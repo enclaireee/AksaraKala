@@ -29,8 +29,8 @@ func is_dead() -> bool:
 	return hp <= 0
 
 
-func take_damage(amount: int, source: Node = null) -> bool:
-	if is_dead() or is_invincible():
+func take_damage(amount: int, source: Node = null, ignore_iframes := false) -> bool:
+	if is_dead() or (is_invincible() and not ignore_iframes):
 		return false
 	hp = maxi(0, hp - amount)
 	damaged.emit(amount, source)

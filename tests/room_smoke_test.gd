@@ -1,5 +1,6 @@
 extends SceneTree
-## End-to-end wiring: in the real room the chaser hurts an idle player, and a keris swing hurts the chaser.
+## End-to-end wiring in the real room: the grove tank hurts an idle player, keris hits break its poise
+## without flinching it first, and a 6-enemy crowd never has more than 4 attackers (combat.md 3.1, 5.2, 8).
 
 var fails := 0
 
@@ -8,21 +9,52 @@ func _initialize() -> void:
 	var room: Node = load("res://zones/test_room.tscn").instantiate()
 	root.add_child(room)
 	var p: Player = room.get_node("Entities/Player")
-	for i in 240:   # 4 s: notice, chase, wind-up, lunge
-		await physics_frame
-	check(p.health.hp < p.health.max_hp, "chaser never hurt the player (hp %d)" % p.health.hp)
-	var c: Chaser = get_first_node_in_group("enemy")
-	check(c != null, "no chaser spawned")
-	if c:
-		var before := c.health.hp
-		p.health.set_invincible(10.0)
-		for i in 30:   # no mouse headless: keep the chaser where the player aims
-			if is_instance_valid(c):
-				c.global_position = p.global_position + p.aim_dir * 14.0
+	await frames(300)   # 5 s: notice, walk in, wind-up, swing
+	check(p.health.hp < p.health.max_hp, "the grove never hurt the player (hp %d)" % p.health.hp)
+
+	var tank: Chaser
+	for e in get_nodes_in_group("enemy"):
+		if e is Chaser:
+			tank = e
+	check(tank != null and tank.role == "tank", "no tank in the grove")
+	if tank:
+		p.health.set_invincible(60.0)
+		var flinched := false
+		var staggered := false
+		for i in 240:   # hold attack; no mouse headless, so keep the tank where the player aims
+			if not is_instance_valid(tank) or staggered:
+				break
+			tank.global_position = p.global_position + p.aim_dir * 16.0
 			p.buffer["attack"] = p.clock
 			await physics_frame
-		check(not is_instance_valid(c) or c.health.hp < before, "keris swing never hurt the chaser")
+			flinched = flinched or tank.state == Chaser.State.FLINCH
+			staggered = tank.state == Chaser.State.STAGGER
+		check(staggered, "keris combos never broke the tank's poise")
+		check(not flinched, "the tank flinched before its poise broke")
+
+	# Crowd: 3 chasers + 3 shooters around the player, all on screen.
+	for e in get_nodes_in_group("enemy"):
+		e.queue_free()
+	await physics_frame
+	for i in 6:
+		var e: Node2D = load("res://entities/enemies/%s.tscn" % ("chaser" if i < 3 else "shooter")).instantiate()
+		e.position = p.global_position + Vector2.from_angle(TAU * i / 6.0) * (60.0 if i < 3 else 110.0)
+		room.get_node("Entities").add_child(e)
+	var most := 0
+	var melee_most := 0
+	for i in 480:   # 8 s
+		await physics_frame
+		most = maxi(most, EnemyBase.attackers(self))
+		melee_most = maxi(melee_most, get_node_count_in_group("token_melee"))
+	check(most <= 4, "%d enemies attacked at once" % most)
+	check(melee_most <= 2, "%d melee enemies attacked at once" % melee_most)
+	check(most >= 2, "the crowd barely attacked (max %d at once)" % most)
 	quit(1 if fails > 0 else 0)
+
+
+func frames(n: int) -> void:
+	for i in n:
+		await physics_frame
 
 
 func check(ok: bool, msg: String) -> void:

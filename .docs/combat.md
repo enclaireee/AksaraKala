@@ -162,7 +162,7 @@ Only a few enemies attack at once, so crowds stay readable.
 - At most **2 melee** and **2 ranged** enemies may be in wind-up or attack at the same time. The rest circle at 48-80 px or reposition.
 - A token is returned when the attack's recovery ends. An enemy waits at least 0.5 s before asking again.
 - Elites and bosses always have a token and do not count toward the limit.
-- Implementation: a static counter on the enemy base script, no new autoload.
+- Implementation: token holders join a scene-tree group (`token_melee` or `token_ranged`), so freed enemies return their token by themselves. No new autoload. (Changed from a static counter, which leaked at exit.)
 
 ### 5.3 Bosses
 - Light attacks: 0.5 wind-up. Heavy attacks: 0.8-1.0 wind-up with a ground marker. Damage per [balance.md](balance.md) section 7.
@@ -182,6 +182,7 @@ Casting rules are in [spells.md](spells.md). Combat-specific rules:
 - All timings in this doc live in one `CombatTuning` resource (`.tres`) so a playtest tweak needs no code change.
 - Perfect dodge check: when the player's Hurtbox is touched during dodge i-frames and less than 0.15 s has passed since the dodge started.
 - Hitstop: set `speed_scale` to 0 on the attacker's and target's `AnimationPlayer` and skip their `_physics_process` for the duration.
+- Stagger (hurt stagger, poise break) is a state in the player's and enemies' state machines, not a `Status` type. `Status` holds only Burn, Slow, Bound and Curse. ASSUMED.
 
 ## 8. Playtest checks
 | Check | Target |

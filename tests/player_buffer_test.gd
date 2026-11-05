@@ -101,6 +101,25 @@ func _initialize() -> void:
 	p.hurtbox.receive(hb)
 	step_for(t.hitstop_player_hit + t.hurt_stagger + 0.02)
 	check(p.state == Player.State.FREE, "stagger did not end after hurt_stagger")
+
+	# Perfect dodge (combat.md 2.5): early hit refunds stamina and fills sakti, at most once a second.
+	reset()
+	p.health.invincible_time = 0.0
+	p.status.apply(Status.Type.BURN, -1.0, 20.0)
+	press("dodge"); step(1)
+	check(not p.status.has(Status.Type.BURN), "dodge did not put out the burn")
+	check(not p.hurtbox.receive(hb), "hit landed during dodge i-frames")
+	check(p.stamina.value == p.stamina.max_stamina, "perfect dodge did not refund stamina")
+	check(p.sakti.value == t.perfect_sakti, "perfect dodge did not add sakti")
+	check(p.frozen > 0.0, "perfect dodge did not pause")
+	p.hurtbox.receive(hb)
+	check(p.sakti.value == t.perfect_sakti, "perfect dodge paid twice inside its cooldown")
+	step_for(t.perfect_cooldown)
+	reset()
+	press("dodge"); step(1)
+	step_for(t.perfect_window)
+	p.hurtbox.receive(hb)   # i-frames still on (Health is not ticking), but too late for perfect
+	check(p.sakti.value == t.perfect_sakti, "late dodge counted as perfect")
 	hb.queue_free()
 
 	quit(1 if fails > 0 else 0)

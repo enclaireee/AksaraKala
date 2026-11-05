@@ -73,3 +73,54 @@ extends Resource
 @export var enemy_notice := 160.0
 @export var enemy_leash := 320.0
 @export var enemy_turn_rate := 360.0           # degrees per second, frozen during wind-up and attack
+
+@export_group("Perfect dodge")
+@export var perfect_window := 0.15             # first part of the dodge (combat.md 2.5)
+@export var perfect_sakti := 10.0
+@export var perfect_pause := 0.05
+@export var perfect_cooldown := 1.0
+
+@export_group("Poise")
+@export var poise_refill := 3.0                # full refill this long after the last hit
+@export var poise_finisher_mult := 2.0
+@export var poise_immunity := 5.0              # no second break this long after a break
+@export var tank_stagger := 1.5
+
+@export_group("Tank")
+@export var tank_speed := 40.0
+@export var tank_windup := 0.6
+@export var tank_lunge := 4.0                  # ASSUMED: a small step into the swing
+@export var tank_lunge_time := 0.15            # ASSUMED
+@export var tank_recovery := 0.8
+@export var tank_attack_range := 28.0
+@export var tank_turn_rate := 180.0
+@export var tank_arc := 150.0
+@export var tank_reach := 28.0
+
+@export_group("Shooter")
+@export var shooter_speed := 50.0
+@export var shooter_near := 100.0              # keeps between near and far
+@export var shooter_far := 160.0
+@export var shooter_windup := 0.5
+@export var shooter_recovery := 1.5
+@export var shot_speed := 110.0
+@export var shot_range := 240.0                # ASSUMED
+
+@export_group("Attack tokens")
+@export var tokens_melee := 2
+@export var tokens_ranged := 2
+@export var token_retry := 0.5
+@export var circle_min := 48.0
+@export var circle_max := 80.0
+
+@export_group("Statuses")
+@export var burn_time := 1.5
+@export var burn_share := 0.3                  # of the burning hit, over burn_ticks
+@export var burn_ticks := 3
+@export var slow_time := 2.0
+@export var slow_mult := 0.6                   # -40%
+@export var bind_slow_mult := 0.4              # Bind on elites and bosses, -60%
+@export var bind_slow_time := 4.0
+@export var bound_time := 2.0
+@export var curse_time := 4.0
+@export var sakti_max := 120.0

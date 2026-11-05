@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://components/health.gd" id="2"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://components/hitbox.gd" id="5"]
 [ext_resource type="Script" path="res://components/hit_flash.gd" id="6"]
 [ext_resource type="Script" path="res://entities/player/player_camera.gd" id="7"]
+[ext_resource type="Script" path="res://components/status.gd" id="8"]
+[ext_resource type="Script" path="res://components/sakti_gauge.gd" id="9"]
 
 [sub_resource type="CircleShape2D" id="body_shape"]
 radius = 5.0
@@ -79,6 +81,15 @@ script = ExtResource("3")
 [node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("6")
 target = NodePath("../Body")
+
+[node name="Status" type="Node" parent="." node_paths=PackedStringArray("health", "tint_target")]
+script = ExtResource("8")
+health = NodePath("../Health")
+tint_target = NodePath("../Body")
+
+[node name="Sakti" type="Node" parent="." node_paths=PackedStringArray("status")]
+script = ExtResource("9")
+status = NodePath("../Status")
 
 [node name="Camera" type="Camera2D" parent="."]
 script = ExtResource("7")

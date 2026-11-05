@@ -19,10 +19,10 @@ No fixed dates. Phases run in order. Each phase has **exit criteria**: do not st
 - Exit: fighting one chaser in one room feels good with placeholder art. Do not start 1b until it does.
 
 ## Phase 1b: Combat depth
-- [ ] Perfect dodge
-- [ ] Poise and the tank role, enemy turn speed (backstab window)
-- [ ] Statuses component (Burn, Slow/Bound, Stagger, Curse)
-- [ ] Attack tokens, a shooter enemy, one 3-4 enemy mix from [bestiary.md](bestiary.md) Encounters
+- [x] Perfect dodge
+- [x] Poise and the tank role, enemy turn speed (backstab window)
+- [x] Statuses component (Burn, Slow/Bound, Stagger, Curse)
+- [x] Attack tokens, a shooter enemy, one 3-4 enemy mix from [bestiary.md](bestiary.md) Encounters
 - Exit: the mix is readable, and the combat.md section 8 checks pass.
 
 ## Phase 2: Aksara casting (the gimmick)

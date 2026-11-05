@@ -27,9 +27,6 @@ tile_set = SubResource("ts")
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(264, 200)
 
-[node name="EnemySpawn" type="Marker2D" parent="."]
-position = Vector2(376, 200)
-
 [node name="Entities" type="Node2D" parent="."]
 y_sort_enabled = true
 

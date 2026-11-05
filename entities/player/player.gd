@@ -26,6 +26,8 @@ const SNAP_PAD := 6.0                           # ASSUMED: enemy body radius add
 @onready var camera: PlayerCamera = $Camera
 @onready var vignette: CanvasItem = $Overlay/Vignette
 @onready var debug: Label = $Overlay/Debug
+@onready var status: Status = $Status
+@onready var sakti: SaktiGauge = $Sakti
 
 var state := State.FREE
 var phase := Phase.WINDUP
@@ -41,11 +43,14 @@ var dodge_dir := Vector2.RIGHT
 var knock := Vector2.ZERO
 var blink_until := 0.0
 var frozen := 0.0          # hitstop time left
+var last_perfect := -INF   # clock time of the last perfect dodge
+var debug_status := 0
 
 
 func _ready() -> void:
 	add_to_group("player")
 	hurtbox.hurt.connect(_on_hurt)
+	hurtbox.dodged.connect(_on_dodged)
 	health.died.connect(_on_died)
 	camera.lean = tuning.camera_lean
 	melee_hitbox.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, self, melee_hitbox.heavy))
@@ -61,6 +66,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	# ponytail: debug weapon swap until the menu exists (items.md swaps weapons in the menu)
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F1:
 		weapon = Weapon.RANGED if weapon == Weapon.MELEE else Weapon.MELEE
+	# ponytail: debug status cycle (Burn of a 20 hit, Slow, Curse) until enemies apply them
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F2:
+		var types := [Status.Type.BURN, Status.Type.SLOW, Status.Type.CURSE]
+		status.apply(types[debug_status], -1.0, 20.0)
+		debug_status = (debug_status + 1) % types.size()
 
 
 func hitstop(seconds: float) -> void:
@@ -97,19 +107,19 @@ func _physics_process(delta: float) -> void:
 	body.visible = clock >= blink_until or fmod(clock, 0.1) < 0.05
 	move_and_slide()
 	# ponytail: debug readout until the HUD (ui.md) exists
-	debug.text = "HP %d  ST %d  %s [F1]" % [health.hp, stamina.value, "keris" if weapon == Weapon.MELEE else "busur"]
+	debug.text = "HP %d  ST %d  SK %d  %s [F1]  status [F2]" % [health.hp, stamina.value, sakti.value, "keris" if weapon == Weapon.MELEE else "busur"]
 
 
 # --- states ---
 
 func _free() -> void:
-	velocity = move_dir * tuning.walk_speed
+	velocity = move_dir * _walk()
 	_try_buffered(["dodge", "attack"])
 
 
 func _attack() -> void:
 	var ranged := weapon == Weapon.RANGED
-	velocity = move_dir * tuning.walk_speed * tuning.ranged_move_factor if ranged else Vector2.ZERO
+	velocity = move_dir * _walk() * tuning.ranged_move_factor if ranged else Vector2.ZERO
 	match phase:
 		Phase.WINDUP:
 			if state_time >= _phase_len(Phase.WINDUP):
@@ -139,7 +149,7 @@ func _dodge() -> void:
 	if state_time < tuning.dodge_duration:
 		velocity = dodge_dir * tuning.dodge_distance / tuning.dodge_duration
 	else:
-		velocity = move_dir * tuning.walk_speed   # dodge recovery: free to move, actions wait
+		velocity = move_dir * _walk()   # dodge recovery: free to move, actions wait
 		if state_time >= tuning.dodge_duration + tuning.dodge_recovery:
 			_enter(State.FREE)
 
@@ -167,6 +177,7 @@ func _start_dodge() -> bool:
 		return false
 	dodge_dir = move_dir.normalized() if move_dir != Vector2.ZERO else aim_dir
 	health.set_invincible(tuning.dodge_iframes)
+	status.clear(Status.Type.BURN)   # a dodge roll puts out a burn (combat.md 4)
 	_swing(false)
 	combo = 0
 	_enter(State.DODGE)
@@ -247,6 +258,19 @@ func _on_hit_landed(hb: Hurtbox, attacker: Node, heavy: bool) -> void:
 
 # --- getting hit ---
 
+func _on_dodged(hitbox: Hitbox) -> void:
+	# Perfect dodge: hit during the first part of a dodge, at most once a second (combat.md 2.5).
+	if state != State.DODGE or state_time >= tuning.perfect_window or clock - last_perfect < tuning.perfect_cooldown:
+		return
+	last_perfect = clock
+	stamina.refund(tuning.dodge_cost)
+	sakti.add(tuning.perfect_sakti)   # ponytail: Mage x1.2 arrives with classes (Phase 3)
+	hit_flash.flash(tuning.perfect_pause * 3.0)   # ponytail: no chime until the audio pass
+	hitstop(tuning.perfect_pause)
+	if is_instance_valid(hitbox.source) and hitbox.source.has_method("hitstop"):   # a shot can outlive its shooter
+		hitbox.source.hitstop(tuning.perfect_pause)
+
+
 func _on_hurt(hitbox: Hitbox) -> void:
 	if health.is_dead():
 		return
@@ -262,7 +286,7 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	knock = (global_position - from).normalized() * kb / tuning.hurt_stagger
 	_enter(State.HURT)
 	hitstop(tuning.hitstop_player_hit)
-	if hitbox.source != null and hitbox.source.has_method("hitstop"):
+	if is_instance_valid(hitbox.source) and hitbox.source.has_method("hitstop"):   # a shot can outlive its shooter
 		hitbox.source.hitstop(tuning.hitstop_player_hit)
 	camera.shake(tuning.shake_player_hit.x, tuning.shake_player_hit.y)
 	vignette.modulate.a = 1.0
@@ -282,6 +306,10 @@ func _on_died() -> void:
 func _enter(s: State) -> void:
 	state = s
 	state_time = 0.0
+
+
+func _walk() -> float:
+	return tuning.walk_speed * status.speed_mult()   # Slow; dodge distance is unchanged (combat.md 4)
 
 
 func _set_phase(p: Phase) -> void:
