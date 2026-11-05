@@ -25,27 +25,27 @@ marker = {"zone": "desa_purwa", "id": "semar"}
 script = ExtResource("2")
 objective = "Q_MQ0_S4_OBJ"
 on = "glyph_learned:sunda_ka"
-marker = {"zone": "desa_purwa", "id": "sanggar"}
+marker = {"zone": "desa_purwa", "id": "sanggar_enter"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ0_S5_OBJ"
 on = "spell_cast:sunda_ka"
 count = 3
-marker = {"zone": "desa_purwa", "id": "sanggar"}
+marker = {"zone": "desa_purwa", "id": "sanggar_enter"}
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ0_S6_OBJ"
 on = "enemy_killed:dummy"
 count = 3
-marker = {"zone": "desa_purwa", "id": "dummies"}
+marker = {"zone": "desa_purwa", "id": "dummy"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ0_S7_OBJ"
 on = "zone_entered:tatar_sunda"
-marker = {"zone": "desa_purwa", "id": "exit_tatar_sunda"}
+marker = {"zone": "tatar_sunda", "id": "from_purwa"}
 
 [resource]
 script = ExtResource("1")

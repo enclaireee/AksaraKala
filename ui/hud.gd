@@ -164,7 +164,7 @@ func refresh_arrow() -> void:
 			if "target_zone" in n and n.target_zone == nxt:
 				_tnode = n
 				return
-		elif n.get("id") == id or n.get("npc_id") == id or n.name == id:
+		elif id in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("kind"), n.name]:
 			_tnode = n
 			return
 

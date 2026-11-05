@@ -41,7 +41,7 @@ set_flag = "mq1_5"
 script = ExtResource("2")
 objective = "Q_MQ1_S6_OBJ"
 on = "talked_to:sunda_weaver"
-marker = {"zone": "tatar_sunda", "id": "weaver_house"}
+marker = {"zone": "tatar_sunda", "id": "sunda_weaver"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")

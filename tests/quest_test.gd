@@ -53,6 +53,7 @@ func _initialize() -> void:
 	quest("t_b", [step("class_chosen")], {"flask_shard": 1}, req)
 	quest("t_c", [step("area_entered:spring", 1, "", {"zone": "tatar_sunda", "id": "spring"})])
 	quest("t_d", [step("item_picked:ang_*", 3), step("talked_to:z")])
+	quest("t_e", [step("petilasan_activated:p"), step("boss_defeated:boss_x"), step("talked_to:z")])
 	g._reset()
 	g.class_id = "warrior"
 
@@ -126,6 +127,12 @@ func _initialize() -> void:
 	check(g.quests.t_d.count == 2, "prefix or give: %s" % g.quests.t_d)
 	ev.item_picked.emit("ang_3")
 	check(g.quests.t_d.step == 1, "prefix step did not finish: %s" % g.quests.t_d)
+
+	# A kill step whose unique enemy is already dead is met at once (MQ1: boss beaten before resting).
+	g.killed.append("boss_x")
+	g.start_quest("t_e")
+	ev.petilasan_activated.emit("p")
+	check(g.quests.t_e.step == 2, "kill catch-up: %s" % g.quests.t_e)
 
 	# Save round trip keeps quests, codex, pin and flags.
 	var before := JSON.stringify(g.to_dict())

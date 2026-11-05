@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 	if item_id != "":
 		for q: String in game.quests:
 			var s: QuestStep = game.current_step(q)
-			if s and s.on == "item_picked:" + item_id:
+			if s and game._matches(s.on, "item_picked", item_id):
 				want = true
 	_t += delta
 	modulate.a = 0.6 + 0.4 * sin(_t * 8.0) if want else 1.0

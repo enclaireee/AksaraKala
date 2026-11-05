@@ -272,9 +272,17 @@ func _bump(id: String) -> void:
 
 
 ## A collect step counts items already held, so picking them up early can't soft-lock the quest.
+## A kill step for a unique enemy (boss, elite) already in `killed` is met: it never respawns to fire again.
 func _catch_up(id: String) -> void:
 	var st := current_step(id)
-	if st == null or not st.on.begins_with("item_picked:"):
+	if st == null:
+		return
+	var kv := st.on.split(":", true, 1)
+	if kv[0] in ["boss_defeated", "enemy_killed"] and kv.size() == 2 and kv[1] in killed:
+		quests[id].count = st.count - 1
+		_bump(id)
+		return
+	if not st.on.begins_with("item_picked:"):
 		return
 	var n := Array(inventory).filter(func(i: String) -> bool: return _matches(st.on, "item_picked", i)).size()
 	if n >= st.count:

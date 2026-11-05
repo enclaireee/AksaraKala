@@ -98,7 +98,7 @@ Custom `Resource` types so adding content is data entry:
 - Shows the existing templates as faint overlays and warns when two glyphs' templates are too close in score (disambiguation check).
 
 ## 9. Zone loading
-- Edge `Area2D` exits call `Zones.go_to(zone_id, spawn_id)`, which fades out, swaps the scene, places the player at the spawn marker and fades in.
+- Edge `Area2D` exits call `Zones.go_to(zone_id, spawn_id)`, which fades out, swaps the scene, places the player at the spawn marker and fades in. The new player starts with full HP, stamina and sakti; this is intended (user call, 2026-11-05).
 - Zone scripts extend `zones/zone.gd` (**ASSUMED** 2026-11-05): `zone_id`, an ASCII `MAP` (any size, in 30x17 screens), and a `SPOTS` dict mapping a map char to `{scene, props, tile}`. The base paints the tiles, places the spots, sets the camera limits from the map size and emits `Events.zone_entered`. Tile chars: `#` wall/cliff, `.` grass, `,` path, `~` water, `b` bamboo, `t` tea, `r` rock, `_` floor. `Zones.ZONES` maps zone id to scene path and `Zones.ADJ` lists neighbours for the objective arrow's breadth-first search.
 - Boss and elite scenes are referenced by path and loaded at runtime, so a zone imports cleanly before its boss exists.
 - Persistent state (killed bosses, opened fog gates, chests) lives in `Game`, not in the scene.

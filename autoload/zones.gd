@@ -57,6 +57,8 @@ func go_to(zone_id: String, spawn_id: String) -> void:
 	current_zone = ""
 	tree.change_scene_to_file(path)
 	await tree.scene_changed
+	tree.paused = false   # again: a menu or dialogue may have opened during the fade-out
+	Engine.time_scale = 1.0
 	var s := _spawn(spawn_id)
 	var player := tree.get_first_node_in_group("player") as Node2D
 	if s and player:

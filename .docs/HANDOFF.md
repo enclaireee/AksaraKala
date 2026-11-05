@@ -133,6 +133,16 @@ User decision: "not everything needs to be budaya'd". Culture is the spice, not 
 - Bosses in `entities/bosses/`: Sangkuriang (logs and slams, dawn phase at 50%, Ca near the hung post is the fake dawn; `boss_defeated`), arena post (cloth colour ASSUMED red, VERIFY), Sandekala plus 4 oncor (a player hit lights one, ASSUMED; ponytail: no hold on the grab), and `kuntilanak_elite` for SQ-S2 (inert until sq_s2 step 2; stats ASSUMED from the balance.md elite row).
 - UI: `ui/prologue` (wayang, PROLOGUE_1..13, hold interact to skip) sits between New Game and the class cards. `ui/dialogue_box` pauses the tree while open. Flow: title → prologue → class → Desa Purwa.
 - Tests: `zone_test`, `zone_build_test`, `npc_test`, `prologue_test`, `boss_test`, `sandekala_test`, `charger_test`, `weakness_test`. All tests passed on 2026-11-05. `quest_reach_test` (added later) checks that every quest step's event has a source in the zones or the dialogue, and that a placed NPC starts every quest but MQ0. It found no gaps; it does not check the order of play.
+- Review fixes (2026-11-05, after the main-path playtest):
+  - Soft-lock: MQ1 locked if Sangkuriang died before the player rested at `sunda_2`. `Game._catch_up` now meets a `boss_defeated:`/`enemy_killed:` step whose id is already in `killed`.
+  - Objective arrow: it was missing on 8 steps. Quest markers now name real node ids, and `hud.gd` also matches `trigger_id`, `area_id` and `kind`. `quest_reach_test` now checks that every marker resolves to a node.
+  - Menu: it no longer opens over the dialogue box.
+  - Zone change: `Zones.go_to` unpauses again after the new zone loads.
+  - SQ-S3: `angklung_*` pickups sparkle (`pickup.gd` uses `_matches`).
+  - Zone exits refill HP, stamina and sakti. The user kept this on purpose (2026-11-05), and architecture.md records it.
+  - Open:
+    - dying during the 0.25 s exit fade skips the respawn;
+    - Sandekala's darkness fade is cut short when his corpse frees.
 
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)

@@ -142,6 +142,9 @@ func close() -> void:
 
 
 func _input(e: InputEvent) -> void:
+	var box := get_node_or_null("../DialogueBox")
+	if box and box.is_open():
+		return   # the box owns pause and input while it is open
 	if e.is_action_pressed("menu"):
 		if visible:
 			close()

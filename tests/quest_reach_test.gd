@@ -17,6 +17,7 @@ func _initialize() -> void:
 	await process_frame
 	var zones := root.get_node("Zones")
 	var src := {}   # signal -> {arg: true}
+	var marks := {}   # zone -> {id: true}, the same fields hud.gd refresh_arrow() matches
 	for s in ["talked_to", "area_entered", "area_cleared", "petilasan_activated", "enemy_killed", "boss_defeated",
 			"item_picked", "glyph_learned", "zone_entered"]:
 		src[s] = {}
@@ -25,7 +26,11 @@ func _initialize() -> void:
 		var z := (load(zones.ZONES[id]) as PackedScene).instantiate()
 		root.add_child(z)
 		await process_frame
+		marks[id] = {}
 		for n in z.find_children("*", "", true, false):
+			for k in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("kind"), n.name]:
+				if k is String or k is StringName:
+					marks[id][String(k)] = true
 			var f := n.scene_file_path
 			if f.ends_with("npc.tscn"):
 				src.talked_to[n.npc_id] = true
@@ -62,6 +67,9 @@ func _initialize() -> void:
 	for q in QuestData.all():
 		check(q.id == "mq0" or starts.has(q.id), "%s: no placed NPC starts it" % q.id)
 		for s in q.steps:
+			var m: Dictionary = s.marker
+			if not m.is_empty():
+				check(marks.get(m.zone, {}).has(m.id), "%s: marker '%s' has no node in %s" % [q.id, m.id, m.zone])
 			var p: PackedStringArray = s.on.split(":", true, 1)
 			if p[0] == "class_chosen" or p.size() == 1:
 				continue
