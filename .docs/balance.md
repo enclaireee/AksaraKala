@@ -52,7 +52,7 @@ The player gets about 2x damage and 1.3x HP over the game. Each source has a cei
 | **Weapons** | Same archetype, at most +25% over the starter. Mostly a change of behavior (reach, arc, speed) | No, from side quests and secrets |
 | **Armor** | 5% damage reduction per Defense point, 5-25% | Batik and Kain Hijau are on the main path |
 | **Accessories** | Small flat bonuses (+1 Spirit, +10 HP, +8% speed and others) | No |
-| **Jamu** | 3-6 charges, 40-60% heal each | Base only. Upgrades are side-quest rewards |
+| **Healing Flask** | 3-6 charges, 40-60% heal each | Base only. Upgrades are side-quest rewards |
 
 ### 3.1 Ingatan (new, confirmed 2026-11-05)
 As the letters return to the world, the hero's ilmu grows with them. This is what keeps a main-quest-only player on the curve without new items.
@@ -72,7 +72,7 @@ As the letters return to the world, the hero's ilmu grows with them. This is wha
 | Armor | `max(1, dmg - defense)` | `max(1, round(dmg x (1 - 0.05 x defense)))` | Flat subtraction halved early hits and did nothing late. A percentage scales with every zone |
 | Spell power | Spirit only | Spirit x Ingatan | Spells keep pace with enemy HP |
 
-Unchanged: stamina costs and regen, dodge, Vitality and Endurance formulas, jamu, level cost.
+Unchanged: stamina costs and regen, dodge, Vitality and Endurance formulas, flask, level cost.
 
 ## 5. Class balance
 Goal from [classes.md](classes.md): any class can finish, Warrior is the easiest and Mage the most active.
@@ -80,14 +80,14 @@ Goal from [classes.md](classes.md): any class can finish, Warrior is the easiest
 ### 5.1 Changes to [classes.md](classes.md)
 | Item | Before | Now |
 |------|--------|-----|
-| Busur base damage | 9 | 8 (ranged is safer, so less damage) |
-| Mage Batin Tajam gauge gain | x1.5 | x1.2 (gauge max 120 unchanged) |
+| Hunting Bow base damage | 9 | 8 (ranged is safer, so less damage) |
+| Mage Keen Mind gauge gain | x1.5 | x1.2 (gauge max 120 unchanged) |
 | Mage spell damage | x1.25 | x1.1 |
 
 ### 5.2 Result (main quest only, middle of each zone, perfect casting)
 Damage per second including uptime (melee 45-50%, ranged 60%). Spell share is the part of the damage that comes from spells.
 
-| Zone | Warrior | Archer | Assassin | Mage |
+| Zone | Warrior | Archer | Rogue | Mage |
 |------|---------|--------|----------|------|
 | Tatar Sunda | 28 (31% spells) | 29 (36%) | 27 (37%) | 35 (55%) |
 | Mataram | 34 | 35 | 33 | 44 |
@@ -97,7 +97,7 @@ Damage per second including uptime (melee 45-50%, ranged 60%). Spell share is th
 - The other three classes stay within 10% of each other. Warrior has the most HP (about 15 hits from a charger), Mage the least (about 12).
 - Mage is about 30% ahead **with perfect casting only**. Real players smudge and fizzle: at about 75% casting efficiency Mage is level with the others. Mage has the highest ceiling, and it is tied to drawing skill, which is the game's gimmick. **TUNE** after playtests.
 - Perfect dodges ([combat.md](combat.md) 2.5) are not in the model either. They are a skill bonus.
-- Assassin's x2 backstab is not in the model. It makes up for the lowest number above.
+- Rogue's x2 backstab is not in the model. It makes up for the lowest number above.
 - Stat allocation in the model: half to the main stat, 30% Vitality, the rest Endurance. Other builds land within about 10%.
 
 ## 6. Enemy scaling
@@ -163,7 +163,7 @@ Boss HP = mean class damage per second for the reference player x target fight t
 
 - Light hit = about 10% of the reference player's HP after armor. Heavy hit = about 22% (4-5 heavy hits kill). Every heavy attack has a ground marker or a 0.5 s+ wind-up ([bestiary.md](bestiary.md)).
 - The old boss HP assumed about 10 damage per hit. With the real formulas a starting Warrior hits for about 30, so the old values gave 15-20 second fights.
-- Fight times are with all 4 classes. Fastest is Mage, slowest is Assassin without backstabs. A completionist finishes in about 75% of the time.
+- Fight times are with all 4 classes. Fastest is Mage, slowest is Rogue without backstabs. A completionist finishes in about 75% of the time.
 - Other minibosses (P1): HP = about 40 s at that zone's damage per second, about 1100 in Sunda (Sandekala) and 1400 in Mataram.
 
 ### 7.1 Making "1-3 tries" true
@@ -232,8 +232,8 @@ One mode. Assist toggles live in Settings, can change at any time, and have no p
 | Time to kill (reference player) | Chaser 1-2 s, tank 5-6 s, every zone |
 | Normal enemy hit | 6-10% of max HP |
 | Boss tries | Median 2, max 4 |
-| Spell share of damage | 25-40% (Warrior, Archer, Assassin), 50-60% (Mage) |
-| Jamu used per zone | About 3-5 by the reference player |
+| Spell share of damage | 25-40% (Warrior, Archer, Rogue), 50-60% (Mage) |
+| Flasks used per zone | About 3-5 by the reference player |
 | Level at boss doors | Section 2.2, within 1-2 levels |
 
 ## 12. Open questions

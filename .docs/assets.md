@@ -47,5 +47,5 @@ Keep a list of the books, museum pages, official sites and expert reviews used f
 ### Fact-check log (Nov 2026, secondary sources only)
 - Aksara: Wikipedia "Javanese script", "Sundanese script", "Aji Saka"; Sono Budoyo page on Aji Saka; Noto fonts SIL OFL 1.1.
 - Legends: Wikipedia "Sangkuriang", "Mpu Gandring", "Ken Arok", "Timun Mas", "Batara Kala", "Nyai Roro Kidul", "Cepot", "Panakawan", "Semar", "Wewe Gombel", "Kujang"; indonesia.travel (Prambanan, UNESCO list); detik.com on ruwatan.
-- UNESCO: keris 2008, wayang 2008, batik 2009, angklung 2010, gamelan 2021, jamu 2023, pencak silat 2019, reog and kebaya 2024.
+- UNESCO: keris 2008, wayang 2008, batik 2009, angklung 2010, gamelan 2021, pencak silat 2019, reog and kebaya 2024.
 - Still open: Pararaton primary text, a school curriculum check on Sangkuriang, glyph shape references, expert review.

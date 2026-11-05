@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ClassData" format=3]
+
+[ext_resource type="Script" path="res://data/class_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "warrior"
+title = "Warrior"
+description = "An unbreakable frontliner.\nClose range, tanky, spells as shockwaves."
+stats = {"vit": 8, "end": 6, "str": 8, "dex": 4, "spi": 3}
+start_weapon = "broadsword"
+start_armor = "padded_tunic"
+passive = "Iron Skin"
+passive_text = "Light hits do not stagger or knock you back."

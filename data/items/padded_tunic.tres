@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "padded_tunic"
+title = "Padded Tunic"
+slot = "armor"
+description = "Plain padded cloth."
+defense = 1

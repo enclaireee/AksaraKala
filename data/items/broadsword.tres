@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "broadsword"
+title = "Broadsword"
+slot = "weapon"
+archetype = "heavy"
+description = "A wide, heavy swing."
+windup = 0.25
+active = 0.1
+recovery = 0.45
+lunge = 4.0
+cost = 25.0
+sakti_per_hit = 10.0
+damage = 22
+reach = 24.0
+arc = 150.0

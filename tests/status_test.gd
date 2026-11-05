@@ -100,7 +100,7 @@ func run() -> void:
 	g.add(10)
 	check(g.value == 10.0, "add works after curse")
 	g.add(500)
-	check(g.value == 120.0, "add clamps at max")
+	check(g.value == g.max_value, "add clamps at max")
 	g.value = 5.0
 	check(not g.spend(6.0) and g.value == 5.0, "spend fails when short, unchanged")
 	check(g.spend(5.0) and g.value == 0.0, "spend succeeds")

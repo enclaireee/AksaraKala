@@ -1,0 +1,34 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/petilasan/petilasan.gd" id="1"]
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 20.0
+
+[node name="Petilasan" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1")
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="Base" type="Polygon2D" parent="."]
+color = Color(0.45, 0.42, 0.38, 1)
+polygon = PackedVector2Array(-10, 4, 10, 4, 8, -2, -8, -2)
+
+[node name="Stone" type="Polygon2D" parent="."]
+color = Color(0.62, 0.6, 0.55, 1)
+polygon = PackedVector2Array(-5, -2, 5, -2, 4, -16, 0, -19, -4, -16)
+
+[node name="Flame" type="Polygon2D" parent="."]
+color = Color(0.34, 0.71, 0.91, 1)
+polygon = PackedVector2Array(-2, -20, 2, -20, 0, -25)
+
+[node name="Prompt" type="Label" parent="."]
+offset_left = -16.0
+offset_top = -38.0
+offset_right = 16.0
+offset_bottom = -24.0
+text = "[E] Rest"
+horizontal_alignment = 1

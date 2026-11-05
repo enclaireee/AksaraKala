@@ -30,24 +30,27 @@ extends Resource
 @export var finisher_mult := 1.5               # damage, sakti and duration of hit 3
 @export var soft_snap_angle := 30.0
 
-@export_group("Light melee (keris)")
-@export var melee_damage := 10                 # TUNE: 4 hits kill a tier-0 chaser (40 HP) in ~1.4 s
-@export var melee_cost := 10.0
-@export var melee_windup := 0.08
-@export var melee_active := 0.07
-@export var melee_recovery := 0.20
-@export var melee_lunge := 10.0
-@export var melee_arc := 90.0
-@export var melee_reach := 20.0
+@export_group("Weapons (numbers live in data/items)")
 @export var melee_finisher_reach_mult := 1.5   # forward thrust
 
-@export_group("Ranged (busur)")
-@export var ranged_damage := 8                 # TUNE
-@export var ranged_cost := 4.0
-@export var ranged_windup := 0.15
-@export var ranged_recovery := 0.30
-@export var arrow_speed := 300.0
-@export var arrow_range := 220.0               # finisher arrow pierces
+@export_group("Stats and passives (rpg.md 2, classes.md)")
+@export var stat_hp_base := 80                 # + 10 per Vitality
+@export var stat_hp_per := 10
+@export var stat_stamina_base := 80.0          # + 6 per Endurance
+@export var stat_stamina_per := 6.0
+@export var stat_damage_per := 0.05            # Str (melee), Dex (ranged, staff), Spi (spells)
+@export var stat_speed_per := 0.01             # attack speed per Dex, stamina regen per End
+@export var stat_sakti_per := 0.02             # sakti gain per Spi
+@export var rogue_dodge_cost := 14.0
+@export var backstab_mult := 2.0
+@export var backstab_angle := 60.0             # degrees around the enemy's back
+@export var eagle_range := 120.0
+@export var eagle_mult := 1.15
+@export var keen_mind_max := 120.0
+@export var keen_mind_gain := 1.2
+@export var flask_time := 0.6
+@export var flask_base_heal := 0.4
+@export var flask_pouch_heal := 0.05
 
 @export_group("Hit feedback")
 @export var flash_time := 0.08
@@ -123,4 +126,12 @@ extends Resource
 @export var bind_slow_time := 4.0
 @export var bound_time := 2.0
 @export var curse_time := 4.0
-@export var sakti_max := 120.0
+@export var sakti_max := 100.0                 # base; Mage 120 is keen_mind_max
+
+@export_group("Casting")
+@export var cast_time_scale := 0.2             # world speed while drawing (spells.md 1)
+@export var cast_min_sakti := 15.0             # slow-mo gate (spells.md 9)
+@export var cast_lockout := 1.0                # after a cancel or fizzle
+@export var cast_draw_limit := 2.5             # real seconds
+@export var cast_min_length := 24.0            # ASSUMED: shorter strokes (viewport px) cancel
+@export var spell_poise_mult := 1.5            # combat.md 6

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "cakra"
+title = "Cakra"
+slot = "weapon"
+archetype = "ranged"
+mythic = true
+description = "A thrown disc of light."
+lore = "Krishna's disc from the wayang tales. Here it flies like an arrow."
+windup = 0.15
+recovery = 0.3
+cost = 4.0
+projectile_speed = 300.0
+projectile_range = 220.0
+damage = 12

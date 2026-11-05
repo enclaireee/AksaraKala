@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "sunda_ka"
+aksara = "sunda"
+latin = "ka"
+templates = Array[PackedVector2Array]([PackedVector2Array(120, 113, 255, 113, 140, 395, 290, 113, 425, 113, 310, 395)])

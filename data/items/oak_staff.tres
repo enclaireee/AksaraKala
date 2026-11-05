@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "oak_staff"
+title = "Oak Staff"
+slot = "weapon"
+archetype = "staff"
+description = "A weak bolt of light."
+windup = 0.15
+recovery = 0.35
+cost = 5.0
+projectile_speed = 200.0
+projectile_range = 160.0
+sakti_per_hit = 4.0
+damage = 8

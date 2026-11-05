@@ -49,7 +49,7 @@ Notes:
 - The Boss 1 "light" mechanic reuses Ca (Burst), cast next to the boeh rarang banner: no extra glyph (**ASSUMED**, see [quests.md](quests.md) MQ1).
 
 ### Class modifiers
-Class changes numbers and delivery, not the glyph set. See [classes.md](classes.md) for per-class multipliers (e.g. Archer's Bolt as a 3-arrow fan, Assassin's cheaper Dash).
+Class changes numbers and delivery, not the glyph set. See [classes.md](classes.md) for per-class multipliers (e.g. Archer's Bolt as a 3-arrow fan, Rogue's cheaper Dash).
 
 ## 4. Recognition
 - **Algorithm:** a point-cloud recognizer such as $P (multi-stroke aware) or $1 (single-stroke). Both are public-domain-style academic methods, about 100 lines in GDScript. Written from scratch.
@@ -92,7 +92,7 @@ Class changes numbers and delivery, not the glyph set. See [classes.md](classes.
 - Pause mid-cast: cancel.
 - Taking damage mid-cast: the cast continues (slow-mo reduces the pressure), no cancel (**ASSUMED**). Other combat rules while casting: [combat.md](combat.md) 6.
 - Stroke too short or only a click: treat as cancel, no cost.
-- **Slow-mo gate (confirmed 2026-11-05):** Drawing can only start with at least 15 sakti (14 for Mage and Assassin, their cheapest spell), and not within 1 s after a cancel or fizzle. The sanggar is exempt, so practice is always free. Without it, pressing and cancelling over and over would play every fight at 20% speed. Pressing cast when blocked flashes the gauge and plays a dull sound.
+- **Slow-mo gate (confirmed 2026-11-05):** Drawing can only start with at least 15 sakti (14 for Mage and Rogue, their cheapest spell), and not within 1 s after a cancel or fizzle. The sanggar is exempt, so practice is always free. Without it, pressing and cancelling over and over would play every fight at 20% speed. Pressing cast when blocked flashes the gauge and plays a dull sound.
 - Gauge too low for the matched spell: show the spell's cost, fizzle with a distinct soft sound, no gauge loss.
 - Multiple monitors/HiDPI: collect points in viewport coordinates and normalize.
 

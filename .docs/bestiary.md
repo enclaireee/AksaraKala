@@ -8,12 +8,15 @@ Design rules:
 - 3 archetypes (chaser, shooter, charger) plus 1 tank per zone, re-skinned and re-tuned across zones.
 - Cartoonish look, no gore.
 - Each enemy has a codex entry.
+- Each zone mixes 2-3 mundane enemies (bandits, soldiers, beasts) with 1-2 folklore spirits. Minibosses and bosses stay legendary (decided 2026-11-05, **ASSUMED**).
 
 ## Zone 1: Tatar Sunda
 | Enemy | Archetype | HP | Dmg | Ilmu | Behavior | Folklore note |
 |-------|-----------|----|-----|------|----------|---------------|
+| Bandit | Chaser | 40 | 8 | 6 | Rushes and swings a short blade | Mundane. Plain fantasy-RPG enemy (**ASSUMED**) |
+| Bandit Archer | Shooter | 40 | 8 | 6 | Keeps distance, fires a telegraphed arrow | Mundane (**ASSUMED**) |
+| Wild Boar | Charger | 60 | 12 | 9 | Telegraphs, then dashes in a straight line | Mundane beast. Replaces Maung (the tiger spirit is dropped; Maung Bodas, Siliwangi's white tiger, may return as a legendary encounter later) |
 | Kuntilanak | Shooter | 40 | 8 | 6 | Floats, keeps distance, shrieks in a short cone | Female ghost of Indonesian and Malay folklore |
-| Maung | Charger | 60 | 12 | 9 | Telegraphs, then dashes in a straight line | Tiger spirit. Sundanese lore links tigers to the Siliwangi legend |
 | Jurig Leuweung | Tank | 150 | 12 | 15 | Slow, wide swing. Bind roots it (see Glyph weaknesses) | Descriptive name: a "jurig" (ghost, verified) of the "leuweung" (forest, **VERIFY** spelling). No named Sundanese figure fits a slow giant without reusing Genderuwo, and a generic spirit claims no legend (decided 2026-11-05, **ASSUMED**) |
 
 **Miniboss: Sandekala** (P1, optional, in the bamboo forest at dusk). HP 1100, Dmg 14, Ilmu 100 (**TUNE**, [balance.md](balance.md) 7). Sundanese dusk spirit said to take children who stay outside after sunset (verified, 2 sources). Its form is not fixed in the belief, so the look is ours: a tall shadow with a lantern-less face.
@@ -27,6 +30,8 @@ Design rules:
 - Teaches: casting under pressure.
 
 ## Zone 2: Mataram
+Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
+
 | Enemy | Archetype | HP | Dmg | Ilmu | Behavior | Folklore note |
 |-------|-----------|----|-----|------|----------|---------------|
 | Genderuwo | Tank | 195 | 14 | 22 | Big melee, throws rocks | Hairy giant spirit |
@@ -42,6 +47,8 @@ Design rules:
 - Teaches: crowd control and area spells.
 
 ## Zone 3: Tanah Timur
+Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
+
 | Enemy | Archetype | HP | Dmg | Ilmu | Behavior | Folklore note |
 |-------|-----------|----|-----|------|----------|---------------|
 | Banaspati | Chaser | 64 | 10 | 14 | Flaming head, hits and its ground trail apply Burn | Fire spirit |
@@ -57,6 +64,8 @@ Design rules:
 - Teaches: using the spell system proactively.
 
 ## Zone 4: Segara Kidul
+Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
+
 | Enemy | Archetype | HP | Dmg | Ilmu | Behavior | Note |
 |-------|-----------|----|-----|------|----------|------|
 | Lampor | Chaser (swarm) | 46 | 12 | 10 | A line of 3-5 torch-bearing spirit soldiers that drifts, then rushes | Folk spirits called "obor setan" (devil torch), verified 2 sources. Some tellings call them the Queen's army: never say so in game text |
@@ -93,11 +102,11 @@ Rules:
 ### Tatar Sunda
 | Mix | Enemies | Where | Tests |
 |-----|---------|-------|-------|
-| Bamboo edge | 3 Kuntilanak | Open field with bamboo cover | Closing distance, Bolt interrupts |
-| Tiger lane | 2 Maung | Long straight path | Reading the dash, Ward bounce |
+| Bamboo edge | 2 Bandit, 2 Kuntilanak | Open field with bamboo cover | Closing distance, Bolt interrupts |
+| Boar lane | 2 Wild Boar | Long straight path | Reading the dash, Ward bounce |
 | Batu tulis grove (MQ1 1.4) | 1 Jurig Leuweung, 2 Kuntilanak | Grove clearing | Tank in front, shooters behind, Bind |
-| Hunting party | 1 Maung, 1 Jurig Leuweung, 2 Kuntilanak | Tea terraces, lane plus cover | Priorities |
-| Crater path | 1 Jurig Leuweung, 2 Maung, 2 Kuntilanak (2 waves) | Before the crater petilasan | Everything in the zone |
+| Hunting party | 1 Wild Boar, 1 Jurig Leuweung, 1 Bandit Archer, 1 Kuntilanak | Tea terraces, lane plus cover | Priorities |
+| Crater path | 1 Jurig Leuweung, 2 Wild Boar, 1 Bandit, 1 Bandit Archer, 1 Kuntilanak (2 waves) | Before the crater petilasan | Everything in the zone |
 
 ### Mataram
 | Mix | Enemies | Where | Tests |
@@ -126,8 +135,9 @@ Every normal enemy has one glyph that breaks its gimmick. It is a strong shortcu
 | Enemy | Glyph (learned) | Trigger | Effect |
 |-------|-----------------|---------|--------|
 | Kuntilanak | Ka Bolt (MQ0) | Bolt hits her during the shriek wind-up | Shriek cancelled, she drops to the ground for 2 s and can be hit by melee |
-| Maung | Ga Ward (MQ1 1.3) | It dashes into the player while Ward is up | Bounces off as if it hit a wall: 1.5 s stagger |
+| Wild Boar | Ga Ward (MQ1 1.3) | It dashes into the player while Ward is up | Bounces off as if it hit a wall: 1.5 s stagger |
 | Jurig Leuweung | Nga Bind (MQ1 1.5) | Bound | Cannot swing while Bound, takes x2 poise damage |
+| Bandit, Bandit Archer | None | Mundane | Beaten with the combo and dodge (**ASSUMED**) |
 | Tuyul | Ca Burst (MQ1 1.7) | Burst hits the group | 40 base damage beats their 31 HP: one cast clears a swarm |
 | Genderuwo | Ka Bolt | Bolt hits the rock it holds during the throw wind-up | The rock shatters on its head: its own rock damage plus a 1.5 s stagger |
 | Pocong | Nga Bind | Bound mid-hop | Falls flat for 2 s and takes x1.5 damage |
@@ -143,7 +153,7 @@ Every normal enemy has one glyph that breaks its gimmick. It is a strong shortcu
 Spread: Ka x3, Ga x3, Nga x3, Ca (Sunda) x2, Na x2, Ra x1. Ha Heal and Ca (Jawa) Rally are self-buffs and have no enemy weakness. Ka (Jawa) Ombak, the final glyph, has none either: it is the answer to projectiles and Kala's time-sand. Heal answers Keris Hantu's Curse.
 
 Discovery:
-- **Hint:** each weakness gets one spoken line. The glyph's teacher gives it when the enemy lives in that zone (the elder on Ga: "Ga turns back the tiger's charge"). Otherwise the first NPC of the enemy's zone gives it. Lines go in the string tables in both languages.
+- **Hint:** each weakness gets one spoken line. The glyph's teacher gives it when the enemy lives in that zone (the elder on Ga: "Ga turns back the boar's charge"). Otherwise the first NPC of the enemy's zone gives it. Lines go in the string tables in both languages.
 - **Codex:** the enemy's entry gains a "Kelemahan / Weakness" line the first time the player triggers it.
 - **Teach then test:** the first room where an enemy appears has a clean chance to use its weakness (see Encounters).
 

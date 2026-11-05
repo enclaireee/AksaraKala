@@ -19,7 +19,7 @@ Every input, what it does in each situation, and the options around it. Combat t
 | Attack | Left mouse | Left mouse | Click, or hold for the 3-hit combo | `attack` |
 | Cast (draw aksara) | Right mouse | Right mouse | Hold, draw, release | `cast` |
 | Dodge | Space | Right Ctrl | Tap | `dodge` |
-| Jamu (heal) | Q | Right Shift | Tap | `heal_jamu` |
+| Healing flask | Q | Right Shift | Tap | `heal_jamu` |
 | Interact | E | Enter | Tap | `interact` |
 | Menu | Tab | Backspace | Tap | `menu` |
 | Pause / back / cancel cast | Esc | Esc | Tap | `pause` |
@@ -31,7 +31,7 @@ Every input, what it does in each situation, and the options around it. Combat t
 ## 3. What each input does in each state
 "Buffer" means the input is held for 0.15 s and fires as soon as the state allows ([combat.md](combat.md) 2.6). "Ignored" means it is dropped.
 
-| State | Move | Attack | Dodge | Cast | Jamu | Interact |
+| State | Move | Attack | Dodge | Cast | Flask | Interact |
 |-------|------|--------|-------|------|------|----------|
 | Free | Yes | Starts combo | Yes | Starts drawing (if the gate allows, 4.4) | Yes | Yes |
 | Melee wind-up and hit | No (the lunge moves you) | Buffer (next combo hit) | Buffer | Buffer | Ignored | Ignored |
@@ -41,7 +41,7 @@ Every input, what it does in each situation, and the options around it. Combat t
 | Dodge recovery (0.1 s) | Yes | Buffer | Buffer | Buffer | Ignored | Ignored |
 | Hurt stagger (0.25 s) | No | Buffer | Allowed after 0.1 s | Buffer | Ignored | Ignored |
 | Drawing (cast held) | Yes, slowed with the world | Ignored | Cancels the cast (no cost), then dodges | Release fires the glyph | Ignored | Ignored |
-| Drinking jamu (0.6 s) | 50% speed | Ignored | Cancels the drink (charge kept) | Ignored | Ignored | Ignored |
+| Drinking the flask (0.6 s) | 50% speed | Ignored | Cancels the drink (charge kept) | Ignored | Ignored | Ignored |
 | Dialogue, menu, pause | World paused | Advance or select | Ignored | Ignored | Ignored | Advance or select |
 
 Rules behind the table:
@@ -68,12 +68,12 @@ Rules behind the table:
 ### 4.4 Cast
 - Hold right mouse: slow-mo starts, draw with the mouse, release to fire ([spells.md](spells.md) 1).
 - Cancel, all at no cost: Esc, dodge, a stroke that is too short, or the draw time running out.
-- **Gate:** drawing needs 15 sakti to start (14 for Mage and Assassin) and is locked for 1 s after a cancel or fizzle, so slow-mo cannot be spammed ([spells.md](spells.md) 9). When blocked, the gauge flashes and a dull sound plays. The sanggar is exempt.
+- **Gate:** drawing needs 15 sakti to start (14 for Mage and Rogue) and is locked for 1 s after a cancel or fizzle, so slow-mo cannot be spammed ([spells.md](spells.md) 9). When blocked, the gauge flashes and a dull sound plays. The sanggar is exempt.
 - Enough to start but not enough for the drawn glyph: the glyph is recognized, shows its cost and fizzles with no gauge loss ([spells.md](spells.md) 9).
 - Hits taken while drawing do not cancel the cast ([combat.md](combat.md) 6).
 - The draw time limit counts real time, not slowed game time.
 
-### 4.5 Jamu
+### 4.5 Healing flask
 - One tap drinks one charge (0.6 s). With no charges left: a short "empty" sound, nothing else happens.
 - Drinking at full HP is blocked: a "HP full" hint shows and the charge is kept (confirmed 2026-11-05).
 
@@ -122,4 +122,4 @@ Rules behind the table:
 - A left-handed player can finish the Sangkuriang fight on the Left-handed preset.
 
 ## 9. Open questions
-None. Ranged 50% movement and the full-HP jamu block were confirmed on 2026-11-05.
+None. Ranged 50% movement and the full-HP flask block were confirmed on 2026-11-05.

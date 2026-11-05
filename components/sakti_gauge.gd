@@ -6,6 +6,7 @@ signal changed(value: float, max_value: float)
 @export var status: Status
 var value := 0.0
 var max_value: float
+var gain_mult := 1.0   # Spirit and Keen Mind; set by the player
 
 
 func _ready() -> void:
@@ -15,7 +16,7 @@ func _ready() -> void:
 func add(amount: float) -> void:
 	if status and status.has(Status.Type.CURSE):
 		return
-	value = minf(max_value, value + amount)
+	value = minf(max_value, value + amount * gain_mult)
 	changed.emit(value, max_value)
 
 

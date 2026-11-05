@@ -24,7 +24,7 @@ Conventions as in [README.md](README.md): **ASSUMED**, **VERIFY**, **TUNE**. Eve
 5. **The legend is told, not changed.** A re-telling quest follows the legend's real beats. Where the game adds something (the forgetting curse, a fight), the codex says what is legend and what is game.
 
 ## 3. Reward economy
-The goal is rewards that **scale with the systems already designed** (5 stats, 3 gear slots, jamu, codex), so that adding a quest is data entry and no reward breaks balance.
+The goal is rewards that **scale with the systems already designed** (5 stats, 3 gear slots, flask, codex), so that adding a quest is data entry and no reward breaks balance.
 
 ### 3.1 Every quest gives
 - **Ilmu** by size and zone (**TUNE**, from [balance.md](balance.md) 8.3): S = half a level, M = one level, L = 1.5 levels at that zone's target level.
@@ -43,15 +43,15 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 | Pool | What it does | Count | Why it scales |
 |------|--------------|-------|---------------|
 | **Gear** | The weapons, armor and accessories in [items.md](items.md). Quests are the main source of gear. Chests and secrets hold the rest | 10 from quests | Gear is already data. A new item is one resource |
-| **Kendi** (clay water jug) | +1 max jamu charge. Base 3, max 6 | 3 | Rewards exploration with survivability, the most motivating Souls-style reward |
-| **Rempah** (jamu spices: kunyit/turmeric, temulawak/Javanese ginger, jahe/ginger, kencur/aromatic ginger) | +5% jamu heal each. Base 40%, max 60% | 4 (3 in P0) | Same as Kendi: jamu power grows without new systems. The four spices are real jamu ingredients (**VERIFY** each) |
+| **Flask Shard** | +1 max flask charge. Base 3, max 6 | 3 | Rewards exploration with survivability, the most motivating Souls-style reward |
+| **Herb Pouch** | +5% flask heal each. Base 40%, max 60% | 4 (3 in P0) | Same as Flask Shard: flask power grows without new systems |
 | **Lakon** (wayang story) | Unlocks a performance at the Desa Purwa wayang stage (see section 6.1) | 1 per re-telling | Feeds the hub meta quest, adds no balance |
 | **Lontar Kuno** (old palm-leaf manuscript) | New accessory: the "smudged" threshold drops from 0.65 to 0.60 (**TUNE**) | 1 | Helps casting without adding a glyph |
 
 ### 3.3 Rules
 - **No new glyphs from side quests.** The 8 core glyphs (plus the final glyph from Segara Kidul) come only from the main quest. This keeps the recognizer's candidate set small and tested, and every boss can assume the player has them. A P2 option: up to 2 bonus glyphs via side quests, only if the recognizer test still passes with them added.
 - **Two-way quests give the same key reward either way.** The fight path gives +50% Ilmu. The peaceful path gives an extra codex entry and its own dialogue. So the choice is about flavor, never about power.
-- **No reward is required to finish the game.** All jamu upgrades together are a comfort, not a gate.
+- **No reward is required to finish the game.** All flask upgrades together are a comfort, not a gate.
 - Ilmu from side quests should make up about 25-35% of a full playthrough's Ilmu (**TUNE**), the rest from enemies and bosses.
 
 ### 3.4 Where every reward comes from
@@ -59,7 +59,7 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 |--------|--------|
 | Kujang | Tatar Sunda secret chest (unchanged) |
 | Golok | SQ-S2 Kuntilanak bounty |
-| Tombak | SQ-M3 Tuyul bounty |
+| Spear (ex-Tombak) | SQ-M3 Tuyul bounty |
 | Panah Pasopati | Mataram secret (unchanged) |
 | Keris Luk 7 | SQ-T3 Pamor errand |
 | Cakra | P2 (thrown archetype). If built: SQ-K2 sea spirit bounty |
@@ -67,13 +67,13 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 | Blangkon | SQ-M4 Gamelan errand |
 | Baju Batik | Main quest, Bandung Bondowoso (MQ2) |
 | Kain Hijau | Main quest, Segara Kidul trial (MQ4, P1) |
-| Gelang Perak | SQ-S4 Cepot |
-| Selendang | SQ-M1 Jaka Tarub |
-| Jimat Kecil | SQ-M2 Wewe Gombel |
-| Cincin Batu | SQ-T1 Ande-Ande Lumut |
+| Silver Bangle | SQ-S4 Cepot |
+| Feather Charm | SQ-M1 Jaka Tarub |
+| Jimat | SQ-M2 Wewe Gombel |
+| Stone Ring | SQ-T1 Ande-Ande Lumut |
 | Lontar Kuno (new) | SQ-D2 Pustaka, at 50% codex |
-| Kendi x3 | SQ-S3 Angklung, SQ-T4 Kuda Kepang, SQ-D1 Lakon (4 lakon) |
-| Rempah x4 | Kunyit SQ-S2, Temulawak SQ-M1, Jahe SQ-T2, Kencur SQ-K1 (P1) |
+| Flask Shard x3 | SQ-S3 Angklung, SQ-T4 Kuda Kepang, SQ-D1 Lakon (4 lakon) |
+| Herb Pouch x4 | SQ-S2, SQ-M1, SQ-T2, SQ-K1 (P1) |
 
 ## 4. Main quest
 Six chapters, one per zone. The arrow always points at the current step. Glyphs are learned only here. Each glyph's teacher also speaks one hint about the enemy that glyph counters ([bestiary.md](bestiary.md) Glyph weaknesses). Objective lines below are journal text in both languages. Final dialogue goes in the string tables (section 7.7).
@@ -85,7 +85,7 @@ Teaches: movement, interacting, class choice, the first glyph, combat basics.
 |---|----------------|----------------|--------------|
 | 0.1 | Watch the wayang performance | Saksikan pertunjukan wayang | Prologue scene ends (Aji Saka legend, letters fade: the curse begins) |
 | 0.2 | Speak with Semar | Bicara dengan Semar | `talked_to:semar` |
-| 0.3 | Choose your lineage at the petilasan | Pilih garis keturunanmu di petilasan | `class_chosen` |
+| 0.3 | Choose your class | Pilih kelasmu | `class_chosen` |
 | 0.4 | Learn your first letter in the sanggar | Pelajari aksara pertamamu di sanggar | `glyph_learned:sunda_ka` (Semar teaches Ka, "the first letter of the west") |
 | 0.5 | Cast Ka three times | Rapalkan Ka tiga kali | `spell_cast:sunda_ka` x3 |
 | 0.6 | Defeat the training dummies | Kalahkan boneka latihan | `enemy_killed:dummy` x3 |
@@ -187,19 +187,19 @@ Card format: type, size, giver, unlock, steps, resolution, reward, culture and *
 **SQ-S2 "Kuntilanak Rumpun Bambu" / "The Bamboo-Grove Kuntilanak"** (bounty, L)
 - Giver: the kepala desa (village head). Unlock: MQ1 step 1.2.
 - Steps: (1) hear the reports, (2) find the elite kuntilanak in the bamboo grove at night (a marked arena), (3) defeat her, (4) report back.
-- Reward: **Golok**, **Rempah: Kunyit**, Ilmu L.
+- Reward: **Golok**, **Herb Pouch #1**, Ilmu L.
 - Culture: label her as pan-Indonesian folklore. Cartoonish, no gore. Which tree she is tied to varies (**VERIFY**: bamboo, waru or another).
 
 **SQ-S3 "Angklung yang Tercerai" / "The Scattered Angklung"** (errand, M)
 - Giver: the leader of a village angklung group. Unlock: entering Tatar Sunda.
 - Steps: (1) find 5 angklung scattered across the zone (each plays one note when picked up), (2) return them. The group plays a short piece with all 5 notes.
-- Reward: **Kendi #1**, Ilmu M.
+- Reward: **Flask Shard #1**, Ilmu M.
 - Culture: each angklung sounds one note, so a tune needs every player. That is the point of the quest and the codex entry. Angklung is UNESCO 2010 (verified). **VERIFY** the traditional scale (pentatonic salendro/pelog vs the later diatonic angklung).
 
 **SQ-S4 "Cepot Si Pemberani" / "Brave Cepot"** (errand, S, demo path)
 - Giver: Cepot. Unlock: MQ1 step 1.1, so judges see the quest system in the first 15 minutes.
 - Steps: (1) Cepot wants to prove he is brave and asks you to defeat 3 Maung while he "supervises" from a tree, commenting on each kill, (2) report back.
-- Reward: **Gelang Perak**, Ilmu S.
+- Reward: **Silver Bangle**, Ilmu S.
 - Culture: Cepot's humor as in wayang golek. Barks are one-liners in both languages.
 
 ### Mataram
@@ -207,7 +207,7 @@ Card format: type, size, giver, unlock, steps, resolution, reward, culture and *
 - Giver: Nawang Wulan, a quiet woman in a rice-farming household. Unlock: MQ2 step 2.1.
 - Steps: (1) she says her rice pot's magic broke after someone lifted the lid, (2) search the lumbung (rice barn), (3) find her selendang (shawl) hidden under the last of the rice, (4) return it.
 - Resolution: she returns to the sky, as in the legend, and leaves her weaving scarf behind as thanks.
-- Reward: **Selendang**, **Rempah: Temulawak**, lakon "Jaka Tarub", Ilmu M.
+- Reward: **Feather Charm**, **Herb Pouch #2**, lakon "Jaka Tarub", Ilmu M.
 - Culture: one grain of rice filled the pot while the lid stayed closed. Jaka Tarub hid the shawl. Their daughter Nawangsih. Nawang Wulan is a bidadari (celestial maiden), not a deity, and shown with respect. **VERIFY** all beats and the legend's location.
 
 **SQ-M2 "Wewe Gombel"** (bounty, two-way, L). Wewe Gombel moved to Mataram (decided 2026-11-05).
@@ -216,7 +216,7 @@ Card format: type, size, giver, unlock, steps, resolution, reward, culture and *
 - Resolution:
   - **Peaceful:** go back and talk to the parents. They come to the hill and call the child kindly (and bang pots, as in the folk practice, **VERIFY**). Wewe Gombel returns the child, since in folklore she takes children who are neglected, not to harm them.
   - **Fight:** defeat the elite Wewe Gombel and bring the child home.
-- Reward: **Jimat Kecil**, Ilmu L (fight +50%). Peaceful adds the codex entry "Wewe Gombel's lesson".
+- Reward: **Jimat**, Ilmu L (fight +50%). Peaceful adds the codex entry "Wewe Gombel's lesson".
 - Culture: the legend is a warning about neglect. The peaceful ending tells that story best.
 
 **SQ-M3 "Tuyul di Pasar" / "A Tuyul at the Market"** (bounty, two-way, M)
@@ -225,7 +225,7 @@ Card format: type, size, giver, unlock, steps, resolution, reward, culture and *
 - Resolution:
   - **Peaceful:** set out the folk distraction (**VERIFY**: crabs, or green beans the tuyul must count) and catch the leader while it plays.
   - **Fight:** defeat the elite tuyul leader and its swarm.
-- Reward: **Tombak**, Ilmu M (fight +50%).
+- Reward: **Spear**, Ilmu M (fight +50%).
 - Culture: described only as a mischievous money-stealing child spirit. Light comedy.
 
 **SQ-M4 "Gamelan yang Bisu" / "The Silent Gamelan"** (errand, M)
@@ -241,13 +241,13 @@ Card format: type, size, giver, unlock, steps, resolution, reward, culture and *
 - Resolution:
   - **Peaceful (the legend's way):** fetch the sodo lanang (a stick from a palm-leaf broom) she was given, and she strikes the river with it. The water dries up (**VERIFY** who gave it and what it does).
   - **Fight:** defeat Yuyu Kangkang (an elite charger).
-- Reward: **Cincin Batu**, lakon "Ande-Ande Lumut", Ilmu M (fight +50%).
+- Reward: **Stone Ring**, lakon "Ande-Ande Lumut", Ilmu M (fight +50%).
 - Culture: a Panji tale. Ande-Ande Lumut is Panji in disguise. Child-friendly retelling: the crab demands "a payment", not a kiss.
 
 **SQ-T2 "Banaspati Padang Sabana" / "The Savanna Banaspati"** (bounty, L)
 - Giver: a herder. Unlock: MQ3 step 3.1.
 - Steps: (1) the grassland keeps catching fire, (2) follow the burn trail to the elite Banaspati, (3) defeat it.
-- Reward: **Rempah: Jahe**, Ilmu L.
+- Reward: **Herb Pouch #3**, Ilmu L.
 - Culture: fire spirit. Do not tie it to the Tengger or Bromo rituals.
 
 **SQ-T3 "Pamor dari Langit" / "Pamor from the Sky"** (errand, cross-zone, M)
@@ -259,13 +259,13 @@ Card format: type, size, giver, unlock, steps, resolution, reward, culture and *
 **SQ-T4 "Kuda Kepang yang Hilang" / "The Lost Kuda Kepang"** (errand, S)
 - Giver: the leader of a kuda lumping troupe. Unlock: MQ3 step 3.1.
 - Steps: (1) find 3 kuda kepang (woven bamboo horses) blown away in a storm, (2) return them and watch a short performance.
-- Reward: **Kendi #2**, Ilmu S.
+- Reward: **Flask Shard #2**, Ilmu S.
 - Culture: performance only. No trance, no glass-eating, no fire (rule from [world.md](world.md)).
 
 ### Segara Kidul (P1)
 **SQ-K1 "Tukik Pulang ke Laut" / "Hatchlings Home to the Sea"** (errand, S)
 - Giver: a fisher's child. Steps: (1) guide 5 turtle hatchlings past crabs and birds to the water (they move on their own, the player clears the path).
-- Reward: **Rempah: Kencur**, Ilmu S.
+- Reward: **Herb Pouch #4**, Ilmu S.
 - Culture: Java's south coast has real turtle nesting beaches (**VERIFY**: e.g. Pangumbahan, Sukamade). A conservation note in the codex.
 
 **SQ-K2 sea spirit bounty** (bounty, L). Target: Bajul Putih Tua, an old white crocodile elite ([bestiary.md](bestiary.md) Zone 4). Reward: **Cakra** if the thrown archetype is built, otherwise Ilmu L x2.
@@ -277,7 +277,7 @@ These grow with the content, so they reward the whole game without new systems.
 - Giver: the Desa Purwa dalang who performs the prologue. Unlock: MQ0.
 - Every finished re-telling (S1, M1, T1) and every main-quest legend (Sangkuriang, Roro Jonggrang, Timun Mas, Ken Arok) adds a lakon. 7 in total, plus the Aji Saka prologue.
 - At the stage, the player can watch any unlocked lakon: about 30 seconds of silhouette slides with narration text in P0, animated wayang in P2.
-- Thresholds: 4 lakon gives **Kendi #3**. All 7 adds a line to the credits.
+- Thresholds: 4 lakon gives **Flask Shard #3**. All 7 adds a line to the credits.
 
 ### 6.2 SQ-D2 "Pustaka" (the codex keeper)
 - Giver: a keeper of old manuscripts in Desa Purwa. Unlock: first codex entry.
@@ -299,7 +299,7 @@ Fits [architecture.md](architecture.md): data-driven resources, quest state in t
 | `giver` | `npc_id` |
 | `requires` | flags that must be set to unlock, e.g. `["mq2_2"]` |
 | `steps` | `Array[QuestStep]` |
-| `rewards` | `{items: [...], kendi: 0, rempah: 0, lakon: "", flags: []}` |
+| `rewards` | `{items: [...], flask_shard: 0, herb_pouch: 0, lakon: "", flags: []}` |
 
 `QuestStep`:
 | Field | Example |
@@ -357,7 +357,7 @@ MQ0 (prologue, class, glyph Ka) -> MQ1 steps 1.1-1.3 -> SQ-S4 Cepot (quest syste
 Writing budget, rough: main quest about 120 dialogue lines, each side quest 15-30, so about 450 lines per language (**TUNE**).
 
 ## 10. VERIFY list for this file
-Lutung Kasarung (cure at the spring, Guruminda, juru pantun role), kuntilanak's tree, angklung scale, Jaka Tarub (rice pot, lumbung, Nawangsih, location), Wewe Gombel folk practice of banging pots and returning children, tuyul distractions, gong ageng role, Ande-Ande Lumut (Yuyu Kangkang, sodo lanang, Panji link), Prambanan meteorite and pamor, turtle beaches, Roro Jonggrang's fake dawn (rice pounding, burning straw). Verified 2026-11-05: gejog lesung, Timun Mas (hermit, four pouches, Mbok Srini), the four jamu spices.
+Lutung Kasarung (cure at the spring, Guruminda, juru pantun role), kuntilanak's tree, angklung scale, Jaka Tarub (rice pot, lumbung, Nawangsih, location), Wewe Gombel folk practice of banging pots and returning children, tuyul distractions, gong ageng role, Ande-Ande Lumut (Yuyu Kangkang, sodo lanang, Panji link), Prambanan meteorite and pamor, turtle beaches, Roro Jonggrang's fake dawn (rice pounding, burning straw). Verified 2026-11-05: gejog lesung, Timun Mas (hermit, four pouches, Mbok Srini).
 
 ## 11. Open decisions and doc changes this implies
 1. ~~Wewe Gombel to Mataram~~: decided yes (2026-11-05). Tatar Sunda's tank is Jurig Leuweung, a descriptive name kept on purpose ([bestiary.md](bestiary.md)).
@@ -375,4 +375,4 @@ Lutung Kasarung (cure at the spring, Guruminda, juru pantun role), kuntilanak's 
 | Wayang stage dalang | Ki Wangsa | Desa Purwa, MQ0 |
 | Codex keeper | Nyai Rukmi | Desa Purwa, SQ-D2 |
 | Juru kunci of the coast | Mbah Wiryo | Segara Kidul, MQ4 4.2 |
-4. Docs to sync: [scope.md](scope.md) (bilingual moves from P2 to P0, side quests are 3-4 per zone), [story.md](story.md) (side quest section now points here), [items.md](items.md) (add Lontar Kuno, Kendi, Rempah; Golok and Tombak sources), [architecture.md](architecture.md) (translation keys, `QuestData`, `data/quests/`, `data/text/`), [rpg.md](rpg.md) (jamu max 6 charges, heal up to 60%).
+4. Docs to sync: [scope.md](scope.md) (bilingual moves from P2 to P0, side quests are 3-4 per zone), [story.md](story.md) (side quest section now points here), [items.md](items.md) (add Lontar Kuno, Flask Shard, Herb Pouch; Golok and Spear sources), [architecture.md](architecture.md) (translation keys, `QuestData`, `data/quests/`, `data/text/`), [rpg.md](rpg.md) (flask max 6 charges, heal up to 60%).

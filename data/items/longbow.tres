@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "longbow"
+title = "Longbow"
+slot = "weapon"
+archetype = "ranged"
+description = "Slower draw, more damage."
+windup = 0.25
+recovery = 0.3
+cost = 5.0
+projectile_speed = 280.0
+projectile_range = 280.0
+damage = 10

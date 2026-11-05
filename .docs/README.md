@@ -9,7 +9,7 @@ Top-down 2D pixel-art action RPG set in Java and Sunda folklore. Real-time comba
 | [world.md](world.md) | Map, zones, legends, gating, checkpoints, NPCs |
 | [quests.md](quests.md) | Main quest, side quests, rewards, quest system |
 | [bestiary.md](bestiary.md) | Enemies, minibosses, bosses |
-| [classes.md](classes.md) | The 4 classes (lineages) |
+| [classes.md](classes.md) | The 4 classes |
 | [rpg.md](rpg.md) | Stats, stamina, damage, currency, checkpoints, controls |
 | [controls.md](controls.md) | Key bindings, what each input does per state, accessibility options |
 | [combat.md](combat.md) | Combo, dodge, perfect dodge, hit feel, poise, statuses, enemy behavior |

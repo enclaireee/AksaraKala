@@ -1,6 +1,7 @@
 extends SceneTree
 ## End-to-end wiring in the real room: the grove tank hurts an idle player, keris hits break its poise
-## without flinching it first, and a 6-enemy crowd never has more than 4 attackers (combat.md 3.1, 5.2, 8).
+## without flinching it first, a 6-enemy crowd never has more than 4 attackers (combat.md 3.1, 5.2, 8),
+## and a drawn Ka casts a Bolt that hits a chaser (spells.md 1).
 
 var fails := 0
 
@@ -49,6 +50,27 @@ func _initialize() -> void:
 	check(most <= 4, "%d enemies attacked at once" % most)
 	check(melee_most <= 2, "%d melee enemies attacked at once" % melee_most)
 	check(most >= 2, "the crowd barely attacked (max %d at once)" % most)
+
+	# Cast: draw the Ka template through the controller and hit a chaser 60 px away.
+	for e in get_nodes_in_group("enemy"):
+		e.queue_free()
+	await physics_frame
+	var target: Chaser = load("res://entities/enemies/chaser.tscn").instantiate()
+	target.position = p.global_position + Vector2(60, -6)
+	room.get_node("Entities").add_child(target)
+	await physics_frame
+	p.sakti.value = 50.0
+	p.aim_dir = Vector2.RIGHT   # no mouse headless; the cast keeps the aim it started with
+	check(p.cast.start(), "cast did not start with 50 sakti")
+	var ka: PackedVector2Array = GlyphData.by_id("sunda_ka").templates[0]
+	for q in ka:
+		var e := InputEventMouseMotion.new()
+		e.position = Vector2(170, 60) + q * 0.3   # templates are ~500 units; about 100 px on screen
+		p.cast._unhandled_input(e)
+	p.cast.release()
+	check(p.sakti.value == 35.0, "drawing Ka did not spend 15 sakti (left %s)" % p.sakti.value)
+	await frames(60)
+	check(is_instance_valid(target) and target.health.hp < target.health.max_hp, "the Bolt never hit the chaser")
 	quit(1 if fails > 0 else 0)
 
 

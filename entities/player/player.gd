@@ -1,10 +1,9 @@
 class_name Player
 extends CharacterBody2D
 ## Player: movement, mouse aim, 3-hit combo, dodge, hurt (combat.md 2, controls.md 3).
-## Casting arrives in Phase 2; "cast" is already buffered so the priority order is in place.
+## Casting lives in the CastController child (spells.md 1).
 
-enum State { FREE, ATTACK, DODGE, HURT, DEAD }
-enum Weapon { MELEE, RANGED }
+enum State { FREE, ATTACK, DODGE, HURT, DRINK, DEAD }
 enum Phase { WINDUP, ACTIVE, RECOVERY }
 
 const PRIORITY := ["dodge", "cast", "attack"]   # combat.md 2.6
@@ -12,7 +11,6 @@ const ARROW := preload("res://entities/player/arrow.tscn")
 const SNAP_PAD := 6.0                           # ASSUMED: enemy body radius added to reach for soft snap
 
 @export var tuning: CombatTuning = preload("res://data/combat_tuning.tres")
-@export var weapon := Weapon.MELEE
 
 @onready var health: Health = $Health
 @onready var stamina: Stamina = $Stamina
@@ -28,6 +26,7 @@ const SNAP_PAD := 6.0                           # ASSUMED: enemy body radius add
 @onready var debug: Label = $Overlay/Debug
 @onready var status: Status = $Status
 @onready var sakti: SaktiGauge = $Sakti
+@onready var cast: CastController = $CastController
 
 var state := State.FREE
 var phase := Phase.WINDUP
@@ -46,26 +45,48 @@ var frozen := 0.0          # hitstop time left
 var last_perfect := -INF   # clock time of the last perfect dodge
 var debug_status := 0
 
+# Derived from Game by apply_from_game() (rpg.md 2, classes.md)
+var game: Node             # the Game autoload (get_node, so tests can compile this script early)
+var item: ItemData         # equipped weapon; the dagger when none is equipped
+var class_id := ""
+var dmg_mult := 1.0        # Str for melee, Dex for ranged and staff
+var atk_speed := 1.0       # Dex: shortens wind-up and recovery
+var move_mult := 1.0
+var dodge_cost := 20.0
+var _applied := false
+var _regen_base := 35.0
+
 
 func _ready() -> void:
 	add_to_group("player")
+	game = get_node("/root/Game")
+	_regen_base = stamina.regen
+	apply_from_game()
+	game.changed.connect(apply_from_game)
 	hurtbox.hurt.connect(_on_hurt)
 	hurtbox.dodged.connect(_on_dodged)
 	health.died.connect(_on_died)
 	camera.lean = tuning.camera_lean
-	melee_hitbox.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, self, melee_hitbox.heavy))
-	stamina.empty_attempt.connect(func() -> void:
-		debug.modulate = Color.RED
-		create_tween().tween_property(debug, "modulate", Color.WHITE, 0.3))
+	melee_hitbox.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, self, melee_hitbox.heavy, melee_hitbox.damage))
+	stamina.empty_attempt.connect(_flash_debug)
+	cast.blocked.connect(_flash_debug)   # ponytail: flashes the debug readout until the HUD gauge exists
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	for a in PRIORITY:
 		if event.is_action_pressed(a):
 			buffer[a] = clock
+	if event.is_action_pressed("heal_jamu"):
+		_try_flask()
 	# ponytail: debug weapon swap until the menu exists (items.md swaps weapons in the menu)
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F1:
-		weapon = Weapon.RANGED if weapon == Weapon.MELEE else Weapon.MELEE
+		var ws: Array[String] = []
+		for id in game.inventory:
+			var it := ItemData.by_id(id)
+			if it and it.slot == "weapon":
+				ws.append(id)
+		if not ws.is_empty():
+			game.equip(ws[(ws.find(item.id) + 1) % ws.size()])
 	# ponytail: debug status cycle (Burn of a 20 hit, Slow, Curse) until enemies apply them
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F2:
 		var types := [Status.Type.BURN, Status.Type.SLOW, Status.Type.CURSE]
@@ -91,7 +112,7 @@ func _physics_process(delta: float) -> void:
 		combo = 0
 	move_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	# ASSUMED: the busur keeps tracking the mouse through its wind-up; melee commits to its snap
-	var ranged_windup := state == State.ATTACK and weapon == Weapon.RANGED and phase == Phase.WINDUP
+	var ranged_windup := state == State.ATTACK and not item.is_melee() and phase == Phase.WINDUP
 	if (state != State.ATTACK or ranged_windup) and state != State.DEAD:
 		var to_mouse := get_global_mouse_position() - aim.global_position
 		if to_mouse.length() > 1.0:
@@ -103,11 +124,12 @@ func _physics_process(delta: float) -> void:
 		State.ATTACK: _attack()
 		State.DODGE: _dodge()
 		State.HURT: _hurt()
+		State.DRINK: _drink()
 		State.DEAD: velocity = Vector2.ZERO
 	body.visible = clock >= blink_until or fmod(clock, 0.1) < 0.05
 	move_and_slide()
 	# ponytail: debug readout until the HUD (ui.md) exists
-	debug.text = "HP %d  ST %d  SK %d  %s [F1]  status [F2]" % [health.hp, stamina.value, sakti.value, "keris" if weapon == Weapon.MELEE else "busur"]
+	debug.text = "HP %d  ST %d  SK %d  %s [F1]  status [F2]" % [health.hp, stamina.value, sakti.value, item.title]
 
 
 # --- states ---
@@ -118,7 +140,7 @@ func _free() -> void:
 
 
 func _attack() -> void:
-	var ranged := weapon == Weapon.RANGED
+	var ranged := not item.is_melee()
 	velocity = move_dir * _walk() * tuning.ranged_move_factor if ranged else Vector2.ZERO
 	match phase:
 		Phase.WINDUP:
@@ -130,7 +152,7 @@ func _attack() -> void:
 					_swing(true)
 					_set_phase(Phase.ACTIVE)
 		Phase.ACTIVE:
-			velocity = aim_dir * tuning.melee_lunge / _phase_len(Phase.ACTIVE)
+			velocity = aim_dir * item.lunge / _phase_len(Phase.ACTIVE)
 			if state_time >= _phase_len(Phase.ACTIVE):
 				_swing(false)
 				_set_phase(Phase.RECOVERY)
@@ -154,6 +176,18 @@ func _dodge() -> void:
 			_enter(State.FREE)
 
 
+func _drink() -> void:
+	velocity = move_dir * _walk() * tuning.ranged_move_factor   # 50% speed (controls.md 3)
+	if _try_buffered(["dodge"]):   # a dodge cancels the drink, charge kept
+		return
+	if state_time >= tuning.flask_time:
+		var pouches := mini(game.herb_pouches, 4)
+		health.heal(roundi((tuning.flask_base_heal + tuning.flask_pouch_heal * pouches) * health.max_hp))
+		game.flask_charges -= 1
+		_enter(State.FREE)
+		game.changed.emit()
+
+
 func _hurt() -> void:
 	velocity = knock
 	if state_time >= tuning.hurt_dodge_after and _try_buffered(["dodge"]):
@@ -172,8 +206,17 @@ func _try_buffered(allowed: Array) -> bool:
 	return false
 
 
+func _try_flask() -> void:
+	if state != State.FREE:
+		return   # ignored in every other state (controls.md 3)
+	if game.flask_charges <= 0 or health.hp >= health.max_hp:
+		_flash_debug()   # ponytail: empty and "HP full" hints are the debug flash until the HUD exists
+		return
+	_enter(State.DRINK)   # the charge is spent when the drink ends, so a dodge cancel keeps it
+
+
 func _start_dodge() -> bool:
-	if not stamina.spend(tuning.dodge_cost):
+	if not stamina.spend(dodge_cost):
 		return false
 	dodge_dir = move_dir.normalized() if move_dir != Vector2.ZERO else aim_dir
 	health.set_invincible(tuning.dodge_iframes)
@@ -185,8 +228,7 @@ func _start_dodge() -> bool:
 
 
 func _start_attack() -> bool:
-	var cost := tuning.melee_cost if weapon == Weapon.MELEE else tuning.ranged_cost
-	if not stamina.spend(cost):
+	if not stamina.spend(item.cost):
 		return false
 	hit = combo
 	combo = (combo + 1) % 3
@@ -203,11 +245,11 @@ func _swing(on: bool) -> void:
 		melee_hitbox.deactivate()
 		return
 	var finisher := hit == 2
-	var reach := tuning.melee_reach * (tuning.melee_finisher_reach_mult if finisher else 1.0)
-	var poly := _arc(tuning.melee_arc, reach)
+	var reach := item.reach * (tuning.melee_finisher_reach_mult if finisher else 1.0)
+	var poly := _arc(item.arc, reach)
 	melee_shape.polygon = poly
 	slash.polygon = poly
-	melee_hitbox.damage = _damage(tuning.melee_damage)
+	melee_hitbox.damage = _damage()
 	melee_hitbox.heavy = finisher
 	melee_hitbox.knockback = tuning.enemy_knockback_finisher if finisher else tuning.enemy_knockback_light
 	melee_hitbox.activate()
@@ -217,23 +259,28 @@ func _shoot() -> void:
 	var finisher := hit == 2
 	var arrow: Arrow = ARROW.instantiate()
 	arrow.source = self
-	arrow.damage = _damage(tuning.ranged_damage)
+	arrow.damage = _damage()
+	if class_id == "archer":
+		arrow.far_damage = roundi(arrow.damage * tuning.eagle_mult)   # Eagle Eye
+		arrow.far_after = tuning.eagle_range
+	if item.archetype == "staff":
+		arrow.modulate = Color(0.6, 0.8, 1.0)   # ponytail: a recolored arrow until the bolt has art
 	arrow.heavy = finisher
 	arrow.pierce = finisher
 	arrow.knockback = tuning.enemy_knockback_finisher if finisher else tuning.enemy_knockback_light
 	arrow.direction = aim_dir
-	arrow.speed = tuning.arrow_speed
-	arrow.max_range = tuning.arrow_range
+	arrow.speed = item.projectile_speed
+	arrow.max_range = item.projectile_range
 	arrow.position = aim.global_position + aim_dir * 8.0
 	# ASSUMED: a ranged hit freezes only the target; the archer is not touching it
-	arrow.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, null, finisher))
+	arrow.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, null, finisher, arrow.damage))
 	get_parent().add_child(arrow)
 
 
 func _snap_aim(dir: Vector2) -> Vector2:
-	if weapon != Weapon.MELEE:
+	if not item.is_melee():
 		return dir   # ranged shots go exactly where the mouse points
-	var reach := tuning.melee_reach * (tuning.melee_finisher_reach_mult if hit == 2 else 1.0) + SNAP_PAD
+	var reach := item.reach * (tuning.melee_finisher_reach_mult if hit == 2 else 1.0) + SNAP_PAD
 	var best := Vector2.ZERO
 	for e: Node2D in get_tree().get_nodes_in_group("enemy"):
 		var d := e.global_position - aim.global_position
@@ -245,7 +292,13 @@ func _snap_aim(dir: Vector2) -> Vector2:
 
 # --- hit feedback (combat.md 3.2) ---
 
-func _on_hit_landed(hb: Hurtbox, attacker: Node, heavy: bool) -> void:
+func _on_hit_landed(hb: Hurtbox, attacker: Node, heavy: bool, dmg: int) -> void:
+	sakti.add(item.sakti_per_hit)   # weapon hits (balance.md 4); spells do not refill sakti
+	if item.self_damage > 0:   # Mpu Gandring's curse: costs HP, never kills
+		health.hp = maxi(1, health.hp - item.self_damage)
+		health.changed.emit(health.hp, health.max_hp)
+	if _is_backstab(hb.owner):   # Light Step. ponytail: the bonus lands as a second hit, poise ignores it
+		hb.health.take_damage(roundi(dmg * (tuning.backstab_mult - 1.0)), self, true)
 	var kill := hb.health.is_dead()
 	var stop := tuning.hitstop_kill if kill else tuning.hitstop_heavy if heavy else tuning.hitstop_light
 	for n: Node in [hb.owner, attacker]:
@@ -264,7 +317,7 @@ func _on_dodged(hitbox: Hitbox) -> void:
 		return
 	last_perfect = clock
 	stamina.refund(tuning.dodge_cost)
-	sakti.add(tuning.perfect_sakti)   # ponytail: Mage x1.2 arrives with classes (Phase 3)
+	sakti.add(tuning.perfect_sakti)
 	hit_flash.flash(tuning.perfect_pause * 3.0)   # ponytail: no chime until the audio pass
 	hitstop(tuning.perfect_pause)
 	if is_instance_valid(hitbox.source) and hitbox.source.has_method("hitstop"):   # a shot can outlive its shooter
@@ -277,15 +330,18 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	health.set_invincible(tuning.hurt_iframes)
 	blink_until = clock + tuning.hurt_iframes
 	hit_flash.flash(tuning.flash_time)
-	_swing(false)
-	combo = 0
+	var skin := class_id == "warrior" and not hitbox.heavy   # Iron Skin: no stagger or knockback
+	if not skin:
+		_swing(false)
+		combo = 0
 	var from := hitbox.global_position
 	if hitbox.source is Node2D:
 		from = (hitbox.source as Node2D).global_position
 	var kb := tuning.player_knockback_heavy if hitbox.heavy else tuning.player_knockback_light
 	knock = (global_position - from).normalized() * kb / tuning.hurt_stagger
-	_enter(State.HURT)
-	hitstop(tuning.hitstop_player_hit)
+	if not skin:
+		_enter(State.HURT)
+		hitstop(tuning.hitstop_player_hit)
 	if is_instance_valid(hitbox.source) and hitbox.source.has_method("hitstop"):   # a shot can outlive its shooter
 		hitbox.source.hitstop(tuning.hitstop_player_hit)
 	camera.shake(tuning.shake_player_hit.x, tuning.shake_player_hit.y)
@@ -297,11 +353,15 @@ func _on_died() -> void:
 	_swing(false)
 	_enter(State.DEAD)
 	body.modulate = Color(0.4, 0.4, 0.4)
-	# ponytail: reload the room on death; petilasan respawn is Phase 3 (rpg.md)
-	get_tree().create_timer(1.5).timeout.connect(get_tree().reload_current_scene)
+	get_node("/root/Events").player_died.emit()   # the UI and zones handle the rest
 
 
 # --- helpers ---
+
+func _flash_debug() -> void:
+	debug.modulate = Color.RED
+	create_tween().tween_property(debug, "modulate", Color.WHITE, 0.3)
+
 
 func _enter(s: State) -> void:
 	state = s
@@ -309,7 +369,7 @@ func _enter(s: State) -> void:
 
 
 func _walk() -> float:
-	return tuning.walk_speed * status.speed_mult()   # Slow; dodge distance is unchanged (combat.md 4)
+	return tuning.walk_speed * move_mult * status.speed_mult()   # Slow; dodge distance is unchanged (combat.md 4)
 
 
 func _set_phase(p: Phase) -> void:
@@ -318,16 +378,57 @@ func _set_phase(p: Phase) -> void:
 
 
 func _phase_len(p: Phase) -> float:
-	var t: float
-	if weapon == Weapon.MELEE:
-		t = [tuning.melee_windup, tuning.melee_active, tuning.melee_recovery][p]
-	else:
-		t = [tuning.ranged_windup, 0.0, tuning.ranged_recovery][p]
+	var t: float = [item.windup, item.active if item.is_melee() else 0.0, item.recovery][p]
+	if p != Phase.ACTIVE:
+		t /= atk_speed
 	return t * (tuning.finisher_mult if hit == 2 else 1.0)
 
 
-func _damage(base: int) -> int:
-	return roundi(base * (tuning.finisher_mult if hit == 2 else 1.0))
+func _damage() -> int:
+	return roundi(item.damage * dmg_mult * (tuning.finisher_mult if hit == 2 else 1.0))
+
+
+## Rogue Light Step: the hit lands within 60 degrees of the enemy's back. Never on bosses.
+func _is_backstab(e: Node) -> bool:
+	if class_id != "rogue" or e == null or e.is_in_group("boss") or not e.get("aim") is Node2D:
+		return false
+	var facing := Vector2.RIGHT.rotated((e.get("aim") as Node2D).global_rotation)
+	var to_me := (global_position - (e as Node2D).global_position).normalized()
+	return absf(rad_to_deg((-facing).angle_to(to_me))) <= tuning.backstab_angle
+
+
+## Recompute everything that depends on Game. The first call fills HP and stamina; later calls keep them (clamped).
+func apply_from_game() -> void:
+	class_id = game.class_id
+	item = game.equipped_item("weapon")
+	if item == null:
+		item = ItemData.by_id("dagger")
+	var mage := class_id == "mage"
+	health.max_hp = tuning.stat_hp_base + tuning.stat_hp_per * game.stat("vit") + int(game.bonus("max_hp"))
+	health.hp = health.max_hp if not _applied else mini(health.hp, health.max_hp)
+	health.defense = 0
+	for slot in ["armor", "accessory"]:
+		var g: ItemData = game.equipped_item(slot)
+		health.defense += g.defense if g else 0
+	stamina.max_stamina = tuning.stat_stamina_base + tuning.stat_stamina_per * game.stat("end")
+	stamina.value = stamina.max_stamina if not _applied else minf(stamina.value, stamina.max_stamina)
+	stamina.regen = _regen_base * (1.0 + tuning.stat_speed_per * game.stat("end") + game.bonus("stamina_regen"))
+	dmg_mult = 1.0 + tuning.stat_damage_per * game.stat("str" if item.is_melee() else "dex")
+	atk_speed = 1.0 + tuning.stat_speed_per * game.stat("dex")
+	move_mult = 1.0 + game.bonus("move_speed")
+	dodge_cost = tuning.rogue_dodge_cost if class_id == "rogue" else tuning.dodge_cost
+	sakti.max_value = tuning.keen_mind_max if mage else tuning.sakti_max   # Keen Mind
+	sakti.gain_mult = (1.0 + tuning.stat_sakti_per * game.stat("spi")) * (tuning.keen_mind_gain if mage else 1.0)
+	sakti.value = minf(sakti.value, sakti.max_value)
+	_applied = true
+	health.changed.emit(health.hp, health.max_hp)
+	stamina.changed.emit(stamina.value, stamina.max_stamina)
+	sakti.changed.emit(sakti.value, sakti.max_value)
+
+
+## Spell damage multiplier from Spirit (rpg.md 2); spells apply it themselves.
+func spell_mult() -> float:
+	return 1.0 + tuning.stat_damage_per * game.stat("spi")
 
 
 static func _arc(arc_deg: float, reach: float) -> PackedVector2Array:

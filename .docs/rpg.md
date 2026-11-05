@@ -5,7 +5,7 @@ Top-down real-time 2D combat (Soul Knight-style visuals and gameplay) with Souls
 Related: [combat.md](combat.md) (moves, timings, enemies, statuses), [balance.md](balance.md), [classes.md](classes.md), [spells.md](spells.md), [items.md](items.md), [world.md](world.md).
 
 ## 1. Controls
-Keyboard and mouse: WASD to move, mouse to aim, left mouse to attack, hold right mouse to draw aksara, Space to dodge, Q for jamu, E to interact. Full bindings, per-state rules and accessibility options: [controls.md](controls.md).
+Keyboard and mouse: WASD to move, mouse to aim, left mouse to attack, hold right mouse to draw aksara, Space to dodge, Q for the healing flask, E to interact. Full bindings, per-state rules and accessibility options: [controls.md](controls.md).
 
 ## 2. Stats
 Five stats, no skill trees. Starting values come from the class ([classes.md](classes.md)).
@@ -44,7 +44,7 @@ Five stats, no skill trees. Starting values come from the class ([classes.md](cl
 - Damage taken = `max(1, round(enemy damage x (1 - 0.05 x armor defense)))`, so each defense point is 5% reduction.
 - Assist toggle "Gentle combat" halves damage taken ([balance.md](balance.md) 9).
 - After taking a hit: 0.8 s of invincibility and a 0.25 s stagger (Warrior's passive removes the stagger from light hits). No contact damage ([combat.md](combat.md) 2.7).
-- Healing: **Jamu** (traditional herbal drink): 3 charges, each heals 40% of max HP, all refilled at a petilasan. Quest rewards raise it: each **Kendi** +1 charge (max 6), each **Rempah** +5% heal (max 60%) ([quests.md](quests.md)).
+- Healing: **Healing Flask**: 3 charges, each heals 40% of max HP, all refilled at a petilasan. Quest rewards raise it: each **Flask Shard** +1 charge (max 6), each **Herb Pouch** +5% heal (max 60%) ([quests.md](quests.md)).
 - The Heal glyph is a separate, spell-based heal.
 
 ## 6. Currency and leveling
@@ -53,7 +53,7 @@ Five stats, no skill trees. Starting values come from the class ([classes.md](cl
 - Never lost on death.
 
 ## 7. Petilasan (checkpoints) and death
-- Interact to activate: sets respawn, saves ([section 11](#11-save-confirmed-2026-11-05)), fully heals, refills jamu, respawns normal enemies, opens the menu.
+- Interact to activate: sets respawn, saves ([section 11](#11-save-confirmed-2026-11-05)), fully heals, refills the flask, respawns normal enemies, opens the menu.
 - Menu: level up, equip, codex.
 - **Death:** respawn at the last activated petilasan. Keep Ilmu, stats, gear and glyphs. No other penalty.
 - **Enemy respawn: ASSUMED.** Normal enemies respawn on rest or death. Minibosses and bosses stay dead.
@@ -93,11 +93,11 @@ P0. One slot, saved automatically. No manual save, no save menu.
 
 **Loading**
 - Title screen: Continue (only if a save exists), New Game, Settings, Quit.
-- Continue puts the player at the last activated petilasan with full HP and jamu, the same as after a rest. Position is never saved, so zone state is always clean: normal enemies respawn, bosses stay dead.
+- Continue puts the player at the last activated petilasan with full HP and flask, the same as after a rest. Position is never saved, so zone state is always clean: normal enemies respawn, bosses stay dead.
 - New Game with a save present asks "Mulai baru? Perjalanan lama akan terhapus / Start over? Your old journey will be erased". The old save is replaced only when the new game saves for the first time (at class choice), so backing out before that loses nothing.
 - Before the first save there is no Continue. The prologue up to class choice is about 3 minutes.
 
-**What is saved:** everything in `Game`: class, stats, Ilmu, Ingatan, glyphs learned (and mastery, if built), equipment and inventory, jamu charges, Kendi, Rempah, last petilasan, quests, flags, codex unlocks, killed bosses and minibosses, opened fog gates, opened chests, picked-up unique items, play time. **Not saved:** normal enemies, player position, dropped Ilmu, settings (those live in `user://settings.cfg`, [controls.md](controls.md) 7).
+**What is saved:** everything in `Game`: class, stats, Ilmu, Ingatan, glyphs learned (and mastery, if built), equipment and inventory, flask charges, Flask Shards, Herb Pouches, last petilasan, quests, flags, codex unlocks, killed bosses and minibosses, opened fog gates, opened chests, picked-up unique items, play time. **Not saved:** normal enemies, player position, dropped Ilmu, settings (those live in `user://settings.cfg`, [controls.md](controls.md) 7).
 
 **File and safety**
 - `user://save.json`, written with `JSON.stringify` from `Game.to_dict()`.

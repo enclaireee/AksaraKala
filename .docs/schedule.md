@@ -37,8 +37,8 @@ No fixed dates. Phases run in order. Each phase has **exit criteria**: do not st
 ## Phase 3: RPG loop
 - [ ] `Game` autoload: class, stats, Ilmu, glyphs, gear, last petilasan
 - [ ] Autosave and Continue: `Game.to_dict()`/`from_dict()`, safe write, round-trip test ([rpg.md](rpg.md) 11)
-- [ ] Classes and class selection altars
-- [ ] Petilasan: heal, jamu, level-up UI, respawn
+- [ ] Classes and class select (4 cards)
+- [ ] Petilasan: heal, flask refill, level-up UI, respawn
 - [ ] Death and respawn, enemy respawn
 - [ ] Remaining 5 glyphs and spells
 - Exit: a full loop works: fight, earn Ilmu, rest, level up, die, respawn, quit, Continue with nothing lost.

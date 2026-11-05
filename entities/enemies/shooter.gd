@@ -27,7 +27,7 @@ func _tick(delta: float) -> void:
 				_enter(State.RETURN)
 			else:
 				_turn(to_target.angle(), delta)
-				velocity = _band_velocity(to_target, d)
+				velocity = _band_velocity(to_target, d) * slow()
 				if d >= t("near") and d <= t("far") and absf(angle_difference(facing, to_target.angle())) < 0.05 and request_token():   # aimed before it commits
 					_enter(State.WINDUP)
 		State.WINDUP:
@@ -36,7 +36,7 @@ func _tick(delta: float) -> void:
 				_enter(State.RECOVER)
 		State.RECOVER:
 			_turn(to_target.angle(), delta)
-			velocity = _band_velocity(to_target, d)
+			velocity = _band_velocity(to_target, d) * slow()
 			if state_time >= t("recovery"):
 				release_token()
 				_enter(State.KEEP)
@@ -52,7 +52,7 @@ func _tick(delta: float) -> void:
 				_enter(State.IDLE)
 			else:
 				_turn(to_home.angle(), delta)
-				velocity = to_home.normalized() * t("speed")
+				velocity = to_home.normalized() * t("speed") * slow()
 	move_and_slide()
 
 

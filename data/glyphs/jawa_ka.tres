@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "jawa_ka"
+aksara = "jawa"
+latin = "ka"
+templates = Array[PackedVector2Array]([PackedVector2Array(172, 262, 140, 248, 128, 215, 128, 130, 145, 98, 178, 85, 205, 98, 215, 130, 215, 262, 215, 185, 290, 185, 335, 195, 340, 235, 318, 262, 292, 258, 282, 230, 285, 130, 310, 95, 350, 85, 385, 95, 395, 130, 395, 262, 395, 130, 410, 95, 440, 85, 470, 100, 478, 130, 478, 262)])

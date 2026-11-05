@@ -6,6 +6,8 @@ var direction := Vector2.RIGHT
 var speed := 300.0
 var max_range := 220.0
 var pierce := false
+var far_damage := 0        # damage once past far_after px (Archer Eagle Eye); 0 = off
+var far_after := 120.0
 var _travelled := 0.0
 var _spent := false
 
@@ -29,5 +31,7 @@ func _on_area_entered(area: Area2D) -> void:
 func _physics_process(delta: float) -> void:
 	position += direction * speed * delta
 	_travelled += speed * delta
+	if far_damage > 0 and _travelled > far_after:
+		damage = far_damage
 	if _travelled >= max_range:
 		queue_free()

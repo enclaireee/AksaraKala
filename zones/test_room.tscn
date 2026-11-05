@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://zones/test_room.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/art/placeholder_tiles.png" id="2"]
 [ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://ui/game_ui.tscn" id="gameui"]
 
 [sub_resource type="TileSetAtlasSource" id="src"]
 texture = ExtResource("2")
@@ -32,3 +33,5 @@ y_sort_enabled = true
 
 [node name="Player" parent="Entities" instance=ExtResource("3")]
 position = Vector2(264, 200)
+
+[node name="GameUI" parent="." instance=ExtResource("gameui")]

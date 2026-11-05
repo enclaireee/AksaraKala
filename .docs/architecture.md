@@ -9,12 +9,12 @@ Current `project.godot` has the defaults: renderer Forward Plus, stretch mode `c
 |---------|-------|-----|
 | `display/window/size/viewport_width` x `viewport_height` | 480 x 270 | Soul Knight-like low-res, 30x17 tiles of 16 px |
 | `display/window/size/window_width_override` x `height` | 1440 x 810 | Starting window size: exactly 3x. 1280 x 720 is not a whole multiple, so integer scaling would show 2x with borders (changed 2026-11-05) |
-| `display/window/stretch/mode` | `viewport` | Render at 480x270 then scale, keeps pixels crisp |
+| `display/window/stretch/mode` | `canvas_items` | Layout is 480x270, drawn at window resolution: smooth, non-pixel UI text (user call, 2026-11-05). Art stays crisp through Nearest filtering. Cost: sprites can sit between game pixels. If that shimmers in play, move the world into a 480x270 SubViewport and keep only the UI at full resolution |
 | `display/window/stretch/scale_mode` | `integer` | No blurry fractional scales |
 | `display/window/stretch/aspect` | `keep` | Letterbox instead of stretching |
 | `rendering/textures/canvas_textures/default_texture_filter` | `Nearest` | Sharp pixels |
 | `rendering/2d/snap/snap_2d_transforms_to_pixel` and `snap_2d_vertices_to_pixel` | on | No sub-pixel shimmer |
-| `gui/theme/default_font_antialiasing` and `default_font_subpixel_positioning` | None, Disabled | Anti-aliased text turns into soft grey blocks when scaled up (found 2026-11-05) |
+| `gui/theme/default_font_antialiasing` and `default_font_subpixel_positioning` | defaults (Grayscale, Auto) | Text is smooth at full resolution under `canvas_items`. The earlier None setting was only needed for `viewport` stretch |
 | Renderer | **Compatibility** | Forward Plus is overkill for 2D, and Compatibility is required for web export (confirmed 2026-11-05) |
 
 Also: remove the 3D Jolt physics setting if no 3D is used (harmless).
@@ -52,7 +52,7 @@ res://
 ## 3. Autoloads
 | Name | Responsibility |
 |------|----------------|
-| `Game` | Run state: class, stats, Ilmu, glyphs learned, equipment, jamu (charges, Kendi, Rempah), last petilasan, story flags, quest state, codex unlocks. Advances quest steps on `Events` signals. Autosave and load, one slot (JSON in `user://`, [rpg.md](rpg.md) 11) |
+| `Game` | Run state: class, stats, Ilmu, glyphs learned, equipment, healing flask (charges, Flask Shards, Herb Pouches), last petilasan, story flags, quest state, codex unlocks. Advances quest steps on `Events` signals. Autosave and load, one slot (JSON in `user://`, [rpg.md](rpg.md) 11) |
 | `Events` | Global signals: `player_died`, `enemy_killed`, `glyph_learned`, `petilasan_activated`, `dialogue_started`, the quest triggers and `quest_started/updated/completed` ([quests.md](quests.md) section 7.2), etc. Decouples systems |
 | `Zones` | Zone loading, fade transitions, spawn points, tracking killed minibosses/bosses and opened gates (the lists live in `Game` so they are saved) |
 | `Audio` | Music crossfade, sfx pool, volume buses |
@@ -61,7 +61,7 @@ Keep the list short (4). No further autoloads without a reason.
 
 ## 4. Data-driven resources
 Custom `Resource` types so adding content is data entry:
-- `ClassData`: name, lineage, starting stats, starting weapon, passive id, spell modifiers, sprite tint
+- `ClassData`: name, starting stats, starting weapon, passive id, spell modifiers, sprite tint
 - `ItemData`: name key, slot, archetype, damage/defense, stat bonuses, description key, source note, icon
 - `EnemyData`: name, archetype, hp, damage, speed, attack pattern, drops, codex entry
 - `GlyphData`: id, script (sunda/jawa), latin name, templates (array of point arrays), guide texture, true-form texture
@@ -102,7 +102,7 @@ Custom `Resource` types so adding content is data entry:
 - Normal enemies respawn by reloading the zone scene (state is intentionally not persisted for them).
 
 ## 10. UI
-- `CanvasLayer` HUD: bars (HP, stamina, sakti), jamu, weapon, Ilmu.
+- `CanvasLayer` HUD: bars (HP, stamina, sakti), flask, weapon, Ilmu.
 - Dialogue box with typewriter text and a speaker name. Optional portraits (stretch).
 - Menus: pause, equipment and stats, level-up (at petilasan), codex, journal, glyph viewer, settings (incl. language).
 - Sizes and layout: [ui.md](ui.md).

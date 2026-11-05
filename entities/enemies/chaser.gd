@@ -39,13 +39,13 @@ func _tick(delta: float) -> void:
 				_turn(to_target.angle(), delta)
 				var d := to_target.length()
 				if d <= tuning.circle_max and request_token():
-					velocity = Vector2.from_angle(facing) * t("speed")
+					velocity = Vector2.from_angle(facing) * t("speed") * slow()
 					if d <= t("attack_range"):
 						_enter(State.WINDUP)
 				else:
 					if d > tuning.circle_max:
 						release_token()   # the target ran off; let someone else attack
-					velocity = circle_velocity(to_target, t("speed"))
+					velocity = circle_velocity(to_target, t("speed")) * slow()
 		State.WINDUP:
 			if state_time >= t("windup"):
 				_enter(State.ATTACK)
@@ -73,7 +73,7 @@ func _tick(delta: float) -> void:
 				_enter(State.IDLE)
 			else:
 				_turn(to_home.angle(), delta)
-				velocity = to_home.normalized() * t("speed")
+				velocity = to_home.normalized() * t("speed") * slow()
 	move_and_slide()
 
 

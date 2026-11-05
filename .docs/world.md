@@ -70,7 +70,7 @@ Soft and story-driven:
 
 ## Checkpoints (petilasan)
 - A petilasan is a place where a revered figure once rested or meditated (verified usage). Shown as a small shrine with incense and a lit lamp.
-- On interact: heal fully, refill jamu charges, set respawn, respawn normal enemies, open the menu (level up, equip, codex).
+- On interact: heal fully, refill flask charges, set respawn, respawn normal enemies, open the menu (level up, equip, codex).
 - 6-8 in total across the map. At least one before each boss.
 
 ## Points of interest per zone (target)

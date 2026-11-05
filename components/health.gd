@@ -6,6 +6,8 @@ signal died
 
 @export var max_hp: int = 100
 var hp: int
+var shield := 0   # absorbs damage before hp (Ward)
+var defense := 0  # armor points: 5% less damage each, min 1 (rpg.md 5); enemies leave it 0
 var invincible_time: float = 0.0
 
 
@@ -32,7 +34,11 @@ func is_dead() -> bool:
 func take_damage(amount: int, source: Node = null, ignore_iframes := false) -> bool:
 	if is_dead() or (is_invincible() and not ignore_iframes):
 		return false
-	hp = maxi(0, hp - amount)
+	if defense > 0 and amount > 0:
+		amount = maxi(1, roundi(amount * (1.0 - 0.05 * defense)))
+	var soaked := mini(shield, amount)
+	shield -= soaked
+	hp = maxi(0, hp - (amount - soaked))
 	damaged.emit(amount, source)
 	changed.emit(hp, max_hp)
 	if hp == 0:

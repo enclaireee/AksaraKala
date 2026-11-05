@@ -5,6 +5,7 @@ signal hit_landed(hurtbox: Hurtbox)
 @export var damage: int = 10
 @export var knockback: float = 6.0
 @export var heavy: bool = false
+@export var poise_mult := 1.0   # spells break poise faster (combat.md 6)
 var source: Node
 var _hit: Array[Hurtbox] = []
 

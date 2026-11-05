@@ -3,7 +3,7 @@
 All legends and details are summarized from common retellings. Fact-checked once (Nov 2026) against secondary sources only (Wikipedia, news, travel sites), so primary texts (Pararaton etc.) and expert review are still open. Items still marked **VERIFY** were not confirmed. Sources in [assets.md](assets.md).
 
 ## Spine: "Aksara yang Terlupa" (The Forgotten Script)
-In this world, magic is written. The aksara (script characters) of Sunda and Java hold the old power. A curse of forgetting spreads across the island: people forget their letters, spirits grow restless, and the land begins to fade. The hero, chosen from a lineage of defenders, must relearn the script from the land itself and face the force behind the curse.
+In this world, magic is written. The aksara (script characters) of Sunda and Java hold the old power. A curse of forgetting spreads across the island: people forget their letters, spirits grow restless, and the land begins to fade. The hero, chosen as a defender, must relearn the script from the land itself and face the force behind the curse.
 
 ## Characters
 | Character | Role | Notes |
@@ -16,7 +16,7 @@ In this world, magic is written. The aksara (script characters) of Sunda and Jav
 | **Nyi Roro Kidul** | Neutral power, gives the final trial | Queen of the Southern Sea, treated with respect |
 
 ## Acts
-**Prologue: Desa Purwa (starting village).** A wayang kulit performance of the Aji Saka legend (two loyal servants, Dora and Sembada, and the origin of the Hanacaraka: "ha na ca ra ka, da ta sa wa la, pa dha ja ya nya, ma ga ba tha nga"). As it plays, the letters on the screen fade out. This is the curse starting, and the tutorial. Semar sends the hero to the Petilasan to choose a lineage (class), then teaches the first glyph in the practice hall (sanggar).
+**Prologue: Desa Purwa (starting village).** A wayang kulit performance of the Aji Saka legend (two loyal servants, Dora and Sembada, and the origin of the Hanacaraka: "ha na ca ra ka, da ta sa wa la, pa dha ja ya nya, ma ga ba tha nga"). As it plays, the letters on the screen fade out. This is the curse starting, and the tutorial. Semar sends the hero to choose a class, then teaches the first glyph in the practice hall (sanggar).
 
 **Act 1: Tatar Sunda (West Java).** Learn Aksara Sunda glyphs. Legend: Sangkuriang and Tangkuban Perahu. Boss: Sangkuriang. The "fake dawn" trick from the legend becomes a boss mechanic.
 

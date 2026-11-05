@@ -22,14 +22,14 @@ Explore a zone -> fight folklore enemies with weapon and drawn spells -> earn Il
 Hold the right mouse button, the world slows, and draw a character from Aksara Sunda or Aksara Jawa. A recognizer matches the stroke to a glyph and casts its spell. Every class can cast. Full design: [spells.md](spells.md).
 
 ## Player and classes
-The player is a custom hero (the player names them). At the start they choose a **lineage**: a class inspired by a folklore figure. They are classes, not separate characters.
+The player is a custom hero (the player names them). At the start they choose one of 4 plain classes (decided 2026-11-05). They are classes, not separate characters.
 
-| Class | Inspired by |
-|-------|-------------|
-| Warrior | Gatotkaca |
-| Archer | Arjuna / Srikandi |
-| Assassin | Ken Arok |
-| Mage | Nyi Roro Kidul |
+| Class |
+|-------|
+| Warrior |
+| Archer |
+| Rogue |
+| Mage |
 
 Details: [classes.md](classes.md).
 
@@ -44,6 +44,8 @@ Details: [classes.md](classes.md).
 ## Tone
 Respectful, warm, a bit of humor from the punakawan (wayang clown-servants). Enemies are stylized and cartoonish in the Soul Knight way, not gory.
 
+Culture is the spice, not the whole dish. Ordinary gear, common enemies and NPCs are regular fantasy-RPG fare. The setting, story, bosses, folklore spirits, mythic gear (pusaka) and aksara carry the culture. (decided 2026-11-05)
+
 ## Cultural sensitivity
 - Nyi Roro Kidul, Batara Kala and other figures are meaningful to many people. Portray them with respect. No mockery, no cheap jokes.
 - Avoid presenting folklore as religious doctrine. Present it as stories and heritage.
@@ -51,7 +53,8 @@ Respectful, warm, a bit of humor from the punakawan (wayang clown-servants). Ene
 - Have someone familiar with Sundanese and Javanese culture review the final text, if possible.
 
 ## Open questions
-- Final game title and class names (draft)
+- Final game title (draft)
+- ~~Class names~~: decided 2026-11-05 (Warrior, Archer, Rogue, Mage)
 - ~~Language~~: decided 2026-11-05, all text in Indonesian and English ([quests.md](quests.md) section 7.7)
 
 Related: [story.md](story.md), [world.md](world.md), [rpg.md](rpg.md), [spells.md](spells.md).

@@ -56,7 +56,7 @@ func _initialize() -> void:
 		hits.append(p.hit)
 		step_until(func() -> bool: return p.phase == Player.Phase.ACTIVE, 0.5)
 		if i == 2:
-			check(p.melee_hitbox.damage == roundi(t.melee_damage * t.finisher_mult), "finisher damage %d" % p.melee_hitbox.damage)
+			check(p.melee_hitbox.damage == roundi(p.item.damage * p.dmg_mult * t.finisher_mult), "finisher damage %d" % p.melee_hitbox.damage)
 		step_until(func() -> bool: return p.state == Player.State.FREE, 1.0)
 	check(hits == [0, 1, 2], "combo order %s" % [hits])
 
@@ -110,16 +110,16 @@ func _initialize() -> void:
 	check(not p.status.has(Status.Type.BURN), "dodge did not put out the burn")
 	check(not p.hurtbox.receive(hb), "hit landed during dodge i-frames")
 	check(p.stamina.value == p.stamina.max_stamina, "perfect dodge did not refund stamina")
-	check(p.sakti.value == t.perfect_sakti, "perfect dodge did not add sakti")
+	check(is_equal_approx(p.sakti.value, t.perfect_sakti * p.sakti.gain_mult), "perfect dodge did not add sakti")
 	check(p.frozen > 0.0, "perfect dodge did not pause")
 	p.hurtbox.receive(hb)
-	check(p.sakti.value == t.perfect_sakti, "perfect dodge paid twice inside its cooldown")
+	check(is_equal_approx(p.sakti.value, t.perfect_sakti * p.sakti.gain_mult), "perfect dodge paid twice inside its cooldown")
 	step_for(t.perfect_cooldown)
 	reset()
 	press("dodge"); step(1)
 	step_for(t.perfect_window)
 	p.hurtbox.receive(hb)   # i-frames still on (Health is not ticking), but too late for perfect
-	check(p.sakti.value == t.perfect_sakti, "late dodge counted as perfect")
+	check(is_equal_approx(p.sakti.value, t.perfect_sakti * p.sakti.gain_mult), "late dodge counted as perfect")
 	hb.queue_free()
 
 	quit(1 if fails > 0 else 0)

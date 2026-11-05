@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "axe"
+title = "Axe"
+slot = "weapon"
+archetype = "heavy"
+description = "Hits hard and slow."
+windup = 0.3
+active = 0.1
+recovery = 0.45
+lunge = 4.0
+cost = 28.0
+sakti_per_hit = 10.0
+damage = 26
+reach = 24.0
+arc = 130.0

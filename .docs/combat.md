@@ -40,22 +40,28 @@ Every weapon uses the same rule: **the finisher deals x1.5 damage, gives x1.5 sa
 - Melee hits lunge 8 px forward (light 10 px, heavy 4 px), which pulls the player into range.
 - **Soft snap (melee only):** if an enemy is within reach and within 30 degrees of the cursor, the swing turns to face it. Ranged shots go exactly where the mouse points.
 
-Stamina check (start stats, regen 35/s after 0.4 s): Warrior can combo nonstop for about 17 s, Assassin about 6 s (14 hits). Archer and Mage never run out from attacking alone. Dodging is what really spends stamina, as intended.
+Stamina check (start stats, regen 35/s after 0.4 s): Warrior can combo nonstop for about 17 s, Rogue about 6 s (14 hits). Archer and Mage never run out from attacking alone. Dodging is what really spends stamina, as intended.
 
 ### 2.3 Weapon shapes
 Weapons of one archetype share timing ([balance.md](balance.md) section 3) and differ in shape.
 
 | Weapon | Hit shape |
 |--------|-----------|
-| Keris | Arc 90°, reach 20 |
+| Dagger | Arc 90°, reach 20 |
+| Short Sword | Arc 100°, reach 22 (**TUNE**) |
 | Kujang | Arc 110°, reach 20. Its curved blade sweeps wider |
 | Keris Luk 7 | Arc 90°, reach 22. The finisher hits twice (x0.75 each) |
-| Gada | Arc 150°, reach 24 |
+| Keris Mpu Gandring | Arc 90°, reach 22. Each hit costs the wielder 1 HP (**TUNE**) |
+| Broadsword | Arc 150°, reach 24 |
+| Axe | Arc 130°, reach 24 (**TUNE**) |
 | Golok | Arc 120°, reach 26 |
-| Tombak | Arc 40°, reach 44. Long thrust, finisher is a 2-tile lunge instead of a slam |
-| Busur | Arrow 300 px/s, range 220 |
+| Spear | Arc 40°, reach 44. Long thrust, finisher is a 2-tile lunge instead of a slam |
+| Hunting Bow | Arrow 300 px/s, range 220 |
+| Longbow | Arrow 280 px/s, range 280, slower draw (**TUNE**) |
+| Crossbow | Bolt 360 px/s, range 240, 0.5 s wind-up (**TUNE**) |
 | Panah Pasopati | Arrow 340 px/s, range 260, every hit pierces one enemy |
-| Tongkat | Bolt 200 px/s, range 160 |
+| Oak Staff | Bolt 200 px/s, range 160 |
+| Iron Staff | Bolt 210 px/s, range 170 (**TUNE**) |
 
 - **Cutting projectiles:** a melee hit destroys normal enemy projectiles it touches. Boss heavy projectiles cannot be cut. This gives melee classes an answer to shooters without a parry.
 
@@ -66,7 +72,7 @@ Weapons of one archetype share timing ([balance.md](balance.md) section 3) and d
 | Distance | 48 (3 tiles), in the movement direction, or toward the mouse if standing still |
 | Invincible | From the first frame to 0.25 |
 | Recovery | 0.1. An attack or cast can be buffered into it |
-| Cost | 20 stamina (Assassin 14). No cooldown |
+| Cost | 20 stamina (Rogue 14). No cooldown |
 
 - A dodge can cancel the recovery of any attack, so a player who over-commits can always escape.
 - A dodge passes through enemies but not walls or pits.
@@ -82,7 +88,7 @@ The full state-by-input table is in [controls.md](controls.md) 3.
 - Attack, dodge and cast inputs are buffered for 0.15 s and fire as soon as the current action allows.
 - Order of priority if two are buffered: dodge, cast, attack.
 - Casting (hold right mouse) can start during attack recovery, which cancels it. During a dodge it is buffered.
-- Using jamu takes 0.6 and can be cancelled by a dodge (the charge is not spent).
+- Using the flask takes 0.6 and can be cancelled by a dodge (the charge is not spent).
 
 ### 2.7 Taking a hit
 | Value | Number |
@@ -92,8 +98,8 @@ The full state-by-input table is in [controls.md](controls.md) 3.
 | Knockback | 12 px from a light hit, 28 px from a heavy hit |
 
 - **Light hit:** any normal enemy attack and a boss light attack. **Heavy hit:** elite and boss heavy attacks (listed in [balance.md](balance.md) section 7).
-- Warrior's Otot Kawat ignores the stagger and knockback of light hits.
-- Assassin's backstab (x2): a hit that lands within 60 degrees of the enemy's back. Bosses have no back. The reliable setup is to dodge through the enemy during its wind-up, then hit before it turns (5.1, confirmed 2026-11-05).
+- Warrior's Iron Skin ignores the stagger and knockback of light hits.
+- Rogue's backstab (x2): a hit that lands within 60 degrees of the enemy's back. Bosses have no back. The reliable setup is to dodge through the enemy during its wind-up, then hit before it turns (5.1, confirmed 2026-11-05).
 
 ## 3. Hitting enemies
 ### 3.1 Flinch and poise
@@ -107,7 +113,7 @@ The full state-by-input table is in [controls.md](controls.md) 3.
 
 - Poise damage = damage dealt. Finishers deal x2 poise damage.
 - Poise refills fully 3 s after the last hit, and right after a break. After a break the enemy cannot be broken again for 5 s, so nothing gets stunlocked.
-- Check (Tatar Sunda, start stats): Warrior breaks a tank (poise 90) with one combo, Assassin needs about two. Sangkuriang (poise 252) breaks about every 9-10 s of steady hitting, so a stagger takes up about 20% of the fight.
+- Check (Tatar Sunda, start stats): Warrior breaks a tank (poise 90) with one combo, Rogue needs about two. Sangkuriang (poise 252) breaks about every 9-10 s of steady hitting, so a stagger takes up about 20% of the fight.
 - Knockback on enemies: light 6 px, heavy 14 px, finisher 24 px. Tanks, elites and bosses take none.
 
 ### 3.2 Hit feedback
@@ -131,7 +137,7 @@ Each status has one tint, one icon by the HP bar and a short sound when it start
 |--------|------|--------|-------|------------|------------|
 | **Burn** | Orange flicker | Takes 30% of the burning hit's damage again, over 3 ticks | 1.5 | Banaspati, fire-ground trails | Dodge roll |
 | **Slow** | Blue | Move speed -40%. Dodge distance is unchanged, so a dodge still escapes | 2.0 | Mud and saltwater (Buto Ijo arena), Kala's time-sand. On enemies: Bind on elites and bosses (-60%, 4 s) | |
-| **Bound** (enemies only) | Glowing script ring | Cannot move, can still attack in reach | 2.0 (Assassin +30%) | Bind glyph on normal enemies | |
+| **Bound** (enemies only) | Glowing script ring | Cannot move, can still attack in reach | 2.0 (Rogue +30%) | Bind glyph on normal enemies | |
 | **Stagger** | Shake + stars | Cannot act | Player 0.25; enemies per 3.1 | Hits and poise breaks | |
 | **Curse** | Purple marks | Sakti gauge cannot fill | 4.0 | Keris Hantu, Mpu Gandring's Keris, Batara Kala | Heal glyph, petilasan |
 

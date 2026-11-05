@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://components/hurtbox.gd" id="3"]
 [ext_resource type="Script" path="res://components/hitbox.gd" id="4"]
 [ext_resource type="Script" path="res://components/hit_flash.gd" id="5"]
+[ext_resource type="Script" path="res://components/status.gd" id="6"]
 
 [sub_resource type="CircleShape2D" id="body_shape"]
 radius = 5.0
@@ -65,3 +66,8 @@ max_hp = 40
 [node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("5")
 target = NodePath("../Body")
+
+[node name="Status" type="Node" parent="." node_paths=PackedStringArray("health", "tint_target")]
+script = ExtResource("6")
+health = NodePath("../Health")
+tint_target = NodePath("../Body")

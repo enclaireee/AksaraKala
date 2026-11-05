@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="BUDAYAGO"
-run/main_scene="res://zones/test_room.tscn"
+run/main_scene="res://ui/title.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -28,14 +28,9 @@ window/size/viewport_width=480
 window/size/viewport_height=270
 window/size/window_width_override=1440
 window/size/window_height_override=810
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 window/stretch/aspect="keep"
 window/stretch/scale_mode="integer"
-
-[gui]
-
-theme/default_font_antialiasing=0
-theme/default_font_subpixel_positioning=0
 
 [input]
 

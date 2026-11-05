@@ -5,6 +5,8 @@ class_name EnemyBase extends CharacterBody2D
 @export var role := "chaser"        # prefix of this enemy's values in CombatTuning (chaser_*, tank_*, shooter_*)
 @export var poise_ratio := 0.0      # 0: flinch on every hit. Tank 0.6 (combat.md 3.1)
 @export var ranged := false         # which token pool it draws from (combat.md 5.2)
+@export var ilmu := 6               # Ilmu awarded on death (balance.md 6). TUNE: chaser 6, shooter 6, tank 15
+@export var unique_id := ""         # bosses and minibosses: stays dead once listed in Game.killed (rpg.md 11)
 
 @onready var body: Polygon2D = $Body
 @onready var hurtbox: Hurtbox = $Hurtbox
@@ -12,6 +14,7 @@ class_name EnemyBase extends CharacterBody2D
 @onready var hit_flash: HitFlash = $HitFlash
 @onready var aim: Node2D = $Aim
 @onready var attack_hitbox: Hitbox = $Aim/Hitbox
+@onready var status: Status = get_node_or_null("Status")
 
 # Tokens are group membership: freed nodes leave groups by themselves, so nothing leaks (combat.md 5.2).
 # ponytail: no autoload; elites and bosses will skip tokens.
@@ -30,6 +33,10 @@ var poise_immune := 0.0
 
 
 func _ready() -> void:
+	if unique_id != "" and unique_id in get_node("/root/Game").killed:
+		set_physics_process(false)
+		queue_free()
+		return
 	add_to_group("enemy")
 	home = global_position
 	target = get_tree().get_first_node_in_group("player") as Node2D
@@ -42,6 +49,11 @@ func _ready() -> void:
 func t(name: String) -> float:
 	var v: Variant = tuning.get(role + "_" + name)
 	return v if v != null else tuning.get("enemy_" + name)
+
+
+## Movement speed multiplier from Slow and Bound.
+func slow() -> float:
+	return status.speed_mult() if status else 1.0
 
 
 func hitstop(seconds: float) -> void:
@@ -138,7 +150,7 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	# Poise roles take no knockback and do not flinch until poise breaks.
 	if poise_immune > 0.0:
 		return
-	poise -= hitbox.damage * (tuning.poise_finisher_mult if hitbox.heavy else 1.0)
+	poise -= hitbox.damage * (tuning.poise_finisher_mult if hitbox.heavy else hitbox.poise_mult)
 	if poise <= 0.0:
 		poise = _max_poise()
 		poise_immune = tuning.poise_immunity
@@ -155,4 +167,27 @@ func _on_died() -> void:
 	hurtbox.set_deferred("monitorable", false)
 	body.modulate = Color(0.4, 0.4, 0.4)
 	# ponytail: no death anim or drops yet.
+	var game := get_node("/root/Game")
+	game.add_ilmu(ilmu)   # ASSUMED: awarded directly, no pickups
+	if unique_id != "":
+		game.killed.append(unique_id)
+		game.save_game()
+	get_node("/root/Events").enemy_killed.emit(self, ilmu)
+	_float_label()
 	get_tree().create_timer(0.4).timeout.connect(queue_free)
+
+
+## Rising "+N" that outlives the enemy: lives in the parent and frees itself.
+func _float_label() -> void:
+	var l := Label.new()
+	l.text = "+%d" % ilmu
+	l.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))   # ASSUMED warm gold
+	l.add_theme_color_override("font_outline_color", Color.BLACK)
+	l.add_theme_constant_override("outline_size", 3)
+	l.z_index = 100
+	get_parent().add_child(l)
+	l.global_position = (global_position + Vector2(-8, -20)).round()
+	var tw := l.create_tween().set_parallel()
+	tw.tween_property(l, "position:y", l.position.y - 12.0, 0.8)   # TUNE
+	tw.tween_property(l, "modulate:a", 0.0, 0.8)
+	tw.chain().tween_callback(l.queue_free)
