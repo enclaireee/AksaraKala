@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "klething_kuning"
+name_key = "NPC_KLETHING_KUNING_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_t1=done"], "lines": ["DLG_KLETHING_KUNING_1"], "do": []},
+	{"if": ["step:sq_t1=2"], "lines": ["DLG_KLETHING_KUNING_2", "DLG_KLETHING_KUNING_3"], "do": []},
+	{"if": ["step:sq_t1=1"], "lines": ["DLG_KLETHING_KUNING_4", "DLG_KLETHING_KUNING_5"], "do": []},
+	{"if": ["quest:sq_t1=available"], "lines": ["DLG_KLETHING_KUNING_6", "DLG_KLETHING_KUNING_7", "DLG_KLETHING_KUNING_8"], "do": ["start:sq_t1"]},
+	{"if": [], "lines": ["DLG_KLETHING_KUNING_9"], "do": []}
+])

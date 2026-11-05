@@ -20,9 +20,9 @@ Build rule: a char may repeat only when scene and props are identical (the 4 dum
 
 ## Map
 ```
-############################################################
-#..........................................................#
-#...##################..............#############..........#
+####################################################JJ######
+#...................................................kk.....#
+#...##################..............#############...ju.....#
 #...#________________#..bb..........#___________#.....bbbb.#
 #...#________________#..bb..........#___________#.....bbbb.#
 #...#___D__D__D__D___#..............#_____G_____#.....bbbb.#
@@ -72,6 +72,10 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE
 | `D` | training dummy (same props on all 4 tiles) | `res://entities/enemies/dummy.tscn` | `{}` | floor | 4 |
 | `T` | trigger, wayang stage (prologue scene, MQ0 0.1) | `res://entities/world/trigger.tscn` | `{trigger_id:"wayang_stage", size:Vector2i(11,5)}` | floor | 1 |
 | `S` | trigger, sanggar entered (shows draw tutorial) | `res://entities/world/trigger.tscn` | `{trigger_id:"sanggar_enter", size:Vector2i(16,9)}` | floor | 1 |
+| `J` | exit to Gua Kala (P0 entry, Phase 5) | `res://entities/world/exit.tscn` | `{target_zone:"gk_mulut", spawn_id:"from_desa_purwa"}` | grass | 2 |
+| `k` | kabut, Gua Kala gate (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq3_8"}` | grass | 2 |
+| `j` | spawn, arrival from Gua Kala's mouth | `res://entities/world/spawn.tscn` | `{id:"from_gk_mulut"}` | grass | 1 |
+| `u` | spawn, arrival home after Batara Kala (`kala_exit`) | `res://entities/world/spawn.tscn` | `{id:"from_gua_kala"}` | grass | 1 |
 
 Exits sit on the map edge (x = 0 and x = 59, rows 16-17). Each exit has a spawn one tile inside: `w` (1,16) for the west exit, `v` (57,16) for the east one. The east gate is two kabut tiles `K` at (58,16) and (58,17), between `v` and the exit `E`.
 
@@ -86,6 +90,7 @@ Exits sit on the map edge (x = 0 and x = 59, rows 16-17). Each exit has a spawn 
 | start path | (12..13,13..15) | Start landing, 2 tiles below the sanggar door | spawn `s` (13,14) | none |
 | west road | (1,16)-(12,17) | Exit to Tatar Sunda | spawn `w` (1,16), exit `W` (0,16..17) | `exit_tatar_sunda` |
 | east road | (47,16)-(58,17) | Fogged exit to Mataram | spawn `v` (57,16), kabut `K` (58,16..17), exit `E` (59,16..17) | `exit_mataram` |
+| north gap | (52..53,0..2) | Fogged exit to Gua Kala (Phase 5) | exit `J` (52..53,0), kabut `k` (52..53,1), spawns `j` (52,2) and `u` (53,2) | `exit_gua_kala` |
 | green | (1,1)-(58,32) rest | Open grass, pond (14..20,26..30), bamboo and rock dressing | none | none |
 
 ## Encounter table
@@ -137,6 +142,7 @@ Desa Purwa has no enemy encounters, so the combat items are not applicable. Spaw
 - Spawn ids (**ASSUMED** 2026-11-05, renamed for the area graph in [world.md](../world.md) World structure; the code still uses `from_sunda`/`from_mataram` until the Part B rebuild): `start`, `from_ts_kebun` (arrival from Tatar Sunda), `from_mt_gapura`. Exit targets: `{target_zone:"ts_kebun", spawn_id:"from_desa_purwa"}`, `{target_zone:"mt_gapura", spawn_id:"from_desa_purwa"}`.
 - Trigger ids `wayang_stage` and `sanggar_enter`. Marker ids above. Dialogue by Semar for 0.2, 0.3, 0.4 happens in the sanggar.
 - Wayang stage is a trigger plus Ki Wangsa NPC, no extra scene.
+- Gua Kala entry (**ASSUMED** 2026-11-05, gua_kala.md P0 decisions): a north-edge exit `J` at (52..53,0) to `gk_mulut`, behind kabut `k` on `mq3_8` (Semar's MQ3 3.8 talk). Spawn `j` is the arrival from the cave mouth, `u` the arrival home after the final boss.
 - The west gate to Tatar Sunda has no kabut (quests.md: only the Mataram gate is fogged).
 
 ## Open questions

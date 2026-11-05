@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_T1_S1_OBJ"
+on = "talked_to:klething_kuning"
+marker = {"zone": "tt_kali", "id": "klething_kuning"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_T1_S2_OBJ"
+on = "item_picked:sodo_lanang"
+alt = {"item_picked:sodo_lanang": "peaceful", "enemy_killed:yuyu_kangkang": "fight"}
+marker = {"zone": "tt_beringin", "id": "sodo_lanang"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_T1_S3_OBJ"
+on = "talked_to:klething_kuning"
+marker = {"zone": "tt_kali", "id": "klething_kuning"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_t1"
+kind = "side"
+type = "retelling"
+zone = "tanah_timur"
+size = "M"
+giver = "klething_kuning"
+requires = Array[String](["mq3_1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3")])
+rewards = {"items": ["stone_ring"], "lakon": "ande_ande_lumut", "codex": ["ande_ande_lumut"]}

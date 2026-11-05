@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "wewe_parents"
+name_key = "NPC_WEWE_PARENTS_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_m2=done"], "lines": ["DLG_WEWE_PARENTS_1"], "do": []},
+	{"if": ["quest:sq_m2=active"], "lines": ["DLG_WEWE_PARENTS_2", "DLG_WEWE_PARENTS_3", "DLG_WEWE_PARENTS_4"], "do": ["flag:wewe_parents_called"]},
+	{"if": [], "lines": ["DLG_WEWE_PARENTS_5"], "do": []}
+])

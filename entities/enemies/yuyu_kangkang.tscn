@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/yuyu_kangkang.gd" id="1"]
+[ext_resource type="Script" path="res://components/health.gd" id="2"]
+[ext_resource type="Script" path="res://components/hurtbox.gd" id="3"]
+[ext_resource type="Script" path="res://components/hitbox.gd" id="4"]
+[ext_resource type="Script" path="res://components/hit_flash.gd" id="5"]
+[ext_resource type="Script" path="res://components/status.gd" id="6"]
+[ext_resource type="Script" path="res://data/combat_tuning.gd" id="7"]
+
+[sub_resource type="Resource" id="tuning"]
+script = ExtResource("7")
+charger_speed = 40.0
+charger_dash_speed = 150.0
+charger_dash_max = 192.0
+charger_windup = 0.5
+
+[sub_resource type="CircleShape2D" id="body_shape"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="hurt_shape"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="hit_shape"]
+radius = 7.0
+
+[node name="YuyuKangkang" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("1")
+tuning = SubResource("tuning")
+role = "charger"
+poise_ratio = 0.6
+ilmu = 80
+kind = "yuyu_kangkang"
+unique_id = "yuyu_kangkang"
+
+[node name="Body" type="Polygon2D" parent="."]
+antialiased = false
+color = Color(0.85, 0.3, 0.25, 1)
+polygon = PackedVector2Array(-12, -14, 12, -14, 12, 0, -12, 0)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("body_shape")
+
+[node name="Aim" type="Node2D" parent="."]
+position = Vector2(0, -6)
+
+[node name="Hitbox" type="Area2D" parent="Aim"]
+position = Vector2(10, 0)
+collision_layer = 16
+collision_mask = 2
+monitorable = false
+script = ExtResource("4")
+damage = 18
+knockback = 28.0
+
+[node name="Shape" type="CollisionShape2D" parent="Aim/Hitbox"]
+shape = SubResource("hit_shape")
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+position = Vector2(0, -6)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("3")
+health = NodePath("../Health")
+
+[node name="Shape" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("hurt_shape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2")
+max_hp = 384
+
+[node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("5")
+target = NodePath("../Body")
+
+[node name="Status" type="Node" parent="." node_paths=PackedStringArray("health", "tint_target")]
+script = ExtResource("6")
+health = NodePath("../Health")
+tint_target = NodePath("../Body")

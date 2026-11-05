@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "pande_besi"
+name_key = "NPC_PANDE_BESI_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_m3=done"], "lines": ["DLG_PANDE_BESI_1"], "do": []},
+	{"if": ["step:sq_m3=3"], "lines": ["DLG_PANDE_BESI_2"], "do": []},
+	{"if": ["quest:sq_m3=active"], "lines": ["DLG_PANDE_BESI_3"], "do": []},
+	{"if": ["quest:sq_m3=available"], "lines": ["DLG_PANDE_BESI_4", "DLG_PANDE_BESI_5", "DLG_PANDE_BESI_6", "DLG_PANDE_BESI_7"], "do": ["start:sq_m3", "give:distraction"]},
+	{"if": [], "lines": ["DLG_PANDE_BESI_8"], "do": []}
+])

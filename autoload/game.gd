@@ -10,7 +10,8 @@ const STATS := ["vit", "end", "str", "dex", "spi"]
 const STARTER_GLYPHS: Array[String] = []   # glyphs come from the main quest (quests.md 3.3)
 ## Quest Ilmu by zone and size S/M/L (quests.md 3.1, TUNE). Desa Purwa uses the Act 1 row for now.
 const QUEST_ILMU := {"tatar_sunda": [30, 60, 90], "desa_purwa": [30, 60, 90], "mataram": [55, 110, 165],
-	"tanah_timur": [110, 220, 330], "segara_kidul": [190, 380, 570]}
+	"tanah_timur": [110, 220, 330], "segara_kidul": [190, 380, 570],
+	"gua_kala": [190, 380, 570]}
 ## Quest-trigger signals on Events with one String arg (quests.md 7.2).
 const QUEST_SIGNALS := ["talked_to", "item_picked", "boss_defeated", "area_cleared", "area_entered",
 	"zone_entered", "petilasan_activated", "glyph_learned", "class_chosen", "weakness_triggered"]
@@ -223,7 +224,7 @@ func current_step(id: String) -> QuestStep:
 func start_quest(id: String) -> bool:
 	if quest_state(id) != "available":
 		return false
-	quests[id] = {"state": "active", "step": 0, "count": 0}
+	quests[id] = {"state": "active", "step": 0, "count": 0, "resolution": ""}
 	_emit("quest_started", id)
 	if QuestData.by_id(id).steps.is_empty():
 		_complete(id)
@@ -241,8 +242,10 @@ func on_event(sig: String, arg: String) -> void:
 	var hit := false
 	for id in quests.keys():
 		var st := current_step(id)
-		if st != null and _matches(st.on, sig, arg):
+		if st != null and (_matches(st.on, sig, arg) or st.alt.has(sig + ":" + arg)):
 			hit = true
+			if st.alt.has(sig + ":" + arg):
+				quests[id].resolution = st.alt[sig + ":" + arg]
 			_bump(id)
 	if hit:
 		changed.emit()
@@ -298,7 +301,8 @@ func _complete(id: String) -> void:
 	if pinned == id:
 		pinned = ""
 	var row: Array = QUEST_ILMU.get(q.zone, QUEST_ILMU.tatar_sunda)
-	ilmu += row[["S", "M", "L"].find(q.size)] if q.size in ["S", "M", "L"] else 0
+	var base: int = row[["S", "M", "L"].find(q.size)] if q.size in ["S", "M", "L"] else 0
+	ilmu += base * 3 / 2 if quests[id].get("resolution", "") == "fight" else base   # quests.md 3: fight +50%
 	var r := q.rewards
 	for item in r.get("items", []):
 		add_item(item, false)
@@ -391,6 +395,8 @@ func check(cond: String) -> bool:
 			return has_flag(arg)
 		"glyph":
 			return arg in glyphs_learned
+		"item":
+			return arg in inventory
 		"quest":
 			var p := arg.split("=")
 			return p.size() == 2 and quest_state(p[0]) == p[1]
@@ -471,7 +477,7 @@ func from_dict(d: Dictionary) -> void:
 	for id in quests.keys():   # drop malformed quest records from old or hand-edited saves
 		var q: Variant = quests[id]
 		if q is Dictionary and str(q.get("state", "")) in ["active", "done"]:
-			quests[id] = {"state": str(q.state), "step": maxi(0, _num(q.get("step"))), "count": maxi(0, _num(q.get("count")))}
+			quests[id] = {"state": str(q.state), "step": maxi(0, _num(q.get("step"))), "count": maxi(0, _num(q.get("count"))), "resolution": str(q.get("resolution", ""))}
 		else:
 			quests.erase(id)
 	changed.emit()

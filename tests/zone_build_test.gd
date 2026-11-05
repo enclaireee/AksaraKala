@@ -6,7 +6,9 @@ extends SceneTree
 
 var fails := 0
 ## Exit targets that are built in Phase 5. Their exits are fogged or behind a closed gate.
-const PENDING := ["mt_gapura", "sk_tebing"]
+const PENDING := ["sk_tebing", "sk_karang"]
+## Shortcuts opened only from a pending area: id -> that area.
+const PENDING_OPENERS := {"sc:ts_sk": "sk_tebing"}
 
 
 func check(ok: bool, msg: String) -> void:
@@ -35,8 +37,11 @@ func _initialize() -> void:
 	var dp: Zone = built.get("desa_purwa")
 	if dp:
 		check(dp.size == Vector2i(60, 34), "desa_purwa size %s" % dp.size)
-		check(dp.spawn("start") != null and dp.spawn("from_ts_kebun") != null and dp.spawn("from_mt_gapura") != null, "desa_purwa spawns")
-		check(flags(dp) == ["mq1_10", "mq1_10"], "desa_purwa kabut flags %s" % [flags(dp)])
+		check(dp.spawn("start") != null and dp.spawn("from_ts_kebun") != null and dp.spawn("from_mt_gapura") != null
+				and dp.spawn("from_gk_mulut") != null and dp.spawn("from_gua_kala") != null, "desa_purwa spawns")
+		var dpf := flags(dp)
+		dpf.sort()
+		check(dpf == ["mq1_10", "mq1_10", "mq3_8", "mq3_8"], "desa_purwa kabut flags %s" % [dpf])
 		check(pets(dp) == ["desa_purwa"], "desa_purwa petilasans %s" % [pets(dp)])
 		check(of(dp, "dummy.tscn").size() == 4, "desa_purwa wants 4 dummies")
 		check(encounters(dp).is_empty(), "desa_purwa has encounters")
@@ -118,6 +123,99 @@ func _initialize() -> void:
 	check(loops >= 2, "tatar_sunda has %d loops, want 2+" % loops)
 	check(zones.SHORTCUTS.keys().filter(func(s: String) -> bool: return s.begins_with("sc:ts_")).size() >= 2, "tatar_sunda wants 2+ shortcuts")
 	check(zones.DROPS.any(func(d: Array) -> bool: return d[0].begins_with("ts_")), "tatar_sunda wants a drop")
+
+	# Mataram region totals (zones/mataram.md).
+	var mt := built.keys().filter(func(id: String) -> bool: return id.begins_with("mt_"))
+	check(mt.size() == 8, "mataram has %d areas, want 8" % mt.size())
+	f = []
+	p = []
+	gates = []
+	enc = 0
+	for id: String in mt:
+		var z: Zone = built[id]
+		f += flags(z)
+		p += pets(z)
+		enc += encounters(z).size()
+		for g in of(z, "shortcut.tscn"):
+			gates.append(g.id)
+			check_gate(zones, z, g)
+	f.sort()
+	p.sort()
+	gates.sort()
+	check(f == ["mq2_6", "mq2_6", "mq2_9", "mq2_9"], "mataram kabut flags %s" % [f])
+	check(p == ["mataram_1", "mataram_2"], "mataram petilasans %s" % [p])
+	check(enc == 7, "mataram has %d encounters, want 7" % enc)
+	check(gates == ["sc:mt_candi_gapura", "sc:mt_candi_gapura", "sc:mt_ruin_sawah", "sc:mt_ruin_sawah", "sc:mt_tt", "sc:mt_tt"], "mataram shortcut gates %s" % [gates])
+	check(of(built.get("mt_candi"), "bandung_bondowoso.tscn").size() == 1, "mt_candi wants the boss")
+	undirected = {}
+	for k: String in want:
+		var ab := k.split(">")
+		if ab[0].begins_with("mt_") and ab[1].begins_with("mt_"):
+			ab.sort()
+			undirected["-".join(ab)] = true
+	check(undirected.size() - mt.size() + 1 >= 2, "mataram has too few loops")
+	check(zones.DROPS.any(func(d: Array) -> bool: return d[0].begins_with("mt_")), "mataram wants a drop")
+
+	# Tanah Timur region totals (zones/tanah_timur.md).
+	var tt := built.keys().filter(func(id: String) -> bool: return id.begins_with("tt_"))
+	check(tt.size() == 8, "tanah_timur has %d areas, want 8" % tt.size())
+	f = []
+	p = []
+	gates = []
+	enc = 0
+	for id: String in tt:
+		var z: Zone = built[id]
+		for k in flags(z):
+			if not f.has(k):
+				f.append(k)
+		p += pets(z)
+		enc += encounters(z).size()
+		for g in of(z, "shortcut.tscn"):
+			if not gates.has(g.id):
+				gates.append(g.id)
+			check_gate(zones, z, g)
+	f.sort()
+	p.sort()
+	gates.sort()
+	check(f == ["mq2_9", "mq3_4", "mq3_8"], "tanah_timur kabut flags %s" % [f])
+	check(p == ["timur_1", "timur_2"], "tanah_timur petilasans %s" % [p])
+	check(enc == 8, "tanah_timur has %d encounters, want 8" % enc)
+	check(gates == ["sc:tt_ladang", "sc:tt_pasir"], "tanah_timur shortcut gates %s" % [gates])
+	check(of(built.get("tt_ladang"), "buto_ijo.tscn").size() == 1, "tt_ladang wants Buto Ijo")
+	check(of(built.get("tt_candi"), "keris_gandring.tscn").size() == 1, "tt_candi wants the keris")
+	check(of(built.get("tt_candi"), "curse_stake.tscn").size() == 7, "tt_candi wants 7 curse stakes")
+	check(of(built.get("tt_beringin"), "curse_stake.tscn").size() == 3, "tt_beringin wants 3 practice stakes")
+	undirected = {}
+	for k: String in want:
+		var ab := k.split(">")
+		if ab[0].begins_with("tt_") and ab[1].begins_with("tt_"):
+			ab.sort()
+			undirected["-".join(ab)] = true
+	check(undirected.size() - tt.size() + 1 >= 3, "tanah_timur has too few loops")
+	check(zones.DROPS.has(["tt_beringin", "tt_pesisir"]), "tanah_timur wants the drop")
+
+	# Gua Kala totals (zones/gua_kala.md, P0: entered from Desa Purwa).
+	var gk := built.keys().filter(func(id: String) -> bool: return id.begins_with("gk_"))
+	check(gk.size() == 4, "gua_kala has %d areas, want 4" % gk.size())
+	f = []
+	p = []
+	gates = []
+	enc = 0
+	for id: String in gk:
+		var z: Zone = built[id]
+		f += flags(z)
+		p += pets(z)
+		enc += encounters(z).size()
+		for g in of(z, "shortcut.tscn"):
+			gates.append(g.id)
+			check_gate(zones, z, g)
+	p.sort()
+	check(f == ["mq5_3", "mq5_3"], "gua_kala kabut flags %s" % [f])
+	check(p == ["kala_1", "kala_2"], "gua_kala petilasans %s" % [p])
+	check(enc == 4, "gua_kala has %d encounters, want 4" % enc)
+	check(gates == ["sc:gk_lorong", "sc:gk_lorong"], "gua_kala shortcut gates %s" % [gates])
+	check(of(built.get("gk_ruang_kala"), "batara_kala.tscn").size() == 1, "gk_ruang_kala wants Batara Kala")
+	check(zones.DROPS.has(["gk_pasir", "gk_lupa"]), "gua_kala wants the drop")
 	quit(1 if fails > 0 else 0)
 
 
@@ -132,7 +230,7 @@ func check_exit(zones: Node, z: Zone, e: Node, built: Dictionary) -> void:
 
 ## The arrival spawn from the area that opens the gate must stand on the gate's open side.
 func check_gate(zones: Node, z: Zone, g: Node) -> void:
-	var ab: Array = zones.SHORTCUTS.get(g.id, ["sk_tebing", z.zone_id])   # sc:ts_sk opens from Segara Kidul
+	var ab: Array = zones.SHORTCUTS.get(g.id, [PENDING_OPENERS.get(g.id, "?"), z.zone_id])
 	check(ab[1] == z.zone_id, "%s gate is in %s, want %s" % [g.id, z.zone_id, ab[1]])
 	var s := z.spawn("from_" + ab[0])
 	check(s != null and g.from_open_side(s.global_position), "%s: spawn from_%s is not on the open side" % [g.id, ab[0]])

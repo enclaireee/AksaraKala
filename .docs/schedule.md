@@ -56,9 +56,9 @@ No fixed dates. Phases run in order. Each phase has **exit criteria**: do not st
 
 ## Phase 5: Remaining regions
 Build each region from its area graph in `zones/<region>.md` ([mataram](zones/mataram.md), [tanah_timur](zones/tanah_timur.md), [segara_kidul](zones/segara_kidul.md), [gua_kala](zones/gua_kala.md)): first add tile maps per area (AGENTS.md 5), then build.
-- [ ] Mataram zone and boss
-- [ ] Tanah Timur zone, miniboss and boss
-- [ ] Gua Kala and the final boss
+- [x] Mataram zone and boss (built 2026-11-05, not yet playtested)
+- [x] Tanah Timur zone, miniboss and boss (built 2026-11-05, not yet playtested)
+- [x] Gua Kala and the final boss (built 2026-11-05, not yet playtested)
 - [ ] Segara Kidul (P1)
 - [ ] All gear as data, drops and chests
 - Exit: the game can be played start to finish with placeholder or pack art.

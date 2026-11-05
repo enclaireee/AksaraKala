@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_M4_S1_OBJ"
+on = "talked_to:mataram_dalang"
+marker = {"zone": "mt_pasar", "id": "mataram_dalang"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_M4_S2_OBJ"
+on = "item_picked:gong_ageng"
+marker = {"zone": "mt_reruntuhan", "id": "gong_ageng"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_M4_S3_OBJ"
+on = "talked_to:mataram_dalang"
+marker = {"zone": "mt_pasar", "id": "mataram_dalang"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_m4"
+kind = "side"
+type = "errand"
+zone = "mataram"
+size = "M"
+giver = "mataram_dalang"
+requires = Array[String](["mq2_2"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3")])
+rewards = {"items": ["blangkon"], "codex": ["gamelan"]}

@@ -2,9 +2,9 @@ extends Zone
 ## Desa Purwa, built from .docs/zones/desa_purwa.md (no redesign).
 
 const MAP := [
-	"############################################################",
-	"#..........................................................#",
-	"#...##################..............#############..........#",
+	"####################################################JJ######",
+	"#...................................................kk.....#",
+	"#...##################..............#############...ju.....#",
 	"#...#________________#..bb..........#___________#.....bbbb.#",
 	"#...#________________#..bb..........#___________#.....bbbb.#",
 	"#...#___D__D__D__D___#..............#_____G_____#.....bbbb.#",
@@ -54,6 +54,10 @@ const SPOTS := {
 	"D": {"scene": "res://entities/enemies/dummy.tscn", "props": {}, "tile": "_"},
 	"T": {"scene": W + "trigger.tscn", "props": {"trigger_id": "wayang_stage", "size": Vector2i(11, 5)}, "tile": "_"},
 	"S": {"scene": W + "trigger.tscn", "props": {"trigger_id": "sanggar_enter", "size": Vector2i(16, 9)}, "tile": "_"},
+	"J": {"scene": W + "exit.tscn", "props": {"target_zone": "gk_mulut", "spawn_id": "from_desa_purwa"}, "tile": "."},
+	"k": {"scene": W + "kabut.tscn", "props": {"flag": "mq3_8"}, "tile": "."},
+	"j": {"scene": W + "spawn.tscn", "props": {"id": "from_gk_mulut"}, "tile": "."},
+	"u": {"scene": W + "spawn.tscn", "props": {"id": "from_gua_kala"}, "tile": "."},
 }
 
 

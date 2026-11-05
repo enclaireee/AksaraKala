@@ -15,13 +15,33 @@ const ZONES := {
 	"ts_situ": "res://zones/ts_situ.tscn",
 	"ts_kawah_jalan": "res://zones/ts_kawah_jalan.tscn",
 	"ts_kawah": "res://zones/ts_kawah.tscn",
+	"mt_gapura": "res://zones/mt_gapura.tscn",
+	"mt_sawah": "res://zones/mt_sawah.tscn",
+	"mt_pasar": "res://zones/mt_pasar.tscn",
+	"gk_mulut": "res://zones/gk_mulut.tscn",
+	"gk_pasir": "res://zones/gk_pasir.tscn",
+	"gk_lupa": "res://zones/gk_lupa.tscn",
+	"gk_ruang_kala": "res://zones/gk_ruang_kala.tscn",
+	"mt_reruntuhan": "res://zones/mt_reruntuhan.tscn",
+	"mt_kuburan": "res://zones/mt_kuburan.tscn",
+	"mt_wetan": "res://zones/mt_wetan.tscn",
+	"mt_candi": "res://zones/mt_candi.tscn",
+	"mt_tegal": "res://zones/mt_tegal.tscn",
+	"tt_kulon": "res://zones/tt_kulon.tscn",
+	"tt_sabana": "res://zones/tt_sabana.tscn",
+	"tt_kali": "res://zones/tt_kali.tscn",
+	"tt_beringin": "res://zones/tt_beringin.tscn",
+	"tt_ladang": "res://zones/tt_ladang.tscn",
+	"tt_pasir": "res://zones/tt_pasir.tscn",
+	"tt_candi": "res://zones/tt_candi.tscn",
+	"tt_pesisir": "res://zones/tt_pesisir.tscn",
 }
 ## Where you can walk from each area, for the objective arrow's breadth-first search (architecture.md 9).
 ## Directed: a drop and a shortcut are listed only from the side that can always pass (world.md World
 ## structure). Kabut links are listed as open. ponytail: an opened shortcut's back edge is not added;
 ## the arrow just takes the long way round.
 const ADJ := {
-	"desa_purwa": ["ts_kebun", "mt_gapura"],
+	"desa_purwa": ["ts_kebun", "mt_gapura", "gk_mulut"],   # gk_mulut: kabut mq3_8
 	"ts_kebun": ["desa_purwa", "ts_kampung"],
 	"ts_kampung": ["ts_kebun", "ts_leuweung", "ts_sawah", "ts_leuwi"],
 	"ts_leuweung": ["ts_kampung", "ts_kebun"],   # ts_kebun: sc:ts_pagar, opened from this side
@@ -30,11 +50,34 @@ const ADJ := {
 	"ts_situ": ["ts_sawah", "ts_kawah_jalan", "ts_kampung"],   # ts_kampung: sc:ts_tangga
 	"ts_kawah_jalan": ["ts_situ", "ts_kawah", "ts_kampung"],   # ts_kampung: the one-way drop
 	"ts_kawah": ["ts_kawah_jalan"],
+	"mt_gapura": ["desa_purwa", "mt_sawah"],
+	"mt_sawah": ["mt_gapura", "mt_pasar", "mt_tegal"],
+	"mt_pasar": ["mt_sawah", "mt_reruntuhan"],
+	"mt_reruntuhan": ["mt_pasar", "mt_wetan", "mt_kuburan", "mt_sawah"],   # mt_sawah: sc:mt_ruin_sawah
+	"mt_kuburan": ["mt_reruntuhan", "mt_wetan"],
+	"mt_wetan": ["mt_reruntuhan", "mt_kuburan", "mt_candi", "mt_tegal", "tt_kulon"],   # mt_tegal: the one-way drop
+	"mt_candi": ["mt_wetan", "mt_gapura"],   # mt_gapura: sc:mt_candi_gapura
+	"mt_tegal": ["mt_sawah"],
+	"tt_kulon": ["mt_wetan", "tt_sabana"],
+	"tt_sabana": ["tt_kulon", "tt_kali", "tt_beringin", "tt_pesisir", "mt_tegal"],   # mt_tegal: sc:mt_tt
+	"tt_kali": ["tt_sabana", "tt_ladang"],
+	"tt_beringin": ["tt_sabana", "tt_pesisir"],   # tt_pesisir: the one-way drop
+	"tt_ladang": ["tt_kali", "tt_pasir", "tt_beringin"],   # tt_beringin: sc:tt_ladang
+	"tt_pasir": ["tt_ladang", "tt_candi", "tt_sabana"],   # tt_sabana: sc:tt_pasir
+	"tt_candi": ["tt_pasir"],
+	"tt_pesisir": ["tt_sabana"],   # sk_karang (S, kabut mq3_8) waits for Segara Kidul
+	"gk_mulut": ["desa_purwa", "gk_pasir", "gk_lupa"],   # gk_lupa: sc:gk_lorong
+	"gk_pasir": ["gk_mulut", "gk_lupa"],   # gk_lupa: the one-way drop
+	"gk_lupa": ["gk_mulut", "gk_ruang_kala"],
+	"gk_ruang_kala": ["gk_lupa", "desa_purwa"],   # desa_purwa: kala_exit, kabut mq5_3
 }
-## Edges in ADJ with no way back (drops). Shortcut edges are in SHORTCUTS.
-const DROPS := [["ts_kawah_jalan", "ts_kampung"]]
+## Edges in ADJ with no way back (drops, and the one-way kala_exit door). Shortcut edges are in SHORTCUTS.
+const DROPS := [["ts_kawah_jalan", "ts_kampung"], ["mt_wetan", "mt_tegal"], ["tt_beringin", "tt_pesisir"], ["gk_pasir", "gk_lupa"], ["gk_ruang_kala", "desa_purwa"]]
 ## Shortcut id -> [area that can always open it, area behind the gate].
-const SHORTCUTS := {"sc:ts_pagar": ["ts_leuweung", "ts_kebun"], "sc:ts_tangga": ["ts_situ", "ts_kampung"]}
+const SHORTCUTS := {"sc:ts_pagar": ["ts_leuweung", "ts_kebun"], "sc:ts_tangga": ["ts_situ", "ts_kampung"],
+	"sc:mt_ruin_sawah": ["mt_reruntuhan", "mt_sawah"], "sc:mt_candi_gapura": ["mt_candi", "mt_gapura"],
+	"sc:mt_tt": ["tt_sabana", "mt_tegal"], "sc:tt_ladang": ["tt_ladang", "tt_beringin"], "sc:tt_pasir": ["tt_pasir", "tt_sabana"],
+	"sc:gk_lorong": ["gk_lupa", "gk_mulut"]}
 
 var current_zone := ""   # set by Zone._ready; "" in scenes that are not a Zone
 
@@ -52,6 +95,16 @@ func _ready() -> void:
 	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.add_child(_fade)
+	get_node("/root/Events").quest_completed.connect(_on_quest_completed)
+
+
+## MQ5 done (the walk home through kala_exit): play the epilogue once the arrival has settled.
+func _on_quest_completed(id: String) -> void:
+	if id != "mq5":
+		return
+	while _busy:
+		await get_tree().process_frame
+	go_to("res://ui/epilogue.tscn", "")
 
 
 ## After class choice. Game.new_game() has already saved.

@@ -9,6 +9,11 @@ var kinds: Array[String] = []
 var kills: Array[String] = []
 
 
+class FakePlayer extends Node2D:
+	var health := Health.new()
+	var class_id := ""
+
+
 func _initialize() -> void:
 	player = CharacterBody2D.new()
 	player.add_to_group("player")
@@ -120,6 +125,104 @@ func _initialize() -> void:
 	check(j.state == Chaser.State.WINDUP, "swings again once free")
 	j.free()
 	kinds.clear()
+
+	# --- Pocong: Bind mid-hop ---
+	var pc := await _spawn("pocong", Vector2(270, 135))
+	check(pc.health.max_hp == 78 and pc.kind == "pocong", "pocong stats")
+	pc.status.apply(Status.Type.BOUND, 2.0)
+	check(pc.state != Charger.State.STUN and kinds.is_empty() and not pc.flat, "Bound outside a hop does nothing special")
+	pc.free()
+	pc = await _spawn("pocong", Vector2(270, 135))
+	for i in 600:
+		if pc.state == Charger.State.DASH:
+			break
+		pc._physics_process(DT)
+	check(pc.state == Charger.State.DASH, "pocong hops")
+	pc.status.apply(Status.Type.BOUND, 2.0)
+	check(pc.state == Charger.State.STUN and pc.flat and kinds == ["pocong"], "Bound mid-hop: flat, emitted once")
+	pc.hurtbox.receive(_hit())
+	check(pc.health.hp == 78 - 15, "x1.5 damage while flat (hp %d)" % pc.health.hp)
+	for i in 110:
+		pc._physics_process(DT)
+	check(pc.state == Charger.State.STUN, "flat at 1.8 s")
+	for i in 20:
+		pc._physics_process(DT)
+	check(pc.state != Charger.State.STUN and not pc.flat, "up again after 2 s")
+	pc.hurtbox.receive(_hit())
+	check(pc.health.hp == 78 - 15 - 10, "normal damage once up (hp %d)" % pc.health.hp)
+	pc.free()
+	kinds.clear()
+
+	# --- Genderuwo: Bolt during the throw wind-up ---
+	var gd := await _spawn("genderuwo", Vector2(290, 135))
+	check(gd.health.max_hp == 195 and gd.kind == "genderuwo", "genderuwo stats")
+	gd.hurtbox.receive(_bolt())
+	check(not gd.throwing and gd.state != Chaser.State.STAGGER and kinds.is_empty(), "Bolt outside the wind-up does not trigger")
+	gd.free()
+	gd = await _spawn("genderuwo", Vector2(290, 135))
+	gd.cooldown = 0.0
+	for i in 20:
+		if gd.throwing:
+			break
+		gd._physics_process(DT)
+	check(gd.throwing and gd.rock.visible, "genderuwo holds the rock while winding up")
+	gd.hurtbox.receive(_hit())
+	check(gd.throwing and kinds.is_empty(), "plain hit does not shatter the rock")
+	var h1: int = gd.health.hp
+	gd.hurtbox.receive(_bolt())
+	check(gd.health.hp == h1 - 10 - Genderuwo.ROCK_DAMAGE, "Bolt plus rock damage (hp %d)" % gd.health.hp)
+	check(gd.state == Chaser.State.STAGGER and gd.stagger_time == 1.5 and not gd.throwing and not gd.rock.visible, "staggered 1.5 s, rock gone")
+	check(kinds == ["genderuwo"], "genderuwo weakness emitted once")
+	for i in 100:
+		gd._physics_process(DT)
+	check(gd.state != Chaser.State.STAGGER, "stagger ends at 1.5 s")
+	gd.free()
+	kinds.clear()
+
+	# --- Arca: Dash-strike x3. Tuyul: one Burst clears the swarm ---
+	var fp := FakePlayer.new()
+	fp.add_child(fp.health)
+	fp.position = Vector2(-1000, 0)
+	root.add_child(fp)
+	var ar := await _spawn("arca", Vector2(-960, 0))
+	check(ar.health.max_hp == 78 and ar.kind == "arca", "arca stats")
+	var ds_data := SpellData.for_glyph("jawa_na")
+	var ds := ds_data.scene.instantiate()
+	ds.caster = fp
+	ds.data = ds_data
+	ds.direction = Vector2.RIGHT
+	root.add_child(ds)
+	var ds_dmg: int = ds.damage
+	for i in 15:
+		await physics_frame
+	check(ar.health.hp == 78 - 3 * ds_dmg and kinds == ["arca"], "dash-strike does x3 (hp %d)" % ar.health.hp)
+	ar.free()
+	kinds.clear()
+	ar = await _spawn("arca", Vector2(-960, 0))
+	ar.hurtbox.receive(_hit())
+	check(ar.health.hp == 68 and kinds.is_empty(), "plain hit is x1")
+	ar.free()
+	fp.position = Vector2(-1000, 0)
+	var swarm: Array[EnemyBase] = []
+	for p in [Vector2(-980, 0), Vector2(-1000, 30), Vector2(-1020, -20), Vector2(-985, 40)]:
+		swarm.append(await _spawn("tuyul", p))
+	check(swarm[0].health.max_hp == 31 and swarm[0].kind == "tuyul", "tuyul stats")
+	var bd := SpellData.for_glyph("sunda_ca")
+	var burst := bd.scene.instantiate()
+	burst.caster = fp
+	burst.data = bd
+	burst.global_position = fp.global_position
+	root.add_child(burst)
+	for i in 4:
+		await physics_frame
+	var alive := 0
+	for e in swarm:
+		alive += int(e.health.hp > 0)
+	check(alive == 0, "one Burst clears the swarm (%d alive)" % alive)
+	for e in swarm:
+		e.free()
+	fp.free()
+	kills.clear()
 
 	# --- Dummy ---
 	var game := root.get_node("Game")

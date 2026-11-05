@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "lesung_women"
+name_key = "NPC_LESUNG_WOMEN_NAME"
+entries = Array[Dictionary]([
+	{"if": ["glyph:jawa_ca"], "lines": ["DLG_LESUNG_WOMEN_1"], "do": []},
+	{"if": ["step:mq2=4"], "lines": ["DLG_LESUNG_WOMEN_2", "DLG_LESUNG_WOMEN_3", "DLG_LESUNG_WOMEN_4", "DLG_LESUNG_WOMEN_5"], "do": ["learn:jawa_ca"]},
+	{"if": [], "lines": ["DLG_LESUNG_WOMEN_6"], "do": []}
+])

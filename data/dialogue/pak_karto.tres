@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "pak_karto"
+name_key = "NPC_PAK_KARTO_NAME"
+entries = Array[Dictionary]([
+	{"if": ["glyph:jawa_na"], "lines": ["DLG_PAK_KARTO_1"], "do": []},
+	{"if": ["step:mq2=2"], "lines": ["DLG_PAK_KARTO_2", "DLG_PAK_KARTO_3", "DLG_PAK_KARTO_4", "DLG_PAK_KARTO_5"], "do": ["learn:jawa_na"]},
+	{"if": [], "lines": ["DLG_PAK_KARTO_6"], "do": []}
+])

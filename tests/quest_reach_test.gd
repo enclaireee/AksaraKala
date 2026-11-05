@@ -30,7 +30,7 @@ func _initialize() -> void:
 		await process_frame
 		marks[id] = {}
 		for n in z.find_children("*", "", true, false):
-			for k in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("kind"), n.name]:
+			for k in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.name]:
 				if k is String or k is StringName:
 					marks[id][String(k)] = true
 			var f := n.scene_file_path
@@ -48,6 +48,8 @@ func _initialize() -> void:
 			elif f.ends_with("chest.tscn") or f.ends_with("pickup.tscn"):
 				if n.item_id != "":
 					src.item_picked[n.item_id] = true
+			elif f.ends_with("curse_stake.tscn") and n.practice:
+				src.area_entered["timur_praktik_mark"] = true   # curse_stake.gd put_out()
 			elif n is EnemyBase:
 				add_enemy(src, n)
 		z.free()

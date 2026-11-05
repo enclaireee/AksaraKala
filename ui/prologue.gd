@@ -1,13 +1,17 @@
 extends Control
 ## Wayang prologue between New Game and the class cards (quests.md MQ0). PROLOGUE_1..13 in dialogue.csv:
 ## 1-10 narration, 11-13 Semar. Interact or click advances; holding interact ~1 s skips it all.
-## Placeholder art: lit screen, dark silhouettes. ASSUMED: the Jawa glyph line uses the macOS system font
+## The epilogue (ui/epilogue.tscn) reuses this with EPILOGUE_n keys and returns to Desa Purwa; a line with
+## `%d` gets the codex percentage. Placeholder art: lit screen, dark silhouettes. ASSUMED: the Jawa glyph line uses the macOS system font
 ## (like aksara_render_test) and falls back to Latin when it is missing.
 
 signal finished
 
-const LINES := 13
-const SEMAR_FROM := 11
+@export var key_prefix := "PROLOGUE"
+@export var lines := 13
+@export var semar_from := 11
+@export var semar_to := 13
+@export var next_scene := "res://ui/class_select.tscn"   # "" = back to Desa Purwa (epilogue)
 const HOLD := 1.0
 const JAWA := "/System/Library/Fonts/Supplemental/NotoSansJavanese-Regular.otf"
 const SHADOW := Color("14110f")
@@ -58,7 +62,7 @@ func _ready() -> void:
 	_aksara.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_aksara.position = Vector2(100, 55)
 	_aksara.size = Vector2(200, 40)
-	_aksara.modulate.a = 0.0
+	_aksara.modulate.a = 0.0 if key_prefix == "PROLOGUE" else 1.0   # the epilogue: the letters are back
 	screen.add_child(_aksara)
 	_name = Label.new()
 	_name.position = Vector2(40, 170)
@@ -100,16 +104,18 @@ func advance() -> void:
 		_tw.kill()
 		_text.visible_ratio = 1.0
 		return
-	if index >= LINES:
+	if index >= lines:
 		_finish()
 		return
 	index += 1
-	var key := "PROLOGUE_%d" % index
-	_name.text = "NPC_SEMAR_NAME" if index >= SEMAR_FROM else ""
-	_text.text = key
+	var key := "%s_%d" % [key_prefix, index]
+	_name.text = "NPC_SEMAR_NAME" if index >= semar_from and index <= semar_to else ""
+	_text.text = tr(key) % int(get_node("/root/Game").codex_percent()) if "%d" in tr(key) else key
 	_text.visible_ratio = 0.0
 	_tw = create_tween()
 	_tw.tween_property(_text, "visible_ratio", 1.0, maxf(0.3, tr(key).length() * 0.03))
+	if key_prefix != "PROLOGUE":
+		return
 	match index:
 		1: create_tween().tween_property(_aji, "position:x", 100.0, 1.2).set_trans(Tween.TRANS_SINE)
 		2: _fade(_servants, 1.0)
@@ -127,13 +133,16 @@ func _finish() -> void:
 		return
 	_done = true
 	finished.emit()
-	get_tree().change_scene_to_file("res://ui/class_select.tscn")
+	if next_scene == "":
+		get_node("/root/Zones").go_to("desa_purwa", "from_gua_kala")
+	else:
+		get_tree().change_scene_to_file(next_scene)
 
 
 func _input(e: InputEvent) -> void:
 	if e.is_action_pressed("interact") or (e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT):
+		get_viewport().set_input_as_handled()   # first: the last advance changes scene and drops the viewport
 		advance()
-		get_viewport().set_input_as_handled()
 
 
 func _process(delta: float) -> void:

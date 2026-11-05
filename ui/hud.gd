@@ -30,7 +30,8 @@ var _arrow: Node2D
 var _tnode: Node2D   # what the arrow points at: a marker node, or the exit toward the target zone
 
 # boss bar (ui.md 2). Contract: node in group "boss" with `health` (Health), `boss_name_key: String`,
-# optional `dawn: float` (0-1), and `engaged: bool` which the HUD polls. Shown while engaged and alive.
+# optional `dawn: float` (0-1), optional `sequence: PackedStringArray` + `seq_index: int` (shown while dawn
+# is set), and `engaged: bool` which the HUD polls. Shown while engaged and alive.
 const BOSS_W := 240
 var _boss_root: Control
 var _boss_name: Label
@@ -89,7 +90,8 @@ func _ready() -> void:
 		_push_toast(tr("UI_TOAST_QUEST_DONE") % _title(id))
 		refresh_arrow())
 	ev.item_picked.connect(func(id: String) -> void:
-		_push_toast(tr("UI_TOAST_ITEM") % tr("ITEM_%s_NAME" % id.to_upper())))
+		var what := "%s Ilmu" % id.get_slice(":", 1) if id.begins_with("ilmu:") else tr("ITEM_%s_NAME" % id.to_upper())
+		_push_toast(tr("UI_TOAST_ITEM") % what))
 	ev.glyph_learned.connect(func(id: String) -> void:
 		_push_toast(tr("UI_TOAST_GLYPH") % id.split("_")[-1].capitalize()))   # sunda_ka -> Ka
 	ev.zone_entered.connect(func(_z: String) -> void: refresh_arrow())
@@ -215,7 +217,7 @@ func refresh_arrow() -> void:
 			if "target_zone" in n and n.target_zone == nxt:
 				_tnode = n
 				return
-		elif id in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("kind"), n.name]:
+		elif id in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.name]:
 			_tnode = n
 			return
 
@@ -255,6 +257,14 @@ func _update_boss() -> void:
 	if not _boss_root.visible:
 		return
 	_boss_name.text = tr(str(b.get("boss_name_key")))
+	var seq = b.get("sequence")   # Batara Kala's shield: the glyphs to cast in order, the next one in brackets
+	if seq is PackedStringArray and not seq.is_empty() and b.get("dawn") != null:
+		var parts := PackedStringArray()
+		for i in seq.size():
+			var g := GlyphData.by_id(seq[i])
+			var t: String = g.latin if g else seq[i]
+			parts.append("[%s]" % t.to_upper() if i == int(b.get("seq_index")) else t)
+		_boss_name.text += "   " + " · ".join(parts)
 	_boss_fill.size.x = roundf(BOSS_W * clampf(float(h.hp) / maxf(h.max_hp, 1.0), 0.0, 1.0))
 	var dawn = b.get("dawn")
 	_dawn_bg.visible = dawn != null

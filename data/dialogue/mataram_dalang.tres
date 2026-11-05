@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "mataram_dalang"
+name_key = "NPC_MATARAM_DALANG_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq2=1"], "lines": ["DLG_MATARAM_DALANG_1", "DLG_MATARAM_DALANG_2", "DLG_MATARAM_DALANG_3", "DLG_MATARAM_DALANG_4", "DLG_MATARAM_DALANG_5", "DLG_MATARAM_DALANG_6", "DLG_MATARAM_DALANG_7"], "do": ["learn:jawa_ha"]},
+	{"if": ["step:sq_m4=2"], "lines": ["DLG_MATARAM_DALANG_8", "DLG_MATARAM_DALANG_9"], "do": []},
+	{"if": ["quest:sq_m4=done"], "lines": ["DLG_MATARAM_DALANG_10"], "do": []},
+	{"if": ["quest:sq_m4=active"], "lines": ["DLG_MATARAM_DALANG_11"], "do": []},
+	{"if": ["quest:sq_m4=available"], "lines": ["DLG_MATARAM_DALANG_12", "DLG_MATARAM_DALANG_13", "DLG_MATARAM_DALANG_14"], "do": ["start:sq_m4"]},
+	{"if": [], "lines": ["DLG_MATARAM_DALANG_15"], "do": []}
+])

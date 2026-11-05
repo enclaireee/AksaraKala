@@ -194,3 +194,187 @@ DLG_CEPOT_16,"Hai! Aku Cepot, putra Semar. Terkenal, kan?","Hi! I am Cepot, Sema
 DLG_CEPOT_17,Petilasan di sini enak buat istirahat.,The petilasan here is nice for resting.
 DLG_CEPOT_18,Coba duduk dulu. Aku tidak menggigit. Biasanya.,Try resting first. I don't bite. Usually.
 DLG_CEPOT_19,"Setelah itu, ngobrol lagi sama aku.","After that, talk to me again."
+NPC_MATARAM_DALANG_NAME,Ki Sumarto,Ki Sumarto
+DLG_MATARAM_DALANG_1,"Selamat datang, Nak. Aku Ki Sumarto, dalang kampung ini.","Welcome, child. I am Ki Sumarto, this village's dalang."
+DLG_MATARAM_DALANG_2,"Dengarkan. Aji Saka punya dua abdi setia, Dora dan Sembada.","Listen. Aji Saka had two loyal servants, Dora and Sembada."
+DLG_MATARAM_DALANG_3,Keduanya gugur karena setia. Dari situ lahir Hanacaraka.,Both fell out of loyalty. From that the Hanacaraka was born.
+DLG_MATARAM_DALANG_4,"Ini Ha, huruf pertama. Ia menyembuhkan luka.","This is Ha, the first letter. It heals wounds."
+DLG_MATARAM_DALANG_5,Dulu Bandung Bondowoso minta seribu candi dalam semalam.,Long ago Bandung Bondowoso asked for a thousand temples in one night.
+DLG_MATARAM_DALANG_6,Roro Jonggrang menipunya dengan fajar palsu: lesung dan jerami.,Roro Jonggrang tricked him with a fake dawn: lesung and straw.
+DLG_MATARAM_DALANG_7,Kini ia lupa dan terus membangun. Bantulah kami.,Now he forgets and keeps building. Please help us.
+DLG_MATARAM_DALANG_8,Gong ageng! Suaranya pulang ke kampung.,The gong ageng! Its voice comes home to the village.
+DLG_MATARAM_DALANG_9,Gong besar menutup satu putaran lagu. Kini gamelan utuh.,The big gong closes a round of the tune. The gamelan is whole.
+DLG_MATARAM_DALANG_10,"Gamelan utuh lagi. Terima kasih, Nak.","The gamelan is whole again. Thank you, child."
+DLG_MATARAM_DALANG_11,"Gong ageng ada di relung tertutup, di reruntuhan. Awas arca.",The gong ageng is in a sealed nook in the ruins. Beware the statues.
+DLG_MATARAM_DALANG_12,Kampung ini bisu tanpa gong ageng.,This village falls silent without its gong ageng.
+DLG_MATARAM_DALANG_13,"Gong itu terbawa ke reruntuhan candi, ke relung tertutup.","It was carried into the temple ruins, into a sealed nook."
+DLG_MATARAM_DALANG_14,Para arca di sana tak ramah. Maukah kau mencarinya?,The statues there are unfriendly. Will you find it?
+DLG_MATARAM_DALANG_15,"Duduk, duduk. Hanacaraka itu lebih dari sekadar huruf.","Sit, sit. The Hanacaraka is more than just letters."
+NPC_PAK_KARTO_NAME,Pak Karto,Pak Karto
+DLG_PAK_KARTO_1,Arca di dalam bangun kalau kau lewat. Waspadalah.,The statues inside wake when you pass. Beware.
+DLG_PAK_KARTO_2,"Aku Pak Karto, pemahat batu. Ki Sumarto yang mengirimmu?","I am Pak Karto, a stone-carver. Did Ki Sumarto send you?"
+DLG_PAK_KARTO_3,Ini Na. Gerakannya menerjang lurus menembus lawan.,This is Na. It dashes straight through your foe.
+DLG_PAK_KARTO_4,"Arca di reruntuhan itu batu tua, retak di dalamnya.","The statues in the ruins are old stone, cracked inside."
+DLG_PAK_KARTO_5,"Terjang dengan Na, dan batunya pecah.","Dash through with Na, and the stone breaks."
+DLG_PAK_KARTO_6,Aku mengukir batu sejak muda. Temui Ki Sumarto dulu.,I have carved stone since I was young. See Ki Sumarto first.
+NPC_LESUNG_WOMEN_NAME,Para Perempuan,The Women
+DLG_LESUNG_WOMEN_1,Terus menumbuk! Biar candi mengira fajar sudah tiba.,Keep pounding! Let the temple think dawn has come.
+DLG_LESUNG_WOMEN_2,"Kemari, Nak! Ikut menumbuk bersama kami.","Come, child! Pound along with us."
+DLG_LESUNG_WOMEN_3,"Tuk, tuk, tuk. Begitulah gejog lesung.","Tuk, tuk, tuk. That is gejog lesung."
+DLG_LESUNG_WOMEN_4,Konon begini cara Roro Jonggrang menipu fajar.,They say this is how Roro Jonggrang tricked the dawn.
+DLG_LESUNG_WOMEN_5,Ini Ca. Iramanya mempercepat tanganmu.,This is Ca. Its rhythm quickens your hands.
+DLG_LESUNG_WOMEN_6,Kami menumbuk padi sambil bernyanyi. Ikutlah nanti.,We pound rice and sing. Join us later.
+NPC_JURU_KUNCI_NAME,Mbah Marto,Mbah Marto
+DLG_JURU_KUNCI_1,Hati-hati di gerbang candi. Batu bisa jatuh.,Mind the temple gate. Stones can fall.
+DLG_JURU_KUNCI_2,"Mbah Marto, juru kunci candi. Lama tak ada tamu.","Mbah Marto, keeper of the temple keys. No guests for ages."
+DLG_JURU_KUNCI_3,Konon candi dijaga roh harimau. Ra memanggilnya.,They say a tiger spirit guards the temple. Ra calls it.
+DLG_JURU_KUNCI_4,"Gambar Ra, dan ia bertarung untukmu sebentar.","Draw Ra, and it fights for you a short while."
+DLG_JURU_KUNCI_5,Restuku kuberikan. Jalan ke candi kubukakan.,You have my blessing. I open the road to the temple.
+DLG_JURU_KUNCI_6,"Selesaikan dulu urusanmu di reruntuhan, baru temui aku.","Finish your business at the ruins first, then see me."
+NPC_NAWANG_WULAN_NAME,Nawang Wulan,Nawang Wulan
+DLG_NAWANG_WULAN_1,Kau baik hati. Selendang itu membawaku pulang.,You are kind. That shawl carried me home.
+DLG_NAWANG_WULAN_2,"Selendangku! Di bawah sisa padi, ya?","My shawl! Under the last of the rice, was it?"
+DLG_NAWANG_WULAN_3,Terima kasih. Kini aku pulang ke langit.,Thank you. Now I return to the sky.
+DLG_NAWANG_WULAN_4,Terimalah selendang tenunku. Semoga ringan langkahmu.,Take my woven scarf. May your steps be light.
+DLG_NAWANG_WULAN_5,"Carilah di lumbung, mungkin di bawah sisa padi.","Look in the lumbung, perhaps under the last of the rice."
+DLG_NAWANG_WULAN_6,Periuk nasiku tak ajaib lagi sejak tutupnya dibuka.,My rice pot lost its magic once someone lifted the lid.
+DLG_NAWANG_WULAN_7,Dulu sebutir padi cukup memenuhi periuk.,Once a single grain filled the whole pot.
+DLG_NAWANG_WULAN_8,Selendangku hilang juga. Maukah kau cari di lumbung?,My shawl is gone too. Would you look in the lumbung?
+DLG_NAWANG_WULAN_9,Damai sekali sawah ini. Padinya tumbuh subur.,Such peaceful fields. The rice grows well.
+NPC_PANDE_BESI_NAME,Pande Besi,Blacksmith
+DLG_PANDE_BESI_1,Pasar tenang lagi. Tombak itu pantas di tanganmu.,The market is calm again. That spear suits your hand.
+DLG_PANDE_BESI_2,Tuyul tak mencuri lagi? Bagus! Ini tombak dari bengkelku.,No more tuyul thefts? Good! Here is a spear from my forge.
+DLG_PANDE_BESI_3,Sarangnya di tegalan. Tuyul suka sekali berhitung.,Their den is in the tegal. Tuyuls love counting.
+DLG_PANDE_BESI_4,Koin di lapakku raib lagi! Pasti ulah tuyul.,Coins vanished from my stall again! Surely tuyuls.
+DLG_PANDE_BESI_5,Mereka hanya pencuri uang kecil yang usil.,They are only mischievous little money thieves.
+DLG_PANDE_BESI_6,Bawa kacang hijau ini. Konon mereka tak tahan menghitungnya.,Take these green beans. They say tuyuls cannot resist counting them.
+DLG_PANDE_BESI_7,Sarangnya ada di tegalan. Bisa kau urus?,Their den is in the tegal. Can you deal with it?
+DLG_PANDE_BESI_8,"Aku pande besi. Besi kutempa, koin kujaga.",I am a blacksmith. I forge iron and guard my coins.
+NPC_WEWE_NEIGHBOR_NAME,Tetangga,Neighbor
+DLG_WEWE_NEIGHBOR_1,Anak itu kini sering tertawa.,The child laughs often now.
+DLG_WEWE_NEIGHBOR_2,"Anak itu pulang! Terima kasih, Nak.",The child is home! Thank you.
+DLG_WEWE_NEIGHBOR_3,Orang tuanya berjanji lebih sering menemaninya.,Her parents promise to spend more time with her.
+DLG_WEWE_NEIGHBOR_4,Bukitnya ada di dekat kuburan. Berhati-hatilah.,The hill is near the graveyard. Be careful.
+DLG_WEWE_NEIGHBOR_5,Anak tetangga sudah dua hari hilang. Orang tuanya sibuk.,A neighbor's child has been missing two days. Her parents were busy.
+DLG_WEWE_NEIGHBOR_6,"Kata orang, Wewe Gombel membawa anak yang terlantar.",They say Wewe Gombel takes children who are neglected.
+DLG_WEWE_NEIGHBOR_7,"Bukan untuk menyakiti, kata cerita. Tolong carilah bukitnya.","Not to harm, says the tale. Please find her hill."
+DLG_WEWE_NEIGHBOR_8,"Pasar ramai, tapi anak-anak butuh perhatian.","The market is lively, but children need attention."
+NPC_WEWE_PARENTS_NAME,Orang Tua Anak,The Child's Parents
+DLG_WEWE_PARENTS_1,Kami akan lebih sering menemaninya. Janji.,We will be with her more. A promise.
+DLG_WEWE_PARENTS_2,Anak kami hilang. Kami terlalu sibuk berjualan.,Our child is missing. We were too busy selling.
+DLG_WEWE_PARENTS_3,Kami akan ke bukit dan memanggilnya baik-baik.,We will go to the hill and call her kindly.
+DLG_WEWE_PARENTS_4,"Sambil memukul panci, seperti kata orang tua dulu.","Banging pots, as the old folk used to say."
+DLG_WEWE_PARENTS_5,Hari ini banyak pembeli. Hati kami lega.,Plenty of buyers today. Our hearts are light.
+NPC_WEWE_PARENTS_2_NAME,Orang Tua Anak,The Child's Parents
+DLG_WEWE_PARENTS_2_1,"Terima kasih, Nak. Kami pulang bersamanya.","Thank you, child. We go home with her."
+DLG_WEWE_PARENTS_2_2,"Nak! Pulanglah, Ibu dan Bapak di sini.","Child! Come home, Mother and Father are here."
+DLG_WEWE_PARENTS_2_3,Maafkan kami yang lalai. Kami berjanji.,Forgive us for neglecting you. We promise.
+DLG_WEWE_PARENTS_2_4,"Dari balik batu, seorang anak berlari memeluk mereka.","From behind a stone, a small child runs into their arms."
+DLG_WEWE_PARENTS_2_5,"Maaf, kami sedang mencari anak kami.","Sorry, we are looking for our child."
+NPC_TUYUL_LEADER_NAME,Pemimpin Tuyul,Tuyul Leader
+DLG_TUYUL_LEADER_1,"Satu, dua, tiga...","One, two, three..."
+DLG_TUYUL_LEADER_2,"Satu, dua, tiga... eh, aku lupa hitungannya!","One, two, three... oops, I lost count!"
+DLG_TUYUL_LEADER_3,"Ketangkap! Baiklah, koinnya kukembalikan.","Caught! Fine, I will give the coins back."
+DLG_TUYUL_LEADER_4,Tapi boleh kan aku tetap berhitung?,But may I keep counting?
+DLG_TUYUL_LEADER_5,Milikku! Milikku! Jangan ganggu!,Mine! Mine! Do not bother me!
+DLG_SEMAR_30,Bandung Bondowoso berhenti membangun. Kerja bagus!,Bandung Bondowoso has stopped building. Well done!
+DLG_SEMAR_31,"Lupa itu bukan hanya milik Mataram, Nak.","The forgetting is not Mataram's alone, child."
+DLG_SEMAR_32,"Asalnya dari sesuatu yang lebih tua, di timur.","It comes from something older, in the east."
+DLG_SEMAR_33,Kabut di timur Mataram kini terbuka.,The kabut east of Mataram is open now.
+DLG_SEMAR_34,Timur itu jauh dan panas. Bawalah bekal.,The east is far and hot. Pack supplies.
+DLG_SEMAR_35,"Dengarkan Ki Sumarto, lalu ikuti jejak aksara Jawa.","Hear Ki Sumarto, then follow the trail of the Javanese letters."
+DLG_SEMAR_36,Candi itu takkan selesai selama ia lupa.,The temples will never be finished while he forgets.
+DLG_SEMAR_37,Mataram pernah membangun seribu candi. Kini ia lupa.,Mataram once raised a thousand temples. Now it forgets.
+DLG_SEMAR_38,"Ki Sumarto, sang dalang, menunggumu di pasar.","Ki Sumarto, the dalang, waits for you at the market."
+DLG_SEMAR_39,Mulailah dari petilasan di tengah sawah.,Begin at the petilasan among the rice fields.
+NPC_TIMUR_EMPU_NAME,Mpu Wirasana,Mpu Wirasana
+DLG_TIMUR_EMPU_1,"Selamat datang, Nak. Aku Mpu Wirasana, empu tua di bengkel ini.","Welcome, child. I am Mpu Wirasana, the old smith of this forge."
+DLG_TIMUR_EMPU_2,Dahulu Mpu Gandring menempa keris untuk Ken Arok.,Long ago Mpu Gandring forged a keris for Ken Arok.
+DLG_TIMUR_EMPU_3,"Ken Arok tak sabar, dan merebut keris itu sebelum rampung.",Ken Arok grew impatient and took the keris before it was done.
+DLG_TIMUR_EMPU_4,"Dengan napas terakhir, sang empu mengutuk keris itu.","With his last breath, the smith cursed the keris."
+DLG_TIMUR_EMPU_5,"Kini kerisnya bangun lagi, marah dan sedih.","Now the keris has woken again, angry and sad."
+DLG_TIMUR_EMPU_6,Mbok Srini di tepi kali butuh bantuan. Temui dia dulu.,Mbok Srini by the river needs help. See her first.
+DLG_TIMUR_EMPU_7,Buto Ijo sudah kau kalahkan? Bagus sekali.,You beat Buto Ijo? Very good.
+DLG_TIMUR_EMPU_8,Keris itu menandai korbannya dengan tanda kutukan.,The keris marks its victims with curse marks.
+DLG_TIMUR_EMPU_9,Tanda itu bisa dipatahkan dengan aksara.,A curse mark can be broken with aksara.
+DLG_TIMUR_EMPU_10,Berlatihlah pada tiga tonggak di halaman bengkel.,Practise on the three stakes in the forge yard.
+DLG_TIMUR_EMPU_11,"Patahkan dua tanda, baru kau siap.",Break two marks and you are ready.
+DLG_TIMUR_EMPU_12,"Batu bintang! Ringan di tangan, tapi pamornya indah.","A star-stone! Light in the hand, but its pamor is lovely."
+DLG_TIMUR_EMPU_13,"Terima kasih, Nak. Terimalah keris ini.","Thank you, child. Take this keris."
+DLG_TIMUR_EMPU_14,"Luk tujuh, ditempa dari batu langit.","Seven curves, forged from sky-stone."
+DLG_TIMUR_EMPU_15,Aku butuh batu dari langit untuk pamor keris baru.,I need a stone from the sky for the pamor of a new keris.
+DLG_TIMUR_EMPU_16,Konon pecahannya jatuh di dataran candi Mataram.,They say a fragment fell on the temple plain of Mataram.
+DLG_TIMUR_EMPU_17,Maukah kau mengambilnya? Pakai pintu belakang di sabana.,Will you fetch it? Use the back door in the savanna.
+DLG_TIMUR_EMPU_18,Gambar aksara tepat pada tonggak itu. Dua tanda cukup.,Draw the aksara right on the stakes. Two marks is enough.
+DLG_TIMUR_EMPU_19,Batu bintang itu ada di halaman timur candi Mataram.,The star-stone is in the east yard of the Mataram temple.
+DLG_TIMUR_EMPU_20,Keris itu tenang. Terima kasih sudah menidurkannya.,The keris is calm. Thank you for laying it to rest.
+DLG_TIMUR_EMPU_21,"Hati-hati di jalan, Nak. Api masih menyala di timur.","Take care on the road, child. Fires still burn in the east."
+DLG_TIMUR_EMPU_22,Besi itu jujur. Ia hanya mengingat apa yang ditempakan padanya.,Iron is honest. It only remembers what is forged into it.
+NPC_MBOK_SRINI_NAME,Mbok Srini,Mbok Srini
+DLG_MBOK_SRINI_1,Anakku Timun Mas dikejar Buto Ijo. Aku tak sanggup menolongnya.,My daughter Timun Mas is chased by Buto Ijo. I cannot help her.
+DLG_MBOK_SRINI_2,"Bawalah empat kantong ini: biji timun, jarum, garam, dan terasi.","Take these four pouches: cucumber seeds, needles, salt and terasi."
+DLG_MBOK_SRINI_3,Kantong itu kau pakai satu demi satu saat melawannya.,Use them one by one when you face him.
+DLG_MBOK_SRINI_4,Timun Mas sudah lari jauh. Susullah Buto Ijo di ladang timur.,Timun Mas has run far. Go after Buto Ijo in the eastern field.
+DLG_MBOK_SRINI_5,"Buto Ijo sudah kalah! Timun Mas aman. Terima kasih, Nak.","Buto Ijo is beaten! Timun Mas is safe. Thank you, child."
+DLG_MBOK_SRINI_6,"Dalam kisahnya, Timun Mas lolos berkat empat kantong itu.","In the tale, Timun Mas escapes thanks to those four pouches."
+DLG_MBOK_SRINI_7,Temui sang empu di bengkel beringin dulu. Ia tahu banyak.,See the empu at the banyan forge first. He knows much.
+DLG_MBOK_SRINI_8,Hati-hati di sana. Ladang itu panas dan sepi.,Take care out there. The field is hot and lonely.
+NPC_KLETHING_KUNING_NAME,Klething Kuning,Klething Kuning
+DLG_KLETHING_KUNING_1,"Ande-Ande Lumut, aku datang! Terima kasih, Nak.","Ande-Ande Lumut, here I come! Thank you, child."
+DLG_KLETHING_KUNING_2,Sudah beres! Jalan ke seberang terbuka.,All done! The way across is open.
+DLG_KLETHING_KUNING_3,Terimalah cincin ini sebagai tanda terima kasih.,Take this ring as thanks.
+DLG_KLETHING_KUNING_4,"Kepiting itu minta bayaran, dan aku tak punya apa-apa.",The crab wants a payment and I have nothing.
+DLG_KLETHING_KUNING_5,"Sodo lanang, lidi sapu dari seorang nenek, tertinggal di beringin. Atau hadapi saja kepitingnya.","The sodo lanang, a broom stick from an old woman, was left in the banyan grove. Or just face the crab."
+DLG_KLETHING_KUNING_6,Aku Klething Kuning. Aku ingin menyeberang menemui Ande-Ande Lumut.,I am Klething Kuning. I want to cross and meet Ande-Ande Lumut.
+DLG_KLETHING_KUNING_7,"Tapi Yuyu Kangkang, kepiting raksasa, minta bayaran dari setiap yang lewat.","But Yuyu Kangkang, a giant crab, demands a payment from everyone who crosses."
+DLG_KLETHING_KUNING_8,Maukah kau membantuku?,Will you help me?
+DLG_KLETHING_KUNING_9,Sungai ini panjang dan sepi.,This river is long and quiet.
+NPC_TIMUR_HERDER_NAME,Penggembala,Herder
+DLG_TIMUR_HERDER_1,Terima kasih. Sabana kembali tenang.,Thank you. The savanna is calm again.
+DLG_TIMUR_HERDER_2,Apinya padam! Rumput bisa tumbuh lagi.,The fire is out! The grass can grow again.
+DLG_TIMUR_HERDER_3,Ini kantong ramuan. Bawalah.,Here is a herb pouch. Take it.
+DLG_TIMUR_HERDER_4,"Banaspati itu ada di pantai. Hati-hati, ia cepat.","The Banaspati is on the shore. Careful, it is fast."
+DLG_TIMUR_HERDER_5,"Ikuti jejak hangus ke selatan, sampai ke pantai berpasir.",Follow the burnt trail south to the sandy shore.
+DLG_TIMUR_HERDER_6,Rumput ini terbakar terus setiap malam.,This grass burns again every night.
+DLG_TIMUR_HERDER_7,Bukan matahari. Ada api berkepala yang berkeliaran.,It is not the sun. A flaming head roams about.
+DLG_TIMUR_HERDER_8,Jejak hangusnya mengarah ke selatan. Maukah kau menyelidikinya?,Its burnt trail leads south. Will you look into it?
+DLG_TIMUR_HERDER_9,"Domba-dombaku gelisah, tapi sabana ini tetap indah.","My sheep are restless, but the savanna is still beautiful."
+NPC_KEPANG_LEADER_NAME,Pemimpin Kuda Lumping,Kuda Lumping Leader
+DLG_KEPANG_LEADER_1,"Pertunjukan yang indah, bukan? Terima kasih, Nak!","A fine show, was it not? Thank you, child!"
+DLG_KEPANG_LEADER_2,Duduklah di depan panggung. Kami mulai!,Sit in front of the stage. We begin!
+DLG_KEPANG_LEADER_3,Kuda-kudaku lengkap! Kau penyelamat kami.,My horses are all here! You saved us.
+DLG_KEPANG_LEADER_4,Sekarang tontonlah kami di panggung.,Now watch us at the stage.
+DLG_KEPANG_LEADER_5,"Tiga kuda kepang kami terbawa angin: di sabana, di kali, dan di pantai.","Three of our kuda kepang blew away: on the savanna, by the river and on the shore."
+DLG_KEPANG_LEADER_6,Kami rombongan kuda lumping. Badai menerbangkan kuda kepang kami.,We are a kuda lumping troupe. A storm blew our kuda kepang away.
+DLG_KEPANG_LEADER_7,Maukah kau mencarinya? Cari yang berkilau di tanah.,Will you find them? Look for a sparkle on the ground.
+DLG_KEPANG_LEADER_8,"Kuda kepang itu anyaman bambu, ringan dan lincah.","The kuda kepang is woven bamboo, light and nimble."
+DLG_SEMAR_40,Ada keris tua yang bangun di timur. Pergilah ke sana.,An old keris has woken in the east. Go there.
+DLG_SEMAR_41,"Keris itu tenang kembali. Kau berani, Nak.","The keris is calm again. You are brave, child."
+DLG_SEMAR_42,Tapi kutukan Mpu Gandring hanyalah gema.,But Mpu Gandring's curse is only an echo.
+DLG_SEMAR_43,"Di balik semua yang dilupakan ada Kala, yang menelan waktu.","Behind everything forgotten stands Kala, who swallows time."
+DLG_SEMAR_44,Kabut di selatan sabana kini terbuka. Tarik napas dulu.,The kabut south of the savanna is open now. Catch your breath first.
+DLG_SEMAR_45,"Kala menunggu. Jaga dirimu, Nak.","Kala is waiting. Take care, child."
+DLG_SEMAR_46,"Cari petilasan di sabana, lalu temui sang empu.","Find the petilasan on the savanna, then meet the empu."
+DLG_SEMAR_47,Keris tua itu harus tenang sebelum Kala bangun.,The old keris must rest before Kala wakes.
+DLG_SEMAR_48,"Di timur, sebuah keris tua menjerit dalam tidurnya.","In the east, an old keris screams in its sleep."
+DLG_SEMAR_49,"Temui Mpu Wirasana, empu di bengkel beringin.","Meet Mpu Wirasana, the smith at the banyan forge."
+DLG_SEMAR_50,"Kabut di timur laut Desa Purwa sudah terangkat. Itu jalan ke Gua Kala.","The kabut northeast of Desa Purwa has lifted. That is the way to Kala's Cave."
+DLG_SEMAR_51,Bawa semua aksaramu. Aku menunggu di sini.,Take all your letters with you. I will wait here.
+DLG_SEMAR_52,"Kala sudah pulang, panggung menyala lagi. Terima kasih, Nak.","Kala has gone home and the stage glows again. Thank you, child."
+DLG_SEMAR_53,Jelajahilah sisa kisah. Aku tidak ke mana-mana.,Wander the remaining tales. I am going nowhere.
+DLG_SEMAR_KALA_1,Nak! Ini aku. Ya ya ya. Jangan tanya bagaimana.,Child! It is me. Yes yes yes. Do not ask how.
+DLG_SEMAR_KALA_2,"Kala itu bukan jahat, hanya lapar dan kesepian.","Kala is not wicked, only hungry and lonely."
+DLG_SEMAR_KALA_3,Ingat aksaramu. Aku percaya padamu.,Remember your letters. I believe in you.
+DLG_SEMAR_KALA_4,Teruslah. Kala menunggu di ujung gua.,Keep going. Kala waits at the end of the cave.
+EPILOGUE_1,Kala berhenti. Lapar itu mereda seperti ombak surut.,Kala stops. The hunger fades like a tide going out.
+EPILOGUE_2,"Ia menunduk, lalu berbalik pulang.","He bows his head, then turns for home."
+EPILOGUE_3,Aksara yang lama hilang mengalir kembali ke desa.,The long-lost letters flow back to the village.
+EPILOGUE_4,"Ha, Na, Ca, Ra, Ka. Orang-orang mengingatnya lagi.","Ha, Na, Ca, Ra, Ka. The people remember them again."
+EPILOGUE_5,Layar wayang menyala. Bayangan menari.,The wayang screen glows. Shadows dance.
+EPILOGUE_6,Anak-anak bersorak. Seekor ayam pun ikut kaget.,The children cheer. Even a chicken is startled.
+EPILOGUE_7,"Kisah itu hidup lagi, satu huruf demi satu huruf.","The tale lives again, one letter at a time."
+EPILOGUE_8,"Nah, Nak. Kau pulang dengan selamat.","There, child. You came home safe."
+EPILOGUE_9,"Aksara tidak hilang, ia hanya menunggu ditulis.","The letters were never lost, only waiting to be written."
+EPILOGUE_10,"Kisahnya belum tamat. Selalu ada lakon berikutnya, hehe.","The story is not over. There is always another play, hehe."
+EPILOGUE_11,"BUDAYAGO\ndibuat oleh fatih","BUDAYAGO\nmade by fatih"
+EPILOGUE_12,Kodeks: %d%% aksara yang terlupa telah diingat.,Codex: %d%% of the forgotten letters remembered.

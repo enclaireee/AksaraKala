@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "nawang_wulan"
+name_key = "NPC_NAWANG_WULAN_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_m1=done"], "lines": ["DLG_NAWANG_WULAN_1"], "do": []},
+	{"if": ["step:sq_m1=3"], "lines": ["DLG_NAWANG_WULAN_2", "DLG_NAWANG_WULAN_3", "DLG_NAWANG_WULAN_4"], "do": []},
+	{"if": ["quest:sq_m1=active"], "lines": ["DLG_NAWANG_WULAN_5"], "do": []},
+	{"if": ["quest:sq_m1=available"], "lines": ["DLG_NAWANG_WULAN_6", "DLG_NAWANG_WULAN_7", "DLG_NAWANG_WULAN_8"], "do": ["start:sq_m1"]},
+	{"if": [], "lines": ["DLG_NAWANG_WULAN_9"], "do": []}
+])

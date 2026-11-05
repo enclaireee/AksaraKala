@@ -23,7 +23,7 @@ Numbers **TUNE**. Sources use "Zone N chest" or "drop"; shops are not designed y
 | Longbow | Ranged | 10 | Slower draw, more damage | Zone 2 chest |
 | Crossbow | Ranged | 14 | Slow wind-up, high damage | Zone 3 chest |
 | Oak Staff | Staff | 8 | Weak ranged bolt | Starter (Mage) |
-| Iron Staff | Staff | 9 | Sturdier bolt | Zone 2 drop |
+| Iron Staff | Staff | 9 | Sturdier bolt | Zone 2 chest (no enemy drops yet, **ASSUMED**) |
 
 ## Weapons: mythic (pusaka)
 | Item | Archetype | Base dmg | Notes (culture) | Source |
@@ -64,7 +64,7 @@ Body armor only, one slot.
 - **Healing Flask**: heal item, 3 charges, 40% heal each, refilled at a petilasan ([rpg.md](rpg.md)).
 - **Flask Shard**: +1 max flask charge, 3 in the game (max 6). Quest rewards only.
 - **Herb Pouch**: +5% flask heal each, 4 in the game (max 60%). Quest rewards only.
-- **Ilmu**: currency drops.
+- **Ilmu**: currency drops. A chest with no gear left to give holds Ilmu S or M of its zone instead (`item_id: "ilmu:<n>"`, **ASSUMED**).
 - **Herb**: small HP pickup from enemies.
 - **Gulungan** (scroll): learns a new glyph. Main quest only ([quests.md](quests.md) section 3.3).
 

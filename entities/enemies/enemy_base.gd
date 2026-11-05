@@ -72,6 +72,8 @@ func _physics_process(delta: float) -> void:
 	since_hit += delta
 	if since_hit >= tuning.poise_refill:
 		poise = _max_poise()
+	if target == null:   # a zone's placed spots are built before its player
+		target = get_tree().get_first_node_in_group("player") as Node2D
 	_tick(delta)
 
 

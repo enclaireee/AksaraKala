@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "wewe_neighbor"
+name_key = "NPC_WEWE_NEIGHBOR_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_m2=done"], "lines": ["DLG_WEWE_NEIGHBOR_1"], "do": []},
+	{"if": ["step:sq_m2=3"], "lines": ["DLG_WEWE_NEIGHBOR_2", "DLG_WEWE_NEIGHBOR_3"], "do": []},
+	{"if": ["quest:sq_m2=active"], "lines": ["DLG_WEWE_NEIGHBOR_4"], "do": []},
+	{"if": ["quest:sq_m2=available"], "lines": ["DLG_WEWE_NEIGHBOR_5", "DLG_WEWE_NEIGHBOR_6", "DLG_WEWE_NEIGHBOR_7"], "do": ["start:sq_m2"]},
+	{"if": [], "lines": ["DLG_WEWE_NEIGHBOR_8"], "do": []}
+])

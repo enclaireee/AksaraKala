@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "timur_empu"
+name_key = "NPC_TIMUR_EMPU_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq3=1"], "lines": ["DLG_TIMUR_EMPU_1", "DLG_TIMUR_EMPU_2", "DLG_TIMUR_EMPU_3", "DLG_TIMUR_EMPU_4", "DLG_TIMUR_EMPU_5", "DLG_TIMUR_EMPU_6"], "do": []},
+	{"if": ["step:mq3=4"], "lines": ["DLG_TIMUR_EMPU_7", "DLG_TIMUR_EMPU_8", "DLG_TIMUR_EMPU_9", "DLG_TIMUR_EMPU_10", "DLG_TIMUR_EMPU_11"], "do": []},
+	{"if": ["step:sq_t3=2"], "lines": ["DLG_TIMUR_EMPU_12", "DLG_TIMUR_EMPU_13", "DLG_TIMUR_EMPU_14"], "do": []},
+	{"if": ["quest:sq_t3=available"], "lines": ["DLG_TIMUR_EMPU_15", "DLG_TIMUR_EMPU_16", "DLG_TIMUR_EMPU_17"], "do": ["start:sq_t3"]},
+	{"if": ["step:mq3=5"], "lines": ["DLG_TIMUR_EMPU_18"], "do": []},
+	{"if": ["quest:sq_t3=active"], "lines": ["DLG_TIMUR_EMPU_19"], "do": []},
+	{"if": ["flag:mq3_7"], "lines": ["DLG_TIMUR_EMPU_20"], "do": []},
+	{"if": ["quest:mq3=active"], "lines": ["DLG_TIMUR_EMPU_21"], "do": []},
+	{"if": [], "lines": ["DLG_TIMUR_EMPU_22"], "do": []}
+])

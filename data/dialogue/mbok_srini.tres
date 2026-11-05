@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "mbok_srini"
+name_key = "NPC_MBOK_SRINI_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq3=2"], "lines": ["DLG_MBOK_SRINI_1", "DLG_MBOK_SRINI_2", "DLG_MBOK_SRINI_3", "DLG_MBOK_SRINI_4"], "do": []},
+	{"if": ["flag:mq3_4"], "lines": ["DLG_MBOK_SRINI_5", "DLG_MBOK_SRINI_6"], "do": []},
+	{"if": ["quest:mq3=active"], "lines": ["DLG_MBOK_SRINI_7"], "do": []},
+	{"if": [], "lines": ["DLG_MBOK_SRINI_8"], "do": []}
+])

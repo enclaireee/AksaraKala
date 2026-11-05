@@ -133,6 +133,20 @@ func _initialize() -> void:
 	check(g.quests.t_d.step == 1, "prefix step did not finish: %s" % g.quests.t_d)
 
 	# A kill step whose unique enemy is already dead is met at once (MQ1: boss beaten before resting).
+	# Two-way step (quests.md 7.1 alt): either event completes it, fight gives +50% Ilmu, resolution survives a reload.
+	var two := step("talked_to:pa")
+	two.alt = {"enemy_killed:elite": "fight", "talked_to:pa": "peaceful"}
+	quest("t_f", [two, step("talked_to:zf")])
+	g.start_quest("t_f")
+	g.on_event("enemy_killed", "elite")   # what Game sends for a kill of kind "elite"
+	check(g.quests.t_f.step == 1 and g.quests.t_f.resolution == "fight", "alt fight: %s" % g.quests.t_f)
+	g.save_game()
+	g.load_game()
+	var i0: int = g.ilmu
+	ev.talked_to.emit("zf")
+	check(g.quest_state("t_f") == "done" and g.ilmu - i0 == 45, "fight bonus after reload: %d" % (g.ilmu - i0))
+	g.add_item("golok", false)
+	check(g.check("item:golok") and not g.check("item:spear"), "item condition")
 	g.killed.append("boss_x")
 	g.start_quest("t_e")
 	ev.petilasan_activated.emit("p")

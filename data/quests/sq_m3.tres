@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_M3_S1_OBJ"
+on = "talked_to:pande_besi"
+marker = {"zone": "mt_pasar", "id": "pande_besi"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_M3_S2_OBJ"
+on = "area_entered:tuyul_hideout"
+marker = {"zone": "mt_tegal", "id": "tuyul_hideout"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_M3_S3_OBJ"
+on = "talked_to:tuyul_leader"
+alt = {"enemy_killed:tuyul_leader": "fight", "talked_to:tuyul_leader": "peaceful"}
+marker = {"zone": "mt_tegal", "id": "tuyul_hideout"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_M3_S4_OBJ"
+on = "talked_to:pande_besi"
+marker = {"zone": "mt_pasar", "id": "pande_besi"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_m3"
+kind = "side"
+type = "bounty"
+zone = "mataram"
+size = "M"
+giver = "pande_besi"
+requires = Array[String](["mq2_1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"items": ["spear"], "codex": ["tuyul"]}

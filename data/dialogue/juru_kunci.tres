@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "juru_kunci"
+name_key = "NPC_JURU_KUNCI_NAME"
+entries = Array[Dictionary]([
+	{"if": ["glyph:jawa_ra"], "lines": ["DLG_JURU_KUNCI_1"], "do": []},
+	{"if": ["step:mq2=5"], "lines": ["DLG_JURU_KUNCI_2", "DLG_JURU_KUNCI_3", "DLG_JURU_KUNCI_4", "DLG_JURU_KUNCI_5"], "do": ["learn:jawa_ra", "flag:mq2_6"]},
+	{"if": [], "lines": ["DLG_JURU_KUNCI_6"], "do": []}
+])

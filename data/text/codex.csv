@@ -42,3 +42,61 @@ CODEX_ANGKLUNG_TITLE,Angklung,Angklung
 CODEX_ANGKLUNG_BODY,"Alat musik bambu Sunda. Satu angklung memainkan satu nada, jadi lagu butuh semua pemain.","A Sundanese bamboo instrument. One angklung plays one note, so a tune needs every player."
 CODEX_CEPOT_TITLE,Cepot,Cepot
 CODEX_CEPOT_BODY,"Punakawan jenaka dalam wayang golek Sunda, putra Semar yang paling terkenal.","A comic punakawan of Sundanese wayang golek, Semar's best-known son."
+CODEX_GAPURA_TITLE,Gapura,Gapura
+CODEX_GAPURA_BODY,"Gerbang batu berundak khas Jawa dan Bali, kerap dijaga arca. Sumber: arsitektur tradisional Jawa dan Bali.","A tiered stone gate typical of Java and Bali, often guarded by statues. Source: traditional Javanese and Balinese architecture."
+CODEX_GEJOG_LESUNG_TITLE,Gejog Lesung,Gejog Lesung
+CODEX_GEJOG_LESUNG_BODY,"Musik dari menumbuk padi di lesung dengan alu, dikenal di Jawa Tengah dan Yogyakarta. Sumber: kesenian rakyat Jawa Tengah dan Yogyakarta.","Music made by pounding rice in a lesung with a pestle, known in Central Java and Yogyakarta. Source: folk art of Central Java and Yogyakarta."
+CODEX_GAMELAN_TITLE,Gamelan,Gamelan
+CODEX_GAMELAN_BODY,"Orkestra Jawa dari gong dan logam bernada. Gong besar biasanya menutup satu putaran lagu. Sumber: UNESCO, 2021.","A Javanese orchestra of gongs and tuned metal. The big gong usually closes one round of a tune. Source: UNESCO, 2021."
+CODEX_CANDI_SERIBU_TITLE,Candi Seribu,Candi Seribu
+CODEX_CANDI_SERIBU_BODY,"Tempat rekaan game ini, terinspirasi kisah seribu candi. Bukan lokasi nyata. Sumber: rekaan game.","An invented place in this game, inspired by the tale of a thousand temples. Not a real site. Source: game invention."
+CODEX_RORO_JONGGRANG_TITLE,Roro Jonggrang,Roro Jonggrang
+CODEX_RORO_JONGGRANG_BODY,"Putri yang diminta menikah dengan Bandung Bondowoso. Ia mensyaratkan seribu candi dalam semalam, lalu menipunya dengan fajar palsu: lesung ditabuh dan jerami dibakar. Serupa dengan fajar palsu Sangkuriang. Sumber: legenda rakyat Jawa.","A princess whom Bandung Bondowoso wished to marry. She asked for a thousand temples in one night, then tricked him with a fake dawn: lesung pounded and straw burned. Much like Sangkuriang's fake dawn. Source: Javanese folk legend."
+CODEX_ARCA_TITLE,Arca,Arca
+CODEX_ARCA_BODY,"Patung batu penjaga candi yang bangkit saat dilewati dan menembakkan bolt. Sumber: rekaan game, terinspirasi arca candi.","A stone temple guardian that wakes as you pass and fires a bolt. Source: game invention, inspired by temple statues."
+CODEX_ARCA_WEAK,"Tembus dengan Na, retakan batunya pecah dan arca nyaris selalu roboh.",Dash through with Na and the cracked stone shatters; the arca almost always falls.
+CODEX_GENDERUWO_TITLE,Genderuwo,Genderuwo
+CODEX_GENDERUWO_BODY,"Makhluk raksasa berbulu dalam kepercayaan Jawa, konon melempar batu ke atap di malam hari. Sumber: kepercayaan rakyat Jawa.","A hairy giant of Javanese belief, said to throw stones onto roofs at night. Source: Javanese folk belief."
+CODEX_GENDERUWO_WEAK,Ka saat ia mengangkat batu: batunya pecah di kepalanya dan ia goyah.,Hit it with Ka as it lifts a rock: the rock shatters on its head and it staggers.
+CODEX_TUYUL_TITLE,Tuyul,Tuyul
+CODEX_TUYUL_BODY,Roh anak kecil nakal dalam cerita rakyat yang hanya suka mencuri uang. Di sini mereka datang berkawanan. Sumber: cerita rakyat Indonesia.,A mischievous child spirit of folklore that only steals money. Here they come in swarms. Source: Indonesian folklore.
+CODEX_TUYUL_WEAK,Ca meledakkan seluruh kawanan sekaligus.,Ca bursts the whole swarm at once.
+CODEX_POCONG_TITLE,Pocong,Pocong
+CODEX_POCONG_BODY,"Hantu terbungkus kain kafan yang melompat, dari cerita hantu Indonesia. Sumber: cerita rakyat Indonesia.","A ghost in a burial shroud that hops, from Indonesian ghost tales. Source: Indonesian folklore."
+CODEX_POCONG_WEAK,Nga Bind saat ia melompat: ia jatuh 2 detik dan lebih rapuh.,Bind it with Nga mid-hop: it falls for 2 seconds and takes extra damage.
+CODEX_WEWE_GOMBEL_TITLE,Wewe Gombel,Wewe Gombel
+CODEX_WEWE_GOMBEL_BODY,"Hantu perempuan dari cerita Jawa yang konon membawa anak yang terlantar, bukan untuk menyakiti. Kisahnya peringatan agar anak diperhatikan. Konon terkait Bukit Gombel, Semarang. Sumber: cerita rakyat Jawa Tengah.","A female ghost of Javanese tales said to take neglected children, not to harm them. Her tale warns that children need care. Said to be tied to Bukit Gombel, Semarang. Source: Central Javanese folklore."
+CODEX_BANDUNG_BONDOWOSO_TITLE,Bandung Bondowoso,Bandung Bondowoso
+CODEX_BANDUNG_BONDOWOSO_BODY,Tokoh sakti dalam legenda yang dibantu roh pembangun untuk mendirikan seribu candi. Di sini kutukan lupa membuatnya terus membangun. Sumber: legenda rakyat Jawa.,"A mighty figure of legend, aided by spirit builders to raise a thousand temples. Here the curse of forgetting keeps him building. Source: Javanese folk legend."
+CODEX_JAKA_TARUB_TITLE,Jaka Tarub dan Nawang Wulan,Jaka Tarub and Nawang Wulan
+CODEX_JAKA_TARUB_BODY,Jaka Tarub menyembunyikan selendang bidadari Nawang Wulan. Sebutir padi memenuhi periuk selama tutupnya tak dibuka. Sumber: cerita rakyat Jawa.,Jaka Tarub hid the shawl of the celestial maiden Nawang Wulan. A single grain filled the pot while its lid stayed closed. Source: Javanese folk tale.
+CODEX_KERIS_TITLE,Keris,Keris
+CODEX_KERIS_BODY,"Belati bergelombang dari Nusantara, sering berpola pamor, lapisan logam yang ditempa bersama. UNESCO mengakui keris sebagai warisan budaya takbenda pada 2008. Sumber: UNESCO.","A wavy-bladed dagger of the archipelago, often patterned with pamor, layers of metal forged together. UNESCO recognised the keris as intangible cultural heritage in 2008. Source: UNESCO."
+CODEX_MPU_GANDRING_TITLE,Mpu Gandring,Mpu Gandring
+CODEX_MPU_GANDRING_BODY,"Empu dalam kitab Pararaton yang menempa keris pesanan Ken Arok. Karena keris direbut sebelum selesai, ia mengutuknya. Sumber: Pararaton; rincian berbeda antar penceritaan.","A smith in the Pararaton who forged a keris for Ken Arok. The keris was taken before it was finished, so he cursed it. Source: Pararaton; details differ between retellings."
+CODEX_TENGGER_LAUTAN_PASIR_TITLE,Lautan Pasir Tengger,Tengger Sea of Sand
+CODEX_TENGGER_LAUTAN_PASIR_BODY,"Hamparan pasir vulkanik di sekitar Gunung Bromo, Jawa Timur, di kawasan Tengger. Dalam permainan ini hanya pemandangan.","A wide plain of volcanic sand around Mount Bromo in East Java, in the Tengger area. In this game it is scenery only."
+CODEX_BANASPATI_TITLE,Banaspati,Banaspati
+CODEX_BANASPATI_BODY,Roh api dalam cerita rakyat berupa kepala menyala. Di sini ia berkeliaran di sabana kering dan meninggalkan jejak hangus. Sumber: cerita rakyat Indonesia.,"A fire spirit of folklore, shown as a flaming head. Here it roams the dry savanna and leaves a burnt trail. Source: Indonesian folklore."
+CODEX_BANASPATI_WEAK,"Sentuh dengan Ga Ward: apinya padam 3 detik, tak membakar, dan ia menerima 1,5 kali kerusakan.","Touch it with a Ga Ward: its flame goes out for 3 seconds, no Burn, and it takes 1.5 times damage."
+CODEX_PRAJURIT_TERKUTUK_TITLE,Prajurit Terkutuk,Cursed Soldier
+CODEX_PRAJURIT_TERKUTUK_BODY,"Prajurit tua yang terkutuk menjaga gerbang yang rusak. Perisainya menahan 75% serangan dari depan. Tokoh ciptaan permainan, bernuansa Singasari.",An old cursed soldier guarding a ruined gate. Its shield blocks 75% of attacks from the front. A game creation with a Singasari flavour.
+CODEX_PRAJURIT_TERKUTUK_WEAK,Panggil harimau dengan Ra: ia berbalik menghadapinya dan punggungnya terbuka.,Summon the tiger with Ra: it turns to face it and its back is open.
+CODEX_KEMAMANG_TITLE,Kemamang,Kemamang
+CODEX_KEMAMANG_BODY,Bola api melayang dalam cerita rakyat Jawa. Di sini apinya biru kehijauan agar tak tertukar dengan Banaspati. Sumber: cerita rakyat Jawa.,A floating fireball in Javanese folklore. Here its flame is teal so it is not mistaken for a Banaspati. Source: Javanese folklore.
+CODEX_KEMAMANG_WEAK,Tembus dengan Na saat ia mengisi ludahan: apinya padam 2 detik dan ia menerima dua kali kerusakan.,Dash through it with Na as it charges a spit: it goes out for 2 seconds and takes double damage.
+CODEX_KERIS_HANTU_TITLE,Keris Hantu,Haunted Keris
+CODEX_KERIS_HANTU_BODY,"Roh keris terbang yang melesat dalam garis lurus. Pukulannya menimbulkan Kutukan. Tokoh ciptaan permainan, terinspirasi kisah Mpu Gandring.",A flying keris spirit that darts in straight lines. Its hits apply Curse. A game creation inspired by Mpu Gandring's tale.
+CODEX_KERIS_HANTU_WEAK,"Ikat dengan Nga saat melesat: ia jatuh ke tanah 2,5 detik. Ha Heal menyembuhkan Kutukan.",Bind it with Nga mid-dart: it drops for 2.5 seconds. Ha Heal cures Curse.
+CODEX_BUTO_IJO_TITLE,Buto Ijo,Buto Ijo
+CODEX_BUTO_IJO_BODY,"Raksasa hijau dalam kisah Timun Mas yang mengejar anak itu. Timun Mas lolos dengan empat bekal dari pertapa: biji timun, jarum, garam, dan terasi. Sumber: cerita rakyat Jawa.","The green giant of the Timun Mas tale who chases the girl. Timun Mas escapes with four gifts from a hermit: cucumber seeds, needles, salt and terasi. Source: Javanese folktale."
+CODEX_TIMUN_MAS_TITLE,Timun Mas,Timun Mas
+CODEX_TIMUN_MAS_BODY,"Anak Mbok Srini yang dikaruniakan oleh seorang raksasa dan dikejar olehnya. Ia lolos berkat empat bekal ajaib, dan raksasa itu binasa. Sumber: cerita rakyat Jawa.","The daughter of Mbok Srini, given by a giant who then hunts her. She escapes thanks to four magical gifts, and the giant perishes. Source: Javanese folktale."
+CODEX_ANDE_ANDE_LUMUT_TITLE,Ande-Ande Lumut,Ande-Ande Lumut
+CODEX_ANDE_ANDE_LUMUT_BODY,"Kisah Panji: seorang pemuda menyamar sebagai Ande-Ande Lumut untuk memilih istri. Klething Kuning yang baik hati menyeberangi sungai dengan bantuan sodo lanang. Sumber: cerita Panji, Jawa.",A Panji tale: a young man disguised as Ande-Ande Lumut chooses a wife. The kind Klething Kuning crosses the river with the help of a sodo lanang. Source: Javanese Panji tale.
+CODEX_KUDA_KEPANG_TITLE,Kuda Kepang,Kuda Kepang
+CODEX_KUDA_KEPANG_BODY,Kuda anyaman bambu yang ditunggangi penari kuda lumping atau jaran kepang. Di sini hanya pertunjukan tari dan musik. Sumber: kesenian rakyat Jawa.,The woven bamboo horse ridden by kuda lumping or jaran kepang dancers. Here it is a dance and music show only. Source: Javanese folk art.
+CODEX_BATARA_KALA_TITLE,Batara Kala,Batara Kala
+CODEX_BATARA_KALA_BODY,"Dewa waktu dan penelan dalam pewayangan Jawa, putra Batara Guru dalam penceritaan. Dalam permainan ini ia ditenangkan dan dipulangkan, bukan dibunuh. Sumber: tradisi pewayangan; rincian berbeda antar penceritaan.","The deity of time and devouring in Javanese wayang, a son of Batara Guru in the tellings. In this game he is calmed and turned back, not killed. Source: wayang tradition; details differ between tellings."
+CODEX_RUWATAN_TITLE,Ruwatan,Ruwatan
+CODEX_RUWATAN_BODY,"Upacara pembersihan dalam tradisi Jawa untuk membebaskan seseorang dari incaran Kala, sering berupa pergelaran wayang lakon Murwakala. Sumber: tradisi Jawa; tata caranya beragam.","A cleansing rite in Javanese tradition to free a person from Kala's claim, often a wayang performance of the Murwakala play. Source: Javanese tradition; practice varies."

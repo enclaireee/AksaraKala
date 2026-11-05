@@ -39,3 +39,65 @@ Q_SQ_S3_S2_OBJ,Kembalikan angklung kepada pemimpin kelompok,Return the angklung 
 Q_SQ_S4_TITLE,Cepot Si Pemberani,Brave Cepot
 Q_SQ_S4_S1_OBJ,Kalahkan 3 babi hutan,Defeat 3 wild boars
 Q_SQ_S4_S2_OBJ,Lapor kepada Cepot,Report back to Cepot
+Q_MQ2_TITLE,Seribu Candi,A Thousand Temples
+Q_MQ2_S1_OBJ,Beristirahat di petilasan dekat sawah,Rest at the petilasan by the rice fields
+Q_MQ2_S2_OBJ,Dengarkan kisah Hanacaraka dari Ki Dalang,Hear the dalang's story of the Hanacaraka
+Q_MQ2_S3_OBJ,Pelajari Na dari pemahat batu,Learn Na from the stone-carver
+Q_MQ2_S4_OBJ,Bangunkan penjaga candi di reruntuhan,Wake the temple guardians at the ruins
+Q_MQ2_S5_OBJ,Bergabunglah dengan para perempuan di lesung,Join the women at the lesung
+Q_MQ2_S6_OBJ,Mohon restu penjaga dari juru kunci,Ask the juru kunci for the guardian's blessing
+Q_MQ2_S7_OBJ,Masuki pelataran candi,Enter the temple courtyard
+Q_MQ2_S8_OBJ,Hentikan pembangunan tanpa akhir Bandung Bondowoso,Stop Bandung Bondowoso's endless building
+Q_MQ2_S9_OBJ,Kembali ke Semar,Return to Semar
+Q_SQ_M1_TITLE,Jaka Tarub dan Nawang Wulan,Jaka Tarub and Nawang Wulan
+Q_SQ_M1_S1_OBJ,Dengarkan keluhan Nawang Wulan,Hear Nawang Wulan's trouble
+Q_SQ_M1_S2_OBJ,Periksa lumbung,Search the lumbung
+Q_SQ_M1_S3_OBJ,Temukan selendang di bawah sisa padi,Find the shawl under the last of the rice
+Q_SQ_M1_S4_OBJ,Kembalikan selendang kepada Nawang Wulan,Return the shawl to Nawang Wulan
+Q_SQ_M2_TITLE,Wewe Gombel,Wewe Gombel
+Q_SQ_M2_S1_OBJ,Dengarkan cemas sang tetangga,Hear the worried neighbor
+Q_SQ_M2_S2_OBJ,Cari bukit tempat Wewe Gombel menyembunyikan anak,Find the hill where Wewe Gombel hides children
+Q_SQ_M2_S3_OBJ,"Selesaikan di bukit: ajak orang tua anak, atau kalahkan Wewe Gombel","Settle it at the hill: bring the child's parents, or defeat Wewe Gombel"
+Q_SQ_M2_S4_OBJ,Kabari sang tetangga,Tell the neighbor the news
+Q_SQ_M3_TITLE,Tuyul di Pasar,A Tuyul at the Market
+Q_SQ_M3_S1_OBJ,Dengarkan keluhan pande besi,Hear the blacksmith's complaint
+Q_SQ_M3_S2_OBJ,Temukan sarang kawanan tuyul,Find the tuyul swarm's hideout
+Q_SQ_M3_S3_OBJ,"Hentikan pemimpin tuyul: pakai kacang hijau, atau kalahkan","Stop the tuyul leader: use the green beans, or defeat it"
+Q_SQ_M3_S4_OBJ,Lapor kepada pande besi,Report back to the blacksmith
+Q_SQ_M4_TITLE,Gamelan yang Bisu,The Silent Gamelan
+Q_SQ_M4_S1_OBJ,Dengarkan permintaan Ki Sumarto,Hear Ki Sumarto's request
+Q_SQ_M4_S2_OBJ,Temukan gong ageng di relung reruntuhan,Find the gong ageng in the ruins' sealed nook
+Q_SQ_M4_S3_OBJ,Bawa gong ageng kepada Ki Sumarto,Bring the gong ageng to Ki Sumarto
+Q_MQ3_TITLE,Kutukan Sang Empu,The Smith's Curse
+Q_MQ3_S1_OBJ,Beristirahat di petilasan di sabana,Rest at the petilasan on the savanna
+Q_MQ3_S2_OBJ,Temui sang empu di bengkel tempa,Find the empu at the forge
+Q_MQ3_S3_OBJ,Bantu Mbok Srini mencari Timun Mas,Help Mbok Srini find Timun Mas
+Q_MQ3_S4_OBJ,Kalahkan Buto Ijo,Defeat Buto Ijo
+Q_MQ3_S5_OBJ,Temui sang empu lagi untuk belajar mematahkan tanda kutukan,Return to the empu to learn how to break curse marks
+Q_MQ3_S6_OBJ,Patahkan dua tanda kutukan di halaman bengkel,Break two curse marks in the forge yard
+Q_MQ3_S7_OBJ,Beristirahat sebelum candi,Rest before the shrine
+Q_MQ3_S8_OBJ,Tenangkan keris terkutuk,Lay the cursed keris to rest
+Q_MQ3_S9_OBJ,Bicara dengan Semar tentang Kala,Speak with Semar about Kala
+Q_SQ_T1_TITLE,Ande-Ande Lumut,Ande-Ande Lumut
+Q_SQ_T1_S1_OBJ,Dengarkan masalah Klething Kuning di sungai,Hear Klething Kuning's trouble at the river
+Q_SQ_T1_S2_OBJ,"Ambil sodo lanang di beringin, atau kalahkan Yuyu Kangkang","Fetch the sodo lanang in the banyan grove, or defeat Yuyu Kangkang"
+Q_SQ_T1_S3_OBJ,Kembali ke Klething Kuning,Return to Klething Kuning
+Q_SQ_T2_TITLE,Banaspati Padang Sabana,The Savanna Banaspati
+Q_SQ_T2_S1_OBJ,Dengarkan keluhan penggembala soal api di rumput,Hear the herder's trouble with the grass fires
+Q_SQ_T2_S2_OBJ,Ikuti jejak hangus ke selatan,Follow the burn trail south
+Q_SQ_T2_S3_OBJ,Kalahkan Banaspati besar di pantai,Defeat the large Banaspati on the shore
+Q_SQ_T2_S4_OBJ,Lapor kepada penggembala,Report back to the herder
+Q_SQ_T3_TITLE,Pamor dari Langit,Pamor from the Sky
+Q_SQ_T3_S1_OBJ,Dengarkan permintaan Mpu Wirasana,Hear Mpu Wirasana's request
+Q_SQ_T3_S2_OBJ,Ambil pecahan batu bintang di halaman candi Mataram,Take the star-stone fragment from the Mataram temple yard
+Q_SQ_T3_S3_OBJ,Bawa batu bintang kepada sang empu,Bring the star-stone to the empu
+Q_SQ_T4_TITLE,Kuda Kepang yang Hilang,The Lost Kuda Kepang
+Q_SQ_T4_S1_OBJ,Dengarkan pemimpin rombongan kuda lumping,Hear the kuda lumping troupe leader
+Q_SQ_T4_S2_OBJ,Temukan 3 kuda kepang yang terbawa badai,Find the 3 kuda kepang the storm blew away
+Q_SQ_T4_S3_OBJ,Kembalikan kuda kepang kepada pemimpin rombongan,Return the kuda kepang to the troupe leader
+Q_SQ_T4_S4_OBJ,Tonton pertunjukan di panggung,Watch the show at the stage
+Q_MQ5_TITLE,Gua Kala,Kala's Cave
+Q_MQ5_S1_OBJ,Masuki Gua Kala,Enter Gua Kala
+Q_MQ5_S2_OBJ,Beristirahat di petilasan terakhir,Rest at the last petilasan
+Q_MQ5_S3_OBJ,Hadapi Batara Kala,Face Batara Kala
+Q_MQ5_S4_OBJ,Kembali ke panggung wayang,Return to the wayang stage

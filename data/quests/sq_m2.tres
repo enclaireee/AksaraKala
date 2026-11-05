@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_M2_S1_OBJ"
+on = "talked_to:wewe_neighbor"
+marker = {"zone": "mt_pasar", "id": "wewe_neighbor"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_M2_S2_OBJ"
+on = "area_entered:wewe_hill"
+marker = {"zone": "mt_kuburan", "id": "wewe_hill"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_M2_S3_OBJ"
+on = "talked_to:wewe_parents_2"
+alt = {"enemy_killed:wewe_elite": "fight", "talked_to:wewe_parents_2": "peaceful"}
+marker = {"zone": "mt_kuburan", "id": "wewe_hill"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_M2_S4_OBJ"
+on = "talked_to:wewe_neighbor"
+marker = {"zone": "mt_pasar", "id": "wewe_neighbor"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_m2"
+kind = "side"
+type = "bounty"
+zone = "mataram"
+size = "L"
+giver = "wewe_neighbor"
+requires = Array[String](["mq2_2"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"items": ["jimat"]}

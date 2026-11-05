@@ -63,6 +63,7 @@ UI_TOAST_GLYPH,Aksara baru: %s,New aksara: %s
 UI_HOLD_SKIP,Tahan untuk melewati,Hold to skip
 BOSS_SANGKURIANG,Sangkuriang,Sangkuriang
 BOSS_SANDEKALA,Sandekala,Sandekala
+BOSS_BANDUNG_BONDOWOSO,Bandung Bondowoso,Bandung Bondowoso
 UI_FIZZLE_UNKNOWN,Tak dikenali,Unrecognized
 UI_VERB_USE,Pakai,Use
 UI_VERB_TALK,Bicara,Talk
@@ -73,3 +74,6 @@ UI_KEY_LMB,LMB,LMB
 UI_KEY_RMB,RMB,RMB
 UI_HINT_SANDE,Pukul keempat obor untuk menyalakannya,Hit the four torches to light them
 UI_DEATH_SUB,Kembali ke petilasan. Ilmu tetap utuh.,Back at the petilasan. Your Ilmu is kept.
+BOSS_BUTO_IJO,Buto Ijo,Buto Ijo
+BOSS_KERIS_GANDRING,Keris Mpu Gandring,Mpu Gandring's Keris
+BOSS_BATARA_KALA,Batara Kala,Batara Kala

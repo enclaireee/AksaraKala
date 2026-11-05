@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "tuyul_leader"
+name_key = "NPC_TUYUL_LEADER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["flag:tuyul_caught"], "lines": ["DLG_TUYUL_LEADER_1"], "do": []},
+	{"if": ["step:sq_m3=2", "item:distraction"], "lines": ["DLG_TUYUL_LEADER_2", "DLG_TUYUL_LEADER_3", "DLG_TUYUL_LEADER_4"], "do": ["flag:tuyul_caught"]},
+	{"if": [], "lines": ["DLG_TUYUL_LEADER_5"], "do": [], "quiet": true}
+])

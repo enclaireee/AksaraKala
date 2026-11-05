@@ -7,7 +7,17 @@ script = ExtResource("1")
 npc_id = "semar"
 name_key = "NPC_SEMAR_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq1=9"], "lines": ["DLG_SEMAR_1", "DLG_SEMAR_2", "DLG_SEMAR_3", "DLG_SEMAR_4", "DLG_SEMAR_5"], "do": []},
+	{"if": ["step:mq1=9"], "lines": ["DLG_SEMAR_1", "DLG_SEMAR_2", "DLG_SEMAR_3", "DLG_SEMAR_4", "DLG_SEMAR_5"], "do": ["flag:mq1_10", "start:mq2"]},
+	{"if": ["step:mq2=8"], "lines": ["DLG_SEMAR_30", "DLG_SEMAR_31", "DLG_SEMAR_32", "DLG_SEMAR_33", "DLG_SEMAR_40"], "do": ["flag:mq2_9", "start:mq3"]},
+	{"if": ["flag:mq5_4"], "lines": ["DLG_SEMAR_52", "DLG_SEMAR_53"], "do": []},
+	{"if": ["step:mq3=8"], "lines": ["DLG_SEMAR_41", "DLG_SEMAR_42", "DLG_SEMAR_43", "DLG_SEMAR_44"], "do": ["flag:mq3_8", "start:mq5"]},
+	{"if": ["quest:mq5=active"], "lines": ["DLG_SEMAR_50", "DLG_SEMAR_51"], "do": []},
+	{"if": ["flag:mq3_8"], "lines": ["DLG_SEMAR_45"], "do": []},
+	{"if": ["quest:mq3=active"], "lines": ["DLG_SEMAR_46", "DLG_SEMAR_47"], "do": []},
+	{"if": ["quest:mq3=available"], "lines": ["DLG_SEMAR_48", "DLG_SEMAR_49"], "do": ["start:mq3"]},
+	{"if": ["flag:mq2_9"], "lines": ["DLG_SEMAR_34"], "do": []},
+	{"if": ["quest:mq2=active"], "lines": ["DLG_SEMAR_35", "DLG_SEMAR_36"], "do": []},
+	{"if": ["quest:mq2=available"], "lines": ["DLG_SEMAR_37", "DLG_SEMAR_38", "DLG_SEMAR_39"], "do": ["start:mq2"]},
 	{"if": ["flag:mq1_10"], "lines": ["DLG_SEMAR_6", "DLG_SEMAR_7"], "do": []},
 	{"if": ["step:mq0=3"], "lines": ["DLG_SEMAR_8", "DLG_SEMAR_9", "DLG_SEMAR_10", "DLG_SEMAR_11", "DLG_SEMAR_12", "DLG_SEMAR_13"], "do": ["learn:sunda_ka", "start:mq1"]},
 	{"if": ["step:mq0=4"], "lines": ["DLG_SEMAR_14", "DLG_SEMAR_15"], "do": []},

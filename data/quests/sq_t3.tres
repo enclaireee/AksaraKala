@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_T3_S1_OBJ"
+on = "talked_to:timur_empu"
+marker = {"zone": "tt_beringin", "id": "timur_empu"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_T3_S2_OBJ"
+on = "item_picked:batu_bintang"
+marker = {"zone": "mt_candi", "id": "batu_bintang"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_T3_S3_OBJ"
+on = "talked_to:timur_empu"
+marker = {"zone": "tt_beringin", "id": "timur_empu"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_t3"
+kind = "side"
+type = "errand"
+zone = "tanah_timur"
+size = "M"
+giver = "timur_empu"
+requires = Array[String](["mq3_2"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3")])
+rewards = {"items": ["keris_luk_7"]}

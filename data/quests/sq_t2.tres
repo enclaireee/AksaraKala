@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_T2_S1_OBJ"
+on = "talked_to:timur_herder"
+marker = {"zone": "tt_sabana", "id": "timur_herder"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_T2_S2_OBJ"
+on = "area_entered:burn_trail"
+marker = {"zone": "tt_pesisir", "id": "burn_trail"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_T2_S3_OBJ"
+on = "enemy_killed:banaspati_elite"
+marker = {"zone": "tt_pesisir", "id": "banaspati_elite"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_T2_S4_OBJ"
+on = "talked_to:timur_herder"
+marker = {"zone": "tt_sabana", "id": "timur_herder"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_t2"
+kind = "side"
+type = "bounty"
+zone = "tanah_timur"
+size = "L"
+giver = "timur_herder"
+requires = Array[String](["mq3_1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"herb_pouch": 1}

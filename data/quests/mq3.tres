@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_MQ3_S1_OBJ"
+on = "petilasan_activated:timur_1"
+marker = {"zone": "tt_sabana", "id": "timur_1"}
+set_flag = "mq3_1"
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_MQ3_S2_OBJ"
+on = "talked_to:timur_empu"
+marker = {"zone": "tt_beringin", "id": "timur_empu"}
+set_flag = "mq3_2"
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_MQ3_S3_OBJ"
+on = "talked_to:mbok_srini"
+marker = {"zone": "tt_kali", "id": "mbok_srini"}
+set_flag = "mq3_3"
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_MQ3_S4_OBJ"
+on = "boss_defeated:buto_ijo"
+marker = {"zone": "tt_ladang", "id": "buto_ijo"}
+set_flag = "mq3_4"
+
+[sub_resource type="Resource" id="s5"]
+script = ExtResource("2")
+objective = "Q_MQ3_S5_OBJ"
+on = "talked_to:timur_empu"
+marker = {"zone": "tt_beringin", "id": "timur_empu"}
+
+[sub_resource type="Resource" id="s6"]
+script = ExtResource("2")
+objective = "Q_MQ3_S6_OBJ"
+on = "area_entered:timur_praktik_mark"
+count = 2
+marker = {"zone": "tt_beringin", "id": "timur_praktik"}
+
+[sub_resource type="Resource" id="s7"]
+script = ExtResource("2")
+objective = "Q_MQ3_S7_OBJ"
+on = "petilasan_activated:timur_2"
+marker = {"zone": "tt_pasir", "id": "timur_2"}
+
+[sub_resource type="Resource" id="s8"]
+script = ExtResource("2")
+objective = "Q_MQ3_S8_OBJ"
+on = "boss_defeated:keris_gandring"
+marker = {"zone": "tt_candi", "id": "keris_gandring"}
+set_flag = "mq3_7"
+
+[sub_resource type="Resource" id="s9"]
+script = ExtResource("2")
+objective = "Q_MQ3_S9_OBJ"
+on = "talked_to:semar"
+marker = {"zone": "desa_purwa", "id": "semar"}
+set_flag = "mq3_8"
+
+[resource]
+script = ExtResource("1")
+id = "mq3"
+kind = "main"
+type = "main"
+zone = "tanah_timur"
+size = "L"
+giver = "semar"
+requires = Array[String](["mq2_9"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9")])
+rewards = {"lakon": "timun_mas", "codex": ["timun_mas"]}

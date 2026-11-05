@@ -58,6 +58,13 @@ func _initialize() -> void:
 	root.add_child(c2)
 	c2.interact()
 	check(picked.size() == 1 and c2._open, "chest stays open after reload")
+	var c3: Node = load("res://entities/world/chest.tscn").instantiate()
+	c3.chest_id = "c3"
+	c3.item_id = "ilmu:55"
+	root.add_child(c3)
+	var before: int = g.ilmu
+	c3.interact()
+	check(g.ilmu == before + 55 and not g.inventory.has("ilmu:55"), "ilmu chest gives Ilmu, not an item")
 
 	g.set_flag("pickup:gem", false)
 	var p: Node = load("res://entities/world/pickup.tscn").instantiate()

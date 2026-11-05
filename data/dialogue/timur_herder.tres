@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "timur_herder"
+name_key = "NPC_TIMUR_HERDER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_t2=done"], "lines": ["DLG_TIMUR_HERDER_1"], "do": []},
+	{"if": ["step:sq_t2=3"], "lines": ["DLG_TIMUR_HERDER_2", "DLG_TIMUR_HERDER_3"], "do": []},
+	{"if": ["step:sq_t2=2"], "lines": ["DLG_TIMUR_HERDER_4"], "do": []},
+	{"if": ["step:sq_t2=1"], "lines": ["DLG_TIMUR_HERDER_5"], "do": []},
+	{"if": ["quest:sq_t2=available"], "lines": ["DLG_TIMUR_HERDER_6", "DLG_TIMUR_HERDER_7", "DLG_TIMUR_HERDER_8"], "do": ["start:sq_t2"]},
+	{"if": [], "lines": ["DLG_TIMUR_HERDER_9"], "do": []}
+])

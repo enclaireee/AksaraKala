@@ -58,5 +58,6 @@ func interact() -> void:
 	for a: String in e.get("do", []):
 		get_node("/root/Game").run(a)
 	_busy = false
-	ev.talked_to.emit(npc_id)
+	if not e.get("quiet", false):   # a quiet entry (a refusal) does not count as the talk
+		ev.talked_to.emit(npc_id)
 	_recompute()

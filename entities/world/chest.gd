@@ -27,7 +27,10 @@ func interact() -> void:
 	usable = false
 	_refresh_prompt()
 	var game := get_node("/root/Game")
-	game.add_item(item_id, false)
+	if item_id.begins_with("ilmu:"):   # an Ilmu chest (items.md Consumables and pickups)
+		game.add_ilmu(int(item_id.get_slice(":", 1)))
+	else:
+		game.add_item(item_id, false)
 	game.set_flag("chest:" + chest_id, false)
 	game.save_game()
 	get_node("/root/Events").item_picked.emit(item_id)

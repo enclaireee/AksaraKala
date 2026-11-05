@@ -35,6 +35,9 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
   | Mataram | 55 | 110 | 165 |
   | Tanah Timur | 110 | 220 | 330 |
   | Segara Kidul | 190 | 380 | 570 |
+  | Gua Kala | 190 | 380 | 570 |
+
+  - Gua Kala uses the Segara Kidul row (**ASSUMED** 2026-11-05). Its only quest, MQ5, pays out after the final boss, so balance_model.py counts 0 for it.
 
   - Desa Purwa hub quests use the zone of the current main-quest chapter.
 - **A codex entry** about the legend, figure or object, with a source line.
@@ -124,8 +127,8 @@ Culture point: Tatar Sunda and Mataram both have a fake-dawn legend (cloth and r
 |---|----------------|----------------|--------------|
 | 2.1 | Rest at the petilasan by the rice fields | Beristirahat di petilasan dekat sawah | `petilasan_activated:mataram_1` |
 | 2.2 | Hear the dalang's story of the Hanacaraka | Dengarkan kisah Hanacaraka dari Ki Dalang | `talked_to:mataram_dalang` (teaches Ha) |
-| 2.3 | Wake the temple guardians at the ruins | Bangunkan penjaga candi di reruntuhan | `area_cleared:mataram_ruins` (Arca enemies) |
-| 2.4 | Learn Na from the stone-carver | Pelajari Na dari pemahat batu | `glyph_learned:jawa_na` |
+| 2.3 | Learn Na from the stone-carver | Pelajari Na dari pemahat batu | `glyph_learned:jawa_na` |
+| 2.4 | Wake the temple guardians at the ruins | Bangunkan penjaga candi di reruntuhan | `area_cleared:mataram_ruins` (Arca enemies; Na is their weakness, so it is taught first: steps swapped 2026-11-05, **ASSUMED**) |
 | 2.5 | Join the women at the lesung | Bergabunglah dengan para perempuan di lesung | `talked_to:lesung_women` (teaches Ca: the rhythm of gejog lesung, rice-pounding music of Central Java and Yogyakarta, verified) |
 | 2.6 | Ask the juru kunci for the guardian's blessing | Mohon restu penjaga dari juru kunci | `glyph_learned:jawa_ra` (the tiger spirit) |
 | 2.7 | Enter the temple courtyard | Masuki pelataran candi | `petilasan_activated:mataram_2` |
@@ -167,12 +170,14 @@ Nyi Roro Kidul speaks once, from a distance. She is never fought or touched, and
 ### MQ5 Finale: "Gua Kala" / "Kala's Cave"
 | # | Objective (EN) | Objective (ID) | Completes on |
 |---|----------------|----------------|--------------|
-| 5.1 | Enter Gua Kala | Masuki Gua Kala | `zone_entered:gua_kala` |
+| 5.1 | Enter Gua Kala | Masuki Gua Kala | `zone_entered:gk_mulut` (zone.gd emits the area id) |
 | 5.2 | Rest at the last petilasan | Beristirahat di petilasan terakhir | `petilasan_activated:kala_1` |
 | 5.3 | Face Batara Kala | Hadapi Batara Kala | `boss_defeated:batara_kala` |
 | 5.4 | Return to the wayang stage | Kembali ke panggung wayang | `zone_entered:desa_purwa` (epilogue, credits) |
 
 Batara Kala is defeated in the sense of being calmed and turned back. The codex note on ruwatan from [story.md](story.md) applies. He is a deity figure, so he is not "killed".
+
+**P0 build (ASSUMED 2026-11-05):** without Segara Kidul, MQ5 needs `mq3_8` and Semar starts it in his 3.8 talk. The way in is a fogged east exit in Desa Purwa (kabut `mq3_8`, [desa_purwa.md](zones/desa_purwa.md)). When MQ5 completes the epilogue and credits play (`ui/epilogue.tscn`), then the player is back in Desa Purwa.
 
 **Post-game (ASSUMED):** after the credits the player wakes in Desa Purwa with every zone open, so unfinished side quests can still be done (never missable).
 
@@ -309,12 +314,13 @@ Fits [architecture.md](architecture.md): data-driven resources, quest state in t
 | `objective` | translation key, e.g. `Q_SQ_M2_S1` |
 | `on` | event string, e.g. `"enemy_killed:wild_boar"` (`<signal>:<arg>`; the arg is the enemy `kind`, npc id, item id, etc.). A bare `<signal>` matches any arg; a trailing `*` is a prefix (`item_picked:angklung_*`). An `item_picked:` step counts matching items already held when it becomes current, so early pickups never soft-lock it. `give:` fires `item_picked`. |
 | `count` | `3` |
-| `alt` | for two-way steps: `{"enemy_killed:wewe_elite": "fight", "talked_to:wewe_parents_2": "peaceful"}`. Not built until Mataram (Tatar Sunda has no two-way quest) |
+| `alt` | for two-way steps: `{"enemy_killed:wewe_elite": "fight", "talked_to:wewe_parents_2": "peaceful"}`. Any key completes the step and stores `resolution`; `fight` gives +50% quest Ilmu. Built 2026-11-05 |
 | `marker` | `{zone: "mt_alas", id: "wewe_hill"}`: `zone` is the area id where the node sits ([world.md](world.md) World structure); `QuestData.zone` stays the region id |
 | `set_flag` | `mq2_2` |
 
 Dialogue (`DialogueData`, one `.tres` per NPC in `data/dialogue/`, **ASSUMED** 2026-11-05): `npc_id`, `name_key`, `entries: Array[Dictionary]`, each `{"if": [conditions], "lines": [keys], "do": [actions]}`. The first entry whose conditions all hold plays; an entry with no `if` is the fallback and goes last.
-- Conditions: `quest:<id>=<locked|available|active|done>`, `step:<id>=<n>` (0-based current step), `flag:<f>`, `!flag:<f>`, `glyph:<id>`.
+- Conditions: `quest:<id>=<locked|available|active|done>`, `step:<id>=<n>` (0-based current step), `flag:<f>`, `!flag:<f>`, `glyph:<id>`, `item:<id>` (held).
+- An entry with `"quiet": true` does not fire `talked_to` (a refusal that must not complete a talk step).
 - Actions run when the box closes, in order: `start:<quest>`, `give:<item>`, `learn:<glyph>`, `flag:<f>`, `codex:<id>`. Then `talked_to:<npc_id>` fires.
 - `Game.check(cond)` and `Game.run(action)` hold the logic, so the NPC script only walks the list.
 

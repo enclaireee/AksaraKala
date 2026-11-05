@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_M1_S1_OBJ"
+on = "talked_to:nawang_wulan"
+marker = {"zone": "mt_sawah", "id": "nawang_wulan"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_M1_S2_OBJ"
+on = "area_entered:lumbung"
+marker = {"zone": "mt_sawah", "id": "lumbung"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_M1_S3_OBJ"
+on = "item_picked:selendang_nawang"
+marker = {"zone": "mt_sawah", "id": "lumbung"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_M1_S4_OBJ"
+on = "talked_to:nawang_wulan"
+marker = {"zone": "mt_sawah", "id": "nawang_wulan"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_m1"
+kind = "side"
+type = "retelling"
+zone = "mataram"
+size = "M"
+giver = "nawang_wulan"
+requires = Array[String](["mq2_1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"items": ["feather_charm"], "herb_pouch": 1, "lakon": "jaka_tarub", "codex": ["jaka_tarub"]}

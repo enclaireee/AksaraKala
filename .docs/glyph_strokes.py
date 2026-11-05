@@ -167,8 +167,6 @@ def sim(trials=300, seed=1):
 if __name__ == "__main__":
     pairs = pair_table()
     res = sim()
-    # Design targets: a misread must be rare (the tie rule should turn doubt into a fizzle),
-    # and an honest sloppy drawing should cast most of the time.
     for k, (right, wrong) in res.items():
         assert wrong <= 0.02, f"{k} misread {wrong:.0%}"
     bad = [k for k, (right, _) in res.items() if right < 0.85]
