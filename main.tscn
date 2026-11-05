@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[node name="Main" type="Node2D"]
+
+[node name="Shape" type="Polygon2D" parent="."]
+position = Vector2(240, 135)
+color = Color(0.36, 0.55, 0.75, 1)
+polygon = PackedVector2Array(0, -40, 37, 9, 13, 30, -29, 22, -40, -11)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 4.0
+offset_top = 2.0
+text = "480x270"

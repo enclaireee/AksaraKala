@@ -1,0 +1,10 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Export output
+/build/
+
+# OS / tooling
+.DS_Store
+__pycache__/
