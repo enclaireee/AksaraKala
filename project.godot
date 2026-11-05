@@ -79,6 +79,11 @@ pause={
 "events": [Object(InputEventKey,"physical_keycode":4194305)]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://data/text/ui.id.translation", "res://data/text/ui.en.translation", "res://data/text/items.id.translation", "res://data/text/items.en.translation", "res://data/text/quests.id.translation", "res://data/text/quests.en.translation", "res://data/text/dialogue.id.translation", "res://data/text/dialogue.en.translation", "res://data/text/codex.id.translation", "res://data/text/codex.en.translation")
+locale/fallback="en"
+
 [layer_names]
 
 2d_physics/layer_1="world"

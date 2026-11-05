@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1")
 id = "oak_staff"
-title = "Oak Staff"
+title = "ITEM_OAK_STAFF_NAME"
 slot = "weapon"
 archetype = "staff"
-description = "A weak bolt of light."
+description = "ITEM_OAK_STAFF_DESC"
 windup = 0.15
 recovery = 0.35
 cost = 5.0

@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_MQ0_S1_OBJ"
+on = "area_entered:wayang_stage"
+marker = {"zone": "desa_purwa", "id": "wayang_stage"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_MQ0_S2_OBJ"
+on = "talked_to:semar"
+marker = {"zone": "desa_purwa", "id": "semar"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_MQ0_S3_OBJ"
+on = "class_chosen"
+marker = {"zone": "desa_purwa", "id": "semar"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_MQ0_S4_OBJ"
+on = "glyph_learned:sunda_ka"
+marker = {"zone": "desa_purwa", "id": "sanggar"}
+
+[sub_resource type="Resource" id="s5"]
+script = ExtResource("2")
+objective = "Q_MQ0_S5_OBJ"
+on = "spell_cast:sunda_ka"
+count = 3
+marker = {"zone": "desa_purwa", "id": "sanggar"}
+
+[sub_resource type="Resource" id="s6"]
+script = ExtResource("2")
+objective = "Q_MQ0_S6_OBJ"
+on = "enemy_killed:dummy"
+count = 3
+marker = {"zone": "desa_purwa", "id": "dummies"}
+
+[sub_resource type="Resource" id="s7"]
+script = ExtResource("2")
+objective = "Q_MQ0_S7_OBJ"
+on = "zone_entered:tatar_sunda"
+marker = {"zone": "desa_purwa", "id": "exit_tatar_sunda"}
+
+[resource]
+script = ExtResource("1")
+id = "mq0"
+kind = "main"
+type = "main"
+zone = "desa_purwa"
+size = "S"
+giver = "semar"
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7")])
+rewards = {"codex": ["hanacaraka"]}

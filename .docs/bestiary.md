@@ -100,13 +100,7 @@ Rules:
 - Attack tokens and leashing apply as usual ([combat.md](combat.md) 5).
 
 ### Tatar Sunda
-| Mix | Enemies | Where | Tests |
-|-----|---------|-------|-------|
-| Bamboo edge | 2 Bandit, 2 Kuntilanak | Open field with bamboo cover | Closing distance, Bolt interrupts |
-| Boar lane | 2 Wild Boar | Long straight path | Reading the dash, Ward bounce |
-| Batu tulis grove (MQ1 1.4) | 1 Jurig Leuweung, 2 Kuntilanak | Grove clearing | Tank in front, shooters behind, Bind |
-| Hunting party | 1 Wild Boar, 1 Jurig Leuweung, 1 Bandit Archer, 1 Kuntilanak | Tea terraces, lane plus cover | Priorities |
-| Crater path | 1 Jurig Leuweung, 2 Wild Boar, 1 Bandit, 1 Bandit Archer, 1 Kuntilanak (2 waves) | Before the crater petilasan | Everything in the zone |
+The built mixes are the encounter table in [zones/tatar_sunda.md](zones/tatar_sunda.md): 7 encounters, at most one shooter each, Jurig first at the clearing after Bind is learned (2026-11-05, replaces the earlier mixes that broke the one-shooter rule).
 
 ### Mataram
 | Mix | Enemies | Where | Tests |

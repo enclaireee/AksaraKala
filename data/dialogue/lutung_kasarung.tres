@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "lutung_kasarung"
+name_key = "NPC_LUTUNG_KASARUNG_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:sq_s1=0"], "lines": ["DLG_LUTUNG_KASARUNG_1", "DLG_LUTUNG_KASARUNG_2", "DLG_LUTUNG_KASARUNG_3", "DLG_LUTUNG_KASARUNG_4"], "do": []},
+	{"if": ["quest:sq_s1=done"], "lines": ["DLG_LUTUNG_KASARUNG_5"], "do": []},
+	{"if": [], "lines": ["DLG_LUTUNG_KASARUNG_6", "DLG_LUTUNG_KASARUNG_7"], "do": []}
+])

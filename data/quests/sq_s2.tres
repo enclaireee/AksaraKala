@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_S2_S1_OBJ"
+on = "talked_to:kepala_desa"
+marker = {"zone": "tatar_sunda", "id": "kepala_desa"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_S2_S2_OBJ"
+on = "area_entered:dark_grove"
+marker = {"zone": "tatar_sunda", "id": "elite_grove"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_S2_S3_OBJ"
+on = "enemy_killed:kuntilanak_elite"
+marker = {"zone": "tatar_sunda", "id": "elite_grove"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_S2_S4_OBJ"
+on = "talked_to:kepala_desa"
+marker = {"zone": "tatar_sunda", "id": "kepala_desa"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_s2"
+kind = "side"
+type = "bounty"
+zone = "tatar_sunda"
+size = "L"
+giver = "kepala_desa"
+requires = Array[String](["mq1_2"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"items": ["golok"], "herb_pouch": 1, "codex": ["kuntilanak_rumpun"]}

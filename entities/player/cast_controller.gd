@@ -86,11 +86,12 @@ func release() -> void:
 	if spell == null:
 		_fizzle("")
 	elif not practice and not player.sakti.spend(SpellUtil.cost(player, spell)):
-		_fizzle("needs %d" % ceili(SpellUtil.cost(player, spell)))
+		_fizzle(tr("UI_FIZZLE_NEEDS") % ceili(SpellUtil.cost(player, spell)))
 	else:
 		_exit_cast_mode()
-		overlay.finish(true, "%s · %s" % [glyph.latin.capitalize(), spell.title])
+		overlay.finish(true, "%s · %s" % [glyph.latin.capitalize(), tr(spell.title)])
 		_spawn(spell, power)
+		get_node("/root/Events").spell_cast.emit(glyph.id, power)
 
 
 ## Cancels and fizzles both lock casting out for a moment, so slow-mo cannot be spammed (spells.md 9).

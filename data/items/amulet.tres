@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1")
 id = "amulet"
-title = "Amulet"
+title = "ITEM_AMULET_NAME"
 slot = "accessory"
-description = "+10 max HP."
+description = "ITEM_AMULET_DESC"
 bonus = {"max_hp": 10}

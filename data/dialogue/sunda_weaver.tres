@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "sunda_weaver"
+name_key = "NPC_SUNDA_WEAVER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq1=5"], "lines": ["DLG_SUNDA_WEAVER_1", "DLG_SUNDA_WEAVER_2", "DLG_SUNDA_WEAVER_3", "DLG_SUNDA_WEAVER_4", "DLG_SUNDA_WEAVER_5", "DLG_SUNDA_WEAVER_6"], "do": ["give:boeh_rarang"]},
+	{"if": ["flag:mq1_5"], "lines": ["DLG_SUNDA_WEAVER_7", "DLG_SUNDA_WEAVER_8"], "do": []},
+	{"if": [], "lines": ["DLG_SUNDA_WEAVER_9", "DLG_SUNDA_WEAVER_10"], "do": []}
+])

@@ -34,4 +34,5 @@ func rest() -> void:
 	game.last_petilasan = {"zone": get_tree().current_scene.scene_file_path, "id": id}
 	game.flask_charges = game.flask_max
 	game.save_game()
+	get_node("/root/Events").petilasan_activated.emit(id)
 	get_node("/root/Zones").respawn(true)

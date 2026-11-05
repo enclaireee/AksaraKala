@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1")
 id = "feather_charm"
-title = "Feather Charm"
+title = "ITEM_FEATHER_CHARM_NAME"
 slot = "accessory"
-description = "+8% move speed."
+description = "ITEM_FEATHER_CHARM_DESC"
 bonus = {"move_speed": 0.08}

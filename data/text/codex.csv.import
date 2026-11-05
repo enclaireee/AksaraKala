@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://y57vec1gt466"
+
+[deps]
+
+files=["res://data/text/codex.id.translation", "res://data/text/codex.en.translation"]
+
+source_file="res://data/text/codex.csv"
+dest_files=["res://data/text/codex.id.translation", "res://data/text/codex.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

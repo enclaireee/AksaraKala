@@ -1,15 +1,29 @@
 class_name Shooter extends EnemyBase
 ## Kuntilanak: keeps a distance band, telegraphs, fires one spirit shot (combat.md 3.1, 5.1).
-## ponytail: skipped the tier 2+ 3-shot spread and the bestiary's shriek cone.
+## With shriek on (Kuntilanak) the attack is a cone instead of a shot, and a Bolt during the wind-up grounds her.
+## ponytail: skipped the tier 2+ 3-shot spread.
 
-enum State { IDLE, KEEP, WINDUP, RECOVER, FLINCH, RETURN, DEAD }
+enum State { IDLE, KEEP, WINDUP, SHRIEK, GROUNDED, RECOVER, FLINCH, RETURN, DEAD }
 
 const TELEGRAPH := Color(1.0, 0.45, 0.45)
+const STAGGERED := Color(0.7, 0.75, 1.0)
 const SHOT := preload("res://entities/enemies/spirit_shot.tscn")
+
+@export var shriek := false
 
 var state := State.IDLE
 var state_time := 0.0
 var facing := 0.0          # radians
+
+@onready var cone: Polygon2D = attack_hitbox.get_node_or_null("Slash")
+@onready var arc: CollisionPolygon2D = attack_hitbox.get_node_or_null("Arc")
+
+
+func _ready() -> void:
+	super()
+	if shriek:
+		arc.polygon = Player._arc(t("arc"), t("reach"))
+		cone.polygon = arc.polygon
 
 
 func _tick(delta: float) -> void:
@@ -18,6 +32,8 @@ func _tick(delta: float) -> void:
 	if target != null:
 		to_target = target.global_position - global_position
 	var d := to_target.length()
+	if shriek:   # floats; sits on the ground while grounded
+		body.position.y = 0.0 if state == State.GROUNDED else -4.0 - 2.0 * sin(Time.get_ticks_msec() / 250.0)
 	match state:
 		State.IDLE:
 			if d <= tuning.enemy_notice:
@@ -32,8 +48,17 @@ func _tick(delta: float) -> void:
 					_enter(State.WINDUP)
 		State.WINDUP:
 			if state_time >= t("windup"):
-				_fire()
+				if shriek:
+					_enter(State.SHRIEK)
+				else:
+					_fire()
+					_enter(State.RECOVER)
+		State.SHRIEK:
+			if state_time >= t("shriek_time"):
 				_enter(State.RECOVER)
+		State.GROUNDED:
+			if state_time >= tuning.weak_ground_time:
+				_enter(State.KEEP)
 		State.RECOVER:
 			_turn(to_target.angle(), delta)
 			velocity = _band_velocity(to_target, d) * slow()
@@ -65,13 +90,26 @@ func _band_velocity(to_target: Vector2, d: float) -> Vector2:
 
 
 func _enter(s: State) -> void:
-	if state == State.WINDUP:
+	if state in [State.WINDUP, State.GROUNDED]:
 		body.modulate = Color.WHITE
+	if shriek:
+		attack_hitbox.deactivate()
+		cone.visible = false
 	state = s
 	state_time = 0.0
 	velocity = Vector2.ZERO
-	if s == State.WINDUP:
-		body.modulate = TELEGRAPH
+	match s:
+		State.WINDUP:
+			body.modulate = TELEGRAPH
+			if shriek:
+				cone.visible = true
+				cone.modulate.a = 0.3   # cone telegraph
+		State.SHRIEK:
+			attack_hitbox.activate()
+			cone.visible = true
+			cone.modulate.a = 0.8
+		State.GROUNDED:
+			body.modulate = STAGGERED
 
 
 func _fire() -> void:
@@ -90,8 +128,17 @@ func _turn(want: float, delta: float) -> void:
 	aim.rotation = facing
 
 
+func _on_hurt(hitbox: Hitbox) -> void:
+	var weak := shriek and state == State.WINDUP and hitbox is Bolt
+	super(hitbox)
+	if weak and not health.is_dead():
+		_enter(State.GROUNDED)
+		get_node("/root/Events").weakness_triggered.emit(kind)
+
+
 func _on_flinch() -> void:
-	_enter(State.FLINCH)
+	if state != State.GROUNDED:
+		_enter(State.FLINCH)
 
 
 func _on_died() -> void:

@@ -7,6 +7,8 @@ enum State { IDLE, CHASE, WINDUP, ATTACK, RECOVER, FLINCH, STAGGER, RETURN, DEAD
 const TELEGRAPH := Color(1.0, 0.45, 0.45)
 const STAGGERED := Color(0.7, 0.75, 1.0)   # ponytail: tint instead of shake + stars until the art pass
 
+@export var bind_weak := false   # Jurig Leuweung: Bound means no new swing and x2 poise damage
+
 var state := State.IDLE
 var state_time := 0.0
 var stagger_time := 0.0
@@ -18,6 +20,10 @@ var facing := 0.0          # radians
 
 func _ready() -> void:
 	super()
+	if bind_weak and status != null:
+		status.started.connect(func(type: Status.Type) -> void:
+			if type == Status.Type.BOUND:
+				get_node("/root/Events").weakness_triggered.emit(kind))
 	if arc != null:   # wide swing roles (tank) build their arc from tuning
 		arc.polygon = Player._arc(t("arc"), t("reach"))
 		slash.polygon = arc.polygon
@@ -40,7 +46,7 @@ func _tick(delta: float) -> void:
 				var d := to_target.length()
 				if d <= tuning.circle_max and request_token():
 					velocity = Vector2.from_angle(facing) * t("speed") * slow()
-					if d <= t("attack_range"):
+					if d <= t("attack_range") and not _bound_weak():
 						_enter(State.WINDUP)
 				else:
 					if d > tuning.circle_max:
@@ -96,6 +102,14 @@ func _enter(s: State) -> void:
 				slash.visible = true
 		State.STAGGER:
 			body.modulate = STAGGERED
+
+
+func _bound_weak() -> bool:
+	return bind_weak and status != null and status.has(Status.Type.BOUND)
+
+
+func _poise_mult() -> float:
+	return tuning.weak_bind_poise_mult if _bound_weak() else 1.0
 
 
 func _turn(want: float, delta: float) -> void:

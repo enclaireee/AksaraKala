@@ -5,12 +5,12 @@
 [resource]
 script = ExtResource("1")
 id = "keris_mpu_gandring"
-title = "Keris Mpu Gandring"
+title = "ITEM_KERIS_MPU_GANDRING_NAME"
 slot = "weapon"
 archetype = "light"
 mythic = true
-description = "Strong, but every hit costs you 1 HP."
-lore = "In the Pararaton legend, this keris was forged unfinished for Ken Arok, and Mpu Gandring's dying curse followed it."
+description = "ITEM_KERIS_MPU_GANDRING_DESC"
+lore = "ITEM_KERIS_MPU_GANDRING_LORE"
 windup = 0.08
 active = 0.07
 recovery = 0.2

@@ -1,0 +1,36 @@
+keys,id,en
+Q_MQ0_TITLE,Wayang Terakhir,The Last Shadow Play
+Q_MQ1_TITLE,Perahu yang Tertelungkup,The Overturned Boat
+Q_MQ0_S1_OBJ,Saksikan pertunjukan wayang,Watch the wayang performance
+Q_MQ0_S2_OBJ,Bicara dengan Semar,Speak with Semar
+Q_MQ0_S3_OBJ,Pilih kelasmu,Choose your class
+Q_MQ0_S4_OBJ,Pelajari aksara pertamamu di sanggar,Learn your first letter in the sanggar
+Q_MQ0_S5_OBJ,Rapalkan Ka tiga kali,Cast Ka three times
+Q_MQ0_S6_OBJ,Kalahkan boneka latihan,Defeat the training dummies
+Q_MQ0_S7_OBJ,"Pergilah ke barat, ke Tatar Sunda",Head west to Tatar Sunda
+Q_MQ1_S1_OBJ,Beristirahat di petilasan dekat kebun teh,Rest at the petilasan by the tea terraces
+Q_MQ1_S2_OBJ,Temui sesepuh kampung,Find the village elder
+Q_MQ1_S3_OBJ,Pelajari Ga dari sesepuh,Learn Ga from the elder
+Q_MQ1_S4_OBJ,Usir perampok dan Kuntilanak dari batu tulis di rumpun bambu,Clear the bandits and the Kuntilanak from the batu tulis in the bamboo grove
+Q_MQ1_S5_OBJ,Baca batu tulis untuk mempelajari Nga,Read the batu tulis to learn Nga
+Q_MQ1_S6_OBJ,Temui penenun penyimpan boeh rarang,Find the weaver who keeps the boeh rarang
+Q_MQ1_S7_OBJ,Temui arwah Dayang Sumbi di tepi danau,Meet Dayang Sumbi's spirit at the lake shore
+Q_MQ1_S8_OBJ,Daki ke bibir kawah,Climb to the crater rim
+Q_MQ1_S9_OBJ,Bebaskan Sangkuriang dari lupa,Free Sangkuriang from the forgetting
+Q_MQ1_S10_OBJ,Kembali ke Semar,Return to Semar
+Q_SQ_S1_TITLE,Lutung Kasarung,Lutung Kasarung
+Q_SQ_S1_S1_OBJ,Temukan arwah lutung hitam di hutan,Find the black lutung spirit in the forest
+Q_SQ_S1_S2_OBJ,Usir roh-roh dari mata air tersembunyi,Clear the spirits from the hidden spring
+Q_SQ_S1_S3_OBJ,Bicara dengan Purbasari,Speak with Purbasari
+Q_SQ_S1_S4_OBJ,Antar Purbasari ke mata air,Bring Purbasari to the spring
+Q_SQ_S2_TITLE,Kuntilanak Rumpun Bambu,The Bamboo-Grove Kuntilanak
+Q_SQ_S2_S1_OBJ,Dengarkan laporan kepala desa,Hear the village head's reports
+Q_SQ_S2_S2_OBJ,Cari Kuntilanak di rumpun bambu yang gelap,Find the Kuntilanak in the dark bamboo grove
+Q_SQ_S2_S3_OBJ,Kalahkan Kuntilanak itu,Defeat the Kuntilanak
+Q_SQ_S2_S4_OBJ,Lapor kepada kepala desa,Report back to the village head
+Q_SQ_S3_TITLE,Angklung yang Tercerai,The Scattered Angklung
+Q_SQ_S3_S1_OBJ,Temukan 5 angklung yang tercecer,Find the 5 scattered angklung
+Q_SQ_S3_S2_OBJ,Kembalikan angklung kepada pemimpin kelompok,Return the angklung to the group leader
+Q_SQ_S4_TITLE,Cepot Si Pemberani,Brave Cepot
+Q_SQ_S4_S1_OBJ,Kalahkan 3 babi hutan,Defeat 3 wild boars
+Q_SQ_S4_S2_OBJ,Lapor kepada Cepot,Report back to Cepot

@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1")
 id = "jimat"
-title = "Jimat"
+title = "ITEM_JIMAT_NAME"
 slot = "accessory"
 mythic = true
-description = "+10 max HP."
-lore = "A small charm carried for luck and protection."
+description = "ITEM_JIMAT_DESC"
+lore = "ITEM_JIMAT_LORE"
 bonus = {"max_hp": 10}

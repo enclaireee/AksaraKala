@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "batu_tulis"
+name_key = "NPC_BATU_TULIS_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq1=4"], "lines": ["DLG_BATU_TULIS_1", "DLG_BATU_TULIS_2", "DLG_BATU_TULIS_3", "DLG_BATU_TULIS_4", "DLG_BATU_TULIS_5"], "do": ["learn:sunda_nga"]},
+	{"if": ["flag:mq1_5"], "lines": ["DLG_BATU_TULIS_6", "DLG_BATU_TULIS_7"], "do": []},
+	{"if": [], "lines": ["DLG_BATU_TULIS_8", "DLG_BATU_TULIS_9", "DLG_BATU_TULIS_10"], "do": []}
+])

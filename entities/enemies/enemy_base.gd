@@ -6,6 +6,7 @@ class_name EnemyBase extends CharacterBody2D
 @export var poise_ratio := 0.0      # 0: flinch on every hit. Tank 0.6 (combat.md 3.1)
 @export var ranged := false         # which token pool it draws from (combat.md 5.2)
 @export var ilmu := 6               # Ilmu awarded on death (balance.md 6). TUNE: chaser 6, shooter 6, tank 15
+@export var kind := ""              # quests count kills by this (Events.enemy_killed)
 @export var unique_id := ""         # bosses and minibosses: stays dead once listed in Game.killed (rpg.md 11)
 
 @onready var body: Polygon2D = $Body
@@ -76,6 +77,11 @@ func _physics_process(delta: float) -> void:
 
 func _tick(_delta: float) -> void:
 	pass
+
+
+## Extra poise damage multiplier (weaknesses).
+func _poise_mult() -> float:
+	return 1.0
 
 
 func _on_flinch() -> void:
@@ -150,7 +156,7 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	# Poise roles take no knockback and do not flinch until poise breaks.
 	if poise_immune > 0.0:
 		return
-	poise -= hitbox.damage * (tuning.poise_finisher_mult if hitbox.heavy else hitbox.poise_mult)
+	poise -= hitbox.damage * _poise_mult() * (tuning.poise_finisher_mult if hitbox.heavy else hitbox.poise_mult)
 	if poise <= 0.0:
 		poise = _max_poise()
 		poise_immune = tuning.poise_immunity

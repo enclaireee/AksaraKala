@@ -26,30 +26,32 @@ No fixed dates. Phases run in order. Each phase has **exit criteria**: do not st
 - Exit: the mix is readable, and the combat.md section 8 checks pass.
 
 ## Phase 2: Aksara casting (the gimmick)
-- [ ] Cast mode: slow-mo, vignette, ink trail
-- [ ] Recognizer ($P or $1) and glyph data resource
-- [ ] Glyph recorder tool and the first 3 glyph templates (start from the designs in `glyph_strokes.py`)
+- [x] Cast mode: slow-mo, vignette, ink trail
+- [x] Recognizer ($P or $1) and glyph data resource
+- [x] Glyph recorder tool and the first 3 glyph templates (start from the designs in `glyph_strokes.py`)
 - [ ] Re-run the confusability check on real recorded templates, all 8 glyphs ([spells.md](spells.md) 10)
-- [ ] Sakti gauge and the first 3 spells
-- [ ] Sanggar practice scene with ghost guide
-- Exit: a new player can learn to draw a glyph in the sanggar and cast it in combat with at least 90% success on a clean stroke, and the wrong spell is never cast by accident. Ga/Nga and Na/Ca fizzle under 10% on honest drawings, otherwise swap Nga.
+- [x] Sakti gauge and the first 3 spells
+- [x] Sanggar practice scene with ghost guide
+- Exit (built 2026-11-05, waits for the user's recorded templates and playtest): a new player can learn to draw a glyph in the sanggar and cast it in combat with at least 90% success on a clean stroke, and the wrong spell is never cast by accident. Ga/Nga and Na/Ca fizzle under 10% on honest drawings, otherwise swap Nga.
 
 ## Phase 3: RPG loop
-- [ ] `Game` autoload: class, stats, Ilmu, glyphs, gear, last petilasan
-- [ ] Autosave and Continue: `Game.to_dict()`/`from_dict()`, safe write, round-trip test ([rpg.md](rpg.md) 11)
-- [ ] Classes and class select (4 cards)
-- [ ] Petilasan: heal, flask refill, level-up UI, respawn
-- [ ] Death and respawn, enemy respawn
-- [ ] Remaining 5 glyphs and spells
-- Exit: a full loop works: fight, earn Ilmu, rest, level up, die, respawn, quit, Continue with nothing lost.
+- [x] `Game` autoload: class, stats, Ilmu, glyphs, gear, last petilasan
+- [x] Autosave and Continue: `Game.to_dict()`/`from_dict()`, safe write, round-trip test ([rpg.md](rpg.md) 11)
+- [x] Classes and class select (4 cards)
+- [x] Petilasan: heal, flask refill, level-up UI, respawn
+- [x] Death and respawn, enemy respawn
+- [x] Remaining 5 glyphs and spells
+- Exit (built 2026-11-05, waits for the user's playtest): a full loop works: fight, earn Ilmu, rest, level up, die, respawn, quit, Continue with nothing lost.
 
 ## Phase 4: First region (Desa Purwa + Tatar Sunda)
-- [ ] Zone loader and edge transitions, camera bounds
-- [ ] Desa Purwa with the wayang prologue, Semar, class choice
-- [ ] Tatar Sunda: tileset, enemies, NPCs, petilasans, boss Sangkuriang
-- [ ] Dialogue system, quest system (QuestData, journal, marker), CSV string tables (ID/EN), codex v1
-- [ ] Main quest MQ0-MQ1 and the Cepot side quest ([quests.md](quests.md))
-- Exit: the first 15 minutes are playable start to boss, with real structure. This is the **demo path** for judges.
+- [x] Zone loader and edge transitions, camera bounds
+- [x] Desa Purwa with the wayang prologue, Semar, class choice
+- [x] Tatar Sunda: tileset, enemies, NPCs, petilasans, boss Sangkuriang
+- [x] Dialogue system, quest system (QuestData, journal, marker), CSV string tables (ID/EN), codex v1
+- [x] Main quest MQ0-MQ1 and the Cepot side quest ([quests.md](quests.md))
+- [x] Extras (user call, 2026-11-05): Sandekala miniboss, SQ-S1 Lutung Kasarung, SQ-S2 Kuntilanak bounty, SQ-S3 Angklung
+- [x] i18n sweep: all existing UI, items and classes become translation keys; ID/EN toggle on the title screen (`user://settings.cfg`, first launch follows the OS locale)
+- Exit (built 2026-11-05, waits for the user's playtest): New Game to Sangkuriang's release and the Mataram gate opening is playable (about 40 min, [balance.md](balance.md) 2.1), with SQ-S1 to S4 and Sandekala completable, on placeholder art.
 
 ## Phase 5: Remaining regions
 - [ ] Mataram zone and boss

@@ -38,7 +38,9 @@ Soft and story-driven:
 - NPCs: Cepot (comic relief), Abah Karna, the elder who teaches a glyph, side-quest givers ([quests.md](quests.md)).
 - Culture: rumah panggung (stilt house), iket (cloth head wrap), angklung (verified: Sundanese, UNESCO 2010), kujang weapon.
 - Petilasans: 2 (entrance, before the crater).
-- Boss: Sangkuriang ([bestiary.md](bestiary.md)).
+- Boss: Sangkuriang ([bestiary.md](bestiary.md)). Miniboss: Sandekala. Elite: the bamboo-grove Kuntilanak (SQ-S2, a locally darkened arena, no day/night cycle).
+- Gates (**ASSUMED** 2026-11-05): a kabut on the crater path lifts with flag `mq1_7` (Dayang Sumbi teaches Ca). The Desa Purwa east gate to Mataram stays fogged until flag `mq1_10`.
+- Room layout: [zones/tatar_sunda.md](zones/tatar_sunda.md). Desa Purwa: [zones/desa_purwa.md](zones/desa_purwa.md). The sanggar is a room inside Desa Purwa.
 
 ### Mataram (Central Java), Act 2
 - Look: temple ruins, rice fields, volcano silhouette, stone gateways.
@@ -74,7 +76,7 @@ Soft and story-driven:
 - 6-8 in total across the map. At least one before each boss.
 
 ## Points of interest per zone (target)
-- 1 boss arena, 1 miniboss or elite room, 3-5 NPCs, 2-3 secret rooms (chests with gear), 1 codex-rich location (e.g. a museum-like ruin), 6-10 enemy encounters.
+- 1 boss arena, 1 miniboss or elite room, 3-5 NPCs (Tatar Sunda has 10 because it teaches the quest loop, **ASSUMED** 2026-11-05), 2-3 secret rooms (chests with gear), 1 codex-rich location (e.g. a museum-like ruin), 6-10 enemy encounters.
 
 ## Codex
 Fed by: first meeting an enemy, first picking an item, first learning a glyph, talking to key NPCs, visiting landmarks. Each entry has a title, 1-3 sentences, a source line and (for glyphs) the character and its Latin transliteration.

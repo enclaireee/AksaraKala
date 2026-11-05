@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1")
 id = "crossbow"
-title = "Crossbow"
+title = "ITEM_CROSSBOW_NAME"
 slot = "weapon"
 archetype = "ranged"
-description = "Slow wind-up, high damage."
+description = "ITEM_CROSSBOW_DESC"
 windup = 0.5
 recovery = 0.3
 cost = 6.0

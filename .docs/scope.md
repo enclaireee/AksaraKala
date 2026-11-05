@@ -25,7 +25,7 @@ There is no fixed deadline, so scope is ordered by priority, not cut by time. Bu
 - Side quests (3-4 per zone) and the hub meta quests ([quests.md](quests.md))
 - Glyph mastery and always-on guide setting
 - Accessibility settings (assist toggles in [balance.md](balance.md) 9: gentle combat, drawing assist, slow-mo strength, draw time)
-- Judge quick-start demo path
+- Quick-start option (skip prologue)
 
 ## P2: stretch
 - Diacritic modifiers and glyph combos (the Kala shield mechanic)

@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1")
 id = "kain_hijau"
-title = "Kain Hijau"
+title = "ITEM_KAIN_HIJAU_NAME"
 slot = "armor"
 mythic = true
-description = "A green cloth."
-lore = "Linked, by belief, to the lore of Nyi Roro Kidul."
+description = "ITEM_KAIN_HIJAU_DESC"
+lore = "ITEM_KAIN_HIJAU_LORE"
 defense = 5

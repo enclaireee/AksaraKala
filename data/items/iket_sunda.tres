@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1")
 id = "iket_sunda"
-title = "Iket Sunda"
+title = "ITEM_IKET_SUNDA_NAME"
 slot = "armor"
 mythic = true
-description = "A Sundanese cloth head wrap."
-lore = "Tied by the wearer, never pinned."
+description = "ITEM_IKET_SUNDA_DESC"
+lore = "ITEM_IKET_SUNDA_LORE"
 defense = 2

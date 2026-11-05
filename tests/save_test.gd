@@ -49,7 +49,7 @@ func _initialize() -> void:
 
 	# A missing field gets its default; a wrong type keeps the default; unknown keys are ignored.
 	g.from_dict({"version": 1, "class_id": "mage", "ilmu": "lots", "future_field": 1})
-	check(g.class_id == "mage" and g.ilmu == 0 and g.flask_max == 3 and g.glyphs_learned.size() == 3, "merge onto defaults failed")
+	check(g.class_id == "mage" and g.ilmu == 0 and g.flask_max == 3 and g.glyphs_learned.is_empty() and g.quests.is_empty(), "merge onto defaults failed")
 
 	# save.bak holds the previous good save. A broken save.json falls back to it and is not deleted.
 	g.from_dict(JSON.parse_string(before))

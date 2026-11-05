@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1")
 id = "rogue"
-title = "Rogue"
-description = "Fast and deadly.\nHit and run, strike from behind."
+title = "CLASS_ROGUE_NAME"
+description = "CLASS_ROGUE_DESC"
 stats = {"vit": 5, "end": 7, "str": 6, "dex": 7, "spi": 3}
 start_weapon = "dagger"
 start_armor = "padded_tunic"
-passive = "Light Step"
-passive_text = "Dodge costs 14. Double damage from behind."
+passive = "CLASS_ROGUE_PASSIVE"
+passive_text = "CLASS_ROGUE_PASSIVE_DESC"

@@ -1,0 +1,99 @@
+keys,id,en
+ITEM_GOLOK_NAME,Golok,Golok
+CLASS_ARCHER_DESC,Petarung jarak jauh yang presisi.\nBergerak lincah dan memilih posisi.,A precise ranged fighter.\nKites and picks positions.
+CLASS_ARCHER_NAME,Pemanah,Archer
+CLASS_ARCHER_PASSIVE,Mata Elang,Eagle Eye
+CLASS_ARCHER_PASSIVE_DESC,+15% damage di atas 120 px. Bolt menembus.,+15% damage over 120 px. Bolt pierces.
+CLASS_MAGE_DESC,"Penguasa tulisan.\nMenyihir terus-menerus, rapuh.","Master of the written word.\nCasts constantly, fragile."
+CLASS_MAGE_NAME,Penyihir,Mage
+CLASS_MAGE_PASSIVE,Pikiran Tajam,Keen Mind
+CLASS_MAGE_PASSIVE_DESC,"Sakti terisi 1,2x lebih cepat dan menampung 120.",Sakti fills 1.2x faster and holds 120.
+CLASS_ROGUE_DESC,"Cepat dan mematikan.\nSerang lalu menghindar, tusuk dari belakang.","Fast and deadly.\nHit and run, strike from behind."
+CLASS_ROGUE_NAME,Penyelinap,Rogue
+CLASS_ROGUE_PASSIVE,Langkah Ringan,Light Step
+CLASS_ROGUE_PASSIVE_DESC,Menghindar butuh 14. Damage dua kali lipat dari belakang.,Dodge costs 14. Double damage from behind.
+CLASS_WARRIOR_DESC,"Garda depan yang tak tergoyahkan.\nJarak dekat, tangguh, mantra berupa gelombang kejut.","An unbreakable frontliner.\nClose range, tanky, spells as shockwaves."
+CLASS_WARRIOR_NAME,Prajurit,Warrior
+CLASS_WARRIOR_PASSIVE,Kulit Besi,Iron Skin
+CLASS_WARRIOR_PASSIVE_DESC,Pukulan ringan tidak membuatmu terhuyung atau terpental.,Light hits do not stagger or knock you back.
+ITEM_AMULET_DESC,+10 HP maks.,+10 max HP.
+ITEM_AMULET_NAME,Amulet,Amulet
+ITEM_AXE_DESC,"Berat dan lambat, tapi pukulannya keras.",Hits hard and slow.
+ITEM_AXE_NAME,Kapak,Axe
+ITEM_BAJU_BATIK_DESC,Pakaian batik.,Batik clothing.
+ITEM_BAJU_BATIK_LORE,"Motifnya sarat makna; sebagian, seperti parang, dulu hanya boleh dipakai bangsawan.","Its patterns carry meaning; some, like parang, were once royal-only."
+ITEM_BAJU_BATIK_NAME,Baju Batik,Baju Batik
+ITEM_BLANGKON_DESC,Penutup kepala batik siap pakai khas Jawa.,A Javanese ready-made batik head cloth.
+ITEM_BLANGKON_LORE,Dipakai di seluruh Jawa; motif batiknya menyimpan makna.,Worn across Java; the batik pattern carries meaning.
+ITEM_BLANGKON_NAME,Blangkon,Blangkon
+ITEM_BROADSWORD_DESC,Ayunan lebar dan berat.,"A wide, heavy swing."
+ITEM_BROADSWORD_NAME,Pedang Lebar,Broadsword
+ITEM_CAKRA_DESC,Cakram cahaya yang dilempar.,A thrown disc of light.
+ITEM_CAKRA_LORE,Cakram Kresna dalam cerita wayang. Di sini ia melesat seperti anak panah.,Krishna's disc from the wayang tales. Here it flies like an arrow.
+ITEM_CAKRA_NAME,Cakra,Cakra
+ITEM_CHAINMAIL_DESC,Cincin besi yang berat.,Heavy rings of iron.
+ITEM_CHAINMAIL_NAME,Baju Zirah Rantai,Chainmail
+ITEM_CROSSBOW_DESC,"Penarikan lambat, daya hancur besar.","Slow wind-up, high damage."
+ITEM_CROSSBOW_NAME,Busur Silang,Crossbow
+ITEM_DAGGER_DESC,"Cepat, jangkauan pendek.","Fast, short reach."
+ITEM_DAGGER_NAME,Belati,Dagger
+ITEM_FEATHER_CHARM_DESC,+8% kecepatan gerak.,+8% move speed.
+ITEM_FEATHER_CHARM_NAME,Jimat Bulu,Feather Charm
+ITEM_GOLOK_DESC,Bilah tebas mirip parang.,A machete-like chopping blade.
+ITEM_HUNTING_BOW_DESC,Busur biasa.,A plain bow.
+ITEM_HUNTING_BOW_NAME,Busur Berburu,Hunting Bow
+ITEM_IKET_SUNDA_DESC,Ikat kepala kain khas Sunda.,A Sundanese cloth head wrap.
+ITEM_IKET_SUNDA_LORE,"Diikat sendiri oleh pemakainya, tidak pernah disemat.","Tied by the wearer, never pinned."
+ITEM_IKET_SUNDA_NAME,Iket Sunda,Iket Sunda
+ITEM_IRON_RING_DESC,+1 Kekuatan.,+1 Strength.
+ITEM_IRON_RING_NAME,Cincin Besi,Iron Ring
+ITEM_IRON_STAFF_DESC,Sambaran yang lebih kokoh.,A sturdier bolt.
+ITEM_IRON_STAFF_NAME,Tongkat Besi,Iron Staff
+ITEM_JIMAT_DESC,+10 HP maks.,+10 max HP.
+ITEM_JIMAT_LORE,Benda kecil yang dibawa demi keberuntungan dan perlindungan.,A small charm carried for luck and protection.
+ITEM_JIMAT_NAME,Jimat,Jimat
+ITEM_KAIN_HIJAU_DESC,Selembar kain hijau.,A green cloth.
+ITEM_KAIN_HIJAU_LORE,"Menurut kepercayaan, terkait dengan kisah Nyi Roro Kidul.","Linked, by belief, to the lore of Nyi Roro Kidul."
+ITEM_KAIN_HIJAU_NAME,Kain Hijau,Kain Hijau
+ITEM_KERIS_LUK_7_DESC,Keris dengan tujuh lekukan.,A keris with seven curves.
+ITEM_KERIS_LUK_7_LORE,"Tujuh lekukan, secara tradisi dikaitkan dengan perlindungan. Pusaka keramat; perlakukan dengan hormat.","Seven curves, traditionally associated with protection. A sacred pusaka; handle it with respect."
+ITEM_KERIS_LUK_7_NAME,Keris Luk 7,Keris Luk 7
+ITEM_KERIS_MPU_GANDRING_DESC,"Kuat, tetapi setiap pukulan menguras 1 HP.","Strong, but every hit costs you 1 HP."
+ITEM_KERIS_MPU_GANDRING_LORE,"Dalam legenda Pararaton, keris ini ditempa belum selesai untuk Ken Arok, dan kutukan Mpu Gandring menyertainya.","In the Pararaton legend, this keris was forged unfinished for Ken Arok, and Mpu Gandring's dying curse followed it."
+ITEM_KERIS_MPU_GANDRING_NAME,Keris Mpu Gandring,Keris Mpu Gandring
+ITEM_KUJANG_DESC,Bilah melengkung khas Sunda.,A curved Sundanese blade.
+ITEM_KUJANG_LORE,Ikon Jawa Barat; bilahnya yang melengkung menyapu lebar.,Iconic to West Java; its curved blade sweeps wide.
+ITEM_KUJANG_NAME,Kujang,Kujang
+ITEM_LEATHER_ARMOR_DESC,Ringan dan senyap.,Light and quiet.
+ITEM_LEATHER_ARMOR_NAME,Zirah Kulit,Leather Armor
+ITEM_LONGBOW_DESC,"Tarikan lebih lambat, daya hancur lebih besar.","Slower draw, more damage."
+ITEM_LONGBOW_NAME,Busur Panjang,Longbow
+ITEM_OAK_STAFF_DESC,Sambaran cahaya yang lemah.,A weak bolt of light.
+ITEM_OAK_STAFF_NAME,Tongkat Ek,Oak Staff
+ITEM_PADDED_TUNIC_DESC,Kain berlapis yang sederhana.,Plain padded cloth.
+ITEM_PADDED_TUNIC_NAME,Tunik Empuk,Padded Tunic
+ITEM_PANAH_PASOPATI_DESC,Anak panah yang namanya diambil dari panah Arjuna.,An arrow named after Arjuna's.
+ITEM_PANAH_PASOPATI_LORE,"Arjuna, pemanah agung dalam wayang, dikaitkan dengan panah Pasopati.","Arjuna, the great archer of wayang, is linked with the arrow Pasopati."
+ITEM_PANAH_PASOPATI_NAME,Panah Pasopati,Panah Pasopati
+ITEM_SHORT_SWORD_DESC,Bilah yang seimbang.,A balanced blade.
+ITEM_SHORT_SWORD_NAME,Pedang Pendek,Short Sword
+ITEM_SILVER_BANGLE_DESC,+10% pemulihan stamina.,+10% stamina regen.
+ITEM_SILVER_BANGLE_NAME,Gelang Perak,Silver Bangle
+ITEM_SPEAR_DESC,"Jangkauan panjang, tusukan sempit.","Long reach, narrow thrust."
+ITEM_SPEAR_NAME,Tombak,Spear
+ITEM_STONE_RING_DESC,+1 Spirit.,+1 Spirit.
+ITEM_STONE_RING_NAME,Cincin Batu,Stone Ring
+SPELL_JAWA_CA_NAME,Kobar,Rally
+SPELL_JAWA_HA_NAME,Sembuh,Heal
+SPELL_JAWA_NA_NAME,Terjang,Dash-strike
+SPELL_JAWA_RA_NAME,Panggil,Summon
+SPELL_SUNDA_CA_NAME,Ledakan,Burst
+SPELL_SUNDA_GA_NAME,Tameng,Ward
+SPELL_SUNDA_KA_NAME,Sambaran,Bolt
+SPELL_SUNDA_NGA_NAME,Ikat,Bind
+ITEM_BOEH_RARANG_NAME,Boeh rarang,Boeh rarang
+ITEM_ANGKLUNG_1_NAME,Angklung (1/5),Angklung (1/5)
+ITEM_ANGKLUNG_2_NAME,Angklung (2/5),Angklung (2/5)
+ITEM_ANGKLUNG_3_NAME,Angklung (3/5),Angklung (3/5)
+ITEM_ANGKLUNG_4_NAME,Angklung (4/5),Angklung (4/5)
+ITEM_ANGKLUNG_5_NAME,Angklung (5/5),Angklung (5/5)

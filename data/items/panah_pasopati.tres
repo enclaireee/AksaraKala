@@ -5,12 +5,12 @@
 [resource]
 script = ExtResource("1")
 id = "panah_pasopati"
-title = "Panah Pasopati"
+title = "ITEM_PANAH_PASOPATI_NAME"
 slot = "weapon"
 archetype = "ranged"
 mythic = true
-description = "An arrow named after Arjuna's."
-lore = "Arjuna, the great archer of wayang, is linked with the arrow Pasopati."
+description = "ITEM_PANAH_PASOPATI_DESC"
+lore = "ITEM_PANAH_PASOPATI_LORE"
 windup = 0.15
 recovery = 0.3
 cost = 4.0

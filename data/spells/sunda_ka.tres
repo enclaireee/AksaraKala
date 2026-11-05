@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1")
 glyph_id = "sunda_ka"
-title = "Bolt"
+title = "SPELL_SUNDA_KA_NAME"
 cost = 15.0
 power = 30.0
 duration = 0.0

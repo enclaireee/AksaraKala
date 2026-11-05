@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1")
 id = "warrior"
-title = "Warrior"
-description = "An unbreakable frontliner.\nClose range, tanky, spells as shockwaves."
+title = "CLASS_WARRIOR_NAME"
+description = "CLASS_WARRIOR_DESC"
 stats = {"vit": 8, "end": 6, "str": 8, "dex": 4, "spi": 3}
 start_weapon = "broadsword"
 start_armor = "padded_tunic"
-passive = "Iron Skin"
-passive_text = "Light hits do not stagger or knock you back."
+passive = "CLASS_WARRIOR_PASSIVE"
+passive_text = "CLASS_WARRIOR_PASSIVE_DESC"

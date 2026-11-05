@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_S4_S1_OBJ"
+on = "enemy_killed:wild_boar"
+count = 3
+marker = {"zone": "tatar_sunda", "id": "cepot"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_S4_S2_OBJ"
+on = "talked_to:cepot"
+marker = {"zone": "tatar_sunda", "id": "cepot"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_s4"
+kind = "side"
+type = "errand"
+zone = "tatar_sunda"
+size = "S"
+giver = "cepot"
+requires = Array[String](["mq1_1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2")])
+rewards = {"items": ["silver_bangle"], "codex": ["cepot"]}

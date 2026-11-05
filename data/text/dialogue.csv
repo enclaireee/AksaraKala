@@ -1,0 +1,196 @@
+keys,id,en
+NPC_SEMAR_NAME,Semar,Semar
+PROLOGUE_1,Kisah ini bermula dari Aji Saka dan dua abdinya yang setia.,This tale begins with Aji Saka and his two loyal servants.
+PROLOGUE_2,Mereka bernama Dora dan Sembada.,Their names were Dora and Sembada.
+PROLOGUE_3,Dari kesetiaan mereka lahirlah aksara: Hanacaraka.,From their loyalty the letters were born: Hanacaraka.
+PROLOGUE_4,"Ha na ca ra ka,","Ha na ca ra ka,"
+PROLOGUE_5,"da ta sa wa la,","da ta sa wa la,"
+PROLOGUE_6,"pa dha ja ya nya,","pa dha ja ya nya,"
+PROLOGUE_7,ma ga ba tha nga.,ma ga ba tha nga.
+PROLOGUE_8,"Namun malam ini, huruf-huruf di layar mulai memudar.","But tonight, the letters on the screen begin to fade."
+PROLOGUE_9,"Satu per satu, aksara itu lenyap.","One by one, the letters vanish."
+PROLOGUE_10,"Orang lupa cara menulisnya. Lalu, lupa kisahnya.",People forget how to write them. Then they forget the tales.
+PROLOGUE_11,"Kau lihat, Nak? Dunia sedang lupa.","Did you see, child? The world is forgetting."
+PROLOGUE_12,"Aksara bisa kembali, selama ada yang mau mengingat.","The letters can return, as long as someone remembers."
+PROLOGUE_13,Pilihlah jalanmu. Lalu temui aku di sanggar.,Choose your path. Then meet me in the sanggar.
+NPC_CEPOT_NAME,Cepot,Cepot
+NPC_SUNDA_ELDER_NAME,Abah Karna,Abah Karna
+NPC_DAYANG_SUMBI_NAME,Dayang Sumbi,Dayang Sumbi
+NPC_SUNDA_WEAVER_NAME,Penenun,Weaver
+NPC_BATU_TULIS_NAME,Batu Tulis,Batu Tulis
+NPC_KI_WANGSA_NAME,Ki Wangsa,Ki Wangsa
+NPC_NYAI_RUKMI_NAME,Nyai Rukmi,Nyai Rukmi
+NPC_KI_DARSA_NAME,Ki Darsa,Ki Darsa
+NPC_KEPALA_DESA_NAME,Kepala Desa,Village Head
+NPC_ANGKLUNG_LEADER_NAME,Pemimpin Angklung,Angklung Leader
+NPC_PURBASARI_NAME,Purbasari,Purbasari
+NPC_LUTUNG_KASARUNG_NAME,Lutung Kasarung,Lutung Kasarung
+DLG_SEMAR_1,"Kau kembali! Perahu itu kini jadi gunung, kan?","You are back! That boat is a mountain now, is it not?"
+DLG_SEMAR_2,"Sangkuriang ingat, berkat kamu.","Sangkuriang remembers, thanks to you."
+DLG_SEMAR_3,Kabut di gerbang timur mulai menipis.,The kabut at the east gate begins to thin.
+DLG_SEMAR_4,Mataram menunggu. Di sana aksara Jawa tersimpan.,Mataram waits. The Javanese aksara are kept there.
+DLG_SEMAR_5,"Hati-hati, Nak. Lupa itu licik.","Careful, child. Forgetting is sly."
+DLG_SEMAR_6,Gerbang timur sudah terbuka. Pergilah ke Mataram.,The east gate is open. Go to Mataram.
+DLG_SEMAR_7,Mampir ke petilasan dulu kalau perlu.,Stop by the petilasan first if you need to.
+DLG_SEMAR_8,"Nah, ini sanggar. Dulu ramai sekali.",Here is the sanggar. It used to be so lively.
+DLG_SEMAR_9,"Aksara bukan sekadar huruf. Digambar dengan hati, ia jadi tenaga.","Aksara are not just letters. Drawn with heart, they become power."
+DLG_SEMAR_10,"Kita mulai dari Ka, huruf pertama dari barat.","We start with Ka, the first letter of the west."
+DLG_SEMAR_11,"Gambar dengan mouse: tahan, lalu lepas. Pelan saja.","Draw with the mouse: hold, then release. Slowly is fine."
+DLG_SEMAR_12,Ka melesat lurus seperti anak panah. Ampuh melawan Kuntilanak.,Ka flies straight like an arrow. Great against the Kuntilanak.
+DLG_SEMAR_13,Coba rapalkan tiga kali.,Now cast it three times.
+DLG_SEMAR_14,"Rapalkan Ka tiga kali. Tarik napas, gambar yang rapi.","Cast Ka three times. Breathe, and draw it neatly."
+DLG_SEMAR_15,"Kalau garisnya kacau, mantranya ikut kacau. Sabar, ya.","If the lines are a mess, so is the spell. Be patient."
+DLG_SEMAR_16,Bagus! Sekarang uji di boneka latihan di sudut sanggar.,Good! Now test it on the practice dummies in the corner.
+DLG_SEMAR_17,Mereka tidak membalas. Tidak seperti tetangga kita.,They never hit back. Unlike our neighbours.
+DLG_SEMAR_18,"Kau sudah siap. Pergilah ke barat, ke Tatar Sunda.","You are ready. Go west, to Tatar Sunda."
+DLG_SEMAR_19,Di sana ada gunung seperti perahu terbalik.,There stands a mountain like an overturned boat.
+DLG_SEMAR_20,Anakku Cepot menunggu dekat petilasan. Dia... berisik.,My boy Cepot waits near the petilasan. He is... noisy.
+DLG_SEMAR_21,Istirahatlah di petilasan; di sana tenagamu pulih.,Rest at a petilasan; there your strength returns.
+DLG_SEMAR_22,"Ke barat, Nak. Sangkuriang masih lupa.","To the west, child. Sangkuriang still forgets."
+DLG_SEMAR_23,Dengarkan Abah Karna di sana.,Listen to Abah Karna there.
+DLG_SEMAR_24,Sangkuriang lupa bahwa fajar sudah lama datang.,Sangkuriang forgets that dawn came long ago.
+DLG_SEMAR_25,"Ia membendung sungai dan membangun perahu, lagi dan lagi.","He dams the river and builds his boat, again and again."
+DLG_SEMAR_26,Ingatkan dia dengan fajar palsu dari kisah lama.,Remind him with the fake dawn from the old tale.
+DLG_SEMAR_27,Kembalilah kalau semuanya selesai.,Come back when it is done.
+DLG_SEMAR_28,"Aku Semar. Tua, tapi ingatanku masih kuat.","I am Semar. Old, but my memory still holds."
+DLG_SEMAR_29,"Kalau perlu apa-apa, aku di sini.","If you need anything, I am here."
+DLG_KI_WANGSA_1,"Kau pulang dari Tatar Sunda? Ceritakan, biar kuwayangkan!","Back from Tatar Sunda? Tell me, so I can put it on the screen!"
+DLG_KI_WANGSA_2,Perahu terbalik jadi gunung. Lakon yang bagus.,A boat that becomes a mountain. A fine lakon.
+DLG_KI_WANGSA_3,"Tunggu, nanti ada pertunjukan baru.","Wait, a new performance is coming."
+DLG_KI_WANGSA_4,Kali ini dengan tokoh-tokoh baru.,This time with new characters.
+DLG_KI_WANGSA_5,"Aku Ki Wangsa, dalang desa ini.","I am Ki Wangsa, this village's dalang."
+DLG_KI_WANGSA_6,"Bayangan di layar ini hidup, selama ada yang menonton.",The shadows on this screen live as long as someone watches.
+DLG_KI_WANGSA_7,Semalaman aku main. Punggungku protes.,I played all night. My back protests.
+DLG_KI_WANGSA_8,Kisah Aji Saka tadi favoritku.,The Aji Saka tale is my favourite.
+DLG_NYAI_RUKMI_1,Tatar Sunda sudah kau lewati? Kisahnya kucatat dulu.,You crossed Tatar Sunda? Let me write down its tale.
+DLG_NYAI_RUKMI_2,"Kalau ada legenda baru, bawa ke sini.","If you find new legends, bring them here."
+DLG_NYAI_RUKMI_3,"Aku Nyai Rukmi, penjaga catatan desa.","I am Nyai Rukmi, keeper of the village records."
+DLG_NYAI_RUKMI_4,"Setiap legenda yang kau temui, kucatat di sini.","Every legend you meet, I write down here."
+DLG_NYAI_RUKMI_5,"Makin banyak yang kau ingat, makin tebal bukuku.","The more you remember, the thicker my book grows."
+DLG_NYAI_RUKMI_6,Mampirlah lagi. Tehku selalu hangat.,Do stop by again. My tea is always warm.
+DLG_SUNDA_ELDER_1,"Lembah ini tenang lagi. Terima kasih, Nak.","The valley is calm again. Thank you, child."
+DLG_SUNDA_ELDER_2,Perahu itu sudah jadi gunung. Biarlah ia tidur.,That boat is a mountain now. Let it sleep.
+DLG_SUNDA_ELDER_3,"Duduklah. Ini Ga, huruf perisai.","Sit. This is Ga, the shield letter."
+DLG_SUNDA_ELDER_4,"Gambar Ga, dan perisai cahaya melindungimu.","Draw Ga, and a shield of light guards you."
+DLG_SUNDA_ELDER_5,Babi hutan menyeruduk tanpa pikir. Ga memantulkan serudukannya.,Wild boars charge without thinking. Ga bounces them off.
+DLG_SUNDA_ELDER_6,"Nah, kini kau bisa bertahan. Ke arah timur ada rumpun bambu.",Now you can hold your ground. East lies a bamboo grove.
+DLG_SUNDA_ELDER_7,"Di sana ada batu tulis, tapi perampok menjaganya.","There is a batu tulis, but bandits guard it."
+DLG_SUNDA_ELDER_8,"Ah, kau dikirim Semar. Aku Abah Karna.","Ah, Semar sent you. I am Abah Karna."
+DLG_SUNDA_ELDER_9,"Lembah ini banjir, lagi dan lagi. Sungai dibendung orang yang lupa.","The valley floods, again and again. A forgetful man dams the river."
+DLG_SUNDA_ELDER_10,Namanya Sangkuriang. Ia ingin menyelesaikan perahu sebelum fajar.,His name is Sangkuriang. He wants the boat done before dawn.
+DLG_SUNDA_ELDER_11,"Fajar sudah tiba, tapi ia lupa.","Dawn came, but he forgot."
+DLG_SUNDA_ELDER_12,Bicaralah lagi denganku. Akan kuajari Ga.,Speak to me again. I will teach you Ga.
+DLG_SUNDA_ELDER_13,Kau terlihat lelah. Istirahatlah di petilasan dulu.,You look tired. Rest at the petilasan first.
+DLG_SUNDA_ELDER_14,Nanti kita bicara.,Then we can talk.
+DLG_SUNDA_ELDER_15,"Ingat, Nak: Ga untuk bertahan, bukan bersembunyi.","Remember, child: Ga is for holding, not hiding."
+DLG_SUNDA_ELDER_16,Batu tulis di rumpun bambu menyimpan huruf berikutnya.,The batu tulis in the bamboo grove keeps the next letter.
+DLG_SUNDA_ELDER_17,Selamat datang di kampung kami.,Welcome to our village.
+DLG_SUNDA_ELDER_18,"Tehnya kami petik sendiri, ceritanya kami jaga sendiri.",We pick our own tea and guard our own tales.
+DLG_BATU_TULIS_1,Batu ini penuh goresan lama. Dua huruf berdampingan.,The stone is full of old carvings. Two letters sit side by side.
+DLG_BATU_TULIS_2,"Yang pertama kau kenal: Ga, huruf perisai.","The first you know: Ga, the shield letter."
+DLG_BATU_TULIS_3,Di sebelahnya Nga: Ga tanpa kotak.,Beside it Nga: Ga without the box.
+DLG_BATU_TULIS_4,Nga mengikat. Makhluk besar pun tak bisa mengayun.,Nga binds. Even big creatures cannot swing.
+DLG_BATU_TULIS_5,Hutan ini punya jurig yang berat dan lambat. Ikat saja.,"This forest has slow, heavy jurig. Just bind them."
+DLG_BATU_TULIS_6,Goresan di batu ini sudah kau baca.,You have read the carvings on this stone.
+DLG_BATU_TULIS_7,Nga: Ga tanpa kotak.,Nga: Ga without the box.
+DLG_BATU_TULIS_8,"Batu tulis tua, berlumut dan retak.","An old batu tulis, mossy and cracked."
+DLG_BATU_TULIS_9,Suara perampok dan bisikan Kuntilanak terdengar dekat.,Bandits shout and a Kuntilanak whispers nearby.
+DLG_BATU_TULIS_10,"Singkirkan mereka dulu, baru batu ini bisa dibaca.","Drive them off first, then the stone can be read."
+DLG_SUNDA_WEAVER_1,"Ah, Abah Karna sudah bercerita? Mari, duduk.","Ah, did Abah Karna tell you? Come, sit."
+DLG_SUNDA_WEAVER_2,"Kain ini boeh rarang, warisan keluarga kami.","This cloth is boeh rarang, our family heirloom."
+DLG_SUNDA_WEAVER_3,"Dalam kisah lama, kain ini menipu Sangkuriang.","In the old tale, such cloth tricked Sangkuriang."
+DLG_SUNDA_WEAVER_4,Ia mengira fajar datang dari timur.,He thought dawn came from the east.
+DLG_SUNDA_WEAVER_5,"Bawalah. Tenunan memang untuk dipakai, bukan disimpan.","Take it. Weaving is for using, not for keeping."
+DLG_SUNDA_WEAVER_6,"Gantung di tiang timur, lalu rapalkan cahaya.","Hang it on the east post, then cast the light."
+DLG_SUNDA_WEAVER_7,Semoga kainnya berguna di bibir kawah.,I hope the cloth helps at the crater rim.
+DLG_SUNDA_WEAVER_8,"Hati-hati. Benang bisa putus, tapi tekad jangan.","Be careful. Thread may snap, resolve should not."
+DLG_SUNDA_WEAVER_9,"Maaf, alat tenunku sedang bising. Datang lagi nanti?","Sorry, my loom is noisy. Come back later?"
+DLG_SUNDA_WEAVER_10,Aku dengar kau mencari kain tua.,I hear you seek an old cloth.
+DLG_DAYANG_SUMBI_1,Kau datang dengan kain itu. Aku bisa merasakannya.,You come bearing that cloth. I can feel it.
+DLG_DAYANG_SUMBI_2,Namaku Dayang Sumbi. Anakku keras kepala sekali.,I am Dayang Sumbi. My son is so stubborn.
+DLG_DAYANG_SUMBI_3,"Ia mengira fajar belum tiba, padahal sudah lama.","He thinks dawn has not come, but it did long ago."
+DLG_DAYANG_SUMBI_4,Hanya cahaya sebelum fajar yang bisa menyadarkannya.,Only the light before dawn can wake him.
+DLG_DAYANG_SUMBI_5,Ini Ca: huruf ledakan cahaya.,This is Ca: the letter of bursting light.
+DLG_DAYANG_SUMBI_6,Gambar Ca di dekat kain di tiang timur.,Draw Ca beside the cloth on the east post.
+DLG_DAYANG_SUMBI_7,Ca juga menyapu makhluk yang berkerumun.,Ca also sweeps away creatures that swarm.
+DLG_DAYANG_SUMBI_8,Kabut di jalan kawah kini terbuka. Pergilah.,The kabut on the crater path opens now. Go.
+DLG_DAYANG_SUMBI_9,"Bebaskan dia, Nak. Lalu biarkan ia beristirahat.","Free him, child. Then let him rest."
+DLG_DAYANG_SUMBI_10,Gantung kainnya di tiang timur.,Hang the cloth on the east post.
+DLG_DAYANG_SUMBI_11,"Danau ini tenang, tapi hatiku tidak.","The lake is calm, but my heart is not."
+DLG_DAYANG_SUMBI_12,Datanglah dengan kain tenun itu.,Come with that woven cloth.
+DLG_KI_DARSA_1,Kisah Purbasari sudah kau tuntaskan. Akan kupantunkan!,You finished Purbasari's tale. I will sing it as pantun!
+DLG_KI_DARSA_2,"Lutung itu bukan sembarang monyet, ya?","That lutung was no ordinary monkey, was he?"
+DLG_KI_DARSA_3,Cari lutung hitam di hutan. Ia sahabat Purbasari.,Find the black lutung in the forest. He is Purbasari's friend.
+DLG_KI_DARSA_4,"Setelah itu, mata air tersembunyi menunggu.","After that, a hidden spring awaits."
+DLG_KI_DARSA_5,"Duduk, duduk. Mau dengar pantun?","Sit, sit. Care for a pantun?"
+DLG_KI_DARSA_6,"Tentang Purbasari, putri yang kulitnya sakit.","About Purbasari, a princess with an ailing skin."
+DLG_KI_DARSA_7,"Ia diasingkan kakaknya, Purbararang.",Her sister Purbararang cast her out.
+DLG_KI_DARSA_8,"Seekor lutung hitam menemaninya. Sebenarnya Guruminda, makhluk langit.","A black lutung kept her company. In truth he was Guruminda, a heavenly being."
+DLG_KI_DARSA_9,Maukah kau bantu mempertemukan mereka? Pantunku belum selesai.,Would you help bring them together? My pantun is unfinished.
+DLG_KI_DARSA_10,"Aku Ki Darsa, juru pantun.","I am Ki Darsa, a juru pantun."
+DLG_KI_DARSA_11,Pantun itu cara kami mengingat. Sengaja agar tak lupa.,Pantun is how we remember. Made so nothing is forgotten.
+DLG_KI_DARSA_12,Kembalilah setelah bertemu Abah Karna.,Come back after meeting Abah Karna.
+DLG_LUTUNG_KASARUNG_1,Kau melihatku? Sedikit orang bisa.,You can see me? Few people can.
+DLG_LUTUNG_KASARUNG_2,Aku menjaga Purbasari dari bayang-bayang.,I guard Purbasari from the shadows.
+DLG_LUTUNG_KASARUNG_3,Mata air di sana bisa menyembuhkannya.,The spring there can heal her.
+DLG_LUTUNG_KASARUNG_4,Tapi roh-roh gelap menjaga mata air itu. Bantu aku.,But dark spirits guard that spring. Help me.
+DLG_LUTUNG_KASARUNG_5,Terima kasih. Tugasku sudah selesai.,Thank you. My task is done.
+DLG_LUTUNG_KASARUNG_6,Sst. Aku hanya lutung biasa.,Shh. I am just an ordinary lutung.
+DLG_LUTUNG_KASARUNG_7,Jangan tanya apa-apa.,Ask nothing.
+DLG_PURBASARI_1,"Mata air itu, ya? Aku ikut.",To that spring? I will come.
+DLG_PURBASARI_2,Antar aku. Aku sudah lama ingin mandi tenang.,Lead me. I long for a peaceful bath.
+DLG_PURBASARI_3,Lutung sudah bercerita? Kau baik sekali.,The lutung told you? You are kind.
+DLG_PURBASARI_4,"Kulitku sakit, dan saudariku tidak peduli.","My skin is ill, and my sister does not care."
+DLG_PURBASARI_5,"Kata lutung, ada mata air yang menyembuhkan.",The lutung says a spring can heal.
+DLG_PURBASARI_6,Aku mau ikut. Antar aku ke sana.,I will come. Take me there.
+DLG_PURBASARI_7,Kulitku pulih! Aku berhutang padamu.,My skin is healed! I owe you.
+DLG_PURBASARI_8,"Ceritakan pada Purbararang, kalau ia mau dengar.","Tell Purbararang, if she will listen."
+DLG_PURBASARI_9,"Aku Purbasari. Tolong, aku sedang sendiri.","I am Purbasari. Please, I wish to be alone."
+DLG_PURBASARI_10,"Hutan ini sepi, tapi lebih tenang daripada istana.","The forest is quiet, calmer than the palace."
+DLG_KEPALA_DESA_1,Kuntilanak itu sudah kau kalahkan? Syukurlah!,You beat the Kuntilanak? Thank goodness!
+DLG_KEPALA_DESA_2,Warga bisa lewat rumpun bambu lagi.,Villagers can pass the bamboo grove again.
+DLG_KEPALA_DESA_3,Terimalah golok ini dan ramuan dari kami.,Take this golok and herb pouch from us.
+DLG_KEPALA_DESA_4,"Golok ini tajam, jadi hati-hati.","This golok is sharp, so careful."
+DLG_KEPALA_DESA_5,Desa kami aman berkatmu.,Our village is safe thanks to you.
+DLG_KEPALA_DESA_6,Anak-anak mulai berani bermain lagi.,The children dare to play again.
+DLG_KEPALA_DESA_7,Rumpun bambu itu gelap kalau malam.,That bamboo grove is dark at night.
+DLG_KEPALA_DESA_8,"Kuntilanak itu menjerit, dan warga lari.","The Kuntilanak shrieks, and villagers flee."
+DLG_KEPALA_DESA_9,"Hati-hati, Nak. Ka bisa menghentikan jeritnya.","Careful, child. Ka can stop her shriek."
+DLG_KEPALA_DESA_10,"Nak, ada kabar buruk dari rumpun bambu.","Child, there is bad news from the bamboo grove."
+DLG_KEPALA_DESA_11,Seorang Kuntilanak muncul di sana. Warga takut lewat.,A Kuntilanak appears there. Villagers fear to pass.
+DLG_KEPALA_DESA_12,"Kisahnya ada di seluruh Nusantara, katanya.","Her tale is told across the archipelago, they say."
+DLG_KEPALA_DESA_13,Ia membuat bambu jadi gelap. Maukah kau usir?,She turns the bamboo dark. Will you drive her out?
+DLG_KEPALA_DESA_14,Aku kepala desa di sini.,I am the village head here.
+DLG_KEPALA_DESA_15,"Maaf, aku sibuk. Datang lagi nanti.","Sorry, I am busy. Come back later."
+DLG_ANGKLUNG_LEADER_1,Kelima angklung sudah kembali! Dengarkan ini.,All five angklung are back! Listen to this.
+DLG_ANGKLUNG_LEADER_2,"Satu angklung, satu nada. Kita semua bermain bersama.","One angklung, one note. We all play together."
+DLG_ANGKLUNG_LEADER_3,"Ting, ting... indah sekali, kan?","Ting, ting... lovely, isn't it?"
+DLG_ANGKLUNG_LEADER_4,Ambil ini sebagai tanda terima kasih.,Take this as our thanks.
+DLG_ANGKLUNG_LEADER_5,Kelompok kami sudah main lagi berkatmu.,Our group plays again thanks to you.
+DLG_ANGKLUNG_LEADER_6,"Masih ada angklung yang tercecer, Nak.","Some angklung are still scattered, child."
+DLG_ANGKLUNG_LEADER_7,Angklung bersinar kalau kau dekat.,Angklung sparkle when you are near.
+DLG_ANGKLUNG_LEADER_8,"Wah, ada tamu! Kami sedang berkabung.","Ah, a visitor! We are quite sad."
+DLG_ANGKLUNG_LEADER_9,Angklung kami tercecer ke seluruh lembah.,Our angklung are scattered across the valley.
+DLG_ANGKLUNG_LEADER_10,"Satu angklung, satu nada. Tanpa semuanya, tak ada lagu.","One angklung, one note. Without all, there is no song."
+DLG_ANGKLUNG_LEADER_11,Ada lima. Maukah kau kumpulkan?,There are five. Will you gather them?
+DLG_ANGKLUNG_LEADER_12,Kami kelompok angklung desa.,We are the village angklung group.
+DLG_ANGKLUNG_LEADER_13,"Sayang, sekarang kami sedang tidak bermain.","Sadly, we are not playing right now."
+DLG_CEPOT_1,"Hahaha! Lihat, aku berani, kan?","Hahaha! See, I am brave, aren't I?"
+DLG_CEPOT_2,"Kamu yang bertarung, tapi aku yang berteriak paling keras!","You did the fighting, but I shouted the loudest!"
+DLG_CEPOT_3,"Ini gelang perak. Kata Ayah, itu untuk orang berani.",A silver bangle. Father says it is for the brave.
+DLG_CEPOT_4,Tapi kau lebih pantas. Gelang ini untukmu.,But you deserve it more. The bangle is yours.
+DLG_CEPOT_5,"Satu! Wah, hebat! Eh, aku yang hebat, kan?","One! Wow, great! Er, I am the great one, right?"
+DLG_CEPOT_6,Dua! Aku hampir turun menolong! Hampir.,Two! I almost came down to help! Almost.
+DLG_CEPOT_7,"Tiga! Aduh, kenapa mereka begitu galak?","Three! Oh my, why are they so fierce?"
+DLG_CEPOT_8,"Kalahkan tiga babi hutan, ya. Aku mengawasi dari sini.","Beat three wild boars, will you? I supervise from here."
+DLG_CEPOT_9,Gelangnya cocok! Tapi jangan lupa siapa yang mengawasi.,The bangle suits you! Don't forget who supervised.
+DLG_CEPOT_10,"Aku Astrajingga, putra Semar. Bangga, kan?","I am Astrajingga, Semar's son. Proud, right?"
+DLG_CEPOT_11,"Hai, hai! Kau yang dikirim Ayah? Aku Cepot!","Hi, hi! You are the one Father sent? I am Cepot!"
+DLG_CEPOT_12,Aku mau buktikan bahwa aku ini pemberani.,I want to prove that I am brave.
+DLG_CEPOT_13,Ada babi hutan yang berkeliaran di kebun teh.,Wild boars roam the tea terraces.
+DLG_CEPOT_14,"Kalahkan tiga, dan aku mengawasi dari sini. Setuju?","Defeat three, and I supervise from here. Deal?"
+DLG_CEPOT_15,"Ga membuat babi hutan terpental, lho. Tapi itu rahasia.","Ga bounces boars right off, you know. But that's a secret."
+DLG_CEPOT_16,"Hai! Aku Cepot, putra Semar. Terkenal, kan?","Hi! I am Cepot, Semar's son. Famous, right?"
+DLG_CEPOT_17,Petilasan di sini enak buat istirahat.,The petilasan here is nice for resting.
+DLG_CEPOT_18,Coba duduk dulu. Aku tidak menggigit. Biasanya.,Try resting first. I don't bite. Usually.
+DLG_CEPOT_19,"Setelah itu, ngobrol lagi sama aku.","After that, talk to me again."

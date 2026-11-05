@@ -23,6 +23,14 @@ func shake(px: float, seconds: float) -> void:
 		_len = seconds
 
 
+## Never show outside rect (the zone map). Camera2D limits clamp after lean and shake.
+func set_bounds(rect: Rect2) -> void:
+	limit_left = floori(rect.position.x)
+	limit_top = floori(rect.position.y)
+	limit_right = ceili(rect.end.x)
+	limit_bottom = ceili(rect.end.y)
+
+
 func _current() -> float:
 	return _amp * _left / _len if _left > 0.0 else 0.0
 

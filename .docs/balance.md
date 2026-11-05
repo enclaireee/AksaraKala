@@ -133,7 +133,9 @@ The old rule "x1.5 per zone" for HP is replaced. HP rising x1.3 per zone keeps t
 | Enemy | Zone (tier) | Role | HP | Dmg | Ilmu |
 |-------|-------------|------|----|-----|------|
 | Kuntilanak | Sunda (0) | Shooter | 40 | 8 | 6 |
-| Maung | Sunda (0) | Charger | 60 | 12 | 9 |
+| Bandit | Sunda (0) | Chaser | 40 | 8 | 6 |
+| Bandit Archer | Sunda (0) | Shooter | 40 | 8 | 6 |
+| Wild Boar | Sunda (0) | Charger | 60 | 12 | 9 |
 | Jurig Leuweung | Sunda (0) | Tank | 150 | 12 | 15 |
 | Genderuwo | Mataram (1) | Tank | 195 | 14 | 22 |
 | Tuyul | Mataram (1) | Chaser, swarm | 31 | 9 | 4 |

@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1")
 id = "blangkon"
-title = "Blangkon"
+title = "ITEM_BLANGKON_NAME"
 slot = "armor"
 mythic = true
-description = "A Javanese ready-made batik head cloth."
-lore = "Worn across Java; the batik pattern carries meaning."
+description = "ITEM_BLANGKON_DESC"
+lore = "ITEM_BLANGKON_LORE"
 defense = 3

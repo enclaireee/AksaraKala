@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "dayang_sumbi"
+name_key = "NPC_DAYANG_SUMBI_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq1=6"], "lines": ["DLG_DAYANG_SUMBI_1", "DLG_DAYANG_SUMBI_2", "DLG_DAYANG_SUMBI_3", "DLG_DAYANG_SUMBI_4", "DLG_DAYANG_SUMBI_5", "DLG_DAYANG_SUMBI_6", "DLG_DAYANG_SUMBI_7", "DLG_DAYANG_SUMBI_8"], "do": ["learn:sunda_ca"]},
+	{"if": ["flag:mq1_7"], "lines": ["DLG_DAYANG_SUMBI_9", "DLG_DAYANG_SUMBI_10"], "do": []},
+	{"if": [], "lines": ["DLG_DAYANG_SUMBI_11", "DLG_DAYANG_SUMBI_12"], "do": []}
+])

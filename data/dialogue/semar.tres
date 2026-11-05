@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "semar"
+name_key = "NPC_SEMAR_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq1=9"], "lines": ["DLG_SEMAR_1", "DLG_SEMAR_2", "DLG_SEMAR_3", "DLG_SEMAR_4", "DLG_SEMAR_5"], "do": []},
+	{"if": ["flag:mq1_10"], "lines": ["DLG_SEMAR_6", "DLG_SEMAR_7"], "do": []},
+	{"if": ["step:mq0=3"], "lines": ["DLG_SEMAR_8", "DLG_SEMAR_9", "DLG_SEMAR_10", "DLG_SEMAR_11", "DLG_SEMAR_12", "DLG_SEMAR_13"], "do": ["learn:sunda_ka", "start:mq1"]},
+	{"if": ["step:mq0=4"], "lines": ["DLG_SEMAR_14", "DLG_SEMAR_15"], "do": []},
+	{"if": ["step:mq0=5"], "lines": ["DLG_SEMAR_16", "DLG_SEMAR_17"], "do": []},
+	{"if": ["step:mq0=6"], "lines": ["DLG_SEMAR_18", "DLG_SEMAR_19", "DLG_SEMAR_20", "DLG_SEMAR_21"], "do": []},
+	{"if": ["quest:mq1=available"], "lines": ["DLG_SEMAR_22", "DLG_SEMAR_23"], "do": ["start:mq1"]},
+	{"if": ["quest:mq1=active"], "lines": ["DLG_SEMAR_24", "DLG_SEMAR_25", "DLG_SEMAR_26", "DLG_SEMAR_27"], "do": []},
+	{"if": [], "lines": ["DLG_SEMAR_28", "DLG_SEMAR_29"], "do": []}
+])

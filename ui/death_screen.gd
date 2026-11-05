@@ -1,5 +1,5 @@
 extends Control
-## Death: fade to dark, "Gugur / Fallen", then respawn (rpg.md 7).
+## Death: fade to dark, "UI_FALLEN", then respawn (rpg.md 7).
 
 var _dim: ColorRect
 
@@ -13,7 +13,7 @@ func _ready() -> void:
 	add_child(_dim)
 	var l := Label.new()
 	l.name = "Text"
-	l.text = "Gugur / Fallen"
+	l.text = "UI_FALLEN"
 	l.set_anchors_preset(PRESET_FULL_RECT)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

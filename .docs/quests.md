@@ -91,6 +91,8 @@ Teaches: movement, interacting, class choice, the first glyph, combat basics.
 | 0.6 | Defeat the training dummies | Kalahkan boneka latihan | `enemy_killed:dummy` x3 |
 | 0.7 | Head west to Tatar Sunda | Pergilah ke barat, ke Tatar Sunda | `zone_entered:tatar_sunda` |
 
+0.1-0.3 happen before the save exists (prologue, Semar's line, class cards), so New Game starts MQ0 at 0.4 with 0.1-0.3 already struck (**ASSUMED** 2026-11-05).
+
 The Mataram gate east of the village stays fogged until MQ1 is done.
 
 ### MQ1 Act 1: "Perahu yang Tertelungkup" / "The Overturned Boat" (Tatar Sunda)
@@ -101,7 +103,7 @@ Premise: cursed by the forgetting, Sangkuriang does not remember that dawn alrea
 | 1.1 | Rest at the petilasan by the tea terraces | Beristirahat di petilasan dekat kebun teh | `petilasan_activated:sunda_1` (Cepot is here; SQ-S4 becomes available) |
 | 1.2 | Find the village elder | Temui sesepuh kampung | `talked_to:sunda_elder` |
 | 1.3 | Learn Ga from the elder | Pelajari Ga dari sesepuh | `glyph_learned:sunda_ga` |
-| 1.4 | Clear the spirits from the batu tulis in the bamboo grove | Usir makhluk halus dari batu tulis di rumpun bambu | `area_cleared:sunda_batutulis` |
+| 1.4 | Clear the bandits and the Kuntilanak from the batu tulis in the bamboo grove | Usir perampok dan Kuntilanak dari batu tulis di rumpun bambu | `area_cleared:sunda_batutulis` |
 | 1.5 | Read the batu tulis to learn Nga | Baca batu tulis untuk mempelajari Nga | `glyph_learned:sunda_nga` (the stone shows Ga beside Nga: "Nga is Ga without the box", [spells.md](spells.md) 5) |
 | 1.6 | Find the weaver who keeps the boeh rarang | Temui penenun penyimpan boeh rarang | `item_picked:boeh_rarang` |
 | 1.7 | Meet Dayang Sumbi's spirit at the lake shore | Temui arwah Dayang Sumbi di tepi danau | `talked_to:dayang_sumbi` (teaches Ca: "the light before dawn") |
@@ -196,9 +198,9 @@ Card format: type, size, giver, unlock, steps, resolution, reward, culture and *
 - Reward: **Flask Shard #1**, Ilmu M.
 - Culture: each angklung sounds one note, so a tune needs every player. That is the point of the quest and the codex entry. Angklung is UNESCO 2010 (verified). **VERIFY** the traditional scale (pentatonic salendro/pelog vs the later diatonic angklung).
 
-**SQ-S4 "Cepot Si Pemberani" / "Brave Cepot"** (errand, S, demo path)
-- Giver: Cepot. Unlock: MQ1 step 1.1, so judges see the quest system in the first 15 minutes.
-- Steps: (1) Cepot wants to prove he is brave and asks you to defeat 3 Maung while he "supervises" from a tree, commenting on each kill, (2) report back.
+**SQ-S4 "Cepot Si Pemberani" / "Brave Cepot"** (errand, S, first-hour path)
+- Giver: Cepot. Unlock: MQ1 step 1.1, so the quest system shows up early.
+- Steps: (1) Cepot wants to prove he is brave and asks you to defeat 3 Wild Boar (was Maung, dropped with the tiger spirit, **ASSUMED** 2026-11-05) while he "supervises" from a tree, commenting on each kill, (2) report back.
 - Reward: **Silver Bangle**, Ilmu S.
 - Culture: Cepot's humor as in wayang golek. Barks are one-liners in both languages.
 
@@ -305,11 +307,18 @@ Fits [architecture.md](architecture.md): data-driven resources, quest state in t
 | Field | Example |
 |-------|---------|
 | `objective` | translation key, e.g. `Q_SQ_M2_S1` |
-| `on` | event string, e.g. `"enemy_killed:maung"` |
+| `on` | event string, e.g. `"enemy_killed:wild_boar"` (`<signal>:<arg>`; the arg is the enemy `kind`, npc id, item id, etc.). A bare `<signal>` matches any arg; a trailing `*` is a prefix (`item_picked:angklung_*`). An `item_picked:` step counts matching items already held when it becomes current, so early pickups never soft-lock it. `give:` fires `item_picked`. |
 | `count` | `3` |
-| `alt` | for two-way steps: `{"enemy_killed:wewe_elite": "fight", "talked_to:wewe_parents_2": "peaceful"}` |
+| `alt` | for two-way steps: `{"enemy_killed:wewe_elite": "fight", "talked_to:wewe_parents_2": "peaceful"}`. Not built until Mataram (Tatar Sunda has no two-way quest) |
 | `marker` | `{zone: "mataram", id: "wewe_hill"}` |
 | `set_flag` | `mq2_2` |
+
+Dialogue (`DialogueData`, one `.tres` per NPC in `data/dialogue/`, **ASSUMED** 2026-11-05): `npc_id`, `name_key`, `entries: Array[Dictionary]`, each `{"if": [conditions], "lines": [keys], "do": [actions]}`. The first entry whose conditions all hold plays; an entry with no `if` is the fallback and goes last.
+- Conditions: `quest:<id>=<locked|available|active|done>`, `step:<id>=<n>` (0-based current step), `flag:<f>`, `!flag:<f>`, `glyph:<id>`.
+- Actions run when the box closes, in order: `start:<quest>`, `give:<item>`, `learn:<glyph>`, `flag:<f>`, `codex:<id>`. Then `talked_to:<npc_id>` fires.
+- `Game.check(cond)` and `Game.run(action)` hold the logic, so the NPC script only walks the list.
+
+`CodexEntry` (`data/codex/<id>.tres`): `id`, `category` (`enemy` / `legend` / `item` / `aksara`), `source`. Text keys `CODEX_<ID>_TITLE`, `_BODY`, `_WEAK` (enemies only). Unlocks on the first kill of that enemy `kind`, an item pick, a glyph learned, or a `codex:` action. A weakness trigger sets flag `weak:<kind>`, which shows the `_WEAK` line.
 
 ### 7.2 Events
 Quests listen to signals that `Events` already plans plus a few more: `talked_to(npc_id)`, `item_picked(item_id)`, `enemy_killed(enemy_id)`, `boss_defeated(boss_id)`, `area_cleared(area_id)`, `area_entered(trigger_id)`, `zone_entered(zone_id)`, `petilasan_activated(id)`, `glyph_learned(glyph_id)`, `spell_cast(glyph_id, score)`, `class_chosen(class_id)`, `trial_completed(id)`. Plus outgoing: `quest_started`, `quest_updated`, `quest_completed`.
@@ -344,13 +353,13 @@ Quests listen to signals that `Events` already plans plus a few more: `talked_to
 ### 7.8 Testing
 - A headless check (same style as the recognizer test) that loads every `QuestData` and asserts: every `requires` flag is set by some step, every `marker` names an existing zone, every key exists in both `id` and `en` columns, and every item in `rewards` exists. This catches broken quest chains without playing.
 
-## 8. Demo path (first 15 minutes)
-MQ0 (prologue, class, glyph Ka) -> MQ1 steps 1.1-1.3 -> SQ-S4 Cepot (quest system, journal, toast, reward) -> glyph Ga. A judge sees the main quest arrow, a side quest from start to finish, two glyphs and a folklore enemy with a codex entry.
+## 8. First-hour path
+MQ0 (prologue, class, glyph Ka) -> MQ1 steps 1.1-1.3 -> SQ-S4 Cepot (quest system, journal, toast, reward) -> glyph Ga. In the first 15 minutes a new player meets the main quest arrow, a side quest from start to finish, two glyphs and a folklore enemy with a codex entry. This is a good opening, not a demo path for judges (2026-11-05).
 
 ## 9. Scope
 | Tier | Content |
 |------|---------|
-| P0 | Quest system (sections 7.1-7.7), main quest MQ0-MQ3 and MQ5, bilingual text for all of it, SQ-S4 (demo path) |
+| P0 | Quest system (sections 7.1-7.7), main quest MQ0-MQ3 and MQ5, bilingual text for all of it, SQ-S4 (first-hour path) |
 | P1 | All other side quests in Sunda, Mataram, Timur (11), hub meta quests, MQ4 and Segara Kidul quests, the headless quest check |
 | P2 | Animated lakon performances, bonus glyphs from side quests, SQ-K2 Cakra reward |
 

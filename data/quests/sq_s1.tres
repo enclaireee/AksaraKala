@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_S1_S1_OBJ"
+on = "talked_to:lutung_kasarung"
+marker = {"zone": "tatar_sunda", "id": "lutung"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_S1_S2_OBJ"
+on = "area_cleared:sunda_spring"
+marker = {"zone": "tatar_sunda", "id": "hidden_spring"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_S1_S3_OBJ"
+on = "talked_to:purbasari"
+marker = {"zone": "tatar_sunda", "id": "purbasari"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_S1_S4_OBJ"
+on = "area_entered:spring_bath"
+marker = {"zone": "tatar_sunda", "id": "hidden_spring"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_s1"
+kind = "side"
+type = "retelling"
+zone = "tatar_sunda"
+size = "M"
+giver = "ki_darsa"
+requires = Array[String](["mq1_2"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"items": ["iket_sunda"], "lakon": "lutung_kasarung", "codex": ["lutung_kasarung"]}

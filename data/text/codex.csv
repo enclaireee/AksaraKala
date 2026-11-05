@@ -1,0 +1,44 @@
+keys,id,en
+CODEX_BANDIT_TITLE,Perampok,Bandit
+CODEX_BANDIT_BODY,Penjahat biasa yang menyerbu dengan pedang pendek.,An ordinary outlaw who rushes in with a short blade.
+CODEX_BANDIT_WEAK,Tak punya kelemahan khusus. Kombo dan menghindar cukup.,No special weakness. Combo and dodge are enough.
+CODEX_BANDIT_ARCHER_TITLE,Perampok Pemanah,Bandit Archer
+CODEX_BANDIT_ARCHER_BODY,Menjaga jarak dan menembakkan panah yang terlihat dulu.,Keeps its distance and fires arrows you can see coming.
+CODEX_BANDIT_ARCHER_WEAK,Tak punya kelemahan khusus. Dekati dan hajar.,No special weakness. Close in and strike.
+CODEX_WILD_BOAR_TITLE,Babi Hutan,Wild Boar
+CODEX_WILD_BOAR_BODY,Binatang hutan yang menyeruduk lurus setelah aba-aba.,A forest beast that charges in a straight line after a warning.
+CODEX_WILD_BOAR_WEAK,"Kalau menyeruduk ke Ga, ia terpental dan limbung 1,5 detik.","If it charges into Ga, it bounces off and staggers for 1.5 seconds."
+CODEX_KUNTILANAK_TITLE,Kuntilanak,Kuntilanak
+CODEX_KUNTILANAK_BODY,Hantu perempuan dari cerita rakyat Indonesia dan Melayu. Ia melayang dan menjerit.,A female ghost from Indonesian and Malay folklore. She floats and shrieks.
+CODEX_KUNTILANAK_WEAK,"Kena Ka saat ia bersiap menjerit, ia jatuh 2 detik dan bisa dipukul.",Hit her with Ka as she winds up to shriek and she drops for 2 seconds.
+CODEX_JURIG_LEUWEUNG_TITLE,Jurig Leuweung,Jurig Leuweung
+CODEX_JURIG_LEUWEUNG_BODY,"Jurig berarti hantu, leuweung berarti hutan. Makhluk besar yang lambat dan berat.","Jurig means ghost, leuweung means forest. A big, slow, heavy creature."
+CODEX_JURIG_LEUWEUNG_WEAK,"Kena Nga, ia tak bisa mengayun dan menerima dua kali kerusakan keseimbangan.","Bound by Nga, it cannot swing and takes double poise damage."
+CODEX_SANDEKALA_TITLE,Sandekala,Sandekala
+CODEX_SANDEKALA_BODY,Roh senja dari kepercayaan Sunda yang konon mengambil anak yang masih di luar saat petang.,A Sundanese dusk spirit said to take children who stay outside after sunset.
+CODEX_SANGKURIANG_TITLE,Sangkuriang,Sangkuriang
+CODEX_SANGKURIANG_BODY,"Pemuda dalam legenda yang membendung sungai dan membangun perahu dalam semalam. Dalam game ini, kutukan lupa membuatnya terus mengulang.","The youth of the legend who dammed a river and built a boat in one night. Here, the curse makes him repeat it."
+CODEX_SUNDA_KA_TITLE,Ka,Ka
+CODEX_SUNDA_KA_BODY,"Aksara Sunda pertama, huruf barat. Dirapal sebagai Bolt, anak panah cahaya.","The first Aksara Sunda letter, the letter of the west. Cast as Bolt, a dart of light."
+CODEX_SUNDA_GA_TITLE,Ga,Ga
+CODEX_SUNDA_GA_BODY,Huruf perisai. Dirapal sebagai Ward yang menahan serangan.,"The shield letter. Cast as Ward, which holds off attacks."
+CODEX_SUNDA_NGA_TITLE,Nga,Nga
+CODEX_SUNDA_NGA_BODY,Ga tanpa kotak. Dirapal sebagai Bind yang mengikat musuh di tempat.,"Ga without the box. Cast as Bind, rooting enemies in place."
+CODEX_SUNDA_CA_TITLE,Ca,Ca
+CODEX_SUNDA_CA_BODY,"Cahaya sebelum fajar. Dirapal sebagai Burst, ledakan cahaya.","The light before dawn. Cast as Burst, a blast of light."
+CODEX_KUJANG_TITLE,Kujang,Kujang
+CODEX_KUJANG_BODY,"Bilah khas Sunda, ikon Jawa Barat. Ringan dan cepat.","A Sundanese blade, iconic to West Java. Light and quick."
+CODEX_BOEH_RARANG_TITLE,Boeh Rarang,Boeh Rarang
+CODEX_BOEH_RARANG_BODY,Kain tenun tua dari penenun Tatar Sunda. Dipakai untuk membuat fajar palsu.,An old woven cloth from a Tatar Sunda weaver. Used to make the fake dawn.
+CODEX_HANACARAKA_TITLE,Hanacaraka,Hanacaraka
+CODEX_HANACARAKA_BODY,"Deretan aksara Jawa, lahir dari kisah Aji Saka dan dua abdinya, Dora dan Sembada.","The row of Javanese letters, born from the tale of Aji Saka and his servants Dora and Sembada."
+CODEX_TANGKUBAN_PERAHU_TITLE,Tangkuban Perahu,Tangkuban Perahu
+CODEX_TANGKUBAN_PERAHU_BODY,"Gunung berbentuk perahu terbalik. Menurut legenda, itulah perahu Sangkuriang.","A mountain shaped like an overturned boat. In the legend, it is Sangkuriang's boat."
+CODEX_LUTUNG_KASARUNG_TITLE,Lutung Kasarung,Lutung Kasarung
+CODEX_LUTUNG_KASARUNG_BODY,"Legenda Purbasari dan seekor lutung hitam yang sejatinya Guruminda, makhluk langit.","The legend of Purbasari and a black lutung who is really Guruminda, a heavenly being."
+CODEX_KUNTILANAK_RUMPUN_TITLE,Kuntilanak dan Rumpun Bambu,The Kuntilanak and the Bamboo
+CODEX_KUNTILANAK_RUMPUN_BODY,"Pohon tempat Kuntilanak tinggal berbeda di tiap cerita. Di sini, ia memilih rumpun bambu.","Which tree a Kuntilanak haunts differs from tale to tale. Here, she picked a bamboo grove."
+CODEX_ANGKLUNG_TITLE,Angklung,Angklung
+CODEX_ANGKLUNG_BODY,"Alat musik bambu Sunda. Satu angklung memainkan satu nada, jadi lagu butuh semua pemain.","A Sundanese bamboo instrument. One angklung plays one note, so a tune needs every player."
+CODEX_CEPOT_TITLE,Cepot,Cepot
+CODEX_CEPOT_BODY,"Punakawan jenaka dalam wayang golek Sunda, putra Semar yang paling terkenal.","A comic punakawan of Sundanese wayang golek, Semar's best-known son."

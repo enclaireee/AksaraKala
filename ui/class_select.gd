@@ -27,7 +27,7 @@ func _ready() -> void:
 		if c:
 			_card(c)
 	_back = Button.new()
-	_back.text = "Kembali / Back"
+	_back.text = "UI_BACK"
 	_back.position = Vector2(6, 240)
 	_back.size = Vector2(90, 20)
 	_back.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://ui/title.tscn"))
@@ -41,11 +41,11 @@ func _ready() -> void:
 	_confirm_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_confirm.add_child(_confirm_lbl)
 	var yes := Button.new()
-	yes.text = "Ya / Yes"
+	yes.text = "UI_YES"
 	yes.pressed.connect(_go)
 	_confirm.add_child(yes)
 	var no := Button.new()
-	no.text = "Batal / Cancel"
+	no.text = "UI_CANCEL"
 	no.pressed.connect(_show_cards)
 	_confirm.add_child(no)
 	_show_cards()
@@ -59,15 +59,15 @@ func _card(c: ClassData) -> void:
 	p.add_child(v)
 	var w := ItemData.by_id(c.start_weapon)
 	var st := " ".join(STATS.map(func(s: String) -> String: return "%s %d" % [s.to_upper(), c.stats.get(s, 0)]))
-	for text in [c.title, c.description, st, "Senjata / Weapon: " + (w.title if w else c.start_weapon),
-			"%s: %s" % [c.passive, c.passive_text]]:
+	for text in [tr(c.title), tr(c.description), st, "%s: %s" % [tr("UI_WEAPON"), tr(w.title) if w else c.start_weapon],
+			"%s: %s" % [tr(c.passive), tr(c.passive_text)]]:
 		var l := Label.new()
 		l.text = text
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.custom_minimum_size.x = 100
 		v.add_child(l)
 	var b := Button.new()
-	b.text = "Pilih / Choose"
+	b.text = "UI_CHOOSE"
 	b.pressed.connect(_ask.bind(c))
 	v.add_child(b)
 	_row.add_child(p)
@@ -87,7 +87,7 @@ func _show_cards() -> void:
 
 func _ask(c: ClassData) -> void:
 	_chosen = c
-	_confirm_lbl.text = "Pilih %s? / Choose %s?" % [c.title, c.title]
+	_confirm_lbl.text = tr("UI_CHOOSE_Q") % tr(c.title)
 	_row.visible = false
 	_back.visible = false
 	_confirm.visible = true
@@ -96,4 +96,5 @@ func _ask(c: ClassData) -> void:
 
 func _go() -> void:
 	get_node("/root/Game").new_game(_chosen)
+	get_node("/root/Events").class_chosen.emit(_chosen.id)
 	get_node("/root/Zones").start_new_game()

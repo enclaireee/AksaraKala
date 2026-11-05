@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1")
 id = "leather_armor"
-title = "Leather Armor"
+title = "ITEM_LEATHER_ARMOR_NAME"
 slot = "armor"
-description = "Light and quiet."
+description = "ITEM_LEATHER_ARMOR_DESC"
 defense = 2

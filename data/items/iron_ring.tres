@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1")
 id = "iron_ring"
-title = "Iron Ring"
+title = "ITEM_IRON_RING_NAME"
 slot = "accessory"
-description = "+1 Strength."
+description = "ITEM_IRON_RING_DESC"
 bonus = {"str": 1}

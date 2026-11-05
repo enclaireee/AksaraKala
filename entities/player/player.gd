@@ -129,7 +129,7 @@ func _physics_process(delta: float) -> void:
 	body.visible = clock >= blink_until or fmod(clock, 0.1) < 0.05
 	move_and_slide()
 	# ponytail: debug readout until the HUD (ui.md) exists
-	debug.text = "HP %d  ST %d  SK %d  %s [F1]  status [F2]" % [health.hp, stamina.value, sakti.value, item.title]
+	debug.text = "HP %d  ST %d  SK %d  %s [F1]  status [F2]" % [health.hp, stamina.value, sakti.value, tr(item.title)]
 
 
 # --- states ---

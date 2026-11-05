@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1")
 id = "silver_bangle"
-title = "Silver Bangle"
+title = "ITEM_SILVER_BANGLE_NAME"
 slot = "accessory"
-description = "+10% stamina regen."
+description = "ITEM_SILVER_BANGLE_DESC"
 bonus = {"stamina_regen": 0.1}

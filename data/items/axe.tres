@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1")
 id = "axe"
-title = "Axe"
+title = "ITEM_AXE_NAME"
 slot = "weapon"
 archetype = "heavy"
-description = "Hits hard and slow."
+description = "ITEM_AXE_DESC"
 windup = 0.3
 active = 0.1
 recovery = 0.45

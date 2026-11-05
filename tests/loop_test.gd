@@ -46,8 +46,9 @@ func run() -> void:
 	check(game.equipped.weapon == "broadsword", "warrior starts with %s" % game.equipped.weapon)
 	check(game.has_save(), "class choice did not create the save")
 
+	zones.start_zone = "res://zones/hub.tscn"
 	zones.start_new_game()
-	check(await until(func() -> bool: return current_scene != null and current_scene.scene_file_path == zones.START_ZONE and player() != null),
+	check(await until(func() -> bool: return current_scene != null and current_scene.scene_file_path == zones.start_zone and player() != null),
 		"new game never reached the hub")
 	await frames(2)
 	var p := player()

@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1")
 id = "archer"
-title = "Archer"
-description = "A precise ranged fighter.\nKites and picks positions."
+title = "CLASS_ARCHER_NAME"
+description = "CLASS_ARCHER_DESC"
 stats = {"vit": 5, "end": 6, "str": 4, "dex": 9, "spi": 4}
 start_weapon = "hunting_bow"
 start_armor = "padded_tunic"
-passive = "Eagle Eye"
-passive_text = "+15% damage over 120 px. Bolt pierces."
+passive = "CLASS_ARCHER_PASSIVE"
+passive_text = "CLASS_ARCHER_PASSIVE_DESC"

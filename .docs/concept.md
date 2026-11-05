@@ -38,7 +38,7 @@ Details: [classes.md](classes.md).
 - **Lose:** no real fail state. Dying returns you to the last petilasan with nothing lost ([rpg.md](rpg.md)).
 
 ## Audience and first impression
-- Judges may play only 10-15 minutes. The first 10 minutes must show everything that matters: class choice, drawing a glyph, a folklore enemy with an on-screen description, the codex, and a boss tease. Design the opening as a deliberate demo path.
+- The first 10-15 minutes should show what makes the game itself: class choice, drawing a glyph, a folklore enemy with an on-screen description, the codex, and a boss tease ([quests.md](quests.md) 8). The competition brief is not a design input (2026-11-05).
 - A **quick-start option** that skips the prologue and gives starting glyphs may be useful for demos (**ASSUMED**, stretch).
 
 ## Tone

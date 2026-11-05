@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1")
 id = "golok"
-title = "Golok"
+title = "ITEM_GOLOK_NAME"
 slot = "weapon"
 archetype = "heavy"
-description = "A machete-like chopping blade."
+description = "ITEM_GOLOK_DESC"
 windup = 0.25
 active = 0.1
 recovery = 0.45

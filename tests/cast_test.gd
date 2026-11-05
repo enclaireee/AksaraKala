@@ -8,6 +8,7 @@ var world: Node2D
 
 
 func _initialize() -> void:
+	root.get_node("Game").glyphs_learned = PackedStringArray(["sunda_ka", "sunda_ga", "sunda_nga"])   # quests teach them in play
 	world = Node2D.new()
 	root.add_child(world)
 	p = load("res://entities/player/player.tscn").instantiate()

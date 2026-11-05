@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://entities/enemies/kuntilanak.tscn" id="1"]
+[ext_resource type="Script" path="res://entities/enemies/kuntilanak_elite.gd" id="2"]
+
+[node name="KuntilanakElite" instance=ExtResource("1")]
+script = ExtResource("2")
+ilmu = 60
+kind = "kuntilanak_elite"
+unique_id = "kuntilanak_elite"
+
+[node name="Hitbox" parent="Aim" index="0"]
+damage = 14
+
+[node name="Health" parent="." index="5"]
+max_hp = 600

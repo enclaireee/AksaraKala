@@ -52,3 +52,5 @@ func _grant_items() -> void:
 	for f in DirAccess.get_files_at("res://data/items"):
 		if f.ends_with(".tres"):
 			game.add_item(f.get_basename(), false)
+	# all 8 core glyphs (Jawa Ka is P1); quests teach them in the real zones
+	game.glyphs_learned = PackedStringArray(["sunda_ka", "sunda_ga", "sunda_nga", "sunda_ca", "jawa_ha", "jawa_na", "jawa_ca", "jawa_ra"])

@@ -5,12 +5,12 @@
 [resource]
 script = ExtResource("1")
 id = "keris_luk_7"
-title = "Keris Luk 7"
+title = "ITEM_KERIS_LUK_7_NAME"
 slot = "weapon"
 archetype = "light"
 mythic = true
-description = "A keris with seven curves."
-lore = "Seven curves, traditionally associated with protection. A sacred pusaka; handle it with respect."
+description = "ITEM_KERIS_LUK_7_DESC"
+lore = "ITEM_KERIS_LUK_7_LORE"
 windup = 0.08
 active = 0.07
 recovery = 0.2

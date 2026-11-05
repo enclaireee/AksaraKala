@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "sunda_elder"
+name_key = "NPC_SUNDA_ELDER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["flag:mq1_10"], "lines": ["DLG_SUNDA_ELDER_1", "DLG_SUNDA_ELDER_2"], "do": []},
+	{"if": ["step:mq1=2"], "lines": ["DLG_SUNDA_ELDER_3", "DLG_SUNDA_ELDER_4", "DLG_SUNDA_ELDER_5", "DLG_SUNDA_ELDER_6", "DLG_SUNDA_ELDER_7"], "do": ["learn:sunda_ga"]},
+	{"if": ["step:mq1=1"], "lines": ["DLG_SUNDA_ELDER_8", "DLG_SUNDA_ELDER_9", "DLG_SUNDA_ELDER_10", "DLG_SUNDA_ELDER_11", "DLG_SUNDA_ELDER_12"], "do": []},
+	{"if": ["step:mq1=0"], "lines": ["DLG_SUNDA_ELDER_13", "DLG_SUNDA_ELDER_14"], "do": []},
+	{"if": ["quest:mq1=active"], "lines": ["DLG_SUNDA_ELDER_15", "DLG_SUNDA_ELDER_16"], "do": []},
+	{"if": [], "lines": ["DLG_SUNDA_ELDER_17", "DLG_SUNDA_ELDER_18"], "do": []}
+])

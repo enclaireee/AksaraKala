@@ -7,6 +7,7 @@ var fails := 0
 
 
 func _initialize() -> void:
+	root.get_node("Game").glyphs_learned = PackedStringArray(["sunda_ka", "sunda_ga", "sunda_nga"])   # quests teach them in play
 	var room: Node = load("res://zones/test_room.tscn").instantiate()
 	root.add_child(room)
 	var p: Player = room.get_node("Entities/Player")

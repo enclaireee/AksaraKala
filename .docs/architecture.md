@@ -53,7 +53,7 @@ res://
 | Name | Responsibility |
 |------|----------------|
 | `Game` | Run state: class, stats, Ilmu, glyphs learned, equipment, healing flask (charges, Flask Shards, Herb Pouches), last petilasan, story flags, quest state, codex unlocks. Advances quest steps on `Events` signals. Autosave and load, one slot (JSON in `user://`, [rpg.md](rpg.md) 11) |
-| `Events` | Global signals: `player_died`, `enemy_killed`, `glyph_learned`, `petilasan_activated`, `dialogue_started`, the quest triggers and `quest_started/updated/completed` ([quests.md](quests.md) section 7.2), etc. Decouples systems |
+| `Events` | Global signals, decouples systems. Phase 4 list (**ASSUMED** 2026-11-05): `enemy_killed(enemy, ilmu)`, `player_died`, `rested(petilasan)`, `talked_to(npc_id)`, `item_picked(item_id)`, `boss_defeated(boss_id)`, `area_cleared(area_id)`, `area_entered(trigger_id)`, `zone_entered(zone_id)`, `petilasan_activated(id)`, `glyph_learned(id)`, `spell_cast(glyph_id, score)`, `class_chosen(class_id)`, `weakness_triggered(kind)`, `quest_started/updated/completed(id)`, `dialogue_requested(speaker_key, lines)`, `dialogue_finished`. Quest steps match `"<signal>:<arg>"`; for `enemy_killed` the arg is the enemy's `kind` ([quests.md](quests.md) 7.2) |
 | `Zones` | Zone loading, fade transitions, spawn points, tracking killed minibosses/bosses and opened gates (the lists live in `Game` so they are saved) |
 | `Audio` | Music crossfade, sfx pool, volume buses |
 
@@ -66,10 +66,11 @@ Custom `Resource` types so adding content is data entry:
 - `EnemyData`: name, archetype, hp, damage, speed, attack pattern, drops, codex entry
 - `GlyphData`: id, script (sunda/jawa), latin name, templates (array of point arrays), guide texture, true-form texture
 - `SpellData`: glyph id, name, gauge cost, base power, scene to spawn, class modifier table
-- `CodexEntry`: id, title key, text key, source
+- `CodexEntry`: id, category, source; text keys `CODEX_<ID>_TITLE/_BODY/_WEAK` ([quests.md](quests.md) 7.1)
 - `QuestData` and `QuestStep`: fields in [quests.md](quests.md) section 7.1
+- `DialogueData`: npc id, name key, condition/line/action entries ([quests.md](quests.md) 7.1)
 
-**Text:** all player-facing text is a translation key. Strings live in CSV tables in `data/text/` with `keys,id,en` columns; Godot imports CSV as translations and `tr()` looks them up. Language picked at first launch, changeable in settings.
+**Text:** all player-facing text is a translation key. Strings live in CSV tables in `data/text/` with `keys,id,en` columns; Godot imports CSV as translations and `tr()` looks them up. Tables: `ui`, `items`, `quests`, `dialogue`, `codex`. Key prefixes: `UI_`, `ITEM_<ID>_NAME/_DESC`, `CLASS_<ID>_NAME/_DESC/_PASSIVE`, `Q_<QUEST>_TITLE`, `Q_<QUEST>_S<n>`, `NPC_<npc>_NAME`, `NPC_<npc>_<n>`, `PROLOGUE_<n>`, `CODEX_<ID>_*`. Language: first launch follows the OS locale (`id` -> Indonesian, else English); the title-screen toggle saves it in `user://settings.cfg`, not in the run save.
 
 ## 5. Scene composition
 - **Player:** `CharacterBody2D` with child components (Health, Stamina, SaktiGauge, Hurtbox, weapon slot, sprite, `CastController`). A small state machine (idle, move, attack, dodge, hurt, cast, dead).
@@ -98,6 +99,8 @@ Custom `Resource` types so adding content is data entry:
 
 ## 9. Zone loading
 - Edge `Area2D` exits call `Zones.go_to(zone_id, spawn_id)`, which fades out, swaps the scene, places the player at the spawn marker and fades in.
+- Zone scripts extend `zones/zone.gd` (**ASSUMED** 2026-11-05): `zone_id`, an ASCII `MAP` (any size, in 30x17 screens), and a `SPOTS` dict mapping a map char to `{scene, props, tile}`. The base paints the tiles, places the spots, sets the camera limits from the map size and emits `Events.zone_entered`. Tile chars: `#` wall/cliff, `.` grass, `,` path, `~` water, `b` bamboo, `t` tea, `r` rock, `_` floor. `Zones.ZONES` maps zone id to scene path and `Zones.ADJ` lists neighbours for the objective arrow's breadth-first search.
+- Boss and elite scenes are referenced by path and loaded at runtime, so a zone imports cleanly before its boss exists.
 - Persistent state (killed bosses, opened fog gates, chests) lives in `Game`, not in the scene.
 - Normal enemies respawn by reloading the zone scene (state is intentionally not persisted for them).
 

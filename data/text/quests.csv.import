@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://chqlj6s5n55fy"
+
+[deps]
+
+files=["res://data/text/quests.id.translation", "res://data/text/quests.en.translation"]
+
+source_file="res://data/text/quests.csv"
+dest_files=["res://data/text/quests.id.translation", "res://data/text/quests.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

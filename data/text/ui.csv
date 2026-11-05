@@ -1,0 +1,65 @@
+keys,id,en
+UI_SAVED,Tersimpan,Saved
+UI_CONTINUE,Lanjut,Continue
+UI_NEW_GAME,Game Baru,New Game
+UI_QUIT,Keluar,Quit
+UI_NEW_CONFIRM,Mulai baru? Perjalanan lama akan terhapus.,Start over? Your old journey will be erased.
+UI_YES,Ya,Yes
+UI_CANCEL,Batal,Cancel
+UI_BACK,Kembali,Back
+UI_CHOOSE,Pilih,Choose
+UI_SAVE_BAD,Simpanan tidak bisa dibaca. Mulai Game Baru.,The save could not be read. Start a New Game.
+UI_CHOOSE_Q,Pilih %s?,Choose %s?
+UI_WEAPON,Senjata,Weapon
+UI_FALLEN,Gugur,Fallen
+UI_LEVEL_LINE,Level %d   Ilmu %d   Berikutnya: %d,Level %d   Ilmu %d   Next: %d
+UI_REST_HINT,Istirahat di petilasan untuk naik level,Rest at a petilasan to level up
+UI_RAISE_Q,Naikkan %s? (%d Ilmu),Raise %s? (%d Ilmu)
+UI_STAT_VIT,Vitalitas,Vitality
+UI_STAT_END,Ketahanan,Endurance
+UI_STAT_STR,Kekuatan,Strength
+UI_STAT_DEX,Ketangkasan,Dexterity
+UI_STAT_SPI,Spirit,Spirit
+UI_HINT_VIT,HP maks +10,Max HP +10
+UI_HINT_END,"Stamina maks +6, pemulihan +1%","Max stamina +6, regen +1%"
+UI_HINT_STR,Damage jarak dekat +5%,Melee damage +5%
+UI_HINT_DEX,"Damage jarak jauh +5%, kecepatan serang +1%","Ranged damage +5%, attack speed +1%"
+UI_HINT_SPI,"Damage mantra +5%, sakti terisi +2%","Spell damage +5%, sakti gain +2%"
+UI_SLOT_WEAPON,Senjata,Weapon
+UI_SLOT_ARMOR,Zirah,Armor
+UI_SLOT_ACCESSORY,Aksesori,Accessory
+UI_TAB_STATUS,Status,Status
+UI_TAB_EQUIP,Perlengkapan,Equipment
+UI_TAB_JOURNAL,Catatan,Journal
+UI_TAB_CODEX,Kodeks,Codex
+UI_JOURNAL_MAIN,Utama,Main
+UI_JOURNAL_SIDE,Sampingan,Side
+UI_JOURNAL_DONE,Selesai,Done
+UI_JOURNAL_EMPTY,Belum ada misi.,No quests yet.
+UI_PIN,Sematkan,Pin
+UI_UNPIN,Lepas sematan,Unpin
+UI_PINNED,[disematkan],[pinned]
+UI_ZONE,Zona,Zone
+UI_ZONE_HUB,Hub uji,Test hub
+UI_ZONE_DESA_PURWA,Desa Purwa,Desa Purwa
+UI_ZONE_TATAR_SUNDA,Tatar Sunda,Tatar Sunda
+UI_ZONE_MATARAM,Mataram,Mataram
+UI_ZONE_TANAH_TIMUR,Tanah Timur,Tanah Timur
+UI_ZONE_SEGARA_KIDUL,Segara Kidul,Segara Kidul
+UI_CODEX_EMPTY,Kodeks masih kosong.,The codex is still empty.
+UI_CODEX_PERCENT,Kodeks terisi %d%%,Codex %d%% complete
+UI_CAT_ENEMY,Musuh,Enemies
+UI_CAT_LEGEND,Legenda,Legends
+UI_CAT_ITEM,Benda,Items
+UI_CAT_AKSARA,Aksara,Aksara
+UI_LOCKED,???,???
+UI_WEAKNESS,Kelemahan,Weakness
+UI_FIZZLE_NEEDS,butuh %d,needs %d
+UI_HELP_TABS,Q / E: ganti tab,Q / E: switch tab
+UI_TOAST_QUEST_STARTED,Misi baru: %s,New quest: %s
+UI_TOAST_QUEST_DONE,Misi selesai: %s,Quest done: %s
+UI_TOAST_ITEM,Diperoleh: %s,Got: %s
+UI_TOAST_GLYPH,Aksara baru: %s,New aksara: %s
+UI_HOLD_SKIP,Tahan untuk melewati,Hold to skip
+BOSS_SANGKURIANG,Sangkuriang,Sangkuriang
+BOSS_SANDEKALA,Sandekala,Sandekala

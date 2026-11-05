@@ -109,6 +109,31 @@ extends Resource
 @export var shot_speed := 110.0
 @export var shot_range := 240.0                # ASSUMED
 
+@export_group("Charger (Wild Boar)")
+@export var charger_speed := 60.0              # approach
+@export var charger_attack_range := 110.0      # TUNE: starts the telegraph inside this distance
+@export var charger_windup := 0.6              # TUNE: line marker shown, no turning
+@export var charger_dash_speed := 200.0        # TUNE
+@export var charger_dash_max := 160.0          # TUNE: dash length when nothing blocks it
+@export var charger_recovery := 0.8            # TUNE: punishable
+@export var charger_wall_stun := 0.8           # TUNE: self-stun on a wall hit
+
+@export_group("Kuntilanak (shooter variant, shriek cone)")
+@export var kuntilanak_speed := 50.0
+@export var kuntilanak_near := 40.0            # TUNE: short cone, so she keeps a close band
+@export var kuntilanak_far := 60.0
+@export var kuntilanak_windup := 0.7           # TUNE: the Bolt window
+@export var kuntilanak_recovery := 1.5
+@export var kuntilanak_arc := 70.0             # TUNE
+@export var kuntilanak_reach := 72.0           # TUNE
+@export var kuntilanak_shriek_time := 0.15     # TUNE: how long the cone hits
+
+@export_group("Glyph weaknesses (bestiary.md)")
+@export var weak_ground_time := 2.0            # Kuntilanak grounded by Bolt in the wind-up
+@export var weak_ward_stagger := 1.5           # Wild Boar dashing into Ward
+@export var weak_ward_reach := 28.0            # ASSUMED: dash counts as "into the Ward" inside this distance of its centre
+@export var weak_bind_poise_mult := 2.0        # Jurig Leuweung while Bound
+
 @export_group("Attack tokens")
 @export var tokens_melee := 2
 @export var tokens_ranged := 2

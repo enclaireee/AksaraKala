@@ -5,12 +5,12 @@
 [resource]
 script = ExtResource("1")
 id = "kujang"
-title = "Kujang"
+title = "ITEM_KUJANG_NAME"
 slot = "weapon"
 archetype = "light"
 mythic = true
-description = "A curved Sundanese blade."
-lore = "Iconic to West Java; its curved blade sweeps wide."
+description = "ITEM_KUJANG_DESC"
+lore = "ITEM_KUJANG_LORE"
 windup = 0.08
 active = 0.07
 recovery = 0.2

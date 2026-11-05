@@ -5,12 +5,12 @@
 [resource]
 script = ExtResource("1")
 id = "cakra"
-title = "Cakra"
+title = "ITEM_CAKRA_NAME"
 slot = "weapon"
 archetype = "ranged"
 mythic = true
-description = "A thrown disc of light."
-lore = "Krishna's disc from the wayang tales. Here it flies like an arrow."
+description = "ITEM_CAKRA_DESC"
+lore = "ITEM_CAKRA_LORE"
 windup = 0.15
 recovery = 0.3
 cost = 4.0
