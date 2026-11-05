@@ -51,7 +51,7 @@ No fixed dates. Phases run in order. Each phase has **exit criteria**: do not st
 - [x] Main quest MQ0-MQ1 and the Cepot side quest ([quests.md](quests.md))
 - [x] Extras (user call, 2026-11-05): Sandekala miniboss, SQ-S1 Lutung Kasarung, SQ-S2 Kuntilanak bounty, SQ-S3 Angklung
 - [x] i18n sweep: all existing UI, items and classes become translation keys; ID/EN toggle on the title screen (`user://settings.cfg`, first launch follows the OS locale)
-- Exit (built 2026-11-05, waits for the user's playtest): New Game to Sangkuriang's release and the Mataram gate opening is playable (about 40 min, [balance.md](balance.md) 2.1), with SQ-S1 to S4 and Sandekala completable, on placeholder art.
+- Exit (main path playtested and confirmed 2026-11-05; SQ-S1 to S4 and Sandekala wait for the user's playtest): New Game to Sangkuriang's release and the Mataram gate opening is playable (about 40 min, [balance.md](balance.md) 2.1), with SQ-S1 to S4 and Sandekala completable, on placeholder art.
 
 ## Phase 5: Remaining regions
 - [ ] Mataram zone and boss
