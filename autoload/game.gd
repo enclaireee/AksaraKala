@@ -316,16 +316,47 @@ func _complete(id: String) -> void:
 
 ## The objective to point the arrow at: the pinned side quest, else the first active main quest.
 func objective_marker() -> Dictionary:
-	var ids: Array = [pinned] if quest_state(pinned) == "active" else []
-	for id in quests.keys():
-		var q := QuestData.by_id(id)
-		if q and q.kind == "main":
-			ids.append(id)
-	for id in ids:
+	for id in _tracked():
 		var st := current_step(id)
 		if st and not st.marker.is_empty():
 			return st.marker
 	return {}
+
+
+## Quests the HUD follows, in order: the pinned side quest, then active main quests.
+func _tracked() -> Array:
+	var ids: Array = [pinned] if quest_state(pinned) == "active" else []
+	for id in quests.keys():
+		var q := QuestData.by_id(id)
+		if q and q.kind == "main" and quest_state(id) == "active":
+			ids.append(id)
+	return ids
+
+
+## The HUD objective line (ui.md 2): the first tracked step's objective, plus "n/count" for counted steps.
+func objective_text() -> String:
+	for id in _tracked():
+		var st := current_step(id)
+		if st:
+			return tr(st.objective) + (" %d/%d" % [quests[id].count, st.count] if st.count > 1 else "")
+	return ""
+
+
+## The first key bound to an input action, for prompts and hints ("E", "Right Mouse").
+func key_name(action: String) -> String:
+	var evs := InputMap.action_get_events(action)
+	if evs.is_empty():
+		return "?"
+	var e := evs[0]
+	if e is InputEventKey:
+		var k: Key = e.keycode
+		if e.physical_keycode:   # the label on this keyboard layout (headless has no layout: QWERTY)
+			k = e.physical_keycode if DisplayServer.get_name() == "headless" \
+					else DisplayServer.keyboard_get_keycode_from_physical(e.physical_keycode)
+		return OS.get_keycode_string(k)
+	if e is InputEventMouseButton:
+		return tr("UI_KEY_LMB") if e.button_index == MOUSE_BUTTON_LEFT else tr("UI_KEY_RMB")
+	return e.as_text()
 
 
 ## Pins an active side quest, or unpins it if already pinned.

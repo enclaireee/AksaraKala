@@ -25,6 +25,10 @@ Safe margin 6 px from every edge. Nothing in the central 240x140 px.
 | Objective arrow | Screen edge | 7x7 | Main objective or the pinned side quest only ([quests.md](quests.md) 7.5) |
 | Save icon | Bottom right | 8x8 brush | "Tersimpan / Saved" for 1 s ([rpg.md](rpg.md) 11) |
 | Interact prompt | Above the NPC or object | key glyph + 1 word | Only within interact range |
+| Objective line | Top left, under the bars | 1 line | Current step of the main quest or the pinned side quest, plus "n/count" when the step counts (user call, 2026-11-05) |
+| Hint line | Under the objective | 1 line | Key hints for tutorial steps (`Q_<ID>_S<n>_HINT`, keys from the input map). Hidden when the step has no hint |
+
+Blocked actions (no stamina, no sakti or cast lockout, flask empty or HP full) flash the matching bar or the flask slots red for 0.25 s.
 
 Colors are the Okabe-Ito colorblind-safe set: HP #D55E00, stamina #F0E442, sakti #56B4E9, flask #009E73 (**VERIFY** on the final palette, keep the hues apart). No red HP next to a green bar.
 

@@ -18,7 +18,9 @@ If you are a subagent with a brief, do only the brief and skip the rest of this 
 - Godot is not on PATH. Set `GODOT=/Applications/Godot.app/Contents/MacOS/Godot`.
 - Import and parse check: `$GODOT --headless --path . --import`
 - Run a test script: `$GODOT --headless --path . -s tests/<name>.gd`. A test exits 0 on pass and prints only failures.
+- Run a test script: a parse error still exits 0, so also treat any `SCRIPT ERROR` in the output as a failure.
 - Design checks: `python3 .docs/glyph_strokes.py` and `python3 .docs/balance_model.py`
+- Area scenes: `python3 .docs/gen_zones.py .docs/zones/<region>.md` writes `zones/<area>.gd/.tscn` from the doc's area maps and legends.
 - Pixel-art settings, folders, autoloads, the input map and physics layers are in `.docs/architecture.md`. Follow them and do not invent new ones.
 
 ## Git

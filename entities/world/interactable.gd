@@ -3,6 +3,7 @@ class_name Interactable extends Area2D
 ## nearest overlapping interactable reacts to `interact`. Subclasses override interact().
 
 var usable := true   # false hides the prompt and ignores input
+var verb := "UI_VERB_USE"   # prompt word (ui.md 2: key glyph + 1 word); subclasses set their own
 var _near := false
 var _prompt: Label
 
@@ -10,8 +11,9 @@ var _prompt: Label
 func _ready() -> void:
 	add_to_group("interactable")
 	_prompt = Label.new()
-	_prompt.text = "[E]"
-	_prompt.position = Vector2(-10, -30)
+	_prompt.position = Vector2(-30, -30)
+	_prompt.size = Vector2(60, 12)
+	_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_prompt.visible = false
 	add_child(_prompt)
 	body_entered.connect(func(b: Node) -> void: _set_near(b, true))
@@ -25,6 +27,7 @@ func _set_near(b: Node, on: bool) -> void:
 
 
 func _refresh_prompt() -> void:
+	_prompt.text = "[%s] %s" % [get_node("/root/Game").key_name("interact"), tr(verb)]
 	_prompt.visible = _near and usable
 
 

@@ -11,6 +11,7 @@ var _t := 0.0
 
 
 func _ready() -> void:
+	verb = "UI_VERB_TALK"
 	super()
 	if data == null:
 		data = DialogueData.by_id(npc_id)

@@ -59,11 +59,11 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE
 ## Legend (spots)
 | Char | Entity | Scene | Props | Floor under | Tiles |
 |------|--------|-------|-------|-------------|-------|
-| `W` | exit to Tatar Sunda | `res://entities/world/exit.tscn` | `{target_zone:"tatar_sunda", spawn_id:"from_purwa"}` | path | 2 |
-| `w` | spawn, arrival from Tatar Sunda | `res://entities/world/spawn.tscn` | `{id:"from_sunda"}` | path | 1 |
-| `v` | spawn, arrival from Mataram | `res://entities/world/spawn.tscn` | `{id:"from_mataram"}` | path | 1 |
+| `W` | exit to Tatar Sunda | `res://entities/world/exit.tscn` | `{target_zone:"ts_kebun", spawn_id:"from_desa_purwa"}` | path | 2 |
+| `w` | spawn, arrival from Tatar Sunda | `res://entities/world/spawn.tscn` | `{id:"from_ts_kebun"}` | path | 1 |
+| `v` | spawn, arrival from Mataram | `res://entities/world/spawn.tscn` | `{id:"from_mt_gapura"}` | path | 1 |
 | `K` | kabut, Mataram gate (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq1_10"}` | path | 2 |
-| `E` | exit to Mataram | `res://entities/world/exit.tscn` | `{target_zone:"mataram", spawn_id:"from_purwa"}` | path | 2 |
+| `E` | exit to Mataram | `res://entities/world/exit.tscn` | `{target_zone:"mt_gapura", spawn_id:"from_desa_purwa"}` | path | 2 |
 | `s` | spawn, player start after class choice | `res://entities/world/spawn.tscn` | `{id:"start"}` | path | 1 |
 | `P` | petilasan | `res://entities/petilasan/petilasan.tscn` | `{id:"desa_purwa"}` | path | 1 |
 | `M` | NPC Semar | `res://entities/npc/npc.tscn` | `{npc_id:"semar"}` | floor | 1 |
@@ -133,7 +133,8 @@ PASS exactly one spawn "start" at (13, 14), 2 tiles outside the sanggar door
 Desa Purwa has no enemy encounters, so the combat items are not applicable. Spawn `start`, petilasan `desa_purwa`, Semar, Ki Wangsa, Nyai Rukmi, sanggar with 4 dummies, west exit and fogged east exit are all present and validated above.
 
 ## ASSUMED
-- Spawn ids: `start`, `from_sunda` (arrival from Tatar Sunda), `from_mataram`. Exit targets: `{target_zone:"tatar_sunda", spawn_id:"from_purwa"}`, `{target_zone:"mataram", spawn_id:"from_purwa"}`.
+- Back route to Segara Kidul (**ASSUMED** 2026-11-05, world.md link table): a south exit to `sk_pantai`, behind a kabut that lifts when the third boss is beaten. It is drawn into the map in Phase 5 with Segara Kidul; until then the south edge stays solid.
+- Spawn ids (**ASSUMED** 2026-11-05, renamed for the area graph in [world.md](../world.md) World structure; the code still uses `from_sunda`/`from_mataram` until the Part B rebuild): `start`, `from_ts_kebun` (arrival from Tatar Sunda), `from_mt_gapura`. Exit targets: `{target_zone:"ts_kebun", spawn_id:"from_desa_purwa"}`, `{target_zone:"mt_gapura", spawn_id:"from_desa_purwa"}`.
 - Trigger ids `wayang_stage` and `sanggar_enter`. Marker ids above. Dialogue by Semar for 0.2, 0.3, 0.4 happens in the sanggar.
 - Wayang stage is a trigger plus Ki Wangsa NPC, no extra scene.
 - The west gate to Tatar Sunda has no kabut (quests.md: only the Mataram gate is fogged).

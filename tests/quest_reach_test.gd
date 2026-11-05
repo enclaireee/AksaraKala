@@ -1,5 +1,5 @@
 extends SceneTree
-## Soft-lock check for Phase 4: every quest step's event has a source in the built zones or the dialogue
+## Soft-lock check over every built area: every quest step's event has a source in the built zones or the dialogue
 ## data (an NPC to talk to, a trigger, an encounter, a petilasan, a placed or spawned enemy, a chest,
 ## pickup or `give:`, a `learn:`), and every quest but MQ0 is started by a placed NPC.
 ## ponytail: static reachability only; it does not prove the order is playable, the playtest does.
@@ -21,7 +21,9 @@ func _initialize() -> void:
 	for s in ["talked_to", "area_entered", "area_cleared", "petilasan_activated", "enemy_killed", "boss_defeated",
 			"item_picked", "glyph_learned", "zone_entered"]:
 		src[s] = {}
-	for id in ["desa_purwa", "tatar_sunda"]:
+	for id: String in zones.ZONES:
+		if id == "hub":
+			continue
 		src.zone_entered[id] = true
 		var z := (load(zones.ZONES[id]) as PackedScene).instantiate()
 		root.add_child(z)

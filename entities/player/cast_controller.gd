@@ -84,7 +84,7 @@ func release() -> void:
 	var power: float = r.power
 	var spell := SpellData.for_glyph(glyph.id) if glyph and power > 0.0 else null
 	if spell == null:
-		_fizzle("")
+		_fizzle(tr("UI_FIZZLE_UNKNOWN"))
 	elif not practice and not player.sakti.spend(SpellUtil.cost(player, spell)):
 		_fizzle(tr("UI_FIZZLE_NEEDS") % ceili(SpellUtil.cost(player, spell)))
 	else:

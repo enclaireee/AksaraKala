@@ -310,7 +310,7 @@ Fits [architecture.md](architecture.md): data-driven resources, quest state in t
 | `on` | event string, e.g. `"enemy_killed:wild_boar"` (`<signal>:<arg>`; the arg is the enemy `kind`, npc id, item id, etc.). A bare `<signal>` matches any arg; a trailing `*` is a prefix (`item_picked:angklung_*`). An `item_picked:` step counts matching items already held when it becomes current, so early pickups never soft-lock it. `give:` fires `item_picked`. |
 | `count` | `3` |
 | `alt` | for two-way steps: `{"enemy_killed:wewe_elite": "fight", "talked_to:wewe_parents_2": "peaceful"}`. Not built until Mataram (Tatar Sunda has no two-way quest) |
-| `marker` | `{zone: "mataram", id: "wewe_hill"}` |
+| `marker` | `{zone: "mt_alas", id: "wewe_hill"}`: `zone` is the area id where the node sits ([world.md](world.md) World structure); `QuestData.zone` stays the region id |
 | `set_flag` | `mq2_2` |
 
 Dialogue (`DialogueData`, one `.tres` per NPC in `data/dialogue/`, **ASSUMED** 2026-11-05): `npc_id`, `name_key`, `entries: Array[Dictionary]`, each `{"if": [conditions], "lines": [keys], "do": [actions]}`. The first entry whose conditions all hold plays; an entry with no `if` is the fallback and goes last.
@@ -336,7 +336,7 @@ Quests listen to signals that `Events` already plans plus a few more: `talked_to
 
 ### 7.5 Marker (soft arrow)
 - A small arrow at the screen edge pointing at the pinned or main objective. It hides when the target is on screen.
-- Target in another zone: the arrow points to the exit toward that zone. `Zones` already knows the adjacency, so a breadth-first search over 6 zones is enough.
+- Target in another zone: the arrow points to the exit toward that zone. `Zones` already knows the adjacency, so a breadth-first search over all areas (about 30) is enough.
 - Errand collectibles sparkle when within one screen while their quest is active, instead of each getting a marker.
 - Settings: the arrow can be turned off.
 

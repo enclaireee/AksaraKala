@@ -19,6 +19,15 @@ func _ready() -> void:
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	l.modulate.a = 0.0
 	_dim.add_child(l)
+	var sub := Label.new()
+	sub.name = "Sub"
+	sub.text = "UI_DEATH_SUB"
+	sub.position = Vector2(0, 150)
+	sub.size = Vector2(480, 12)
+	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sub.add_theme_font_size_override("font_size", 8)
+	sub.modulate.a = 0.0
+	_dim.add_child(sub)
 	get_node("/root/Events").player_died.connect(_on_died)
 
 
@@ -27,5 +36,6 @@ func _on_died() -> void:
 	var tw := create_tween()
 	tw.tween_property(_dim, "color:a", 0.95, 0.6)
 	tw.tween_property(_dim.get_node("Text"), "modulate:a", 1.0, 0.2)
+	tw.tween_property(_dim.get_node("Sub"), "modulate:a", 1.0, 0.2)
 	tw.tween_interval(1.5)
 	tw.tween_callback(func() -> void: get_node("/root/Zones").respawn())

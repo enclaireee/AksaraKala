@@ -89,7 +89,7 @@ func run() -> void:
 	qd.id = "t_arrow"
 	var st := QuestStep.new()
 	st.on = "area_entered:spring"
-	st.marker = {"zone": "tatar_sunda", "id": "spring"}
+	st.marker = {"zone": "ts_kampung", "id": "spring"}
 	qd.steps = [st]
 	ResourceSaver.save(qd, zdir + "/t_arrow.tres")
 	zones.current_zone = "desa_purwa"
@@ -97,7 +97,7 @@ func run() -> void:
 	await frames(1)
 	check(not hud._arrow.visible and hud._tnode == null, "arrow hidden without a marker")
 	var ex: Node2D = load("res://entities/world/exit.tscn").instantiate()
-	ex.target_zone = "tatar_sunda"
+	ex.target_zone = "ts_kebun"   # first hop toward ts_kampung
 	ex.position = Vector2(2000, 0)
 	root.add_child(ex)
 	game.start_quest("t_arrow")

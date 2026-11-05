@@ -3,6 +3,11 @@ Q_MQ0_TITLE,Wayang Terakhir,The Last Shadow Play
 Q_MQ1_TITLE,Perahu yang Tertelungkup,The Overturned Boat
 Q_MQ0_S1_OBJ,Saksikan pertunjukan wayang,Watch the wayang performance
 Q_MQ0_S2_OBJ,Bicara dengan Semar,Speak with Semar
+Q_MQ0_S1_HINT,Berjalan dengan {move},Walk with {move}
+Q_MQ0_S2_HINT,Dekati Semar lalu tekan {interact},Walk up to Semar and press {interact}
+Q_MQ0_S4_HINT,Masuk ke sanggar lalu bicara dengan Semar,Enter the sanggar and talk to Semar
+Q_MQ0_S5_HINT,"Tahan {cast}, gambar Ka mengikuti bayangan, lalu lepas","Hold {cast}, trace Ka over the guide, then release"
+Q_MQ0_S6_HINT,{attack} menyerang · {dodge} menghindar,{attack} attacks · {dodge} dodges
 Q_MQ0_S3_OBJ,Pilih kelasmu,Choose your class
 Q_MQ0_S4_OBJ,Pelajari aksara pertamamu di sanggar,Learn your first letter in the sanggar
 Q_MQ0_S5_OBJ,Rapalkan Ka tiga kali,Cast Ka three times

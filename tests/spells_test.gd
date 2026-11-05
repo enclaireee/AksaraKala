@@ -2,10 +2,10 @@ extends SceneTree
 ## Bolt, Ward, Bind against real enemies. Headless, steps by physics frames.
 
 var fails := 0
-var player: Dummy
+var player: FakePlayer
 
 
-class Dummy extends Node2D:
+class FakePlayer extends Node2D:
 	var health := Health.new()
 	var stamina := Stamina.new()
 	var status := Status.new()
@@ -18,7 +18,7 @@ class Dummy extends Node2D:
 
 
 func _initialize() -> void:
-	player = Dummy.new()
+	player = FakePlayer.new()
 	player.add_child(player.health)
 	player.add_child(player.stamina)
 	player.add_child(player.status)

@@ -3,6 +3,8 @@ extends CharacterBody2D
 ## Player: movement, mouse aim, 3-hit combo, dodge, hurt (combat.md 2, controls.md 3).
 ## Casting lives in the CastController child (spells.md 1).
 
+signal blocked(what: String)   # "st", "sk" or "flask": the HUD flashes that bar (ui.md 2)
+
 enum State { FREE, ATTACK, DODGE, HURT, DRINK, DEAD }
 enum Phase { WINDUP, ACTIVE, RECOVERY }
 
@@ -68,8 +70,8 @@ func _ready() -> void:
 	health.died.connect(_on_died)
 	camera.lean = tuning.camera_lean
 	melee_hitbox.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, self, melee_hitbox.heavy, melee_hitbox.damage))
-	stamina.empty_attempt.connect(_flash_debug)
-	cast.blocked.connect(_flash_debug)   # ponytail: flashes the debug readout until the HUD gauge exists
+	stamina.empty_attempt.connect(blocked.emit.bind("st"))
+	cast.blocked.connect(blocked.emit.bind("sk"))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -210,7 +212,7 @@ func _try_flask() -> void:
 	if state != State.FREE:
 		return   # ignored in every other state (controls.md 3)
 	if game.flask_charges <= 0 or health.hp >= health.max_hp:
-		_flash_debug()   # ponytail: empty and "HP full" hints are the debug flash until the HUD exists
+		blocked.emit("flask")
 		return
 	_enter(State.DRINK)   # the charge is spent when the drink ends, so a dodge cancel keeps it
 
@@ -357,11 +359,6 @@ func _on_died() -> void:
 
 
 # --- helpers ---
-
-func _flash_debug() -> void:
-	debug.modulate = Color.RED
-	create_tween().tween_property(debug, "modulate", Color.WHITE, 0.3)
-
 
 func _enter(s: State) -> void:
 	state = s

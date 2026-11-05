@@ -13,6 +13,9 @@ var _pips: Array[ColorRect] = []
 var _ilmu: Label
 var _saved: Label
 var _saved_left := 0.0
+var _objective: Label
+var _hint: Label
+var _player: Node   # the player whose `blocked` signal is connected (a new zone brings a new one)
 
 # toasts (quests.md 7.6): one at a time, TOAST_TIME each, queued
 const TOAST_TIME := 3.0
@@ -56,15 +59,18 @@ func _ready() -> void:
 	_ilmu.add_theme_color_override("font_color", GOLD)
 	add_child(_ilmu)
 	_saved = Label.new()
-	_saved.text = "Tersimpan / Saved"
+	_saved.text = "UI_SAVED"
 	_saved.position = Vector2(480 - 6 - 90, 270 - 6 - 12)
 	_saved.size = Vector2(90, 12)
 	_saved.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_saved.visible = false
 	add_child(_saved)
 	_build_extras()
+	_objective = _line(24, GOLD)
+	_hint = _line(34, Color.WHITE)
 	var g := get_node("/root/Game")
 	g.changed.connect(refresh)
+	g.changed.connect(refresh_objective)
 	g.saved.connect(func() -> void:
 		_saved_left = 1.0
 		_saved.visible = true)
@@ -73,6 +79,12 @@ func _ready() -> void:
 		_push_toast(tr("UI_TOAST_QUEST_STARTED") % _title(id))
 		refresh_arrow())
 	ev.quest_updated.connect(func(_id: String) -> void: refresh_arrow())
+	for s in ["quest_started", "quest_updated", "quest_completed", "zone_entered"]:
+		ev.connect(s, refresh_objective.unbind(1))
+	ev.area_entered.connect(func(id: String) -> void:
+		if id == "sande_room" and not g.has_flag("hint_sande"):   # one-time hint (bestiary.md Sandekala)
+			g.run("flag:hint_sande")
+			_push_toast(tr("UI_HINT_SANDE")))
 	ev.quest_completed.connect(func(id: String) -> void:
 		_push_toast(tr("UI_TOAST_QUEST_DONE") % _title(id))
 		refresh_arrow())
@@ -83,6 +95,45 @@ func _ready() -> void:
 	ev.zone_entered.connect(func(_z: String) -> void: refresh_arrow())
 	refresh()
 	refresh_arrow()
+	refresh_objective()
+
+
+func _line(y: int, col: Color) -> Label:
+	var l := Label.new()
+	l.position = Vector2(6, y)
+	l.size = Vector2(200, 10)
+	l.add_theme_color_override("font_color", col)
+	_outlined(l)
+	add_child(l)
+	return l
+
+
+## Objective and hint lines (ui.md 2). A hint is the objective key with _HINT, filled with live key names.
+func refresh_objective() -> void:
+	var g := get_node("/root/Game")
+	_objective.text = g.objective_text()
+	_hint.text = ""
+	for id in g._tracked():
+		var st: QuestStep = g.current_step(id)
+		if st:
+			var key := st.objective.replace("_OBJ", "_HINT")
+			if tr(key) != key:
+				var keys := {}
+				for a in ["interact", "cast", "attack", "dodge", "menu"]:
+					keys[a] = g.key_name(a)
+				keys.move = "%s%s%s%s" % [g.key_name("move_up"), g.key_name("move_left"), g.key_name("move_down"), g.key_name("move_right")]
+				_hint.text = tr(key).format(keys)
+			return
+
+
+## Red flash on the bar whose resource ran out (ui.md 2).
+func _on_blocked(what: String) -> void:
+	var nodes: Array = _pips if what == "flask" else [_bars[what][0].get_parent()]
+	for n: ColorRect in nodes:
+		n.color = Color.RED
+		var tw := create_tween()
+		tw.tween_property(n, "color", Color(0, 0, 0, 0.6) if what != "flask" else FLASK_COL, 0.25)
+		tw.finished.connect(refresh)   # restores the dim empty pips
 
 
 func _title(id: String) -> String:
@@ -241,6 +292,9 @@ func refresh() -> void:
 func _process(delta: float) -> void:
 	var p := get_tree().get_first_node_in_group("player")
 	if p:
+		if p != _player:
+			_player = p
+			p.blocked.connect(_on_blocked)
 		_fill("hp", p.health.hp, p.health.max_hp)
 		_fill("st", p.stamina.value, p.stamina.max_stamina)
 		_fill("sk", p.sakti.value, p.sakti.max_value)

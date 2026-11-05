@@ -7,7 +7,7 @@ class_name Sandekala extends EnemyBase
 enum State { IDLE, CHASE, FADING, GONE, WINDUP, GRAB, RECOVER, DEAD }
 
 const GRAB_R := 24.0
-const OVERLAY_SIZE := Vector2(368, 192)   # the sande area, 23x12 tiles (tatar_sunda.md)
+const OVERLAY_SIZE := Vector2(368, 192)   # the ts_leuwi Sandekala room, 23x12 tiles (zones/tatar_sunda.md)
 
 @export var engage_dist := 140.0      # TUNE
 @export var move_speed := 36.0        # TUNE

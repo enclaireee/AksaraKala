@@ -8,6 +8,7 @@ var _open := false
 
 
 func _ready() -> void:
+	verb = "UI_VERB_OPEN"
 	super()
 	_open = get_node("/root/Game").has_flag("chest:" + chest_id)
 	usable = not _open

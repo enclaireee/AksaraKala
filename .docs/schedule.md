@@ -50,10 +50,12 @@ No fixed dates. Phases run in order. Each phase has **exit criteria**: do not st
 - [x] Dialogue system, quest system (QuestData, journal, marker), CSV string tables (ID/EN), codex v1
 - [x] Main quest MQ0-MQ1 and the Cepot side quest ([quests.md](quests.md))
 - [x] Extras (user call, 2026-11-05): Sandekala miniboss, SQ-S1 Lutung Kasarung, SQ-S2 Kuntilanak bounty, SQ-S3 Angklung
+- [x] Interlocking rebuild of Tatar Sunda (user call 2026-11-05): 8 areas, shortcuts and a drop, from [zones/tatar_sunda.md](zones/tatar_sunda.md) and [world.md](world.md) World structure
 - [x] i18n sweep: all existing UI, items and classes become translation keys; ID/EN toggle on the title screen (`user://settings.cfg`, first launch follows the OS locale)
 - Exit (main path playtested and confirmed 2026-11-05; SQ-S1 to S4 and Sandekala wait for the user's playtest): New Game to Sangkuriang's release and the Mataram gate opening is playable (about 40 min, [balance.md](balance.md) 2.1), with SQ-S1 to S4 and Sandekala completable, on placeholder art.
 
 ## Phase 5: Remaining regions
+Build each region from its area graph in `zones/<region>.md` ([mataram](zones/mataram.md), [tanah_timur](zones/tanah_timur.md), [segara_kidul](zones/segara_kidul.md), [gua_kala](zones/gua_kala.md)): first add tile maps per area (AGENTS.md 5), then build.
 - [ ] Mataram zone and boss
 - [ ] Tanah Timur zone, miniboss and boss
 - [ ] Gua Kala and the final boss

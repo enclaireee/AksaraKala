@@ -7,10 +7,34 @@ const FADE := 0.25   # TUNE: seconds each way
 const ZONES := {
 	"hub": "res://zones/hub.tscn",
 	"desa_purwa": "res://zones/desa_purwa.tscn",
-	"tatar_sunda": "res://zones/tatar_sunda.tscn",
+	"ts_kebun": "res://zones/ts_kebun.tscn",
+	"ts_kampung": "res://zones/ts_kampung.tscn",
+	"ts_leuweung": "res://zones/ts_leuweung.tscn",
+	"ts_leuwi": "res://zones/ts_leuwi.tscn",
+	"ts_sawah": "res://zones/ts_sawah.tscn",
+	"ts_situ": "res://zones/ts_situ.tscn",
+	"ts_kawah_jalan": "res://zones/ts_kawah_jalan.tscn",
+	"ts_kawah": "res://zones/ts_kawah.tscn",
 }
-## Neighbours, for the objective arrow's breadth-first search (architecture.md 9).
-const ADJ := {"desa_purwa": ["tatar_sunda", "mataram"], "tatar_sunda": ["desa_purwa"]}
+## Where you can walk from each area, for the objective arrow's breadth-first search (architecture.md 9).
+## Directed: a drop and a shortcut are listed only from the side that can always pass (world.md World
+## structure). Kabut links are listed as open. ponytail: an opened shortcut's back edge is not added;
+## the arrow just takes the long way round.
+const ADJ := {
+	"desa_purwa": ["ts_kebun", "mt_gapura"],
+	"ts_kebun": ["desa_purwa", "ts_kampung"],
+	"ts_kampung": ["ts_kebun", "ts_leuweung", "ts_sawah", "ts_leuwi"],
+	"ts_leuweung": ["ts_kampung", "ts_kebun"],   # ts_kebun: sc:ts_pagar, opened from this side
+	"ts_leuwi": ["ts_kampung"],
+	"ts_sawah": ["ts_kampung", "ts_situ"],
+	"ts_situ": ["ts_sawah", "ts_kawah_jalan", "ts_kampung"],   # ts_kampung: sc:ts_tangga
+	"ts_kawah_jalan": ["ts_situ", "ts_kawah", "ts_kampung"],   # ts_kampung: the one-way drop
+	"ts_kawah": ["ts_kawah_jalan"],
+}
+## Edges in ADJ with no way back (drops). Shortcut edges are in SHORTCUTS.
+const DROPS := [["ts_kawah_jalan", "ts_kampung"]]
+## Shortcut id -> [area that can always open it, area behind the gate].
+const SHORTCUTS := {"sc:ts_pagar": ["ts_leuweung", "ts_kebun"], "sc:ts_tangga": ["ts_situ", "ts_kampung"]}
 
 var current_zone := ""   # set by Zone._ready; "" in scenes that are not a Zone
 

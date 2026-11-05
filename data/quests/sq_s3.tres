@@ -13,7 +13,7 @@ count = 5
 script = ExtResource("2")
 objective = "Q_SQ_S3_S2_OBJ"
 on = "talked_to:angklung_leader"
-marker = {"zone": "tatar_sunda", "id": "angklung_leader"}
+marker = {"zone": "ts_kampung", "id": "angklung_leader"}
 
 [resource]
 script = ExtResource("1")

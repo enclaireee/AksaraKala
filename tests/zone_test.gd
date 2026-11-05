@@ -64,11 +64,13 @@ func run() -> void:
 	var game := root.get_node("Game")
 
 	# BFS over ADJ.
-	check(zones.next_zone("desa_purwa", "tatar_sunda") == "tatar_sunda", "desa_purwa -> tatar_sunda")
-	check(zones.next_zone("tatar_sunda", "mataram") == "desa_purwa", "tatar_sunda -> mataram should go via desa_purwa")
-	check(zones.next_zone("tatar_sunda", "nowhere") == "", "unknown target")
-	check(zones.next_zone("nowhere", "tatar_sunda") == "", "unknown start")
-	check(zones.next_zone("tatar_sunda", "tatar_sunda") == "", "same zone")
+	check(zones.next_zone("desa_purwa", "ts_kampung") == "ts_kebun", "desa_purwa -> ts_kampung goes via ts_kebun")
+	check(zones.next_zone("ts_leuweung", "mt_gapura") == "ts_kebun", "ts_leuweung -> mt_gapura should take the fence shortcut")
+	check(zones.next_zone("ts_kampung", "ts_kawah_jalan") == "ts_sawah", "the drop is one-way: go up through ts_sawah")
+	check(zones.next_zone("ts_kawah_jalan", "ts_kebun") == "ts_kampung", "ts_kawah_jalan -> ts_kebun should take the drop")
+	check(zones.next_zone("ts_kebun", "nowhere") == "", "unknown target")
+	check(zones.next_zone("nowhere", "ts_kebun") == "", "unknown start")
+	check(zones.next_zone("ts_kebun", "ts_kebun") == "", "same zone")
 
 	# Build.
 	zones.go_to(A, "start")

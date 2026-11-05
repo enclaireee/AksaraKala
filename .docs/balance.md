@@ -18,12 +18,14 @@ Related: [rpg.md](rpg.md) (base formulas), [classes.md](classes.md), [bestiary.m
 | Chapter | Zone | Minutes | Main-path kills | Glyphs known at the end |
 |---------|------|---------|-----------------|-------------------------|
 | MQ0 | Desa Purwa | 10 | 0 (dummies) | 1 |
-| MQ1 | Tatar Sunda | 30 | about 40 | 4 |
+| MQ1 | Tatar Sunda | 30-40 **TUNE** | about 40 | 4 |
 | MQ2 | Mataram | 35 | about 40 | 8 |
 | MQ3 | Tanah Timur | 40 | about 40 | 8 |
 | MQ4 | Segara Kidul (P1) | 15 | about 30 (trial waves) | 9 |
 | MQ5 | Gua Kala | 15 | about 10 | 9 |
 | **Total** | | **about 145** | **about 160** | |
+
+MQ1 grows with the interlocking rebuild (8 areas, user call 2026-11-05); shortcuts cut the walk back, so measure it in the playtest before changing the later rows.
 
 Side quests take 3-8 minutes each ([quests.md](quests.md)). 14 of them, plus the hub quests and exploration, add about 80-100 minutes.
 

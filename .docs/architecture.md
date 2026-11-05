@@ -67,7 +67,7 @@ Custom `Resource` types so adding content is data entry:
 - `GlyphData`: id, script (sunda/jawa), latin name, templates (array of point arrays), guide texture, true-form texture
 - `SpellData`: glyph id, name, gauge cost, base power, scene to spawn, class modifier table
 - `CodexEntry`: id, category, source; text keys `CODEX_<ID>_TITLE/_BODY/_WEAK` ([quests.md](quests.md) 7.1)
-- `QuestData` and `QuestStep`: fields in [quests.md](quests.md) section 7.1
+- `QuestData` and `QuestStep`: fields in [quests.md](quests.md) section 7.1. `QuestData.zone` is the region id (`tatar_sunda`, for Ilmu tiers); a step `marker.zone` is an area id (`ts_situ`).
 - `DialogueData`: npc id, name key, condition/line/action entries ([quests.md](quests.md) 7.1)
 
 **Text:** all player-facing text is a translation key. Strings live in CSV tables in `data/text/` with `keys,id,en` columns; Godot imports CSV as translations and `tr()` looks them up. Tables: `ui`, `items`, `quests`, `dialogue`, `codex`. Key prefixes: `UI_`, `ITEM_<ID>_NAME/_DESC`, `CLASS_<ID>_NAME/_DESC/_PASSIVE`, `Q_<QUEST>_TITLE`, `Q_<QUEST>_S<n>`, `NPC_<npc>_NAME`, `NPC_<npc>_<n>`, `PROLOGUE_<n>`, `CODEX_<ID>_*`. Language: first launch follows the OS locale (`id` -> Indonesian, else English); the title-screen toggle saves it in `user://settings.cfg`, not in the run save.
@@ -78,7 +78,7 @@ Custom `Resource` types so adding content is data entry:
 - **Boss:** an enemy with phases defined by HP thresholds, plus an arena script.
 - **Components over inheritance.** Reuse Health, Stamina, Hitbox, Hurtbox, HitFlash on both player and enemies.
 - **Weapons:** a weapon scene per archetype that spawns hitboxes or projectiles. Parameters from `ItemData`.
-- **Zones:** one scene per zone containing `TileMapLayer`s, enemy spawners (markers), petilasans, NPCs, chests and edge `Area2D` exits (target zone + spawn id).
+- **Zones:** one scene per area (a region is several areas, [world.md](world.md) World structure; the scene id is the area id, e.g. `ts_kebun`) containing `TileMapLayer`s, enemy spawners (markers), petilasans, NPCs, chests and edge `Area2D` exits (target zone + spawn id).
 
 ## 6. Physics layers
 1 world, 2 player, 3 enemy, 4 player_hitbox, 5 enemy_hitbox, 6 interactable, 7 trigger/exit. Name them in the project settings.
@@ -99,7 +99,7 @@ Custom `Resource` types so adding content is data entry:
 
 ## 9. Zone loading
 - Edge `Area2D` exits call `Zones.go_to(zone_id, spawn_id)`, which fades out, swaps the scene, places the player at the spawn marker and fades in. The new player starts with full HP, stamina and sakti; this is intended (user call, 2026-11-05).
-- Zone scripts extend `zones/zone.gd` (**ASSUMED** 2026-11-05): `zone_id`, an ASCII `MAP` (any size, in 30x17 screens), and a `SPOTS` dict mapping a map char to `{scene, props, tile}`. The base paints the tiles, places the spots, sets the camera limits from the map size and emits `Events.zone_entered`. Tile chars: `#` wall/cliff, `.` grass, `,` path, `~` water, `b` bamboo, `t` tea, `r` rock, `_` floor. `Zones.ZONES` maps zone id to scene path and `Zones.ADJ` lists neighbours for the objective arrow's breadth-first search.
+- Zone scripts extend `zones/zone.gd` (**ASSUMED** 2026-11-05): `zone_id`, an ASCII `MAP` (any size, in 30x17 screens), and a `SPOTS` dict mapping a map char to `{scene, props, tile}`. The base paints the tiles, places the spots, sets the camera limits from the map size and emits `Events.zone_entered`. Tile chars: `#` wall/cliff, `.` grass, `,` path, `~` water, `b` bamboo, `t` tea, `r` rock, `_` floor. `Zones.ZONES` maps area id to scene path and `Zones.ADJ` lists where you can walk from each area (two-way links; a one-way drop only from its top end; a shortcut only from the side that opens it, listed in `Zones.SHORTCUTS`, drops in `Zones.DROPS`) for the objective arrow's breadth-first search. Area scripts are generated from the region doc by `.docs/gen_zones.py`.
 - Boss and elite scenes are referenced by path and loaded at runtime, so a zone imports cleanly before its boss exists.
 - Persistent state (killed bosses, opened fog gates, chests) lives in `Game`, not in the scene.
 - Normal enemies respawn by reloading the zone scene (state is intentionally not persisted for them).

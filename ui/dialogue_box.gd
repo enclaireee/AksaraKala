@@ -1,6 +1,6 @@
 extends Control
 ## Dialogue box (ui.md 2, quests.md 7.7). Listens to Events.dialogue_requested(speaker_key, lines),
-## types each line out, `interact` completes the line or advances, then emits dialogue_finished.
+## types each line out, `interact`, Enter or left click completes the line or advances, then emits dialogue_finished.
 ## Pauses the tree while open and restores the previous pause state.
 
 const CPS := 45.0   # TUNE: characters per second
@@ -14,6 +14,7 @@ var _opened_frame := -1
 var _open := false
 var _speaker: Label
 var _text: Label
+var _cue: Label   # "▼" once the line is fully shown
 
 
 func _ready() -> void:
@@ -30,6 +31,8 @@ func _ready() -> void:
 	_speaker = _label(Vector2(48, 198), Vector2(384, 12), Color("E8D9A0"))
 	_text = _label(Vector2(48, 212), Vector2(384, 48), Color.WHITE)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_cue = _label(Vector2(424, 252), Vector2(10, 10), Color("E8D9A0"))
+	_cue.text = "▼"
 	get_node("/root/Events").dialogue_requested.connect(_on_requested)
 
 
@@ -87,11 +90,14 @@ func _process(delta: float) -> void:
 	if _open and _text.visible_characters < _text.get_total_character_count():
 		_shown += delta * CPS
 		_text.visible_characters = int(_shown)
+	_cue.visible = _open and _text.visible_characters >= _text.get_total_character_count() \
+			and Time.get_ticks_msec() % 800 < 500
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	# the press that opened the box arrives in the same frame: not an advance
-	if not _open or Engine.get_process_frames() == _opened_frame or not event.is_action_pressed("interact"):
+	if not _open or Engine.get_process_frames() == _opened_frame or not (event.is_action_pressed("interact") \
+			or event.is_action_pressed("ui_accept") or event.is_action_pressed("attack")):
 		return
 	get_viewport().set_input_as_handled()
 	if _text.visible_characters < _text.get_total_character_count():

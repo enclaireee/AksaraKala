@@ -44,8 +44,8 @@ marker = {"zone": "desa_purwa", "id": "dummy"}
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ0_S7_OBJ"
-on = "zone_entered:tatar_sunda"
-marker = {"zone": "tatar_sunda", "id": "from_purwa"}
+on = "zone_entered:ts_kebun"
+marker = {"zone": "ts_kebun", "id": "from_desa_purwa"}
 
 [resource]
 script = ExtResource("1")

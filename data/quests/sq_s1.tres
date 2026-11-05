@@ -7,25 +7,25 @@
 script = ExtResource("2")
 objective = "Q_SQ_S1_S1_OBJ"
 on = "talked_to:lutung_kasarung"
-marker = {"zone": "tatar_sunda", "id": "lutung_kasarung"}
+marker = {"zone": "ts_leuweung", "id": "lutung_kasarung"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_S1_S2_OBJ"
 on = "area_cleared:sunda_spring"
-marker = {"zone": "tatar_sunda", "id": "sunda_spring"}
+marker = {"zone": "ts_leuweung", "id": "sunda_spring"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_SQ_S1_S3_OBJ"
 on = "talked_to:purbasari"
-marker = {"zone": "tatar_sunda", "id": "purbasari"}
+marker = {"zone": "ts_kampung", "id": "purbasari"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_SQ_S1_S4_OBJ"
 on = "area_entered:spring_bath"
-marker = {"zone": "tatar_sunda", "id": "spring_bath"}
+marker = {"zone": "ts_leuweung", "id": "spring_bath"}
 
 [resource]
 script = ExtResource("1")

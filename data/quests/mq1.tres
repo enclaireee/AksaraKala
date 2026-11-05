@@ -7,60 +7,60 @@
 script = ExtResource("2")
 objective = "Q_MQ1_S1_OBJ"
 on = "petilasan_activated:sunda_1"
-marker = {"zone": "tatar_sunda", "id": "sunda_1"}
+marker = {"zone": "ts_kebun", "id": "sunda_1"}
 set_flag = "mq1_1"
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ1_S2_OBJ"
 on = "talked_to:sunda_elder"
-marker = {"zone": "tatar_sunda", "id": "sunda_elder"}
+marker = {"zone": "ts_kampung", "id": "sunda_elder"}
 set_flag = "mq1_2"
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ1_S3_OBJ"
 on = "glyph_learned:sunda_ga"
-marker = {"zone": "tatar_sunda", "id": "sunda_elder"}
+marker = {"zone": "ts_kampung", "id": "sunda_elder"}
 set_flag = "mq1_3"
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ1_S4_OBJ"
 on = "area_cleared:sunda_batutulis"
-marker = {"zone": "tatar_sunda", "id": "sunda_batutulis"}
+marker = {"zone": "ts_leuweung", "id": "sunda_batutulis"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ1_S5_OBJ"
 on = "glyph_learned:sunda_nga"
-marker = {"zone": "tatar_sunda", "id": "batu_tulis"}
+marker = {"zone": "ts_leuweung", "id": "batu_tulis"}
 set_flag = "mq1_5"
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ1_S6_OBJ"
 on = "talked_to:sunda_weaver"
-marker = {"zone": "tatar_sunda", "id": "sunda_weaver"}
+marker = {"zone": "ts_sawah", "id": "sunda_weaver"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ1_S7_OBJ"
 on = "talked_to:dayang_sumbi"
-marker = {"zone": "tatar_sunda", "id": "dayang_sumbi"}
+marker = {"zone": "ts_situ", "id": "dayang_sumbi"}
 set_flag = "mq1_7"
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ1_S8_OBJ"
 on = "petilasan_activated:sunda_2"
-marker = {"zone": "tatar_sunda", "id": "sunda_2"}
+marker = {"zone": "ts_kawah_jalan", "id": "sunda_2"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQ1_S9_OBJ"
 on = "boss_defeated:sangkuriang"
-marker = {"zone": "tatar_sunda", "id": "sangkuriang"}
+marker = {"zone": "ts_kawah", "id": "sangkuriang"}
 
 [sub_resource type="Resource" id="s10"]
 script = ExtResource("2")

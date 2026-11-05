@@ -8,13 +8,13 @@ script = ExtResource("2")
 objective = "Q_SQ_S4_S1_OBJ"
 on = "enemy_killed:wild_boar"
 count = 3
-marker = {"zone": "tatar_sunda", "id": "cepot"}
+marker = {"zone": "ts_kebun", "id": "cepot"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_S4_S2_OBJ"
 on = "talked_to:cepot"
-marker = {"zone": "tatar_sunda", "id": "cepot"}
+marker = {"zone": "ts_kebun", "id": "cepot"}
 
 [resource]
 script = ExtResource("1")

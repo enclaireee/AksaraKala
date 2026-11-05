@@ -7,25 +7,25 @@
 script = ExtResource("2")
 objective = "Q_SQ_S2_S1_OBJ"
 on = "talked_to:kepala_desa"
-marker = {"zone": "tatar_sunda", "id": "kepala_desa"}
+marker = {"zone": "ts_kampung", "id": "kepala_desa"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_S2_S2_OBJ"
 on = "area_entered:dark_grove"
-marker = {"zone": "tatar_sunda", "id": "dark_grove"}
+marker = {"zone": "ts_leuweung", "id": "dark_grove"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_SQ_S2_S3_OBJ"
 on = "enemy_killed:kuntilanak_elite"
-marker = {"zone": "tatar_sunda", "id": "kuntilanak_elite"}
+marker = {"zone": "ts_leuweung", "id": "kuntilanak_elite"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_SQ_S2_S4_OBJ"
 on = "talked_to:kepala_desa"
-marker = {"zone": "tatar_sunda", "id": "kepala_desa"}
+marker = {"zone": "ts_kampung", "id": "kepala_desa"}
 
 [resource]
 script = ExtResource("1")

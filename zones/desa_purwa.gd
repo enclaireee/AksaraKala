@@ -41,11 +41,11 @@ const MAP := [
 const W := "res://entities/world/"
 const NPC := "res://entities/npc/npc.tscn"
 const SPOTS := {
-	"W": {"scene": W + "exit.tscn", "props": {"target_zone": "tatar_sunda", "spawn_id": "from_purwa"}, "tile": ","},
-	"w": {"scene": W + "spawn.tscn", "props": {"id": "from_sunda"}, "tile": ","},
-	"v": {"scene": W + "spawn.tscn", "props": {"id": "from_mataram"}, "tile": ","},
+	"W": {"scene": W + "exit.tscn", "props": {"target_zone": "ts_kebun", "spawn_id": "from_desa_purwa"}, "tile": ","},
+	"w": {"scene": W + "spawn.tscn", "props": {"id": "from_ts_kebun"}, "tile": ","},
+	"v": {"scene": W + "spawn.tscn", "props": {"id": "from_mt_gapura"}, "tile": ","},
 	"K": {"scene": W + "kabut.tscn", "props": {"flag": "mq1_10"}, "tile": ","},
-	"E": {"scene": W + "exit.tscn", "props": {"target_zone": "mataram", "spawn_id": "from_purwa"}, "tile": ","},
+	"E": {"scene": W + "exit.tscn", "props": {"target_zone": "mt_gapura", "spawn_id": "from_desa_purwa"}, "tile": ","},
 	"s": {"scene": W + "spawn.tscn", "props": {"id": "start"}, "tile": ","},
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "desa_purwa"}, "tile": ","},
 	"M": {"scene": NPC, "props": {"npc_id": "semar"}, "tile": "_"},
@@ -63,3 +63,37 @@ func map() -> PackedStringArray:
 
 func spots() -> Dictionary:
 	return SPOTS
+
+
+## The sanggar shows the ghost guide of the newest learned glyph while the player stands inside it
+## (desa_purwa.md `S`). Same overlay and corner as zones/sanggar.gd.
+const GUIDE_RECT := Rect2(380, 20, 80, 80)
+var guide: CastOverlay
+var _in_sanggar := false
+
+
+func _ready() -> void:
+	super()
+	guide = preload("res://ui/cast_overlay.tscn").instantiate()
+	guide.layer = 4
+	add_child(guide)
+	for t in find_children("*", "Area2D", true, false):
+		if t.get("trigger_id") == "sanggar_enter":
+			t.body_entered.connect(_sanggar.bind(true))
+			t.body_exited.connect(_sanggar.bind(false))
+	get_node("/root/Events").glyph_learned.connect(_show_guide.unbind(1))
+
+
+func _sanggar(body: Node, inside: bool) -> void:
+	if body.is_in_group("player"):
+		_in_sanggar = inside
+		body.cast.practice = inside   # no sakti gate in the sanggar: a new player starts with 0
+		_show_guide()
+
+
+func _show_guide() -> void:
+	var g: Array[GlyphData] = get_node("/root/Game").learned_glyphs()
+	guide.hide_guide()
+	guide.visible = _in_sanggar and not g.is_empty()
+	if guide.visible:
+		guide.show_guide(g[-1].templates[0], GUIDE_RECT)

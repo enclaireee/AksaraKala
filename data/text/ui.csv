@@ -63,3 +63,13 @@ UI_TOAST_GLYPH,Aksara baru: %s,New aksara: %s
 UI_HOLD_SKIP,Tahan untuk melewati,Hold to skip
 BOSS_SANGKURIANG,Sangkuriang,Sangkuriang
 BOSS_SANDEKALA,Sandekala,Sandekala
+UI_FIZZLE_UNKNOWN,Tak dikenali,Unrecognized
+UI_VERB_USE,Pakai,Use
+UI_VERB_TALK,Bicara,Talk
+UI_VERB_OPEN,Buka,Open
+UI_VERB_TAKE,Ambil,Take
+UI_SC_LOCKED,Tidak terbuka dari sisi ini,Does not open from this side
+UI_KEY_LMB,LMB,LMB
+UI_KEY_RMB,RMB,RMB
+UI_HINT_SANDE,Pukul keempat obor untuk menyalakannya,Hit the four torches to light them
+UI_DEATH_SUB,Kembali ke petilasan. Ilmu tetap utuh.,Back at the petilasan. Your Ilmu is kept.

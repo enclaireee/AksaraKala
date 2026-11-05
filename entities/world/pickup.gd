@@ -13,6 +13,7 @@ func _key() -> String:
 
 
 func _ready() -> void:
+	verb = "UI_VERB_TAKE"
 	super()
 	if get_node("/root/Game").has_flag("pickup:" + _key()):
 		queue_free()
