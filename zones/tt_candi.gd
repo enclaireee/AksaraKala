@@ -14,11 +14,11 @@ const MAP := [
 	"#.................#__________________________________#..rr.#",
 	"#.................#_________________H________________#.....#",
 	"#.................#___________N______________________#.....#",
-	"#.................#__________________________________#.....#",
+	"#.................#___A______________________________#.....#",
 	"#.................#_________________R________________#.....#",
 	"#.................#__________________________________#.....#",
 	"#.................,__________________________________#.....#",
-	"Xe,,,,,,,,,,,,,,,,,_____S___________B________________#.....#",
+	"Xe,,,,,,,,,,,,,,,,,__E__S___________B___C________D___#.....#",
 	"X,,,,,,,,,,,,,,,,,,________________________________4_#.....#",
 	"#.................,__________________________________#.....#",
 	"#.................#_____________W___K________________#.....#",
@@ -41,8 +41,8 @@ const MAP := [
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pasir", "spawn_id": "from_tt_candi"}, "tile": ","},   # exit to tt_pasir (west edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": ","},   # spawn, arrival from tt_pasir
-	"B": {"scene": "res://entities/bosses/keris_gandring.tscn", "props": {"cond": "flag:beat_shrine_sight"}, "tile": "_"},   # boss Mpu Gandring's Keris (3.10, arena centre; wakes after the `shrine_sight` beat)
-	"H": {"scene": "res://entities/bosses/nameless_hunter.tscn", "props": {"cond": "flag:beat_keris"}, "tile": "_"},   # boss the Nameless Hunter, after the keris (MQ3 3.11)
+	"B": {"scene": "res://entities/bosses/keris_gandring.tscn", "props": {"cond": "flag:beat_shrine_sight"}, "tile": "_"},   # boss Mpu Gandring's Keris (3.9, arena centre; wakes after the `shrine_sight` beat)
+	"H": {"scene": "res://entities/bosses/nameless_hunter.tscn", "props": {"cond": "flag:mq3_h6"}, "tile": "_"},   # boss the Nameless Hunter, after the keris (MQ3 3.11)
 	"1": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 1}, "tile": "_"},   # curse stake 1 (arena edge)
 	"2": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 2}, "tile": "_"},   # curse stake 2 (arena edge)
 	"3": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 3}, "tile": "_"},   # curse stake 3 (arena edge)
@@ -55,6 +55,10 @@ const SPOTS := {
 	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_empu", "cond": "flag:mq3_7,!flag:beat_keris"}, "tile": "_"},   # NPC Mpu Wirasana, hands over the reforged keris in the `keris` beat
 	"R": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_hunter_shrine", "size": Vector2i(10,4)}, "tile": "_"},   # trigger, beat `hunter_shrine` staging (the restore beat; `flag:beat_keris`)
 	"N": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_hunter_name", "size": Vector2i(12,8)}, "tile": "_"},   # trigger, beat `hunter_name` staging (aftermath, then `goto:desa_purwa:from_riders`; `quest:mq3=done`)
+	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "forge_stone", "memory_id": "k5_forge"}, "tile": "_"},   # clue, the old forge stone at the desert shrine (3.9 K5; opens memory `k5_forge`)
+	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hunter_mask_4", "memory_id": "h4", "cond": "flag:beat_keris"}, "tile": "_"},   # clue, the last mask fragment where the keris lay (3.10 H4; opens memory `h4`; appears when `flag:beat_keris`)
+	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "mask_joined", "memory_id": "k6_servant", "cond": "flag:mq3_h7"}, "tile": "_"},   # clue, the joined mask at the shrine door (3.10 K6; opens memory `k6_servant`; appears when `flag:mq3_h7`)
+	"E": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "candi_inner_sanctum", "size": Vector2i(5,4)}, "tile": "_"},   # trigger, inner sanctum entry via Laras's wind-tunnel shortcut (3.18 `candi_inner_sanctum`)
 }
 
 

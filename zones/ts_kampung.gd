@@ -33,7 +33,7 @@ const MAP := [
 	"#.............r.,,..bbbbb.....#______#..r...,,......bbbbb..#",
 	"#..~~~~~~.......,,..bbbbb.....########......,,......bbbbb..#",
 	"#..~~~~~~.......,,..bbbbb...................,,......bbbbb..#",
-	"#..~~~~~~.......,,..bbbbb...................,,......bbbbb..#",
+	"#..~~~~~~.......,,..bbbbb...................h,......bbbbb..#",
 	"#...............e,..........................@,.............#",
 	"################XX##########################%%##############",
 ]
@@ -43,6 +43,7 @@ const SPOTS := {
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kebun"}, "tile": ","},   # spawn, arrival from ts_kebun
 	"%": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_leuwi", "spawn_id": "from_ts_kampung"}, "tile": ","},   # exit to ts_leuwi (south edge, 2 tiles)
 	"@": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_leuwi"}, "tile": ","},   # spawn, arrival from ts_leuwi
+	"h": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sunda_hamlet", "size": Vector2i(4,4)}, "tile": ","},   # trigger, follow the mother's cries toward the river gorge hamlet (MQ1 1.5 `area_entered:sunda_hamlet`)
 	"&": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_leuweung", "spawn_id": "from_ts_kampung"}, "tile": ","},   # exit to ts_leuweung (west edge, 2 tiles)
 	"!": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_leuweung"}, "tile": ","},   # spawn, arrival from ts_leuweung
 	"$": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_sawah", "spawn_id": "from_ts_kampung"}, "tile": ","},   # exit to ts_sawah (east edge, 2 tiles)
@@ -53,8 +54,8 @@ const SPOTS := {
 	"+": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:ts_tangga", "open_side": "n"}, "tile": ","},   # shortcut gate, ladder (opens from the north pocket, 2 tiles)
 	"G": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_3"}, "tile": ","},   # kabut, west gate to ts_leuweung (one per tile)
 	"H": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_5"}, "tile": ","},   # kabut, east gate to ts_sawah (one per tile)
-	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_kampung", "size": Vector2i(15,9), "cond": "step:mq1=1", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]], [["res://entities/enemies/wild_boar_elite.tscn", Vector2i(0,0)]]]}, "tile": "."},   # encounter sunda_kampung, the ambush at Abah Karna's kampung; wave 2 is the elite boar, the `miniboss` piece (MQ1 1.2, only while step 1.2 is current)
-	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_elder"}, "tile": "."},   # NPC Abah Karna, the kampung elder, teaches Ga (MQ1 1.3)
+	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_kampung", "size": Vector2i(15,9), "cond": "step:mq1=1", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]], [["res://entities/enemies/wild_boar_elite.tscn", Vector2i(0,0)]]]}, "tile": "."},   # encounter sunda_kampung, the ambush at Abah Karna's kampung; wave 2 is the elite boar, the `miniboss` piece (MQ1 1.4)
+	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_elder"}, "tile": "."},   # NPC Abah Karna, the kampung elder, teaches Ga (MQ1 1.5)
 	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ki_darsa"}, "tile": ","},   # NPC Ki Darsa, juru pantun (SQ-S1 giver)
 	"V": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kepala_desa"}, "tile": ","},   # NPC kepala desa (SQ-S2 giver)
 	"L": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "angklung_leader"}, "tile": ","},   # NPC angklung group leader (SQ-S3 giver)

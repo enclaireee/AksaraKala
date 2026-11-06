@@ -4,6 +4,7 @@ class_name Clue extends Interactable
 ## Examined clues stay examinable: lines replay, the signal fires again, the flag is already set.
 
 @export var clue_id := ""                   # zone docs pass `clue_id`; lontar_shimmer.gd reads it and `memory_id`
+@export var hunt_id := ""                   # optional hunt/investigation group id (quests.md 7.1)
 @export var lines := PackedStringArray()    # empty: CLUE_<ID>_1 and _2, those that exist
 @export var journal_key := ""               # CLUE_<ID>_NOTE (journal reads it)
 @export var memory_id := ""

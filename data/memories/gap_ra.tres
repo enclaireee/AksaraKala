@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="GapMemoryData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/gap_memory_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+memory_id = "ra"
+scene_spot = "ibu_table"
+gaps = Array[Dictionary]([{
+"correct": "GAP_RA_CUP_3",
+"gap_id": "ra_cup",
+"options": ["GAP_RA_CUP_1", "GAP_RA_CUP_2", "GAP_RA_CUP_3"],
+"pos": Vector2i(10, 6),
+"prompt_key": "GAP_RA_CUP_P"
+}, {
+"correct": "GAP_RA_TEA_2",
+"gap_id": "ra_tea",
+"options": ["GAP_RA_TEA_1", "GAP_RA_TEA_2", "GAP_RA_TEA_3"],
+"pos": Vector2i(16, 10),
+"prompt_key": "GAP_RA_TEA_P"
+}, {
+"correct": "GAP_RA_SAY_3",
+"gap_id": "ra_say",
+"options": ["GAP_RA_SAY_1", "GAP_RA_SAY_2", "GAP_RA_SAY_3"],
+"pos": Vector2i(22, 5),
+"prompt_key": "GAP_RA_SAY_P"
+}])

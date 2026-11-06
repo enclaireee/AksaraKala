@@ -25,11 +25,11 @@ Build rule: a char may repeat only when scene and props are identical (the 4 dum
 ####################################################JJ######
 #...................................................kk.....#
 #...##################..............#############...ju.....#
-#...#________________#..bb..........#_____q_____#.....bbbb.#
+#...#________________#..bb..........#_____q_____#...%.bbbb.#
 #...#________________#..bb..........#______G____#.....bbbb.#
 #...#___D__D__D__D___#..............#___________#.....bbbb.#
 #...#________________#..............#_p_____p_p_#.....bbbb.#
-#...#_______S________#..............#_____T_____#..........#
+#...#_______S________#..............#____$T_____#..........#
 #...#_____________i__#..............#___p____L__#..........#
 #...#__M_e___________#..............#_p___V____p#..........#
 #...#________________#..............#####__######..........#
@@ -53,7 +53,7 @@ W,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE
 #.............~~~~~~~6..................#___________#.bbbb.#
 #.............~~~~~~~...................#############.bbbb.#
 #.bb..........~~~~~~~.................................bbbb.#
-#.bbC.................8.......y.......................bbbb.#
+#.bbC@................8.......y.......................bbbb.#
 #.............................xx...........................#
 ##############################XX############################
 ```
@@ -66,53 +66,56 @@ W,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE
 | `v` | spawn, arrival from Keraton Galuh | `res://entities/world/spawn.tscn` | `{id:"from_kg_alun"}` | path | 1 |
 | `K` | kabut, Galuh gate (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq1_10"}` | path | 2 |
 | `E` | exit to Keraton Galuh | `res://entities/world/exit.tscn` | `{target_zone:"kg_alun", spawn_id:"from_desa_purwa"}` | path | 2 |
-| `I` | NPC Ibu, the hero's mother (MQ0 0.2 tea and 0.6, Interlude 4.3, epilogue cups) | `res://entities/npc/npc.tscn` | `{npc_id:"ibu"}` | floor | 1 |
-| `F` | encounter purwa_raid, the plaza fight, 3 Faceless (MQ0 0.8, last of three skirmishes) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid", cond:"step:mq0=7", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(0,2)]]]}` | path | 1 |
-| `9` | encounter purwa_raid_a, west road skirmish, 2 Faceless (MQ0 0.8, first) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid_a", cond:"step:mq0=7", size:Vector2i(12,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | path | 1 |
-| `0` | encounter purwa_raid_b, stage road skirmish, 2 Faceless (MQ0 0.8, second) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid_b", cond:"step:mq0=7", size:Vector2i(12,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | path | 1 |
+| `I` | NPC Ibu, the hero's mother (MQ0 0.2 tea and 0.10, Interlude 4.4, epilogue cups) | `res://entities/npc/npc.tscn` | `{npc_id:"ibu"}` | floor | 1 |
+| `F` | encounter purwa_raid, the plaza fight, 3 Faceless (MQ0 0.12, last of three skirmishes) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid", cond:"step:mq0=7", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(0,2)]]]}` | path | 1 |
+| `9` | encounter purwa_raid_a, west road skirmish, 2 Faceless (MQ0 0.12, first) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid_a", cond:"step:mq0=7", size:Vector2i(12,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | path | 1 |
+| `0` | encounter purwa_raid_b, stage road skirmish, 2 Faceless (MQ0 0.12, second) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid_b", cond:"step:mq0=7", size:Vector2i(12,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | path | 1 |
 | `s` | spawn, player start after class choice | `res://entities/world/spawn.tscn` | `{id:"start"}` | path | 1 |
 | `P` | petilasan | `res://entities/petilasan/petilasan.tscn` | `{id:"desa_purwa"}` | path | 1 |
-| `M` | NPC Semar, the village dalang (MQ0 0.3 and 0.7, Interlude 4.5; SQ-D1 lakon giver) | `res://entities/npc/npc.tscn` | `{npc_id:"semar"}` | floor | 1 |
-| `e` | NPC Cepot, at Semar's side in the sanggar (MQ0 0.3, one-line quiet talk) | `res://entities/npc/npc.tscn` | `{npc_id:"cepot"}` | floor | 1 |
+| `M` | NPC Semar, the village dalang (MQ0 0.5 and 0.11, Interlude 4.7; SQ-D1 lakon giver) | `res://entities/npc/npc.tscn` | `{npc_id:"semar"}` | floor | 1 |
+| `e` | NPC Cepot, at Semar's side in the sanggar (MQ0 0.5) | `res://entities/npc/npc.tscn` | `{npc_id:"cepot"}` | floor | 1 |
 | `R` | NPC Nyai Rukmi, codex keeper (SQ-D2) | `res://entities/npc/npc.tscn` | `{npc_id:"nyai_rukmi"}` | floor | 1 |
 | `D` | training dummy (same props on all 4 tiles) | `res://entities/enemies/dummy.tscn` | `{}` | floor | 4 |
-| `T` | trigger, wayang stage (MQ0 0.6 `area_entered:wayang_stage`) | `res://entities/world/trigger.tscn` | `{trigger_id:"wayang_stage", size:Vector2i(11,5)}` | floor | 1 |
+| `T` | trigger, wayang stage (MQ0 0.10 `area_entered:wayang_stage`) | `res://entities/world/trigger.tscn` | `{trigger_id:"wayang_stage", size:Vector2i(11,5)}` | floor | 1 |
+| `$` | trigger, lighting the four ceremonial stage oil lamps at dusk (MQ0 0.7 `puzzle_solved:purwa_stage_lamps`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_stage_lamps", size:Vector2i(3,3)}` | floor | 1 |
 | `S` | trigger, sanggar entered (shows draw tutorial) | `res://entities/world/trigger.tscn` | `{trigger_id:"sanggar_enter", size:Vector2i(16,9)}` | floor | 1 |
-| `i` | trigger, the lontar table in the sanggar (MQ0 0.3 `area_entered:sanggar_lontar`; the write card for the hero's and Laras's names) | `res://entities/world/trigger.tscn` | `{trigger_id:"sanggar_lontar", size:Vector2i(3,3)}` | floor | 1 |
+| `i` | trigger, the lontar table in the sanggar (MQ0 0.6 `area_entered:sanggar_lontar`; the write card for the hero's and Laras's names) | `res://entities/world/trigger.tscn` | `{trigger_id:"sanggar_lontar", size:Vector2i(3,3)}` | floor | 1 |
 | `J` | exit to Gua Kala (P0 entry, the Act VI gate) | `res://entities/world/exit.tscn` | `{target_zone:"gk_mulut", spawn_id:"from_desa_purwa"}` | grass | 2 |
-| `k` | kabut, Gua Kala gate (one per tile), lifts when MQ4 is done (flag `mq4_9`, set by step 4.12) | `res://entities/world/kabut.tscn` | `{flag:"mq4_9"}` | grass | 2 |
+| `k` | kabut, Gua Kala gate (one per tile), lifts when MQ4 is done (flag `mq4_9`, set by step 4.22) | `res://entities/world/kabut.tscn` | `{flag:"mq4_9"}` | grass | 2 |
+| `%` | trigger, test the impenetrable fog at the northern cave mouth (Interlude 4.1 `area_entered:purwa_north_fog`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_north_fog", size:Vector2i(4,3)}` | grass | 1 |
 | `j` | spawn, arrival from Gua Kala's mouth | `res://entities/world/spawn.tscn` | `{id:"from_gk_mulut"}` | grass | 1 |
 | `u` | spawn, arrival home after Batara Kala (`kala_exit`) | `res://entities/world/spawn.tscn` | `{id:"from_gua_kala"}` | grass | 1 |
-| `L` | pickup, Laras's lontar on the burned stage (MQ0 0.6, the deed before Ka; the `clue` piece) | `res://entities/world/pickup.tscn` | `{item_id:"laras_lontar", cond:"flag:mq0_4"}` | floor | 1 |
+| `L` | pickup, Laras's lontar on the burned stage (MQ0 0.10, the deed before Ka; the `clue` piece) | `res://entities/world/pickup.tscn` | `{item_id:"laras_lontar", cond:"flag:mq0_4"}` | floor | 1 |
 | `X` | exit to Segara Kidul `sk_pantai` (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_pantai", spawn_id:"from_desa_purwa"}` | grass | 2 |
-| `x` | kabut, south gate to the coast, lifts on the Semar talk (flag `mq4_i5`, step 4.5; one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq4_i5"}` | grass | 2 |
+| `x` | kabut, south gate to the coast, lifts on the Semar talk (flag `mq4_i5`, step 4.7; one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq4_i5"}` | grass | 2 |
 | `y` | spawn, arrival from `sk_pantai` | `res://entities/world/spawn.tscn` | `{id:"from_sk_pantai"}` | grass | 1 |
 | `z` | spawn, the riders drop you here (Interlude 4.1, target of the `goto` after Act IV) | `res://entities/world/spawn.tscn` | `{id:"from_riders"}` | path | 1 |
-| `N` | NPC Ciung Wanara at Ibu's table (Interlude 4.4) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mq4_2,!flag:mq4_9"}` | floor | 1 |
-| `H` | NPC Hariang Banga at Ibu's table (Interlude 4.4) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga", cond:"flag:mq4_2,!flag:mq4_9"}` | floor | 1 |
+| `N` | NPC Ciung Wanara at Ibu's table (Interlude 4.5) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mq4_2,!flag:mq4_9"}` | floor | 1 |
+| `H` | NPC Hariang Banga at Ibu's table (Interlude 4.5) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga", cond:"flag:mq4_2,!flag:mq4_9"}` | floor | 1 |
 | `h` | NPC the Nameless Hunter at the west gate, staging for the `hunter_raid` beat (no talk; `npc_id` ASSUMED) | `res://entities/npc/npc.tscn` | `{npc_id:"nameless_hunter", cond:"flag:mq0_7,!flag:beat_hunter_raid"}` | grass | 1 |
 | `n` | NPC Nini Balangantrang at the west gate, speaks in the `hunter_raid` beat (display name "the old woman"; no talk of her own) | `res://entities/npc/npc.tscn` | `{npc_id:"nini_balangantrang", cond:"flag:mq0_7,!flag:beat_hunter_raid"}` | grass | 1 |
 | `m` | codex spot, the Hunter's empty mask in the hearth (Interlude, id ASSUMED; hidden until MQ3 is done so the codex cannot spoil him) | `res://entities/world/pickup.tscn` | `{codex_id:"hunter_mask", cond:"quest:mq3=done"}` | floor | 1 |
 | `l` | NPC Laras, the tag partner; runs the route, then waits at the last stop (MQ0 0.1; `npc_id` ASSUMED, the route is read by the NPC script) | `res://entities/npc/npc.tscn` | `{npc_id:"laras_tag", cond:"!flag:mq0_d1", route:[Vector2i(16,16), Vector2i(26,17), Vector2i(34,14), Vector2i(31,11), Vector2i(26,14)]}` | grass | 1 |
 | `Z` | trigger, tag game ends (MQ0 0.1 `area_entered:purwa_tag_end`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_tag_end", size:Vector2i(3,3)}` | grass | 1 |
 | `c` | NPC the stray cat; Laras calls it by its "real name" and it comes (MQ0 0.1 beat, no talk; the old banyan beside it shivers) | `res://entities/npc/npc.tscn` | `{npc_id:"stray_cat", cond:"!flag:mq0_d1"}` | grass | 1 |
-| `O` | NPC the old couple outside their door (house_c); the lead-in talk before Ciung (MQ0 0.2) | `res://entities/npc/npc.tscn` | `{npc_id:"purwa_old_couple", cond:"!flag:mq0_d3"}` | grass | 1 |
-| `C` | NPC Ciung Wanara up the big tree with his egg (MQ0 0.2) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mq0_d2,!flag:mq0_d4"}` | grass | 1 |
-| `8` | codex spot, the old banyan shrine on the road to the tree (MQ0 0.2 `travel` find; id ASSUMED) | `res://entities/world/pickup.tscn` | `{codex_id:"banyan"}` | grass | 1 |
-| `Y` | NPC the stall-keeper at the market stall (MQ0 0.3 `talked_to:purwa_stall`; asks children's names, "a tall man in a blank mask") | `res://entities/npc/npc.tscn` | `{npc_id:"purwa_stall", cond:"flag:mq0_d5,!flag:mq0_d6"}` | grass | 1 |
-| `q` | clue, the lamp behind the kelir; examining it pulls you into K0 (MQ0 0.4, `memory_id` `k0_ruwatan`) | `res://entities/world/clue.tscn` | `{clue_id:"kelir_lamp", memory_id:"k0_ruwatan", cond:"flag:mq0_d6,!flag:memory_k0_ruwatan"}` | floor | 1 |
+| `O` | NPC the old couple outside their door (house_c); the lead-in talk before Ciung (MQ0 0.2, Interlude 4.2) | `res://entities/npc/npc.tscn` | `{npc_id:"purwa_old_couple", cond:"!flag:mq0_d3"}` | grass | 1 |
+| `@` | trigger, climb the banyan ridge to Ciung Wanara (MQ0 0.3 `puzzle_solved:purwa_banyan_climb`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_banyan_climb", size:Vector2i(3,3)}` | grass | 1 |
+| `C` | NPC Ciung Wanara up the big tree with his egg (MQ0 0.3) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mq0_d2,!flag:mq0_d4"}` | grass | 1 |
+| `8` | codex spot, the old banyan shrine on the road to the tree (MQ0 0.3 `travel` find; id ASSUMED) | `res://entities/world/pickup.tscn` | `{codex_id:"banyan"}` | grass | 1 |
+| `Y` | NPC the stall-keeper at the market stall (MQ0 0.4 and Interlude 4.2 `talked_to:purwa_stall`; asks children's names, "a tall man in a blank mask") | `res://entities/npc/npc.tscn` | `{npc_id:"purwa_stall", cond:"flag:mq0_d5,!flag:mq0_d6"}` | grass | 1 |
+| `q` | clue, the lamp behind the kelir; examining it pulls you into K0 (MQ0 0.8, `memory_id` `k0_ruwatan`) | `res://entities/world/clue.tscn` | `{clue_id:"kelir_lamp", memory_id:"k0_ruwatan", cond:"flag:mq0_d6,!flag:memory_k0_ruwatan"}` | floor | 1 |
 | `p` | NPC villager in the show crowd (same props on all 6 tiles; dressing, they scatter in the `raid` beat) | `res://entities/npc/npc.tscn` | `{npc_id:"villager", cond:"!flag:mq0_d8"}` | floor | 6 |
-| `V` | trigger, the crowd in front of the kelir (MQ0 0.5 `area_entered:purwa_crowd`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_crowd", size:Vector2i(9,3)}` | floor | 1 |
-| `G` | NPC Laras in the crowd, she looks up at the tallest shadow (MQ0 0.5 `raid` beat; taken by the Hunter) | `res://entities/npc/npc.tscn` | `{npc_id:"laras_crowd", cond:"flag:mq0_d7,!flag:beat_raid"}` | floor | 1 |
-| `a` | doorpost 1, house_b (Interlude 4.2, write card seq `door_a`; NPC-scene whose entry runs `write:door_a:...`) | `res://entities/npc/npc.tscn` | `{npc_id:"door_a", cond:"step:mq4=1"}` | grass | 1 |
-| `d` | doorpost 2, house_c (Interlude 4.2, `door_b`) | `res://entities/npc/npc.tscn` | `{npc_id:"door_b", cond:"step:mq4=1"}` | grass | 1 |
-| `f` | doorpost 3, the pustaka (Interlude 4.2, `door_c`) | `res://entities/npc/npc.tscn` | `{npc_id:"door_c", cond:"step:mq4=1"}` | grass | 1 |
-| `1` | clue, Ibu's shelf: set the ribbon down (Interlude 4.3, ids ASSUMED) | `res://entities/world/clue.tscn` | `{clue_id:"shelf_ribbon", cond:"item:laras_ribbon,!flag:mq4_2"}` | floor | 1 |
-| `2` | clue, Ibu's shelf: set the wagon board down (Interlude 4.3) | `res://entities/world/clue.tscn` | `{clue_id:"shelf_board", cond:"item:laras_board,!flag:mq4_2"}` | floor | 1 |
-| `3` | clue, Ibu's shelf: set the Ka strip down (Interlude 4.3) | `res://entities/world/clue.tscn` | `{clue_id:"shelf_strip", cond:"item:laras_strip_ka,!flag:mq4_2"}` | floor | 1 |
-| `&` | clue, the queen's reply letter by the second cup on the table (SQ-C2 step 3, Interlude after 4.4: `clue_examined:c2_reply_letter`; appears only if the letters were given to the queen in Galuh, i.e. `c2_reply` is set; the player reads it or leaves it folded, no item; the letter's lines vary by `choice_mercy` or `choice_silent`) | `res://entities/world/clue.tscn` | `{clue_id:"c2_reply_letter", cond:"flag:c2_reply"}` | floor | 1 |
-| `B` | trigger, the table; starts the dinner setpiece (Interlude 4.4 `area_entered:purwa_table`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_table", size:Vector2i(5,4)}` | floor | 1 |
-| `A` | NPC Aria Kebonan by the burned stage, optional quiet talk (Interlude 4.5; `npc_id` ASSUMED) | `res://entities/npc/npc.tscn` | `{npc_id:"aria_kebonan", cond:"flag:mq4_i3,!flag:mq4_9"}` | grass | 1 |
+| `V` | trigger, the crowd in front of the kelir (MQ0 0.9 `area_entered:purwa_crowd`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_crowd", size:Vector2i(9,3)}` | floor | 1 |
+| `G` | NPC Laras in the crowd, she looks up at the tallest shadow (MQ0 0.9 `raid` beat; taken by the Hunter) | `res://entities/npc/npc.tscn` | `{npc_id:"laras_crowd", cond:"flag:mq0_d7,!flag:beat_raid"}` | floor | 1 |
+| `a` | doorpost 1, house_b (Interlude 4.3, write card seq `door_a`; NPC-scene whose entry runs `write:door_a:...`) | `res://entities/npc/npc.tscn` | `{npc_id:"door_a", cond:"step:mq4=1"}` | grass | 1 |
+| `d` | doorpost 2, house_c (Interlude 4.3, `door_b`) | `res://entities/npc/npc.tscn` | `{npc_id:"door_b", cond:"step:mq4=1"}` | grass | 1 |
+| `f` | doorpost 3, the pustaka (Interlude 4.3, `door_c`) | `res://entities/npc/npc.tscn` | `{npc_id:"door_c", cond:"step:mq4=1"}` | grass | 1 |
+| `1` | clue, Ibu's shelf: set the ribbon down (Interlude 4.4, ids ASSUMED) | `res://entities/world/clue.tscn` | `{clue_id:"shelf_ribbon", cond:"item:laras_ribbon,!flag:mq4_2"}` | floor | 1 |
+| `2` | clue, Ibu's shelf: set the wagon board down (Interlude 4.4) | `res://entities/world/clue.tscn` | `{clue_id:"shelf_board", cond:"item:laras_board,!flag:mq4_2"}` | floor | 1 |
+| `3` | clue, Ibu's shelf: set the Ka strip down (Interlude 4.4) | `res://entities/world/clue.tscn` | `{clue_id:"shelf_strip", cond:"item:laras_strip_ka,!flag:mq4_2"}` | floor | 1 |
+| `&` | clue, the queen's reply letter by the second cup on the table (SQ-C2 step 4, Interlude after 4.5: `clue_examined:c2_reply_letter`; appears only if the letters were given to the queen in Galuh, i.e. `c2_reply` is set; the player reads it or leaves it folded, no item; the letter's lines vary by `choice_mercy` or `choice_judgment`) | `res://entities/world/clue.tscn` | `{clue_id:"c2_reply_letter", cond:"flag:c2_reply"}` | floor | 1 |
+| `B` | trigger, the table; starts the dinner setpiece (Interlude 4.5 `area_entered:purwa_table`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_table", size:Vector2i(5,4)}` | floor | 1 |
+| `A` | NPC Aria Kebonan by the burned stage (Interlude 4.6 `talked_to:aria_kebonan`) | `res://entities/npc/npc.tscn` | `{npc_id:"aria_kebonan", cond:"flag:mq4_i3,!flag:mq4_9"}` | grass | 1 |
 | `Q` | NPC Laras, home again; wakes you and dares you to tag (epilogue, `flag:mq5_4`) | `res://entities/npc/npc.tscn` | `{npc_id:"laras", cond:"flag:mq5_4"}` | grass | 1 |
 | `g` | NPC the elder's grandson with his angklung (epilogue) | `res://entities/npc/npc.tscn` | `{npc_id:"sunda_grandson", cond:"flag:mq5_4"}` | grass | 1 |
 | `U` | NPC Uwa Lengser (epilogue) | `res://entities/npc/npc.tscn` | `{npc_id:"lengser", cond:"flag:mq5_4"}` | grass | 1 |
@@ -156,49 +159,59 @@ Exits sit on the map edge (x = 0 and x = 59, rows 16-17; the south exit `X` at (
 
 The cond is the 0-based index of step 0.8 (0.1 is index 0). Skirmishes `9` and `0` start when step 0.8 is current; the three are independent and the order is free.
 
-## Piece placement per step (story v4c)
+## Piece placement per step (story v5)
 Every piece in the `Play` column of quests.md 4 has a place. `travel` pieces are walks through a changed village with one thing to find (the village is safe, so their "encounters" are talks and the tag stops, **ASSUMED**).
 
 | Step | Pieces | Place |
 |------|--------|-------|
-| 0.1 | `setpiece` | Tag game. `s` (13,14) -> Laras `l` (16,15) runs the `route` (road east, plaza, round `P`, north of the banyan) and ends at `Z` (26,14). Three legs; at each leg's end she dodges once, so the player must dodge-step (hint card) to catch her. The cat `c` (24,15) comes at its real name; the banyan (24..25,12..13) shivers. Sets `mq0_d1` |
-| 0.2 | `talk, travel, talk` | Ibu `I` (27,24) (tea, two cups) -> old couple `O` (35,20) at the house_c door (lead-in) -> travel west along the south lane past the pond to the big tree: codex `8` (22,31) is the find -> Ciung `C` (4,31) |
-| 0.3 | `talk, talk, write, travel, talk` | Semar `M` (7,9), Cepot `e` (9,9) -> lontar table `i` (18,8) (write card) -> travel from the sanggar door (12..13,12) east along the road to the plaza -> stall `Y` (35,14) |
-| 0.4 | `memory, beat` | Behind the kelir: clue `q` (42,3) -> K0 (`zones/kelir/k0_ruwatan.tscn`, below) -> back at `q`; the dalang reads the children's names (beat) |
-| 0.5 | `setpiece, beat` | Crowd `p` x6 and Laras `G` (43,4) in the stage; trigger `V` (42,9); the `raid` beat; the Faceless step off the screen (staging, no enemy) |
-| 0.6 | `talk, beat, clue` | Ibu `I` (second talk, `mq0_4`) -> stage trigger `T` (42,7) -> lontar `L` (45,8) |
-| 0.7 | `talk, lesson, fight x2` | Semar `M`, Ka lesson; Ka x3 on the dummies `D` (8,5) (11,5) (14,5) (17,5) |
-| 0.8 | `fight x3` | `9` west road, `0` stage road, `F` plaza (skirmish table) |
-| 0.9 | `beat, talk, travel` | `hunter_raid` beat at `h` (3,15) and `n` (5,15), then west road `W` (0,16..17) to `ts_kebun` |
-| 4.1 | `travel` | Riders drop you at `z` (27,19); you walk the nameless village (the NPCs speak no names) |
-| 4.2 | `travel, write x3` | Doorposts `a` (8,20), `d` (36,20), `f` (47,20); each opens a write card (`write:door_a:...`, glyph ids set in quests.md) |
-| 4.3 | `clue x3, talk x2, beat x2` | Shelf clues `1` `2` `3` in house_a (the items are held; each is a short examine), then Ibu `I` (27,24) |
-| 4.4 | `setpiece, beat` | Table trigger `B` (28,23); Ciung `N` (26,25) and Hariang `H` (29,25) seated; the dinner is scripted (pass dishes, choose the seat) |
-| 4.5 | `beat x2, talk x2` | Aria `A` (40,12) (optional quiet talk), Semar `M` (7,9) in the sanggar (completes the step, lifts `x`) |
+| 0.1 | `setpiece, talk` | Tag game. `s` (13,14) -> Laras `l` (16,15) runs the `route` (road east, plaza, round `P`, north of the banyan) and ends at `Z` (26,14). The cat `c` (24,15) comes at its real name; the banyan (24..25,12..13) shivers. Sets `mq0_d1` |
+| 0.2 | `talk x2, clue, beat` | Ibu `I` (27,24) (tea, two cups) -> old couple `O` (35,20) at the house_c door (`mq0_d2`, `mq0_d2b`) |
+| 0.3 | `travel, puzzle, talk` | Travel west along the south lane past the pond to the big tree: codex `8` (22,31) is the find -> climb trigger `@` (5,31) (`purwa_banyan_climb`) -> Ciung `C` (4,31) (`mq0_d3`) |
+| 0.4 | `travel, clue, talk` | Walk the morning market with Laras to the stall `Y` (35,14) (`talked_to:purwa_stall`, sets `mq0_d6`) |
+| 0.5 | `travel, talk x2` | Semar `M` (7,9) (`mq0_d4`) and Cepot `e` (9,9) (`mq0_d4b`) in the sanggar |
+| 0.6 | `puzzle, write, beat` | Lontar table `i` (18,8) (`sanggar_lontar`, write card, sets `mq0_d5`) |
+| 0.7 | `travel, puzzle, talk` | Stage lamps trigger `$` (41,7) (`puzzle_solved:purwa_stage_lamps`, sets `mq0_d6b`) |
+| 0.8 | `memory, beat` | Behind the kelir: clue `q` (42,3) -> K0 (`zones/kelir/k0_ruwatan.tscn`, below) -> back at `q`; the dalang reads the children's names (`mq0_d7`) |
+| 0.9 | `setpiece, beat` | Crowd `p` x6 and Laras `G` (43,4) in the stage; trigger `V` (42,9) (`purwa_crowd`, sets `mq0_d8`); the `raid` beat |
+| 0.10 | `talk, beat, clue, travel` | Ibu `I` (second talk, `mq0_4`) -> stage trigger `T` (42,7) -> lontar `L` (45,8) (`laras_lontar`, sets `mq0_5`) |
+| 0.11 | `talk, lesson, fight x2` | Semar `M`, Ka lesson (`glyph_learned:sunda_ka`); Ka x3 on the dummies `D` (8,5) (11,5) (14,5) (17,5) |
+| 0.12 | `fight x2, beat, travel` | `9` west road, `0` stage road, `F` plaza (`purwa_raid`, sets `mq0_7`); `hunter_raid` beat at `h` (3,15) and `n` (5,15), then west road `W` (0,16..17) to `ts_kebun` |
+| 4.1 | `travel, beat` | Riders drop you at `z` (27,19); walk north to test the fog `%` (52,3) (`purwa_north_fog`, sets `mq4_i0`) |
+| 4.2 | `talk x2, clue` | Old couple `O` (35,20) and stall-keeper `Y` (35,14) (`mq4_i0b`) |
+| 4.3 | `travel, write x3` | Doorposts `a` (8,20), `d` (36,20), `f` (47,20); each opens a write card (`door_a`, `door_b`, `door_c`, sets `mq4_i1`) |
+| 4.4 | `clue x3, talk, beat` | Shelf clues `1` `2` `3` in house_a (`shelf_ribbon`, `shelf_board`, `shelf_strip`), then Ibu `I` (27,24) (sets `mq4_2`) |
+| 4.5 | `setpiece, talk, beat` | Table trigger `B` (28,23) (`purwa_table`, sets `mq4_i3`); Ciung `N` (26,25) and Hariang `H` (29,25) seated; SQ-C2 reply letter `&` (28,24) |
+| 4.6 | `talk x2, beat` | Aria `A` (40,12) (`talked_to:aria_kebonan`, sets `mq4_i4`) |
+| 4.7 | `talk x2, beat` | Semar `M` (7,9) in the sanggar (`talked_to:semar`, sets `mq4_i5`, lifts `x`) |
+| 4.8 | `travel, talk` | South gate `X` (30..31,33) to `sk_pantai` (`zone_entered:sk_pantai`, sets `mq4_i6`) |
 
 ## Quest markers per step
-Marker form `{zone: "desa_purwa", id: ...}`. Marker ids are **ASSUMED** unless quests.md names them. Step numbers follow [quests.md](../quests.md) section 4 (story v4c).
+Marker form `{zone: "desa_purwa", id: ...}`. Step numbers follow [quests.md](../quests.md) section 4 (story v5).
 
 | Step | Marker id | Spot | Completes on |
 |------|-----------|------|--------------|
 | 0.1 catch Laras | `purwa_tag_end` | `Z` (26,14) | `area_entered:purwa_tag_end`, sets `mq0_d1` |
-| 0.2 tea, then Ciung | `ibu`, then `ciung_wanara` | `I` (27,24), `C` (4,31) | `talked_to:ibu` sets `mq0_d2`; `talked_to:ciung_wanara` sets `mq0_d3` |
-| 0.3 sanggar and market | `semar`, `sanggar_lontar`, `purwa_stall` | `M` (7,9), `i` (18,8), `Y` (35,14) | `talked_to:semar` sets `mq0_d4`; `area_entered:sanggar_lontar` sets `mq0_d5`; `talked_to:purwa_stall` sets `mq0_d6` |
-| 0.4 the show | `kelir_lamp` | `q` (42,3) | `memory_done:k0_ruwatan`, sets `mq0_d7` |
-| 0.5 the crowd | `purwa_crowd` | `V` (42,9) | `area_entered:purwa_crowd`, sets `mq0_d8`; plays `raid` |
-| 0.6 Ibu, then the lontar | `ibu`, `wayang_stage` | `I` (27,24), `T` (42,7), `L` (45,8) | `talked_to:ibu` sets `mq0_4`; `area_entered:wayang_stage` sets `mq0_5`; the pickup fires `item_picked:laras_lontar` |
-| 0.7 Ka | `semar`, `sanggar` | `M` (7,9), `S` (12,7) | `glyph_learned:sunda_ka` (his entry needs `flag:mq0_5`); `spell_cast:sunda_ka` x3 (dummies) |
-| 0.8 drive the Faceless out | `purwa_raid` | `F` (30,15) | `area_cleared:purwa_raid`, sets `mq0_7` (`9` and `0` are not events) |
-| 0.9 the Hunter at the gate | `exit_tatar_sunda` | `W` (0,16..17), `h` (3,15), `n` (5,15) | beat `hunter_raid` (`if flag:mq0_7`): "Wrong child. A better one."; Nini says Ciung ran west; the first mask fragment (clue `mask_gate`) is given by the beat; sets `beat_hunter_raid`, starts `mq1`; step ends on `zone_entered:ts_kebun` |
+| 0.2 tea and old couple | `ibu`, `purwa_old_couple` | `I` (27,24), `O` (35,20) | `talked_to:ibu` sets `mq0_d2`; `talked_to:purwa_old_couple` sets `mq0_d2b` |
+| 0.3 banyan ridge and Ciung | `purwa_banyan_climb`, `ciung_wanara` | `@` (5,31), `C` (4,31) | `puzzle_solved:purwa_banyan_climb`; `talked_to:ciung_wanara` sets `mq0_d3` |
+| 0.4 morning market | `purwa_stall` | `Y` (35,14) | `talked_to:purwa_stall`, sets `mq0_d6` |
+| 0.5 sanggar | `semar`, `cepot` | `M` (7,9), `e` (9,9) | `talked_to:semar` sets `mq0_d4`; `talked_to:cepot` sets `mq0_d4b` |
+| 0.6 write names | `sanggar_lontar` | `i` (18,8) | `area_entered:sanggar_lontar`, sets `mq0_d5` |
+| 0.7 stage oil lamps | `purwa_stage_lamps` | `$` (41,7) | `puzzle_solved:purwa_stage_lamps`, sets `mq0_d6b` |
+| 0.8 the show | `kelir_lamp` (`k0_ruwatan`) | `q` (42,3) | `memory_done:k0_ruwatan`, sets `mq0_d7` |
+| 0.9 the crowd | `purwa_crowd` | `V` (42,9) | `area_entered:purwa_crowd`, sets `mq0_d8`; plays `raid` |
+| 0.10 Ibu, then the lontar | `ibu`, `laras_lontar` | `I` (27,24), `T` (42,7), `L` (45,8) | `talked_to:ibu` sets `mq0_4`; `item_picked:laras_lontar` sets `mq0_5` |
+| 0.11 Ka | `semar`, `sanggar` | `M` (7,9), `S` (12,7) | `glyph_learned:sunda_ka`; `spell_cast:sunda_ka` x3 (dummies) |
+| 0.12 raid and west gate | `purwa_raid`, `exit_tatar_sunda` | `F` (30,15), `W` (0,16..17), `h` (3,15), `n` (5,15) | `area_cleared:purwa_raid`, sets `mq0_7`; then `zone_entered:ts_kebun` (after beat `hunter_raid` & clue `mask_gate`) |
 | MQ1 end | - | - | the `naga` beat in Tatar Sunda sets `mq1_10`, kabut `K` (Galuh road) lifts |
-| 4.1 go home | `from_riders` | `z` (27,19) | `zone_entered:desa_purwa` |
-| 4.2 doorposts | `door_a`, `door_b`, `door_c` | `a`, `d`, `f` | `all`: `name_written:door_a`, `door_b`, `door_c`, sets `mq4_i1` |
-| 4.3 Ibu's things | `shelf_ribbon`, `shelf_board`, `shelf_strip`, `ibu` | `1` `2` `3`, `I` | `talked_to:ibu`, sets `mq4_2` (entry needs the three items; she sets the second cup straight) |
-| 4.4 the table | `purwa_table` | `B` (28,23), `N`, `H`, mask `m` | `area_entered:purwa_table`, sets `mq4_i3`; beat `quiet_house` or `quiet_house_silent` |
-| SQ-C2 (3) the reply letter | `c2_reply_letter` | `&` (28,24) | `clue_examined:c2_reply_letter`, cond `flag:c2_reply` (set by `talked_to:galuh_queen` in `kg_keraton`), after step 4.4. Sets `clue_c2_reply_letter`; never blocks 4.5 |
-| 4.5 Semar and Aria | `semar`, `aria_kebonan` | `M` (7,9), `A` (40,12) | `talked_to:semar`, sets `mq4_i5` (lifts kabut `x`, opens the south exit `X`); Aria is an optional `quiet` entry |
-| Interlude fog | `gua_kala_fog` | `k` (52..53,1) | the fog at the Gua Kala mouth eats every glyph thrown at it (set dressing, no step); lifts on `mq4_9` |
-| 4.6 on | `exit_pantai` | `X` (30..31,33) | the walk south to `sk_pantai` (4.6 is `petilasan_activated:kidul_1`) |
+| 4.1 return & north fog | `from_riders`, `purwa_north_fog` | `z` (27,19), `%` (52,3) | `zone_entered:desa_purwa`; then `area_entered:purwa_north_fog`, sets `mq4_i0` |
+| 4.2 bewildered villagers | `purwa_old_couple`, `purwa_stall` | `O` (35,20), `Y` (35,14) | `talked_to:purwa_old_couple`; then `talked_to:purwa_stall`, sets `mq4_i0b` |
+| 4.3 doorposts | `door_a`, `door_b`, `door_c` | `a`, `d`, `f` | `all`: `name_written:door_a`, `door_b`, `door_c`, sets `mq4_i1` |
+| 4.4 Ibu's shelf | `shelf_ribbon`, `shelf_board`, `shelf_strip`, `ibu` | `1` `2` `3`, `I` | `all`: `clue_examined:shelf_ribbon`, `shelf_board`, `shelf_strip`; then `talked_to:ibu`, sets `mq4_2` |
+| 4.5 the table | `purwa_table` | `B` (28,23), `N`, `H`, mask `m` | `area_entered:purwa_table`, sets `mq4_i3`; beat `quiet_house` |
+| SQ-C2 (4) the reply letter | `c2_reply_letter` | `&` (28,24) | `clue_examined:c2_reply_letter`, cond `flag:c2_reply` |
+| 4.6 Aria Kebonan | `aria_kebonan` | `A` (40,12) | `talked_to:aria_kebonan`, sets `mq4_i4` |
+| 4.7 Semar | `semar` | `M` (7,9) | `talked_to:semar`, sets `mq4_i5` (lifts kabut `x`, opens the south exit `X`) |
+| 4.8 walk south | `exit_pantai` | `X` (30..31,33) | `zone_entered:sk_pantai`, sets `mq4_i6` |
 | MQ5 start | `exit_gua_kala` | `J` (52..53,0) | opens on `mq4_9` (MQ4 done); the finale gate |
 | Epilogue | - | `Q` `g` `U` `o` `4` `5` `6` `7` | `flag:mq5_4`: the village as listed in the room table; not quest steps |
 | SQ-D1 Lakon (giver Semar, the village dalang) | `semar` | `M` | watch lakon at the stage; the Ki Wangsa giver is cut |

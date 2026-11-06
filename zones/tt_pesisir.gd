@@ -10,21 +10,21 @@ const MAP := [
 	"#...........................,,.............................#",
 	"#.......rr..................,,..........rr.................#",
 	"#.......rr..................,,..........rr.................#",
+	"#.............B.............,,.............................#",
 	"#...........................,,.............................#",
 	"#...........................,,.............................#",
 	"#...........................,,.............................#",
-	"#...........................,,.............................#",
-	"#.............rr............,,....................q........#",
-	"#.............rr............,,.............................#",
-	"#.....rr....................,,.............................#",
-	"#.....rr....................,,.............................#",
+	"#.............rr............,,....................q....#####",
+	"#.............rr............,,.........................@.C.D",
+	"#.....rr....................,,.........................@...D",
+	"#.....rr....................,,.........................#####",
 	"#...........................,,.............................#",
 	"#.....................T.....,,..E..........................#",
 	"#...........................,,.............................#",
 	"#...........................,,.............................#",
 	"#.........rr................,,......................rrrrrr.#",
 	"#.........rr................,,......................r....r.#",
-	"#...........................,,.........................c.r.#",
+	"#.............A.............,,.........................c.r.#",
 	"#...........................,,......................r....r.#",
 	"#.......k...................,,......................r....r.#",
 	"#...........................,,......................rrrrrr.#",
@@ -45,11 +45,16 @@ const SPOTS := {
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_9"}, "tile": ","},   # kabut K3, south edge (one per tile; opens on `quest:mq4=done`)
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_tt_pesisir"}, "tile": ","},   # exit to sk_karang (south edge, not built yet, 2 tiles)
 	"g": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
-	"q": {"scene": "res://entities/enemies/banaspati_elite.tscn", "props": {}, "tile": "."},   # elite Banaspati (SQ-T2, east dunes)
+	"q": {"scene": "res://entities/enemies/banaspati_elite.tscn", "props": {"unique_id": "banaspati_elite"}, "tile": "."},   # elite Banaspati (SQ-T2, at the spring in the east dunes, `unique_id` `banaspati_elite`, elite stats HP x4, Ilmu x4, **TUNE**; inert until step 4)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "burn_trail", "size": Vector2i(6,6)}, "tile": "."},   # trigger, burn trail reached (SQ-T2)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "chest_tt_pesisir", "item_id": "ilmu:220"}, "tile": "."},   # chest: 220 Ilmu (wreck, secret)
 	"k": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "kuda_kepang_3"}, "tile": "."},   # pickup, kuda kepang 3 (SQ-T4)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_pesisir", "size": Vector2i(20,11), "waves": [[["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(7,0)], ["res://entities/enemies/banaspati.tscn", Vector2i(3,-3)], ["res://entities/enemies/banaspati.tscn", Vector2i(3,3)]]]}, "tile": "."},   # encounter timur_pesisir
+	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ash_trail"}, "tile": "."},   # clue, the Hunter's cold ash trail (3.7 `clue` piece; journal note only, ASSUMED id)
+	"B": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_dune", "size": Vector2i(16,9), "waves": [[["res://entities/enemies/banaspati.tscn", Vector2i(-4,-1)], ["res://entities/enemies/banaspati.tscn", Vector2i(3,2)], ["res://entities/enemies/banaspati.tscn", Vector2i(6,-2)]]]}, "tile": "."},   # encounter timur_dune (3.7, second fight, north dunes)
+	"@": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq3_h4"}, "tile": "."},   # kabut K4, the coast road to `tt_pasir` (one per tile; lifts on `mq3_h4`, step 3.6)
+	"C": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": "."},   # spawn, arrival from tt_pasir (inside the east pocket)
+	"D": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pasir", "spawn_id": "from_tt_pesisir"}, "tile": ","},   # exit to tt_pasir (east edge, east pocket behind K4, 2 tiles)
 }
 
 

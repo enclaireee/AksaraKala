@@ -20,6 +20,8 @@ signal class_chosen(class_id: String)
 signal weakness_triggered(kind: String)         # an enemy reacted to its glyph weakness (bestiary.md)
 signal clue_examined(clue_id: String)           # Clue lines done, or the `clue:<id>` action (architecture.md 9b)
 signal memory_done(memory_id: String)           # KelirMemory.finish(); flag memory_<id> is already set
+signal puzzle_solved(puzzle_id: String)         # environmental puzzle solved (quests.md 7.1)
+signal trial_completed(trial_id: String)        # trial / defense completed (quests.md 7.1)
 
 # Kelir memory (architecture.md 9b)
 signal memory_started(memory_id: String)        # Zones.enter_memory, before the fade

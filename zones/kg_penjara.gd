@@ -18,34 +18,39 @@ const MAP := [
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
-	"Xe,,,,__________W_____________________G______________#######",
+	"Xe,,,,____V_____W_____________________G______________#######",
 	"X,,,,,_______________________________________________#######",
+	"######__________________B____________________________#######",
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
-	"######_______________________________________________#######",
-	"############################################################",
-	"############################################################",
-	"############################################################",
-	"############################################################",
-	"############################################################",
-	"############################################################",
-	"############################################################",
-	"############################################################",
-	"############################################################",
-	"############################################################",
-	"############################################################",
+	"####################____________________####################",
+	"####################____________________####################",
+	"####################____________________####################",
+	"####################____________________####################",
+	"####################_________P__________####################",
+	"####################____________________####################",
+	"####################____________________####################",
+	"####################____________________####################",
+	"####################____________________####################",
+	"#############################s_#############################",
+	"#############################SS#############################",
 ]
 
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_keraton", "spawn_id": "from_kg_penjara"}, "tile": ","},   # exit to kg_keraton (west edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_keraton"}, "tile": ","},   # spawn, arrival from kg_keraton
+	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_kaputren", "spawn_id": "from_kg_penjara"}, "tile": "_"},   # exit to kg_kaputren (south edge, 2 tiles)
+	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_kaputren"}, "tile": "_"},   # spawn, arrival from kg_kaputren
+	"P": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "penjara_stairs", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": "_"},   # encounter penjara_stairs (MQG g.11)
 	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "galuh_cells", "size": Vector2i(22,10), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-8,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(-2,3)], ["res://entities/enemies/faceless.tscn", Vector2i(5,-3)]], [["res://entities/enemies/faceless.tscn", Vector2i(-6,3)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(8,2)]]]}, "tile": "_"},   # encounter galuh_cells (the guards of the cells)
-	"W": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "galuh_escort", "size": Vector2i(16,10), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-5,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,3)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(6,2)]]]}, "tile": "_"},   # encounter galuh_escort (the wagon escort in the cell yard, the near miss)
+	"W": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "galuh_escort", "size": Vector2i(16,10), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-5,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,3)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)]], [["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(6,2)]]]}, "tile": "_"},   # encounter galuh_escort, the wagon escort in the cell yard; two waves (MQG g.4 `fight x2`), the near miss
 	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "faceless_deserter"}, "tile": "_"},   # NPC the Faceless deserter, in a cell
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "pamali_cage"}, "tile": "_"},   # codex spot, the iron cage of the legend (VERIFY)
-	"m": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "laras_wall"}, "tile": "_"},   # wall message, Laras's scratched words: "The thousand temples. Don't stop." (MQG g.7; codex id ASSUMED)
+	"m": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "laras_wall", "memory_id": "lc2", "cond": "flag:mqg_5"}, "tile": "_"},   # clue, Laras's scratched words on the wall: "The thousand temples. Don't stop." (MQG g.5 `clue` piece; appears once the cells are clear; pulls you into LC2, `memory_id` `lc2`; id `laras_wall` is the old codex id, now a clue id)
+	"B": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "laras_board", "cond": "flag:mqg_4b"}, "tile": "_"},   # pickup, the splintered wagon-floor board with Laras's message (item `laras_board`, needed in the Interlude 4.3; appears once the wagon has gone)
+	"V": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "galuh_wagon", "cond": "!flag:mqg_4b"}, "tile": "_"},   # the wagon, a scripted prop in the yard (the `setpiece` of g.4): rolls east through the yard gate as the last guard falls, leaving the board
 }
 
 

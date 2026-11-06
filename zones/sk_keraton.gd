@@ -15,7 +15,7 @@ const MAP := [
 	"#__________________________________________________________#",
 	"#___________________rr________________rr___________________#",
 	"#___________________rr________________rr___________________#",
-	"#__________________________________________________________#",
+	"#_____________________B_____________C______________________#",
 	"#__________________________________________________________#",
 	"#__________________________________________________________#",
 	"Ww_________________________________________________________#",
@@ -44,13 +44,15 @@ const SPOTS := {
 	"l": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_tebing"}, "tile": "_"},   # spawn, landing of drop D1 from sk_tebing
 	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_pantai", "spawn_id": "from_sk_keraton"}, "tile": "_"},   # exit to sk_pantai (west edge, opens sc:sk_gerbang in sk_pantai, 2 tiles)
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_pantai"}, "tile": "_"},   # spawn, arrival from sk_pantai
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_trial", "size": Vector2i(21,11), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-5,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(-3,2)], ["res://entities/enemies/lampor.tscn", Vector2i(3,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(5,2)]], [["res://entities/enemies/ula_segara.tscn", Vector2i(-6,0)], ["res://entities/enemies/ula_segara.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(0,-3)]], [["res://entities/enemies/bajul_putih.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,2)]]]}, "tile": "_"},   # encounter kidul_trial (Trial of the Waves, outer court)
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_trial", "size": Vector2i(21,11), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-5,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(-3,2)], ["res://entities/enemies/lampor.tscn", Vector2i(3,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(5,2)]], [["res://entities/enemies/ula_segara.tscn", Vector2i(-6,0)], ["res://entities/enemies/ula_segara.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(0,-3)]], [["res://entities/enemies/bajul_putih.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,2)]]]}, "tile": "_"},   # encounter kidul_trial (Trial of the Waves, outer court; 4.12: **three setpiece waves**, the ring pauses 20 s after waves 1 and 2 so the sign clues can be read)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kidul_2"}, "tile": "_"},   # petilasan 2 (inner pendopo)
 	"x": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "nyi_roro_kidul"}, "tile": "_"},   # codex spot, Kanjeng Ratu Kidul
 	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_altar"}, "tile": "_"},   # Sea Altar of the Southern Sanctuary (inscribe jawa_ka)
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_mulut", "spawn_id": "from_sk_keraton"}, "tile": "_"},   # exit to gk_mulut (south edge, 2 tiles, behind the kabut)
 	"m": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_mulut"}, "tile": "_"},   # spawn, arrival from gk_mulut
-	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_9"}, "tile": "_"},   # kabut to Gua Kala, lifts when MQ4 is done (`quest:mq4=done`, set with step 4.9, so flag `mq4_9`; one per tile)
+	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_9"}, "tile": "_"},   # kabut to Gua Kala, lifts when MQ4 is done (`quest:mq4=done`, set with step 4.12, so flag `mq4_9`; one per tile)
+	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "trial_sign_1"}, "tile": "_"},   # clue, a sign that rises from the shallows after wave 1: the water says names back (4.12 `clue` piece; journal note only, ASSUMED id)
+	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "trial_sign_2"}, "tile": "_"},   # clue, a second sign after wave 2 (4.12 `clue` piece; journal note only, ASSUMED id)
 }
 
 

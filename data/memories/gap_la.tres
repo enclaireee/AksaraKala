@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="GapMemoryData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/gap_memory_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+memory_id = "la"
+scene_spot = "tag_route"
+gaps = Array[Dictionary]([{
+"correct": "GAP_LA_CAT_2",
+"gap_id": "la_cat",
+"options": ["GAP_LA_CAT_1", "GAP_LA_CAT_2", "GAP_LA_CAT_3"],
+"pos": Vector2i(8, 6),
+"prompt_key": "GAP_LA_CAT_P"
+}, {
+"correct": "GAP_LA_TREE_1",
+"gap_id": "la_tree",
+"options": ["GAP_LA_TREE_1", "GAP_LA_TREE_2", "GAP_LA_TREE_3"],
+"pos": Vector2i(16, 10),
+"prompt_key": "GAP_LA_TREE_P"
+}, {
+"correct": "GAP_LA_END_3",
+"gap_id": "la_end",
+"options": ["GAP_LA_END_1", "GAP_LA_END_2", "GAP_LA_END_3"],
+"pos": Vector2i(24, 4),
+"prompt_key": "GAP_LA_END_P"
+}])

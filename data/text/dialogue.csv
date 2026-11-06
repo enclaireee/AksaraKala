@@ -1499,3 +1499,55 @@ CLUE_C4_ROLL_B_2,"Dua daftar, satu nama. Kalau ketahuan, ia akan dalam kesulitan
 CLUE_C4_ROLL_B_NOTE,Nama Cepot di daftar perekrut Jawa.,Cepot's name on the Java recruiter's roll.
 EPILOGUE_C3_FREED,Ranga menunggu di mulut gua. Kini ada yang memanggilnya dengan namanya.,Ranga waits at the cave mouth. Now someone calls him by his name.
 EPILOGUE_C4,"Cepot bercerita pada anak-anak desa tentang pantai itu. Ceritanya keliru semua, tapi ia pemberani.","Cepot tells the village children about the beach. He gets it all wrong, but he is brave."
+CLUE_LARAS_RIBBON_SPOT_1,"Pita merah milik Laras tersangkut di ranting bambu. Dia sempat melawan di sini.","Laras's red ribbon is caught on a bamboo stalk. She fought back here."
+CLUE_S2_GRAVE_1,"Gundukan tanah tanpa nisan di bawah bambu. Wangi cempaka menggantung pekat di udara.","An unmarked mound beneath the bamboo. The scent of cempaka hangs thick in the air."
+CLUE_WARD_INSCRIPTION_1,"Pahatan kuno di bibir tebing: setiap nama yang ditelan Kala jatuh ke dasar jurang sebagai pasir.","An ancient carving on the cliff rim: every name swallowed by Kala falls into the chasm as sand."
+CLUE_KA_CHALK_1,"Goresan kapur kecil di balik batu reruntuhan: huruf Ka yang ditulis terburu-buru oleh tangan anak kecil.","A small chalk mark behind a ruined stone: the letter Ka, drawn in a hurry by a child's hand."
+CLUE_DOORPOST_MARK_1,"Tanda merah berbentuk lidah api terbakar di tiang pintu. Penghuni rumah duduk membisu di dalam.","A red mark shaped like a flame is burned into the doorpost. The household sits mute inside."
+CLUE_ASH_TRAIL_1,"Jejak abu hitam memanjang di atas pasir pantai, dingin seperti api yang padam bertahun-tahun lalu.","A trail of black ash stretches across the beach sand, cold as a fire that went out years ago."
+CLUE_REEF_THREAD_1,"Benang hijau kusut tersangkut di karang tajam, berayun mengikuti arus surut.","A tangled green thread is snagged on the sharp reef, swaying with the ebbing tide."
+CLUE_TRIAL_SIGN_1_1,"Pahatan di batu karang pertama: ""Jangan melawan arus; berdirilah tenang saat gelombang datang.""","Carving on the first reef stone: ""Do not fight the current; stand still when the wave comes."""
+CLUE_TRIAL_SIGN_2_1,"Pahatan di batu karang kedua: ""Laut tidak menuntut sembah, hanya tata krama.""","Carving on the second reef stone: ""The sea asks no worship, only manners."""
+CLUE_PALACE_CREST_1,"Lambang kerajaan Galuh di dinding balairung, bagian namanya dikikis habis dengan pahat.","The royal crest of Galuh on the hall wall, its name chiseled completely away."
+CLUE_WAGON_MANIFEST_1,"Daftar muatan pedati istana: tiga peti batu bertulis menuju timur, dikawal prajurit bertopeng.","A palace wagon manifest: three crates of inscribed stone bound east, escorted by masked guards."
+CLUE_G1_DEBT_LEDGER_1,"Buku catatan utang pasar yang penuh coretan denda tak masuk akal atas nama pejabat alun-alun.","A market debt ledger filled with absurd fines written in the square official's hand."
+CLUE_SCRAPED_GENEALOGY_1,"Lontar silsilah raja-raja Galuh. Nama Prabu Nagawiru dikikis paksa hingga seratnya tipis.","A genealogy lontar of the kings of Galuh. King Nagawiru's name is scraped so deep the palm leaf is thin."
+CLUE_LARAS_HAIRPIN_1,"Tusuk konde kayu kecil milik Laras jatuh di sudut kaputren, dekat celah jeruji saluran air.","Laras's small wooden hairpin lies in the corner of the women's quarter, near a loose drainage grate."
+CLUE_SHELF_RIBBON_1,"Pita rambut Laras yang kau temukan di rumpun bambu Tatar Sunda, diletakkan rapi di rak Ibu.","Laras's hair ribbon that you found in the bamboo grove of Tatar Sunda, laid neatly on Ibu's shelf."
+CLUE_SHELF_BOARD_1,"Papan lantai pedati dari Keraton Galuh dengan goresan pesan Laras tentang cangkir gompalnya.","The wagon floorboard from Keraton Galuh bearing Laras's scratched message about her chipped cup."
+CLUE_SHELF_STRIP_1,"Secarik lontar dari perkemahan Candi Seribu yang penuh tulisan huruf Ka milik Laras.","A strip of lontar from the Thousand Temples camp covered in Laras's shaky Ka letters."
+MEM_SQ_C3_RANGA_TITLE,Bengkel Gerabah di Tepi Sungai,The Potter's Shed by the River
+MEM_SQ_C3_RANGA_IN,"Ingatan yang pecah mulai menyatu di tepi ombak, Nak. Lihat siapa dirinya sebelum topeng itu menutup wajahnya.","A broken memory comes together by the surf, child. See who he was before the mask covered his face."
+MEM_SQ_C3_RANGA_1,"Seorang tukang gerabah memutar tanah liat basah di bengkelnya. Dari pintu, istrinya memanggil: ""Ranga, makan dulu.""","A potter turns wet clay in his shed. From the doorway his wife calls: ""Ranga, come eat."""
+MEM_SQ_C3_RANGA_2,"Ia mengukir dua huruf di dasar tempayan sebelum dibakar: Ra dan Nga, tanda buatannya sendiri.","He carves two letters into the base of a jar before firing it: Ra and Nga, his maker's mark."
+MEM_SQ_C3_RANGA_3,"Saat prajurit bertopeng datang menyeretnya, tempayan itu jatuh pecah—tapi pangkal namanya tertinggal di tanah liat.","When the masked soldiers drag him away, the jar shatters—but the syllables of his name remain in the clay."
+MEM_SQ_C3_RANGA_OUT,"Namanya Ranga, Nak. Bawalah dua huruf itu ke batu di mulut gua.","His name is Ranga, child. Carry those two letters to the stone at the cave mouth."
+NPC_NYAI_SEKAR_NAME,Nyai Sekar,Nyai Sekar
+DLG_NYAI_SEKAR_1,"Aku menjaga kebun teh di hulu ini sejak jalan ke danau ditutup. Kalau kau mencari penenun, terasnya ada di sebelah timur.","I've tended the upper tea garden since the lake road was shut. If you seek the Weaver, her terrace lies east."
+DLG_NYAI_SEKAR_2,"Daun teh paling harum dipetik sebelum kabut turun. Hati-hati di jembatan ngarai, Nak.","The most fragrant tea leaves are picked before the mist comes down. Mind the gorge bridge, child."
+NPC_PASAR_INFORMANT_NAME,Pedagang Bisik-bisik,Whispering Merchant
+DLG_PASAR_INFORMANT_1,"Ssst! Jangan keras-keras. Pedati tertutup yang kau cari sempat berhenti di dekat gudang pasar ini sebelum dikawal ke sel timur.","Shh! Keep your voice down. The covered wagon you're looking for stopped by the market storehouse before being escorted to the eastern cells."
+DLG_PASAR_INFORMANT_2,"Sejak patih lama menghilang dan raja tak pernah membuka tirai wajahnya, semua orang di pasar ini bicara dengan mata saja.","Ever since the old minister vanished and the king stopped lifting his veil, everyone in this market speaks only with their eyes."
+NPC_KIDUL_SARI_NAME,Nenek Sari,Grandmother Sari
+DLG_KIDUL_SARI_1,"Suamiku dulu melaut dari kampung nelayan ini. Kami menyanyikan bait kedua sedekah laut setiap petang agar perahu tahu jalan pulang.","My husband used to sail from this fishing village. We sang the second verse of the sea offering every dusk so the boats knew the way home."
+DLG_KIDUL_SARI_2,"Laut selatan itu keras tapi jujur, Nak. Ia tak pernah mengambil nama orang yang menghormatinya.","The southern sea is stern but honest, child. It never takes the name of one who respects it."
+NPC_CLIFF_ALTAR_NAME,Altar Tebing Karang,Cliff Shrine Altar
+DLG_CLIFF_ALTAR_1,"Angin laut berputar di atas batu persembahan tebing ini. Untuk membuka jalan menuju pelataran samudra, laut meminta satu persembahan dari ingatanmu.","The sea wind swirls above this cliffside offering stone. To open the way to the ocean court, the sea asks one offering from what you carry."
+DLG_CLIFF_ALTAR_2,"Ombak di bawah tebing menjawab dengan tenang. Jalan menuju keraton laut telah terbuka.","The waves below the cliff answer calmly. The way to the sea court stands open."
+CHOICE_OFFER_MEMORY,Serahkan kehangatan ingatan dari rumah.,Offer the warmth of a memory from home.
+CHOICE_OFFER_SONG,Nyanyikan gema lagu sedekah laut yang telah utuh.,Sing the restored verses of the sea offering song.
+NPC_MEMORIAL_STONE_NAME,Batu Peringatan Nama,Memorial Stone of Names
+DLG_MEMORIAL_STONE_1,"Di ambang terdalam Gua Kala, batu tua ini menyimpan gema nama yang pernah dibuang oleh Aria Kebonan demi wajah curiannya.","At the deepest threshold of Gua Kala, this ancient stone holds the echo of the name Aria Kebonan cast away for a stolen face."
+DLG_MEMORIAL_STONE_2,"Batu ini kini hangat dan tenang. Nama yang tertinggal di atasnya tak lagi berteriak dalam gelap.","The stone is warm and still now. The name resting upon it no longer cries out in the dark."
+CHOICE_REDEEM_ARIA,Pahat kembali nama Aria Kebonan di batu agar ia diampuni.,Carve Aria Kebonan's name back into the stone to redeem him.
+CHOICE_RELEASE_ARIA,Biarkan gema masa lalunya larut dengan tenang ke dalam terang.,Release the echo of his past gently into the light.
+NPC_HAULER_NAME,Pengangkut Batu,Stone Hauler
+DLG_HAULER_1,"Satu batu lagi... sebelum fajar... jangan tanya siapa kami...","One more stone... before dawn... do not ask who we are..."
+NPC_GALUH_HERALD_NAME,Bentara Gelanggang,Arena Herald
+DLG_GALUH_HERALD_1,"Sayembara sabung ayam Prabu Barma Wijaya dibuka di alun-alun! Siapa pun yang jagonya menang dua babak berhak menghadap pelataran dalam!","King Barma Wijaya's royal cockfighting tournament is open in the square! Whoever wins two bouts may enter the inner court!"
+NPC_GALUH_LAMP_NAME,Lentera Jalan,Street Lamp
+DLG_GALUH_LAMP_1,"Lentera minyak di tepi alun-alun. Sumbunya menyala tenang di balik kisi bambu.","An oil lamp at the edge of the square. Its wick burns steadily behind bamboo lattice."
+NPC_GALUH_WAGON_NAME,Pedati Tertutup,Covered Wagon
+DLG_GALUH_WAGON_1,"Pedati kayu berpenutup kain tebal. Salah satu papan lantainya tampak longgar dan baru digores dari dalam.","A wooden wagon under heavy cloth. One of its floorboards is loose and freshly scratched from the inside."
+NPC_RIRIWA_NAME_NAME,Daftar Pelayan Kaputren,Kaputren Servants' Roll
+NPC_DESERTER_STONE_NAME,Batu Pipih di Mulut Gua,Flat Stone at the Cave Mouth

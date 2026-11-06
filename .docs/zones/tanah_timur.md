@@ -1,6 +1,6 @@
-# Tanah Timur (region id `tanah_timur`), Act 4 (v4c)
+# Tanah Timur (region id `tanah_timur`), Act 4 (Story v5)
 
-Region graph on paper (graph level only, no tile maps until Phase 5). Step 1 of the world design workflow ([AGENTS.md](../../AGENTS.md) section 5). Area id prefix: `tt_`. Sources: [world.md](../world.md) (Technical frame, World structure, Tanah Timur, Checkpoints, Points of interest), [bestiary.md](../bestiary.md) (Zone 3, Encounters, Glyph weaknesses), [quests.md](../quests.md) (MQ3 of story v3.1 with 11 steps, Tanah Timur side quests, 3.4, 7.5), [story.md](../story.md) (Pacing, Act IV), [tatar_sunda.md](tatar_sunda.md) (format). Change the layout here first, then in code.
+Region graph on paper. Step 1 of the world design workflow ([AGENTS.md](../../AGENTS.md) section 5). Area id prefix: `tt_`. Sources: [world.md](../world.md) (Technical frame, World structure, Tanah Timur, Checkpoints, Points of interest), [bestiary.md](../bestiary.md) (Zone 3, Encounters, Glyph weaknesses), [quests.md](../quests.md) (MQ3 of Story v5 with 22 steps 3.1–3.22, Tanah Timur side quests SQ-T1..T4, SQ-C2..C3, 3.4, 7.5), [story.md](../story.md) (Pacing, Act IV), [tatar_sunda.md](tatar_sunda.md) (format). Change the layout here first, then in code.
 
 Story v4/v4b/v4c additions (2026-11-06): the **arrival slice** (the smiths' street and Wirasana's daughter), the **K4 Buto Ijo Hunt** (clues `seeds`, `needle_case`, `salt_terasi`, memory `k4_timun_mas`), the **K5 Keris Hunt** (clues `scabbard`, `forge_records`, `forge_stone`, memory `k5_forge`), **LC4** (Laras chapter), **H4 and K6** (`hunter_mask_4`, `mask_joined`, memories `h4`, `k6_servant`), plus a coastal link `tt_pesisir` > `tt_pasir` (Pacing rule 5). Cut names: the widow is "the widow" in text (npc id `mbok_srini` kept). The memory scenes are in "Memory scenes" below. Side stories v4d additions (2026-11-06; [quests.md](../quests.md) 5): clues, givers, arenas and memories for SQ-T1 (`t1_claw_marks`, `t1_sodo`, `sq_t1_klething`, the river crossing with `yuyu_kangkang`, peaceful area `t1_crossing_dry`) and SQ-T2 (`t2_burn_trail`, `t2_campfire`, `sq_t2_herder`, `t2_herder`, the spring arena with `banaspati_elite`), plus the Companion clue `c3_road_mark` (C3, fragment 2, in `tt_pasir`); SQ-T3 and SQ-T4 were checked against their cards and stand as written. The placements are in "Side stories v4d spots" after the side-quest table; the herder npc id is now `t2_herder` (was `timur_herder`). **Puzzle convention (ASSUMED):** a puzzle is a `trigger.tscn` with `trigger_id` `puzzle_<id>`; a gating puzzle sets `flag:puzzle_<id>` and a `kabut.tscn` with that flag lifts. Miniboss pieces are encounters or spots whose enemy carries `unique_id` and elite stats (HP x4, Ilmu x4, **TUNE**); setpieces are encounters with a scripted frame.
 
@@ -134,29 +134,33 @@ Arena in `tt_ladang`, east half, 28x16, with the lamp-lit lair. Four phases, one
 Marker form `{zone: "tanah_timur", id: ...}`. Ids from quests.md marked (Q); others are **ASSUMED**.
 
 ### Main quest MQ3
-Step numbers are the MQ3 v4c ones (11 steps, [quests.md](../quests.md) 4, `Play` column). Every piece has a place: `travel` = crossing that area with its fights and one find; `fight` = one encounter; `clue`, `puzzle`, `miniboss`, `setpiece`, `memory`, `chapter` as named. Unnamed `clue` pieces (`doorpost_mark`, `ash_trail`) are **ASSUMED**: journal note only, no quest trigger.
+Step numbers are the MQ3 Story v5 ones (22 steps 3.1–3.22, [quests.md](../quests.md) 4, `Play` column). Every piece has a place: `travel` = crossing that area with its fights and one find; `fight` = one encounter; `clue`, `puzzle`, `miniboss`, `setpiece`, `memory`, `chapter` as named.
 
 | Step | Pieces (Play) | Marker id | Area | Event string |
 |------|---------------|-----------|------|--------------|
 | (entry) | | `timur_edge` | `tt_kulon` | `zone_entered:tanah_timur` |
-| 3.1 walk the smiths' street, hear Wirasana's daughter | `talk, travel` | `timur_daughter` (Q) | `tt_kulon` (west half of the road) | `talked_to:timur_daughter`, sets `mq3_a1` (codex pamor) |
-| 3.1 the first curse mark, then the ambush at the eastern border | `fight, clue, travel, fight` | `timur_kulon`, `doorpost_mark`, `timur_gerbang` (Q) | `tt_kulon` (field `E`, doorpost clue, ruined gate `G`) | `area_cleared:timur_gerbang` (Q) |
-| 3.1 rest at the savanna petilasan | | `timur_1` (Q) | `tt_sabana` | `petilasan_activated:timur_1` (Q); sets `mq3_1` |
-| 3.2 follow the red marks to the forge | `travel, beat` | `timur_marks` (Q) | `tt_beringin` (village mouth, beat `marks_hook`) | `area_entered:timur_marks`; sets `mq3_h1` |
-| 3.2 the empu, learn to break marks | `talk, lesson, puzzle` | `timur_empu` (Q), `puzzle_timur_forgemark` | `tt_beringin` (forge; the puzzle is the forge door mark) | `talked_to:timur_empu` (Q); sets `mq3_2`. Makes SQ-T3 available |
-| 3.3 help the widow (hut smashed open), examine the pouches | `travel, beat, clue x3` | `mbok_srini` (Q; comment: the widow), `timur_wisps`, `seeds`, `needle_case`, `salt_terasi` | `tt_kali` (riverbed, hut, `salt_terasi` has `memory_id: k4_timun_mas`) | `talked_to:mbok_srini` (Q; entry needs `area_cleared:timur_wisps`); sets `mq3_3`. Then `all`: `clue_examined:seeds`, `clue_examined:needle_case`, `clue_examined:salt_terasi`; sets `mq3_h2` |
-| 3.4 K4 memory | `memory` | `k4_timun_mas` | `zones/kelir/k4_timun_mas.tscn` | `memory_done:k4_timun_mas`, sets `mq3_h3` |
-| 3.5 defeat Buto Ijo | `boss, beat` | `buto_ijo` | `tt_ladang` | `boss_defeated:buto_ijo` (Q); sets `mq3_4` (opens `K2`) |
-| 3.6 break two practice marks, examine the scabbard and forge records | `puzzle x2, clue x2` | `timur_praktik` (two marks), `scabbard`, `forge_records` | `tt_beringin` (forge yard stakes `S`; the two clues in the forge) | `area_entered:timur_praktik_mark` x2 (also sets `flag:clue_practice_marks`); then `all`: `clue_examined:scabbard`, `clue_examined:forge_records`; sets `mq3_h4` (opens `K4`) |
-| 3.7 follow the ash trail down the coast | `travel, fight x2, clue` | `timur_pesisir` (Q), `timur_dune`, `ash_trail` | `tt_pesisir` (dune hollow `E`, north dunes, trail clue) | `area_cleared:timur_pesisir` |
-| 3.7 cross the Sea of Sand | `travel, fight, miniboss, beat, puzzle` | `timur_penjaga` (miniboss), `puzzle_pasir_dunes`, `timur_pasir` (Q), beat `pasir_sight` | `tt_pasir` (south corridor, plain `E`) | `area_cleared:timur_pasir` |
-| 3.8 rest at the desert petilasan, camp talk | `talk` | `timur_2` (Q), `hariang_banga` | `tt_pasir` (alcove) | `petilasan_activated:timur_2` (Q); sets `mq3_6`; the camp talk is optional, never a step |
-| 3.8 LC4: the desert road | `chapter` | `lc4_lontar` (ASSUMED; `memory_id: lc4`, cond `flag:mq3_6`) | `tt_pasir` (alcove) and `zones/kelir/lc4.tscn` | `memory_done:lc4`, sets `mq3_lc` |
-| 3.9 reach the shrine, see the old forge | `travel, beat, memory` | `forge_stone` (Q; `memory_id: k5_forge`) | `tt_pasir` to `tt_candi` (court, west) and `zones/kelir/k5_forge.tscn` | `memory_done:k5_forge`, sets `mq3_h5` (then beat `shrine_sight`) |
-| 3.9 lay the cursed keris to rest | `boss, beat` | `keris_gandring` | `tt_candi` (`B`, cond `flag:beat_shrine_sight`) | `boss_defeated:keris_gandring` (Q); sets `mq3_7` (Seal 4) |
-| 3.10 take the last mask fragment and see the servant | `clue, memory` | `hunter_mask_4` (Q; `memory_id: h4`, cond `flag:beat_keris`) | `tt_candi` (court, east of the keris) and `zones/kelir/h4.tscn` | `memory_done:h4`, sets `mq3_h7` |
-| 3.10 join the mask | `beat` | `mask_joined` (Q; `memory_id: k6_servant`, cond `flag:mq3_h7`) | `tt_candi` (shrine door, east wall) and `zones/kelir/k6_servant.tscn` | `memory_done:k6_servant`, sets `mq3_h6` |
-| 3.11 face the Nameless Hunter | `boss, setpiece, beat` | `nameless_hunter` | `tt_candi` (`H`, cond `flag:mq3_h6`; the setpiece is the `hunter_shrine` restore plus the stake duel) | `boss_defeated:nameless_hunter` (Q); sets `mq3_8` |
+| 3.1 Arrival: meet Ratna (`timur_daughter`) and rest at `timur_1` | `travel, talk x2, fight` | `timur_daughter` (Q), `timur_kulon`, `timur_gerbang` (Q), `timur_1` (Q) | `tt_kulon`, `tt_sabana` | `talked_to:timur_daughter`, sets `mq3_a1`; then `petilasan_activated:timur_1` (Q), sets `mq3_1` |
+| 3.2 Stalking Ambush #1: survive Buto Ijo's sudden rampage across the western savanna | `setpiece, miniboss, beat` | `buto_ambush_1` (Q) | `tt_kulon` | `area_cleared:buto_ambush_1`, sets `mq3_b1` |
+| 3.3 follow the burning red curse marks to Mpu Wirasana's forge | `travel, clue, talk` | `timur_marks` (Q), `timur_empu` (Q) | `tt_beringin` | `area_entered:timur_marks`, sets `mq3_h1`; then `talked_to:timur_empu` (Q), sets `mq3_2` |
+| 3.4 learn Mpu Wirasana's technique to extinguish blood-curse stakes | `lesson, puzzle, fight` | `timur_praktik` (two marks) | `tt_beringin` (forge yard stakes `S`) | `area_entered:timur_praktik_mark` x2, sets `flag:clue_practice_marks` |
+| 3.5 reach Mbok Srini's smashed hut and examine the spilled relics | `travel, talk, clue x3` | `mbok_srini` (Q), `seeds`, `needle_case`, `salt_terasi` | `tt_kali` (riverbed, hut, `salt_terasi` has `memory_id: k4_timun_mas`) | `talked_to:mbok_srini` (Q), sets `mq3_3`; then `all`: `clue_examined:seeds`, `clue_examined:needle_case`, `clue_examined:salt_terasi`; sets `mq3_h2` |
+| 3.6 Stalking Ambush #2: test the bramble-seed pouch to slow Buto Ijo's charge | `setpiece, puzzle, fight, beat` | `buto_ambush_2` (Q) | `tt_kali` | `area_cleared:buto_ambush_2`, sets `mq3_b2` |
+| 3.7 Stalking Ambush #3: consecrate the needle, salt, and terasi pouches at the ancient banyan | `travel, clue, puzzle, miniboss` | `buto_ambush_3` (Q) | `tt_beringin` | `area_cleared:buto_ambush_3`, sets `mq3_b3` |
+| 3.8 K4 Memory: Timun Mas's flight | `memory, beat` | `k4_timun_mas` | `zones/kelir/k4_timun_mas.tscn` | `memory_done:k4_timun_mas`, sets `mq3_h3` |
+| 3.9 lure Buto Ijo into his canyon lair and defeat him | `boss, beat, talk` | `buto_ijo` (Q) | `tt_ladang` | `boss_defeated:buto_ijo` (Q); sets `mq3_4` (opens `K2`) |
+| 3.10 return to `tt_ladang` as the waking Keris ignites curse stakes across the dry fields | `travel, clue, fight x2, puzzle` | `timur_ladang_stakes` (Q) | `tt_ladang` | `area_cleared:timur_ladang_stakes`, sets `mq3_5a` |
+| 3.11 help Mpu Wirasana and Ratna defend the forge quarter from flying Keris Hantu packs | `fight, talk, fight, miniboss` | `timur_forge_defense` (Q) | `tt_beringin` | `area_cleared:timur_forge_defense`, sets `mq3_5b` |
+| 3.12 inspect the broken scabbard and seven-generation forge ledger | `clue x2, puzzle, talk` | `scabbard` (Q), `forge_records` (Q) | `tt_beringin` (forge interior) | `all`: `clue_examined:scabbard`, `clue_examined:forge_records`; sets `mq3_h4` (opens `K4`) |
+| 3.13 K5 Memory: night of Mpu Gandring's apprentice | `memory, beat` | `forge_stone` (Q; `memory_id: k5_forge`) | `tt_candi` and `zones/kelir/k5_forge.tscn` | `memory_done:k5_forge`, sets `mq3_h5` |
+| 3.14 follow the Hunter's ash-trail down the volcanic coast (`tt_pesisir`) | `travel, fight x2, talk` | `timur_pesisir` (Q), `timur_dune`, `ash_trail` | `tt_pesisir` | `area_cleared:timur_pesisir`, sets `mq3_5c` |
+| 3.15 cross the Sea of Sand (`tt_pasir`), using the ancient stone waymarkers | `travel, puzzle, fight, miniboss` | `timur_pasir` (Q), `pasir_waymarkers` (Q), `timur_penjaga` | `tt_pasir` | `area_cleared:timur_pasir`; then `puzzle_solved:pasir_waymarkers`, sets `mq3_5d` |
+| 3.16 rest at the desert petilasan (`timur_2`) and speak with Hariang Banga | `talk x2, clue, fight` | `timur_2` (Q), `hariang_banga` | `tt_pasir` (alcove) | `petilasan_activated:timur_2` (Q); sets `mq3_6` |
+| 3.17 LC4 Cross-Time Chapter: Laras across the dunes & shrine | `chapter, puzzle, beat` | `lc4_lontar` (`memory_id: lc4`) | `tt_pasir` (alcove) and `zones/kelir/lc4.tscn` | `memory_done:lc4`, sets `mq3_lc`, `laras_key:sand_tunnel`, `laras_sabotage:keris_seventh_stake` |
+| 3.18 use Laras's wind-tunnel shortcut to breach `tt_candi` | `travel, fight x2, beat` | `candi_inner_sanctum` (Q) | `tt_candi` | `area_entered:candi_inner_sanctum`, sets `mq3_6b` (plays beat `shrine_sight`) |
+| 3.19 lay the awakened Keris Mpu Gandring to rest | `boss, beat` | `keris_gandring` (Q) | `tt_candi` (`B`, cond `flag:beat_shrine_sight`) | `boss_defeated:keris_gandring` (Q); sets `mq3_7` (Seal 4) |
+| 3.20 decide the fate of Mpu Gandring's blade (Choice 4) | `talk, beat, puzzle` | `beat_keris` | `tt_candi` (`K`, `W`) | `flag:beat_keris` (`choice_reforge` / `choice_sink`) |
+| 3.21 claim the fourth mask fragment (`H4`) and join the full mask (`K6`) | `clue, memory x2, beat` | `hunter_mask_4` (Q; `memory_id: h4`), `mask_joined` (Q; `memory_id: k6_servant`) | `tt_candi` and `zones/kelir/h4.tscn`, `zones/kelir/k6_servant.tscn` | `memory_done:h4`, sets `mq3_h7`; then `memory_done:k6_servant`, sets `mq3_h6` (plays beat `hunter_shrine`, `restore`) |
+| 3.22 defeat the Nameless Hunter | `boss, setpiece, beat` | `nameless_hunter` (Q) | `tt_candi` (`H`, cond `flag:mq3_h6`) | `boss_defeated:nameless_hunter` (Q); sets `mq3_8` (beat `hunter_name` starts `mq4` and `goto:desa_purwa:from_riders`) |
 
 **Beat spots.** Beats are played by the GameUI listener from `beats.tres` ([quests.md](../quests.md) section 4), not by a map node. Each trigger spot below only stages the beat (**ASSUMED**); the `zone:` part of each `if` is in quests.md and `zone:` is not built yet.
 
@@ -499,7 +503,7 @@ The 8 sections below follow the format of [mataram.md](mataram.md) (tile chars a
 #...........................................rr.............#
 #...........A...............B...............rr.............#
 #######....................................................#
-Xe,,K,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,G,,,,,,,,,yY
+Xe,,K,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,D,,,,,,,,,,,,G,,,,,,,,,yY
 X,,,K,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 #######....................................................#
 #...........................................rr.............#
@@ -533,6 +537,7 @@ X,,,K,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `A` | NPC Wirasana's daughter on the smiths' street (3.1 arrival slice; shows how a keris is folded, `codex:pamor`; the curse marks follow) | `res://entities/npc/npc.tscn` | `{npc_id:"timur_daughter"}` | grass | 1 |
 | `B` | clue, the first red curse mark on a stall doorpost (3.1 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"doorpost_mark"}` | grass | 1 |
 | `C` | chest: 150 Ilmu (north-east hollow, rule 7 optional find, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"chest_tt_kulon", item_id:"ilmu:150"}` | grass | 1 |
+| `D` | encounter buto_ambush_1 (3.2 Stalking Ambush #1: Buto Ijo's sudden rampage across the western savanna) | `res://entities/world/encounter.tscn` | `{area_id:"buto_ambush_1", size:Vector2i(16,9), waves:[[[res://entities/enemies/banaspati.tscn, Vector2i(-4,-2)], [res://entities/enemies/banaspati.tscn, Vector2i(4,-2)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,2)]]]}` | path | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -575,7 +580,7 @@ M,,,,,,.......................,,..................................j.............
 #.............................,,...........................................rr............#
 #.............................,,.........................................................#
 #.............................,,.........................................................#
-#.........H...................,,.........................................................#
+#.........H..T................,,.........................................................#
 #.............................,,.........................................................#
 Xe,,,,,P,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY
 X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
@@ -623,7 +628,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `z` | spawn, arrival from tt_pasir (on the open side of the gate) | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
 | `+` | shortcut gate sc:tt_pasir, sand-choked slab (opens from the east pocket, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:tt_pasir", open_side:"e"}` | path | 2 |
 | `P` | petilasan 1 | `res://entities/petilasan/petilasan.tscn` | `{id:"timur_1"}` | path | 1 |
-| `H` | NPC herder (SQ-T2 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"t2_herder"}` | grass | 1 |
+| `H` | NPC herder (SQ-T2 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"timur_herder"}` | grass | 1 |
+| `T` | NPC herder v4d (SQ-T2) | `res://entities/npc/npc.tscn` | `{npc_id:"t2_herder"}` | grass | 1 |
 | `c` | chest: Crossbow (secret, mound ring) | `res://entities/world/chest.tscn` | `{chest_id:"chest_tt_sabana", item_id:"crossbow"}` | grass | 1 |
 | `k` | pickup, kuda kepang 1 (SQ-T4) | `res://entities/world/pickup.tscn` | `{item_id:"kuda_kepang_1"}` | grass | 1 |
 | `E` | encounter timur_embers | `res://entities/world/encounter.tscn` | `{area_id:"timur_embers", size:Vector2i(26,14), waves:[[[res://entities/enemies/banaspati.tscn, Vector2i(8,-4)], [res://entities/enemies/banaspati.tscn, Vector2i(8,4)], [res://entities/enemies/banaspati.tscn, Vector2i(4,-5)], [res://entities/enemies/banaspati.tscn, Vector2i(4,5)]]]}` | path | 1 |
@@ -659,9 +665,9 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #...rr..............................~~..B.....,..........................................#
 #.............................................,..........................................#
 #.............................................,..........................................#
-#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,u,,,,,,,,,,,,,,,,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,yY
-#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
-#.......,,..................A............................................................#
+#,,,,,,,,,,,,,,,,,,,D,,,,,,,,,,,,,,,,,,,u,,,,,,,,,,,,,,,,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,yY
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,I,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
+#.......,,..................A...H.F......................................................#
 #.......,,................rr.............................................................#
 #.......,,................rr........~~...................................................#
 #.......,,....rr....................~~...............#####################################
@@ -696,6 +702,10 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `A` | clue, cucumber seeds spilled on the path (3.3, K4 clue 1 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"seeds"}` | grass | 1 |
 | `B` | clue, a needle case on the riverbed rocks (3.3, K4 clue 2 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"needle_case"}` | grass | 1 |
 | `C` | clue, a salt jar and a pot of terasi at the hut door (3.3, K4 clue 3 of 3; opens memory `k4_timun_mas`) | `res://entities/world/clue.tscn` | `{clue_id:"salt_terasi", memory_id:"k4_timun_mas"}` | path | 1 |
+| `D` | encounter buto_ambush_2 (3.6 Stalking Ambush #2: test the bramble-seed pouch across the dry riverbed) | `res://entities/world/encounter.tscn` | `{area_id:"buto_ambush_2", size:Vector2i(16,9), waves:[[[res://entities/enemies/kemamang.tscn, Vector2i(-4,0)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,0)], [res://entities/enemies/kemamang.tscn, Vector2i(4,0)]]]}` | path | 1 |
+| `F` | clue, giant claw marks on the broken ferry jetty (SQ-T1 clue 1 of 2) | `res://entities/world/clue.tscn` | `{clue_id:"t1_claw_marks", cond:"quest:sq_t1=active"}` | grass | 1 |
+| `H` | clue, the sodo lanang palm rib in Klething Kuning's bundle (SQ-T1 clue 2 of 2; opens memory `sq_t1_klething`) | `res://entities/world/clue.tscn` | `{clue_id:"t1_sodo", memory_id:"sq_t1_klething", cond:"quest:sq_t1=active"}` | grass | 1 |
+| `I` | trigger, strike the river with the sodo lanang to dry the crossing (SQ-T1 peaceful end; fires `area_entered:t1_crossing_dry`) | `res://entities/world/trigger.tscn` | `{trigger_id:"t1_crossing_dry", size:Vector2i(4,4)}` | path | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -721,7 +731,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #.......#############...................#############......#++#.............#_________#..#
 #.......#___________#.........rr........#___________#.......,,..............#____c____#..#
 #.......#___________#.........rr........#___________#.......,,..............#_________#..#
-#.......#_____E_____#...................#___________#.......,,..............#_________#..#
+#.......#_____E_____#...................#_____R_____#.......,,..............#_________#..#
 #.......#___________#...................#___________#.......,,..............#_________#..#
 #.......#___C____F__#...................#___________#.......,,..............#####,#####..#
 #.......#___________#...................#___________#.......,,...................,.......#
@@ -731,7 +741,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #..........S..S..S............................,.............,,...................,.......#
 #.............M...............................,.............,,...................,.......#
 #.............,...............................,.............,,...................,.......#
-Xe,,,,A,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..........#
+Xe,,,,A,,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,,,,,,,,,H,,,,,,,,,,,,,,,,,,,,,,,,,,,,..........#
 X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..........#
 #.................................................,,.....................................#
 #.................................................,,.....................................#
@@ -761,6 +771,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 | `+` | shortcut gate sc:tt_ladang, root-choked door (opens from the north pocket, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:tt_ladang", open_side:"n"}` | path | 2 |
 | `D` | exit, the drop to tt_pesisir (south rim, 2 tiles, one way, no spawn back) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pesisir", spawn_id:"from_tt_beringin"}` | path | 2 |
 | `E` | NPC Mpu Wirasana (3.2, SQ-T3 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"timur_empu"}` | floor | 1 |
+| `R` | pickup, sodo lanang (SQ-T1 step 2) | `res://entities/world/pickup.tscn` | `{item_id:"sodo_lanang"}` | floor | 1 |
 | `S` | practice stake (3.5, one per tile) | `res://entities/bosses/curse_stake.tscn` | `{practice:true}` | grass | 3 |
 | `M` | trigger, practice marks marker `timur_praktik` (3.6) | `res://entities/world/trigger.tscn` | `{trigger_id:"timur_praktik", size:Vector2i(10,5)}` | grass | 1 |
 | `L` | NPC kuda lumping leader (SQ-T4 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"kepang_leader"}` | grass | 1 |
@@ -775,6 +786,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 | `B` | trigger, puzzle `puzzle_timur_forgemark` (3.2: break the curse mark on the forge door with the empu's technique; sets `flag:puzzle_timur_forgemark`, no gate) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_timur_forgemark", size:Vector2i(6,4)}` | path | 1 |
 | `C` | clue, the broken scabbard inside the forge (3.6, K5 clue 1 of 3 is the practice marks) | `res://entities/world/clue.tscn` | `{clue_id:"scabbard"}` | floor | 1 |
 | `F` | clue, Wirasana's forge records, "seven generations" (3.6, K5) | `res://entities/world/clue.tscn` | `{clue_id:"forge_records"}` | floor | 1 |
+| `G` | encounter timur_forge_defense (3.11 defend the forge quarter from flying Keris Hantu packs) | `res://entities/world/encounter.tscn` | `{area_id:"timur_forge_defense", size:Vector2i(15,9), waves:[[[res://entities/enemies/keris_hantu.tscn, Vector2i(-4,-2)], [res://entities/enemies/keris_hantu.tscn, Vector2i(4,-2)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,2)]]]}` | path | 1 |
+| `H` | encounter buto_ambush_3 (3.7 Stalking Ambush #3: consecrate the pouches at the ancient banyan while holding off Buto Ijo) | `res://entities/world/encounter.tscn` | `{area_id:"buto_ambush_3", size:Vector2i(16,9), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(-4,0)], [res://entities/enemies/keris_hantu.tscn, Vector2i(0,-2)], [res://entities/enemies/keris_hantu.tscn, Vector2i(4,2)]]]}` | path | 1 |
 
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -805,14 +818,14 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 #.......rr.....E........rr..#____________________________###
 #...........................#____________________________###
 #...........................,____________________________###
-#.............,,,,,,,,,,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,KzZ
+#.............,,,,,,,,C,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,KzZ
 #.............,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,Z
 #...rr........,,............,____________________________###
 #...rr........,,............#____________________________###
-#.............,,....rr......#____________________________###
+#.............,,....rr..D...#____________________________###
 #.............,,....rr......#____________________________###
 #.............,,............#__rr_____________________rr_###
-#.............,,............#__rr_____________________rr_###
+#.............,,........F...#__rr_____________________rr_###
 Yy,,,,,,,,,,,,,,............#____________________________###
 Y,,,,,,,,,,,,,,,............################################
 #...........................################################
@@ -841,6 +854,9 @@ Y,,,,,,,,,,,,,,,............################################
 | `b` | loose banaspati, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/banaspati.tscn` | `{}` | grass | 1 |
 | `v` | loose kemamang, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/kemamang.tscn` | `{}` | grass | 1 |
 | `A` | chest: 160 Ilmu (north-west nook, rule 7 optional find, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"chest_tt_ladang", item_id:"ilmu:160"}` | grass | 1 |
+| `C` | encounter timur_ladang_stakes (3.10 waking Keris ignites seven-generation curse stakes across the dry fields) | `res://entities/world/encounter.tscn` | `{area_id:"timur_ladang_stakes", size:Vector2i(15,9), waves:[[[res://entities/enemies/keris_hantu.tscn, Vector2i(-3,0)], [res://entities/enemies/banaspati.tscn, Vector2i(3,0)]]]}` | path | 1 |
+| `D` | clue, circular scorched grass trail in the dry field (SQ-T2 clue 1 of 2) | `res://entities/world/clue.tscn` | `{clue_id:"t2_burn_trail", cond:"quest:sq_t2=active"}` | grass | 1 |
+| `F` | clue, unlit campsite in the field (SQ-T2 clue 2 of 2; opens memory `sq_t2_herder`) | `res://entities/world/clue.tscn` | `{clue_id:"t2_campfire", memory_id:"sq_t2_herder", cond:"quest:sq_t2=active"}` | grass | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -879,7 +895,7 @@ Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,G,,,,,,,,,,,,,
 Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,C
 #_________,,____________________________________________________________________,________#
 #_________,,____________________________________________________________________#___I____#
-#____rr___,,__________________________________________________F_________________#________#
+#____rr___,,________________________________________K_____J___F_________________#________#
 #____rr___,,____________________________________________________________________#______r_#
 #_________,,______________________________________________________rr____________##########
 #_________,,____________________________rr________________________rr_____________________#
@@ -916,6 +932,8 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `F` | trigger, puzzle `puzzle_pasir_dunes` (3.7: line up the three cairns with the Hunter's ash so the wind shows the safe way across the loose sand; sets `flag:puzzle_pasir_dunes`, no gate) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_pasir_dunes", size:Vector2i(16,8)}` | floor | 1 |
 | `G` | trigger, beat `pasir_sight` staging (3.7: Candi Gandring across the sand; ASSUMED, no quest effect) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_pasir_sight", size:Vector2i(10,4)}` | path | 1 |
 | `I` | clue, Laras's lontar fragment in the alcove (3.8, opens chapter `lc4`; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"lc4_lontar", memory_id:"lc4", cond:"flag:mq3_6"}` | floor | 1 |
+| `J` | trigger, ancient stone waymarkers in the Sea of Sand (3.15 puzzle `pasir_waymarkers`) | `res://entities/world/trigger.tscn` | `{trigger_id:"pasir_waymarkers", size:Vector2i(4,4)}` | floor | 1 |
+| `K` | clue, Ranga's old shield mark / Lengser's note on the desert boundary stone (SQ-C3 fragment 2) | `res://entities/world/clue.tscn` | `{clue_id:"c3_road_mark", cond:"flag:mq3_6"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -953,7 +971,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #.................#_________________R________________#.....#
 #.................#__________________________________#.....#
 #.................,__________________________________#.....#
-Xe,,,,,,,,,,,,,,,,,_____S___________B___C________D___#.....#
+Xe,,,,,,,,,,,,,,,,,__E__S___________B___C________D___#.....#
 X,,,,,,,,,,,,,,,,,,________________________________4_#.....#
 #.................,__________________________________#.....#
 #.................#_____________W___K________________#.....#
@@ -995,6 +1013,7 @@ X,,,,,,,,,,,,,,,,,,________________________________4_#.....#
 | `A` | clue, the old forge stone at the desert shrine (3.9 K5; opens memory `k5_forge`) | `res://entities/world/clue.tscn` | `{clue_id:"forge_stone", memory_id:"k5_forge"}` | floor | 1 |
 | `C` | clue, the last mask fragment where the keris lay (3.10 H4; opens memory `h4`; appears when `flag:beat_keris`) | `res://entities/world/clue.tscn` | `{clue_id:"hunter_mask_4", memory_id:"h4", cond:"flag:beat_keris"}` | floor | 1 |
 | `D` | clue, the joined mask at the shrine door (3.10 K6; opens memory `k6_servant`; appears when `flag:mq3_h7`) | `res://entities/world/clue.tscn` | `{clue_id:"mask_joined", memory_id:"k6_servant", cond:"flag:mq3_h7"}` | floor | 1 |
+| `E` | trigger, inner sanctum entry via Laras's wind-tunnel shortcut (3.18 `candi_inner_sanctum`) | `res://entities/world/trigger.tscn` | `{trigger_id:"candi_inner_sanctum", size:Vector2i(5,4)}` | floor | 1 |
 
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |

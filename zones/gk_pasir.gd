@@ -12,23 +12,23 @@ const MAP := [
 	"#_______________________rr__________________________________#____________________________D",
 	"#_____________________________rr________________rr__________#____________________________#",
 	"#_____________________________rr________________rr__________#_______________rr___________#",
-	"#_______rr____________________________rr____________________#_______________rr___________#",
+	"#_______rr____________________________rr____________________#_______________rr____G______#",
 	"#_______rr____________________________rr____________________#____________________________#",
 	"#___________________________________________________________#____________________________#",
 	"#___________________________________________________________#____________________________#",
 	"#___________________________________________________________##########__##################",
-	"#________________________________________________________________________________________#",
+	"Ww_______________________________________________________________________________________#",
+	"W_______________rr________________________________rr_____________________________________#",
 	"#_______________rr________________________________rr_____________________________________#",
-	"#_______________rr________________________________rr_____________________________________#",
 	"#________________________________________________________________________________________#",
 	"#________________________________________________________________________________________#",
-	"#________________________________________________________________________________________#",
+	"#_____________________________________B__________________________________________________#",
 	"#___________________________rr___________________________________________________________#",
-	"#___________________________rr___________________________________________________________#",
+	"#___________________________rr______________________________________________C____________#",
 	"#________________________________________________________________________________________#",
-	"Xe_______________________________________________________________________________________#",
-	"X_________________________________E_________________________rr___________________________#",
-	"#___________________rr______________________________________rr___________________________#",
+	"Xe________________A______________________________________________________________________#",
+	"X_________________________________E_________________________rr__________________________yY",
+	"#___________________rr______________________________________rr___________________________Y",
 	"#___________________rr__________________rr_______________________________________________#",
 	"#_______________________________________rr______________________F_rr_____________________#",
 	"#_________________________________________________________________rr_____________________#",
@@ -58,10 +58,18 @@ const MAP := [
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_mulut", "spawn_id": "from_gk_pasir"}, "tile": "_"},   # exit to gk_mulut (west edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_mulut"}, "tile": "_"},   # spawn, arrival from gk_mulut
+	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_pelataran", "spawn_id": "from_gk_pasir"}, "tile": "_"},   # exit to gk_pelataran (west edge, north side, 2 tiles)
+	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_pelataran"}, "tile": "_"},   # spawn, arrival from gk_pelataran
+	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_hutan", "spawn_id": "from_gk_pasir"}, "tile": "_"},   # exit to gk_hutan (east edge, 2 tiles)
+	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_hutan"}, "tile": "_"},   # spawn, arrival from gk_hutan
 	"D": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_lupa", "spawn_id": "from_gk_pasir"}, "tile": "_"},   # exit, the drop D1 to gk_lupa (east rim of the high gallery, 2 tiles, one way, no spawn back)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_pasir_1", "size": Vector2i(22,12), "waves": [[["res://entities/enemies/genderuwo.tscn", Vector2i(7,0)], ["res://entities/enemies/pocong.tscn", Vector2i(3,-4)], ["res://entities/enemies/pocong.tscn", Vector2i(3,4)]]]}, "tile": "_"},   # encounter kala_pasir_1
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_pasir_2", "size": Vector2i(20,11), "waves": [[["res://entities/enemies/kemamang.tscn", Vector2i(6,-3)], ["res://entities/enemies/kemamang.tscn", Vector2i(6,3)]]]}, "tile": "_"},   # encounter kala_pasir_2
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kala_chest_1", "item_id": "ilmu:300"}, "tile": "_"},   # chest: 300 Ilmu (secret, sand cave behind the pillar gap)
+	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ward_inscription"}, "tile": "_"},   # clue, the time-ward inscription (5.2 `clue` piece; journal note only, ASSUMED id)
+	"B": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "puzzle_pasir_ward_w", "size": Vector2i(12,8)}, "tile": "_"},   # trigger, puzzle `puzzle_pasir_ward_w` (5.2: turn the three hourglass stones until the sand runs up; the western ward shatters)
+	"C": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "puzzle_pasir_ward_e", "size": Vector2i(12,8)}, "tile": "_"},   # trigger, puzzle `puzzle_pasir_ward_e` (5.2: same, mirrored; the eastern ward shatters)
+	"G": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_wards_down", "size": Vector2i(8,6)}, "tile": "_"},   # trigger, beat spot at the high gallery (5.2: both wards down, Semar's one line; ASSUMED)
 }
 
 

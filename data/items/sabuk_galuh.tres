@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "sabuk_galuh"
+title = "ITEM_SABUK_GALUH_NAME"
+slot = "accessory"
+mythic = true
+description = "ITEM_SABUK_GALUH_DESC"
+lore = "ITEM_SABUK_GALUH_LORE"
+bonus = {"defense": 0.08, "vit": 1}

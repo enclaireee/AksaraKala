@@ -5,22 +5,22 @@ const MAP := [
 	"############UU##############NN##############################",
 	"#...........u...............n,.............................#",
 	"#.......rr..................,,............rr...............#",
-	"#.......rr..................,,............rr...............#",
+	"#.......rr....G.............,,............rr...............#",
 	"#...........................,,.............................#",
 	"#...........................,,........E....................#",
 	"#...........................,,.............................#",
 	"#.....~~~~~~~~..............,,...................rrrrrr....#",
 	"#.....~~~~~~~~..............,,...................r....r....#",
-	"#.....~~~~~~~~..............,,...................r..c.r....#",
+	"#.....~~~~~~~~......B.......,,...................r..c.r....#",
 	"#...........................,,...................r....r....#",
-	"#...........................,,........................r....#",
-	"#..............rr...........,,...................rrrrrr....#",
-	"#..............rr...........,,.............................#",
+	"#.........D.................,,........................r....#",
+	"#..............rr...........,,...................rrrrrr....X",
+	"#..............rr...........,,............................xX",
 	"#...........................,,.............................#",
 	"#......A....................,,.............................#",
-	"Ww,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#",
-	"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#",
-	"#...........................,,.............................#",
+	"Ww,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
+	"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY",
+	"#.....................C.....,,.............................#",
 	"#...........................,,.............................#",
 	"#.........~~~~~~~~..........,,............#############....#",
 	"#.........~~~~~~~~..........,,............#...........#....#",
@@ -30,7 +30,7 @@ const MAP := [
 	"#...........................,,................T............#",
 	"#..............rr...........,,.............................#",
 	"#..............rr...........,,.............................#",
-	"#...........................G,.............................#",
+	"#...........................,,.............................#",
 	"############################KK##############################",
 	"############################,,##############################",
 	"############################,,##############################",
@@ -48,13 +48,20 @@ const SPOTS := {
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_8"}, "tile": ","},   # kabut on the causeway to the keraton, lifts when the Trial of the Waves is passed (one per tile)
 	"U": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_tebing", "spawn_id": "from_sk_karang"}, "tile": ","},   # exit to sk_tebing (north edge, west of centre, 2 tiles; main path, L4)
 	"u": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_tebing"}, "tile": ","},   # spawn, arrival from sk_tebing
-	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_nelayan_tua"}, "tile": "."},   # NPC Pak Raka, old fisherman (SQ-K2)
+	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_nelayan_tua"}, "tile": "."},   # NPC Pak Raka, old fisherman (the hut beat of 4.9 only; the SQ-K2 giver is `k2_fisher`, see Side stories v4d spots)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_karang_1", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(5,0)], ["res://entities/enemies/lampor.tscn", Vector2i(4,2)]]]}, "tile": "."},   # encounter kidul_karang_1
-	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_karang_2", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/ula_segara.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(3,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(3,2)]]]}, "tile": ","},   # encounter kidul_karang_2
-	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_karang_3", "size": Vector2i(19,9), "waves": [[["res://entities/enemies/bajul_putih.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(3,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(3,2)]]]}, "tile": ","},   # encounter kidul_karang_3
-	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kidul_elite_cove", "size": Vector2i(7,7)}, "tile": "."},   # trigger, SQ-K2 cove entrance
-	"q": {"scene": "res://entities/enemies/bajul_putih_tua.tscn", "props": {}, "tile": "."},   # elite Bajul Putih Tua (SQ-K2)
+	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_karang_3", "size": Vector2i(19,9), "waves": [[["res://entities/enemies/bajul_putih.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,2)]]]}, "tile": ","},   # encounter kidul_karang_3 (4.9, fight 1: the reef lane on the road; moved here from the south causeway, so every reef fight is on the way to the stair)
+	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_karang_2", "size": Vector2i(12,6), "waves": [[["res://entities/enemies/ula_segara.tscn", Vector2i(4,0)], ["res://entities/enemies/lampor.tscn", Vector2i(-3,-1)], ["res://entities/enemies/lampor.tscn", Vector2i(-3,1)]]]}, "tile": "."},   # encounter kidul_karang_2 (**miniboss**, 4.9: an elite Ula Segara `kidul_reef_elite` with 2 Lampor at the foot of the north-west stair; the step completes here)
+	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kidul_elite_cove", "size": Vector2i(7,7)}, "tile": "."},   # trigger, SQ-K2 cove entrance (the river-mouth arena)
+	"q": {"scene": "res://entities/enemies/bajul_putih_tua.tscn", "props": {"unique_id": "bajul_putih_tua"}, "tile": "."},   # elite Bajul Putih Tua (SQ-K2; `unique_id` `bajul_putih_tua`, inert until step 4; at 0 HP it dives and fades)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_2", "item_id": "ilmu:380"}, "tile": "."},   # chest: 380 Ilmu (hidden tide pool)
+	"B": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_karang_4", "size": Vector2i(12,7), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-3,-1)], ["res://entities/enemies/lampor.tscn", Vector2i(0,2)], ["res://entities/enemies/lampor.tscn", Vector2i(3,-1)]]]}, "tile": "."},   # encounter kidul_karang_4 (4.9, fight 2, north bank of the tide pool)
+	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "reef_thread"}, "tile": "."},   # clue, a green thread tied to a rock on the sandbar: Laras's trail (4.9 `clue` piece; journal note only, ASSUMED id)
+	"D": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "puzzle_kidul_tide", "size": Vector2i(8,4)}, "tile": "."},   # trigger, puzzle `puzzle_kidul_tide` (4.9: move the water, turn the three sluice stones so the tide pool drains and the sandbar to the stair shows; sets `flag:puzzle_kidul_tide`, no gate)
+	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_bakau", "spawn_id": "from_sk_karang"}, "tile": "."},   # exit to sk_bakau (east edge, north path, 2 tiles)
+	"x": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_bakau"}, "tile": "."},   # spawn, arrival from sk_bakau
+	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_gua", "spawn_id": "from_sk_karang"}, "tile": ","},   # exit to sk_gua (east edge, main road, 2 tiles)
+	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_gua"}, "tile": ","},   # spawn, arrival from sk_gua
 }
 
 

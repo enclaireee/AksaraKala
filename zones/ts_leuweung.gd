@@ -10,9 +10,9 @@ const MAP := [
 	"#############r.r############################################",
 	"##.......................................5...###############",
 	"##............................bbbb...........###############",
-	"##.....Y......................bbbb.......y...###############",
-	"##............................bbbb.........y.###############",
-	"##............T,,,R,,,........bbbb...........###############",
+	"##.....Y.I....................bbbb.......y...###############",
+	"##......o.....................bbbb.........y.###############",
+	"##............TB,,R,,,........bbbb...........###############",
 	"##..................,,..............bbbb.....###############",
 	"##...bbbb.7.........,,.....6........bbbb.....###############",
 	"##...bbbb...........,,..............bbbb.....###############",
@@ -24,13 +24,13 @@ const MAP := [
 	"##...............................w.w.........###############",
 	"##############,,#####################bbb,,bbbbbbbbbbbbbbbbb#",
 	"###.......................###.......#bbb,,bbbbbbbbbbbbbbbbb#",
-	"###.......................###.......#bbb,,bbbbbbbbbbbbbbbbb#",
+	"###.......................###...S...#bbb,,bbbbbbbbbbbbbbbbb#",
 	"###..bbbb..........bbbb...###...N...#bbb,,bbbbbbbbbbbbbbbbb#",
-	"###..bbbbl.........bbbb...r##..~~~..#bbb,,bbbbbbbbbbbbbbbbb#",
+	"###..bbbblC........bbbb...r##..~~~..#bbb,,bbbbbbbbbbbbbbbbb#",
 	"###..bbbb..........bbbb...,,,.k~~~..#bbb,,bbbbbbbbbbbbbbbbb#",
 	"###..bbbb.....d....bbbb...r##..~~~j.#bbb,,bbbbbbbbbbbbbbbbb#",
 	"###..............,,,......###...u...#bbb,,bbbbbbbbbbbbbbbbb#",
-	"###...m.......q..,,,......###.a.....#bbb,,bbbbbbbbbbbbbbbbb#",
+	"###...mG......q..,,,......###.a.....#bbb,,bbbbbbbbbbbbbbbbb#",
 	"###...bbbb.......,,,......###.......#bbb,,bbbbbbbbbbbbbbbbb#",
 	"###...bbbb................##############,,##################",
 	"###...bbbb................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@%",
@@ -45,23 +45,29 @@ const SPOTS := {
 	"@": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kebun"}, "tile": ","},   # spawn, arrival from ts_kebun
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_boarlane", "size": Vector2i(11,3), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(-4,0)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-4,1)]]]}, "tile": ","},   # encounter sunda_boarlane
 	"R": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_batutulis", "size": Vector2i(20,12), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(3,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(7,-4)]]]}, "tile": ","},   # encounter sunda_batutulis
-	"T": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_tulis"}, "tile": ","},   # batu tulis stone, teaches Nga (MQ1 1.7); its learn entry needs `flag:batu_3` (the puzzle), its first lines are readable before
+	"B": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "batu_stones_123", "size": Vector2i(4,4)}, "tile": ","},   # trigger, align the three ancient name-stones (MQ1 1.11 `puzzle_solved:batu_stones_123`)
+	"T": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_tulis"}, "tile": ","},   # batu tulis stone, teaches Nga (MQ1 1.12); its learn entry needs `flag:batu_3` (the puzzle), its first lines are readable before
 	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lutung_kasarung"}, "tile": "."},   # NPC Lutung Kasarung spirit (SQ-S1)
+	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ki_darsa"}, "tile": "."},   # NPC Ki Darsa, juru pantun in the forest (SQ-S1 giver in v5)
+	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "s1_offerings", "cond": "flag:mq1_3"}, "tile": "."},   # clue, the langur's fruit offerings in the forest grove (SQ-S1 `clue_examined:s1_offerings`)
 	"4": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_4"}, "tile": "."},   # angklung 4
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_ironring", "item_id": "iron_ring"}, "tile": "."},   # chest: Iron Ring (secret 3, alcove)
 	"q": {"scene": "res://entities/enemies/kuntilanak_elite.tscn", "props": {"unique_id": "kuntilanak_elite"}, "tile": "."},   # elite Kuntilanak (SQ-S2), the miniboss: carries `unique_id` and elite stats (HP 160, Dmg 10, Ilmu 24, bestiary, **TUNE**), a plain spot inert until `mq1_3` (not an encounter); the lakeshore wave entry in ts_situ reuses the scene without a `unique_id`, so it never fires `enemy_killed:kuntilanak_elite`
 	"d": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "dark_grove", "size": Vector2i(22,10)}, "tile": "."},   # trigger, dark grove entered (darkens arena, SQ-S2)
 	"N": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_spring", "size": Vector2i(7,9), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-2,0)], ["res://entities/enemies/faceless.tscn", Vector2i(2,0)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(-2,4)]]]}, "tile": "."},   # encounter sunda_spring
+	"S": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "s1_spring_guardians", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(-3,0)], ["res://entities/enemies/jurig_leuweung.tscn", Vector2i(3,0)]]]}, "tile": "."},   # encounter s1_spring_guardians, cleanse the spring guardians (SQ-S1 step 4 `area_cleared:s1_spring_guardians`)
 	"u": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "spring_bath", "size": Vector2i(5,3)}, "tile": "."},   # trigger, spring bath (Purbasari delivered)
 	"m": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "s2_cempaka", "cond": "flag:mq1_3"}, "tile": "."},   # clue, a cempaka tree over an unmarked grave in the dark grove, the scent strong (SQ-S2 clue 1; `cond` ASSUMED)
+	"G": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "s2_grave", "cond": "flag:mq1_3"}, "tile": "."},   # clue, the unmarked cempaka grave in the dark grove (SQ-S2 v5 `clue_examined:s2_grave`)
 	"l": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "s2_white_cloth", "memory_id": "sq_s2_grandmother", "cond": "flag:clue_s2_cempaka"}, "tile": "."},   # clue, a torn white cloth caught on the bamboo; the second clue shows the crying thing is a kuntilanak, then pulls you into the grandmother memory (SQ-S2, `memory_id` `sq_s2_grandmother`; needs the grave first)
+	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "s2_cloth", "memory_id": "sq_s2_grandmother", "cond": "flag:mq1_3"}, "tile": "."},   # clue, torn white cloth in the bamboo (SQ-S2 v5 `clue_examined:s2_cloth`, `memory_id` `sq_s2_grandmother`)
 	"k": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "s1_spring", "memory_id": "sq_s1_lutung", "cond": "flag:clue_s1_offerings"}, "tile": "."},   # clue, the hidden spring, the water black with huddled spirits (SQ-S1 clue 2; `cond` is the first clue; examined after `sunda_spring` is cleared, pulls you into the lutung memory, `memory_id` `sq_s1_lutung`)
-	"j": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purbasari", "cond": "flag:memory_sq_s1_lutung"}, "tile": "."},   # NPC Purbasari at the spring, after the memory (SQ-S1 step 4; the bath cures her skin; she is the same `purbasari` as the hut `U` in ts_kampung, hidden there by the same flag)
+	"j": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purbasari", "cond": "flag:memory_sq_s1_lutung"}, "tile": "."},   # NPC Purbasari at the spring, after the memory (SQ-S1 step 5; the bath cures her skin; she is the same `purbasari` as the hut `U` in ts_kampung, hidden there by the same flag)
 	"a": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_leather", "item_id": "leather_armor"}, "tile": "."},   # chest: Leather Armor (secret 2, hidden spring)
 	"y": {"scene": "res://entities/enemies/wild_boar.tscn", "props": {}, "tile": "."},   # loose wild boar, roaming pack (respawns on zone reload, no unique_id)
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
 	"h": {"scene": "res://entities/enemies/kuntilanak.tscn", "props": {}, "tile": "."},   # loose kuntilanak, roaming pack (respawns on zone reload, no unique_id)
-	"5": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_1"}, "tile": "."},   # puzzle, fallen name-stone 1, the east stone (MQ1 1.7; stand it up, sets `batu_1`)
+	"5": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_1"}, "tile": "."},   # puzzle, fallen name-stone 1, the east stone (MQ1 1.11; stand it up, sets `batu_1`)
 	"6": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_2"}, "tile": "."},   # puzzle, fallen name-stone 2 (entry needs `flag:batu_1`, sets `batu_2`; out of order it shows a hint line)
 	"7": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_3"}, "tile": "."},   # puzzle, fallen name-stone 3, the west stone (entry needs `flag:batu_2`, sets `batu_3`; the Batu Tulis `T` can then be read)
 }

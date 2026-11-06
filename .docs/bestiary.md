@@ -28,10 +28,11 @@ Design rules:
 - Teaches: reading wind-ups and using the room, before Sangkuriang.
 
 **Boss: Sangkuriang.** HP 2100. Ilmu 150.
-- Hunt: K2, "Dayang Sumbi's night". The memory teaches hanging the cloth east and the early crow, which is the false dawn (Ca). First-time hint: "Hang cloth, cast Ca" (**ASSUMED**).
+- **Buildup (Story v5):** Environmental progression across Tatar Sunda (`ts_sawah`, `ts_leuwi`, `ts_situ` floodwaters rising overnight from his dam) + **Laras Cross-Time Sabotage (`LC1`)** + `K2` ("Dayang Sumbi's night").
+- **Laras Sabotage (`laras_sabotage:crater_seal` & `laras_key:crater_post`):** In `LC1`, Laras slips a river stone into the seal-stone's dawn groove and carves a *Ka* mark on the eastern post. This creates the cracked post interaction in the arena. First-time hint: `"Hang cloth on Laras's post, cast Ca"` (**ASSUMED**).
 - Phase 1: throws logs and boat fragments in arcs (ground-marked), slams the ground.
-- Phase 2: builds toward "dawn" (a visible progress bar). If the player draws the light glyph (the "fake dawn", from the legend where cloth to the east and crowing roosters trick him; cloth color varies by retelling, red or boeh rarang), the boss is stunned for a few seconds. Fail to do it and he gets enraged.
-- Teaches: casting under pressure.
+- Phase 2: builds toward "dawn" (a visible progress bar). Because Laras sabotaged the dawn groove in `LC1`, hanging the *Boeh Rarang* on her marked eastern post and casting Sunda `Ca` (Burst) triggers the "fake dawn", stunning Sangkuriang for 4 s and exposing him to bonus damage. Fail to do it and he gets enraged.
+- Teaches: casting under pressure and cross-time teamwork with Laras.
 
 ## Zone 2: Mataram
 Mundane enemies: none are planned; the zone uses its three folklore enemies (zones/segara_kidul.md, an accepted exception to the mix rule).
@@ -48,7 +49,8 @@ Mundane enemies: none are planned; the zone uses its three folklore enemies (zon
 **Elite: tuyul leader** (SQ-M3, `tuyul_leader`). Elite of the Tuyul Chaser at tier 1 (x4): HP 124, Dmg 11, Ilmu 16, with a swarm of the base tuyul around it (**TUNE**). Faster than its swarm and it stops to pick up anything dropped. Weakness: Ca Burst on the swarm, as Tuyul. Its Kelir memory (The tuyul) teaches that a tuyul cannot pass a spill without counting it (**VERIFY** beans or crabs), which is how the peaceful ending catches it.
 
 **Boss: Bandung Bondowoso.** HP 3100. Ilmu 300.
-- Hunt: K3, "The princess's women". The memory teaches the lesung beat, which is the Jawa Ca that exposes the pillars. First-time hint: "Keep the lesung beat" (**ASSUMED**).
+- **Buildup (Story v5):** Real-time night-building siege across eastern Mataram (`mt_wetan`, `mt_tegal`, `mt_candi`) + **Laras Cross-Time Sabotage (`LC3`)** + `K3` ("The princess's women").
+- **Laras Sabotage (`laras_sabotage:bondowoso_pillar` & `laras_key:candi_crypt`):** In `LC3`, Laras skips the 1,000th verse and hides Bondowoso's master chisel under the central altar. Because the pillars lack their keystone, Nyai Gendhis's lesung rhythm and Jawa `Ca` expose every standing pillar to a one-hit shatter. First-time hint: `"Keep the lesung beat"` (**ASSUMED**).
 - Summons spirit builders to raise "pillars". Each pillar must be broken to damage the boss (or he is shielded).
 - Phase 2: pillars rise faster and rain debris.
 - Teaches: crowd control and area spells.
@@ -71,7 +73,11 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
 | Keris Hantu | Charger | 96 | 16 | 20 | Flying keris spirit, darts in lines, hits apply Curse (teaches it before the Keris boss) | Ties to Mpu Gandring |
 
 **Miniboss: Buto Ijo.** HP 3400. Ilmu 300. Based on the Timun Mas legend. Each phase the hero's "pouch" changes the arena, mirroring the legend's four items: cucumber seeds, needles, salt, shrimp paste (terasi). **VERIFY** the legend's items. Arena effects: bramble field, bamboo forest, saltwater, mud.
-- Hunt: K4, "Timun Mas". The memory teaches throwing a pouch when he is close, which is luring him through the pouch fields. First-time hint: "Lure him through pouches" (**ASSUMED**).
+- **Buildup (Story v5 — 3-Zone Stalking Predator):** Instead of waiting passively in his arena, Buto Ijo **stalks and ambushes the player across three zones** before the final canyon lair fight:
+  1. **Stalking Ambush #1 (`tt_kulon`, step 3.2):** Cursed mad by the waking fourth seal, his hide takes 90% reduced weapon damage; drive him off by luring his charge into the savanna fire-ward braziers (retreats at 80% HP, `area_cleared:buto_ambush_1`).
+  2. **Stalking Ambush #2 (`tt_kali`, step 3.6):** Ambushes you at the dry riverbed after you visit Mbok Srini's smashed hut; test the first consecrated **cucumber-seed pouch** to trap him in brambles and drive him off (retreats at 65% HP, `area_cleared:buto_ambush_2`).
+  3. **Stalking Ambush #3 (`tt_beringin`, step 3.7):** Attacks while you consecrate the needle, salt, and terasi pouches at the ancient banyan shrine; stun his charge with the **needle bamboo wall** (retreats to his canyon lair at 50% HP, `area_cleared:buto_ambush_3`).
+  4. **Final Canyon Lair (`tt_beringin` inner canyon, step 3.9, after `K4` "Timun Mas"):** Full 4-phase fight where all four pouch fields turn his own momentum against him. First-time hint: `"Lure him through pouches"` (**ASSUMED**).
 - Build spec (2026-11-05, all numbers **TUNE**, mechanics **ASSUMED**). The pouches help the player against Buto, as in the legend, and they never hurt the player.
   - Attacks (balance.md 7): charge, heavy 41, a line marker 0.8 s, from 64-200 px, runs 220 px or until a wall; ground pound, heavy 41, a ring marker (r 48) 0.8 s, at 56 px or closer. Same telegraph style as Sangkuriang.
   - Pouch phases: 4 phases at 100/75/50/25% HP. At each phase start he roars (1 s pause) and Timun Mas (a visual off-arena, no node) throws the next pouch. The pouch makes 3 fields (r 32) at set spots in the arena, between his start spot and the arena centre. The fields stay until the fight ends, so the arena gets kinder each phase. Fields only affect Buto:
@@ -83,7 +89,8 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
   - Defeat: he sinks to his knees in the mud and Timun Mas is safe (off screen). `boss_defeated:buto_ijo`, sets `mq3_4`.
 
 **Boss: Mpu Gandring's Keris (cursed wraith).** HP 4200. Ilmu 500.
-- Hunt: K5, "The old forge". The memory teaches dousing the curse marks, which is removing marks with the right glyph. First-time hint: "Put out the marks" (**ASSUMED**).
+- **Buildup (Story v5 — 7-Generation Blood-Curse Mystery & Laras Sabotage):** You first cleanse active curse stakes across `tt_pasar` and `tt_ladang` with Mpu Wirasana and Ratna, inspect the 7-generation ledger, relive `K5` ("The old forge"), and play **Laras Chapter `LC4`** where Laras binds her own *Ka* stroke onto the seventh curse stake (`laras_sabotage:keris_seventh_stake`). First-time hint: `"Put out the marks"` (**ASSUMED**).
+- **Laras Sabotage (`laras_sabotage:keris_seventh_stake`):** Because Laras bound *Ka* onto Stake #7 during her forced reading, Stake #7 resists the Keris's ignition (taking twice as long to light) and casting Jawa `Ha` near it sends a cleansing pulse across a 120 px radius (up from 80 px).
 - Legend: Mpu Gandring's dying curse is that Ken Arok and seven descendants die by the keris (retellings differ on the count). The 7 marks are game design, not cited as legend.
 - Mechanic: the boss accumulates up to 7 curse marks on the arena. Fill all 7 and it triggers a big attack. The player removes marks with the right glyph.
 - Teaches: using the spell system proactively.
@@ -112,10 +119,13 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
 
 **Elite: Bajul Putih Tua** (old white crocodile, SQ-K2 bounty). HP 1140, Dmg 20, Ilmu 204 (elite x tier 3). Same moves, faster lunges, a second lunge in phase 2. Event `enemy_killed:bajul_putih_tua`. It is driven back into the deep, not killed: at 0 HP it dives and the screen fades. Its Kelir memory (A fisher) teaches the tide tell before its charge (the water draws back first, **VERIFY** the offering as belief with respect).
 
-**Trial of the waves** (MQ4 4.8, main path, held at the `sk_keraton` sea pavilion, not on the beach; **ASSUMED**). Three waves at low tide, each with a clean glyph answer. As everywhere, the glyph is a shortcut, not a lock.
-1. 5 Lampor in two lines: Ca Burst (Sunda).
-2. 2 Ula Segara, 3 Lampor: Ka Bolt during the spit wind-up.
-3. 1 Bajul Putih, 2 Lampor: Ga Ward bounces the lunge.
+**Three Sacred Sea Trials** (MQ4 Act V, Story v5, expanded across `sk_karang`, `sk_gua`, and `sk_keraton`). Each trial tests a different aspect of the hero's mastery before Nyi Roro Kidul speaks from afar and grants `jawa_ka` (*Ombak*):
+1. **Sacred Trial I — Trial of the Torch-Lines (`sk_karang`, step 4.14, `area_cleared:kidul_karang_2`):** Held on the low-tide coral reef after lighting the mangrove beacons. Two waves of Lampor lines (5 Lampor, then 6 Lampor + 1 Ula Segara). Sunda `Ca` Burst snuffs an entire line's torches.
+2. **Sacred Trial II — Trial of the Abyssal Current (`sk_gua`, step 4.17, `area_cleared:kidul_gua_trial`):** Held on the sunken cavern causeway unlocked by Laras's `LC5` bronze bells (`laras_key:tidal_gate`). Two waves of Ula Segara crossfire and rushing Lampor (3 Ula Segara + 3 Lampor). Sunda `Ka` Bolt during spit wind-ups and Jawa `Na` Dash-strike across the current lanes.
+3. **Sacred Trial III — The Trial of the Waves (`sk_keraton` Sea Pavilion court, step 4.21, `area_cleared:kidul_trial`):** Three culminating waves at low tide:
+   - Wave 1: 5 Lampor in two lines (`Ca` Burst).
+   - Wave 2: 2 Ula Segara, 3 Lampor (`Ka` Bolt during the spit wind-up).
+   - Wave 3: 1 Bajul Putih, 2 Lampor (`Ga` Ward bounces the crocodile's lunge).
 
 Then the sea goes still and Nyi Roro Kidul speaks once (MQ4). She is not fought, and no enemy here is shown as her servant. Decided 2026-11-05 (**ASSUMED**, numbers **TUNE**).
 
@@ -140,8 +150,9 @@ They scale by the zone they spawn in, read from the zone id prefix on ready: `de
 - Defeat: the mask cracks, `boss_defeated:faceless_captain`. The `crater_seal` beat follows (he smashes the seal-stone and Sangkuriang wakes), then the Sangkuriang fight.
 
 **Boss: Prabu Barma Wijaya, the false king** (Act II, kg_keraton, the throne room). HP 2400, Ilmu 220, speed 45 (balance.md 7).
+- **Buildup (Story v5 — 3-Wing Palace Infiltration & Laras Sabotage):** Uncovered through the Royal Archive genealogy cipher (`kg_pustaka`), the Kaputren eavesdrop (`kg_kaputren`), Lengser's `K-II` memory, and **Laras Chapter `LC2`** where Laras steals his royal signet wax (`laras_sabotage:glamour_seal`).
 - Phase 1: a kris thrust (0.4 s wind-up, line marker 3 tiles, heavy 40) and a fan of 3 thrown kris-darts (0.6 s wind-up, light 18 each).
-- **Glamour** at 70% and 35% HP: he steps back and becomes 4 identical figures (3 copies and him), shuffled over 1 s. Copies take no damage from weapons (hits flicker through). **Any cast glyph that hits a copy breaks it** (aksara reveal true faces). Copies attack with the phase 1 moves at half damage. While any copy stands, the real one also takes no damage. When the last copy breaks he is stunned 3 s and open. A new glamour comes only at the next HP mark.
+- **Glamour** at 70% and 35% HP: he steps back and becomes 4 identical figures (3 copies and him), shuffled over 1 s. Copies take no damage from weapons (hits flicker through). **Because Laras stole his signet wax (`laras_sabotage:glamour_seal`), any cast glyph that hits a copy shatters it in one hit** (aksara reveal true faces). Copies attack with the phase 1 moves at half damage. While any copy stands, the real one also takes no damage. When the last copy breaks he is stunned 3 s and open. A new glamour comes only at the next HP mark.
 - Defeat: at 0 HP he does not die. He drops to one knee, his face slips, `boss_defeated:barma_wijaya`. The `confession` beat follows, then `cage`.
 
 **Boss: Hariang Banga** (Act III, kg_pamali, the river duel). HP 3200, Ilmu 320, speed 60 (balance.md 7). An honourable swordsman, never a villain.
@@ -164,7 +175,10 @@ Each boss is a person with a stake in the plot (FromSoftware rule, [story.md](st
 
 ## Final: Gua Kala
 **Boss: Batara Kala.** HP 9300, 3 phases of 3100.
-- Hunt: K7, "The ruwatan again" (also K10 "Murwakala", the tale of how Kala was born hungry, a walk memory; **VERIFY**). The memory teaches reading the names aloud, alternating Sunda and Jawa letters, which is the Ruwatan of Dawn shield sequence. First-time hint: "Read names, Sunda, Jawa" (**ASSUMED**).
+- **Buildup (Story v5 — Three-Realm Memory Descent & Dual-Perspective Finale):** Reclaim `La`, `Ra`, `Sa` across the three prologue gap memories, experience `K10` ("Murwakala") and `K7` ("The ruwatan again"), and play **Laras Chapter `LC6` ("Who's there?")**, which sets `laras_sabotage:kala_eclipse`. First-time hint: `"Read names, Sunda, Jawa"` (**ASSUMED**).
+- **Dual-Perspective & Choice 6 Mechanics (`laras_sabotage:kala_eclipse` & `choice_redeem_aria` / `choice_release_aria`):**
+  - During Phase 2 and Phase 3 shield sequences, **Laras speaks from inside Kala's shadow** (`laras_sabotage:kala_eclipse`), calling out the true name of each stolen script as you cast it (`Sunda glyph -> Jawa glyph -> Ombak`), cracking his Eclipse shield from within and extending his stun window from 3 s to 4 s.
+  - If the player chose **`choice_redeem_aria`** in **Choice 6** (carving *Aria Kebonan* onto the ancestors' stone in `gk_pelataran`), Aria's redeemed shadow manifests at the start of Phase 3 to hold back Kala's hourglass, extending the Phase 3 Ruwatan countdown from 20 s to 26 s (`+6 s`). If the player chose **`choice_release_aria`**, the hero gains **Keteguhan Sunyi** (`+15% stamina & sakti recovery` during the fight).
 - Phase 1: devouring pulses and falling time-sand attacks.
 - Phase 2: the countdown starts. A shield is broken by drawing 3 glyphs in the shown order (stretch).
 - Phase 3: all arenas combined, every class mechanic matters.

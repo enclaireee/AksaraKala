@@ -4,7 +4,7 @@ extends SceneTree
 ## Run: $GODOT --headless --path . -s tests/galuh_play_test.gd
 ## ponytail: structure only, no walk; the quest flags (mqg_*) have no quest data yet.
 
-const AREAS := ["kg_alun", "kg_keraton", "kg_penjara", "kg_pamali"]
+const AREAS := ["kg_alun", "kg_keraton", "kg_penjara", "kg_pamali", "kg_pasar", "kg_pustaka", "kg_kaputren"]
 ## Spawns added by other agents in desa_purwa and mt_gapura.
 const SKIP := ["desa_purwa:from_kg_alun", "mt_gapura:from_kg_pamali"]
 
@@ -42,9 +42,13 @@ func _initialize() -> void:
 					check(SKIP.has(key) or not AREAS.has(t), "%s exit: %s not built" % [id, t])
 					continue
 				check(built[t].spawn(n.spawn_id) != null, "%s exit: %s has no spawn %s" % [id, t, n.spawn_id])
-	check(flags(built.get("kg_alun")) == ["mqg_3", "mqg_3", "mqg_7", "mqg_7"], "kg_alun kabut %s" % [flags(built.get("kg_alun"))])
-	check(flags(built.get("kg_keraton")) == ["mqg_6", "mqg_6"], "kg_keraton kabut %s" % [flags(built.get("kg_keraton"))])
-	for s: String in ["from_desa_purwa", "from_kg_keraton", "from_kg_pamali"]:
+	var alun_f := flags(built.get("kg_alun"))
+	alun_f.sort()
+	check(alun_f == ["mqg_3", "mqg_3", "mqg_7", "mqg_7"], "kg_alun kabut %s" % [alun_f])
+	var ker_f := flags(built.get("kg_keraton"))
+	ker_f.sort()
+	check(ker_f == ["lamps_3", "lamps_3", "mqg_6", "mqg_6", "mqg_6", "mqg_6"], "kg_keraton kabut %s" % [ker_f])
+	for s: String in ["from_desa_purwa", "from_kg_keraton", "from_kg_pamali", "from_kg_pasar"]:
 		check(built["kg_alun"].spawn(s) != null, "kg_alun spawn " + s)
 	for s: String in ["from_kg_alun", "from_mt_gapura"]:
 		check(built["kg_pamali"].spawn(s) != null, "kg_pamali spawn " + s)
@@ -55,7 +59,7 @@ func _initialize() -> void:
 			if n.scene_file_path.ends_with("encounter.tscn"):
 				ids.append(String(n.area_id))
 	ids.sort()
-	check(ids == ["galuh_bout_1", "galuh_bout_2", "galuh_cells", "galuh_escort"], "encounters %s" % [ids])
+	check(ids == ["galuh_bout_1", "galuh_bout_2", "galuh_cells", "galuh_escort", "galuh_hall", "galuh_market_riggers", "kaputren_courtyard", "keraton_throne_approach", "pamali_bank", "pamali_ford", "penjara_stairs", "pustaka_guards"], "encounters %s" % [ids])
 	# Boss spots come from the doc's spot table, so they are checked even while the boss scenes are being built.
 	check(has_spot(built["kg_keraton"], "barma_wijaya.tscn"), "kg_keraton has no Barma Wijaya spot")
 	check(has_spot(built["kg_pamali"], "hariang_banga.tscn"), "kg_pamali has no Hariang Banga spot")

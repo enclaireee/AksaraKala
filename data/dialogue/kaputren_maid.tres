@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "kaputren_maid"
+name_key = "NPC_KAPUTREN_MAID_NAME"
+entries = Array[Dictionary]([
+	{"if": ["flag:ririwa_named"], "lines": ["DLG_KAPUTREN_MAID_V20", "DLG_KAPUTREN_MAID_V21"], "do": []},
+	{"if": ["flag:g2_started"], "lines": ["DLG_KAPUTREN_MAID_V24"], "do": []},
+	{"if": [], "lines": ["DLG_KAPUTREN_MAID_V25", "DLG_KAPUTREN_MAID_V26", "DLG_KAPUTREN_MAID_V27"], "do": ["flag:g2_started"]}
+])

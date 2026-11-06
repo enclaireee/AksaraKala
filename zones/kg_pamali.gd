@@ -14,14 +14,14 @@ const MAP := [
 	"#.......................~~~~~~~~~~~~.......................#",
 	"#.......................,,,,,,,,,,,,.......................#",
 	"#.......................,,,,,r,,,,,,.......................#",
-	"#.......................,,,r,,,,,,,,..............bbb......#",
+	"#.......................,,,r,,,,,,,,....L.........bbb......#",
 	"#.......................,,,,,,,,,,,,..............bbb......#",
-	"#...............S.......,,,,,,,,,,,,..............bbb......#",
-	"#....................c..,,,,,,,,,,,,.......................#",
+	"#...............S.......,,,,,,,,,,,,..QK..........bbb......#",
+	"#...............N....c..,,,,,,,,,,,,......P................#",
 	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,,,,,,,,,,,,yY",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
-	"#.......................,,,,,s,,,,,,.......................#",
-	"#.......................,,,,,,,,,,,,.......................#",
+	"#.......................,,,,,s,,,,,,H......................#",
+	"#.........1.............,,,,,,,,,,,,....2..................#",
 	"#.......................,,,,,,,,,,,,.......................#",
 	"#.......................,,,,,,,,r,,,.......................#",
 	"#.......................,,,,,,r,,,,,.......................#",
@@ -48,6 +48,14 @@ const SPOTS := {
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "pamali"}, "tile": "."},   # codex spot, the Pamali river
 	"s": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sapto", "cond": "quest:mq2=done,!flag:beat_truce"}, "tile": ","},   # NPC Sapto, Ki Sumarto's son, a soldier of Hariang Banga's army; wades home across the ford in the `truce` beat (name key `NPC_SAPTO_NAME`, **ASSUMED**)
 	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "quest:mq2=done,!flag:beat_truce"}, "tile": "."},   # NPC Ciung Wanara on the west bank, staging for the `truce` beat (the same `ciung_wanara` NPC id as Act II; he has no talk here)
+	"1": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "pamali_bank", "size": Vector2i(14,8), "cond": "step:mq2=10", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,0)], ["res://entities/enemies/faceless.tscn", Vector2i(0,3)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-1)]]]}, "tile": "."},   # encounter pamali_bank, the Faceless pickets on the west bank (MQ2 2.11 `fight`, only while step 2.11 is current)
+	"2": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "pamali_ford", "size": Vector2i(14,8), "cond": "step:mq2=10", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-1)], ["res://entities/enemies/faceless.tscn", Vector2i(2,2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(5,-1)]]]}, "tile": "."},   # encounter pamali_ford, the guards of Hariang Banga's camp at the ford's east side (MQ2 2.11 `fight`)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga", "cond": "flag:beat_truce,!flag:mq3_1"}, "tile": "."},   # NPC Hariang Banga at the ford after the truce (MQ2 camp talk `camp_mataram`: optional, 2-4 lines, `quiet`, `do`: `flag:camp_mataram`; the first time you two talk as brothers, not rivals; entry cond `flag:beat_truce`, `!flag:mq3_1`, **ASSUMED**; the same `hariang_banga` NPC id as the boss `B`, whose spot is gone after the duel)
+	"K": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ki_sumarto", "cond": "flag:mq2_8,!flag:mq2_h5"}, "tile": "."},   # NPC Ki Sumarto at the ford camp, the dalang of the brothers' show (MQ2 2.12; he is a staging figure, the clue `Q` starts the memory)
+	"Q": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "sumarto_show", "memory_id": "k_iii", "cond": "flag:mq2_8"}, "tile": "."},   # clue, Ki Sumarto's show at the ford camp; pulls you into K-III (MQ2 2.12, `memory_id` `k_iii`, scene specified in mataram.md)
+	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hariang_letters", "cond": "flag:mq2_h5"}, "tile": "."},   # clue, Hariang Banga's camp letters to his mother, the person-boss clue (MQ2 2.13; appears once K-III is done, then he comes to the ford)
+	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "galuh_2"}, "tile": "."},   # petilasan galuh_2, at the river camp
+	"N": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nagawiru", "cond": "flag:mq2_7"}, "tile": "."},   # write spot nagawiru, on the Pamali stone (MQ2 2.21)
 }
 
 

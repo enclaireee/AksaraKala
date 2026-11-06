@@ -16,11 +16,11 @@ const MAP := [
 	"#..........................,,..............................#",
 	"#.............rr...........,,...................rr.........#",
 	"#.............rr...........,,...................rr.........#",
+	"#..........................,,........................B.....#",
 	"#..........................,,..............................#",
-	"#..........................,,..............................#",
-	"#..........................,,..........................P...D",
+	"#..........................,,........................C.P...D",
 	"#..........................,,..............................D",
-	"#..........................,,..............................#",
+	"#..........................,,........................A.....#",
 	"#..........................,,..............................#",
 	"#.......rr.................,,..............rr..............#",
 	"#.......rr.................,,..............rr..............#",
@@ -34,20 +34,25 @@ const MAP := [
 	"#..........................,,..............................#",
 	"#..........................,,..............................#",
 	"#..........................,,..............................#",
-	"#..........................s,..............................#",
-	"###########################SS###############################",
+	"#.............g............s,..............................#",
+	"#############GG############SS###############################",
 ]
 
 const SPOTS := {
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit to sk_karang (south edge, 2 tiles)
 	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
-	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kidul_3"}, "tile": ","},   # petilasan 3, the cliff shrine (Laras beat)
+	"G": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_gua", "spawn_id": "from_sk_tebing"}, "tile": "."},   # exit to sk_gua (south-west edge, 2 tiles)
+	"g": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_gua"}, "tile": "."},   # spawn, arrival from sk_gua
+	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kidul_3"}, "tile": ","},   # petilasan 3, the cliff shrine (K9 memory and LC5 chapter)
 	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_situ", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit to ts_situ (west edge, opens sc:ts_sk in ts_situ, 2 tiles)
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_situ"}, "tile": ","},   # spawn, arrival from ts_situ
 	"D": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_keraton", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit, one-way drop D1 to sk_keraton (east cliff edge, 2 tiles)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_tebing_1", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(3,-3)], ["res://entities/enemies/lampor.tscn", Vector2i(4,-1)], ["res://entities/enemies/lampor.tscn", Vector2i(4,1)], ["res://entities/enemies/lampor.tscn", Vector2i(3,3)]]]}, "tile": ","},   # encounter kidul_tebing_1
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_tebing_2", "size": Vector2i(19,9), "waves": [[["res://entities/enemies/ula_segara.tscn", Vector2i(7,0)], ["res://entities/enemies/bajul_putih.tscn", Vector2i(4,0)], ["res://entities/enemies/lampor.tscn", Vector2i(2,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(2,2)]]]}, "tile": "."},   # encounter kidul_tebing_2
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_3", "item_id": "ilmu:380"}, "tile": "."},   # chest: 380 Ilmu (sea cave)
+	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "shrine_tale", "memory_id": "k9_queen_south"}, "tile": "."},   # clue, the shrine's carved tale and lamp, Ki Sumarto's version (4.10; opens memory `k9_queen_south`; ASSUMED id)
+	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lc5_lontar", "memory_id": "lc5", "cond": "flag:mq4_h3"}, "tile": "."},   # clue, Laras's lontar fragment at the shrine (4.11, opens chapter `lc5`; ASSUMED id, cond `flag:mq4_h3`)
+	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cliff_altar"}, "tile": "."},   # NPC cliff altar for Choice 5 (`mq4_offering`)
 }
 
 

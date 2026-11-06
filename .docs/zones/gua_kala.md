@@ -414,7 +414,7 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 #__c____________rr_______________________________________________________________________#
 #_______________rr_______________________________________________________________________#
 Xe____________________________________________E_______________________A_________________yY
-X________________________________________________________________________________________Y
+X_____D__________________________________________________________________________________Y
 #___d_______________________________________________________________________________B____#
 #__h_____________________________________________________________________________________#
 #_________________rr_____________________________________________________________________#
@@ -429,8 +429,8 @@ X_______________________________________________________________________________
 #_____________________________#########___________________________#########______________#
 #_____________________________#########__________________________________________________#
 #________________________________________________________________________________________#
-#___________________________________________z____________________________________________#
-############################################ZZ############################################
+#___________________s_______________________z____________________________________________#
+####################SS######################ZZ############################################
 ```
 
 ### Legend
@@ -438,6 +438,8 @@ X_______________________________________________________________________________
 |------|------|-------|-------|-------|-------|
 | `Z` | exit to sk_keraton (south edge, a sea-cave passage, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_keraton", spawn_id:"from_gk_mulut"}` | floor | 2 |
 | `z` | spawn, arrival from sk_keraton | `res://entities/world/spawn.tscn` | `{id:"from_sk_keraton"}` | floor | 1 |
+| `S` | exit to gk_pelataran (south-west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_pelataran", spawn_id:"from_gk_mulut"}` | floor | 2 |
+| `s` | spawn, arrival from gk_pelataran | `res://entities/world/spawn.tscn` | `{id:"from_gk_pelataran"}` | floor | 1 |
 | `d` | NPC the Faceless Deserter at the mouth, variant spot `mouth_freed` (only when Choice 1 freed him) | `res://entities/npc/npc.tscn` | `{npc_id:"deserter_mouth", cond:"flag:choice_freed"}` | floor | 1 |
 | `c` | NPC Ciung Wanara holding the mouth, staging for the `mouth` / `mouth_freed` beats (no talk of his own; same `ciung_wanara` id) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mq4_9"}` | floor | 1 |
 | `h` | NPC Hariang Banga holding the mouth, staging for the same beats (no talk of his own; same `hariang_banga` id) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga", cond:"flag:mq4_9"}` | floor | 1 |
@@ -453,6 +455,7 @@ X_______________________________________________________________________________
 | `A` | encounter kala_mulut_2 (5.1, second fight, east road) | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut_2", size:Vector2i(18,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)], [res://entities/enemies/kuntilanak.tscn, Vector2i(4,0)]]]}` | floor | 1 |
 | `B` | clue, a faded floating letter *La* (5.1; opens gap memory `la`; cond `flag:mq5_1b`; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"letter_la", memory_id:"la", cond:"flag:mq5_1b"}` | floor | 1 |
 | `C` | chest: 300 Ilmu (north nook, rule 7 optional find, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_0", item_id:"ilmu:300"}` | floor | 1 |
+| `D` | NPC write stone for Ranga's name (SQ-C3) | `res://entities/npc/npc.tscn` | `{npc_id:"deserter_stone"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -489,8 +492,8 @@ X_______________________________________________________________________________
 #___________________________________________________________#____________________________#
 #___________________________________________________________#____________________________#
 #___________________________________________________________##########__##################
-#________________________________________________________________________________________#
-#_______________rr________________________________rr_____________________________________#
+Ww_______________________________________________________________________________________#
+W_______________rr________________________________rr_____________________________________#
 #_______________rr________________________________rr_____________________________________#
 #________________________________________________________________________________________#
 #________________________________________________________________________________________#
@@ -499,8 +502,8 @@ X_______________________________________________________________________________
 #___________________________rr______________________________________________C____________#
 #________________________________________________________________________________________#
 Xe________________A______________________________________________________________________#
-X_________________________________E_________________________rr___________________________#
-#___________________rr______________________________________rr___________________________#
+X_________________________________E_________________________rr__________________________yY
+#___________________rr______________________________________rr___________________________Y
 #___________________rr__________________rr_______________________________________________#
 #_______________________________________rr______________________F_rr_____________________#
 #_________________________________________________________________rr_____________________#
@@ -532,6 +535,10 @@ X_________________________________E_________________________rr__________________
 |------|------|-------|-------|-------|-------|
 | `X` | exit to gk_mulut (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_mulut", spawn_id:"from_gk_pasir"}` | floor | 2 |
 | `e` | spawn, arrival from gk_mulut | `res://entities/world/spawn.tscn` | `{id:"from_gk_mulut"}` | floor | 1 |
+| `W` | exit to gk_pelataran (west edge, north side, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_pelataran", spawn_id:"from_gk_pasir"}` | floor | 2 |
+| `w` | spawn, arrival from gk_pelataran | `res://entities/world/spawn.tscn` | `{id:"from_gk_pelataran"}` | floor | 1 |
+| `Y` | exit to gk_hutan (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_hutan", spawn_id:"from_gk_pasir"}` | floor | 2 |
+| `y` | spawn, arrival from gk_hutan | `res://entities/world/spawn.tscn` | `{id:"from_gk_hutan"}` | floor | 1 |
 | `D` | exit, the drop D1 to gk_lupa (east rim of the high gallery, 2 tiles, one way, no spawn back) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_pasir"}` | floor | 2 |
 | `E` | encounter kala_pasir_1 | `res://entities/world/encounter.tscn` | `{area_id:"kala_pasir_1", size:Vector2i(22,12), waves:[[[res://entities/enemies/genderuwo.tscn, Vector2i(7,0)], [res://entities/enemies/pocong.tscn, Vector2i(3,-4)], [res://entities/enemies/pocong.tscn, Vector2i(3,4)]]]}` | floor | 1 |
 | `F` | encounter kala_pasir_2 | `res://entities/world/encounter.tscn` | `{area_id:"kala_pasir_2", size:Vector2i(20,11), waves:[[[res://entities/enemies/kemamang.tscn, Vector2i(6,-3)], [res://entities/enemies/kemamang.tscn, Vector2i(6,3)]]]}` | floor | 1 |
@@ -560,8 +567,8 @@ X_________________________________E_________________________rr__________________
 
 ### Map
 ```
-############################################################
-#__________________________________________________________#
+############################NN##############################
+#___________________________n______________________________#
 #__________________________________________________________#
 #__________________________________________________________#
 #_____l____________________________________________________#
@@ -576,8 +583,8 @@ X__________________________________________________________#
 #_______________________________E__________________________#
 #___rr________________________________________________rr___#
 #___rr________________________________________________rr___#
-#__________________________________________________________#
-#__________________________________________________________#
+#_________________________________________________________yY
+#__________________________________________________________Y
 #__________________________________________________________#
 #__________________________________________________________#
 #___rr_____________________________________________________#
@@ -618,6 +625,10 @@ X__________________________________________________________#
 |------|------|-------|-------|-------|-------|
 | `X` | exit to gk_mulut (west edge, plain exit into the `sc:gk_lorong` pocket, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_mulut", spawn_id:"from_gk_lupa"}` | floor | 2 |
 | `m` | spawn, arrival from gk_mulut | `res://entities/world/spawn.tscn` | `{id:"from_gk_mulut"}` | floor | 1 |
+| `N` | exit to gk_hutan (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_hutan", spawn_id:"from_gk_lupa"}` | floor | 2 |
+| `n` | spawn, arrival from gk_hutan | `res://entities/world/spawn.tscn` | `{id:"from_gk_hutan"}` | floor | 1 |
+| `Y` | exit to gk_jembatan (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_jembatan", spawn_id:"from_gk_lupa"}` | floor | 2 |
+| `y` | spawn, arrival from gk_jembatan | `res://entities/world/spawn.tscn` | `{id:"from_gk_jembatan"}` | floor | 1 |
 | `l` | spawn, landing of the drop D1 from gk_pasir (no exit back) | `res://entities/world/spawn.tscn` | `{id:"from_gk_pasir"}` | floor | 1 |
 | `E` | encounter kala_lupa (**miniboss**, 5.3: the Prajurit is the elite `kala_lupa_elite`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_lupa", size:Vector2i(20,11), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(7,0)], [res://entities/enemies/banaspati.tscn, Vector2i(3,-3)], [res://entities/enemies/banaspati.tscn, Vector2i(3,3)]]]}` | floor | 1 |
 | `c` | chest: 300 Ilmu (secret, behind stone tablets) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_2", item_id:"ilmu:300"}` | floor | 1 |
@@ -703,3 +714,168 @@ X__________________________________________________________#
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
 | none | none | none | none | none |
+
+## Area 5: gk_pelataran
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: Pelataran Waktu (Courtyard of Time), outer temple forecourt of black stone with ancestral pillars, memorial stones, and a petilasan flame.
+- Purpose: MQ5 5.1–5.2 (`kala_pelataran_siege`, `memorial_stone` for Choice 6, `ciung_wanara`, `hariang_banga`), SQ-C3 step 4 (`deserter_stone`), and petilasan `kala_0`. Links to `gk_mulut` and `gk_pasir`.
+
+### Map
+```
+############################NN##############################
+#___________________________n______________________________#
+#__________________________________________________________#
+#______________rr__________________________rr______________#
+#______________rr__________________________rr______________#
+#__________________________________________________________#
+#______________________C___________H_______________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr___________________#
+#__________________________________________________________#
+#_____________________________E____________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr__________________yY
+#__________________________________________________________Y
+#__________________________________________________________#
+#__________________________________________________________#
+#______________rr__________________________rr______________#
+#______________rr__________________________rr______________#
+#__________________________________________________________#
+#____________________M________P________D___________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr___________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+############################################################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `N` | exit to gk_mulut (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_mulut", spawn_id:"from_gk_pelataran"}` | floor | 2 |
+| `n` | spawn, arrival from gk_mulut | `res://entities/world/spawn.tscn` | `{id:"from_gk_mulut"}` | floor | 1 |
+| `Y` | exit to gk_pasir (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_pasir", spawn_id:"from_gk_pelataran"}` | floor | 2 |
+| `y` | spawn, arrival from gk_pasir | `res://entities/world/spawn.tscn` | `{id:"from_gk_pasir"}` | floor | 1 |
+| `E` | encounter kala_pelataran_siege | `res://entities/world/encounter.tscn` | `{area_id:"kala_pelataran_siege", size:Vector2i(16,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,2)]]]}` | floor | 1 |
+| `M` | NPC ancestors' memorial stone for Choice 6 (`mq5_choice6`) | `res://entities/npc/npc.tscn` | `{npc_id:"memorial_stone"}` | floor | 1 |
+| `D` | NPC write stone for Ranga's name (SQ-C3) | `res://entities/npc/npc.tscn` | `{npc_id:"deserter_stone"}` | floor | 1 |
+| `C` | NPC Ciung Wanara holding the courtyard | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara"}` | floor | 1 |
+| `H` | NPC Hariang Banga holding the courtyard | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga"}` | floor | 1 |
+| `P` | petilasan 0 (courtyard rest) | `res://entities/petilasan/petilasan.tscn` | `{id:"kala_0"}` | floor | 1 |
+
+## Area 6: gk_hutan
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: Hutan Lupa (The Forgotten Woods), petrified underground forest of whispering name-trees and hanging stone chimes.
+- Purpose: MQ5 5.6 (`kala_hutan_echoes`, `hutan_name_chimes`), and chest `kala_chest_hutan`. Links to `gk_pasir` and `gk_lupa`.
+
+### Map
+```
+############################################################
+#__________________________________________________________#
+#______##########__________________________##########______#
+#______#________#__________________________#________#______#
+#______#___c____#__________________________#________#______#
+#______####__####__________________________####__####______#
+#__________________________________________________________#
+#______________rr__________________________rr______________#
+#______________rr__________________________rr______________#
+#__________________________________________________________#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr___________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+Ww____________________________E____________________________#
+W__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr___________________#
+#__________________________________________________________#
+#_____________________________T____________________________#
+#__________________________________________________________#
+#______________rr__________________________rr______________#
+#______________rr__________________________rr______________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#___________________________s______________________________#
+############################SS##############################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `W` | exit to gk_pasir (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_pasir", spawn_id:"from_gk_hutan"}` | floor | 2 |
+| `w` | spawn, arrival from gk_pasir | `res://entities/world/spawn.tscn` | `{id:"from_gk_pasir"}` | floor | 1 |
+| `S` | exit to gk_lupa (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_hutan"}` | floor | 2 |
+| `s` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
+| `E` | encounter kala_hutan_echoes | `res://entities/world/encounter.tscn` | `{area_id:"kala_hutan_echoes", size:Vector2i(15,9), waves:[[[res://entities/enemies/kuntilanak.tscn, Vector2i(-4,0)], [res://entities/enemies/kemamang.tscn, Vector2i(4,-2)], [res://entities/enemies/kemamang.tscn, Vector2i(4,2)]]]}` | floor | 1 |
+| `T` | trigger, whispering name-chimes puzzle | `res://entities/world/trigger.tscn` | `{trigger_id:"hutan_name_chimes", size:Vector2i(4,4)}` | floor | 1 |
+| `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_hutan", item_id:"ilmu:55"}` | floor | 1 |
+
+## Area 7: gk_jembatan
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: Jembatan Bayang (The Shadow Bridge), ancient stone causeway spanning the chasm of eaten time.
+- Purpose: MQ5 5.8 (`kala_jembatan_echoes`) and chest `kala_chest_jembatan`. Links to `gk_lupa`.
+
+### Map
+```
+############################################################
+#__________________________________________________________#
+#_______~~~~____________________________________~~~~_______#
+#_______~~~~____________________________________~~~~_______#
+#_______~~~~____________________________________~~~~_______#
+#__________________________________________________________#
+#______________rr__________________________rr______________#
+#______________rr__________________________rr______________#
+#__________________________________________________________#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr___________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+Ww____________________________E____________________________#
+W__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr___________________#
+#__________________________________________________________#
+#__________________________________________________c_______#
+#______________rr__________________________rr______________#
+#______________rr__________________________rr______________#
+#__________________________________________________________#
+#_______~~~~____________________________________~~~~_______#
+#_______~~~~____________________________________~~~~_______#
+#_______~~~~____________________________________~~~~_______#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+############################################################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `W` | exit to gk_lupa (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_jembatan"}` | floor | 2 |
+| `w` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
+| `E` | encounter kala_jembatan_echoes | `res://entities/world/encounter.tscn` | `{area_id:"kala_jembatan_echoes", size:Vector2i(16,9), waves:[[[res://entities/enemies/arca_penjaga.tscn, Vector2i(-4,0)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,0)], [res://entities/enemies/bajul_putih.tscn, Vector2i(4,0)]]]}` | floor | 1 |
+| `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_jembatan", item_id:"ilmu:55"}` | floor | 1 |

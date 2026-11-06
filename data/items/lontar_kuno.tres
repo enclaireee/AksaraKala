@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "lontar_kuno"
+title = "ITEM_LONTAR_KUNO_NAME"
+slot = "accessory"
+mythic = true
+description = "ITEM_LONTAR_KUNO_DESC"
+lore = "ITEM_LONTAR_KUNO_LORE"
+bonus = {"spi": 2}

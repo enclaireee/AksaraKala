@@ -5,12 +5,12 @@ const MAP := [
 	"##########XX################################################",
 	"#.........e,...............................................#",
 	"#.........,,...............................................#",
-	"#.........,,...............................................#",
+	"#.........,,......B........................................#",
 	"#.........,,...............................................#",
 	"#.........,,..r.r.r.r.r.r.r.r.r.r..........................#",
 	"#.........,,........................................b......#",
 	"#.........,,..r.r.r.r.r.r.r.r.r.r..........................#",
-	"#.........,,...........H...................................#",
+	"#.........,,...........H......A............................#",
 	"#.........,,...............................................#",
 	"#.........,,....................................T..........#",
 	"#.........,,..................................q............#",
@@ -20,7 +20,7 @@ const MAP := [
 	"#..........................................................#",
 	"#..........................................................#",
 	"#..........................................................#",
-	"#.....................E..............,,,,,,,,,,,,,,,,,,,,,yY",
+	"#.....................E..............,,,,,,,,,,,,,C,,,,,,,yY",
 	"#....................................,,,,,,,,,,,,,,,,,,,,,,Y",
 	"#.............................................,............#",
 	"#.............................................,............#",
@@ -45,10 +45,13 @@ const SPOTS := {
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_wetan"}, "tile": ","},   # spawn, arrival from mt_wetan
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_kuburan", "size": Vector2i(26,15), "waves": [[["res://entities/enemies/pocong.tscn", Vector2i(8,-4)], ["res://entities/enemies/pocong.tscn", Vector2i(8,4)], ["res://entities/enemies/tuyul.tscn", Vector2i(-6,-5)], ["res://entities/enemies/tuyul.tscn", Vector2i(-3,5)], ["res://entities/enemies/tuyul.tscn", Vector2i(2,0)]]]}, "tile": "."},   # encounter mataram_kuburan
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "wewe_hill", "size": Vector2i(17,12)}, "tile": "."},   # trigger, Wewe hill entered (SQ-M2)
-	"q": {"scene": "res://entities/enemies/wewe_gombel.tscn", "props": {}, "tile": "."},   # elite Wewe Gombel (SQ-M2, inert until step 3)
+	"q": {"scene": "res://entities/enemies/wewe_gombel.tscn", "props": {"unique_id": "wewe_elite"}, "tile": "."},   # elite Wewe Gombel (SQ-M2, inert until step 4; `unique_id` `wewe_elite`, elite stats HP 780, Ilmu x4, **TUNE**)
 	"p": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "wewe_parents_2"}, "tile": "."},   # NPC Wewe's parents at the hill (SQ-M2 peaceful)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_secret_pasopati", "item_id": "panah_pasopati"}, "tile": "_"},   # chest: Panah Pasopati (secret 2, crypt)
 	"H": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_hunter_war", "size": Vector2i(19,6)}, "tile": "."},   # trigger, beat `hunter_war` staging (the Hunter among the graves; plays when `flag:lead_kuburan`, `zone:mt_kuburan`)
+	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hunter_mask_3", "memory_id": "h3", "cond": "flag:lead_kuburan"}, "tile": "."},   # clue, the Hunter's third mask fragment among the graves (2.4 H3; opens memory `h3`; appears when `flag:lead_kuburan`)
+	"B": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_kuburan_gate", "size": Vector2i(20,9), "waves": [[["res://entities/enemies/tuyul.tscn", Vector2i(-6,-1)], ["res://entities/enemies/tuyul.tscn", Vector2i(-3,3)], ["res://entities/enemies/tuyul.tscn", Vector2i(5,0)], ["res://entities/enemies/pocong.tscn", Vector2i(8,2)]]]}, "tile": "."},   # encounter mataram_kuburan_gate (2.2, fight 1 of the graveyard lead, north field)
+	"C": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_pemanen", "cond": "flag:memory_h3", "size": Vector2i(18,9), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(0,0)], ["res://entities/enemies/pocong.tscn", Vector2i(6,-3)], ["res://entities/enemies/pocong.tscn", Vector2i(6,3)]]]}, "tile": ","},   # encounter mataram_pemanen (**miniboss**, 2.4: the harvest captain on the east road; cond `flag:memory_h3`)
 }
 
 

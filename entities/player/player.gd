@@ -409,13 +409,14 @@ func apply_from_game() -> void:
 		health.defense += g.defense if g else 0
 	stamina.max_stamina = tuning.stat_stamina_base + tuning.stat_stamina_per * game.stat("end")
 	stamina.value = stamina.max_stamina if not _applied else minf(stamina.value, stamina.max_stamina)
-	stamina.regen = _regen_base * (1.0 + tuning.stat_speed_per * game.stat("end") + game.bonus("stamina_regen"))
+	var aria_regen := 0.15 if game.has_flag("choice_release_aria") else 0.0
+	stamina.regen = _regen_base * (1.0 + tuning.stat_speed_per * game.stat("end") + game.bonus("stamina_regen") + aria_regen)
 	dmg_mult = 1.0 + tuning.stat_damage_per * game.stat("str" if item.is_melee() else "dex")
 	atk_speed = 1.0 + tuning.stat_speed_per * game.stat("dex")
 	move_mult = 1.0 + game.bonus("move_speed")
 	dodge_cost = tuning.rogue_dodge_cost if class_id == "rogue" else tuning.dodge_cost
 	sakti.max_value = tuning.keen_mind_max if mage else tuning.sakti_max   # Keen Mind
-	sakti.gain_mult = (1.0 + tuning.stat_sakti_per * game.stat("spi")) * (tuning.keen_mind_gain if mage else 1.0)
+	sakti.gain_mult = (1.0 + tuning.stat_sakti_per * game.stat("spi") + aria_regen) * (tuning.keen_mind_gain if mage else 1.0)
 	sakti.value = minf(sakti.value, sakti.max_value)
 	_applied = true
 	health.changed.emit(health.hp, health.max_hp)

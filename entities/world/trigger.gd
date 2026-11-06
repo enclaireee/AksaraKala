@@ -3,6 +3,7 @@ extends Area2D
 
 @export var trigger_id := ""
 @export var size := Vector2i(1, 1)   # tiles, centered on the node
+@export var cond := ""
 
 
 func _ready() -> void:
@@ -10,5 +11,7 @@ func _ready() -> void:
 	r.size = Vector2(size * 16)
 	$Shape.shape = r
 	body_entered.connect(func(b: Node) -> void:
-		if b.is_in_group("player"):
-			get_node("/root/Events").area_entered.emit(trigger_id))
+		if b.is_in_group("player") and get_node("/root/Game").check(cond):
+			var ev := get_node("/root/Events")
+			ev.area_entered.emit(trigger_id)
+			ev.puzzle_solved.emit(trigger_id.trim_prefix("puzzle_")))

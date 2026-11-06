@@ -4,37 +4,37 @@ extends Zone
 const MAP := [
 	"############################################################",
 	"#################____________H_____________#################",
-	"#################__________________________#################",
-	"#################__________________________#################",
-	"#################____________B_____________#################",
-	"#################_________Q_____O__________#################",
-	"#################__________________________#################",
-	"#################_________________R________#################",
-	"#################__________________________#################",
-	"#################__________________________#################",
-	"#################__________________________#################",
-	"#################__________________________#################",
-	"#################__________________________#################",
-	"#############################KK#############################",
-	"#............................,,............................#",
-	"#............................,,............................#",
-	"#............................,,............................#",
-	"#.....bbb....................,,...................bbb......#",
-	"#.....bbb....................,,...................bbb......#",
-	"#.....bbb....................,,...................bbb......#",
-	"#............................,,............................#",
-	"#............................,,............................#",
-	"#...........P................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX",
-	"#.............C..............,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
-	"#............................,,............................#",
-	"#............................,,............................#",
-	"#............................,,............................#",
-	"#.....bbb....................,,...................bbb......#",
-	"#.....bbb....................,,...................bbb......#",
-	"#.....bbb....................,,...................bbb......#",
-	"#............................,,............................#",
-	"#............................,,............................#",
-	"#............................s,............................#",
+	"###____________##______________M___________#################",
+	"###__D_________##__________________________#################",
+	"###____________##____________B_____________#################",
+	"###____________##_________Q_____O__________#################",
+	"Zz__J__________##________q_________________#################",
+	"Z______________##_________________R________#################",
+	"###____________##__________________________#################",
+	"###____________##____________T_____________#################",
+	"###____________##__________________________#################",
+	"###____________##__________________________#################",
+	"########__#######__________________________#################",
+	"########WW###################KK#############################",
+	"#.................#..........,,............................#",
+	"#.............U...#..........,,............................#",
+	"#...F.............#..........,L............................#",
+	"#.....bbb.........#..........,,...................bbb......#",
+	"#.....bbb.........#...1......,,...................bbb.3....#",
+	"#.....bbb.........#..........,,...................bbb......#",
+	"#.................#..........,,.....2......................#",
+	"#...A.............#..........,,............................#",
+	"#...........P.....V..........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX",
+	"#.............C...V..........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
+	"#.................#..........,,............................#",
+	"#.................#..........,,............................#",
+	"#.................#..........,,............................#",
+	"#.....bbb.........#..........,,...................bbb......#",
+	"#.....bbb.........#..........,,...................bbb......#",
+	"#.....bbb.........#..........,,...................bbb......#",
+	"#...G.............#..........,,............................#",
+	"#........I........#..........,,.E..........................#",
+	"#.................#..........s,............................#",
 	"#############################SS#############################",
 ]
 
@@ -43,14 +43,33 @@ const SPOTS := {
 	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_alun"}, "tile": ","},   # spawn, arrival from kg_alun
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_penjara", "spawn_id": "from_kg_keraton"}, "tile": ","},   # exit to kg_penjara (east edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_penjara"}, "tile": ","},   # spawn, arrival from kg_penjara
+	"Z": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_pustaka", "spawn_id": "from_kg_keraton"}, "tile": "_"},   # exit to kg_pustaka (west edge, 2 tiles, archive grate)
+	"z": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_pustaka"}, "tile": "_"},   # spawn, arrival from kg_pustaka
+	"J": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "keraton_upper_gallery", "size": Vector2i(4,4)}, "tile": "_"},   # trigger keraton_upper_gallery (MQG g.16)
+	"L": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "keraton_throne_approach", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless_champion.tscn", Vector2i(0,0)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,0)], ["res://entities/enemies/faceless.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter keraton_throne_approach (MQG g.19)
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mqg_6"}, "tile": ","},   # kabut, throne room door (one per tile)
-	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "galuh_1"}, "tile": ","},   # petilasan galuh_1
+	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "galuh_1"}, "tile": ","},   # petilasan galuh_1, inside the inner garden
 	"B": {"scene": "res://entities/bosses/barma_wijaya.tscn", "props": {"unique_id": "barma_wijaya"}, "tile": "_"},   # boss Barma Wijaya, the false king (MQG g.9)
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mqg_4"}, "tile": ","},   # NPC Ciung Wanara, camp talk at the petilasan (optional, `quiet`, 2-4 lines, entry `camp_galuh`; reachable after the boss too)
 	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nameless_hunter", "cond": "flag:beat_confession,!flag:beat_escape"}, "tile": "_"},   # NPC the Nameless Hunter, a shadow behind the throne (`cage` beat): "The cage holds the man, not the name."
-	"Q": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pangrenyep", "cond": "flag:mqg_7"}, "tile": "_"},   # NPC Queen Pangrenyep, caged with the king (`cage` beat, one line)
+	"Q": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pangrenyep", "cond": "flag:mqg_7,!quest:mq2=done"}, "tile": "_"},   # NPC Queen Pangrenyep, caged with the king (`cage` beat, one line)
 	"O": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mqg_7"}, "tile": "_"},   # NPC Ciung Wanara in the throne room, cages the king and queen, then holds Galuh (`cage` and `escape` beats)
 	"R": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga", "cond": "flag:beat_cage,!flag:beat_escape"}, "tile": "_"},   # NPC Prince Hariang Banga, escapes east (`escape` beat)
+	"V": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "lamps_3"}, "tile": ","},   # kabut, the inner garden gate (one per tile); lifts when the three lamps are lit (flag `lamps_3`, the `puzzle` of MQG g.3)
+	"W": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mqg_6"}, "tile": ","},   # kabut, the portrait gallery door (one per tile); lifts with the throne room (flag `mqg_6`)
+	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kaputren_maid", "cond": "flag:mqg_4"}, "tile": "."},   # NPC the palace maid of the Kaputren, unnamed (SQ-G2 giver; unlock `mqg_4`, inside the inner palace)
+	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g2_broom", "cond": "flag:mqg_4"}, "tile": "."},   # clue, the broom worn to the handle, left in the north corridor (SQ-G2 clue 1)
+	"G": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g2_roll", "memory_id": "sq_g2_servant", "cond": "flag:clue_g2_broom"}, "tile": "."},   # clue, a servants' roll with one name scraped out; its ink holds the ghost's trace and pulls you into the servant's last day (SQ-G2 clue 2, `memory_id` `sq_g2_servant`; needs the broom first)
+	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ririwa_name", "cond": "flag:memory_sq_g2_servant"}, "tile": "."},   # write stone, the roll's pinned copy at the corridor's end: its entry runs the write card `write:ririwa_name:sunda_ca,sunda_nga` (Ca, Nga; **ASSUMED** name "Canga"); `name_written:ririwa_name` is the peaceful branch (modelled on the Nagawiru write, step 2.11)
+	"U": {"scene": "res://entities/enemies/ririwa.tscn", "props": {"unique_id": "ririwa"}, "tile": "."},   # elite ririwa (SQ-G2 fight branch), the miniboss: carries `unique_id` and elite stats (HP 312, Dmg 16, Ilmu 56, bestiary, **TUNE**), a plain spot inert until `mqg_4`, not an encounter; the scene `ririwa.tscn` is new (a Pocong-class Charger, **ASSUMED**)
+	"q": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "galuh_queen", "cond": "quest:mq2=done"}, "tile": "_"},   # NPC the queen of Galuh at her cage (SQ-C2 step 2: Hariang Banga's letters; she writes back, lines vary by `choice_mercy`/`choice_silent`, sets `c2_reply`; `npc_id` **ASSUMED**; replaces the one-line `cage` figure `Q`, which is hidden once `mq2` is done)
+	"1": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "galuh_lamp_1"}, "tile": "."},   # puzzle, palace lamp 1, the west lamp (lights it, sets `lamp_1`; "light the path", west to east)
+	"2": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "galuh_lamp_2"}, "tile": "."},   # puzzle, palace lamp 2 (entry needs `flag:lamp_1`, sets `lamp_2`)
+	"3": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "galuh_lamp_3"}, "tile": "."},   # puzzle, palace lamp 3, the east lamp (entry needs `flag:lamp_2`, sets `lamps_3`; the garden gate `V` opens)
+	"E": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "palace_crest"}, "tile": "."},   # clue, the scraped royal crest on the courtyard gate pillar (MQG g.3 `clue` piece; id ASSUMED, quests.md names none)
+	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "court_portrait", "memory_id": "k_ii", "cond": "flag:mqg_6"}, "tile": "_"},   # clue, the court portrait with its face scraped off; pulls you into K-II (MQG g.7-g.8, `memory_id` `k_ii`)
+	"M": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hunter_mask_2", "memory_id": "h2", "cond": "flag:mqg_h2"}, "tile": "_"},   # clue, the Hunter's mask fragment behind the throne; pulls you into H2 (MQG g.8, `memory_id` `h2`; appears once K-II is done)
+	"T": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "galuh_hall", "size": Vector2i(20,8), "cond": "flag:mqg_h3,!flag:mqg_7", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-6,-1)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)], ["res://entities/enemies/faceless.tscn", Vector2i(6,-1)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(8,3)]]]}, "tile": "_"},   # encounter galuh_hall, the throne-room guards before the boss (MQG g.9 `fight`)
 }
 
 

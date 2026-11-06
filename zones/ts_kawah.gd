@@ -20,7 +20,7 @@ const MAP := [
 	"########...................Y..##############################",
 	"########......................,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX",
 	"########...S...B.C.........Z..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
-	"########......................##############################",
+	"########...................P..##############################",
 	"########......................##############################",
 	"########.V....................##############################",
 	"########.............R........##############################",
@@ -41,16 +41,17 @@ const MAP := [
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kawah_jalan", "spawn_id": "from_ts_kawah"}, "tile": ","},   # exit to ts_kawah_jalan (east edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kawah_jalan"}, "tile": ","},   # spawn, arrival from ts_kawah_jalan
-	"B": {"scene": "res://entities/bosses/sangkuriang.tscn", "props": {"cond": "flag:mq1_8"}, "tile": ","},   # boss Sangkuriang (MQ1 1.15), awakened after the Captain smashes the cracked seal-stone
-	"C": {"scene": "res://entities/bosses/faceless_captain.tscn", "props": {}, "tile": ","},   # boss Faceless captain (MQ1 1.13)
+	"B": {"scene": "res://entities/bosses/sangkuriang.tscn", "props": {"cond": "flag:mq1_8"}, "tile": ","},   # boss Sangkuriang (MQ1 1.24), awakened after the Captain smashes the cracked seal-stone
+	"C": {"scene": "res://entities/bosses/faceless_captain.tscn", "props": {}, "tile": ","},   # boss Faceless captain (MQ1 1.22)
 	"Z": {"scene": "res://entities/bosses/arena_post.tscn", "props": {"post_id": "east"}, "tile": ","},   # arena post, east post (hang boeh rarang)
-	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "seal_stone", "cond": "!flag:mq1_8"}, "tile": ","},   # NPC-scene spot, the cracked seal-stone (Crater Seal); the Captain smashes it at the end of 1.12
-	"G": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mq1_8,!flag:beat_naga"}, "tile": ","},   # NPC Ciung Wanara, chained as bait on the west rim (seen in the `crater_seal` beat, freed after 1.13)
-	"V": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nagawiru", "cond": "flag:mq1_8,!flag:beat_naga"}, "tile": ","},   # NPC Nagawiru, the naga-king, bound at the arena's west edge (freed after 1.13)
+	"P": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "crater_post", "size": Vector2i(3,3), "cond": "flag:laras_key_crater_post"}, "tile": ","},   # trigger, Laras's marked eastern post (MQ1 1.21/1.24 `crater_post`, gated by `laras_key:crater_post`)
+	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "seal_stone", "cond": "!flag:mq1_8"}, "tile": ","},   # NPC-scene spot, the cracked seal-stone (Crater Seal); the Captain smashes it at the end of 1.22
+	"G": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mq1_8,!flag:beat_naga"}, "tile": ","},   # NPC Ciung Wanara, chained as bait on the west rim (seen in the `crater_seal` beat, freed after 1.24)
+	"V": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nagawiru", "cond": "flag:mq1_8,!flag:beat_naga"}, "tile": ","},   # NPC Nagawiru, the naga-king, bound at the arena's west edge (freed after 1.24)
 	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nameless_hunter", "cond": "flag:mq1_8,!flag:beat_crater_seal"}, "tile": ","},   # NPC the Nameless Hunter, seen on the far rim; he watches and leaves (Hunter of Act I)
-	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "quest:mq1=done,!flag:beat_naga"}, "tile": ","},   # NPC Naganingrum on the rim, too late to be recognised (`naga` beat)
-	"K": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hunter_mask_1", "memory_id": "h1", "cond": "flag:beat_crater_seal"}, "tile": ","},   # clue, the Hunter's mask fragment on the far rim; pulls you into H1 (MQ1 1.13; appears after the `crater_seal` beat, when the Hunter has left)
-	"R": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "boat_ribs", "memory_id": "k2_dayang_sumbi", "cond": "flag:mq1_h7"}, "tile": ","},   # clue, the ribs of the half-built boat; pulls you into K2 (MQ1 1.14)
+	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "quest:mq1=done,!flag:beat_naga"}, "tile": ","},   # NPC Naganingrum on the rim, reconciles or stays hidden by Choice 1 (`naga` beat)
+	"K": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hunter_mask_1", "memory_id": "h1", "cond": "flag:beat_crater_seal"}, "tile": ","},   # clue, the Hunter's mask fragment on the far rim; pulls you into H1 (MQ1 1.22; appears after the `crater_seal` beat, when the Hunter has left)
+	"R": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "boat_ribs", "memory_id": "k2_dayang_sumbi", "cond": "flag:mq1_h7"}, "tile": ","},   # clue, the ribs of the half-built boat; pulls you into K2 (MQ1 1.23)
 	"n": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "crater_seal"}, "tile": ","},   # codex spot, the cracked Crater Seal (the arena's optional find; id ASSUMED)
 }
 

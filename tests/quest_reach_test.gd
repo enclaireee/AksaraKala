@@ -19,7 +19,8 @@ func _initialize() -> void:
 	var src := {}   # signal -> {arg: true}
 	var marks := {}   # zone -> {id: true}, the same fields hud.gd refresh_arrow() matches
 	for s in ["talked_to", "area_entered", "area_cleared", "petilasan_activated", "enemy_killed", "boss_defeated",
-			"item_picked", "glyph_learned", "zone_entered", "name_written", "clue_examined", "memory_done"]:
+			"item_picked", "glyph_learned", "zone_entered", "name_written", "clue_examined", "memory_done",
+			"puzzle_solved", "trial_completed"]:
 		src[s] = {}
 	for id: String in zones.ZONES:
 		if id == "hub":
@@ -105,6 +106,8 @@ func _initialize() -> void:
 
 func add_enemy(src: Dictionary, e: Node) -> void:
 	src.enemy_killed[e.kind] = true
+	if e.kind == "tuyul_leader":
+		src.talked_to[e.kind] = true
 	if e.is_in_group("boss") or e is Sangkuriang or e is Sandekala:
 		src.boss_defeated[e.kind] = true
 	if not e.is_inside_tree():

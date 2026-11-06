@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "ririwa_name"
+name_key = "NPC_RIRIWA_NAME_NAME"
+entries = Array[Dictionary]([
+	{"if": ["!flag:ririwa_named"], "lines": ["DLG_RIRIWA_ROLL_V20", "DLG_RIRIWA_ROLL_V21", "DLG_RIRIWA_ROLL_V22"], "do": ["flag:ririwa_named"]},
+	{"if": [], "lines": ["DLG_RIRIWA_ROLL_V23"], "do": []}
+])

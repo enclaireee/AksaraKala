@@ -146,7 +146,11 @@ func _tick(delta: float) -> void:
 
 
 func _countdown() -> float:
-	return countdown_p3 if phase >= 3 else countdown_p2
+	var c := countdown_p3 if phase >= 3 else countdown_p2
+	var g := get_node_or_null("/root/Game")
+	if phase >= 3 and g and g.has_flag("choice_redeem_aria"):
+		c += 6.0   # Choice 6: Aria's shadow adds +6 s to Phase 3 countdown (bestiary.md)
+	return c
 
 
 func _enter(s: State) -> void:

@@ -23,6 +23,7 @@ const COOL := Color("D5E2F0")    # Laras chapters
 @export_enum("play", "walk", "chapter", "gap") var kind := "play"
 @export var memory_id := ""        # the memory_done:<id> id; "" takes data.memory_id, then Zones.memory_id
 @export var data: GapMemoryData    # kind gap only; null loads data/memories/gap_<Zones.memory_id>.tres
+@export var allow_cast := false    # true in K7 (the finale ruwatan where you are the dalang)
 
 var stand_in: CharacterBody2D
 var checkpoint: Node2D   # last one reached

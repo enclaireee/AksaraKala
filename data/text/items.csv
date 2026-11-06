@@ -111,3 +111,9 @@ ITEM_KUDA_KEPANG_3_NAME,Kuda Kepang (3/3),Kuda Kepang (3/3)
 ITEM_HERB_NAME,Daun Obat,Herb
 ITEM_FLASK_NAME,Isi Labu,Flask Refill
 SPELL_JAWA_KA_NAME,Ombak,Tide
+ITEM_SABUK_GALUH_NAME,Sabuk Galuh,Sabuk Galuh
+ITEM_SABUK_GALUH_DESC,+8% pertahanan dan +1 Vitalitas.,+8% defense and +1 Vitality.
+ITEM_SABUK_GALUH_LORE,Sabuk kerajaan yang diberikan saat keadilan ditegakkan di tepi Sungai Pamali.,A royal sash bestowed when justice is upheld on the banks of the Pamali.
+ITEM_LONTAR_KUNO_NAME,Lontar Kuno,Ancient Lontar
+ITEM_LONTAR_KUNO_DESC,+2 Spirit.,+2 Spirit.
+ITEM_LONTAR_KUNO_LORE,Naskah daun lontar tua dari pustaka desa.,An old palm-leaf manuscript from the village archive.

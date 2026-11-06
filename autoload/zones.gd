@@ -22,6 +22,9 @@ const ZONES := {
 	"gk_pasir": "res://zones/gk_pasir.tscn",
 	"gk_lupa": "res://zones/gk_lupa.tscn",
 	"gk_ruang_kala": "res://zones/gk_ruang_kala.tscn",
+	"gk_pelataran": "res://zones/gk_pelataran.tscn",
+	"gk_hutan": "res://zones/gk_hutan.tscn",
+	"gk_jembatan": "res://zones/gk_jembatan.tscn",
 	"mt_reruntuhan": "res://zones/mt_reruntuhan.tscn",
 	"mt_kuburan": "res://zones/mt_kuburan.tscn",
 	"mt_wetan": "res://zones/mt_wetan.tscn",
@@ -39,10 +42,16 @@ const ZONES := {
 	"sk_pantai": "res://zones/sk_pantai.tscn",
 	"sk_tebing": "res://zones/sk_tebing.tscn",
 	"sk_keraton": "res://zones/sk_keraton.tscn",
+	"sk_nelayan": "res://zones/sk_nelayan.tscn",
+	"sk_bakau": "res://zones/sk_bakau.tscn",
+	"sk_gua": "res://zones/sk_gua.tscn",
 	"kg_alun": "res://zones/kg_alun.tscn",
 	"kg_keraton": "res://zones/kg_keraton.tscn",
 	"kg_penjara": "res://zones/kg_penjara.tscn",
 	"kg_pamali": "res://zones/kg_pamali.tscn",
+	"kg_pasar": "res://zones/kg_pasar.tscn",
+	"kg_pustaka": "res://zones/kg_pustaka.tscn",
+	"kg_kaputren": "res://zones/kg_kaputren.tscn",
 }
 ## Where you can walk from each area, for the objective arrow's breadth-first search (architecture.md 9).
 ## Directed: a drop and a shortcut are listed only from the side that can always pass (world.md World
@@ -71,21 +80,30 @@ const ADJ := {
 	"tt_kali": ["tt_sabana", "tt_ladang"],
 	"tt_beringin": ["tt_sabana", "tt_pesisir"],   # tt_pesisir: the one-way drop
 	"tt_ladang": ["tt_kali", "tt_pasir", "tt_beringin"],   # tt_beringin: sc:tt_ladang
-	"tt_pasir": ["tt_ladang", "tt_candi", "tt_sabana"],   # tt_sabana: sc:tt_pasir
+	"tt_pasir": ["tt_ladang", "tt_candi", "tt_sabana", "tt_pesisir"],   # tt_sabana: sc:tt_pasir
 	"tt_candi": ["tt_pasir"],
-	"tt_pesisir": ["tt_sabana", "sk_karang"],   # sk_karang: S, the back route, kabut mq4_9
-	"sk_karang": ["tt_pesisir", "sk_pantai", "sk_keraton", "sk_tebing"],   # sk_keraton: S, kabut mq4_8; sk_tebing: L4
-	"sk_pantai": ["desa_purwa", "sk_karang"],
-	"sk_tebing": ["sk_karang", "sk_keraton", "ts_situ"],   # sk_keraton: one-way drop, ts_situ: sc:ts_sk
+	"tt_pesisir": ["tt_sabana", "tt_pasir", "sk_karang"],   # sk_karang: S, the back route, kabut mq4_9
+	"sk_karang": ["tt_pesisir", "sk_pantai", "sk_keraton", "sk_tebing", "sk_bakau", "sk_gua"],   # sk_keraton: S, kabut mq4_8; sk_tebing: L4
+	"sk_pantai": ["desa_purwa", "sk_karang", "sk_nelayan"],
+	"sk_tebing": ["sk_karang", "sk_keraton", "ts_situ", "sk_gua"],   # sk_keraton: one-way drop, ts_situ: sc:ts_sk
 	"sk_keraton": ["sk_karang", "sk_pantai", "gk_mulut"],   # sk_pantai: sc:sk_gerbang, gk_mulut: kabut mq4_9
-	"kg_alun": ["desa_purwa", "kg_keraton", "kg_pamali"],   # kg_keraton: kabut mqg_3, kg_pamali: kabut mqg_7
-	"kg_keraton": ["kg_alun", "kg_penjara"],
-	"kg_penjara": ["kg_keraton"],
+	"sk_nelayan": ["sk_pantai", "sk_bakau"],
+	"sk_bakau": ["sk_nelayan", "sk_karang"],
+	"sk_gua": ["sk_karang", "sk_tebing"],
+	"kg_alun": ["desa_purwa", "kg_keraton", "kg_pamali", "kg_pasar"],   # kg_keraton: kabut mqg_3, kg_pamali: kabut mqg_7
+	"kg_keraton": ["kg_alun", "kg_penjara", "kg_pustaka"],
+	"kg_penjara": ["kg_keraton", "kg_kaputren"],
 	"kg_pamali": ["kg_alun", "mt_gapura"],
-	"gk_mulut": ["desa_purwa", "gk_pasir", "gk_lupa", "sk_keraton"],   # gk_lupa: sc:gk_lorong
-	"gk_pasir": ["gk_mulut", "gk_lupa"],   # gk_lupa: the one-way drop
-	"gk_lupa": ["gk_mulut", "gk_ruang_kala"],
+	"kg_pasar": ["kg_alun", "kg_pustaka"],
+	"kg_pustaka": ["kg_pasar", "kg_kaputren", "kg_keraton"],
+	"kg_kaputren": ["kg_pustaka", "kg_penjara"],
+	"gk_mulut": ["desa_purwa", "gk_pasir", "gk_lupa", "sk_keraton", "gk_pelataran"],   # gk_lupa: sc:gk_lorong
+	"gk_pasir": ["gk_mulut", "gk_lupa", "gk_pelataran", "gk_hutan"],   # gk_lupa: the one-way drop
+	"gk_lupa": ["gk_mulut", "gk_ruang_kala", "gk_hutan", "gk_jembatan"],
 	"gk_ruang_kala": ["gk_lupa", "desa_purwa"],   # desa_purwa: kala_exit, kabut mq5_3
+	"gk_pelataran": ["gk_mulut", "gk_pasir"],
+	"gk_hutan": ["gk_pasir", "gk_lupa"],
+	"gk_jembatan": ["gk_lupa"],
 }
 ## Edges in ADJ with no way back (drops, and the one-way kala_exit door). Shortcut edges are in SHORTCUTS.
 const DROPS := [["ts_kawah_jalan", "ts_kampung"], ["mt_wetan", "mt_tegal"], ["tt_beringin", "tt_pesisir"], ["sk_tebing", "sk_keraton"], ["gk_pasir", "gk_lupa"], ["gk_ruang_kala", "desa_purwa"]]

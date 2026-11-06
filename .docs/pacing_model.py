@@ -1,25 +1,28 @@
-# Pacing model behind story.md "Pacing model (v4c)". Run: python3 .docs/pacing_model.py
-# Reads the main-quest step tables in quests.md 4 (the "Play" column) and the runtime table in story.md "Pacing",
-# and the side-quest cards in quests.md 5 (each card's "- Play:" lines, sized against BANDS; story.md "Side stories (v4d)").
+# Pacing model behind story.md "Pacing & Dialogue Rules (Story v5)". Run: python3 .docs/pacing_model.py
+# Reads the main-quest step tables in quests.md 4 (the "Play" column) and the runtime table in story.md,
+# and the side-quest cards in quests.md 5 (each card's "- Play:" lines, sized against BANDS).
 # Prints minutes per act and every rule that breaks. Exits 1 if a rule breaks.
 # Re-measure piece minutes after each playtest and change MIN below (TUNE).
 import os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-MIN = {'talk': 0.5, 'beat': 1, 'lesson': 1, 'write': 1, 'clue': 1.5, 'fight': 1.5, 'travel': 3,
-       'puzzle': 3, 'memory': 3, 'chapter': 4, 'miniboss': 3, 'boss': 5, 'setpiece': 4}
+MIN = {
+    'talk': 1.0, 'beat': 1.5, 'lesson': 1.5, 'write': 1.5, 'clue': 2.0,
+    'fight': 2.0, 'travel': 4.0, 'puzzle': 4.0, 'memory': 4.0,
+    'chapter': 6.0, 'miniboss': 4.0, 'boss': 6.0, 'setpiece': 5.0
+}
 PLAY = {'fight', 'travel', 'puzzle', 'miniboss', 'boss', 'setpiece', 'chapter', 'memory'}
 READ = {'talk', 'beat', 'lesson'}
 STORY = {'clue', 'talk', 'beat', 'memory', 'chapter', 'write'}
 PAYOFF = {'miniboss', 'boss', 'setpiece', 'beat'}
 HEADS = {'MQ0': 'Prologue', 'MQ1': 'Act I', 'MQG': 'Act II', 'MQ2': 'Act III', 'MQ3': 'Act IV', 'MQ5': 'Act VI'}
-BANDS = {'S': (5, 10), 'M': (10, 20), 'L': (20, 30)}  # side-quest minutes by card size (TUNE)
-STEP_MIN, TOL, PLAY_SHARE, READ_SHARE, STORY_GAP, PAYOFF_GAP, READ_RUN = 3, 0.15, 0.55, 0.25, 10, 25, 3
+BANDS = {'S': (8, 15), 'M': (15, 28), 'L': (25, 45)}  # side-quest minutes by card size in v5 (TUNE)
+STEP_MIN, TOL, PLAY_SHARE, READ_SHARE, STORY_GAP, PAYOFF_GAP, READ_RUN = 5.0, 0.15, 0.55, 0.25, 14, 34, 3
 
 
 def act_of(mq, num):
     if mq == 'MQ4':
-        return 'Interlude' if int(num.split('.')[1]) <= 5 else 'Act V'  # 4.10 is after 4.9, not 4.1
+        return 'Interlude' if int(num.split('.')[1]) <= 8 else 'Act V'
     return HEADS.get(mq)
 
 
@@ -63,8 +66,16 @@ def read_steps():
 def read_targets():
     t = {}
     for line in open(os.path.join(HERE, 'story.md'), encoding='utf-8'):
+        if not line.startswith('|'):
+            continue
         cells = [c.strip() for c in line.strip().strip('|').split('|')]
-        if len(cells) >= 4 and cells[3].isdigit():
+        if len(cells) >= 6 and cells[5].isdigit():
+            name = cells[0].replace('*', '')
+            for a in ['Prologue', 'Act VI', 'Act V', 'Act IV', 'Act III', 'Act II', 'Act I', 'Interlude']:
+                if name.startswith(a):
+                    t.setdefault(a, int(cells[5]))
+                    break
+        elif len(cells) >= 4 and cells[3].isdigit():
             name = cells[0].replace('*', '')
             for a in ['Prologue', 'Act VI', 'Act V', 'Act IV', 'Act III', 'Act II', 'Act I', 'Interlude']:
                 if name.startswith(a):
@@ -115,7 +126,7 @@ def main():
     acts, targets, fails = read_steps(), read_targets(), []
     order = ['Prologue', 'Act I', 'Act II', 'Act III', 'Act IV', 'Interlude', 'Act V', 'Act VI']
     print('%-10s %5s %7s %7s %6s %6s' % ('Act', 'steps', 'minutes', 'target', 'play%', 'read%'))
-    total = 0
+    total = 0.0
     for a in order:
         steps = acts.get(a, [])
         missing = [n for n, p in steps if p is None]
@@ -128,8 +139,9 @@ def main():
             m = sum(MIN[x] for x in p)
             mins += m
             seq += p
-            if m < STEP_MIN and a != 'Interlude':
-                fails.append('%s %s: thin step (%.1f min < %d)' % (a, n, m, STEP_MIN))
+            min_req = 3.0 if a == 'Interlude' else STEP_MIN
+            if m < min_req:
+                fails.append('%s %s: thin step (%.1f min < %.1f)' % (a, n, m, min_req))
         total += mins
         tgt = targets.get(a)
         play = sum(MIN[x] for x in seq if x in PLAY) / mins if mins else 0

@@ -7,7 +7,7 @@ Related: [rpg.md](rpg.md) (base formulas), [classes.md](classes.md), [bestiary.m
 ## 1. Decisions
 | Topic | Decision |
 |-------|----------|
-| Length | Main quest alone is about 6.5-7 hours (story v3.1, **TUNE**). Side quests and exploring add about 3 hours (about 10 hours for 100%) |
+| Length | Main quest alone is about **21–22 hours** (Story v5: 138 steps, 1,285 min modeled, 49 areas, **TUNE**). Side quests (20 quests, ~454 min modeled) and exploring add about 12–14 hours (**~35 hours for 100%**) |
 | Enemy scaling | Fixed per zone. Overleveling makes a zone easier, which rewards side quests and exploration |
 | Difficulty | One balanced mode plus opt-in assist toggles (section 9) |
 | Bosses | An average player at the target level wins in 1-3 tries |
@@ -15,20 +15,20 @@ Related: [rpg.md](rpg.md) (base formulas), [classes.md](classes.md), [bestiary.m
 
 ## 2. Pacing
 ### 2.1 Time budget (main quest only)
-Runtime target from [story.md](story.md) Pacing (v3.1, 2026-11-06). Every number is **TUNE**; measure real minutes per act in the playtest.
+Runtime target from [story.md](story.md) Pacing (Story v5, 2026-11-06; checked by `python3 .docs/pacing_model.py`). Every number is **TUNE**; measure real minutes per act in the playtest.
 
-| Part | Quest | Steps | Minutes | Running % |
-|------|-------|-------|---------|-----------|
-| Prologue | MQ0 | 8 | 20 | 5% |
-| Act I Tatar Sunda | MQ1 | 13 | 75 | 23% |
-| Act II Keraton Galuh | MQG | 8 | 50 | 35% |
-| Act III Mataram | MQ2 | 13 | 85 | 56% |
-| Act IV Tanah Timur | MQ3 | 11 | 75 | 74% |
-| Interlude Desa Purwa | MQ4 4.1-4.2 | 2 | 10 | 76% |
-| Act V Segara Kidul | MQ4 4.3-4.9 | 7 | 45 | 87% |
-| Act VI Gua Kala | MQ5 | 8 | 45 | 98% |
-| Epilogue | | | 5 | 100% |
-| **Total** | | **70** | **about 410 (6.5-7 h)** | Side quests and exploring add about 3 h (about 10 h at 100%) |
+| Part | Quest | Areas | Steps | Minutes | Running % |
+|------|-------|-------|-------|---------|-----------|
+| Prologue | MQ0 | 1 | 12 | 80 | 6% |
+| Act I Tatar Sunda | MQ1 | 8 | 24 | 210 | 23% |
+| Act II Keraton Galuh | MQG | 7 | 20 | 175 | 37% |
+| Act III Mataram | MQ2 | 8 | 24 | 220 | 54% |
+| Act IV Tanah Timur | MQ3 | 8 | 22 | 205 | 70% |
+| Interlude Desa Purwa | MQ4 4.1-4.8 | 1 | 8 | 45 | 74% |
+| Act V Segara Kidul | MQ4 4.9-4.22 | 7 | 14 | 160 | 86% |
+| Act VI Gua Kala | MQ5 | 7 | 14 | 160 | 99% |
+| Epilogue | Playable | 1 | — | 15 | 100% |
+| **Total** | | **49** | **138** | **1,270 target (1,285 modeled, ~21.4 h)** | **Side quests (~454 min) and exploring add ~13 h (~35 h at 100%)** |
 
 Glyphs known at the end of each part: Prologue 1, Act I 4, Act III 8, Act V 9 (Ombak). Acts II and IV teach none.
 

@@ -16,7 +16,16 @@ const QUEST_ILMU := {"tatar_sunda": [30, 60, 90], "desa_purwa": [30, 60, 90], "k
 ## Quest-trigger signals on Events with one String arg (quests.md 7.2).
 const QUEST_SIGNALS := ["talked_to", "item_picked", "boss_defeated", "area_cleared", "area_entered",
 	"zone_entered", "petilasan_activated", "glyph_learned", "class_chosen", "weakness_triggered", "name_written",
-	"clue_examined", "memory_done"]
+	"clue_examined", "memory_done", "puzzle_solved", "trial_completed"]
+## Cross-time Laras flags set automatically when LC1-LC6 complete (quests.md 7.1).
+const LARAS_FLAGS := {
+	"lc1": ["mq1_lc", "laras_sabotage:crater_seal", "laras_key:crater_post", "laras_sabotage_crater_seal", "laras_key_crater_post"],
+	"lc2": ["mqg_lc", "laras_sabotage:glamour_seal", "laras_key:archive_grate", "laras_sabotage_glamour_seal", "laras_key_archive_grate"],
+	"lc3": ["mq2_lc", "laras_key:candi_crypt", "laras_sabotage:bondowoso_pillar", "laras_key_candi_crypt", "laras_sabotage_bondowoso_pillar"],
+	"lc4": ["mq3_lc", "laras_key:sand_tunnel", "laras_sabotage:keris_seventh_stake", "laras_key_sand_tunnel", "laras_sabotage_keris_seventh_stake"],
+	"lc5": ["mq4_lc", "laras_key:tidal_gate", "laras_key_tidal_gate"],
+	"lc6": ["mq5_lc", "laras_sabotage:kala_eclipse", "laras_sabotage_kala_eclipse"],
+}
 ## Saved fields, in to_dict order. Add a field here and in _reset(); old saves get its default.
 const FIELDS := ["class_id", "stats", "ilmu", "points_spent", "glyphs_learned", "inventory", "equipped",
 	"flask_charges", "flask_max", "herb_pouches", "last_petilasan", "killed", "flags", "play_time", "quests", "codex", "pinned",
@@ -92,6 +101,9 @@ func _connect_events() -> void:
 		if kind != "":
 			on_event("enemy_killed", kind))
 	ev.weakness_triggered.connect(func(kind: String) -> void: set_flag("weak:" + kind))
+	ev.memory_done.connect(func(mid: String) -> void:
+		for fl: String in LARAS_FLAGS.get(mid, []):
+			set_flag(fl, false))
 
 
 func _process(delta: float) -> void:
@@ -231,7 +243,13 @@ func learned_glyphs() -> Array[GlyphData]:
 
 func has_flag(f: String) -> bool:
 	var v: Variant = flags.get(f, false)
-	return v is bool and v
+	if v is bool and v:
+		return true
+	if f.begins_with("laras_"):
+		var alt := f.replace(":", "_") if ":" in f else f.replace("laras_key_", "laras_key:").replace("laras_sabotage_", "laras_sabotage:")
+		var va: Variant = flags.get(alt, false)
+		return va is bool and va
+	return false
 
 
 func set_flag(f: String, save := true) -> void:
@@ -300,7 +318,18 @@ func on_event(sig: String, arg: String) -> void:
 ## "sig:arg" exact, bare "sig" for any arg, or a trailing * as a prefix ("item_picked:angklung_*").
 func _matches(on: String, sig: String, arg: String) -> bool:
 	var ev := sig + ":" + arg
-	return on == ev or on == sig or (on.ends_with("*") and ev.begins_with(on.trim_suffix("*")))
+	if on == ev or on == sig or (on.ends_with("*") and ev.begins_with(on.trim_suffix("*"))):
+		return true
+	if on.begins_with("puzzle_solved:") and sig in ["area_entered", "puzzle_solved"]:
+		var pid := on.substr(14)
+		return arg == pid or arg == "puzzle_" + pid or "puzzle_" + arg == pid
+	if on.begins_with("area_entered:") and sig in ["area_entered", "puzzle_solved"]:
+		var tid := on.substr(13)
+		return arg == tid or arg == "puzzle_" + tid or "puzzle_" + arg == tid
+	if on.begins_with("trial_completed:") and sig in ["area_cleared", "area_entered", "trial_completed"]:
+		var trid := on.substr(16)
+		return arg == trid or arg == "puzzle_" + trid
+	return false
 
 
 func _bump(id: String) -> void:
@@ -524,6 +553,11 @@ func run(action: String) -> void:
 		"clue":   # clue:<id>, what a Clue runs after its lines (architecture.md 9b)
 			set_flag("clue_" + arg)
 			_emit("clue_examined", arg)
+		"puzzle":
+			set_flag("puzzle_" + arg)
+			_emit("puzzle_solved", arg)
+		"memory":
+			get_node("/root/Zones").enter_memory(arg)
 		"write":   # write:<seq_id>:<glyph_id>,<glyph_id>,... (ui/glyph_lesson)
 			var p := arg.split(":", true, 1)
 			if p.size() == 2:

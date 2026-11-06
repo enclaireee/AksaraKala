@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "k2_fisher"
+name_key = "NPC_K2_FISHER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_k2=done"], "lines": ["DLG_K2_FISHER_V21"], "do": []},
+	{"if": ["step:sq_k2=3"], "lines": ["DLG_K2_FISHER_V20", "DLG_K2_FISHER_V21"], "do": []},
+	{"if": ["quest:sq_k2=active"], "lines": ["DLG_K2_FISHER_V22"], "do": []},
+	{"if": ["flag:mq4_4"], "lines": ["DLG_K2_FISHER_V23", "DLG_K2_FISHER_V24"], "do": ["start:sq_k2"]},
+	{"if": [], "lines": ["DLG_K2_FISHER_V25"], "do": []}
+])

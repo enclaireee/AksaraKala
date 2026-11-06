@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "door_c"
+name_key = "NPC_DOOR_NEIGHBOUR_NAME"
+entries = Array[Dictionary]([
+	{"if": ["!flag:name_door_c"], "lines": ["DLG_DOOR_C_V1", "@NPC_HERO_NAME", "DLG_DOOR_C_H1", "@NPC_DOOR_NEIGHBOUR_NAME", "DLG_DOOR_C_V2"], "do": ["flag:name_door_c"]},
+	{"if": [], "lines": ["DLG_DOOR_C_V3"], "do": []}
+])

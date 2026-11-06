@@ -13,7 +13,7 @@ const MAP := [
 	"######################,,,,,,w,,,,,,,,,w,,,,,,,##############",
 	"######################,,,,,,,w,,,,,,,,,,w,,,,,##############",
 	"######################,,########,,##########################",
-	"##################....,,....####,,##########################",
+	"##################....,,O...####,,##########################",
 	"##################.bb.,,.2bb####,,##########################",
 	"##################.bb.h,..bb####,,##########################",
 	"##################....,,M...####==##########################",
@@ -41,17 +41,18 @@ const MAP := [
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kampung", "spawn_id": "from_ts_leuwi"}, "tile": ","},   # exit to ts_kampung (north edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kampung"}, "tile": ","},   # spawn, arrival from ts_kampung
-	"S": {"scene": "res://entities/bosses/sandekala.tscn", "props": {"cond": "flag:mq1_h3"}, "tile": "."},   # miniboss Sandekala (MQ1 1.6); stays away until the K1 memory is done (`mq1_h3`) so the Hunt cannot be skipped
+	"S": {"scene": "res://entities/bosses/sandekala.tscn", "props": {"cond": "flag:mq1_h3"}, "tile": "."},   # miniboss Sandekala (MQ1 1.10); stays away until the K1 memory is done (`mq1_h3`) so the Hunt cannot be skipped
 	"m": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "nw"}, "tile": "."},   # oncor NW
 	"n": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "ne"}, "tile": "."},   # oncor NE
 	"p": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "sw"}, "tile": "."},   # oncor SW
 	"s": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "se"}, "tile": "."},   # oncor SE
 	"j": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sande_room", "size": Vector2i(21,10)}, "tile": "."},   # trigger, Sandekala room entered (starts darkening)
-	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "leuwi_mother"}, "tile": "."},   # NPC the mother who calls her son's name into the trees (MQ1 1.3 `hamlet_hook` beat; she lights her oncor again after Sandekala)
-	"h": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sunda_hamlet", "size": Vector2i(10,7)}, "tile": ","},   # trigger, the gorge-side hamlet entered at dusk (MQ1 1.3 `area_entered:sunda_hamlet`, plays `hamlet_hook`)
-	"1": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "sandal"}, "tile": "."},   # clue, the boy's sandal at the river's edge (K1 clue 1)
-	"2": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "oncor"}, "tile": "."},   # clue, a row of oncor nobody lit (K1 clue 2)
-	"3": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "gorge_prints", "memory_id": "k1_maghrib"}, "tile": ","},   # clue, Laras's and Ciung's prints going down into the gorge; the last K1 clue, pulls you into K1 (MQ1 1.4-1.5)
+	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "leuwi_mother"}, "tile": "."},   # NPC the mother who calls her son's name into the trees (MQ1 1.6 `talked_to:leuwi_mother`; she lights her oncor again after Sandekala)
+	"h": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sunda_hamlet", "size": Vector2i(10,7)}, "tile": ","},   # trigger, the gorge-side hamlet entered at dusk (MQ1 1.5 `area_entered:sunda_hamlet`, plays `hamlet_hook`)
+	"1": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "sandal"}, "tile": "."},   # clue, the boy's sandal at the river's edge (MQ1 1.6 K1 clue 1)
+	"2": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "oncor"}, "tile": "."},   # clue, a row of oncor nobody lit (MQ1 1.7 K1 clue 2)
+	"O": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "leuwi_outer_oncor", "size": Vector2i(4,4)}, "tile": "."},   # trigger, relight the outer hamlet bamboo lanterns (MQ1 1.8 `puzzle_solved:leuwi_outer_oncor`)
+	"3": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "gorge_prints", "memory_id": "k1_maghrib"}, "tile": ","},   # clue, Laras's and Ciung's prints going down into the gorge; the last K1 clue, pulls you into K1 (MQ1 1.7/1.9)
 	"c": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "maghrib"}, "tile": "."},   # codex spot, the maghrib oncor custom (the `travel` find and the area's optional find; id ASSUMED)
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": ","},   # loose faceless, roaming pack in the passage (respawns on zone reload, no unique_id); two pairs, the `travel` piece's two skirmishes
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:ts_leuwi", "open_side": "s"}, "tile": ","},   # shortcut gate, the gorge tunnel (opens from the sande room, 2 tiles); the way back after the boss (Pacing 5)

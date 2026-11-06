@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "cliff_altar"
+name_key = "NPC_CLIFF_ALTAR_NAME"
+entries = Array[Dictionary]([
+	{"if": ["!flag:cliff_offered"], "lines": ["DLG_CLIFF_ALTAR_1"], "do": ["flag:cliff_offered"], "choices": [{"text": "CHOICE_OFFER_MEMORY", "do": ["flag:choice_offer_memory"]}, {"text": "CHOICE_OFFER_SONG", "do": ["flag:choice_offer_song"]}]},
+	{"if": [], "lines": ["DLG_CLIFF_ALTAR_2"], "do": []}
+])

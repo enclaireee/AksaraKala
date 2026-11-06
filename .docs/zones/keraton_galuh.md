@@ -11,11 +11,19 @@ Story v4/v4b/v4c ([quests.md](../quests.md) section 4, MQG g.1-g.9, [story.md](.
 | `kg_keraton` | 60x34 | Palace courtyard and throne room | Rest, boss Barma Wijaya |
 | `kg_penjara` | 60x34 | The cells | Fight, deserter, cage codex |
 | `kg_pamali` | 60x34 | River crossing | Duel Hariang Banga, link to Mataram |
+| `kg_pasar` | 60x34 | Pasar Kuta outer market and storehouses | Informant, manifest, tournament riggers, SQ-G1, SQ-C1 |
+| `kg_pustaka` | 60x34 | Balai Pustaka royal archive | Nyai Sekar, mirror-lamp cipher, scraped genealogy, grate to keraton |
+| `kg_kaputren` | 60x34 | Kaputren royal women's quarters | Courtyard fight, Laras's guest chamber, eavesdrop, SQ-G2 |
 
 ## Link table
 | from | to | kind | gate | spawns |
 |------|----|------|------|--------|
 | `desa_purwa` | `kg_alun` | link | - | `from_desa_purwa` in kg_alun; `from_kg_alun` in desa_purwa (added by others) |
+| `kg_alun` | `kg_pasar` | link | - | `from_kg_alun` in kg_pasar; `from_kg_pasar` in kg_alun |
+| `kg_pasar` | `kg_pustaka` | link | - | `from_kg_pasar` in kg_pustaka; `from_kg_pustaka` in kg_pasar |
+| `kg_pustaka` | `kg_kaputren` | link | - | `from_kg_pustaka` in kg_kaputren; `from_kg_kaputren` in kg_pustaka |
+| `kg_kaputren` | `kg_penjara` | link | - | `from_kg_kaputren` in kg_penjara; `from_kg_penjara` in kg_kaputren |
+| `kg_pustaka` | `kg_keraton` | link | `laras_key:archive_grate` | `from_kg_pustaka` in kg_keraton; `from_kg_keraton` in kg_pustaka |
 | `kg_alun` | `kg_keraton` | link | kabut `mqg_3` | `from_kg_alun` in kg_keraton; `from_kg_keraton` in kg_alun |
 | `kg_keraton` | `kg_penjara` | link | - | `from_kg_keraton` in kg_penjara; `from_kg_penjara` in kg_keraton |
 | `kg_alun` | `kg_pamali` | link | kabut `mqg_7` | `from_kg_alun` in kg_pamali; `from_kg_pamali` in kg_alun |
@@ -61,10 +69,10 @@ X,,,,,,,,,,,,,_____________________,,,,,,,,,,,,,,,,,,,J,,,,Y
 #..bbb..................................bbb.....u...bbb....#
 #..bbbc.................................bbb....u....bbb....#
 #...........................z..............................#
-#..........................................................#
-#..........................................................#
-#..........................................................#
-############################################################
+#............................,,............................#
+#............................,,............................#
+#............................q,............................#
+#############################ZZ#############################
 ```
 
 ### Legend
@@ -74,6 +82,8 @@ X,,,,,,,,,,,,,_____________________,,,,,,,,,,,,,,,,,,,J,,,,Y
 | `e` | spawn, arrival from desa_purwa | `res://entities/world/spawn.tscn` | `{id:"from_desa_purwa"}` | path | 1 |
 | `N` | exit to kg_keraton (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_keraton", spawn_id:"from_kg_alun"}` | path | 2 |
 | `n` | spawn, arrival from kg_keraton | `res://entities/world/spawn.tscn` | `{id:"from_kg_keraton"}` | path | 1 |
+| `Z` | exit to kg_pasar (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_pasar", spawn_id:"from_kg_alun"}` | path | 2 |
+| `q` | spawn, arrival from kg_pasar | `res://entities/world/spawn.tscn` | `{id:"from_kg_pasar"}` | path | 1 |
 | `K` | kabut, north gate to the palace (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mqg_3"}` | path | 2 |
 | `Y` | exit to kg_pamali (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_pamali", spawn_id:"from_kg_alun"}` | path | 2 |
 | `y` | spawn, arrival from kg_pamali | `res://entities/world/spawn.tscn` | `{id:"from_kg_pamali"}` | path | 1 |
@@ -130,8 +140,8 @@ Roaming packs: Faceless (46,26), (48,27), (47,28). 3 kills, skirtable, outside t
 ###__D_________##__________________________#################
 ###____________##____________B_____________#################
 ###____________##_________Q_____O__________#################
-###____________##________q_________________#################
-###____________##_________________R________#################
+Zz__J__________##________q_________________#################
+Z______________##_________________R________#################
 ###____________##__________________________#################
 ###____________##____________T_____________#################
 ###____________##__________________________#################
@@ -140,7 +150,7 @@ Roaming packs: Faceless (46,26), (48,27), (47,28). 3 kills, skirtable, outside t
 ########WW###################KK#############################
 #.................#..........,,............................#
 #.............U...#..........,,............................#
-#...F.............#..........,,............................#
+#...F.............#..........,L............................#
 #.....bbb.........#..........,,...................bbb......#
 #.....bbb.........#...1......,,...................bbb.3....#
 #.....bbb.........#..........,,...................bbb......#
@@ -167,6 +177,10 @@ Roaming packs: Faceless (46,26), (48,27), (47,28). 3 kills, skirtable, outside t
 | `s` | spawn, arrival from kg_alun | `res://entities/world/spawn.tscn` | `{id:"from_kg_alun"}` | path | 1 |
 | `X` | exit to kg_penjara (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_penjara", spawn_id:"from_kg_keraton"}` | path | 2 |
 | `e` | spawn, arrival from kg_penjara | `res://entities/world/spawn.tscn` | `{id:"from_kg_penjara"}` | path | 1 |
+| `Z` | exit to kg_pustaka (west edge, 2 tiles, archive grate) | `res://entities/world/exit.tscn` | `{target_zone:"kg_pustaka", spawn_id:"from_kg_keraton"}` | floor | 2 |
+| `z` | spawn, arrival from kg_pustaka | `res://entities/world/spawn.tscn` | `{id:"from_kg_pustaka"}` | floor | 1 |
+| `J` | trigger keraton_upper_gallery (MQG g.16) | `res://entities/world/trigger.tscn` | `{trigger_id:"keraton_upper_gallery", size:Vector2i(4,4)}` | floor | 1 |
+| `L` | encounter keraton_throne_approach (MQG g.19) | `res://entities/world/encounter.tscn` | `{area_id:"keraton_throne_approach", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless_champion.tscn, Vector2i(0,0)], [res://entities/enemies/faceless.tscn, Vector2i(-4,0)], [res://entities/enemies/faceless.tscn, Vector2i(4,0)]]]}` | path | 1 |
 | `K` | kabut, throne room door (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mqg_6"}` | path | 2 |
 | `P` | petilasan galuh_1, inside the inner garden | `res://entities/petilasan/petilasan.tscn` | `{id:"galuh_1"}` | path | 1 |
 | `B` | boss Barma Wijaya, the false king (MQG g.9) | `res://entities/bosses/barma_wijaya.tscn` | `{unique_id:"barma_wijaya"}` | floor | 1 |
@@ -240,17 +254,17 @@ X,,,,,_______________________________________________#######
 ######_______________________________________________#######
 ######_______________________________________________#######
 ######_______________________________________________#######
-############################################################
-############################################################
-############################################################
-############################################################
-############################################################
-############################################################
-############################################################
-############################################################
-############################################################
-############################################################
-############################################################
+####################____________________####################
+####################____________________####################
+####################____________________####################
+####################____________________####################
+####################_________P__________####################
+####################____________________####################
+####################____________________####################
+####################____________________####################
+####################____________________####################
+#############################s_#############################
+#############################SS#############################
 ```
 
 ### Legend
@@ -258,6 +272,9 @@ X,,,,,_______________________________________________#######
 |------|------|-------|-------|-------|-------|
 | `X` | exit to kg_keraton (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_keraton", spawn_id:"from_kg_penjara"}` | path | 2 |
 | `e` | spawn, arrival from kg_keraton | `res://entities/world/spawn.tscn` | `{id:"from_kg_keraton"}` | path | 1 |
+| `S` | exit to kg_kaputren (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_kaputren", spawn_id:"from_kg_penjara"}` | floor | 2 |
+| `s` | spawn, arrival from kg_kaputren | `res://entities/world/spawn.tscn` | `{id:"from_kg_kaputren"}` | floor | 1 |
+| `P` | encounter penjara_stairs (MQG g.11) | `res://entities/world/encounter.tscn` | `{area_id:"penjara_stairs", size:Vector2i(12,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | floor | 1 |
 | `G` | encounter galuh_cells (the guards of the cells) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_cells", size:Vector2i(22,10), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-8,-3)], [res://entities/enemies/faceless.tscn, Vector2i(-2,3)], [res://entities/enemies/faceless.tscn, Vector2i(5,-3)]], [[res://entities/enemies/faceless.tscn, Vector2i(-6,3)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(8,2)]]]}` | floor | 1 |
 | `W` | encounter galuh_escort, the wagon escort in the cell yard; two waves (MQG g.4 `fight x2`), the near miss | `res://entities/world/encounter.tscn` | `{area_id:"galuh_escort", size:Vector2i(16,10), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-5,-2)], [res://entities/enemies/faceless.tscn, Vector2i(0,3)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)]], [[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(6,2)]]]}` | floor | 1 |
 | `D` | NPC the Faceless deserter, in a cell | `res://entities/npc/npc.tscn` | `{npc_id:"faceless_deserter"}` | floor | 1 |
@@ -304,7 +321,7 @@ No roaming enemies.
 #.......................,,,r,,,,,,,,....L.........bbb......#
 #.......................,,,,,,,,,,,,..............bbb......#
 #...............S.......,,,,,,,,,,,,..QK..........bbb......#
-#....................c..,,,,,,,,,,,,.......................#
+#...............N....c..,,,,,,,,,,,,......P................#
 Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,,,,,,,,,,,,yY
 X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 #.......................,,,,,s,,,,,,H......................#
@@ -343,6 +360,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `K` | NPC Ki Sumarto at the ford camp, the dalang of the brothers' show (MQ2 2.12; he is a staging figure, the clue `Q` starts the memory) | `res://entities/npc/npc.tscn` | `{npc_id:"ki_sumarto", cond:"flag:mq2_8,!flag:mq2_h5"}` | grass | 1 |
 | `Q` | clue, Ki Sumarto's show at the ford camp; pulls you into K-III (MQ2 2.12, `memory_id` `k_iii`, scene specified in mataram.md) | `res://entities/world/clue.tscn` | `{clue_id:"sumarto_show", memory_id:"k_iii", cond:"flag:mq2_8"}` | grass | 1 |
 | `L` | clue, Hariang Banga's camp letters to his mother, the person-boss clue (MQ2 2.13; appears once K-III is done, then he comes to the ford) | `res://entities/world/clue.tscn` | `{clue_id:"hariang_letters", cond:"flag:mq2_h5"}` | grass | 1 |
+| `P` | petilasan galuh_2, at the river camp | `res://entities/petilasan/petilasan.tscn` | `{id:"galuh_2"}` | grass | 1 |
+| `N` | write spot nagawiru, on the Pamali stone (MQ2 2.21) | `res://entities/npc/npc.tscn` | `{npc_id:"nagawiru", cond:"flag:mq2_7"}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents |
@@ -360,6 +379,186 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `pamali_ford` | `2 (40,19)` | 14x8 | W1: Faceless (-4,-1), (+2,+2), Faceless Archer (+5,-1) | One shooter; cond `step:mq2=10`; 8+ tiles from the camp spots `K` `Q` `L` |
 
 Hariang Banga `unique_id:"hariang_banga"` is a boss.
+
+## Area 5: kg_pasar
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: Pasar Kuta, the bustling outer market and stone storehouses south of the royal square, shaded by banyan groves along the eastern stalls.
+- Purpose: Ch 1 undercover scouting (MQG g.2 `pasar_informant`, `wagon_manifest`; g.3 `galuh_market_riggers`), `SQ-G1` Si Kabayan (`kabayan`, `g1_debt_ledger`, `g1_palm_sack`), `SQ-C1` (`c1_rooster_found`), and chest `galuh_chest_pasar`. Links north to `kg_alun` and east to `kg_pustaka`.
+
+### Map
+```
+#############################NN#############################
+#............................n,............................#
+#............................,,............................#
+#............................,,............................#
+#...bbb......................,,.....................bbb....#
+#...bbb......................,,.....................bbb....#
+#...bbb......................,,.....................bbb....#
+#............................,,............................#
+#............................,,.....................c......#
+#............................,,............................#
+#.....___________________....,,............................#
+#.....___________________....,,............................#
+#.....___M_______________....,,..I.........................#
+#.....___________________....,,............................#
+#.....___________________....,,............................#
+#....._________R_________....,,............................#
+#.....___________________....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,eE
+#.....___________________....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E
+#.....___________________..................................#
+#.....___________________..................................#
+#.....___________________..................................#
+#..........................................................#
+#.........................................k..d.............#
+#...bbb...................................bbb..............#
+#...bbb...................................bbb..............#
+#...bbb...................................a................#
+#..........................................................#
+#...................z......................................#
+#..........................................................#
+#..........................................................#
+#..........................................................#
+#..........................................................#
+#..........................................................#
+############################################################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `N` | exit to kg_alun (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_alun", spawn_id:"from_kg_pasar"}` | path | 2 |
+| `n` | spawn, arrival from kg_alun | `res://entities/world/spawn.tscn` | `{id:"from_kg_alun"}` | path | 1 |
+| `E` | exit to kg_pustaka (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_pustaka", spawn_id:"from_kg_pasar"}` | path | 2 |
+| `e` | spawn, arrival from kg_pustaka | `res://entities/world/spawn.tscn` | `{id:"from_kg_pustaka"}` | path | 1 |
+| `I` | NPC pasar_informant, market informant (MQG g.2) | `res://entities/npc/npc.tscn` | `{npc_id:"pasar_informant"}` | grass | 1 |
+| `M` | clue wagon_manifest, in the storehouse (MQG g.2) | `res://entities/world/clue.tscn` | `{clue_id:"wagon_manifest"}` | floor | 1 |
+| `R` | encounter galuh_market_riggers, tournament riggers in the storehouse (MQG g.3) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_market_riggers", size:Vector2i(15,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(0,2)]]]}` | floor | 1 |
+| `k` | NPC Si Kabayan, resting by the market banyan (SQ-G1) | `res://entities/npc/npc.tscn` | `{npc_id:"kabayan"}` | grass | 1 |
+| `d` | clue g1_debt_ledger, the official's tax ledger (SQ-G1) | `res://entities/world/clue.tscn` | `{clue_id:"g1_debt_ledger"}` | grass | 1 |
+| `a` | clue g1_palm_sack, Kabayan's sack; pulls into sq_g1_kabayan (SQ-G1) | `res://entities/world/clue.tscn` | `{clue_id:"g1_palm_sack", memory_id:"sq_g1_kabayan"}` | grass | 1 |
+| `z` | trigger c1_rooster_found, market rooftop perch (SQ-C1) | `res://entities/world/trigger.tscn` | `{trigger_id:"c1_rooster_found", size:Vector2i(4,4)}` | grass | 1 |
+| `c` | chest galuh_chest_pasar (55 Ilmu) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_pasar", item_id:"ilmu:55"}` | grass | 1 |
+
+## Area 6: kg_pustaka
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: Balai Pustaka, the stone-terraced royal palm-leaf archive of Galuh, flanked by quiet courtyard gardens and a drainage grate leading north to the upper palace gallery.
+- Purpose: Ch 2 archive infiltration (MQG g.6 `pustaka_guards`, `nyai_sekar`; g.7 `pustaka_cipher`, `scraped_genealogy`), chest `galuh_chest_pustaka`, and the `laras_key:archive_grate` passage north to `kg_keraton`. Links west to `kg_pasar`, south to `kg_kaputren`, and north to `kg_keraton`.
+
+### Map
+```
+#############################NN#############################
+#.................#__________n___________#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#...bbb...........#___________________c__#..........bbb....#
+#...bbb...........#______________________#..........bbb....#
+#...bbb...........#______________________#..........bbb....#
+#.................#______________________#.................#
+#.................#_____Y____P____L______#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+Ww,,,,,,,,,,,,,,,,,___________G___________.................#
+W,,,,,,,,,,,,,,,,,,_______________________.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#.................#______________________#.................#
+#...bbb...........#______________________#..........bbb....#
+#...bbb...........#______________________#..........bbb....#
+#...bbb...........#______________________#..........bbb....#
+#.................###########,,###########.................#
+#............................,,............................#
+#............................,,............................#
+#............................,,............................#
+#............................,,............................#
+#............................,,............................#
+#............................s,............................#
+#############################SS#############################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `W` | exit to kg_pasar (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_pasar", spawn_id:"from_kg_pustaka"}` | path | 2 |
+| `w` | spawn, arrival from kg_pasar | `res://entities/world/spawn.tscn` | `{id:"from_kg_pasar"}` | path | 1 |
+| `S` | exit to kg_kaputren (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_kaputren", spawn_id:"from_kg_pustaka"}` | path | 2 |
+| `s` | spawn, arrival from kg_kaputren | `res://entities/world/spawn.tscn` | `{id:"from_kg_kaputren"}` | path | 1 |
+| `N` | exit to kg_keraton (north edge, 2 tiles, archive grate) | `res://entities/world/exit.tscn` | `{target_zone:"kg_keraton", spawn_id:"from_kg_pustaka"}` | floor | 2 |
+| `n` | spawn, arrival from kg_keraton | `res://entities/world/spawn.tscn` | `{id:"from_kg_keraton"}` | floor | 1 |
+| `G` | encounter pustaka_guards, archive guards (MQG g.6) | `res://entities/world/encounter.tscn` | `{area_id:"pustaka_guards", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(3,0)]]]}` | floor | 1 |
+| `Y` | NPC Nyai Sekar, royal archivist (MQG g.6) | `res://entities/npc/npc.tscn` | `{npc_id:"nyai_sekar"}` | floor | 1 |
+| `P` | trigger pustaka_cipher, mirror-lamp cipher (MQG g.7) | `res://entities/world/trigger.tscn` | `{trigger_id:"pustaka_cipher", size:Vector2i(4,4)}` | floor | 1 |
+| `L` | clue scraped_genealogy, King Nagawiru's scraped lontar (MQG g.7) | `res://entities/world/clue.tscn` | `{clue_id:"scraped_genealogy"}` | floor | 1 |
+| `c` | chest galuh_chest_pustaka (55 Ilmu) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_pustaka", item_id:"ilmu:55"}` | floor | 1 |
+
+## Area 7: kg_kaputren
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: The Kaputren, the royal women's quarters and colonnaded courtyard gardens, with silk-screened guest chambers and a side stair leading east to the dungeon yard.
+- Purpose: Ch 2 Kaputren investigation (MQG g.8 `kaputren_courtyard`; g.9 `kaputren_screens`, `laras_hairpin`; g.10 `kaputren_eavesdrop`), `SQ-G2` Ririwa (`g2_maid`, `g2_broom`, `g2_roll`, `ririwa_name`), and chest `galuh_chest_kaputren`. Links north to `kg_pustaka` and east to `kg_penjara`.
+
+### Map
+```
+#############################NN#############################
+#............................n,............................#
+#............................,,............................#
+#............................,,............................#
+#...bbb......................,,.....................bbb....#
+#...bbb......................,,.....................bbb....#
+#...bbb......................,,.....................bbb....#
+#............................,,............................#
+#.......c....________________________________..............#
+#............________________________________..............#
+#............________________________________..............#
+#............__H__T__________________________..............#
+#............________________________________..............#
+#............________________________________..............#
+#............___________________________V____..............#
+#............________________________________..............#
+#............________________K_______________,,,,,,,,,,,,,eE
+#............________________________________,,,,,,,,,,,,,,E
+#............________________________________..............#
+#............________________________________..............#
+#............________________________________..............#
+#............________________________________..............#
+#.......M....___F_____G___I__________________..............#
+#............________________________________..............#
+#............________________________________..............#
+#...bbb.............................................bbb....#
+#...bbb.............................................bbb....#
+#...bbb.............................................bbb....#
+#..........................................................#
+#..........................................................#
+#..........................................................#
+#..........................................................#
+#..........................................................#
+############################################################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `N` | exit to kg_pustaka (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_pustaka", spawn_id:"from_kg_kaputren"}` | path | 2 |
+| `n` | spawn, arrival from kg_pustaka | `res://entities/world/spawn.tscn` | `{id:"from_kg_pustaka"}` | path | 1 |
+| `E` | exit to kg_penjara (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_penjara", spawn_id:"from_kg_kaputren"}` | path | 2 |
+| `e` | spawn, arrival from kg_penjara | `res://entities/world/spawn.tscn` | `{id:"from_kg_penjara"}` | path | 1 |
+| `K` | encounter kaputren_courtyard (MQG g.8) | `res://entities/world/encounter.tscn` | `{area_id:"kaputren_courtyard", size:Vector2i(15,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,0)], [res://entities/enemies/faceless_champion.tscn, Vector2i(0,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,0)]]]}` | floor | 1 |
+| `T` | trigger kaputren_screens, guest chamber screen puzzle (MQG g.9) | `res://entities/world/trigger.tscn` | `{trigger_id:"kaputren_screens", size:Vector2i(4,4)}` | floor | 1 |
+| `H` | clue laras_hairpin, Laras's hairpin in the guest chamber (MQG g.9) | `res://entities/world/clue.tscn` | `{clue_id:"laras_hairpin"}` | floor | 1 |
+| `V` | trigger kaputren_eavesdrop, overhear Hariang Banga (MQG g.10) | `res://entities/world/trigger.tscn` | `{trigger_id:"kaputren_eavesdrop", size:Vector2i(5,4)}` | floor | 1 |
+| `M` | NPC g2_maid, old palace maid of the Kaputren (SQ-G2) | `res://entities/npc/npc.tscn` | `{npc_id:"g2_maid"}` | grass | 1 |
+| `F` | clue g2_broom, worn-down broom in the Kaputren (SQ-G2) | `res://entities/world/clue.tscn` | `{clue_id:"g2_broom"}` | floor | 1 |
+| `G` | clue g2_roll, scraped servants' roll; pulls into sq_g2_servant (SQ-G2) | `res://entities/world/clue.tscn` | `{clue_id:"g2_roll", memory_id:"sq_g2_servant"}` | floor | 1 |
+| `I` | write stone ririwa_name, write Ca-Nga on the roll (SQ-G2) | `res://entities/npc/npc.tscn` | `{npc_id:"ririwa_name"}` | floor | 1 |
+| `c` | chest galuh_chest_kaputren (55 Ilmu) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_kaputren", item_id:"ilmu:55"}` | grass | 1 |
 
 ## Piece placement per step (story v4c)
 Every piece in the `Play` column of [quests.md](../quests.md) MQG has a place. Cond indexes are 0-based. The champion is `faceless_champion.tscn` (new, **ASSUMED**), the Galuh tank as an elite, wave 2 of `galuh_bout_2`.

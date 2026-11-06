@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "m3_smith"
+name_key = "NPC_M3_SMITH_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_m3=done"], "lines": ["DLG_M3_SMITH_V22"], "do": []},
+	{"if": ["step:sq_m3=3"], "lines": ["DLG_M3_SMITH_V20", "DLG_M3_SMITH_V21"], "do": []},
+	{"if": ["quest:sq_m3=active"], "lines": ["DLG_M3_SMITH_V24"], "do": []},
+	{"if": ["flag:mq2_1"], "lines": ["DLG_M3_SMITH_V25", "DLG_M3_SMITH_V26", "DLG_M3_SMITH_V27"], "do": ["start:sq_m3", "flag:sq_m3_beans"]},
+	{"if": [], "lines": ["DLG_M3_SMITH_V28"], "do": []}
+])

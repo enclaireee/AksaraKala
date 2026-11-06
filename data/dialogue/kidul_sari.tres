@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "kidul_sari"
+name_key = "NPC_KIDUL_SARI_NAME"
+entries = Array[Dictionary]([
+	{"if": ["!flag:kidul_sari_met"], "lines": ["DLG_KIDUL_SARI_1"], "do": ["flag:kidul_sari_met"]},
+	{"if": [], "lines": ["DLG_KIDUL_SARI_2"], "do": []}
+])

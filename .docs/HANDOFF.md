@@ -296,6 +296,25 @@ User call: "Expand the story first", with side quests as Hunts and deeper charac
 - Zone build fixes (A2): puzzle stones and sluice wheels get action-only dialogue files (`batu_stone_1`-`3`, `sluice_wheel_1`-`2`): each press sets its flag in order, and an out-of-order press does nothing, because script.md has no hint line yet (tatar_sunda.md asks for one). An NPC with no dialogue file shows no Talk prompt (`npc.gd`), and zone_build_test's `NO_TALK` lists the set-dressing ids. The epilogue Ki Sumarto in desa_purwa now uses `npc_id:"mataram_dalang"` (his script.md entry); the epilogue line under that entry is a Milestone B item. Open: tatar_sunda.md says the Batu Tulis "can then be read" after `batu_3`, but script.md `batu_tulis` entry 1 only checks `step:mq1=6`, so it is left ungated. Decide which doc wins.
 - Expected until Milestone B: `kidul_play_test`, `mataram_play_test`, `timur_play_test` replay the v3.1 beat order, and the v4 beats need new flags (e.g. `quiet_house` needs `beat_table_dishes`), so #6 rewrites them with the B data.
 
+### 5zc. Story v5 Major RPG Expansion & Anti-Repetition Blueprint (2026-11-06, core docs synced)
+User call: "for other bosses and other characters don't make it too repetitive, make it a much much longer game, and put more depth into each part of the story, each character, each boss, each region, especially the ones on main story; redesign the md first, and sync every doc to the newest convention."
+Clarified with the user via design interview (`ask_question`) and synced across `story.md`, `quests.md`, `pacing_model.py`, `world.md`, `bestiary.md`, `architecture.md`, `ui.md`, `balance.md`, `README.md`, `schedule.md`:
+- **Scale:** Expanded from 78 main steps (~9.5 h, 40 areas) to **138 main steps (~21.4 h / 1,285 min modeled, 49 areas across 6 regions + hub, 4–5 chapters per region)** plus **20 side & companion quests (454 min modeled)** = **~35 h+ at 100%**. `python3 .docs/pacing_model.py` passes with 0 failures.
+- **9 New Sub-Areas (40 -> 49 areas):**
+  - Keraton Galuh (`4 -> 7`): `+kg_pasar` (Pasar Kuta), `+kg_pustaka` (Balai Pustaka / Royal Archive), `+kg_kaputren` (Royal Quarters).
+  - Segara Kidul (`4 -> 7`): `+sk_nelayan` (Kampung Nelayan), `+sk_bakau` (Hutan Bakau mangrove), `+sk_gua` (Gua Karang sea cavern).
+  - Gua Kala (`4 -> 7`): `+gk_pelataran` (Pelataran Waktu / Courtyard of Time), `+gk_hutan` (Hutan Lupa / Forgotten Woods), `+gk_jembatan` (Jembatan Bayang / Shadow Bridge).
+- **Anti-Repetition (Unique Structure per Act & Boss):**
+  - **Act I (Tatar Sunda):** Classic Folklore Hunt (`Sandekala`) + Rising Floodwaters & Sluice Progression (`Faceless Captain` & `Sangkuriang`).
+  - **Act II (Keraton Galuh):** Undercover Palace Intrigue, 3-Wing Faction Heist (`kg_pasar`, `kg_pustaka`, `kg_kaputren`), Wagon Ambush & Throne-Room Coup (`Barma Wijaya`).
+  - **Act III (Mataram):** Two-Front War Campaign, Real-Time Night-Building Siege (`Bandung Bondowoso` raising stone barriers across `mt_wetan`/`mt_tegal`/`mt_candi`) & 1v1 River-Ford Duel (`Hariang Banga`).
+  - **Act IV (Tanah Timur):** 3-Zone Stalking Predator (`Buto Ijo` ambushes you in `tt_kulon`, `tt_kali`, and `tt_beringin` before the final canyon lair), 7-Generation Blood-Curse Mystery (`Keris Mpu Gandring`) & Personal Showdown (`The Nameless Hunter`).
+  - **Act V (Segara Kidul):** Coastal Community Healing (`sk_nelayan`, `sk_bakau`) & **Three Sacred Sea Trials** (Trial of the Torch-Lines in `sk_karang`, Trial of the Abyssal Current in `sk_gua`, Trial of the Waves in `sk_keraton`).
+  - **Act VI (Gua Kala):** Allied Defense at `gk_pelataran`, Three-Realm Memory Descent (`La`, `Ra`, `Sa`) & **Dual-Perspective Finale** against `Batara Kala`.
+- **Cross-Time Laras Chapters (`LC1`–`LC6`):** Laras's playable chapters set persistent flags (`laras_key:crater_post`, `laras_key:archive_grate`, `laras_key:candi_crypt`, `laras_key:sand_tunnel`, `laras_key:tidal_gate`) that unlock routes/shortcuts for the hero, plus boss/seal sabotage flags (`laras_sabotage:crater_seal`, `laras_sabotage:glamour_seal`, `laras_sabotage:bondowoso_pillar`, `laras_sabotage:keris_seventh_stake`, `laras_sabotage:kala_eclipse`) that create the bosses' vulnerable phases.
+- **Deeper Dialogue & Expanded Cast:** Lifted the 4-line cap to **8–12 lines** for main-path/camp talks and **8–10 lines** for beats; added optional **"Ask about..."** (`"quiet": true` topic hub) branches; added named regional characters (**Nyai Sekar** in Galuh, **Nyai Gendhis** in Mataram, **Ratna** in Tanah Timur, **Sari** in Segara Kidul).
+- **6 Major Choices (one per Act):** Choice 1 (`choice_tell_ciung` / `choice_keep_secret`), Choice 2 (`choice_freed` / `choice_handed`), Choice 3 (`choice_mercy` / `choice_judgment`), Choice 4 (`choice_reforge` / `choice_sink`), Choice 5 (`choice_offer_memory` / `choice_offer_song`), Choice 6 (`choice_redeem_aria` / `choice_release_aria`).
+
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)
 2. ~~Move Wewe Gombel to Mataram~~: done 2026-11-05.
@@ -305,17 +324,10 @@ User call: "Expand the story first", with side quests as Hunts and deeper charac
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
-**2026-11-06 (Milestone A built and committed as `033792a`, §5zb):** Next: the user plays New Game through Sandekala and S1/S2 and says whether they know who everyone is and why each boss is there. Fix lines and clues, then Milestone B.
-
-Milestone B checklist (schedule.md Phase 4d "Code order" and Phase 4e; two regions at a time):
-1. Data per region pair, Acts II-VI and the Interlude: `gen_zones.py` and `gen_memories.py` per region; NPC and camp-talk `.tres` from script.md (renames `m2_neighbour`, `m2_parents_1`, `m3_smith`, `t2_herder`; epilogue entries, including the Ki Sumarto line under `mataram_dalang`); quests `mqg`, `mq2`-`mq5`, the remaining `sq_*`, new `sq_g1`, `sq_g2`, `sq_c1`-`sq_c3`, write seqs `ririwa_name`, `deserter_name`; rebuild `sq_t1.tres`/`tt_beringin` without `sodo_lanang`.
-2. Before writing those quests: fix the script.md 15 step conds that look 1-based (`sq_g1=5`, `sq_g2=5`, `sq_k2=5`, `sq_c1=5`).
-3. C4 parts 2 and 3: move `sq_c4_2`/`sq_c4_3` back from `.docs/parked_b/`, add their TITLE/OBJ keys, the `trial_completed` event (ASSUMED) and the zone nodes in `mt_gapura`/`sk_pantai`.
-4. Missing text in script.md: `DLG_MBOK_SRINI_5/7/8`, the Interlude shelf clues (`shelf_ribbon`/`shelf_board`/`shelf_strip`, then drop their skip in `key_ref_test`), the out-of-order hint lines for the Batu Tulis stones and the sluice wheels.
-5. Rewrite `kidul_play_test`, `mataram_play_test`, `timur_play_test` to the v4 beats; extend the galuh and kala play tests.
-6. K7 memory subclass (`allow_cast`).
-7. Open from A: the Batu Tulis `batu_3` gate (tatar_sunda.md vs script.md, user decides); the Journal Clues list grouped by hunt (a `hunt` export on Clue); no gold act marker, "Ingatan: <title>" line or `sfx_lontar`; `ki_wangsa.tres` delete waits for the user's OK.
-8. Exit B: every test passes, then the user plays the Interlude (Laras chapters, doorposts, gap memories), one side Hunt per region and one companion chain.
+**2026-11-06 (Story v5 Phase 1 Core Docs Blueprint complete, §5zc):**
+1. **User reviews the Story v5 Core Docs Blueprint** (`story.md`, `quests.md`, `world.md`, `bestiary.md`, `pacing_model.py`).
+2. **Phase 2 (Zone Docs & Script Sync):** Update the 7 region docs in `.docs/zones/*.md` (adding ASCII maps and spot legends for the 9 new sub-areas `kg_pasar`, `kg_pustaka`, `kg_kaputren`, `sk_nelayan`, `sk_bakau`, `sk_gua`, `gk_pelataran`, `gk_hutan`, `gk_jembatan`, plus the new cross-time Laras spots, Buto Ijo stalking ambushes, and environmental puzzles) and expand `.docs/script.md` to v5 (8–12 line talks, `"Ask about..."` topic hubs, 6 Major Choices, and 138 main steps).
+3. **Phase 3 (Code & Data Rollout):** Build the v5 engine additions and region data two regions at a time.
 
 **2026-11-06 (Phase 4d part 2 started, code plan approved):** Milestone A is running (schedule.md Phase 4d "Code order"). Wave 0 docs are done, not committed:
 - architecture.md 9b: memory scenes are generated by `.docs/gen_memories.py`; play memories use the generic `MemorySpot`/`MemoryThreat`, with subclasses only for K0 and K7; gaps use the dialogue choices. The zone docs say "generated by `gen_memories.py`", and the gaps use one `gap.tscn` plus `data/memories/gap_<x>.tres`.

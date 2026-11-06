@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "aria_kebonan"
+name_key = "NPC_ARIA_KEBONAN_NAME"
+entries = Array[Dictionary]([
+	{"if": ["!flag:aria_talk"], "lines": ["DLG_ARIA_KEBONAN_V1", "DLG_ARIA_KEBONAN_V2", "@NPC_HERO_NAME", "DLG_ARIA_KEBONAN_H1", "@NPC_ARIA_KEBONAN_NAME", "DLG_ARIA_KEBONAN_V3"], "do": ["flag:aria_talk"]},
+	{"if": [], "lines": ["DLG_ARIA_KEBONAN_V4"], "do": []}
+])

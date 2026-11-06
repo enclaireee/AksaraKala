@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "deserter_stone"
+name_key = "NPC_DESERTER_STONE_NAME"
+entries = Array[Dictionary]([
+	{"if": ["!flag:ranga_named", "flag:choice_freed"], "lines": ["DLG_DESERTER_STONE_V20", "DLG_DESERTER_STONE_V21", "DLG_DESERTER_STONE_V22"], "do": ["flag:ranga_named"]},
+	{"if": ["!flag:ranga_named"], "lines": ["DLG_DESERTER_STONE_V20", "DLG_DESERTER_STONE_V21", "DLG_DESERTER_STONE_V23"], "do": ["flag:ranga_named"]},
+	{"if": [], "lines": ["DLG_DESERTER_STONE_V24"], "do": []}
+])

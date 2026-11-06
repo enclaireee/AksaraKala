@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "galuh_seller"
+name_key = "NPC_GALUH_SELLER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["!flag:galuh_seller_met"], "lines": ["DLG_GALUH_SELLER_V1", "DLG_GALUH_SELLER_V2", "@NPC_HERO_NAME", "DLG_GALUH_SELLER_H1", "@NPC_GALUH_SELLER_NAME", "DLG_GALUH_SELLER_V3"], "do": ["flag:galuh_seller_met"]},
+	{"if": [], "lines": ["DLG_GALUH_SELLER_V4"], "do": []}
+])

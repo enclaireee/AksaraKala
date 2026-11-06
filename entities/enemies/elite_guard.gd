@@ -33,6 +33,8 @@ func _set_active(on: bool) -> void:
 	enemy.set_physics_process(on)
 	if on:
 		enemy.add_to_group("enemy")
+		if enemy.target == null:
+			enemy.target = get_tree().get_first_node_in_group("player") as Node2D
 	else:
 		enemy.remove_from_group("enemy")
 	enemy.collision_layer = 4 if on else 0

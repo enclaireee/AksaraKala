@@ -8,8 +8,8 @@ const MAP := [
 	"#.....###########...........,,..........#############......#",
 	"#.....#_________#...........,,..........#___________#......#",
 	"#.....#_________#...........,,..........#___________#......#",
-	"#.....#____D____#...........,,..........#_____B_____#......#",
-	"#.....#_________#...........,,..........#___________#......#",
+	"#.....#____D____#...........,,..........#___B___M___#......#",
+	"#.....#_________#...........,,..........#___F___H___#......#",
 	"#.....#_________#...........,,..........#___________#......#",
 	"#.....#_________#...........,,..........#___________#......#",
 	"#.....#####,#####...........,,..........######,######......#",
@@ -20,12 +20,12 @@ const MAP := [
 	"#..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..#",
 	"#..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..#",
 	"#...........................,,.............................#",
-	"#...................W.......,,.............................#",
+	"#.............I...J.W.......,,.............................#",
 	"#....####,####..............,,........_____________........#",
 	"#....#_______#..............,,........_____________........#",
 	"#....#_______#..............,,........_____________........#",
 	"#....#_______#..............,,........______G______........#",
-	"#....#___P___#..............,,........_____________........#",
+	"#....#__P_K__#..............,,........_____________........#",
 	"#....#_______#..............,,........_____________........#",
 	"#....#########..............,,........_____________........#",
 	"#...........................,,........_____________........#",
@@ -35,7 +35,7 @@ const MAP := [
 	"#..............bb...........,,..........bb.................#",
 	"#.......u......bb...........,,..........bb..bbbbbbbbbbbbbbb#",
 	"#...........................,,.............................#",
-	"#.........u.................,,.............................#",
+	"#.........u.................A,.............................#",
 	"#......u....................,,.............................#",
 	"#...........................,,.............................#",
 	"#...........................E,,,,,,,,,,,,,,,,,,,,,O,,,,,,,.#",
@@ -60,15 +60,22 @@ const SPOTS := {
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_sawah"}, "tile": ","},   # spawn, arrival from mt_sawah
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_reruntuhan", "spawn_id": "from_mt_pasar"}, "tile": ","},   # exit to mt_reruntuhan (south edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_reruntuhan"}, "tile": ","},   # spawn, arrival from mt_reruntuhan
-	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "mataram_dalang"}, "tile": "_"},   # NPC Ki Sumarto, the dalang (2.4, teaches Ha once `lead_pasar`; regional character; SQ-M4 giver)
+	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "mataram_dalang"}, "tile": "_"},   # NPC Ki Sumarto, the dalang (2.3, teaches Ha once `lead_pasar`; regional character; SQ-M4 giver)
 	"B": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pande_besi"}, "tile": "_"},   # NPC pande besi, blacksmith (SQ-M3 giver)
+	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "m3_smith"}, "tile": "_"},   # NPC smith assistant (SQ-M3 v4d)
 	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "wewe_neighbor"}, "tile": "."},   # NPC worried neighbor (SQ-M2 giver)
+	"J": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "m2_neighbour"}, "tile": "."},   # NPC neighbor (SQ-M2 v4d)
 	"P": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "wewe_parents"}, "tile": "_"},   # NPC Wewe's parents (SQ-M2 alt)
+	"K": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "m2_parents_1"}, "tile": "_"},   # NPC parents (SQ-M2 v4d)
 	"G": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "gamelan"}, "tile": "_"},   # codex spot, gamelan (pavilion)
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_pasar", "size": Vector2i(22,12), "waves": [[["res://entities/enemies/tuyul.tscn", Vector2i(-8,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,3)], ["res://entities/enemies/tuyul.tscn", Vector2i(0,-4)], ["res://entities/enemies/tuyul.tscn", Vector2i(5,2)], ["res://entities/enemies/tuyul.tscn", Vector2i(9,-2)]]]}, "tile": ","},   # encounter mataram_pasar
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_pasar", "size": Vector2i(22,12), "waves": [[["res://entities/enemies/tuyul.tscn", Vector2i(-8,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,3)], ["res://entities/enemies/tuyul.tscn", Vector2i(0,-4)], ["res://entities/enemies/tuyul.tscn", Vector2i(5,2)], ["res://entities/enemies/tuyul.tscn", Vector2i(9,-2)]], [["res://entities/enemies/tuyul.tscn", Vector2i(-6,0)], ["res://entities/enemies/tuyul.tscn", Vector2i(0,5)], ["res://entities/enemies/tuyul.tscn", Vector2i(6,1)]]]}, "tile": ","},   # encounter mataram_pasar (**setpiece**, 2.2: defend Ki Sumarto's stage; the show goes on if it holds)
 	"O": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_pocong", "size": Vector2i(16,7), "waves": [[["res://entities/enemies/pocong.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter mataram_pocong
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_pasar", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu (Ilmu S, ASSUMED)
 	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
+	"A": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "pasar_stage", "size": Vector2i(12,6)}, "tile": ","},   # trigger, Ki Sumarto's stage in the plaza: anchor of the `mataram_pasar` setpiece (the stage prop has a 'hold' meter; thieves that reach it drain it; it must not empty)
+	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "m3_footprints", "cond": "quest:sq_m3=active"}, "tile": "_"},   # clue, tiny ash footprints in the smithy hearth (SQ-M3 clue 1 of 2)
+	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "m3_beans", "memory_id": "sq_m3_tuyul", "cond": "quest:sq_m3=active"}, "tile": "_"},   # clue, half-counted green beans spilled by the stall (SQ-M3 clue 2 of 2; opens memory `sq_m3_tuyul`)
+	"I": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "m2_toy", "memory_id": "sq_m2_child", "cond": "quest:sq_m2=active"}, "tile": "."},   # clue, dropped wooden toy on the lane (SQ-M2 clue; opens memory `sq_m2_child`)
 }
 
 
