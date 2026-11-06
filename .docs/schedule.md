@@ -74,6 +74,14 @@ The main story is now [story.md](story.md) v3.1, with Act III's three leads, the
 - Built 2026-11-06 (HANDOFF §5x): all 52 tests pass. The Ombak spell is built too.
 - Exit: every test passes; New Game to the credits plays the v3.1 story; the user's playtest says it feels like an RPG and measures the minutes per act against the story.md runtime table.
 
+## Phase 4d: Story v4 telling pass (user call 2026-11-06)
+The story is now [story.md](story.md) v4 (Pacing rules 10-14, Hunts K0-K7). The aim: the player always knows who a person is, why a boss is there, and what the boss's trick is before the fight. Spec: [architecture.md](architecture.md) 9b, [ui.md](ui.md) 3.
+- [ ] **Part 1, docs:** story, ui, architecture, bestiary, schedule (this pass, 2026-11-06); then quests.md (clue and memory steps, `recap` field), script.md (name tags, clue lines, memory narration) and the zone docs (clue spots)
+- [ ] **Part 2, code, engine** (`deep-implementer`, with tests): `Clue` interactable (`entities/world/clue.gd`), Kelir memory base and stand-in (`zones/kelir/memory.gd`, `entities/player/stand_in.tscn`), `Zones.enter_memory/exit_memory` and `Game.memory_return` (saved), the lontar shimmer, the name tag in `dialogue_box.gd`, the Journal "Story so far" and Clues sections in `menu.gd`, the new `Events` signals (`clue_examined`, `memory_started`, `memory_done`), memory kinds `walk`, `chapter` (Laras, `faceless_patrol.gd`, checkpoints) and `gap` (`GapMemoryData`), the doorpost write seq ids (architecture.md 9b)
+- [ ] **Part 2, code, data:** the MQ0 day (a normal day before the raid), K0 plus all memories (k0-k10, k_ii, k_iii, h1-h4, lc1-lc6, gap_la/ra/sa; story.md Depth pass v4b), the clues placed in each area, all script lines and `NPC_*_WHO`, `CLUE_*`, `MEM_*` keys in both languages, `recap` lines for every main step; zone regen with `gen_zones.py`
+- [ ] **Tests:** `clue_test`, `memory_test`, the know-before-you-meet check (script.md order: every name's first use is at or after its introduction, Pacing 10), the key check; update the play tests and `quest_reach_test` for the new steps
+- Exit: every test passes; the know-before-you-meet check passes; the user plays New Game through Sandekala and reports that they understand who everyone is and why each boss is there. Then a second playtest through the Interlude: the user says the second half has depth (Laras chapters, the doorposts, the gap memories). If not, fix the lines and clues before Act II.
+
 ## Phase 5: Remaining regions
 Build each region from its area graph in `zones/<region>.md` ([mataram](zones/mataram.md), [tanah_timur](zones/tanah_timur.md), [segara_kidul](zones/segara_kidul.md), [gua_kala](zones/gua_kala.md)): first add tile maps per area (AGENTS.md 5), then build.
 - [x] Mataram zone and boss (built 2026-11-05, not yet playtested)

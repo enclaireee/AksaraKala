@@ -259,6 +259,17 @@ A read-through of the Phase 4c build against the docs found these; all are fixed
 - **Not done:** v1 save migration (dev-only, plan call) and the Ilmu of the four new bosses in the balance income model (a design call for the user, §5v).
 - **Run on the Mac first:** `$GODOT --headless --path . --import` (the `.translation` files are stale until the CSVs are re-imported; commit the regenerated files), then every test in `tests/`.
 
+### 5z. Story v4 telling pass, v4b depth, v4c pacing (2026-11-06, docs only)
+Playtest feedback: "suddenly there's Sandekala? who is Cepot? I don't know a lot of the stuff"; 1.4+1.5 took about 5 minutes. User calls: keep the v3.1 plot, fix the telling; a playable normal day before the raid; Witcher-style Hunts (backstory through play, not a talk then a boss); fewer names; then the same for the whole game with more depth in the second half; then redesign the pacing of the whole game.
+- story.md: v4 note; Pacing rules 10-14 (know before you meet, name tags, Hunts, the fight is the memory, Story so far); Prologue "A Day in Desa Purwa"; "Depth pass (v4b)" (arrival slices, Laras chapters LC1-LC6, Hunter memories H1-H4, who's who through play, prologue callbacks; deeper Interlude, Act V, Act VI, playable epilogue); "Pacing model (v4c)" (typed pieces with minutes, 7 rules); "Hunts (v4)" (K0-K10, K-II, K-III); cast cuts (Ki Wangsa, Aki/Nini, Abah Karna, Mbah Marto, Mbok Srini, Pangrenyep unnamed in play).
+- New check: `python3 .docs/pacing_model.py` reads the `Play` column in quests.md 4. It passed at 572 min, 78 steps (v4c merges cut the count from 112).
+- quests.md 4 and 7 rewritten (new events `clue_examined`, `memory_done`, action `clue:`; step field `recap` = `Q_<QUEST>_S<n>_DONE`; Desa Purwa south exit now on `mq4_i5`). architecture.md 9b (Clue, Kelir memory kinds play/walk/chapter/gap, shimmer, `Zones.go_to` gets an optional `pos`, `Game.memory_return`), ui.md 3, bestiary.md Hunt lines, schedule.md Phase 4d.
+- Data fix: Cepot's Ga hint (`DLG_CEPOT_15`) now plays only after Ga (`data/dialogue/cepot.tres`). Not run in Godot.
+- Zone docs (all 7) rewritten by two agents: every clue, memory entry, arrival-slice NPC, new fight/puzzle/miniboss and shortcut placed; memory scenes specified in "## Memory" / "## Memory scenes" sections that gen_zones skips. New Tanah Timur link L14 (tt_pesisir to tt_pasir, kabut `mq3_h4`).
+- script.md: rewritten for v4 by an agent (prologue day, every act's clues, memories, Laras chapters, Hunter memories, the gap memories, Interlude, epilogue, quest text, `_DONE` recaps, `_WHO` name tags). The agent was stopped before its own review; treat it as a draft (Next step 1).
+- Open for the code phase (from the agents' reports): `clue.tscn` needs a `cond` export (now in architecture 9b); gen_zones quotes a `cond` wrongly when a later term is positive (put positive terms first or fix the generator); wave entries can't carry elite props, so elites need their own scenes (`wild_boar_elite`, `jurig_leuweung_elite`, `faceless_champion` and the east ones) or a props dict; puzzles use `trigger.tscn` with `puzzle_<id>` for now; boss and NPC conds that read step indexes (e.g. `sunda_kampung` `step:mq1=1`, the Sea Altar) need re-indexing when QuestData is rebuilt; Laras's `route` prop is assumed. Several small ids are ASSUMED in each zone doc's list.
+- New VERIFY: Semar as Batara Ismaya; sedekah laut / labuhan; Nyi Roro Kidul retelling; the Murwakala lakon as the ruwatan story.
+
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)
 2. ~~Move Wewe Gombel to Mataram~~: done 2026-11-05.
@@ -268,6 +279,12 @@ A read-through of the Phase 4c build against the docs found these; all are fixed
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
+**2026-11-06 (Story v4/v4b/v4c, §5z):** the docs pass is written and committed; the code is not started. Next, in order:
+1. Review `script.md` (written by an agent that was stopped before its self-check): the know-before-you-meet order check (story.md Pacing rule 10), the cut-name grep, that every key in quests.md 4 has lines in both languages, and that the gap-memory answers (`la`/`ra`/`sa`) match the prologue lines.
+2. Re-run the zone checks: the area maps were checked with a read-only parse, not `gen_zones.py` (it writes into `zones/`) and not `ts_check.py`.
+3. Phase 4d part 2 in [schedule.md](schedule.md): engine (Clue, Kelir memory kinds play/walk/chapter/gap, the shimmer, the name tag, the journal page, `Zones.go_to` with `pos`, `Game.memory_return`, the `clue_examined`/`memory_done` events and the `clue:` action), then the data from script.md, then `gen_zones.py` per region, then the tests.
+4. The user plays New Game through Sandekala, then through the Interlude, and times the acts against `python3 .docs/pacing_model.py`. Re-calibrate the piece minutes in the script from that playtest.
+
 **2026-11-06 (v3.1 review fixes, §5y):** bugs from the review are fixed and pushed to master. Next: run `--import` and every test on the Mac (not run in this session), commit the regenerated `.translation` files, then the playtest below.
 
 **2026-11-06 (Phase 4c built, §5x):** the code now runs the v3.1 story. Next: the user plays New Game to the credits and times each act against the story.md runtime table. Open: the Ombak tuning, and the Ilmu for the new bosses in the balance model (§5v).

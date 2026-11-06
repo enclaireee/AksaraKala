@@ -20,11 +20,13 @@ Design rules:
 | Jurig Leuweung | Tank | 150 | 12 | 15 | Slow, wide swing. Bind roots it (see Glyph weaknesses) | Descriptive name: a "jurig" (ghost, verified) of the "leuweung" (forest, **VERIFY** spelling). No named Sundanese figure fits a slow giant without reusing Genderuwo, and a generic spirit claims no legend (decided 2026-11-05, **ASSUMED**) |
 
 **Boss: Sandekala** (main path, Act I; the dusk fight in the river gorge, not a P1 optional). HP 1100, Dmg 14, Ilmu 100 (**TUNE**, [balance.md](balance.md) 7). Sundanese dusk spirit said to take children who stay outside after sunset (verified, 2 sources). Its form is not fixed in the belief, so the look is ours: a tall shadow with a lantern-less face.
+- Hunt: K1, "A child at maghrib" ([story.md](story.md) "Hunts"). The memory teaches lighting the oncor, which is the fight mechanic. First-time hint: "Light the oncor" (**ASSUMED**).
 - The arena darkens over the fight. In shadow it fades out and reappears behind the player with a grab (0.6 s wind-up, ground marker).
 - Four oncor (torches) ring the arena. A hit lights one and shrinks the shadow. With all four lit it cannot fade.
 - Teaches: reading wind-ups and using the room, before Sangkuriang.
 
 **Boss: Sangkuriang.** HP 2100. Ilmu 150.
+- Hunt: K2, "Dayang Sumbi's night". The memory teaches hanging the cloth east and the early crow, which is the false dawn (Ca). First-time hint: "Hang cloth, cast Ca" (**ASSUMED**).
 - Phase 1: throws logs and boat fragments in arcs (ground-marked), slams the ground.
 - Phase 2: builds toward "dawn" (a visible progress bar). If the player draws the light glyph (the "fake dawn", from the legend where cloth to the east and crowing roosters trick him; cloth color varies by retelling, red or boeh rarang), the boss is stunned for a few seconds. Fail to do it and he gets enraged.
 - Teaches: casting under pressure.
@@ -42,6 +44,7 @@ Mundane enemies: none are planned; the zone uses its three folklore enemies (zon
 **Quest figure: Wewe Gombel** (SQ-M2 in [quests.md](quests.md)). Not a regular enemy, since the quest can end peacefully with her returning the child. Elite if fought: HP 780, Dmg 16, Ilmu 90, slow wide swing, grabs and pulls the player in. Javanese ogress who takes neglected children (Bukit Gombel, Semarang).
 
 **Boss: Bandung Bondowoso.** HP 3100. Ilmu 300.
+- Hunt: K3, "The princess's women". The memory teaches the lesung beat, which is the Jawa Ca that exposes the pillars. First-time hint: "Keep the lesung beat" (**ASSUMED**).
 - Summons spirit builders to raise "pillars". Each pillar must be broken to damage the boss (or he is shielded).
 - Phase 2: pillars rise faster and rain debris.
 - Teaches: crowd control and area spells.
@@ -64,6 +67,7 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
 | Keris Hantu | Charger | 96 | 16 | 20 | Flying keris spirit, darts in lines, hits apply Curse (teaches it before the Keris boss) | Ties to Mpu Gandring |
 
 **Miniboss: Buto Ijo.** HP 3400. Ilmu 300. Based on the Timun Mas legend. Each phase the hero's "pouch" changes the arena, mirroring the legend's four items: cucumber seeds, needles, salt, shrimp paste (terasi). **VERIFY** the legend's items. Arena effects: bramble field, bamboo forest, saltwater, mud.
+- Hunt: K4, "Timun Mas". The memory teaches throwing a pouch when he is close, which is luring him through the pouch fields. First-time hint: "Lure him through pouches" (**ASSUMED**).
 - Build spec (2026-11-05, all numbers **TUNE**, mechanics **ASSUMED**). The pouches help the player against Buto, as in the legend, and they never hurt the player.
   - Attacks (balance.md 7): charge, heavy 41, a line marker 0.8 s, from 64-200 px, runs 220 px or until a wall; ground pound, heavy 41, a ring marker (r 48) 0.8 s, at 56 px or closer. Same telegraph style as Sangkuriang.
   - Pouch phases: 4 phases at 100/75/50/25% HP. At each phase start he roars (1 s pause) and Timun Mas (a visual off-arena, no node) throws the next pouch. The pouch makes 3 fields (r 32) at set spots in the arena, between his start spot and the arena centre. The fields stay until the fight ends, so the arena gets kinder each phase. Fields only affect Buto:
@@ -75,6 +79,7 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
   - Defeat: he sinks to his knees in the mud and Timun Mas is safe (off screen). `boss_defeated:buto_ijo`, sets `mq3_4`.
 
 **Boss: Mpu Gandring's Keris (cursed wraith).** HP 4200. Ilmu 500.
+- Hunt: K5, "The old forge". The memory teaches dousing the curse marks, which is removing marks with the right glyph. First-time hint: "Put out the marks" (**ASSUMED**).
 - Legend: Mpu Gandring's dying curse is that Ken Arok and seven descendants die by the keris (retellings differ on the count). The 7 marks are game design, not cited as legend.
 - Mechanic: the boss accumulates up to 7 curse marks on the arena. Fill all 7 and it triggers a big attack. The player removes marks with the right glyph.
 - Teaches: using the spell system proactively.
@@ -139,6 +144,7 @@ They scale by the zone they spawn in, read from the zone id prefix on ready: `de
 - Yield at 15% HP: he stops, sheathes, `boss_defeated:hariang_banga`. He never dies (the legend: neither brother wins). The `truce` beat follows (the `ford` beat came before the duel).
 
 **Boss: the Nameless Hunter (Si Tanpa Ngaran)** (Act IV, tt_candi after the keris). HP 4600, Ilmu 480, speed 55 (balance.md 7). A tall shape in a hunter's cloak with no face at all.
+- Hunt: K6, "The servant" (a person boss: the memory teaches the why, no mechanic). First-time hint: none; a 4-word hint line is not shown (**ASSUMED**).
 - Shadow-step: he fades out (0.3 s), a ground marker shows behind the player for 0.6 s, he reappears there with a cut (heavy 54). Rolling out of the marker dodges it.
 - Chain hook: 0.6 s wind-up, line marker 8 tiles, light 24, pulls the player 3 tiles toward him.
 - **Forget**: 0.8 s wind-up with a pale cone marker (r 64, 90 degrees). Hit by it, the player's sakti empties and casting is locked for 4 s (the existing cast lockout). **Ga Ward** up when it lands blocks it completely.
@@ -152,6 +158,7 @@ Each boss is a person with a stake in the plot (FromSoftware rule, [story.md](st
 
 ## Final: Gua Kala
 **Boss: Batara Kala.** HP 9300, 3 phases of 3100.
+- Hunt: K7, "The ruwatan again" (also K10 "Murwakala", the tale of how Kala was born hungry, a walk memory; **VERIFY**). The memory teaches reading the names aloud, alternating Sunda and Jawa letters, which is the Ruwatan of Dawn shield sequence. First-time hint: "Read names, Sunda, Jawa" (**ASSUMED**).
 - Phase 1: devouring pulses and falling time-sand attacks.
 - Phase 2: the countdown starts. A shield is broken by drawing 3 glyphs in the shown order (stretch).
 - Phase 3: all arenas combined, every class mechanic matters.

@@ -1,6 +1,8 @@
-# Gua Kala (region id `gua_kala`), the finale
+# Gua Kala (region id `gua_kala`), the finale (Act VI, v4c)
 
 Area graph on paper. Step 1 of the world design workflow ([AGENTS.md](../../AGENTS.md) section 5), graph level only: no tile maps until Phase 5. Prefix `gk_`. Sources: [world.md](../world.md) (World structure, link table, Gua Kala, Checkpoints), [bestiary.md](../bestiary.md) (Final: Gua Kala, Encounters, Glyph weaknesses), [quests.md](../quests.md) (MQ5, 7.5, 9), [story.md](../story.md) (Batara Kala). Format follows [tatar_sunda.md](tatar_sunda.md).
+
+Story v4b/v4c additions (2026-11-06; MQ5 5.1-5.9, [quests.md](../quests.md) 4 with its `Play` column): the three letters of her name are held in three **gap memories** of the prologue day, one per letter area: `la` (the tag game, in `gk_mulut`), `ra` (the two cups, in `gk_lupa` after the Abyss fight), `sa` (the written names, at the last petilasan `kala_1`); then K10 (Murwakala), LC6 (Laras's chapter) and K7 (the ruwatan, you are the dalang) at `kala_1`. The pacing pieces get places: two time-ward puzzles in `gk_pasir`, the Abyss miniboss in `gk_lupa`, extra fights. The memory scenes are in "Memory scenes" below. **Puzzle convention (ASSUMED):** a puzzle is a `trigger.tscn` with `trigger_id` `puzzle_<id>`; the builder attaches the script (tests set `flag:puzzle_<id>`). Miniboss pieces are encounters whose first enemy carries `unique_id` and elite stats (HP x4, Ilmu x4, **TUNE**). Setpieces are scripted frames of the boss encounter.
 
 Look: a dark cavern of wet black rock, hourglass and clock-like motifs carved into the walls, and the forgotten letters floating about, faded and dim. Sand trickles in thin streams from the ceiling in the deeper halls. The landmark is Kala's chamber. From the first area (`gk_mulut`), across a wide chasm, the player sees an enormous hourglass and a round clock-face set in the far wall, glowing faintly. It grows nearer in each area, and its ticking gets louder. Batara Kala is a deity figure and is not killed: he is calmed and turned back (a respectful ruwatan note is in the codex, per story.md). Tone stays warm and a bit cartoonish.
 
@@ -9,9 +11,9 @@ Areas: 4. Critical path: `gk_mulut` -> `gk_pasir` -> (drop) `gk_lupa` -> `gk_rua
 ## Area table
 | id | size (screens, tiles) | look | purpose | contents |
 |----|-----------------------|------|---------|----------|
-| `gk_mulut` | 3x2, 90x34 | The cave mouth. Wet black rock, carved clock gears, drifting faded letters, the chasm with the far hourglass in view | Entry, first rest, landmark view | Spawns `from_desa_purwa` (W, gate `quest:mq4=done`), `from_sk_keraton` (S, a sea-cave passage from the pavilion, gate `quest:mq4=done`), `from_gk_pasir` (link L1), `from_gk_lupa` (shortcut landing). Petilasan `kala_2` (near the entry). Encounter `kala_mulut`. Shortcut landing `sc:gk_lorong`. NPC variant spot `mouth_freed` (the Deserter, `deserter_mouth`, only when `choice_freed`). Quest markers `kala_mulut` (5.1, 5.2) |
-| `gk_pasir` | 3x3, 90x51 | The sand halls. Giant hourglass shapes in the walls, thin sand streams that only look pretty, rocky floors and pillars | The long way in, two fights, a secret | Spawns `from_gk_mulut` (W). Encounters `kala_pasir_1`, `kala_pasir_2`. Chest `kala_chest_1` (hidden sand cave, gap between pillars). Drop `D1` (high gallery, sand-slide) onto `gk_lupa`. Quest marker none |
-| `gk_lupa` | 2x3, 60x51 | The hall of faded letters. Aksara float like dim motes: Sunda, Jawa, forgotten scripts. Shelves of stone tablets | Rest before the boss, codex, the shortcut, the boss door | Spawns `from_gk_pasir` (drop landing, N), `from_gk_ruang_kala` (S door). Encounter `kala_lupa`. Chest `kala_chest_2` (behind tablets). Petilasan `kala_1` (south end, 10 tiles from the door, no fight between). NPC `semar` at `kala_1`. Codex spot `kala_aksara_pudar`. Shortcut gate `sc:gk_lorong` (opens from here). Quest markers `kala_1`, `kala_boss` (door) |
+| `gk_mulut` | 3x2, 90x34 | The cave mouth. Wet black rock, carved clock gears, drifting faded letters, the chasm with the far hourglass in view | Entry, first rest, landmark view | Spawns `from_desa_purwa` (W, gate `quest:mq4=done`), `from_sk_keraton` (S, a sea-cave passage from the pavilion, gate `quest:mq4=done`), `from_gk_pasir` (link L1), `from_gk_lupa` (shortcut landing). Petilasan `kala_2` (near the entry). Encounters `kala_mulut` and `kala_mulut_2` (5.1). Gap memory letter `letter_la` (east road). Optional chest `kala_chest_0` (rule 7). Shortcut landing `sc:gk_lorong`. NPC variant spot `mouth_freed` (the Deserter, `deserter_mouth`, only when `choice_freed`). Quest markers `kala_mulut` (5.1, 5.2) |
+| `gk_pasir` | 3x3, 90x51 | The sand halls. Giant hourglass shapes in the walls, thin sand streams that only look pretty, rocky floors and pillars | The long way in, two fights, a secret | Spawns `from_gk_mulut` (W). Encounters `kala_pasir_1`, `kala_pasir_2`. Time-ward puzzles `puzzle_pasir_ward_w`, `puzzle_pasir_ward_e`, clue `ward_inscription`, beat spot `beat_wards_down` (5.2). Chest `kala_chest_1` (hidden sand cave, gap between pillars). Drop `D1` (high gallery, sand-slide) onto `gk_lupa`. Quest marker none |
+| `gk_lupa` | 2x3, 60x51 | The hall of faded letters. Aksara float like dim motes: Sunda, Jawa, forgotten scripts. Shelves of stone tablets | Rest before the boss, codex, the shortcut, the boss door | Spawns `from_gk_pasir` (drop landing, N), `from_gk_ruang_kala` (S door). Encounters `kala_lupa_1` (fight) and `kala_lupa` (**miniboss**) (5.3). Gap memory letter `letter_ra` (5.3). Chest `kala_chest_2` (behind tablets). Petilasan `kala_1` (south end, 10 tiles from the door, no fight between). NPC `semar` at `kala_1`. Codex spot `kala_aksara_pudar`. Shortcut gate `sc:gk_lorong` (opens from here). Quest markers `kala_1`, `kala_boss` (door) |
 | `gk_ruang_kala` | 2x2, 60x34 | A round chamber. A clock face on the floor, the great hourglass overhead. Four quadrants, each with a motif of an earlier region (phase 3 uses them all) | Boss arena, Batara Kala | Spawn `from_gk_lupa`. Boss `batara_kala` (marker `kala_boss`). After the fight a lit door leads to the epilogue (`kala_exit`, **ASSUMED**). No other enemies |
 
 ## Region graph
@@ -47,7 +49,9 @@ Loop: `gk_mulut` -> L1 -> `gk_pasir` -> D1 (drop) -> `gk_lupa` -> `sc:gk_lorong`
 
 Drop: D1, a sand-slide from the high gallery of `gk_pasir` (hourglass motif: the sand carries the player down). The landing is a few tiles from the `sc:gk_lorong` door, so the way back to `kala_2` opens early.
 
-Critical path (MQ5): 5.1 enter `gk_mulut`; fight `kala_mulut`; rest `kala_2`; `gk_pasir` fights; drop to `gk_lupa`; fight `kala_lupa`; 5.2 rest at `kala_1` (no fight between it and the door); 5.3 `gk_ruang_kala`, Batara Kala; 5.4 the lit door after the fight.
+Critical path (MQ5, v4c): 5.1 enter `gk_mulut`, fight `kala_mulut`, beat `mouth`, fight `kala_mulut_2`, letter `letter_la` and the gap memory `la`; 5.2 `gk_pasir`: `kala_pasir_1`, the inscription clue, the west time-ward puzzle, `kala_pasir_2`, the east time-ward puzzle, the beat at the gallery; drop D1; 5.3 `gk_lupa`: `kala_lupa_1`, the miniboss `kala_lupa`, letter `letter_ra` and the gap memory `ra`; 5.4 rest at `kala_1` (no fight between it and the door), Semar, letter `letter_sa` and the gap memory `sa`; 5.5 K10 (`semar_tale`); 5.6 LC6 (`lc6_lontar`); 5.7 K7 (`semar_kelir`); 5.8 `gk_ruang_kala`, Batara Kala (phase 3 is the setpiece); 5.9 write her name.
+
+**Return trips (Pacing rule 5).** There is no backtrack on the path: mulut > pasir > drop > lupa > ruang is forward only; `sc:gk_lorong` is only for a player who wants `kala_2` again. Rule 7: every area holds an optional find: `gk_mulut` the new chest `kala_chest_0`, `gk_pasir` the sand-cave chest, `gk_lupa` the tablet chest and the codex, `gk_ruang_kala` none (the boss arena).
 
 Optional areas: none. With 4 areas all lie on the loop, and nothing dead-ends, so rule 4 is met by having no optional dead-end area. Optional content is inside areas: `kala_chest_1` in the hidden sand cave and `kala_chest_2` behind the tablets.
 
@@ -59,9 +63,11 @@ Bestiary: about 10 kills in Gua Kala, one mix from each earlier zone at tier 4. 
 | `kala_mulut` | mulut | Tatar Sunda (`sunda_batutulis`) | 2 Faceless, 1 Kuntilanak | Ka Bolt on the shriek |
 | `kala_pasir_1` | pasir | Mataram rock thrower | 1 Genderuwo, 2 Pocong | Ka Bolt on the rock, Nga Bind on a hopping Pocong |
 | `kala_pasir_2` | pasir | Tanah Timur wisps (dry riverbed with rock cover) | 2 Kemamang | Na Dash-strike |
-| `kala_lupa` | lupa | Tanah Timur Old guard (kept; the Segara Kidul W3 mix would also fit now, ASSUMED no change) | 1 Prajurit Terkutuk, 2 Banaspati | Na Dash-strike behind the shield, Ga Ward on the burn. One tank |
+| `kala_mulut_2` | mulut | (v4c, 5.1 fight 2) | 2 Faceless, 1 Kuntilanak | Ka Bolt on the shriek |
+| `kala_lupa_1` | lupa | (v4c, 5.3 fight) | 3 Lampor | Ca Burst; Ombak pushes them back |
+| `kala_lupa` | lupa | Tanah Timur Old guard (**miniboss**, 5.3: the Prajurit is the elite `kala_lupa_elite`, HP x4, **TUNE**) (kept; the Segara Kidul W3 mix would also fit now, ASSUMED no change) | 1 Prajurit Terkutuk, 2 Banaspati | Na Dash-strike behind the shield, Ga Ward on the burn. One tank |
 
-Total 11 kills (about 10). Four encounters, no room with 4 or more enemies, so the 15x9 rule is met by default; the Bajul lane in `gk_lupa` is 8+ tiles. No second tank right before the boss (the pre-boss exception is not used). The newest glyph, Ombak, answers Kala's time-sand in the boss fight; its other uses here are on Lampor and projectiles.
+Total about 20 kills after v4c (two more fights, the Abyss fight and the miniboss's escorts; the v3.1 target was about 10, **TUNE**). Seven encounters (v3.1: four), no room with 4 or more enemies, so the 15x9 rule is met by default; the Bajul lane in `gk_lupa` is 8+ tiles. No second tank right before the boss (the pre-boss exception is not used). The newest glyph, Ombak, answers Kala's time-sand in the boss fight; its other uses here are on Lampor and projectiles.
 
 ## Points of interest
 | Thing | Count | Where |
@@ -74,18 +80,23 @@ Total 11 kills (about 10). Four encounters, no room with 4 or more enemies, so t
 | Petilasans | 2 | `kala_2` (mulut), `kala_1` (lupa, the last one) |
 
 ## Quest step locations
-Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Everything else is **ASSUMED**.
+Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Everything else is **ASSUMED**. Step numbers are the MQ5 v4c ones (9 steps, [quests.md](../quests.md) 4, `Play` column). Every piece has a place: `travel` = crossing that area with its fights and one find; `fight` = one encounter; `clue`, `puzzle`, `miniboss`, `setpiece`, `memory`, `chapter` as named. Unnamed clue ids (`letter_la`, `letter_ra`, `letter_sa`, `ward_inscription`, `lc6_lontar`) are **ASSUMED**; `ward_inscription` is a journal-note clue only.
 
-| Step | Marker id | Area | Event string |
-|------|-----------|------|--------------|
-| MQ5 5.1 enter Gua Kala | `kala_mulut` | `gk_mulut` (brothers `c` (3,14) and `h` (3,19), Deserter `d` (4,18)) | `zone_entered:gk_mulut` (Q), sets `mq5_1`. Requires `mq4_9`. Beats `mouth_freed` (if `flag:mq5_1`, `flag:choice_freed`) then `mouth` (if `flag:mq5_1`), both `do` `flag:beat_mouth` |
-| 5.2 reclaim La, the first letter of her name, at the Maw | `kala_mulut` | `gk_mulut` | `area_cleared:kala_mulut` (Q), sets `mq5_1b`. The letter La is released by the clear (no map object, Phase 5 decides) |
-| 5.3 shatter the western time-ward | `kala_pasir_1` | `gk_pasir` (west half) | `area_cleared:kala_pasir_1` (Q) |
-| 5.4 shatter the eastern time-ward | `kala_pasir_2` | `gk_pasir` (east half, past the gallery) | `area_cleared:kala_pasir_2` (Q), sets `mq5_1c` |
-| 5.5 reclaim Ra, the second letter of her name, in the Abyss of Forgetting | `kala_lupa` | `gk_lupa` | `area_cleared:kala_lupa` (Q), sets `mq5_1d` |
-| 5.6 rest at the last petilasan | `kala_1` | `gk_lupa` | `petilasan_activated:kala_1` (Q), sets `mq5_2`. The third seal, Sa; Semar waits here. Beat `laras_5` (if `step:mq5=6`): Laras's beat, "Who's there?", she has forgotten you but is still writing. `do` `flag:beat_laras_5` |
-| 5.7 calm Batara Kala | `kala_boss` | `gk_ruang_kala` | `boss_defeated:batara_kala` (Q), sets `mq5_3`. Beat `write` (if `flag:mq5_3`): Kala turns back into the dark, her lontar is blank, Semar: "Then write it." |
-| 5.8 write Laras's name | `kala_boss` | `gk_ruang_kala` | `name_written:laras` (Q), sets `mq5_4`. The name-writing card ends with the event; MQ5 done plays the epilogue (zones.gd). The lit door `kala_exit` stays as a walk home after the credits |
+| Step | Pieces (Play) | Marker id | Area | Event string |
+|------|---------------|-----------|------|--------------|
+| 5.1 enter Gua Kala, the mouth | `travel, fight, beat` | `kala_mulut` (Q) | `gk_mulut` (brothers `c` (3,14) and `h` (3,19), Deserter `d` (4,18)) | `zone_entered:gk_mulut` (Q), sets `mq5_1`. Requires `mq4_9`. Beats `mouth_freed` (if `flag:mq5_1`, `flag:choice_freed`) then `mouth` (if `flag:mq5_1`), both `do` `flag:beat_mouth` |
+| 5.1 break the Maw's guard | `fight` | `kala_mulut` (Q), `kala_mulut_2` | `gk_mulut` (field `E`, east road) | `area_cleared:kala_mulut` (Q), sets `mq5_1b` |
+| 5.1 reclaim La in the tag game | `memory` | `letter_la` (`memory_id: la`, cond `flag:mq5_1b`) | `gk_mulut` (east road) and `zones/kelir/gap.tscn` (data `gap_la`) | `memory_done:la` |
+| 5.2 shatter the western time-ward | `travel, fight, clue, puzzle` | `kala_pasir_1`, `ward_inscription`, `puzzle_pasir_ward_w` | `gk_pasir` (west half) | `area_cleared:kala_pasir_1` (Q) |
+| 5.2 shatter the eastern time-ward | `fight, puzzle, beat` | `kala_pasir_2`, `puzzle_pasir_ward_e`, `beat_wards_down` | `gk_pasir` (east half, past the gallery) | `area_cleared:kala_pasir_2` (Q), sets `mq5_1c` |
+| 5.3 cross the Abyss of Forgetting | `travel, fight, miniboss` | `kala_lupa_1`, `kala_lupa` (Q, miniboss) | `gk_lupa` (north to centre) | `area_cleared:kala_lupa` (Q), sets `mq5_1d` |
+| 5.3 reclaim Ra in the two cups | `memory` | `letter_ra` (`memory_id: ra`, cond `flag:mq5_1d`) | `gk_lupa` and `zones/kelir/gap.tscn` (`gap_ra`) | `memory_done:ra` |
+| 5.4 rest at the last petilasan, reclaim Sa | `talk, memory, beat` | `kala_1` (Q), `semar_kala`, `letter_sa` (`memory_id: sa`, cond `flag:mq5_2`) | `gk_lupa` (south) and `zones/kelir/gap.tscn` (`gap_sa`) | `petilasan_activated:kala_1` (Q), sets `mq5_2`; then `memory_done:sa`. Semar waits here |
+| 5.5 K10: Semar's tale of Murwakala | `memory, beat` | `semar_tale` (Q; `memory_id: k10_murwakala`, cond `flag:memory_sa`) | `gk_lupa` (beside `kala_1`) and `zones/kelir/k10_murwakala.tscn` | `memory_done:k10_murwakala`, sets `mq5_h2` (**VERIFY** the Murwakala lakon) |
+| 5.6 LC6: who's there? | `chapter` | `lc6_lontar` (`memory_id: lc6`, cond `flag:mq5_h2`) | `gk_lupa` and `zones/kelir/lc6.tscn` | `memory_done:lc6`, sets `mq5_lc` |
+| 5.7 K7: read the names aloud | `clue, memory` | `semar_kelir` (Q; `memory_id: k7_ruwatan`, cond `flag:mq5_lc`) | `gk_lupa` (beside `kala_1`) and `zones/kelir/k7_ruwatan.tscn` | `memory_done:k7_ruwatan`, sets `mq5_h1` (casting on) |
+| 5.8 calm Batara Kala | `boss, setpiece, beat` | `kala_boss` (Q) | `gk_ruang_kala` (boss `B`, cond `flag:mq5_h1`; phase 3 is the ruwatan setpiece) | `boss_defeated:batara_kala` (Q), sets `mq5_3`. Beat `write` (if `flag:mq5_3`): Kala turns back into the dark, Semar: "Then write it." |
+| 5.9 write Laras's name | `setpiece, beat` | `kala_boss` (Q) | `gk_ruang_kala` | `name_written:laras` (Q), sets `mq5_4`. The name-writing card ends with the event; MQ5 done plays the epilogue (zones.gd). The lit door `kala_exit` stays as a walk home after the credits |
 | Petilasan | `kala_2` | `gk_mulut` | `petilasan_activated:kala_2` (not a quest step) |
 | Codex | `kala_aksara_pudar` | `gk_lupa` | `codex:batara_kala`, `codex:ruwatan` (ASSUMED) |
 | Variant spot `mouth_freed` | `deserter_mouth` | `gk_mulut` (map char `d`, near the entry) | NPC with `cond: flag:choice_freed`. If the player freed the Deserter (Choice 1), he stands beside the two brothers at the mouth (story.md Choices change more than a card). Not a quest step. His one line is in script.md (ASSUMED) |
@@ -93,23 +104,250 @@ Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Ev
 
 Flags: `mq4_9` / `quest:mq4=done` (read, Ombak earned; gates X0 and X1), `choice_freed` (read, variant spot `mouth_freed`), `sc:gk_lorong`. Post-game: after the credits the player wakes in Desa Purwa with every zone open.
 
-## Flow
-Enter `gk_mulut` (the far hourglass in view) -> Sunda mix `kala_mulut` -> petilasan `kala_2` -> `gk_pasir` -> Mataram mix `kala_pasir_1` -> Timur mix `kala_pasir_2` -> high gallery, sand-slide drop -> `gk_lupa` -> open `sc:gk_lorong` (short way back to `kala_2`) -> Segara mix `kala_lupa` -> codex and Semar at petilasan `kala_1` -> door -> `gk_ruang_kala`, Batara Kala -> the lit door home.
+## Memory scenes (Story v4/v4b, [architecture.md](../architecture.md) 9b)
+Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zones.py` skips them). Built on `memory.gd` with a `Stand` marker and `Checkpoint` markers. Chars are this section's own (`_` lit floor, `#` dark wall). Gap memories use one scene `zones/kelir/gap.tscn` plus data `data/memories/gap_<la|ra|sa>.tres` and reuse the prologue-day spots of [desa_purwa.md](desa_purwa.md): the tag route, Ibu's table (house_a, (25,22)-(30,26)) and Laras's lontar spot (the burned stage, (37,3)-(47,9)); the builder copies those tile rects. Every `correct` option must match what script.md and the prologue (quests.md 0.1, 0.2) show; the script owner fixes the texts. All numbers **TUNE**.
 
-## Self-check ([AGENTS.md](../../AGENTS.md) section 5 Step 2)
-- [~] POI counts: 1 boss arena, 0 elite rooms, 1 NPC (3-5), 2 secrets (2-3), 1 codex spot, 4 encounters (6-10), 2 petilasans. Smaller than usual: a 4-area finale with about 10 kills (bestiary), and Semar is the only talker.
-- [x] Petilasan before the boss, no fight between: `kala_1` is 10 tiles from the door; `kala_lupa` is at the north end of `gk_lupa`, 20+ tiles away, and `gk_ruang_kala` has no other enemies.
-- [x] First appearances: every enemy was met in an earlier zone, and each encounter has its weakness glyph (table above).
-- [x] One tank per encounter: only `kala_lupa` has a tank (1 Bajul Putih). At most one shooter (`kala_pasir_1`: Genderuwo). At most 2 waves: all single wave.
-- [x] Rooms with 4 or more enemies: none. Bajul lane 8+ tiles.
-- [x] Newest glyph: Ombak answers time-sand and projectiles (boss), no weakness enemy here; Lampor can be pushed back with it.
-- [x] Every MQ5 step has a marker (table above).
-- [x] Critical path without any one glyph: no kabut inside Gua Kala; the kabuts on X0 and X1 open on `mq4_9` (story), not on a glyph.
-- [x] Rule: at least 1 loop or 1 shortcut: loop `mulut-pasir-(D1)-lupa-(sc)-mulut` plus `sc:gk_lorong` back to `kala_2`.
-- [x] At least 1 drop: D1.
-- [x] Landmark: the hourglass chamber shows from `gk_mulut`.
-- [x] Petilasan right before Batara Kala with no fight between: `kala_1`.
-- [~] Rule 7, 2 petilasans: `kala_2` then `kala_1`. The ids run backwards (the first rest is `kala_2`) because quests.md 5.2 fixes `kala_1` as the last one.
+### Memory `gap_la`: the tag game (La)
+
+- Scene `res://zones/kelir/gap_la.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `gap`. Size 30x17 (a copy of the tag route lane of Desa Purwa).
+- Stand-in: the hero on the prologue day (warm kelir look).
+- The one action: `interact` at a grey gap opens a 3-option list; a wrong pick flashes grey 0.5 s and reopens (no counter); after 2 wrong picks the right option pulses.
+- Goal: Fill 3 gaps; the third right pick calls `finish()` and `memory_done:la`; the letter joins the finale write card.
+- Checkpoints: `C` is not needed (no fail state); resume at the clue on quit.
+
+| gap_id | pos | prompt | options (3, key `GAP_<ID>_<n>`; `*` = correct) |
+|---|---|---|---|
+| `gap_la_cat` | (8,6) | What did she call the stray cat? | Cat name from the prologue* / a near name / another near name |
+| `gap_la_tree` | (16,10) | Which tree's leaves shivered at its name? | the banyan* / the kapok / the bamboo |
+| `gap_la_end` | (24,4) | Where did the chase end? | the place of `purwa_tag_end`* / the stage / the sanggar |
+
+```
+##############################
+#____________________________#
+#__________________________G_#
+#____________________________#
+#_______________________3____#
+#____________________________#
+#_______1____________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#_______________2____________#
+#____________________________#
+#____________________________#
+#__S_________________________#
+#____________________________#
+#____________________________#
+##############################
+```
+
+| Char | What | Notes |
+|------|------|-------|
+| `S` | Stand (3,13) | start |
+| `1 2 3` | grey gaps | positions in the table below |
+| `G` | goal (27,2) | where the memory dissolves into the lamp |
+
+### Memory `gap_ra`: the two cups (Ra)
+
+- Scene `res://zones/kelir/gap_ra.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `gap`. Size 30x17 (a copy of house_a, Ibu's table).
+- Stand-in: the hero on the prologue day (warm kelir look).
+- The one action: `interact` at a grey gap opens a 3-option list; a wrong pick flashes grey 0.5 s and reopens (no counter); after 2 wrong picks the right option pulses.
+- Goal: Fill 3 gaps; the third right pick calls `finish()` and `memory_done:ra`; the letter joins the finale write card.
+- Checkpoints: `C` is not needed (no fail state); resume at the clue on quit.
+
+| gap_id | pos | prompt | options (3, key `GAP_<ID>_<n>`; `*` = correct) |
+|---|---|---|---|
+| `gap_ra_cup` | (10,6) | Which cup was hers? | the one the prologue sets for Laras* / the other cup / the spare cup |
+| `gap_ra_words` | (16,10) | What did Ibu say as she poured? | "have Laras home before the show"* / two other near lines |
+| `gap_ra_seat` | (22,5) | Where did Laras sit? | her seat at the table* / by the door / on the step |
+
+```
+##############################
+#____________________________#
+#__________________________G_#
+#____________________________#
+#____________________________#
+#_____________________3______#
+#_________1__________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#_______________2____________#
+#____________________________#
+#____________________________#
+#__S_________________________#
+#____________________________#
+#____________________________#
+##############################
+```
+
+| Char | What | Notes |
+|------|------|-------|
+| `S` | Stand (3,13) | start |
+| `1 2 3` | grey gaps | positions in the table below |
+| `G` | goal (27,2) | where the memory dissolves into the lamp |
+
+### Memory `gap_sa`: the written names (Sa)
+
+- Scene `res://zones/kelir/gap_sa.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `gap`. Size 30x17 (a copy of the burned stage, Laras's lontar spot).
+- Stand-in: the hero on the prologue day (warm kelir look).
+- The one action: `interact` at a grey gap opens a 3-option list; a wrong pick flashes grey 0.5 s and reopens (no counter); after 2 wrong picks the right option pulses.
+- Goal: Fill 3 gaps; the third right pick calls `finish()` and `memory_done:sa`; the letter joins the finale write card.
+- Checkpoints: `C` is not needed (no fail state); resume at the clue on quit.
+
+| gap_id | pos | prompt | options (3, key `GAP_<ID>_<n>`; `*` = correct) |
+|---|---|---|---|
+| `gap_sa_first` | (9,5) | Which name did she write first? | yours* / hers / Ibu's |
+| `gap_sa_hand` | (15,9) | Which hand held the stylus? | as the prologue shows* / the other / both |
+| `gap_sa_slant` | (22,6) | How did her letters lean? | her handwriting from the lontar* / two other slants |
+
+```
+##############################
+#____________________________#
+#__________________________G_#
+#____________________________#
+#____________________________#
+#________1___________________#
+#_____________________3______#
+#____________________________#
+#____________________________#
+#______________2_____________#
+#____________________________#
+#____________________________#
+#____________________________#
+#__S_________________________#
+#____________________________#
+#____________________________#
+##############################
+```
+
+| Char | What | Notes |
+|------|------|-------|
+| `S` | Stand (3,13) | start |
+| `1 2 3` | grey gaps | positions in the table below |
+| `G` | goal (27,2) | where the memory dissolves into the lamp |
+
+### Memory `k10_murwakala`: Murwakala (K10)
+
+- Scene `res://zones/kelir/k10_murwakala.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 30x17.
+- Stand-in: young Kala, born hungry (silhouette; **VERIFY** the Murwakala lakon as the ruwatan story).
+- The one action: none (walk only).
+- Goal: Follow Kala from the feast table `K` through the hall; at each stop Semar the dalang `D` tells why he was hungry and how the dalang's words turned him back; end at `G`. Teaches why the ruwatan works.
+- Checkpoints: none (no fail state).
+
+```
+##############################
+#____________________________#
+#_____________D______________#
+#____________________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#_____T_______K_________G____#
+#____________________________#
+#____________________________#
+#____________________________#
+#_____________T______________#
+#__S_________________________#
+#____________________________#
+#____________________________#
+##############################
+```
+
+| Char | What | Notes |
+|------|------|-------|
+| `S` | Stand (3,13) | start |
+| `D` | Semar at the kelir (14,2) | narrator |
+| `K` | the feast table (14,8) |  |
+| `T` | narration stops | (6,8), (14,12) |
+| `G` | goal (24,8) |  |
+
+### Memory `lc6`: who's there? (LC6)
+
+- Scene `res://zones/kelir/lc6.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `chapter`. Size 30x17.
+- Stand-in: Laras at the bottom of the dark (`entities/player/stand_in_laras.tscn`), tiny lamp radius.
+- The one action: `interact` = write *Ka* on a floor tablet `K`; also freeze a Faceless for 3 s.
+- Goal: Cross the dark to the tablet `K` and write *Ka* once more while a Faceless circles; your own voice replies (a line from the hero) and the memory ends. She has forgotten you and still writes.
+- Checkpoints: `C` (3,12). Seen = `fail()`, back to `C`, no HP loss.
+
+```
+##############################
+#____________________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#_______h___f_______f_____KG_#
+#____________________________#
+#____________________________#
+#____________________________#
+#__C____________h____________#
+#__S_________________________#
+#____________________________#
+#____________________________#
+##############################
+```
+
+| Char | What | Notes |
+|------|------|-------|
+| `S` | Stand (3,13) | start |
+| `f` | Faceless patrol | 2, row y=8 |
+| `h` | hide prop | 2 |
+| `K` | floor tablet (26,8) | the *Ka* write card |
+| `C` | checkpoint | 1 |
+| `G` | goal (27,8) |  |
+
+### Memory `k7_ruwatan`: the ruwatan again (K7)
+
+- Scene `res://zones/kelir/k7_ruwatan.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `play`. Size 30x17 (the K0 stage, mirrored).
+- Stand-in: the dalang at the kelir (hero silhouette); `allow_cast = true`.
+- The one action: Draw the shown letter (cast overlay) when its name lights on the kelir.
+- Goal: Read six names aloud, alternating Sunda and Jawa letters (`1` to `6`); a wrong or late letter dims the lamp and repeats that name. Teaches that the Ruwatan of Dawn alternates the scripts.
+- Checkpoints: `C` not needed; failing a letter repeats it (`fail()` resets that name only). After 3 fails the guide stroke shows.
+
+```
+##############################
+#____________________________#
+#____________________________#
+#_____________K______________#
+#____________________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#____________________________#
+#_______1__2__3__4__5__6_____#
+#____________________________#
+#_____________S______________#
+#____________________________#
+#____________________________#
+#____________________________#
+##############################
+```
+
+| Char | What | Notes |
+|------|------|-------|
+| `S` | Stand (14,12) | the dalang's place |
+| `K` | kelir (14,3) | the lit screen |
+| `1-6` | name markers | (8..23,10), 3 tiles apart; odd = Sunda, even = Jawa |
+
+## Flow
+Enter `gk_mulut` (the far hourglass in view) > `kala_mulut`, beat `mouth`, `kala_mulut_2`, letter La and the tag game (5.1) > petilasan `kala_2` is optional > `gk_pasir`: `kala_pasir_1`, the inscription, the west ward puzzle, `kala_pasir_2`, the east ward puzzle, the gallery beat (5.2) > sand-slide drop > `gk_lupa`: `kala_lupa_1`, the elite `kala_lupa`, letter Ra and the two cups (5.3) > open `sc:gk_lorong` (short way back) > petilasan `kala_1`, Semar, letter Sa (5.4), K10 (5.5), LC6 (5.6), K7 (5.7) > door > `gk_ruang_kala`, Batara Kala (5.8), write her name (5.9) > the lit door home.
+
+## Self-check ([AGENTS.md](../../AGENTS.md) section 5 Step 2), re-run for v4c 2026-11-06
+- [~] POI counts: 1 boss arena, 1 miniboss (`kala_lupa`), 1 NPC (3-5), 3 secrets or finds (`kala_chest_0`, `kala_chest_1`, `kala_chest_2`), 1 codex spot, 7 encounters (6-10), 2 petilasans. The finale keeps few talkers by design.
+- [x] Petilasan before the boss, no fight between: `kala_1` is 10 tiles from the door; `kala_lupa` and `kala_lupa_1` are 20+ tiles away in the north; the gap memories, K10, LC6 and K7 are scenes, not fights.
+- [x] First appearances: every enemy was met earlier, each encounter has its weakness glyph.
+- [x] One tank per encounter (`kala_lupa` has the Prajurit), at most one shooter, single waves.
+- [x] Rooms with 4 or more enemies: none (all new fights have 3 enemies). Lanes 8+.
+- [x] Newest glyph: Ombak answers time-sand and projectiles; Lampor in `kala_lupa_1` can be pushed back with it.
+- [x] Every MQ5 step 5.1-5.9, clue id, memory id (`la`, `ra`, `sa`, `k10_murwakala`, `lc6`, `k7_ruwatan`) and beat has a place.
+- [x] Critical path without any one glyph: no kabut inside Gua Kala except the arena exit; puzzles gate nothing.
+- [x] Loop or shortcut, drop, landmark, petilasan before the boss: unchanged.
+- [x] Pacing rule 5 (forward only) and rule 7 (finds in every area but the arena).
 
 ## ASSUMED
 - Area names `gk_pasir`, `gk_lupa`, `gk_ruang_kala` (only `gk_mulut` is fixed), their sizes, the loop layout, D1 and `sc:gk_lorong`.
@@ -118,6 +356,8 @@ Enter `gk_mulut` (the far hourglass in view) -> Sunda mix `kala_mulut` -> petila
 - The four mixes (one per earlier zone) and the one-wave rule; 11 kills is "about 10".
 - Semar at `kala_1`, with an optional line.
 - The lit door after the fight leads to Desa Purwa; it is not a graph edge.
+
+- v4c (2026-11-06): gap-memory letters, `ward_inscription`, `lc6_lontar` and the beat `beat_wards_down` are ASSUMED ids. The boss `B` waits on `flag:mq5_h1` (K7) so the sequence cannot be skipped. Gap `correct` options depend on the prologue text (script owner).
 
 ## Open questions
 1. VERIFY (ruwatan): the codex note on ruwatan, and the claim that Kala is "turned back", not killed, need sources ([story.md](../story.md) says verified with nuance). Any new culture claim about hourglass or clock motifs for Kala is a design invention, not folklore.
@@ -130,7 +370,7 @@ Enter `gk_mulut` (the far hourglass in view) -> Sunda mix `kala_mulut` -> petila
 - Entry: link X1 from `sk_keraton` (the main entry, a sea-cave passage in the south wall of `gk_mulut`, spawn `from_sk_keraton`) and link X0 from `desa_purwa` (the west exit, spawns `from_desa_purwa` in mulut and `from_gk_mulut` in Desa Purwa). Both open on `quest:mq4=done` (kabut flag `mq4_9`). MQ5 requires `mq4_9`; the beat `kidul` starts it (`start:mq5`). The Hunter does not appear in Act VI.
 - Arena: stays 2x2 (60x34), quadrant motifs are art only (open question 2).
 - `kala_lupa` uses the Timur Old guard mix (open question 3).
-- Return: the lit door `kala_exit`, an exit to `desa_purwa` (spawn `from_gua_kala`) that appears after `boss_defeated:batara_kala` (open question 4). Step 5.8 (`name_written:laras`) completes MQ5 and the epilogue plays first; after it the player wakes in Desa Purwa (`from_gua_kala`). The lit door is also a walk home afterwards.
+- Return: the lit door `kala_exit`, an exit to `desa_purwa` (spawn `from_gua_kala`) that appears after `boss_defeated:batara_kala` (open question 4). Step 5.9 (`name_written:laras`) completes MQ5 and the epilogue plays first; after it the player wakes in Desa Purwa (`from_gua_kala`). The lit door is also a walk home afterwards.
 - Semar is at `kala_1` with one optional line, npc id `semar_kala` (open question 5).
 - Kala HP 9300 (starting value; Segara Kidul is on the main path, so the old P0 figure 8400 no longer applies). No tier scaling exists, so the reused mixes keep their own stats.
 
@@ -152,7 +392,7 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 
 - Size: 90 x 34 tiles = 3 x 2 screens (30 x 17 each).
 - Look: Wet black cave mouth, carved clock gears, drifting faded letters, the far hourglass and clock face faint across the dark. A small sand-choked side pocket by the first petilasan.
-- Purpose: Entry from `sk_keraton` (south passage, `quest:mq4=done`) or Desa Purwa (west), MQ5 5.1-5.2 (beats `mouth_freed` / `mouth`, the first letter, La), the `mouth_freed` Deserter spot, first rest `kala_2`, fight `kala_mulut`, link to gk_pasir, the gate of `sc:gk_lorong` (north wall, west) with its pocket and exit into gk_lupa.
+- Purpose: Entry from `sk_keraton` (south passage, `quest:mq4=done`) or Desa Purwa (west), MQ5 5.1 (beats `mouth_freed` / `mouth`, the first letter, La), the `mouth_freed` Deserter spot, first rest `kala_2`, fight `kala_mulut`, link to gk_pasir, the gate of `sc:gk_lorong` (north wall, west) with its pocket and exit into gk_lupa.
 
 ### Map
 ```
@@ -160,7 +400,7 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 #__________#n_#__________________________________________________________________________#
 #__________#__#_____________________________#####________________________________________#
 #__________#++#_____________________________#####___________#########____________________#
-#___________________#######_________________#####___________#########_______________rr___#
+#___________________#######___C_____________#####___________#########_______________rr___#
 #___________________#######_____________________________rr__#########_______________rr___#
 #___________________#######_____________rr______________rr__#########____________________#
 #___________________#######_____________rr__________________#########____________________#
@@ -172,9 +412,9 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 #_______________________rr__________________________________rr______________#####________#
 #__c____________rr_______________________________________________________________________#
 #_______________rr_______________________________________________________________________#
-Xe____________________________________________E_________________________________________yY
+Xe____________________________________________E_______________________A_________________yY
 X________________________________________________________________________________________Y
-#___d____________________________________________________________________________________#
+#___d_______________________________________________________________________________B____#
 #__h_____________________________________________________________________________________#
 #_________________rr_____________________________________________________________________#
 #_________________rr_____________________________________________________________________#
@@ -209,12 +449,21 @@ X_______________________________________________________________________________
 | `+` | shortcut gate sc:gk_lorong, sand-choked arch (opens from the north pocket, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:gk_lorong", open_side:"n"}` | floor | 2 |
 | `P` | petilasan 2 | `res://entities/petilasan/petilasan.tscn` | `{id:"kala_2"}` | floor | 1 |
 | `E` | encounter kala_mulut | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut", size:Vector2i(20,11), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,3)], [res://entities/enemies/kuntilanak.tscn, Vector2i(8,0)]]]}` | floor | 1 |
+| `A` | encounter kala_mulut_2 (5.1, second fight, east road) | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut_2", size:Vector2i(18,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)], [res://entities/enemies/kuntilanak.tscn, Vector2i(4,0)]]]}` | floor | 1 |
+| `B` | clue, a faded floating letter *La* (5.1; opens gap memory `la`; cond `flag:mq5_1b`; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"letter_la", memory_id:"la", cond:"flag:mq5_1b"}` | floor | 1 |
+| `C` | chest: 300 Ilmu (north nook, rule 7 optional find, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_0", item_id:"ilmu:300"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
 | `kala_mulut` | `E (46,16)` | 20x11 | W1: Faceless (+6,-3), Faceless (+6,+3), Kuntilanak (+8,+0) | Ka Bolt on the shriek |
+| `kala_mulut_2` | `E (70,16)` | 18x9 | W1: Faceless (-4,-2), Faceless (-4,+2), Kuntilanak (+4,0) | Ka Bolt on the shriek |
 
+### Rooms (v4c)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| east road | (60,12)-(88,20) | Fight 2 and the letter | E `A` (70,16), clue `B` letter_la (84,18) | 5.1 |
+| north nook | (28,2)-(34,6) | Optional chest | `C` (30,4) | rule 7 |
 ## Area 2: gk_pasir
 
 - Size: 90 x 51 tiles = 3 x 3 screens (30 x 17 each).
@@ -233,7 +482,7 @@ X_______________________________________________________________________________
 #_______________________rr__________________________________#____________________________D
 #_____________________________rr________________rr__________#____________________________#
 #_____________________________rr________________rr__________#_______________rr___________#
-#_______rr____________________________rr____________________#_______________rr___________#
+#_______rr____________________________rr____________________#_______________rr____G______#
 #_______rr____________________________rr____________________#____________________________#
 #___________________________________________________________#____________________________#
 #___________________________________________________________#____________________________#
@@ -243,11 +492,11 @@ X_______________________________________________________________________________
 #_______________rr________________________________rr_____________________________________#
 #________________________________________________________________________________________#
 #________________________________________________________________________________________#
-#________________________________________________________________________________________#
+#_____________________________________B__________________________________________________#
 #___________________________rr___________________________________________________________#
-#___________________________rr___________________________________________________________#
+#___________________________rr______________________________________________C____________#
 #________________________________________________________________________________________#
-Xe_______________________________________________________________________________________#
+Xe________________A______________________________________________________________________#
 X_________________________________E_________________________rr___________________________#
 #___________________rr______________________________________rr___________________________#
 #___________________rr__________________rr_______________________________________________#
@@ -285,6 +534,10 @@ X_________________________________E_________________________rr__________________
 | `E` | encounter kala_pasir_1 | `res://entities/world/encounter.tscn` | `{area_id:"kala_pasir_1", size:Vector2i(22,12), waves:[[[res://entities/enemies/genderuwo.tscn, Vector2i(7,0)], [res://entities/enemies/pocong.tscn, Vector2i(3,-4)], [res://entities/enemies/pocong.tscn, Vector2i(3,4)]]]}` | floor | 1 |
 | `F` | encounter kala_pasir_2 | `res://entities/world/encounter.tscn` | `{area_id:"kala_pasir_2", size:Vector2i(20,11), waves:[[[res://entities/enemies/kemamang.tscn, Vector2i(6,-3)], [res://entities/enemies/kemamang.tscn, Vector2i(6,3)]]]}` | floor | 1 |
 | `c` | chest: 300 Ilmu (secret, sand cave behind the pillar gap) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_1", item_id:"ilmu:300"}` | floor | 1 |
+| `A` | clue, the time-ward inscription (5.2 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"ward_inscription"}` | floor | 1 |
+| `B` | trigger, puzzle `puzzle_pasir_ward_w` (5.2: turn the three hourglass stones until the sand runs up; the western ward shatters) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_pasir_ward_w", size:Vector2i(12,8)}` | floor | 1 |
+| `C` | trigger, puzzle `puzzle_pasir_ward_e` (5.2: same, mirrored; the eastern ward shatters) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_pasir_ward_e", size:Vector2i(12,8)}` | floor | 1 |
+| `G` | trigger, beat spot at the high gallery (5.2: both wards down, Semar's one line; ASSUMED) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_wards_down", size:Vector2i(8,6)}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -292,6 +545,11 @@ X_________________________________E_________________________rr__________________
 | `kala_pasir_1` | `E (34,25)` | 22x12 | W1: Genderuwo (+7,+0), Pocong (+3,-4), Pocong (+3,+4) | Ka Bolt on the rock, Nga Bind on a hopping Pocong |
 | `kala_pasir_2` | `F (64,28)` | 20x11 | W1: Kemamang (+6,-3), Kemamang (+6,+3) | Na Dash-strike |
 
+### Rooms (v4c)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| west ward | (30,15)-(45,25) | Clue, puzzle | clue `A` (18,24), trigger `B` (38,20) | 5.2 |
+| east ward and gallery | (68,17)-(88,12) | Puzzle, beat before the drop | trigger `C` (76,22), trigger `G` (82,10) | 5.2 |
 ## Area 3: gk_lupa
 
 - Size: 60 x 51 tiles = 2 x 3 screens (30 x 17 each).
@@ -308,7 +566,7 @@ X_________________________________E_________________________rr__________________
 Xm_________________________________________________________#
 X__________________________________________________________#
 #__________________________________________________________#
-#_____________________________________________________rr___#
+#_____________A_______________________________________rr___#
 #_____________________________________________________rr___#
 #__________________________________________________________#
 #__________________________________________________________#
@@ -324,7 +582,7 @@ X__________________________________________________________#
 #___rr_____________________________________________________#
 #____________________________________________________#######
 #__________________________________________________rr#_____#
-#__________________________________________________rr#_____#
+#_____________________________B____________________rr#_____#
 #__________________________________________________________#
 #___rr__________________________________________________c__#
 #___rr_____________________________________________rr#_____#
@@ -336,13 +594,13 @@ X__________________________________________________________#
 #__________________________________________________________#
 #__________________________________________________________#
 #__________________________________________________________#
-#___rr_____________________________________________________#
-#___rr_____________________________________________________#
+#___rr______________________F______________________________#
+#___rr___________________________G_________________________#
 #___________________rr__________________rr____________rr___#
 #___________________rr__________________rr____________rr___#
 #_____________________________P__H_________________________#
 #__________________________________________________________#
-#___rr_____________________________________________________#
+#___rr_____________________C________D______________________#
 #___rr_____________________________________________________#
 #_______________rr__________________________rr________rr___#
 #_______________rr__________________________rr________rr___#
@@ -359,7 +617,7 @@ X__________________________________________________________#
 | `X` | exit to gk_mulut (west edge, plain exit into the `sc:gk_lorong` pocket, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_mulut", spawn_id:"from_gk_lupa"}` | floor | 2 |
 | `m` | spawn, arrival from gk_mulut | `res://entities/world/spawn.tscn` | `{id:"from_gk_mulut"}` | floor | 1 |
 | `l` | spawn, landing of the drop D1 from gk_pasir (no exit back) | `res://entities/world/spawn.tscn` | `{id:"from_gk_pasir"}` | floor | 1 |
-| `E` | encounter kala_lupa | `res://entities/world/encounter.tscn` | `{area_id:"kala_lupa", size:Vector2i(20,11), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(7,0)], [res://entities/enemies/banaspati.tscn, Vector2i(3,-3)], [res://entities/enemies/banaspati.tscn, Vector2i(3,3)]]]}` | floor | 1 |
+| `E` | encounter kala_lupa (**miniboss**, 5.3: the Prajurit is the elite `kala_lupa_elite`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_lupa", size:Vector2i(20,11), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(7,0)], [res://entities/enemies/banaspati.tscn, Vector2i(3,-3)], [res://entities/enemies/banaspati.tscn, Vector2i(3,3)]]]}` | floor | 1 |
 | `c` | chest: 300 Ilmu (secret, behind stone tablets) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_2", item_id:"ilmu:300"}` | floor | 1 |
 | `g` | codex spot kala_aksara_pudar, faded letters 1 (Batara Kala) | `res://entities/world/pickup.tscn` | `{codex_id:"batara_kala"}` | floor | 1 |
 | `i` | codex spot kala_aksara_pudar, faded letters 2 (ruwatan) | `res://entities/world/pickup.tscn` | `{codex_id:"ruwatan"}` | floor | 1 |
@@ -367,12 +625,24 @@ X__________________________________________________________#
 | `H` | NPC Semar (optional line) | `res://entities/npc/npc.tscn` | `{npc_id:"semar_kala"}` | floor | 1 |
 | `S` | exit to gk_ruang_kala (south edge, the boss door, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_ruang_kala", spawn_id:"from_gk_lupa"}` | floor | 2 |
 | `s` | spawn, arrival from gk_ruang_kala | `res://entities/world/spawn.tscn` | `{id:"from_gk_ruang_kala"}` | floor | 1 |
+| `A` | encounter kala_lupa_1 (5.3, fight before the miniboss) | `res://entities/world/encounter.tscn` | `{area_id:"kala_lupa_1", size:Vector2i(14,8), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(-3,-1)], [res://entities/enemies/lampor.tscn, Vector2i(0,2)], [res://entities/enemies/lampor.tscn, Vector2i(3,-1)]]]}` | floor | 1 |
+| `B` | clue, a faded floating letter *Ra* (5.3; opens gap memory `ra`; cond `flag:mq5_1d`) | `res://entities/world/clue.tscn` | `{clue_id:"letter_ra", memory_id:"ra", cond:"flag:mq5_1d"}` | floor | 1 |
+| `C` | clue, a faded floating letter *Sa* (5.4; opens gap memory `sa`; cond `flag:mq5_2`) | `res://entities/world/clue.tscn` | `{clue_id:"letter_sa", memory_id:"sa", cond:"flag:mq5_2"}` | floor | 1 |
+| `D` | clue, Semar's tale stone (5.5 K10; opens `k10_murwakala`; cond `flag:memory_sa`) | `res://entities/world/clue.tscn` | `{clue_id:"semar_tale", memory_id:"k10_murwakala", cond:"flag:memory_sa"}` | floor | 1 |
+| `F` | clue, Laras's lontar fragment (5.6 LC6; opens `lc6`; ASSUMED id; cond `flag:mq5_h2`) | `res://entities/world/clue.tscn` | `{clue_id:"lc6_lontar", memory_id:"lc6", cond:"flag:mq5_h2"}` | floor | 1 |
+| `G` | clue, Semar's kelir (5.7 K7; opens `k7_ruwatan`; cond `flag:mq5_lc`) | `res://entities/world/clue.tscn` | `{clue_id:"semar_kelir", memory_id:"k7_ruwatan", cond:"flag:mq5_lc"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
 | `kala_lupa` | `E (32,13)` | 20x11 | W1: Prajurit Terkutuk (+7,+0), Banaspati (+3,-3), Banaspati (+3,+3) | Na Dash-strike behind the shield, Ga Ward on the burn |
+| `kala_lupa_1` | `E (14,8)` | 14x8 | W1: Lampor (-3,-1), Lampor (0,+2), Lampor (+3,-1) | Ca Burst |
 
+### Rooms (v4c)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| last rest | (24,34)-(38,46) | Petilasan `kala_1`, Semar, five clues in order: `C` letter_sa, `D` semar_tale, `F` lc6_lontar, `G` semar_kelir | 5.4-5.7 |
+| abyss | (4,4)-(40,28) | Fight (14,8), miniboss (32,13), letter_ra `B` (30,24) | 5.3 |
 ## Area 4: gk_ruang_kala
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
@@ -422,7 +692,7 @@ X__________________________________________________________#
 |------|------|-------|-------|-------|-------|
 | `N` | exit to gk_lupa (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_ruang_kala"}` | floor | 2 |
 | `n` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
-| `B` | boss Batara Kala (arena centre) | `res://entities/bosses/batara_kala.tscn` | `{}` | floor | 1 |
+| `B` | boss Batara Kala (arena centre; wakes after K7, `flag:mq5_h1`; phase 3 is the ruwatan setpiece) | `res://entities/bosses/batara_kala.tscn` | `{cond:"flag:mq5_h1"}` | floor | 1 |
 | `S` | exit to desa_purwa (south edge, the lit door, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"desa_purwa", spawn_id:"from_gua_kala"}` | floor | 2 |
 | `K` | kabut, lifts on the boss (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq5_3"}` | floor | 2 |
 | `T` | trigger, quest marker kala_exit (4x2) | `res://entities/world/trigger.tscn` | `{trigger_id:"kala_exit", size:Vector2i(4,2)}` | floor | 1 |
