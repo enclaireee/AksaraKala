@@ -160,3 +160,246 @@ Arrive at `sk_pantai` (`from_desa_purwa`, or walk in from `sk_karang`) -> teach 
 - world.md calls the ts_situ end of `sc:ts_sk` an area (`ts_situ`), but tatar_sunda.md is still a single zone `tatar_sunda`. The `ts_*` split and the position of `sunda_2` relative to `ts_situ` are undefined.
 - quests.md 4.1 `zone_entered:segara_kidul` uses a region id, while the scenes are areas (`sk_*`). The event must fire on the first area entered.
 - quests.md "After 3.8: in a P0 build the Gua Kala gate opens now" vs world.md, which links `gk_mulut` only from `sk_keraton`.
+
+## Area 1: sk_karang
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: Dark reef rock, tide pools, a long sandbar from `tt_pesisir`, a fishing hut in the west, and a rocky south-east cove where Bajul Putih Tua lurks.
+- Purpose: Entry from `tt_pesisir`, reef encounters (`kidul_karang_1`, `kidul_karang_2`, `kidul_karang_3`), NPC `kidul_nelayan_tua` (SQ-K2), elite room `kidul_elite_cove` (`bajul_putih_tua`), secret chest `kidul_chest_2`, south causeway to `sk_keraton` (gated by kabut `mq4_5`).
+
+### Map
+```
+############################NN##############################
+#...........................n,.............................#
+#.......rr..................,,............rr...............#
+#.......rr..................,,............rr...............#
+#...........................,,.............................#
+#...........................,,........E....................#
+#...........................,,.............................#
+#.....~~~~~~~~..............,,...................rrrrrr....#
+#.....~~~~~~~~..............,,...................r....r....#
+#.....~~~~~~~~..............,,...................r..c.r....#
+#...........................,,...................r....r....#
+#...........................,,........................r....#
+#..............rr...........,,...................rrrrrr....#
+#..............rr...........,,.............................#
+#...........................,,.............................#
+#......A....................,,.............................#
+Ww,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#...........................,,.............................#
+#...........................,,.............................#
+#.........~~~~~~~~..........,,............#############....#
+#.........~~~~~~~~..........,,............#...........#....#
+#.........~~~~~~~~..........,,............#.....q.....#....#
+#...........................,,............#...........#....#
+#...........................,,............#####...#####....#
+#...........................,,................T............#
+#..............rr...........,,.............................#
+#..............rr...........,,.............................#
+#...........................G,.............................#
+############################KK##############################
+############################,,##############################
+############################,,##############################
+############################s,##############################
+############################SS##############################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `N` | exit to tt_pesisir (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pesisir", spawn_id:"from_sk_karang"}` | path | 2 |
+| `n` | spawn, arrival from tt_pesisir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pesisir"}` | path | 1 |
+| `W` | exit to sk_pantai (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_pantai", spawn_id:"from_sk_karang"}` | path | 2 |
+| `w` | spawn, arrival from sk_pantai | `res://entities/world/spawn.tscn` | `{id:"from_sk_pantai"}` | path | 1 |
+| `S` | exit to sk_keraton (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_keraton", spawn_id:"from_sk_karang"}` | path | 2 |
+| `s` | spawn, arrival from sk_keraton | `res://entities/world/spawn.tscn` | `{id:"from_sk_keraton"}` | path | 1 |
+| `K` | kabut, lifts after the Trial of the Waves (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq4_5"}` | path | 2 |
+| `A` | NPC Pak Raka, old fisherman (SQ-K2) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_nelayan_tua"}` | grass | 1 |
+| `E` | encounter kidul_karang_1 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_karang_1", size:Vector2i(17,9), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(4,-2)], [res://entities/enemies/lampor.tscn, Vector2i(5,0)], [res://entities/enemies/lampor.tscn, Vector2i(4,2)]]]}` | grass | 1 |
+| `F` | encounter kidul_karang_2 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_karang_2", size:Vector2i(17,9), waves:[[[res://entities/enemies/ula_segara.tscn, Vector2i(6,0)], [res://entities/enemies/lampor.tscn, Vector2i(3,-2)], [res://entities/enemies/lampor.tscn, Vector2i(3,2)]]]}` | path | 1 |
+| `G` | encounter kidul_karang_3 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_karang_3", size:Vector2i(19,9), waves:[[[res://entities/enemies/bajul_putih.tscn, Vector2i(6,0)], [res://entities/enemies/lampor.tscn, Vector2i(3,-2)], [res://entities/enemies/lampor.tscn, Vector2i(3,2)]]]}` | path | 1 |
+| `T` | trigger, SQ-K2 cove entrance | `res://entities/world/trigger.tscn` | `{trigger_id:"kidul_elite_cove", size:Vector2i(7,7)}` | grass | 1 |
+| `q` | elite Bajul Putih Tua (SQ-K2) | `res://entities/enemies/bajul_putih_tua.tscn` | `{}` | grass | 1 |
+| `c` | chest: 380 Ilmu (hidden tide pool) | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_2", item_id:"ilmu:380"}` | grass | 1 |
+
+## Area 2: sk_pantai
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: Black-sand dunes in the north, a wide wet tidal flat in the south, green southern surf, and the barred coral gate (`sc:sk_gerbang`) on the south-east shore.
+- Purpose: Petilasan `kidul_1`, NPCs `kidul_jurukunci` and `kidul_nelayan_anak` (SQ-K1), teach encounters (`kidul_pantai_1`, `kidul_pantai_2`, `kidul_pantai_3`), Trial of the Southern Waves (`kidul_trial`), north stair to `sk_tebing`, shortcut gate `sc:sk_gerbang` to `sk_keraton`.
+
+### Map
+```
+############################NN##############################
+#...........................n,.............................#
+#......rrrrrr...............,,...................rr........#
+#......r....r...............,,...................rr........#
+#......r..c.r...............,,.............................#
+#......r....................,,.........1...................#
+#......rrrrrr...............,,.............................#
+#...........................,,.......................2.....#
+#.............E.............,,.............................#
+#...........................,,.............................#
+#...........................,,.............................#
+#......C....................,,...................3.........#
+#...........................,,.............................#
+#...........................,,.............................#
+#...................P....J..,,.............................#
+#...........................,,.............................#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,yY
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
+#...........................,,.............................#
+#.........G.................,,.............................#
+#...........................,,........................######
+#......____________________.,,........................=,;..$
+#......____________________.,,........................=,,..$
+#......____________________.,,........................######
+#......_________W__________.,,.............................#
+#......____________________.,,.............................#
+#......____________________.,,.............................#
+#......____________________.,,.............................#
+#...........................,,............T................#
+#..........................................................#
+#.....~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.....#
+#.....~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.....#
+#..........................................................#
+############################################################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `Y` | exit to sk_karang (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_karang", spawn_id:"from_sk_pantai"}` | path | 2 |
+| `y` | spawn, arrival from sk_karang | `res://entities/world/spawn.tscn` | `{id:"from_sk_karang"}` | path | 1 |
+| `N` | exit to sk_tebing (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_tebing", spawn_id:"from_sk_pantai"}` | path | 2 |
+| `n` | spawn, arrival from sk_tebing | `res://entities/world/spawn.tscn` | `{id:"from_sk_tebing"}` | path | 1 |
+| `$` | exit to sk_keraton (east edge behind shortcut gate, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_keraton", spawn_id:"from_sk_pantai"}` | path | 2 |
+| `;` | spawn, arrival from sk_keraton (on open side of `=`) | `res://entities/world/spawn.tscn` | `{id:"from_sk_keraton"}` | path | 1 |
+| `=` | shortcut gate sc:sk_gerbang (opens from sk_keraton, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:sk_gerbang", open_side:"e"}` | path | 2 |
+| `P` | petilasan 1 | `res://entities/petilasan/petilasan.tscn` | `{id:"kidul_1"}` | grass | 1 |
+| `J` | NPC Nyai Ranti, juru kunci of the Southern Shore | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_jurukunci"}` | grass | 1 |
+| `C` | NPC Damar, fisher child (SQ-K1) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_nelayan_anak"}` | grass | 1 |
+| `1` | pickup, stranded hatchling 1 (SQ-K1) | `res://entities/world/pickup.tscn` | `{item_id:"tukik_1"}` | grass | 1 |
+| `2` | pickup, stranded hatchling 2 (SQ-K1) | `res://entities/world/pickup.tscn` | `{item_id:"tukik_2"}` | grass | 1 |
+| `3` | pickup, stranded hatchling 3 (SQ-K1) | `res://entities/world/pickup.tscn` | `{item_id:"tukik_3"}` | grass | 1 |
+| `T` | trigger, surf release spot (SQ-K1) | `res://entities/world/trigger.tscn` | `{trigger_id:"kidul_tukik_laut", size:Vector2i(7,5)}` | grass | 1 |
+| `E` | encounter kidul_pantai_1 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_pantai_1", size:Vector2i(17,9), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(4,-2)], [res://entities/enemies/lampor.tscn, Vector2i(5,0)], [res://entities/enemies/lampor.tscn, Vector2i(4,2)]]]}` | grass | 1 |
+| `F` | encounter kidul_pantai_2 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_pantai_2", size:Vector2i(17,9), waves:[[[res://entities/enemies/ula_segara.tscn, Vector2i(6,0)], [res://entities/enemies/lampor.tscn, Vector2i(3,-2)], [res://entities/enemies/lampor.tscn, Vector2i(3,2)]]]}` | path | 1 |
+| `G` | encounter kidul_pantai_3 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_pantai_3", size:Vector2i(17,9), waves:[[[res://entities/enemies/bajul_putih.tscn, Vector2i(6,0)]]]}` | grass | 1 |
+| `W` | encounter kidul_trial (Trial of the Southern Waves) | `res://entities/world/encounter.tscn` | `{area_id:"kidul_trial", size:Vector2i(21,11), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(-5,-2)], [res://entities/enemies/lampor.tscn, Vector2i(-3,2)], [res://entities/enemies/lampor.tscn, Vector2i(3,-2)], [res://entities/enemies/lampor.tscn, Vector2i(5,2)]], [[res://entities/enemies/ula_segara.tscn, Vector2i(-6,0)], [res://entities/enemies/ula_segara.tscn, Vector2i(6,0)], [res://entities/enemies/lampor.tscn, Vector2i(0,-3)]], [[res://entities/enemies/bajul_putih.tscn, Vector2i(6,0)], [res://entities/enemies/lampor.tscn, Vector2i(-4,-2)], [res://entities/enemies/lampor.tscn, Vector2i(-4,2)]]]}` | floor | 1 |
+| `c` | chest: 380 Ilmu (behind driftwood) | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_1", item_id:"ilmu:380"}` | grass | 1 |
+
+## Area 3: sk_tebing
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: High black sea cliffs, switchback stone stairs, wind-carved sea cave in the north-east, and a cliff-edge slide dropping onto `sk_keraton`.
+- Purpose: Connects `sk_pantai` up to the `sc:ts_sk` cliff shortcut into Tatar Sunda (`ts_situ`), two cliff encounters (`kidul_tebing_1`, `kidul_tebing_2`), secret chest `kidul_chest_3`, and one-way drop `D` to `sk_keraton`.
+
+### Map
+```
+############################################################
+#..........................................................#
+#...........................................##########.....#
+#........rr.................................#........#.....#
+#........rr.................................#....c...#.....#
+#...........................................#........#.....#
+Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,...............####..####.....#
+W,,,,,,,,,,,,,,,,,,,,,,,,,,,,..............................#
+#..........................,,..............................#
+#..........................,,.......F......................#
+#..........................,,..............................#
+#..........................,,..............................#
+#.............rr...........,,...................rr.........#
+#.............rr...........,,...................rr.........#
+#..........................,,..............................#
+#..........................,,..............................#
+#..........................,,..............................D
+#..........................,,..............................D
+#..........................,,..............................#
+#..........................,,..............................#
+#.......rr.................,,..............rr..............#
+#.......rr.................,,..............rr..............#
+#..........................,,..............................#
+#..........................E,..............................#
+#..........................,,..............................#
+#..........................,,..............................#
+#..........................,,..............................#
+#.................rr.......,,..............................#
+#.................rr.......,,..............................#
+#..........................,,..............................#
+#..........................,,..............................#
+#..........................,,..............................#
+#..........................s,..............................#
+###########################SS###############################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `S` | exit to sk_pantai (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_pantai", spawn_id:"from_sk_tebing"}` | path | 2 |
+| `s` | spawn, arrival from sk_pantai | `res://entities/world/spawn.tscn` | `{id:"from_sk_pantai"}` | path | 1 |
+| `W` | exit to ts_situ (west edge, opens sc:ts_sk in ts_situ, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"ts_situ", spawn_id:"from_sk_tebing"}` | path | 2 |
+| `w` | spawn, arrival from ts_situ | `res://entities/world/spawn.tscn` | `{id:"from_ts_situ"}` | path | 1 |
+| `D` | exit, one-way drop D1 to sk_keraton (east cliff edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_keraton", spawn_id:"from_sk_tebing"}` | path | 2 |
+| `E` | encounter kidul_tebing_1 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_tebing_1", size:Vector2i(17,9), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(3,-3)], [res://entities/enemies/lampor.tscn, Vector2i(4,-1)], [res://entities/enemies/lampor.tscn, Vector2i(4,1)], [res://entities/enemies/lampor.tscn, Vector2i(3,3)]]]}` | path | 1 |
+| `F` | encounter kidul_tebing_2 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_tebing_2", size:Vector2i(19,9), waves:[[[res://entities/enemies/ula_segara.tscn, Vector2i(7,0)], [res://entities/enemies/bajul_putih.tscn, Vector2i(4,0)], [res://entities/enemies/lampor.tscn, Vector2i(2,-2)], [res://entities/enemies/lampor.tscn, Vector2i(2,2)]]]}` | grass | 1 |
+| `c` | chest: 380 Ilmu (sea cave) | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_3", item_id:"ilmu:380"}` | grass | 1 |
+
+## Area 4: sk_keraton
+
+- Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
+- Look: Outer causeway and court of green-glass stone over the Southern Sea, leading south into a tranquil inner pendopo where waves lap softly against carved pillars.
+- Purpose: Outer court encounter (`kidul_keraton_1`), drop landing from `sk_tebing`, west coral gate exit to `sk_pantai` (opens `sc:sk_gerbang`), inner pendopo with petilasan `kidul_2`, codex `nyi_roro_kidul`, and the Sea Altar (`kidul_altar`) where the player inscribes `jawa_ka` (*Ombak*) and receives the Queen's blessing (`kain_hijau`).
+
+### Map
+```
+############################NN##############################
+#___________________________n______________________________#
+#______________________________________________l___________#
+#_______~~~~____________________________________~~~~_______#
+#_______~~~~____________________________________~~~~_______#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr___________________#
+#__________________________________________________________#
+#____________________________E_____________________________#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr___________________#
+#__________________________________________________________#
+#__________________________________________________________#
+#__________________________________________________________#
+Ww_________________________________________________________#
+W__________________________________________________________#
+#__________________________________________________________#
+#___________############____________############___________#
+#___________############____________############___________#
+#__________________________________________________________#
+#___________________rr________________rr___________________#
+#___________________rr________________rr___________________#
+#__________________________________________________________#
+#_______________________P_________x________________________#
+#__________________________________________________________#
+#____________________________A_____________________________#
+#__________________________________________________________#
+#_______~~~~____________________________________~~~~_______#
+#_______~~~~____________________________________~~~~_______#
+#__________________________________________________________#
+#__________________________________________________________#
+############################################################
+```
+
+### Legend
+| Char | What | Scene | Props | Floor | Count |
+|------|------|-------|-------|-------|-------|
+| `N` | exit to sk_karang (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_karang", spawn_id:"from_sk_keraton"}` | floor | 2 |
+| `n` | spawn, arrival from sk_karang | `res://entities/world/spawn.tscn` | `{id:"from_sk_karang"}` | floor | 1 |
+| `l` | spawn, landing of drop D1 from sk_tebing | `res://entities/world/spawn.tscn` | `{id:"from_sk_tebing"}` | floor | 1 |
+| `W` | exit to sk_pantai (west edge, opens sc:sk_gerbang in sk_pantai, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_pantai", spawn_id:"from_sk_keraton"}` | floor | 2 |
+| `w` | spawn, arrival from sk_pantai | `res://entities/world/spawn.tscn` | `{id:"from_sk_pantai"}` | floor | 1 |
+| `E` | encounter kidul_keraton_1 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_keraton_1", size:Vector2i(19,9), waves:[[[res://entities/enemies/ula_segara.tscn, Vector2i(6,0)], [res://entities/enemies/lampor.tscn, Vector2i(3,-3)], [res://entities/enemies/lampor.tscn, Vector2i(4,0)], [res://entities/enemies/lampor.tscn, Vector2i(3,3)]]]}` | floor | 1 |
+| `P` | petilasan 2 (inner pendopo) | `res://entities/petilasan/petilasan.tscn` | `{id:"kidul_2"}` | floor | 1 |
+| `x` | codex spot, Kanjeng Ratu Kidul | `res://entities/world/pickup.tscn` | `{codex_id:"nyi_roro_kidul"}` | floor | 1 |
+| `A` | Sea Altar of the Southern Sanctuary (inscribe jawa_ka) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_altar"}` | floor | 1 |
+

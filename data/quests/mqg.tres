@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_MQG_S1_OBJ"
+on = "talked_to:ciung_wanara"
+marker = {"zone": "kg_alun", "id": "ciung_wanara"}
+set_flag = "mqg_0"
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_MQG_S2_OBJ"
+on = "area_cleared:galuh_bout_1"
+marker = {"zone": "kg_alun", "id": "galuh_bout_1"}
+set_flag = "mqg_1"
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_MQG_S3_OBJ"
+on = "area_cleared:galuh_bout_2"
+marker = {"zone": "kg_alun", "id": "galuh_bout_2"}
+set_flag = "mqg_2"
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_MQG_S4_OBJ"
+on = "talked_to:lengser"
+marker = {"zone": "kg_alun", "id": "lengser"}
+set_flag = "mqg_3"
+
+[sub_resource type="Resource" id="s5"]
+script = ExtResource("2")
+objective = "Q_MQG_S5_OBJ"
+on = "petilasan_activated:galuh_1"
+marker = {"zone": "kg_keraton", "id": "galuh_1"}
+set_flag = "mqg_4"
+
+[sub_resource type="Resource" id="s6"]
+script = ExtResource("2")
+objective = "Q_MQG_S6_OBJ"
+on = "area_cleared:galuh_cells"
+marker = {"zone": "kg_penjara", "id": "galuh_cells"}
+set_flag = "mqg_5"
+
+[sub_resource type="Resource" id="s7"]
+script = ExtResource("2")
+objective = "Q_MQG_S7_OBJ"
+on = "talked_to:faceless_deserter"
+marker = {"zone": "kg_penjara", "id": "faceless_deserter"}
+set_flag = "mqg_6"
+
+[sub_resource type="Resource" id="s8"]
+script = ExtResource("2")
+objective = "Q_MQG_S8_OBJ"
+on = "boss_defeated:barma_wijaya"
+marker = {"zone": "kg_keraton", "id": "barma_wijaya"}
+set_flag = "mqg_7"
+
+[resource]
+script = ExtResource("1")
+id = "mqg"
+kind = "main"
+type = "main"
+zone = "tatar_sunda"
+size = "L"
+requires = Array[String](["mq1_10"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8")])
+rewards = {}

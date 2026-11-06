@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+; Write-only glyph for the "write the name" card, NOT a spell (never in Game.glyphs_learned). VERIFY shape and stroke order against a Sundanese source.
+id = "sunda_sa"
+aksara = "sunda"
+latin = "sa"
+templates = Array[PackedVector2Array]([PackedVector2Array(3050, 177, 3190, 177, 3060, 445, 3128, 305, 3195, 305, 3055, 305, 3215, 177, 3355, 177, 3225, 445, 3290, 305, 3357, 305, 3215, 305)])

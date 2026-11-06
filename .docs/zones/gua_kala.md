@@ -55,7 +55,7 @@ Bestiary: about 10 kills in Gua Kala, one mix from each earlier zone at tier 4. 
 
 | encounter id | area | zone mix reused | enemy mix | clean answer |
 |--------------|------|-----------------|-----------|--------------|
-| `kala_mulut` | mulut | Tatar Sunda (`sunda_batutulis`) | 2 Bandit, 1 Kuntilanak | Ka Bolt on the shriek |
+| `kala_mulut` | mulut | Tatar Sunda (`sunda_batutulis`) | 2 Faceless, 1 Kuntilanak | Ka Bolt on the shriek |
 | `kala_pasir_1` | pasir | Mataram rock thrower | 1 Genderuwo, 2 Pocong | Ka Bolt on the rock, Nga Bind on a hopping Pocong |
 | `kala_pasir_2` | pasir | Tanah Timur wisps (dry riverbed with rock cover) | 2 Kemamang | Na Dash-strike |
 | `kala_lupa` | lupa | Tanah Timur Old guard (P0; Segara Kidul trial W3 in a P1 build) | 1 Prajurit Terkutuk, 2 Banaspati | Na Dash-strike behind the shield, Ga Ward on the burn. One tank |
@@ -77,10 +77,10 @@ Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Ev
 
 | Step | Marker id | Area | Event string |
 |------|-----------|------|--------------|
-| MQ5 5.1 enter Gua Kala | `kala_mulut` | `gk_mulut` | `zone_entered:gk_mulut` (zone.gd emits the area id) |
-| 5.2 rest at the last petilasan | `kala_1` | `gk_lupa` | `petilasan_activated:kala_1` (Q) |
-| 5.3 face Batara Kala | `kala_boss` | `gk_ruang_kala` | `boss_defeated:batara_kala` (Q) |
-| 5.4 return to the wayang stage | `kala_exit` | `gk_ruang_kala` (the lit door after the fight) | `zone_entered:desa_purwa` (Q). The door leads to Desa Purwa (spawn `from_gua_kala`), epilogue and credits |
+| MQ5 5.1 enter Gua Kala | `kala_mulut` | `gk_mulut` | `zone_entered:gk_mulut`, sets `mq5_1`; beat `mouth` (the brothers hold the mouth) |
+| 5.2 rest at the last petilasan | `kala_1` | `gk_lupa` | `petilasan_activated:kala_1` (Q), sets `mq5_2`; Laras beat 5 |
+| 5.3 face Batara Kala | `kala_boss` | `gk_ruang_kala` | `boss_defeated:batara_kala` (Q), sets `mq5_3`; beat `write` opens the name card |
+| 5.4 write Laras's name | `kala_boss` | `gk_ruang_kala` | `name_written:laras` (Story v2), sets `mq5_4`; MQ5 done plays the epilogue (zones.gd). The lit door `kala_exit` stays as a walk home after the credits |
 | Petilasan | `kala_2` | `gk_mulut` | `petilasan_activated:kala_2` (not a quest step) |
 | Codex | `kala_aksara_pudar` | `gk_lupa` | `codex:batara_kala`, `codex:ruwatan` (ASSUMED) |
 | Semar line | `semar_kala` | `gk_lupa` | `talked_to:semar_kala` (optional, not a step; a separate npc_id so it never counts for MQ steps waiting on `talked_to:semar`) |
@@ -121,7 +121,7 @@ Enter `gk_mulut` (the far hourglass in view) -> Sunda mix `kala_mulut` -> petila
 5. Is Semar at `kala_1` wanted, or does story.md want him silent in the finale?
 
 ## P0 decisions (ASSUMED 2026-11-05, resolve open questions 2-5 and the conflicts)
-- Entry: link X0 from `desa_purwa` (a fogged east exit, kabut `mq3_8`) to `gk_mulut`, spawns `from_desa_purwa` (in mulut) and `from_gk_mulut` (in Desa Purwa). X1 from `sk_keraton` stays pending until Segara Kidul (P1). MQ5 requires `mq3_8`; Semar's 3.8 talk starts it.
+- Entry: link X0 from `desa_purwa` (a fogged east exit, kabut `mq3_8`) to `gk_mulut`, spawns `from_desa_purwa` (in mulut) and `from_gk_mulut` (in Desa Purwa). X1 from `sk_keraton` stays pending until Segara Kidul (P1). MQ5 requires `mq3_8`; the `hunter_name` beat after the Hunter starts it (Story v2).
 - Arena: stays 2x2 (60x34), quadrant motifs are art only (open question 2).
 - `kala_lupa` uses the Timur Old guard mix (open question 3).
 - Return: the lit door `kala_exit`, an exit to `desa_purwa` (spawn `from_gua_kala`) that appears after `boss_defeated:batara_kala` (open question 4). Entering Desa Purwa completes 5.4 and MQ5, and the epilogue scene plays.
@@ -193,12 +193,12 @@ X_______________________________________________________________________________
 | `n` | spawn, arrival from gk_lupa (inside the pocket) | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
 | `+` | shortcut gate sc:gk_lorong, sand-choked arch (opens from the north pocket, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:gk_lorong", open_side:"n"}` | floor | 2 |
 | `P` | petilasan 2 | `res://entities/petilasan/petilasan.tscn` | `{id:"kala_2"}` | floor | 1 |
-| `E` | encounter kala_mulut | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut", size:Vector2i(20,11), waves:[[[res://entities/enemies/bandit.tscn, Vector2i(6,-3)], [res://entities/enemies/bandit.tscn, Vector2i(6,3)], [res://entities/enemies/kuntilanak.tscn, Vector2i(8,0)]]]}` | floor | 1 |
+| `E` | encounter kala_mulut | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut", size:Vector2i(20,11), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,3)], [res://entities/enemies/kuntilanak.tscn, Vector2i(8,0)]]]}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
-| `kala_mulut` | `E (46,16)` | 20x11 | W1: Bandit (+6,-3), Bandit (+6,+3), Kuntilanak (+8,+0) | Ka Bolt on the shriek |
+| `kala_mulut` | `E (46,16)` | 20x11 | W1: Faceless (+6,-3), Faceless (+6,+3), Kuntilanak (+8,+0) | Ka Bolt on the shriek |
 
 ## Area 2: gk_pasir
 

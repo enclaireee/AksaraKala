@@ -1,15 +1,16 @@
 extends "res://tests/timur_play_test.gd"
-## Gua Kala route (gua_kala.md, P0): Semar's 3.8 starts MQ5, the fog north of Desa Purwa lifts, MQ5 5.1-5.4
-## walked area to area, then the epilogue plays and drops the player home at from_gua_kala.
+## Gua Kala route (gua_kala.md, P0): the Hunter's fall (3.8) lifts the fog north of Desa Purwa and the hunter_name beat starts MQ5; MQ5 5.1-5.4
+## walked area to area (5.4 = the write card, drawn with the stored templates), then the epilogue plays and drops the player home at from_gua_kala.
 ## Reuses timur_play_test.gd's walker. ponytail: kills and casts are faked, the user playtests combat.
 
 const KALA_ROUTE := [
-	"go:gk_mulut", "q:mq5=active:1", "do:kala_2", "do:kala_mulut",
-	"go:gk_pasir", "do:kala_pasir_1", "do:kala_pasir_2", "chest:kala_chest_1",
-	"go:gk_lupa", "do:kala_lupa", "chest:kala_chest_2", "do:batara_kala", "do:ruwatan",
+	"go:gk_mulut", "q:mq5=active:1", "beat:mouth", "do:kala_2", "do:kala_mulut", "q:mq5=active:2",
+	"go:gk_pasir", "do:kala_pasir_1", "q:mq5=active:3", "do:kala_pasir_2", "q:mq5=active:4", "chest:kala_chest_1",
+	"go:gk_lupa", "do:kala_lupa", "q:mq5=active:5", "chest:kala_chest_2", "do:batara_kala", "do:ruwatan",
 	"go:gk_mulut", "do:sc:gk_lorong", "go:gk_lupa",
-	"do:semar_kala", "do:kala_1", "q:mq5=active:2",
-	"go:gk_ruang_kala", "do:batara_kala", "q:mq5=active:3",
+	"do:semar_kala", "do:kala_1", "q:mq5=active:6", "beat:laras_5",
+	"go:gk_ruang_kala", "do:batara_kala", "q:mq5=active:7",
+	"beat:write", "write:laras:sunda_la,sunda_ra,sunda_sa", "q:mq5=done",
 ]
 
 
@@ -18,11 +19,13 @@ func _initialize() -> void:
 	game = root.get_node("Game")
 	events = root.get_node("Events")
 	game.save_path = "user://test_kala_play.json"
-	for f in ["mq0_done", "mq1_10", "mq2_9", "mq3_1", "mq3_2", "mq3_3", "mq3_4", "mq3_7"]:
+	for f in ["mq0_done", "mq1_10", "mqg_7", "mq2_9", "mq3_1", "mq3_2", "mq3_3", "mq3_4", "mq3_7", "choice_sink",
+			"beat_hunter_raid", "beat_laras_1", "beat_naga", "beat_galuh_bout", "beat_laras_2", "beat_cage", "beat_hunter_war",
+			"beat_laras_3", "beat_ford", "beat_truce", "beat_laras_4", "beat_keris", "beat_hunter_shrine"]:
 		game.flags[f] = true
-	for q in ["mq1", "mq2"]:
+	for q in ["mq1", "mqg", "mq2"]:
 		game.quests[q] = {"state": "done", "step": 0, "count": 0, "resolution": ""}
-	game.quests["mq3"] = {"state": "active", "step": 8, "count": 0, "resolution": ""}
+	game.quests["mq3"] = {"state": "active", "step": 13, "count": 0, "resolution": ""}
 	for g in ["sunda_ka", "sunda_ga", "jawa_na"]:
 		game.run("learn:" + g)
 	events.dialogue_requested.connect(_on_dialogue)
@@ -30,12 +33,19 @@ func _initialize() -> void:
 	await scene_changed
 	await _settle()
 	var ok: bool = check(_exit_to("gk_mulut") != null and not _reachable(_cells_of(_exit_to("gk_mulut"))), "Gua Kala gate open before 3.8")
-	if ok:
-		ok = await _do("semar")
-	ok = ok and _expect("mq3=done") and _expect("mq5=active:0")
+	if ok:   # the Hunter falls at tt_candi (Tanah Timur walk); the hunter_name beat then starts MQ5
+		events.boss_defeated.emit("nameless_hunter")
+		await _drain()
+	ok = ok and _expect("mq3=done") and check(game.has_flag("beat_hunter_name"), "hunter_name beat did not play") and _expect("mq5=active:0")
 	for a: String in KALA_ROUTE if ok else []:
 		var kv := a.split(":", true, 1)
+		if kv[0] == "pick":
+			pick = int(kv[1])
+			continue
+		await _drain()
 		match kv[0]:
+			"beat": ok = check(game.has_flag("beat_" + kv[1]), "beat %s did not play" % kv[1])
+			"write": ok = await _write(kv[1])
 			"go": ok = await _go(kv[1])
 			"do": ok = await _do(kv[1])
 			"q": ok = _expect(kv[1])
@@ -49,15 +59,8 @@ func _initialize() -> void:
 	quit(1 if fails > 0 else 0)
 
 
-## 5.4 completes MQ5 on arrival; the epilogue plays, and advancing through it lands in Desa Purwa.
-## Not _go(): arriving completes MQ5 and swaps in the epilogue before the walker could settle in the zone.
+## Writing Laras's name completes MQ5 and swaps in the epilogue; advancing through it lands in Desa Purwa.
 func _epilogue() -> void:
-	var e := _exit_to("desa_purwa")
-	if not check(e != null and _reachable(_cells_of(e)), "kala_exit to Desa Purwa missing or shut after the fight"):
-		return
-	await root.get_node("Zones").go_to("desa_purwa", e.spawn_id)
-	await process_frame
-	check(_expect("mq5=done"), "mq5 not done on the walk home")
 	for i in 600:
 		if current_scene and current_scene.scene_file_path == "res://ui/epilogue.tscn":
 			break
@@ -70,7 +73,7 @@ func _epilogue() -> void:
 		if ep._done:
 			break
 		ep.advance()
-	check(ep.index == 12, "epilogue stopped at line %d, want 12" % ep.index)
+	check(ep.index == 7, "epilogue stopped at line %d, want 7" % ep.index)
 	for i in 600:
 		if current_scene is Zone and current_scene.zone_id == "desa_purwa":
 			break

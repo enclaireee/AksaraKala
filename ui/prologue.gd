@@ -1,6 +1,7 @@
 extends Control
-## Wayang prologue between New Game and the class cards (quests.md MQ0). PROLOGUE_1..13 in dialogue.csv:
-## 1-10 narration, 11-13 Semar. Interact or click advances; holding interact ~1 s skips it all.
+## Wayang prologue between New Game and the class cards (quests.md MQ0). PROLOGUE_1..5 in dialogue.csv:
+## Story v2, 5 narration cards: the show, Laras's lontar, the faceless step off the screen, she is taken, morning
+## (codex entry aji_saka, the hanacaraka legend, still unlocks at the end). Interact or click advances; holding interact ~1 s skips it all.
 ## The epilogue (ui/epilogue.tscn) reuses this with EPILOGUE_n keys and returns to Desa Purwa; a line with
 ## `%d` gets the codex percentage. Placeholder art: lit screen, dark silhouettes. ASSUMED: the Jawa glyph line uses the macOS system font
 ## (like aksara_render_test) and falls back to Latin when it is missing.
@@ -8,9 +9,10 @@ extends Control
 signal finished
 
 @export var key_prefix := "PROLOGUE"
-@export var lines := 13
-@export var semar_from := 11
-@export var semar_to := 13
+@export var lines := 5
+@export var semar_from := 4
+@export var semar_to := 5
+@export var variants := {}   # card number -> flag; while the flag is set, card n uses <PREFIX>_<n>_ALT
 @export var next_scene := "res://ui/class_select.tscn"   # "" = back to Desa Purwa (epilogue)
 const HOLD := 1.0
 const JAWA := "/System/Library/Fonts/Supplemental/NotoSansJavanese-Regular.otf"
@@ -108,21 +110,32 @@ func advance() -> void:
 		_finish()
 		return
 	index += 1
+	var game := get_node("/root/Game")
 	var key := "%s_%d" % [key_prefix, index]
+	if game.has_flag(str(variants.get(index, variants.get(str(index), "")))):
+		key += "_ALT"
 	_name.text = "NPC_SEMAR_NAME" if index >= semar_from and index <= semar_to else ""
-	_text.text = tr(key) % int(get_node("/root/Game").codex_percent()) if "%d" in tr(key) else key
+	var body := tr(key)
+	_text.text = game.fmt(body % int(game.codex_percent()) if "%d" in body else body)
 	_text.visible_ratio = 0.0
 	_tw = create_tween()
-	_tw.tween_property(_text, "visible_ratio", 1.0, maxf(0.3, tr(key).length() * 0.03))
+	_tw.tween_property(_text, "visible_ratio", 1.0, maxf(0.3, body.length() * 0.03))
 	if key_prefix != "PROLOGUE":
 		return
-	match index:
+	var screen := _aji.get_parent() as CanvasItem
+	match index:   # _aji = the dalang's puppet, _servants = the two faceless, _aksara = Laras's letters
 		1: create_tween().tween_property(_aji, "position:x", 100.0, 1.2).set_trans(Tween.TRANS_SINE)
-		2: _fade(_servants, 1.0)
-		3: _fade(_aksara, 1.0)
-		8: _fade(_aksara, 0.35, 1.5)
-		9: _fade(_aksara, 0.0, 1.5)
-
+		2: _fade(_aksara, 1.0)
+		3:
+			_fade(_servants, 1.0)
+			create_tween().tween_property(_servants, "scale", Vector2(1.4, 1.4), 1.5).set_trans(Tween.TRANS_SINE)
+		4:
+			create_tween().tween_property(screen, "modulate", Color(0.15, 0.13, 0.12), 1.2)
+			_fade(_servants, 0.0, 1.2)
+		5:
+			create_tween().tween_property(screen, "modulate", Color(0.75, 0.8, 0.85), 1.5)
+			_fade(_aji, 0.0, 0.2)
+			_fade(_aksara, 0.35, 1.5)   # some of her letters have already faded
 
 func skip() -> void:
 	_finish()
@@ -132,6 +145,8 @@ func _finish() -> void:
 	if _done:
 		return
 	_done = true
+	if key_prefix == "PROLOGUE":
+		get_node("/root/Game").unlock_codex("aji_saka")
 	finished.emit()
 	if next_scene == "":
 		get_node("/root/Zones").go_to("desa_purwa", "from_gua_kala")

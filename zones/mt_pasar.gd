@@ -33,10 +33,10 @@ const MAP := [
 	"#...........................,,.............................#",
 	"#...........................,,.............................#",
 	"#..............bb...........,,..........bb.................#",
-	"#..............bb...........,,..........bb..bbbbbbbbbbbbbbb#",
+	"#.......u......bb...........,,..........bb..bbbbbbbbbbbbbbb#",
 	"#...........................,,.............................#",
-	"#...........................,,.............................#",
-	"#...........................,,.............................#",
+	"#.........u.................,,.............................#",
+	"#......u....................,,.............................#",
 	"#...........................,,.............................#",
 	"#...........................E,,,,,,,,,,,,,,,,,,,,,O,,,,,,,.#",
 	"#...........................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.#",
@@ -68,6 +68,7 @@ const SPOTS := {
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_pasar", "size": Vector2i(22,12), "waves": [[["res://entities/enemies/tuyul.tscn", Vector2i(-8,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,3)], ["res://entities/enemies/tuyul.tscn", Vector2i(0,-4)], ["res://entities/enemies/tuyul.tscn", Vector2i(5,2)], ["res://entities/enemies/tuyul.tscn", Vector2i(9,-2)]]]}, "tile": ","},   # encounter mataram_pasar
 	"O": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_pocong", "size": Vector2i(16,7), "waves": [[["res://entities/enemies/pocong.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter mataram_pocong
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_pasar", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu (Ilmu S, ASSUMED)
+	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

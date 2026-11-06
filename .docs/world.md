@@ -4,11 +4,12 @@ An open map of connected zones on the island of Java (Sunda and Javanese lands).
 
 ## Layout (west to east)
 ```
- [Tatar Sunda]---[Desa Purwa]---[Mataram]===[Tanah Timur]
-      :               |                          |
-      :               +-------[Segara Kidul]-----+
-      :.......................:     |
-                               [Gua Kala]
+ [Tatar Sunda]---[Desa Purwa]---[Keraton Galuh]---[Mataram]===[Tanah Timur]
+      :               |    |                                        |
+      :               |    +-------------[Segara Kidul]-------------+
+      :               |                       |
+      :            [Gua Kala]  (P0: from the hub; P1: also from Segara Kidul)
+      :.......................................:
  --- link   === link plus a back-road shortcut   ... back-route shortcut
  Each box is a region of several areas; see World structure.
 ```
@@ -48,7 +49,9 @@ Endpoint area ids are fixed here so the region docs agree (**ASSUMED** 2026-11-0
 | Link | Area A | Area B | Kind | Opens |
 |------|--------|--------|------|-------|
 | Hub to Tatar Sunda | `desa_purwa` (W) | `ts_kebun` | link | always |
-| Hub to Mataram | `desa_purwa` (E) | `mt_gapura` | link, kabut | `mq1_10` |
+| Hub to Keraton Galuh | `desa_purwa` (E) | `kg_alun` | link, kabut | `mq1_10` (Story v2, 2026-11-06; was the Mataram link) |
+| Galuh to Mataram | `kg_pamali` (E) | `mt_gapura` (W) | link | always (`kg_alun` to `kg_pamali` is behind kabut `mqg_7`) |
+| Hub to Gua Kala (P0) | `desa_purwa` (S) | `gk_mulut` | link, kabut | `mq3_8` |
 | Mataram to Tanah Timur | `mt_wetan` | `tt_kulon` | link, kabut | `mq2_9` (MQ2 2.9, back at Semar) |
 | Mataram back road | `mt_tegal` | `tt_sabana` | shortcut `sc:mt_tt` | from `tt_sabana` |
 | Hub to Segara Kidul | `desa_purwa` (S, new) | `sk_pantai` | link, kabut | `mq3_8` (MQ3 3.8, back at Semar) |
@@ -81,6 +84,12 @@ Soft and story-driven:
 - Boss: Sangkuriang ([bestiary.md](bestiary.md)). Miniboss: Sandekala. Elite: the bamboo-grove Kuntilanak (SQ-S2, a locally darkened arena, no day/night cycle).
 - Gates (**ASSUMED** 2026-11-05): a kabut on the crater path lifts with flag `mq1_7` (Dayang Sumbi teaches Ca). The Desa Purwa east gate to Mataram stays fogged until flag `mq1_10`.
 - Room layout: [zones/tatar_sunda.md](zones/tatar_sunda.md). Desa Purwa: [zones/desa_purwa.md](zones/desa_purwa.md). The sanggar is a room inside Desa Purwa.
+
+### Keraton Galuh (the Galuh capital), Ch 2 (Story v2, 2026-11-06)
+- Look: a Sundanese royal capital, stone terraces and walls, a square with a tournament ring, banyan trees. Loosely Karang Kamulyan, Ciamis (**VERIFY**).
+- Legend: **Ciung Wanara** ([story_ciung_wanara.md](story_ciung_wanara.md)). Areas `kg_alun`, `kg_keraton`, `kg_penjara`, `kg_pamali` ([zones/keraton_galuh.md](zones/keraton_galuh.md)). Enemy tier 1 (Mataram numbers).
+- No new glyph: the region tests the four Sunda glyphs. Boss: Prabu Barma Wijaya. The Pamali crossing holds the Hariang Banga duel later (Ch 3).
+- Petilasans: 1 (`galuh_1`).
 
 ### Mataram (Central Java), Act 2
 - Look: temple ruins, rice fields, volcano silhouette, stone gateways.

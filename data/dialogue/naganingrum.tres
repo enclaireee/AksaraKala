@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "naganingrum"
+name_key = "NPC_NAGANINGRUM_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq1=9"], "lines": ["DLG_NAGANINGRUM_V1", "@NPC_HERO_NAME", "DLG_NAGANINGRUM_H1", "@NPC_NAGANINGRUM_NAME", "DLG_NAGANINGRUM_V2", "DLG_NAGANINGRUM_V2B", "DLG_NAGANINGRUM_V3", "DLG_NAGANINGRUM_V4"], "do": ["learn:sunda_ca"]},
+	{"if": ["flag:mq1_7"], "lines": ["DLG_NAGANINGRUM_V5"], "do": []},
+	{"if": [], "lines": ["DLG_NAGANINGRUM_V6"], "do": []}
+])

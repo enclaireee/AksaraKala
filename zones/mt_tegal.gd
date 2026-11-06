@@ -24,11 +24,11 @@ const MAP := [
 	"#...................................................#......#",
 	"#..........rr..............................................#",
 	"#..........rr..............................................#",
+	"#............,..........................u..................#",
 	"#............,.............................................#",
-	"#............,.............................................#",
-	"#.......#####,#####........................................#",
+	"#.......#####,#####.......................u................#",
 	"#.......#_________#........................................#",
-	"#.......#_________#........................................#",
+	"#.......#_________#......................k.................#",
 	"#.......#_________#........................................#",
 	"#.......#____c____#........................................#",
 	"#.......#_________#........................................#",
@@ -49,6 +49,8 @@ const SPOTS := {
 	"L": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tuyul_leader"}, "tile": "_"},   # NPC tuyul leader (SQ-M3, talk for the peaceful end)
 	"q": {"scene": "res://entities/enemies/tuyul_leader.tscn", "props": {}, "tile": "_"},   # elite tuyul leader (SQ-M3, inert until step 2)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_secret_sumur", "item_id": "amulet"}, "tile": "_"},   # chest: Amulet (secret 3, well chamber, ASSUMED)
+	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
+	"k": {"scene": "res://entities/enemies/pocong.tscn", "props": {}, "tile": "."},   # loose Pocong, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

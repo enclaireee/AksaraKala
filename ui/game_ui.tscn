@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="PackedScene" path="res://ui/hud.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://ui/menu.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://ui/death_screen.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://ui/dialogue_box.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://ui/glyph_lesson.tscn" id="5"]
+[ext_resource type="Script" path="res://ui/story_beat.gd" id="6"]
 
 [node name="GameUI" type="CanvasLayer"]
 layer = 10
@@ -16,3 +18,8 @@ process_mode = 3
 [node name="DeathScreen" parent="." instance=ExtResource("3")]
 
 [node name="DialogueBox" parent="." instance=ExtResource("4")]
+
+[node name="GlyphLesson" parent="." instance=ExtResource("5")]
+
+[node name="StoryBeat" type="Node" parent="."]
+script = ExtResource("6")

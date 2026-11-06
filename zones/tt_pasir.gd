@@ -6,11 +6,11 @@ const MAP := [
 	"#________________________________________________________________________________________#",
 	"#________________________________________________________________________________________#",
 	"#________________________________________________________________________________________#",
-	"#_______rr__________________________________________________rr___________________________#",
-	"#_______rr________________rr________________________________rr___________________________#",
+	"#_______rr__________b_______________________________________rr___________________________#",
+	"#_______rr______j_________rr________________________________rr___________________________#",
 	"#_________________________rr__________________________rr_________________________________#",
 	"#_____________________________________________________rr_________________________________#",
-	"#________________________________________________________________________________________#",
+	"#___________x____________________________________________________________________________#",
 	"#________________________________________________________________________________________#",
 	"#________________________________________________________________________________________#",
 	"#_______________________________________________________________________________##########",
@@ -47,6 +47,9 @@ const SPOTS := {
 	"c": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_candi"}, "tile": ","},   # spawn, arrival from tt_candi
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "timur_2"}, "tile": "_"},   # petilasan 2 (sand alcove, no enemy inside)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_pasir", "size": Vector2i(36,16), "waves": [[["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(10,-3)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(10,3)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,-5)], ["res://entities/enemies/kemamang.tscn", Vector2i(-6,0)]],[["res://entities/enemies/keris_hantu.tscn", Vector2i(12,-3)], ["res://entities/enemies/keris_hantu.tscn", Vector2i(12,3)]]]}, "tile": ","},   # encounter timur_pasir
+	"j": {"scene": "res://entities/enemies/prajurit_terkutuk.tscn", "props": {}, "tile": "_"},   # loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id)
+	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "_"},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)
+	"x": {"scene": "res://entities/enemies/keris_hantu.tscn", "props": {}, "tile": "_"},   # loose keris hantu, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

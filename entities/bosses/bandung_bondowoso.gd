@@ -15,6 +15,7 @@ const PILLAR_SCENE := preload("res://entities/bosses/pillar.tscn")
 const SHIELD_HP := 1 << 30
 
 @export var boss_name_key := "BOSS_BANDUNG_BONDOWOSO"
+@export var cond := ""                  # Game.check condition; empty = always on
 @export var speed := 28.0              # TUNE
 @export var engage_range := 128.0      # 8 tiles
 @export var stomp_range := 48.0        # spec
@@ -46,6 +47,11 @@ const SHIELD_HP := 1 << 30
 @export var debris_radius := 16.0      # TUNE
 @export var debris_damage := 18        # spec
 
+var active := true:   # EliteGuard flips it
+	set(v):
+		active = v
+		if active and is_inside_tree() and pillars.is_empty() and not dead:
+			_raise.call_deferred(_ring_spot())
 var state := State.IDLE
 var state_time := 0.0
 var phase := 1
@@ -73,12 +79,17 @@ func _ready() -> void:
 	if dead or is_queued_for_deletion():
 		return
 	add_to_group("boss")
+	if cond != "":   # hidden and inert until Game.check(cond) holds (elite_guard.gd)
+		var g := EliteGuard.new()
+		g.cond = cond
+		add_child(g)
 	_start = global_position
 	build_interval = pillar_every
 	health.changed.connect(_on_health)
 	hurtbox.dodged.connect(_on_shield_hit)
 	get_node("/root/Events").spell_cast.connect(_on_cast)
-	_raise.call_deferred(_ring_spot())   # the fight opens with one pillar
+	if active:
+		_raise.call_deferred(_ring_spot())   # the fight opens with one pillar
 
 
 func standing() -> int:

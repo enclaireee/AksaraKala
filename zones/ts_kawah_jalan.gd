@@ -26,7 +26,7 @@ const MAP := [
 	"#####,,############..............................###########",
 	"#####,,############..rrr....................rrr..###########",
 	"#####,,############rrrrr....................rrrrr###########",
-	"#####,,############rr..........................rr###########",
+	"#####,,############rr...............w..w.......rr###########",
 	"#####,,#####################################################",
 	"#####,,#####################################################",
 	"#####,,#####################################################",
@@ -45,7 +45,8 @@ const SPOTS := {
 	"@": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kawah"}, "tile": ","},   # spawn, arrival from ts_kawah
 	"$": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kampung", "spawn_id": "from_ts_kawah_jalan"}, "tile": ","},   # DROP exit to ts_kampung (south edge, 2 tiles, one-way)
 	"Q": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "sunda_2"}, "tile": ","},   # petilasan 2
-	"O": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_crater", "size": Vector2i(22,11), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(4,-2)], ["res://entities/enemies/bandit.tscn", Vector2i(3,2)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-6,-1)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-6,1)]], [["res://entities/enemies/kuntilanak.tscn", Vector2i(-2,-4)], ["res://entities/enemies/bandit.tscn", Vector2i(-2,4)]]]}, "tile": ","},   # encounter sunda_crater
+	"O": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_crater", "size": Vector2i(22,11), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(3,2)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-6,-1)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-6,1)]], [["res://entities/enemies/kuntilanak.tscn", Vector2i(-2,-4)], ["res://entities/enemies/faceless.tscn", Vector2i(-2,4)]]]}, "tile": ","},   # encounter sunda_crater
+	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

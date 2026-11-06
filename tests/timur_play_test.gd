@@ -1,32 +1,33 @@
 extends SceneTree
-## Tanah Timur route (tanah_timur.md): MQ3 3.1-3.8 and SQ-T1..T4 walked area to area from the Mataram border,
+## Tanah Timur route (tanah_timur.md): MQ3 3.1-3.8 and SQ-T1..T4 walked area to area from the Mataram border (Story v2: ends on the keris choice, the Nameless Hunter and the hunter_name beat),
 ## the way mataram_play_test.gd walks MQ2. Same actions, plus "kill:<kind>" (an active quest elite) and
 ## "stakes" (cast next to the practice stakes). ponytail: kills and casts are faked, the user playtests combat.
 
 const ROUTE := [
 	"q:mq3=active:0",
-	"go:tt_sabana", "do:timur_1", "q:mq3=active:1",
-	"do:timur_herder", "q:sq_t2=active:1",
+	"do:timur_gerbang", "q:mq3=active:1",
+	"go:tt_sabana", "do:timur_1", "q:mq3=active:2",
+	"do:timur_herder", "q:sq_t2=active:1", "do:timur_embers", "q:mq3=active:3",
 	"go:tt_kali", "do:klething_kuning", "q:sq_t1=active:1",
-	"go:tt_sabana", "go:tt_beringin", "do:timur_empu", "q:mq3=active:2",
+	"go:tt_sabana", "go:tt_beringin", "do:timur_empu", "q:mq3=active:4",
 	"do:timur_empu", "q:sq_t3=active:1", "do:kepang_leader", "q:sq_t4=active:1",
 	"do:sodo_lanang", "q:sq_t1=active:2",
 	"go:tt_sabana", "do:kuda_kepang_1", "go:tt_kali", "do:kuda_kepang_2",
 	"do:klething_kuning", "q:sq_t1=done", "has:stone_ring",
-	"do:mbok_srini", "q:mq3=active:3",
-	"go:tt_ladang", "do:buto_ijo", "q:mq3=active:4",
-	"go:tt_beringin", "do:sc:tt_ladang", "do:timur_empu", "q:mq3=active:5",
-	"do:timur_praktik", "q:mq3=active:5", "stakes", "q:mq3=active:6",
+	"do:timur_wisps", "q:mq3=active:5", "do:mbok_srini", "q:mq3=active:6",
+	"go:tt_ladang", "do:timur_ladang", "q:mq3=active:7", "do:buto_ijo", "q:mq3=active:8",
+	"go:tt_beringin", "do:sc:tt_ladang", "do:timur_empu", "q:mq3=active:8",
+	"do:timur_praktik", "q:mq3=active:8", "stakes", "q:mq3=active:9",
 	"go:tt_pesisir", "do:kuda_kepang_3", "q:sq_t4=active:2",
 	"do:burn_trail", "q:sq_t2=active:2", "kill:banaspati_elite", "q:sq_t2=active:3",
+	"do:timur_pesisir", "q:mq3=active:10",
 	"go:tt_sabana", "do:timur_herder", "q:sq_t2=done",
 	"go:tt_beringin", "do:kepang_leader", "q:sq_t4=active:3", "do:kepang_stage", "q:sq_t4=done",
 	"go:tt_sabana", "go:tt_kulon", "go:mt_wetan", "go:mt_candi", "do:batu_bintang", "q:sq_t3=active:2",
 	"go:mt_wetan", "go:tt_kulon", "go:tt_sabana", "go:tt_beringin", "do:timur_empu", "q:sq_t3=done", "has:keris_luk_7",
-	"go:tt_ladang", "go:tt_pasir", "do:timur_2", "q:mq3=active:7",
-	"go:tt_candi", "do:keris_gandring", "q:mq3=active:8",
-	"go:tt_pasir", "go:tt_sabana", "do:sc:tt_pasir", "go:mt_tegal", "do:sc:mt_tt",
-	"go:mt_sawah", "go:mt_gapura", "go:desa_purwa", "do:semar", "q:mq3=done",
+	"go:tt_ladang", "go:tt_pasir", "do:timur_pasir", "q:mq3=active:11", "do:timur_2", "q:mq3=active:12", "beat:laras_4",
+	"go:tt_candi", "pick:1", "do:keris_gandring", "q:mq3=active:13", "beat:keris", "flag:choice_sink",
+	"beat:hunter_shrine", "do:nameless_hunter", "q:mq3=done", "beat:hunter_name", "q:mq5=active:0",
 ]
 
 var fails := 0
@@ -49,9 +50,11 @@ func _initialize() -> void:
 	game = root.get_node("Game")
 	events = root.get_node("Events")
 	game.save_path = "user://test_timur_play.json"
-	for f in ["mq0_done", "mq1_10", "mq2_1", "mq2_2", "mq2_3", "mq2_4", "mq2_5", "mq2_6", "mq2_7", "mq2_8", "mq2_9"]:
+	for f in ["mq0_done", "mq1_10", "mqg_7", "mq2_1", "mq2_2", "mq2_3", "mq2_4", "mq2_5", "mq2_6", "mq2_7", "mq2_8", "mq2_9",
+			"beat_hunter_raid", "beat_laras_1", "beat_naga", "beat_galuh_bout", "beat_laras_2", "beat_cage",
+			"beat_hunter_war", "beat_laras_3", "beat_ford", "beat_truce"]:
 		game.flags[f] = true
-	for q in ["mq1", "mq2"]:
+	for q in ["mq1", "mqg", "mq2"]:
 		game.quests[q] = {"state": "done", "step": 0, "count": 0, "resolution": ""}
 	game.start_quest("mq3")
 	events.dialogue_requested.connect(_on_dialogue)
@@ -62,6 +65,10 @@ func _initialize() -> void:
 	for a: String in ROUTE:
 		var kv := a.split(":", true, 1)
 		var ok := true
+		if kv[0] == "pick":
+			pick = int(kv[1])   # before the drain: the beat it answers is already up
+			continue
+		await _drain()
 		match kv[0]:
 			"go": ok = await _go(kv[1])
 			"do": ok = await _do(kv[1])
@@ -69,6 +76,9 @@ func _initialize() -> void:
 			"has": ok = check(game.inventory.has(kv[1]), "no %s in the inventory" % kv[1])
 			"kill": ok = _kill(kv[1])
 			"stakes": ok = await _stakes()
+			"beat": ok = check(game.has_flag("beat_" + kv[1]), "beat %s did not play" % kv[1])
+			"flag": ok = check(game.has_flag(kv[1]), "flag %s not set" % kv[1])
+			"write": ok = await _write(kv[1])
 			"see": ok = check(_exit_to(kv[1]) != null and _reachable(_cells_of(_exit_to(kv[1]))), "%s: exit to %s not reachable" % [zone.zone_id, kv[1]])
 		if not ok:
 			printerr("  stopped at '%s' in %s" % [a, zone.zone_id])
@@ -88,6 +98,39 @@ func _settle() -> void:
 		menu.close()
 
 
+## A story beat plays on its own (ui/story_beat.gd) once nothing else is open: close every box that opens, picking
+## choice `pick` (set by "pick:<n>", then back to 0) like the player would. Chains take a few frames.
+var pick := 0
+
+
+func _drain() -> void:
+	for i in 6:
+		var box := _find("res://ui/dialogue_box.gd")
+		while box and box.is_open():
+			while not box._opts.is_empty() and not box._choosing:
+				box._next()   # read on to the choice list
+			if box._choosing:
+				events.dialogue_picked.emit(pick)
+				pick = 0
+			box._close()
+		await process_frame
+
+
+## Draw the glyphs of a write card (Events.write_requested) with their stored templates, then wait out the fade.
+func _write(spec: String) -> bool:
+	var p := spec.split(":")
+	var lesson := _find("res://ui/glyph_lesson.gd")
+	if not check(lesson != null and lesson.writing == p[0], "no write card for %s" % p[0]):
+		return false
+	for g in p[1].split(","):
+		check(lesson.write_attempt(GlyphData.by_id(g).templates[0]), "write %s: %s not accepted" % [p[0], g])
+	for i in 600:
+		if lesson.writing == "":
+			break
+		await process_frame
+	return check(lesson.writing == "", "write card for %s never closed" % p[0])
+
+
 func _find(script: String) -> Node:
 	for n in root.find_children("*", "", true, false):
 		if n.get_script() and n.get_script().resource_path == script:
@@ -98,6 +141,10 @@ func _find(script: String) -> Node:
 ## Every dialogue line the player sees must have a translation.
 func _on_dialogue(_who: String, lines: PackedStringArray) -> void:
 	for l in lines:
+		if l.begins_with("@"):   # speaker switch; a bare "@" clears the tag
+			l = l.substr(1)
+			if l == "":
+				continue
 		check(tr(l) != l, "untranslated dialogue key %s" % l)
 
 
@@ -275,10 +322,10 @@ func _kill(kind: String) -> bool:
 	return check(e.dead, "%s: %s did not die" % [zone.zone_id, kind])
 
 
-## Stand next to each practice stake in turn and cast, until step 3.5 moves on.
+## Stand next to each practice stake in turn and cast, until step 3.5 (index 4) moves on.
 func _stakes() -> bool:
 	for s in get_nodes_in_group("curse_stake"):
-		if game.quests.mq3.step != 5:
+		if game.quests.mq3.step != 8:
 			break
 		var at := _reach(_cells_of(s))
 		if not check(at != Vector2i(-1, -1), "%s: practice stake not reachable" % zone.zone_id):

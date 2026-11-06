@@ -21,9 +21,9 @@ const MAP := [
 	"Xe,,.........,,,,tt#_____#tttttttttttttttttttttttt3tt#######",
 	"X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######",
 	"####.......r.####tt#_____#ttttttttttttttttttttttttttt#######",
-	"####.........####tt#_____#ttttttttttttttttttttttttttt#######",
+	"####.........####tt#_____#ttttttttttttttttttttttttjtt#######",
 	"#################tt###,###ttttttttttttttttttttttttttt#######",
-	"#################tttttttttttttttttttMtttttttttttttttt#######",
+	"#################tttttttttttttttttttMttttttttttttttit#######",
 	"#################tttttttttttttttttttttttttttttttttttt#######",
 	"#################tttrrttttttttttttttttttttttttttttttt#######",
 	"#################tttttttttttttttttttttttttttttrrttttt#######",
@@ -43,10 +43,12 @@ const SPOTS := {
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kampung"}, "tile": ","},   # spawn, arrival from ts_kampung
 	"%": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_situ", "spawn_id": "from_ts_sawah"}, "tile": ","},   # exit to ts_situ (north edge, 2 tiles)
 	"@": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_situ"}, "tile": ","},   # spawn, arrival from ts_situ
-	"J": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_clearing", "size": Vector2i(9,10), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(3,0)], ["res://entities/enemies/bandit.tscn", Vector2i(2,-3)], ["res://entities/enemies/bandit.tscn", Vector2i(2,3)]]]}, "tile": ","},   # encounter sunda_clearing
-	"M": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_terraces", "size": Vector2i(24,11), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(6,0)], ["res://entities/enemies/jurig_leuweung.tscn", Vector2i(-3,-3)], ["res://entities/enemies/bandit_archer.tscn", Vector2i(4,-4)], ["res://entities/enemies/bandit.tscn", Vector2i(-4,2)]]]}, "tile": "t"},   # encounter sunda_terraces
+	"J": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_clearing", "size": Vector2i(9,10), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(2,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(2,3)]]]}, "tile": ","},   # encounter sunda_clearing
+	"M": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_terraces", "size": Vector2i(24,11), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(6,0)], ["res://entities/enemies/jurig_leuweung.tscn", Vector2i(-3,-3)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-4)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,2)]], [["res://entities/enemies/faceless.tscn", Vector2i(-8,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(8,3)], ["res://entities/enemies/wild_boar.tscn", Vector2i(8,-3)]]]}, "tile": "t"},   # encounter sunda_terraces
 	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_weaver"}, "tile": "_"},   # NPC weaver, gives boeh rarang (MQ1 1.6)
 	"3": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_3"}, "tile": "t"},   # angklung 3
+	"j": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "t"},   # loose faceless (terrace), roaming pack (respawns on zone reload, no unique_id)
+	"i": {"scene": "res://entities/enemies/jurig_leuweung.tscn", "props": {}, "tile": "t"},   # loose Jurig Leuweung (terrace), roaming pack (respawns on zone reload, no unique_id)
 }
 
 

@@ -47,7 +47,7 @@ const SPOTS := {
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_lupa"}, "tile": "_"},   # spawn, arrival from gk_lupa (inside the pocket)
 	"+": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:gk_lorong", "open_side": "n"}, "tile": "_"},   # shortcut gate sc:gk_lorong, sand-choked arch (opens from the north pocket, 2 tiles)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kala_2"}, "tile": "_"},   # petilasan 2
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_mulut", "size": Vector2i(20,11), "waves": [[["res://entities/enemies/bandit.tscn", Vector2i(6,-3)], ["res://entities/enemies/bandit.tscn", Vector2i(6,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(8,0)]]]}, "tile": "_"},   # encounter kala_mulut
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_mulut", "size": Vector2i(20,11), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(8,0)]]]}, "tile": "_"},   # encounter kala_mulut
 }
 
 

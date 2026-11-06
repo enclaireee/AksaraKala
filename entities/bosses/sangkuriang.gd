@@ -11,6 +11,7 @@ const MARKER := Color(1.0, 0.3, 0.3, 0.35)
 const STUNNED := Color(0.7, 0.75, 1.0)
 
 @export var boss_name_key := "BOSS_SANGKURIANG"
+@export var cond := ""                  # Game.check condition; empty = always on
 @export var post_id := "east"
 @export var speed := 30.0              # TUNE
 @export var engage_range := 128.0      # 8 tiles
@@ -31,6 +32,7 @@ const STUNNED := Color(0.7, 0.75, 1.0)
 @export var rage_speed := 0.6          # TUNE: wind-up and recovery multiplier when enraged
 @export var rage_damage := 1.5         # TUNE
 
+var active := true   # EliteGuard flips it
 var state := State.IDLE
 var state_time := 0.0
 var phase := 1
@@ -51,6 +53,10 @@ func _ready() -> void:
 	if dead or is_queued_for_deletion():
 		return
 	add_to_group("boss")
+	if cond != "":   # hidden and inert until Game.check(cond) holds (elite_guard.gd)
+		var g := EliteGuard.new()
+		g.cond = cond
+		add_child(g)
 	health.changed.connect(_on_health)
 	get_node("/root/Events").spell_cast.connect(_on_cast)
 

@@ -41,6 +41,17 @@ func _initialize() -> void:
 	ev.dialogue_finished.emit()
 	npc.queue_free()
 
+	# cond: hidden and unusable until it holds, re-checked on Game.changed
+	var cn: Npc = load("res://entities/npc/npc.tscn").instantiate()
+	cn.npc_id = "t"
+	cn.data = d
+	cn.cond = "flag:show_me"
+	root.add_child(cn)
+	check(not cn.visible and not cn.usable, "npc with a false cond is hidden and unusable")
+	g.set_flag("show_me", false)
+	check(cn.visible and cn.usable, "npc appears when its cond holds")
+	cn.queue_free()
+
 	var chest: Node = load("res://entities/world/chest.tscn").instantiate()
 	chest.chest_id = "c1"
 	chest.item_id = "dagger"

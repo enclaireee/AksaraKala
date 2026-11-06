@@ -26,6 +26,8 @@ Related: [rpg.md](rpg.md) (base formulas), [classes.md](classes.md), [bestiary.m
 | **Total** | | **about 145** | **about 160** | |
 
 MQ1 grows with the interlocking rebuild (8 areas, user call 2026-11-05); shortcuts cut the walk back, so measure it in the playtest before changing the later rows.
+MQ1 main-path kills after the roaming packs (2026-11-06): 43 (21 in fixed encounters, 19 in loose packs, 3 in the `sunda_terraces` wave 2).
+MQ2 main-path kills after the roaming packs (2026-11-06): 40 (23 fixed, 17 loose). MQ3: 40 (24 fixed, 16 loose). MQ5 unchanged at about 12. `balance_model.py` does not read the zone maps, so real levels at the boss doors run a little above its numbers. Check this in the playtest. TUNE
 
 Side quests take 3-8 minutes each ([quests.md](quests.md)). 14 of them, plus the hub quests and exploration, add about 80-100 minutes.
 

@@ -25,7 +25,10 @@ func _initialize() -> void:
 	cls.start_weapon = ""
 	cls.start_armor = ""
 	check(not g.has_save(), "has_save before any save")
+	g.hero_name = "Ayu"   # set on the name screen before class select
+	g.hero_pronoun = "she"
 	g.new_game(cls)
+	check(g.hero_name == "Ayu" and g.hero_pronoun == "she", "new_game reset the hero name")
 	check(g.has_save() and g.class_id == "warrior" and g.stats.vit == 8, "new_game did not save the class")
 	check(g.level() == 1 and g.level_cost() == 40, "level 1 costs %d" % g.level_cost())
 	check(not g.level_up("str"), "level_up with 0 Ilmu")
@@ -50,6 +53,9 @@ func _initialize() -> void:
 	# A missing field gets its default; a wrong type keeps the default; unknown keys are ignored.
 	g.from_dict({"version": 1, "class_id": "mage", "ilmu": "lots", "future_field": 1})
 	check(g.class_id == "mage" and g.ilmu == 0 and g.flask_max == 3 and g.glyphs_learned.is_empty() and g.quests.is_empty(), "merge onto defaults failed")
+	check(g.hero_name == "Jaka" and g.hero_pronoun == "they", "an old save lacks the hero name: defaults expected")
+	g.from_dict({"class_id": "mage", "hero_name": "[b]x{y}", "hero_pronoun": "xe"})
+	check(g.hero_name == "bxy" and g.hero_pronoun == "they", "a hand-edited name/pronoun was not cleaned: %s %s" % [g.hero_name, g.hero_pronoun])
 
 	# save.bak holds the previous good save. A broken save.json falls back to it and is not deleted.
 	g.from_dict(JSON.parse_string(before))

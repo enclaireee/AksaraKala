@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=13 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -6,16 +6,15 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ1_S1_OBJ"
-on = "petilasan_activated:sunda_1"
-marker = {"zone": "ts_kebun", "id": "sunda_1"}
-set_flag = "mq1_1"
+on = "area_cleared:sunda_edge"
+marker = {"zone": "ts_kebun", "id": "sunda_edge"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ1_S2_OBJ"
-on = "talked_to:sunda_elder"
-marker = {"zone": "ts_kampung", "id": "sunda_elder"}
-set_flag = "mq1_2"
+on = "petilasan_activated:sunda_1"
+marker = {"zone": "ts_kebun", "id": "sunda_1"}
+set_flag = "mq1_1"
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
@@ -27,47 +26,74 @@ set_flag = "mq1_3"
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ1_S4_OBJ"
-on = "area_cleared:sunda_batutulis"
-marker = {"zone": "ts_leuweung", "id": "sunda_batutulis"}
+on = "boss_defeated:sandekala"
+marker = {"zone": "ts_leuwi", "id": "sandekala"}
+set_flag = "mq1_3b"
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ1_S5_OBJ"
-on = "glyph_learned:sunda_nga"
-marker = {"zone": "ts_leuweung", "id": "batu_tulis"}
-set_flag = "mq1_5"
+on = "area_cleared:sunda_batutulis"
+marker = {"zone": "ts_leuweung", "id": "sunda_batutulis"}
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ1_S6_OBJ"
-on = "talked_to:sunda_weaver"
-marker = {"zone": "ts_sawah", "id": "sunda_weaver"}
+on = "glyph_learned:sunda_nga"
+marker = {"zone": "ts_leuweung", "id": "batu_tulis"}
+set_flag = "mq1_5"
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ1_S7_OBJ"
-on = "talked_to:dayang_sumbi"
-marker = {"zone": "ts_situ", "id": "dayang_sumbi"}
-set_flag = "mq1_7"
+on = "area_cleared:sunda_clearing"
+marker = {"zone": "ts_sawah", "id": "sunda_clearing"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ1_S8_OBJ"
-on = "petilasan_activated:sunda_2"
-marker = {"zone": "ts_kawah_jalan", "id": "sunda_2"}
+on = "area_cleared:sunda_terraces"
+marker = {"zone": "ts_sawah", "id": "sunda_terraces"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQ1_S9_OBJ"
-on = "boss_defeated:sangkuriang"
-marker = {"zone": "ts_kawah", "id": "sangkuriang"}
+on = "talked_to:sunda_weaver"
+marker = {"zone": "ts_sawah", "id": "sunda_weaver"}
+set_flag = "mq1_6"
 
 [sub_resource type="Resource" id="s10"]
 script = ExtResource("2")
 objective = "Q_MQ1_S10_OBJ"
-on = "talked_to:semar"
-marker = {"zone": "desa_purwa", "id": "semar"}
-set_flag = "mq1_10"
+on = "glyph_learned:sunda_ca"
+marker = {"zone": "ts_situ", "id": "naganingrum"}
+set_flag = "mq1_7"
+
+[sub_resource type="Resource" id="s11"]
+script = ExtResource("2")
+objective = "Q_MQ1_S11_OBJ"
+on = "area_cleared:sunda_crater"
+marker = {"zone": "ts_kawah_jalan", "id": "sunda_crater"}
+
+[sub_resource type="Resource" id="s12"]
+script = ExtResource("2")
+objective = "Q_MQ1_S12_OBJ"
+on = "petilasan_activated:sunda_2"
+marker = {"zone": "ts_kawah_jalan", "id": "sunda_2"}
+
+[sub_resource type="Resource" id="s13"]
+script = ExtResource("2")
+objective = "Q_MQ1_S13_OBJ"
+on = "boss_defeated:faceless_captain"
+marker = {"zone": "ts_kawah", "id": "faceless_captain"}
+set_flag = "mq1_8"
+
+[sub_resource type="Resource" id="s14"]
+script = ExtResource("2")
+objective = "Q_MQ1_S14_OBJ"
+on = "boss_defeated:sangkuriang"
+marker = {"zone": "ts_kawah", "id": "sangkuriang"}
+set_flag = "mq1_9"
 
 [resource]
 script = ExtResource("1")
@@ -77,5 +103,5 @@ type = "main"
 zone = "tatar_sunda"
 size = "L"
 giver = "semar"
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10")])
-rewards = {"codex": ["tangkuban_perahu"]}
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10"), SubResource("s11"), SubResource("s12"), SubResource("s13"), SubResource("s14")])
+rewards = {"lakon": "sangkuriang", "codex": ["naganingrum", "sangkuriang", "dayang_sumbi"]}

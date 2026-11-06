@@ -2,6 +2,9 @@ extends Control
 ## Dialogue box (ui.md 2, quests.md 7.7). Listens to Events.dialogue_requested(speaker_key, lines),
 ## types each line out, `interact`, Enter or left click completes the line or advances, then emits dialogue_finished.
 ## Pauses the tree while open and restores the previous pause state.
+## A line "@KEY" is not shown: it sets the speaker tag for the lines after it. Events.dialogue_choices (sent just
+## before the request) lists 2-3 choices under the last line: move_up/move_down move, interact picks, cancel does
+## nothing; Events.dialogue_picked(index) then dialogue_finished. All text goes through tr() then Game.fmt().
 
 const CPS := 45.0   # TUNE: characters per second
 const OUTLINE := Color(0, 0, 0, 0.9)
@@ -15,6 +18,11 @@ var _open := false
 var _speaker: Label
 var _text: Label
 var _cue: Label   # "▼" once the line is fully shown
+var _choices := PackedStringArray()   # for the next request
+var _opts := PackedStringArray()      # for the open box
+var _choosing := false
+var _sel := 0
+var _list: Label
 
 
 func _ready() -> void:
@@ -23,17 +31,20 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	visible = false
 	var bg := ColorRect.new()
-	bg.color = Color(0, 0, 0, 0.75)
-	bg.position = Vector2(40, 194)
-	bg.size = Vector2(400, 70)
+	bg.color = Color(0, 0, 0, 0.82)
+	bg.position = Vector2(32, 180)
+	bg.size = Vector2(416, 86)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
-	_speaker = _label(Vector2(48, 198), Vector2(384, 12), Color("E8D9A0"))
-	_text = _label(Vector2(48, 212), Vector2(384, 48), Color.WHITE)
+	_speaker = _label(Vector2(42, 184), Vector2(396, 12), Color("E8D9A0"))
+	_text = _label(Vector2(42, 198), Vector2(396, 56), Color.WHITE)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_cue = _label(Vector2(424, 252), Vector2(10, 10), Color("E8D9A0"))
+	_cue = _label(Vector2(434, 252), Vector2(10, 10), Color("E8D9A0"))
 	_cue.text = "▼"
-	get_node("/root/Events").dialogue_requested.connect(_on_requested)
+	_list = _label(Vector2(50, 232), Vector2(388, 32), Color.WHITE)
+	var ev := get_node("/root/Events")
+	ev.dialogue_requested.connect(_on_requested)
+	ev.dialogue_choices.connect(func(keys: PackedStringArray) -> void: _choices = keys)
 
 
 func _label(pos: Vector2, sz: Vector2, col: Color) -> Label:
@@ -54,32 +65,58 @@ func is_open() -> bool:
 
 func _on_requested(speaker_key: String, lines: PackedStringArray) -> void:
 	if _open:
+		_choices = PackedStringArray()
 		return
-	if lines.is_empty():
+	if lines.is_empty() and _choices.is_empty():
 		get_node("/root/Events").dialogue_finished.emit()
 		return
 	_open = true
 	_lines = lines
+	_opts = _choices
+	_choices = PackedStringArray()
+	_choosing = false
+	_list.text = ""
+	_text.text = ""
 	_i = -1
 	_opened_frame = Engine.get_process_frames()
 	_was_paused = get_tree().paused
 	get_tree().paused = true
-	_speaker.text = tr(speaker_key)
+	_speaker.text = _t(speaker_key)
 	visible = true
 	_next()
 
 
+func _t(key: String) -> String:
+	return get_node("/root/Game").fmt(tr(key))
+
+
 func _next() -> void:
 	_i += 1
+	while _i < _lines.size() and _lines[_i].begins_with("@"):
+		_speaker.text = _t(_lines[_i].substr(1))
+		_i += 1
 	if _i >= _lines.size():
-		_close()
+		if _opts.is_empty():
+			_close()
+		else:
+			_choosing = true
+			_sel = 0
+			_show_choices()
 		return
-	_text.text = tr(_lines[_i])
+	_text.text = _t(_lines[_i])
 	_text.visible_characters = 0
 	_shown = 0.0
 
 
+func _show_choices() -> void:
+	var out := PackedStringArray()
+	for i in _opts.size():
+		out.append(("▶ " if i == _sel else "   ") + _t(_opts[i]))
+	_list.text = "\n".join(out)
+
+
 func _close() -> void:
+	_list.text = ""
 	_open = false
 	visible = false
 	get_tree().paused = _was_paused
@@ -90,14 +127,27 @@ func _process(delta: float) -> void:
 	if _open and _text.visible_characters < _text.get_total_character_count():
 		_shown += delta * CPS
 		_text.visible_characters = int(_shown)
-	_cue.visible = _open and _text.visible_characters >= _text.get_total_character_count() \
+	_cue.visible = _open and not _choosing and _text.visible_characters >= _text.get_total_character_count() \
 			and Time.get_ticks_msec() % 800 < 500
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	# the press that opened the box arrives in the same frame: not an advance
-	if not _open or Engine.get_process_frames() == _opened_frame or not (event.is_action_pressed("interact") \
-			or event.is_action_pressed("ui_accept") or event.is_action_pressed("attack")):
+	if not _open or Engine.get_process_frames() == _opened_frame:
+		return
+	if _choosing:
+		var d := int(event.is_action_pressed("move_down") or event.is_action_pressed("ui_down")) \
+				- int(event.is_action_pressed("move_up") or event.is_action_pressed("ui_up"))
+		if d != 0:
+			get_viewport().set_input_as_handled()
+			_sel = posmod(_sel + d, _opts.size())
+			_show_choices()
+		elif event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
+			get_viewport().set_input_as_handled()
+			get_node("/root/Events").dialogue_picked.emit(_sel)
+			_close()
+		return
+	if not (event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or event.is_action_pressed("attack")):
 		return
 	get_viewport().set_input_as_handled()
 	if _text.visible_characters < _text.get_total_character_count():

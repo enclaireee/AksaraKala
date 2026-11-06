@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_K1_S1_OBJ"
+on = "talked_to:kidul_nelayan_anak"
+marker = {"zone": "sk_pantai", "id": "kidul_nelayan_anak"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_K1_S2_OBJ"
+on = "item_picked:tukik_*"
+count = 3
+marker = {"zone": "sk_pantai", "id": "tukik_1"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_K1_S3_OBJ"
+on = "area_entered:kidul_tukik_laut"
+marker = {"zone": "sk_pantai", "id": "kidul_tukik_laut"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_K1_S4_OBJ"
+on = "talked_to:kidul_nelayan_anak"
+marker = {"zone": "sk_pantai", "id": "kidul_nelayan_anak"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_k1"
+kind = "side"
+type = "errand"
+zone = "segara_kidul"
+size = "M"
+giver = "kidul_nelayan_anak"
+requires = Array[String](["mq4_1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"herb_pouch": 1}

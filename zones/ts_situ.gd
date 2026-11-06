@@ -12,7 +12,7 @@ const MAP := [
 	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
 	"&!,,,,K,,,,,,.......~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
 	"&,,,,,K,,,,,,.......~~~~~~~~~~~~~~~~~~~~~~~~~~~....#########",
-	"#######....D........~~~~~~~~~~~~~~~~~~~~~~~~~~~....#.......#",
+	"#######...dD........~~~~~~~~~~~~~~~~~~~~~~~~~~~....#.......#",
 	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~....r.......#",
 	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~.........k..#",
 	"#######............................................r.......#",
@@ -26,12 +26,12 @@ const MAP := [
 	"#######.,,....................,,,,,,,,,,,,,,,,,,,,,,,,,,=,,$",
 	"#######.,,....................,,........................####",
 	"#######.,,....................,,...........................#",
+	"#######.,,........w...v.......,,...........................#",
 	"#######.,,....................,,...........................#",
+	"#######.,,....r.....w.........,,................r..........#",
+	"#######.,,.....r..............,,............y....r.........#",
 	"#######.,,....................,,...........................#",
-	"#######.,,....r...............,,................r..........#",
-	"#######.,,.....r..............,,.................r.........#",
-	"#######.,,....................,,...........................#",
-	"#######.,,....................,,...........................#",
+	"#######.,,....................,,..............y............#",
 	"#######.,,....................,,...........................#",
 	"#######.,,....................,,...........................#",
 	"#######.@,....................e,...........................#",
@@ -49,10 +49,14 @@ const SPOTS := {
 	";": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_tebing"}, "tile": ","},   # spawn, arrival from `sk_tebing` (in the pocket on the open side of `=`)
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:ts_sk", "open_side": "e"}, "tile": ","},   # shortcut gate, back route to Segara Kidul (opens only from `sk_tebing`, 2 tiles)
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_7"}, "tile": ","},   # kabut, crater path gate (one per tile)
-	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "dayang_sumbi"}, "tile": "."},   # NPC Dayang Sumbi, teaches Ca (MQ1 1.7)
+	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "!quest:mq1=done"}, "tile": "."},   # NPC Naganingrum, the woman by the lake, teaches Ca (MQ1 1.6), gone after MQ1
+	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "dayang_sumbi", "cond": "quest:mq1=done"}, "tile": "."},   # NPC Dayang Sumbi, gives SQ-S5 after MQ1
 	"x": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "tangkuban_perahu"}, "tile": "."},   # codex spot, ruin on the lake shore
 	"5": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_5"}, "tile": "."},   # angklung 5
 	"k": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_kujang", "item_id": "kujang"}, "tile": "."},   # chest: Kujang (secret 1)
+	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
+	"v": {"scene": "res://entities/enemies/faceless_archer.tscn", "props": {}, "tile": "."},   # loose faceless archer, roaming pack (respawns on zone reload, no unique_id)
+	"y": {"scene": "res://entities/enemies/wild_boar.tscn", "props": {}, "tile": "."},   # loose wild boar, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

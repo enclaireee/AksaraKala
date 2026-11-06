@@ -1,28 +1,32 @@
 keys,id,en
-Q_MQ0_TITLE,Wayang Terakhir,The Last Shadow Play
-Q_MQ1_TITLE,Perahu yang Tertelungkup,The Overturned Boat
-Q_MQ0_S1_OBJ,Saksikan pertunjukan wayang,Watch the wayang performance
-Q_MQ0_S2_OBJ,Bicara dengan Semar,Speak with Semar
+Q_MQ0_TITLE,Malam Wayang,The Night of the Wayang
+Q_MQ1_TITLE,Jejak Pangeran dan Naga,The Prince and the Chained King
+Q_MQ0_S1_OBJ,Saksikan pertunjukan wayang ruwatan bersama Laras,Watch the wayang ruwatan performance with Laras
+Q_MQ0_S2_OBJ,Bicara dengan Semar di panggung wayang,Speak with Semar by the wayang stage
 Q_MQ0_S1_HINT,Berjalan dengan {move},Walk with {move}
 Q_MQ0_S2_HINT,Dekati Semar lalu tekan {interact},Walk up to Semar and press {interact}
-Q_MQ0_S4_HINT,Masuk ke sanggar lalu bicara dengan Semar,Enter the sanggar and talk to Semar
-Q_MQ0_S5_HINT,"Tahan {cast}, gambar Ka mengikuti bayangan, lalu lepas","Hold {cast}, trace Ka over the guide, then release"
-Q_MQ0_S6_HINT,{attack} menyerang · {dodge} menghindar,{attack} attacks · {dodge} dodges
-Q_MQ0_S3_OBJ,Pilih kelasmu,Choose your class
-Q_MQ0_S4_OBJ,Pelajari aksara pertamamu di sanggar,Learn your first letter in the sanggar
-Q_MQ0_S5_OBJ,Rapalkan Ka tiga kali,Cast Ka three times
-Q_MQ0_S6_OBJ,Kalahkan boneka latihan,Defeat the training dummies
-Q_MQ0_S7_OBJ,"Pergilah ke barat, ke Tatar Sunda",Head west to Tatar Sunda
-Q_MQ1_S1_OBJ,Beristirahat di petilasan dekat kebun teh,Rest at the petilasan by the tea terraces
-Q_MQ1_S2_OBJ,Temui sesepuh kampung,Find the village elder
-Q_MQ1_S3_OBJ,Pelajari Ga dari sesepuh,Learn Ga from the elder
-Q_MQ1_S4_OBJ,Usir perampok dan Kuntilanak dari batu tulis di rumpun bambu,Clear the bandits and the Kuntilanak from the batu tulis in the bamboo grove
-Q_MQ1_S5_OBJ,Baca batu tulis untuk mempelajari Nga,Read the batu tulis to learn Nga
-Q_MQ1_S6_OBJ,Temui penenun penyimpan boeh rarang,Find the weaver who keeps the boeh rarang
-Q_MQ1_S7_OBJ,Temui arwah Dayang Sumbi di tepi danau,Meet Dayang Sumbi's spirit at the lake shore
-Q_MQ1_S8_OBJ,Daki ke bibir kawah,Climb to the crater rim
-Q_MQ1_S9_OBJ,Bebaskan Sangkuriang dari lupa,Free Sangkuriang from the forgetting
-Q_MQ1_S10_OBJ,Kembali ke Semar,Return to Semar
+Q_MQ0_S4_HINT,Pulang lalu tekan {interact} di dekat Ibu,Walk home and press {interact} near Ibu
+Q_MQ0_S5_HINT,Masuk ke sanggar lalu bicara dengan Semar,Enter the sanggar and talk to Semar
+Q_MQ0_S6_HINT,"Tahan {cast}, gambar Ka mengikuti bayangan, lalu lepas","Hold {cast}, trace Ka over the guide, then release"
+Q_MQ0_S3_OBJ,Pilih jalan bertarungmu,Choose your combat path
+Q_MQ0_S4_OBJ,Pulang ke rumah dan tanyakan keberadaan Laras pada Ibu,Return home and ask Ibu what happened to Laras
+Q_MQ0_S5_OBJ,Temui Semar di sanggar untuk memeriksa lontar Laras,Find Semar in the sanggar to examine Laras's fading lontar
+Q_MQ0_S6_OBJ,Goreskan aksara Ka tiga kali untuk mengunci ingatanmu,Inscribe the Ka glyph three times to anchor your memory
+Q_MQ0_S7_OBJ,Kalahkan pasukan Pajang Teken yang menyerbu alun-alun desa,Drive the Faceless raiders out of the village square
+Q_MQ1_S1_OBJ,Hancurkan penyergap Pajang Teken di kebun teh barat,Clear the Faceless ambush on the western tea terraces
+Q_MQ1_S2_OBJ,Beristirahat di petilasan kebun teh di jalur pengejaran barat,Rest at the tea-terrace petilasan on the western pursuit trail
+Q_MQ1_S3_OBJ,Tanyakan arah pasukan bertopeng dan pangeran buronan pada Abah Karna,Question Elder Abah Karna about the Faceless column and the hunted prince
+Q_MQ1_S4_OBJ,Nyalakan obor oncor dan kalahkan iblis senja Sandekala di Leuwi Peteng,Light the four oncor braziers and banish the dusk-demon Sandekala at Leuwi Peteng
+Q_MQ1_S5_OBJ,Kalahkan penyergap Pajang Teken di prasasti kerajaan Batu Tulis,Defeat the Faceless ambush at the royal Batu Tulis stele
+Q_MQ1_S6_OBJ,Periksa prasasti raja yang dirusak untuk melacak jejak Ciung Wanara,Inspect the defaced royal stele to track Ciung Wanara's trail
+Q_MQ1_S7_OBJ,Terobos barisan penjaga Pajang Teken di bukaan pintu sawah,Break the Faceless vanguard at the rice-field clearing
+Q_MQ1_S8_OBJ,Terobos blokade Pajang Teken di teras sawah menuju danau,Break through the Faceless blockade on the upper rice terraces
+Q_MQ1_S9_OBJ,Temui penenun teras sawah yang menyembunyikan Laras dan ambil kain Boeh Rarang,Speak with the terrace Weaver who sheltered Laras and obtain the Boeh Rarang cloth
+Q_MQ1_S10_OBJ,Temui permaisuri buangan Dewi Naganingrum di tepi danau untuk mempelajari fajar Ca,Speak with exiled Queen Naganingrum by the lake to learn the False Dawn glyph Ca
+Q_MQ1_S11_OBJ,Terobos penjaga lereng kawah menuju puncak Tangkuban Perahu,Fight through the crater-slope garrison on the ascent to Tangkuban Perahu
+Q_MQ1_S12_OBJ,Beristirahat di petilasan jalan kawah sebelum menyerbu puncak Tangkuban Perahu,Rest at the crater-road petilasan before storming the Tangkuban Perahu summit
+Q_MQ1_S13_OBJ,Kalahkan Kapten Pajang Teken di bibir kawah sebelum ia memecahkan Segel Kawah,Defeat the Faceless Captain at the crater rim before he shatters the Crater Seal
+Q_MQ1_S14_OBJ,"Gantung Boeh Rarang di tiang timur, goreskan Ca, dan tenangkan amukan Sangkuriang","Hang the Boeh Rarang on the eastern post, cast Ca, and quell the awakened titan Sangkuriang"
 Q_SQ_S1_TITLE,Lutung Kasarung,Lutung Kasarung
 Q_SQ_S1_S1_OBJ,Temukan arwah lutung hitam di hutan,Find the black lutung spirit in the forest
 Q_SQ_S1_S2_OBJ,Usir roh-roh dari mata air tersembunyi,Clear the spirits from the hidden spring
@@ -39,16 +43,22 @@ Q_SQ_S3_S2_OBJ,Kembalikan angklung kepada pemimpin kelompok,Return the angklung 
 Q_SQ_S4_TITLE,Cepot Si Pemberani,Brave Cepot
 Q_SQ_S4_S1_OBJ,Kalahkan 3 babi hutan,Defeat 3 wild boars
 Q_SQ_S4_S2_OBJ,Lapor kepada Cepot,Report back to Cepot
-Q_MQ2_TITLE,Seribu Candi,A Thousand Temples
-Q_MQ2_S1_OBJ,Beristirahat di petilasan dekat sawah,Rest at the petilasan by the rice fields
-Q_MQ2_S2_OBJ,Dengarkan kisah Hanacaraka dari Ki Dalang,Hear the dalang's story of the Hanacaraka
-Q_MQ2_S3_OBJ,Pelajari Na dari pemahat batu,Learn Na from the stone-carver
-Q_MQ2_S4_OBJ,Bangunkan penjaga candi di reruntuhan,Wake the temple guardians at the ruins
-Q_MQ2_S5_OBJ,Bergabunglah dengan para perempuan di lesung,Join the women at the lesung
-Q_MQ2_S6_OBJ,Mohon restu penjaga dari juru kunci,Ask the juru kunci for the guardian's blessing
-Q_MQ2_S7_OBJ,Masuki pelataran candi,Enter the temple courtyard
-Q_MQ2_S8_OBJ,Hentikan pembangunan tanpa akhir Bandung Bondowoso,Stop Bandung Bondowoso's endless building
-Q_MQ2_S9_OBJ,Kembali ke Semar,Return to Semar
+Q_MQ2_TITLE,Darah di Sungai Pamali,Blood on the Pamali River
+Q_MQ2_S1_OBJ,Terobos pos penjaga perbatasan di Gapura Mataram,Break through the border garrison at the Mataram Gate
+Q_MQ2_S2_OBJ,Beristirahat di petilasan garis depan sawah Mataram,Rest at the rice-field petilasan on the Mataram war front
+Q_MQ2_S3_OBJ,Usir kawanan penjarah dari jalan utama pasar pengungsi,Clear the scavenger pack from the refugee market road
+Q_MQ2_S4_OBJ,Temui dalang Ki Sumarto di pasar pengungsi untuk melacak Si Tanpa Ngaran,Find Ki Sumarto at the refugee market to track the Nameless Hunter
+Q_MQ2_S5_OBJ,Temui pengintai Pak Karto di reruntuhan yang diperebutkan dua pasukan,Meet scout Pak Karto at the contested temple ruins
+Q_MQ2_S6_OBJ,Hancurkan barisan arca batu yang dibangkitkan Pajang Teken di reruntuhan,Destroy the stone guardians awakened by the Faceless in the ruins
+Q_MQ2_S7_OBJ,Temui para perempuan di lesung yang menahan kutukan malam candi,Rally the women at the lesung holding back the temple's night-curse
+Q_MQ2_S8_OBJ,Bersihkan kuburan tua dari roh-roh yang gelisah di jalur timur,Purge the restless dead from the old cemetery on the eastern path
+Q_MQ2_S9_OBJ,Kalahkan penjaga batu raksasa di lereng timur menuju bukit candi,Defeat the stone-hill guardians on the eastern ascent to the temple
+Q_MQ2_S10_OBJ,Minta kunci gerbang candi dan segel macan pada Mbah Marto,Obtain the temple gate key and tiger seal from Mbah Marto
+Q_MQ2_S11_OBJ,Terobos barisan arca penjaga di jalan menanjak Candi Mataram,Break the outer guardian statues on the Mataram temple approach
+Q_MQ2_S12_OBJ,Gempur perkemahan Si Tanpa Ngaran di pelataran Candi Mataram,Storm the Nameless Hunter's war-camp in the Mataram temple yard
+Q_MQ2_S13_OBJ,Hentikan panglima terkutuk Bandung Bondowoso setelah Segel Candi dipatahkan,Stop the awakened warlord Bandung Bondowoso after the Temple Seal is shattered
+Q_MQ2_S14_OBJ,Pahat kembali nama sejati Raja Nagawiru di Batu Pamali untuk menghentikan perang,Carve King Nagawiru's true name onto the Pamali boundary stone
+Q_MQ2_S15_OBJ,Hentikan Pangeran Hariang Banga dalam duel di penyeberangan Sungai Pamali,Stop Prince Hariang Banga in single combat at the Pamali ford
 Q_SQ_M1_TITLE,Jaka Tarub dan Nawang Wulan,Jaka Tarub and Nawang Wulan
 Q_SQ_M1_S1_OBJ,Dengarkan keluhan Nawang Wulan,Hear Nawang Wulan's trouble
 Q_SQ_M1_S2_OBJ,Periksa lumbung,Search the lumbung
@@ -68,16 +78,21 @@ Q_SQ_M4_TITLE,Gamelan yang Bisu,The Silent Gamelan
 Q_SQ_M4_S1_OBJ,Dengarkan permintaan Ki Sumarto,Hear Ki Sumarto's request
 Q_SQ_M4_S2_OBJ,Temukan gong ageng di relung reruntuhan,Find the gong ageng in the ruins' sealed nook
 Q_SQ_M4_S3_OBJ,Bawa gong ageng kepada Ki Sumarto,Bring the gong ageng to Ki Sumarto
-Q_MQ3_TITLE,Kutukan Sang Empu,The Smith's Curse
-Q_MQ3_S1_OBJ,Beristirahat di petilasan di sabana,Rest at the petilasan on the savanna
-Q_MQ3_S2_OBJ,Temui sang empu di bengkel tempa,Find the empu at the forge
-Q_MQ3_S3_OBJ,Bantu Mbok Srini mencari Timun Mas,Help Mbok Srini find Timun Mas
-Q_MQ3_S4_OBJ,Kalahkan Buto Ijo,Defeat Buto Ijo
-Q_MQ3_S5_OBJ,Temui sang empu lagi untuk belajar mematahkan tanda kutukan,Return to the empu to learn how to break curse marks
-Q_MQ3_S6_OBJ,Patahkan dua tanda kutukan di halaman bengkel,Break two curse marks in the forge yard
-Q_MQ3_S7_OBJ,Beristirahat sebelum candi,Rest before the shrine
-Q_MQ3_S8_OBJ,Tenangkan keris terkutuk,Lay the cursed keris to rest
-Q_MQ3_S9_OBJ,Bicara dengan Semar tentang Kala,Speak with Semar about Kala
+Q_MQ3_TITLE,Bayangan Aria Kebonan,The Shadow of Aria Kebonan
+Q_MQ3_S1_OBJ,Terobos penyergap Pajang Teken di gerbang perbatasan Tanah Timur,Break the Faceless ambush at the Tanah Timur border pass
+Q_MQ3_S2_OBJ,Beristirahat di petilasan sabana di jalur pelarian Si Tanpa Ngaran,Rest at the savanna petilasan on the Nameless Hunter's trail
+Q_MQ3_S3_OBJ,Padamkan kawanan roh api yang membakar padang sabana,Quell the fire-spirits scorching the savanna crossroads
+Q_MQ3_S4_OBJ,Tanyakan cara menembus segel kutukan candi pada Mpu Wirasana,Question bladesmith Mpu Wirasana about the shrine's death-curse barrier
+Q_MQ3_S5_OBJ,Bersihkan tepi kali dari roh-roh api yang mengepung jalan ke ladang,Clear the riverbanks of the fire-wisps blocking the eastern crossing
+Q_MQ3_S6_OBJ,Temui Mbok Srini di tepi kali untuk menembus blokade raksasa di ladang timur,Find Mbok Srini by the river to break the giant's blockade of the eastern road
+Q_MQ3_S7_OBJ,Hancurkan barisan penjaga terkutuk di ladang timur,Break the cursed vanguard in the eastern fields
+Q_MQ3_S8_OBJ,Kalahkan raksasa Buto Ijo yang dirasuki kutukan di ladang timur,Slay the curse-maddened giant Buto Ijo blocking the eastern fields
+Q_MQ3_S9_OBJ,Hancurkan dua tonggak kutukan latihan di bengkel tempa dengan Aksara,Shatter two death-curse stakes in the forge yard using Aksara
+Q_MQ3_S10_OBJ,Bersihkan pesisir selatan dari sisa pasukan terkutuk,Clear the southern shore of the lingering cursed garrison
+Q_MQ3_S11_OBJ,Terobos kepungan prajurit terkutuk di lautan pasir menuju candi,Fight through the cursed legion across the sand sea
+Q_MQ3_S12_OBJ,Beristirahat di petilasan gurun sebelum menyerbu candi terkutuk,Rest at the desert petilasan before storming the cursed shrine
+Q_MQ3_S13_OBJ,Patahkan kutukan darah Keris Mpu Gandring yang menjaga candi,Break the blood-curse of Mpu Gandring's Keris guarding the shrine
+Q_MQ3_S14_OBJ,Kalahkan Si Tanpa Ngaran dan paksakan nama aslinya kembali,Defeat the Nameless Hunter and carve his true name back onto his mask
 Q_SQ_T1_TITLE,Ande-Ande Lumut,Ande-Ande Lumut
 Q_SQ_T1_S1_OBJ,Dengarkan masalah Klething Kuning di sungai,Hear Klething Kuning's trouble at the river
 Q_SQ_T1_S2_OBJ,"Ambil sodo lanang di beringin, atau kalahkan Yuyu Kangkang","Fetch the sodo lanang in the banyan grove, or defeat Yuyu Kangkang"
@@ -96,8 +111,48 @@ Q_SQ_T4_S1_OBJ,Dengarkan pemimpin rombongan kuda lumping,Hear the kuda lumping t
 Q_SQ_T4_S2_OBJ,Temukan 3 kuda kepang yang terbawa badai,Find the 3 kuda kepang the storm blew away
 Q_SQ_T4_S3_OBJ,Kembalikan kuda kepang kepada pemimpin rombongan,Return the kuda kepang to the troupe leader
 Q_SQ_T4_S4_OBJ,Tonton pertunjukan di panggung,Watch the show at the stage
-Q_MQ5_TITLE,Gua Kala,Kala's Cave
-Q_MQ5_S1_OBJ,Masuki Gua Kala,Enter Gua Kala
-Q_MQ5_S2_OBJ,Beristirahat di petilasan terakhir,Rest at the last petilasan
-Q_MQ5_S3_OBJ,Hadapi Batara Kala,Face Batara Kala
-Q_MQ5_S4_OBJ,Kembali ke panggung wayang,Return to the wayang stage
+Q_MQ5_TITLE,Di Dalam Mulut Waktu,Into the Maw of Time
+Q_MQ5_S1_OBJ,Masuki Gua Kala saat dua raja bersaudara menjaga gerbangnya,Enter Gua Kala while the two brother-kings hold its gate
+Q_MQ5_S2_OBJ,Hancurkan penjaga ambang Gua Kala untuk merebut Segel Ingatan pertama (La),Break the threshold guard of Gua Kala to reclaim the First Memory Seal (La)
+Q_MQ5_S3_OBJ,Terobos ruang pasir waktu pertama di perut Gua Kala,Break through the first hourglass chamber in the depths of Gua Kala
+Q_MQ5_S4_OBJ,Padamkan roh-roh api di bibir jurang pasir waktu untuk merebut Segel Ingatan kedua (Ra),Quell the fire-spirits at the hourglass brink to reclaim the Second Memory Seal (Ra)
+Q_MQ5_S5_OBJ,Bersihkan Jurang Kelupaan untuk membuka jalan ke pelataran terakhir,Clear the Abyss of Forgetting to open the path to the final shrine
+Q_MQ5_S6_OBJ,Beristirahat di petilasan terakhir bersama Semar untuk mengunci Segel Ingatan ketiga (Sa),Rest at the final petilasan with Semar to anchor the Third Memory Seal (Sa)
+Q_MQ5_S7_OBJ,Hadapi Batara Kala dan jalankan Ruwatan Fajar untuk membebaskan nama-nama yang ditelan waktu,Face Batara Kala and perform the Ruwatan of Dawn to free the names swallowed by time
+Q_MQ5_S8_OBJ,Tuliskan kembali nama sejati Laras (La-Ra-Sa) di atas lontarnya yang kosong,Inscribe Laras's true name (La-Ra-Sa) onto her blank lontar to bring her home
+Q_MQG_TITLE,Wajah Pinjaman di Singgasana,The Borrowed Face on the Throne
+Q_MQ0_S8_OBJ,Kejar Si Tanpa Ngaran dan jejak Pangeran Ciung Wanara ke barat,Follow the Nameless Hunter and Prince Ciung Wanara's trail west
+Q_MQG_S1_OBJ,Temui Pangeran Ciung Wanara di tepi gelanggang sabung ayam Keraton Galuh,Meet Prince Ciung Wanara by the royal cockfighting ring of Galuh
+Q_MQG_S2_OBJ,Menangkan babak pertama sayembara sabung ayam dan kalahkan pengawal curang,Win the first tournament bout and cut down the King's riggers
+Q_MQG_S3_OBJ,Menangkan babak kedua untuk memaksa Raja Barma Wijaya turun dari panggung,Win the second bout to force King Barma Wijaya down from his dais
+Q_MQG_S4_OBJ,Temui patih tua Uwa Lengser secara diam-diam di sudut alun-alun,Meet secretly with old court chamberlain Uwa Lengser
+Q_MQG_S5_OBJ,Beristirahat di petilasan pelataran dalam sebelum menyusup ke penjara,Rest at the inner courtyard petilasan before infiltrating the dungeons
+Q_MQG_S6_OBJ,"Geledah sel penjara bawah tanah untuk mencari Laras dan daftar nama curian","Search the royal dungeon cells for Laras and the ledger of stolen names"
+Q_MQG_S7_OBJ,Interogasi pembelot Pajang Teken dan putuskan nasibnya,Interrogate the Faceless deserter and decide his fate
+Q_MQG_S8_OBJ,Hadapi Raja Palsu di ruang singgasana dan hancurkan wajah curiannya,Confront the False King in the throne room and shatter his stolen face
+Q_MQ0_S7_HINT,{attack} menyerang · {dodge} menghindar,{attack} attacks · {dodge} dodges
+Q_SQ_S5_TITLE,Gema: Sangkuriang,Echo: Sangkuriang
+Q_SQ_S5_S1_OBJ,Minta boeh rarang pada si penenun,Ask the weaver for the boeh rarang
+Q_SQ_S5_S2_OBJ,Hentikan Sangkuriang sebelum malam berakhir,Stop Sangkuriang before the night ends
+Q_SQ_M5_TITLE,Gema: Seribu Candi,Echo: A Thousand Temples
+Q_SQ_M5_S1_OBJ,Hentikan Bandung Bondowoso di candi,Stop Bandung Bondowoso at the temples
+Q_MQ4_TITLE,Ombak Segara Kidul,Waves of the Southern Sea
+Q_MQ4_S1_OBJ,Turuni jalur karang selatan dari Pesisir Tanah Timur menuju Segara Kidul,Descend the southern reef trail from the Tanah Timur coast into Segara Kidul
+Q_MQ4_S2_OBJ,Bersihkan penyergapan roh laut di kolam pasang Karang Selatan,Clear the sea-spirit ambush at the Southern Reef tide pools
+Q_MQ4_S3_OBJ,Beristirahat di petilasan Pantai Selatan di tepi dataran pasang,Rest at the Southern Shore petilasan by the tidal flat
+Q_MQ4_S4_OBJ,Temui Juru Kunci Nyai Ranti untuk memohon izin menghadapi Ujian Ombak,Speak with Keeper Nyai Ranti to seek permission for the Trial of the Waves
+Q_MQ4_S5_OBJ,Bertahan menghadapi tiga gelombang Ujian Ombak Segara Kidul di dataran pasir hitam,Survive all three waves of the Trial of Segara Kidul upon the black-sand flat
+Q_MQ4_S6_OBJ,Terobos pelataran luar Keraton Segara Kidul dan kalahkan penjaga karang,Cross the outer court of the Southern Sea Sanctuary and defeat the reef guard
+Q_MQ4_S7_OBJ,Beristirahat di petilasan pendopo dalam Keraton Segara Kidul,Rest at the inner pendopo petilasan of the Southern Sea Sanctuary
+Q_MQ4_S8_OBJ,Goreskan Aksara Jawa terakhir (Ka - Ombak) di Altar Segara untuk menerima restu Kanjeng Ratu,Inscribe the final Javanese glyph (Ka - Ombak) at the Sea Altar to receive the Queen's blessing
+Q_MQ4_S9_OBJ,Naiki Tebing Selatan dan bersihkan puncaknya untuk membuka jalan pintas kembali ke Tatar Sunda,Ascend the Southern Cliffs and clear the summit to unlock the cliff shortcut back to Tatar Sunda
+Q_SQ_K1_TITLE,Tukik yang Tersesat,The Stranded Hatchlings
+Q_SQ_K1_S1_OBJ,Dengarkan kekhawatiran bocah nelayan Damar tentang penyu kecil di bukit pasir,Hear the fisher child Damar's worry about the stranded sea-turtle hatchlings
+Q_SQ_K1_S2_OBJ,Kumpulkan 3 tukik yang tersesat di balik bukit pasir Pantai Selatan,Gather the 3 hatchlings stranded among the Southern Shore dunes
+Q_SQ_K1_S3_OBJ,Lepaskan ketiga tukik kembali ke debur ombak di bibir pantai,Release the hatchlings safely into the surf at the water's edge
+Q_SQ_K1_S4_OBJ,Kembalilah menemui Damar di Pantai Selatan,Report back to Damar on the Southern Shore
+Q_SQ_K2_TITLE,Penjaga Muara Karang,Guardian of the Reef Estuary
+Q_SQ_K2_S1_OBJ,Dengarkan kisah nelayan tua Pak Raka tentang buaya putih raksasa di teluk karang,Hear the old fisherman Pak Raka's tale of the giant white crocodile in the reef cove
+Q_SQ_K2_S2_OBJ,Masuki teluk tersembunyi di tenggara Karang Selatan,Enter the hidden cove in the south-east of the Southern Reef
+Q_SQ_K2_S3_OBJ,Tumbangkan Bajul Putih Tua yang mengamuk di teluk karang,Defeat the rampaging Bajul Putih Tua in the reef cove
+Q_SQ_K2_S4_OBJ,Lapor kembali kepada Pak Raka di pondok nelayan,Report back to Pak Raka at the fishing hut

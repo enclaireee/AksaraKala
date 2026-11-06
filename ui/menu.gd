@@ -143,8 +143,9 @@ func close() -> void:
 
 func _input(e: InputEvent) -> void:
 	var box := get_node_or_null("../DialogueBox")
-	if box and box.is_open():
-		return   # the box owns pause and input while it is open
+	var lesson := get_node_or_null("../GlyphLesson")
+	if (box and box.is_open()) or (lesson and lesson.writing != ""):
+		return   # the box and the write card own pause and input while they are open
 	if e.is_action_pressed("menu"):
 		if visible:
 			close()

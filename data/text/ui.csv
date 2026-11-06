@@ -77,3 +77,24 @@ UI_DEATH_SUB,Kembali ke petilasan. Ilmu tetap utuh.,Back at the petilasan. Your 
 BOSS_BUTO_IJO,Buto Ijo,Buto Ijo
 BOSS_KERIS_GANDRING,Keris Mpu Gandring,Mpu Gandring's Keris
 BOSS_BATARA_KALA,Batara Kala,Batara Kala
+UI_LESSON_PROGRESS,Berhasil %d/%d,Cast %d/%d
+UI_LESSON_WRONG,"Itu %s, bukan %s","That was %s, not %s"
+LESSON_SUNDA_KA,"Dua angka 7: geser naik dari kaki pertama ke garis atas kedua. Cara menggambar di game ini.","Two 7s: slide up from the first foot to the second bar. How to draw it in this game."
+LESSON_SUNDA_GA,"Garis atas, miring ke kiri bawah, garis bawah, lalu tutup kotak kecil. Ga punya kotak.","Top bar, slant down-left, bottom bar, then close the small box. Ga has the box."
+LESSON_SUNDA_NGA,"Nga adalah Ga tanpa kotak: ekornya melenting ke kiri atas.","Nga is Ga without the box: the tail flicks up-left."
+LESSON_SUNDA_CA,"Garis atas, miring ke lingkaran kecil, lengkung bawah, lalu tarik panjang ke kanan atas.","Top bar, slant into a small loop, round the bottom, then a long pull up-right."
+LESSON_JAWA_HA,"Mulai dari ekor kiri bawah: lengkung kiri, mangkuk, lalu dua punuk.","Start at the bottom-left tail: left arch, bowl, then two humps."
+LESSON_JAWA_NA,"Seperti Ca tetapi tanpa diagonal: lengkung kiri, kaki naik-turun, simpul kecil, lengkung kanan besar.","Like Ca but with no diagonal: left arch, leg down and up, small loop, big right arch."
+LESSON_JAWA_CA,"Ca punya diagonal ke kanan bawah, Na tidak. Ekor, mangkuk, simpul, diagonal, batang, garis atas.","Ca has the diagonal down-right, Na does not. Tail, bowl, loop, diagonal, stem, top bar."
+LESSON_JAWA_RA,"Taji kecil, garis atas, kait ke kiri bawah, diagonal ke kanan bawah, naik ke lengkung kanan.","Small spur, top bar, hook down-left, diagonal down-right, up into the right arch."
+UI_NAME_PROMPT,Siapa namamu?,What is your name?
+UI_PRONOUN_PROMPT,Disebut sebagai,Called
+UI_PRONOUN_HE,dia (laki-laki),he / him
+UI_PRONOUN_SHE,dia (perempuan),she / her
+UI_PRONOUN_THEY,dia,they / them
+UI_NAME_OK,Lanjut,Continue
+UI_WRITE_HINT,Tulis aksara yang bercahaya,Write the glowing letter
+BOSS_FACELESS_CAPTAIN,Kapten Tanpa Rupa,Faceless Captain
+BOSS_NAMELESS_HUNTER,Si Tanpa Ngaran,The Nameless Hunter
+BOSS_BARMA_WIJAYA,Prabu Barma Wijaya,Prabu Barma Wijaya
+BOSS_HARIANG_BANGA,Hariang Banga,Hariang Banga

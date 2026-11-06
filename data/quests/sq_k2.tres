@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_K2_S1_OBJ"
+on = "talked_to:kidul_nelayan_tua"
+marker = {"zone": "sk_karang", "id": "kidul_nelayan_tua"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_K2_S2_OBJ"
+on = "area_entered:kidul_elite_cove"
+marker = {"zone": "sk_karang", "id": "kidul_elite_cove"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_K2_S3_OBJ"
+on = "enemy_killed:bajul_putih_tua"
+marker = {"zone": "sk_karang", "id": "bajul_putih_tua"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_K2_S4_OBJ"
+on = "talked_to:kidul_nelayan_tua"
+marker = {"zone": "sk_karang", "id": "kidul_nelayan_tua"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_k2"
+kind = "side"
+type = "bounty"
+zone = "segara_kidul"
+size = "L"
+giver = "kidul_nelayan_tua"
+requires = Array[String](["mq4_1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"items": ["cakra"]}

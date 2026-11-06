@@ -14,10 +14,14 @@ const QUEST_ILMU := {"tatar_sunda": [30, 60, 90], "desa_purwa": [30, 60, 90], "m
 	"gua_kala": [190, 380, 570]}
 ## Quest-trigger signals on Events with one String arg (quests.md 7.2).
 const QUEST_SIGNALS := ["talked_to", "item_picked", "boss_defeated", "area_cleared", "area_entered",
-	"zone_entered", "petilasan_activated", "glyph_learned", "class_chosen", "weakness_triggered"]
+	"zone_entered", "petilasan_activated", "glyph_learned", "class_chosen", "weakness_triggered", "name_written"]
 ## Saved fields, in to_dict order. Add a field here and in _reset(); old saves get its default.
 const FIELDS := ["class_id", "stats", "ilmu", "points_spent", "glyphs_learned", "inventory", "equipped",
-	"flask_charges", "flask_max", "herb_pouches", "last_petilasan", "killed", "flags", "play_time", "quests", "codex", "pinned"]
+	"flask_charges", "flask_max", "herb_pouches", "last_petilasan", "killed", "flags", "play_time", "quests", "codex", "pinned",
+	"hero_name", "hero_pronoun"]
+const DEFAULT_NAME := "Jaka"   # ASSUMED (ui.md 3)
+## he / she / they -> [they, them, their, They] for Game.fmt.
+const PRONOUNS := {"he": ["he", "him", "his", "He"], "she": ["she", "her", "her", "She"], "they": ["they", "them", "their", "They"]}
 
 var save_path := "user://save.json"   # tests point this elsewhere
 
@@ -38,6 +42,8 @@ var play_time := 0.0
 var quests := {}                       # id -> {state: active|done, step, count} (quests.md 7.3)
 var codex := PackedStringArray()       # unlocked CodexEntry ids
 var pinned := ""                       # pinned side quest id, "" follows the main quest
+var hero_name := DEFAULT_NAME          # set on the name screen; new_game keeps it
+var hero_pronoun := "they"             # he, she or they
 
 
 func _init() -> void:
@@ -62,6 +68,8 @@ func _reset() -> void:
 	quests = {}
 	codex = PackedStringArray()
 	pinned = ""
+	hero_name = DEFAULT_NAME
+	hero_pronoun = "they"
 
 
 func _ready() -> void:
@@ -92,11 +100,38 @@ func _notification(what: int) -> void:
 		save_game()   # quit is a save trigger (rpg.md 11)
 
 
+# --- hero name and text (ui.md 3) ---
+
+## Keeps letters (any script), digits, space, ' and -, at most 12. `final` also trims and falls back to the
+## default, so a name can never hold [ ] { } or BBCode.
+static func clean_name(s: String, final := true) -> String:
+	var re := RegEx.create_from_string("[^\\p{L}0-9 '\\-]")
+	s = re.sub(s, "", true).left(12)
+	if not final:
+		return s
+	s = s.strip_edges()
+	return s if s != "" else DEFAULT_NAME
+
+
+## Fills {name}, {they}, {them}, {their}, {They}. Call it on the result of tr(). Plain replaces on purpose:
+## never String.format with player input.
+func fmt(s: String) -> String:
+	if not "{" in s:
+		return s
+	var p: Array = PRONOUNS.get(hero_pronoun, PRONOUNS.they)
+	return s.replace("{name}", hero_name).replace("{they}", p[0]).replace("{them}", p[1]) \
+			.replace("{their}", p[2]).replace("{They}", p[3])
+
+
 # --- new game, leveling, inventory ---
 
 ## Class choice creates the save (rpg.md 11). The old save is replaced only here.
 func new_game(cls: ClassData) -> void:
+	var keep_name := hero_name   # chosen on the name screen, before class select
+	var keep_pronoun := hero_pronoun
 	_reset()
+	hero_name = keep_name
+	hero_pronoun = keep_pronoun
 	class_id = cls.id
 	stats = cls.stats.duplicate()
 	for id in [cls.start_weapon, cls.start_armor]:
@@ -386,6 +421,10 @@ func codex_percent() -> float:
 
 ## Dialogue conditions (quests.md 7.1). Unknown conditions are false.
 func check(cond: String) -> bool:
+	if cond.strip_edges() == "":
+		return true
+	if "," in cond:   # "flag:a,!flag:b": all of
+		return Array(cond.split(",")).all(func(c: String) -> bool: return check(c.strip_edges()))
 	if cond.begins_with("!"):
 		return not check(cond.substr(1))
 	var kv := cond.split(":", true, 1)
@@ -425,8 +464,42 @@ func run(action: String) -> void:
 			set_flag(arg)
 		"codex":
 			unlock_codex(arg)
+		"write":   # write:<seq_id>:<glyph_id>,<glyph_id>,... (ui/glyph_lesson)
+			var p := arg.split(":", true, 1)
+			if p.size() == 2:
+				var ids := Array(p[1].split(",")).map(func(g: String) -> String: return g.strip_edges()).filter(func(g: String) -> bool: return GlyphData.by_id(g) != null)
+				if ids.is_empty():
+					push_warning("dialogue: write '%s' names no known glyph" % arg)
+				else:
+					get_node("/root/Events").write_requested.emit(p[0], PackedStringArray(ids))
 		_:
 			push_warning("dialogue: unknown action '%s'" % action)
+
+
+## Plays one dialogue entry {"lines": [...], "choices": [{"text": KEY, "do": [...]}], "do": [...]} and returns
+## when it is over (await it). Contract, used by Npc.interact and ui/story_beat.gd:
+##   1. emits Events.dialogue_choices (only with choices), then Events.dialogue_requested(name_key, lines);
+##   2. waits for Events.dialogue_finished (the box pauses the tree meanwhile);
+##   3. runs the picked choice's `do`, then the entry's `do` (every action through run()).
+## A line "@KEY" is not shown: it sets the speaker tag for the lines after it. Cancel never skips a choice.
+func play(name_key: String, entry: Dictionary) -> void:
+	var ev := get_node("/root/Events")
+	var choices: Array = entry.get("choices", [])
+	var pick := [-1]   # a lambda cannot assign a captured int
+	var on_pick := func(i: int) -> void: pick[0] = i
+	if not choices.is_empty():
+		ev.dialogue_picked.connect(on_pick)
+		ev.dialogue_choices.emit(PackedStringArray(choices.map(func(c: Dictionary) -> String: return c.get("text", ""))))
+	if not choices.is_empty() or not entry.get("lines", []).is_empty():   # a do-only entry shows no box (the box would finish before the await)
+		ev.dialogue_requested.emit(name_key, PackedStringArray(entry.get("lines", [])))
+		await ev.dialogue_finished
+	if ev.dialogue_picked.is_connected(on_pick):
+		ev.dialogue_picked.disconnect(on_pick)
+	if pick[0] >= 0 and pick[0] < choices.size():
+		for a: String in choices[pick[0]].get("do", []):
+			run(a)
+	for a: String in entry.get("do", []):
+		run(a)
 
 
 func _emit(sig: String, id: String) -> void:
@@ -472,6 +545,9 @@ func from_dict(d: Dictionary) -> void:
 					var merged: Dictionary = cur
 					merged.merge(v, true)
 					set(k, merged)
+	hero_name = clean_name(hero_name)
+	if hero_pronoun not in PRONOUNS:
+		hero_pronoun = "they"
 	for s in STATS:   # JSON reads numbers back as floats
 		stats[s] = int(stats.get(s, 5))
 	for id in quests.keys():   # drop malformed quest records from old or hand-edited saves

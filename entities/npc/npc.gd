@@ -3,6 +3,7 @@ class_name Npc extends Interactable
 ## currently passes (new or advancing quest talk), grey otherwise; bobs when gold (7.6).
 
 @export var npc_id := ""
+@export var cond := ""   # hidden and not interactable while Game.check(cond) is false
 
 var data: DialogueData   # tests may preset this
 var _busy := false
@@ -20,7 +21,20 @@ func _ready() -> void:
 	var ev := get_node("/root/Events")
 	for s in [ev.quest_started, ev.quest_updated, ev.quest_completed, ev.talked_to]:
 		s.connect(func(_a: Variant = null) -> void: _recompute())
+	var game := get_node("/root/Game")
+	game.changed.connect(_apply_cond)
+	_apply_cond()
 	_recompute()
+
+
+func _apply_cond() -> void:
+	var on: bool = get_node("/root/Game").check(cond)
+	visible = on
+	usable = on
+	if not on:
+		_prompt.visible = false
+	elif _near:
+		_refresh_prompt()
 
 
 func _recompute() -> void:
@@ -53,10 +67,7 @@ func interact() -> void:
 		return
 	_busy = true
 	var ev := get_node("/root/Events")
-	ev.dialogue_requested.emit(data.name_key, PackedStringArray(e.get("lines", [])))
-	await ev.dialogue_finished
-	for a: String in e.get("do", []):
-		get_node("/root/Game").run(a)
+	await get_node("/root/Game").play(data.name_key, e)   # lines, choices, then the actions
 	_busy = false
 	if not e.get("quiet", false):   # a quiet entry (a refusal) does not count as the talk
 		ev.talked_to.emit(npc_id)

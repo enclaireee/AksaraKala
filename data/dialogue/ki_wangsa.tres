@@ -7,6 +7,7 @@ script = ExtResource("1")
 npc_id = "ki_wangsa"
 name_key = "NPC_KI_WANGSA_NAME"
 entries = Array[Dictionary]([
-	{"if": ["quest:mq1=done"], "lines": ["DLG_KI_WANGSA_1", "DLG_KI_WANGSA_2", "DLG_KI_WANGSA_3", "DLG_KI_WANGSA_4"], "do": []},
-	{"if": [], "lines": ["DLG_KI_WANGSA_5", "DLG_KI_WANGSA_6", "DLG_KI_WANGSA_7", "DLG_KI_WANGSA_8"], "do": []}
+	{"if": ["flag:mq5_4"], "lines": ["DLG_KI_WANGSA_V1"], "do": []},
+	{"if": ["quest:mq0=active"], "lines": ["DLG_KI_WANGSA_V2", "DLG_KI_WANGSA_V3"], "do": []},
+	{"if": [], "lines": ["DLG_KI_WANGSA_V4"], "do": []}
 ])

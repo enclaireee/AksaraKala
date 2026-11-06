@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -13,21 +13,48 @@ set_flag = "mq5_1"
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ5_S2_OBJ"
-on = "petilasan_activated:kala_1"
-marker = {"zone": "gk_lupa", "id": "kala_1"}
-set_flag = "mq5_2"
+on = "area_cleared:kala_mulut"
+marker = {"zone": "gk_mulut", "id": "kala_mulut"}
+set_flag = "mq5_1b"
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ5_S3_OBJ"
-on = "boss_defeated:batara_kala"
-marker = {"zone": "gk_ruang_kala", "id": "batara_kala"}
-set_flag = "mq5_3"
+on = "area_cleared:kala_pasir_1"
+marker = {"zone": "gk_pasir", "id": "kala_pasir_1"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ5_S4_OBJ"
-on = "zone_entered:desa_purwa"
+on = "area_cleared:kala_pasir_2"
+marker = {"zone": "gk_pasir", "id": "kala_pasir_2"}
+set_flag = "mq5_1c"
+
+[sub_resource type="Resource" id="s5"]
+script = ExtResource("2")
+objective = "Q_MQ5_S5_OBJ"
+on = "area_cleared:kala_lupa"
+marker = {"zone": "gk_lupa", "id": "kala_lupa"}
+set_flag = "mq5_1d"
+
+[sub_resource type="Resource" id="s6"]
+script = ExtResource("2")
+objective = "Q_MQ5_S6_OBJ"
+on = "petilasan_activated:kala_1"
+marker = {"zone": "gk_lupa", "id": "kala_1"}
+set_flag = "mq5_2"
+
+[sub_resource type="Resource" id="s7"]
+script = ExtResource("2")
+objective = "Q_MQ5_S7_OBJ"
+on = "boss_defeated:batara_kala"
+marker = {"zone": "gk_ruang_kala", "id": "batara_kala"}
+set_flag = "mq5_3"
+
+[sub_resource type="Resource" id="s8"]
+script = ExtResource("2")
+objective = "Q_MQ5_S8_OBJ"
+on = "name_written:laras"
 marker = {"zone": "gk_ruang_kala", "id": "kala_exit"}
 set_flag = "mq5_4"
 
@@ -38,7 +65,6 @@ kind = "main"
 type = "main"
 zone = "gua_kala"
 size = "L"
-giver = "semar"
 requires = Array[String](["mq3_8"])
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8")])
 rewards = {"codex": ["batara_kala", "ruwatan"]}

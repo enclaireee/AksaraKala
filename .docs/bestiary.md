@@ -109,6 +109,41 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
 
 Then the sea goes still and Nyi Roro Kidul speaks once (MQ4). She is not fought, and no enemy here is shown as her servant. Decided 2026-11-05 (**ASSUMED**, numbers **TUNE**).
 
+## Story v2 (Phase 4b, 2026-11-06)
+The story ([story.md](story.md)) adds one faction seen in every region and four bosses. All numbers are **TUNE**, all looks and moves are game inventions (**ASSUMED**). Galuh uses the Mataram tier (x1.3 HP, balance.md 6.2): it is the second region now.
+
+**The Faceless (Wong Tanpa Rupa).** People whose names were eaten: blank white masks, grey cloth, no gore. When one dies its mask cracks and a name-strip floats up for 1 s (art only). Mundane rules apply: no glyph weakness, beaten with combo and dodge.
+
+| Enemy | Archetype | HP (tier 0) | Dmg | Ilmu | Behavior | Scene |
+|-------|-----------|-------------|-----|------|----------|-------|
+| Faceless | Chaser | 40 | 8 | 6 | The bandit's moves, a short blade | `entities/enemies/faceless.tscn` |
+| Faceless Archer | Shooter | 40 | 8 | 6 | The bandit archer's moves | `entities/enemies/faceless_archer.tscn` |
+
+They scale by the zone they spawn in, read from the zone id prefix on ready: `desa_`, `ts_` tier 0; `kg_`, `mt_` tier 1; `tt_` tier 2; `gk_` tier 4 (balance.md 6.2). One scene per role, so encounter waves can use them. They replace the bandits in Tatar Sunda and some Tuyul and Pocong packs in later zones (zone docs).
+
+**Boss: Faceless Captain** (Ch 1, ts_kawah, at Nagawiru's lair). HP 1800, Ilmu 150, speed 40, boss poise.
+- Spear sweep: 0.5 s wind-up with an arc marker (r 40, 120 degrees), heavy 18.
+- Lunge: 0.6 s wind-up, a line marker 6 tiles long, then a dash along it, heavy 16.
+- Muster at 66% and 33% HP: he raises the spear (1.2 s) and calls 2 Faceless from the lair's edges with the usual 0.5 s ground warning. **Ca Burst** hitting him during the muster breaks it: no adds and a 2 s stun (the newest Sunda glyph earns its place).
+- Defeat: the mask cracks, `boss_defeated:faceless_captain`. The naga's beat follows (story.md Ch 1).
+
+**Boss: Prabu Barma Wijaya, the false king** (Ch 2, kg_keraton, the throne room). HP 2400, Ilmu 220, speed 45.
+- Phase 1: a kris thrust (0.4 s wind-up, line marker 3 tiles, light 14) and a fan of 3 thrown kris-darts (0.6 s wind-up, light 12 each).
+- **Glamour** at 70% and 35% HP: he steps back and becomes 4 identical figures (3 copies and him), shuffled over 1 s. Copies take no damage from weapons (hits flicker through). **Any cast glyph that hits a copy breaks it** (aksara reveal true faces). Copies attack with the phase 1 moves at half damage. While any copy stands, the real one also takes no damage. When the last copy breaks he is stunned 3 s and open. A new glamour comes only at the next HP mark.
+- Defeat: at 0 HP he does not die. He drops to one knee, his face slips, `boss_defeated:barma_wijaya`. The cage beat follows.
+
+**Boss: Hariang Banga** (Ch 3, kg_pamali, the river duel). HP 2800, Ilmu 320, speed 60. An honourable swordsman, never a villain.
+- Guard: he faces the player with a raised blade. Weapon hits from the front do x0.2 damage. A **Jawa Na Dash-strike** through him breaks the guard: 2 s stagger, x1.5 damage taken for 3 s. Hits from behind always land.
+- Moves: a 3-cut combo (0.4 s wind-up each, light 15), a lunge (0.5 s, line 6 tiles, heavy 20), a ground cut that sends a wave along the floor (0.6 s, line 10 tiles, light 14).
+- Yield at 15% HP: he stops, sheathes, `boss_defeated:hariang_banga`. He never dies (the legend: neither brother wins). The truce beat follows.
+
+**Boss: the Nameless Hunter (Si Tanpa Ngaran)** (Ch 4, tt_candi after the keris). HP 3600, Ilmu 480, speed 55. A tall shape in a hunter's cloak with no face at all.
+- Shadow-step: he fades out (0.3 s), a ground marker shows behind the player for 0.6 s, he reappears there with a cut (heavy 22). Rolling out of the marker dodges it.
+- Chain hook: 0.6 s wind-up, line marker 8 tiles, light 16, pulls the player 3 tiles toward him.
+- **Forget**: 0.8 s wind-up with a pale cone marker (r 64, 90 degrees). Hit by it, the player's sakti empties and casting is locked for 4 s (the existing cast lockout). **Ga Ward** up when it lands blocks it completely.
+- Phase 2 at 50%: shadow-steps come in pairs and Forget follows the second.
+- Defeat: he comes apart into name-strips, `boss_defeated:nameless_hunter`. The beat reveals him as Aria Kebonan's true self.
+
 ## Final: Gua Kala
 **Boss: Batara Kala.** HP 9300, 3 phases of 3100 (P0 build without Segara Kidul: 8400).
 - Phase 1: devouring pulses and falling time-sand attacks.
@@ -186,6 +221,12 @@ Discovery:
 - **Hint:** each weakness gets one spoken line. The glyph's teacher gives it when the enemy lives in that zone (the elder on Ga: "Ga turns back the boar's charge"). Otherwise the first NPC of the enemy's zone gives it. Lines go in the string tables in both languages.
 - **Codex:** the enemy's entry gains a "Kelemahan / Weakness" line the first time the player triggers it.
 - **Teach then test:** the first room where an enemy appears has a clean chance to use its weakness (see Encounters).
+
+## Drops
+Transient floor pickups spawned at the death spot by EnemyBase; collected by walking over them, never saved, gone on zone reload. Flask Shard and Herb Pouch stay quest-only, so drops are the "Herb" and a flask refill (items.md).
+- **Common enemies:** 15% (**TUNE**) chance of one drop. Table (**TUNE**): Herb 70% (heals 20% max HP), Flask refill 30% (+1 charge, up to the max).
+- **Elites and minibosses** (any enemy with a `unique_id`): always drop, same table.
+- **Bosses:** no drops (their rewards are unchanged). Training dummies never die, so never drop.
 
 ## Respawn
 Normal enemies respawn on rest or death. Minibosses and bosses stay dead.

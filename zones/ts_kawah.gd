@@ -19,7 +19,7 @@ const MAP := [
 	"########......................##############################",
 	"########......................##############################",
 	"########......................,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX",
-	"########.......B...........Z..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
+	"########.......B.C.........Z..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
 	"########......................##############################",
 	"########......................##############################",
 	"########......................##############################",
@@ -41,7 +41,8 @@ const MAP := [
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kawah_jalan", "spawn_id": "from_ts_kawah"}, "tile": ","},   # exit to ts_kawah_jalan (east edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kawah_jalan"}, "tile": ","},   # spawn, arrival from ts_kawah_jalan
-	"B": {"scene": "res://entities/bosses/sangkuriang.tscn", "props": {}, "tile": ","},   # boss Sangkuriang
+	"B": {"scene": "res://entities/bosses/sangkuriang.tscn", "props": {"cond": "flag:mq1_8"}, "tile": ","},   # boss Sangkuriang, awakened after Captain breaks the Crater Seal
+	"C": {"scene": "res://entities/bosses/faceless_captain.tscn", "props": {}, "tile": ","},   # boss Faceless captain (MQ1 1.8)
 	"Z": {"scene": "res://entities/bosses/arena_post.tscn", "props": {"post_id": "east"}, "tile": ","},   # arena post, east post (hang boeh rarang)
 }
 

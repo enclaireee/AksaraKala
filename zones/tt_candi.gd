@@ -12,7 +12,7 @@ const MAP := [
 	"#...........rr....#__________________________________#.....#",
 	"#.................#__________________________________#..rr.#",
 	"#.................#__________________________________#..rr.#",
-	"#.................#__________________________________#.....#",
+	"#.................#_________________H________________#.....#",
 	"#.................#__________________________________#.....#",
 	"#.................#__________________________________#.....#",
 	"#.................#__________________________________#.....#",
@@ -42,6 +42,7 @@ const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pasir", "spawn_id": "from_tt_candi"}, "tile": ","},   # exit to tt_pasir (west edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": ","},   # spawn, arrival from tt_pasir
 	"B": {"scene": "res://entities/bosses/keris_gandring.tscn", "props": {}, "tile": "_"},   # boss Mpu Gandring's Keris (arena centre)
+	"H": {"scene": "res://entities/bosses/nameless_hunter.tscn", "props": {"cond": "flag:beat_keris"}, "tile": "_"},   # boss the Nameless Hunter, after the keris (MQ3 3.8, Story v2)
 	"1": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 1}, "tile": "_"},   # curse stake 1 (arena edge)
 	"2": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 2}, "tile": "_"},   # curse stake 2 (arena edge)
 	"3": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 3}, "tile": "_"},   # curse stake 3 (arena edge)

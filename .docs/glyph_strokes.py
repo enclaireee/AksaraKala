@@ -1,4 +1,4 @@
-"""Single-stroke designs for the 8 MVP glyphs and the P1 final glyph, plus a confusability check.
+"""Single-stroke designs for the 8 MVP glyphs, the P1 final glyph and the 3 write-only glyphs (La, Ra, Sa), plus a confusability check.
 
 Strokes were traced by hand over Noto Sans Javanese / Noto Sans Sundanese
 renders (macOS system fonts). No source on traditional stroke order was found
@@ -48,6 +48,15 @@ STROKES = {
                 (215, 130), (215, 262), (215, 185), (290, 185), (335, 195), (340, 235), (318, 262),
                 (292, 258), (282, 230), (285, 130), (310, 95), (350, 85), (385, 95), (395, 130),
                 (395, 262), (395, 130), (410, 95), (440, 85), (470, 100), (478, 130), (478, 262)],
+    # Sunda La, Ra, Sa: NOT spells, only the "write the name" card (ui.md 3: Laras). Traced over Noto Sans Sundanese
+    # (U+1B9C, U+1B9B, U+1B9E), one stroke each; own 500x500 grids. VERIFY shape and stroke order against a Sundanese source.
+    # La: left slash up, top bar, diagonal back down, bottom bar, long slash up-right.
+    "sunda_la": [(2032, 445), (2118, 163), (2215, 163), (2125, 440), (2240, 440), (2330, 163)],
+    # Ra: three bars joined by slants, a Z-fold, then the tail down-left.
+    "sunda_ra": [(2555, 177), (2740, 177), (2560, 243), (2720, 243), (2560, 331), (2730, 331), (2630, 445)],
+    # Sa: Ka with a crossbar on each stem.
+    "sunda_sa": [(3050, 177), (3190, 177), (3060, 445), (3128, 305), (3195, 305), (3055, 305), (3215, 177),
+                 (3355, 177), (3225, 445), (3290, 305), (3357, 305), (3215, 305)],
 }
 
 N = 64

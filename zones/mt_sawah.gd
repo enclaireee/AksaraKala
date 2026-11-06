@@ -25,12 +25,12 @@ const MAP := [
 	"#...........................................,,..........b,,,,,,,,,,,,,,,b................#",
 	"#...####,####...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#_______#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
-	"#...#______s#...ttttttttttttttttttttttttt...,,..........b,,,g,,,,,,,,,,,b.ttttttttttttt..#",
+	"#...#______s#...ttttttttttttttttttttttttt...,,.....u....b,,,g,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#___L___#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
-	"#...#_______#...ttttttttttttttttttttttttt...,,..........b,,,,,,,W,,,,,,,b.ttttttttttttt..#",
+	"#...#_______#...ttttttttttttttttttttttttt...,,.......u..b,,,,,,,W,,,,,,,b.ttttttttttttt..#",
 	"#...#_______#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#########...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
-	"#...............ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
+	"#...............ttttttttttttttttttttttttt...,,......u...b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...............ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...............ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...............ttttttttttttttttttttttttt...,,..........bbbbbbbbbbbbbbbbb.ttttttttttttt..#",
@@ -55,6 +55,7 @@ const SPOTS := {
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_sawah", "item_id": "axe"}, "tile": "."},   # chest: Axe (items.md Zone 2 chest)
 	"L": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "lumbung", "size": Vector2i(7,5)}, "tile": "_"},   # trigger, lumbung entered (SQ-M1 search)
 	"s": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "selendang_nawang"}, "tile": "_"},   # pickup, selendang Nawang Wulan (sparkle, SQ-M1)
+	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

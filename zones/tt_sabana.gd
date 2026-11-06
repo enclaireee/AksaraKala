@@ -14,11 +14,11 @@ const MAP := [
 	"#.............................,,............................rr...........................#",
 	"#######.............rr........,,.....................................................#####",
 	"Mm,,,,,.............rr........,,.....................................................+,,zZ",
-	"M,,,,,,.......................,,.....................................................+,,,Z",
+	"M,,,,,,.......................,,..................................j..................+,,,Z",
 	"#######.......................,,.....................................................#####",
+	"#.............................,,.......................rr.......b........................#",
 	"#.............................,,.......................rr................................#",
-	"#.............................,,.......................rr................................#",
-	"#..............rr.............,,.........................................................#",
+	"#..............rr.............,,...................................b.....................#",
 	"#..............rr.............,,.........................................................#",
 	"#.............................,,...........................................rr............#",
 	"#.............................,,...........................................rr............#",
@@ -74,6 +74,8 @@ const SPOTS := {
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "chest_tt_sabana", "item_id": "crossbow"}, "tile": "."},   # chest: Crossbow (secret, mound ring)
 	"k": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "kuda_kepang_1"}, "tile": "."},   # pickup, kuda kepang 1 (SQ-T4)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_embers", "size": Vector2i(26,14), "waves": [[["res://entities/enemies/banaspati.tscn", Vector2i(8,-4)], ["res://entities/enemies/banaspati.tscn", Vector2i(8,4)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,-5)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,5)]]]}, "tile": ","},   # encounter timur_embers
+	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "."},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)
+	"j": {"scene": "res://entities/enemies/prajurit_terkutuk.tscn", "props": {}, "tile": "."},   # loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

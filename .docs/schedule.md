@@ -54,6 +54,14 @@ No fixed dates. Phases run in order. Each phase has **exit criteria**: do not st
 - [x] i18n sweep: all existing UI, items and classes become translation keys; ID/EN toggle on the title screen (`user://settings.cfg`, first launch follows the OS locale)
 - Exit (main path playtested and confirmed 2026-11-05; SQ-S1 to S4 and Sandekala wait for the user's playtest): New Game to Sangkuriang's release and the Mataram gate opening is playable (about 40 min, [balance.md](balance.md) 2.1), with SQ-S1 to S4 and Sandekala completable, on placeholder art.
 
+## Phase 4b: Story v2 (user call 2026-11-06)
+The main story becomes [story_ciung_wanara.md](story_ciung_wanara.md) v2: Laras taken, the Faceless, the Nameless Hunter, Ciung Wanara, Kala. Plan: rewrite every main quest, add Keraton Galuh, and write all main-path dialogue in [script.md](script.md).
+- [ ] Name entry, dialogue choices, the name-writing finale ([ui.md](ui.md) 3)
+- [ ] The Faceless, the captain, Barma Wijaya, Hariang Banga, the Nameless Hunter ([bestiary.md](bestiary.md) Story v2)
+- [ ] Keraton Galuh, 4 areas ([zones/keraton_galuh.md](zones/keraton_galuh.md))
+- [ ] Quests MQ0, MQ1, MQG, MQ2, MQ3, MQ5 and the echo side quests SQ-S5, SQ-M5 ([quests.md](quests.md) 4-5), story beats, all text from [script.md](script.md)
+- Exit: every test passes; New Game to the credits plays the v2 story with no "return to Semar" steps; the user's playtest says it feels like an RPG and the pace holds.
+
 ## Phase 5: Remaining regions
 Build each region from its area graph in `zones/<region>.md` ([mataram](zones/mataram.md), [tanah_timur](zones/tanah_timur.md), [segara_kidul](zones/segara_kidul.md), [gua_kala](zones/gua_kala.md)): first add tile maps per area (AGENTS.md 5), then build.
 - [x] Mataram zone and boss (built 2026-11-05, not yet playtested)

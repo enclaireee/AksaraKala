@@ -10,8 +10,8 @@ const MAP := [
 	"#############r.r############################################",
 	"##...........................................###############",
 	"##............................bbbb...........###############",
-	"##.....Y......................bbbb...........###############",
-	"##............................bbbb...........###############",
+	"##.....Y......................bbbb.......y...###############",
+	"##............................bbbb.........y.###############",
 	"##............T,,,R,,,........bbbb...........###############",
 	"##..................,,..............bbbb.....###############",
 	"##...bbbb...........,,..............bbbb.....###############",
@@ -20,8 +20,8 @@ const MAP := [
 	"##...bbbb...........,,.......................###############",
 	"##..................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,F,,,,,eX",
 	"##........r.........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
-	"##...4.......................................###############",
-	"##...........................................###############",
+	"##...4...............................h.......###############",
+	"##...............................w.w.........###############",
 	"##############,,#####################bbb,,bbbbbbbbbbbbbbbbb#",
 	"###.......................###.......#bbb,,bbbbbbbbbbbbbbbbb#",
 	"###.......................###.......#bbb,,bbbbbbbbbbbbbbbbb#",
@@ -44,16 +44,19 @@ const SPOTS := {
 	"%": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kebun", "spawn_id": "from_ts_leuweung"}, "tile": ","},   # exit to ts_kebun (east edge, the shortcut link, 2 tiles)
 	"@": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kebun"}, "tile": ","},   # spawn, arrival from ts_kebun
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_boarlane", "size": Vector2i(11,3), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(-4,0)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-4,1)]]]}, "tile": ","},   # encounter sunda_boarlane
-	"R": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_batutulis", "size": Vector2i(20,12), "waves": [[["res://entities/enemies/bandit.tscn", Vector2i(-3,-3)], ["res://entities/enemies/bandit.tscn", Vector2i(3,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(7,-4)]]]}, "tile": ","},   # encounter sunda_batutulis
+	"R": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_batutulis", "size": Vector2i(20,12), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(3,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(7,-4)]]]}, "tile": ","},   # encounter sunda_batutulis
 	"T": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_tulis"}, "tile": ","},   # batu tulis stone, teaches Nga (MQ1 1.5)
 	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lutung_kasarung"}, "tile": "."},   # NPC Lutung Kasarung spirit (SQ-S1)
 	"4": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_4"}, "tile": "."},   # angklung 4
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_ironring", "item_id": "iron_ring"}, "tile": "."},   # chest: Iron Ring (secret 3, alcove)
 	"q": {"scene": "res://entities/enemies/kuntilanak_elite.tscn", "props": {}, "tile": "."},   # elite Kuntilanak (SQ-S2)
 	"d": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "dark_grove", "size": Vector2i(22,10)}, "tile": "."},   # trigger, dark grove entered (darkens arena, SQ-S2)
-	"N": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_spring", "size": Vector2i(7,9), "waves": [[["res://entities/enemies/bandit.tscn", Vector2i(-2,0)], ["res://entities/enemies/bandit.tscn", Vector2i(2,0)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(-2,4)]]]}, "tile": "."},   # encounter sunda_spring
+	"N": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_spring", "size": Vector2i(7,9), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-2,0)], ["res://entities/enemies/faceless.tscn", Vector2i(2,0)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(-2,4)]]]}, "tile": "."},   # encounter sunda_spring
 	"u": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "spring_bath", "size": Vector2i(5,3)}, "tile": "."},   # trigger, spring bath (Purbasari delivered)
 	"a": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_leather", "item_id": "leather_armor"}, "tile": "."},   # chest: Leather Armor (secret 2, hidden spring)
+	"y": {"scene": "res://entities/enemies/wild_boar.tscn", "props": {}, "tile": "."},   # loose wild boar, roaming pack (respawns on zone reload, no unique_id)
+	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
+	"h": {"scene": "res://entities/enemies/kuntilanak.tscn", "props": {}, "tile": "."},   # loose kuntilanak, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

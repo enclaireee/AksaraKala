@@ -2,7 +2,7 @@ extends SceneTree
 ## Static check of the shipped quest and dialogue data (quests.md 7.8). Exits 0 on pass, prints only failures.
 
 const SIGNALS := ["talked_to", "item_picked", "boss_defeated", "area_cleared", "area_entered", "zone_entered",
-	"petilasan_activated", "glyph_learned", "spell_cast", "class_chosen", "enemy_killed"]
+	"petilasan_activated", "glyph_learned", "spell_cast", "class_chosen", "enemy_killed", "name_written"]
 var fails := 0
 
 
@@ -57,9 +57,13 @@ func _initialize() -> void:
 			check(s.marker.is_empty() or (s.marker.get("zone", "") != "" and s.marker.get("id", "") != ""),
 				"%s: marker needs zone and id" % q.id)
 	for d in dialogues:
-		check(dt.get(d.name_key, false), "%s: name key %s missing" % [d.npc_id, d.name_key])
+		check(d.name_key == "" or dt.get(d.name_key, false), "%s: name key %s missing" % [d.npc_id, d.name_key])
 		for e in d.entries:
 			for k in e.get("lines", []):
+				if k.begins_with("@"):   # speaker switch; a bare "@" clears the tag
+					k = k.substr(1)
+					if k == "":
+						continue
 				check(dt.get(k, false), "%s: line key %s missing or empty" % [d.npc_id, k])
 			for a in e.get("do", []):
 				var p: PackedStringArray = a.split(":", true, 1)
@@ -85,6 +89,6 @@ func _initialize() -> void:
 			for a in e.get("do", []):
 				if a.begins_with("codex:"):
 					check(ids.has(a.substr(6)), "%s: codex action %s has no .tres" % [d.npc_id, a])
-	for i in 13:
+	for i in 5:
 		check(dt.get("PROLOGUE_%d" % (i + 1), false), "PROLOGUE_%d missing" % (i + 1))
 	quit(1 if fails > 0 else 0)

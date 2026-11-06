@@ -121,4 +121,4 @@ func _new() -> void:
 
 
 func _to_class_select() -> void:
-	get_tree().change_scene_to_file("res://ui/prologue.tscn")
+	get_tree().change_scene_to_file("res://ui/name_entry.tscn")

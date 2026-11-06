@@ -35,13 +35,21 @@ const ZONES := {
 	"tt_pasir": "res://zones/tt_pasir.tscn",
 	"tt_candi": "res://zones/tt_candi.tscn",
 	"tt_pesisir": "res://zones/tt_pesisir.tscn",
+	"sk_karang": "res://zones/sk_karang.tscn",
+	"sk_pantai": "res://zones/sk_pantai.tscn",
+	"sk_tebing": "res://zones/sk_tebing.tscn",
+	"sk_keraton": "res://zones/sk_keraton.tscn",
+	"kg_alun": "res://zones/kg_alun.tscn",
+	"kg_keraton": "res://zones/kg_keraton.tscn",
+	"kg_penjara": "res://zones/kg_penjara.tscn",
+	"kg_pamali": "res://zones/kg_pamali.tscn",
 }
 ## Where you can walk from each area, for the objective arrow's breadth-first search (architecture.md 9).
 ## Directed: a drop and a shortcut are listed only from the side that can always pass (world.md World
 ## structure). Kabut links are listed as open. ponytail: an opened shortcut's back edge is not added;
 ## the arrow just takes the long way round.
 const ADJ := {
-	"desa_purwa": ["ts_kebun", "mt_gapura", "gk_mulut"],   # gk_mulut: kabut mq3_8
+	"desa_purwa": ["ts_kebun", "kg_alun", "gk_mulut"],   # gk_mulut: kabut mq3_8
 	"ts_kebun": ["desa_purwa", "ts_kampung"],
 	"ts_kampung": ["ts_kebun", "ts_leuweung", "ts_sawah", "ts_leuwi"],
 	"ts_leuweung": ["ts_kampung", "ts_kebun"],   # ts_kebun: sc:ts_pagar, opened from this side
@@ -50,7 +58,7 @@ const ADJ := {
 	"ts_situ": ["ts_sawah", "ts_kawah_jalan", "ts_kampung"],   # ts_kampung: sc:ts_tangga
 	"ts_kawah_jalan": ["ts_situ", "ts_kawah", "ts_kampung"],   # ts_kampung: the one-way drop
 	"ts_kawah": ["ts_kawah_jalan"],
-	"mt_gapura": ["desa_purwa", "mt_sawah"],
+	"mt_gapura": ["kg_pamali", "mt_sawah"],
 	"mt_sawah": ["mt_gapura", "mt_pasar", "mt_tegal"],
 	"mt_pasar": ["mt_sawah", "mt_reruntuhan"],
 	"mt_reruntuhan": ["mt_pasar", "mt_wetan", "mt_kuburan", "mt_sawah"],   # mt_sawah: sc:mt_ruin_sawah
@@ -65,16 +73,25 @@ const ADJ := {
 	"tt_ladang": ["tt_kali", "tt_pasir", "tt_beringin"],   # tt_beringin: sc:tt_ladang
 	"tt_pasir": ["tt_ladang", "tt_candi", "tt_sabana"],   # tt_sabana: sc:tt_pasir
 	"tt_candi": ["tt_pasir"],
-	"tt_pesisir": ["tt_sabana"],   # sk_karang (S, kabut mq3_8) waits for Segara Kidul
+	"tt_pesisir": ["tt_sabana", "sk_karang"],   # sk_karang: S, kabut mq3_8
+	"sk_karang": ["tt_pesisir", "sk_pantai", "sk_keraton"],   # sk_keraton: S, kabut mq4_5
+	"sk_pantai": ["sk_karang", "sk_tebing"],
+	"sk_tebing": ["sk_pantai", "sk_keraton", "ts_situ"],   # sk_keraton: one-way drop, ts_situ: sc:ts_sk
+	"sk_keraton": ["sk_karang", "sk_pantai"],   # sk_pantai: sc:sk_gerbang
+	"kg_alun": ["desa_purwa", "kg_keraton", "kg_pamali"],   # kg_keraton: kabut mqg_3, kg_pamali: kabut mqg_7
+	"kg_keraton": ["kg_alun", "kg_penjara"],
+	"kg_penjara": ["kg_keraton"],
+	"kg_pamali": ["kg_alun", "mt_gapura"],
 	"gk_mulut": ["desa_purwa", "gk_pasir", "gk_lupa"],   # gk_lupa: sc:gk_lorong
 	"gk_pasir": ["gk_mulut", "gk_lupa"],   # gk_lupa: the one-way drop
 	"gk_lupa": ["gk_mulut", "gk_ruang_kala"],
 	"gk_ruang_kala": ["gk_lupa", "desa_purwa"],   # desa_purwa: kala_exit, kabut mq5_3
 }
 ## Edges in ADJ with no way back (drops, and the one-way kala_exit door). Shortcut edges are in SHORTCUTS.
-const DROPS := [["ts_kawah_jalan", "ts_kampung"], ["mt_wetan", "mt_tegal"], ["tt_beringin", "tt_pesisir"], ["gk_pasir", "gk_lupa"], ["gk_ruang_kala", "desa_purwa"]]
+const DROPS := [["ts_kawah_jalan", "ts_kampung"], ["mt_wetan", "mt_tegal"], ["tt_beringin", "tt_pesisir"], ["sk_tebing", "sk_keraton"], ["gk_pasir", "gk_lupa"], ["gk_ruang_kala", "desa_purwa"]]
 ## Shortcut id -> [area that can always open it, area behind the gate].
 const SHORTCUTS := {"sc:ts_pagar": ["ts_leuweung", "ts_kebun"], "sc:ts_tangga": ["ts_situ", "ts_kampung"],
+	"sc:ts_sk": ["sk_tebing", "ts_situ"], "sc:sk_gerbang": ["sk_keraton", "sk_pantai"],
 	"sc:mt_ruin_sawah": ["mt_reruntuhan", "mt_sawah"], "sc:mt_candi_gapura": ["mt_candi", "mt_gapura"],
 	"sc:mt_tt": ["tt_sabana", "mt_tegal"], "sc:tt_ladang": ["tt_ladang", "tt_beringin"], "sc:tt_pasir": ["tt_pasir", "tt_sabana"],
 	"sc:gk_lorong": ["gk_lupa", "gk_mulut"]}
@@ -128,6 +145,9 @@ func go_to(zone_id: String, spawn_id: String) -> void:
 		return
 	_busy = true
 	var tree := get_tree()
+	var prev_player := tree.get_first_node_in_group("player") as Node2D
+	var prev_hp: int = prev_player.health.hp if prev_player and prev_player.get("health") and not prev_player.health.is_dead() else -1
+	var prev_sakti: float = prev_player.sakti.value if prev_player and prev_player.get("sakti") else -1.0
 	tree.paused = false
 	Engine.time_scale = 1.0
 	await _fade_to(1.0)
@@ -138,6 +158,13 @@ func go_to(zone_id: String, spawn_id: String) -> void:
 	Engine.time_scale = 1.0
 	var s := _spawn(spawn_id)
 	var player := tree.get_first_node_in_group("player") as Node2D
+	if player:
+		if prev_hp > 0 and player.get("health"):
+			player.health.hp = mini(prev_hp, player.health.max_hp)
+			player.health.changed.emit(player.health.hp, player.health.max_hp)
+		if prev_sakti >= 0.0 and player.get("sakti"):
+			player.sakti.value = minf(prev_sakti, player.sakti.max_value)
+			player.sakti.changed.emit(player.sakti.value, player.sakti.max_value)
 	if s and player:
 		player.global_position = s.global_position
 		player.reset_physics_interpolation()

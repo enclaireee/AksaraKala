@@ -6,9 +6,9 @@ extends SceneTree
 
 var fails := 0
 ## Exit targets that are built in Phase 5. Their exits are fogged or behind a closed gate.
-const PENDING := ["sk_tebing", "sk_karang"]
+const PENDING := []
 ## Shortcuts opened only from a pending area: id -> that area.
-const PENDING_OPENERS := {"sc:ts_sk": "sk_tebing"}
+const PENDING_OPENERS := {}
 
 
 func check(ok: bool, msg: String) -> void:
@@ -30,6 +30,7 @@ func _initialize() -> void:
 		if packed == null:
 			continue
 		var z := packed.instantiate() as Zone
+		z.process_mode = Node.PROCESS_MODE_DISABLED   # all zones overlap at the origin: no player may walk into another zone's exit
 		root.add_child(z)
 		await process_frame
 		check(z.zone_id == id, "%s has zone_id %s" % [id, z.zone_id])
@@ -37,14 +38,14 @@ func _initialize() -> void:
 	var dp: Zone = built.get("desa_purwa")
 	if dp:
 		check(dp.size == Vector2i(60, 34), "desa_purwa size %s" % dp.size)
-		check(dp.spawn("start") != null and dp.spawn("from_ts_kebun") != null and dp.spawn("from_mt_gapura") != null
+		check(dp.spawn("start") != null and dp.spawn("from_ts_kebun") != null and dp.spawn("from_kg_alun") != null
 				and dp.spawn("from_gk_mulut") != null and dp.spawn("from_gua_kala") != null, "desa_purwa spawns")
 		var dpf := flags(dp)
 		dpf.sort()
 		check(dpf == ["mq1_10", "mq1_10", "mq3_8", "mq3_8"], "desa_purwa kabut flags %s" % [dpf])
 		check(pets(dp) == ["desa_purwa"], "desa_purwa petilasans %s" % [pets(dp)])
 		check(of(dp, "dummy.tscn").size() == 4, "desa_purwa wants 4 dummies")
-		check(encounters(dp).is_empty(), "desa_purwa has encounters")
+		check(encounters(dp).size() == 1, "desa_purwa wants 1 encounter (purwa_raid)")
 		var pl := get_first_node_in_group("player")
 		dp._sanggar(pl, true)
 		check(not dp.guide.visible, "sanggar guide shown before any glyph is learned")
@@ -62,12 +63,18 @@ func _initialize() -> void:
 	var p := []
 	var gates := []
 	var enc := 0
+	var loose := 0
 	for id: String in ts:
 		var z: Zone = built[id]
 		check(z.size == Vector2i(60, 34), "%s size %s" % [id, z.size])
 		f += flags(z)
 		p += pets(z)
 		enc += encounters(z).size()
+		# Count enemy spot chars in the map: live children also hold encounter spawns, which depend on timing.
+		var m := "\n".join(z.map())
+		for c: String in z.spots():
+			if String(z.spots()[c].scene).contains("/enemies/"):
+				loose += m.count(c)
 		for g in of(z, "shortcut.tscn"):
 			gates.append(g.id)
 			check_gate(zones, z, g)
@@ -77,6 +84,7 @@ func _initialize() -> void:
 	check(f == ["mq1_3", "mq1_3", "mq1_5", "mq1_5", "mq1_7", "mq1_7"], "tatar_sunda kabut flags %s" % [f])
 	check(p == ["sunda_1", "sunda_2"], "tatar_sunda petilasans %s" % [p])
 	check(enc == 7, "tatar_sunda has %d encounters, want 7" % enc)
+	check(loose == 20, "tatar_sunda has %d placed enemies, want 20 (19 roaming-pack enemies, the elite)" % loose)
 	check(gates == ["sc:ts_pagar", "sc:ts_pagar", "sc:ts_sk", "sc:ts_sk", "sc:ts_tangga", "sc:ts_tangga"], "shortcut gates %s" % [gates])
 
 	# Exits: each lands on a spawn, and together they are exactly ADJ plus the gated side of each shortcut.
@@ -144,7 +152,7 @@ func _initialize() -> void:
 	gates.sort()
 	check(f == ["mq2_6", "mq2_6", "mq2_9", "mq2_9"], "mataram kabut flags %s" % [f])
 	check(p == ["mataram_1", "mataram_2"], "mataram petilasans %s" % [p])
-	check(enc == 7, "mataram has %d encounters, want 7" % enc)
+	check(enc == 8, "mataram has %d encounters, want 8" % enc)
 	check(gates == ["sc:mt_candi_gapura", "sc:mt_candi_gapura", "sc:mt_ruin_sawah", "sc:mt_ruin_sawah", "sc:mt_tt", "sc:mt_tt"], "mataram shortcut gates %s" % [gates])
 	check(of(built.get("mt_candi"), "bandung_bondowoso.tscn").size() == 1, "mt_candi wants the boss")
 	undirected = {}
@@ -216,6 +224,39 @@ func _initialize() -> void:
 	check(gates == ["sc:gk_lorong", "sc:gk_lorong"], "gua_kala shortcut gates %s" % [gates])
 	check(of(built.get("gk_ruang_kala"), "batara_kala.tscn").size() == 1, "gk_ruang_kala wants Batara Kala")
 	check(zones.DROPS.has(["gk_pasir", "gk_lupa"]), "gua_kala wants the drop")
+
+	# Segara Kidul totals (zones/segara_kidul.md).
+	var sk := built.keys().filter(func(id: String) -> bool: return id.begins_with("sk_"))
+	check(sk.size() == 4, "segara_kidul has %d areas, want 4" % sk.size())
+	f = []
+	p = []
+	gates = []
+	enc = 0
+	for id: String in sk:
+		var z: Zone = built[id]
+		f += flags(z)
+		p += pets(z)
+		enc += encounters(z).size()
+		for g in of(z, "shortcut.tscn"):
+			gates.append(g.id)
+			check_gate(zones, z, g)
+	p.sort()
+	check(f == ["mq4_5", "mq4_5"], "segara_kidul kabut flags %s" % [f])
+	check(p == ["kidul_1", "kidul_2"], "segara_kidul petilasans %s" % [p])
+	check(enc == 10, "segara_kidul has %d encounters, want 10" % enc)
+	check(gates == ["sc:sk_gerbang", "sc:sk_gerbang"], "segara_kidul shortcut gates %s" % [gates])
+	check(of(built.get("sk_karang"), "bajul_putih_tua.tscn").size() == 1, "sk_karang wants Bajul Putih Tua")
+	undirected = {}
+	for k: String in want:
+		var ab := k.split(">")
+		if ab[0].begins_with("sk_") and ab[1].begins_with("sk_"):
+			ab.sort()
+			undirected["-".join(ab)] = true
+	check(undirected.size() - sk.size() + 1 >= 2, "segara_kidul has too few loops")
+	check(zones.DROPS.has(["sk_tebing", "sk_keraton"]), "segara_kidul wants the drop")
+	for z: Node in built.values():   # free before quit, or the HUDs call the freed autoloads on shutdown
+		z.free()
+	await process_frame
 	quit(1 if fails > 0 else 0)
 
 

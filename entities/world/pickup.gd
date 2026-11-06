@@ -4,6 +4,7 @@ extends Interactable
 
 @export var item_id := ""
 @export var codex_id := ""
+@export var drop := false   # enemy drop (bestiary.md Drops): item_id "herb" or "flask"; collected on touch, no flag, no save
 
 var _t := 0.0
 
@@ -15,6 +16,10 @@ func _key() -> String:
 func _ready() -> void:
 	verb = "UI_VERB_TAKE"
 	super()
+	if drop:
+		usable = false
+		body_entered.connect(_on_touch)
+		return
 	if get_node("/root/Game").has_flag("pickup:" + _key()):
 		queue_free()
 
@@ -33,6 +38,20 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	draw_rect(Rect2(-3, -3, 6, 6), Color(0.4, 0.8, 1.0) if codex_id != "" else Color(0.9, 0.9, 0.5))
+
+
+func _on_touch(b: Node) -> void:
+	if not b.is_in_group("player"):
+		return
+	var game := get_node("/root/Game")
+	if item_id == "herb":
+		(b.get("health") as Health).heal(roundi(0.2 * b.health.max_hp))   # TUNE
+	elif item_id == "flask":
+		game.flask_charges = mini(game.flask_max, game.flask_charges + 1)
+		game.changed.emit()
+	get_node("/root/Events").item_picked.emit(item_id)   # HUD "Got:" toast; no quest step listens to herb/flask
+	set_deferred("monitoring", false)
+	queue_free()
 
 
 func interact() -> void:

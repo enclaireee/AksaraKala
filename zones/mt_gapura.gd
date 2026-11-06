@@ -25,10 +25,10 @@ const MAP := [
 	"#.........##...............................................#",
 	"#.........##...............................................#",
 	"#.........##......................................bbbb.....#",
+	"#.........##..................................u...bbbb.....#",
+	"#.........##....................................u.bbbb.....#",
 	"#.........##......................................bbbb.....#",
-	"#.........##......................................bbbb.....#",
-	"#.........##......................................bbbb.....#",
-	"#.........##........bbb....................................#",
+	"#.........##........bbb........................u...........#",
 	"#...bbb...##........bbb....................................#",
 	"#...bbb...##........bbb.................bbb...c............#",
 	"#...bbb...##............................bbb................#",
@@ -39,8 +39,8 @@ const MAP := [
 ]
 
 const SPOTS := {
-	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "desa_purwa", "spawn_id": "from_mt_gapura"}, "tile": ","},   # exit to Desa Purwa (west edge, 2 tiles)
-	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_desa_purwa"}, "tile": ","},   # spawn, arrival from Desa Purwa
+	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_pamali", "spawn_id": "from_mt_gapura"}, "tile": ","},   # exit to Keraton Galuh, the Pamali ford (west edge, 2 tiles)
+	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_pamali"}, "tile": ","},   # spawn, arrival from the Pamali ford
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_sawah", "spawn_id": "from_mt_gapura"}, "tile": ","},   # exit to mt_sawah (east edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_sawah"}, "tile": ","},   # spawn, arrival from mt_sawah
 	"Z": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_candi", "spawn_id": "from_mt_gapura"}, "tile": ","},   # exit to mt_candi (east edge, in the causeway pocket, 2 tiles)
@@ -49,6 +49,7 @@ const SPOTS := {
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_gerbang", "size": Vector2i(22,11), "waves": [[["res://entities/enemies/tuyul.tscn", Vector2i(-4,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(2,3)], ["res://entities/enemies/tuyul.tscn", Vector2i(6,-2)]]]}, "tile": ","},   # encounter mataram_gerbang
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_gapura", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu (Ilmu S, ASSUMED)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "gapura"}, "tile": "."},   # codex spot, stone gate
+	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

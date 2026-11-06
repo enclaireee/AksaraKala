@@ -21,7 +21,7 @@ Sizes: 1 screen = 30x17 tiles. 2x2 = 60x34, 3x2 = 90x34, 3x3 = 90x51. Total 8 ar
 Quest NPCs: 5 (Mpu Wirasana, Mbok Srini, Klething Kuning, the herder, the kuda lumping leader). Elites: Yuyu Kangkang, Banaspati elite. Miniboss: Buto Ijo. Secrets: 3 chests. Codex: 1 location (`tt_beringin`). Petilasans: `timur_1` (`tt_sabana`), `timur_2` (`tt_pasir`).
 
 ## Region graph
-`==K==` kabut, `--` link, `~~sc~~` shortcut gate (opens from the tagged side), `--v` drop. Flags: `K1` mq2_9, `K2` mq3_4, `K3` mq3_8 (all ASSUMED).
+`==K==` kabut, `--` link, `~~sc~~` shortcut gate (opens from the tagged side), `--v` drop. Flags: `K1` mq2_9 (Hariang Banga yields), `K2` mq3_4, `K3` mq3_8 (the Hunter beaten); Story v2.
 ```
  row N:               tt_kali ------ tt_ladang ==K2== tt_pasir[P2] ---- tt_candi (boss)
                         |              ^   .             .
@@ -54,7 +54,7 @@ row S:                tt_pesisir
 ## Link table
 | # | From | To | Kind | Gate flag | Spawn ids |
 |---|------|----|------|-----------|-----------|
-| 1 | `mt_wetan` | `tt_kulon` | link, kabut `K1` | `mq2_9` (set by MQ2 2.9, Semar; same pattern as `mq1_10`) | `from_mt_wetan` (in kulon), `from_tt_kulon` (in mt_wetan) |
+| 1 | `mt_wetan` | `tt_kulon` | link, kabut `K1` | `mq2_9` (set by MQ2 2.9, the Pamali duel) | `from_mt_wetan` (in kulon), `from_tt_kulon` (in mt_wetan) |
 | 2 | `tt_kulon` | `tt_sabana` | link | none | `from_tt_kulon` (in sabana), `from_tt_sabana` (in kulon) |
 | 3 | `tt_sabana` | `tt_kali` | link | none | `from_tt_sabana` (kali), `from_tt_kali` (sabana) |
 | 4 | `tt_sabana` | `tt_beringin` | link | none | `from_tt_sabana` (beringin), `from_tt_beringin` (sabana) |
@@ -66,7 +66,7 @@ row S:                tt_pesisir
 | 10 | `tt_ladang` | `tt_beringin` | shortcut `sc:tt_ladang` | `sc:tt_ladang` (opened from ladang) | `from_tt_beringin` (ladang), `from_tt_ladang` (beringin) |
 | 11 | `tt_pasir` | `tt_sabana` | shortcut `sc:tt_pasir` | `sc:tt_pasir` (opened from pasir) | `from_tt_pasir` (sabana), `from_tt_sabana` (pasir; second spawn on the shortcut side) |
 | 12 | `tt_beringin` | `tt_pesisir` | drop | none | `from_tt_beringin` (pesisir); nothing leads back up the ledge |
-| 13 | `tt_pesisir` | `sk_karang` | link, kabut `K3` | `mq3_8` (set by MQ3 3.8, Semar; same pattern as `mq1_10`) | `from_tt_pesisir` (sk_karang), `from_sk_karang` (pesisir) |
+| 13 | `tt_pesisir` | `sk_karang` | link, kabut `K3` | `mq3_8` (set by MQ3 3.8, the Hunter) | `from_tt_pesisir` (sk_karang), `from_sk_karang` (pesisir) |
 
 ## Shortcut table
 | Id | Gate area | Open side | Leads to | Back to which petilasan |
@@ -83,7 +83,7 @@ row S:                tt_pesisir
 
 **Drop:** `drop_pesisir`, `tt_beringin` south rim to `tt_pesisir` north dunes (a dune slide). No exit leads up. The player is never stuck: `tt_pesisir` has a normal link back to `tt_sabana`.
 
-**Critical path (MQ3 order):** `mt_wetan` -> `tt_kulon` (E `timur_kulon`, E `timur_gerbang`) -> `tt_sabana` (`timur_1`, 3.1; E `timur_embers`) -> `tt_beringin` (empu, 3.2; opens SQ-T3) -> `tt_sabana` -> `tt_kali` (E `timur_wisps`, Mbok Srini and the pouches, 3.3; E `timur_ngarai`) -> `tt_ladang` (E `timur_ladang`, open `sc:tt_ladang`, Buto Ijo, 3.4) -> `sc:tt_ladang` -> `tt_beringin` (empu, practice marks, 3.5) -> `sc:tt_ladang` back -> `tt_ladang` -> `tt_pasir` (E `timur_pasir`, `timur_2`, 3.6) -> `tt_candi` (keris, 3.7) -> `tt_pasir` -> `sc:tt_pasir` -> `tt_sabana` -> `sc:mt_tt` -> Mataram -> Semar (3.8).
+**Critical path (MQ3 order):** `mt_wetan` -> `tt_kulon` (E `timur_kulon`, E `timur_gerbang`) -> `tt_sabana` (`timur_1`, 3.1; E `timur_embers`) -> `tt_beringin` (empu, 3.2; opens SQ-T3) -> `tt_sabana` -> `tt_kali` (E `timur_wisps`, Mbok Srini and the pouches, 3.3; E `timur_ngarai`) -> `tt_ladang` (E `timur_ladang`, open `sc:tt_ladang`, Buto Ijo, 3.4) -> `sc:tt_ladang` -> `tt_beringin` (empu, practice marks, 3.5) -> `sc:tt_ladang` back -> `tt_ladang` -> `tt_pasir` (E `timur_pasir`, `timur_2`, 3.6) -> `tt_candi` (keris, 3.7; the Hunter, 3.8). Story v2: no walk home to Semar; the Gua Kala gate in Desa Purwa opens on `mq3_8`.
 
 **Optional areas:** `tt_pesisir` only (Loop C): elite Banaspati, secret chest, kuda kepang, back door to Segara Kidul. Optional rooms inside areas: the sabana mound ring (secret), the hollow banyan (secret), the codex ruin, the performance stage.
 
@@ -102,6 +102,8 @@ Trigger rects are centered on the spot, as in Tatar Sunda. Wave 2 (pasir only) r
 | `timur_pasir` | `tt_pasir` | sand plain before `timur_2` | 36x16 | W1: 2 Prajurit Terkutuk, Banaspati, Kemamang ; W2: 2 Keris Hantu | Before the keris (two-tank exception) | Ra Summon, Na Dash-strike, Bind on wave 2, Heal for Curse |
 
 8 encounters (6-10). Extra fights: Yuyu Kangkang (elite charger, riverbed crossing, 12-tile lane), Banaspati elite (SQ-T2, `tt_pesisir` east dunes), Buto Ijo (miniboss), Keris (boss). Tank rule: gerbang, ladang, pesisir have 1 tank, pasir has 2 (allowed before the boss). Shooters: ladang 1, pasir 1, wisps 2 (a pure shooter room, no tank, per bestiary). Waves: pasir has 2, all others 1.
+
+**Main-path kills (balance.md 2.1 target ~40):** 24 before (fixed encounters only: kulon 2, gerbang 3, embers 4, wisps 2, ngarai 3, ladang 4, pasir 6; no loose enemies on the path; bosses, Yuyu, Banaspati elite and `tt_pesisir` not counted), 40 after 16 loose roaming-pack enemies (kulon 2 Banaspati, sabana 3, beringin 3, kali 2 Kemamang, ladang 3, pasir 3; Prajurit at most 1 per pack, Kemamang only after `timur_wisps`, Keris Hantu only in ladang and pasir, after `timur_ngarai`).
 
 First appearances (teach, then test):
 | Enemy | First seen | Player glyphs there | Weakness usable |
@@ -123,14 +125,14 @@ Marker form `{zone: "tanah_timur", id: ...}`. Ids from quests.md marked (Q); oth
 | Step | Marker id | Area | Event string |
 |------|-----------|------|--------------|
 | (entry) | `timur_edge` | `tt_kulon` | `zone_entered:tanah_timur` |
-| 3.1 rest at the savanna petilasan | `timur_1` (Q) | `tt_sabana` | `petilasan_activated:timur_1` (Q) |
-| 3.2 find the empu | `timur_empu` (Q) | `tt_beringin` | `talked_to:timur_empu` (Q). Makes SQ-T3 available |
-| 3.3 help Mbok Srini | `mbok_srini` (Q) | `tt_kali` | `talked_to:mbok_srini` (Q), gives 4 pouches (`give:pouch_cucumber`, `pouch_needles`, `pouch_salt`, `pouch_terasi`) |
+| 3.1 rest at the savanna petilasan | `timur_1` (Q) | `tt_sabana` | `petilasan_activated:timur_1` (Q); sets `mq3_1` |
+| 3.2 find the empu | `timur_empu` (Q) | `tt_beringin` | `talked_to:timur_empu` (Q); sets `mq3_2`. Makes SQ-T3 available |
+| 3.3 help Mbok Srini | `mbok_srini` (Q) | `tt_kali` | `talked_to:mbok_srini` (Q); sets `mq3_3`, gives the 4 pouches |
 | 3.4 defeat Buto Ijo | `buto_ijo` | `tt_ladang` | `boss_defeated:buto_ijo` (Q); sets `mq3_4` (opens `K2`) |
-| 3.5 learn to break curse marks | `timur_empu`, `timur_praktik` | `tt_beringin` | `talked_to:timur_empu` (Q) then `spell_cast` on a practice mark x2 (Q); marker `timur_praktik` at the stakes |
-| 3.6 rest before the shrine | `timur_2` (Q) | `tt_pasir` | `petilasan_activated:timur_2` (Q) |
-| 3.7 lay the keris to rest | `keris_gandring` | `tt_candi` | `boss_defeated:keris_gandring` (Q); sets `mq3_7` |
-| 3.8 speak with Semar | `semar` | `desa_purwa` (see conflicts) | `talked_to:semar` (Q); sets `mq3_8` (opens `K3`) |
+| 3.5 break two practice curse marks | `timur_praktik` | `tt_beringin` | `area_entered:timur_praktik_mark` x2 (the empu taught it at 3.2, Story v2) |
+| 3.6 rest before the shrine | `timur_2` (Q) | `tt_pasir` | `petilasan_activated:timur_2` (Q); Laras beat 4 |
+| 3.7 lay the keris to rest | `keris_gandring` | `tt_candi` | `boss_defeated:keris_gandring` (Q); sets `mq3_7`; beat `keris` (choice 3) |
+| 3.8 face the Nameless Hunter | `nameless_hunter` | `tt_candi` (`H`, cond `flag:beat_keris`) | `boss_defeated:nameless_hunter` (Q); sets `mq3_8` (opens `K3` and the Gua Kala gate) |
 
 ### Side quests
 | Quest | Step | Marker id | Area | Event string |
@@ -177,11 +179,11 @@ Enter `tt_kulon` (landmark on the horizon) -> `timur_kulon` (Ward teach) -> `tim
 
 ## ASSUMED
 - All area ids beyond the three fixed ones (`tt_kulon`, `tt_sabana`, `tt_pesisir`), the `timur_*` encounter ids, the npc_ids, marker ids, chest ids and the `kuda_kepang_*` ids.
-- Flags `mq2_9`, `mq3_4`, `mq3_7`, `mq3_8`. Region gates lift on the return to Semar (quests.md 2.9 and 3.8), like `mq1_10`; world.md link table updated to match.
+- Flags `mq2_9`, `mq3_4`, `mq3_7`, `mq3_8`. Region gates lift on boss fights (Story v2: 2.9 Hariang Banga, 3.8 the Hunter).
 - Mbok Srini lives in `tt_kali` and Klething Kuning at the river crossing in the same area (the river is a trickle in a dry riverbed).
 - The sodo lanang is a pickup in the banyan shrine (the source for the legend is VERIFY).
 - Drop `drop_pesisir` is a dune slide; sizes 3x2 are allowed by the 60/90 x 34/51 rule.
-- Semar stands in `desa_purwa` for 3.8; `sc:mt_tt` and `sc:tt_pasir` make the walk home short.
+- Story v2: 3.8 is the Hunter in `tt_candi`, so there is no walk home; `sc:mt_tt` and `sc:tt_pasir` stay as loops.
 - The meteorite fragment `batu_bintang` lies in `mt_candi` (east yard).
 - The `timur_wisps` encounter has no tank or chaser, as the bestiary mix lists only 2 Kemamang.
 
@@ -219,9 +221,9 @@ The 8 sections below follow the format of [mataram.md](mataram.md) (tile chars a
 #...........................................##.............#
 #...........................................##.............#
 #...........................................##.............#
-#.............................rr............##......rr.....#
+#.............................rr..b.........##......rr.....#
 #.........rr..................rr............##......rr.....#
-#.........rr................................##.............#
+#.........rr.........................b......##.............#
 #...........................................##.............#
 #...........................................##.............#
 #...........................................##.............#
@@ -260,6 +262,7 @@ X,,,K,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `y` | spawn, arrival from tt_sabana | `res://entities/world/spawn.tscn` | `{id:"from_tt_sabana"}` | path | 1 |
 | `E` | encounter timur_kulon | `res://entities/world/encounter.tscn` | `{area_id:"timur_kulon", size:Vector2i(20,11), waves:[[[res://entities/enemies/banaspati.tscn, Vector2i(6,-3)], [res://entities/enemies/banaspati.tscn, Vector2i(6,3)]]]}` | path | 1 |
 | `G` | encounter timur_gerbang | `res://entities/world/encounter.tscn` | `{area_id:"timur_gerbang", size:Vector2i(18,10), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(7,0)], [res://entities/enemies/banaspati.tscn, Vector2i(3,-3)], [res://entities/enemies/banaspati.tscn, Vector2i(3,3)]]]}` | path | 1 |
+| `b` | loose banaspati, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/banaspati.tscn` | `{}` | grass | 2 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -287,11 +290,11 @@ X,,,K,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 #.............................,,............................rr...........................#
 #######.............rr........,,.....................................................#####
 Mm,,,,,.............rr........,,.....................................................+,,zZ
-M,,,,,,.......................,,.....................................................+,,,Z
+M,,,,,,.......................,,..................................j..................+,,,Z
 #######.......................,,.....................................................#####
+#.............................,,.......................rr.......b........................#
 #.............................,,.......................rr................................#
-#.............................,,.......................rr................................#
-#..............rr.............,,.........................................................#
+#..............rr.............,,...................................b.....................#
 #..............rr.............,,.........................................................#
 #.............................,,...........................................rr............#
 #.............................,,...........................................rr............#
@@ -349,6 +352,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `c` | chest: Crossbow (secret, mound ring) | `res://entities/world/chest.tscn` | `{chest_id:"chest_tt_sabana", item_id:"crossbow"}` | grass | 1 |
 | `k` | pickup, kuda kepang 1 (SQ-T4) | `res://entities/world/pickup.tscn` | `{item_id:"kuda_kepang_1"}` | grass | 1 |
 | `E` | encounter timur_embers | `res://entities/world/encounter.tscn` | `{area_id:"timur_embers", size:Vector2i(26,14), waves:[[[res://entities/enemies/banaspati.tscn, Vector2i(8,-4)], [res://entities/enemies/banaspati.tscn, Vector2i(8,4)], [res://entities/enemies/banaspati.tscn, Vector2i(4,-5)], [res://entities/enemies/banaspati.tscn, Vector2i(4,5)]]]}` | path | 1 |
+| `b` | loose banaspati, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/banaspati.tscn` | `{}` | grass | 2 |
+| `j` | loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/prajurit_terkutuk.tscn` | `{}` | grass | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -369,10 +374,10 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #...................................~~....#########..#####################################
 #...................................~~....#_______#..#####################################
 #.................rr................~~....#_______#..#####################################
-#...........k.....rr................~~....#___M___#..#####################################
+#...........k.....rr...........v....~~....#___M___#..#####################################
 #...................................~~....#_______#..#####################################
 #...........................rr......~~....#_______#..#####################################
-#...........................rr......~~....#_______#..#####################################
+#...........................rr...v..~~....#_______#..#####################################
 #...................................~~....####,####..#####################################
 #...................................~~........,......#####################################
 #...rr..............................~~........,..........................................#
@@ -412,6 +417,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `k` | pickup, kuda kepang 2 (SQ-T4, riverbed) | `res://entities/world/pickup.tscn` | `{item_id:"kuda_kepang_2"}` | grass | 1 |
 | `E` | encounter timur_wisps | `res://entities/world/encounter.tscn` | `{area_id:"timur_wisps", size:Vector2i(28,12), waves:[[[res://entities/enemies/kemamang.tscn, Vector2i(6,-3)], [res://entities/enemies/kemamang.tscn, Vector2i(6,3)]]]}` | grass | 1 |
 | `G` | encounter timur_ngarai | `res://entities/world/encounter.tscn` | `{area_id:"timur_ngarai", size:Vector2i(30,9), waves:[[[res://entities/enemies/keris_hantu.tscn, Vector2i(10,-3)], [res://entities/enemies/keris_hantu.tscn, Vector2i(10,0)], [res://entities/enemies/keris_hantu.tscn, Vector2i(10,3)]]]}` | path | 1 |
+| `v` | loose kemamang, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/kemamang.tscn` | `{}` | grass | 2 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -422,7 +428,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ## Area 4: tt_beringin
 
 - Size: 90 x 34 tiles = 3 x 2 screens (30 x 17 each).
-- Look: Giant banyan grove, hanging roots, a forge under a banyan, shrine ruins, a troupe camp. A quiet area, no fights.
+- Look: Giant banyan grove, hanging roots, a forge under a banyan, shrine ruins, a troupe camp. Quiet around the forge and camp; one roaming pack in the south-east (2026-11-06).
 - Purpose: Empu forge with 3 practice stakes, codex ruin, kuda lumping camp and stage, sodo lanang shrine, hollow banyan chest, drop ledge south, far side of `sc:tt_ladang`.
 
 ### Map
@@ -449,11 +455,11 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 #.................................................,,.....................................#
 #.................................................,,..................rr..rr.............#
 #.................................................,,..................rr..rr.............#
-#.................................................,,................g...i...o............#
+#.................................................,,....b...........g...i...o............#
 #.................................................,,.....................................#
-#.............................L...................,,.....................................#
+#.............................L...................,,......b..............................#
 #....rr...........................................,,..................rr..rr.............#
-#....rr...........................................,,..................rr..rr.............#
+#....rr...........................................,,....j.............rr..rr.............#
 #.................................................,,.....................................#
 #.............................T...................,,........rr...........................#
 #.................................................,,........rr...........................#
@@ -482,6 +488,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 | `i` | codex ruin, inscribed stone 2 (Mpu Gandring) | `res://entities/world/pickup.tscn` | `{codex_id:"mpu_gandring"}` | grass | 1 |
 | `o` | codex ruin, statue plinth (Tengger, scenery text) | `res://entities/world/pickup.tscn` | `{codex_id:"tengger_lautan_pasir"}` | grass | 1 |
 | `c` | chest: Chainmail (secret, hollow banyan) | `res://entities/world/chest.tscn` | `{chest_id:"chest_tt_beringin", item_id:"chainmail"}` | floor | 1 |
+| `b` | loose banaspati, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/banaspati.tscn` | `{}` | grass | 2 |
+| `j` | loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/prajurit_terkutuk.tscn` | `{}` | grass | 1 |
 
 ## Area 5: tt_ladang
 
@@ -494,8 +502,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 ############################################################
 #...........................################################
 #...........................################################
-#...........................################################
-#.....................rr....################################
+#.......x.......v...........################################
+#...........b.........rr....################################
 #....rr...............rr....################################
 #....rr.....................################################
 #...........................################################
@@ -539,6 +547,9 @@ Y,,,,,,,,,,,,,,,............################################
 | `z` | spawn, arrival from tt_pasir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
 | `B` | boss Buto Ijo (arena 28x16: x 29..56, y 9..24) | `res://entities/bosses/buto_ijo.tscn` | `{}` | floor | 1 |
 | `E` | encounter timur_ladang | `res://entities/world/encounter.tscn` | `{area_id:"timur_ladang", size:Vector2i(30,14), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(8,0)], [res://entities/enemies/keris_hantu.tscn, Vector2i(4,-4)], [res://entities/enemies/banaspati.tscn, Vector2i(4,4)], [res://entities/enemies/kemamang.tscn, Vector2i(-6,-3)]]]}` | grass | 1 |
+| `x` | loose keris hantu, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/keris_hantu.tscn` | `{}` | grass | 1 |
+| `b` | loose banaspati, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/banaspati.tscn` | `{}` | grass | 1 |
+| `v` | loose kemamang, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/kemamang.tscn` | `{}` | grass | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -557,11 +568,11 @@ Y,,,,,,,,,,,,,,,............################################
 #________________________________________________________________________________________#
 #________________________________________________________________________________________#
 #________________________________________________________________________________________#
-#_______rr__________________________________________________rr___________________________#
-#_______rr________________rr________________________________rr___________________________#
+#_______rr__________b_______________________________________rr___________________________#
+#_______rr______j_________rr________________________________rr___________________________#
 #_________________________rr__________________________rr_________________________________#
 #_____________________________________________________rr_________________________________#
-#________________________________________________________________________________________#
+#___________x____________________________________________________________________________#
 #________________________________________________________________________________________#
 #________________________________________________________________________________________#
 #_______________________________________________________________________________##########
@@ -600,6 +611,9 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `c` | spawn, arrival from tt_candi | `res://entities/world/spawn.tscn` | `{id:"from_tt_candi"}` | path | 1 |
 | `P` | petilasan 2 (sand alcove, no enemy inside) | `res://entities/petilasan/petilasan.tscn` | `{id:"timur_2"}` | floor | 1 |
 | `E` | encounter timur_pasir | `res://entities/world/encounter.tscn` | `{area_id:"timur_pasir", size:Vector2i(36,16), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(10,-3)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(10,3)], [res://entities/enemies/banaspati.tscn, Vector2i(4,-5)], [res://entities/enemies/kemamang.tscn, Vector2i(-6,0)]],[[res://entities/enemies/keris_hantu.tscn, Vector2i(12,-3)], [res://entities/enemies/keris_hantu.tscn, Vector2i(12,3)]]]}` | path | 1 |
+| `j` | loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/prajurit_terkutuk.tscn` | `{}` | floor | 1 |
+| `b` | loose banaspati, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/banaspati.tscn` | `{}` | floor | 1 |
+| `x` | loose keris hantu, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/keris_hantu.tscn` | `{}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -610,7 +624,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Banyan courtyard in front of Candi Gandring (stepped shrine, keris spire), seven curse stakes at the arena edge.
-- Purpose: Boss arena Mpu Gandring's Keris (interior x 19..52, y 5..28). Only exit: west, back to tt_pasir.
+- Purpose: Boss arena Mpu Gandring's Keris, then the Nameless Hunter in the same court once the `keris` beat has played (interior x 19..52, y 5..28). Only exit: west, back to tt_pasir.
 
 ### Map
 ```
@@ -624,7 +638,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #...........rr....#__________________________________#.....#
 #.................#__________________________________#..rr.#
 #.................#__________________________________#..rr.#
-#.................#__________________________________#.....#
+#.................#_________________H________________#.....#
 #.................#__________________________________#.....#
 #.................#__________________________________#.....#
 #.................#__________________________________#.....#
@@ -656,6 +670,7 @@ X,,,,,,,,,,,,,,,,,,________________________________4_#.....#
 | `X` | exit to tt_pasir (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pasir", spawn_id:"from_tt_candi"}` | path | 2 |
 | `e` | spawn, arrival from tt_pasir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
 | `B` | boss Mpu Gandring's Keris (arena centre) | `res://entities/bosses/keris_gandring.tscn` | `{}` | floor | 1 |
+| `H` | boss the Nameless Hunter, after the keris (MQ3 3.8, Story v2) | `res://entities/bosses/nameless_hunter.tscn` | `{cond:"flag:beat_keris"}` | floor | 1 |
 | `1` | curse stake 1 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:1}` | floor | 1 |
 | `2` | curse stake 2 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:2}` | floor | 1 |
 | `3` | curse stake 3 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:3}` | floor | 1 |

@@ -7,9 +7,9 @@ const MAP := [
 	"#...........................................##.............#",
 	"#...........................................##.............#",
 	"#...........................................##.............#",
-	"#.............................rr............##......rr.....#",
+	"#.............................rr..b.........##......rr.....#",
 	"#.........rr..................rr............##......rr.....#",
-	"#.........rr................................##.............#",
+	"#.........rr.........................b......##.............#",
 	"#...........................................##.............#",
 	"#...........................................##.............#",
 	"#...........................................##.............#",
@@ -46,6 +46,7 @@ const SPOTS := {
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_sabana"}, "tile": ","},   # spawn, arrival from tt_sabana
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_kulon", "size": Vector2i(20,11), "waves": [[["res://entities/enemies/banaspati.tscn", Vector2i(6,-3)], ["res://entities/enemies/banaspati.tscn", Vector2i(6,3)]]]}, "tile": ","},   # encounter timur_kulon
 	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_gerbang", "size": Vector2i(18,10), "waves": [[["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(7,0)], ["res://entities/enemies/banaspati.tscn", Vector2i(3,-3)], ["res://entities/enemies/banaspati.tscn", Vector2i(3,3)]]]}, "tile": ","},   # encounter timur_gerbang
+	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "."},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

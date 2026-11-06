@@ -5,8 +5,8 @@ const MAP := [
 	"############################################################",
 	"#...........................################################",
 	"#...........................################################",
-	"#...........................################################",
-	"#.....................rr....################################",
+	"#.......x.......v...........################################",
+	"#...........b.........rr....################################",
 	"#....rr...............rr....################################",
 	"#....rr.....................################################",
 	"#...........................################################",
@@ -48,6 +48,9 @@ const SPOTS := {
 	"z": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": ","},   # spawn, arrival from tt_pasir
 	"B": {"scene": "res://entities/bosses/buto_ijo.tscn", "props": {}, "tile": "_"},   # boss Buto Ijo (arena 28x16: x 29..56, y 9..24)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_ladang", "size": Vector2i(30,14), "waves": [[["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(8,0)], ["res://entities/enemies/keris_hantu.tscn", Vector2i(4,-4)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,4)], ["res://entities/enemies/kemamang.tscn", Vector2i(-6,-3)]]]}, "tile": "."},   # encounter timur_ladang
+	"x": {"scene": "res://entities/enemies/keris_hantu.tscn", "props": {}, "tile": "."},   # loose keris hantu, roaming pack (respawns on zone reload, no unique_id)
+	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "."},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)
+	"v": {"scene": "res://entities/enemies/kemamang.tscn", "props": {}, "tile": "."},   # loose kemamang, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

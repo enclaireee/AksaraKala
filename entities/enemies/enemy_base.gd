@@ -7,6 +7,7 @@ class_name EnemyBase extends CharacterBody2D
 @export var ranged := false         # which token pool it draws from (combat.md 5.2)
 @export var ilmu := 6               # Ilmu awarded on death (balance.md 6). TUNE: chaser 6, shooter 6, tank 15
 @export var kind := ""              # quests count kills by this (Events.enemy_killed)
+@export var drop_chance := 0.15     # common enemies (bestiary.md Drops). TUNE. Elites (unique_id) always drop
 @export var unique_id := ""         # bosses and minibosses: stays dead once listed in Game.killed (rpg.md 11)
 
 @onready var body: Polygon2D = $Body
@@ -174,7 +175,8 @@ func _on_died() -> void:
 	attack_hitbox.deactivate()
 	hurtbox.set_deferred("monitorable", false)
 	body.modulate = Color(0.4, 0.4, 0.4)
-	# ponytail: no death anim or drops yet.
+	# ponytail: no death anim yet.
+	_drop()
 	var game := get_node("/root/Game")
 	game.add_ilmu(ilmu)   # ASSUMED: awarded directly, no pickups
 	if unique_id != "":
@@ -183,6 +185,18 @@ func _on_died() -> void:
 	get_node("/root/Events").enemy_killed.emit(self, ilmu)
 	_float_label()
 	get_tree().create_timer(0.4).timeout.connect(queue_free)
+
+
+## Herb (70%) or flask refill (30%), TUNE. Elites always; bosses (entities/bosses) never.
+func _drop() -> void:
+	var boss: bool = get_script().resource_path.begins_with("res://entities/bosses/")
+	if boss or (unique_id == "" and randf() >= drop_chance):
+		return
+	var p := (load("res://entities/world/pickup.tscn") as PackedScene).instantiate()
+	p.drop = true
+	p.item_id = "herb" if randf() < 0.7 else "flask"
+	p.position = position
+	get_parent().add_child.call_deferred(p)   # ponytail: deferred, the death can come mid physics query
 
 
 ## Rising "+N" that outlives the enemy: lives in the parent and frees itself.

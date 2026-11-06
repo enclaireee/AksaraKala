@@ -1,27 +1,30 @@
 extends SceneTree
-## Scripted playthrough of Mataram (zones/mataram.md critical path): MQ2 start to end plus SQ-M1 to M4,
+## Scripted playthrough of Mataram (zones/mataram.md critical path): MQ2 start to end (Story v2: from kg_pamali to the Hariang Banga duel and the truce beat) plus SQ-M1 to M5,
 ## in the real zones. Every hop and target must be walkable from where the player stands (physics on
 ## layer 1: walls, live kabut, closed gates). Talks run the real dialogue, petilasans rest, encounters
 ## and the boss are killed by hand. Run: $GODOT --headless --path . -s tests/mataram_play_test.gd
 ## ponytail: enemies are killed by fiat and the player is invincible; feel is the user's playtest.
 
 const ROUTE := [
-	"do:semar", "q:mq2=active:0",
-	"go:mt_gapura", "go:mt_sawah", "do:mataram_1", "q:mq2=active:1",
+	"q:mq2=active:0",
+	"go:kg_alun", "go:kg_pamali", "go:mt_gapura", "do:mataram_gerbang", "q:mq2=active:1",
+	"go:mt_sawah", "do:mataram_1", "q:mq2=active:2",
 	"do:nawang_wulan", "q:sq_m1=active:1", "do:lumbung", "do:selendang_nawang", "do:nawang_wulan", "q:sq_m1=done",
-	"go:mt_pasar", "do:mataram_dalang", "q:mq2=active:2", "do:mataram_dalang", "q:sq_m4=active:1",
+	"go:mt_pasar", "do:mataram_pasar", "q:mq2=active:3", "do:mataram_dalang", "q:mq2=active:4", "do:mataram_dalang", "q:sq_m4=active:1",
 	"do:pande_besi", "q:sq_m3=active:1", "do:wewe_neighbor", "q:sq_m2=active:1", "do:wewe_parents",
-	"go:mt_reruntuhan", "do:pak_karto", "q:mq2=active:3", "do:mataram_ruins", "q:mq2=active:4",
+	"go:mt_reruntuhan", "do:pak_karto", "q:mq2=active:5", "do:mataram_ruins", "q:mq2=active:6",
 	"do:gong_ageng", "q:sq_m4=active:2",
-	"go:mt_sawah", "do:sc:mt_ruin_sawah", "do:lesung_women", "q:mq2=active:5",
-	"go:mt_reruntuhan", "go:mt_kuburan", "do:wewe_hill", "do:wewe_parents_2", "q:sq_m2=active:3",
-	"go:mt_wetan", "do:juru_kunci", "q:mq2=active:6",
+	"go:mt_sawah", "do:sc:mt_ruin_sawah", "do:lesung_women", "q:mq2=active:7", "do:lesung_women", "q:sq_m5=active:0",
+	"go:mt_reruntuhan", "go:mt_kuburan", "do:mataram_kuburan", "q:mq2=active:8", "do:wewe_hill", "do:wewe_parents_2", "q:sq_m2=active:3",
+	"go:mt_wetan", "do:mataram_batu", "q:mq2=active:9", "do:juru_kunci", "q:mq2=active:10", "beat:hunter_war",
 	"go:mt_tegal", "do:tuyul_hideout", "do:tuyul_leader", "q:sq_m3=active:3",
 	"go:mt_sawah", "go:mt_pasar", "do:pande_besi", "q:sq_m3=done", "do:wewe_neighbor", "q:sq_m2=done",
 	"do:mataram_dalang", "q:sq_m4=done",
-	"go:mt_reruntuhan", "go:mt_wetan", "go:mt_candi", "do:mataram_2", "q:mq2=active:7",
-	"do:bandung_bondowoso", "q:mq2=active:8",
-	"go:mt_gapura", "do:sc:mt_candi_gapura", "go:desa_purwa", "do:semar", "q:mq2=done",
+	"go:mt_reruntuhan", "go:mt_wetan", "go:mt_candi", "do:mataram_candi", "q:mq2=active:11", "do:mataram_camp", "q:mq2=active:12",
+	"do:mataram_2", "beat:laras_3", "do:bandung_bondowoso", "q:sq_m5=done", "q:mq2=active:13",
+	"go:mt_gapura", "do:sc:mt_candi_gapura", "go:kg_pamali",
+	"do:pamali_stone", "write:nagawiru:jawa_na,sunda_ga", "q:mq2=active:14", "beat:ford",
+	"pick:1", "do:hariang_banga", "q:mq2=done", "beat:truce", "flag:choice_silent", "q:mq3=active:0",
 	"go:mt_gapura", "go:mt_sawah", "go:mt_reruntuhan", "go:mt_wetan", "see:tt_kulon",
 ]
 
@@ -46,7 +49,11 @@ func _initialize() -> void:
 	events = root.get_node("Events")
 	game.save_path = "user://test_mataram_play.json"
 	game.flags["mq0_done"] = true
-	game.quests["mq1"] = {"state": "active", "step": 9, "count": 0, "resolution": ""}
+	game.quests["mq1"] = {"state": "done", "step": 0, "count": 0, "resolution": ""}
+	game.quests["mqg"] = {"state": "done", "step": 0, "count": 0, "resolution": ""}
+	for f in ["mq1_10", "mqg_7", "beat_hunter_raid", "beat_laras_1", "beat_naga", "beat_galuh_bout", "beat_laras_2", "beat_cage"]:
+		game.flags[f] = true
+	game.run("start:mq2")   # the beat_cage beat does this in play
 	events.dialogue_requested.connect(_on_dialogue)
 	change_scene_to_file(root.get_node("Zones").start_zone)
 	await scene_changed
@@ -54,10 +61,17 @@ func _initialize() -> void:
 	for a: String in ROUTE:
 		var kv := a.split(":", true, 1)
 		var ok := true
+		if kv[0] == "pick":
+			pick = int(kv[1])   # before the drain: the beat it answers is already up
+			continue
+		await _drain()
 		match kv[0]:
 			"go": ok = await _go(kv[1])
 			"do": ok = await _do(kv[1])
 			"q": ok = _expect(kv[1])
+			"beat": ok = check(game.has_flag("beat_" + kv[1]), "beat %s did not play" % kv[1])
+			"flag": ok = check(game.has_flag(kv[1]), "flag %s not set" % kv[1])
+			"write": ok = await _write(kv[1])
 			"see": ok = check(_exit_to(kv[1]) != null and _reachable(_cells_of(_exit_to(kv[1]))), "%s: exit to %s not reachable" % [zone.zone_id, kv[1]])
 		if not ok:
 			printerr("  stopped at '%s' in %s" % [a, zone.zone_id])
@@ -77,6 +91,39 @@ func _settle() -> void:
 		menu.close()
 
 
+## A story beat plays on its own (ui/story_beat.gd) once nothing else is open: close every box that opens, picking
+## choice `pick` (set by "pick:<n>", then back to 0) like the player would. Chains take a few frames.
+var pick := 0
+
+
+func _drain() -> void:
+	for i in 6:
+		var box := _find("res://ui/dialogue_box.gd")
+		while box and box.is_open():
+			while not box._opts.is_empty() and not box._choosing:
+				box._next()   # read on to the choice list
+			if box._choosing:
+				events.dialogue_picked.emit(pick)
+				pick = 0
+			box._close()
+		await process_frame
+
+
+## Draw the glyphs of a write card (Events.write_requested) with their stored templates, then wait out the fade.
+func _write(spec: String) -> bool:
+	var p := spec.split(":")
+	var lesson := _find("res://ui/glyph_lesson.gd")
+	if not check(lesson != null and lesson.writing == p[0], "no write card for %s" % p[0]):
+		return false
+	for g in p[1].split(","):
+		check(lesson.write_attempt(GlyphData.by_id(g).templates[0]), "write %s: %s not accepted" % [p[0], g])
+	for i in 600:
+		if lesson.writing == "":
+			break
+		await process_frame
+	return check(lesson.writing == "", "write card for %s never closed" % p[0])
+
+
 func _find(script: String) -> Node:
 	for n in root.find_children("*", "", true, false):
 		if n.get_script() and n.get_script().resource_path == script:
@@ -87,6 +134,10 @@ func _find(script: String) -> Node:
 ## Every dialogue line the player sees must have a translation.
 func _on_dialogue(_who: String, lines: PackedStringArray) -> void:
 	for l in lines:
+		if l.begins_with("@"):   # speaker switch; a bare "@" clears the tag
+			l = l.substr(1)
+			if l == "":
+				continue
 		check(tr(l) != l, "untranslated dialogue key %s" % l)
 
 

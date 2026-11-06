@@ -49,9 +49,14 @@ All menus pause the world ([controls.md](controls.md) 4.7). Esc backs out one le
   5. **Codex:** enemies, legends, items, with "Kelemahan / Weakness" lines ([bestiary.md](bestiary.md)).
 - **Settings:** audio (master, music, SFX), display (window scale, fullscreen), controls and accessibility ([controls.md](controls.md) 6), language (Indonesian / English).
 - **Dialogue box:** bottom, full width minus margins, 3 lines of text, speaker name tag. Typewriter text, interact shows all, then advances. Portraits 32x32 are a stretch ([architecture.md](architecture.md) 10).
-- **Class choice:** after New Game, 4 class cards (name, description, stats, start weapon, passive), then a confirm ([classes.md](classes.md)).
+- **Name entry** (Story v2, 2026-11-06): after New Game, before the prologue. One screen: a text field (max 12 characters, letters, digits, space, `'` and `-`; anything else is dropped as you type), a default name `Jaka` (**ASSUMED**) so Enter alone works and a gamepad player can just confirm, a pronoun row he / she / they (left and right, default they), and a confirm. Empty or blank names fall back to the default. Saved as `hero_name` and `hero_pronoun`. Text uses `{name}`, `{they}`, `{them}`, `{their}`, `{They}` (capitalised), filled by `Game.fmt()` after `tr()`. Indonesian has one pronoun (`dia`, `-nya`), so the ID strings never need the pronoun tokens.
+- **Dialogue choices:** a talk may end in 2-3 choices, listed under the last line in the dialogue box. Up and down move, interact picks, Esc does nothing (a choice is never skipped). Each choice runs its own actions. The game has 3 choices in all, each recorded as a flag ([quests.md](quests.md) 4).
+- **Writing the name** (the finale): after Kala, a full-screen ink card. It shows Laras's name as 3 Sunda glyphs, La, Ra, Sa (Laras; the final s takes a pamaéh, the vowel killer, which the game leaves out: **VERIFY** whether it should be a 4th stroke), one at a time with the ghost guide, and the player draws each. A stroke is scored only against the glyph asked for, with the practice threshold, and a miss just clears it to try again (no fail state). Each written glyph stays on the card in ink. After the third, the card fades to the epilogue.
+- **Class choice:** after the prologue, 4 class cards (name, description, stats, start weapon, passive), then a confirm ([classes.md](classes.md)).
 - **Death:** fade to black, "Gugur / Fallen", one-line folklore tip (stretch), back at the petilasan ([rpg.md](rpg.md) 7).
 - **Ending:** the epilogue at the wayang stage, then credits ([quests.md](quests.md) MQ5).
+
+**Glyph lesson card.** Top-left card (`ui/glyph_lesson`, child of GameUI, does not pause) shown after each newly learned glyph: Latin name and spell name, the aksara character, the codex line, a tip (`LESSON_*`), "Cast n/3" with power, and the hold-to-skip hint. The ghost guide sits top-right. See [spells.md](spells.md) section 5.
 
 ## 4. Open
 - Test the HUD sizes on the real canvas in Phase 1 and tune.

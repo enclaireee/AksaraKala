@@ -14,8 +14,8 @@ const MAP := [
 	"#..tttttttttt...,,....ttttttttttttttttttttttttttttttttttt..#",
 	"#...............,,...................bbb...................#",
 	"#...............,,...................bbb..........bbbb.....#",
-	"#......bbb......,,...................bbb..........bbbb.....#",
-	"#......bbb......,,................................bbbb.....#",
+	"#......bbb......,,........w..........bbb..........bbbb.....#",
+	"#......bbb......,,..........w.....................bbbb.....#",
 	"#......bbb......,,.........................................#",
 	"#...............,,.........................................#",
 	"#.............P,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,eX",
@@ -24,8 +24,8 @@ const MAP := [
 	"#.............,,........bbb...................bbb..........#",
 	"#.......r.....,,........bbb...rr..............bbb..........#",
 	"#.............,,........bbb...r...............bbb..........#",
-	"#.............,,...........................................#",
-	"#.............,,.......................................1...#",
+	"#.............,,..........w.w..............................#",
+	"#.............,,.............v.........................1...#",
 	"#.............,,...........................................#",
 	"####..........,,....ttttttttttttttttttttttttttttttttt......#",
 	"&!,=,,,,,,,,,,,,....ttttttttttttttttttttttttttttttttt..bbb.#",
@@ -50,7 +50,9 @@ const SPOTS := {
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cepot"}, "tile": "."},   # NPC Cepot (SQ-S4 giver)
 	"1": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_1"}, "tile": "."},   # angklung 1
 	"2": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_2"}, "tile": "t"},   # angklung 2
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_edge", "size": Vector2i(22,10), "waves": [[["res://entities/enemies/kuntilanak.tscn", Vector2i(-10,0)], ["res://entities/enemies/bandit.tscn", Vector2i(-5,-2)], ["res://entities/enemies/bandit.tscn", Vector2i(-5,2)]]]}, "tile": ","},   # encounter sunda_edge
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_edge", "size": Vector2i(22,10), "waves": [[["res://entities/enemies/kuntilanak.tscn", Vector2i(-10,0)], ["res://entities/enemies/faceless.tscn", Vector2i(-5,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-5,2)]]]}, "tile": ","},   # encounter sunda_edge
+	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
+	"v": {"scene": "res://entities/enemies/faceless_archer.tscn", "props": {}, "tile": "."},   # loose faceless archer, roaming pack (respawns on zone reload, no unique_id)
 }
 
 

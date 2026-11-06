@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "kidul_nelayan_anak"
+name_key = "NPC_KIDUL_ANAK_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_k1=available"], "lines": ["NPC_KIDUL_ANAK_1", "@NPC_HERO_NAME", "NPC_KIDUL_ANAK_H1", "@NPC_KIDUL_ANAK_NAME", "NPC_KIDUL_ANAK_2"], "do": ["start:sq_k1"]},
+	{"if": ["step:sq_k1=3"], "lines": ["NPC_KIDUL_ANAK_3", "@NPC_HERO_NAME", "NPC_KIDUL_ANAK_H2", "@NPC_KIDUL_ANAK_NAME", "NPC_KIDUL_ANAK_4"]},
+	{"if": ["quest:sq_k1=done"], "lines": ["NPC_KIDUL_ANAK_5"]},
+	{"lines": ["NPC_KIDUL_ANAK_6"]}
+])

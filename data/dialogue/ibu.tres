@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "ibu"
+name_key = "NPC_IBU_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq0=3"], "lines": ["DLG_IBU_V1", "@NPC_HERO_NAME", "DLG_IBU_H1", "@NPC_IBU_NAME", "DLG_IBU_V2", "DLG_IBU_V3", "DLG_IBU_V4"], "do": []},
+	{"if": ["flag:mq5_4"], "lines": ["DLG_IBU_V5", "DLG_IBU_V6"], "do": []},
+	{"if": ["quest:mq0=active"], "lines": ["DLG_IBU_V7"], "do": []},
+	{"if": [], "lines": ["DLG_IBU_V8"], "do": []}
+])

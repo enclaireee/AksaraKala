@@ -67,6 +67,7 @@ Class changes numbers and delivery, not the glyph set. See [classes.md](classes.
 
 ## 5. Teaching and mastery
 - **Sanggar (practice hall):** in Desa Purwa and at some petilasan. Draw any learned glyph with no time pressure and see the score.
+- **Glyph lesson (one-time, after every new glyph):** `ui/glyph_lesson` listens to `Events.glyph_learned` and, once any dialogue closes, shows a card (name, aksara, what the spell does, a tip `LESSON_<GLYPH>`) with the ghost guide. Practice mode is on (no sakti, no cost) until the player casts that glyph 3 times (TUNE); another glyph shows "That was X, not Y". Holding interact skips it. The previous `practice` value is restored. The hub debug grant sets `glyphs_learned` directly, so no lesson fires there.
 - **Ghost guide:** a faint outline of the stroke in the early game, with a start dot and direction arrows. Settings can keep it always on.
 - **Look-alikes:** when Nga is learned (MQ1 1.5), the batu tulis scene shows Ga and Nga side by side: "Nga is Ga without the box". Same idea for Jawa Na and Ca: whichever is learned second is shown beside the first ("Ca has the diagonal").
 - **Mastery (stretch):** each successful cast without the guide fills a mastery meter per glyph, and at full mastery the spell gets a small bonus (e.g. +10% power). Encourages learning the glyph, not just spamming.

@@ -115,8 +115,8 @@ The Tangkuban Perahu silhouette (the overturned-boat mountain). It is a backdrop
 #..tttttttttt...,,....ttttttttttttttttttttttttttttttttttt..#
 #...............,,...................bbb...................#
 #...............,,...................bbb..........bbbb.....#
-#......bbb......,,...................bbb..........bbbb.....#
-#......bbb......,,................................bbbb.....#
+#......bbb......,,........w..........bbb..........bbbb.....#
+#......bbb......,,..........w.....................bbbb.....#
 #......bbb......,,.........................................#
 #...............,,.........................................#
 #.............P,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,eX
@@ -125,8 +125,8 @@ The Tangkuban Perahu silhouette (the overturned-boat mountain). It is a backdrop
 #.............,,........bbb...................bbb..........#
 #.......r.....,,........bbb...rr..............bbb..........#
 #.............,,........bbb...r...............bbb..........#
-#.............,,...........................................#
-#.............,,.......................................1...#
+#.............,,..........w.w..............................#
+#.............,,.............v.........................1...#
 #.............,,...........................................#
 ####..........,,....ttttttttttttttttttttttttttttttttt......#
 &!,=,,,,,,,,,,,,....ttttttttttttttttttttttttttttttttt..bbb.#
@@ -153,7 +153,9 @@ The Tangkuban Perahu silhouette (the overturned-boat mountain). It is a backdrop
 | `C` | NPC Cepot (SQ-S4 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"cepot"}` | grass | 1 |
 | `1` | angklung 1 | `res://entities/world/pickup.tscn` | `{item_id:"angklung_1"}` | grass | 1 |
 | `2` | angklung 2 | `res://entities/world/pickup.tscn` | `{item_id:"angklung_2"}` | tea terrace | 1 |
-| `E` | encounter sunda_edge | `res://entities/world/encounter.tscn` | `{area_id:"sunda_edge", size:Vector2i(22,10), waves:[[[res://entities/enemies/kuntilanak.tscn, Vector2i(-10,0)], [res://entities/enemies/bandit.tscn, Vector2i(-5,-2)], [res://entities/enemies/bandit.tscn, Vector2i(-5,2)]]]}` | path | 1 |
+| `E` | encounter sunda_edge | `res://entities/world/encounter.tscn` | `{area_id:"sunda_edge", size:Vector2i(22,10), waves:[[[res://entities/enemies/kuntilanak.tscn, Vector2i(-10,0)], [res://entities/enemies/faceless.tscn, Vector2i(-5,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-5,2)]]]}` | path | 1 |
+| `w` | loose faceless, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless.tscn` | `{}` | grass | 4 |
+| `v` | loose faceless archer, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless_archer.tscn` | `{}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -168,7 +170,9 @@ The Tangkuban Perahu silhouette (the overturned-boat mountain). It is a backdrop
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
-| `sunda_edge` | `E (44,16)` | 22x10 | W1: Kuntilanak (-10,+0), Bandit (-5,-2), Bandit (-5,+2) | Ka Bolt (Kuntilanak shriek) |
+| `sunda_edge` | `E (44,16)` | 22x10 | W1: Kuntilanak (-10,+0), Faceless (-5,-2), Faceless (-5,+2) | Ka Bolt (Kuntilanak shriek) |
+
+Roaming packs (loose enemies, `w` faceless, `v` archer): K1 2 faceless (26,12), (28,13); K2 2 faceless (26,22), (28,22) + archer (29,23). 5 kills, skirtable, 12+ tiles from P1.
 
 ## Area 2: ts_kampung
 
@@ -270,8 +274,8 @@ None.
 #############r.r############################################
 ##...........................................###############
 ##............................bbbb...........###############
-##.....Y......................bbbb...........###############
-##............................bbbb...........###############
+##.....Y......................bbbb.......y...###############
+##............................bbbb.........y.###############
 ##............T,,,R,,,........bbbb...........###############
 ##..................,,..............bbbb.....###############
 ##...bbbb...........,,..............bbbb.....###############
@@ -280,8 +284,8 @@ None.
 ##...bbbb...........,,.......................###############
 ##..................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,F,,,,,eX
 ##........r.........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X
-##...4.......................................###############
-##...........................................###############
+##...4...............................h.......###############
+##...............................w.w.........###############
 ##############,,#####################bbb,,bbbbbbbbbbbbbbbbb#
 ###.......................###.......#bbb,,bbbbbbbbbbbbbbbbb#
 ###.......................###.......#bbb,,bbbbbbbbbbbbbbbbb#
@@ -306,16 +310,19 @@ None.
 | `%` | exit to ts_kebun (east edge, the shortcut link, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"ts_kebun", spawn_id:"from_ts_leuweung"}` | path | 2 |
 | `@` | spawn, arrival from ts_kebun | `res://entities/world/spawn.tscn` | `{id:"from_ts_kebun"}` | path | 1 |
 | `F` | encounter sunda_boarlane | `res://entities/world/encounter.tscn` | `{area_id:"sunda_boarlane", size:Vector2i(11,3), waves:[[[res://entities/enemies/wild_boar.tscn, Vector2i(-4,0)], [res://entities/enemies/wild_boar.tscn, Vector2i(-4,1)]]]}` | path | 1 |
-| `R` | encounter sunda_batutulis | `res://entities/world/encounter.tscn` | `{area_id:"sunda_batutulis", size:Vector2i(20,12), waves:[[[res://entities/enemies/bandit.tscn, Vector2i(-3,-3)], [res://entities/enemies/bandit.tscn, Vector2i(3,3)], [res://entities/enemies/kuntilanak.tscn, Vector2i(7,-4)]]]}` | path | 1 |
+| `R` | encounter sunda_batutulis | `res://entities/world/encounter.tscn` | `{area_id:"sunda_batutulis", size:Vector2i(20,12), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,-3)], [res://entities/enemies/faceless.tscn, Vector2i(3,3)], [res://entities/enemies/kuntilanak.tscn, Vector2i(7,-4)]]]}` | path | 1 |
 | `T` | batu tulis stone, teaches Nga (MQ1 1.5) | `res://entities/npc/npc.tscn` | `{npc_id:"batu_tulis"}` | path | 1 |
 | `Y` | NPC Lutung Kasarung spirit (SQ-S1) | `res://entities/npc/npc.tscn` | `{npc_id:"lutung_kasarung"}` | grass | 1 |
 | `4` | angklung 4 | `res://entities/world/pickup.tscn` | `{item_id:"angklung_4"}` | grass | 1 |
 | `c` | chest: Iron Ring (secret 3, alcove) | `res://entities/world/chest.tscn` | `{chest_id:"sunda_ironring", item_id:"iron_ring"}` | grass | 1 |
 | `q` | elite Kuntilanak (SQ-S2) | `res://entities/enemies/kuntilanak_elite.tscn` | `{}` | grass | 1 |
 | `d` | trigger, dark grove entered (darkens arena, SQ-S2) | `res://entities/world/trigger.tscn` | `{trigger_id:"dark_grove", size:Vector2i(22,10)}` | grass | 1 |
-| `N` | encounter sunda_spring | `res://entities/world/encounter.tscn` | `{area_id:"sunda_spring", size:Vector2i(7,9), waves:[[[res://entities/enemies/bandit.tscn, Vector2i(-2,0)], [res://entities/enemies/bandit.tscn, Vector2i(2,0)], [res://entities/enemies/kuntilanak.tscn, Vector2i(-2,4)]]]}` | grass | 1 |
+| `N` | encounter sunda_spring | `res://entities/world/encounter.tscn` | `{area_id:"sunda_spring", size:Vector2i(7,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-2,0)], [res://entities/enemies/faceless.tscn, Vector2i(2,0)], [res://entities/enemies/kuntilanak.tscn, Vector2i(-2,4)]]]}` | grass | 1 |
 | `u` | trigger, spring bath (Purbasari delivered) | `res://entities/world/trigger.tscn` | `{trigger_id:"spring_bath", size:Vector2i(5,3)}` | grass | 1 |
 | `a` | chest: Leather Armor (secret 2, hidden spring) | `res://entities/world/chest.tscn` | `{chest_id:"sunda_leather", item_id:"leather_armor"}` | grass | 1 |
+| `y` | loose wild boar, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/wild_boar.tscn` | `{}` | grass | 2 |
+| `w` | loose faceless, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless.tscn` | `{}` | grass | 2 |
+| `h` | loose kuntilanak, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/kuntilanak.tscn` | `{}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -333,8 +340,10 @@ None.
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
 | `sunda_boarlane` | `F (52,16)` | 11x3 | W1: Wild Boar (-4,+0), Wild Boar (-4,+1) | Ga Ward (Boar dash) |
-| `sunda_batutulis` | `R (18,10)` | 20x12 | W1: Bandit (-3,-3), Bandit (+3,+3), Kuntilanak (+7,-4) | Ka Bolt (Kuntilanak) |
-| `sunda_spring` | `N (32,23)` | 7x9 | W1: Bandit (-2,+0), Bandit (+2,+0), Kuntilanak (-2,+4) | Ka Bolt (Kuntilanak) |
+| `sunda_batutulis` | `R (18,10)` | 20x12 | W1: Faceless (-3,-3), Faceless (+3,+3), Kuntilanak (+7,-4) | Ka Bolt (Kuntilanak) |
+| `sunda_spring` | `N (32,23)` | 7x9 | W1: Faceless (-2,+0), Faceless (+2,+0), Kuntilanak (-2,+4) | Ka Bolt (Kuntilanak) |
+
+Roaming packs (loose, respawn like bonfire enemies): L1 2 boars `y` (41,8), (43,9) (Ga is known, gate `mq1_3` passed); L2 2 faceless `w` (33,19), (35,19) + kuntilanak `h` (37,18) beside the lane. 5 kills.
 
 ## Area 4: ts_leuwi
 
@@ -428,9 +437,9 @@ None.
 Xe,,.........,,,,tt#_____#tttttttttttttttttttttttt3tt#######
 X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######
 ####.......r.####tt#_____#ttttttttttttttttttttttttttt#######
-####.........####tt#_____#ttttttttttttttttttttttttttt#######
+####.........####tt#_____#ttttttttttttttttttttttttjtt#######
 #################tt###,###ttttttttttttttttttttttttttt#######
-#################tttttttttttttttttttMtttttttttttttttt#######
+#################tttttttttttttttttttMttttttttttttttit#######
 #################tttttttttttttttttttttttttttttttttttt#######
 #################tttrrttttttttttttttttttttttttttttttt#######
 #################tttttttttttttttttttttttttttttrrttttt#######
@@ -452,10 +461,12 @@ X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######
 | `e` | spawn, arrival from ts_kampung | `res://entities/world/spawn.tscn` | `{id:"from_ts_kampung"}` | path | 1 |
 | `%` | exit to ts_situ (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"ts_situ", spawn_id:"from_ts_sawah"}` | path | 2 |
 | `@` | spawn, arrival from ts_situ | `res://entities/world/spawn.tscn` | `{id:"from_ts_situ"}` | path | 1 |
-| `J` | encounter sunda_clearing | `res://entities/world/encounter.tscn` | `{area_id:"sunda_clearing", size:Vector2i(9,10), waves:[[[res://entities/enemies/jurig_leuweung.tscn, Vector2i(3,0)], [res://entities/enemies/bandit.tscn, Vector2i(2,-3)], [res://entities/enemies/bandit.tscn, Vector2i(2,3)]]]}` | path | 1 |
-| `M` | encounter sunda_terraces | `res://entities/world/encounter.tscn` | `{area_id:"sunda_terraces", size:Vector2i(24,11), waves:[[[res://entities/enemies/wild_boar.tscn, Vector2i(6,0)], [res://entities/enemies/jurig_leuweung.tscn, Vector2i(-3,-3)], [res://entities/enemies/bandit_archer.tscn, Vector2i(4,-4)], [res://entities/enemies/bandit.tscn, Vector2i(-4,2)]]]}` | tea terrace | 1 |
+| `J` | encounter sunda_clearing | `res://entities/world/encounter.tscn` | `{area_id:"sunda_clearing", size:Vector2i(9,10), waves:[[[res://entities/enemies/jurig_leuweung.tscn, Vector2i(3,0)], [res://entities/enemies/faceless.tscn, Vector2i(2,-3)], [res://entities/enemies/faceless.tscn, Vector2i(2,3)]]]}` | path | 1 |
+| `M` | encounter sunda_terraces | `res://entities/world/encounter.tscn` | `{area_id:"sunda_terraces", size:Vector2i(24,11), waves:[[[res://entities/enemies/wild_boar.tscn, Vector2i(6,0)], [res://entities/enemies/jurig_leuweung.tscn, Vector2i(-3,-3)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,-4)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)]], [[res://entities/enemies/faceless.tscn, Vector2i(-8,-3)], [res://entities/enemies/faceless.tscn, Vector2i(8,3)], [res://entities/enemies/wild_boar.tscn, Vector2i(8,-3)]]]}` | tea terrace | 1 |
 | `W` | NPC weaver, gives boeh rarang (MQ1 1.6) | `res://entities/npc/npc.tscn` | `{npc_id:"sunda_weaver"}` | floor | 1 |
 | `3` | angklung 3 | `res://entities/world/pickup.tscn` | `{item_id:"angklung_3"}` | tea terrace | 1 |
+| `j` | loose faceless (terrace), roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless.tscn` | `{}` | tea terrace | 1 |
+| `i` | loose Jurig Leuweung (terrace), roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/jurig_leuweung.tscn` | `{}` | tea terrace | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -469,8 +480,10 @@ X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
-| `sunda_clearing` | `J (8,15)` | 9x10 | W1: Jurig Leuweung (+3,+0), Bandit (+2,-3), Bandit (+2,+3) | Nga Bind (Jurig) |
-| `sunda_terraces` | `M (36,21)` | 24x11 | W1: Wild Boar (+6,+0), Jurig Leuweung (-3,-3), Bandit Archer (+4,-4), Bandit (-4,+2) | Nga Bind on Jurig, Ga Ward on Boar |
+| `sunda_clearing` | `J (8,15)` | 9x10 | W1: Jurig Leuweung (+3,+0), Faceless (+2,-3), Faceless (+2,+3) | Nga Bind (Jurig) |
+| `sunda_terraces` | `M (36,21)` | 24x11 | W1: Wild Boar (+6,+0), Jurig Leuweung (-3,-3), Faceless Archer (+4,-4), Faceless (-4,+2); W2: Faceless (-8,-3), Faceless (+8,+3), Wild Boar (+8,-3) | Nga Bind on Jurig, Ga Ward on Boar |
+
+Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) + Jurig `i` (51,21) (Nga is known, gate `mq1_5` passed). 2 kills. `sunda_terraces` also has a second wave (2 faceless + boar, +3 kills).
 
 ## Area 6: ts_situ
 
@@ -490,7 +503,7 @@ X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######
 #######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~............#
 &!,,,,K,,,,,,.......~~~~~~~~~~~~~~~~~~~~~~~~~~~............#
 &,,,,,K,,,,,,.......~~~~~~~~~~~~~~~~~~~~~~~~~~~....#########
-#######....D........~~~~~~~~~~~~~~~~~~~~~~~~~~~....#.......#
+#######...dD........~~~~~~~~~~~~~~~~~~~~~~~~~~~....#.......#
 #######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~....r.......#
 #######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~.........k..#
 #######............................................r.......#
@@ -504,12 +517,12 @@ X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######
 #######.,,....................,,,,,,,,,,,,,,,,,,,,,,,,,,=,,$
 #######.,,....................,,........................####
 #######.,,....................,,...........................#
+#######.,,........w...v.......,,...........................#
 #######.,,....................,,...........................#
+#######.,,....r.....w.........,,................r..........#
+#######.,,.....r..............,,............y....r.........#
 #######.,,....................,,...........................#
-#######.,,....r...............,,................r..........#
-#######.,,.....r..............,,.................r.........#
-#######.,,....................,,...........................#
-#######.,,....................,,...........................#
+#######.,,....................,,..............y............#
 #######.,,....................,,...........................#
 #######.,,....................,,...........................#
 #######.@,....................e,...........................#
@@ -529,15 +542,19 @@ X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######
 | `;` | spawn, arrival from `sk_tebing` (in the pocket on the open side of `=`) | `res://entities/world/spawn.tscn` | `{id:"from_sk_tebing"}` | path | 1 |
 | `=` | shortcut gate, back route to Segara Kidul (opens only from `sk_tebing`, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:ts_sk", open_side:"e"}` | path | 2 |
 | `K` | kabut, crater path gate (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq1_7"}` | path | 2 |
-| `D` | NPC Dayang Sumbi, teaches Ca (MQ1 1.7) | `res://entities/npc/npc.tscn` | `{npc_id:"dayang_sumbi"}` | grass | 1 |
+| `D` | NPC Naganingrum, the woman by the lake, teaches Ca (MQ1 1.6), gone after MQ1 | `res://entities/npc/npc.tscn` | `{npc_id:"naganingrum", cond:"!quest:mq1=done"}` | grass | 1 |
+| `d` | NPC Dayang Sumbi, gives SQ-S5 after MQ1 | `res://entities/npc/npc.tscn` | `{npc_id:"dayang_sumbi", cond:"quest:mq1=done"}` | grass | 1 |
 | `x` | codex spot, ruin on the lake shore | `res://entities/world/pickup.tscn` | `{codex_id:"tangkuban_perahu"}` | grass | 1 |
 | `5` | angklung 5 | `res://entities/world/pickup.tscn` | `{item_id:"angklung_5"}` | grass | 1 |
 | `k` | chest: Kujang (secret 1) | `res://entities/world/chest.tscn` | `{chest_id:"sunda_kujang", item_id:"kujang"}` | grass | 1 |
+| `w` | loose faceless, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless.tscn` | `{}` | grass | 2 |
+| `v` | loose faceless archer, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless_archer.tscn` | `{}` | grass | 1 |
+| `y` | loose wild boar, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/wild_boar.tscn` | `{}` | grass | 2 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
-| lake shore | (7,2)-(58,13) 52x12 | Shore ring around water (20..46,4..12) | Dayang Sumbi `D` (11,10), kabut `K` (6,8..9) flag `mq1_7` | 1.7 `dayang_sumbi`, opens `K` |
+| lake shore | (7,2)-(58,13) 52x12 | Shore ring around water (20..46,4..12) | Naganingrum `D` (11,10), Dayang Sumbi `d` (10,10) after MQ1, kabut `K` (6,8..9) flag `mq1_7` | 1.6 `naganingrum`, opens `K`; SQ-S5 `dayang_sumbi` |
 | west gate | (1,8)-(5,9) 5x2 | Walk to ts_kawah_jalan | exit `&` (0,8..9), spawn `!` (1,8) | none |
 | ruin | (40,17)-(44,19) 5x3 | Ruin ringed by four rocks, gaps at the diagonals | codex `x` (42,18) | codex `tangkuban_perahu` |
 | south shore | (7,14)-(51,32) | Open shore and paths | angklung `5` (10,18), exit `%` (8..9,33) spawn `@` (8,32), exit `X` (30..31,33) spawn `e` (30,32) | none |
@@ -545,7 +562,7 @@ X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######
 | east corridor | (30,20)-(58,21) 29x2 | Corridor to Segara Kidul. Gate `=` (56,20..21). The pocket (57..58,20..21) is the open side. | gate `=` `sc:ts_sk` (open_side `e`), spawn `;` (58,20), exit `$` (59,20..21) | none |
 
 ### Encounters
-None.
+No fixed encounter. Roaming packs: T1 south-west shore 2 faceless `w` (18,24), (20,26) + archer `v` (22,24); T2 south-east shore 2 boars `y` (44,27), (46,29). 5 kills, all skirtable, 8+ tiles from the path column and the spawn.
 
 ## Area 7: ts_kawah_jalan
 
@@ -579,7 +596,7 @@ None.
 #####,,############..............................###########
 #####,,############..rrr....................rrr..###########
 #####,,############rrrrr....................rrrrr###########
-#####,,############rr..........................rr###########
+#####,,############rr...............w..w.......rr###########
 #####,,#####################################################
 #####,,#####################################################
 #####,,#####################################################
@@ -600,7 +617,8 @@ None.
 | `@` | spawn, arrival from ts_kawah | `res://entities/world/spawn.tscn` | `{id:"from_ts_kawah"}` | path | 1 |
 | `$` | DROP exit to ts_kampung (south edge, 2 tiles, one-way) | `res://entities/world/exit.tscn` | `{target_zone:"ts_kampung", spawn_id:"from_ts_kawah_jalan"}` | path | 2 |
 | `Q` | petilasan 2 | `res://entities/petilasan/petilasan.tscn` | `{id:"sunda_2"}` | path | 1 |
-| `O` | encounter sunda_crater | `res://entities/world/encounter.tscn` | `{area_id:"sunda_crater", size:Vector2i(22,11), waves:[[[res://entities/enemies/jurig_leuweung.tscn, Vector2i(4,-2)], [res://entities/enemies/bandit.tscn, Vector2i(3,2)], [res://entities/enemies/wild_boar.tscn, Vector2i(-6,-1)], [res://entities/enemies/wild_boar.tscn, Vector2i(-6,1)]], [[res://entities/enemies/kuntilanak.tscn, Vector2i(-2,-4)], [res://entities/enemies/bandit.tscn, Vector2i(-2,4)]]]}` | path | 1 |
+| `O` | encounter sunda_crater | `res://entities/world/encounter.tscn` | `{area_id:"sunda_crater", size:Vector2i(22,11), waves:[[[res://entities/enemies/jurig_leuweung.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(3,2)], [res://entities/enemies/wild_boar.tscn, Vector2i(-6,-1)], [res://entities/enemies/wild_boar.tscn, Vector2i(-6,1)]], [[res://entities/enemies/kuntilanak.tscn, Vector2i(-2,-4)], [res://entities/enemies/faceless.tscn, Vector2i(-2,4)]]]}` | path | 1 |
+| `w` | loose faceless, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless.tscn` | `{}` | grass | 2 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -614,7 +632,9 @@ None.
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
-| `sunda_crater` | `O (34,16)` | 22x11 | W1: Jurig Leuweung (+4,-2), Bandit (+3,+2), Wild Boar (-6,-1), Wild Boar (-6,+1); W2: Kuntilanak (-2,-4), Bandit (-2,+4) | Nga Bind (Jurig), Ga Ward (Boars), Ca Burst (wave 2) |
+| `sunda_crater` | `O (34,16)` | 22x11 | W1: Jurig Leuweung (+4,-2), Faceless (+3,+2), Wild Boar (-6,-1), Wild Boar (-6,+1); W2: Kuntilanak (-2,-4), Faceless (-2,+4) | Nga Bind (Jurig), Ga Ward (Boars), Ca Burst (wave 2) |
+
+Roaming pack J1 on the south side of the crater floor: 2 faceless `w` (36,24), (39,24), outside the `sunda_crater` rect. 2 kills. Nothing between P2 and the boss.
 
 ## Area 8: ts_kawah
 
@@ -641,7 +661,7 @@ None.
 ########......................##############################
 ########......................##############################
 ########......................,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX
-########.......B...........Z..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X
+########.......B.C.........Z..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X
 ########......................##############################
 ########......................##############################
 ########......................##############################
@@ -665,14 +685,15 @@ None.
 |------|------|-------|-------|-------|-------|
 | `X` | exit to ts_kawah_jalan (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"ts_kawah_jalan", spawn_id:"from_ts_kawah"}` | path | 2 |
 | `e` | spawn, arrival from ts_kawah_jalan | `res://entities/world/spawn.tscn` | `{id:"from_ts_kawah_jalan"}` | path | 1 |
-| `B` | boss Sangkuriang | `res://entities/bosses/sangkuriang.tscn` | `{}` | path | 1 |
+| `B` | boss Sangkuriang, awakened after Captain breaks the Crater Seal | `res://entities/bosses/sangkuriang.tscn` | `{cond:"flag:mq1_8"}` | path | 1 |
+| `C` | boss Faceless captain (MQ1 1.8) | `res://entities/bosses/faceless_captain.tscn` | `{}` | path | 1 |
 | `Z` | arena post, east post (hang boeh rarang) | `res://entities/bosses/arena_post.tscn` | `{post_id:"east"}` | path | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | causeway | (30,16)-(58,17) 29x2 | Straight walk to the arena | exit `X` (59,16..17), spawn `e` (58,16) | none |
-| arena | (8,11)-(29,23) 22x13 | Sangkuriang boss arena | boss `B` (15,17), arena post `Z` (27,17, east side) | 1.9 `sangkuriang` |
+| arena | (8,11)-(29,23) 22x13 | Nagawiru's lair: the captain (MQ1), later the Sangkuriang echo (SQ-S5) | captain `C` (17,17), boss `B` (15,17), arena post `Z` (27,17, east side) | 1.8 `faceless_captain`; SQ-S5 `sangkuriang` |
 
 ### Encounters
 None.
@@ -683,17 +704,18 @@ Marker form `{zone: "<area id>", id: ...}`. The marker id equals the spot's own 
 
 | quest | step | marker id | area | char | event |
 |-------|------|-----------|------|------|-------|
-| MQ0 | 0.7 arrive in Tatar Sunda | `from_desa_purwa` | `ts_kebun` | `e` | `zone_entered:ts_*` on the first spawn (ASSUMED) |
-| MQ1 | 1.1 rest at petilasan | `sunda_1` (Q) | `ts_kebun` | `P` | `petilasan_activated:sunda_1` (Q) |
-| MQ1 | 1.2 find the elder | `sunda_elder` (Q) | `ts_kampung` | `A` | `talked_to:sunda_elder` (Q) |
-| MQ1 | 1.3 learn Ga | `sunda_elder` | `ts_kampung` | `A` | `glyph_learned:sunda_ga` (Q); set flag `mq1_3` (opens `G`) |
-| MQ1 | 1.4 clear the batu tulis grove | `sunda_batutulis` (Q) | `ts_leuweung` | `R` | `area_cleared:sunda_batutulis` (Q) |
-| MQ1 | 1.5 read the batu tulis | `batu_tulis` | `ts_leuweung` | `T` | `glyph_learned:sunda_nga` (Q); set flag `mq1_5` (opens `H`) |
-| MQ1 | 1.6 find the weaver | `sunda_weaver` | `ts_sawah` | `W` | `item_picked:boeh_rarang` (Q); the weaver gives it by dialogue (`give:boeh_rarang`) |
-| MQ1 | 1.7 meet Dayang Sumbi | `dayang_sumbi` (Q) | `ts_situ` | `D` | `talked_to:dayang_sumbi` (Q); set flag `mq1_7` (opens `K`) |
-| MQ1 | 1.8 climb to the crater rim | `sunda_2` (Q) | `ts_kawah_jalan` | `Q` | `petilasan_activated:sunda_2` (Q) |
-| MQ1 | 1.9 free Sangkuriang | `sangkuriang` | `ts_kawah` | `B` | `boss_defeated:sangkuriang` (Q); post `Z` (hang boeh rarang on post_id "east", then Ca) |
-| MQ1 | 1.10 return to Semar | `semar` | `desa_purwa` | - | `talked_to:semar`; sets `mq1_10` in Desa Purwa. The way back is the drop, then ts_kebun `X` |
+| MQ0 | 0.8 follow the raiders west | `from_desa_purwa` | `ts_kebun` | `e` | `zone_entered:ts_kebun` |
+| MQ1 | 1.1 rest at petilasan | `sunda_1` (Q) | `ts_kebun` | `P` | `petilasan_activated:sunda_1`, sets `mq1_1` |
+| MQ1 | 1.2 ask the elder, learn Ga | `sunda_elder` (Q) | `ts_kampung` | `A` | `glyph_learned:sunda_ga`; sets `mq1_3` (opens `G`). The talk also sets `mq1_2` |
+| MQ1 | 1.3 clear the batu tulis grove | `sunda_batutulis` (Q) | `ts_leuweung` | `R` | `area_cleared:sunda_batutulis` |
+| MQ1 | 1.4 read the batu tulis | `batu_tulis` | `ts_leuweung` | `T` | `glyph_learned:sunda_nga`; sets `mq1_5` (opens `H`) |
+| MQ1 | 1.5 clear the terraces | `sunda_terraces` | `ts_sawah` | `M` | `area_cleared:sunda_terraces` |
+| MQ1 | 1.6 the woman by the lake | `naganingrum` | `ts_situ` | `D` | `glyph_learned:sunda_ca`; sets `mq1_7` (opens `K`) |
+| MQ1 | 1.7 climb to the crater rim | `sunda_2` (Q) | `ts_kawah_jalan` | `Q` | `petilasan_activated:sunda_2` (Laras beat 1) |
+| MQ1 | 1.8 save the naga | `faceless_captain` | `ts_kawah` | `C` | `boss_defeated:faceless_captain`, sets `mq1_8`; then the `naga` beat sets `mq1_10` and starts MQG |
+| SQ-S5 | giver Dayang Sumbi | `dayang_sumbi` | `ts_situ` | `d` | after MQ1 |
+| SQ-S5 | (1) boeh rarang | `sunda_weaver` | `ts_sawah` | `W` | `talked_to:sunda_weaver` (`give:boeh_rarang`) |
+| SQ-S5 | (2) Sangkuriang | `sangkuriang` | `ts_kawah` | `B` | `boss_defeated:sangkuriang`; post `Z` (hang boeh rarang on post_id "east", then Ca) |
 | Optional | Sandekala | `sandekala` | `ts_leuwi` | `S` | `boss_defeated:sandekala` |
 | SQ-S1 | giver Ki Darsa | `ki_darsa` | `ts_kampung` | `I` | `talked_to:ki_darsa`. Unlock: 1.2 |
 | SQ-S1 | (1) Lutung Kasarung | `lutung_kasarung` | `ts_leuweung` | `Y` | `talked_to:lutung_kasarung` |
@@ -710,7 +732,7 @@ Marker form `{zone: "<area id>", id: ...}`. The marker id equals the spot's own 
 Flags set or read in this region: `mq1_3`, `mq1_5` (**ASSUMED**, new), `mq1_7` (Q), `mq1_10` (Q, Desa Purwa). Shortcut gate ids `sc:ts_pagar`, `sc:ts_tangga` (**ASSUMED**).
 
 ## Flow
-Desa Purwa -> ts_kebun `e` -> E1 field (Bolt teach) -> petilasan 1 `P` with Cepot -> north road -> ts_kampung (Abah Karna, Ga) -> `G` -> ts_leuweung lane E2 (Ward) -> grove E3 + batu tulis (Nga) -> back to ts_kampung (lane, or the south path and the pagar shortcut; the dark grove is never on the route) -> `H` -> ts_sawah clearing E4 (Bind teach) -> terraces E5 + weaver (boeh rarang) -> north corridor -> ts_situ, Dayang Sumbi (Ca) -> `K` -> ts_kawah_jalan crater E7 -> petilasan 2 `Q` -> ts_kawah, Sangkuriang. After the boss: P2 -> drop -> ts_kampung -> ts_kebun -> Desa Purwa. Optional: Sandekala (ts_leuwi), dark grove elite (SQ-S2), hidden spring (SQ-S1), 3 secret chests, 5 angklung, the codex.
+Desa Purwa -> ts_kebun `e` -> E1 field (Bolt teach) -> petilasan 1 `P` with Cepot -> north road -> ts_kampung (Abah Karna, Ga) -> `G` -> ts_leuweung lane E2 (Ward) -> grove E3 + batu tulis (Nga) -> back to ts_kampung (lane, or the south path and the pagar shortcut; the dark grove is never on the route) -> `H` -> ts_sawah clearing E4 (Bind teach) -> terraces E5 -> north corridor -> ts_situ, Naganingrum (Ca) -> `K` -> ts_kawah_jalan crater E7 -> petilasan 2 `Q` -> ts_kawah, the Faceless captain (Story v2). After the boss: P2 -> drop -> ts_kampung -> ts_kebun -> Desa Purwa, then east to Keraton Galuh. Echo SQ-S5: Dayang Sumbi in ts_situ, the weaver, Sangkuriang at the same arena. Optional: Sandekala (ts_leuwi), dark grove elite (SQ-S2), hidden spring (SQ-S1), 3 secret chests, 5 angklung, the codex.
 
 ## Validation
 Run with `python3 ts_check.py` (kept outside the repo in the session scratch folder). It parses this file. Checks: row widths and sizes, solid edges except exits, spawn within 2 tiles of every exit, link pairs on both ends (the drop is one-way), BFS from every spawn reaching every spot (kabut and gates walkable), shortcut pockets separated by the gate, first-trip world BFS with shortcuts opened from the far side, kabut-closed reachability, encounter spawn tiles and boar lanes, petilasan before the boss with no fight between, and the graph rules (loops, shortcuts, drop, reachability).
@@ -940,7 +962,7 @@ RESULT: 218 checks, 0 FAIL
 ## Step 2 self-check ([AGENTS.md](../../AGENTS.md) section 5)
 - [x] POI counts: 1 boss arena, 2 optional fight rooms (Sandekala miniboss, dark grove elite; world.md wants "1 miniboss or elite room"), 3 secrets (alcove, hidden spring, Kujang room), 1 codex spot, 7 encounters (6-10), 2 petilasans. **NPCs: 10 spots** vs the world.md target 3-5. See Doc conflicts.
 - [x] Petilasan `Q` (6,16) in ts_kawah_jalan is the last stop before ts_kawah: the P2 room, the exit `%` and the causeway hold no enemies. The crater fight E7 is east of P2, its trigger rect (23..44) ends before the P2 room. The validator checks this.
-- [x] First appearances (teach, then test): Bandit and Kuntilanak at E1 (player holds Ka). Wild Boar alone at E2 (Ka, Ga; kabut `G` needs `mq1_3`). Jurig at E4 with 2 Bandits (Ka, Ga, Nga; kabut `H` needs `mq1_5`). Bandit Archer at E5 with known enemies.
+- [x] First appearances (teach, then test): Faceless and Kuntilanak at E1 (player holds Ka). Wild Boar alone at E2 (Ka, Ga; kabut `G` needs `mq1_3`). Jurig at E4 with 2 Faceless (Ka, Ga, Nga; kabut `H` needs `mq1_5`). Faceless Archer at E5 with known enemies.
 - [x] One tank per encounter (Jurig in E4, E5, E7 only), at most one shooter, at most two waves (crater only).
 - [x] Rooms with 4+ enemies: terraces (36x13, 24x11 trigger) and crater (30x17 floor) are both above 15x9. Boar lanes 8+ (validator): E2 is 14 straight tiles, E7 boars have 20 clear tiles west and 31 east.
 - [~] Newest glyph: Ca (Dayang Sumbi) has no weakness in this region. The newest glyph with a weakness is Nga (Bind). Ca Burst answers E7 wave 2 and Sangkuriang phase 2. See Doc conflicts.
@@ -966,7 +988,7 @@ RESULT: 218 checks, 0 FAIL
 
 ## Open questions
 1. NPC count is 10 (world.md target 3-5). Keep (all quest-bound, recommended), or merge the weaver into the angklung leader and make the lutung a trigger?
-2. E3 (batu tulis grove) uses Bandits plus Kuntilanak, not the bestiary's Jurig mix, because Bind is learned after the grove is cleared. OK?
+2. E3 (batu tulis grove) uses Faceless plus Kuntilanak, not the bestiary's Jurig mix, because Bind is learned after the grove is cleared. OK?
 3. Should Ca have a Tatar Sunda weakness enemy? Today only Lampor (Mataram, listed as "Ca (Sunda)") uses it.
 4. Cepot "supervises from a tree": no tree tile, so he stands next to the petilasan.
 5. Segara Kidul `sk_tebing` must get the `from_ts_situ` spawn and the pending shortcut end before `sc:ts_sk` can open. Until then it is a closed gate that is only decoration.
@@ -976,5 +998,5 @@ RESULT: 218 checks, 0 FAIL
 - bestiary.md batu tulis mix has Jurig Leuweung at MQ1 1.4, but Bind arrives at 1.5. Jurig first appears at E4 instead.
 - bestiary.md "newest glyph earns its place" vs Ca (1.7) having no Tatar Sunda enemy.
 - world.md "3-5 NPCs" vs quests.md needing Cepot, Abah Karna, Ki Darsa, kepala desa, angklung leader, weaver, Purbasari, Dayang Sumbi, lutung.
-- quests.md SQ-S1 step 3 and 1.4 "spirits" wording: E3 holds Bandits and a Kuntilanak.
+- quests.md SQ-S1 step 3 and 1.4 "spirits" wording: E3 holds Faceless and a Kuntilanak.
 - world.md, architecture.md and schedule.md still describe Tatar Sunda as one zone with id `tatar_sunda`. They need the area list when this design is approved.

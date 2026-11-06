@@ -27,3 +27,9 @@ signal quest_completed(id: String)
 # dialogue box (ui/dialogue_box)
 signal dialogue_requested(speaker_key: String, lines: PackedStringArray)
 signal dialogue_finished
+signal dialogue_choices(keys: PackedStringArray)   # Game.play emits this just before dialogue_requested; the box shows them after the last line
+signal dialogue_picked(index: int)                  # the box emits this just before dialogue_finished when choices were shown
+
+# write mode (ui/glyph_lesson): the player draws these glyphs in order
+signal write_requested(seq_id: String, glyphs: PackedStringArray)
+signal name_written(seq_id: String)

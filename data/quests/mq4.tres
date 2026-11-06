@@ -1,0 +1,79 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_MQ4_S1_OBJ"
+on = "zone_entered:sk_karang"
+set_flag = "mq4_1"
+marker = {"zone": "sk_karang", "id": "from_tt_pesisir"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_MQ4_S2_OBJ"
+on = "area_cleared:kidul_karang_2"
+set_flag = "mq4_2"
+marker = {"zone": "sk_karang", "id": "kidul_karang_2"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_MQ4_S3_OBJ"
+on = "petilasan_activated:kidul_1"
+set_flag = "mq4_3"
+marker = {"zone": "sk_pantai", "id": "kidul_1"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_MQ4_S4_OBJ"
+on = "talked_to:kidul_jurukunci"
+set_flag = "mq4_4"
+marker = {"zone": "sk_pantai", "id": "kidul_jurukunci"}
+
+[sub_resource type="Resource" id="s5"]
+script = ExtResource("2")
+objective = "Q_MQ4_S5_OBJ"
+on = "area_cleared:kidul_trial"
+set_flag = "mq4_5"
+marker = {"zone": "sk_pantai", "id": "kidul_trial"}
+
+[sub_resource type="Resource" id="s6"]
+script = ExtResource("2")
+objective = "Q_MQ4_S6_OBJ"
+on = "area_cleared:kidul_keraton_1"
+set_flag = "mq4_6"
+marker = {"zone": "sk_keraton", "id": "kidul_keraton_1"}
+
+[sub_resource type="Resource" id="s7"]
+script = ExtResource("2")
+objective = "Q_MQ4_S7_OBJ"
+on = "petilasan_activated:kidul_2"
+set_flag = "mq4_7"
+marker = {"zone": "sk_keraton", "id": "kidul_2"}
+
+[sub_resource type="Resource" id="s8"]
+script = ExtResource("2")
+objective = "Q_MQ4_S8_OBJ"
+on = "name_written:ombak"
+set_flag = "mq4_8"
+marker = {"zone": "sk_keraton", "id": "kidul_altar"}
+
+[sub_resource type="Resource" id="s9"]
+script = ExtResource("2")
+objective = "Q_MQ4_S9_OBJ"
+on = "area_cleared:kidul_tebing_2"
+set_flag = "mq4_9"
+marker = {"zone": "sk_tebing", "id": "kidul_tebing_2"}
+
+[resource]
+script = ExtResource("1")
+id = "mq4"
+kind = "main"
+type = "main"
+zone = "segara_kidul"
+size = "L"
+giver = "beats"
+requires = Array[String](["mq3_8"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9")])
+rewards = {"items": ["kain_hijau"], "codex": ["nyi_roro_kidul"]}

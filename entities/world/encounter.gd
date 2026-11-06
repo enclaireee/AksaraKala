@@ -9,6 +9,8 @@ const WARN := 0.5   # TUNE
 @export var size := Vector2i(15, 9)   # tiles, centered on the node
 ## Each wave: Array of [scene_path: String, tile_offset: Vector2i] (offset from this node's tile).
 @export var waves: Array = []
+## Game.check condition; the encounter stays off (starts nothing, draws nothing) until it holds. Empty = always on.
+@export var cond := ""
 
 var _wave := -1   # index of the wave on the field
 var _alive := 0
@@ -20,10 +22,18 @@ func _ready() -> void:
 	r.size = Vector2(size * 16)
 	$Shape.shape = r
 	body_entered.connect(_on_body_entered)
+	if cond != "":
+		get_node("/root/Game").changed.connect(_on_game_changed)
+
+
+## The condition came true with the player already inside the rect.
+func _on_game_changed() -> void:
+	for b in get_overlapping_bodies():
+		_on_body_entered(b)
 
 
 func _on_body_entered(b: Node) -> void:
-	if not _started and b.is_in_group("player"):
+	if not _started and b.is_in_group("player") and get_node("/root/Game").check(cond):
 		_started = true
 		_next.call_deferred()   # no adding bodies during the physics flush
 
