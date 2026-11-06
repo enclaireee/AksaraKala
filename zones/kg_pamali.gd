@@ -17,10 +17,10 @@ const MAP := [
 	"#.......................,,,r,,,,,,,,..............bbb......#",
 	"#.......................,,,,,,,,,,,,..............bbb......#",
 	"#...............S.......,,,,,,,,,,,,..............bbb......#",
-	"#.......................,,,,,,,,,,,,.......................#",
+	"#....................c..,,,,,,,,,,,,.......................#",
 	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,,,,,,,,,,,,yY",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
-	"#.......................,,,,,,,,,,,,.......................#",
+	"#.......................,,,,,s,,,,,,.......................#",
 	"#.......................,,,,,,,,,,,,.......................#",
 	"#.......................,,,,,,,,,,,,.......................#",
 	"#.......................,,,,,,,,r,,,.......................#",
@@ -46,6 +46,8 @@ const SPOTS := {
 	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pamali_stone", "cond": "flag:mq2_7"}, "tile": "."},   # NPC the Pamali stone, west bank (Ch 3)
 	"B": {"scene": "res://entities/bosses/hariang_banga.tscn", "props": {"unique_id": "hariang_banga", "cond": "flag:mq2_8"}, "tile": ","},   # boss Hariang Banga, the duel on the ford
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "pamali"}, "tile": "."},   # codex spot, the Pamali river
+	"s": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sapto", "cond": "quest:mq2=done,!flag:beat_truce"}, "tile": ","},   # NPC Sapto, Ki Sumarto's son, a soldier of Hariang Banga's army; wades home across the ford in the `truce` beat (name key `NPC_SAPTO_NAME`, **ASSUMED**)
+	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "quest:mq2=done,!flag:beat_truce"}, "tile": "."},   # NPC Ciung Wanara on the west bank, staging for the `truce` beat (the same `ciung_wanara` NPC id as Act II; he has no talk here)
 }
 
 

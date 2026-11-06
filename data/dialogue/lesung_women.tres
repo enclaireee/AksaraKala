@@ -7,9 +7,6 @@ script = ExtResource("1")
 npc_id = "lesung_women"
 name_key = "NPC_LESUNG_WOMEN_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq2=6"], "lines": ["DLG_LESUNG_WOMEN_V1", "@NPC_HERO_NAME", "DLG_LESUNG_WOMEN_H1", "@NPC_LESUNG_WOMEN_NAME", "DLG_LESUNG_WOMEN_V2", "DLG_LESUNG_WOMEN_V3", "DLG_LESUNG_WOMEN_V4"], "do": ["learn:jawa_ca"]},
-	{"if": ["quest:sq_m5=done"], "lines": ["DLG_LESUNG_WOMEN_V5"], "do": []},
-	{"if": ["quest:sq_m5=active"], "lines": ["DLG_LESUNG_WOMEN_V6"], "do": []},
-	{"if": ["flag:mq2_5", "quest:sq_m5=available"], "lines": ["DLG_LESUNG_WOMEN_V7", "DLG_LESUNG_WOMEN_V8", "DLG_LESUNG_WOMEN_V9"], "do": ["start:sq_m5"]},
+	{"if": ["flag:lead_kuburan", "!flag:mq2_5"], "lines": ["DLG_LESUNG_WOMEN_V1", "@NPC_HERO_NAME", "DLG_LESUNG_WOMEN_H1", "@NPC_LESUNG_WOMEN_NAME", "DLG_LESUNG_WOMEN_V2", "DLG_LESUNG_WOMEN_V3"], "do": ["learn:jawa_ca"]},
 	{"if": [], "lines": ["DLG_LESUNG_WOMEN_V10"], "do": []}
 ])

@@ -49,7 +49,7 @@ const ZONES := {
 ## structure). Kabut links are listed as open. ponytail: an opened shortcut's back edge is not added;
 ## the arrow just takes the long way round.
 const ADJ := {
-	"desa_purwa": ["ts_kebun", "kg_alun", "gk_mulut"],   # gk_mulut: kabut mq3_8
+	"desa_purwa": ["ts_kebun", "kg_alun", "gk_mulut", "sk_pantai"],   # gk_mulut: kabut mq4_9, sk_pantai: kabut mq4_2
 	"ts_kebun": ["desa_purwa", "ts_kampung"],
 	"ts_kampung": ["ts_kebun", "ts_leuweung", "ts_sawah", "ts_leuwi"],
 	"ts_leuweung": ["ts_kampung", "ts_kebun"],   # ts_kebun: sc:ts_pagar, opened from this side
@@ -73,16 +73,16 @@ const ADJ := {
 	"tt_ladang": ["tt_kali", "tt_pasir", "tt_beringin"],   # tt_beringin: sc:tt_ladang
 	"tt_pasir": ["tt_ladang", "tt_candi", "tt_sabana"],   # tt_sabana: sc:tt_pasir
 	"tt_candi": ["tt_pasir"],
-	"tt_pesisir": ["tt_sabana", "sk_karang"],   # sk_karang: S, kabut mq3_8
-	"sk_karang": ["tt_pesisir", "sk_pantai", "sk_keraton"],   # sk_keraton: S, kabut mq4_5
-	"sk_pantai": ["sk_karang", "sk_tebing"],
-	"sk_tebing": ["sk_pantai", "sk_keraton", "ts_situ"],   # sk_keraton: one-way drop, ts_situ: sc:ts_sk
-	"sk_keraton": ["sk_karang", "sk_pantai"],   # sk_pantai: sc:sk_gerbang
+	"tt_pesisir": ["tt_sabana", "sk_karang"],   # sk_karang: S, the back route, kabut mq4_9
+	"sk_karang": ["tt_pesisir", "sk_pantai", "sk_keraton", "sk_tebing"],   # sk_keraton: S, kabut mq4_8; sk_tebing: L4
+	"sk_pantai": ["desa_purwa", "sk_karang"],
+	"sk_tebing": ["sk_karang", "sk_keraton", "ts_situ"],   # sk_keraton: one-way drop, ts_situ: sc:ts_sk
+	"sk_keraton": ["sk_karang", "sk_pantai", "gk_mulut"],   # sk_pantai: sc:sk_gerbang, gk_mulut: kabut mq4_9
 	"kg_alun": ["desa_purwa", "kg_keraton", "kg_pamali"],   # kg_keraton: kabut mqg_3, kg_pamali: kabut mqg_7
 	"kg_keraton": ["kg_alun", "kg_penjara"],
 	"kg_penjara": ["kg_keraton"],
 	"kg_pamali": ["kg_alun", "mt_gapura"],
-	"gk_mulut": ["desa_purwa", "gk_pasir", "gk_lupa"],   # gk_lupa: sc:gk_lorong
+	"gk_mulut": ["desa_purwa", "gk_pasir", "gk_lupa", "sk_keraton"],   # gk_lupa: sc:gk_lorong
 	"gk_pasir": ["gk_mulut", "gk_lupa"],   # gk_lupa: the one-way drop
 	"gk_lupa": ["gk_mulut", "gk_ruang_kala"],
 	"gk_ruang_kala": ["gk_lupa", "desa_purwa"],   # desa_purwa: kala_exit, kabut mq5_3
@@ -202,8 +202,7 @@ func respawn(rested := false) -> void:
 		return   # death fade and a rest in the same frame: one reload only
 	_busy = true
 	var game := get_node("/root/Game")
-	game.flask_charges = game.flask_max
-	game.changed.emit()
+	game.restore()   # flask (and a living player, about to be replaced anyway)
 	var zone: String = game.last_petilasan.get("zone", "")
 	if zone == "" or not ResourceLoader.exists(zone):
 		zone = start_zone

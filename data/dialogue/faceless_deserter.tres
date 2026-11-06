@@ -7,7 +7,7 @@ script = ExtResource("1")
 npc_id = "faceless_deserter"
 name_key = "NPC_FACELESS_DESERTER_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mqg=6"], "lines": ["DLG_FACELESS_DESERTER_V1", "@NPC_HERO_NAME", "DLG_FACELESS_DESERTER_H1", "@NPC_FACELESS_DESERTER_NAME", "DLG_FACELESS_DESERTER_V2", "DLG_FACELESS_DESERTER_V2B", "DLG_FACELESS_DESERTER_V3"], "do": [], "choices": [{"text": "CHOICE_DESERTER_1", "do": ["flag:choice_freed"]}, {"text": "CHOICE_DESERTER_2", "do": ["flag:choice_handed"]}]},
+	{"if": ["step:mqg=7"], "lines": ["DLG_FACELESS_DESERTER_V1", "@NPC_HERO_NAME", "DLG_FACELESS_DESERTER_H1", "@NPC_FACELESS_DESERTER_NAME", "DLG_FACELESS_DESERTER_V2", "DLG_FACELESS_DESERTER_V3", "CHOICE_DESERTER_1", "CHOICE_DESERTER_2"], "do": [], "choices": [{"text": "CHOICE_DESERTER_1", "do": ["flag:choice_freed"]}, {"text": "CHOICE_DESERTER_2", "do": ["flag:choice_handed"]}]},
 	{"if": ["flag:choice_freed"], "lines": ["DLG_FACELESS_DESERTER_V4"], "do": []},
 	{"if": ["flag:choice_handed"], "lines": ["DLG_FACELESS_DESERTER_V5"], "do": []},
 	{"if": [], "lines": ["DLG_FACELESS_DESERTER_V6"], "do": []}

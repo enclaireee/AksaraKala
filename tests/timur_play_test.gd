@@ -1,33 +1,36 @@
 extends SceneTree
-## Tanah Timur route (tanah_timur.md): MQ3 3.1-3.8 and SQ-T1..T4 walked area to area from the Mataram border (Story v2: ends on the keris choice, the Nameless Hunter and the hunter_name beat),
+## Tanah Timur route (tanah_timur.md): MQ3 3.1-3.11 and SQ-T1..T4 walked area to area from the Mataram border (Story v3.1: ends on the keris choice, the Nameless Hunter and the hunter_name beat),
 ## the way mataram_play_test.gd walks MQ2. Same actions, plus "kill:<kind>" (an active quest elite) and
 ## "stakes" (cast next to the practice stakes). ponytail: kills and casts are faked, the user playtests combat.
 
 const ROUTE := [
+	# MQ3 step index = row order in quests.md 4 (3.1 = 0 ... 3.11 = 10).
 	"q:mq3=active:0",
 	"do:timur_gerbang", "q:mq3=active:1",
 	"go:tt_sabana", "do:timur_1", "q:mq3=active:2",
-	"do:timur_herder", "q:sq_t2=active:1", "do:timur_embers", "q:mq3=active:3",
+	"do:timur_herder", "q:sq_t2=active:1", "do:timur_embers",
 	"go:tt_kali", "do:klething_kuning", "q:sq_t1=active:1",
-	"go:tt_sabana", "go:tt_beringin", "do:timur_empu", "q:mq3=active:4",
-	"do:timur_empu", "q:sq_t3=active:1", "do:kepang_leader", "q:sq_t4=active:1",
+	"go:tt_sabana", "go:tt_beringin", "do:timur_empu", "q:mq3=active:3",
+	"do:kepang_leader", "q:sq_t4=active:1",
 	"do:sodo_lanang", "q:sq_t1=active:2",
 	"go:tt_sabana", "do:kuda_kepang_1", "go:tt_kali", "do:kuda_kepang_2",
 	"do:klething_kuning", "q:sq_t1=done", "has:stone_ring",
-	"do:timur_wisps", "q:mq3=active:5", "do:mbok_srini", "q:mq3=active:6",
-	"go:tt_ladang", "do:timur_ladang", "q:mq3=active:7", "do:buto_ijo", "q:mq3=active:8",
-	"go:tt_beringin", "do:sc:tt_ladang", "do:timur_empu", "q:mq3=active:8",
-	"do:timur_praktik", "q:mq3=active:8", "stakes", "q:mq3=active:9",
+	"do:timur_wisps", "do:mbok_srini", "q:mq3=active:4",
+	"go:tt_ladang", "do:timur_ladang", "do:buto_ijo", "q:mq3=active:5",
+	"go:tt_beringin", "do:sc:tt_ladang", "do:timur_empu", "q:mq3=active:5",
+	"do:timur_praktik", "q:mq3=active:5", "stakes", "q:mq3=active:6",
 	"go:tt_pesisir", "do:kuda_kepang_3", "q:sq_t4=active:2",
 	"do:burn_trail", "q:sq_t2=active:2", "kill:banaspati_elite", "q:sq_t2=active:3",
-	"do:timur_pesisir", "q:mq3=active:10",
+	"do:timur_pesisir", "q:mq3=active:7",
 	"go:tt_sabana", "do:timur_herder", "q:sq_t2=done",
 	"go:tt_beringin", "do:kepang_leader", "q:sq_t4=active:3", "do:kepang_stage", "q:sq_t4=done",
+	# SQ-T3 opens with 3.3 but the empu offers it only once his step hints (steps 3 and 5) are past.
+	"do:timur_empu", "q:sq_t3=active:1",
 	"go:tt_sabana", "go:tt_kulon", "go:mt_wetan", "go:mt_candi", "do:batu_bintang", "q:sq_t3=active:2",
 	"go:mt_wetan", "go:tt_kulon", "go:tt_sabana", "go:tt_beringin", "do:timur_empu", "q:sq_t3=done", "has:keris_luk_7",
-	"go:tt_ladang", "go:tt_pasir", "do:timur_pasir", "q:mq3=active:11", "do:timur_2", "q:mq3=active:12", "beat:laras_4",
-	"go:tt_candi", "pick:1", "do:keris_gandring", "q:mq3=active:13", "beat:keris", "flag:choice_sink",
-	"beat:hunter_shrine", "do:nameless_hunter", "q:mq3=done", "beat:hunter_name", "q:mq5=active:0",
+	"go:tt_ladang", "go:tt_pasir", "do:timur_pasir", "q:mq3=active:8", "do:timur_2", "q:mq3=active:9", "beat:laras_4",
+	"go:tt_candi", "pick:1", "do:keris_gandring", "q:mq3=active:10", "beat:keris", "flag:choice_sink",
+	"beat:hunter_shrine", "do:nameless_hunter", "q:mq3=done", "beat:hunter_name", "q:mq4=active",
 ]
 
 var fails := 0
@@ -322,10 +325,10 @@ func _kill(kind: String) -> bool:
 	return check(e.dead, "%s: %s did not die" % [zone.zone_id, kind])
 
 
-## Stand next to each practice stake in turn and cast, until step 3.5 (index 4) moves on.
+## Stand next to each practice stake in turn and cast, until step 3.6 (index 5) moves on.
 func _stakes() -> bool:
 	for s in get_nodes_in_group("curse_stake"):
-		if game.quests.mq3.step != 8:
+		if game.quests.mq3.step != 5:
 			break
 		var at := _reach(_cells_of(s))
 		if not check(at != Vector2i(-1, -1), "%s: practice stake not reachable" % zone.zone_id):

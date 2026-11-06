@@ -60,7 +60,7 @@ const SPOTS := {
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_sawah"}, "tile": ","},   # spawn, arrival from mt_sawah
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_reruntuhan", "spawn_id": "from_mt_pasar"}, "tile": ","},   # exit to mt_reruntuhan (south edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_reruntuhan"}, "tile": ","},   # spawn, arrival from mt_reruntuhan
-	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "mataram_dalang"}, "tile": "_"},   # NPC Ki Sumarto, the dalang (2.2, SQ-M4 giver)
+	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "mataram_dalang"}, "tile": "_"},   # NPC Ki Sumarto, the dalang (2.4, teaches Ha once `lead_pasar`; regional character; SQ-M4 giver)
 	"B": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pande_besi"}, "tile": "_"},   # NPC pande besi, blacksmith (SQ-M3 giver)
 	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "wewe_neighbor"}, "tile": "."},   # NPC worried neighbor (SQ-M2 giver)
 	"P": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "wewe_parents"}, "tile": "_"},   # NPC Wewe's parents (SQ-M2 alt)

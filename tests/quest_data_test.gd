@@ -52,7 +52,9 @@ func _initialize() -> void:
 			check(ResourceLoader.exists("res://data/items/%s.tres" % it), "%s: reward item %s missing" % [q.id, it])
 		for s in q.steps:
 			check(qt.get(s.objective, false), "%s: objective key %s missing or empty" % [q.id, s.objective])
-			check(s.on.split(":")[0] in SIGNALS, "%s: unknown signal in '%s'" % [q.id, s.on])
+			# A step has its own `on`, or an empty `on` plus an `all` array of {on, set_flag} leads (quests.md 7.1).
+			for o: String in ([s.on] if s.on != "" else s.all.map(func(a: Dictionary) -> String: return a.on)):
+				check(o.split(":")[0] in SIGNALS, "%s: unknown signal in '%s'" % [q.id, o])
 			# ponytail: markers are only checked for shape, not against the zone docs
 			check(s.marker.is_empty() or (s.marker.get("zone", "") != "" and s.marker.get("id", "") != ""),
 				"%s: marker needs zone and id" % q.id)

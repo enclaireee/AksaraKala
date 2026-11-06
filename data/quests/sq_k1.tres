@@ -36,6 +36,6 @@ type = "errand"
 zone = "segara_kidul"
 size = "M"
 giver = "kidul_nelayan_anak"
-requires = Array[String](["mq4_1"])
+requires = Array[String](["mq4_2"])
 steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
 rewards = {"herb_pouch": 1}

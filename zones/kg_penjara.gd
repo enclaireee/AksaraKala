@@ -9,7 +9,7 @@ const MAP := [
 	"############################################################",
 	"##########______####______####______####______##############",
 	"##########______####______####______####______##############",
-	"##########______####______####__D___####__g___##############",
+	"##########___m__####______####__D___####__g___##############",
 	"##########______####______####______####______##############",
 	"##########______####______####______####______##############",
 	"############__########__########__########__################",
@@ -18,7 +18,7 @@ const MAP := [
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
-	"Xe,,,,______________________G________________________#######",
+	"Xe,,,,__________W_____________________G______________#######",
 	"X,,,,,_______________________________________________#######",
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
@@ -42,8 +42,10 @@ const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_keraton", "spawn_id": "from_kg_penjara"}, "tile": ","},   # exit to kg_keraton (west edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_keraton"}, "tile": ","},   # spawn, arrival from kg_keraton
 	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "galuh_cells", "size": Vector2i(22,10), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-8,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(-2,3)], ["res://entities/enemies/faceless.tscn", Vector2i(5,-3)]], [["res://entities/enemies/faceless.tscn", Vector2i(-6,3)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(8,2)]]]}, "tile": "_"},   # encounter galuh_cells (the guards of the cells)
+	"W": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "galuh_escort", "size": Vector2i(16,10), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-5,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,3)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(6,2)]]]}, "tile": "_"},   # encounter galuh_escort (the wagon escort in the cell yard, the near miss)
 	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "faceless_deserter"}, "tile": "_"},   # NPC the Faceless deserter, in a cell
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "pamali_cage"}, "tile": "_"},   # codex spot, the iron cage of the legend (VERIFY)
+	"m": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "laras_wall"}, "tile": "_"},   # wall message, Laras's scratched words: "The thousand temples. Don't stop." (MQG g.7; codex id ASSUMED)
 }
 
 

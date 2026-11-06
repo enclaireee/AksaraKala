@@ -65,12 +65,13 @@ The main story becomes [story_ciung_wanara.md](story_ciung_wanara.md) v2: Laras 
 ## Phase 4c: Story v3.1 (user call 2026-11-06)
 The main story is now [story.md](story.md) v3.1, with Act III's three leads, the Interlude, Segara Kidul as Act V on the main path, glyphs earned by deeds, camp talks and choice consequences. All docs were updated first (2026-11-06). The code still runs the v2/brainstorm data, so this phase brings the code in line with the docs.
 - [x] Docs: story, quests, script, world, every zone doc, bestiary, balance, spells, ui, scope, items, concept, rpg (HANDOFF §5u)
-- [ ] Quest engine: `all` steps, `goto:<area>:<spawn>`, `restore`, `zone:<area>` condition, and a `glyph_learned:` step that completes at once if the glyph is already known ([quests.md](quests.md) 7.1). `deep-implementer`, with tests
-- [ ] Quest data: rewrite `data/quests/mq0`-`mq5`, `mqg` to quests.md §4 (70 steps); remove `sq_s5`, `sq_m5` and the bosses' echo conds
-- [ ] Beats and dialogue: `beats.tres` and NPC dialogue from [script.md](script.md); camp talks; choice consequences; new codex entries
-- [ ] Zones: regenerate the areas whose maps changed (`gen_zones.py`) and move the kabut flags (`mq4_2`, `mq4_9`); new objects `laras_lontar`, `laras_ribbon`, `seal_stone`, `arca_base`, `hunter_mask`, `laras_wall`; petilasan `kidul_3`; the trial moves to `sk_keraton`
-- [ ] Items: `batu_kali`; the Choice 3 rewards
-- [ ] Tests: update the play tests (prologue, galuh, mataram, timur, kidul, kala) and `quest_reach_test` to the new steps
+- [x] Quest engine: `all` steps, `goto:<area>:<spawn>`, `restore`, `zone:<area>` condition, and a `glyph_learned:` step that completes at once if the glyph is already known ([quests.md](quests.md) 7.1). `deep-implementer`, with tests
+- [x] Quest data: rewrite `data/quests/mq0`-`mq5`, `mqg` to quests.md §4 (71 steps); remove `sq_s5`, `sq_m5` and the bosses' echo conds
+- [x] Beats and dialogue: `beats.tres` and NPC dialogue from [script.md](script.md); camp talks; choice consequences; new codex entries
+- [x] Zones: regenerate the areas whose maps changed (`gen_zones.py`) and move the kabut flags (`mq4_2`, `mq4_9`); new objects `laras_lontar`, `laras_ribbon`, `seal_stone`, `arca_base`, `hunter_mask`, `laras_wall`; petilasan `kidul_3`; the trial moves to `sk_keraton`
+- [x] Items: `batu_kali`; the Choice 3 rewards
+- [x] Tests: update the play tests (prologue, galuh, mataram, timur, kidul, kala) and `quest_reach_test` to the new steps
+- Built 2026-11-06 (HANDOFF §5x): all 52 tests pass. The Ombak spell is built too.
 - Exit: every test passes; New Game to the credits plays the v3.1 story; the user's playtest says it feels like an RPG and measures the minutes per act against the story.md runtime table.
 
 ## Phase 5: Remaining regions
@@ -78,7 +79,7 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 - [x] Mataram zone and boss (built 2026-11-05, not yet playtested)
 - [x] Tanah Timur zone, miniboss and boss (built 2026-11-05, not yet playtested)
 - [x] Gua Kala and the final boss (built 2026-11-05, not yet playtested)
-- [ ] Segara Kidul (main path, P0 since story v3.1: 4 areas, the Trial of the Waves, Ombak)
+- [x] Segara Kidul (main path, P0 since story v3.1: 4 areas, the Trial of the Waves, Ombak; built in Phase 4c, not yet playtested)
 - [ ] All gear as data, drops and chests
 - Exit: the game can be played start to finish with placeholder or pack art.
 

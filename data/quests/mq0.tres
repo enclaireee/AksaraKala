@@ -6,27 +6,26 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ0_S1_OBJ"
-on = "area_entered:wayang_stage"
-marker = {"zone": "desa_purwa", "id": "wayang_stage"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ0_S2_OBJ"
-on = "talked_to:semar"
+on = "class_chosen"
 marker = {"zone": "desa_purwa", "id": "semar"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ0_S3_OBJ"
-on = "class_chosen"
-marker = {"zone": "desa_purwa", "id": "semar"}
+on = "talked_to:ibu"
+set_flag = "mq0_4"
+marker = {"zone": "desa_purwa", "id": "ibu"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ0_S4_OBJ"
-on = "talked_to:ibu"
-marker = {"zone": "desa_purwa", "id": "ibu"}
-set_flag = "mq0_4"
+on = "area_entered:wayang_stage"
+set_flag = "mq0_5"
+marker = {"zone": "desa_purwa", "id": "wayang_stage"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
@@ -45,8 +44,8 @@ marker = {"zone": "desa_purwa", "id": "sanggar_enter"}
 script = ExtResource("2")
 objective = "Q_MQ0_S7_OBJ"
 on = "area_cleared:purwa_raid"
-marker = {"zone": "desa_purwa", "id": "purwa_raid"}
 set_flag = "mq0_7"
+marker = {"zone": "desa_purwa", "id": "purwa_raid"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")

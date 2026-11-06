@@ -7,7 +7,7 @@ script = ExtResource("1")
 npc_id = "lengser"
 name_key = "NPC_LENGSER_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mqg=3"], "lines": ["DLG_LENGSER_V1", "@NPC_HERO_NAME", "DLG_LENGSER_H1", "@NPC_LENGSER_NAME", "DLG_LENGSER_V2", "DLG_LENGSER_V3", "DLG_LENGSER_V4"], "do": ["codex:lengser"]},
+	{"if": ["step:mqg=3"], "lines": ["DLG_LENGSER_V1", "@NPC_HERO_NAME", "DLG_LENGSER_H1", "@NPC_LENGSER_NAME", "DLG_LENGSER_V2"], "do": ["codex:lengser"]},
 	{"if": ["flag:choice_freed"], "lines": ["DLG_LENGSER_V5"], "do": []},
 	{"if": ["flag:choice_handed"], "lines": ["DLG_LENGSER_V6"], "do": []},
 	{"if": ["quest:mqg=active"], "lines": ["DLG_LENGSER_V7"], "do": []},

@@ -23,7 +23,7 @@ const MAP := [
 	"##########......,,........,,,,,,,,,,,,,,,...,,....##########",
 	"#...............,,........,,I,,,,,,,,,,L,...,,.............#",
 	"#............r..,,........,,,,,,,,,,,,,,,...,,.............#",
-	"#...............,,........,,,,,,,,,,,,,,,...,,....#######..#",
+	"#...............,,....K...,,,,,,,,,,,,,,,...,,....#######..#",
 	"#..#######......,,...............,..........,,....#_____#..#",
 	"#..#_____#......,,...............,..........,,,,,,,_____#..#",
 	"#..#_____,,,,,,,,,.A..........###,####......,,....#_____#..#",
@@ -53,7 +53,8 @@ const SPOTS := {
 	"+": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:ts_tangga", "open_side": "n"}, "tile": ","},   # shortcut gate, ladder (opens from the north pocket, 2 tiles)
 	"G": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_3"}, "tile": ","},   # kabut, west gate to ts_leuweung (one per tile)
 	"H": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_5"}, "tile": ","},   # kabut, east gate to ts_sawah (one per tile)
-	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_elder"}, "tile": "."},   # NPC Abah Karna, elder, teaches Ga
+	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_kampung", "size": Vector2i(14,8), "cond": "step:mq1=2", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]]]}, "tile": "."},   # encounter sunda_kampung, the ambush at Abah Karna's kampung (MQ1 1.3, new; only while step 1.3 is current)
+	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_elder"}, "tile": "."},   # NPC Abah Karna, elder, teaches Ga (MQ1 1.4)
 	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ki_darsa"}, "tile": ","},   # NPC Ki Darsa, juru pantun (SQ-S1 giver)
 	"V": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kepala_desa"}, "tile": ","},   # NPC kepala desa (SQ-S2 giver)
 	"L": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "angklung_leader"}, "tile": ","},   # NPC angklung group leader (SQ-S3 giver)

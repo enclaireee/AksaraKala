@@ -69,7 +69,7 @@ shape = SubResource("hurt_shape")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2")
-max_hp = 8400
+max_hp = 9300
 
 [node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("5")

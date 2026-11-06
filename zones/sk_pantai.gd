@@ -26,7 +26,7 @@ const MAP := [
 	"#......____________________.,,........................=,;..$",
 	"#......____________________.,,........................=,,..$",
 	"#......____________________.,,........................######",
-	"#......_________W__________.,,.............................#",
+	"#......____________________.,,.............................#",
 	"#......____________________.,,.............................#",
 	"#......____________________.,,.............................#",
 	"#......____________________.,,.............................#",
@@ -41,13 +41,13 @@ const MAP := [
 const SPOTS := {
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to sk_karang (east edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
-	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_tebing", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to sk_tebing (north edge, 2 tiles)
-	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_tebing"}, "tile": ","},   # spawn, arrival from sk_tebing
+	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "desa_purwa", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to desa_purwa (north edge, 2 tiles; X1, kabut `mq4_2` is on the desa_purwa side)
+	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_desa_purwa"}, "tile": ","},   # spawn, arrival from desa_purwa
 	"$": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_keraton", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to sk_keraton (east edge behind shortcut gate, 2 tiles)
 	";": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_keraton"}, "tile": ","},   # spawn, arrival from sk_keraton (on open side of `=`)
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:sk_gerbang", "open_side": "e"}, "tile": ","},   # shortcut gate sc:sk_gerbang (opens from sk_keraton, 2 tiles)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kidul_1"}, "tile": "."},   # petilasan 1
-	"J": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_jurukunci"}, "tile": "."},   # NPC Nyai Ranti, juru kunci of the Southern Shore
+	"J": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_jurukunci"}, "tile": "."},   # NPC Mbah Wiryo, juru kunci of the Southern Shore (regional character)
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_nelayan_anak"}, "tile": "."},   # NPC Damar, fisher child (SQ-K1)
 	"1": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "tukik_1"}, "tile": "."},   # pickup, stranded hatchling 1 (SQ-K1)
 	"2": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "tukik_2"}, "tile": "."},   # pickup, stranded hatchling 2 (SQ-K1)
@@ -56,7 +56,6 @@ const SPOTS := {
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_pantai_1", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(5,0)], ["res://entities/enemies/lampor.tscn", Vector2i(4,2)]]]}, "tile": "."},   # encounter kidul_pantai_1
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_pantai_2", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/ula_segara.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(3,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(3,2)]]]}, "tile": ","},   # encounter kidul_pantai_2
 	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_pantai_3", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/bajul_putih.tscn", Vector2i(6,0)]]]}, "tile": "."},   # encounter kidul_pantai_3
-	"W": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_trial", "size": Vector2i(21,11), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-5,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(-3,2)], ["res://entities/enemies/lampor.tscn", Vector2i(3,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(5,2)]], [["res://entities/enemies/ula_segara.tscn", Vector2i(-6,0)], ["res://entities/enemies/ula_segara.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(0,-3)]], [["res://entities/enemies/bajul_putih.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,2)]]]}, "tile": "_"},   # encounter kidul_trial (Trial of the Southern Waves)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_1", "item_id": "ilmu:380"}, "tile": "."},   # chest: 380 Ilmu (behind driftwood)
 }
 

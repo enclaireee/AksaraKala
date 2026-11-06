@@ -55,7 +55,7 @@ func _initialize() -> void:
 			if n.scene_file_path.ends_with("encounter.tscn"):
 				ids.append(String(n.area_id))
 	ids.sort()
-	check(ids == ["galuh_bout_1", "galuh_bout_2", "galuh_cells"], "encounters %s" % [ids])
+	check(ids == ["galuh_bout_1", "galuh_bout_2", "galuh_cells", "galuh_escort"], "encounters %s" % [ids])
 	# Boss spots come from the doc's spot table, so they are checked even while the boss scenes are being built.
 	check(has_spot(built["kg_keraton"], "barma_wijaya.tscn"), "kg_keraton has no Barma Wijaya spot")
 	check(has_spot(built["kg_pamali"], "hariang_banga.tscn"), "kg_pamali has no Hariang Banga spot")

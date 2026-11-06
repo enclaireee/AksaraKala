@@ -1,5 +1,5 @@
 extends "res://tests/timur_play_test.gd"
-## Gua Kala route (gua_kala.md, P0): the Hunter's fall (3.8) lifts the fog north of Desa Purwa and the hunter_name beat starts MQ5; MQ5 5.1-5.4
+## Gua Kala route (gua_kala.md, P0): MQ4 done (flag mq4_9) lifts the fog north of Desa Purwa and the kidul beat starts MQ5; MQ5 5.1-5.4
 ## walked area to area (5.4 = the write card, drawn with the stored templates), then the epilogue plays and drops the player home at from_gua_kala.
 ## Reuses timur_play_test.gd's walker. ponytail: kills and casts are faked, the user playtests combat.
 
@@ -19,24 +19,37 @@ func _initialize() -> void:
 	game = root.get_node("Game")
 	events = root.get_node("Events")
 	game.save_path = "user://test_kala_play.json"
-	for f in ["mq0_done", "mq1_10", "mqg_7", "mq2_9", "mq3_1", "mq3_2", "mq3_3", "mq3_4", "mq3_7", "choice_sink",
+	for f in ["mq0_done", "mq1_10", "mqg_7", "mq2_9", "mq3_1", "mq3_2", "mq3_3", "mq3_4", "mq3_6", "mq3_7", "choice_sink",
 			"beat_hunter_raid", "beat_laras_1", "beat_naga", "beat_galuh_bout", "beat_laras_2", "beat_cage", "beat_hunter_war",
 			"beat_laras_3", "beat_ford", "beat_truce", "beat_laras_4", "beat_keris", "beat_hunter_shrine"]:
 		game.flags[f] = true
 	for q in ["mq1", "mqg", "mq2"]:
 		game.quests[q] = {"state": "done", "step": 0, "count": 0, "resolution": ""}
-	game.quests["mq3"] = {"state": "active", "step": 13, "count": 0, "resolution": ""}
+	game.quests["mq3"] = {"state": "active", "step": 10, "count": 0, "resolution": ""}
 	for g in ["sunda_ka", "sunda_ga", "jawa_na"]:
 		game.run("learn:" + g)
 	events.dialogue_requested.connect(_on_dialogue)
 	change_scene_to_file(root.get_node("Zones").start_zone)
 	await scene_changed
 	await _settle()
-	var ok: bool = check(_exit_to("gk_mulut") != null and not _reachable(_cells_of(_exit_to("gk_mulut"))), "Gua Kala gate open before 3.8")
-	if ok:   # the Hunter falls at tt_candi (Tanah Timur walk); the hunter_name beat then starts MQ5
+	for i in 20:   # the wall tiles take a few physics frames to become solid after the first scene loads
+		await physics_frame
+	var ok: bool = check(_exit_to("gk_mulut") != null and not _reachable(_cells_of(_exit_to("gk_mulut"))), "Gua Kala gate open before mq4_9")
+	if ok:   # the Hunter falls at tt_candi (Tanah Timur walk); the hunter_name beat then starts MQ4 (Act V comes before Gua Kala)
 		events.boss_defeated.emit("nameless_hunter")
 		await _drain()
-	ok = ok and _expect("mq3=done") and check(game.has_flag("beat_hunter_name"), "hunter_name beat did not play") and _expect("mq5=active:0")
+	ok = ok and _expect("mq3=done") and check(game.has_flag("beat_hunter_name"), "hunter_name beat did not play") and _expect("mq4=active")
+	# ponytail: Act V is walked by kidul_play_test; here MQ4 is finished by fiat, lifting the gate (kabut mq4_9, quests.md 4.9). The kidul beat starts MQ5.
+	if ok:
+		for f in ["mq4_2", "mq4_4", "mq4_8", "mq4_9"]:
+			game.flags[f] = true
+		game.quests["mq4"] = {"state": "done", "step": 9, "count": 0, "resolution": ""}
+		game.changed.emit()
+		await _drain()
+		await root.get_node("Zones").go_to("desa_purwa", "from_riders")
+		await _settle()
+		ok = check(game.has_flag("beat_kidul"), "kidul beat did not play") and _expect("mq5=active:0")
+		ok = ok and check(_exit_to("gk_mulut") != null and _reachable(_cells_of(_exit_to("gk_mulut"))), "Gua Kala gate still shut after MQ4")
 	for a: String in KALA_ROUTE if ok else []:
 		var kv := a.split(":", true, 1)
 		if kv[0] == "pick":

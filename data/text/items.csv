@@ -52,6 +52,9 @@ ITEM_IRON_STAFF_NAME,Tongkat Besi,Iron Staff
 ITEM_JIMAT_DESC,+10 HP maks.,+10 max HP.
 ITEM_JIMAT_LORE,Benda kecil yang dibawa demi keberuntungan dan perlindungan.,A small charm carried for luck and protection.
 ITEM_JIMAT_NAME,Jimat,Jimat
+ITEM_BATU_KALI_DESC,+1 Spirit dan +5% pemulihan stamina.,+1 Spirit and +5% stamina regen.
+ITEM_BATU_KALI_LORE,Batu sungai yang licin; sungai mengembalikannya saat keris ditenggelamkan.,A smooth river stone the river gives back when you sink the keris.
+ITEM_BATU_KALI_NAME,Batu Kali,Batu Kali
 ITEM_KAIN_HIJAU_DESC,Selembar kain hijau.,A green cloth.
 ITEM_KAIN_HIJAU_LORE,"Menurut kepercayaan, terkait dengan kisah Nyi Roro Kidul.","Linked, by belief, to the lore of Nyi Roro Kidul."
 ITEM_KAIN_HIJAU_NAME,Kain Hijau,Kain Hijau
@@ -107,3 +110,4 @@ ITEM_KUDA_KEPANG_2_NAME,Kuda Kepang (2/3),Kuda Kepang (2/3)
 ITEM_KUDA_KEPANG_3_NAME,Kuda Kepang (3/3),Kuda Kepang (3/3)
 ITEM_HERB_NAME,Daun Obat,Herb
 ITEM_FLASK_NAME,Isi Labu,Flask Refill
+SPELL_JAWA_KA_NAME,Ombak,Tide

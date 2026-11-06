@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "hariang_banga"
+name_key = "NPC_HARIANG_BANGA_NAME"
+entries = Array[Dictionary]([
+	{"if": ["flag:mq3_6"], "lines": ["DLG_HARIANG_BANGA_V1", "DLG_HARIANG_BANGA_H1", "DLG_HARIANG_BANGA_V2"], "do": ["flag:camp_timur"], "quiet": true}
+])

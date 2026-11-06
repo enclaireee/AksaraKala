@@ -265,6 +265,9 @@ func _break_shield() -> void:
 func _on_cast(glyph_id: String, _score: float) -> void:
 	if not shielded or dead or state == State.PAUSE or sequence.size() < 3:
 		return
+	if glyph_id == "jawa_ka":   # Ombak: the one letter the Eclipse can't eat (story.md)
+		_break_shield()
+		return
 	if glyph_id == sequence[seq_index]:
 		seq_index += 1
 	else:

@@ -17,7 +17,7 @@ CODEX_JURIG_LEUWEUNG_WEAK,"Kena Nga, ia tak bisa mengayun dan menerima dua kali 
 CODEX_SANDEKALA_TITLE,Sandekala,Sandekala
 CODEX_SANDEKALA_BODY,Roh senja dari kepercayaan Sunda yang konon mengambil anak yang masih di luar saat petang.,A Sundanese dusk spirit said to take children who stay outside after sunset.
 CODEX_SANGKURIANG_TITLE,Sangkuriang,Sangkuriang
-CODEX_SANGKURIANG_BODY,"Pemuda dalam legenda yang membendung sungai dan membangun perahu dalam semalam. Dalam game ini, kutukan lupa membuatnya terus mengulang.","The youth of the legend who dammed a river and built a boat in one night. Here, the curse makes him repeat it."
+CODEX_SANGKURIANG_BODY,"Kisah lelaki yang tak sadar ingin menikahi ibunya, Dayang Sumbi, dan membangun danau serta perahu dalam semalam; fajar palsu menghentikannya. Segel Kawah adalah rekaan gim.","The tale of the man who, unknowing, wanted to marry his mother Dayang Sumbi and built a lake and a boat in one night; the false dawn stopped him. The Crater Seal is the game's."
 CODEX_SUNDA_KA_TITLE,Ka,Ka
 CODEX_SUNDA_KA_BODY,"Aksara Sunda pertama, huruf barat. Dirapal sebagai Bolt, anak panah cahaya.","The first Aksara Sunda letter, the letter of the west. Cast as Bolt, a dart of light."
 CODEX_SUNDA_GA_TITLE,Ga,Ga
@@ -51,7 +51,7 @@ CODEX_GAMELAN_BODY,"Orkestra Jawa dari gong dan logam bernada. Gong besar biasan
 CODEX_CANDI_SERIBU_TITLE,Candi Seribu,Candi Seribu
 CODEX_CANDI_SERIBU_BODY,"Tempat rekaan game ini, terinspirasi kisah seribu candi. Bukan lokasi nyata. Sumber: rekaan game.","An invented place in this game, inspired by the tale of a thousand temples. Not a real site. Source: game invention."
 CODEX_RORO_JONGGRANG_TITLE,Roro Jonggrang,Roro Jonggrang
-CODEX_RORO_JONGGRANG_BODY,"Putri yang diminta menikah dengan Bandung Bondowoso. Ia mensyaratkan seribu candi dalam semalam, lalu menipunya dengan fajar palsu: lesung ditabuh dan jerami dibakar. Serupa dengan fajar palsu Sangkuriang. Sumber: legenda rakyat Jawa.","A princess whom Bandung Bondowoso wished to marry. She asked for a thousand temples in one night, then tricked him with a fake dawn: lesung pounded and straw burned. Much like Sangkuriang's fake dawn. Source: Javanese folk legend."
+CODEX_RORO_JONGGRANG_BODY,"Bandung Bondowoso diminta seribu candi dalam semalam; para perempuan menumbuk padi hingga ayam berkokok lebih awal, dan ia kurang satu. Segel 3 adalah rekaan gim.","Bandung Bondowoso was asked for a thousand temples in a night; the women pounding rice made the roosters crow early, and he fell one short. Seal 3 is the game's."
 CODEX_ARCA_TITLE,Arca,Arca
 CODEX_ARCA_BODY,"Patung batu penjaga candi yang bangkit saat dilewati dan menembakkan bolt. Sumber: rekaan game, terinspirasi arca candi.","A stone temple guardian that wakes as you pass and fires a bolt. Source: game invention, inspired by temple statues."
 CODEX_ARCA_WEAK,"Tembus dengan Na, retakan batunya pecah dan arca nyaris selalu roboh.",Dash through with Na and the cracked stone shatters; the arca almost always falls.
@@ -99,7 +99,7 @@ CODEX_KUDA_KEPANG_BODY,Kuda anyaman bambu yang ditunggangi penari kuda lumping a
 CODEX_BATARA_KALA_TITLE,Batara Kala,Batara Kala
 CODEX_BATARA_KALA_BODY,"Dewa waktu dan penelan dalam pewayangan Jawa, putra Batara Guru dalam penceritaan. Dalam permainan ini ia ditenangkan dan dipulangkan, bukan dibunuh. Sumber: tradisi pewayangan; rincian berbeda antar penceritaan.","The deity of time and devouring in Javanese wayang, a son of Batara Guru in the tellings. In this game he is calmed and turned back, not killed. Source: wayang tradition; details differ between tellings."
 CODEX_RUWATAN_TITLE,Ruwatan,Ruwatan
-CODEX_RUWATAN_BODY,"Upacara pembersihan dalam tradisi Jawa untuk membebaskan seseorang dari incaran Kala, sering berupa pergelaran wayang lakon Murwakala. Sumber: tradisi Jawa; tata caranya beragam.","A cleansing rite in Javanese tradition to free a person from Kala's claim, often a wayang performance of the Murwakala play. Source: Javanese tradition; practice varies."
+CODEX_RUWATAN_BODY,"Ruwatan adalah ritus pembersihan yang masih hidup di Jawa dan Sunda, kerap dengan pertunjukan wayang lakon Murwakala, untuk membebaskan seseorang dari cengkeraman Kala. Dalam gim, Kala ditenangkan dan dikembalikan, tak pernah dibunuh.","Ruwatan is a living Javanese and Sundanese rite of cleansing, often with a wayang performance of the Murwakala tale, to free someone from Kala's grip. In the game Kala is calmed and turned back, never killed."
 CODEX_AJI_SAKA_TITLE,Aji Saka,Aji Saka
 CODEX_AJI_SAKA_BODY,"Aji Saka dan dua abdinya, Dora dan Sembada, setia sampai mati. Dari kisah itu lahir Hanacaraka: ha na ca ra ka, da ta sa wa la, pa dha ja ya nya, ma ga ba tha nga. Dalam game ini, huruf-huruf itu mulai memudar dan orang lupa cara menulisnya, lalu lupa kisahnya.","Aji Saka and his two servants, Dora and Sembada, stayed loyal to the death. From that tale came Hanacaraka: ha na ca ra ka, da ta sa wa la, pa dha ja ya nya, ma ga ba tha nga. Here, the letters begin to fade and people forget how to write them, then forget the tales."
 CODEX_SUNDA_ELDER_TITLE,Abah Karna,Abah Karna
@@ -115,22 +115,22 @@ CODEX_MATARAM_DALANG_BODY,"Dalang kampung Mataram. Ia bercerita tentang Dora dan
 CODEX_TIMUR_EMPU_TITLE,Mpu Wirasana,Mpu Wirasana
 CODEX_TIMUR_EMPU_BODY,"Empu tua di bengkel Tanah Timur. Katanya, dahulu Mpu Gandring menempa keris untuk Ken Arok. Ken Arok tak sabar dan merebut keris itu sebelum rampung. Dengan napas terakhir, sang empu mengutuk keris itu. Sumber: Pararaton; rincian berbeda antar penceritaan.","The old smith of the Tanah Timur forge. He says Mpu Gandring once forged a keris for Ken Arok. Ken Arok grew impatient and took the keris before it was done. With his last breath, the smith cursed it. Source: Pararaton; details differ between retellings."
 CODEX_FACELESS_TITLE,Wong Tanpa Rupa,The Faceless
-CODEX_FACELESS_BODY,"Orang-orang yang namanya telah dimakan. Topeng kosong, tangan hampa. Saat satu tumbang, sebuah nama melayang sesaat. Rekaan gim.","People whose names were eaten. Blank masks, hollow hands. When one falls, a name floats free for a moment. A game invention."
+CODEX_FACELESS_BODY,"Orang-orang yang terlupa. Si Pemburu memegang nama mereka dalam seikat lontar di pinggangnya, dan mereka patuh pada siapa pun yang memegangnya. Saat satu tumbang, sebuah nama melayang sesaat.","Forgotten people. The Hunter holds their names in a lontar bundle at his belt, and they obey whoever holds them. When one falls, a name floats free for a moment."
 CODEX_FACELESS_WEAK,Tak ada aksara khusus: kombo dan menghindar.,No letter trick: the combo and the dodge.
 CODEX_FACELESS_ARCHER_TITLE,Pemanah Tanpa Rupa,Faceless Archer
-CODEX_FACELESS_ARCHER_BODY,Tanpa Rupa berbusur yang menjaga jarak. Rekaan gim.,A Faceless with a bow that keeps its distance. A game invention.
+CODEX_FACELESS_ARCHER_BODY,Tanpa Rupa berbusur yang menjaga jarak.,A Faceless with a bow that keeps its distance.
 CODEX_FACELESS_ARCHER_WEAK,Dekati dia.,Close the gap.
 CODEX_FACELESS_CAPTAIN_TITLE,Kapten Tanpa Rupa,Faceless Captain
-CODEX_FACELESS_CAPTAIN_BODY,"Ia memimpin perburuan di barat dengan tombak panjang dan suara lantang, padahal ia tak bermulut. Rekaan gim.","He leads the hunt in the west with a long spear and a loud voice, though he has no mouth. A game invention."
+CODEX_FACELESS_CAPTAIN_BODY,"Ia memimpin perburuan di barat dengan tombak panjang dan suara lantang, padahal ia tak bermulut.","He leads the hunt in the west with a long spear and a loud voice, though he has no mouth."
 CODEX_FACELESS_CAPTAIN_WEAK,Ca saat ia memanggil pasukan memutus seruannya dan membuatnya pusing.,Ca Burst during his muster breaks the call and stuns him.
 CODEX_BARMA_WIJAYA_TITLE,Prabu Barma Wijaya,Prabu Barma Wijaya
-CODEX_BARMA_WIJAYA_BODY,"Dalam legenda, patih Aria Kebonan dibuat muda dan diberi takhta Galuh dengan satu syarat, yang ia langgar. Ciung Wanara mengurungnya. Perjanjiannya dengan Kala adalah rekaan gim.","In the legend, the minister Aria Kebonan was made young and given Galuh's throne on one condition, which he broke. Ciung Wanara caged him. His pact with Kala is the game's."
+CODEX_BARMA_WIJAYA_BODY,"Dalam legenda, patih Aria Kebonan dibuat muda dan diberi takhta Galuh dengan satu syarat, yang ia langgar. Ciung Wanara mengurungnya. Nama yang dikikis dan perjanjian dengan Kala adalah rekaan gim.","In the legend, the minister Aria Kebonan was made young and given Galuh's throne on one condition, which he broke. Ciung Wanara caged him. The scraped name and the pact with Kala are the game's."
 CODEX_BARMA_WIJAYA_WEAK,"Aksara apa pun memecah bayangan cermin. Setelah semuanya pecah, yang asli terbuka.","Any letter breaks a mirror copy. With the copies gone, the real one is open."
 CODEX_HARIANG_BANGA_TITLE,Hariang Banga,Hariang Banga
 CODEX_HARIANG_BANGA_BODY,"Putra Dewi Pangrenyep. Dalam legenda ia melawan Ciung Wanara demi membebaskan ibunya. Tak ada yang menang, dan tanah dibagi di sungai.","Son of Dewi Pangrenyep. In the legend he fought Ciung Wanara to free his mother. Neither won, and the land was split at the river."
 CODEX_HARIANG_BANGA_WEAK,Na Jawa menerjang menembus tangkisannya.,Jawa Na dashes through his guard.
 CODEX_NAMELESS_HUNTER_TITLE,Si Tanpa Ngaran,The Nameless Hunter
-CODEX_NAMELESS_HUNTER_BODY,"Nama sejati Aria Kebonan, diserahkan pada Kala lewat perjanjian dan dikosongkan. Ia memburu orang yang bisa menuliskannya kembali. Rekaan gim.","Aria Kebonan's true name, given to Kala in a pact and hollowed out. It hunted the one who could write it back. A game invention."
+CODEX_NAMELESS_HUNTER_BODY,"Nama sejati Aria Kebonan, diserahkan pada Kala lewat perjanjian dan dikosongkan. Ia memburu orang yang bisa menuliskannya kembali.","Aria Kebonan's true name, given to Kala in a pact and hollowed out. It hunted the one who could write it back."
 CODEX_NAMELESS_HUNTER_WEAK,"""Lupa""-nya mengunci aksara terakhirmu beberapa detik. Sering-seringlah berganti aksara.","His ""forget"" seals your last letter for a few seconds. Switch letters often."
 CODEX_NAGAWIRU_TITLE,Nagawiru,Nagawiru
 CODEX_NAGAWIRU_BODY,"Raja tua Prabu Permana Di Kusumah meninggalkan takhta untuk bertapa. Dalam legenda ia dibunuh saat menyamar, menjadi naga Nagawiru, dan menetaskan telur Ciung Wanara.","The old king Prabu Permana Di Kusumah left his throne to become a hermit. In the legend he was killed in disguise, became the naga Nagawiru, and hatched Ciung Wanara's egg."
@@ -141,9 +141,9 @@ CODEX_CIUNG_WANARA_BODY,"Dihanyutkan di Citanduy saat bayi dan dibesarkan Aki da
 CODEX_LENGSER_TITLE,Uwa Batara Lengser,Uwa Batara Lengser
 CODEX_LENGSER_BODY,Abdi istana setia yang menyelamatkan sang permaisuri. Lengser juga tokoh dalam upacara penyambutan Sunda.,The loyal court officer who spared the queen. Lengser is also a figure in Sundanese welcome ceremonies.
 CODEX_PAMALI_TITLE,Pamali,Pamali
-CODEX_PAMALI_BODY,"Pamali: pantangan, yang tak boleh dilakukan. Dalam legenda perkelahian dua saudara itu pamali, dan sungai tempat tanah dibagi memakai nama itu (Ci Pamali / Kali Pemali).","Pamali: what must not be done. In the legend the brothers' fight was pamali, and the river where the land was split took the name (Ci Pamali / Kali Pemali)."
-CODEX_NYI_RORO_KIDUL_TITLE,Kanjeng Ratu Kidul,Queen of the Southern Sea
-CODEX_NYI_RORO_KIDUL_BODY,"Penguasa Samudra Selatan dalam kepercayaan masyarakat Jawa dan Sunda. Pantangan memakai kain hijau pupus di pantai selatan adalah bentuk penghormatan pada wilayahnya. Sumber: tradisi pesisir selatan Jawa.","Ruler of the Southern Ocean in Javanese and Sundanese belief. The taboo against wearing leaf-green cloth on the southern shore is a mark of respect for her realm. Source: southern Java coastal tradition."
+CODEX_PAMALI_BODY,"Pamali: pantangan, yang tak boleh dilakukan. Dalam legenda perkelahian dua saudara itu pamali, dan sungai tempat tanah dibagi memakai nama itu ((Ci Pamali / Kali Pemali).","Pamali: what must not be done. In the legend the brothers' fight was pamali, and the river where the land was split took the name ((Ci Pamali / Kali Pemali)."
+CODEX_NYI_RORO_KIDUL_TITLE,Nyi Roro Kidul,Nyi Roro Kidul
+CODEX_NYI_RORO_KIDUL_BODY,"Ratu Laut Selatan dalam kepercayaan Jawa dan Sunda, lekat dengan warna hijau; banyak masyarakat pesisir berpantang memakai hijau di tepi laut. Gim menampilkannya sebagai kepercayaan, dengan hormat. Ia tak pernah dilawan.","Queen of the Southern Sea in Javanese and Sundanese belief, tied to the colour green; many coastal communities keep taboos on green by the shore. The game shows her as belief, with respect. She is never fought."
 CODEX_LAMPOR_TITLE,Lampor,Lampor
 CODEX_LAMPOR_BODY,"Arak-arakan roh pembawa obor dari laut selatan dalam cerita rakyat Jawa, konon terdengar menderu di malam berangin. Sumber: cerita rakyat pesisir Jawa.","A procession of torch-bearing spirits from the southern sea in Javanese folklore, said to roar past on windy nights. Source: Javanese coastal folklore."
 CODEX_LAMPOR_WEAK,"Ledakan Ca menyapu barisan pembawa obor sebelum mereka mengepungmu.","Ca Burst sweeps the line of torch-bearers before they surround you."
@@ -153,3 +153,23 @@ CODEX_ULA_SEGARA_WEAK,"Terjang dengan Na saat ia mengangkat kepala untuk menyemb
 CODEX_BAJUL_PUTIH_TITLE,Bajul Putih,White Crocodile
 CODEX_BAJUL_PUTIH_BODY,"Buaya putih raksasa penjaga muara dan karang selatan dalam cerita rakyat Jawa. Kulitnya keras bagai batu karang. Sumber: cerita rakyat Jawa.","A giant white crocodile guarding southern estuaries and reefs in Javanese folklore. Its hide is as hard as reef stone. Source: Javanese folklore."
 CODEX_BAJUL_PUTIH_WEAK,"Ikat dengan Nga atau hantam dengan Ka saat ia menganga sebelum menerjang.","Bind it with Nga or strike with Ka as its jaws gape before a lunge."
+CODEX_PANGRENYEP_TITLE,Dewi Pangrenyep,Dewi Pangrenyep
+CODEX_PANGRENYEP_BODY,Permaisuri raja palsu dan ibu Hariang Banga. Dalam legenda ia dan raja palsu dikurung oleh Ciung Wanara.,The false king's queen and Hariang Banga's mother. In the legend she and the false king were caged by Ciung Wanara.
+CODEX_FOUR_SEALS_TITLE,Empat Segel Agung,The Four Great Seals
+CODEX_FOUR_SEALS_BODY,"Empat kisah berbahaya ditulis agar tetap selesai: Kawah, Nama Raja Galuh, Seribu Candi, dan Keris. Segel yang pecah membuat legendanya berjalan lagi. Kau tak pernah memecahkan segel; kau mengakhiri kisahnya sekali lagi.","Four dangerous stories were written down so they would stay finished: the Crater, the Royal Name of Galuh, the Thousand Temples and the Keris. Break one and its legend walks again. You never break a seal, you end the story again."
+CODEX_ECLIPSE_TITLE,Gerhana Kala,The Eclipse of Kala
+CODEX_ECLIPSE_BODY,"Saat segel keempat terbuka, langit meredup dan Kala mulai memakan nama, mula-mula milik yang membaca segel. Sebagian penuturan berkata Kala menelan matahari saat gerhana. Ombak satu-satunya huruf yang tak bisa dimakannya.","When the fourth seal opened, the sky dimmed and Kala began to eat names, first of whoever read the seals open. Some tellings say Kala swallows the sun at an eclipse. Ombak is the one letter it cannot eat."
+CODEX_KI_SUMARTO_TITLE,Ki Sumarto,Ki Sumarto
+CODEX_KI_SUMARTO_BODY,Dalang dari Mataram yang pentas untuk kedua tepi Pamali karena putranya berbaris bersama Hariang Banga. Tokoh rekaan gim.,A dalang of Mataram who plays for both banks of the Pamali because his son marches with Hariang Banga. A game character.
+CODEX_MPU_WIRASANA_TITLE,Mpu Wirasana,Mpu Wirasana
+CODEX_MPU_WIRASANA_BODY,"Pandai besi di timur yang yakin setiap bilah ingat untuk apa ia ditempa. Empu pembuat keris adalah tradisi nyata, dan banyak keris diyakini bertuah. Tokoh rekaan gim.","A smith in the east who believes every blade remembers what it was made for. Keris makers (empu) are a real tradition, and many keris are held to carry a spirit. A game character."
+CODEX_MBAH_WIRYO_TITLE,Mbah Wiryo,Mbah Wiryo
+CODEX_MBAH_WIRYO_BODY,"Juru kunci pantai selatan, yang membisikkan nama mendiang istrinya ke laut setiap senja. Juru kunci adalah penjaga nyata sebuah tempat keramat. Tokoh rekaan gim.","The juru kunci of the southern coast, who whispers his late wife's name to the sea each dusk. A juru kunci is the real caretaker of a shrine or a sacred place. A game character."
+CODEX_HUNTER_MASK_TITLE,Topeng Kosong,The Empty Mask
+CODEX_HUNTER_MASK_BODY,"Topeng kosong di perapian Ibu. Si Pemburu meninggalkannya, dan tak seorang pun berani menyentuhnya.","A blank mask lying in Ibu's hearth. The Hunter left it behind, and nobody dares to touch it."
+CODEX_LARAS_WALL_TITLE,Pesan Laras,Laras's Message
+CODEX_LARAS_WALL_BODY,"Tergores di dinding sel: ""Seribu candi. Jangan berhenti.""","Scratched into the cell wall: ""The thousand temples. Don't stop."""
+CODEX_LARAS_LONTAR_TITLE,Lontar Laras,Laras's Lontar
+CODEX_LARAS_LONTAR_BODY,"Lembar lontar miliknya, dengan namamu di baliknya. Hurufnya memudar seiring Kutukan Lupa menguat.","Her palm-leaf strip, with your name on the back. The letters fade as the Curse of Forgetting grows."
+CODEX_LARAS_RIBBON_TITLE,Pita Laras,Laras's Ribbon
+CODEX_LARAS_RIBBON_BODY,"Pita rambutnya, tersangkut di bambu tempat ia meloloskan diri.","Her hair ribbon, caught on the bamboo where she broke free."

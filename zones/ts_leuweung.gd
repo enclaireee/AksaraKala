@@ -45,7 +45,7 @@ const SPOTS := {
 	"@": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kebun"}, "tile": ","},   # spawn, arrival from ts_kebun
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_boarlane", "size": Vector2i(11,3), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(-4,0)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-4,1)]]]}, "tile": ","},   # encounter sunda_boarlane
 	"R": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_batutulis", "size": Vector2i(20,12), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(3,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(7,-4)]]]}, "tile": ","},   # encounter sunda_batutulis
-	"T": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_tulis"}, "tile": ","},   # batu tulis stone, teaches Nga (MQ1 1.5)
+	"T": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_tulis"}, "tile": ","},   # batu tulis stone, teaches Nga (MQ1 1.6)
 	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lutung_kasarung"}, "tile": "."},   # NPC Lutung Kasarung spirit (SQ-S1)
 	"4": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_4"}, "tile": "."},   # angklung 4
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_ironring", "item_id": "iron_ring"}, "tile": "."},   # chest: Iron Ring (secret 3, alcove)

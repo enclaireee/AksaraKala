@@ -42,7 +42,7 @@ const SPOTS := {
 	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_sabana", "spawn_id": "from_tt_pesisir"}, "tile": ","},   # exit to tt_sabana (north edge, 2 tiles)
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_sabana"}, "tile": ","},   # spawn, arrival from tt_sabana
 	"l": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_beringin"}, "tile": ","},   # spawn, landing of the drop from tt_beringin (no exit back)
-	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq3_8"}, "tile": ","},   # kabut K3, south edge (one per tile)
+	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_9"}, "tile": ","},   # kabut K3, south edge (one per tile; opens on `quest:mq4=done`)
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_tt_pesisir"}, "tile": ","},   # exit to sk_karang (south edge, not built yet, 2 tiles)
 	"g": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
 	"q": {"scene": "res://entities/enemies/banaspati_elite.tscn", "props": {}, "tile": "."},   # elite Banaspati (SQ-T2, east dunes)

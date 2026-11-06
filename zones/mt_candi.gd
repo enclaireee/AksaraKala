@@ -17,7 +17,7 @@ const MAP := [
 	"#............#,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
-	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
+	"#............#,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
@@ -61,11 +61,12 @@ const SPOTS := {
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_gapura", "spawn_id": "from_mt_candi"}, "tile": ","},   # exit to mt_gapura (west edge, front yard, the `sc:mt_candi_gapura` pocket, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_gapura"}, "tile": ","},   # spawn, arrival from mt_gapura (through the gate)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "mataram_2"}, "tile": ","},   # petilasan 2
-	"B": {"scene": "res://entities/bosses/bandung_bondowoso.tscn", "props": {"cond": "flag:mq2_7"}, "tile": ","},   # boss Bandung Bondowoso, awakened after Faceless camp breaks the Temple Seal
-	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_camp", "cond": "flag:mq2_6", "size": Vector2i(30,16), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(0,4)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(0,-6)]], [["res://entities/enemies/faceless.tscn", Vector2i(-8,2)], ["res://entities/enemies/faceless.tscn", Vector2i(8,2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(-4,-6)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-6)]]]}, "tile": ","},   # encounter mataram_camp, the faceless camp in the temple court (MQ2 2.7)
+	"B": {"scene": "res://entities/bosses/bandung_bondowoso.tscn", "props": {"cond": "flag:mq2_7"}, "tile": ","},   # boss Bandung Bondowoso (2.11), awakened after Faceless camp breaks the Temple Seal
+	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_camp", "cond": "flag:mq2_6", "size": Vector2i(30,16), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(0,4)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(0,-6)]], [["res://entities/enemies/faceless.tscn", Vector2i(-8,2)], ["res://entities/enemies/faceless.tscn", Vector2i(8,2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(-4,-6)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-6)]]]}, "tile": ","},   # encounter mataram_camp, the faceless camp in the temple court (MQ2 2.10)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_candi", "size": Vector2i(28,16), "waves": [[["res://entities/enemies/genderuwo.tscn", Vector2i(8,-4)], ["res://entities/enemies/arca.tscn", Vector2i(-12,-5)], ["res://entities/enemies/arca.tscn", Vector2i(12,-5)]], [["res://entities/enemies/tuyul.tscn", Vector2i(0,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,0)], ["res://entities/enemies/tuyul.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter mataram_candi
 	"s": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "batu_bintang"}, "tile": "."},   # pickup, batu bintang (SQ-T3 meteorite fragment)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_candi", "item_id": "ilmu:110"}, "tile": "."},   # chest: 110 Ilmu (Ilmu M, ASSUMED)
+	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_camp", "size": Vector2i(12,6)}, "tile": ","},   # trigger, beat `camp` staging (plays when `flag:mq2_7`, `zone:mt_candi`; the cleared camp, Laras's lontar strip)
 }
 
 

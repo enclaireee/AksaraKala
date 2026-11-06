@@ -6,22 +6,20 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ4_S1_OBJ"
-on = "zone_entered:sk_karang"
-set_flag = "mq4_1"
-marker = {"zone": "sk_karang", "id": "from_tt_pesisir"}
+on = "zone_entered:desa_purwa"
+marker = {"zone": "desa_purwa", "id": "ibu"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ4_S2_OBJ"
-on = "area_cleared:kidul_karang_2"
+on = "talked_to:ibu"
 set_flag = "mq4_2"
-marker = {"zone": "sk_karang", "id": "kidul_karang_2"}
+marker = {"zone": "desa_purwa", "id": "ibu"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ4_S3_OBJ"
 on = "petilasan_activated:kidul_1"
-set_flag = "mq4_3"
 marker = {"zone": "sk_pantai", "id": "kidul_1"}
 
 [sub_resource type="Resource" id="s4"]
@@ -34,37 +32,34 @@ marker = {"zone": "sk_pantai", "id": "kidul_jurukunci"}
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ4_S5_OBJ"
-on = "area_cleared:kidul_trial"
-set_flag = "mq4_5"
-marker = {"zone": "sk_pantai", "id": "kidul_trial"}
+on = "area_cleared:kidul_karang_2"
+marker = {"zone": "sk_karang", "id": "kidul_karang_2"}
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ4_S6_OBJ"
-on = "area_cleared:kidul_keraton_1"
-set_flag = "mq4_6"
-marker = {"zone": "sk_keraton", "id": "kidul_keraton_1"}
+on = "area_cleared:kidul_tebing_2"
+marker = {"zone": "sk_tebing", "id": "kidul_tebing_2"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ4_S7_OBJ"
-on = "petilasan_activated:kidul_2"
-set_flag = "mq4_7"
-marker = {"zone": "sk_keraton", "id": "kidul_2"}
+on = "petilasan_activated:kidul_3"
+marker = {"zone": "sk_tebing", "id": "kidul_3"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ4_S8_OBJ"
-on = "name_written:ombak"
+on = "area_cleared:kidul_trial"
 set_flag = "mq4_8"
-marker = {"zone": "sk_keraton", "id": "kidul_altar"}
+marker = {"zone": "sk_keraton", "id": "kidul_trial"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQ4_S9_OBJ"
-on = "area_cleared:kidul_tebing_2"
+on = "glyph_learned:jawa_ka"
 set_flag = "mq4_9"
-marker = {"zone": "sk_tebing", "id": "kidul_tebing_2"}
+marker = {"zone": "sk_keraton", "id": "kidul_altar"}
 
 [resource]
 script = ExtResource("1")

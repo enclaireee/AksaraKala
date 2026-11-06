@@ -18,7 +18,7 @@ const MAP := [
 	"#.............rr...........,,...................rr.........#",
 	"#..........................,,..............................#",
 	"#..........................,,..............................#",
-	"#..........................,,..............................D",
+	"#..........................,,..........................P...D",
 	"#..........................,,..............................D",
 	"#..........................,,..............................#",
 	"#..........................,,..............................#",
@@ -39,8 +39,9 @@ const MAP := [
 ]
 
 const SPOTS := {
-	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_pantai", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit to sk_pantai (south edge, 2 tiles)
-	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_pantai"}, "tile": ","},   # spawn, arrival from sk_pantai
+	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit to sk_karang (south edge, 2 tiles)
+	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
+	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kidul_3"}, "tile": ","},   # petilasan 3, the cliff shrine (Laras beat)
 	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_situ", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit to ts_situ (west edge, opens sc:ts_sk in ts_situ, 2 tiles)
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_situ"}, "tile": ","},   # spawn, arrival from ts_situ
 	"D": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_keraton", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit, one-way drop D1 to sk_keraton (east cliff edge, 2 tiles)

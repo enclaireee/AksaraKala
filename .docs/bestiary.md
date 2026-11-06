@@ -113,7 +113,7 @@ Then the sea goes still and Nyi Roro Kidul speaks once (MQ4). She is not fought,
 ## Story v3.1 (Phase 4c, 2026-11-06)
 The story ([story.md](story.md)) adds one faction seen in every region and four bosses. All numbers are **TUNE**, all looks and moves are game inventions (**ASSUMED**). Galuh uses the Mataram tier (x1.3 HP, balance.md 6.2): it is the second region now.
 
-**The Faceless (Wong Tanpa Rupa).** People whose names were eaten: blank white masks, grey cloth, no gore. When one dies its mask cracks and a name-strip floats up for 1 s (art only). Mundane rules apply: no glyph weakness, beaten with combo and dodge.
+**The Faceless (Wong Tanpa Rupa).** Forgotten people, bound by their names in the lontar bundle at the Hunter's belt; they obey whoever holds those names ([story.md](story.md) "Two kinds of forgetting"). Look: blank white masks, grey cloth, no gore. When one dies its mask cracks and a name-strip floats up for 1 s (art only). Mundane rules apply: no glyph weakness, beaten with combo and dodge.
 
 | Enemy | Archetype | HP (tier 0) | Dmg | Ilmu | Behavior | Scene |
 |-------|-----------|-------------|-----|------|----------|-------|

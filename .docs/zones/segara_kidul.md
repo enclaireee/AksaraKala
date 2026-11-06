@@ -244,12 +244,12 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Black-sand dunes in the north, a wide wet tidal flat in the south, green southern surf, and the barred coral gate (`sc:sk_gerbang`) on the south-east shore.
-- Purpose: MQ4 4.3-4.4 (rest at `kidul_1`, speak with Mbah Wiryo). Petilasan `kidul_1`, NPCs `kidul_jurukunci` (Mbah Wiryo) and `kidul_nelayan_anak` (SQ-K1), teach encounters (`kidul_pantai_1`, `kidul_pantai_2`, `kidul_pantai_3`), east exit to `sk_karang`, shortcut gate `sc:sk_gerbang` to `sk_keraton`. The Trial of the Waves moved to `sk_keraton`; the tidal flat is now shore and landmark only.
+- Purpose: MQ4 4.3-4.4 (rest at `kidul_1`, speak with Mbah Wiryo). Petilasan `kidul_1`, NPCs `kidul_jurukunci` (Mbah Wiryo) and `kidul_nelayan_anak` (SQ-K1), teach encounters (`kidul_pantai_1`, `kidul_pantai_2`, `kidul_pantai_3`), north exit to `desa_purwa`, east exit to `sk_karang`, shortcut gate `sc:sk_gerbang` to `sk_keraton`. The Trial of the Waves moved to `sk_keraton`; the tidal flat is now shore and landmark only.
 
 ### Map
 ```
-############################################################
-#............................,.............................#
+############################NN##############################
+#...........................n,.............................#
 #......rrrrrr...............,,...................rr........#
 #......r....r...............,,...................rr........#
 #......r..c.r...............,,.............................#
@@ -289,6 +289,8 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
 |------|------|-------|-------|-------|-------|
 | `Y` | exit to sk_karang (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_karang", spawn_id:"from_sk_pantai"}` | path | 2 |
 | `y` | spawn, arrival from sk_karang | `res://entities/world/spawn.tscn` | `{id:"from_sk_karang"}` | path | 1 |
+| `N` | exit to desa_purwa (north edge, 2 tiles; X1, kabut `mq4_2` is on the desa_purwa side) | `res://entities/world/exit.tscn` | `{target_zone:"desa_purwa", spawn_id:"from_sk_pantai"}` | path | 2 |
+| `n` | spawn, arrival from desa_purwa | `res://entities/world/spawn.tscn` | `{id:"from_desa_purwa"}` | path | 1 |
 | `$` | exit to sk_keraton (east edge behind shortcut gate, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_keraton", spawn_id:"from_sk_pantai"}` | path | 2 |
 | `;` | spawn, arrival from sk_keraton (on open side of `=`) | `res://entities/world/spawn.tscn` | `{id:"from_sk_keraton"}` | path | 1 |
 | `=` | shortcut gate sc:sk_gerbang (opens from sk_keraton, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:sk_gerbang", open_side:"e"}` | path | 2 |

@@ -7,8 +7,8 @@ script = ExtResource("1")
 npc_id = "sunda_elder"
 name_key = "NPC_SUNDA_ELDER_NAME"
 entries = Array[Dictionary]([
-	{"if": ["quest:mq1=active", "!flag:mq1_1"], "lines": ["DLG_SUNDA_ELDER_V1"], "do": []},
-	{"if": ["step:mq1=2"], "lines": ["@NPC_HERO_NAME", "DLG_SUNDA_ELDER_H1", "@NPC_SUNDA_ELDER_NAME", "DLG_SUNDA_ELDER_V2", "DLG_SUNDA_ELDER_V2B", "DLG_SUNDA_ELDER_V3", "DLG_SUNDA_ELDER_V4", "DLG_SUNDA_ELDER_V5"], "do": ["flag:mq1_2", "learn:sunda_ga"]},
+	{"if": ["step:mq1=3"], "lines": ["@NPC_HERO_NAME", "DLG_SUNDA_ELDER_H1", "@NPC_SUNDA_ELDER_NAME", "DLG_SUNDA_ELDER_V2", "@NPC_HERO_NAME", "DLG_SUNDA_ELDER_H2", "@NPC_SUNDA_ELDER_NAME", "DLG_SUNDA_ELDER_V3"], "do": ["flag:mq1_2", "learn:sunda_ga"]},
+	{"if": ["step:mq1=4"], "lines": ["DLG_SUNDA_ELDER_V4"], "do": []},
 	{"if": ["quest:mq1=active"], "lines": ["DLG_SUNDA_ELDER_V6"], "do": []},
 	{"if": [], "lines": ["DLG_SUNDA_ELDER_17", "DLG_SUNDA_ELDER_18"], "do": []}
 ])

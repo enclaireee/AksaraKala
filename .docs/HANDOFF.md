@@ -222,6 +222,32 @@ A read-through of every doc against story.md > quests.md 4 > script.md > zone do
 - **Systems:** balance.md 7 and `balance_model.py` have boss rows for the Captain, Barma Wijaya, Hariang Banga and the Hunter (bestiary.md HP and hits now match). Kala is 9300 HP (Segara Kidul is P0, so rank 4 always applies); the built boss still has 8400, a code follow-up. items.md has a "Main-path quest items" section (Laras's Lontar, Laras's Ribbon, Boeh Rarang); Choice 3 sink gives `batu_kali`.
 - **Open for the user:** the four new bosses' Ilmu (1,170) is not in the balance 2.2 / 8.2 income model (balance.md 7 note). The Ingatan rank list still counts only Sangkuriang, Bondowoso, the Keris and the trial.
 
+### 5w. v3.1 plot-hole port (2026-11-06, docs only)
+The agreed plot-hole fixes (D1-D5, fixes 1-12; D8 superseded by v3.1's own 71 steps) are ported onto v3.1. No code or data changed. The pre-v3.1 local edits are in `git stash` as "story v3 local edits (pre-v3.1)".
+- **story.md:** the dalang reads the children's names at the ruwatan (VERIFY); the lontar is torn in two (you hold her name, she writes *Ka* on hers); the Faceless are forgotten people bound by names in the Hunter's bundle (held vs gone); Seal 1 cracks on reading, then breaks by force; Ciung at the crater is bait for the naga; one reveal (the deserter only hints); Hariang turns after the cage; "It should have taken me"; Ombak breaks Kala's shield; Nagawiru sleeps in the epilogue. Gua Kala's Memory Seals are now *huruf nama* (the letters of her name) everywhere.
+- **quests.md 4 / script.md:** new MQG step g.6 "Stop the wagon in the cell yard" (`galuh_escort`, sets `mqg_4b`) and beat `galuh_escort`; MQG is 9 steps, total 71. `laras_2` moves to `step:mqg=7` (after the cells). script.md 1 rules: 4 lines per NPC talk, 6 per beat; about 100 EN chars per line; no em dashes or parenthesised directions; villains don't explain the plot. New keys `BEAT_GALUH_ESCORT_1-2`, `Q_MQG_S6_OBJ` (old S6-S8 are now S7-S9); trimmed keys are listed in script.md 14.
+- **keraton_galuh.md:** `kg_penjara` gets encounter `W` `galuh_escort` (16,16) in the west guard hall (the cell yard, ASSUMED); `G` `galuh_cells` moves to (38,16). `gen_zones.py` was not re-run: regenerate `kg_penjara` and run its map check in Phase 4c.
+- **bestiary.md, world.md, gua_kala.md:** the Faceless definition and *huruf nama* wording.
+
+### 5x. Phase 4c: code synced to Story v3.1 (2026-11-06, not yet playtested)
+- Engine (quests.md 7.1): `all` steps (a bitmask in the quest record; save `VERSION` 2, old saves load with 0), `glyph_learned:` catch-up, the `zone:<area>` condition, `goto:<area>:<spawn>`, `restore` (`Game.restore()`, which the petilasan rest also uses), and `lakon:<id>`. Tests: `tests/quest_engine_test.gd`.
+- Data: `mq0`-`mq5` and `mqg` follow quests.md §4. `sq_s5` and `sq_m5` are deleted (user call). `sq_k1` and `sq_k2` now require `mq4_2` (ASSUMED: `mq4_1` is no longer set). The text and beats come from script.md through `.docs/script_to_data.py`; rerun it after any script.md edit (it is idempotent). 21 NPC files were rewritten, plus the new `arca_base`, `hariang_banga` and 7 stubs with empty `entries`.
+- Zones: every region was regenerated and `desa_purwa` was hand-edited (south exit `sk_pantai` behind kabut `mq4_2`, north kabut `mq4_9`, the lontar). `Zones.ADJ` matches the exits.
+- Items and boss: `batu_kali`, 10 codex entries, Kala HP 9300 (phases at 6200 and 3100), and Ombak breaks Kala's shield.
+- New: the Ombak spell (`spells/ombak.gd`, `data/spells/jawa_ka.tres`) is a piercing wave that pushes enemies back and destroys enemy shots it touches. Speed, range and push are TUNE.
+- Doc fixes made during the build:
+  - segara_kidul.md `sk_pantai` gets an N exit to `desa_purwa` and an `n` spawn.
+  - script.md §13 gets rows for `laras_lontar` and `laras_ribbon`.
+  - quests.md 7.1 is marked built and states what `restore` refills.
+  - The Kidul altar now runs `learn:jawa_ka` after its write (a write never teaches a glyph), so 4.9 can complete.
+  - The mbok_srini table header can now be parsed.
+  - Pak Karto has one idle line (`DLG_PAK_KARTO_IDLE`).
+- Saves: v1 saves get `all` = 0 but no step remap, so a mid-quest v1 save can land on the wrong step. Dev-only: start a New Game (plan call, no migration).
+- Open (from before 4c): SQ-K1 data counts 3 hatchlings, while quests.md and segara_kidul.md say 5. `timur_empu` puts the `step:mq3=3/5` entries before the SQ-T3 offer. `pickup.gd` ignores `all` triggers (no data uses that yet).
+- Code fixes:
+  - New Game starts MQ0 at step index 2 (0.3, Ibu).
+  - Glyph lessons wait while a write card is open.
+
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)
 2. ~~Move Wewe Gombel to Mataram~~: done 2026-11-05.
@@ -231,7 +257,9 @@ A read-through of every doc against story.md > quests.md 4 > script.md > zone do
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
-**2026-11-06 (Story v3.1 docs done, §5u):** every doc is on v3.1, the code is not. Next: Phase 4c in [schedule.md](schedule.md). Engine features first (`deep-implementer`), then the quest data, beats and dialogue from script.md, the zone regeneration and tests. Then the user's playtest, New Game to the credits, timing each act against story.md "Pacing". The Story v2 notes below are history. §5v lists the 2026-11-06 consistency fixes (Kala HP 9300 in the docs, 8400 in the code).
+**2026-11-06 (Phase 4c built, §5x):** the code now runs the v3.1 story. Next: the user plays New Game to the credits and times each act against the story.md runtime table. Open: the Ombak tuning, and the Ilmu for the new bosses in the balance model (§5v).
+
+**2026-11-06 (Story v3.1 docs done, §5u):** every doc is on v3.1, the code is not. Next: Phase 4c in [schedule.md](schedule.md). Engine features first (`deep-implementer`), then the quest data, beats and dialogue from script.md, the zone regeneration and tests. Then the user's playtest, New Game to the credits, timing each act against story.md "Pacing". The Story v2 notes below are history. §5v lists the 2026-11-06 consistency fixes (Kala HP 9300 in the docs, 8400 in the code). §5w ports the plot-hole fixes (new `galuh_escort` step and beat, Ombak breaks Kala's shield, `kg_penjara` needs regenerating).
 
 **2026-11-06 (Story v2 built):** the whole v2 story is in the game, from New Game to the credits. That covers name entry, the 5-card prologue, the story beats (`data/dialogue/beats.tres`, `ui/story_beat.gd`), the Faceless, 4 new bosses, Keraton Galuh (kg_*), the 3 choices, the name-writing finale and the epilogue variants. All tests pass, nothing is committed.
 - Security fixes: the finale write card replays after a quit until `mq5_4` is set (script.md, quests.md); the menu ignores input while the write card is open; `Game.play` skips the box for a do-only entry; `write:` ids are checked.

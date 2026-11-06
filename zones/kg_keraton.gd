@@ -3,13 +3,13 @@ extends Zone
 
 const MAP := [
 	"############################################################",
-	"#################__________________________#################",
+	"#################____________H_____________#################",
 	"#################__________________________#################",
 	"#################__________________________#################",
 	"#################____________B_____________#################",
+	"#################_________Q_____O__________#################",
 	"#################__________________________#################",
-	"#################__________________________#################",
-	"#################__________________________#################",
+	"#################_________________R________#################",
 	"#################__________________________#################",
 	"#################__________________________#################",
 	"#################__________________________#################",
@@ -25,7 +25,7 @@ const MAP := [
 	"#............................,,............................#",
 	"#............................,,............................#",
 	"#...........P................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX",
-	"#............................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
+	"#.............C..............,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
 	"#............................,,............................#",
 	"#............................,,............................#",
 	"#............................,,............................#",
@@ -45,7 +45,12 @@ const SPOTS := {
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_penjara"}, "tile": ","},   # spawn, arrival from kg_penjara
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mqg_6"}, "tile": ","},   # kabut, throne room door (one per tile)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "galuh_1"}, "tile": ","},   # petilasan galuh_1
-	"B": {"scene": "res://entities/bosses/barma_wijaya.tscn", "props": {"unique_id": "barma_wijaya"}, "tile": "_"},   # boss Barma Wijaya, the false king
+	"B": {"scene": "res://entities/bosses/barma_wijaya.tscn", "props": {"unique_id": "barma_wijaya"}, "tile": "_"},   # boss Barma Wijaya, the false king (MQG g.9)
+	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mqg_4"}, "tile": ","},   # NPC Ciung Wanara, camp talk at the petilasan (optional, `quiet`, 2-4 lines, entry `camp_galuh`; reachable after the boss too)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nameless_hunter", "cond": "flag:beat_confession,!flag:beat_escape"}, "tile": "_"},   # NPC the Nameless Hunter, a shadow behind the throne (`cage` beat): "The cage holds the man, not the name."
+	"Q": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pangrenyep", "cond": "flag:mqg_7"}, "tile": "_"},   # NPC Queen Pangrenyep, caged with the king (`cage` beat, one line)
+	"O": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mqg_7"}, "tile": "_"},   # NPC Ciung Wanara in the throne room, cages the king and queen, then holds Galuh (`cage` and `escape` beats)
+	"R": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga", "cond": "flag:beat_cage,!flag:beat_escape"}, "tile": "_"},   # NPC Prince Hariang Banga, escapes east (`escape` beat)
 }
 
 
