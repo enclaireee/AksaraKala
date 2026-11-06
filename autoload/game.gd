@@ -9,7 +9,7 @@ const VERSION := 2   # 2: quest records gain `all` (bits of an all step). Older 
 const STATS := ["vit", "end", "str", "dex", "spi"]
 const STARTER_GLYPHS: Array[String] = []   # glyphs come from the main quest (quests.md 3.3)
 ## Quest Ilmu by zone and size S/M/L (quests.md 3.1, TUNE). Desa Purwa uses the Act 1 row for now.
-const QUEST_ILMU := {"tatar_sunda": [30, 60, 90], "desa_purwa": [30, 60, 90], "mataram": [55, 110, 165],
+const QUEST_ILMU := {"tatar_sunda": [30, 60, 90], "desa_purwa": [30, 60, 90], "keraton_galuh": [30, 60, 90], "mataram": [55, 110, 165],
 	"tanah_timur": [110, 220, 330], "segara_kidul": [190, 380, 570],
 	"gua_kala": [190, 380, 570]}
 ## Quest-trigger signals on Events with one String arg (quests.md 7.2).

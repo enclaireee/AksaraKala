@@ -244,7 +244,16 @@ func _new_sequence() -> void:
 	if pool.is_empty():
 		pool = PackedStringArray(["sunda_ka"])
 	sequence = PackedStringArray()
-	if pool.size() >= 3:
+	if "jawa_ka" in pool:   # bestiary.md: a Sunda glyph, a Jawa glyph, then Ombak breaks the shield
+		var sunda := Array(pool).filter(func(g: String) -> bool: return g.begins_with("sunda_"))
+		var jawa := Array(pool).filter(func(g: String) -> bool: return g.begins_with("jawa_") and g != "jawa_ka")
+		var rest := Array(pool).filter(func(g: String) -> bool: return g != "jawa_ka")
+		if rest.is_empty():
+			rest = ["jawa_ka"]
+		sequence.append(sunda.pick_random() if not sunda.is_empty() else rest.pick_random())
+		sequence.append(jawa.pick_random() if not jawa.is_empty() else rest.pick_random())
+		sequence.append("jawa_ka")
+	elif pool.size() >= 3:
 		var a := Array(pool)
 		a.shuffle()
 		sequence = PackedStringArray(a.slice(0, 3))
@@ -264,9 +273,6 @@ func _break_shield() -> void:
 
 func _on_cast(glyph_id: String, _score: float) -> void:
 	if not shielded or dead or state == State.PAUSE or sequence.size() < 3:
-		return
-	if glyph_id == "jawa_ka":   # Ombak: the one letter the Eclipse can't eat (story.md)
-		_break_shield()
 		return
 	if glyph_id == sequence[seq_index]:
 		seq_index += 1

@@ -93,8 +93,16 @@ func _initialize() -> void:
 	check(b.state != BataraKala.State.STUN and not b.shielded, "stun over after 3 s, still open")
 	run(7.0)
 	check(b.shielded and b.seq_index == 0, "shield returns after 10 s")
+	# with Ombak learned: Sunda, Jawa, then Ombak; Ombak out of order does not skip the sequence
+	game.glyphs_learned = PackedStringArray(["sunda_ka", "sunda_ga", "jawa_ha", "jawa_ka"])
+	b._new_sequence()
+	check(b.sequence[0].begins_with("sunda_") and b.sequence[1].begins_with("jawa_") and b.sequence[1] != "jawa_ka" and b.sequence[2] == "jawa_ka", "sequence: Sunda, Jawa, Ombak (%s)" % ",".join(b.sequence))
 	events.spell_cast.emit("jawa_ka", 1.0)
-	check(not b.shielded and b.state == BataraKala.State.STUN, "Ombak (jawa_ka) breaks the shield at once")
+	check(b.shielded and b.seq_index == 0, "Ombak alone does not break the shield")
+	s = b.sequence.duplicate()
+	for g: String in s:
+		events.spell_cast.emit(g, 1.0)
+	check(not b.shielded and b.state == BataraKala.State.STUN, "Ombak as the last glyph breaks the shield")
 	run(10.1)
 	check(b.shielded, "shield returns after the Ombak break")
 

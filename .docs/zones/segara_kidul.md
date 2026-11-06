@@ -114,7 +114,7 @@ Marker form `{zone: "segara_kidul", id: ...}`. Ids from quests.md are marked (Q)
 | 4.8 pass the Trial of the Waves | `kidul_trial` | `sk_keraton` outer court | `area_cleared:kidul_trial` (Q), sets `mq4_8`, lifts the kabut on L3. Beat `kidul_trial` (if `flag:mq4_8`): Nyi Roro Kidul speaks once, from a distance, the sea goes still |
 | 4.9 receive Ombak and the Kain Hijau | `kidul_altar` | `sk_keraton` pendopo (Sea Altar) | the altar entry is `step:mq4=8`, it runs `write:ombak:jawa_ka` and `give:kain_hijau`; `glyph_learned:jawa_ka` (Q), sets `mq4_9`, MQ4 done, lifts the kabut on X3. Beat `kidul` (if `quest:mq4=done`): Semar, Ombak is the one letter the Eclipse can't eat, it opens the cave from the sea pavilion; `start:mq5` |
 | SQ-K1 start | `kidul_nelayan_anak` | `sk_pantai` | `talked_to:kidul_nelayan_anak`. Unlock: `zone_entered:segara_kidul` (ASSUMED) |
-| SQ-K1 (1) guide 5 hatchlings | `kidul_nest` (sparkle only, no extra marker) | `sk_pantai` dunes to shore | `area_entered:kidul_tukik_laut` x5 (one per hatchling that reaches the water) |
+| SQ-K1 (1) pick up 3 hatchlings, (2) carry them to the surf | pickups `1`-`3` (sparkle), then `T` | `sk_pantai` dunes to shore | `item_picked:tukik_*` x3, then `area_entered:kidul_tukik_laut` once (synced 2026-11-06 to the map's 3 pickups) |
 | SQ-K1 turn in | `kidul_nelayan_anak` | `sk_pantai` | `talked_to:kidul_nelayan_anak`. Reward Herb Pouch #4 |
 | SQ-K2 start | `kidul_nelayan_tua` | `sk_karang` | `talked_to:kidul_nelayan_tua`. Unlock: `zone_entered:segara_kidul` (ASSUMED) |
 | SQ-K2 find the old crocodile | `kidul_elite` | `sk_karang` cove | `area_entered:kidul_elite_cove` |
@@ -161,7 +161,7 @@ Arrive at `sk_pantai` (`from_desa_purwa`, green glow on the horizon) -> teach en
 ## Open questions
 1. VERIFY: wearing green on the south coast and her association with the Parangkusumo / Parangtritis shore (a ritual stage, Panggung Sanggabuwana). Do not name real places in game text without a source.
 2. VERIFY: sea-gate and "keraton" imagery (palace under the sea). A single source for any codex line.
-3. SQ-K1 mentions crabs and birds that block hatchlings. bestiary.md has no such enemies ("mundane enemies to be added at Phase 5"). Use them as scripted hazards, or add mundane enemies?
+3. ~~SQ-K1 mentions crabs and birds that block hatchlings.~~ Resolved 2026-11-06: SQ-K1 is the built 3-pickup version, no crabs or birds.
 4. Who gives Jawa Ka? Here the trial and the sea, with Nyi Roro Kidul speaking once, at the Sea Altar (quests.md 4.9).
 5. Does the quest engine complete a step whose event already happened (for a `tt_pesisir` arrival who cleared `kidul_karang_2` on the first pass)? If not, the second crossing needs the encounter to respawn, or the step must accept the cleared state. quests.md 7 does not say.
 6. Mbah Wiryo's words to the sea: the name of his wife. Script.md owns the line (VERIFY nothing cultural, but keep the name plain, not a real figure).

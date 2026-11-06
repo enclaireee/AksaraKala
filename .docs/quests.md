@@ -32,11 +32,13 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
   | Zone | S | M | L |
   |------|---|---|---|
   | Tatar Sunda | 30 | 60 | 90 |
+  | Keraton Galuh | 30 | 60 | 90 |
   | Mataram | 55 | 110 | 165 |
   | Tanah Timur | 110 | 220 | 330 |
   | Segara Kidul | 190 | 380 | 570 |
   | Gua Kala | 190 | 380 | 570 |
 
+  - Keraton Galuh (MQG, `zone = "keraton_galuh"`, so the journal names the right region) uses the Tatar Sunda row (**ASSUMED** 2026-11-06), so the quest income in balance_model.py is unchanged.
   - Gua Kala uses the Segara Kidul row (**ASSUMED** 2026-11-05). Its only quest, MQ5, pays out after the final boss, so balance_model.py counts 0 for it.
 
   - Desa Purwa hub quests use the zone of the current main-quest chapter.
@@ -193,7 +195,7 @@ Beats:
 - `galuh_bout` (if `flag:mqg_2`): the rooster won off-screen; Lengser sees the queen's eyes in Ciung Wanara. Lengser then stands by the ring (cond `flag:mqg_2`). `do`: `flag:beat_galuh_bout`, `codex:ciung_wanara`.
 - `galuh_escort` (if `flag:mqg_4b`): the near miss. The wagon clears the yard gate as the last guard falls. A strip of lontar comes over the wall, *Ka* on it, and the wagon is gone east. `do`: `flag:beat_galuh_escort`.
 - `laras_2` (if `step:mqg=7`, after the cells): Laras's beat. Under the wagon cloth she heard you fighting in the yard; she is rocking east. `do`: `flag:beat_laras_2`. (No petilasan here: the beat fires after the cells fight, **ASSUMED**.)
-- Camp talk (cond `flag:mqg_4`, `ciung_wanara` entry `camp_galuh`, at `galuh_1`): optional, 2-4 lines. Ciung on the throne he wants and the sister you want. `do`: `flag:camp_galuh`. It stays reachable after the boss.
+- Camp talk (cond `flag:mqg_4`, `ciung_wanara` entry `camp_galuh`, at `galuh_1`): optional, 2-4 lines. Ciung on the throne he wants and the sister you want. `do`: `flag:camp_galuh`. The entry also needs `!flag:mqg_7` and `zone:kg_keraton`: its last line looks ahead to the unmasking, so it closes after the boss and never replays in later acts (fixed 2026-11-06).
 - `confession` (if `flag:mqg_7`): the turn. In the throne room Barma Wijaya admits Seal 2: he scraped the old king's name to keep the face and gave Kala his own. The Hunter *is* that name. This is the only reveal; the deserter at g.8 only hints ("our master speaks with the king's voice"). `do`: `flag:beat_confession`.
 - `cage` (if `flag:beat_confession`): the Hunter's appearance. Ciung cages Barma Wijaya and Queen Pangrenyep, as in the legend. Pangrenyep has one line: "My son will come, child. What is caged is always ransomed." From the shadows behind the throne the Hunter: "The cage holds the man, not the name." `do`: `flag:beat_cage`, `codex:barma_wijaya`, `codex:pangrenyep`.
 - `escape` (if `quest:mqg=done`, `flag:beat_cage`): the aftermath that starts MQ2. Prince Hariang Banga escapes east to raise an army and free his mother; he turns on Ciung only now, over the cage. Ciung stays to hold Galuh. You go on alone. `do`: `flag:beat_escape`, `start:mq2`.
@@ -251,7 +253,7 @@ Goal: follow the Hunter to the last seal. Regional character: **Mpu Wirasana**. 
 
 Beats:
 - `laras_4` (if `step:mq3=9`, at `timur_2`): Laras's beat. She can't remember your face; only one letter is left on her half, *Ka*. `do`: `flag:beat_laras_4`.
-- Camp talk (cond `flag:mq3_6`, `hariang_banga` entry `camp_timur`, at `timur_2`): optional, 2-4 lines. Hariang Banga shows you the road east. `do`: `flag:camp_timur`.
+- Camp talk (cond `flag:mq3_6`, `zone:tt_pasir`, `hariang_banga` entry `camp_timur`, at `timur_2`): optional, 2-4 lines. Hariang Banga shows you the road east. `do`: `flag:camp_timur`. The zone cond keeps it from replaying at the Interlude table and the Gua Kala mouth (fixed 2026-11-06).
 - `shrine_sight` (if `flag:mq3_6`, `flag:beat_laras_4`, `zone:tt_candi`): the turn. You see Laras across the shrine, made to read the last seal. The **Keris Mpu Gandring** wakes (Seal 4). The keris boss cond is `flag:beat_shrine_sight`. `do`: `flag:beat_shrine_sight`.
 - `keris` (if `flag:mq3_7`): the keris lies quiet. **Choice 3:** take it to the empu to reforge (`choice_reforge`, `give:keris_gandring`) or give it to the river (`choice_sink`, `give:batu_kali`). `do`: `flag:beat_keris`.
 - `hunter_shrine` (if `flag:beat_keris`): the Hunter's appearance (the duel) and the double-boss restore. He steps out of the shrine's shadow (his boss cond is `flag:beat_keris`). It is a separate beat because no lines can follow a choice. `do`: `flag:beat_hunter_shrine`, `restore`.
@@ -408,7 +410,7 @@ Theme (names): carried by SQ-T1, where a hero hides behind a borrowed name.
 The main path here is P0 (section 4). These side quests are P1. Theme (the sea remembers, **ASSUMED**): carried by SQ-K1, where hatchlings find their own way back.
 
 **SQ-K1 "Tukik Pulang ke Laut" / "Hatchlings Home to the Sea"** (errand, S)
-- Giver: a fisher's child. Steps: (1) guide 5 turtle hatchlings past crabs and birds to the water (they move on their own, the player clears the path).
+- Giver: a fisher's child. Steps: (1) pick up 3 stranded turtle hatchlings in the dunes (`item_picked:tukik_*` x3), (2) carry them to the surf (`area_entered:kidul_tukik_laut`), (3) tell the child. Synced 2026-11-06 to the built quest and the sk_pantai map (3 pickups); the escort version with crabs and birds is dropped, since bestiary.md has no such enemies.
 - Reward: **Herb Pouch #4**, Ilmu S.
 - Culture: Java's south coast has real turtle nesting beaches (**VERIFY**: e.g. Pangumbahan, Sukamade). A conservation note in the codex.
 

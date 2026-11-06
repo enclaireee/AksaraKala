@@ -87,7 +87,7 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE
 | `H` | NPC Hariang Banga at Ibu's table (Interlude beat spot) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga", cond:"flag:mq4_2,!flag:mq4_9"}` | floor | 1 |
 | `h` | NPC the Nameless Hunter at the west gate, staging for the `hunter_raid` beat (no talk; `npc_id` ASSUMED) | `res://entities/npc/npc.tscn` | `{npc_id:"nameless_hunter", cond:"flag:mq0_7,!flag:beat_hunter_raid"}` | grass | 1 |
 | `n` | NPC Nini Balangantrang at the west gate, speaks in the `hunter_raid` beat (name key `NPC_NINI_NAME`; no talk of her own) | `res://entities/npc/npc.tscn` | `{npc_id:"nini_balangantrang", cond:"flag:mq0_7,!flag:beat_hunter_raid"}` | grass | 1 |
-| `m` | codex spot, the Hunter's empty mask in the hearth (Interlude, id ASSUMED) | `res://entities/world/pickup.tscn` | `{codex_id:"hunter_mask"}` | floor | 1 |
+| `m` | codex spot, the Hunter's empty mask in the hearth (Interlude, id ASSUMED; hidden until MQ3 is done so the codex cannot spoil him) | `res://entities/world/pickup.tscn` | `{codex_id:"hunter_mask", cond:"quest:mq3=done"}` | floor | 1 |
 
 Exits sit on the map edge (x = 0 and x = 59, rows 16-17; the south exit `X` at (30..31,33); the north exit `J` at (52..53,0)). Each exit has a spawn one tile inside: `w` (1,16) for the west exit, `v` (57,16) for the east one. The east gate is two kabut tiles `K` at (58,16) and (58,17), between `v` and the exit `E`. The south gate is two kabut tiles `x` at (30..31,32), between the spawn `y` (30,31) and the exit `X`.
 

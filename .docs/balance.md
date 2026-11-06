@@ -220,6 +220,7 @@ The old formula gave 1.5-2 levels for an M quest in Tatar Sunda. Quest Ilmu now 
 | Zone | S | M | L |
 |------|---|---|---|
 | Tatar Sunda | 30 | 60 | 90 |
+| Keraton Galuh (same row as Tatar Sunda, **ASSUMED**) | 30 | 60 | 90 |
 | Mataram | 55 | 110 | 165 |
 | Tanah Timur | 110 | 220 | 330 |
 | Segara Kidul | 190 | 380 | 570 |

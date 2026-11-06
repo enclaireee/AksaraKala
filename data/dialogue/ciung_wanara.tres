@@ -7,10 +7,12 @@ script = ExtResource("1")
 npc_id = "ciung_wanara"
 name_key = "NPC_CIUNG_WANARA_NAME"
 entries = Array[Dictionary]([
+	{"if": ["flag:mq4_9"], "lines": ["DLG_CIUNG_WANARA_V10"], "do": []},
+	{"if": ["quest:mq4=active"], "lines": ["DLG_CIUNG_WANARA_V11"], "do": []},
 	{"if": ["quest:mq2=active"], "lines": ["DLG_CIUNG_WANARA_V1"], "do": []},
 	{"if": ["step:mqg=0"], "lines": ["@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H1", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V3", "@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H2", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V7"], "do": []},
 	{"if": ["step:mqg=2"], "lines": ["DLG_CIUNG_WANARA_V4"], "do": []},
-	{"if": ["flag:mqg_4"], "lines": ["DLG_CIUNG_WANARA_V8", "@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H3", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V9"], "do": ["flag:camp_galuh"], "quiet": true},
+	{"if": ["flag:mqg_4", "!flag:mqg_7", "zone:kg_keraton"], "lines": ["DLG_CIUNG_WANARA_V8", "@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H3", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V9"], "do": ["flag:camp_galuh"], "quiet": true},
 	{"if": ["quest:mqg=active"], "lines": ["DLG_CIUNG_WANARA_V5"], "do": []},
 	{"if": [], "lines": ["DLG_CIUNG_WANARA_V6"], "do": []}
 ])

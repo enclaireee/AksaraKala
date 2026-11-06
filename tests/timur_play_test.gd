@@ -17,14 +17,14 @@ const ROUTE := [
 	"do:klething_kuning", "q:sq_t1=done", "has:stone_ring",
 	"do:timur_wisps", "do:mbok_srini", "q:mq3=active:4",
 	"go:tt_ladang", "do:timur_ladang", "do:buto_ijo", "q:mq3=active:5",
-	"go:tt_beringin", "do:sc:tt_ladang", "do:timur_empu", "q:mq3=active:5",
+	# SQ-T3 opens with 3.3; the empu offers it before his step hints (script.md timur_empu, fixed 2026-11-06).
+	"go:tt_beringin", "do:sc:tt_ladang", "do:timur_empu", "q:mq3=active:5", "q:sq_t3=active:1",
 	"do:timur_praktik", "q:mq3=active:5", "stakes", "q:mq3=active:6",
 	"go:tt_pesisir", "do:kuda_kepang_3", "q:sq_t4=active:2",
 	"do:burn_trail", "q:sq_t2=active:2", "kill:banaspati_elite", "q:sq_t2=active:3",
 	"do:timur_pesisir", "q:mq3=active:7",
 	"go:tt_sabana", "do:timur_herder", "q:sq_t2=done",
 	"go:tt_beringin", "do:kepang_leader", "q:sq_t4=active:3", "do:kepang_stage", "q:sq_t4=done",
-	# SQ-T3 opens with 3.3 but the empu offers it only once his step hints (steps 3 and 5) are past.
 	"do:timur_empu", "q:sq_t3=active:1",
 	"go:tt_sabana", "go:tt_kulon", "go:mt_wetan", "go:mt_candi", "do:batu_bintang", "q:sq_t3=active:2",
 	"go:mt_wetan", "go:tt_kulon", "go:tt_sabana", "go:tt_beringin", "do:timur_empu", "q:sq_t3=done", "has:keris_luk_7",

@@ -7,5 +7,8 @@ script = ExtResource("1")
 npc_id = "hariang_banga"
 name_key = "NPC_HARIANG_BANGA_NAME"
 entries = Array[Dictionary]([
-	{"if": ["flag:mq3_6"], "lines": ["DLG_HARIANG_BANGA_V1", "DLG_HARIANG_BANGA_H1", "DLG_HARIANG_BANGA_V2"], "do": ["flag:camp_timur"], "quiet": true}
+	{"if": ["flag:mq4_9"], "lines": ["DLG_HARIANG_BANGA_V3"], "do": []},
+	{"if": ["quest:mq4=active"], "lines": ["DLG_HARIANG_BANGA_V4"], "do": []},
+	{"if": ["flag:mq3_6", "zone:tt_pasir"], "lines": ["DLG_HARIANG_BANGA_V1", "@NPC_HERO_NAME", "DLG_HARIANG_BANGA_H1", "@NPC_HARIANG_BANGA_NAME", "DLG_HARIANG_BANGA_V2"], "do": ["flag:camp_timur"], "quiet": true},
+	{"if": [], "lines": ["DLG_HARIANG_BANGA_V5"], "do": []}
 ])

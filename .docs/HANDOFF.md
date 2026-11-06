@@ -243,10 +243,21 @@ The agreed plot-hole fixes (D1-D5, fixes 1-12; D8 superseded by v3.1's own 71 st
   - The mbok_srini table header can now be parsed.
   - Pak Karto has one idle line (`DLG_PAK_KARTO_IDLE`).
 - Saves: v1 saves get `all` = 0 but no step remap, so a mid-quest v1 save can land on the wrong step. Dev-only: start a New Game (plan call, no migration).
-- Open (from before 4c): SQ-K1 data counts 3 hatchlings, while quests.md and segara_kidul.md say 5. `timur_empu` puts the `step:mq3=3/5` entries before the SQ-T3 offer. `pickup.gd` ignores `all` triggers (no data uses that yet).
+- ~~Open (from before 4c): SQ-K1 3 vs 5 hatchlings, `timur_empu` order, `pickup.gd` and `all` triggers.~~ All fixed in §5y.
 - Code fixes:
   - New Game starts MQ0 at step index 2 (0.3, Ibu).
   - Glyph lessons wait while a write card is open.
+
+### 5y. v3.1 review fixes (2026-11-06, not yet run in Godot)
+A read-through of the Phase 4c build against the docs found these; all are fixed. Godot was not available in this session, so the tests were not run.
+- **Camp talks replayed in later acts.** Hariang Banga's only entry (`flag:mq3_6`) also ran at the Interlude table and the Gua Kala mouth; Ciung's `camp_galuh` entry ran at `kg_pamali`, Desa Purwa and `gk_mulut` ("Tomorrow we lift the king's mask"). The camp entries now need `zone:tt_pasir` / `zone:kg_keraton` (Ciung's also `!flag:mqg_7`), and both NPCs get a line for the Interlude and the cave mouth (script.md "Staging NPCs", quests.md 4).
+- **The Hunter's mask spoiled the Hunter.** The `hunter_mask` codex pickup in Ibu's house had no cond, so it could be read in the Prologue. `pickup.gd` now takes `cond` (like `Npc.cond`); the mask needs `quest:mq3=done` (desa_purwa.md).
+- **Ombak skipped Kala's shield puzzle.** Any `jawa_ka` cast broke the shield at once. The shield sequence is now a Sunda glyph, a Jawa glyph, then Ombak (bestiary.md Final). `tests/kala_test.gd` checks it.
+- **Seven empty NPCs.** `nameless_hunter`, `nini_balangantrang`, `sapto`, `nagawiru`, `pangrenyep`, `seal_stone`, `deserter_mouth` had no entries, so a talk did nothing. Each has one line now (script.md "Staging NPCs").
+- **MQG journal region.** `mqg.zone` was `tatar_sunda`; it is `keraton_galuh` now, with a `UI_ZONE_KERATON_GALUH` key and a QUEST_ILMU row equal to Tatar Sunda (ASSUMED, so the balance model is unchanged).
+- **Old open items:** SQ-K1 docs now match the built 3-pickup quest; `timur_empu` offers SQ-T3 before its step hints (`timur_play_test` updated); `pickup.gd` sparkles for `all` triggers too.
+- **Not done:** v1 save migration (dev-only, plan call) and the Ilmu of the four new bosses in the balance income model (a design call for the user, §5v).
+- **Run on the Mac first:** `$GODOT --headless --path . --import` (the `.translation` files are stale until the CSVs are re-imported; commit the regenerated files), then every test in `tests/`.
 
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)
@@ -257,6 +268,8 @@ The agreed plot-hole fixes (D1-D5, fixes 1-12; D8 superseded by v3.1's own 71 st
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
+**2026-11-06 (v3.1 review fixes, §5y):** bugs from the review are fixed and pushed to master. Next: run `--import` and every test on the Mac (not run in this session), commit the regenerated `.translation` files, then the playtest below.
+
 **2026-11-06 (Phase 4c built, §5x):** the code now runs the v3.1 story. Next: the user plays New Game to the credits and times each act against the story.md runtime table. Open: the Ombak tuning, and the Ilmu for the new bosses in the balance model (§5v).
 
 **2026-11-06 (Story v3.1 docs done, §5u):** every doc is on v3.1, the code is not. Next: Phase 4c in [schedule.md](schedule.md). Engine features first (`deep-implementer`), then the quest data, beats and dialogue from script.md, the zone regeneration and tests. Then the user's playtest, New Game to the credits, timing each act against story.md "Pacing". The Story v2 notes below are history. §5v lists the 2026-11-06 consistency fixes (Kala HP 9300 in the docs, 8400 in the code). §5w ports the plot-hole fixes (new `galuh_escort` step and beat, Ombak breaks Kala's shield, `kg_penjara` needs regenerating).

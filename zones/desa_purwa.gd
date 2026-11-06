@@ -70,7 +70,7 @@ const SPOTS := {
 	"H": {"scene": NPC, "props": {"npc_id": "hariang_banga", "cond": "flag:mq4_2,!flag:mq4_9"}, "tile": "_"},
 	"h": {"scene": NPC, "props": {"npc_id": "nameless_hunter", "cond": "flag:mq0_7,!flag:beat_hunter_raid"}, "tile": "."},
 	"n": {"scene": NPC, "props": {"npc_id": "nini_balangantrang", "cond": "flag:mq0_7,!flag:beat_hunter_raid"}, "tile": "."},
-	"m": {"scene": W + "pickup.tscn", "props": {"codex_id": "hunter_mask"}, "tile": "_"},
+	"m": {"scene": W + "pickup.tscn", "props": {"codex_id": "hunter_mask", "cond": "quest:mq3=done"}, "tile": "_"},
 }
 
 

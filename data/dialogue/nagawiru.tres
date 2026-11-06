@@ -6,4 +6,6 @@
 script = ExtResource("1")
 npc_id = "nagawiru"
 name_key = "NPC_NAGAWIRU_NAME"
-entries = Array[Dictionary]([])
+entries = Array[Dictionary]([
+	{"if": [], "lines": ["DLG_NAGAWIRU_V1"], "do": []}
+])

@@ -273,32 +273,36 @@ Regional characters: Uwa Lengser (want: to say a secret aloud; turn: the queen's
 ### ciung_wanara (kg_alun; name NPC_CIUNG_WANARA_NAME)
 | Entry | if | do |
 |-------|----|----|
-| 1 | `quest:mq2=active` | |
-| 2 | `step:mqg=0` (g.1) | |
-| 3 | `step:mqg=2` (g.3, after bout 1) | |
-| 4 | `flag:mqg_4` (camp talk at `galuh_1`, `"quiet": true`) | `flag:camp_galuh` |
-| 5 | `quest:mqg=active` | |
-| 6 | (none) | |
+| 1 | `flag:mq4_9` (holding the Gua Kala mouth, Act VI) | |
+| 2 | `quest:mq4=active` (the Interlude table in Desa Purwa) | |
+| 3 | `quest:mq2=active` | |
+| 4 | `step:mqg=0` (g.1) | |
+| 5 | `step:mqg=2` (g.3, after bout 1) | |
+| 6 | `flag:mqg_4`, `!flag:mqg_7`, `zone:kg_keraton` (camp talk at `galuh_1`, `"quiet": true`; closes once the king is unmasked, since its last line looks ahead to that, and the zone keeps it out of later acts) | `flag:camp_galuh` |
+| 7 | `quest:mqg=active` | |
+| 8 | (none) | |
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_CIUNG_WANARA_V1 | Katanya anak Pangrenyep mengumpulkan pasukan. Saudaraku, rupanya. | They say Pangrenyep's son is raising an army. My brother, apparently. |
-| 2 | @NPC_HERO_NAME | | |
-| 2 | DLG_CIUNG_WANARA_H1 | Lewat mana kita masuk? Gerbang istana dijaga ketat. | How do we get in? The palace gate is watched. |
-| 2 | @NPC_CIUNG_WANARA_NAME | | |
-| 2 | DLG_CIUNG_WANARA_V3 | Lewat sayembara raja. Ayamku bertarung di gelanggang, kau hajar siapa pun yang curang. | Through the king's tournament. My rooster fights in the ring, you thrash whoever cheats. |
-| 2 | @NPC_HERO_NAME | | |
-| 2 | DLG_CIUNG_WANARA_H2 | Aku tak menyentuh ayam. Dan aku tak bertaruh. | I don't touch roosters. And I don't bet. |
-| 2 | @NPC_CIUNG_WANARA_NAME | | |
-| 2 | DLG_CIUNG_WANARA_V7 | Siapa yang menyuruh? Ayam itu urusanku. Menangkan dua babak, dan raja terpaksa menemui kita. | Who asked you to? The bird's my business. Win two bouts and the king has to see us. |
-| 3 | DLG_CIUNG_WANARA_V4 | Satu babak lagi. Mereka di panggung kehormatan mulai gelisah. | One more bout. They're getting nervous up on the dais. |
-| 4 | DLG_CIUNG_WANARA_V8 | Kupikir singgasana itu akan terasa seperti pulang. Nyatanya seperti baju kakak: kebesaran, dan bukan milikku. | I thought the throne would feel like coming home. It feels like a big brother's coat: too large, and not mine. |
+| 1 | DLG_CIUNG_WANARA_V10 | Masuklah. Tak ada yang lewat dua raja dan satu pintu. | Go in. Nothing gets past two kings and one door. |
+| 2 | DLG_CIUNG_WANARA_V11 | Ibumu menuangkan teh untukku tanpa bertanya siapa aku. Pergilah ke selatan, Penulis. | Your mother poured me tea without asking who I was. Go south, writer. |
+| 3 | DLG_CIUNG_WANARA_V1 | Katanya anak Pangrenyep mengumpulkan pasukan. Saudaraku, rupanya. | They say Pangrenyep's son is raising an army. My brother, apparently. |
 | 4 | @NPC_HERO_NAME | | |
-| 4 | DLG_CIUNG_WANARA_H3 | Lalu kenapa kau mau? | Then why take it? |
+| 4 | DLG_CIUNG_WANARA_H1 | Lewat mana kita masuk? Gerbang istana dijaga ketat. | How do we get in? The palace gate is watched. |
 | 4 | @NPC_CIUNG_WANARA_NAME | | |
-| 4 | DLG_CIUNG_WANARA_V9 | Kau mau adikmu, aku mau yang dicuri dariku. Sama saja. Tidur. Besok kita buka topeng raja. | You want your sister, I want what was stolen from me. Same thing. Sleep. Tomorrow we lift the king's mask. |
-| 5 | DLG_CIUNG_WANARA_V5 | Istana ini bau dupa tua dan dusta. | This palace smells of old incense and lies. |
-| 6 | DLG_CIUNG_WANARA_V6 | Galuh akan punya raja yang adil. Suatu hari. | Galuh will have a fair king. Someday. |
+| 4 | DLG_CIUNG_WANARA_V3 | Lewat sayembara raja. Ayamku bertarung di gelanggang, kau hajar siapa pun yang curang. | Through the king's tournament. My rooster fights in the ring, you thrash whoever cheats. |
+| 4 | @NPC_HERO_NAME | | |
+| 4 | DLG_CIUNG_WANARA_H2 | Aku tak menyentuh ayam. Dan aku tak bertaruh. | I don't touch roosters. And I don't bet. |
+| 4 | @NPC_CIUNG_WANARA_NAME | | |
+| 4 | DLG_CIUNG_WANARA_V7 | Siapa yang menyuruh? Ayam itu urusanku. Menangkan dua babak, dan raja terpaksa menemui kita. | Who asked you to? The bird's my business. Win two bouts and the king has to see us. |
+| 5 | DLG_CIUNG_WANARA_V4 | Satu babak lagi. Mereka di panggung kehormatan mulai gelisah. | One more bout. They're getting nervous up on the dais. |
+| 6 | DLG_CIUNG_WANARA_V8 | Kupikir singgasana itu akan terasa seperti pulang. Nyatanya seperti baju kakak: kebesaran, dan bukan milikku. | I thought the throne would feel like coming home. It feels like a big brother's coat: too large, and not mine. |
+| 6 | @NPC_HERO_NAME | | |
+| 6 | DLG_CIUNG_WANARA_H3 | Lalu kenapa kau mau? | Then why take it? |
+| 6 | @NPC_CIUNG_WANARA_NAME | | |
+| 6 | DLG_CIUNG_WANARA_V9 | Kau mau adikmu, aku mau yang dicuri dariku. Sama saja. Tidur. Besok kita buka topeng raja. | You want your sister, I want what was stolen from me. Same thing. Sleep. Tomorrow we lift the king's mask. |
+| 7 | DLG_CIUNG_WANARA_V5 | Istana ini bau dupa tua dan dusta. | This palace smells of old incense and lies. |
+| 8 | DLG_CIUNG_WANARA_V6 | Galuh akan punya raja yang adil. Suatu hari. | Galuh will have a fair king. Someday. |
 
 ### Beat `galuh_bout` (if `!flag:beat_galuh_bout`, `flag:mqg_2`; do `flag:beat_galuh_bout`, `codex:ciung_wanara`)
 | Key | ID | EN |
@@ -581,12 +585,15 @@ Regional character: Mpu Wirasana (want: to never again forge a blade that eats; 
 ### timur_empu (Mpu Wirasana; replace the main-path entries, keep the SQ-T3 entries)
 | Entry | if | do |
 |-------|----|----|
+| 3 | `step:mq3=2` (3.3) | |
+| (keep) | the SQ-T3 offer (`quest:sq_t3=available`) and turn-in (`step:sq_t3=2`) | |
 | 1 | `flag:choice_reforge` | |
 | 2 | `flag:choice_sink` | |
-| 3 | `step:mq3=2` (3.3) | |
 | 4 | `step:mq3=3` | |
 | 5 | `step:mq3=5` | |
-| (keep) | SQ-T3 entries and the current fallback | |
+| (keep) | the SQ-T3 reminder (`quest:sq_t3=active`) and the current fallback | |
+
+Runtime order is the row order above (fixed 2026-11-06): the SQ-T3 offer and turn-in come before the main-path nudges and the choice lines, so they are never hidden behind them. Entry numbers name the text rows below.
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
@@ -625,7 +632,7 @@ Regional character: Mpu Wirasana (want: to never again forge a blade that eats; 
 | BEAT_LARAS_4_1 | Kak... wajahmu tak bisa kulihat lagi. Kucoba, tapi cuma bayangan. | Kak... I can't see your face anymore. I try, and it's just a shape. |
 | BEAT_LARAS_4_2 | Di separuh lontarku tinggal satu huruf: Ka. Kugenggam erat-erat. Jangan terlambat. | Only one letter is left on my half: Ka. I'm holding it tight. Don't be late. |
 
-### Camp talk `camp_timur` (hariang_banga, new file; cond `flag:mq3_6`, `"quiet": true`; do `flag:camp_timur`; at `timur_2`)
+### Camp talk `camp_timur` (hariang_banga entry 3; cond `flag:mq3_6`, `zone:tt_pasir`, `"quiet": true`; do `flag:camp_timur`; at `timur_2`. The zone keeps it from replaying in Desa Purwa and Gua Kala; his other entries are in section 10, "Staging NPCs")
 | Key | ID | EN |
 |-----|----|----|
 | DLG_HARIANG_BANGA_V1 | Ini jalan para pedagang garam. Jangan ikuti jejak abu, Penulis. Abu menuntun, tapi tak pernah ke tempat baik. | This is the salt traders' road. Don't follow the ash trail, writer. Ash leads, but never anywhere good. |
@@ -808,6 +815,22 @@ Told as belief; she is never fought or touched. VERIFY the tradition of her tria
 | BEAT_WRITE_2 | Separuh lontarmu tergeletak di batu. Kosong. | Your half of the lontar lies on the stone. It's blank. |
 | @NPC_SEMAR_NAME | | |
 | BEAT_WRITE_3 | Tak ada lagi yang ingat bagaimana namanya ditulis. Kecuali kau. Tuliskanlah, Nak. | Nobody else remembers how her name goes. Except you. Write it, child. |
+
+### Staging NPCs (fixed 2026-11-06)
+These NPCs stand in a scene for a beat or a later act. Each gets one line so a talk is never empty. Hariang Banga's file runs, in order: entry 1 `flag:mq4_9` (V3, the Gua Kala mouth), entry 2 `quest:mq4=active` (V4, the Interlude table), entry 3 the `camp_timur` talk (section 9), entry 4 no cond (V5, the throne room before his escape). The others have a single entry with no cond.
+
+| Key | ID | EN |
+|-----|----|----|
+| DLG_HARIANG_BANGA_V3 | Satu raja dari tiap tepi, dan kali ini kami berdiri di tepi yang sama. Pergilah. | One king from each bank, and for once we stand on the same one. Go. |
+| DLG_HARIANG_BANGA_V4 | Ibumu menyiapkan cangkir untukku. Tak ada yang melakukannya sejak kurungan itu. | Your mother set out a cup for me. Nobody has done that since the cage. |
+| DLG_HARIANG_BANGA_V5 | Jangan sekarang. Ada ibu yang harus kubebaskan. | Not now. I have a mother to free. |
+| DLG_NAMELESS_HUNTER_V1 | Bukan kau. Belum. | Not you. Not yet. |
+| DLG_NINI_V1 | Ciung-ku lari ke barat semalam. Susul dia, Nak, sebelum para topeng itu. | My Ciung ran west in the night. Find him, child, before the masks do. |
+| DLG_SAPTO_V1 | Bilang pada ayahku aku pulang. Ia boleh berhenti main untuk dua tepi. | Tell my father I'm walking home. He can stop playing for both banks. |
+| DLG_NAGAWIRU_V1 | Patahkan dulu fajar palsu itu, Penulis kecil. Baru rantainya. | Break the false dawn first, little writer. Then the chains. |
+| DLG_PANGRENYEP_V1 | Puaskan matamu, Nak. Anakku sudah di jalan. | Look your fill, child. My son is already on the road. |
+| DLG_SEAL_STONE_V1 | Retakan menjalar di aksara tua itu. Seseorang membaca batu ini separuh jalan, pelan-pelan. | Cracks run through the old letters. Someone read this stone halfway, slowly. |
+| DLG_DESERTER_MOUTH_V1 | Aku ingat namaku. Dengan itu aku jaga pintu ini. | I remembered my name. I'll hold the door with it. |
 
 ## 11. Epilogue (`ui/epilogue.tscn`: lines 7, `semar_from = 6`, `semar_to = 6`, variants `{3: "choice_handed", 4: "choice_silent", 5: "choice_sink"}`)
 The base card is the first choice of each pair; `_ALT` is the second.
