@@ -5,7 +5,7 @@ Log every third-party asset here the moment it is added. Check the license befor
 ## Art direction
 - Pixel art in the Soul Knight style: 16x16 characters and tiles, clean dark outlines, 3-4 shades per color, bright readable colors.
 - Base viewport 480x270, integer-scaled. See [architecture.md](architecture.md).
-- One shared palette across the game (target 32 colors, **TUNE**), with a regional tint per zone (cool greens for Sunda, warm stone for Mataram, dry gold for Tanah Timur, deep blue-green for Segara Kidul).
+- One shared palette across the game (target 32 colors, **TUNE**), with a regional tint per zone (cool greens for Sunda, warm stone for Mataram, dry gold for Tanah Timur, deep blue-green for Segara Kidul, pale-gold marble for Keraton Galuh, ash and violet for Gua Kala). Kelir memories use a separate warm paper look and Laras chapters a cool blue one ([architecture.md](architecture.md) 9b).
 - Culture-forward visual motifs: batik patterns for UI frames, wayang shadow silhouettes for cutscenes, candi stone for ruins.
 
 ## Sources and plan
@@ -16,17 +16,18 @@ Log every third-party asset here the moment it is added. Check the license befor
 | Player base sprite | Custom, see sample | A 16x16 sample with a 4-frame walk exists as a quality reference (scratchpad, not in the repo) |
 | Sound effects | Synthesized with a script, or sfxr/jsfxr | Hit, dodge, pickup, cast, checkpoint, UI |
 | Music | Free tracks, plus any gamelan/angklung samples with a clear license | **VERIFY** licenses. Do not use unlicensed gamelan recordings |
-| Fonts (aksara) | Noto Sans Javanese, Noto Sans Sundanese (SIL OFL), plus m5x7 (CC0) for Latin text ([ui.md](ui.md)) | Test rendering in Godot early |
+| Fonts (aksara) | Noto Sans Javanese, Noto Sans Sundanese (SIL OFL), Latin text uses a clean smooth sans, chosen in the art pass (the m5x7 pixel font plan was dropped, [ui.md](ui.md) 1) | Test rendering in Godot early |
 | Wayang prologue | Custom silhouettes | Simple shapes, high impact |
 
 ## Asset checklist (to be filled as work progresses)
 - [ ] Player base + 4 class variants (idle, walk, attack, hurt, dodge, death)
-- [ ] 4 zone tilesets
-- [ ] ~12 enemy types, 5 boss sprites
-- [ ] NPCs (Semar, Cepot, elders, dalang, empu)
-- [ ] Weapons, armor and accessories icons (about 25)
+- [ ] 6 region tilesets (Sunda, Galuh, Mataram, Timur, Kidul, Gua Kala) plus Desa Purwa, for 49 areas ([world.md](world.md)); only `sunda_tiles.png` and a placeholder sheet exist
+- [ ] ~12 enemy types, 11 main-path boss sprites (Sandekala, Faceless Captain, Sangkuriang, Barma Wijaya, Bondowoso, Hariang Banga, Buto Ijo, Keris Mpu Gandring, the Nameless Hunter, the Sea Trial set pieces, Batara Kala)
+- [ ] NPCs (Semar, Cepot, elders, dalang, empu; Story v5 adds Nyai Sekar, Nyai Gendhis, Ratna, Sari and Ranga, [quests.md](quests.md) 8)
+- [ ] Weapons, armor and accessories icons (about 32, the number of `data/items/*.tres`)
 - [ ] HUD, menus, codex frame, dialogue box
 - [ ] Glyph art (stylized and true form) for each glyph
+- [ ] Kelir memory silhouettes, Laras stand-in and Faceless patrol sprites (flat near-black, [architecture.md](architecture.md) 9b)
 - [ ] Effects: ink trail, spell effects, hit flash, particles
 - [ ] SFX (about 30) and music (about 6 tracks)
 

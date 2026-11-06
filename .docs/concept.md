@@ -34,7 +34,7 @@ The player is a custom hero (the player names them). At the start they choose on
 Details: [classes.md](classes.md).
 
 ## Win / lose
-- **Win:** defeat the final boss and restore the aksara.
+- **Win:** defeat the final boss, restore the aksara and bring Laras home. Six Major Choices (one per Act) never block this ending but change allies, gear, spells and the epilogue ([story.md](story.md) "Six Major Choices").
 - **Lose:** no real fail state. Dying returns you to the last petilasan with nothing lost ([rpg.md](rpg.md)).
 
 ## Audience and first impression
@@ -46,7 +46,7 @@ Respectful, warm, a bit of humor from the punakawan (wayang clown-servants). Ene
 
 Culture is the spice, not the whole dish. Ordinary gear, common enemies and NPCs are regular fantasy-RPG fare. The setting, story, bosses, folklore spirits, mythic gear (pusaka) and aksara carry the culture. (decided 2026-11-05)
 
-Culture is the spice, the story is the meal (story v3.1, **ASSUMED**): each region tells one human story first, and the folklore lives inside it.
+Culture is the spice, the story is the meal (story v3.1, **ASSUMED**): each region tells one human story first, and the folklore lives inside it. Story v5 makes it a long narrative RPG (138 main steps, about 21.5 hours, plus 20 side quests) where each act has its own structure ([story.md](story.md) "Breaking Repetition").
 
 ## Cultural sensitivity
 - Nyi Roro Kidul, Batara Kala and other figures are meaningful to many people. Portray them with respect. No mockery, no cheap jokes.

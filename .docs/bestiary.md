@@ -76,8 +76,8 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
 - **Buildup (Story v5 — 3-Zone Stalking Predator):** Instead of waiting passively in his arena, Buto Ijo **stalks and ambushes the player across three zones** before the final canyon lair fight:
   1. **Stalking Ambush #1 (`tt_kulon`, step 3.2):** Cursed mad by the waking fourth seal, his hide takes 90% reduced weapon damage; drive him off by luring his charge into the savanna fire-ward braziers (retreats at 80% HP, `area_cleared:buto_ambush_1`).
   2. **Stalking Ambush #2 (`tt_kali`, step 3.6):** Ambushes you at the dry riverbed after you visit Mbok Srini's smashed hut; test the first consecrated **cucumber-seed pouch** to trap him in brambles and drive him off (retreats at 65% HP, `area_cleared:buto_ambush_2`).
-  3. **Stalking Ambush #3 (`tt_beringin`, step 3.7):** Attacks while you consecrate the needle, salt, and terasi pouches at the ancient banyan shrine; stun his charge with the **needle bamboo wall** (retreats to his canyon lair at 50% HP, `area_cleared:buto_ambush_3`).
-  4. **Final Canyon Lair (`tt_beringin` inner canyon, step 3.9, after `K4` "Timun Mas"):** Full 4-phase fight where all four pouch fields turn his own momentum against him. First-time hint: `"Lure him through pouches"` (**ASSUMED**).
+  3. **Stalking Ambush #3 (`tt_beringin`, step 3.7):** Attacks while you consecrate the needle, salt, and terasi pouches at the ancient banyan shrine; stun his charge with the **needle bamboo wall** (retreats to his lair at 50% HP, `area_cleared:buto_ambush_3`).
+  4. **Final Lair (`tt_ladang` arena, east half, `entities/bosses/buto_ijo.tscn`, step 3.9, after `K4` "Timun Mas"):** Full 4-phase fight where all four pouch fields turn his own momentum against him. First-time hint: `"Lure him through pouches"` (**ASSUMED**).
 - Build spec (2026-11-05, all numbers **TUNE**, mechanics **ASSUMED**). The pouches help the player against Buto, as in the legend, and they never hurt the player.
   - Attacks (balance.md 7): charge, heavy 41, a line marker 0.8 s, from 64-200 px, runs 220 px or until a wall; ground pound, heavy 41, a ring marker (r 48) 0.8 s, at 56 px or closer. Same telegraph style as Sangkuriang.
   - Pouch phases: 4 phases at 100/75/50/25% HP. At each phase start he roars (1 s pause) and Timun Mas (a visual off-arena, no node) throws the next pouch. The pouch makes 3 fields (r 32) at set spots in the arena, between his start spot and the arena centre. The fields stay until the fight ends, so the arena gets kinder each phase. Fields only affect Buto:
@@ -89,7 +89,7 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
   - Defeat: he sinks to his knees in the mud and Timun Mas is safe (off screen). `boss_defeated:buto_ijo`, sets `mq3_4`.
 
 **Boss: Mpu Gandring's Keris (cursed wraith).** HP 4200. Ilmu 500.
-- **Buildup (Story v5 — 7-Generation Blood-Curse Mystery & Laras Sabotage):** You first cleanse active curse stakes across `tt_pasar` and `tt_ladang` with Mpu Wirasana and Ratna, inspect the 7-generation ledger, relive `K5` ("The old forge"), and play **Laras Chapter `LC4`** where Laras binds her own *Ka* stroke onto the seventh curse stake (`laras_sabotage:keris_seventh_stake`). First-time hint: `"Put out the marks"` (**ASSUMED**).
+- **Buildup (Story v5 — 7-Generation Blood-Curse Mystery & Laras Sabotage):** You first cleanse active curse stakes across `tt_kulon` (smiths' street), `tt_beringin` (the forge) and `tt_ladang` with Mpu Wirasana and Ratna, inspect the 7-generation ledger, relive `K5` ("The old forge"), and play **Laras Chapter `LC4`** where Laras binds her own *Ka* stroke onto the seventh curse stake (`laras_sabotage:keris_seventh_stake`). First-time hint: `"Put out the marks"` (**ASSUMED**).
 - **Laras Sabotage (`laras_sabotage:keris_seventh_stake`):** Because Laras bound *Ka* onto Stake #7 during her forced reading, Stake #7 resists the Keris's ignition (taking twice as long to light) and casting Jawa `Ha` near it sends a cleansing pulse across a 120 px radius (up from 80 px).
 - Legend: Mpu Gandring's dying curse is that Ken Arok and seven descendants die by the keris (retellings differ on the count). The 7 marks are game design, not cited as legend.
 - Mechanic: the boss accumulates up to 7 curse marks on the arena. Fill all 7 and it triggers a big attack. The player removes marks with the right glyph.
@@ -170,6 +170,8 @@ They scale by the zone they spawn in, read from the zone id prefix on ready: `de
 
 ## Main-path bosses in act order (story v3.1, **ASSUMED**)
 Sandekala (I), Faceless Captain (I), Sangkuriang (I), Barma Wijaya (II), Bandung Bondowoso (III), Hariang Banga (III), Buto Ijo (IV), Keris Mpu Gandring (IV), the Nameless Hunter (IV), the Trial of the Waves (V, waves, no boss HP), Batara Kala (VI).
+
+**Scenes (as built):** `entities/bosses/<id>.tscn`: `sandekala` (with `oncor`), `faceless_captain`, `sangkuriang` (with `arena_post`), `barma_wijaya` (`kg_keraton`), `bandung_bondowoso` (with `pillar`, `mt_candi`), `hariang_banga` (`kg_pamali`), `buto_ijo` (with `pouch_field`, `tt_ladang`), `keris_gandring` (with `curse_stake`, `tt_candi`), `nameless_hunter` (`tt_candi`), `batara_kala` (`gk_ruang_kala`). Buto Ijo's three ambushes are wave `encounter` nodes (`area_id` `buto_ambush_1..3`) in `tt_kulon`, `tt_kali` and `tt_beringin`; the 80/65/50% retreat thresholds, the `laras_sabotage` vulnerable phases (except Kala's `choice_redeem_aria` check) and the Laras-flag hints are design only for now.
 
 Each boss is a person with a stake in the plot (FromSoftware rule, [story.md](story.md) Pacing): a fight ends in a release, a yield, a confession or a calming, not just a death bar.
 

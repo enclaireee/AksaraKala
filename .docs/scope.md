@@ -7,10 +7,11 @@ There is no fixed deadline, so scope is ordered by priority, not cut by time. Bu
 - Aksara casting: cast mode, recognizer, 9 glyphs (4 Sunda + 4 Jawa + Ombak) and 3 write-only name glyphs (La, Ra, Sa), sakti gauge, 9 spells, sanggar practice
 - 4 classes with the stats, weapons, passives and spell modifiers in [classes.md](classes.md)
 - Stats, Ilmu, level-up at petilasan, death and respawn
-- Open map: Desa Purwa + Tatar Sunda, Keraton Galuh, Mataram, Tanah Timur, Segara Kidul with zone loading and fog gates
+- Open map (Story v5, 49 areas): Desa Purwa + Tatar Sunda, Keraton Galuh, Mataram, Tanah Timur, Segara Kidul with zone loading and fog gates ([world.md](world.md))
 - Enemies for those zones (about 10 types) and the main-path bosses ([bestiary.md](bestiary.md))
-- Final zone: Gua Kala and Batara Kala (at least a basic version)
-- Gear: about 10 weapons, 5 armors, 4 accessories as data
+- Final zone: Gua Kala (7 areas) and Batara Kala (at least a basic version)
+- Story v5 main path: 138 steps, 6 Major Choices as flags, 6 cross-time Laras chapters (`LC1`-`LC6`) with `laras_key:*` and `laras_sabotage:*` flags, "Ask about..." topic hubs, 8-12 line talks ([story.md](story.md), [quests.md](quests.md) 7.1)
+- Gear: about 10 weapons, 5 armors, 4 accessories as data (the data folder already holds more, including the choice rewards Sabuk Galuh, Keris Mpu Gandring and Batu Kali, [items.md](items.md))
 - Dialogue, NPCs, the story spine in [story.md](story.md)
 - Quest system (journal, soft marker, NPC indicators) and the main quest ([quests.md](quests.md)), plus the Cepot side quest on the demo path
 - Bilingual text (Indonesian + English) for everything, via CSV string tables
@@ -42,13 +43,13 @@ There is no fixed deadline, so scope is ordered by priority, not cut by time. Bu
 - Shops and trading
 - Procedural generation
 - Multiplayer
-- Dialogue branching with consequences
+- Free-form dialogue branching. Only the six Major Choices and the optional "Ask about..." topic hubs branch; every choice leaves the canon ending open
 - Open-world seamless streaming (zones load at edges instead)
 - Regions outside Java and Sunda
 
 ## Risk list
 1. **Glyph recognition tuning.** Biggest technical risk. Mitigation: build and test it before anything else after the combat basics. Fallback: reduce to fewer, more distinct glyphs.
-2. **Art volume.** 4 classes + about 12 enemies + 5 bosses is a lot. Mitigation: shared base sprite re-tinted, packs for bulk, custom only for culture items.
+2. **Art volume.** 4 classes + about 12 enemies + 11 main-path bosses is a lot. Mitigation: shared base sprite re-tinted, packs for bulk, custom only for culture items.
 3. **Cultural accuracy.** Mitigation: VERIFY pass per doc, source list, expert review.
 4. **Aksara font rendering in Godot.** Test early. Fallback: pre-rendered images.
 5. **Scope creep.** Mitigation: this document. New ideas go to P2 first.
