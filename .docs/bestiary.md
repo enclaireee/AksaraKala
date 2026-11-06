@@ -19,6 +19,8 @@ Design rules:
 | Kuntilanak | Shooter | 40 | 8 | 6 | Floats, keeps distance, shrieks in a short cone | Female ghost of Indonesian and Malay folklore |
 | Jurig Leuweung | Tank | 150 | 12 | 15 | Slow, wide swing. Bind roots it (see Glyph weaknesses) | Descriptive name: a "jurig" (ghost, verified) of the "leuweung" (forest, **VERIFY** spelling). No named Sundanese figure fits a slow giant without reusing Genderuwo, and a generic spirit claims no legend (decided 2026-11-05, **ASSUMED**) |
 
+**Elite: Kuntilanak** (SQ-S2, the bamboo grove at night, `kuntilanak_elite`). Elite of the Shooter role at tier 0 (x4 HP and x4 Ilmu of the base Kuntilanak, numbers **TUNE**): HP 160, Dmg 10, Ilmu 24. Same shriek cone, wider and with a longer wind-up; she cannot follow onto one lit patch of beaten ground in the grove (the 3x3 path patch in `ts_leuweung`), which is the player's safe ground between shrieks (**VERIFY** the motif, or **ASSUMED** game rule). Weakness: Ka Bolt during the shriek, as Kuntilanak. Hunt: its Kelir memory (A grandmother) teaches the safe ground of the grove, which is where you stand to fight her.
+
 **Boss: Sandekala** (main path, Act I; the dusk fight in the river gorge, not a P1 optional). HP 1100, Dmg 14, Ilmu 100 (**TUNE**, [balance.md](balance.md) 7). Sundanese dusk spirit said to take children who stay outside after sunset (verified, 2 sources). Its form is not fixed in the belief, so the look is ours: a tall shadow with a lantern-less face.
 - Hunt: K1, "A child at maghrib" ([story.md](story.md) "Hunts"). The memory teaches lighting the oncor, which is the fight mechanic. First-time hint: "Light the oncor" (**ASSUMED**).
 - The arena darkens over the fight. In shadow it fades out and reappears behind the player with a grab (0.6 s wind-up, ground marker).
@@ -41,7 +43,9 @@ Mundane enemies: none are planned; the zone uses its three folklore enemies (zon
 | Pocong | Charger | 78 | 14 | 14 | Hops forward, slams down | Shrouded ghost |
 | Arca (statue) | Shooter (stationary) | 78 | 9 | 14 | Stationary, fires a bolt, wakes when you pass | Ties to the temple legend |
 
-**Quest figure: Wewe Gombel** (SQ-M2 in [quests.md](quests.md)). Not a regular enemy, since the quest can end peacefully with her returning the child. Elite if fought: HP 780, Dmg 16, Ilmu 90, slow wide swing, grabs and pulls the player in. Javanese ogress who takes neglected children (Bukit Gombel, Semarang).
+**Quest figure: Wewe Gombel** (SQ-M2 in [quests.md](quests.md)). Not a regular enemy, since the quest can end peacefully with her returning the child. Elite if fought: HP 780, Dmg 16, Ilmu 90, slow wide swing, grabs and pulls the player in. Javanese ogress who takes neglected children (Bukit Gombel, Semarang). Event `enemy_killed:wewe_elite`. Its Kelir memory (The neglected child) teaches the peaceful way, calling kindly and banging pots (**VERIFY**), so the elite is the other branch.
+
+**Elite: tuyul leader** (SQ-M3, `tuyul_leader`). Elite of the Tuyul Chaser at tier 1 (x4): HP 124, Dmg 11, Ilmu 16, with a swarm of the base tuyul around it (**TUNE**). Faster than its swarm and it stops to pick up anything dropped. Weakness: Ca Burst on the swarm, as Tuyul. Its Kelir memory (The tuyul) teaches that a tuyul cannot pass a spill without counting it (**VERIFY** beans or crabs), which is how the peaceful ending catches it.
 
 **Boss: Bandung Bondowoso.** HP 3100. Ilmu 300.
 - Hunt: K3, "The princess's women". The memory teaches the lesung beat, which is the Jawa Ca that exposes the pillars. First-time hint: "Keep the lesung beat" (**ASSUMED**).
@@ -93,8 +97,8 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
 - Practice marks (MQ3 3.6): the same `curse_stake` with `practice` on, in the forge yard. It is always lit. Cleansing it emits `area_entered:timur_praktik_mark` (not `timur_praktik`, which the marker trigger emits on walk-in) and it relights after 2 s. Step 3.6 counts 2.
 
 **Elites** (elite = x4 HP and x4 Ilmu of the base, as Wewe Gombel and Bajul Putih Tua; numbers **TUNE**). Both are plain spots, inert until their quest step, and not encounters.
-- **Yuyu Kangkang** (SQ-T1): giant river crab, elite charger. HP 384, Dmg 18, Ilmu 80. Charges sideways along the 12-tile crossing, pinches twice at close range. Weakness: Bind, as Keris Hantu. Leaves on the peaceful route (the river dries up).
-- **Banaspati elite** (SQ-T2): HP 256, Dmg 12, Ilmu 56. A larger flaming head, faster, its burn trail lasts twice as long. Weakness: Ward, as Banaspati.
+- **Yuyu Kangkang** (SQ-T1): giant river crab, elite charger. HP 384, Dmg 18, Ilmu 80. Charges sideways along the 12-tile crossing, pinches twice at close range. Weakness: Bind, as Keris Hantu. Leaves on the peaceful route (the river dries up). Its Kelir memory (Klething Kuning) teaches striking the water, which is the peaceful ending.
+- **Banaspati elite** (SQ-T2): HP 256, Dmg 12, Ilmu 56. A larger flaming head, faster, its burn trail lasts twice as long. Weakness: Ward, as Banaspati. Its Kelir memory (A herder boy) teaches that the fire will not cross running water (**ASSUMED**), so the fight is held at the spring arena.
 
 ## Zone 4: Segara Kidul
 Main path and P0 since story v3.1 (Act V).
@@ -106,7 +110,7 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
 | Ula Segara | Shooter | 76 | 12 | 20 | Sea snake that rises from the shallows, spits a water arc, sinks again | Generic sea snake ("ula" is Javanese for snake, **VERIFY**), not a named figure. Nyi Blorong is avoided on purpose (tied to living pesugihan belief) |
 | Bajul Putih | Tank | 285 | 17 | 51 | Snaps in a wide arc, tail-sweeps behind, lunges in a straight line from the water | White crocodile. In the Aji Saka legend the giant king Dewata Cengkar is driven into the southern sea and becomes one (single source, **VERIFY**), which ties the zone to the Hanacaraka |
 
-**Elite: Bajul Putih Tua** (old white crocodile, SQ-K2 bounty). HP 1140, Dmg 20, Ilmu 204 (elite x tier 3). Same moves, faster lunges, a second lunge in phase 2.
+**Elite: Bajul Putih Tua** (old white crocodile, SQ-K2 bounty). HP 1140, Dmg 20, Ilmu 204 (elite x tier 3). Same moves, faster lunges, a second lunge in phase 2. Event `enemy_killed:bajul_putih_tua`. It is driven back into the deep, not killed: at 0 HP it dives and the screen fades. Its Kelir memory (A fisher) teaches the tide tell before its charge (the water draws back first, **VERIFY** the offering as belief with respect).
 
 **Trial of the waves** (MQ4 4.8, main path, held at the `sk_keraton` sea pavilion, not on the beach; **ASSUMED**). Three waves at low tide, each with a clean glyph answer. As everywhere, the glyph is a shortcut, not a lock.
 1. 5 Lampor in two lines: Ca Burst (Sunda).
@@ -126,6 +130,8 @@ The story ([story.md](story.md)) adds one faction seen in every region and four 
 | Faceless Archer | Shooter | 40 | 8 | 6 | The bandit archer's moves | `entities/enemies/faceless_archer.tscn` |
 
 They scale by the zone they spawn in, read from the zone id prefix on ready: `desa_`, `ts_` tier 0; `kg_`, `mt_` tier 1; `tt_` tier 2; `gk_` tier 4 (balance.md 6.2). One scene per role, so encounter waves can use them. They replace the bandits in Tatar Sunda and some Tuyul and Pocong packs in later zones (zone docs).
+
+**Elite: Ririwa** (SQ-G2, the Kaputren corridors in `kg_keraton`, `ririwa`). A ghost that sweeps: Charger role, tier 1 (`kg_`), elite = x4 HP and x4 Ilmu of the base Pocong-class Charger (78 HP, Ilmu 14): HP 312, Dmg 16, Ilmu 56 (**TUNE**). Sweeps the floor in a wide broom arc (0.5 s wind-up, ground marker), then rushes the length of the corridor. Weakness: Bind, as Pocong. Sundanese ghost term "ririwa" is **VERIFY**; cartoonish, no gore. Its Kelir memory (The servant's last day) teaches that his name is in the roll's ink, which is the peaceful ending (write the name); the elite is the other branch.
 
 **Boss: Faceless Captain** (Act I, ts_kawah, at Nagawiru's lair). HP 1800, Ilmu 150, speed 40, boss poise (balance.md 7).
 - Spear sweep: 0.5 s wind-up with an arc marker (r 40, 120 degrees), light 16.

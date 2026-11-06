@@ -2,7 +2,8 @@ extends SceneTree
 ## Static check of the shipped quest and dialogue data (quests.md 7.8). Exits 0 on pass, prints only failures.
 
 const SIGNALS := ["talked_to", "item_picked", "boss_defeated", "area_cleared", "area_entered", "zone_entered",
-	"petilasan_activated", "glyph_learned", "spell_cast", "class_chosen", "enemy_killed", "name_written"]
+	"petilasan_activated", "glyph_learned", "spell_cast", "class_chosen", "enemy_killed", "name_written",
+	"clue_examined", "memory_done"]
 var fails := 0
 
 
@@ -37,6 +38,8 @@ func _initialize() -> void:
 	for q in quests:
 		for s in q.steps:
 			flags[s.set_flag] = true
+			for a in s.all:   # an `all` step's leads set their own flags (mq1_1, mq1_3)
+				flags[a.get("set_flag", "")] = true
 		for fl in q.rewards.get("flags", []):
 			flags[fl] = true
 	for d in dialogues:
@@ -91,6 +94,6 @@ func _initialize() -> void:
 			for a in e.get("do", []):
 				if a.begins_with("codex:"):
 					check(ids.has(a.substr(6)), "%s: codex action %s has no .tres" % [d.npc_id, a])
-	for i in 5:
+	for i in 2:   # script.md 4: two cards, PROLOGUE_3-5 retired
 		check(dt.get("PROLOGUE_%d" % (i + 1), false), "PROLOGUE_%d missing" % (i + 1))
 	quit(1 if fails > 0 else 0)

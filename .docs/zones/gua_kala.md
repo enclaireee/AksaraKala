@@ -2,7 +2,7 @@
 
 Area graph on paper. Step 1 of the world design workflow ([AGENTS.md](../../AGENTS.md) section 5), graph level only: no tile maps until Phase 5. Prefix `gk_`. Sources: [world.md](../world.md) (World structure, link table, Gua Kala, Checkpoints), [bestiary.md](../bestiary.md) (Final: Gua Kala, Encounters, Glyph weaknesses), [quests.md](../quests.md) (MQ5, 7.5, 9), [story.md](../story.md) (Batara Kala). Format follows [tatar_sunda.md](tatar_sunda.md).
 
-Story v4b/v4c additions (2026-11-06; MQ5 5.1-5.9, [quests.md](../quests.md) 4 with its `Play` column): the three letters of her name are held in three **gap memories** of the prologue day, one per letter area: `la` (the tag game, in `gk_mulut`), `ra` (the two cups, in `gk_lupa` after the Abyss fight), `sa` (the written names, at the last petilasan `kala_1`); then K10 (Murwakala), LC6 (Laras's chapter) and K7 (the ruwatan, you are the dalang) at `kala_1`. The pacing pieces get places: two time-ward puzzles in `gk_pasir`, the Abyss miniboss in `gk_lupa`, extra fights. The memory scenes are in "Memory scenes" below. **Puzzle convention (ASSUMED):** a puzzle is a `trigger.tscn` with `trigger_id` `puzzle_<id>`; the builder attaches the script (tests set `flag:puzzle_<id>`). Miniboss pieces are encounters whose first enemy carries `unique_id` and elite stats (HP x4, Ilmu x4, **TUNE**). Setpieces are scripted frames of the boss encounter.
+Story v4b/v4c additions (2026-11-06; MQ5 5.1-5.9, [quests.md](../quests.md) 4 with its `Play` column): the three letters of her name are held in three **gap memories** of the prologue day, one per letter area: `la` (the tag game, in `gk_mulut`), `ra` (the two cups, in `gk_lupa` after the Abyss fight), `sa` (the written names, at the last petilasan `kala_1`); then K10 (Murwakala), LC6 (Laras's chapter) and K7 (the ruwatan, you are the dalang) at `kala_1`. The pacing pieces get places: two time-ward puzzles in `gk_pasir`, the Abyss miniboss in `gk_lupa`, extra fights. The memory scenes are in "Memory scenes" below. Side stories v4d additions (2026-11-06; [quests.md](../quests.md) 5): the only side content in Gua Kala is the last step of SQ-C3 "The Deserter's Name", the write stone `deserter_stone` at `gk_mulut` (`write:deserter_name:jawa_ra,sunda_nga`, event `name_written:deserter_name`); Act VI stays dense. **Puzzle convention (ASSUMED):** a puzzle is a `trigger.tscn` with `trigger_id` `puzzle_<id>`; the builder attaches the script (tests set `flag:puzzle_<id>`). Miniboss pieces are encounters whose first enemy carries `unique_id` and elite stats (HP x4, Ilmu x4, **TUNE**). Setpieces are scripted frames of the boss encounter.
 
 Look: a dark cavern of wet black rock, hourglass and clock-like motifs carved into the walls, and the forgotten letters floating about, faded and dim. Sand trickles in thin streams from the ceiling in the deeper halls. The landmark is Kala's chamber. From the first area (`gk_mulut`), across a wide chasm, the player sees an enormous hourglass and a round clock-face set in the far wall, glowing faintly. It grows nearer in each area, and its ticking gets louder. Batara Kala is a deity figure and is not killed: he is calmed and turned back (a respectful ruwatan note is in the codex, per story.md). Tone stays warm and a bit cartoonish.
 
@@ -100,6 +100,7 @@ Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Ev
 | Petilasan | `kala_2` | `gk_mulut` | `petilasan_activated:kala_2` (not a quest step) |
 | Codex | `kala_aksara_pudar` | `gk_lupa` | `codex:batara_kala`, `codex:ruwatan` (ASSUMED) |
 | Variant spot `mouth_freed` | `deserter_mouth` | `gk_mulut` (map char `d`, near the entry) | NPC with `cond: flag:choice_freed`. If the player freed the Deserter (Choice 1), he stands beside the two brothers at the mouth (story.md Choices change more than a card). Not a quest step. His one line is in script.md (ASSUMED) |
+| SQ-C3 step 4: write the Deserter's name | `deserter_stone` | `gk_mulut` (stone `(6,17)` beside the entry, near `d` (4,18)) | NPC `deserter_stone`, the write stone; entry cond `flag:mq5_1`, `clue_examined:c3_camp_scrap`, `clue_examined:c3_road_mark`, `clue_examined:c3_shore_net`; runs the write card `write:deserter_name:jawa_ra,sunda_nga` (Ra, Nga), event `name_written:deserter_name`; the stone's `quiet` entries never complete an MQ5 step and the quest is optional (**ASSUMED**). Two variants by Choice 1: **freed** (`flag:choice_freed`): the Deserter `deserter_mouth` stands by the stone, hears his name and the card is written beside him; **handed** (`flag:choice_handed`): the stone alone, the name is written alone and a line says a cell in Galuh is quiet. Reward: freed adds a line on his epilogue card, handed adds the codex entry `deserter_name`. Ilmu: none from the reward, **TUNE** |
 | Semar line | `semar_kala` | `gk_lupa` | `talked_to:semar_kala` (optional, not a step; a separate npc_id so it never counts for MQ steps waiting on `talked_to:semar`) |
 
 Flags: `mq4_9` / `quest:mq4=done` (read, Ombak earned; gates X0 and X1), `choice_freed` (read, variant spot `mouth_freed`), `sc:gk_lorong`. Post-game: after the credits the player wakes in Desa Purwa with every zone open.
@@ -109,7 +110,7 @@ Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zon
 
 ### Memory `gap_la`: the tag game (La)
 
-- Scene `res://zones/kelir/gap_la.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `gap`. Size 30x17 (a copy of the tag route lane of Desa Purwa).
+- Scene `res://zones/kelir/gap.tscn` with data `res://data/memories/gap_la.tres` (not a Zone; the one shared gap scene, [architecture.md](../architecture.md) 9b). Kind `gap`. Size 30x17 (a copy of the tag route lane of Desa Purwa).
 - Stand-in: the hero on the prologue day (warm kelir look).
 - The one action: `interact` at a grey gap opens a 3-option list; a wrong pick flashes grey 0.5 s and reopens (no counter); after 2 wrong picks the right option pulses.
 - Goal: Fill 3 gaps; the third right pick calls `finish()` and `memory_done:la`; the letter joins the finale write card.
@@ -149,7 +150,7 @@ Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zon
 
 ### Memory `gap_ra`: the two cups (Ra)
 
-- Scene `res://zones/kelir/gap_ra.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `gap`. Size 30x17 (a copy of house_a, Ibu's table).
+- Scene `res://zones/kelir/gap.tscn` with data `res://data/memories/gap_ra.tres` (not a Zone; the one shared gap scene, [architecture.md](../architecture.md) 9b). Kind `gap`. Size 30x17 (a copy of house_a, Ibu's table).
 - Stand-in: the hero on the prologue day (warm kelir look).
 - The one action: `interact` at a grey gap opens a 3-option list; a wrong pick flashes grey 0.5 s and reopens (no counter); after 2 wrong picks the right option pulses.
 - Goal: Fill 3 gaps; the third right pick calls `finish()` and `memory_done:ra`; the letter joins the finale write card.
@@ -189,7 +190,7 @@ Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zon
 
 ### Memory `gap_sa`: the written names (Sa)
 
-- Scene `res://zones/kelir/gap_sa.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `gap`. Size 30x17 (a copy of the burned stage, Laras's lontar spot).
+- Scene `res://zones/kelir/gap.tscn` with data `res://data/memories/gap_sa.tres` (not a Zone; the one shared gap scene, [architecture.md](../architecture.md) 9b). Kind `gap`. Size 30x17 (a copy of the burned stage, Laras's lontar spot).
 - Stand-in: the hero on the prologue day (warm kelir look).
 - The one action: `interact` at a grey gap opens a 3-option list; a wrong pick flashes grey 0.5 s and reopens (no counter); after 2 wrong picks the right option pulses.
 - Goal: Fill 3 gaps; the third right pick calls `finish()` and `memory_done:sa`; the letter joins the finale write card.
@@ -229,7 +230,7 @@ Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zon
 
 ### Memory `k10_murwakala`: Murwakala (K10)
 
-- Scene `res://zones/kelir/k10_murwakala.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 30x17.
+- Scene `res://zones/kelir/k10_murwakala.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 30x17.
 - Stand-in: young Kala, born hungry (silhouette; **VERIFY** the Murwakala lakon as the ruwatan story).
 - The one action: none (walk only).
 - Goal: Follow Kala from the feast table `K` through the hall; at each stop Semar the dalang `D` tells why he was hungry and how the dalang's words turned him back; end at `G`. Teaches why the ruwatan works.
@@ -265,7 +266,7 @@ Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zon
 
 ### Memory `lc6`: who's there? (LC6)
 
-- Scene `res://zones/kelir/lc6.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `chapter`. Size 30x17.
+- Scene `res://zones/kelir/lc6.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `chapter`. Size 30x17.
 - Stand-in: Laras at the bottom of the dark (`entities/player/stand_in_laras.tscn`), tiny lamp radius.
 - The one action: `interact` = write *Ka* on a floor tablet `K`; also freeze a Faceless for 3 s.
 - Goal: Cross the dark to the tablet `K` and write *Ka* once more while a Faceless circles; your own voice replies (a line from the hero) and the memory ends. She has forgotten you and still writes.
@@ -302,7 +303,7 @@ Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zon
 
 ### Memory `k7_ruwatan`: the ruwatan again (K7)
 
-- Scene `res://zones/kelir/k7_ruwatan.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `play`. Size 30x17 (the K0 stage, mirrored).
+- Scene `res://zones/kelir/k7_ruwatan.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `play`. Size 30x17 (the K0 stage, mirrored).
 - Stand-in: the dalang at the kelir (hero silhouette); `allow_cast = true`.
 - The one action: Draw the shown letter (cast overlay) when its name lights on the kelir.
 - Goal: Read six names aloud, alternating Sunda and Jawa letters (`1` to `6`); a wrong or late letter dims the lamp and repeats that name. Teaches that the Ruwatan of Dawn alternates the scripts.
@@ -331,7 +332,7 @@ Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zon
 | Char | What | Notes |
 |------|------|-------|
 | `S` | Stand (14,12) | the dalang's place |
-| `K` | kelir (14,3) | the lit screen |
+| `K` | kelir (14,3) | decor; the lit screen |
 | `1-6` | name markers | (8..23,10), 3 tiles apart; odd = Sunda, even = Jawa |
 
 ## Flow
@@ -464,6 +465,7 @@ X_______________________________________________________________________________
 |------|----------------------|---------|----------|---------------|
 | east road | (60,12)-(88,20) | Fight 2 and the letter | E `A` (70,16), clue `B` letter_la (84,18) | 5.1 |
 | north nook | (28,2)-(34,6) | Optional chest | `C` (30,4) | rule 7 |
+| name stone (v4d) | (5,16)-(7,18) | SQ-C3 step 4: the write stone `deserter_stone` at (6,17), not drawn on the map (**ASSUMED**: a plain NPC spot on floor; `gen_zones.py` reads only the legend). The stone is the only side spot in Gua Kala; it sits 2 tiles from the Deserter spot `d` (4,18), so the freed variant is one scene | NPC `{npc_id:"deserter_stone", cond:"flag:mq5_1"}` (the three clue conds are in the quest step table) | SQ-C3 `name_written:deserter_name` |
 ## Area 2: gk_pasir
 
 - Size: 90 x 51 tiles = 3 x 3 screens (30 x 17 each).

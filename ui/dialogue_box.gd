@@ -23,6 +23,8 @@ var _opts := PackedStringArray()      # for the open box
 var _choosing := false
 var _sel := 0
 var _list: Label
+var _who: Label   # name tag (ui.md 3)
+var _fresh := {}   # npc ids whose tag is up for this first talk
 
 
 func _ready() -> void:
@@ -30,6 +32,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	visible = false
+	add_to_group("dialogue_box")
 	var bg := ColorRect.new()
 	bg.color = Color(0, 0, 0, 0.82)
 	bg.position = Vector2(32, 180)
@@ -37,6 +40,8 @@ func _ready() -> void:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 	_speaker = _label(Vector2(42, 184), Vector2(396, 12), Color("E8D9A0"))
+	_who = _label(Vector2(42, 193), Vector2(396, 10), Color("BDB59A"))
+	_who.add_theme_font_size_override("font_size", 7)
 	_text = _label(Vector2(42, 198), Vector2(396, 56), Color.WHITE)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_cue = _label(Vector2(434, 252), Vector2(10, 10), Color("E8D9A0"))
@@ -81,9 +86,30 @@ func _on_requested(speaker_key: String, lines: PackedStringArray) -> void:
 	_opened_frame = Engine.get_process_frames()
 	_was_paused = get_tree().paused
 	get_tree().paused = true
-	_speaker.text = _t(speaker_key)
+	_fresh.clear()
+	_set_speaker(speaker_key)
 	visible = true
 	_next()
+
+
+## Sets the name and, for a named NPC (key NPC_<ID>_NAME) with a NPC_<ID>_WHO text, the tag; flag seen_name_<id> on first sight.
+func _set_speaker(key: String) -> void:
+	_speaker.text = _t(key)
+	_who.text = ""
+	_text.position.y = 198
+	if not (key.begins_with("NPC_") and key.ends_with("_NAME")):
+		return
+	var nid := key.trim_prefix("NPC_").trim_suffix("_NAME").to_lower()
+	var wk := "NPC_%s_WHO" % nid.to_upper()
+	if tr(wk) == wk:
+		return
+	var g := get_node("/root/Game")
+	if g.has_flag("seen_name_" + nid) and not _fresh.has(nid):
+		return
+	_fresh[nid] = true
+	g.set_flag("seen_name_" + nid)
+	_who.text = _t(wk)
+	_text.position.y = 202   # TUNE: body moves down 4 px under the tag
 
 
 func _t(key: String) -> String:
@@ -93,7 +119,7 @@ func _t(key: String) -> String:
 func _next() -> void:
 	_i += 1
 	while _i < _lines.size() and _lines[_i].begins_with("@"):
-		_speaker.text = _t(_lines[_i].substr(1))
+		_set_speaker(_lines[_i].substr(1))
 		_i += 1
 	if _i >= _lines.size():
 		if _opts.is_empty():

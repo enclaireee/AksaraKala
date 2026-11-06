@@ -1,6 +1,6 @@
 # Desa Purwa (zone id `desa_purwa`)
 
-Zone design for the start village. Step 1 of the world design workflow ([AGENTS.md](../../AGENTS.md) section 5). Targets: [world.md](../world.md) "Desa Purwa", [quests.md](../quests.md) MQ0 (Prologue, 9 steps), MQ4 4.1-4.5 (Interlude), the MQ5 epilogue, SQ-D1, SQ-D2. A builder agent turns this file into the zone scene without redesign: change the layout here first. **Story v4/v4b/v4c pass (2026-11-06):** the prologue is a day (tag, tea, errands, the show) then the raid; Ki Wangsa is cut (Semar is the dalang); the Interlude has doorposts, shelf, table and Aria; the south gate lifts on `mq4_i5`; the epilogue fills the village with people from every act.
+Zone design for the start village. Step 1 of the world design workflow ([AGENTS.md](../../AGENTS.md) section 5). Targets: [world.md](../world.md) "Desa Purwa", [quests.md](../quests.md) MQ0 (Prologue, 9 steps), MQ4 4.1-4.5 (Interlude), the MQ5 epilogue, SQ-D1, SQ-D2. A builder agent turns this file into the zone scene without redesign: change the layout here first. **Story v4/v4b/v4c pass (2026-11-06):** the prologue is a day (tag, tea, errands, the show) then the raid; Ki Wangsa is cut (Semar is the dalang); the Interlude has doorposts, shelf, table and Aria; the south gate lifts on `mq4_i5`; the epilogue fills the village with people from every act. **Side stories v4d additions (2026-11-06):** SQ-C2 "Letters to Mother" ends here: the reply letter `c2_reply_letter` lies by the second cup on the Interlude table at `purwa_table` (new clue `&` (28,24), cond `flag:c2_reply`); it is a clue object, not an item, and does not change the 4.4 table setpiece or the map size.
 
 Map: **60 x 34 tiles = 2 x 2 screens** (30 x 17 each). Coordinates are (x, y) from the top-left tile (0,0). The area is parsed by `gen_zones.py` as `## Area 1: desa_purwa` (this file now follows the region-doc format: `### Map` and `### Legend` under the Area heading; the old `## Map` / `## Legend (spots)` headings did not match the generator). Safe zone except the MQ0 raid (`purwa_raid` and its two outer skirmishes, step 0.8); the other enemy spots are the 4 training dummies in the sanggar. The zone is used four times: the Prologue (MQ0), the Interlude "The Quiet House" (MQ4 4.1-4.5, no combat), the Gua Kala gate (Act VI) and the Epilogue (after `mq5_4`, a short playable day).
 
@@ -46,7 +46,7 @@ W,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE
 #...###_####............###_####.##_###.#####__######...r..#
 #...#______#............#1_____#.#____#.#___________#......#
 #...#______#............#2__B_m#.#____#.#___________#......#
-#...#______#............#3_I___#.#____#.#___________#......#
+#...#______#............#3_I&__#.#____#.#___________#......#
 #...#______#............#_N__H_#.#____#.#_____R_____#......#
 #...#______#..~~~~~~~...#______#.######.#___________#......#
 #...########..~~~~~~~...########........#___________#.bbbb.#
@@ -110,12 +110,13 @@ W,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE
 | `1` | clue, Ibu's shelf: set the ribbon down (Interlude 4.3, ids ASSUMED) | `res://entities/world/clue.tscn` | `{clue_id:"shelf_ribbon", cond:"item:laras_ribbon,!flag:mq4_2"}` | floor | 1 |
 | `2` | clue, Ibu's shelf: set the wagon board down (Interlude 4.3) | `res://entities/world/clue.tscn` | `{clue_id:"shelf_board", cond:"item:laras_board,!flag:mq4_2"}` | floor | 1 |
 | `3` | clue, Ibu's shelf: set the Ka strip down (Interlude 4.3) | `res://entities/world/clue.tscn` | `{clue_id:"shelf_strip", cond:"item:laras_strip_ka,!flag:mq4_2"}` | floor | 1 |
+| `&` | clue, the queen's reply letter by the second cup on the table (SQ-C2 step 3, Interlude after 4.4: `clue_examined:c2_reply_letter`; appears only if the letters were given to the queen in Galuh, i.e. `c2_reply` is set; the player reads it or leaves it folded, no item; the letter's lines vary by `choice_mercy` or `choice_silent`) | `res://entities/world/clue.tscn` | `{clue_id:"c2_reply_letter", cond:"flag:c2_reply"}` | floor | 1 |
 | `B` | trigger, the table; starts the dinner setpiece (Interlude 4.4 `area_entered:purwa_table`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_table", size:Vector2i(5,4)}` | floor | 1 |
 | `A` | NPC Aria Kebonan by the burned stage, optional quiet talk (Interlude 4.5; `npc_id` ASSUMED) | `res://entities/npc/npc.tscn` | `{npc_id:"aria_kebonan", cond:"flag:mq4_i3,!flag:mq4_9"}` | grass | 1 |
 | `Q` | NPC Laras, home again; wakes you and dares you to tag (epilogue, `flag:mq5_4`) | `res://entities/npc/npc.tscn` | `{npc_id:"laras", cond:"flag:mq5_4"}` | grass | 1 |
 | `g` | NPC the elder's grandson with his angklung (epilogue) | `res://entities/npc/npc.tscn` | `{npc_id:"sunda_grandson", cond:"flag:mq5_4"}` | grass | 1 |
 | `U` | NPC Uwa Lengser (epilogue) | `res://entities/npc/npc.tscn` | `{npc_id:"lengser", cond:"flag:mq5_4"}` | grass | 1 |
-| `o` | NPC Ki Sumarto, setting up his show (epilogue) | `res://entities/npc/npc.tscn` | `{npc_id:"ki_sumarto", cond:"flag:mq5_4"}` | grass | 1 |
+| `o` | NPC Ki Sumarto, setting up his show (epilogue) | `res://entities/npc/npc.tscn` | `{npc_id:"mataram_dalang", cond:"flag:mq5_4"}` | grass | 1 |
 | `4` | NPC Sapto, Ki Sumarto's son (epilogue) | `res://entities/npc/npc.tscn` | `{npc_id:"sapto", cond:"flag:mq5_4"}` | grass | 1 |
 | `5` | NPC Wirasana's daughter (epilogue; `npc_id` ASSUMED) | `res://entities/npc/npc.tscn` | `{npc_id:"wirasana_daughter", cond:"flag:mq5_4"}` | grass | 1 |
 | `6` | NPC Mbah Wiryo at the pond (epilogue) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_jurukunci", cond:"flag:mq5_4"}` | grass | 1 |
@@ -132,7 +133,7 @@ Exits sit on the map edge (x = 0 and x = 59, rows 16-17; the south exit `X` at (
 | market | (34,13)-(36,15) | One stall at the plaza's east edge, 3 tiles from the road | stall-keeper `Y` (35,14) | `purwa_stall` |
 | stage | (37,3)-(47,9) 11x7, walls (36,2)-(48,10), door (41..42,10) | The wayang stage: the ruwatan night (K0, the crowd), then burned | kelir lamp `q` (42,3), crowd `p` x6, Laras `G` (43,4), crowd trigger `V` (42,9), trigger `T` (42,7), lontar `L` (45,8) | `kelir_lamp`, `purwa_crowd`, `wayang_stage`, `laras_lontar` |
 | pustaka | (41,22)-(51,28) 11x7, door (45..46,21) | Codex keeper's house; doorpost 3 | Nyai Rukmi `R` (46,25), doorpost `f` (47,20) | `nyai_rukmi`, `door_c` |
-| house_a | (25,22)-(30,26), door (27,21) | Ibu's house; the Interlude table. Door column x = 27 (y 22..23) stays free | Ibu `I` (27,24); shelf clues `1` (25,22) `2` (25,23) `3` (25,24); table trigger `B` (28,23); Interlude: Ciung `N` (26,25), Hariang `H` (29,25), codex mask `m` (30,23) | `ibu`, `quiet_house`, `purwa_table`, `shelf_*` |
+| house_a | (25,22)-(30,26), door (27,21) | Ibu's house; the Interlude table. Door column x = 27 (y 22..23) stays free | Ibu `I` (27,24); shelf clues `1` (25,22) `2` (25,23) `3` (25,24); table trigger `B` (28,23), SQ-C2 reply letter `&` (28,24) by the second cup; Interlude: Ciung `N` (26,25), Hariang `H` (29,25), codex mask `m` (30,23) | `ibu`, `quiet_house`, `purwa_table`, `shelf_*` |
 | house_b | (5,22)-(10,26), door (7,21) | Empty house; doorpost 1 | doorpost `a` (8,20) | `door_a` |
 | house_c | (34,22)-(37,25), walls (33,21)-(38,26), door (35,21) | The old couple's house, next door to Ibu (5 tiles east); doorpost 2 | old couple `O` (35,20), doorpost `d` (36,20) | `purwa_old_couple`, `door_b` |
 | tree | (2,30)-(4,31) | Ciung's tree (the 2x2 `b` block) and the road to it from the pond side | Ciung `C` (4,31), banyan shrine codex `8` (22,31) | `ciung_wanara`, `banyan` |
@@ -194,6 +195,7 @@ Marker form `{zone: "desa_purwa", id: ...}`. Marker ids are **ASSUMED** unless q
 | 4.2 doorposts | `door_a`, `door_b`, `door_c` | `a`, `d`, `f` | `all`: `name_written:door_a`, `door_b`, `door_c`, sets `mq4_i1` |
 | 4.3 Ibu's things | `shelf_ribbon`, `shelf_board`, `shelf_strip`, `ibu` | `1` `2` `3`, `I` | `talked_to:ibu`, sets `mq4_2` (entry needs the three items; she sets the second cup straight) |
 | 4.4 the table | `purwa_table` | `B` (28,23), `N`, `H`, mask `m` | `area_entered:purwa_table`, sets `mq4_i3`; beat `quiet_house` or `quiet_house_silent` |
+| SQ-C2 (3) the reply letter | `c2_reply_letter` | `&` (28,24) | `clue_examined:c2_reply_letter`, cond `flag:c2_reply` (set by `talked_to:galuh_queen` in `kg_keraton`), after step 4.4. Sets `clue_c2_reply_letter`; never blocks 4.5 |
 | 4.5 Semar and Aria | `semar`, `aria_kebonan` | `M` (7,9), `A` (40,12) | `talked_to:semar`, sets `mq4_i5` (lifts kabut `x`, opens the south exit `X`); Aria is an optional `quiet` entry |
 | Interlude fog | `gua_kala_fog` | `k` (52..53,1) | the fog at the Gua Kala mouth eats every glyph thrown at it (set dressing, no step); lifts on `mq4_9` |
 | 4.6 on | `exit_pantai` | `X` (30..31,33) | the walk south to `sk_pantai` (4.6 is `petilasan_activated:kidul_1`) |

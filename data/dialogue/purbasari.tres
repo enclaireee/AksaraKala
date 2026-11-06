@@ -7,8 +7,6 @@ script = ExtResource("1")
 npc_id = "purbasari"
 name_key = "NPC_PURBASARI_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:sq_s1=3"], "lines": ["DLG_PURBASARI_1", "DLG_PURBASARI_2"], "do": []},
-	{"if": ["step:sq_s1=2"], "lines": ["DLG_PURBASARI_3", "DLG_PURBASARI_4", "DLG_PURBASARI_5", "DLG_PURBASARI_6"], "do": []},
-	{"if": ["quest:sq_s1=done"], "lines": ["DLG_PURBASARI_7", "DLG_PURBASARI_8"], "do": []},
-	{"if": [], "lines": ["DLG_PURBASARI_9", "DLG_PURBASARI_10"], "do": []}
+	{"if": ["step:sq_s1=3"], "lines": ["DLG_PURBASARI_V20", "DLG_PURBASARI_V21", "DLG_PURBASARI_V22"], "do": []},
+	{"if": [], "lines": ["DLG_PURBASARI_V23"], "do": []}
 ])

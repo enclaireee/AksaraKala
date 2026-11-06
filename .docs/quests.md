@@ -122,7 +122,7 @@ Na is no longer taught by Pak Karto. The source is an inscribed object on the Ar
 
 **Story beats.** `data/dialogue/beats.tres` holds entries in the dialogue format (`if`, `lines`, `do`, optional `choices`). A listener in GameUI (`ui/story_beat.gd`) plays the first entry whose `if` holds, when no dialogue or menu is open, on `Game.changed` and after each zone load. Every beat's `if` includes `!flag:beat_<id>` and its `do` sets `flag:beat_<id>`, so it plays once. Lines may switch speaker with `@NPC_..._NAME` ([ui.md](ui.md) 3). Beats with no speaker are narration. Each act has one **Laras beat** at a petilasan: 2-3 lines, her voice from the dark. `step:<q>=<n>` is the 0-based index of the current step, so a Laras beat that follows a petilasan step reads the index of the step after it.
 
-**Camp talks.** In Acts II and IV the travelling ally has an optional 2-4 line talk at the petilasan (Act II `galuh_1` with Ciung Wanara, Act IV `timur_2` with Hariang Banga). These are `cond`-based entries in the NPC's own dialogue file, `"quiet": true`, so they never complete a step and are never required (**ASSUMED**).
+**Camp talks.** In Acts I-V the main path ends each boss with an optional 2-4 line talk ([story.md](story.md) Pacing 6; none in the Interlude or Act VI): Act I `camp_sunda` (Ciung Wanara by the lake), Act II `camp_galuh` (Ciung Wanara, `galuh_1`), Act III `camp_mataram` (Hariang Banga at the ford), Act IV `camp_timur` (Hariang Banga, `timur_2`), Act V `camp_kidul` (Mbah Wiryo, `kidul_1`). v4d added I, III and V. These are `cond`-based entries in the NPC's own dialogue file, `"quiet": true`, so they never complete a step and are never required (**ASSUMED**).
 
 **Choices** (3 in all, [ui.md](ui.md) 3): the deserter (MQG), mercy for the caged king (MQ2), the keris (MQ3). Each sets one flag. Each changes one epilogue card and **one thing you can see in play** (**ASSUMED**, [story.md](story.md) "Choices change more than a card"):
 | Choice | Flag | Visible consequence |
@@ -204,6 +204,7 @@ Beats:
 - Turn: the `naganingrum` talk at the lake (NPC entry, cond `flag:mq1_6b`, not a beat). She knows the boy's face without being told. She is his mother. She points to the crater.
 - LC1 replaces the old `laras_1` beat (v4b): the chapter is step 1.12, after the petilasan `sunda_2`. A man with no face keeps asking her to read; she reads slowly on purpose. `do`: `flag:beat_laras_1` is set by the step's `memory_done`.
 - `crater_seal` (if `flag:mq1_8`): the Hunter's appearance and the double-boss restore. The Captain, with his last strength, smashes the cracked seal-stone and **Sangkuriang** wakes (Seal 1). On the far rim the Hunter watches and leaves; the mask fragment `hunter_mask_1` lies there (step 1.13, H1). Ciung is seen chained as bait. `do`: `flag:beat_crater_seal`, `restore`.
+- Camp talk (cond `flag:mq1_9`, `zone:ts_situ`, `ciung_wanara` entry `camp_sunda`, by the lake after Sangkuriang): optional, 2-4 lines. His anger, and the mother he does not know; the player knows she is the woman by the lake, he does not. `"quiet": true`, `do`: `flag:camp_sunda`. The zone cond keeps it from replaying later (**ASSUMED**).
 - `naga` (if `quest:mq1=done`): the aftermath that starts MQG. Ciung Wanara and the naga-king Nagawiru are free. Nagawiru: "The man on the throne wears my face. They took the girl to Galuh." Naganingrum reaches the rim too late to be recognised: Ciung doesn't know her. The egg Ciung carried hatches. You go east together. `do`: `flag:beat_naga`, `flag:mq1_10`, `codex:nagawiru`, `codex:sangkuriang`, `lakon:sangkuriang`, `start:mqg`.
 
 Clue ids Act I: `sandal`, `oncor`, `gorge_prints`, `felled_trees`, `empty_coops`, `loom`, `faceless_toy`, `boat_ribs`, `hunter_mask_1`. Memory ids: `k1_maghrib`, `k2_dayang_sumbi`, `lc1`, `h1`. Cepot's hint about Ga plays only after Ga is learned (section 5, SQ-S4).
@@ -277,6 +278,7 @@ Beats:
 - `camp` (if `flag:mq2_7`): the turn. The camp is not a prison, it is a reading room. Seal 3 is broken and **Bandung Bondowoso** wakes. The strip torn from Laras's half, covered with *Ka* written again and again, is now a clue object (`ka_strip`, step 2.11): she is gone east. `do`: `flag:beat_camp`.
 - LC3 replaces the old `laras_3` beat (v4b): the chapter is step 2.9, after the K3 memory and before the Bondowoso fight. She read the seal because they hurt the prisoners when she didn't. `do`: `flag:beat_laras_3` is set by the step's `memory_done`.
 - The Pamali stone (`pamali_stone`, cond `flag:mq2_7`) runs `write:nagawiru:jawa_na,sunda_ga`: one letter from each script.
+- Camp talk (cond `flag:beat_truce`, `zone:kg_pamali`, `!flag:mq3_1`, `hariang_banga` entry `camp_mataram`, at the ford after the truce): optional, 2-4 lines. The first time you two talk as brothers, not rivals. `"quiet": true`, `do`: `flag:camp_mataram` (**ASSUMED**).
 - `ford` (if `flag:mq2_h3`): Hariang Banga wades into the ford alone. You helped cage his mother, so it is a duel, not a battle. `do`: `flag:beat_ford`.
 - `truce` (if `quest:mq2=done`): the aftermath that starts MQ3. Hariang Banga yields. Nagawiru's voice from the water, Ciung Wanara on the far bank: fighting your brother is *pamali*. The land splits at the river. Ki Sumarto's son (Sapto, **ASSUMED**) wades back across the ford. **Choice 2:** ask Ciung Wanara to show the caged king mercy (`choice_mercy`) or say nothing (`choice_silent`). `do`: `flag:beat_truce`, `codex:pamali`, `codex:roro_jonggrang`, `lakon:roro_jonggrang`, `start:mq3`.
 
@@ -349,6 +351,7 @@ Beats:
 - `quiet_house_silent` (if `flag:mq4_i3`, `flag:choice_silent`): the same scene. Ciung says nothing about the cage and looks away. `do`: `flag:beat_quiet_house`.
 - LC5 replaces the old `laras_kidul` beat (v4b): the chapter is step 4.11, after the K9 memory at the cliff shrine and before the Trial. She can hear the sea, and the sea still says her name. `do`: `flag:beat_laras_kidul` is set by the step's `memory_done`.
 - Clue ids Interlude and Act V: `song_1`, `song_2`, `song_3`; items `laras_ribbon`, `laras_board`, `laras_strip_ka`; write seq ids `door_a`, `door_b`, `door_c`. Memory ids: `k8_wiryo_wife`, `k9_queen_south`, `lc5`.
+- Camp talk (cond `flag:mq4_8`, `zone:sk_pantai`, `!flag:mq5_1`, `kidul_jurukunci` entry `camp_kidul`, Mbah Wiryo at petilasan `kidul_1` after the trial): optional, 2-4 lines. What he will say to the sea now. `"quiet": true`, `do`: `flag:camp_kidul` (**ASSUMED**).
 - `kidul_trial` (if `flag:mq4_8`): the turn of the act. Nyi Roro Kidul speaks once, from a distance. `do`: `flag:beat_kidul_trial`.
 - `kidul` (if `quest:mq4=done`): the aftermath that starts MQ5. Semar: Ombak is the one letter the Eclipse can't eat. It opens the cave from the sea pavilion and breaks Kala's eclipse shield (the sea remembering is a game invention). `do`: `flag:beat_kidul`, `start:mq5`.
 
@@ -385,102 +388,153 @@ Batara Kala is calmed and turned back, never killed. The ruwatan codex note from
 **Post-game (ASSUMED):** every zone stays open, so unfinished side quests can still be done (never missable).
 
 ## 5. Side quests
-Card format: type, size, giver, unlock, steps, resolution, reward, culture and **VERIFY** notes. IDs: `SQ-<zone letter><n>`.
+Card format: type, size, giver, unlock, **Hook**, **Steps** (as events), resolution, reward, culture and **VERIFY** notes, and a `Play` line. IDs: `SQ-<zone letter><n>`.
+
+**Side stories (v4d, [story.md](story.md) "Side stories").** Side quests get the main path's telling. A **side Hunt** is a small main Hunt: hook, 2 clues (`clue_examined:<id>`), a 1-2 minute Kelir memory (`memory_done:sq_<id>`), then the fight or the peaceful action, then an aftermath with a person's cost. **No new systems:** Clue, Kelir memory, the write card (`name_written:<id>`) and `quiet` NPC entries only. Ids: clue ids are `<quest>_<thing>` in lowercase snake_case; memory ids are `sq_<quest>_<thing>`. Elite events are `enemy_killed:<elite_id>`. **For two-way quests the memory teaches the peaceful way**, and the fight stays as the other branch (+50% Ilmu, as before; the peaceful branch adds a codex entry). **Pacing rule 10 applies to cards:** the creature is shown or explained before its name appears in player-facing text, so the objective text says "the crying in the bamboo", not "the kuntilanak", until a clue has shown it. For quests named after a creature (S2, M2, M3, T2, K2, G2) the journal title is the hook text until that clue, then the name (**ASSUMED**). The `Play` line uses the pieces and `x2` syntax of the section 4 Play column; minutes are the `pacing_model.py` piece values (**TUNE**), and sizes are S 5-10, M 10-20, L 20-30 minutes. Ilmu is the section 3.1 table; **new side quests from v4d (G1, G2, C1-C4) give no reward Ilmu**, because `balance_model.py` holds the side-quest Ilmu share at 25-35% and it already sits at 34% (kills still drop Ilmu). Their rewards are story: codex entries, a lakon, an epilogue-card line, a letter. No new items or systems. Side quests never block the main path, and every zone stays open after the ending, so none is missable.
 
 ### Tatar Sunda
 Theme (names): carried by SQ-S1, where a prince lives under a borrowed face, the lutung, until someone sees him. Naganingrum's story is on the main path ([story.md](story.md)).
 
 **SQ-S1 "Lutung Kasarung"** (re-telling, M)
-- Giver: a juru pantun (singer of Sundanese pantun epics, **VERIFY** the role), at the village. Unlock: MQ1 step 1.3.
-- Steps: (1) find the black lutung (langur) spirit in the forest, (2) clear the spirits from the hidden spring, (3) bring Purbasari to the spring. The bath cures her skin, as in the legend.
+- Giver: a juru pantun (singer of Sundanese pantun epics, **VERIFY** the role), Ki Darsa, at the village. Unlock: MQ1 step 1.3 (`mq1_3`).
+- **Hook:** a black langur will not leave a girl with spotted skin alone at the edge of the forest. She does not chase him off.
+- **Steps:** (1) talk to Ki Darsa (`talked_to:ki_darsa`), (2) `clue_examined:s1_offerings` (the langur's offerings left at her door) and `clue_examined:s1_spring` (a hidden spring choked with spirits), `all`; the spirits fall first (`area_cleared:sunda_spring`), (3) `memory_done:sq_s1_lutung` (you play the lutung leading Purbasari to the spring; you clear it, she bathes, her skin heals), (4) `talked_to:purbasari` at the spring (the bath cures her skin, as in the legend), (5) report to Ki Darsa.
+- **Resolution:** a face is seen for what it is (Guruminda under a borrowed face): the theme of Act I. The memory teaches nothing to fight.
 - Reward: **Iket Sunda**, lakon "Lutung Kasarung", Ilmu M.
 - Culture: Purbasari, her sister Purbararang, and the lutung who is really Guruminda, a heavenly being. He is an ally. **VERIFY** the cure and the names.
+- Play: `talk, beat, travel, clue x2, fight, memory, beat, talk`
 
-**SQ-S2 "Kuntilanak Rumpun Bambu" / "The Bamboo-Grove Kuntilanak"** (bounty, L)
-- Giver: the kepala desa (village head). Unlock: MQ1 step 1.3.
-- Steps: (1) hear the reports, (2) find the elite kuntilanak in the bamboo grove at night (a marked arena), (3) defeat her, (4) report back.
+**SQ-S2 "Tangis di Rumpun Bambu" / "Crying in the Bamboo"** (Kuntilanak bounty, side Hunt, L)
+- Giver: the kepala desa (village head). Unlock: MQ1 step 1.3 (`mq1_3`).
+- **Hook:** a baby cries at night in the bamboo grove, where no house stands. The kepala desa will not go near it.
+- **Steps:** (1) talk to the kepala desa (`talked_to:kepala_desa`), (2) `all`: `clue_examined:s2_cempaka` (cempaka scent at an unmarked grave) and `clue_examined:s2_white_cloth` (a torn white cloth on the bamboo); the second clue names the thing as a kuntilanak, (3) `memory_done:sq_s2_grandmother` (you play a grandmother walking the grove at night, keeping to the ground she cannot be followed onto; teaches the fight's safe ground), (4) defeat the elite kuntilanak in the grove (a marked arena, night): `enemy_killed:kuntilanak_elite`, (5) report back (`talked_to:kepala_desa`).
+- **Resolution:** fight only. The grove is cut back; the kepala desa carves a name on the grave.
 - Reward: **Golok**, **Herb Pouch #1**, Ilmu L.
-- Culture: label her as pan-Indonesian folklore. Cartoonish, no gore. Which tree she is tied to varies (**VERIFY**: bamboo, waru or another).
+- Culture: label her as pan-Indonesian folklore. Cartoonish, no gore. Which tree she is tied to varies (**VERIFY**: bamboo, waru or another). The grandmother's "safe ground" motif is **VERIFY**, or a game rule (**ASSUMED**) if no source is found.
+- Play: `talk, beat, travel x2, clue x2, memory, travel, fight, miniboss, beat, talk`
 
 **SQ-S3 "Angklung yang Tercerai" / "The Scattered Angklung"** (errand, M)
 - Giver: the leader of a village angklung group. Unlock: entering Tatar Sunda.
 - Steps: (1) find 5 angklung scattered across the zone (each plays one note when picked up), (2) return them. The group plays a short piece with all 5 notes.
 - Reward: **Flask Shard #1**, Ilmu M.
 - Culture: each angklung sounds one note, so a tune needs every player. That is the point of the quest and the codex entry. Angklung is UNESCO 2010 (verified). **VERIFY** the traditional scale (pentatonic salendro/pelog vs the later diatonic angklung).
+- Play: `talk, travel x2, clue x5, talk, beat`
 
-**SQ-S4 "Cepot Si Pemberani" / "Brave Cepot"** (errand, S, first-hour path)
-- Giver: Cepot. Unlock: MQ1 step 1.2, so the quest system shows up early. Cepot is first met in the prologue (MQ0 0.3, sanggar, a quiet talk). v4: his hint about Ga (what the glyph counters) must only play when `glyph:sunda_ga` holds. He is at the petilasan before Ga is learned (1.2 comes before 1.4), so the hint is a second entry in his file with cond `glyph:sunda_ga`; the first meeting only starts the quest. **ASSUMED**.
-- Steps: (1) Cepot wants to prove he is brave and asks you to defeat 3 Wild Boar (was Maung, dropped with the tiger spirit, **ASSUMED** 2026-11-05) while he "supervises" from a tree, commenting on each kill, (2) report back.
+**SQ-S4 "Cepot Si Pemberani" / "Brave Cepot"** (errand, S, first-hour path; **part 1 of SQ-C4**, the Cepot chain, see Companion stories)
+- Giver: Cepot. Unlock: MQ1 step 1.2, so the quest system shows up early. Cepot is first met in the prologue (MQ0 0.3, sanggar, a quiet talk). v4: his hint about Ga (what the glyph counters) must only play when `glyph:sunda_ga` holds. He is at the petilasan before Ga is learned (1.2 comes before 1.3), so the hint is a second entry in his file with cond `glyph:sunda_ga`; the first meeting only starts the quest. **ASSUMED**.
+- Steps: (1) Cepot wants to prove he is brave and asks you to defeat 3 Wild Boar (was Maung, dropped with the tiger spirit, **ASSUMED** 2026-11-05) while he "supervises" from a tree, commenting on each kill, (2) report back. Finishing it sets `c4_1` (part 1 of SQ-C4 done).
 - Reward: **Silver Bangle**, Ilmu S.
 - Culture: Cepot's humor as in wayang golek. Barks are one-liners in both languages.
+- Play: `talk, fight x3, talk`
 
 **SQ-S5 (retired in v3.1).** Sangkuriang is fought on the main path (MQ1 1.15), so the echo is cut. Its lakon "Sangkuriang" and codex `sangkuriang` are given when MQ1 completes. Dayang Sumbi keeps an idle talk at the lake after MQ1 (cond `quest:mq1=done`). Code follow-up: remove `data/quests/sq_s5.tres` and Sangkuriang's `quest:sq_s5=active` cond.
+
+### Keraton Galuh
+Theme (a name at risk, **ASSUMED**): carried by SQ-G2, a servant nobody names, before the confession says why that matters. Act II had no side stories before v4d. SQ-C1 (Ciung's rooster) is also here, under Companion stories.
+
+**SQ-G1 "Si Kabayan di Alun-alun" / "Si Kabayan at the Square"** (re-telling, comic, M)
+- Giver: Si Kabayan himself, a lazy man sprawled by the tournament stalls at the alun-alun (the legend's trickster; not a new main-path speaker). Unlock: `mqg_0` (the plan with Ciung Wanara; the crowd is up).
+- **Hook:** a pompous official is shouting at a man asleep in the shade, and the crowd is laughing at the wrong one.
+- **Steps:** (1) talk to Kabayan (`talked_to:kabayan`), (2) `clue_examined:g1_decree` (the official's decree, posted at the alun-alun) and `clue_examined:g1_basket` (a basket he left half-woven), `all`, (3) `memory_done:sq_g1_kabayan` (one short Kabayan tale you play, 1-2 min, **VERIFY** which tale; a clever answer turns the official's own order against him), (4) `talked_to:galuh_official` (the official gives up; the crowd cheers), (5) back to Kabayan, who goes back to sleep.
+- **Resolution:** the lazy man wins by wit; the official is embarrassed, no one is hurt. No fight.
+- Reward: lakon "Si Kabayan", codex `kabayan`. Ilmu: none from the reward, **TUNE**; kills still drop Ilmu.
+- Culture: Si Kabayan is a Sundanese folk trickster, lazy and clever. **VERIFY** the tale, the framing and the character's details before anything ships.
+- Play: `talk, beat, travel, clue x2, memory, beat, talk`
+
+**SQ-G2 "Ririwa Kaputren" / "The Ririwa of the Kaputren"** (side Hunt, two-way, L)
+- Giver: a palace maid in the inner palace (unnamed). Unlock: `mqg_4` (inside the inner palace, `galuh_1`).
+- **Hook:** someone sweeps the women's quarters every night, and the broom is found worn to the handle by morning. The maid has never seen who.
+- **Steps:** (1) talk to the maid (`talked_to:kaputren_maid`), (2) `all`: `clue_examined:g2_broom` (the worn broom) and `clue_examined:g2_roll` (a servants' roll with one name scraped out); the roll's ink holds the ghost's trace, (3) `memory_done:sq_g2_servant` (you play the servant's last day: sweeping while nobody says his name; teaches his name is in the roll's ink: Ca, Nga, **ASSUMED** name "Canga"), (4) `alt`: write his name on the roll (`name_written:ririwa_name`, the write card runs `write:ririwa_name:sunda_ca,sunda_nga`, modelled on the Nagawiru write in step 2.11) = **peaceful**, or defeat the elite ririwa in the Kaputren corridor (`enemy_killed:ririwa`) = **fight**, (5) report to the maid.
+- **Resolution:**
+  - **Peaceful:** the name is written and the sweeping stops; the broom hangs on its hook. The maid says his name aloud once.
+  - **Fight:** the elite ririwa goes down; the quarters are quiet, and the roll is still scraped. The maid says nothing.
+- Reward: codex `ririwa` (peaceful adds "The servant's name"). Ilmu: none from the reward, **TUNE**; kills still drop Ilmu (the fight branch drops the elite's Ilmu, [bestiary.md](bestiary.md)).
+- Culture: ririwa as a Sundanese ghost term is **VERIFY**. It foreshadows the borrowed-name theme before the confession and never names it. Cartoonish, no gore.
+- Play: `talk, beat, travel x3, clue x2, puzzle, memory, write, beat`
+- Fight branch: swaps `write` for `fight, miniboss`.
 
 ### Mataram
 Theme (forgetting): carried by SQ-M2, where a neglected child is lost because no one looked for it. Ki Sumarto's story is on the main path.
 
 **SQ-M1 "Jaka Tarub dan Nawang Wulan" / "Jaka Tarub and Nawang Wulan"** (re-telling, M)
-- Giver: Nawang Wulan, a quiet woman in a rice-farming household. Unlock: MQ2 step 2.1.
-- Steps: (1) she says her rice pot's magic broke after someone lifted the lid, (2) search the lumbung (rice barn), (3) find her selendang (shawl) hidden under the last of the rice, (4) return it.
-- Resolution: she returns to the sky, as in the legend, and leaves her weaving scarf behind as thanks.
+- Giver: Nawang Wulan, a quiet woman in a rice-farming household. Unlock: MQ2 step 2.1 (`mq2_1`).
+- **Hook:** a rice pot that used to fill from one grain is empty. She lifts the lid and looks away.
+- **Steps:** (1) talk to her (`talked_to:nawang_wulan`), (2) `all`: `clue_examined:m1_pot_lid` (the pot's lifted lid) and `clue_examined:m1_rice_gone` (the rice gone down in the lumbung all at once), (3) `memory_done:sq_m1_selendang` (you play Nawang Wulan finding her selendang under the last of the rice; teaches nothing to fight), (4) return to her (`talked_to:nawang_wulan`).
+- **Resolution:** she returns to the sky, as in the legend, and leaves her weaving scarf behind as thanks.
 - Reward: **Feather Charm**, **Herb Pouch #2**, lakon "Jaka Tarub", Ilmu M.
 - Culture: one grain of rice filled the pot while the lid stayed closed. Jaka Tarub hid the shawl. Their daughter Nawangsih. Nawang Wulan is a bidadari (celestial maiden), not a deity, and shown with respect. **VERIFY** all beats and the legend's location.
+- Play: `talk, beat, travel, clue x2, memory, beat, talk`
 
-**SQ-M2 "Wewe Gombel"** (bounty, two-way, L). Wewe Gombel moved to Mataram (decided 2026-11-05).
-- Giver: a worried neighbor. Unlock: MQ2 step 2.3.
-- Steps: (1) a neglected child has gone missing, (2) find the hill where Wewe Gombel hides children.
-- Resolution:
-  - **Peaceful:** go back and talk to the parents. They come to the hill and call the child kindly (and bang pots, as in the folk practice, **VERIFY**). Wewe Gombel returns the child, since in folklore she takes children who are neglected, not to harm them.
-  - **Fight:** defeat the elite Wewe Gombel and bring the child home.
+**SQ-M2 "Anak yang Tak Dipanggil" / "The Child Nobody Called"** (Wewe Gombel bounty, side Hunt, two-way, L). Wewe Gombel moved to Mataram (decided 2026-11-05).
+- Giver: a worried neighbor. Unlock: MQ2 step 2.3 (`mq2_2`).
+- **Hook:** a mother did not notice her son was gone until evening. The neighbor says only that nobody called him.
+- **Steps:** (1) talk to the neighbor (`talked_to:m2_neighbour`), (2) `clue_examined:m2_toy` (the boy's toy on the hill path) and `talked_to:m2_parents_1` ("nobody called him"; the parents), `all`; the toy's note names the Wewe Gombel, the spirit who takes neglected children, (3) `memory_done:sq_m2_child` (you play the neglected child following a kind voice up the hill; teaches calling kindly and banging pots, **VERIFY**), (4) `alt`: `talked_to:wewe_parents_2` (the parents come to the hill and call kindly) = **peaceful**, or `enemy_killed:wewe_elite` = **fight**, (5) bring the child home.
+- **Resolution:**
+  - **Peaceful:** the parents call the child kindly (and bang pots, as in the folk practice, **VERIFY**). Wewe Gombel returns the child, since in folklore she takes children who are neglected, not to harm them.
+  - **Fight:** defeat the elite Wewe Gombel and bring the child home. The mother does not speak.
 - Reward: **Jimat**, Ilmu L (fight +50%). Peaceful adds the codex entry "Wewe Gombel's lesson".
 - Culture: the legend is a warning about neglect. The peaceful ending tells that story best.
+- Play: `talk, beat, travel x3, fight x2, clue x2, memory, talk, beat`
+- Fight branch: swaps `talk` for `miniboss`.
 
-**SQ-M3 "Tuyul di Pasar" / "A Tuyul at the Market"** (bounty, two-way, M)
-- Giver: a pande besi (blacksmith) with a market stall. Unlock: MQ2 step 2.1.
-- Steps: (1) coins vanish from the stalls, (2) find the tuyul swarm's hideout.
-- Resolution:
-  - **Peaceful:** set out the folk distraction (**VERIFY**: crabs, or green beans the tuyul must count) and catch the leader while it plays.
+**SQ-M3 "Uang yang Hilang di Pasar" / "Coins Gone from the Market"** (Tuyul bounty, side Hunt, two-way, M)
+- Giver: a pande besi (blacksmith) with a market stall. Unlock: MQ2 step 2.1 (`mq2_1`).
+- **Hook:** coins vanish from the stall while its keeper watches. He sees nothing.
+- **Steps:** (1) talk to him (`talked_to:m3_smith`), (2) `all`: `clue_examined:m3_footprints` (tiny footprints in the hearth ash) and `clue_examined:m3_beans` (spilled green beans, half counted; names the tuyul), (3) `memory_done:sq_m3_tuyul` (you play a tuyul sent out by a greedy master who cannot pass a spill without counting it; teaches it must stop to count, **VERIFY** beans or crabs), (4) `alt`: set out the beans and catch the leader (`area_entered:m3_trap_sprung`) = **peaceful**, or defeat the elite leader and its swarm (`enemy_killed:tuyul_leader`) = **fight**, (5) tell the smith.
+- **Resolution:**
+  - **Peaceful:** set out the folk distraction and catch the leader while it counts.
   - **Fight:** defeat the elite tuyul leader and its swarm.
 - Reward: **Spear**, Ilmu M (fight +50%).
 - Culture: described only as a mischievous money-stealing child spirit. Light comedy.
+- Play: `talk, beat, travel, clue x2, memory, puzzle, talk`
+- Fight branch: swaps `puzzle` for `fight x2, miniboss`.
 
 **SQ-M4 "Gamelan yang Bisu" / "The Silent Gamelan"** (errand, M)
-- Giver: Ki Dalang, the MQ2 teacher. Unlock: MQ2 step 2.3.
+- Giver: Ki Sumarto, the dalang of MQ2 (was "Ki Dalang"; he teaches Ha at step 2.3). Unlock: MQ2 step 2.3 (`mq2_2`).
 - Steps: (1) the village gamelan's gong ageng was carried off into the temple ruins, (2) fight through the Arca to find it, (3) bring it back. The zone music gains its gong layer from then on (a cheap audio-state change, strong payoff).
 - Reward: **Blangkon**, Ilmu M.
 - Culture: the gong ageng marks the end of the musical cycle (**VERIFY** wording). Gamelan is UNESCO 2021 (verified).
+- Play: `talk, travel, fight x2, miniboss, puzzle, travel, talk, beat`
 
 **SQ-M5 (retired in v3.1).** Bandung Bondowoso is fought on the main path (MQ2 2.10), so the echo is cut. Its lakon "Roro Jonggrang" and codex `roro_jonggrang` are given when MQ2 completes. Code follow-up: remove `data/quests/sq_m5.tres` and Bondowoso's `quest:sq_m5=active` cond.
 
 ### Tanah Timur
 Theme (names): carried by SQ-T1, where a hero hides behind a borrowed name.
 
-**SQ-T1 "Ande-Ande Lumut"** (re-telling, two-way, M)
-- Giver: Klething Kuning at the riverbank. Unlock: MQ3 step 3.1.
-- Steps: (1) she must cross the river to reach Ande-Ande Lumut, but Yuyu Kangkang, a giant crab, demands a payment from everyone who crosses.
-- Resolution:
-  - **Peaceful (the legend's way):** fetch the sodo lanang (a stick from a palm-leaf broom) she was given, and she strikes the river with it. The water dries up (**VERIFY** who gave it and what it does).
+**SQ-T1 "Ande-Ande Lumut"** (re-telling, side Hunt, two-way, M)
+- Giver: Klething Kuning at the riverbank. Unlock: MQ3 step 3.1 (`mq3_1`).
+- **Hook:** a girl is stopped at the river; the ferry rope is cut. She holds a bundle and will not say what is in it.
+- **Steps:** (1) talk to her (`talked_to:klething_kuning`), (2) `all`: `clue_examined:t1_claw_marks` (claw marks on the jetty; names the crab as Yuyu Kangkang) and `clue_examined:t1_sodo` (the sodo lanang in her bundle), (3) `memory_done:sq_t1_klething` (you play Klething Kuning being given the sodo lanang, **VERIFY** by whom; teaches strike the water), (4) `alt`: `area_entered:t1_crossing_dry` (she strikes the water with the sodo lanang and the river dries) = **peaceful**, or `enemy_killed:yuyu_kangkang` = **fight**, (5) she crosses (`talked_to:klething_kuning`).
+- **Resolution:**
+  - **Peaceful (the legend's way):** she strikes the river with the sodo lanang. The water dries up (**VERIFY** who gave it and what it does).
   - **Fight:** defeat Yuyu Kangkang (an elite charger).
 - Reward: **Stone Ring**, lakon "Ande-Ande Lumut", Ilmu M (fight +50%).
 - Culture: a Panji tale. Ande-Ande Lumut is Panji in disguise. Child-friendly retelling: the crab demands "a payment", not a kiss.
+- Play: `talk, beat, travel, clue x2, memory, puzzle, beat`
+- Fight branch: swaps `puzzle` for `fight, miniboss`.
 
-**SQ-T2 "Banaspati Padang Sabana" / "The Savanna Banaspati"** (bounty, L)
-- Giver: a herder. Unlock: MQ3 step 3.1.
-- Steps: (1) the grassland keeps catching fire, (2) follow the burn trail to the elite Banaspati, (3) defeat it.
+**SQ-T2 "Api Tanpa Angin" / "Fire With No Wind"** (Banaspati bounty, side Hunt, L)
+- Giver: a herder. Unlock: MQ3 step 3.1 (`mq3_1`).
+- **Hook:** the herder's grass burns in a line with no wind.
+- **Steps:** (1) talk to the herder (`talked_to:t2_herder`), (2) `all`: `clue_examined:t2_burn_trail` (a scorched trail that circles back) and `clue_examined:t2_campfire` (a campfire nobody lit; names the banaspati), (3) `memory_done:sq_t2_herder` (you play a herder boy who learns the fire will not cross running water, **ASSUMED**, game retelling; teaches the spring arena), (4) defeat the elite banaspati at the spring: `enemy_killed:banaspati_elite`, (5) report to the herder.
+- **Resolution:** fight only. The grass grows back.
 - Reward: **Herb Pouch #3**, Ilmu L.
 - Culture: fire spirit. Do not tie it to the Tengger or Bromo rituals.
+- Play: `talk, beat, travel x2, clue x2, memory, travel, fight, miniboss, talk`
 
 **SQ-T3 "Pamor dari Langit" / "Pamor from the Sky"** (errand, cross-zone, M)
-- Giver: the empu. Unlock: MQ3 step 3.2.
+- Giver: the empu (Mpu Wirasana). Unlock: MQ3 step 3.2 (`mq3_2`).
 - Steps: (1) the empu needs a batu bintang (meteorite) to forge a keris with pamor (the patterned metal layers), (2) travel back to Mataram, where a fragment lies near the temple plain, (3) bring it back.
 - Reward: **Keris Luk 7**, Ilmu M.
 - Culture: the Prambanan meteorite is known for keris pamor (**VERIFY**). This is a quest reward, not a crafting system. Keris is UNESCO 2008 (verified). It teaches backtracking on the open map.
+- Play: `talk, travel x3, fight x2, clue, travel, talk`
 
 **SQ-T4 "Kuda Kepang yang Hilang" / "The Lost Kuda Kepang"** (errand, S)
-- Giver: the leader of a kuda lumping troupe. Unlock: MQ3 step 3.1.
+- Giver: the leader of a kuda lumping troupe. Unlock: MQ3 step 3.1 (`mq3_1`).
 - Steps: (1) find 3 kuda kepang (woven bamboo horses) blown away in a storm, (2) return them and watch a short performance.
 - Reward: **Flask Shard #2**, Ilmu S.
 - Culture: performance only. No trance, no glass-eating, no fire (rule from [world.md](world.md)).
+- Play: `talk, travel, clue x3, beat`
 
 ### Segara Kidul
 The main path here is P0 (section 4). These side quests are P1. Theme (the sea remembers, **ASSUMED**): carried by SQ-K1, where hatchlings find their own way back.
@@ -489,17 +543,69 @@ The main path here is P0 (section 4). These side quests are P1. Theme (the sea r
 - Giver: a fisher's child. Steps: (1) pick up 3 stranded turtle hatchlings in the dunes (`item_picked:tukik_*` x3), (2) carry them to the surf (`area_entered:kidul_tukik_laut`), (3) tell the child. Synced 2026-11-06 to the built quest and the sk_pantai map (3 pickups); the escort version with crabs and birds is dropped, since bestiary.md has no such enemies.
 - Reward: **Herb Pouch #4**, Ilmu S.
 - Culture: Java's south coast has real turtle nesting beaches (**VERIFY**: e.g. Pangumbahan, Sukamade). A conservation note in the codex.
+- Play: `talk, clue x3, travel, beat`
 
-**SQ-K2 sea spirit bounty** (bounty, L). Target: Bajul Putih Tua, an old white crocodile elite ([bestiary.md](bestiary.md) Zone 4). Reward: **Cakra** if the thrown archetype is built, otherwise Ilmu L x2.
+**SQ-K2 "Jaring yang Robek" / "The Torn Nets"** (sea spirit bounty, side Hunt, L). Target: Bajul Putih Tua, an old white crocodile elite ([bestiary.md](bestiary.md) Zone 4).
+- Giver: a fisher at the river mouth (unnamed). Unlock: MQ4 step 4.6 (`mq4_4`, Mbah Wiryo met).
+- **Hook:** nets are torn from the inside, and the fishers will not cast at the river mouth.
+- **Steps:** (1) talk to the fisher (`talked_to:k2_fisher`), (2) `clue_examined:k2_scale` (a white scale in the net) and `talked_to:kidul_jurukunci` (Mbah Wiryo on "the old one who keeps the river mouth"; one line, names the white crocodile), `all`, (3) `memory_done:sq_k2_fisher` (you play a fisher leaving an offering at the river mouth, **VERIFY** belief with respect; teaches the tide tell before its charge), (4) defeat Bajul Putih Tua at the river mouth: `enemy_killed:bajul_putih_tua` (at 0 HP it dives; a fade), (5) report to the fisher.
+- **Resolution:** fight only. The old one is driven back into the deep, not killed. The fishers cast again, and leave a first catch on the sand.
+- Reward: **Cakra** if the thrown archetype is built, otherwise Ilmu L x2.
+- Culture: a sea spirit told as belief; the white crocodile ties to the Aji Saka legend (bestiary **VERIFY**). Never the Queen's servant.
+- Play: `talk, beat, travel x2, clue x2, memory, travel, miniboss, beat`
+
+### Companion stories
+Optional chains that deepen the party and the cast the player already knows. **Companion stories add no new named speaking characters** (the Deserter, Ciung, Hariang Banga, Cepot and the queen are all met on the main path; the rest are unnamed). All **ASSUMED**; none gives reward Ilmu (kills still drop Ilmu, TUNE), and none adds an item or system.
+
+**SQ-C1 "Ayam Jago Ciung" / "Ciung's Rooster"** (Act II, M)
+- Giver: Ciung Wanara. Unlock: `mqg_a1` (arrival; the rooster ran off before the tournament). Never missable.
+- **Hook:** Ciung checks his empty perch before the tournament; the rooster has run off.
+- **Steps:** (1) talk to Ciung (`talked_to:ciung_wanara`), (2) `all`: `clue_examined:c1_feathers` (feathers at the rooster seller's stall) and `clue_examined:c1_basket` (a river basket in the alun-alun where children play), (3) `memory_done:sq_c1_basket` (you play the baby in a basket on the river, holding the egg that became his rooster, **VERIFY** the Ciung Wanara motif), (4) find the rooster (`area_entered:c1_rooster_found`), (5) `talked_to:ciung_wanara`.
+- **Resolution:** the rooster is found. No bout is shown (Sensitivity). Ciung: the rooster is the only family he knew he had.
+- Reward: codex `ciung_egg`. Ilmu: none from the reward, **TUNE**; kills still drop Ilmu.
+- Culture: the Ciung Wanara tale ([story_ciung_wanara.md](story_ciung_wanara.md)). The rooster is never bet on or handled by the hero.
+- Play: `talk, beat, travel, clue x2, memory, puzzle, talk, beat`
+
+**SQ-C2 "Surat untuk Ibu" / "Letters to Mother"** (Acts III-IV, M, cross-zone)
+- Giver: Hariang Banga. Unlock: `quest:mq2=done` (after the truce). The clue `hariang_letters` is found at step 2.13.
+- **Hook:** after the truce Hariang Banga holds a bundle of letters he never sent to his mother, the queen, caged in Galuh.
+- **Steps:** (1) talk to Hariang Banga (`talked_to:hariang_banga`), (2) travel to the cage in Galuh and give her the letters (`talked_to:galuh_queen`, id **ASSUMED**; she writes back, lines vary by `choice_mercy` or `choice_silent`; sets `c2_reply`), (3) at your mother's table in the Interlude, the reply letter lies by the second cup (`clue_examined:c2_reply_letter`, cond `flag:c2_reply`, at `purwa_table` after step 4.4).
+- **Resolution:** the player reads the letter or leaves it folded by the second cup; no item.
+- Reward: the reply letter on the Interlude table (a clue object, not an item). Ilmu: none from the reward, **TUNE**; kills still drop Ilmu.
+- Culture: story only. The queen is "the queen" in play; her name is in her codex entry.
+- Play: `talk, travel x3, talk, beat, clue`
+
+**SQ-C3 "Nama si Pembelot" / "The Deserter's Name"** (Acts III-VI, L, chain, two variants by Choice 1)
+- Giver: the Deserter (freed variant) or Uwa Lengser's note (handed variant). Unlock: `flag:choice_freed` or `flag:choice_handed` at MQ2 2.6 (`mq2_7`, the camp).
+- **The Deserter's name: Ranga** (**ASSUMED**; an ordinary Sundanese name). The write card runs `write:deserter_name:jawa_ra,sunda_nga` (Ra, Nga): one letter from each script, like Nagawiru's name (`name_written:deserter_name`). Both are core glyphs; in `glyph_strokes.py` Ra reads 100% and Nga 87% (Nga is only confused with Ga, which the name does not use).
+- **Hook:** *freed:* he walks at the edge of each camp and asks if anyone knows a name that fits. *Handed:* Uwa Lengser's note says he keeps saying one sound in his cell.
+- **Steps (one fragment clue per act, the same ids in both variants; the lines depend on the variant):**
+  1. Act III, the Mataram camp: `clue_examined:c3_camp_scrap` (cond `flag:mq2_7`; a scrap of cloth with a stitched sound, or Lengser's note).
+  2. Act IV, the desert road: `clue_examined:c3_road_mark` (cond `flag:mq3_6`, `zone:tt_pasir`).
+  3. Act V, the black-sand shore: `clue_examined:c3_shore_net` (cond `flag:mq4_4`, `zone:sk_pantai`).
+  4. Act VI, the Gua Kala mouth: `name_written:deserter_name` (cond `flag:mq5_1` and all three clues; a stone at `gk_mulut`; the card is `write:deserter_name:jawa_ra,sunda_nga`).
+- **Resolution:** *freed:* he stands at the mouth, hears his name, and the card is written beside him. *Handed:* the name is written alone; a line says a cell in Galuh is quiet.
+- Reward: freed adds a line on his epilogue card; handed adds the codex entry `deserter_name`. Ilmu: none from the reward, **TUNE**; kills still drop Ilmu.
+- Culture: story only. No culture claim beyond Sundanese naming.
+- Play: `clue x3, talk x3, travel x4, write, beat`
+
+**SQ-C4 "Cepot Si Pemberani" (chain, parts 2 and 3)** (S each)
+- Part 1 is SQ-S4 (Act I), which sets `c4_1`. The chain's payoff is one line on the epilogue card: Cepot telling the village children the story, wrong but brave.
+- **Part 2, Act III (`c4_2`):** Giver: Cepot. Unlock: `c4_1` and `mq2_a1`. **Hook:** Cepot has signed on with both recruiters at the river market. **Steps:** (1) talk to Cepot (`talked_to:cepot`), (2) `all`: `clue_examined:c4_roll_a` and `clue_examined:c4_roll_b` (his name on both rolls), (3) get him out before either side notices (`area_entered:c4_market_clear`, a stealth puzzle), (4) `talked_to:cepot`.
+  - Play: `talk, clue x2, puzzle, talk, beat`
+- **Part 3, Act V (`c4_3`):** Giver: Cepot. Unlock: `c4_2` and `mq4_4`. **Hook:** Cepot followed you to the coast and is terrified of the sea. **Steps:** (1) talk to Cepot (`talked_to:cepot`), (2) hold the lamp over the hatchlings' beach through one wave (`trial_completed:c4_lamp`, **ASSUMED**), (3) `talked_to:cepot`; sets `c4_done`.
+  - Play: `talk, travel, setpiece, beat`
+- Reward: Ilmu: none from the reward, **TUNE**; kills still drop Ilmu. The part 1 reward is Silver Bangle (SQ-S4).
+- Culture: Cepot's humor as in wayang golek. The turtle beach reuses SQ-K1's area, with the same conservation note.
 
 ## 6. Hub meta quests (Desa Purwa)
 These grow with the content, so they reward the whole game without new systems.
 
 ### 6.1 SQ-D1 "Lakon" (the wayang stage)
 - Giver: the Desa Purwa dalang who performs the prologue. Unlock: MQ0.
-- Every finished re-telling (S1, M1, T1) and every main-quest legend (Sangkuriang, Roro Jonggrang, Ciung Wanara, Timun Mas, Ken Arok) adds a lakon. 8 in total, plus the hero's own story at the end (v3.1).
+- Every finished re-telling (S1, M1, G1 Si Kabayan, T1; the giver of the lakon is Semar, the dalang) and every main-quest legend (Sangkuriang, Roro Jonggrang, Ciung Wanara, Timun Mas, Ken Arok) adds a lakon. 9 in total (v4d, was 8), plus the hero's own story at the end (v3.1).
 - At the stage, the player can watch any unlocked lakon: about 30 seconds of silhouette slides with narration text in P0, animated wayang in P2.
-- Thresholds: 4 lakon gives **Flask Shard #3**. All 7 adds a line to the credits.
+- Thresholds: 4 lakon gives **Flask Shard #3**. All 9 adds a line to the credits.
 
 ### 6.2 SQ-D2 "Pustaka" (the codex keeper)
 - Giver: a keeper of old manuscripts in Desa Purwa. Unlock: first codex entry.

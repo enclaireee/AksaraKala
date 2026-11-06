@@ -260,6 +260,7 @@ func _zone_name(zone: String) -> String:
 func _refresh_journal(g: Node) -> void:
 	var focus_pin: String = get_viewport().gui_get_focus_owner().get_meta("pin", "") if get_viewport().gui_get_focus_owner() else ""
 	_clear(_journal)
+	_story_and_clues(g)
 	var lists := {"main": [], "side": [], "done": []}
 	for id in g.quests:
 		var q := QuestData.by_id(id)
@@ -284,6 +285,35 @@ func _refresh_journal(g: Node) -> void:
 		for b in _journal.find_children("*", "Button", true, false):
 			if b.get_meta("pin", "") == focus_pin:
 				b.grab_focus()
+
+
+## "Story so far": recap of every step below the current one (all steps when done); "Clues": set clue_* flags.
+func _story_and_clues(g: Node) -> void:
+	var recaps := PackedStringArray()
+	for id in g.quests:
+		var q := QuestData.by_id(id)
+		var st: String = g.quest_state(id)
+		if q == null or st == "available" or q.kind != "main":
+			continue
+		var cur: int = q.steps.size() if st == "done" else int(g.quests[id].step)
+		for i in mini(cur, q.steps.size()):
+			var r: String = q.steps[i].get("recap") if q.steps[i].get("recap") != null else ""
+			if r != "":
+				recaps.append(tr(r))
+	if not recaps.is_empty():
+		_label(_journal, "UI_JOURNAL_STORY", GOLD)
+		for r in recaps.slice(-6):   # ui.md: last 6 only
+			_label(_journal, r, DIM)
+	var notes := PackedStringArray()
+	for f: String in g.flags:
+		if f.begins_with("clue_") and g.has_flag(f):
+			var k := "CLUE_%s_NOTE" % f.trim_prefix("clue_").to_upper()
+			if tr(k) != k:
+				notes.append(tr(k))
+	if not notes.is_empty():
+		_label(_journal, "UI_JOURNAL_CLUES", GOLD)
+		for n in notes:
+			_label(_journal, n, DIM)
 
 
 func _quest_block(g: Node, q: QuestData, done: bool) -> void:

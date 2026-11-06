@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -12,18 +12,24 @@ marker = {"zone": "ts_kampung", "id": "kepala_desa"}
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_S2_S2_OBJ"
-on = "area_entered:dark_grove"
-marker = {"zone": "ts_leuweung", "id": "dark_grove"}
+all = [{"on": "clue_examined:s2_cempaka"}, {"on": "clue_examined:s2_white_cloth"}]
+marker = {"zone": "ts_leuweung", "id": "s2_cempaka"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_SQ_S2_S3_OBJ"
-on = "enemy_killed:kuntilanak_elite"
-marker = {"zone": "ts_leuweung", "id": "kuntilanak_elite"}
+on = "memory_done:sq_s2_grandmother"
+marker = {"zone": "ts_leuweung", "id": "sq_s2_grandmother"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_SQ_S2_S4_OBJ"
+on = "enemy_killed:kuntilanak_elite"
+marker = {"zone": "ts_leuweung", "id": "kuntilanak_elite"}
+
+[sub_resource type="Resource" id="s5"]
+script = ExtResource("2")
+objective = "Q_SQ_S2_S5_OBJ"
 on = "talked_to:kepala_desa"
 marker = {"zone": "ts_kampung", "id": "kepala_desa"}
 
@@ -35,6 +41,6 @@ type = "bounty"
 zone = "tatar_sunda"
 size = "L"
 giver = "kepala_desa"
-requires = Array[String](["mq1_2"])
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+requires = Array[String](["mq1_3"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5")])
 rewards = {"items": ["golok"], "herb_pouch": 1, "codex": ["kuntilanak_rumpun"]}

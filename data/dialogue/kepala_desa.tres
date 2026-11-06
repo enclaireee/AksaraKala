@@ -7,9 +7,8 @@ script = ExtResource("1")
 npc_id = "kepala_desa"
 name_key = "NPC_KEPALA_DESA_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:sq_s2=3"], "lines": ["DLG_KEPALA_DESA_1", "DLG_KEPALA_DESA_2", "DLG_KEPALA_DESA_3", "DLG_KEPALA_DESA_4"], "do": []},
-	{"if": ["quest:sq_s2=done"], "lines": ["DLG_KEPALA_DESA_5", "DLG_KEPALA_DESA_6"], "do": []},
-	{"if": ["quest:sq_s2=active"], "lines": ["DLG_KEPALA_DESA_7", "DLG_KEPALA_DESA_8", "DLG_KEPALA_DESA_9"], "do": []},
-	{"if": ["quest:sq_s2=available"], "lines": ["DLG_KEPALA_DESA_10", "DLG_KEPALA_DESA_11", "DLG_KEPALA_DESA_12", "DLG_KEPALA_DESA_13"], "do": ["start:sq_s2"]},
-	{"if": [], "lines": ["DLG_KEPALA_DESA_14", "DLG_KEPALA_DESA_15"], "do": []}
+	{"if": ["step:sq_s2=4"], "lines": ["DLG_KEPALA_DESA_V20", "DLG_KEPALA_DESA_V21"], "do": []},
+	{"if": ["quest:sq_s2=active"], "lines": ["DLG_KEPALA_DESA_V22"], "do": []},
+	{"if": ["quest:sq_s2=available", "flag:mq1_3"], "lines": ["DLG_KEPALA_DESA_V23", "DLG_KEPALA_DESA_V24", "DLG_KEPALA_DESA_V25"], "do": ["start:sq_s2"]},
+	{"if": [], "lines": ["DLG_KEPALA_DESA_V26"], "do": []}
 ])

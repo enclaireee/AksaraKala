@@ -15,7 +15,7 @@ CODEX_JURIG_LEUWEUNG_TITLE,Jurig Leuweung,Jurig Leuweung
 CODEX_JURIG_LEUWEUNG_BODY,"Jurig berarti hantu, leuweung berarti hutan. Makhluk besar yang lambat dan berat.","Jurig means ghost, leuweung means forest. A big, slow, heavy creature."
 CODEX_JURIG_LEUWEUNG_WEAK,"Kena Nga, ia tak bisa mengayun dan menerima dua kali kerusakan keseimbangan.","Bound by Nga, it cannot swing and takes double poise damage."
 CODEX_SANDEKALA_TITLE,Sandekala,Sandekala
-CODEX_SANDEKALA_BODY,Roh senja dari kepercayaan Sunda yang konon mengambil anak yang masih di luar saat petang.,A Sundanese dusk spirit said to take children who stay outside after sunset.
+CODEX_SANDEKALA_BODY,"Dalam kepercayaan Sunda, roh senja yang mengambil anak yang masih di luar saat maghrib, sehingga orang tua memanggil mereka pulang. Oncor menyala dan perburuannya rekaan gim.","In Sundanese belief, a spirit of dusk that takes children who stay outside at maghrib, so parents call them home. The lit oncor and the Hunt are the game's."
 CODEX_SANGKURIANG_TITLE,Sangkuriang,Sangkuriang
 CODEX_SANGKURIANG_BODY,"Kisah lelaki yang tak sadar ingin menikahi ibunya, Dayang Sumbi, dan membangun danau serta perahu dalam semalam; fajar palsu menghentikannya. Segel Kawah adalah rekaan gim.","The tale of the man who, unknowing, wanted to marry his mother Dayang Sumbi and built a lake and a boat in one night; the false dawn stopped him. The Crater Seal is the game's."
 CODEX_SUNDA_KA_TITLE,Ka,Ka
@@ -39,7 +39,7 @@ CODEX_LUTUNG_KASARUNG_BODY,"Legenda Purbasari dan seekor lutung hitam yang sejat
 CODEX_KUNTILANAK_RUMPUN_TITLE,Kuntilanak dan Rumpun Bambu,The Kuntilanak and the Bamboo
 CODEX_KUNTILANAK_RUMPUN_BODY,"Pohon tempat Kuntilanak tinggal berbeda di tiap cerita. Di sini, ia memilih rumpun bambu.","Which tree a Kuntilanak haunts differs from tale to tale. Here, she picked a bamboo grove."
 CODEX_ANGKLUNG_TITLE,Angklung,Angklung
-CODEX_ANGKLUNG_BODY,"Alat musik bambu Sunda. Satu angklung memainkan satu nada, jadi lagu butuh semua pemain.","A Sundanese bamboo instrument. One angklung plays one note, so a tune needs every player."
+CODEX_ANGKLUNG_BODY,"Alat musik Sunda dari tabung bambu dalam bingkai, masing-masing satu nada; sekelompok orang memainkan lagu dengan masing-masing menggoyang satu.","A Sundanese instrument of bamboo tubes in a frame, each tuned to one note; a group plays a tune by each shaking one."
 CODEX_CEPOT_TITLE,Cepot,Cepot
 CODEX_CEPOT_BODY,"Punakawan jenaka dalam wayang golek Sunda, putra Semar yang paling terkenal.","A comic punakawan of Sundanese wayang golek, Semar's best-known son."
 CODEX_GAPURA_TITLE,Gapura,Gapura
@@ -173,3 +173,8 @@ CODEX_LARAS_LONTAR_TITLE,Lontar Laras,Laras's Lontar
 CODEX_LARAS_LONTAR_BODY,"Lembar lontar miliknya, dengan namamu di baliknya. Hurufnya memudar seiring Kutukan Lupa menguat.","Her palm-leaf strip, with your name on the back. The letters fade as the Curse of Forgetting grows."
 CODEX_LARAS_RIBBON_TITLE,Pita Laras,Laras's Ribbon
 CODEX_LARAS_RIBBON_BODY,"Pita rambutnya, tersangkut di bambu tempat ia meloloskan diri.","Her hair ribbon, caught on the bamboo where she broke free."
+CODEX_PAMOR_TITLE,Pamor,Pamor
+CODEX_PAMOR_BODY,"Pola berlapis pada bilah keris, hasil melipat beberapa logam. Para empu membaca watak pada tiap pola.","The layered pattern in a keris blade, made by folding different metals together. Smiths read character into each pattern."
+CODEX_SANDEKALA_WEAK,Nyalakan oncor.,Light the oncor.
+CODEX_SEDEKAH_LAUT_TITLE,Sedekah Laut,Sea Offering
+CODEX_SEDEKAH_LAUT_BODY,"Masyarakat pesisir bersyukur kepada laut dengan lagu, makanan, dan sebuah perahu yang dilepas (sedekah laut, labuhan; ). Lagu desa yang hilang adalah rekaan gim.","Coastal communities give thanks to the sea with songs, food and a boat set afloat (sedekah laut, labuhan; ). The village's lost song is the game's."

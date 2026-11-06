@@ -57,8 +57,8 @@ Laras isn't a sack on someone's back. She fights back, runs when she can, and ke
 | **Laras** | The younger sister. Hears True Names. Taken in the prologue, home in the epilogue |
 | **Semar** | Mentor and wayang narrator, beyond forgetting. Speaks at petilasans and in a few beats. Never hostile |
 | **Ibu** | Your mother. Forgets Laras, yet pours her a cup of tea every morning and doesn't know why she weeps |
-| **Ciung Wanara** | The hidden heir of Galuh, raised in Desa Purwa. Your ally in Acts I-II. A wild, angry boy who becomes a just king. His rooster is his, not yours |
-| **Hariang Banga** | Son of the false king's queen. A rival, then a brother-king. Never a villain |
+| **Ciung Wanara** | The hidden heir of Galuh, raised in Desa Purwa. Your ally in Acts I-II. A wild, angry boy who becomes a just king. His rooster is his, not yours. Arc in side stories (v4d): anger (camp talk I, by the lake where his unknown mother lives) → justice (camp talk II, SQ-C1 his rooster) |
+| **Hariang Banga** | Son of the false king's queen. A rival, then a brother-king. Never a villain. Arc in side stories (v4d): rival → brother (camp talk III after the truce, SQ-C2 the letters, camp talk IV, the Interlude table) |
 | **Uwa Lengser** | The old chamberlain of Galuh and your inside man. Warm, funny, brave (**VERIFY** Lengser as a ceremonial figure) |
 | **Nagawiru** | The rightful old king, cursed into a naga when his name was scraped away. Freed in Act I, his name restored in Act III |
 | **Dewi Naganingrum** | Ciung Wanara's mother, exiled by the lake. Act I regional character: the player learns who she is at the lake; Ciung doesn't, until the epilogue. Shows you Ca |
@@ -67,15 +67,15 @@ Laras isn't a sack on someone's back. She fights back, runs when she can, and ke
 | **The Nameless Hunter** | Aria Kebonan's true name, given to Kala and hollowed out. Commands the Faceless through the bundle of their names at his belt. His motive: "If no one has a name, no one is missing one" |
 | **The Faceless** | Forgotten people whose names the Hunter holds. Blank masks; they obey whoever holds their names. Freed when he falls ([bestiary.md](bestiary.md)) |
 | **The Faceless Captain** | Leads the raid on the crater. Act I boss |
-| **The Faceless Deserter** | A Faceless who is starting to remember a name. He guarded Laras in Galuh. Hints at the truth, never tells it. Choice 1 |
+| **The Faceless Deserter** | A Faceless who is starting to remember a name. He guarded Laras in Galuh. Hints at the truth, never tells it. Choice 1. SQ-C3 (v4d) carries Choice 1 to Act VI: you gather his name and write it at the cave mouth |
 | **Batara Kala** | The god of time who eats the forgotten. Calmed and turned back by ruwatan, never killed |
 | **Nyi Roro Kidul** | Queen of the Southern Sea. Sets the Trial of the Waves. Speaks once, from a distance. Neither friend nor enemy, never fought or touched |
 | **Ki Sumarto** | Act III regional character. A dalang who performs for both banks; his son marches with Hariang Banga. His son comes home at the truce |
 | **Mpu Wirasana** | Act IV regional character. A smith who believes every blade remembers what it was made for. Choice 3 is decided with him |
-| **Mbah Wiryo** | Act V regional character. The juru kunci of the coast, who says his late wife's name to the sea each dusk |
-| **Cepot** | Semar's son, loud and cowardly-brave (wayang golek comic figure). Met in the prologue day at the sanggar, pestering Semar. Gives SQ-S4 in Act I |
+| **Mbah Wiryo** | Act V regional character. The juru kunci of the coast, who says his late wife's name to the sea each dusk. Takes Act V's camp-talk slot, since no ally travels in V (v4d) |
+| **Cepot** | Semar's son, loud and cowardly-brave (wayang golek comic figure). Met in the prologue day at the sanggar, pestering Semar. Gives SQ-S4 in Act I, which becomes part 1 of his chain SQ-C4 (I, III, V, epilogue): he keeps turning up to prove himself, and stays when it matters |
 | **Helpers (unnamed in v4)** | The old couple next door (Ciung's grandparents), the kampung elder (was Abah Karna), the Weaver, the lesung women, the juru kunci (was Mbah Marto), the widow (was Mbok Srini, Timun Mas's mother), the stall-keeper. Ki Wangsa is cut: Semar is the village dalang. Pak Karto stays in side quests |
-| **Kelir figures** | Played, never met: the child at maghrib, Dayang Sumbi, Lengser's younger self, a woman of Roro Jonggrang's court, Timun Mas, Mpu Gandring's apprentice, young Aria Kebonan. They exist only inside Kelir memories (see Hunts) |
+| **Kelir figures** | Played, never met: the child at maghrib, Dayang Sumbi, Lengser's younger self, a woman of Roro Jonggrang's court, Timun Mas, Mpu Gandring's apprentice, young Aria Kebonan; the side-story figures of v4d (Purbasari's lutung, Nawang Wulan, Klething Kuning, the Kaputren servant and others). They exist only inside Kelir memories (see Hunts and Side stories) |
 
 ## Pacing (v3.1, 2026-11-06)
 The story should play like a road, not a museum. Culture is the spice. Each region tells **one** human story, and the folklore lives inside it. Patterns come from The Witcher 3 (one trail and one morally grey local story per region; the villain shows up in every region), Assassin's Creed (leads, then a lieutenant, then the target, then a confession) and FromSoftware (lore lives in places and items; every boss is a person with a stake). Research notes are in HANDOFF §5u.
@@ -86,7 +86,7 @@ The story should play like a road, not a museum. Culture is the spice. Each regi
 3. **One regional character per act.** Their personal problem mirrors yours (someone lost, a name at risk). Their arc closes in that act's aftermath beat or in a later callback.
 4. **Glyphs are earned, never handed over.** Each glyph comes after a deed: a fight, a rescue, an inscription read in place. A teacher may name it or show it, but the deed comes first. The glyph lesson card ([spells.md](spells.md) 5) follows right after.
 5. **Rhythm.** A story beat about every 10 minutes. A miniboss, elite or set piece about every 20 minutes. A petilasan every 15-20 minutes of walking. No more than 2 plain steps (walk, talk, collect) before something new happens.
-6. **Quiet after every boss.** Each climax boss is followed by 2-4 minutes with no combat: an aftermath beat, and in Acts II and IV an optional **camp talk** with the travelling ally at a petilasan after a boss (Act II: `galuh_1`, after the tournament; Act IV: `timur_2`, after Buto Ijo; 2-4 lines, never required).
+6. **Quiet after every boss.** Each climax boss is followed by 2-4 minutes with no combat: an aftermath beat, and in Acts I-V an optional **camp talk** after a boss (2-4 lines, never required). Act I `camp_sunda` (Ciung, the lake, after Sangkuriang); Act II `camp_galuh` (Ciung, `galuh_1`, after the tournament); Act III `camp_mataram` (Hariang Banga, the ford, after the truce); Act IV `camp_timur` (Hariang Banga, `timur_2`, after Buto Ijo); Act V `camp_kidul` (Mbah Wiryo, `kidul_1`, after the trial). None in the Interlude (the table is its quiet) or Act VI (no filler). v4d added I, III and V.
 7. **The Hunter in every act.** He is seen or felt once per act: the west gate (Prologue), the far rim (I), the throne shadow (II), the graves (III), the duel (IV), his empty mask in the Interlude.
 8. **Double bosses.** Where two bosses come back to back (I: Captain then Sangkuriang; IV: the Keris then the Hunter), the beat between them restores health and flask charges (**ASSUMED**).
 9. **Talks.** At most 4 lines per NPC talk and 6 per story beat (§5t playtest fix), hero and NPC taking turns; each talk ends on a lead. Lore goes to the codex (1-3 lines per entry, optional reading).
@@ -109,7 +109,7 @@ The story should play like a road, not a museum. Culture is the spice. Each regi
 | Act V Segara Kidul | MQ4 4.6-4.12 | 7 | 60 | 83% | Hope: the sea remembers |
 | Act VI Gua Kala | MQ5 | 9 | 65 | 98% | Finale: write her name |
 | Epilogue | | | 10 | 100% | A day again |
-| **Total** | | **78** | **about 585 target; the model sums 572 (about 9.5 h)** | | Side quests and exploring add about 3 h (about 13 h at 100%) |
+| **Total** | | **78** | **about 585 target; the model sums 572 (about 9.5 h)** | | Side quests and exploring add about 6 h after v4d (about 16 h at 100%, TUNE; was 13 h) |
 
 ## Pacing model (v4c, user call 2026-11-06: "redesign the pacing of the whole game")
 **Why.** Playtest: MQ1 1.4 and 1.5 (a talk and the Sandekala gorge) took the user about 5 minutes together, against a design rate of about 6 minutes per step. Most v3.1 steps are a single talk or a single fight, joined by empty walking and backtracking. The minute targets were wishes, not a model. v4c replaces them with a **content model**: each step is built from typed pieces of play with measured times, and a script adds them up (`python3 .docs/pacing_model.py`).
@@ -275,6 +275,41 @@ The Witcher 3 contract shape, adapted. A legend boss is never just "someone tell
 - **Barma Wijaya** (II): Lengser's investigation already works this way; add a clue, the court portrait with its face scraped off, and Lengser's short memory (K-II, 1 minute: the night a servant put on the king's face). Sets up the confession.
 - **Hariang Banga** (III): met in Act II; in Act III his camp letters to his mother are a clue before the ford.
 
+## Side stories (v4d, user call 2026-11-06: "side quests as Hunts" plus "deeper characters", "as big as it needs")
+The side quests get the main path's v4 telling. The main path itself (78 steps, 572 min) is not touched. **No new systems:** side stories reuse Clue (`clue_examined`), Kelir memory (`memory_done`), the write card (`name_written`) and `quiet` NPC entries. Card detail, ids and rewards are in [quests.md](quests.md) 5; lines in [script.md](script.md). Sizes (TUNE): **S** 5-10 min, **M** 10-20, **L** 20-30.
+
+### Side Hunt shape
+A small main Hunt: **hook** (the harm before the name) → **2 clues** → a **1-2 min Kelir memory** → fight *or* peaceful ending → **aftermath** with a person's cost. Pacing rules 10 and 13 apply: the creature is shown or explained before its name is spoken, and the memory teaches what ends it. **For two-way quests the memory teaches the peaceful way** (the legend's own solution), so a player who paid attention can end it without a fight; the fight stays as the other branch (+50% Ilmu, as before). Retellings (no fight) become a memory you play instead of a list of fetches. Errands keep their shape and only get a rule-10 pass.
+
+| Quest (size) | Hook | Clues | Kelir memory: you play / it teaches | Ending |
+|---|---|---|---|---|
+| SQ-S1 Lutung Kasarung (M, retelling) | A black langur that won't leave a girl with spotted skin alone at the edge of the forest | the lutung's offerings left at her door; a spring choked with spirits | **The lutung** (Guruminda under a borrowed face) leading Purbasari to the hidden spring. Teaches nothing to fight: you clear the spring, she bathes, her skin heals (**VERIFY** the cure) | A face seen for what it is: the theme of Act I |
+| SQ-S2 Kuntilanak (L) | A baby crying at night in the bamboo grove, where no house stands | cempaka scent at an unmarked grave; a torn white cloth on the bamboo | **A grandmother** walking the grove at night, keeping to the ground she can't follow onto (**VERIFY** the motif, or mark it **ASSUMED** as a game rule). Teaches the fight's safe ground | Fight. The grove is cut back; the kepala desa carves a name for the grave |
+| SQ-M1 Jaka Tarub (M, retelling) | A rice pot that used to fill from one grain is empty | the pot's lifted lid; rice gone down in the lumbung all at once | **Nawang Wulan** finding her selendang under the last of the rice. Teaches nothing to fight | She goes back to the sky and leaves her weaving scarf |
+| SQ-M2 Wewe Gombel (L, two-way) | A mother who didn't notice her son was gone until evening | the boy's toy on the hill path; a neighbour: "nobody called him" | **The neglected child** following a kind voice up the hill. Teaches **calling kindly and banging pots** (**VERIFY**) | Peaceful: the parents call. Fight: the elite |
+| SQ-M3 Tuyul (M, two-way) | Coins vanish from a stall while its keeper watches | tiny footprints in the hearth ash; spilled green beans, half counted | **The tuyul**, sent out by a greedy master, who can't pass a spill without counting it. Teaches **it must stop to count** (**VERIFY** beans or crabs) | Peaceful: set the beans, catch the leader. Fight: the leader and swarm |
+| SQ-T1 Ande-Ande Lumut (M, two-way) | A girl stopped at the river; the ferry rope cut | claw marks on the jetty; the sodo lanang in her bundle | **Klething Kuning** being given the sodo lanang (**VERIFY** by whom). Teaches **strike the water** | Peaceful: the river dries. Fight: Yuyu Kangkang |
+| SQ-T2 Banaspati (L) | The herder's grass burning in a line with no wind | a scorched trail that circles back; a campfire nobody lit | **A herder boy** who learns the fire won't cross running water (**ASSUMED**, game retelling). Teaches the spring arena | Fight at the spring |
+| SQ-K2 Bajul Putih Tua (L) | Nets torn from the inside | a white scale; Mbah Wiryo on "the old one who keeps the river mouth" | **A fisher** leaving an offering at the river mouth (**VERIFY**, belief with respect). Teaches **the tide tell** before its charge | Fight; the old one is driven back into the deep, not killed (a fade) |
+| SQ-G2 Ririwa of the Kaputren (L, two-way) | Someone sweeps the women's quarters every night; the broom is found worn to the handle | the worn broom; a servants' roll with one name scraped out | **The servant's last day**: sweeping while nobody says his name. Teaches **his name is in the roll's ink** | Peaceful: write his name (`name_written`). Fight: elite ririwa (**VERIFY** the term) |
+
+### New Keraton Galuh stories (Act II had none)
+- **SQ-G1 Si Kabayan** (M, retelling, comic): the lazy, clever Sundanese trickster outwits a pompous official at the alun-alun during the tournament. The memory is one short Kabayan tale you play (**VERIFY** which tale). Adds a lakon.
+- **SQ-G2 Ririwa of the Kaputren** (above): a forgotten palace servant. It foreshadows the borrowed-name theme before the confession, without naming it.
+- **SQ-C1** (below) is also here. Gua Kala keeps **no** side stories (Act VI is dense, no filler).
+
+### Companion stories (no new named speakers)
+- **SQ-C1 Ciung's rooster** (Act II, M): his rooster has run off before the tournament. Clues through the alun-alun. Memory: the baby in a basket on the river, holding the egg that became his rooster (**VERIFY** the Ciung Wanara motif). No bout is shown (Sensitivity). Ciung: the rooster is the only family he knew he had.
+- **SQ-C2 Letters to Mother** (Acts III-IV, M, cross-zone): after the truce, carry Hariang Banga's letters (the clue `hariang_letters`) to his mother in Galuh. She writes back; her reply lies on the Interlude table.
+- **SQ-C3 The Deserter's Name** (Acts III-VI, L, chain): one name fragment per act (III camp, IV desert road, V shore), each a clue. At the Gua Kala mouth you write his name on a write card. Two variants by Choice 1: *freed*, he walks at the edge of each camp and asks; *handed*, Uwa Lengser's note says he keeps saying one sound in his cell. Freed adds a line on his epilogue card. His name is **ASSUMED** (quests.md picks it; its glyphs must pass `glyph_strokes.py`).
+- **SQ-C4 Brave Cepot** (chain, S each): part 1 is SQ-S4 (Act I). Part 2 (Act III): he has signed up with both recruiters at the river market; get him out before either side notices. Part 3 (Act V): he followed you to the coast, terrified of the sea, and holds the lamp over the hatchlings' beach through one wave. Payoff: one line on the epilogue card, Cepot telling the village children the story, wrong but brave.
+
+### Camp talks (Pacing rule 6)
+Optional `quiet` NPC entries, 2-4 lines, each closed by a `zone:` cond so it never replays in a later act (the `camp_galuh`/`camp_timur` pattern).
+- **`camp_sunda`** (I): Ciung by the lake after Sangkuriang. His anger, and the mother he doesn't know; the player knows she is the woman by the lake, he doesn't (the epilogue keeps that reveal).
+- **`camp_mataram`** (III): Hariang Banga at the ford after the truce. The first time you two talk as brothers, not rivals.
+- **`camp_kidul`** (V): Mbah Wiryo at the black-sand petilasan after the trial. What he'll say to the sea now.
+
 ## Delivery
 - Name tags on first speech (Pacing rule 11), Hunts with Kelir memories (Hunts), the journal's "Story so far" (Pacing rule 14).
 - NPC dialogue in short boxes: at most 4 lines per NPC talk and 6 per story beat (TUNE). The hero and the NPC take turns. Every talk ends on a lead, and lore goes to the codex. See Pacing above.
@@ -291,7 +326,7 @@ The Witcher 3 contract shape, adapted. A legend boss is never just "someone tell
 - **The Majapahit claim** (Hariang Banga as founder) only ever appears as "some tellings say".
 
 ## Quests
-Main quest steps, 3-4 side quests per zone (folklore retellings, spirit bounties, errands), rewards and the quest system are in [quests.md](quests.md).
+Main quest steps, side quests (folklore retellings, side Hunts, errands and companion stories; see "Side stories (v4d)"), rewards and the quest system are in [quests.md](quests.md).
 
 ## Ending conditions
 There is a single ending. Each of the 3 choices changes one epilogue card, and codex completion changes the credits text only (**ASSUMED**).

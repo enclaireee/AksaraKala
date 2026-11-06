@@ -2,7 +2,7 @@
 
 Area graph plus maps. Step 1 of the world design workflow ([AGENTS.md](../../AGENTS.md) section 5). Prefix `sk_`. Sources: [world.md](../world.md) (World structure, link table, Segara Kidul, Checkpoints), [bestiary.md](../bestiary.md) (Zone 4, Encounters, Glyph weaknesses), [quests.md](../quests.md) (MQ4 steps 4.6-4.12, SQ-K1, SQ-K2, 7.5, 9), [story.md](../story.md) (Pacing, Acts). Format follows [tatar_sunda.md](tatar_sunda.md). Scope is **P0**: Segara Kidul is Act V on the main path (story v3.1, 2026-11-06). It is entered after the Interlude "The Quiet House" in Desa Purwa (MQ4 4.1-4.5), when `flag:mq4_2` is set.
 
-Story v4/v4b/v4c additions (2026-11-06; MQ4 4.6-4.12, [quests.md](../quests.md) 4 with its `Play` column): the **arrival slice** (the fishing village mending nets for the sea offering), the **K8 Hunt** (three forgotten verses with three families, clues `song_1` to `song_3`, memory `k8_wiryo_wife`), **K9** (the queen of the south as one retelling, memory `k9_queen_south`), **LC5** (Laras chapter, `lc5`), and the trial's pieces: three setpiece waves with two sign clues between them. Cut names: Mbah Wiryo (npc id `kidul_jurukunci`) is kept; the three families and the net menders are unnamed locals. The memory scenes are in "Memory scenes" below. **Puzzle convention (ASSUMED):** a puzzle is a `trigger.tscn` with `trigger_id` `puzzle_<id>`; the builder attaches the script (tests set `flag:puzzle_<id>`). Miniboss pieces are encounters whose first enemy carries `unique_id` and elite stats (HP x4, Ilmu x4, **TUNE**, the bestiary elite rule). Setpieces are encounters with a scripted frame.
+Story v4/v4b/v4c additions (2026-11-06; MQ4 4.6-4.12, [quests.md](../quests.md) 4 with its `Play` column): the **arrival slice** (the fishing village mending nets for the sea offering), the **K8 Hunt** (three forgotten verses with three families, clues `song_1` to `song_3`, memory `k8_wiryo_wife`), **K9** (the queen of the south as one retelling, memory `k9_queen_south`), **LC5** (Laras chapter, `lc5`), and the trial's pieces: three setpiece waves with two sign clues between them. Cut names: Mbah Wiryo (npc id `kidul_jurukunci`) is kept; the three families and the net menders are unnamed locals. The memory scenes are in "Memory scenes" below. Side stories v4d additions (2026-11-06; [quests.md](../quests.md) 4 and 5): SQ-K1 was checked against its card and stands as written (giver Damar `kidul_nelayan_anak`, three `tukik_*` pickups, surf trigger `kidul_tukik_laut`); SQ-K2 gets the giver `k2_fisher`, clue `k2_scale`, Mbah Wiryo's one line, memory `sq_k2_fisher` and the river-mouth arena where `bajul_putih_tua` is driven back into the deep, not killed; the Companion clue `c3_shore_net` (C3, fragment 3), the C4 part 3 lamp trial `c4_lamp` on the hatchlings' beach, and the `camp_kidul` camp talk (Mbah Wiryo at `kidul_1`) are placed. The placements are in "Side stories v4d spots" after the quest step table; the memory `sq_k2_fisher` is in "Memory scenes". **Puzzle convention (ASSUMED):** a puzzle is a `trigger.tscn` with `trigger_id` `puzzle_<id>`; the builder attaches the script (tests set `flag:puzzle_<id>`). Miniboss pieces are encounters whose first enemy carries `unique_id` and elite stats (HP x4, Ilmu x4, **TUNE**, the bestiary elite rule). Setpieces are encounters with a scripted frame.
 
 Look: black-sand cliffs, a green sea, a palace beneath the waves. The landmark is the green glow of the sea pavilion. From the first spawn (`from_desa_purwa`) the player sees it low on the southern horizon, past the tidal flat of `sk_pantai`, with a stone sea arch standing offshore. The glow is the pavilion (`sk_keraton`) where the trial is held, so the end of the region is in view at the start. Regional character: **Mbah Wiryo**, the juru kunci of the coast (npc id `kidul_jurukunci`), who says his late wife's name to the sea every dusk because the sea says it back; it mirrors the hero's search for a name the world forgot. Nyi Roro Kidul speaks once, from a distance, after the last wave; she is never fought, never touched, neither friend nor enemy, and no enemy is called her servant. The green association is told as a belief by Mbah Wiryo (wearing green on the south coast is said to attract her), never as a punishment.
 
@@ -89,7 +89,7 @@ Rooms with 4 or more enemies are at least 15 x 9 tiles. Offsets are in the legen
 | `kidul_karang_2` | karang | stair foot (step 4.9, **miniboss**) | 1 Ula Segara (elite `kidul_reef_elite`, HP x4, **TUNE**), 2 Lampor | Ka Bolt on the spit wind-up |
 | `kidul_karang_4` | karang | pool north bank (fight 2 of 4.9) | 3 Lampor (12x7) | Ca Burst |
 | `kidul_karang_3` | karang | reef lane on the road (8+ tile lane, moved from the south causeway, fight 1 of 4.9) | 1 Bajul Putih, 2 Lampor | Ga Ward |
-| `kidul_elite_cove` | karang | cove (optional, SQ-K2) | 1 Bajul Putih Tua (elite, stays dead) | Own mechanics: elite, no weakness. Ga Ward still works on the lunge (**ASSUMED**) |
+| `kidul_elite_cove` | karang | cove (optional, SQ-K2; the river-mouth arena since v4d) | 1 Bajul Putih Tua (elite, `unique_id` `bajul_putih_tua`; at 0 HP it dives and fades, driven back into the deep, not killed; `enemy_killed:bajul_putih_tua` still fires) | Own mechanics: elite, no weakness. Ga Ward still works on the lunge (**ASSUMED**) |
 | `kidul_tebing_1` | tebing | lower stair landing | 4 Lampor (one line) | Ca Burst |
 | `kidul_tebing_2` | tebing | upper ledge (step 4.10) | 1 Ula Segara, 1 Bajul Putih, 2 Lampor | Ka Bolt, Ga Ward |
 | `kidul_trial` | keraton | outer court centre (step 4.12, **three setpiece waves** with a pause for the sign clues `trial_sign_1`, `trial_sign_2` between them) | W1: 4 Lampor in two lines. W2: 2 Ula Segara, 1 Lampor. W3: 1 Bajul Putih, 2 Lampor | W1 Ca Burst, W2 Ka Bolt, W3 Ga Ward ([bestiary.md](../bestiary.md) trial of the waves). Waves rise out of the shallows and pools with a 0.5 s warning, in view. The three waves are the deed that earns Ombak |
@@ -123,12 +123,32 @@ Marker form `{zone: "segara_kidul", id: ...}`. Ids from quests.md are marked (Q)
 | SQ-K1 start | `kidul_nelayan_anak` | `sk_pantai` | `talked_to:kidul_nelayan_anak`. Unlock: `zone_entered:segara_kidul` (ASSUMED) |
 | SQ-K1 (1) pick up 3 hatchlings, (2) carry them to the surf | pickups `1`-`3` (sparkle), then `T` | `sk_pantai` dunes to shore | `item_picked:tukik_*` x3, then `area_entered:kidul_tukik_laut` once (synced 2026-11-06 to the map's 3 pickups) |
 | SQ-K1 turn in | `kidul_nelayan_anak` | `sk_pantai` | `talked_to:kidul_nelayan_anak`. Reward Herb Pouch #4 |
-| SQ-K2 start | `kidul_nelayan_tua` | `sk_karang` | `talked_to:kidul_nelayan_tua`. Unlock: `zone_entered:segara_kidul` (ASSUMED) |
-| SQ-K2 find the old crocodile | `kidul_elite` | `sk_karang` cove | `area_entered:kidul_elite_cove` |
-| SQ-K2 defeat it | `kidul_elite` | `sk_karang` cove | `enemy_killed:bajul_putih_tua` |
-| SQ-K2 report back | `kidul_nelayan_tua` | `sk_karang` | `talked_to:kidul_nelayan_tua`. Reward Cakra (P2) or Ilmu L x2 |
+| SQ-K2 (1) the fisher at the river mouth | `k2_fisher` | `sk_karang` (cove mouth) | `talked_to:k2_fisher`. Unlock: `flag:mq4_4` (Mbah Wiryo met, step 4.6) |
+| SQ-K2 (2) `all`: the white scale, Mbah Wiryo's line | `k2_scale`, `kidul_jurukunci` | `sk_karang`, `sk_pantai` | `clue_examined:k2_scale`, `talked_to:kidul_jurukunci` |
+| SQ-K2 (3) the fisher's memory | `k2_scale` (`memory_id: sq_k2_fisher`) | `zones/kelir/sq_k2_fisher.tscn` | `memory_done:sq_k2_fisher` |
+| SQ-K2 (4) drive back the old one | `bajul_putih_tua` | `sk_karang` (river-mouth arena, trigger `kidul_elite_cove`) | `enemy_killed:bajul_putih_tua` (at 0 HP it dives; a fade) |
+| SQ-K2 (5) report | `k2_fisher` | `sk_karang` | `talked_to:k2_fisher`. The fishers cast again and leave a first catch on the sand |
+| C3 fragment 3 (Act V) | `c3_shore_net` | `sk_pantai` (net yard) | `clue_examined:c3_shore_net`, cond `flag:mq4_4` |
+| C4 part 3 (1) Cepot on the coast | `cepot` | `sk_pantai` (hatchlings' beach) | `talked_to:cepot`. Unlock: `flag:c4_2`, `flag:mq4_4` |
+| C4 part 3 (2) hold the lamp through one wave | `c4_lamp` | `sk_pantai` (hatchlings' beach, trigger `kidul_tukik_laut` rect) | `trial_completed:c4_lamp` |
+| C4 part 3 (3) | `cepot` | `sk_pantai` | `talked_to:cepot`; sets `c4_done` |
+| Camp talk `camp_kidul` | `kidul_jurukunci` | `sk_pantai` (petilasan `kidul_1`) | entry `camp_kidul`, cond `flag:mq4_8`, `zone:sk_pantai`, `!flag:mq5_1`; `"quiet": true`, `do`: `flag:camp_kidul`; never a step |
 | Petilasans | `kidul_1`, `kidul_3`, `kidul_2` | pantai, tebing, keraton | `petilasan_activated:kidul_2` is not a quest step; the other two are steps 4.6 and 4.10 |
 | Codex | `kidul_keraton_codex` | `sk_keraton` | `codex:nyi_roro_kidul` (ASSUMED) |
+
+### Side stories v4d spots (2026-11-06)
+Not drawn into the maps (**ASSUMED**: the builder adds them as plain spots at these coordinates, on floor tiles; `gen_zones.py` reads only the legends). Clue props follow `{clue_id, memory_id?, cond?}`; the memory id sits on the clue examined last (as `song_3` does), and `cond` uses `quest:<id>=active` or a flag.
+
+| Area | Spot | Scene and props | At | Card | Notes |
+|------|------|-----------------|----|------|-------|
+| `sk_karang` | `k2_fisher` | NPC `{npc_id:"k2_fisher", cond:"flag:mq4_4"}`, `quiet` entries | (44,27) | SQ-K2 | An unnamed fisher at the river mouth (the cove entrance `T` (46,25) is the river mouth, **ASSUMED**). Pak Raka `A` stays the hut warning of 4.9 and is not the giver |
+| `sk_karang` | `k2_scale` | `clue.tscn` `{clue_id:"k2_scale", memory_id:"sq_k2_fisher", cond:"quest:sq_k2=active"}` | (49,27) | SQ-K2 | A white scale in the torn net on the sand. Opens `sq_k2_fisher` once Mbah Wiryo has spoken |
+| `sk_pantai` | Mbah Wiryo's line | entry in the `kidul_jurukunci` dialogue, `quiet`, cond `quest:sq_k2=active` (`talked_to:kidul_jurukunci`) | `J` (25,14) | SQ-K2 | One line only: the old one who keeps the river mouth, the white crocodile; told as belief (**VERIFY**), never the Queen's servant |
+| `sk_karang` | the river-mouth arena | trigger `T` `kidul_elite_cove` (46,25), elite `q` (48,22) `bajul_putih_tua` | cove room (42,20)-(54,24) | SQ-K2 | Fight only. The elite lunges after a tide tell (the water draws back 1 s before the charge, **TUNE**); at 0 HP it dives into the deep and fades, no corpse. Ga Ward on the lunge (**ASSUMED**) |
+| `sk_pantai` | `c3_shore_net` | `clue.tscn` `{clue_id:"c3_shore_net", cond:"flag:mq4_4"}` | (24,22) | SQ-C3 fragment 3 | A knot of net on the black-sand shore of the net yard (rect (7,21)-(26,27)), with a stitched sound. Freed variant: a scrap in the net. Handed variant: Uwa Lengser's note |
+| `sk_pantai` | `cepot` | NPC `{npc_id:"cepot", cond:"flag:c4_2,flag:mq4_4,!flag:c4_done"}` | (38,28) | SQ-C4 part 3 | At the edge of the hatchlings' beach, afraid of the sea; `quiet` entries |
+| `sk_pantai` | `c4_lamp` | trigger, `trigger_id` `trial_c4_lamp`, same rect as `kidul_tukik_laut` `T` (42,28), `size:Vector2i(7,5)` | (42,28) | SQ-C4 part 3 | Reuses SQ-K1's hatchlings' beach with its conservation note. The player holds a lamp (interact, hold) at the surf line through one wave (8 s, **TUNE**, **ASSUMED**); the hatchlings go down to the sea by its light; no enemy. Completing it fires `trial_completed:c4_lamp`. Works with or without SQ-K1 done |
+| `sk_pantai` | `camp_kidul` | `kidul_jurukunci` entry in the same NPC `J` (25,14), by petilasan `kidul_1` (20,14) | (25,14) | MQ4 camp talk | Optional, 2-4 lines after the trial: what he will say to the sea now. Cond `flag:mq4_8`, `zone:sk_pantai`, `!flag:mq5_1`; `"quiet": true`; `do`: `flag:camp_kidul` (**ASSUMED**). Never completes a step |
 
 Every step 4.6-4.12 and every beat of quests.md MQ4 has a location (the Interlude beat `quiet_house` and `quiet_house_silent` are in Desa Purwa). Flags read or set in this region: `mq4_2` (read, gates X1), `mq4_9` (also gates X2), `mq4_4`, `mq4_8`, `mq4_9` (set), `sc:sk_gerbang` and `sc:ts_sk` (shortcuts). Retired from the v2 doc: `mq3_8`, `mq4_3`, `mq4_5`, `trial_completed:kidul`, marker `kidul_edge`.
 
@@ -137,7 +157,7 @@ Small own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `g
 
 ### Memory `k8_wiryo_wife`: calling a name to the sea (K8)
 
-- Scene `res://zones/kelir/k8_wiryo_wife.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 30x17.
+- Scene `res://zones/kelir/k8_wiryo_wife.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 30x17.
 - Stand-in: Mbah Wiryo's wife, young (silhouette); her husband `w` walks beside her.
 - The one action: `interact` at each calling point `c` = call a name to the water; the sea answers (echo and a ripple). No fail state.
 - Goal: Walk the shore at dusk, teaching him to call a name to the water at three points; then she walks into the evening light `G` (no death shown, fade to light). Teaches calling a name to the sea, the opening of the trial. Entered from `song_3`.
@@ -173,7 +193,7 @@ Small own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `g
 
 ### Memory `k9_queen_south`: the queen of the south, as one retelling (K9)
 
-- Scene `res://zones/kelir/k9_queen_south.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 60x17 (two screens).
+- Scene `res://zones/kelir/k9_queen_south.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 60x17 (two screens).
 - Stand-in: the sea queen in Ki Sumarto's telling (a robed silhouette; **VERIFY**, shown with respect, as belief).
 - The one action: none (walk only; she pauses at each retelling).
 - Goal: Pass three alcoves, each with another retelling of her (`A` the princess sent away, `B` the lady of the green sea, `C` the one who keeps the sea's memory); Ki Sumarto says in his closing line that these are tellings among many. No fight. Entered from `shrine_tale` at the cliff shrine.
@@ -210,7 +230,7 @@ Small own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `g
 
 ### Memory `lc5`: the voice on the water (LC5)
 
-- Scene `res://zones/kelir/lc5.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `chapter`. Size 30x17.
+- Scene `res://zones/kelir/lc5.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `chapter`. Size 30x17.
 - Stand-in: Laras (`entities/player/stand_in_laras.tscn`), cooler blue tint; the lamp radius is small (Kala's dark).
 - The one action: `interact` = say a Faceless's true name: it freezes for 3 s (6 s cooldown).
 - Goal: Follow the voice that says her name through four calling points `V` to `G`; the sea still says it. One Faceless patrol `f` walks the middle row between `V` 2 and `V` 3. Ends with the *Ka* write card, then `memory_done:lc5`.
@@ -244,6 +264,15 @@ Small own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `g
 | `h` | hide prop | 2 |
 | `C` | checkpoint | 2 |
 | `G` | goal (27,8) | the write card |
+
+### Memory `sq_k2_fisher`: the offering at the river mouth (SQ-K2)
+
+- Scene `res://zones/kelir/sq_k2_fisher.tscn` (not a Zone; generated by `gen_memories.py` on `memory.gd`). Kind `walk`. Size 30x17. Opened by clue `k2_scale` in `sk_karang`.
+- Stand-in: a fisher (a small silhouette) carrying an offering basket.
+- The one action: none (walk only); at the waterline he sets the offering down and steps back.
+- Goal: Walk to the river mouth `G` and leave the offering, as a belief told with respect (**VERIFY**). Teaches the tide tell: the water draws back a moment before the old one's charge. No fight.
+- Checkpoints: none (no fail state).
+- Layout: a plain 30x17 room with a river-mouth `~` in the east third, Stand (3,8), tide-tell point `T` (20,8), goal `G` (24,8), all **TUNE**.
 
 ## Flow
 Arrive at `sk_pantai` (`from_desa_purwa`, green glow on the horizon) > teach encounters (Lampor, Ula Segara) while the net village mends its nets > petilasan `kidul_1` with Semar, Mbah Wiryo (4.6) > the net yard and the shore: three families, three verses (4.7) > the K8 memory (4.8) > east to `sk_karang`: fight on the reef lane, the thread clue, the tide-pool puzzle, a second fight, the Ula Segara miniboss at the stair foot (4.9) > north-west stair (L4) to `sk_tebing` > two cliff fights > cliff shrine `kidul_3`, the K9 memory (4.10), Laras's chapter LC5 (4.11) > slide down D1 > pavilion court, the Trial of the Waves as three setpiece waves with two signs (4.12) > Nyi Roro Kidul speaks once, Ombak and the Kain Hijau at the Sea Altar > pendopo, petilasan `kidul_2` > kabut `mq4_9` gone > `gk_mulut`. Optional: the cove, chests, the turtle nest, `sc:sk_gerbang` and `sc:ts_sk`.
@@ -355,12 +384,12 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
 | `K` | kabut on the causeway to the keraton, lifts when the Trial of the Waves is passed (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq4_8"}` | path | 2 |
 | `U` | exit to sk_tebing (north edge, west of centre, 2 tiles; main path, L4) | `res://entities/world/exit.tscn` | `{target_zone:"sk_tebing", spawn_id:"from_sk_karang"}` | path | 2 |
 | `u` | spawn, arrival from sk_tebing | `res://entities/world/spawn.tscn` | `{id:"from_sk_tebing"}` | path | 1 |
-| `A` | NPC Pak Raka, old fisherman (SQ-K2) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_nelayan_tua"}` | grass | 1 |
+| `A` | NPC Pak Raka, old fisherman (the hut beat of 4.9 only; the SQ-K2 giver is `k2_fisher`, see Side stories v4d spots) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_nelayan_tua"}` | grass | 1 |
 | `E` | encounter kidul_karang_1 | `res://entities/world/encounter.tscn` | `{area_id:"kidul_karang_1", size:Vector2i(17,9), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(4,-2)], [res://entities/enemies/lampor.tscn, Vector2i(5,0)], [res://entities/enemies/lampor.tscn, Vector2i(4,2)]]]}` | grass | 1 |
 | `F` | encounter kidul_karang_3 (4.9, fight 1: the reef lane on the road; moved here from the south causeway, so every reef fight is on the way to the stair) | `res://entities/world/encounter.tscn` | `{area_id:"kidul_karang_3", size:Vector2i(19,9), waves:[[[res://entities/enemies/bajul_putih.tscn, Vector2i(6,0)], [res://entities/enemies/lampor.tscn, Vector2i(-4,-2)], [res://entities/enemies/lampor.tscn, Vector2i(-4,2)]]]}` | path | 1 |
 | `G` | encounter kidul_karang_2 (**miniboss**, 4.9: an elite Ula Segara `kidul_reef_elite` with 2 Lampor at the foot of the north-west stair; the step completes here) | `res://entities/world/encounter.tscn` | `{area_id:"kidul_karang_2", size:Vector2i(12,6), waves:[[[res://entities/enemies/ula_segara.tscn, Vector2i(4,0)], [res://entities/enemies/lampor.tscn, Vector2i(-3,-1)], [res://entities/enemies/lampor.tscn, Vector2i(-3,1)]]]}` | grass | 1 |
-| `T` | trigger, SQ-K2 cove entrance | `res://entities/world/trigger.tscn` | `{trigger_id:"kidul_elite_cove", size:Vector2i(7,7)}` | grass | 1 |
-| `q` | elite Bajul Putih Tua (SQ-K2) | `res://entities/enemies/bajul_putih_tua.tscn` | `{}` | grass | 1 |
+| `T` | trigger, SQ-K2 cove entrance (the river-mouth arena) | `res://entities/world/trigger.tscn` | `{trigger_id:"kidul_elite_cove", size:Vector2i(7,7)}` | grass | 1 |
+| `q` | elite Bajul Putih Tua (SQ-K2; `unique_id` `bajul_putih_tua`, inert until step 4; at 0 HP it dives and fades) | `res://entities/enemies/bajul_putih_tua.tscn` | `{unique_id:"bajul_putih_tua"}` | grass | 1 |
 | `c` | chest: 380 Ilmu (hidden tide pool) | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_2", item_id:"ilmu:380"}` | grass | 1 |
 | `B` | encounter kidul_karang_4 (4.9, fight 2, north bank of the tide pool) | `res://entities/world/encounter.tscn` | `{area_id:"kidul_karang_4", size:Vector2i(12,7), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(-3,-1)], [res://entities/enemies/lampor.tscn, Vector2i(0,2)], [res://entities/enemies/lampor.tscn, Vector2i(3,-1)]]]}` | grass | 1 |
 | `C` | clue, a green thread tied to a rock on the sandbar: Laras's trail (4.9 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"reef_thread"}` | grass | 1 |

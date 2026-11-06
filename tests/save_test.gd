@@ -44,6 +44,7 @@ func _initialize() -> void:
 	g.flags["met_guide"] = true
 	g.last_petilasan = {"zone": "res://zones/hub.tscn", "id": "p1"}
 	g.play_time = 123.456789
+	g.memory_return = {"zone": "res://zones/hub.tscn", "pos": [12.5, 40.0]}   # quit inside a Kelir memory (architecture.md 9b)
 	# An all step mid-progress (quests.md 7.1): its trigger bits survive the round trip and still finish it.
 	_all_quest()
 	g.start_quest("sv_q")
@@ -55,13 +56,21 @@ func _initialize() -> void:
 	check(g.load_game(), "load failed")
 	check(JSON.stringify(g.to_dict()) == before, "round trip changed the state:\n%s\n%s" % [before, JSON.stringify(g.to_dict())])
 	check(typeof(g.ilmu) == TYPE_INT and typeof(g.stats.str) == TYPE_INT, "numbers came back as floats")
-	check(g.quests.sv_q.all == 2 and g.to_dict().version == 2, "all bits or version after load: %s" % g.quests.sv_q)
+	check(g.quests.sv_q.all == 2 and g.to_dict().version == g.VERSION, "all bits or version after load: %s" % g.quests.sv_q)
+	check(g.memory_return.zone == "res://zones/hub.tscn" and g.memory_return.pos == [12.5, 40.0], "memory_return round trip: %s" % g.memory_return)
 	g.on_event("talked_to", "a")
 	check(g.quests.sv_q.step == 1 and g.has_flag("sv_all"), "loaded all step did not finish: %s" % g.quests.sv_q)
 	g.from_dict(JSON.parse_string(before))
 	# A version 1 save (quest records without `all`) loads with all = 0.
 	g.from_dict({"version": 1, "class_id": "mage", "quests": {"sv_q": {"state": "active", "step": 0, "count": 0}}})
 	check(g.quests.sv_q.all == 0 and g.current_step("sv_q").set_flag == "sv_all", "v1 quest record: %s" % g.quests.sv_q)
+	g.from_dict(JSON.parse_string(before))
+	# A save from before memory_return (version 2) loads with none; a malformed one is dropped.
+	g.from_dict({"version": 2, "class_id": "mage", "flags": {"a": true}})
+	check(g.class_id == "mage" and g.has_flag("a") and g.memory_return.is_empty(), "v2 save: %s" % g.memory_return)
+	for bad: Variant in [{"zone": "", "pos": [1, 2]}, {"zone": "x"}, {"zone": "x", "pos": [1]}, {"zone": 3, "pos": [1, 2]}, {"zone": "x", "pos": ["a", 2]}, "nope"]:
+		g.from_dict({"class_id": "mage", "memory_return": bad})
+		check(g.memory_return.is_empty(), "malformed memory_return kept: %s" % [bad])
 	g.from_dict(JSON.parse_string(before))
 
 	# A missing field gets its default; a wrong type keeps the default; unknown keys are ignored.

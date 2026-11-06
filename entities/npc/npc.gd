@@ -30,7 +30,7 @@ func _ready() -> void:
 func _apply_cond() -> void:
 	var on: bool = get_node("/root/Game").check(cond)
 	visible = on
-	usable = on
+	usable = on and data != null   # dressing NPCs have no dialogue: no Talk prompt
 	if not on:
 		_prompt.visible = false
 	elif _near:

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "laras"
+name_key = "NPC_LARAS_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq0=0", "!flag:tag_started"], "lines": ["DLG_LARAS_V1", "@NPC_HERO_NAME", "DLG_LARAS_H1", "@NPC_LARAS_NAME", "DLG_LARAS_V2"], "do": ["flag:tag_started"]},
+	{"if": ["step:mq0=0"], "lines": ["DLG_LARAS_V3"], "do": []},
+	{"if": ["step:mq0=1"], "lines": ["DLG_LARAS_V4"], "do": []},
+	{"if": [], "lines": ["DLG_LARAS_V5"], "do": []}
+])

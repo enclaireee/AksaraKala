@@ -9,6 +9,11 @@ var fails := 0
 const PENDING := []
 ## Shortcuts opened only from a pending area: id -> that area.
 const PENDING_OPENERS := {}
+## Placed NPCs with no dialogue file: dressing with no lines in script.md (no Talk prompt), and Milestone B ids
+## (doorposts and epilogue).
+const NO_TALK := ["villager", "laras_crowd", "laras_tag", "stray_cat", "tea_picker", "leuwi_mother", "faceless_captain_seen",
+	"door_a", "door_b", "door_c", "aria_kebonan", "wirasana_daughter"]
+const INTERNAL_GATES := {"sc:ts_leuwi": "s"}
 
 
 func check(ok: bool, msg: String) -> void:
@@ -42,10 +47,10 @@ func _initialize() -> void:
 				and dp.spawn("from_gk_mulut") != null and dp.spawn("from_gua_kala") != null, "desa_purwa spawns")
 		var dpf := flags(dp)
 		dpf.sort()
-		check(dpf == ["mq1_10", "mq1_10", "mq4_2", "mq4_2", "mq4_9", "mq4_9"], "desa_purwa kabut flags %s" % [dpf])
+		check(dpf == ["mq1_10", "mq1_10", "mq4_9", "mq4_9", "mq4_i5", "mq4_i5"], "desa_purwa kabut flags %s" % [dpf])
 		check(pets(dp) == ["desa_purwa"], "desa_purwa petilasans %s" % [pets(dp)])
 		check(of(dp, "dummy.tscn").size() == 4, "desa_purwa wants 4 dummies")
-		check(encounters(dp).size() == 1, "desa_purwa wants 1 encounter (purwa_raid)")
+		check(encounters(dp).size() == 3, "desa_purwa wants 3 encounters (purwa_raid, _a, _b)")
 		var pl := get_first_node_in_group("player")
 		dp._sanggar(pl, true)
 		check(not dp.guide.visible, "sanggar guide shown before any glyph is learned")
@@ -81,11 +86,11 @@ func _initialize() -> void:
 	f.sort()
 	p.sort()
 	gates.sort()
-	check(f == ["mq1_3", "mq1_3", "mq1_5", "mq1_5", "mq1_7", "mq1_7"], "tatar_sunda kabut flags %s" % [f])
+	check(f == ["mq1_3", "mq1_3", "mq1_5", "mq1_5", "mq1_7", "mq1_7", "sluice_2", "sluice_2"], "tatar_sunda kabut flags %s" % [f])
 	check(p == ["sunda_1", "sunda_2"], "tatar_sunda petilasans %s" % [p])
-	check(enc == 9, "tatar_sunda has %d encounters, want 9" % enc)
-	check(loose == 20, "tatar_sunda has %d placed enemies, want 20 (19 roaming-pack enemies, the elite)" % loose)
-	check(gates == ["sc:ts_pagar", "sc:ts_pagar", "sc:ts_sk", "sc:ts_sk", "sc:ts_tangga", "sc:ts_tangga"], "shortcut gates %s" % [gates])
+	check(enc == 10, "tatar_sunda has %d encounters, want 10" % enc)
+	check(loose == 24, "tatar_sunda has %d placed enemies, want 24 (the legend counts of tatar_sunda.md)" % loose)
+	check(gates == ["sc:ts_leuwi", "sc:ts_leuwi", "sc:ts_pagar", "sc:ts_pagar", "sc:ts_sk", "sc:ts_sk", "sc:ts_tangga", "sc:ts_tangga"], "shortcut gates %s" % [gates])
 
 	# Exits: each lands on a spawn, and together they are exactly ADJ plus the gated side of each shortcut.
 	var exits := {}   # "a>b": true
@@ -96,7 +101,7 @@ func _initialize() -> void:
 				if not PENDING.has(n.target_zone):
 					exits["%s>%s" % [z.zone_id, n.target_zone]] = true
 			elif n.scene_file_path.ends_with("npc.tscn"):
-				check(ResourceLoader.exists("res://data/dialogue/%s.tres" % n.npc_id), "no dialogue for npc %s" % n.npc_id)
+				check(n.npc_id in NO_TALK or ResourceLoader.exists("res://data/dialogue/%s.tres" % n.npc_id), "no dialogue for npc %s" % n.npc_id)
 	var want := {}
 	for a: String in zones.ADJ:
 		for b: String in zones.ADJ[a]:
@@ -271,6 +276,9 @@ func check_exit(zones: Node, z: Zone, e: Node, built: Dictionary) -> void:
 
 ## The arrival spawn from the area that opens the gate must stand on the gate's open side.
 func check_gate(zones: Node, z: Zone, g: Node) -> void:
+	if g.id in INTERNAL_GATES:   # a gate inside one area (tatar_sunda.md: the gorge tunnel opens from the sande room, south)
+		check(g.open_side == INTERNAL_GATES[g.id], "%s open side %s" % [g.id, g.open_side])
+		return
 	var ab: Array = zones.SHORTCUTS.get(g.id, [PENDING_OPENERS.get(g.id, "?"), z.zone_id])
 	check(ab[1] == z.zone_id, "%s gate is in %s, want %s" % [g.id, z.zone_id, ab[1]])
 	var s := z.spawn("from_" + ab[0])

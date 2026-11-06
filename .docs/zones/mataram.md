@@ -2,7 +2,7 @@
 
 Region area graph on paper. Step 1 of the world design workflow ([AGENTS.md](../../AGENTS.md) section 5), graph level plus, since Phase 5, the tile map of each area (sections `## Area n: <id>` after the Quest step locations; `python3 .docs/gen_zones.py .docs/zones/mataram.md` writes `zones/mt_*.gd/.tscn`). Sources: [world.md](../world.md) (Technical frame, World structure with interlock rules 1-8 and the inter-region link table, Mataram, Checkpoints, Points of interest), [bestiary.md](../bestiary.md) (Zone 2: Mataram, Encounters, Glyph weaknesses), [quests.md](../quests.md) (MQ2 of story v4c with 13 steps and its `Play` column, SQ-M1 to SQ-M4, 3.4, 7.1, 7.2), [architecture.md](../architecture.md) 9b (Clue, Kelir memory), [story.md](../story.md) Pacing model v4c rules 5 and 7, [story.md](../story.md) (Pacing, Act III). Tatar Sunda ([tatar_sunda.md](tatar_sunda.md)) is the format example. Change the layout here first, then the code.
 
-Regional character: **Ki Sumarto** (dalang, `mt_pasar`). His son Sapto appears at the ford in the `truce` beat, which is in `kg_pamali` ([keraton_galuh.md](keraton_galuh.md)), not here. Pak Karto is off the main path and stays in `mt_reruntuhan` as a side-quest NPC (no quest assigned yet). Na is read off the inscribed object `arca_base`. Story v4/v4b/v4c additions (2026-11-06): the **arrival slice** (two recruiters, one per bank, at the border market in `mt_gapura`), the **K3 Bondowoso Hunt** (clues `rubble`, `lesung_mid`, `ka_strip`, memory `k3_lesung`), **H3** (`hunter_mask_3`, memory `h3`), **LC3** (Laras chapter), and **K-III** (Ki Sumarto's show; its clue and the Hariang Banga letters stand in `kg_pamali`, [keraton_galuh.md](keraton_galuh.md)). Cut names: the juru kunci is NPC `juru_kunci` (no longer called Mbah Marto in dialogue; only this comment keeps the old name), the lesung women are unnamed. The memory scenes are in the section "Memory scenes" below.
+Regional character: **Ki Sumarto** (dalang, `mt_pasar`). His son Sapto appears at the ford in the `truce` beat, which is in `kg_pamali` ([keraton_galuh.md](keraton_galuh.md)), not here. Pak Karto is off the main path and stays in `mt_reruntuhan` as a side-quest NPC (no quest assigned yet). Na is read off the inscribed object `arca_base`. Story v4/v4b/v4c additions (2026-11-06): the **arrival slice** (two recruiters, one per bank, at the border market in `mt_gapura`), the **K3 Bondowoso Hunt** (clues `rubble`, `lesung_mid`, `ka_strip`, memory `k3_lesung`), **H3** (`hunter_mask_3`, memory `h3`), **LC3** (Laras chapter), and **K-III** (Ki Sumarto's show; its clue and the Hariang Banga letters stand in `kg_pamali`, [keraton_galuh.md](keraton_galuh.md)). Cut names: the juru kunci is NPC `juru_kunci` (no longer called Mbah Marto in dialogue; only this comment keeps the old name), the lesung women are unnamed. The memory scenes are in the section "Memory scenes" below. Side stories v4d additions (2026-11-06; [quests.md](../quests.md) 5): clues, givers, arenas and memories for SQ-M1 to SQ-M4, the Companion clue `c3_camp_scrap` (C3, fragment 1, in `mt_candi`) and C4 part 2 (`c4_roll_a`, `c4_roll_b`, stealth area `c4_market_clear`, in `mt_gapura`); the placements are in "Side stories v4d spots" after the area maps, the legend rows that changed are marked v4d, and three memories (`sq_m1_selendang`, `sq_m2_child`, `sq_m3_tuyul`) are in "Memory scenes". NPC ids follow the cards: `m2_neighbour`, `m2_parents_1`, `m3_smith` replace `wewe_neighbor`, `wewe_parents`, `pande_besi`.
 
 **Puzzle convention (ASSUMED).** No puzzle entity exists yet. A puzzle is a `trigger.tscn` with `trigger_id` `puzzle_<id>` (the builder attaches the puzzle script, tests solve it by setting `flag:puzzle_<id>`). When a puzzle must gate the path it also sets that flag, and a `kabut.tscn` with `{flag:"puzzle_<id>"}` stands where it opens (a kabut lifts on a flag, never on a glyph). Miniboss pieces are encounters whose first enemy carries `unique_id` and elite stats (HP x4, Ilmu x4, **TUNE**, the bestiary elite rule); the wave list takes only scene and offset, so the builder either lets a wave entry carry `unique_id` or adds an elite scene (format question in the report). Setpiece pieces are encounters with a scripted frame (stated per area).
 
@@ -31,13 +31,13 @@ Encounter ids are proposed `mataram_*` (**ASSUMED**) except `mataram_ruins`, `ma
 | Id | Encounters | NPCs | Chests, petilasan, codex, secrets |
 |----|------------|------|-----------------------------------|
 | `mt_gapura` | `mataram_gerbang`: 3 Tuyul, one wave (new, teach: Burst clears a swarm; Ca learned in MQ1 1.7). `mataram_jalan`: 4 Tuyul on the east road (2.1, second fight). After 2.10 (`flag:mq2_7b`): `mataram_tepi` (2 Faceless, 1 archer, west road) and `mataram_causeway` (3 Faceless, in front of the opened causeway gate), the 2.11 return fights | `recruiter_a`, `recruiter_b` (2.1, the two banks; unnamed) | Chest `mataram_chest_gapura` (55 Ilmu). Codex spot `codex:gapura` (stone gate). Beat spot `beat_haulers` (K3 hook) |
-| `mt_sawah` | none (safe) | `nawang_wulan` (SQ-M1 giver), `sawah_farmer` (flavor), no lesung women since v4c | Petilasan **`mataram_1`** (Q). Chest `mataram_chest_sawah`. Codex `codex:gejog_lesung` (the lesung that the women later pound in `mt_wetan`). Lumbung: SQ-M1 search spot `lumbung`. Barred north gate of `sc:mt_ruin_sawah` |
-| `mt_pasar` | `mataram_pasar` (**setpiece**, 2.2): 5 Tuyul (Village thieves) come for Ki Sumarto's stage, 2 waves (5 then 3, **ASSUMED**), the stage prop must not fall. `mataram_pocong`: 1 Pocong alone on the east road (new, teach: Bind mid-hop, 8-tile lane) | `mataram_dalang` = Ki Sumarto (Q, 2.3 teaches Ha once `lead_pasar`; regional character; SQ-M4 giver), `pande_besi` (SQ-M3 giver), `wewe_neighbor` (SQ-M2 giver), `wewe_parents` (SQ-M2 alt, later `wewe_parents_2` at the hill) | Chest `mataram_chest_pasar`. Codex `codex:gamelan` |
+| `mt_sawah` | none (safe) | `nawang_wulan` (SQ-M1 giver), `sawah_farmer` (flavor), no lesung women since v4c | Petilasan **`mataram_1`** (Q). Chest `mataram_chest_sawah`. Codex `codex:gejog_lesung` (the lesung that the women later pound in `mt_wetan`). Lumbung: SQ-M1 clues `m1_pot_lid`, `m1_rice_gone` (v4d). Barred north gate of `sc:mt_ruin_sawah` |
+| `mt_pasar` | `mataram_pasar` (**setpiece**, 2.2): 5 Tuyul (Village thieves) come for Ki Sumarto's stage, 2 waves (5 then 3, **ASSUMED**), the stage prop must not fall. `mataram_pocong`: 1 Pocong alone on the east road (new, teach: Bind mid-hop, 8-tile lane) | `mataram_dalang` = Ki Sumarto (Q, 2.3 teaches Ha once `lead_pasar`; regional character; SQ-M4 giver), `m3_smith` (SQ-M3 giver), `m2_neighbour` (SQ-M2 giver), `m2_parents_1` (SQ-M2 alt, later `wewe_parents_2` at the hill) | Chest `mataram_chest_pasar`. Codex `codex:gamelan` |
 | `mt_reruntuhan` | `mataram_ruins` (Q, **miniboss**, 2.2): 3 Arca on the edges (the middle one is the elite `mt_arca_penjaga`), 2 Tuyul, courtyard. Wakes when passed (Ruins wake) | `pak_karto` = Pak Karto (side-quest NPC, off the main path), in the safe outer yard before the courtyard. `arca_base` = inscribed base of an Arca (2.3, cond `flag:lead_ruins`), in the courtyard beside the central path | **Codex-rich ruin**: site museum with `codex:candi_seribu`, `codex:roro_jonggrang`, `codex:arca`. Secret 1: sealed nook behind a cracked wall holding the gong ageng (SQ-M4) and a gear chest `mataram_secret_gong`. Far side of `sc:mt_ruin_sawah` |
 | `mt_kuburan` | `mataram_kuburan_gate` (2.2, fight 1): 3 Tuyul, 1 Pocong on the north field. `mataram_kuburan`: 2 Pocong, 3 Tuyul (Graveyard, open ground; lead 3, required). `mataram_pemanen` (**miniboss**, 2.4, cond `flag:memory_h3`): the harvest captain, an elite Faceless with 2 Pocong, on the east road. `mataram_wewe`: elite Wewe Gombel (only if SQ-M2 is fought, HP 780) | `wewe_parents_2` arrive at the hill if SQ-M2 is peaceful | Secret 2: crypt under the hill, chest **Panah Pasopati** (`mataram_secret_pasopati`, Q reward source "Mataram secret"). Marker `wewe_hill` (Q) |
 | `mt_wetan` | `mataram_batu`: 1 Genderuwo, 2 Pocong (Rock thrower, rocky field). `mataram_batu_2` (2.5, fight 1): 3 Tuyul on the junction field. Puzzle `puzzle_wetan_lamps` (2.5) | `juru_kunci` (comment: was Mbah Marto; 2.5, teaches Ra after the blockade falls), `lesung_women` (2.3, teaches Ca once `lead_kuburan`; lesung yard, moved from `mt_sawah`) | Chest `mataram_chest_wetan`. Codex `codex:genderuwo`. Kabut `K3` to `tt_kulon` on the east edge. Drop ledge on the south cliff |
 | `mt_candi` | `mataram_candi`: Temple gate, wave 1: 1 Genderuwo, 2 Arca; wave 2: 3 Tuyul rising from a heap of dropped stones with a 0.5 s warning (2 waves). Then, in the court (2.6, cond `flag:mq2_6`): `mataram_camp_gate` (3 Faceless), `mataram_camp_captain` (**miniboss**, elite Faceless), `mataram_camp` (**setpiece**, the Pamali stone wakes). The petilasan sits after them, no fight between it and the boss | `hauler` (2.6, a bound hauler at the temple gate, unnamed); the lesung women do not stand at the arena edge (see ASSUMED 9) | Petilasan **`mataram_2`** (Q) right before the boss arena. Boss **Bandung Bondowoso** (`bandung_bondowoso`). Chest `mataram_chest_candi`. Batu bintang (SQ-T3 meteorite fragment) in the front yard (**ASSUMED**). Far side of `sc:mt_candi_gapura`. K3 clues `rubble`, `lesung_mid`, `ka_strip`; Laras's lontar `lc3_lontar` at the petilasan |
-| `mt_tegal` | `mataram_tuyul`: elite tuyul leader + 3 Tuyul (SQ-M3 fight, new). Peaceful ending has no fight | none | Secret 3: dry well chamber, gear chest `mataram_secret_sumur`. Marker `tuyul_hideout` |
+| `mt_tegal` | `mataram_tuyul`: elite tuyul leader (`unique_id` `tuyul_leader`) + 3 Tuyul swarm (SQ-M3 fight, new). Peaceful ending has no fight (puzzle `puzzle_m3_trap_sprung`) | none | Secret 3: dry well chamber, gear chest `mataram_secret_sumur`. Marker `tuyul_hideout` |
 
 NPC count is 10 ids (the 9 NPC ids plus `arca_base`, a read-in-place object) because of the side quests (world.md says 3-5, Tatar Sunda has 10 for the same reason, **ASSUMED**).
 
@@ -201,21 +201,30 @@ Ki Sumarto stays at his house in `mt_pasar` all act (his show K-III is staged at
 | Step | Marker id | Area | Event string |
 |------|-----------|------|--------------|
 | Side NPC (no quest yet) | `pak_karto` | `mt_reruntuhan` (outer yard) | none |
-| SQ-M1 (1) hear Nawang Wulan | `nawang_wulan` | `mt_sawah` | `talked_to:nawang_wulan`. Unlock: `petilasan_activated:mataram_1` (2.1) |
-| SQ-M1 (2) search the lumbung | `lumbung` | `mt_sawah` | `area_entered:lumbung` |
-| SQ-M1 (3) find the selendang | `lumbung` (sparkle) | `mt_sawah` | `item_picked:selendang_nawang` |
-| SQ-M1 (4) return it | `nawang_wulan` | `mt_sawah` | `talked_to:nawang_wulan` (ends the quest, **VERIFY** all beats) |
-| SQ-M2 (1) worried neighbor | `wewe_neighbor` | `mt_pasar` | `talked_to:wewe_neighbor`. Unlock: `glyph_learned:jawa_ha` (2.3) |
-| SQ-M2 (2) find the hill | `wewe_hill` (Q) | `mt_kuburan` | `area_entered:wewe_hill` |
-| SQ-M2 peaceful | `wewe_parents` then the hill | `mt_pasar`, `mt_kuburan` | `talked_to:wewe_parents` then `talked_to:wewe_parents_2` (Q alt "peaceful") |
-| SQ-M2 fight | `wewe_hill` | `mt_kuburan` | `enemy_killed:wewe_elite` (Q alt "fight"), encounter `mataram_wewe` |
-| SQ-M3 (1) the blacksmith | `pande_besi` | `mt_pasar` | `talked_to:pande_besi`. Unlock: 2.1 |
-| SQ-M3 (2) the hideout | `tuyul_hideout` | `mt_tegal` | `area_entered:tuyul_hideout` |
-| SQ-M3 peaceful | `tuyul_hideout` | `mt_tegal` | `item_used:distraction` then `talked_to:tuyul_leader` (**VERIFY** crabs or green beans) |
-| SQ-M3 fight | `tuyul_hideout` | `mt_tegal` | `enemy_killed:tuyul_leader`, encounter `mataram_tuyul` |
-| SQ-M4 (1) Ki Dalang asks | `mataram_dalang` | `mt_pasar` | `talked_to:mataram_dalang`. Unlock: 2.3 |
+| SQ-M1 (1) hear Nawang Wulan | `nawang_wulan` | `mt_sawah` | `talked_to:nawang_wulan`. Unlock: `petilasan_activated:mataram_1` (2.1, `mq2_1`) |
+| SQ-M1 (2) `all`: the pot's lid, the rice gone | `m1_pot_lid`, `m1_rice_gone` | `mt_sawah` (lumbung) | `clue_examined:m1_pot_lid`, `clue_examined:m1_rice_gone` |
+| SQ-M1 (3) the selendang | `m1_rice_gone` (`memory_id: sq_m1_selendang`) | `zones/kelir/sq_m1_selendang.tscn` | `memory_done:sq_m1_selendang` |
+| SQ-M1 (4) return | `nawang_wulan` | `mt_sawah` | `talked_to:nawang_wulan` (ends the quest, **VERIFY** all beats). She leaves her weaving scarf as the thanks; the old pickup `selendang_nawang` is retired (v4d) |
+| SQ-M2 (1) worried neighbour | `m2_neighbour` | `mt_pasar` | `talked_to:m2_neighbour`. Unlock: `glyph_learned:jawa_ha` (2.3, `mq2_2`) |
+| SQ-M2 (2) `all`: the toy, the parents | `m2_toy`, `m2_parents_1` | `mt_kuburan` (hill path), `mt_pasar` (parents' house) | `clue_examined:m2_toy`, `talked_to:m2_parents_1` |
+| SQ-M2 (3) the child's memory | `m2_toy` (`memory_id: sq_m2_child`) | `zones/kelir/sq_m2_child.tscn` | `memory_done:sq_m2_child` |
+| SQ-M2 (4) peaceful | `wewe_parents_2` | `mt_kuburan` (wewe hill) | `talked_to:wewe_parents_2` (Q alt "peaceful") |
+| SQ-M2 (4) fight | `wewe_elite` | `mt_kuburan` (wewe hill) | `enemy_killed:wewe_elite` (Q alt "fight"), encounter `mataram_wewe`; trigger `wewe_hill` stays as the arena entrance |
+| SQ-M2 (5) bring the child home | `m2_parents_1` | `mt_pasar` | `talked_to:m2_parents_1` (ASSUMED: the neighbour `m2_neighbour` takes the turn-in if the parents are still at the hill) |
+| SQ-M3 (1) the blacksmith | `m3_smith` | `mt_pasar` | `talked_to:m3_smith`. Unlock: 2.1 (`mq2_1`) |
+| SQ-M3 (2) `all`: the footprints, the beans | `m3_footprints`, `m3_beans` | `mt_pasar` (smithy hearth), `mt_tegal` (kiln path) | `clue_examined:m3_footprints`, `clue_examined:m3_beans` |
+| SQ-M3 (3) the tuyul's memory | `m3_beans` (`memory_id: sq_m3_tuyul`) | `zones/kelir/sq_m3_tuyul.tscn` | `memory_done:sq_m3_tuyul` |
+| SQ-M3 (4) peaceful | `puzzle_m3_trap_sprung` (trigger `L`) | `mt_tegal` (kiln hideout) | `area_entered:m3_trap_sprung` (fires when the puzzle is solved, sets `flag:puzzle_m3_trap_sprung`) |
+| SQ-M3 (4) fight | `tuyul_leader` | `mt_tegal` | `enemy_killed:tuyul_leader` (the leader and its swarm), encounter `mataram_tuyul` |
+| SQ-M3 (5) tell the smith | `m3_smith` | `mt_pasar` | `talked_to:m3_smith` |
+| SQ-M4 (1) Ki Sumarto asks | `mataram_dalang` | `mt_pasar` | `talked_to:mataram_dalang`. Unlock: 2.3 (`mq2_2`). The giver is Ki Sumarto (was "Ki Dalang"); matches its card |
 | SQ-M4 (2) find the gong | `gong_ageng` (sparkle only) | `mt_reruntuhan` (sealed nook) | `item_picked:gong_ageng` |
 | SQ-M4 (3) bring it back | `mataram_dalang` | `mt_pasar` | `talked_to:mataram_dalang` (zone music gains the gong layer, **VERIFY** wording) |
+| C3 fragment 1 (Act III) | `c3_camp_scrap` | `mt_candi` (petilasan court, the camp is the court above) | `clue_examined:c3_camp_scrap`, cond `flag:mq2_7` |
+| C4 part 2 (1) Cepot at the river market | `cepot` | `mt_gapura` (border market) | `talked_to:cepot`. Unlock: `flag:c4_1`, `flag:mq2_a1` |
+| C4 part 2 (2) `all`: his name on both rolls | `c4_roll_a`, `c4_roll_b` | `mt_gapura` (the two stalls) | `clue_examined:c4_roll_a`, `clue_examined:c4_roll_b` |
+| C4 part 2 (3) get him out unseen | `puzzle_c4_market_clear` | `mt_gapura` (border market) | `area_entered:c4_market_clear` (fires when the stealth puzzle is solved) |
+| C4 part 2 (4) | `cepot` | `mt_gapura` | `talked_to:cepot`; sets `c4_2` |
 | Codex (rich ruin) | `candi_seribu` | `mt_reruntuhan` | `codex:candi_seribu` |
 | Cross-zone SQ-T3 fragment | `batu_bintang` | `mt_candi` front yard | `item_picked:batu_bintang` |
 
@@ -371,8 +380,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `W` | NPC sawah farmer (flavor, one line about the lesung women who moved up to the foothill hamlet; replaces the lesung women, who now stand in `mt_wetan`) | `res://entities/npc/npc.tscn` | `{npc_id:"sawah_farmer"}` | path | 1 |
 | `g` | codex spot, gejog lesung | `res://entities/world/pickup.tscn` | `{codex_id:"gejog_lesung"}` | path | 1 |
 | `c` | chest: Axe (items.md Zone 2 chest) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_chest_sawah", item_id:"axe"}` | grass | 1 |
-| `L` | trigger, lumbung entered (SQ-M1 search) | `res://entities/world/trigger.tscn` | `{trigger_id:"lumbung", size:Vector2i(7,5)}` | floor | 1 |
-| `s` | pickup, selendang Nawang Wulan (sparkle, SQ-M1) | `res://entities/world/pickup.tscn` | `{item_id:"selendang_nawang"}` | floor | 1 |
+| `L` | clue, a cooking pot's lifted lid on the barn floor (SQ-M1 clue 1 of 2; v4d, replaces the `lumbung` trigger; cond `quest:sq_m1=active`) | `res://entities/world/clue.tscn` | `{clue_id:"m1_pot_lid", cond:"quest:sq_m1=active"}` | floor | 1 |
+| `s` | clue, the rice gone down in the lumbung all at once (SQ-M1 clue 2 of 2; v4d, replaces the selendang pickup; opens memory `sq_m1_selendang` once the lid is also examined) | `res://entities/world/clue.tscn` | `{clue_id:"m1_rice_gone", memory_id:"sq_m1_selendang", cond:"quest:sq_m1=active"}` | floor | 1 |
 | `u` | loose Tuyul, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/tuyul.tscn` | `{}` | grass | 3 |
 
 ### Rooms
@@ -381,7 +390,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | west road | (1,16)-(29,17) 29x2 | Arrival from mt_gapura | exit `X` (0,16..17), spawn `e` (1,16) | none |
 | rest area | (26,14)-(38,19) 13x6 | Petilasan and Nawang Wulan, safe | P (30,16), Nawang Wulan `N` (36,14) | 2.1 `mataram_1`, SQ-M1 `nawang_wulan` |
 | north gate pocket | (20,1)-(21,3) 2x3 | Pocket and gate of `sc:mt_ruin_sawah`, corridor (20..21,4..15) down to the road | gate `=` (20..21,3) open_side `n`, exit `Q` (20..21,0), spawn `q` (20,1) | none |
-| lumbung | (4,21)-(12,27) 9x7 | Barn, door (8,21) | trigger `L` (8,24), selendang `s` (11,23) | SQ-M1 `lumbung`, item_picked:selendang_nawang |
+| lumbung | (4,21)-(12,27) 9x7 | Barn, door (8,21) | clue `L` `m1_pot_lid` (8,24), clue `s` `m1_rice_gone` (11,23) | SQ-M1 (2) `all` of two, then memory `sq_m1_selendang` |
 | farm yard | (57,20)-(71,30) 15x11 | Lesung yard, fence gate (62..63,19) | farmer `W` (64,25), codex `g` (60,23) | none |
 | east terraces | (50,3)-(86,12) 37x10 | Padi, chest behind the channel | chest `c` (84,14) | none |
 | south road | (44,18)-(45,32) 2x15 | Road to mt_pasar | exit `Y` (44..45,33), spawn `y` (44,32) | none |
@@ -461,9 +470,9 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 | `Y` | exit to mt_reruntuhan (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"mt_reruntuhan", spawn_id:"from_mt_pasar"}` | path | 2 |
 | `y` | spawn, arrival from mt_reruntuhan | `res://entities/world/spawn.tscn` | `{id:"from_mt_reruntuhan"}` | path | 1 |
 | `D` | NPC Ki Sumarto, the dalang (2.3, teaches Ha once `lead_pasar`; regional character; SQ-M4 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"mataram_dalang"}` | floor | 1 |
-| `B` | NPC pande besi, blacksmith (SQ-M3 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"pande_besi"}` | floor | 1 |
-| `W` | NPC worried neighbor (SQ-M2 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"wewe_neighbor"}` | grass | 1 |
-| `P` | NPC Wewe's parents (SQ-M2 alt) | `res://entities/npc/npc.tscn` | `{npc_id:"wewe_parents"}` | floor | 1 |
+| `B` | NPC pande besi, blacksmith (SQ-M3 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"m3_smith"}` | floor | 1 |
+| `W` | NPC worried neighbor (SQ-M2 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"m2_neighbour"}` | grass | 1 |
+| `P` | NPC Wewe's parents (SQ-M2 alt) | `res://entities/npc/npc.tscn` | `{npc_id:"m2_parents_1"}` | floor | 1 |
 | `G` | codex spot, gamelan (pavilion) | `res://entities/world/pickup.tscn` | `{codex_id:"gamelan"}` | floor | 1 |
 | `E` | encounter mataram_pasar (**setpiece**, 2.2: defend Ki Sumarto's stage; the show goes on if it holds) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_pasar", size:Vector2i(22,12), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-8,-3)], [res://entities/enemies/tuyul.tscn, Vector2i(-4,3)], [res://entities/enemies/tuyul.tscn, Vector2i(0,-4)], [res://entities/enemies/tuyul.tscn, Vector2i(5,2)], [res://entities/enemies/tuyul.tscn, Vector2i(9,-2)]], [[res://entities/enemies/tuyul.tscn, Vector2i(-6,0)], [res://entities/enemies/tuyul.tscn, Vector2i(0,5)], [res://entities/enemies/tuyul.tscn, Vector2i(6,1)]]]}` | path | 1 |
 | `O` | encounter mataram_pocong | `res://entities/world/encounter.tscn` | `{area_id:"mataram_pocong", size:Vector2i(16,7), waves:[[[res://entities/enemies/pocong.tscn, Vector2i(4,0)]]]}` | path | 1 |
@@ -476,9 +485,9 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 |------|----------------------|---------|----------|---------------|
 | north gate | (28,1)-(29,3) 2x3 | Arrival from mt_sawah | exit `X` (28..29,0), spawn `e` (28,1) | none |
 | dalang house | (6,3)-(16,10) 11x8 | Ki Sumarto, door (11,10) | D (11,6) | 2.3 `mataram_dalang`, SQ-M4 steps 1 and 3 |
-| smithy | (40,3)-(52,10) 13x8 | Blacksmith stall, door (46,10) | B (46,6) | SQ-M3 `pande_besi` |
-| cross lane | (3,15)-(56,16) 54x2 | East-west lane, no enemies | neighbor `W` (20,18) | SQ-M2 `wewe_neighbor` |
-| parents' house | (5,19)-(13,25) 9x7 | Door (9,19) | P (9,23) | SQ-M2 alt `wewe_parents` |
+| smithy | (40,3)-(52,10) 13x8 | Blacksmith stall, door (46,10) | B (46,6) | SQ-M3 `m3_smith` |
+| cross lane | (3,15)-(56,16) 54x2 | East-west lane, no enemies | neighbor `W` (20,18) | SQ-M2 `m2_neighbour` |
+| parents' house | (5,19)-(13,25) 9x7 | Door (9,19) | P (9,23) | SQ-M2 alt `m2_parents_1` |
 | gamelan pavilion | (38,19)-(50,26) 13x8 | Open pavilion | codex `G` (44,22) | codex:gamelan |
 | market plaza | (17,30)-(39,41) 23x12 | Thieves fight, 22x12 | E (28,36) `mataram_pasar` | 2.2 lead 1 `area_cleared:mataram_pasar` |
 | east road and yard | (30,36)-(58,37) 29x2 lane, yard (44,32)-(58,42) | Straight lane 28 tiles into a yard | O (50,36) `mataram_pocong` (Pocong at +4), chest `c` (56,41) | none |
@@ -648,7 +657,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 | `y` | spawn, arrival from mt_wetan | `res://entities/world/spawn.tscn` | `{id:"from_mt_wetan"}` | path | 1 |
 | `E` | encounter mataram_kuburan | `res://entities/world/encounter.tscn` | `{area_id:"mataram_kuburan", size:Vector2i(26,15), waves:[[[res://entities/enemies/pocong.tscn, Vector2i(8,-4)], [res://entities/enemies/pocong.tscn, Vector2i(8,4)], [res://entities/enemies/tuyul.tscn, Vector2i(-6,-5)], [res://entities/enemies/tuyul.tscn, Vector2i(-3,5)], [res://entities/enemies/tuyul.tscn, Vector2i(2,0)]]]}` | grass | 1 |
 | `T` | trigger, Wewe hill entered (SQ-M2) | `res://entities/world/trigger.tscn` | `{trigger_id:"wewe_hill", size:Vector2i(17,12)}` | grass | 1 |
-| `q` | elite Wewe Gombel (SQ-M2, inert until step 3) | `res://entities/enemies/wewe_gombel.tscn` | `{}` | grass | 1 |
+| `q` | elite Wewe Gombel (SQ-M2, inert until step 4; `unique_id` `wewe_elite`, elite stats HP 780, Ilmu x4, **TUNE**) | `res://entities/enemies/wewe_gombel.tscn` | `{unique_id:"wewe_elite"}` | grass | 1 |
 | `p` | NPC Wewe's parents at the hill (SQ-M2 peaceful) | `res://entities/npc/npc.tscn` | `{npc_id:"wewe_parents_2"}` | grass | 1 |
 | `c` | chest: Panah Pasopati (secret 2, crypt) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_secret_pasopati", item_id:"panah_pasopati"}` | floor | 1 |
 | `H` | trigger, beat `hunter_war` staging (the Hunter among the graves; plays when `flag:lead_kuburan`, `zone:mt_kuburan`) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_hunter_war", size:Vector2i(19,6)}` | grass | 1 |
@@ -920,8 +929,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,=,,,,,,Y
 | `y` | spawn, arrival from tt_sabana (in the pocket on the open side of `=`) | `res://entities/world/spawn.tscn` | `{id:"from_tt_sabana"}` | path | 1 |
 | `=` | shortcut gate, boulder-blocked back road (opens from the east pocket, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:mt_tt", open_side:"e"}` | path | 2 |
 | `T` | trigger, tuyul hideout entered (SQ-M3) | `res://entities/world/trigger.tscn` | `{trigger_id:"tuyul_hideout", size:Vector2i(11,6)}` | floor | 1 |
-| `L` | NPC tuyul leader (SQ-M3, talk for the peaceful end) | `res://entities/npc/npc.tscn` | `{npc_id:"tuyul_leader"}` | floor | 1 |
-| `q` | elite tuyul leader (SQ-M3, inert until step 2) | `res://entities/enemies/tuyul_leader.tscn` | `{}` | floor | 1 |
+| `L` | trigger, puzzle `puzzle_m3_trap_sprung` (SQ-M3 peaceful end, v4d, replaces the leader NPC: set out the beans in the kiln so the leader stops to count them, then spring the trap; sets `flag:puzzle_m3_trap_sprung`, fires `area_entered:m3_trap_sprung`, no gate) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_m3_trap_sprung", size:Vector2i(6,4)}` | floor | 1 |
+| `q` | elite tuyul leader (SQ-M3, inert until step 4; `unique_id` `tuyul_leader`, elite stats HP x4, Ilmu x4, **TUNE**; in the peaceful end it is the one caught while counting, in the fight end the swarm of `mataram_tuyul` wakes with it) | `res://entities/enemies/tuyul_leader.tscn` | `{unique_id:"tuyul_leader"}` | floor | 1 |
 | `c` | chest: Amulet (secret 3, well chamber, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_secret_sumur", item_id:"amulet"}` | floor | 1 |
 | `u` | loose Tuyul, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/tuyul.tscn` | `{}` | grass | 2 |
 | `k` | loose Pocong, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/pocong.tscn` | `{}` | grass | 1 |
@@ -931,7 +940,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,=,,,,,,Y
 |------|----------------------|---------|----------|---------------|
 | west road | (1,16)-(51,17) 51x2 | Link to mt_sawah | exit `X` (0,16..17), spawn `e` (1,16) | none |
 | landing path | (24,4)-(24,15) 1x12 | One-way drop landing | spawn `l` (24,4), no exit back | none |
-| kiln hideout | (36,6)-(48,13) 13x8 | Brick kiln, door (42,13) | trigger `T` (42,10), leader NPC `L` (40,9), elite `q` (44,9) | SQ-M3 `tuyul_hideout`, `tuyul_leader` |
+| kiln hideout | (36,6)-(48,13) 13x8 | Brick kiln, door (42,13) | trigger `T` (42,10), puzzle trigger `L` (40,9), elite `q` (44,9) | SQ-M3 `tuyul_hideout`, `m3_trap_sprung`, `tuyul_leader` |
 | well chamber | (8,24)-(18,30) 11x7 | Secret 3, door (13,24), dry well rocks above | chest `c` (13,28) | none |
 | back road pocket | (53,16)-(58,17) 6x2 | Boulder-blocked back road, gate (52,16..17), open side east | gate `=` `sc:mt_tt`, exit `Y` (59,16..17), spawn `y` (58,16) | none |
 
@@ -940,12 +949,29 @@ None.
 
 Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and petilasan, outside the encounter rects): Tuyul (40,22), Tuyul (42,24), Pocong (41,26). 3 kills, skirtable.
 
+## Side stories v4d spots (2026-11-06, [quests.md](../quests.md) 5)
+Spots that are not new map characters are listed here, not drawn into the maps (**ASSUMED**: the builder adds them as plain spots at these coordinates, on floor tiles inside the stated rooms; `gen_zones.py` does not read this section). Clue legend rows that changed in the maps (`mt_sawah` `L` and `s`, `mt_tegal` `L`, `q`, `mt_kuburan` `q`) are marked v4d in their legend. Props follow the clue convention `{clue_id, memory_id?, cond?}`; where a step is an `all` of clues and a memory follows, the memory id sits on the clue examined last (as `ka_strip` does, **ASSUMED**: the builder opens the memory only when the step's other pieces are already done). `cond` uses `quest:<id>=active` (the quest-state form in [quests.md](../quests.md) 7).
+
+| Area | Spot | Scene and props | At | Card | Notes |
+|------|------|-----------------|----|------|-------|
+| `mt_sawah` | pot lid, rice gone | clues `L`, `s` (see its legend) | (8,24), (11,23) | SQ-M1 | Both in the lumbung; memory `sq_m1_selendang` follows. `nawang_wulan` `N` (36,14) is the giver and the turn-in |
+| `mt_pasar` | `m2_neighbour`, `m2_parents_1`, `m3_smith` | NPCs `W`, `P`, `B` (legend, ids renamed v4d) | (20,18), (9,23), (46,6) | SQ-M2, SQ-M3 | `m2_parents_1` says "nobody called him" (step 2) and takes the child home (step 5, **ASSUMED**) |
+| `mt_pasar` | `m3_footprints` | `clue.tscn` `{clue_id:"m3_footprints", cond:"quest:sq_m3=active"}` | (48,8) | SQ-M3 | Tiny footprints in the smithy hearth ash |
+| `mt_tegal` | `m3_beans` | `clue.tscn` `{clue_id:"m3_beans", memory_id:"sq_m3_tuyul", cond:"quest:sq_m3=active"}` | (38,11) | SQ-M3 | Spilled green beans, half counted. Names the tuyul. Opens `sq_m3_tuyul` once the footprints are also done |
+| `mt_tegal` | `m3_trap_sprung` | trigger `L` (legend), `trigger_id` `puzzle_m3_trap_sprung` | (40,9) | SQ-M3 peaceful | Puzzle: the player sets out the beans (a 3-bean pile, **VERIFY** beans or crabs) at three marked spots along the leader's path; it stops to count each pile (4 s, **TUNE**); when the third is counted the net drops. The elite `q` (44,9) is caught, not fought; kills nothing |
+| `mt_kuburan` | `m2_toy` | `clue.tscn` `{clue_id:"m2_toy", memory_id:"sq_m2_child", cond:"quest:sq_m2=active"}` | (44,14) | SQ-M2 | The boy's toy on the hill path (inside the hill room (40,3)-(56,16)), south of the tree. Its note names the Wewe Gombel. Opens `sq_m2_child` once the parents have been talked to |
+| `mt_kuburan` | hill-path arena | trigger `T` (48,10) `wewe_hill`, elite `q` (46,11) `wewe_elite`, parents `p` (50,13) `wewe_parents_2` | see legend | SQ-M2 | Fight branch: the elite alone in the hill room (no wave), HP 780, **TUNE**. Peaceful branch: `wewe_parents_2` arrive at (50,13) after the memory, call kindly and bang pots (**VERIFY**), and the elite `q` is not spawned (cond `!flag:sq_m2_peaceful`, **ASSUMED**); the child is at the parents' feet |
+| `mt_candi` | `c3_camp_scrap` | `clue.tscn` `{clue_id:"c3_camp_scrap", cond:"flag:mq2_7"}` | (31,26) | SQ-C3 fragment 1 | The Mataram camp of step 2.6 (`mq2_7`) is the court of `mt_candi`; the scrap hangs on a stake in the petilasan court, a few tiles from the cleared camp, so it is still reachable after the boss. Freed variant: a scrap of cloth with a stitched sound. Handed variant: Uwa Lengser's note. Not in `kg_pamali` |
+| `mt_gapura` | `cepot` | NPC `{npc_id:"cepot", cond:"flag:c4_1,flag:mq2_a1,!flag:c4_2"}` | (7,17) | SQ-C4 part 2 | In the border market lane between the two stalls. `quiet` entries (**ASSUMED**); he sets `c4_2` at the end |
+| `mt_gapura` | `c4_roll_a`, `c4_roll_b` | `clue.tscn` `{clue_id:"c4_roll_a", cond:"flag:c4_1,flag:mq2_a1"}` and `{clue_id:"c4_roll_b", ...}` | (6,13), (6,20) | SQ-C4 part 2 | The two recruiters' rolls, beside `recruiter_a` (4,13) and `recruiter_b` (4,20): his name on both |
+| `mt_gapura` | `c4_market_clear` | trigger, `trigger_id` `puzzle_c4_market_clear`, `size:Vector2i(9,10)` | rect (1,13)-(9,22), goal (10,16) | SQ-C4 part 2 | Stealth puzzle, no combat: Cepot follows two tiles behind. Each recruiter looks down the lane in turns (3 s each, **TUNE**); the player moves him along the crates and the stall shade, two crate hides at (3,16) and (7,19), to the gateway (10..11,14..19). If a recruiter sees him, he walks back to (7,17) and it restarts, no counter. Solving fires `area_entered:c4_market_clear` |
+
 ## Memory scenes (Story v4/v4b, [architecture.md](../architecture.md) 9b)
 Small own scenes under `zones/kelir/`, not areas: they have no `## Area n:` heading, so `gen_zones.py` skips them and the builder makes them on `memory.gd` (a `Stand` marker, `Checkpoint` markers in group `checkpoint`, no exits, no enemies except Laras-chapter patrols). Chars here are only this section's (`_` lit floor, `#` dark wall, `~` water). The clues that open them are in the area legends above. Semar narrates 1-2 lines at the start and end (`MEM_<ID>_START_<n>`, `MEM_<ID>_END_<n>`); Laras chapters use Laras's own lines. All numbers **TUNE**.
 
 ### Memory `k3_lesung`: the princess's women (K3)
 
-- Scene `res://zones/kelir/k3_lesung.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `play`. Size 30x17 (one screen).
+- Scene `res://zones/kelir/k3_lesung.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `play`. Size 30x17 (one screen).
 - Stand-in: one of Roro Jonggrang's women (`entities/player/stand_in.tscn`, speed 70).
 - The one action: `interact` = pound the lesung (`action_kind: pound`) on the beat.
 - Goal: Keep the rice-pounding beat for 3 short bars (one station each); each finished bar makes a rooster crow early and brightens the lamp; the third bar ends the memory at the dawn post `G`. Teaches the Jawa Ca beat (expose the pillars).
@@ -976,13 +1002,13 @@ Small own scenes under `zones/kelir/`, not areas: they have no `## Area n:` head
 | `S` | Stand (3,8) | the dayang |
 | `L` | lesung station | 3 stations, one bar each: (9,8), (15,8), (21,8) |
 | `C` | checkpoint | bar starts |
-| `R` | rooster coop | 2; each crows when a bar is done |
+| `R` | rooster coop | decor, 2; each crows when a bar is done |
 | `G` | dawn post | goal; `finish()` on touch after bar 3 |
 | `K` | the night's shadow origin | a tall silhouette advancing from the west wall |
 
 ### Memory `k_iii`: the brothers who split the land (K-III)
 
-- Scene `res://zones/kelir/k_iii.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 30x17.
+- Scene `res://zones/kelir/k_iii.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 30x17.
 - Stand-in: the younger brother, crossing back over the river (silhouette with a spear).
 - The one action: none (walk only); at the middle stone `T` he lays the spear down by himself.
 - Goal: Reach the older brother `E` on the west bank. Teaches *pamali*: brothers do not fight each other, so the ford duel and Choice 2 land. Triggered by the clue `sumarto_show` at the ford camp in `kg_pamali`.
@@ -1018,7 +1044,7 @@ Small own scenes under `zones/kelir/`, not areas: they have no `## Area n:` head
 
 ### Memory `h3`: the price (H3)
 
-- Scene `res://zones/kelir/h3.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 30x17.
+- Scene `res://zones/kelir/h3.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `walk`. Size 30x17.
 - Stand-in: young Aria Kebonan, alone at night (silhouette).
 - The one action: none (walk only).
 - Goal: Follow the grave path to Kala's shadow `K`; at the end he gives his own name and a glyph of light lifts away from him (`n`). About 1 minute. Teaches the *why* of the borrowed face; no mechanic. Triggered by the mask fragment `hunter_mask_3` in `mt_kuburan`.
@@ -1050,11 +1076,11 @@ Small own scenes under `zones/kelir/`, not areas: they have no `## Area n:` head
 | `g` | grave markers | decor, 5 |
 | `T` | narration trigger | (10,11) and (17,7), Semar 1 line each |
 | `K` | Kala's shadow (26,3) | goal; the memory ends when he stops in front of it |
-| `n` | the name (25,4) | a small light that lifts off |
+| `n` | the name (25,4) | decor; a small light that lifts off |
 
 ### Memory `lc3`: the reading room (LC3)
 
-- Scene `res://zones/kelir/lc3.tscn` (not a Zone: no `gen_zones.py` output; built by hand on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `chapter`. Size 30x34 (two screens, vertical).
+- Scene `res://zones/kelir/lc3.tscn` (not a Zone: no `gen_zones.py` output; generated by `gen_memories.py` on `memory.gd`, [architecture.md](../architecture.md) 9b). Kind `chapter`. Size 30x34 (two screens, vertical).
 - Stand-in: Laras (`entities/player/stand_in_laras.tscn`); cooler blue tint, no Semar.
 - The one action: `interact` = say a Faceless's true name: it freezes for 3 s (6 s cooldown). Faceless see her inside a 72 px, 90 degree cone unless she is behind a `h` prop.
 - Goal: Reach the reading desk `D` past two patrols. At the desk the game offers *read* or *refuse*; refusing shows the prisoners (behind the grill `P`) hurt, then the choice returns and she reads. The chapter ends with the *Ka* write card, then `memory_done:lc3`.
@@ -1102,9 +1128,36 @@ Small own scenes under `zones/kelir/`, not areas: they have no `## Area n:` head
 | `S` | Stand (3,30) | start |
 | `f` | Faceless patrol | 2 patrols: row y=22 from x=4 to 24; column x=14 from y=6 to 16 (marker `f` at (14,10) is the patrol midpoint) |
 | `h` | hide shelves | 4: (6,24), (22,20), (8,12), (21,8) |
-| `P` | prisoners' grill | (4..8,3), the *refuse* consequence is shown here |
+| `P` | prisoners' grill | decor, (4..8,3); the *refuse* consequence is shown here |
 | `D` | reading desk (14,3) | goal; the read / refuse choice, then the Ka write card |
 | `C` | checkpoint | 3 |
+
+### Memory `sq_m1_selendang`: the selendang under the rice (SQ-M1)
+
+- Scene `res://zones/kelir/sq_m1_selendang.tscn` (not a Zone; generated by `gen_memories.py` on `memory.gd`). Kind `walk`. Size 30x17. Opened by clue `m1_rice_gone` in the lumbung of `mt_sawah`.
+- Stand-in: Nawang Wulan (a robed silhouette, shown with respect; **VERIFY** the legend, she is a bidadari).
+- The one action: none (walk only); at the last pile `R` she lifts the rice and finds the selendang under it.
+- Goal: Cross a lumbung lit by one lamp, past three emptying rice piles `R`, to the last pile at `G`; the selendang lies under it. Nothing to fight. Semar's closing line: she knew it was there all along, **ASSUMED**.
+- Checkpoints: none (no fail state).
+- Layout: a plain 30x17 floor room, Stand (3,8), piles `R` at (10,8), (17,8), (24,8), goal `G` (27,8), all **TUNE**.
+
+### Memory `sq_m2_child`: the voice on the hill (SQ-M2)
+
+- Scene `res://zones/kelir/sq_m2_child.tscn` (not a Zone; generated by `gen_memories.py` on `memory.gd`). Kind `walk`. Size 30x17. Opened by clue `m2_toy` on the hill path of `mt_kuburan`.
+- Stand-in: the neglected boy (a small silhouette).
+- The one action: none; he follows a kind voice up the hill (the voice is a moving light), and stops when nobody answers his calls.
+- Goal: Follow the voice to the hill's tree `G`. Teaches calling kindly and banging pots, **VERIFY** the folk practice. The ending shows no harm.
+- Checkpoints: none (no fail state).
+- Layout: a plain 30x17 floor room with a path rising west to east, Stand (3,13), voice light moving along (8,11), (14,9), (20,7), goal `G` (26,5), all **TUNE**.
+
+### Memory `sq_m3_tuyul`: the one who stopped to count (SQ-M3)
+
+- Scene `res://zones/kelir/sq_m3_tuyul.tscn` (not a Zone; generated by `gen_memories.py` on `memory.gd`). Kind `play`. Size 30x17. Opened by clue `m3_beans` in the kiln of `mt_tegal`.
+- Stand-in: a tuyul (a small silhouette, speed 60, **TUNE**), sent out by a greedy master.
+- The one action: `interact` = take a coin from a stall; it must stop and count any spill it passes (an automatic 3 s pause, **VERIFY** beans or crabs).
+- Goal: Take three coins from three stalls `C` and return to the door `G`. The spills `b` (green beans) lie on the way; the master's lamp `K` sweeps and catches the tuyul while it counts. Teaches that it cannot pass a spill without counting it, which is the trap set in `m3_trap_sprung`. Light comedy.
+- Checkpoints: a `C` at each stall; getting caught restarts at the last stall, no counter.
+- Layout: a plain 30x17 floor room, Stand (3,13), first stall at (10,4), second stall at (17,4), third stall at (24,4), decor spills at (10,9), (17,12), (24,9), the master's lamp `K` at (14,8), door `G` (3,3), all **TUNE**.
 
 ## Flow
 Gapura entry, the two recruiters in the border market (the same war told both ways), `mataram_gerbang` and the road ambush `mataram_jalan` with the `haulers` beat > petilasan `mataram_1` (2.1) > **three leads in any order (2.2)**: the market plaza (the stage setpiece; Ki Sumarto teaches Ha, 2.3), the ruins courtyard (chalk clue, the Arca miniboss, Na read off `arca_base` as a puzzle, 2.3; Pak Karto waits in the yard as a side NPC), the graveyard (two fights, `hunter_war`) > the mask fragment and the H3 memory, the harvest captain (2.4) > the foothill: lesung women (Ca, 2.3), `mataram_batu_2`, `mataram_batu`, the lamp puzzle, the juru kunci and Ra (2.5) > `K2` > `mt_candi`: the temple gate fight, the hauler, the camp gate, the captain, the camp setpiece and the `camp` beat (2.6) > three K3 clues (2.7) > the K3 memory (2.8) > rest at `mataram_2`, Laras's chapter LC3 (2.9) > Bandung Bondowoso (2.10) > `sc:mt_candi_gapura` > the Faceless remnants in the gapura (2.11) > `kg_pamali`: the Pamali stone (2.11), K-III (2.12), the letters and the ford duel (2.13, beats `ford`, `truce`) > the causeway and `mt_wetan` > `K3`.
@@ -1162,7 +1215,7 @@ Interlock rules:
 3. Shortcut ids `sc:mt_ruin_sawah` and `sc:mt_candi_gapura`. Both are the Tatar Sunda shortcut gate (`entities/world/shortcut.tscn`): it stands in the gate area and opens from the side the opener area's exit arrives on. No levers (2026-11-05).
 4. The drop from `mt_wetan` to `mt_tegal` does no damage.
 5. Encounter ids `mataram_gerbang`, `mataram_pasar`, `mataram_pocong`, `mataram_kuburan`, `mataram_batu`, `mataram_candi`, `mataram_wewe`, `mataram_tuyul`. New small encounters: `mataram_gerbang` (3 Tuyul), `mataram_pocong` (1 Pocong), `mataram_tuyul` (elite leader + 3 Tuyul). Wave 2 in `mataram_candi` rises from a heap of dropped stones.
-6. NPC ids: `nawang_wulan`, `lesung_women`, `pande_besi`, `wewe_neighbor`, `wewe_parents`, `pak_karto`, `juru_kunci`; `wewe_parents_2` and `mataram_dalang` come from quests.md.
+6. NPC ids: `nawang_wulan`, `lesung_women`, `m3_smith`, `m2_neighbour`, `m2_parents_1`, `pak_karto`, `juru_kunci`; `wewe_parents_2` and `mataram_dalang` come from quests.md.
 7. Marker ids not in quests.md: `pak_karto`, `juru_kunci`, `lumbung`, `tuyul_hideout`, `gong_ageng`, `batu_bintang`, `candi_seribu`, and the event strings marked above.
 8. Pak Karto stands in the safe outer yard of `mt_reruntuhan`, before the courtyard fight.
 9. Boss arena is at least one screen (30x17); the lesung women stay in the `mt_sawah` farm yard (see 15).
@@ -1194,7 +1247,7 @@ Interlock rules:
 4. Wewe Gombel is rooted in Bukit Gombel, Semarang (**VERIFY** how much to show); the hill here is a generic graveyard hill.
 5. ~~Which gear for the three secret chests~~ Done 2026-11-05: Longbow, Panah Pasopati, Amulet.
 6. Names Ki Sumarto and Pak Karto: native speaker check (quests.md section 11).
-7. The 3 Tuyul of `mataram_tuyul` are not placed: an encounter spawns them whatever the quest choice. Add them only if the encounter can be gated on `step:sq_m3=2` and the fight choice.
+7. (v4d: the card says "leader plus swarm", so the swarm is `mataram_tuyul`.) The 3 Tuyul of `mataram_tuyul` are not placed: an encounter spawns them whatever the quest choice. Add them only if the encounter can be gated on `step:sq_m3=2` and the fight choice.
 8. Resolved (v3.1): SQ-M5 is retired. The lesung women stay in the `mt_sawah` farm yard; the false dawn at the arena is told by the Bondowoso fight, not by a standing NPC.
 9. A graveyard-first player (see Three leads) meets Pocong in `mt_kuburan` or as a loose pack in `mt_reruntuhan` before the lone-Pocong Bind teach on the `mt_pasar` east road. Fix options: put a lone-Pocong teach spot on the `mt_reruntuhan` to `mt_kuburan` road, or accept it. Left open.
 10. The Hunter's graveyard appearance (`hunter_war`) plays after the lead clears. If the player has not entered `mt_kuburan` since, the beat waits for the `zone:` part of its `if`.

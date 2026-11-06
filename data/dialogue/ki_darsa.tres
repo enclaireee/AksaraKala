@@ -7,8 +7,8 @@ script = ExtResource("1")
 npc_id = "ki_darsa"
 name_key = "NPC_KI_DARSA_NAME"
 entries = Array[Dictionary]([
-	{"if": ["quest:sq_s1=done"], "lines": ["DLG_KI_DARSA_1", "DLG_KI_DARSA_2"], "do": []},
-	{"if": ["quest:sq_s1=active"], "lines": ["DLG_KI_DARSA_3", "DLG_KI_DARSA_4"], "do": []},
-	{"if": ["quest:sq_s1=available"], "lines": ["DLG_KI_DARSA_5", "DLG_KI_DARSA_6", "DLG_KI_DARSA_7", "DLG_KI_DARSA_8", "DLG_KI_DARSA_9"], "do": ["start:sq_s1"]},
-	{"if": [], "lines": ["DLG_KI_DARSA_10", "DLG_KI_DARSA_11", "DLG_KI_DARSA_12"], "do": []}
+	{"if": ["step:sq_s1=4"], "lines": ["DLG_KI_DARSA_V20", "DLG_KI_DARSA_V21", "DLG_KI_DARSA_V22"], "do": []},
+	{"if": ["quest:sq_s1=active"], "lines": ["DLG_KI_DARSA_V23"], "do": []},
+	{"if": ["quest:sq_s1=available", "flag:mq1_3"], "lines": ["DLG_KI_DARSA_V24", "DLG_KI_DARSA_V25", "DLG_KI_DARSA_V26"], "do": ["start:sq_s1"]},
+	{"if": [], "lines": ["DLG_KI_DARSA_V27"], "do": []}
 ])

@@ -44,6 +44,13 @@ func run() -> void:
 		+ keys_of("res://data/classes", ["title", "description", "passive", "passive_text"]) \
 		+ keys_of("res://data/spells", ["title"])
 	check(used.size() > 50, "keys collected: %d" % used.size())
+	for f in ["ui", "dialogue", "quests", "codex", "items"]:   # every row of every CSV has id and en
+		var fa := FileAccess.open("res://data/text/%s.csv" % f, FileAccess.READ)
+		fa.get_csv_line()
+		while not fa.eof_reached():
+			var r := fa.get_csv_line()
+			if r.size() >= 1 and r[0] != "":
+				check(r.size() >= 3 and r[1].strip_edges() != "" and r[2].strip_edges() != "", "%s.csv row %s lacks id or en" % [f, r[0]])
 	for k in used:
 		check(t.has(k) and t[k][0] != "" and t[k][1] != "", "key %s has id and en" % k)
 	for k in t:

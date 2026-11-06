@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=16 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -6,88 +6,119 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ1_S1_OBJ"
-on = "area_cleared:sunda_edge"
-marker = {"zone": "ts_kebun", "id": "sunda_edge"}
+all = [{"on": "talked_to:sunda_grandson", "set_flag": "mq1_a1"}, {"on": "area_cleared:sunda_edge"}]
+recap = "Q_MQ1_S1_DONE"
+marker = {"zone": "ts_kebun", "id": "sunda_grandson"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ1_S2_OBJ"
-on = "petilasan_activated:sunda_1"
-set_flag = "mq1_1"
+all = [{"on": "petilasan_activated:sunda_1", "set_flag": "mq1_1"}, {"on": "area_cleared:sunda_kampung"}]
+recap = "Q_MQ1_S2_DONE"
 marker = {"zone": "ts_kebun", "id": "sunda_1"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ1_S3_OBJ"
-on = "area_cleared:sunda_kampung"
-marker = {"zone": "ts_kampung", "id": "sunda_kampung"}
+all = [{"on": "glyph_learned:sunda_ga", "set_flag": "mq1_3"}, {"on": "area_entered:sunda_hamlet", "set_flag": "mq1_h1"}]
+set_flag = "mq1_h1"
+recap = "Q_MQ1_S3_DONE"
+marker = {"zone": "ts_kampung", "id": "sunda_elder"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ1_S4_OBJ"
-on = "glyph_learned:sunda_ga"
-set_flag = "mq1_3"
-marker = {"zone": "ts_kampung", "id": "sunda_elder"}
+all = [{"on": "clue_examined:sandal"}, {"on": "clue_examined:oncor"}, {"on": "clue_examined:gorge_prints"}]
+set_flag = "mq1_h2"
+recap = "Q_MQ1_S4_DONE"
+marker = {"zone": "ts_leuwi", "id": "sandal"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ1_S5_OBJ"
-on = "boss_defeated:sandekala"
-set_flag = "mq1_3b"
-marker = {"zone": "ts_leuwi", "id": "sandekala"}
+on = "memory_done:k1_maghrib"
+set_flag = "mq1_h3"
+recap = "Q_MQ1_S5_DONE"
+marker = {"zone": "ts_leuwi", "id": "k1_maghrib"}
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ1_S6_OBJ"
-on = "glyph_learned:sunda_nga"
-set_flag = "mq1_5"
-marker = {"zone": "ts_leuweung", "id": "batu_tulis"}
+on = "boss_defeated:sandekala"
+set_flag = "mq1_3b"
+recap = "Q_MQ1_S6_DONE"
+marker = {"zone": "ts_leuwi", "id": "sandekala"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ1_S7_OBJ"
-on = "area_cleared:sunda_terraces"
-marker = {"zone": "ts_sawah", "id": "sunda_terraces"}
+all = [{"on": "area_cleared:sunda_batutulis"}, {"on": "glyph_learned:sunda_nga", "set_flag": "mq1_5"}]
+set_flag = "mq1_5"
+recap = "Q_MQ1_S7_DONE"
+marker = {"zone": "ts_leuweung", "id": "batu_tulis"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ1_S8_OBJ"
-on = "talked_to:sunda_weaver"
+all = [{"on": "area_cleared:sunda_terraces"}, {"on": "talked_to:sunda_weaver", "set_flag": "mq1_6"}]
 set_flag = "mq1_6"
+recap = "Q_MQ1_S8_DONE"
 marker = {"zone": "ts_sawah", "id": "sunda_weaver"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQ1_S9_OBJ"
-on = "area_cleared:sunda_lakeshore"
-set_flag = "mq1_6b"
-marker = {"zone": "ts_situ", "id": "sunda_lakeshore"}
+all = [{"on": "clue_examined:felled_trees"}, {"on": "clue_examined:empty_coops"}, {"on": "clue_examined:loom"}]
+set_flag = "mq1_h4"
+recap = "Q_MQ1_S9_DONE"
+marker = {"zone": "ts_situ", "id": "felled_trees"}
 
 [sub_resource type="Resource" id="s10"]
 script = ExtResource("2")
 objective = "Q_MQ1_S10_OBJ"
-on = "glyph_learned:sunda_ca"
-set_flag = "mq1_7"
-marker = {"zone": "ts_situ", "id": "naganingrum"}
+all = [{"on": "area_cleared:sunda_lakeshore", "set_flag": "mq1_6b"}, {"on": "clue_examined:faceless_toy", "set_flag": "mq1_h5"}]
+set_flag = "mq1_h5"
+recap = "Q_MQ1_S10_DONE"
+marker = {"zone": "ts_situ", "id": "sunda_lakeshore"}
 
 [sub_resource type="Resource" id="s11"]
 script = ExtResource("2")
 objective = "Q_MQ1_S11_OBJ"
-on = "petilasan_activated:sunda_2"
-marker = {"zone": "ts_kawah_jalan", "id": "sunda_2"}
+all = [{"on": "glyph_learned:sunda_ca", "set_flag": "mq1_7"}, {"on": "petilasan_activated:sunda_2"}]
+set_flag = "mq1_7"
+recap = "Q_MQ1_S11_DONE"
+marker = {"zone": "ts_situ", "id": "naganingrum"}
 
 [sub_resource type="Resource" id="s12"]
 script = ExtResource("2")
 objective = "Q_MQ1_S12_OBJ"
-on = "boss_defeated:faceless_captain"
-set_flag = "mq1_8"
-marker = {"zone": "ts_kawah", "id": "faceless_captain"}
+on = "memory_done:lc1"
+set_flag = "mq1_lc"
+recap = "Q_MQ1_S12_DONE"
+marker = {"zone": "ts_kawah_jalan", "id": "lc1_voice"}
 
 [sub_resource type="Resource" id="s13"]
 script = ExtResource("2")
 objective = "Q_MQ1_S13_OBJ"
+all = [{"on": "boss_defeated:faceless_captain", "set_flag": "mq1_8"}, {"on": "memory_done:h1", "set_flag": "mq1_h7"}]
+set_flag = "mq1_h7"
+recap = "Q_MQ1_S13_DONE"
+marker = {"zone": "ts_kawah", "id": "faceless_captain"}
+
+[sub_resource type="Resource" id="s14"]
+script = ExtResource("2")
+objective = "Q_MQ1_S14_OBJ"
+on = "memory_done:k2_dayang_sumbi"
+set_flag = "mq1_h6"
+recap = "Q_MQ1_S14_DONE"
+marker = {"zone": "ts_kawah", "id": "boat_ribs"}
+
+[sub_resource type="Resource" id="s15"]
+script = ExtResource("2")
+objective = "Q_MQ1_S15_OBJ"
 on = "boss_defeated:sangkuriang"
 set_flag = "mq1_9"
+recap = "Q_MQ1_S15_DONE"
 marker = {"zone": "ts_kawah", "id": "sangkuriang"}
 
 [resource]
@@ -98,5 +129,5 @@ type = "main"
 zone = "tatar_sunda"
 size = "L"
 giver = "semar"
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10"), SubResource("s11"), SubResource("s12"), SubResource("s13")])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10"), SubResource("s11"), SubResource("s12"), SubResource("s13"), SubResource("s14"), SubResource("s15")])
 rewards = {"lakon": "sangkuriang", "codex": ["naganingrum", "sangkuriang", "dayang_sumbi"]}

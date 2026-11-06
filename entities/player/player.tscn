@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://components/health.gd" id="2"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://components/sakti_gauge.gd" id="9"]
 [ext_resource type="Script" path="res://entities/player/cast_controller.gd" id="10"]
 [ext_resource type="PackedScene" path="res://ui/cast_overlay.tscn" id="11"]
+[ext_resource type="Script" path="res://entities/player/lontar_shimmer.gd" id="12"]
 
 [sub_resource type="CircleShape2D" id="body_shape"]
 radius = 5.0
@@ -115,3 +116,6 @@ offset_top = 2.0
 [node name="CastController" type="Node" parent="." node_paths=PackedStringArray("overlay")]
 script = ExtResource("10")
 overlay = NodePath("../CastOverlay")
+
+[node name="LontarShimmer" type="Node2D" parent="."]
+script = ExtResource("12")

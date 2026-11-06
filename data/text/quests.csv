@@ -1,42 +1,42 @@
 keys,id,en
-Q_MQ0_TITLE,Malam Wayang,The Night of the Wayang
+Q_MQ0_TITLE,Sehari di Desa Purwa,A Day in Desa Purwa
 Q_MQ1_TITLE,Segel Kawah,The Crater Seal
-Q_MQ0_S1_OBJ,Saksikan pertunjukan wayang dan bertahanlah malam itu,Watch the wayang show and survive the night
-Q_MQ0_S2_OBJ,Pilih jalanmu,Choose your path
-Q_MQ0_S1_HINT,Berjalan dengan {move},Walk with {move}
-Q_MQ0_S2_HINT,Dekati Semar lalu tekan {interact},Walk up to Semar and press {interact}
-Q_MQ0_S4_HINT,Jalan ke panggung wayang yang terbakar,Walk to the burned wayang stage
+Q_MQ0_S1_OBJ,Tangkap Laras: dia menantangmu bermain kejar-kejaran,Catch Laras: she dares you to a game of tag
+Q_MQ0_S2_OBJ,"Minum teh bersama Ibu, lalu jemput Ciung dan telurnya dari pohon","Have tea with Ibu, then fetch Ciung and his egg from the tree"
+Q_MQ0_S1_HINT,"Kejar Laras, dan tekan {dodge} untuk menerobos rintangan","Chase Laras, and press {dodge} to dash past obstacles"
+Q_MQ0_S2_HINT,"Tekan {interact} di dekat Ibu, lalu pasangan tua, lalu Ciung","Press {interact} near Ibu, then the old couple, then Ciung"
+Q_MQ0_S4_HINT,Duduk di balik kelir dan tetap di cahaya lampu,Sit behind the kelir and stay in the lamp's light
 Q_MQ0_S5_HINT,Masuk ke sanggar lalu bicara dengan Semar,Enter the sanggar and talk to Semar
-Q_MQ0_S6_HINT,"Tahan {cast}, gambar Ka mengikuti bayangan, lalu lepas","Hold {cast}, trace Ka over the guide, then release"
-Q_MQ0_S3_OBJ,Tanya Ibu di mana Laras berada,Ask Ibu where Laras is
-Q_MQ0_S4_OBJ,Ambil lontar Laras dari panggung wayang yang terbakar,Pull Laras's lontar from the burned stage
-Q_MQ0_S5_OBJ,Tunjukkan lontar itu kepada Semar dan pelajari Ka,Show the lontar to Semar and learn Ka
-Q_MQ0_S6_OBJ,Rapalkan Ka tiga kali,Cast Ka three times
-Q_MQ0_S7_OBJ,Usir para tanpa rupa dari alun-alun desa,Drive the faceless out of the village square
-Q_MQ1_S1_OBJ,Patahkan penyergapan di tepi rumpun bambu dan temukan pita Laras,Break the ambush at the bamboo edge and find Laras's ribbon
-Q_MQ1_S2_OBJ,Beristirahat di petilasan dekat kebun teh,Rest at the petilasan by the tea terraces
-Q_MQ1_S3_OBJ,Patahkan penyergapan di kampung Abah Karna,Break the ambush at Abah Karna's kampung
-Q_MQ1_S4_OBJ,Tanya Abah Karna tentang Laras dan pelajari Ga,Ask Abah Karna about Laras and learn Ga
-Q_MQ1_S5_OBJ,Kalahkan Sandekala di ngarai sungai saat senja,Defeat Sandekala in the river gorge at dusk
-Q_MQ1_S6_OBJ,Baca Batu Tulis yang dirusak dan pelajari Nga,Read the defaced Batu Tulis and learn Nga
-Q_MQ1_S7_OBJ,Usir para tanpa rupa dari teras sawah,Drive the faceless off the rice terraces
-Q_MQ1_S8_OBJ,Temui Penenun yang menyembunyikan Laras dan terimalah Boeh Rarang,Find the Weaver who hid Laras and take the Boeh Rarang
-Q_MQ1_S9_OBJ,Bersihkan tepi danau,Clear the lake shore
-Q_MQ1_S10_OBJ,Bicara dengan perempuan di tepi danau dan pelajari Ca,Speak with the woman by the lake and learn Ca
-Q_MQ1_S11_OBJ,Beristirahat di petilasan jalan kawah,Rest at the petilasan on the crater road
-Q_MQ1_S12_OBJ,Kalahkan Kapten Tanpa Rupa di bibir kawah,Defeat the Faceless Captain on the crater rim
-Q_MQ1_S13_OBJ,Akhiri legenda itu sekali lagi: fajar palsu,End the legend again: the false dawn
-Q_MQ1_S14_OBJ,"Gantung Boeh Rarang di tiang timur, goreskan Ca, dan tenangkan amukan Sangkuriang","Hang the Boeh Rarang on the eastern post, cast Ca, and quell the awakened titan Sangkuriang"
+Q_MQ0_S6_HINT,"Tanya Ibu, lalu jalan ke panggung wayang yang terbakar","Ask Ibu, then walk to the burned wayang stage"
+Q_MQ0_S3_OBJ,"Temui Semar dan Cepot di sanggar, tulis namamu di lontar, lalu bertanya di pasar","Meet Semar and Cepot at the sanggar, write your names on the lontar, then ask around the market"
+Q_MQ0_S4_OBJ,Saksikan wayang ruwatan Semar dari balik kelir,Watch Semar's wayang ruwatan from behind the kelir
+Q_MQ0_S5_OBJ,Temukan Laras di tengah kerumunan saat bayangan melangkah turun dari layar,Find Laras in the crowd as the shadows step off the screen
+Q_MQ0_S6_OBJ,"Tanya Ibu di mana Laras berada, lalu ambil lontarnya dari panggung yang terbakar","Ask Ibu where Laras is, then pull her lontar from the burned stage"
+Q_MQ0_S7_OBJ,"Tunjukkan lontar kepada Semar, pelajari Ka dan rapalkan tiga kali","Show the lontar to Semar, learn Ka and cast it three times"
+Q_MQ1_S1_OBJ,"Jalani kebun teh saat fajar, temui cucu sesepuh, patahkan penyergapan di rumpun bambu dan temukan pita Laras","Arrival. Walk the tea terraces at dawn, meet the elder's grandson, break the ambush at the bamboo edge and find Laras's ribbon"
+Q_MQ1_S2_OBJ,"Beristirahat di petilasan dekat kebun teh (Cepot), lalu patahkan penyergapan di kampung","Rest at the petilasan by the tea terraces (Cepot), then break the ambush at the kampung"
+Q_MQ1_S3_OBJ,"Tanya sesepuh kampung tentang Laras, pelajari Ga, lalu ikuti suara seorang ibu ke dusun di tepi ngarai","Ask the kampung elder about Laras, learn Ga, then follow a mother's calling to the hamlet by the gorge"
+Q_MQ1_S4_OBJ,"Cari tahu apa yang membawa anak-anak: sandal, obor yang padam, jejak kaki","K1 clues. Find out what took the children: the sandal, the unlit torches, the prints"
+Q_MQ1_S5_OBJ,Ikuti tarikan lontar: seorang anak saat maghrib,K1 memory. Follow the lontar's pull: a child at maghrib
+Q_MQ1_S6_OBJ,Kalahkan Sandekala di ngarai sungai saat senja,Defeat Sandekala in the river gorge at dusk
+Q_MQ1_S7_OBJ,Baca Batu Tulis yang dirusak dan pelajari Nga,Read the defaced Batu Tulis and learn Nga
+Q_MQ1_S8_OBJ,Usir para tanpa rupa dari teras sawah dan terimalah Boeh Rarang dari Penenun,Drive the faceless off the rice terraces and take the Boeh Rarang from the Weaver
+Q_MQ1_S9_OBJ,"Ikuti sungai yang dibendung dan cari tahu sebabnya: pohon tumbang, kandang kosong, alat tenun","K2 clues. Follow the dammed river and find out why: felled trees, empty coops, the Weaver's loom"
+Q_MQ1_S10_OBJ,Bersihkan tepi danau dan lihat apa yang dijatuhkan seorang Tanpa Rupa yang tumbang,Clear the lake shore and look at what the fallen Faceless dropped
+Q_MQ1_S11_OBJ,"Bicara dengan perempuan di tepi danau dan pelajari Ca, lalu daki jalan kawah ke petilasan","Speak with the woman by the lake and learn Ca, then climb the crater road to the petilasan"
+Q_MQ1_S12_OBJ,Mainkan Laras: membaca pelan-pelan di kawah,LC1. Play Laras: reading slowly at the crater
+Q_MQ1_S13_OBJ,Kalahkan Kapten Tanpa Rupa di bibir kawah dan ambil pecahan topeng,Defeat the Faceless Captain on the crater rim and take the mask fragment
+Q_MQ1_S14_OBJ,Ikuti tarikan lontar: malam Dayang Sumbi,K2 memory. Follow the lontar's pull: Dayang Sumbi's night
 Q_SQ_S1_TITLE,Lutung Kasarung,Lutung Kasarung
-Q_SQ_S1_S1_OBJ,Temukan arwah lutung hitam di hutan,Find the black lutung spirit in the forest
-Q_SQ_S1_S2_OBJ,Usir roh-roh dari mata air tersembunyi,Clear the spirits from the hidden spring
-Q_SQ_S1_S3_OBJ,Bicara dengan Purbasari,Speak with Purbasari
-Q_SQ_S1_S4_OBJ,Antar Purbasari ke mata air,Bring Purbasari to the spring
-Q_SQ_S2_TITLE,Kuntilanak Rumpun Bambu,The Bamboo-Grove Kuntilanak
-Q_SQ_S2_S1_OBJ,Dengarkan laporan kepala desa,Hear the village head's reports
-Q_SQ_S2_S2_OBJ,Cari Kuntilanak di rumpun bambu yang gelap,Find the Kuntilanak in the dark bamboo grove
-Q_SQ_S2_S3_OBJ,Kalahkan Kuntilanak itu,Defeat the Kuntilanak
-Q_SQ_S2_S4_OBJ,Lapor kepada kepala desa,Report back to the village head
+Q_SQ_S1_S1_OBJ,"Bicara dengan Ki Darsa, sang juru pantun","Talk to Ki Darsa, the juru pantun"
+Q_SQ_S1_S2_OBJ,"Periksa persembahan si lutung, dan temukan mata air tersembunyi","Look at the langur's offerings, and find the hidden spring"
+Q_SQ_S1_S3_OBJ,"Ingatan. Sebagai lutung, tuntun gadis itu ke mata air","Memory. As the langur, lead the girl to the spring"
+Q_SQ_S1_S4_OBJ,Bicara dengan gadis itu di mata air,Speak with the girl at the spring
+Q_SQ_S2_TITLE,Tangis di Rumpun Bambu,Crying in the Bamboo
+Q_SQ_S2_S1_OBJ,Dengarkan kepala desa,Hear out the village head
+Q_SQ_S2_S2_OBJ,"Telusuri rumpun bambu, dari mana tangisan itu datang",Search the bamboo grove for where the crying comes from
+Q_SQ_S2_S3_OBJ,Ingatan. Susuri rumpun bambu di malam hari seperti sang nenek,Memory. Walk the grove at night as the grandmother did
+Q_SQ_S2_S4_OBJ,Kalahkan kuntilanak di rumpun bambu,Defeat the kuntilanak in the grove
 Q_SQ_S3_TITLE,Angklung yang Tercerai,The Scattered Angklung
 Q_SQ_S3_S1_OBJ,Temukan 5 angklung yang tercecer,Find the 5 scattered angklung
 Q_SQ_S3_S2_OBJ,Kembalikan angklung kepada pemimpin kelompok,Return the angklung to the group leader
@@ -44,19 +44,19 @@ Q_SQ_S4_TITLE,Cepot Si Pemberani,Brave Cepot
 Q_SQ_S4_S1_OBJ,Kalahkan 3 babi hutan,Defeat 3 wild boars
 Q_SQ_S4_S2_OBJ,Lapor kepada Cepot,Report back to Cepot
 Q_MQ2_TITLE,Darah di Pamali,Blood on the Pamali
-Q_MQ2_S1_OBJ,Patahkan penyergapan di gerbang perbatasan,Break the ambush at the border gate
-Q_MQ2_S2_OBJ,Beristirahat di petilasan dekat sawah,Rest at the petilasan by the rice fields
-Q_MQ2_S3_OBJ,"Telusuri tiga petunjuk tentang Laras: pasar, reruntuhan, dan kuburan","Follow the three leads on Laras: the market, the ruins, the graveyard"
-Q_MQ2_S4_OBJ,"Pelajari Ha dari Ki Sumarto, yang pertunjukannya kau selamatkan","Learn Ha from Ki Sumarto, whose show you saved"
-Q_MQ2_S5_OBJ,Baca Na dari tulisan di dasar Arca,Read Na from the inscription on the Arca's base
-Q_MQ2_S6_OBJ,Pelajari Ca dari para perempuan di lesung,Learn Ca from the lesung women
-Q_MQ2_S7_OBJ,Hancurkan blokade di kaki bukit,Break the blockade on the foothill
-Q_MQ2_S8_OBJ,Terimalah restu juru kunci dan pelajari Ra,Receive the juru kunci's blessing and learn Ra
-Q_MQ2_S9_OBJ,Tembus gerbang candi,Fight through the temple gate
-Q_MQ2_S10_OBJ,Serbu perkemahan tanpa rupa di Candi Seribu,Storm the Faceless camp at Candi Seribu
-Q_MQ2_S11_OBJ,Akhiri malam Bandung Bondowoso,End Bandung Bondowoso's night
-Q_MQ2_S12_OBJ,Tuliskan nama sejati Nagawiru di batu Pamali,Write Nagawiru's true name on the Pamali stone
-Q_MQ2_S13_OBJ,Berduel dengan Hariang Banga di tepi penyeberangan,Duel Hariang Banga at the ford
+Q_MQ2_S1_OBJ,"Dengarkan kedua perekrut di pasar sungai, patahkan penyergapan di gerbang perbatasan dan beristirahat di petilasan","Arrival. Hear both recruiters at the river market, break the ambush at the border gate and rest at the petilasan"
+Q_MQ2_S2_OBJ,"Telusuri tiga petunjuk tentang Laras: pasar, reruntuhan, dan kuburan","Follow the three leads on Laras: the market, the ruins, the graveyard"
+Q_MQ2_S3_OBJ,"Pelajari Ha dari Ki Sumarto, baca Na dari dasar Arca dan pelajari Ca dari para perempuan di lesung","Learn Ha from Ki Sumarto, read Na off the Arca's base and learn Ca from the lesung women"
+Q_MQ2_S4_OBJ,Ambil pecahan topeng di kuburan dan lihat harganya,H3. Take the mask fragment in the graveyard and see the price
+Q_MQ2_S5_OBJ,Hancurkan blokade di kaki bukit dan terimalah restu juru kunci dan Ra,Break the blockade on the foothill and receive the juru kunci's blessing and Ra
+Q_MQ2_S6_OBJ,Tembus gerbang candi dan serbu perkemahan tanpa rupa di Candi Seribu,Fight through the temple gate and storm the Faceless camp at Candi Seribu
+Q_MQ2_S7_OBJ,"Periksa puing berbekas pahat, lesung yang ditinggalkan, dan helai lontar Laras","K3 clues. Examine the chisel-marked rubble, the abandoned lesung and Laras's strip"
+Q_MQ2_S8_OBJ,Ikuti tarikan lontar: para dayang sang putri,K3 memory. Follow the lontar's pull: the princess's women
+Q_MQ2_S9_OBJ,Mainkan Laras: ruang baca,LC3. Play Laras: the reading room
+Q_MQ2_S10_OBJ,Akhiri malam Bandung Bondowoso,End Bandung Bondowoso's night
+Q_MQ2_S11_OBJ,Seberangi ke batu Pamali dan tuliskan nama sejati Nagawiru di atasnya,Cross to the Pamali stone and write Nagawiru's true name on it
+Q_MQ2_S12_OBJ,Saksikan pertunjukan Ki Sumarto: dua saudara yang membelah tanah,K-III. Watch Ki Sumarto's show: the brothers who split the land
+Q_MQ2_S13_OBJ,"Baca surat-surat Hariang Banga untuk ibunya, lalu berduel dengannya di tepi penyeberangan","Read Hariang Banga's letters to his mother, then duel him at the ford"
 Q_MQ2_S14_OBJ,Pahat kembali nama sejati Raja Nagawiru di Batu Pamali untuk menghentikan perang,Carve King Nagawiru's true name onto the Pamali boundary stone
 Q_MQ2_S15_OBJ,Hentikan Pangeran Hariang Banga dalam duel di penyeberangan Sungai Pamali,Stop Prince Hariang Banga in single combat at the Pamali ford
 Q_SQ_M1_TITLE,Jaka Tarub dan Nawang Wulan,Jaka Tarub and Nawang Wulan
@@ -79,16 +79,16 @@ Q_SQ_M4_S1_OBJ,Dengarkan permintaan Ki Sumarto,Hear Ki Sumarto's request
 Q_SQ_M4_S2_OBJ,Temukan gong ageng di relung reruntuhan,Find the gong ageng in the ruins' sealed nook
 Q_SQ_M4_S3_OBJ,Bawa gong ageng kepada Ki Sumarto,Bring the gong ageng to Ki Sumarto
 Q_MQ3_TITLE,Bilah Tujuh Turunan,The Seven-Generation Blade
-Q_MQ3_S1_OBJ,Patahkan penyergapan di perbatasan timur,Break the ambush at the eastern border
-Q_MQ3_S2_OBJ,Beristirahat di petilasan di sabana,Rest at the petilasan on the savanna
-Q_MQ3_S3_OBJ,Temui Mpu Wirasana di bengkel tempa dan belajar mematahkan tanda kutukan,Find Mpu Wirasana at the forge and learn to break curse marks
-Q_MQ3_S4_OBJ,Bantu Mbok Srini mencari Timun Mas,Help Mbok Srini find Timun Mas
+Q_MQ3_S1_OBJ,"Jalani jalan para pandai besi, patahkan penyergapan di perbatasan timur dan beristirahat di petilasan sabana","Arrival. Walk the smiths' street, break the ambush at the eastern border and rest at the savanna petilasan"
+Q_MQ3_S2_OBJ,Ikuti tanda kutukan merah ke bengkel Mpu Wirasana dan belajar mematahkannya,Follow the red curse marks to Mpu Wirasana's forge and learn to break them
+Q_MQ3_S3_OBJ,"Bantu janda yang pondoknya hancur, dan periksa biji timun, tempat jarum, toples garam dan terasi","Help the widow whose hut was smashed, and examine the seeds, needle case, salt jar and terasi pot"
+Q_MQ3_S4_OBJ,Ikuti tarikan lontar: Timun Mas,K4 memory. Follow the lontar's pull: Timun Mas
 Q_MQ3_S5_OBJ,Kalahkan Buto Ijo,Defeat Buto Ijo
-Q_MQ3_S6_OBJ,Patahkan dua tanda kutukan latihan,Break two practice curse marks
-Q_MQ3_S7_OBJ,Ikuti jejak abu Si Tanpa Ngaran menyusuri pesisir,Follow the Hunter's ash trail down the coast
-Q_MQ3_S8_OBJ,Seberangi Lautan Pasir,Cross the Sea of Sand
-Q_MQ3_S9_OBJ,Beristirahat di petilasan di gurun,Rest at the petilasan in the desert
-Q_MQ3_S10_OBJ,Tenangkan keris terkutuk,Lay the cursed keris to rest
+Q_MQ3_S6_OBJ,"Patahkan dua tanda kutukan latihan, lalu periksa sarung keris yang patah dan catatan tempa","Break two practice curse marks, then examine the broken scabbard and the forge records"
+Q_MQ3_S7_OBJ,Ikuti jejak abu Si Tanpa Ngaran menyusuri pesisir dan seberangi Lautan Pasir,Follow the Hunter's ash trail down the coast and cross the Sea of Sand
+Q_MQ3_S8_OBJ,"Beristirahat di petilasan gurun, lalu mainkan Laras di jalan gurun","Rest at the desert petilasan, then play Laras on the desert road"
+Q_MQ3_S9_OBJ,"Capai kuil, lihat bengkel tua, dan tenangkan keris terkutuk","Reach the shrine, see the old forge, and lay the cursed keris to rest"
+Q_MQ3_S10_OBJ,"Ambil pecahan topeng terakhir, satukan topeng dan lihat sang abdi","Take the last mask fragment, join the mask and see the servant"
 Q_MQ3_S11_OBJ,Hadapi Si Tanpa Ngaran,Face the Nameless Hunter
 Q_MQ3_S12_OBJ,Beristirahat di petilasan gurun sebelum menyerbu candi terkutuk,Rest at the desert petilasan before storming the cursed shrine
 Q_MQ3_S13_OBJ,Patahkan kutukan darah Keris Mpu Gandring yang menjaga candi,Break the blood-curse of Mpu Gandring's Keris guarding the shrine
@@ -112,40 +112,40 @@ Q_SQ_T4_S2_OBJ,Temukan 3 kuda kepang yang terbawa badai,Find the 3 kuda kepang t
 Q_SQ_T4_S3_OBJ,Kembalikan kuda kepang kepada pemimpin rombongan,Return the kuda kepang to the troupe leader
 Q_SQ_T4_S4_OBJ,Tonton pertunjukan di panggung,Watch the show at the stage
 Q_MQ5_TITLE,Ke Rahang Sang Waktu,Into the Maw of Time
-Q_MQ5_S1_OBJ,Masuki Gua Kala,Enter Gua Kala
-Q_MQ5_S2_OBJ,"Rebut La, huruf pertama namanya, di mulut gua","Reclaim La, the first letter of her name, at the Maw"
-Q_MQ5_S3_OBJ,Hancurkan penangkal waktu sebelah barat di Pasir Jam Pasir,Shatter the western time-ward on the Hourglass Sands
-Q_MQ5_S4_OBJ,Hancurkan penangkal waktu sebelah timur,Shatter the eastern time-ward
-Q_MQ5_S5_OBJ,"Rebut Ra, huruf kedua namanya, di Jurang Lupa","Reclaim Ra, the second letter of her name, in the Abyss of Forgetting"
-Q_MQ5_S6_OBJ,Beristirahat di petilasan terakhir,Rest at the last petilasan
-Q_MQ5_S7_OBJ,Tenangkan Batara Kala,Calm Batara Kala
-Q_MQ5_S8_OBJ,Tuliskan nama Laras,Write Laras's name
+Q_MQ5_S1_OBJ,Masuki Gua Kala dan rebut La dalam kenangan permainan kejar-kejaran,Enter Gua Kala and reclaim La in the memory of the tag game
+Q_MQ5_S2_OBJ,Hancurkan penangkal waktu barat dan timur di Pasir Jam Pasir,Shatter the western and eastern time-wards on the Hourglass Sands
+Q_MQ5_S3_OBJ,Seberangi Jurang Lupa dan rebut Ra dalam kenangan dua cangkir teh,Cross the Abyss of Forgetting and reclaim Ra in the memory of the two cups
+Q_MQ5_S4_OBJ,Beristirahat di petilasan terakhir dan rebut Sa dalam kenangan nama-nama yang ditulis,Rest at the last petilasan and reclaim Sa in the memory of the written names
+Q_MQ5_S5_OBJ,Dengarkan kisah Murwakala dari Semar: mengapa ruwatan membalikkan Kala,K10. Hear Semar's tale of Murwakala: why the ruwatan turns Kala back
+Q_MQ5_S6_OBJ,Mainkan Laras: siapa di sana?,LC6. Play Laras: who's there?
+Q_MQ5_S7_OBJ,Bacakan nama-nama di kelir Semar,K7 memory. Read the names aloud at Semar's kelir
+Q_MQ5_S8_OBJ,Tenangkan Batara Kala,Calm Batara Kala
 Q_MQG_TITLE,Wajah Pinjaman,The Borrowed Face
-Q_MQ0_S8_OBJ,Ikuti jejak para penyerbu ke barat,Follow the raiders west
-Q_MQG_S1_OBJ,Susun rencana menyusup bersama Ciung Wanara di gerbang alun-alun,Plan the infiltration with Ciung Wanara at the square gates
-Q_MQG_S2_OBJ,Menangkan babak pertama sayembara raja,Win the first bout of the king's tournament
-Q_MQG_S3_OBJ,Menangkan babak kedua,Win the second bout
-Q_MQG_S4_OBJ,"Bicara dengan Uwa Lengser, abdi tua istana","Speak with the old chamberlain, Uwa Lengser"
-Q_MQG_S5_OBJ,Beristirahat di pelataran istana,Rest in the palace courtyard
-Q_MQG_S6_OBJ,Hadang kereta di halaman penjara,Stop the wagon in the cell yard
-Q_MQG_S7_OBJ,"Geledah sel tahanan, cari Laras",Search the cells for Laras
-Q_MQG_S8_OBJ,Putuskan nasib si pembelot,Decide the deserter's fate
-Q_MQ0_S7_HINT,{attack} menyerang · {dodge} menghindar,{attack} attacks · {dodge} dodges
+Q_MQ0_S8_OBJ,Usir para tanpa rupa dari alun-alun desa,Drive the faceless out of the village square
+Q_MQG_S1_OBJ,"Berbaur dengan kerumunan sayembara, bicara dengan penjual ayam jago dan susun rencana bersama Ciung Wanara","Arrival. Join the tournament crowd, talk to the rooster seller and plan the infiltration with Ciung Wanara"
+Q_MQG_S2_OBJ,Menangkan kedua babak sayembara raja,Win both bouts of the king's tournament
+Q_MQG_S3_OBJ,"Bicara dengan Uwa Lengser, abdi tua istana, dan masuki istana dalam","Speak with the old chamberlain, Uwa Lengser, and enter the inner palace"
+Q_MQG_S4_OBJ,Hadang kereta di halaman penjara,Stop the wagon in the cell yard
+Q_MQG_S5_OBJ,"Geledah sel tahanan, cari Laras",Search the cells for Laras
+Q_MQG_S6_OBJ,Mainkan Laras: di bawah kain kereta,LC2. Play Laras: under the wagon cloth
+Q_MQG_S7_OBJ,Putuskan nasib si pembelot dan perhatikan lukisan potret sang raja,Decide the deserter's fate and look at the court portrait of the king
+Q_MQG_S8_OBJ,"Dengarkan kenangan Lengser, lalu ambil pecahan topeng di dekat takhta","Hear Lengser's memory, then take the mask fragment by the throne"
+Q_MQ0_S7_HINT,"Tahan {cast}, gambar Ka mengikuti bayangan, lalu lepas","Hold {cast}, trace Ka over the guide, then release"
 Q_SQ_S5_TITLE,Gema: Sangkuriang,Echo: Sangkuriang
 Q_SQ_S5_S1_OBJ,Minta boeh rarang pada si penenun,Ask the weaver for the boeh rarang
 Q_SQ_S5_S2_OBJ,Hentikan Sangkuriang sebelum malam berakhir,Stop Sangkuriang before the night ends
 Q_SQ_M5_TITLE,Gema: Seribu Candi,Echo: A Thousand Temples
 Q_SQ_M5_S1_OBJ,Hentikan Bandung Bondowoso di candi,Stop Bandung Bondowoso at the temples
 Q_MQ4_TITLE,Laut Tak Pernah Lupa,The Sea Does Not Forget
-Q_MQ4_S1_OBJ,Pulanglah ke Desa Purwa,Go home to Desa Purwa
-Q_MQ4_S2_OBJ,Bicara dengan Ibu,Talk to Ibu
-Q_MQ4_S3_OBJ,Beristirahat di petilasan di pantai pasir hitam,Rest at the petilasan on the black-sand coast
-Q_MQ4_S4_OBJ,"Bicara dengan Mbah Wiryo, juru kunci pantai","Speak with Mbah Wiryo, the juru kunci of the coast"
-Q_MQ4_S5_OBJ,Seberangi karang,Cross the reef
-Q_MQ4_S6_OBJ,Daki jalan setapak di tebing,Climb the cliff path
-Q_MQ4_S7_OBJ,Beristirahat di kuil tebing dan dengarkan suara dari air,Rest at the cliff shrine and listen to the water
-Q_MQ4_S8_OBJ,Jalani Ujian Ombak,Pass the Trial of the Waves
-Q_MQ4_S9_OBJ,Terimalah Ombak dan Kain Hijau,Receive Ombak and the Kain Hijau
+Q_MQ4_S1_OBJ,Pulanglah ke Desa Purwa di bawah Gerhana,Go home to Desa Purwa under the Eclipse
+Q_MQ4_S2_OBJ,Tuliskan nama setiap keluarga di tiang pintu mereka,Write each family's name on their doorpost
+Q_MQ4_S3_OBJ,"Bawakan Ibu tiga benda milik Laras: pita, pesan papan kereta, dan helai Ka","Bring Ibu three of Laras's things: the ribbon, the wagon-board message and the Ka strip"
+Q_MQ4_S4_OBJ,Duduk di meja ibumu bersama kedua saudara raja,Sit at your mother's table with the two brothers
+Q_MQ4_S5_OBJ,"Bicara dengan Semar tentang laut, dan (opsional) dengarkan Aria Kebonan di dekat panggung terbakar","Talk to Semar about the sea, and (optional) hear Aria Kebonan by the burned stage"
+Q_MQ4_S6_OBJ,"Beristirahat di petilasan pantai pasir hitam, lihat desa menambal jala, dan bicara dengan Mbah Wiryo","Arrival. Rest at the black-sand petilasan, see the village mend its nets and speak with Mbah Wiryo"
+Q_MQ4_S7_OBJ,Temukan tiga bait lagu laut yang terlupa pada tiga keluarga,K8 clues. Find the three forgotten verses of the sea song with three families
+Q_MQ4_S8_OBJ,Ikuti tarikan lontar: istri Mbah Wiryo di pantai,K8 memory. Follow the lontar's pull: Mbah Wiryo's wife on the shore
+Q_MQ4_S9_OBJ,Seberangi karang,Cross the reef
 Q_SQ_K1_TITLE,Tukik yang Tersesat,The Stranded Hatchlings
 Q_SQ_K1_S1_OBJ,Dengarkan kekhawatiran bocah nelayan Damar tentang penyu kecil di bukit pasir,Hear the fisher child Damar's worry about the stranded sea-turtle hatchlings
 Q_SQ_K1_S2_OBJ,Kumpulkan 3 tukik yang tersesat di balik bukit pasir Pantai Selatan,Gather the 3 hatchlings stranded among the Southern Shore dunes
@@ -157,4 +157,102 @@ Q_SQ_K2_S2_OBJ,Masuki teluk tersembunyi di tenggara Karang Selatan,Enter the hid
 Q_SQ_K2_S3_OBJ,Tumbangkan Bajul Putih Tua yang mengamuk di teluk karang,Defeat the rampaging Bajul Putih Tua in the reef cove
 Q_SQ_K2_S4_OBJ,Lapor kembali kepada Pak Raka di pondok nelayan,Report back to Pak Raka at the fishing hut
 Q_MQG_S9_OBJ,Buka topeng sang raja,Unmask the king
-Q_MQ0_S3_HINT,Pulang lalu tekan {interact} di dekat Ibu,Walk home and press {interact} near Ibu
+Q_MQ0_S3_HINT,"Bicara dengan Semar di sanggar, lalu bertanya di pasar","Talk to Semar in the sanggar, then ask at the market"
+Q_MQ0_S9_OBJ,Ikuti para penyerbu ke gerbang barat dan lihat sang Pemburu,Follow the raiders to the west gate and see the Hunter
+Q_MQ1_S15_OBJ,Akhiri legenda itu sekali lagi: fajar palsu,End the legend again: the false dawn
+Q_MQ4_S10_OBJ,"Daki jalan setapak tebing, beristirahat di kuil tebing dan dengarkan ratu selatan sebagai satu penceritaan (K9)","Climb the cliff path, rest at the cliff shrine and hear the queen of the south as one retelling (K9)"
+Q_MQ4_S11_OBJ,Mainkan Laras: suara di atas air,LC5. Play Laras: the voice on the water
+Q_MQ4_S12_OBJ,Jalani Ujian Ombak dan terimalah Ombak dan Kain Hijau,Pass the Trial of the Waves and receive Ombak and the Kain Hijau
+Q_MQ5_S9_OBJ,Tuliskan nama Laras,Write Laras's name
+Q_MQ2_S1_A,Dengarkan perekrut tepi barat,Hear the west-bank recruiter
+Q_MQ2_S1_B,Dengarkan perekrut tepi timur,Hear the east-bank recruiter
+Q_MQ2_S2_A,Petunjuk pasar,The market lead
+Q_MQ2_S2_B,Petunjuk reruntuhan,The ruins lead
+Q_MQ2_S2_C,Petunjuk kuburan,The graveyard lead
+Q_MQ2_S3_A,Pelajari Ha dari Ki Sumarto,Learn Ha from Ki Sumarto
+Q_MQ2_S3_B,Baca Na dari dasar Arca,Read Na from the Arca's base
+Q_MQ2_S3_C,Pelajari Ca dari perempuan lesung,Learn Ca from the lesung women
+Q_MQ4_S2_A,Tiang pintu pertama,The first doorpost
+Q_MQ4_S2_B,Tiang pintu kedua,The second doorpost
+Q_MQ4_S2_C,Tiang pintu ketiga,The third doorpost
+Q_MQ0_S8_HINT,{attack} menyerang · {dodge} menghindar,{attack} attacks · {dodge} dodges
+Q_MQ0_S1_DONE,"Kukejar Laras sampai sumur. Ia memanggil seekor kucing dengan nama aslinya, dan kucing itu datang.","I chased Laras to the well. She called a stray cat by its real name, and it came."
+Q_MQ0_S2_DONE,"Kami minum teh melati bersama Ibu, lalu kujemput Ciung dan telurnya dari pohon.","We had jasmine tea with Ibu, then I fetched Ciung and his egg down from the tree."
+Q_MQ0_S3_DONE,Di sanggar Laras menulis nama kami di satu lontar. Pasar memperingatkan tentang lelaki bertopeng polos.,At the sanggar Laras wrote our names on one lontar. The market warned of a man in a blank mask.
+Q_MQ0_S4_DONE,"Semar mementaskan ruwatan: Batara Kala, Empat Segel, dan nama anak-anak yang dibacakan.","Semar played the ruwatan: Batara Kala, the Four Seals, and the children's names read aloud."
+Q_MQ0_S5_DONE,"Bayangan turun dari kelir. Si Pemburu membawa Laras, dan lontar kami robek.","The shadows stepped off the screen. The Hunter took Laras, and our lontar tore."
+Q_MQ0_S6_DONE,"Ibu tak ingat Laras, tapi dua cangkir terhidang. Kuambil lontarku dari panggung yang hangus.","Ibu doesn't remember Laras, yet two cups were set out. I took my lontar from the burned stage."
+Q_MQ0_S7_DONE,"Semar masih ingat Laras. Ia mengajariku Ka, dan kurapalkan tiga kali.","Semar still remembers Laras. He taught me Ka, and I cast it three times."
+Q_MQ0_S8_DONE,Kuusir para tanpa rupa dari alun-alun.,I drove the faceless out of the square.
+Q_MQ0_S9_DONE,"Si Pemburu berdiri di gerbang barat. Ciung lari ke barat, dan para topeng mengikutinya.","The Hunter stood at the west gate. Ciung had run west, and the masks followed."
+Q_MQ1_S1_DONE,Di kebun teh kupatahkan penyergapan dan kutemukan pita Laras di rumpun bambu.,On the tea terraces I broke an ambush and found Laras's ribbon in the bamboo.
+Q_MQ1_S2_DONE,Cepot ada di petilasan. Lalu kupatahkan penyergapan di kampung.,Cepot was at the petilasan. Then I broke the ambush in the kampung.
+Q_MQ1_S3_DONE,Sesepuh kampung melihat Laras berlari bersama bocah liar. Ia mengajariku Ga.,The kampung elder saw Laras running with a wild boy. He taught me Ga.
+Q_MQ1_S4_DONE,"Kutemukan sandal, obor padam, dan jejak anak-anak menuju ngarai.","I found a sandal, cold torches and children's prints leading into the gorge."
+Q_MQ1_S5_DONE,"Lontar menarikku ke maghrib seorang anak, dan aku belajar menyalakan oncor.","The lontar pulled me into a child's maghrib, and I learned to light the oncor."
+Q_MQ1_S6_DONE,Kukalahkan Sandekala di ngarai. Jejak Laras dan Ciung berpisah di sana.,I beat Sandekala in the gorge. Laras's and Ciung's tracks split there.
+Q_MQ1_S7_DONE,"Di Batu Tulis yang dirusak Laras menggores: ""Mereka butuh aku membaca."" Kupelajari Nga.","On the defaced Batu Tulis Laras scratched: ""They need me to read."" I learned Nga."
+Q_MQ1_S8_DONE,Penenun menyembunyikan Laras semalam dan memberiku Boeh Rarang.,The Weaver hid Laras for a night and gave me the Boeh Rarang.
+Q_MQ1_S9_DONE,"Sungai dibendung, kandang kosong, pohon tumbang: seseorang membangun perahu di danau.","A dammed river, empty coops, felled trees: someone is building a boat on the lake."
+Q_MQ1_S10_DONE,Seorang tanpa rupa menjatuhkan mainan bernama. Mereka dulu manusia.,A faceless one dropped a named toy. They were people once.
+Q_MQ1_S11_DONE,Perempuan di danau mengenali wajah Ciung. Ia mengajariku Ca dan menunjuk kawah.,The woman at the lake knew Ciung's face. She taught me Ca and pointed to the crater.
+Q_MQ1_S12_DONE,"Di kawah Laras dipaksa membaca. Ia sengaja membaca pelan, dan aku mendengar suaranya.","At the crater Laras was made to read. She read slowly on purpose, and I heard her voice."
+Q_MQ1_S13_DONE,"Kukalahkan Kapten Tanpa Rupa, tapi ia sempat memecahkan segel. Kutemukan pecahan topeng kedua.","I beat the Faceless Captain, but he cracked the seal first. I found a second mask fragment."
+Q_MQ1_S14_DONE,"Lontar menarikku ke malam Dayang Sumbi: kain putih, lesung, fajar palsu.","The lontar pulled me into Dayang Sumbi's night: white cloth, lesung, a false dawn."
+Q_MQ1_S15_DONE,"Fajar palsu mengakhiri Sangkuriang sekali lagi. Ciung dan Nagawiru bebas, dan telur menetas.","A false dawn ended Sangkuriang again. Ciung and Nagawiru are free, and the egg hatched."
+Q_MQG_S1_DONE,"Di keramaian sayembara Galuh, Ciung dan aku menyusun rencana.","In Galuh's tournament crowd, Ciung and I made a plan."
+Q_MQG_S2_DONE,Kumenangkan kedua babak; ayam Ciung menang di balik tembok.,I won both bouts; Ciung's rooster won behind the wall.
+Q_MQG_S3_DONE,Uwa Lengser membuka istana dalam. Ia melihat mata seorang ratu pada Ciung.,Uwa Lengser opened the inner palace. He saw a queen's eyes in Ciung.
+Q_MQG_S4_DONE,"Aku terlambat: kereta Laras lolos ke timur, tapi ia melempar helai bertanda Ka.","I was too late: Laras's wagon escaped east, but she threw me a strip marked Ka."
+Q_MQG_S5_DONE,"Di dinding sel Laras menulis: ""Seribu candi. Jangan berhenti.""","On the cell wall Laras wrote: ""The thousand temples. Don't stop."""
+Q_MQG_S6_DONE,Kudengar Laras di bawah kain kereta; ia menitip pesan untuk Ibu soal cangkir.,I heard Laras under the wagon cloth; she left a message for Ibu about the cup.
+Q_MQG_S7_DONE,"Nasib si pembelot diputuskan, dan potret raja di galeri sudah dikikis habis.","The deserter's fate was decided, and the king's portrait in the gallery was scraped bare."
+Q_MQG_S8_DONE,Ingatan Lengser: seorang lelaki mencoba wajah raja. Pecahan topeng ketiga di dekat takhta.,Lengser's memory: a man trying on the king's face. A third mask fragment lay by the throne.
+Q_MQG_S9_DONE,"Kubuka topeng Barma Wijaya. Ia mengaku memberikan namanya yang dulu pada Kala, dan nama itu si Pemburu.","I unmasked Barma Wijaya. He confessed he gave his old name to Kala, and that name is the Hunter."
+Q_MQ2_S1_DONE,Di pasar sungai dua perekrut menceritakan perang yang sama secara terbalik. Kulewati gerbang perbatasan.,At the river market two recruiters told the same war backwards. I passed the border gate.
+Q_MQ2_S2_DONE,"Tiga petunjuk tentang Laras: pasar, reruntuhan, kuburan.","Three leads on Laras: the market, the ruins, the graveyard."
+Q_MQ2_S3_DONE,"Kupelajari Ha dari Ki Sumarto, Na dari dasar Arca, dan Ca dari perempuan lesung.","I learned Ha from Ki Sumarto, Na from the Arca's base and Ca from the lesung women."
+Q_MQ2_S4_DONE,Di kuburan si Pemburu bilang dua pasukan membuat dua kali lupa. Pecahan keempat menunjukkan harga namanya.,At the graves the Hunter said two armies make twice the forgetting. A fourth fragment showed what his name cost.
+Q_MQ2_S5_DONE,"Blokade runtuh, dan juru kunci memberiku Ra serta membuka tangga candi.","The blockade fell, and the juru kunci gave me Ra and opened the temple stairs."
+Q_MQ2_S6_DONE,Perkemahan di Candi Seribu ternyata ruang baca. Laras sudah dibawa ke timur.,The camp at Candi Seribu was a reading room. Laras had been taken east.
+Q_MQ2_S7_DONE,"Puing, lesung yang ditinggalkan, helai Ka Laras: semuanya menunjuk satu kisah lama.","Rubble, an abandoned lesung, Laras's Ka strip: all pointed to one old tale."
+Q_MQ2_S8_DONE,"Lontar menarikku ke para dayang sang putri, dan aku belajar irama lesung.","The lontar pulled me to the princess's women, and I learned the lesung beat."
+Q_MQ2_S9_DONE,Laras terpaksa membaca di ruang baca. Ia menulis Ka lagi.,Laras was forced to read in the reading room. She wrote Ka again.
+Q_MQ2_S10_DONE,"Dengan irama dan Ca, malam Bandung Bondowoso berakhir.","With the beat and Ca, Bandung Bondowoso's night ended."
+Q_MQ2_S11_DONE,"Di batu Pamali kutuliskan nama Nagawiru, nama pertama yang kutulis untuk orang lain.","On the Pamali stone I wrote Nagawiru's name, the first name I ever wrote for someone."
+Q_MQ2_S12_DONE,"Ki Sumarto memainkan dua saudara yang membelah tanah, dan aku belajar arti pamali.","Ki Sumarto played two brothers who split the land, and I learned what pamali means."
+Q_MQ2_S13_DONE,"Kubaca surat-surat Hariang Banga untuk ibunya, lalu berduel dengannya di tepi penyeberangan.","I read Hariang Banga's letters to his mother, then fought him at the ford."
+Q_MQ3_S1_DONE,"Di jalan para pandai besi kutemui putri sang empu, lalu kupatahkan penyergapan di perbatasan.","On the smiths' street I met the smith's daughter, then broke the border ambush."
+Q_MQ3_S2_DONE,"Tanda kutukan merah membawaku ke Mpu Wirasana, yang mengajariku mematahkannya.","Red curse marks led me to Mpu Wirasana, who taught me to break them."
+Q_MQ3_S3_DONE,"Sang janda kehilangan putrinya, Timun Mas. Kutemukan biji, jarum, garam, dan terasi.","The widow lost her daughter Timun Mas. I found the seeds, needles, salt and terasi."
+Q_MQ3_S4_DONE,Lontar menarikku menjadi Timun Mas yang lari dari seorang raksasa.,The lontar pulled me into Timun Mas running from a giant.
+Q_MQ3_S5_DONE,"Kukalahkan Buto Ijo, yang dibuat gila oleh kutukan keris.","I beat Buto Ijo, driven mad by the keris's curse."
+Q_MQ3_S6_DONE,Kupatahkan dua tanda latihan dan menemukan sarung keris patah serta catatan tempa Wirasana.,I broke two practice marks and found the broken scabbard and Wirasana's forge records.
+Q_MQ3_S7_DONE,Kuikuti jejak abu si Pemburu menyusuri pesisir dan Lautan Pasir.,I followed the Hunter's ash trail down the coast and across the Sea of Sand.
+Q_MQ3_S8_DONE,Laras mencoba menggambar wajahku di pasir dan tak bisa. Ia hanya menulis Ka.,Laras tried to draw my face in the sand and couldn't. She only wrote Ka.
+Q_MQ3_S9_DONE,"Di candi gurun kulihat Laras membaca. Ingatan bengkel tua mengajariku memadamkan kutuk, dan keris itu tenang.","At the desert shrine I saw Laras reading. A memory of the old forge taught me to douse the curse, and the keris quieted."
+Q_MQ3_S10_DONE,Pecahan terakhir menunjukkan penyerbuan lewat mata si Pemburu. Pecahan-pecahan menyatu menjadi satu topeng.,The last fragment showed the raid through the Hunter's eyes. The fragments joined into one mask.
+Q_MQ3_S11_DONE,Kuhadapi si Pemburu dan kukembalikan nama Aria Kebonan. Lalu Gerhana mengambil Laras.,I faced the Hunter and gave back the name Aria Kebonan. Then the Eclipse took Laras.
+Q_MQ4_S1_DONE,Pasukan berkuda Hariang Banga membawaku pulang ke Desa Purwa di bawah Gerhana.,Hariang Banga's riders carried me home to Desa Purwa under the Eclipse.
+Q_MQ4_S2_DONE,Kutuliskan nama tiga keluarga di tiang pintu mereka.,I wrote three families' names on their doorposts.
+Q_MQ4_S3_DONE,"Kubawakan Ibu pita, papan, dan helai Ka milik Laras. Ia menata cangkir kedua dengan benar.","I brought Ibu Laras's ribbon, board and Ka strip. She set the second cup straight."
+Q_MQ4_S4_DONE,Ciung dan Hariang makan di meja ibuku sebagai saudara.,Ciung and Hariang ate at my mother's table as brothers.
+Q_MQ4_S5_DONE,"Semar bilang ia dewa yang memilih menjadi abdi, dan menyuruhku ke selatan.","Semar told me he is a god who chose to be a servant, and sent me south."
+Q_MQ4_S6_DONE,Di pantai pasir hitam Mbah Wiryo mengajariku tata krama laut.,On the black-sand shore Mbah Wiryo taught me the sea's manners.
+Q_MQ4_S7_DONE,Kukumpulkan tiga bait lagu laut dari tiga keluarga.,I gathered three verses of the sea song from three families.
+Q_MQ4_S8_DONE,Lontar menunjukkan istri Wiryo mengajarinya memanggil nama ke dalam air.,The lontar showed Wiryo's wife teaching him to call a name into the water.
+Q_MQ4_S9_DONE,Kuseberangi karang.,I crossed the reef.
+Q_MQ4_S10_DONE,Di kuil tebing kudengar ratu selatan dituturkan sebagai satu kisah di antara banyak.,At the cliff shrine I heard the queen of the south told as one tale among many.
+Q_MQ4_S11_DONE,Laras mengikuti suara di atas air. Laut masih menyebut namanya.,Laras followed a voice on the water. The sea still says her name.
+Q_MQ4_S12_DONE,Kujalani Ujian Ombak dan menerima Ombak serta Kain Hijau.,I passed the Trial of the Waves and received Ombak and the Kain Hijau.
+Q_MQ5_S1_DONE,Di mulut gua kuputar ulang kejar-kejaran dan merebut La.,At the cave mouth I replayed the tag game and won back La.
+Q_MQ5_S2_DONE,Kuhancurkan dua penangkal waktu di Pasir Jam Pasir.,I shattered two time-wards on the Hourglass Sands.
+Q_MQ5_S3_DONE,Di Jurang Lupa kuputar ulang dua cangkir dan merebut Ra.,In the Abyss of Forgetting I replayed the two cups and won back Ra.
+Q_MQ5_S4_DONE,Di petilasan terakhir kuputar ulang nama-nama yang ditulis dan merebut Sa.,At the last petilasan I replayed the written names and won back Sa.
+Q_MQ5_S5_DONE,"Semar menceritakan Murwakala: Kala lapar, bukan jahat.","Semar told the tale of Murwakala: Kala is hungry, not wicked."
+Q_MQ5_S6_DONE,"Laras di dasar kegelapan melupakanku, tapi tangannya masih menulis Ka.","Laras at the bottom of the dark forgot me, but her hand still wrote Ka."
+Q_MQ5_S7_DONE,Aku menjadi dalang di kelir Semar dan membacakan nama-nama.,I became the dalang at Semar's kelir and read the names.
+Q_MQ5_S8_DONE,Kutenangkan Batara Kala dengan Ruwatan Fajar.,I calmed Batara Kala with the Dawn Ruwatan.
+Q_MQ5_S9_DONE,"Kutuliskan La-Ra-Sa, dan Laras pulang.","I wrote La-Ra-Sa, and Laras came home."
+Q_SQ_S1_S5_OBJ,Kembali kepada Ki Darsa,Return to Ki Darsa
+Q_SQ_S2_S5_OBJ,Lapor kepada kepala desa,Report to the village head

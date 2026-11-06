@@ -7,6 +7,7 @@ script = ExtResource("1")
 npc_id = "cepot"
 name_key = "NPC_CEPOT_NAME"
 entries = Array[Dictionary]([
+	{"if": ["step:mq0=2"], "lines": ["DLG_CEPOT_P1", "DLG_CEPOT_P2"], "do": [], "quiet": true},
 	{"if": ["step:sq_s4=1"], "lines": ["DLG_CEPOT_1", "DLG_CEPOT_2", "DLG_CEPOT_3", "DLG_CEPOT_4"], "do": []},
 	{"if": ["step:sq_s4=0", "glyph:sunda_ga", "!flag:cepot_ga_hint"], "lines": ["DLG_CEPOT_15"], "do": ["flag:cepot_ga_hint"]},
 	{"if": ["step:sq_s4=0"], "lines": ["DLG_CEPOT_5", "DLG_CEPOT_6", "DLG_CEPOT_7", "DLG_CEPOT_8"], "do": []},

@@ -5,7 +5,8 @@ extends Node
 signal changed   # ilmu, stats, gear, glyphs or flask changed
 signal saved     # HUD shows "Saved" for 1 s
 
-const VERSION := 2   # 2: quest records gain `all` (bits of an all step). Older saves load with all = 0.
+const VERSION := 3   # 2: quest records gain `all` (bits of an all step). Older saves load with all = 0.
+                     # 3: memory_return (architecture.md 9b). Older saves load with none.
 const STATS := ["vit", "end", "str", "dex", "spi"]
 const STARTER_GLYPHS: Array[String] = []   # glyphs come from the main quest (quests.md 3.3)
 ## Quest Ilmu by zone and size S/M/L (quests.md 3.1, TUNE). Desa Purwa uses the Act 1 row for now.
@@ -14,11 +15,12 @@ const QUEST_ILMU := {"tatar_sunda": [30, 60, 90], "desa_purwa": [30, 60, 90], "k
 	"gua_kala": [190, 380, 570]}
 ## Quest-trigger signals on Events with one String arg (quests.md 7.2).
 const QUEST_SIGNALS := ["talked_to", "item_picked", "boss_defeated", "area_cleared", "area_entered",
-	"zone_entered", "petilasan_activated", "glyph_learned", "class_chosen", "weakness_triggered", "name_written"]
+	"zone_entered", "petilasan_activated", "glyph_learned", "class_chosen", "weakness_triggered", "name_written",
+	"clue_examined", "memory_done"]
 ## Saved fields, in to_dict order. Add a field here and in _reset(); old saves get its default.
 const FIELDS := ["class_id", "stats", "ilmu", "points_spent", "glyphs_learned", "inventory", "equipped",
 	"flask_charges", "flask_max", "herb_pouches", "last_petilasan", "killed", "flags", "play_time", "quests", "codex", "pinned",
-	"hero_name", "hero_pronoun"]
+	"hero_name", "hero_pronoun", "memory_return"]
 const DEFAULT_NAME := "Jaka"   # ASSUMED (ui.md 3)
 ## he / she / they -> [they, them, their, They] for Game.fmt.
 const PRONOUNS := {"he": ["he", "him", "his", "He"], "she": ["she", "her", "her", "She"], "they": ["they", "them", "their", "They"]}
@@ -44,6 +46,7 @@ var codex := PackedStringArray()       # unlocked CodexEntry ids
 var pinned := ""                       # pinned side quest id, "" follows the main quest
 var hero_name := DEFAULT_NAME          # set on the name screen; new_game keeps it
 var hero_pronoun := "they"             # he, she or they
+var memory_return := {}                # inside a Kelir memory: {zone: scene path, pos: [x, y]} to go back to (Zones.enter_memory)
 
 
 func _init() -> void:
@@ -70,6 +73,7 @@ func _reset() -> void:
 	pinned = ""
 	hero_name = DEFAULT_NAME
 	hero_pronoun = "they"
+	memory_return = {}
 
 
 func _ready() -> void:
@@ -517,6 +521,9 @@ func run(action: String) -> void:
 				get_node("/root/Zones").go_to(p[0], p[1])   # actions run after the box closed; this fires zone_entered
 			else:
 				push_warning("dialogue: goto '%s' needs <area>:<spawn>" % arg)
+		"clue":   # clue:<id>, what a Clue runs after its lines (architecture.md 9b)
+			set_flag("clue_" + arg)
+			_emit("clue_examined", arg)
 		"write":   # write:<seq_id>:<glyph_id>,<glyph_id>,... (ui/glyph_lesson)
 			var p := arg.split(":", true, 1)
 			if p.size() == 2:
@@ -611,6 +618,10 @@ func from_dict(d: Dictionary) -> void:
 	hero_name = clean_name(hero_name)
 	if hero_pronoun not in PRONOUNS:
 		hero_pronoun = "they"
+	var mp: Variant = memory_return.get("pos")
+	if not (memory_return.get("zone") is String and memory_return.zone != "" and mp is Array and mp.size() == 2 \
+			and mp.all(func(x: Variant) -> bool: return x is float or x is int)):
+		memory_return = {}
 	for s in STATS:   # JSON reads numbers back as floats
 		stats[s] = int(stats.get(s, 5))
 	for id in quests.keys():   # drop malformed quest records from old or hand-edited saves
@@ -626,6 +637,11 @@ func _num(v: Variant) -> int:
 	return int(v) if v is int or v is float else 0
 
 
+## True while a Kelir memory is the current scene (architecture.md 9b).
+func in_memory() -> bool:
+	return is_inside_tree() and get_tree().current_scene is KelirMemory
+
+
 func has_save() -> bool:
 	return FileAccess.file_exists(save_path) or FileAccess.file_exists(_bak())
 
@@ -633,6 +649,8 @@ func has_save() -> bool:
 ## Write tmp, copy the current save to .bak, rename tmp over the save. A crash mid-write never
 ## leaves a broken save.json.
 func save_game() -> bool:
+	if in_memory():
+		return false   # no saves inside a Kelir memory: the one made at the clue (with memory_return) resumes there
 	var tmp := save_path + ".tmp"
 	var f := FileAccess.open(tmp, FileAccess.WRITE)
 	if f == null:

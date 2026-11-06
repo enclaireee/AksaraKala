@@ -179,7 +179,7 @@ func _go(area: String) -> bool:
 
 func _target(id: String) -> Node:
 	for n in zone.entities.find_children("*", "", true, false):
-		for k in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind")]:
+		for k in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.get("clue_id"), n.get("memory_id")]:
 			if (k is String or k is StringName) and String(k) == id and not n.is_queued_for_deletion():
 				return n
 	return null

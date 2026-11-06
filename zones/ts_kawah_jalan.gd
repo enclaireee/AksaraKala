@@ -12,12 +12,12 @@ const MAP := [
 	"############################################################",
 	"###################rr..........................rr###########",
 	"###################rr.rrr...............rrrrr..rr###########",
-	"###################...rrr...............rrrrr....###########",
+	"###################.c.rrr...............rrrrr....###########",
 	"###################..............................###########",
 	"###################..............................###########",
 	"#..........########..............................###########",
-	"#..........########..............................###########",
-	"#..........########..............................###########",
+	"#..........########............................C.###########",
+	"#.......L..########..............................###########",
 	"%@,,,,Q,,,,,,,,,,,,,,,,,,,,,,,,,,,O,,,,,,,,,,,,,,,,,,,,,,,eX",
 	"%.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
 	"#..........########..............................###########",
@@ -47,6 +47,9 @@ const SPOTS := {
 	"Q": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "sunda_2"}, "tile": ","},   # petilasan 2
 	"O": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_crater", "size": Vector2i(22,11), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(3,2)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-6,-1)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-6,1)]], [["res://entities/enemies/kuntilanak.tscn", Vector2i(-2,-4)], ["res://entities/enemies/faceless.tscn", Vector2i(-2,4)]]]}, "tile": ","},   # encounter sunda_crater
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
+	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lc1_voice", "memory_id": "lc1", "cond": "step:mq1=11"}, "tile": "."},   # clue, Laras's voice at the petilasan; pulls you into LC1 (MQ1 1.12, appears when step 1.12 is current; id ASSUMED)
+	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "faceless_captain_seen", "cond": "flag:mq1_7,!flag:mq1_8"}, "tile": "."},   # NPC the Faceless Captain, seen on the crater road before the rim (MQ1 1.11, a dark shape on the ridge; no talk)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_chest_jalan", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu (Ilmu S, ASSUMED), the area's optional find, behind the rocks (19..21,8..10)
 }
 
 

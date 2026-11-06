@@ -36,6 +36,8 @@ UI_JOURNAL_MAIN,Utama,Main
 UI_JOURNAL_SIDE,Sampingan,Side
 UI_JOURNAL_DONE,Selesai,Done
 UI_JOURNAL_EMPTY,Belum ada misi.,No quests yet.
+UI_JOURNAL_STORY,Cerita sejauh ini,Story so far
+UI_JOURNAL_CLUES,Petunjuk,Clues
 UI_PIN,Sematkan,Pin
 UI_UNPIN,Lepas sematan,Unpin
 UI_PINNED,[disematkan],[pinned]
@@ -70,6 +72,7 @@ UI_VERB_USE,Pakai,Use
 UI_VERB_TALK,Bicara,Talk
 UI_VERB_OPEN,Buka,Open
 UI_VERB_TAKE,Ambil,Take
+UI_VERB_EXAMINE,Periksa,Examine
 UI_SC_LOCKED,Tidak terbuka dari sisi ini,Does not open from this side
 UI_KEY_LMB,LMB,LMB
 UI_KEY_RMB,RMB,RMB

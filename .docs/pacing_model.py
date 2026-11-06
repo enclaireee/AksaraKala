@@ -1,5 +1,6 @@
 # Pacing model behind story.md "Pacing model (v4c)". Run: python3 .docs/pacing_model.py
-# Reads the main-quest step tables in quests.md 4 (the "Play" column) and the runtime table in story.md "Pacing".
+# Reads the main-quest step tables in quests.md 4 (the "Play" column) and the runtime table in story.md "Pacing",
+# and the side-quest cards in quests.md 5 (each card's "- Play:" lines, sized against BANDS; story.md "Side stories (v4d)").
 # Prints minutes per act and every rule that breaks. Exits 1 if a rule breaks.
 # Re-measure piece minutes after each playtest and change MIN below (TUNE).
 import os, re, sys
@@ -12,6 +13,7 @@ READ = {'talk', 'beat', 'lesson'}
 STORY = {'clue', 'talk', 'beat', 'memory', 'chapter', 'write'}
 PAYOFF = {'miniboss', 'boss', 'setpiece', 'beat'}
 HEADS = {'MQ0': 'Prologue', 'MQ1': 'Act I', 'MQG': 'Act II', 'MQ2': 'Act III', 'MQ3': 'Act IV', 'MQ5': 'Act VI'}
+BANDS = {'S': (5, 10), 'M': (10, 20), 'L': (20, 30)}  # side-quest minutes by card size (TUNE)
 STEP_MIN, TOL, PLAY_SHARE, READ_SHARE, STORY_GAP, PAYOFF_GAP, READ_RUN = 3, 0.15, 0.55, 0.25, 10, 25, 3
 
 
@@ -71,6 +73,44 @@ def read_targets():
     return t
 
 
+def read_side():  # [(id, header, [pieces per Play line])] from quests.md 5
+    cards, on = [], False
+    for line in open(os.path.join(HERE, 'quests.md'), encoding='utf-8'):
+        if line.startswith('## '):
+            on = line.startswith('## 5')
+            continue
+        if not on:
+            continue
+        h = re.match(r'\*\*(SQ-[A-Z]\d+)\b[^*]*\*\*\s*(.*)', line)
+        if h:
+            cards.append((h.group(1), line, []))
+        elif cards and re.match(r'\s*- Play:', line):
+            cards[-1][2].append(pieces(line.split(':', 1)[1]))
+    return [c for c in cards if 'retired' not in c[1]]
+
+
+def check_side(fails):
+    print('%-6s %4s %7s' % ('Side', 'size', 'minutes'))
+    total = 0.0
+    for sq, head, plays in read_side():
+        size = re.search(r'[(,]\s*([SML])\b', head)
+        if not size:
+            fails.append('%s: no size S/M/L in its header' % sq); continue
+        if not plays:
+            fails.append('%s: no "- Play:" line' % sq); continue
+        lo, hi = BANDS[size.group(1)]
+        mins = [sum(MIN[x] for x in p) for p in plays]
+        parts = mins if 'each' in head else [sum(mins)]  # "S each" chains size each part
+        for m in parts:
+            if not lo <= m <= hi:
+                fails.append('%s: %.1f min outside %s band %d-%d' % (sq, m, size.group(1), lo, hi))
+        if re.search(r'hunt', head, re.I) and not all(x in sum(plays, []) for x in ('clue', 'memory')):
+            fails.append('%s: a Hunt card needs a clue and a memory piece' % sq)
+        total += sum(parts)
+        print('%-6s %4s %7.1f' % (sq, size.group(1), sum(parts)))
+    print('%-6s %4s %7.1f' % ('Total', '', total))
+
+
 def main():
     acts, targets, fails = read_steps(), read_targets(), []
     order = ['Prologue', 'Act I', 'Act II', 'Act III', 'Act IV', 'Interlude', 'Act V', 'Act VI']
@@ -119,6 +159,7 @@ def main():
                 if run > READ_RUN:
                     fails.append('%s at %.0f min: more than %d reading pieces in a row' % (a, t, READ_RUN)); run = 0
     print('%-10s %5s %7.1f' % ('Total', '', total))
+    check_side(fails)
     for f in fails:
         print('FAIL', f)
     sys.exit(1 if fails else 0)

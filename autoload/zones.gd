@@ -97,9 +97,14 @@ const SHORTCUTS := {"sc:ts_pagar": ["ts_leuweung", "ts_kebun"], "sc:ts_tangga": 
 	"sc:gk_lorong": ["gk_lupa", "gk_mulut"]}
 
 var current_zone := ""   # set by Zone._ready; "" in scenes that are not a Zone
+var memory_id := ""      # the Kelir memory entered last (enter_memory); gap.tscn reads its data by it
+
+const MEMORY_DIR := "res://zones/kelir/"
+const GAP_SCENE := "res://zones/kelir/gap.tscn"
 
 var _busy := false
 var _fade: ColorRect
+var _carry := {}   # hero hp/sakti while a stand-in plays a memory (it has neither), put back on the way out
 
 
 func _ready() -> void:
@@ -134,9 +139,9 @@ func continue_game() -> void:
 	respawn()
 
 
-## Edge exits land here: fade out, load the zone, put the player on spawn_id, fade in.
+## Edge exits land here: fade out, load the zone, put the player on spawn_id (or at `pos` when given), fade in.
 ## zone_id is a ZONES key or a scene path. Calls while a change is running are ignored.
-func go_to(zone_id: String, spawn_id: String) -> void:
+func go_to(zone_id: String, spawn_id: String, pos := Vector2.INF) -> void:
 	var path: String = ZONES.get(zone_id, zone_id)
 	if _busy:
 		return
@@ -148,9 +153,12 @@ func go_to(zone_id: String, spawn_id: String) -> void:
 	var prev_player := tree.get_first_node_in_group("player") as Node2D
 	var prev_hp: int = prev_player.health.hp if prev_player and prev_player.get("health") and not prev_player.health.is_dead() else -1
 	var prev_sakti: float = prev_player.sakti.value if prev_player and prev_player.get("sakti") else -1.0
+	if prev_hp < 0 and prev_sakti < 0.0:   # leaving a memory: the stand-in has no hp
+		prev_hp = _carry.get("hp", -1)
+		prev_sakti = _carry.get("sakti", -1.0)
 	tree.paused = false
 	Engine.time_scale = 1.0
-	await _fade_to(1.0)
+	await fade_to(1.0)
 	current_zone = ""
 	tree.change_scene_to_file(path)
 	await tree.scene_changed
@@ -165,13 +173,66 @@ func go_to(zone_id: String, spawn_id: String) -> void:
 		if prev_sakti >= 0.0 and player.get("sakti"):
 			player.sakti.value = minf(prev_sakti, player.sakti.max_value)
 			player.sakti.changed.emit(player.sakti.value, player.sakti.max_value)
-	if s and player:
-		player.global_position = s.global_position
+	if player and (s or pos != Vector2.INF):
+		player.global_position = pos if pos != Vector2.INF else s.global_position
 		player.reset_physics_interpolation()
 	elif spawn_id != "":
 		push_warning("Zones.go_to: no spawn '%s' in %s" % [spawn_id, path])
 	_busy = false   # before the fade-in so a death during it still respawns
-	await _fade_to(0.0)
+	await fade_to(0.0)
+
+
+## Clue or beat into a Kelir memory (architecture.md 9b): remember where the hero stands (saved, so a quit inside
+## resumes at the clue), save, then go_to the memory scene. id is a memory id (zones/kelir/<id>.tscn, or gap.tscn
+## when only data/memories/gap_<id>.tres exists) or a scene path (tests).
+func enter_memory(id: String) -> void:
+	var path := memory_path(id)
+	var game := get_node("/root/Game")
+	var tree := get_tree()
+	if _busy or game.in_memory() or tree.current_scene == null or tree.current_scene.scene_file_path == "":
+		return   # no memory inside a memory, and only from a real zone scene, so exit_memory has somewhere to go
+	if not ResourceLoader.exists(path):
+		push_error("Zones.enter_memory: no scene for memory '%s'" % id)
+		return
+	var p := tree.get_first_node_in_group("player") as Node2D
+	var at := p.global_position if p else Vector2.ZERO
+	game.memory_return = {"zone": tree.current_scene.scene_file_path, "pos": [at.x, at.y]}
+	_carry = {"hp": p.health.hp if p and p.get("health") else -1, "sakti": p.sakti.value if p and p.get("sakti") else -1.0}
+	if not game.save_game():
+		push_warning("Zones.enter_memory: save failed; a quit inside resumes at the last save")
+	memory_id = id
+	get_node("/root/Events").memory_started.emit(id)
+	await go_to(path, "")
+
+
+## KelirMemory.finish() lands here: back to Game.memory_return (zone and position), cleared, then a save.
+func exit_memory() -> void:
+	var game := get_node("/root/Game")
+	var r: Dictionary = game.memory_return
+	while _busy:
+		await get_tree().process_frame
+	game.memory_return = {}   # before the zone loads, so a save during the fade-in has none
+	memory_id = ""
+	if r.is_empty() or not ResourceLoader.exists(ZONES.get(r.zone, r.zone)):
+		push_warning("Zones.exit_memory: no way back, respawning at the petilasan")
+		_carry = {}
+		await respawn()   # never leave the hero frozen in a finished memory
+		return
+	await go_to(r.zone, "", Vector2(r.pos[0], r.pos[1]))
+	_carry = {}
+	game.save_game()
+
+
+func memory_path(id: String) -> String:
+	if id.begins_with("res://") or id.begins_with("user://"):
+		return id
+	var p := MEMORY_DIR + id + ".tscn"
+	return GAP_SCENE if not ResourceLoader.exists(p) and ResourceLoader.exists(gap_data_path(id)) else p
+
+
+## data/memories/gap_<letter>.tres for "la" or "gap_la".
+static func gap_data_path(id: String) -> String:
+	return "res://data/memories/%s.tres" % (id if id.begins_with("gap_") else "gap_" + id)
 
 
 ## The neighbour of `from` on the shortest path to `to`, or "" if there is none or they are equal.
@@ -196,6 +257,7 @@ func next_zone(from: String, to: String) -> String:
 
 ## Death, rest, Continue and new game all land here: the zone reloads (normal enemies back,
 ## bosses stay dead through Game.killed), full HP and flask, player at the last petilasan.
+## A save that holds a memory_return (quit inside a memory) puts the player back at the clue instead.
 ## Death does not save; resting saved before calling this.
 func respawn(rested := false) -> void:
 	if _busy:
@@ -204,6 +266,14 @@ func respawn(rested := false) -> void:
 	var game := get_node("/root/Game")
 	game.restore()   # flask (and a living player, about to be replaced anyway)
 	var zone: String = game.last_petilasan.get("zone", "")
+	var at := Vector2.INF
+	var mr: Dictionary = game.memory_return
+	if not mr.is_empty() and ResourceLoader.exists(ZONES.get(mr.zone, mr.zone)):
+		zone = ZONES.get(mr.zone, mr.zone)
+		at = Vector2(mr.pos[0], mr.pos[1])
+	game.memory_return = {}
+	_carry = {}
+	memory_id = ""
 	if zone == "" or not ResourceLoader.exists(zone):
 		zone = start_zone
 	var tree := get_tree()
@@ -214,7 +284,10 @@ func respawn(rested := false) -> void:
 	await tree.scene_changed
 	var p := _petilasan(game.last_petilasan.get("id", ""))
 	var player := tree.get_first_node_in_group("player") as Node2D
-	if p and player:
+	if at != Vector2.INF and player:
+		player.global_position = at
+		player.reset_physics_interpolation()
+	elif p and player:
 		player.global_position = p.global_position + Vector2(0, 20)   # ASSUMED: just below the shrine
 		if player.has_method("reset_physics_interpolation"):
 			player.reset_physics_interpolation()
@@ -223,7 +296,7 @@ func respawn(rested := false) -> void:
 		get_node("/root/Events").rested.emit(p)
 
 
-func _fade_to(alpha: float) -> void:
+func fade_to(alpha: float) -> void:
 	var tw := _fade.create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tw.tween_property(_fade, "modulate:a", alpha, FADE)
 	await tw.finished

@@ -6,20 +6,20 @@ const MAP := [
 	"############################################################",
 	"#######....................................................#",
 	"#######....................................................#",
-	"#######.......rr....~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
+	"#######.......rr....~~~~~~~~~~~~~~~~~~~~~~~~~~~.....1......#",
 	"#######.........r...~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
 	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
 	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
 	"&!,,,,K,,,,,,.......~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
 	"&,,,,,K,,,,,,.......~~~~~~~~~~~~~~~~~~~~~~~~~~~....#########",
 	"#######...dD........~~~~~~~~~~~~~~~~~~~~~~~~~~~....#.......#",
-	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~....r.......#",
+	"#######.....C.......~~~~~~~~~~~~~~~~~~~~~~~~~~~....r.......#",
 	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~.........k..#",
 	"#######............................................r.......#",
 	"#######.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#.......#",
 	"#######.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#.......#",
 	"#######.,,....................,,...................#########",
-	"#######.,,....................Z,........r...r..............#",
+	"#######.,,....................Z,.T......r...r..............#",
 	"#######.,,5...................,,..........x................#",
 	"#######.,,....................,,........r...r...........####",
 	"#######.,,....................,,,,,,,,,,,,,,,,,,,,,,,,,,=,;$",
@@ -30,10 +30,10 @@ const MAP := [
 	"#######.,,....................,,...........................#",
 	"#######.,,....r.....w.........,,................r..........#",
 	"#######.,,.....r..............,,............y....r.........#",
-	"#######.,,....................,,...........................#",
+	"#######.,,....................FF...........................#",
 	"#######.,,....................,,..............y............#",
 	"#######.,,....................,,...........................#",
-	"#######.,,....................,,...........................#",
+	"#######.,,............a.......,,......c....................#",
 	"#######.@,....................e,...........................#",
 	"########%%####################XX############################",
 ]
@@ -49,8 +49,9 @@ const SPOTS := {
 	";": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_tebing"}, "tile": ","},   # spawn, arrival from `sk_tebing` (in the pocket on the open side of `=`)
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:ts_sk", "open_side": "e"}, "tile": ","},   # shortcut gate, back route to Segara Kidul (opens only from `sk_tebing`, 2 tiles)
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_7"}, "tile": ","},   # kabut, crater path gate (one per tile)
-	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "flag:mq1_6b"}, "tile": "."},   # NPC Naganingrum, the woman by the lake, shows Ca (MQ1 1.10, the turn); appears once the shore is clear and stays by the lake after MQ1 (story.md; her arc closes in the epilogue)
-	"Z": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_lakeshore", "size": Vector2i(16,9), "cond": "step:mq1=8", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-5,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-5,2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(6,2)]]]}, "tile": ","},   # encounter sunda_lakeshore, clear the lake shore (MQ1 1.9, new; step 1.9 only)
+	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "flag:mq1_6b"}, "tile": "."},   # NPC Naganingrum, the woman by the lake, shows Ca (MQ1 1.11, the turn); appears once the shore is clear and stays by the lake after MQ1 (story.md; her arc closes in the epilogue)
+	"Z": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_lakeshore", "size": Vector2i(16,9), "cond": "step:mq1=9", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-5,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-5,2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(6,2)]], [["res://entities/enemies/kuntilanak_elite.tscn", Vector2i(0,0)]]]}, "tile": ","},   # encounter sunda_lakeshore, clear the lake shore; wave 2 is the elite, the `miniboss` piece (MQ1 1.10, only while step 1.10 is current)
+	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mq1_9"}, "tile": "."},   # NPC Ciung Wanara by the lake after Sangkuriang (MQ1 camp talk `camp_sunda`: optional, 2-4 lines, `quiet`, `do`: `flag:camp_sunda`; his anger and the mother he does not know, who is the woman `D` two tiles away; entry cond `flag:mq1_9`, `zone:ts_situ`, so it never replays later, **ASSUMED**)
 	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "dayang_sumbi", "cond": "quest:mq1=done"}, "tile": "."},   # NPC Dayang Sumbi, idle talk at the lake after MQ1 (SQ-S5 is retired)
 	"x": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "tangkuban_perahu"}, "tile": "."},   # codex spot, ruin on the lake shore
 	"5": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_5"}, "tile": "."},   # angklung 5
@@ -58,6 +59,11 @@ const SPOTS := {
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
 	"v": {"scene": "res://entities/enemies/faceless_archer.tscn", "props": {}, "tile": "."},   # loose faceless archer, roaming pack (respawns on zone reload, no unique_id)
 	"y": {"scene": "res://entities/enemies/wild_boar.tscn", "props": {}, "tile": "."},   # loose wild boar, roaming pack (respawns on zone reload, no unique_id)
+	"1": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "felled_trees"}, "tile": "."},   # clue, the hillside of freshly felled trees (K2 clue 1)
+	"a": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_1"}, "tile": "."},   # puzzle, sluice wheel 1, west (MQ1 1.9 "move the water"; sets `sluice_1`)
+	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_2"}, "tile": "."},   # puzzle, sluice wheel 2, east (entry needs `flag:sluice_1`, sets `sluice_2`)
+	"F": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "sluice_2"}, "tile": ","},   # kabut, the flooded shore path, the dam's overnight flood (one per tile; drains when wheel 2 turns; same scene as the fog, flood art)
+	"T": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "faceless_toy", "cond": "flag:mq1_6b"}, "tile": "."},   # clue, the carved toy a fallen Faceless dropped (the Captain clue, MQ1 1.10; appears when the shore is clear)
 }
 
 

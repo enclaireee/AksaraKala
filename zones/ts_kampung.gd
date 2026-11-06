@@ -12,7 +12,7 @@ const MAP := [
 	"#.........,,........#_____#.....,...........#_____#........#",
 	"#.........,,........#_____#.....,...........#_____#........#",
 	"#.........,,........###,###.....,...........###,###........#",
-	"#.........,,...........,........,..............,...........#",
+	"#.........,,..........o,........,..............,...........#",
 	"#.........,,...........,........,..............,...........#",
 	"#.........,,...........,..,,,,,,,,,,,,,,,......,...........#",
 	"#.........,,...........,..,,,,,,,,,,,,,,,......,...........#",
@@ -53,12 +53,13 @@ const SPOTS := {
 	"+": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:ts_tangga", "open_side": "n"}, "tile": ","},   # shortcut gate, ladder (opens from the north pocket, 2 tiles)
 	"G": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_3"}, "tile": ","},   # kabut, west gate to ts_leuweung (one per tile)
 	"H": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_5"}, "tile": ","},   # kabut, east gate to ts_sawah (one per tile)
-	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_kampung", "size": Vector2i(14,8), "cond": "step:mq1=2", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]]]}, "tile": "."},   # encounter sunda_kampung, the ambush at Abah Karna's kampung (MQ1 1.3, new; only while step 1.3 is current)
-	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_elder"}, "tile": "."},   # NPC Abah Karna, elder, teaches Ga (MQ1 1.4)
+	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_kampung", "size": Vector2i(15,9), "cond": "step:mq1=1", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]], [["res://entities/enemies/wild_boar_elite.tscn", Vector2i(0,0)]]]}, "tile": "."},   # encounter sunda_kampung, the ambush at Abah Karna's kampung; wave 2 is the elite boar, the `miniboss` piece (MQ1 1.2, only while step 1.2 is current)
+	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_elder"}, "tile": "."},   # NPC Abah Karna, the kampung elder, teaches Ga (MQ1 1.3)
 	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ki_darsa"}, "tile": ","},   # NPC Ki Darsa, juru pantun (SQ-S1 giver)
 	"V": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kepala_desa"}, "tile": ","},   # NPC kepala desa (SQ-S2 giver)
 	"L": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "angklung_leader"}, "tile": ","},   # NPC angklung group leader (SQ-S3 giver)
-	"U": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purbasari"}, "tile": "_"},   # NPC Purbasari (SQ-S1), in her hut
+	"U": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purbasari", "cond": "!flag:memory_sq_s1_lutung"}, "tile": "_"},   # NPC Purbasari (SQ-S1), in her hut until the memory `sq_s1_lutung` is done (then she is at the spring, `j` in ts_leuweung)
+	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "s1_offerings", "cond": "flag:mq1_3"}, "tile": "."},   # clue, the langur's offerings left at Purbasari's door: wild fruit and a flower, set out every dawn (SQ-S1 `clue` piece; shows once SQ-S1 is open (`mq1_3`), `cond` ASSUMED)
 }
 
 

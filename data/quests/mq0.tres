@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=11 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -6,51 +6,72 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ0_S1_OBJ"
+on = "area_entered:purwa_tag_end"
+set_flag = "mq0_d1"
+recap = "Q_MQ0_S1_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_tag_end"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ0_S2_OBJ"
-on = "class_chosen"
-marker = {"zone": "desa_purwa", "id": "semar"}
+all = [{"on": "talked_to:ibu", "set_flag": "mq0_d2"}, {"on": "talked_to:ciung_wanara", "set_flag": "mq0_d3"}]
+set_flag = "mq0_d3"
+recap = "Q_MQ0_S2_DONE"
+marker = {"zone": "desa_purwa", "id": "ibu"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ0_S3_OBJ"
-on = "talked_to:ibu"
-set_flag = "mq0_4"
-marker = {"zone": "desa_purwa", "id": "ibu"}
+all = [{"on": "talked_to:semar", "set_flag": "mq0_d4"}, {"on": "area_entered:sanggar_lontar", "set_flag": "mq0_d5"}, {"on": "talked_to:purwa_stall", "set_flag": "mq0_d6"}]
+set_flag = "mq0_d6"
+recap = "Q_MQ0_S3_DONE"
+marker = {"zone": "desa_purwa", "id": "semar"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ0_S4_OBJ"
-on = "area_entered:wayang_stage"
-set_flag = "mq0_5"
-marker = {"zone": "desa_purwa", "id": "wayang_stage"}
+on = "memory_done:k0_ruwatan"
+set_flag = "mq0_d7"
+recap = "Q_MQ0_S4_DONE"
+marker = {"zone": "desa_purwa", "id": "kelir_lamp"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ0_S5_OBJ"
-on = "glyph_learned:sunda_ka"
-marker = {"zone": "desa_purwa", "id": "semar"}
+on = "area_entered:purwa_crowd"
+set_flag = "mq0_d8"
+recap = "Q_MQ0_S5_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_crowd"}
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ0_S6_OBJ"
-on = "spell_cast:sunda_ka"
-count = 3
-marker = {"zone": "desa_purwa", "id": "sanggar_enter"}
+all = [{"on": "talked_to:ibu", "set_flag": "mq0_4"}, {"on": "area_entered:wayang_stage", "set_flag": "mq0_5"}]
+set_flag = "mq0_5"
+recap = "Q_MQ0_S6_DONE"
+marker = {"zone": "desa_purwa", "id": "ibu"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ0_S7_OBJ"
-on = "area_cleared:purwa_raid"
-set_flag = "mq0_7"
-marker = {"zone": "desa_purwa", "id": "purwa_raid"}
+on = "spell_cast:sunda_ka"
+count = 3
+recap = "Q_MQ0_S7_DONE"
+marker = {"zone": "desa_purwa", "id": "semar"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ0_S8_OBJ"
+on = "area_cleared:purwa_raid"
+set_flag = "mq0_7"
+recap = "Q_MQ0_S8_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_raid"}
+
+[sub_resource type="Resource" id="s9"]
+script = ExtResource("2")
+objective = "Q_MQ0_S9_OBJ"
 on = "zone_entered:ts_kebun"
+recap = "Q_MQ0_S9_DONE"
 marker = {"zone": "ts_kebun", "id": "from_desa_purwa"}
 
 [resource]
@@ -61,5 +82,5 @@ type = "main"
 zone = "desa_purwa"
 size = "S"
 giver = "semar"
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8")])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9")])
 rewards = {"codex": ["hanacaraka"]}

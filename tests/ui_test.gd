@@ -151,6 +151,89 @@ func run() -> void:
 	check(not box.is_open() and done[0] == 1 and paused, "closed, finished once, pause restored")
 	paused = false
 
+	# Name tag, journal recap/clues, lontar shimmer (Story v4).
+	var tr_en := Translation.new()
+	tr_en.locale = TranslationServer.get_locale()
+	tr_en.add_message("NPC_CEPOT_NAME", "Cepot")
+	tr_en.add_message("NPC_CEPOT_WHO", "Semar's son. Loud.")
+	tr_en.add_message("NPC_MUTE_NAME", "Mute")
+	tr_en.add_message("CLUE_ASH_NOTE", "Ash by the door")
+	tr_en.add_message("T_RECAP_0", "recap zero")
+	tr_en.add_message("T_RECAP_1", "recap one")
+	tr_en.add_message("T_RECAP_2", "recap two")
+	TranslationServer.add_translation(tr_en)
+	ev.dialogue_requested.emit("NPC_MUTE_NAME", PackedStringArray(["hi"]))
+	check(box._who.text == "" and not game.has_flag("seen_name_mute"), "no tag without a WHO key")
+	box._close()
+	ev.dialogue_requested.emit("NPC_CEPOT_NAME", PackedStringArray(["a", "b"]))
+	check(box._who.text == "Semar's son. Loud." and game.has_flag("seen_name_cepot"), "tag shown and seen flag set")
+	await frames(1)
+	box._unhandled_input(press)
+	box._unhandled_input(press)
+	check(box._who.text != "", "tag stays up for the whole first talk")
+	box._close()
+	ev.dialogue_requested.emit("NPC_CEPOT_NAME", PackedStringArray(["a"]))
+	check(box._who.text == "", "no tag on a later talk")
+	box._close()
+	paused = false
+
+	var rq := QuestData.new()
+	rq.id = "t_recap"
+	rq.kind = "main"   # recap lists main quests only
+	for i in 3:
+		var s2 := QuestStep.new()
+		s2.on = "talked_to:r%d" % i
+		rq.steps.append(s2)
+	ResourceSaver.save(rq, zdir + "/t_recap.tres")
+	var rq2 := QuestData.by_id("t_recap")
+	for i in 3:
+		rq2.steps[i].set("recap", "" if i == 1 else "T_RECAP_%d" % i)
+	rq2.steps[0].set("recap", "T_RECAP_0")
+	game.start_quest("t_recap")
+	game.quests.t_recap.step = 2
+	game.flags["clue_ash"] = true
+	game.flags["clue_unknown"] = true   # no note key: skipped
+	menu.refresh()
+	var texts := PackedStringArray()
+	for l in menu._journal.find_children("*", "Label", true, false):
+		texts.append(l.text)
+	check("recap zero" in texts and "recap two" not in texts and "recap one" not in texts, "recap lists steps below current, skips empty: %s" % str(texts))
+	check("Ash by the door" in texts and texts.size() >= 2, "clue note listed from flags")
+
+	var sh: LontarShimmer = player.get_node("LontarShimmer")
+	var clue := Node2D.new()
+	var cs2 := GDScript.new()
+	cs2.source_code = "extends Node2D\nvar clue_id := 'well'\nvar memory_id := 'm'\n"
+	cs2.reload()
+	clue.set_script(cs2)
+	root.add_child(clue)
+	clue.add_to_group("interactable")
+	player.global_position = Vector2.ZERO
+	clue.global_position = sh.global_position + Vector2(12, 0)
+	sh.poll()
+	var near := sh.strength
+	clue.global_position = sh.global_position + Vector2(36, 0)
+	sh.poll()
+	var far := sh.strength
+	check(absf(near - 0.75) < 0.01 and absf(far - 0.25) < 0.01, "shimmer alpha follows 1 - dist/48: %f %f" % [near, far])
+	clue.global_position = sh.global_position + Vector2(60, 0)
+	sh.poll()
+	check(sh.strength == 0.0, "no shimmer beyond 48 px")
+	clue.global_position = sh.global_position + Vector2(12, 0)
+	game.flags["clue_well"] = true
+	sh.poll()
+	check(sh.strength == 0.0, "no shimmer for an examined clue")
+	game.flags.erase("clue_well")
+	ev.dialogue_requested.emit("NPC_X", PackedStringArray(["x"]))
+	sh.poll()
+	check(sh.strength == 0.0, "shimmer off while a dialogue is open")
+	box._close()
+	paused = false
+	sh.poll()
+	check(sh.strength > 0.0, "shimmer back after the dialogue")
+	clue.queue_free()
+	game.quests.erase("t_recap")
+
 	game._reset()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://test_ui.json"))
 	paused = false

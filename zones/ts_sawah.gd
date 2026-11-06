@@ -14,14 +14,14 @@ const MAP := [
 	"##############################,,############################",
 	"####.........#################,,############################",
 	"####..r......#################,,############################",
-	"####.........#################,,############################",
+	"####.s.......#################,,############################",
 	"####.........#################,,############################",
 	"####.........####tttttttttttttttttttttttttttttttttttt#######",
-	"####....J....####tt#######ttttttttttttttttttttttttttt#######",
+	"####....J....####tt#######ttttttttotttttttttttttttttt#######",
 	"Xe,,.........,,,,tt#_____#tttttttttttttttttttttttt3tt#######",
 	"X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######",
 	"####.......r.####tt#_____#ttttttttttttttttttttttttttt#######",
-	"####.........####tt#_____#ttttttttttttttttttttttttjtt#######",
+	"####.........####tt#___l_#ttttttttttttttttttttttttjtt#######",
 	"#################tt###,###ttttttttttttttttttttttttttt#######",
 	"#################tttttttttttttttttttMttttttttttttttit#######",
 	"#################tttttttttttttttttttttttttttttttttttt#######",
@@ -44,11 +44,14 @@ const SPOTS := {
 	"%": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_situ", "spawn_id": "from_ts_sawah"}, "tile": ","},   # exit to ts_situ (north edge, 2 tiles)
 	"@": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_situ"}, "tile": ","},   # spawn, arrival from ts_situ
 	"J": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_clearing", "size": Vector2i(9,10), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(2,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(2,3)]]]}, "tile": ","},   # encounter sunda_clearing
-	"M": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_terraces", "size": Vector2i(24,11), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(6,0)], ["res://entities/enemies/jurig_leuweung.tscn", Vector2i(-3,-3)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-4)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,2)]], [["res://entities/enemies/faceless.tscn", Vector2i(-8,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(8,3)], ["res://entities/enemies/wild_boar.tscn", Vector2i(8,-3)]]]}, "tile": "t"},   # encounter sunda_terraces
+	"M": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_terraces", "size": Vector2i(24,11), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(6,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-4)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,2)], ["res://entities/enemies/faceless.tscn", Vector2i(-3,-3)]], [["res://entities/enemies/jurig_leuweung_elite.tscn", Vector2i(0,0)], ["res://entities/enemies/faceless.tscn", Vector2i(-6,0)]]]}, "tile": "t"},   # encounter sunda_terraces; wave 2 is the elite Jurig, the `miniboss` piece (MQ1 1.8)
 	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_weaver"}, "tile": "_"},   # NPC weaver, hid Laras and gives the Boeh Rarang (MQ1 1.8)
 	"3": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_3"}, "tile": "t"},   # angklung 3
 	"j": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "t"},   # loose faceless (terrace), roaming pack (respawns on zone reload, no unique_id)
 	"i": {"scene": "res://entities/enemies/jurig_leuweung.tscn", "props": {}, "tile": "t"},   # loose Jurig Leuweung (terrace), roaming pack (respawns on zone reload, no unique_id)
+	"l": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "loom"}, "tile": "_"},   # clue, the Weaver's loom (K2 clue 3; counts at 1.9 even if examined at 1.8)
+	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "empty_coops"}, "tile": "t"},   # clue, the empty rooster coops on the terrace farmstead (K2 clue 2)
+	"s": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_chest_sawah", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu (Ilmu S, ASSUMED), the sawah's optional find, behind the clearing rocks
 }
 
 

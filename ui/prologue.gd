@@ -1,6 +1,6 @@
 extends Control
-## Wayang prologue between New Game and the class cards (quests.md MQ0). PROLOGUE_1..5 in dialogue.csv:
-## Story v2, 5 narration cards: the show, Laras's lontar, the faceless step off the screen, she is taken, morning
+## Wayang prologue between New Game and the class cards (quests.md MQ0). PROLOGUE_1..2 in dialogue.csv:
+## Story v4, 2 narration cards of an ordinary day (script.md 4; the raid is the `raid` beat now)
 ## (codex entry aji_saka, the hanacaraka legend, still unlocks at the end). Interact or click advances; holding interact ~1 s skips it all.
 ## The epilogue (ui/epilogue.tscn) reuses this with EPILOGUE_n keys and returns to Desa Purwa; a line with
 ## `%d` gets the codex percentage. Placeholder art: lit screen, dark silhouettes. ASSUMED: the Jawa glyph line uses the macOS system font
@@ -9,7 +9,7 @@ extends Control
 signal finished
 
 @export var key_prefix := "PROLOGUE"
-@export var lines := 5
+@export var lines := 2
 @export var semar_from := 4
 @export var semar_to := 5
 @export var variants := {}   # card number -> flag; while the flag is set, card n uses <PREFIX>_<n>_ALT
