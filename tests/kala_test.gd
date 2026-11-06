@@ -33,7 +33,7 @@ func _initialize() -> void:
 	await process_frame
 	b.set_physics_process(false)
 
-	check(b.health.max_hp == 8400 and b.is_in_group("boss") and b.kind == "batara_kala", "stats")
+	check(b.health.max_hp == 9300 and b.is_in_group("boss") and b.kind == "batara_kala", "stats")
 	check(b.dawn == null and not b.shielded and not b.engaged, "phase 1: no shield, not engaged")
 
 	# phase 1: a pulse hits a player standing on the ring path, not one close inside
@@ -64,7 +64,7 @@ func _initialize() -> void:
 	ph.invincible_time = 0.0
 
 	# phase 2
-	b.health.take_damage(8400 - 5600, player)
+	b.health.take_damage(9300 - 6200, player)
 	check(b.phase == 2 and b.state == BataraKala.State.PAUSE and b.shielded, "phase 2 at 66%: pause, shield")
 	check(b.sequence.size() == 3 and b.sequence[0] != b.sequence[1] and b.sequence[1] != b.sequence[2] and b.sequence[0] != b.sequence[2], "3 distinct glyphs")
 	check(Array(b.sequence).all(func(g: String) -> bool: return g in game.glyphs_learned), "glyphs are learned ones")
@@ -93,6 +93,10 @@ func _initialize() -> void:
 	check(b.state != BataraKala.State.STUN and not b.shielded, "stun over after 3 s, still open")
 	run(7.0)
 	check(b.shielded and b.seq_index == 0, "shield returns after 10 s")
+	events.spell_cast.emit("jawa_ka", 1.0)
+	check(not b.shielded and b.state == BataraKala.State.STUN, "Ombak (jawa_ka) breaks the shield at once")
+	run(10.1)
+	check(b.shielded, "shield returns after the Ombak break")
 
 	# countdown expiry: i-frames refuse the wave, no i-frames take 60
 	ph.hp = 1000
@@ -114,7 +118,7 @@ func _initialize() -> void:
 
 	# phase 3
 	b._break_shield()
-	b.health.take_damage(b.health.hp - 2800, player)
+	b.health.take_damage(b.health.hp - 3100, player)
 	check(b.phase == 3 and b.shielded and b._countdown() == 20.0, "phase 3 at 33%: shield, 20 s countdown")
 	b._enter(BataraKala.State.CHASE)
 	b._elapsed = 10.0

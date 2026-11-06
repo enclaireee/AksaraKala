@@ -50,7 +50,7 @@ const SPOTS := {
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:mt_ruin_sawah", "open_side": "n"}, "tile": ","},   # shortcut gate, barred wooden gate in the north wall (opens from the north pocket, 2 tiles)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "mataram_1"}, "tile": ","},   # petilasan 1
 	"N": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nawang_wulan"}, "tile": "."},   # NPC Nawang Wulan (SQ-M1 giver)
-	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lesung_women"}, "tile": ","},   # NPC lesung women (2.5, teaches Ca)
+	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lesung_women"}, "tile": ","},   # NPC lesung women (2.6, teaches Ca once `lead_kuburan`; SQ-M5 is retired, so no giver entries)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "gejog_lesung"}, "tile": ","},   # codex spot, gejog lesung
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_sawah", "item_id": "axe"}, "tile": "."},   # chest: Axe (items.md Zone 2 chest)
 	"L": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "lumbung", "size": Vector2i(7,5)}, "tile": "_"},   # trigger, lumbung entered (SQ-M1 search)

@@ -2,7 +2,7 @@
 
 Built from `zones/mataram.md`'s format. Look: a Sundanese royal capital of stone terraces and walls, a big square with a ring, banyan trees, loosely based on the Karang Kamulyan site in Ciamis (`VERIFY`). Placeholder tiles from the tile table in [tatar_sunda.md](tatar_sunda.md) (`#` wall, `.` grass, `,` path, `~` water, `b` banyan (bamboo tile), `r` rock, `_` stone floor).
 
-Story v3.1 ([quests.md](../quests.md) section 4, MQG g.1-g.8): this region is Act II, "The Borrowed Face". `kg_pamali` (the Act III stone, `ford` and `truce` beats and the duel) belongs to MQ2; its markers are the MQ2 rows below. World order: Desa Purwa, Keraton Galuh, Pamali, Mataram. Kabut flags: `mqg_3` (palace gate), `mqg_6` (throne room), `mqg_7` (Pamali gate). Encounter flags: `mqg_1`, `mqg_2`.
+Story v3.1 ([quests.md](../quests.md) section 4, MQG g.1-g.9): this region is Act II, "The Borrowed Face". `kg_pamali` (the Act III stone, `ford` and `truce` beats and the duel) belongs to MQ2; its markers are the MQ2 rows below. World order: Desa Purwa, Keraton Galuh, Pamali, Mataram. Kabut flags: `mqg_3` (palace gate), `mqg_6` (throne room), `mqg_7` (Pamali gate). Encounter flags: `mqg_1`, `mqg_2`.
 
 ## Area table
 | area | size | look | purpose |
@@ -156,7 +156,7 @@ Roaming packs: Faceless (46,26), (48,27), (47,28). 3 kills, skirtable, outside t
 | `e` | spawn, arrival from kg_penjara | `res://entities/world/spawn.tscn` | `{id:"from_kg_penjara"}` | path | 1 |
 | `K` | kabut, throne room door (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mqg_6"}` | path | 2 |
 | `P` | petilasan galuh_1 | `res://entities/petilasan/petilasan.tscn` | `{id:"galuh_1"}` | path | 1 |
-| `B` | boss Barma Wijaya, the false king (MQG g.8) | `res://entities/bosses/barma_wijaya.tscn` | `{unique_id:"barma_wijaya"}` | floor | 1 |
+| `B` | boss Barma Wijaya, the false king (MQG g.9) | `res://entities/bosses/barma_wijaya.tscn` | `{unique_id:"barma_wijaya"}` | floor | 1 |
 | `C` | NPC Ciung Wanara, camp talk at the petilasan (optional, `quiet`, 2-4 lines, entry `camp_galuh`; reachable after the boss too) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mqg_4"}` | path | 1 |
 | `H` | NPC the Nameless Hunter, a shadow behind the throne (`cage` beat): "The cage holds the man, not the name." | `res://entities/npc/npc.tscn` | `{npc_id:"nameless_hunter", cond:"flag:beat_confession,!flag:beat_escape"}` | floor | 1 |
 | `Q` | NPC Queen Pangrenyep, caged with the king (`cage` beat, one line) | `res://entities/npc/npc.tscn` | `{npc_id:"pangrenyep", cond:"flag:mqg_7"}` | floor | 1 |
@@ -167,7 +167,7 @@ Roaming packs: Faceless (46,26), (48,27), (47,28). 3 kills, skirtable, outside t
 | room | tile rect (x,y) size | purpose | contents |
 |------|----------------------|---------|----------|
 | south gate | (29,32)-(30,33) 2x2 | Arrival from the square | exit `S` (29..30,33), spawn `s` (29,32) |
-| courtyard | (1,14)-(58,32) 58x19 | Rest and crossroads | petilasan `P` (12,22) (g.5, Laras beat `laras_2`), Ciung camp `C` (14,23), exit `X` (59,22..23), spawn `e` (58,22) |
+| courtyard | (1,14)-(58,32) 58x19 | Rest and crossroads | petilasan `P` (12,22) (g.5), Ciung camp `C` (14,23), exit `X` (59,22..23), spawn `e` (58,22) |
 | throne room | (17,1)-(42,12) 26x12 | Boss arena, then the confession and cage staging | boss `B` (29,4), Hunter shadow `H` (29,1), Pangrenyep `Q` (26,5), Ciung `O` (32,5), Hariang `R` (34,7), kabut `K` (29..30,13) flag `mqg_6` |
 
 ### Encounters
@@ -177,7 +177,7 @@ None. Barma Wijaya `unique_id:"barma_wijaya"` is a boss, not an encounter.
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Stone dungeon: a long guard hall with four barred cells along the north wall, torchless and cold.
-- Purpose: Search the cells (Ch 2). Fight `galuh_cells`, talk to the deserter, read the cage. Dead end west-only.
+- Purpose: Stop the wagon and search the cells (Ch 2). Fight `galuh_escort` and `galuh_cells`, talk to the deserter, read the cage. Dead end west-only.
 
 ### Map
 ```
@@ -197,7 +197,7 @@ None. Barma Wijaya `unique_id:"barma_wijaya"` is a boss, not an encounter.
 ######_______________________________________________#######
 ######_______________________________________________#######
 ######_______________________________________________#######
-Xe,,,,______________________G________________________#######
+Xe,,,,__________W_____________________G______________#######
 X,,,,,_______________________________________________#######
 ######_______________________________________________#######
 ######_______________________________________________#######
@@ -223,21 +223,23 @@ X,,,,,_______________________________________________#######
 | `X` | exit to kg_keraton (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_keraton", spawn_id:"from_kg_penjara"}` | path | 2 |
 | `e` | spawn, arrival from kg_keraton | `res://entities/world/spawn.tscn` | `{id:"from_kg_keraton"}` | path | 1 |
 | `G` | encounter galuh_cells (the guards of the cells) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_cells", size:Vector2i(22,10), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-8,-3)], [res://entities/enemies/faceless.tscn, Vector2i(-2,3)], [res://entities/enemies/faceless.tscn, Vector2i(5,-3)]], [[res://entities/enemies/faceless.tscn, Vector2i(-6,3)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(8,2)]]]}` | floor | 1 |
+| `W` | encounter galuh_escort (the wagon escort in the cell yard, the near miss) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_escort", size:Vector2i(16,10), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-5,-2)], [res://entities/enemies/faceless.tscn, Vector2i(0,3)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(6,2)]]]}` | floor | 1 |
 | `D` | NPC the Faceless deserter, in a cell | `res://entities/npc/npc.tscn` | `{npc_id:"faceless_deserter"}` | floor | 1 |
 | `g` | codex spot, the iron cage of the legend (VERIFY) | `res://entities/world/pickup.tscn` | `{codex_id:"pamali_cage"}` | floor | 1 |
-| `m` | wall message, Laras's scratched words: "The thousand temples. Don't stop." (MQG g.6; codex id ASSUMED) | `res://entities/world/pickup.tscn` | `{codex_id:"laras_wall"}` | floor | 1 |
+| `m` | wall message, Laras's scratched words: "The thousand temples. Don't stop." (MQG g.7; codex id ASSUMED) | `res://entities/world/pickup.tscn` | `{codex_id:"laras_wall"}` | floor | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents |
 |------|----------------------|---------|----------|
 | west corridor | (1,16)-(5,17) 5x2 | Arrival | exit `X` (0,16..17), spawn `e` (1,16) |
-| guard hall | (6,11)-(52,22) 47x12 | Fight (g.6) | G (28,16) `galuh_cells` |
+| guard hall (the cell yard) | (6,11)-(52,22) 47x12 | Fights (g.6, g.7) | W (16,16) `galuh_escort`, G (38,16) `galuh_cells` |
 | cells | (10,5)-(45,9), four 6x5 | Prisoners | wall message `m` (13,7) (west cell, Laras's), deserter `D` (32,7), codex `g` (42,7) |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
-| `galuh_cells` | `G (28,16)` | 22x10 | W1: Faceless (-8,-3), (-2,+3), (+5,-3); W2: Faceless (-6,+3), (+3,0), Faceless Archer (+8,+2) | Two waves, one shooter |
+| `galuh_escort` | `W (16,16)` | 16x10 | W1: Faceless (-5,-2), (0,+3), (+4,-2), Faceless Archer (+6,+2) | One wave, one shooter; the wagon leaves as the last guard falls |
+| `galuh_cells` | `G (38,16)` | 22x10 | W1: Faceless (-8,-3), (-2,+3), (+5,-3); W2: Faceless (-6,+3), (+3,0), Faceless Archer (+8,+2) | Two waves, one shooter |
 
 No roaming enemies.
 
@@ -318,11 +320,12 @@ Marker form `{zone: "<area id>", id: ...}`. The marker id equals the spot's own 
 | g.2 first bout | `galuh_bout_1` | `kg_alun` | `E` | `area_cleared:galuh_bout_1`, sets `mqg_1` |
 | g.3 second bout | `galuh_bout_2` | `kg_alun` | `F` | `area_cleared:galuh_bout_2`, sets `mqg_2`; beat `galuh_bout` (Lengser sees the queen's eyes in Ciung) |
 | g.4 speak with Uwa Lengser | `lengser` | `kg_alun` | `L` | `talked_to:lengser`, sets `mqg_3` (lifts kabut `K` to `kg_keraton`) |
-| g.5 rest in the palace courtyard | `galuh_1` | `kg_keraton` | `P` | `petilasan_activated:galuh_1`, sets `mqg_4`; Laras beat `laras_2` (`step:mqg=5`: they moved her east in the night, under a wagon cloth) |
+| g.5 rest in the palace courtyard | `galuh_1` | `kg_keraton` | `P` | `petilasan_activated:galuh_1`, sets `mqg_4` |
 | g.5 camp talk (optional) | `camp_galuh` | `kg_keraton` | `C` (14,23) | `flag:camp_galuh`; `ciung_wanara` entry `camp_galuh`, cond `flag:mqg_4`, `quiet`. Never completes a step, reachable after the boss |
-| g.6 search the cells | `galuh_cells` | `kg_penjara` | `G` | `area_cleared:galuh_cells`, sets `mqg_5`; her message on the wall `laras_wall` `m` (13,7) |
-| g.7 decide the deserter's fate | `faceless_deserter` | `kg_penjara` | `D` | `talked_to:faceless_deserter`, sets `mqg_6` (lifts kabut `K` to the throne room). Choice 1: `choice_freed` or `choice_handed` |
-| g.8 unmask the king | `barma_wijaya` | `kg_keraton` | `B` | `boss_defeated:barma_wijaya`, sets `mqg_7` (lifts kabut `J` to the Pamali road) |
+| g.6 stop the wagon in the cell yard | `galuh_escort` | `kg_penjara` | `W` | `area_cleared:galuh_escort`, sets `mqg_4b`; beat `galuh_escort` (the near miss: a strip with *Ka* comes over the wall, the wagon is gone east) |
+| g.7 search the cells | `galuh_cells` | `kg_penjara` | `G` | `area_cleared:galuh_cells`, sets `mqg_5`; her message on the wall `laras_wall` `m` (13,7); Laras beat `laras_2` (`step:mqg=7`: she heard you in the yard; ASSUMED, no petilasan) |
+| g.8 decide the deserter's fate | `faceless_deserter` | `kg_penjara` | `D` | `talked_to:faceless_deserter`, sets `mqg_6` (lifts kabut `K` to the throne room). Choice 1: `choice_freed` or `choice_handed` |
+| g.9 unmask the king | `barma_wijaya` | `kg_keraton` | `B` | `boss_defeated:barma_wijaya`, sets `mqg_7` (lifts kabut `J` to the Pamali road) |
 | beat `confession` (the turn) | `barma_wijaya` | `kg_keraton` | `B`, `Q`, `O` | `if flag:mqg_7`: Barma Wijaya admits Seal 2, the Hunter *is* the name; `do` `flag:beat_confession` |
 | beat `cage` (Hunter appears) | `nameless_hunter` | `kg_keraton` | `H` (29,1), `O`, `Q` | `if flag:beat_confession`: Ciung cages the king and Pangrenyep (one line from her: "My son will come, child. What is caged is always ransomed."); the Hunter from the shadows: "The cage holds the man, not the name."; `do` `flag:beat_cage`, `codex:barma_wijaya`, `codex:pangrenyep` |
 | beat `escape` (aftermath) | `hariang_banga` | `kg_keraton` | `R` (34,7), `O` | `if quest:mqg=done,flag:beat_cage`: Hariang escapes east to raise an army, Ciung stays to hold Galuh, you go on alone; `do` `flag:beat_escape`, `start:mq2` |
@@ -333,23 +336,23 @@ Marker form `{zone: "<area id>", id: ...}`. The marker id equals the spot's own 
 | Codex | `galuh` | `kg_alun` | `g` | `codex:galuh` |
 | Codex | `pamali_cage` | `kg_penjara` | `g` | `codex:pamali_cage` |
 
-Flags set or read here: `mqg_0` to `mqg_7`, `camp_galuh`, `beat_confession`, `beat_cage`, `beat_escape`, `choice_freed`, `choice_handed`; in `kg_pamali`: `mq2_7` (read, stone), `mq2_8`, `mq2_9`, `beat_ford`, `beat_truce`, `choice_mercy` and `choice_silent` (set by the `truce` choice). Hunter appearance of Act II: the shadow `H`. Sensitivity: the rooster fights off-screen only (no spot, no hero interaction).
+Flags set or read here: `mqg_0` to `mqg_7`, `mqg_4b`, `beat_galuh_escort`, `camp_galuh`, `beat_confession`, `beat_cage`, `beat_escape`, `choice_freed`, `choice_handed`; in `kg_pamali`: `mq2_7` (read, stone), `mq2_8`, `mq2_9`, `beat_ford`, `beat_truce`, `choice_mercy` and `choice_silent` (set by the `truce` choice). Hunter appearance of Act II: the shadow `H`. Sensitivity: the rooster fights off-screen only (no spot, no hero interaction).
 
 ## Flow
-Desa Purwa east road (after `mq1_10`) -> `kg_alun` `e` -> Ciung at the east gate of the ring (g.1) -> bout 1 `E` (g.2) -> bout 2 `F` (g.3) -> Lengser `L` (g.4) opens kabut `K` -> north steps -> `kg_keraton` courtyard petilasan `P` (g.5, Laras beat, optional camp talk with Ciung `C`) -> east exit `X` -> `kg_penjara`: guard hall `galuh_cells` (g.6), wall message `m`, the deserter `D` (g.7, choice 1) -> back to the courtyard, kabut `K` to the throne room is open -> Barma Wijaya `B` (g.8) -> `confession`, `cage` (Pangrenyep `Q`, Ciung `O`, Hunter shadow `H`) and `escape` (Hariang `R`) in the throne room -> `kg_alun`, kabut `J` is open -> east road to `kg_pamali` and Mataram.
+Desa Purwa east road (after `mq1_10`) -> `kg_alun` `e` -> Ciung at the east gate of the ring (g.1) -> bout 1 `E` (g.2) -> bout 2 `F` (g.3) -> Lengser `L` (g.4) opens kabut `K` -> north steps -> `kg_keraton` courtyard petilasan `P` (g.5, Laras beat, optional camp talk with Ciung `C`) -> east exit `X` -> `kg_penjara`: the wagon escort `galuh_escort` (g.6, beat `galuh_escort`), guard hall `galuh_cells` (g.7, Laras beat), wall message `m`, the deserter `D` (g.8, choice 1) -> back to the courtyard, kabut `K` to the throne room is open -> Barma Wijaya `B` (g.8) -> `confession`, `cage` (Pangrenyep `Q`, Ciung `O`, Hunter shadow `H`) and `escape` (Hariang `R`) in the throne room -> `kg_alun`, kabut `J` is open -> east road to `kg_pamali` and Mataram.
 
 ## Step 2 self-check ([AGENTS.md](../../AGENTS.md) section 5)
-- [x] Every MQG step g.1-g.8 and beat (`galuh_bout`, `laras_2`, camp talk, `confession`, `cage`, `escape`) in quests.md section 4 has a marker or spot above.
-- [x] Petilasan `galuh_1` comes before the boss with no fight between it and the throne room (the cells fight `galuh_cells` is a side trip east, and the throne room door `K` stays shut until g.7).
+- [x] Every MQG step g.1-g.9 and beat (`galuh_bout`, `galuh_escort`, `laras_2`, camp talk, `confession`, `cage`, `escape`) in quests.md section 4 has a marker or spot above.
+- [x] Petilasan `galuh_1` comes before the boss with no fight between it and the throne room (the cell-yard fights `galuh_escort` and `galuh_cells` are a side trip east, and the throne room door `K` stays shut until g.8).
 - [x] One shooter per encounter, at most two waves; the 4-plus-enemy rooms (ring 17x9 rects, guard hall 22x10) are the existing ones.
 - [x] Critical path walkable with no glyph; kabut open on talk and fight flags only.
 - [~] Not re-checked after the v3.1 edit: world.md POI counts (3-5 NPCs: this region now holds Ciung (3 spots), Lengser, the deserter, Pangrenyep, Hariang, the Hunter shadow). See Doc conflicts.
-- [ ] Re-run the map validator for `kg_keraton` (new chars `C H Q O R`) and `kg_penjara` (`m`); none of the new spots blocks the door column (29..30) or a path.
+- [ ] Re-run the map validator for `kg_keraton` (new chars `C H Q O R`) and `kg_penjara` (`m`, `W`; `G` moved to (38,16)); none of the new spots blocks the door column (29..30) or a path.
 
 ## ASSUMED
 - Story v3.1 changes (**ASSUMED** 2026-11-06): Ciung `C` in `kg_alun` is where g.1 happens ("the square gates" = the east gate of the ring, (38,18)); he disappears from the square once g.5 sets `mqg_4`, and the same `ciung_wanara` NPC id appears at the courtyard petilasan as the camp-talk giver (`cond:"flag:mqg_4"`, entry `camp_galuh`, `quiet`).
 - The `confession`, `cage` and `escape` beats are flag-driven (`quests.md`), not triggers. Their staging spots are NPC-scene spots in the throne room with `cond` on beat flags: Pangrenyep `Q`, Ciung `O`, the Hunter's shadow `H` (29,1) behind the throne, Hariang `R`. The boss `B` is removed once defeated; the confession is spoken by the beat, with `B` represented by the defeated state. NPC ids `pangrenyep` and `nameless_hunter` (reused from the boss scene's id) are ASSUMED.
-- Laras's wall message `m` is a codex-style pickup (`laras_wall`, ASSUMED id) in the first cell. Step g.6 completes on clearing the guards, not on reading it.
+- Laras's wall message `m` is a codex-style pickup (`laras_wall`, ASSUMED id) in the first cell. Step g.7 completes on clearing the guards, not on reading it.
 - Spots in the throne room sit on the 26x12 floor at least 3 tiles from the door kabut `K` (29..30,13) and keep the door column clear.
 - Hariang Banga `R` is only a staging actor here; the Act III duel `B` in `kg_pamali` is unchanged (`cond:"flag:mq2_8"`).
 

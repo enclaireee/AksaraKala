@@ -14,15 +14,15 @@ const MAP := [
 	"############################################################",
 	"############################################################",
 	"########r....................r##############################",
-	"########..........r.....r.....##############################",
+	"########.H........r.....r.....##############################",
 	"########......................##############################",
-	"########......................##############################",
-	"########......................##############################",
+	"########.G....................##############################",
+	"########...................Y..##############################",
 	"########......................,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX",
-	"########.......B.C.........Z..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
+	"########...S...B.C.........Z..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
 	"########......................##############################",
 	"########......................##############################",
-	"########......................##############################",
+	"########.V....................##############################",
 	"########......................##############################",
 	"########..........r.....r.....##############################",
 	"########r....................r##############################",
@@ -41,9 +41,14 @@ const MAP := [
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kawah_jalan", "spawn_id": "from_ts_kawah"}, "tile": ","},   # exit to ts_kawah_jalan (east edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kawah_jalan"}, "tile": ","},   # spawn, arrival from ts_kawah_jalan
-	"B": {"scene": "res://entities/bosses/sangkuriang.tscn", "props": {"cond": "flag:mq1_8"}, "tile": ","},   # boss Sangkuriang, awakened after Captain breaks the Crater Seal
-	"C": {"scene": "res://entities/bosses/faceless_captain.tscn", "props": {}, "tile": ","},   # boss Faceless captain (MQ1 1.8)
+	"B": {"scene": "res://entities/bosses/sangkuriang.tscn", "props": {"cond": "flag:mq1_8"}, "tile": ","},   # boss Sangkuriang (MQ1 1.13), awakened after the Captain smashes the cracked seal-stone
+	"C": {"scene": "res://entities/bosses/faceless_captain.tscn", "props": {}, "tile": ","},   # boss Faceless captain (MQ1 1.12)
 	"Z": {"scene": "res://entities/bosses/arena_post.tscn", "props": {"post_id": "east"}, "tile": ","},   # arena post, east post (hang boeh rarang)
+	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "seal_stone", "cond": "!flag:mq1_8"}, "tile": ","},   # NPC-scene spot, the cracked seal-stone (Crater Seal); the Captain smashes it at the end of 1.12
+	"G": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mq1_8,!flag:beat_naga"}, "tile": ","},   # NPC Ciung Wanara, chained as bait on the west rim (seen in the `crater_seal` beat, freed after 1.13)
+	"V": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nagawiru", "cond": "flag:mq1_8,!flag:beat_naga"}, "tile": ","},   # NPC Nagawiru, the naga-king, bound at the arena's west edge (freed after 1.13)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nameless_hunter", "cond": "flag:mq1_8,!flag:beat_crater_seal"}, "tile": ","},   # NPC the Nameless Hunter, seen on the far rim; he watches and leaves (Hunter of Act I)
+	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "quest:mq1=done,!flag:beat_naga"}, "tile": ","},   # NPC Naganingrum on the rim, too late to be recognised (`naga` beat)
 }
 
 

@@ -10,7 +10,7 @@ const MAP := [
 	"#.........,,..r.r.r.r.r.r.r.r.r.r..........................#",
 	"#.........,,........................................b......#",
 	"#.........,,..r.r.r.r.r.r.r.r.r.r..........................#",
-	"#.........,,...............................................#",
+	"#.........,,...........H...................................#",
 	"#.........,,...............................................#",
 	"#.........,,....................................T..........#",
 	"#.........,,..................................q............#",
@@ -48,6 +48,7 @@ const SPOTS := {
 	"q": {"scene": "res://entities/enemies/wewe_gombel.tscn", "props": {}, "tile": "."},   # elite Wewe Gombel (SQ-M2, inert until step 3)
 	"p": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "wewe_parents_2"}, "tile": "."},   # NPC Wewe's parents at the hill (SQ-M2 peaceful)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_secret_pasopati", "item_id": "panah_pasopati"}, "tile": "_"},   # chest: Panah Pasopati (secret 2, crypt)
+	"H": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_hunter_war", "size": Vector2i(19,6)}, "tile": "."},   # trigger, beat `hunter_war` staging (the Hunter among the graves; plays when `flag:lead_kuburan`, `zone:mt_kuburan`)
 }
 
 

@@ -130,7 +130,7 @@ Soft and story-driven:
 - Room layout: [zones/segara_kidul.md](zones/segara_kidul.md).
 
 ### Gua Kala (finale), Act VI
-- Regional character: none (Semar waits at the last petilasan; Ciung Wanara and Hariang Banga hold the mouth). Story: "Into the Maw of Time" (MQ5): reclaim the three Memory Seals (La, Ra, Sa), calm Batara Kala in the Ruwatan of Dawn, then write Laras's name. [story.md](story.md) Acts.
+- Regional character: none (Semar waits at the last petilasan; Ciung Wanara and Hariang Banga hold the mouth). Story: "Into the Maw of Time" (MQ5): reclaim the three letters of her name (La, Ra, Sa), calm Batara Kala in the Ruwatan of Dawn, then write Laras's name. [story.md](story.md) Acts.
 - Look: dark cavern, hourglass and clock-like motifs, the forgotten letters floating faded.
 - Entered from the sea pavilion (or the hub) once `quest:mq4=done`.
 - Boss: Batara Kala.

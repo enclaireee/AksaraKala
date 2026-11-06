@@ -19,7 +19,7 @@ const MAP := [
 	"#######.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#.......#",
 	"#######.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#.......#",
 	"#######.,,....................,,...................#########",
-	"#######.,,....................,,........r...r..............#",
+	"#######.,,....................Z,........r...r..............#",
 	"#######.,,5...................,,..........x................#",
 	"#######.,,....................,,........r...r...........####",
 	"#######.,,....................,,,,,,,,,,,,,,,,,,,,,,,,,,=,;$",
@@ -49,8 +49,9 @@ const SPOTS := {
 	";": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_tebing"}, "tile": ","},   # spawn, arrival from `sk_tebing` (in the pocket on the open side of `=`)
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:ts_sk", "open_side": "e"}, "tile": ","},   # shortcut gate, back route to Segara Kidul (opens only from `sk_tebing`, 2 tiles)
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_7"}, "tile": ","},   # kabut, crater path gate (one per tile)
-	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "!quest:mq1=done"}, "tile": "."},   # NPC Naganingrum, the woman by the lake, teaches Ca (MQ1 1.6), gone after MQ1
-	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "dayang_sumbi", "cond": "quest:mq1=done"}, "tile": "."},   # NPC Dayang Sumbi, gives SQ-S5 after MQ1
+	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "flag:mq1_6b"}, "tile": "."},   # NPC Naganingrum, the woman by the lake, shows Ca (MQ1 1.10, the turn); appears once the shore is clear and stays by the lake after MQ1 (story.md; her arc closes in the epilogue)
+	"Z": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_lakeshore", "size": Vector2i(16,9), "cond": "step:mq1=8", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-5,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-5,2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(6,2)]]]}, "tile": ","},   # encounter sunda_lakeshore, clear the lake shore (MQ1 1.9, new; step 1.9 only)
+	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "dayang_sumbi", "cond": "quest:mq1=done"}, "tile": "."},   # NPC Dayang Sumbi, idle talk at the lake after MQ1 (SQ-S5 is retired)
 	"x": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "tangkuban_perahu"}, "tile": "."},   # codex spot, ruin on the lake shore
 	"5": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_5"}, "tile": "."},   # angklung 5
 	"k": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_kujang", "item_id": "kujang"}, "tile": "."},   # chest: Kujang (secret 1)

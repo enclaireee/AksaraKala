@@ -79,10 +79,10 @@ Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Ev
 | Step | Marker id | Area | Event string |
 |------|-----------|------|--------------|
 | MQ5 5.1 enter Gua Kala | `kala_mulut` | `gk_mulut` (brothers `c` (3,14) and `h` (3,19), Deserter `d` (4,18)) | `zone_entered:gk_mulut` (Q), sets `mq5_1`. Requires `mq4_9`. Beats `mouth_freed` (if `flag:mq5_1`, `flag:choice_freed`) then `mouth` (if `flag:mq5_1`), both `do` `flag:beat_mouth` |
-| 5.2 reclaim the first Memory Seal, La, at the Maw | `kala_mulut` | `gk_mulut` | `area_cleared:kala_mulut` (Q), sets `mq5_1b`. The seal La is released by the clear (no map object, Phase 5 decides) |
+| 5.2 reclaim La, the first letter of her name, at the Maw | `kala_mulut` | `gk_mulut` | `area_cleared:kala_mulut` (Q), sets `mq5_1b`. The letter La is released by the clear (no map object, Phase 5 decides) |
 | 5.3 shatter the western time-ward | `kala_pasir_1` | `gk_pasir` (west half) | `area_cleared:kala_pasir_1` (Q) |
 | 5.4 shatter the eastern time-ward | `kala_pasir_2` | `gk_pasir` (east half, past the gallery) | `area_cleared:kala_pasir_2` (Q), sets `mq5_1c` |
-| 5.5 reclaim the second Memory Seal, Ra, in the Abyss of Forgetting | `kala_lupa` | `gk_lupa` | `area_cleared:kala_lupa` (Q), sets `mq5_1d` |
+| 5.5 reclaim Ra, the second letter of her name, in the Abyss of Forgetting | `kala_lupa` | `gk_lupa` | `area_cleared:kala_lupa` (Q), sets `mq5_1d` |
 | 5.6 rest at the last petilasan | `kala_1` | `gk_lupa` | `petilasan_activated:kala_1` (Q), sets `mq5_2`. The third seal, Sa; Semar waits here. Beat `laras_5` (if `step:mq5=6`): Laras's beat, "Who's there?", she has forgotten you but is still writing. `do` `flag:beat_laras_5` |
 | 5.7 calm Batara Kala | `kala_boss` | `gk_ruang_kala` | `boss_defeated:batara_kala` (Q), sets `mq5_3`. Beat `write` (if `flag:mq5_3`): Kala turns back into the dark, her lontar is blank, Semar: "Then write it." |
 | 5.8 write Laras's name | `kala_boss` | `gk_ruang_kala` | `name_written:laras` (Q), sets `mq5_4`. The name-writing card ends with the event; MQ5 done plays the epilogue (zones.gd). The lit door `kala_exit` stays as a walk home after the credits |
@@ -137,7 +137,7 @@ Enter `gk_mulut` (the far hourglass in view) -> Sunda mix `kala_mulut` -> petila
 ## Doc conflicts found (not fixed)
 - Resolved by v3.1: Segara Kidul is P0 and `gk_mulut` has two entries (`sk_keraton`, `desa_purwa`) on `quest:mq4=done`.
 - Resolved 2026-11-06 (consistency pass): desa_purwa.md gates its Gua Kala exit on `mq4_9`; bestiary.md calls Ombak P0 and Kala HP 9300.
-- The three Memory Seals (La, Ra, Sa) of quests.md MQ5 have no map object; they are released by the clears (La, Ra) and the petilasan (Sa). Phase 5 may want pickups.
+- The three letters of her name (*huruf nama*: La, Ra, Sa) of quests.md MQ5 have no map object; they are released by the clears (La, Ra) and the petilasan (Sa). Phase 5 may want pickups.
 - Deserter at the mouth: `deserter_mouth` is a new npc id (ASSUMED) needing a script.md line and a sprite; quests.md names only the beat `mouth_freed`.
 - Quests.md 5.8 `name_written:laras` completes MQ5; the old 5.4 line `zone_entered:desa_purwa` in this doc is replaced.
 - bestiary.md gives Kala HP 9300 / 3 phases (the 8400 P0 figure is retired) with no arena size. world.md says 2x2 to 3x3 screens per area. The built boss still has 8400 HP: code follow-up.
@@ -152,7 +152,7 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 
 - Size: 90 x 34 tiles = 3 x 2 screens (30 x 17 each).
 - Look: Wet black cave mouth, carved clock gears, drifting faded letters, the far hourglass and clock face faint across the dark. A small sand-choked side pocket by the first petilasan.
-- Purpose: Entry from `sk_keraton` (south passage, `quest:mq4=done`) or Desa Purwa (west), MQ5 5.1-5.2 (beats `mouth_freed` / `mouth`, the first Memory Seal La), the `mouth_freed` Deserter spot, first rest `kala_2`, fight `kala_mulut`, link to gk_pasir, the gate of `sc:gk_lorong` (north wall, west) with its pocket and exit into gk_lupa.
+- Purpose: Entry from `sk_keraton` (south passage, `quest:mq4=done`) or Desa Purwa (west), MQ5 5.1-5.2 (beats `mouth_freed` / `mouth`, the first letter, La), the `mouth_freed` Deserter spot, first rest `kala_2`, fight `kala_mulut`, link to gk_pasir, the gate of `sc:gk_lorong` (north wall, west) with its pocket and exit into gk_lupa.
 
 ### Map
 ```

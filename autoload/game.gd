@@ -5,7 +5,7 @@ extends Node
 signal changed   # ilmu, stats, gear, glyphs or flask changed
 signal saved     # HUD shows "Saved" for 1 s
 
-const VERSION := 1
+const VERSION := 2   # 2: quest records gain `all` (bits of an all step). Older saves load with all = 0.
 const STATS := ["vit", "end", "str", "dex", "spi"]
 const STARTER_GLYPHS: Array[String] = []   # glyphs come from the main quest (quests.md 3.3)
 ## Quest Ilmu by zone and size S/M/L (quests.md 3.1, TUNE). Desa Purwa uses the Act 1 row for now.
@@ -39,7 +39,7 @@ var last_petilasan := {}               # zone (scene path) and id
 var killed := PackedStringArray()      # bosses, minibosses, other unique ids that stay dead
 var flags := {}
 var play_time := 0.0
-var quests := {}                       # id -> {state: active|done, step, count} (quests.md 7.3)
+var quests := {}                       # id -> {state: active|done, step, count, resolution, all} (quests.md 7.3)
 var codex := PackedStringArray()       # unlocked CodexEntry ids
 var pinned := ""                       # pinned side quest id, "" follows the main quest
 var hero_name := DEFAULT_NAME          # set on the name screen; new_game keeps it
@@ -139,7 +139,7 @@ func new_game(cls: ClassData) -> void:
 			add_item(id, false)
 			equipped[ItemData.by_id(id).slot] = id
 	if start_quest("mq0"):
-		quests.mq0.step = 3   # 0.1-0.3 (prologue, Semar, class) came before the save (quests.md MQ0)
+		quests.mq0.step = 2   # 0.1-0.2 (prologue, class) are struck before the save; 0.3 Ibu is next (quests.md MQ0)
 	save_game()
 	changed.emit()
 
@@ -259,7 +259,7 @@ func current_step(id: String) -> QuestStep:
 func start_quest(id: String) -> bool:
 	if quest_state(id) != "available":
 		return false
-	quests[id] = {"state": "active", "step": 0, "count": 0, "resolution": ""}
+	quests[id] = {"state": "active", "step": 0, "count": 0, "resolution": "", "all": 0}
 	_emit("quest_started", id)
 	if QuestData.by_id(id).steps.is_empty():
 		_complete(id)
@@ -277,7 +277,13 @@ func on_event(sig: String, arg: String) -> void:
 	var hit := false
 	for id in quests.keys():
 		var st := current_step(id)
-		if st != null and (_matches(st.on, sig, arg) or st.alt.has(sig + ":" + arg)):
+		if st != null and not st.all.is_empty():
+			for i in st.all.size():
+				if not _all_bit(id, i) and _matches(str(st.all[i].get("on", "")), sig, arg):
+					hit = true
+					if _all_hit(id, i):
+						break
+		elif st != null and (_matches(st.on, sig, arg) or st.alt.has(sig + ":" + arg)):
 			hit = true
 			if st.alt.has(sig + ":" + arg):
 				quests[id].resolution = st.alt[sig + ":" + arg]
@@ -302,6 +308,7 @@ func _bump(id: String) -> void:
 	set_flag(st.set_flag, false)
 	quests[id].step = int(quests[id].step) + 1
 	quests[id].count = 0
+	quests[id].all = 0
 	if int(quests[id].step) >= QuestData.by_id(id).steps.size():
 		_complete(id)
 	else:
@@ -309,20 +316,53 @@ func _bump(id: String) -> void:
 		_catch_up(id)
 
 
-## A collect step counts items already held, so picking them up early can't soft-lock the quest.
-## A kill step for a unique enemy (boss, elite) already in `killed` is met: it never respawns to fire again.
+func _all_bit(id: String, i: int) -> bool:
+	return (int(quests[id].get("all", 0)) >> i) & 1 == 1
+
+
+## Marks trigger i of the current all step done and sets its flag. True when that finished the step.
+func _all_hit(id: String, i: int) -> bool:
+	var st := current_step(id)
+	quests[id].all = int(quests[id].get("all", 0)) | (1 << i)
+	set_flag(str(st.all[i].get("set_flag", "")), false)
+	for j in st.all.size():
+		if not _all_bit(id, j):
+			_emit("quest_updated", id)
+			return false
+	quests[id].count = st.count - 1
+	_bump(id)
+	return true
+
+
+## How much of `on` already happened in a way that cannot fire again, capped at `need`: held items and known
+## glyphs count each match, a unique kill (boss, elite) already in `killed` meets it (it never respawns).
+func _already(on: String, need: int) -> int:
+	var kv := on.split(":", true, 1)
+	if kv.size() < 2:
+		return 0
+	var pool := PackedStringArray()
+	match kv[0]:
+		"boss_defeated", "enemy_killed":
+			return need if kv[1] in killed else 0
+		"item_picked":
+			pool = inventory
+		"glyph_learned":
+			pool = glyphs_learned
+	return mini(need, Array(pool).filter(func(x: String) -> bool: return _matches(on, kv[0], x)).size())
+
+
+## A step (or all-trigger) that becomes current counts what already happened (_already), so early pickups,
+## early glyphs and bosses beaten before the quest started can't soft-lock it.
 func _catch_up(id: String) -> void:
 	var st := current_step(id)
 	if st == null:
 		return
-	var kv := st.on.split(":", true, 1)
-	if kv[0] in ["boss_defeated", "enemy_killed"] and kv.size() == 2 and kv[1] in killed:
-		quests[id].count = st.count - 1
-		_bump(id)
+	if not st.all.is_empty():
+		for i in st.all.size():
+			if _already(str(st.all[i].get("on", "")), 1) > 0 and _all_hit(id, i):
+				return
 		return
-	if not st.on.begins_with("item_picked:"):
-		return
-	var n := Array(inventory).filter(func(i: String) -> bool: return _matches(st.on, "item_picked", i)).size()
+	var n := _already(st.on, st.count)
 	if n >= st.count:
 		quests[id].count = st.count - 1
 		_bump(id)
@@ -442,6 +482,9 @@ func check(cond: String) -> bool:
 		"step":
 			var p := arg.split("=")
 			return p.size() == 2 and quest_state(p[0]) == "active" and int(quests[p[0]].step) == int(p[1])
+		"zone":   # the area the player is in (Zones.current_zone, set by Zone._ready)
+			var z := get_node_or_null("/root/Zones")
+			return z != null and z.current_zone == arg
 	push_warning("dialogue: unknown condition '%s'" % cond)
 	return false
 
@@ -464,6 +507,16 @@ func run(action: String) -> void:
 			set_flag(arg)
 		"codex":
 			unlock_codex(arg)
+		"lakon":   # same flag as a quest's lakon reward
+			set_flag("lakon:" + arg)
+		"restore":
+			restore()
+		"goto":   # goto:<area>:<spawn>; the area may be a scene path, so split at the last colon
+			var p := arg.rsplit(":", true, 1)
+			if p.size() == 2:
+				get_node("/root/Zones").go_to(p[0], p[1])   # actions run after the box closed; this fires zone_entered
+			else:
+				push_warning("dialogue: goto '%s' needs <area>:<spawn>" % arg)
 		"write":   # write:<seq_id>:<glyph_id>,<glyph_id>,... (ui/glyph_lesson)
 			var p := arg.split(":", true, 1)
 			if p.size() == 2:
@@ -500,6 +553,16 @@ func play(name_key: String, entry: Dictionary) -> void:
 			run(a)
 	for a: String in entry.get("do", []):
 		run(a)
+
+
+## Refill flask, HP and stamina: resting at a petilasan and the `restore` action. Does not save or reload the zone.
+func restore() -> void:
+	flask_charges = flask_max
+	var p: Node = get_tree().get_first_node_in_group("player") if is_inside_tree() else null
+	if p and p.get("health") and p.get("stamina"):
+		p.health.heal(p.health.max_hp)   # no-op when dead
+		p.stamina.refund(p.stamina.max_stamina)
+	changed.emit()
 
 
 func _emit(sig: String, id: String) -> void:
@@ -553,7 +616,7 @@ func from_dict(d: Dictionary) -> void:
 	for id in quests.keys():   # drop malformed quest records from old or hand-edited saves
 		var q: Variant = quests[id]
 		if q is Dictionary and str(q.get("state", "")) in ["active", "done"]:
-			quests[id] = {"state": str(q.state), "step": maxi(0, _num(q.get("step"))), "count": maxi(0, _num(q.get("count"))), "resolution": str(q.get("resolution", ""))}
+			quests[id] = {"state": str(q.state), "step": maxi(0, _num(q.get("step"))), "count": maxi(0, _num(q.get("count"))), "resolution": str(q.get("resolution", "")), "all": maxi(0, _num(q.get("all")))}
 		else:
 			quests.erase(id)
 	changed.emit()

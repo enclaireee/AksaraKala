@@ -136,7 +136,7 @@ func _on_dialogue_finished() -> void:
 
 
 func _next() -> void:
-	if active != "" or _dialogue or _queue.is_empty():
+	if active != "" or writing != "" or _dialogue or _queue.is_empty():   # a write card holds lessons back
 		return
 	var id: String = _queue.pop_front()
 	var g := GlyphData.by_id(id)
@@ -294,6 +294,7 @@ func _write_done() -> void:
 	_stroke.clear_points()
 	get_tree().paused = _wpaused
 	get_node("/root/Events").name_written.emit(id)
+	_next()
 
 
 func _input(e: InputEvent) -> void:

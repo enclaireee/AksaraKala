@@ -1,5 +1,5 @@
 extends SceneTree
-## Scripted playthrough of Mataram (zones/mataram.md critical path): MQ2 start to end (Story v2: from kg_pamali to the Hariang Banga duel and the truce beat) plus SQ-M1 to M5,
+## Scripted playthrough of Mataram (zones/mataram.md critical path): MQ2 start to end (Story v3.1: from kg_pamali to the Hariang Banga duel and the truce beat) plus SQ-M1 to M4,
 ## in the real zones. Every hop and target must be walkable from where the player stands (physics on
 ## layer 1: walls, live kabut, closed gates). Talks run the real dialogue, petilasans rest, encounters
 ## and the boss are killed by hand. Run: $GODOT --headless --path . -s tests/mataram_play_test.gd
@@ -10,20 +10,29 @@ const ROUTE := [
 	"go:kg_alun", "go:kg_pamali", "go:mt_gapura", "do:mataram_gerbang", "q:mq2=active:1",
 	"go:mt_sawah", "do:mataram_1", "q:mq2=active:2",
 	"do:nawang_wulan", "q:sq_m1=active:1", "do:lumbung", "do:selendang_nawang", "do:nawang_wulan", "q:sq_m1=done",
-	"go:mt_pasar", "do:mataram_pasar", "q:mq2=active:3", "do:mataram_dalang", "q:mq2=active:4", "do:mataram_dalang", "q:sq_m4=active:1",
-	"do:pande_besi", "q:sq_m3=active:1", "do:wewe_neighbor", "q:sq_m2=active:1", "do:wewe_parents",
-	"go:mt_reruntuhan", "do:pak_karto", "q:mq2=active:5", "do:mataram_ruins", "q:mq2=active:6",
+	# 2.3 the three leads (one `all` step, any order): market, ruins, graveyard. Each sets its lead flag.
+	"go:mt_pasar", "do:mataram_pasar", "flag:lead_pasar", "q:mq2=active:2",
+	"do:pande_besi", "q:sq_m3=active:1",
+	"go:mt_reruntuhan", "do:pak_karto", "do:mataram_ruins", "flag:lead_ruins", "q:mq2=active:2",
+	"go:mt_kuburan", "do:mataram_kuburan", "flag:lead_kuburan", "q:mq2=active:3", "beat:hunter_war",
+	# 2.4 Ha from Ki Sumarto, 2.5 Na from the Arca base, 2.6 Ca from the lesung women.
+	"go:mt_reruntuhan", "go:mt_sawah", "do:sc:mt_ruin_sawah", "go:mt_pasar", "do:mataram_dalang", "q:mq2=active:4", "do:mataram_dalang", "q:sq_m4=active:1",
+	"do:wewe_neighbor", "q:sq_m2=active:1", "do:wewe_parents",   # SQ-M2 and SQ-M4 unlock with 2.4 (mq2_2)
+	"go:mt_sawah", "go:mt_reruntuhan", "do:arca_base", "q:mq2=active:5",
 	"do:gong_ageng", "q:sq_m4=active:2",
-	"go:mt_sawah", "do:sc:mt_ruin_sawah", "do:lesung_women", "q:mq2=active:7", "do:lesung_women", "q:sq_m5=active:0",
-	"go:mt_reruntuhan", "go:mt_kuburan", "do:mataram_kuburan", "q:mq2=active:8", "do:wewe_hill", "do:wewe_parents_2", "q:sq_m2=active:3",
-	"go:mt_wetan", "do:mataram_batu", "q:mq2=active:9", "do:juru_kunci", "q:mq2=active:10", "beat:hunter_war",
+	"go:mt_sawah", "do:lesung_women", "q:mq2=active:6",
+	# 2.7 the foothill blockade, 2.8 Ra from the juru kunci.
+	"go:mt_reruntuhan", "go:mt_kuburan", "do:wewe_hill", "do:wewe_parents_2", "q:sq_m2=active:3", "go:mt_wetan", "do:mataram_batu", "q:mq2=active:7", "do:juru_kunci", "q:mq2=active:8",
 	"go:mt_tegal", "do:tuyul_hideout", "do:tuyul_leader", "q:sq_m3=active:3",
 	"go:mt_sawah", "go:mt_pasar", "do:pande_besi", "q:sq_m3=done", "do:wewe_neighbor", "q:sq_m2=done",
 	"do:mataram_dalang", "q:sq_m4=done",
-	"go:mt_reruntuhan", "go:mt_wetan", "go:mt_candi", "do:mataram_candi", "q:mq2=active:11", "do:mataram_camp", "q:mq2=active:12",
-	"do:mataram_2", "beat:laras_3", "do:bandung_bondowoso", "q:sq_m5=done", "q:mq2=active:13",
+	# 2.9 the temple gate, 2.10 the camp (the turn), then the temple petilasan and the Laras beat.
+	"go:mt_reruntuhan", "go:mt_wetan", "go:mt_candi", "do:mataram_candi", "q:mq2=active:9", "do:mataram_camp", "q:mq2=active:10", "beat:camp",
+	"do:mataram_2", "beat:laras_3",
+	# 2.11 Bandung Bondowoso, 2.12 the Pamali stone, 2.13 the duel.
+	"do:bandung_bondowoso", "q:mq2=active:11",
 	"go:mt_gapura", "do:sc:mt_candi_gapura", "go:kg_pamali",
-	"do:pamali_stone", "write:nagawiru:jawa_na,sunda_ga", "q:mq2=active:14", "beat:ford",
+	"do:pamali_stone", "write:nagawiru:jawa_na,sunda_ga", "q:mq2=active:12", "beat:ford",
 	"pick:1", "do:hariang_banga", "q:mq2=done", "beat:truce", "flag:choice_silent", "q:mq3=active:0",
 	"go:mt_gapura", "go:mt_sawah", "go:mt_reruntuhan", "go:mt_wetan", "see:tt_kulon",
 ]

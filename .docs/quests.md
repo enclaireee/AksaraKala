@@ -79,13 +79,13 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 | Herb Pouch x4 | SQ-S2, SQ-M1, SQ-T2, SQ-K1 (P1) |
 
 ## 4. Main quest
-Story v3.1 (user call 2026-11-06, [story.md](story.md) is the canon): the hunt for Laras. A Prologue, six acts and an Interlude, 70 steps, about 7 hours (**TUNE**). Quest ids stay as stable keys (`mq0`, `mq1`, `mqg`, `mq2`, `mq3`, `mq4`, `mq5`); the journal shows the act title. Old gate flag names are kept where they still fit. The arrow always points at the current step. Glyphs are learned only here. Each teacher speaks one hint about the enemy that glyph counters ([bestiary.md](bestiary.md) Glyph weaknesses). Every line of text is in [script.md](script.md). Act titles in Indonesian are **ASSUMED**.
+Story v3.1 (user call 2026-11-06, [story.md](story.md) is the canon): the hunt for Laras. A Prologue, six acts and an Interlude, 71 steps, about 7 hours (**TUNE**). Quest ids stay as stable keys (`mq0`, `mq1`, `mqg`, `mq2`, `mq3`, `mq4`, `mq5`); the journal shows the act title. Old gate flag names are kept where they still fit. The arrow always points at the current step. Glyphs are learned only here. Each teacher speaks one hint about the enemy that glyph counters ([bestiary.md](bestiary.md) Glyph weaknesses). Every line of text is in [script.md](script.md). Act titles in Indonesian are **ASSUMED**.
 
 | Quest | Part | Steps | Region |
 |-------|------|-------|--------|
 | MQ0 | Prologue "Malam Wayang" | 8 | Desa Purwa |
 | MQ1 | Act I "Segel Kawah" | 13 | Tatar Sunda |
-| MQG | Act II "Wajah Pinjaman" | 8 | Keraton Galuh |
+| MQG | Act II "Wajah Pinjaman" | 9 | Keraton Galuh |
 | MQ2 | Act III "Darah di Pamali" | 13 | Mataram |
 | MQ3 | Act IV "Bilah Tujuh Turunan" | 11 | Tanah Timur |
 | MQ4 | Interlude "Rumah yang Sunyi" (4.1-4.2) and Act V "Laut Tak Pernah Lupa" (4.3-4.9) | 9 | Desa Purwa, Segara Kidul |
@@ -127,12 +127,12 @@ Na is no longer taught by Pak Karto. The source is an inscribed object on the Ar
 
 **Gating (v3.1).** Segara Kidul is on the main path and is **P0**. The Desa Purwa south exit to `sk_pantai` opens on `flag:mq4_2`, which is set by the Interlude talk with Ibu (step 4.2), not on `mq3_8`. The `tt_pesisir` link to `sk_karang` is a back route that opens on `quest:mq4=done` (flag `mq4_9`), so Act V always starts from Desa Purwa. `gk_mulut` opens from `sk_keraton` when `quest:mq4=done`, and the Desa Purwa to `gk_mulut` gate also opens on `quest:mq4=done`. Between Act IV and the Interlude the only open route is the one the riders carry you on (`goto`, section 7.1). Segara Kidul has 4 areas on the path: `sk_pantai`, `sk_karang`, `sk_tebing`, `sk_keraton`. There is no `sk_desa` or `sk_hutan`. Other gate flags keep their names: `mq1_10` (Desa Purwa east gate), `mq2_6` (temple stairs), `mq2_9` (Mataram east gate), `mqg_7` (road to the Pamali).
 
-**Double bosses.** Where two bosses come back to back (I: Captain then Sangkuriang; IV: the Keris then the Hunter), the beat between them runs `restore` (health and flask charges, **ASSUMED**, [story.md](story.md) Pacing 8).
+**Double bosses.** Where two bosses come back to back (I: Captain then Sangkuriang; IV: the Keris then the Hunter), the beat between them runs `restore` (health, stamina and flask charges, **ASSUMED**, [story.md](story.md) Pacing 8).
 
 Step "Completes on" is the quest trigger; `sets` is the step's `set_flag`. Flags in tables are the existing ones unless a step says new.
 
 ### MQ0 Prologue: "Malam Wayang" / "The Night of the Wayang" (Desa Purwa, 8 steps)
-Teaches: movement, interacting, class choice, the first glyph, combat basics. Before the save: name entry, the prologue (5 cards: the show, Laras with her lontar, the faceless step out of the screen, she is taken, morning), class choice. New Game starts MQ0 at 0.3 with 0.1-0.2 struck. Regional character: **Ibu**. Trace: Laras's lontar on the burned stage.
+Teaches: movement, interacting, class choice, the first glyph, combat basics. Before the save: name entry, the prologue (5 cards: the show and the names read aloud, Laras with her lontar, the faceless step out of the screen, she is taken and the lontar tears, morning), class choice. New Game starts MQ0 at 0.3 with 0.1-0.2 struck. Regional character: **Ibu**. Trace: Laras's lontar on the burned stage.
 
 | # | Objective (EN) | Objective (ID) | Completes on |
 |---|----------------|----------------|--------------|
@@ -174,7 +174,7 @@ Beats:
 - `crater_seal` (if `flag:mq1_8`): the Hunter's appearance and the double-boss restore. The Captain, with his last strength, smashes the cracked seal-stone and **Sangkuriang** wakes (Seal 1). On the far rim the Hunter watches and leaves. Ciung is seen chained as bait. `do`: `flag:beat_crater_seal`, `restore`.
 - `naga` (if `quest:mq1=done`): the aftermath that starts MQG. Ciung Wanara and the naga-king Nagawiru are free. Nagawiru: "The man on the throne wears my face. They took the girl to Galuh." Naganingrum reaches the rim too late to be recognised: Ciung doesn't know her. The egg Ciung carried hatches. You go east together. `do`: `flag:beat_naga`, `flag:mq1_10`, `codex:nagawiru`, `codex:sangkuriang`, `lakon:sangkuriang`, `start:mqg`.
 
-### MQG Act II: "Wajah Pinjaman" / "The Borrowed Face" (Keraton Galuh, 8 steps)
+### MQG Act II: "Wajah Pinjaman" / "The Borrowed Face" (Keraton Galuh, 9 steps)
 Goal: get into the court and find where the taken are kept. Regional characters: **Uwa Lengser** and the **Faceless Deserter**. No new glyphs; rewards are gear and pusaka. Twist (the midpoint): the king is unmasked, and the Hunter *is* the name he gave away.
 
 | # | Objective (EN) | Objective (ID) | Completes on |
@@ -184,17 +184,19 @@ Goal: get into the court and find where the taken are kept. Regional characters:
 | g.3 | Win the second bout | Menangkan babak kedua | `area_cleared:galuh_bout_2`, sets `mqg_2` |
 | g.4 | Speak with the old chamberlain, Uwa Lengser | Bicara dengan Uwa Lengser, abdi tua istana | `talked_to:lengser`, sets `mqg_3` (opens the palace gate) |
 | g.5 | Rest in the palace courtyard | Beristirahat di pelataran istana | `petilasan_activated:galuh_1`, sets `mqg_4` |
-| g.6 | Search the cells for Laras | Geledah sel tahanan, cari Laras | `area_cleared:galuh_cells`, sets `mqg_5` (her message on the wall: "The thousand temples. Don't stop.") |
-| g.7 | Decide the deserter's fate | Putuskan nasib si pembelot | `talked_to:faceless_deserter`, sets `mqg_6` (opens the throne room). **Choice 1:** free him (`choice_freed`) or hand him to Lengser (`choice_handed`) |
-| g.8 | Unmask the king | Buka topeng sang raja | `boss_defeated:barma_wijaya`, sets `mqg_7` (opens the road to the Pamali) |
+| g.6 | Stop the wagon in the cell yard | Hadang kereta di halaman penjara | `area_cleared:galuh_escort`, sets `mqg_4b` (the near miss: the wagon gets away east) |
+| g.7 | Search the cells for Laras | Geledah sel tahanan, cari Laras | `area_cleared:galuh_cells`, sets `mqg_5` (her message on the wall: "The thousand temples. Don't stop.") |
+| g.8 | Decide the deserter's fate | Putuskan nasib si pembelot | `talked_to:faceless_deserter`, sets `mqg_6` (opens the throne room). **Choice 1:** free him (`choice_freed`) or hand him to Lengser (`choice_handed`) |
+| g.9 | Unmask the king | Buka topeng sang raja | `boss_defeated:barma_wijaya`, sets `mqg_7` (opens the road to the Pamali) |
 
 Beats:
 - `galuh_bout` (if `flag:mqg_2`): the rooster won off-screen; Lengser sees the queen's eyes in Ciung Wanara. Lengser then stands by the ring (cond `flag:mqg_2`). `do`: `flag:beat_galuh_bout`, `codex:ciung_wanara`.
-- `laras_2` (if `step:mqg=5`, at `galuh_1`): Laras's beat. They moved her in the night, east, under a wagon cloth. `do`: `flag:beat_laras_2`.
+- `galuh_escort` (if `flag:mqg_4b`): the near miss. The wagon clears the yard gate as the last guard falls. A strip of lontar comes over the wall, *Ka* on it, and the wagon is gone east. `do`: `flag:beat_galuh_escort`.
+- `laras_2` (if `step:mqg=7`, after the cells): Laras's beat. Under the wagon cloth she heard you fighting in the yard; she is rocking east. `do`: `flag:beat_laras_2`. (No petilasan here: the beat fires after the cells fight, **ASSUMED**.)
 - Camp talk (cond `flag:mqg_4`, `ciung_wanara` entry `camp_galuh`, at `galuh_1`): optional, 2-4 lines. Ciung on the throne he wants and the sister you want. `do`: `flag:camp_galuh`. It stays reachable after the boss.
-- `confession` (if `flag:mqg_7`): the turn. In the throne room Barma Wijaya admits Seal 2: he scraped the old king's name to keep the face and gave Kala his own. The Hunter *is* that name. `do`: `flag:beat_confession`.
+- `confession` (if `flag:mqg_7`): the turn. In the throne room Barma Wijaya admits Seal 2: he scraped the old king's name to keep the face and gave Kala his own. The Hunter *is* that name. This is the only reveal; the deserter at g.8 only hints ("our master speaks with the king's voice"). `do`: `flag:beat_confession`.
 - `cage` (if `flag:beat_confession`): the Hunter's appearance. Ciung cages Barma Wijaya and Queen Pangrenyep, as in the legend. Pangrenyep has one line: "My son will come, child. What is caged is always ransomed." From the shadows behind the throne the Hunter: "The cage holds the man, not the name." `do`: `flag:beat_cage`, `codex:barma_wijaya`, `codex:pangrenyep`.
-- `escape` (if `quest:mqg=done`, `flag:beat_cage`): the aftermath that starts MQ2. Prince Hariang Banga escapes east to raise an army and free his mother. Ciung stays to hold Galuh. You go on alone. `do`: `flag:beat_escape`, `start:mq2`.
+- `escape` (if `quest:mqg=done`, `flag:beat_cage`): the aftermath that starts MQ2. Prince Hariang Banga escapes east to raise an army and free his mother; he turns on Ciung only now, over the cage. Ciung stays to hold Galuh. You go on alone. `do`: `flag:beat_escape`, `start:mq2`.
 
 Sensitivity: the rooster fights off-screen only. The hero never bets or handles it ([story_ciung_wanara.md](story_ciung_wanara.md) 5).
 
@@ -222,7 +224,7 @@ Glyph rewards come from the deeds inside the leads. A glyph's source opens as so
 Beats:
 - `hunter_war` (if `flag:lead_kuburan`): the Hunter's appearance, at the graves, where his servants harvest the fallen. The Hunter: "Two armies make twice the forgetting." `do`: `flag:beat_hunter_war`.
 - `lengser_word` (if `flag:choice_handed`, `flag:mq2_6`): one line, Lengser's word that the Deserter drew him the camp's layout. `do`: `flag:beat_lengser_word`.
-- `camp` (if `flag:mq2_7`): the turn. The camp is not a prison, it is a reading room. You find Laras's lontar strip with your name written again and again. She is gone east. Seal 3 is broken and **Bandung Bondowoso** wakes. `do`: `flag:beat_camp`.
+- `camp` (if `flag:mq2_7`): the turn. The camp is not a prison, it is a reading room. You find a strip torn from Laras's half, covered with *Ka* written again and again. She is gone east. Seal 3 is broken and **Bandung Bondowoso** wakes. `do`: `flag:beat_camp`.
 - `laras_3` (if `step:mq2=10`, `flag:beat_camp`, at the temple petilasan): Laras's beat. She read the seal because they hurt the prisoners when she didn't. `do`: `flag:beat_laras_3`.
 - The Pamali stone (`pamali_stone`, cond `flag:mq2_7`) runs `write:nagawiru:jawa_na,sunda_ga`: one letter from each script.
 - `ford` (if `flag:mq2_8`): Hariang Banga wades into the ford alone. You helped cage his mother, so it is a duel, not a battle. `do`: `flag:beat_ford`.
@@ -248,12 +250,12 @@ Goal: follow the Hunter to the last seal. Regional character: **Mpu Wirasana**. 
 | 3.11 | Face the Nameless Hunter | Hadapi Si Tanpa Ngaran | `boss_defeated:nameless_hunter`, sets `mq3_8` |
 
 Beats:
-- `laras_4` (if `step:mq3=9`, at `timur_2`): Laras's beat. She can't remember your face; she has one letter of your name left. `do`: `flag:beat_laras_4`.
+- `laras_4` (if `step:mq3=9`, at `timur_2`): Laras's beat. She can't remember your face; only one letter is left on her half, *Ka*. `do`: `flag:beat_laras_4`.
 - Camp talk (cond `flag:mq3_6`, `hariang_banga` entry `camp_timur`, at `timur_2`): optional, 2-4 lines. Hariang Banga shows you the road east. `do`: `flag:camp_timur`.
 - `shrine_sight` (if `flag:mq3_6`, `flag:beat_laras_4`, `zone:tt_candi`): the turn. You see Laras across the shrine, made to read the last seal. The **Keris Mpu Gandring** wakes (Seal 4). The keris boss cond is `flag:beat_shrine_sight`. `do`: `flag:beat_shrine_sight`.
 - `keris` (if `flag:mq3_7`): the keris lies quiet. **Choice 3:** take it to the empu to reforge (`choice_reforge`, `give:keris_gandring`) or give it to the river (`choice_sink`, `give:batu_kali`). `do`: `flag:beat_keris`.
 - `hunter_shrine` (if `flag:beat_keris`): the Hunter's appearance (the duel) and the double-boss restore. He steps out of the shrine's shadow (his boss cond is `flag:beat_keris`). It is a separate beat because no lines can follow a choice. `do`: `flag:beat_hunter_shrine`, `restore`.
-- `hunter_name` (if `quest:mq3=done`): the false victory and the aftermath that starts MQ4. His mask cracks; under it, the young face the king wore. You carve *Aria Kebonan* back onto it. In Galuh, the caged man gets his old face back. Then the Eclipse begins and takes Laras first. The Hunter, emptied: "She's gone where I was going." Hariang Banga's riders carry you home. `do`: `flag:beat_hunter_name`, `codex:nameless_hunter`, `start:mq4`, `goto:desa_purwa:from_riders` (spawn placed in desa_purwa.md, **ASSUMED**).
+- `hunter_name` (if `quest:mq3=done`): the false victory and the aftermath that starts MQ4. His mask cracks; under it, the young face the king wore. You carve *Aria Kebonan* back onto it. In Galuh, the caged man gets his old face back. The bundle at his belt opens and the held names fly home ([story.md](story.md) Two kinds of forgetting). Then the Eclipse begins and takes Laras first. The Hunter, emptied: "She's gone where I was going." Hariang Banga's riders carry you home. `do`: `flag:beat_hunter_name`, `codex:nameless_hunter`, `start:mq4`, `goto:desa_purwa:from_riders` (spawn placed in desa_purwa.md, **ASSUMED**).
 
 ### MQ4 Interlude and Act V: "Rumah yang Sunyi" and "Laut Tak Pernah Lupa" (Desa Purwa, then Segara Kidul, 9 steps)
 Steps 4.1-4.2 are the Interlude, "The Quiet House": about 10 minutes, no combat, the low point. Steps 4.3-4.9 are Act V, "The Sea Does Not Forget". Regional character: **Mbah Wiryo**. The journal shows the Act V title for the whole quest (**ASSUMED**). Nyi Roro Kidul speaks once, from a distance. She is never fought or touched, and she is neither friend nor enemy. Areas: `sk_pantai`, `sk_karang`, `sk_tebing`, `sk_keraton`.
@@ -268,7 +270,7 @@ Steps 4.1-4.2 are the Interlude, "The Quiet House": about 10 minutes, no combat,
 | 4.6 | Climb the cliff path | Daki jalan setapak di tebing | `area_cleared:kidul_tebing_2` |
 | 4.7 | Rest at the cliff shrine and listen to the water | Beristirahat di kuil tebing dan dengarkan suara dari air | `petilasan_activated:kidul_3` (new petilasan in `sk_tebing`) |
 | 4.8 | Pass the Trial of the Waves | Jalani Ujian Ombak | `area_cleared:kidul_trial`, sets `mq4_8` (three waves, each with its own glyph answer, [bestiary.md](bestiary.md) Zone 4) |
-| 4.9 | Receive Ombak and the Kain Hijau | Terimalah Ombak dan Kain Hijau | `glyph_learned:jawa_ka`, sets `mq4_9` (the Sea Altar `kidul_altar` runs `write:ombak:jawa_ka` and `give:kain_hijau` at `step:mq4=8`; Ombak / Tide, + Kain Hijau, [spells.md](spells.md) 3). The act ends here |
+| 4.9 | Receive Ombak and the Kain Hijau | Terimalah Ombak dan Kain Hijau | `glyph_learned:jawa_ka`, sets `mq4_9` (the Sea Altar `kidul_altar` runs `write:ombak:jawa_ka`, `learn:jawa_ka` and `give:kain_hijau` at `step:mq4=8`; Ombak / Tide, + Kain Hijau, [spells.md](spells.md) 3). The act ends here |
 
 Beats:
 - Interlude: the Hunter's appearance is his empty mask in the fire. Turn, camp talk and double boss: none.
@@ -284,21 +286,21 @@ Requires `mq4_9`. The Hunter does not appear in this act (his empty mask was the
 | # | Objective (EN) | Objective (ID) | Completes on |
 |---|----------------|----------------|--------------|
 | 5.1 | Enter Gua Kala | Masuki Gua Kala | `zone_entered:gk_mulut`, sets `mq5_1` |
-| 5.2 | Reclaim the first Memory Seal, La, at the Maw | Rebut Segel Ingatan pertama, La, di mulut gua | `area_cleared:kala_mulut`, sets `mq5_1b` |
+| 5.2 | Reclaim La, the first letter of her name, at the Maw | Rebut La, huruf pertama namanya, di mulut gua | `area_cleared:kala_mulut`, sets `mq5_1b` |
 | 5.3 | Shatter the western time-ward on the Hourglass Sands | Hancurkan penangkal waktu sebelah barat di Pasir Jam Pasir | `area_cleared:kala_pasir_1` |
 | 5.4 | Shatter the eastern time-ward | Hancurkan penangkal waktu sebelah timur | `area_cleared:kala_pasir_2`, sets `mq5_1c` |
-| 5.5 | Reclaim the second Memory Seal, Ra, in the Abyss of Forgetting | Rebut Segel Ingatan kedua, Ra, di Jurang Lupa | `area_cleared:kala_lupa`, sets `mq5_1d` |
-| 5.6 | Rest at the last petilasan | Beristirahat di petilasan terakhir | `petilasan_activated:kala_1`, sets `mq5_2` (the third seal, Sa; Semar waits here) |
+| 5.5 | Reclaim Ra, the second letter of her name, in the Abyss of Forgetting | Rebut Ra, huruf kedua namanya, di Jurang Lupa | `area_cleared:kala_lupa`, sets `mq5_1d` |
+| 5.6 | Rest at the last petilasan | Beristirahat di petilasan terakhir | `petilasan_activated:kala_1`, sets `mq5_2` (the third letter, Sa; Semar waits here) |
 | 5.7 | Calm Batara Kala | Tenangkan Batara Kala | `boss_defeated:batara_kala`, sets `mq5_3` |
 | 5.8 | Write Laras's name | Tuliskan nama Laras | `name_written:laras`, sets `mq5_4` (then the epilogue and credits) |
 
 Beats:
 - `mouth_freed` (if `flag:mq5_1`, `flag:choice_freed`): the two brothers at the cave mouth, one from each bank, with the Deserter beside them. You go in alone. `do`: `flag:beat_mouth`.
 - `mouth` (if `flag:mq5_1`): the same, without the Deserter. `do`: `flag:beat_mouth`. (`mouth_freed` is listed first.)
-- `laras_5` (if `step:mq5=6`, at `kala_1`): Laras's beat. "Who's there?" She has forgotten you. She is still writing. `do`: `flag:beat_laras_5`.
-- `write` (if `flag:mq5_3`): Kala turns back into the dark, calmed in the Ruwatan of Dawn. Her lontar is blank. Semar: "Then write it." `do`: `flag:beat_write`; a second, line-less entry (if `!flag:mq5_4`, `flag:beat_write`) runs `write:laras:sunda_la,sunda_ra,sunda_sa`, so a quit mid-card reopens the card. The name-writing card ([ui.md](ui.md) 3) ends with `name_written:laras`.
+- `laras_5` (if `step:mq5=6`, at `kala_1`): Laras's beat. "Who's there?" She has forgotten you. She is still writing *Ka*. `do`: `flag:beat_laras_5`.
+- `write` (if `flag:mq5_3`): Kala turns back into the dark, calmed in the Ruwatan of Dawn. Your half of the lontar is blank. Semar: "Then write it." `do`: `flag:beat_write`; a second, line-less entry (if `!flag:mq5_4`, `flag:beat_write`) runs `write:laras:sunda_la,sunda_ra,sunda_sa`, so a quit mid-card reopens the card. The name-writing card ([ui.md](ui.md) 3) ends with `name_written:laras`.
 
-Epilogue: 7 cards. 1 Laras comes home and nobody thinks she ever left. 2 Ciung Wanara rules the west, Hariang Banga the east. 3-5 one card per choice (`EPILOGUE_n` or `EPILOGUE_n_ALT` when `choice_handed`, `choice_silent`, `choice_sink` is set). 6 the village wayang plays your story, Semar telling it. 7 your name and hers, the credit line with the codex %. After it the player wakes in Desa Purwa (`from_gua_kala`). Naganingrum is called back to court by her son.
+Epilogue: 7 cards. 1 Laras comes home and nobody thinks she ever left. 2 Ciung Wanara rules the west, Hariang Banga the east. 3-5 one card per choice (`EPILOGUE_n` or `EPILOGUE_n_ALT` when `choice_handed`, `choice_silent`, `choice_sink` is set). 6 the village wayang plays your story, Semar telling it. 7 your name and hers, the credit line with the codex %. After it the player wakes in Desa Purwa (`from_gua_kala`). Naganingrum is called back to court by her son, and Nagawiru sleeps in the lake (card 2).
 
 Batara Kala is calmed and turned back, never killed. The ruwatan codex note from [story.md](story.md) applies.
 
@@ -452,15 +454,15 @@ Fits [architecture.md](architecture.md): data-driven resources, quest state in t
 | `alt` | for two-way steps: `{"enemy_killed:wewe_elite": "fight", "talked_to:wewe_parents_2": "peaceful"}`. Any key completes the step and stores `resolution`; `fight` gives +50% quest Ilmu. Built 2026-11-05 |
 | `marker` | `{zone: "mt_alas", id: "wewe_hill"}`: `zone` is the area id where the node sits ([world.md](world.md) World structure); `QuestData.zone` stays the region id |
 | `set_flag` | `mq2_2` |
-| `all` | **Not built yet (code follow-up).** For a step that has several triggers: `[{on: "area_cleared:mataram_pasar", set_flag: "lead_pasar"}, ...]`. Each trigger completes on its own, in any order, and stores its own bit in the quest state. The step completes (and sets its own `set_flag`) when all are done. `on` is empty on such a step. The journal strikes each trigger through as it fires (each needs a text key, e.g. `Q_MQ2_S3_A`). Used once, for the three leads in MQ2 step 2.3 |
+| `all` | Built 2026-11-06 (bits saved in the quest record, `all`). For a step that has several triggers: `[{on: "area_cleared:mataram_pasar", set_flag: "lead_pasar"}, ...]`. Each trigger completes on its own, in any order, and stores its own bit in the quest state. The step completes (and sets its own `set_flag`) when all are done. `on` is empty on such a step. The journal strikes each trigger through as it fires (each needs a text key, e.g. `Q_MQ2_S3_A`). Used once, for the three leads in MQ2 step 2.3 |
 
-Not built yet (code follow-up): a `glyph_learned:` step completes at once if that glyph is already known when the step becomes current (same rule as `item_picked:`), so MQ2 2.4-2.6 never block a player who took the glyph early.
+Built 2026-11-06: a `glyph_learned:` step (or `all` trigger) completes at once if that glyph is already known when the step becomes current (same rule as `item_picked:`), so MQ2 2.4-2.6 never block a player who took the glyph early.
 
 Dialogue (`DialogueData`, one `.tres` per NPC in `data/dialogue/`, **ASSUMED** 2026-11-05): `npc_id`, `name_key`, `entries: Array[Dictionary]`, each `{"if": [conditions], "lines": [keys], "do": [actions]}`. The first entry whose conditions all hold plays; an entry with no `if` is the fallback and goes last.
-- Conditions: `quest:<id>=<locked|available|active|done>`, `step:<id>=<n>` (0-based current step), `flag:<f>`, `!flag:<f>`, `glyph:<id>`, `item:<id>` (held), and comma lists (all of). `zone:<area_id>` (the player is in that area) is **not built yet**; the Act IV `shrine_sight` beat uses it.
+- Conditions: `quest:<id>=<locked|available|active|done>`, `step:<id>=<n>` (0-based current step), `flag:<f>`, `!flag:<f>`, `glyph:<id>`, `item:<id>` (held), and comma lists (all of). `zone:<area_id>` (the player is in that area, built 2026-11-06); the Act IV `shrine_sight` beat uses it.
 - An entry with `"quiet": true` does not fire `talked_to` (a refusal that must not complete a talk step).
 - Actions run when the box closes, in order: `start:<quest>`, `give:<item>`, `learn:<glyph>`, `flag:<f>`, `codex:<id>`, `write:<seq_id>:<glyph>,<glyph>`. Then `talked_to:<npc_id>` fires.
-- **Not built yet (code follow-up):** `goto:<area>:<spawn>` moves the player to that area and spawn after the box closes (Act IV aftermath: Hariang Banga's riders carry you home, `goto:desa_purwa:from_riders`); it fires `zone_entered`. `restore` refills health and flask charges (double-boss beats, **ASSUMED**).
+- Built 2026-11-06: `goto:<area>:<spawn>` moves the player to that area and spawn after the box closes (Act IV aftermath: Hariang Banga's riders carry you home, `goto:desa_purwa:from_riders`); it fires `zone_entered`. `restore` refills health, stamina and flask charges (double-boss beats, **ASSUMED**); it does not save or reset the sakti gauge. `lakon:<id>` sets the same flag a quest's lakon reward sets.
 - `Game.check(cond)` and `Game.run(action)` hold the logic, so the NPC script only walks the list.
 
 `CodexEntry` (`data/codex/<id>.tres`): `id`, `category` (`enemy` / `legend` / `item` / `aksara`), `source`. Text keys `CODEX_<ID>_TITLE`, `_BODY`, `_WEAK` (enemies only). Unlocks on the first kill of that enemy `kind`, an item pick, a glyph learned, or a `codex:` action. A weakness trigger sets flag `weak:<kind>`, which shows the `_WEAK` line.

@@ -15,7 +15,7 @@ const MAP := [
 	"#________________________________________________________________________________________#",
 	"#_______________________________________________________________________________##########",
 	"#_______________________________________________________________________________#______r_#",
-	"#_______________________________________________________________________________#________#",
+	"#_______________________________________________________________________________#__H_____#",
 	"#_______________________________________________________________________________#________#",
 	"#_______________________________________________________________________________,_____P__#",
 	"Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,cC",
@@ -50,6 +50,7 @@ const SPOTS := {
 	"j": {"scene": "res://entities/enemies/prajurit_terkutuk.tscn", "props": {}, "tile": "_"},   # loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id)
 	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "_"},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)
 	"x": {"scene": "res://entities/enemies/keris_hantu.tscn", "props": {}, "tile": "_"},   # loose keris hantu, roaming pack (respawns on zone reload, no unique_id)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga", "cond": "flag:mq3_6"}, "tile": "_"},   # NPC Hariang Banga, camp talk at `timur_2` (optional, quiet; cond `flag:mq3_6`)
 }
 
 

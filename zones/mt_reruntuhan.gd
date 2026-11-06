@@ -23,7 +23,7 @@ const MAP := [
 	"#........................#..................,,..................#........................#",
 	"#........................#..................,,..................#........................#",
 	"#.......k................#..................,,..................#........................#",
-	"#........................#..................,,........rr........#........................#",
+	"#........................#..................,,.A......rr........#........................#",
 	"#..........k.............#..................,,........rr........#........................#",
 	"#........................#..................,,..................#........................#",
 	"#........................#..................,,..................#........................#",
@@ -64,7 +64,8 @@ const SPOTS := {
 	"z": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_kuburan"}, "tile": ","},   # spawn, arrival from mt_kuburan
 	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_sawah", "spawn_id": "from_mt_reruntuhan"}, "tile": ","},   # exit to mt_sawah (west edge, side yard, the `sc:mt_ruin_sawah` pocket, 2 tiles)
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_sawah"}, "tile": ","},   # spawn, arrival from mt_sawah (through the gate)
-	"K": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pak_karto"}, "tile": "."},   # NPC Pak Karto (2.3, teaches Na)
+	"K": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pak_karto"}, "tile": "."},   # NPC Pak Karto (side-quest NPC since v3.1, no quest assigned yet; no longer teaches Na)
+	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "arca_base", "cond": "flag:lead_ruins"}, "tile": "."},   # inscribed base of an Arca, read in place (2.5, teaches Na; cond `flag:lead_ruins`, set by clearing `mataram_ruins`)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_ruins", "size": Vector2i(24,14), "waves": [[["res://entities/enemies/arca.tscn", Vector2i(-11,-5)], ["res://entities/enemies/arca.tscn", Vector2i(11,5)], ["res://entities/enemies/arca.tscn", Vector2i(0,-6)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,2)], ["res://entities/enemies/tuyul.tscn", Vector2i(5,-1)]]]}, "tile": ","},   # encounter mataram_ruins
 	"m": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "candi_seribu"}, "tile": "_"},   # codex spot, Candi Seribu (museum)
 	"n": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "roro_jonggrang"}, "tile": "_"},   # codex spot, Roro Jonggrang (museum)

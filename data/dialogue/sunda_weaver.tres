@@ -1,25 +1,13 @@
-[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://bscx7v6fvy5br"]
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
 
-[ext_resource type="Script" uid="uid://crxg2b237eair" path="res://data/dialogue_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
 npc_id = "sunda_weaver"
 name_key = "NPC_SUNDA_WEAVER_NAME"
-entries = Array[Dictionary]([{
-"do": ["give:boeh_rarang"],
-"if": ["step:mq1=8"],
-"lines": ["DLG_SUNDA_WEAVER_11", "@NPC_HERO_NAME", "DLG_SUNDA_WEAVER_H1", "@NPC_SUNDA_WEAVER_NAME", "DLG_SUNDA_WEAVER_V1", "DLG_SUNDA_WEAVER_5", "DLG_SUNDA_WEAVER_6"]
-}, {
-"do": ["give:boeh_rarang"],
-"if": ["step:sq_s5=0"],
-"lines": ["DLG_SUNDA_WEAVER_11", "DLG_SUNDA_WEAVER_5", "DLG_SUNDA_WEAVER_6"]
-}, {
-"do": [],
-"if": ["flag:mq1_5"],
-"lines": ["DLG_SUNDA_WEAVER_7", "DLG_SUNDA_WEAVER_8"]
-}, {
-"do": [],
-"if": [],
-"lines": ["DLG_SUNDA_WEAVER_9", "DLG_SUNDA_WEAVER_10"]
-}])
+entries = Array[Dictionary]([
+	{"if": ["step:mq1=7"], "lines": ["DLG_SUNDA_WEAVER_1", "@NPC_HERO_NAME", "DLG_SUNDA_WEAVER_H1", "@NPC_SUNDA_WEAVER_NAME", "DLG_SUNDA_WEAVER_V1", "DLG_SUNDA_WEAVER_V2"], "do": ["give:boeh_rarang"]},
+	{"if": ["flag:mq1_5"], "lines": ["DLG_SUNDA_WEAVER_8"], "do": []},
+	{"if": [], "lines": ["DLG_SUNDA_WEAVER_9", "DLG_SUNDA_WEAVER_10"], "do": []}
+])
