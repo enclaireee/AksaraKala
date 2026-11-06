@@ -7,7 +7,7 @@ Related: [rpg.md](rpg.md) (base formulas), [classes.md](classes.md), [bestiary.m
 ## 1. Decisions
 | Topic | Decision |
 |-------|----------|
-| Length | Main quest alone is 2-3 hours. Side quests and activities come on top (about 4-4.5 hours for 100%) |
+| Length | Main quest alone is about 6.5-7 hours (story v3.1, **TUNE**). Side quests and exploring add about 3 hours (about 10 hours for 100%) |
 | Enemy scaling | Fixed per zone. Overleveling makes a zone easier, which rewards side quests and exploration |
 | Difficulty | One balanced mode plus opt-in assist toggles (section 9) |
 | Bosses | An average player at the target level wins in 1-3 tries |
@@ -15,19 +15,27 @@ Related: [rpg.md](rpg.md) (base formulas), [classes.md](classes.md), [bestiary.m
 
 ## 2. Pacing
 ### 2.1 Time budget (main quest only)
-| Chapter | Zone | Minutes | Main-path kills | Glyphs known at the end |
-|---------|------|---------|-----------------|-------------------------|
-| MQ0 | Desa Purwa | 10 | 0 (dummies) | 1 |
-| MQ1 | Tatar Sunda | 30-40 **TUNE** | about 40 | 4 |
-| MQ2 | Mataram | 35 | about 40 | 8 |
-| MQ3 | Tanah Timur | 40 | about 40 | 8 |
-| MQ4 | Segara Kidul (P1) | 15 | about 30 (trial waves) | 9 |
-| MQ5 | Gua Kala | 15 | about 10 | 9 |
-| **Total** | | **about 145** | **about 160** | |
+Runtime target from [story.md](story.md) Pacing (v3.1, 2026-11-06). Every number is **TUNE**; measure real minutes per act in the playtest.
+
+| Part | Quest | Steps | Minutes | Running % |
+|------|-------|-------|---------|-----------|
+| Prologue | MQ0 | 8 | 20 | 5% |
+| Act I Tatar Sunda | MQ1 | 13 | 75 | 23% |
+| Act II Keraton Galuh | MQG | 8 | 50 | 35% |
+| Act III Mataram | MQ2 | 13 | 85 | 56% |
+| Act IV Tanah Timur | MQ3 | 11 | 75 | 74% |
+| Interlude Desa Purwa | MQ4 4.1-4.2 | 2 | 10 | 76% |
+| Act V Segara Kidul | MQ4 4.3-4.9 | 7 | 45 | 87% |
+| Act VI Gua Kala | MQ5 | 8 | 45 | 98% |
+| Epilogue | | | 5 | 100% |
+| **Total** | | **70** | **about 410 (6.5-7 h)** | Side quests and exploring add about 3 h (about 10 h at 100%) |
+
+Glyphs known at the end of each part: Prologue 1, Act I 4, Act III 8, Act V 9 (Ombak). Acts II and IV teach none.
+
+Measured main-path kills (notes, from the earlier chapter budget): MQ1 about 40 (2026-11-06 after the roaming packs: 43, of which 21 in fixed encounters, 19 in loose packs, 3 in the `sunda_terraces` wave 2). MQ2 40 (23 fixed, 17 loose). MQ3 40 (24 fixed, 16 loose). MQ5 about 12. **Estimates, not measured:** MQ4 now includes the Interlude (no combat) and the main-path Segara Kidul (about 30 kills in the trial waves plus the reef and cliff packs), about 45 min for Act V (**ASSUMED**, **TUNE**). The Galuh act (MQG) has no measured count yet.
 
 MQ1 grows with the interlocking rebuild (8 areas, user call 2026-11-05); shortcuts cut the walk back, so measure it in the playtest before changing the later rows.
-MQ1 main-path kills after the roaming packs (2026-11-06): 43 (21 in fixed encounters, 19 in loose packs, 3 in the `sunda_terraces` wave 2).
-MQ2 main-path kills after the roaming packs (2026-11-06): 40 (23 fixed, 17 loose). MQ3: 40 (24 fixed, 16 loose). MQ5 unchanged at about 12. `balance_model.py` does not read the zone maps, so real levels at the boss doors run a little above its numbers. Check this in the playtest. TUNE
+`balance_model.py` does not read the zone maps, so real levels at the boss doors run a little above its numbers. Check this in the playtest. TUNE
 
 Side quests take 3-8 minutes each ([quests.md](quests.md)). 14 of them, plus the hub quests and exploration, add about 80-100 minutes.
 
@@ -41,7 +49,7 @@ Level = 1 + points spent ([rpg.md](rpg.md)). These are the levels at each boss d
 | Sangkuriang | L6-7 | about L12 |
 | Bandung Bondowoso | L12-13 | about L19 |
 | Buto Ijo / Mpu Gandring's Keris | L17-19 | about L25 |
-| Nyi Roro Kidul's trial (P1) | L22 | about L28 |
+| Nyi Roro Kidul's trial (main path, Act V, before Batara Kala; **ASSUMED**) | L22 | about L28 |
 | Batara Kala | L24-25 | about L29 |
 
 The gap is 4-7 levels, which is about 15-25% more power. A completionist finds bosses easier, never trivial. With no cost cap, farming respawned enemies also works, but the exponential level cost (section 8) makes it slow.
@@ -60,12 +68,12 @@ The player gets about 2x damage and 1.3x HP over the game. Each source has a cei
 
 ### 3.1 Ingatan (new, confirmed 2026-11-05)
 As the letters return to the world, the hero's ilmu grows with them. This is what keeps a main-quest-only player on the curve without new items.
-- Rank = main bosses cleared: Sangkuriang (1), Bandung Bondowoso (2), Mpu Gandring's Keris (3), Nyi Roro Kidul's trial (4, P1).
+- Rank = main bosses cleared: Sangkuriang (1), Bandung Bondowoso (2), Mpu Gandring's Keris (3), Nyi Roro Kidul's trial (4, main path).
 - All damage the player deals (weapon, spell, Summon, Ward absorb) is multiplied by `1 + 0.15 x rank`.
 - Shown as a short line when it rises ("The letters remember you. Ingatan II") and in the stats screen. No new UI.
 - State: derived from the boss flags in `Game`. Nothing new is saved.
 - Buto Ijo is a miniboss and gives no rank.
-- P0 build without Segara Kidul: max rank is 3, so Kala's HP is x0.9 (section 7).
+- Segara Kidul is on the main path, so rank 4 is always reached before Batara Kala and his HP is the full 9300 (section 7). The Captain, Barma Wijaya, Hariang Banga and the Hunter give no rank (**ASSUMED**).
 
 ## 4. Player formulas (changes to [rpg.md](rpg.md))
 | Item | Before | Now | Why |
@@ -125,7 +133,7 @@ Enemies are authored as **role + zone tier + modifiers**, not hand-picked number
 | 3 | Segara Kidul | x1.9 | x1.45 | x3.4 |
 | 4 | Gua Kala | x2.2 | x1.6 | x5.1 |
 
-The old rule "x1.5 per zone" for HP is replaced. HP rising x1.3 per zone keeps time to kill flat for the reference player (chaser about 1.5 s, tank about 5.5 s in every zone). New enemy behaviors, not bigger numbers, make later zones harder. Damage grows with player HP and armor, so a normal hit stays at about 6-10% of max HP. Ilmu grows faster than HP, matching the rising level cost.
+Keraton Galuh (`kg_`, Act II) uses tier 1 with Mataram, Desa Purwa tier 0 (bestiary.md Story v3.1). The old rule "x1.5 per zone" for HP is replaced. HP rising x1.3 per zone keeps time to kill flat for the reference player (chaser about 1.5 s, tank about 5.5 s in every zone). New enemy behaviors, not bigger numbers, make later zones harder. Damage grows with player HP and armor, so a normal hit stays at about 6-10% of max HP. Ilmu grows faster than HP, matching the rising level cost.
 
 ### 6.3 Modifiers
 | Modifier | Effect | Used by |
@@ -160,17 +168,22 @@ Boss HP = mean class damage per second for the reference player x target fight t
 
 | Boss | Level, Ingatan rank | Target fight | HP (was) | Light hit | Heavy hit | Ilmu drop |
 |------|---------------------|--------------|----------|-----------|-----------|-----------|
+| Faceless Captain (Act I) | L6, 0 | 50-65 s | **1800** | 16 | 36 | 150 |
 | Sangkuriang | L7, 0 | 60-75 s | **2100** (600) | 16 | 36 | 150 |
+| Prabu Barma Wijaya (Act II, Mataram tier) | L10, 1 | 55-75 s | **2400** | 18 | 40 | 220 |
 | Bandung Bondowoso | L13, 1 | 65-90 s | **3100** (1000) | 18 | 41 | 300 |
+| Hariang Banga (Act III duel, yields at 15% HP) | L16, 2 | 55-80 s | **3200** | 21 | 45 | 320 |
 | Buto Ijo (miniboss) | L17, 2 | 60-85 s | **3400** (800) | 23 | 51 | 300 |
 | Mpu Gandring's Keris | L19, 2 | 70-100 s | **4200** (1400) | 23 | 51 | 500 |
-| Batara Kala | L25, 4 | 115-175 s, 3 phases | **9300** (2500), 3100 per phase. P0 build: 8400 | 27 | 60 | none (ending) |
-| Nyi Roro Kidul's trial (P1) | L22, 3 | waves of tier 3 enemies | no HP | | | 700 |
+| The Nameless Hunter (Act IV) | L20, 3 | 65-100 s | **4600** | 24 | 54 | 480 |
+| Batara Kala | L25, 4 | 115-175 s, 3 phases | **9300** (2500), 3100 per phase | 27 | 60 | none (ending) |
+| Nyi Roro Kidul's trial (main path) | L22, 3 | waves of tier 3 enemies | no HP | | | 700 |
 
 - Light hit = about 10% of the reference player's HP after armor. Heavy hit = about 22% (4-5 heavy hits kill). Every heavy attack has a ground marker or a 0.5 s+ wind-up ([bestiary.md](bestiary.md)).
 - The old boss HP assumed about 10 damage per hit. With the real formulas a starting Warrior hits for about 30, so the old values gave 15-20 second fights.
 - Fight times are with all 4 classes. Fastest is Mage, slowest is Rogue without backstabs. A completionist finishes in about 75% of the time.
-- Other minibosses (P1): HP = about 40 s at that zone's damage per second, about 1100 in Sunda (Sandekala) and 1400 in Mataram.
+- The four story bosses (Captain, Barma Wijaya, Hariang Banga, the Hunter) use the same formula as the rows above (`balance_model.py`, section 7; points spent 5, 9, 15, 19, Ingatan rank 0, 1, 2, 3). All numbers are **TUNE**. Their Ilmu drops (bestiary.md) add 1,170 to the main-path income and are **not** in the section 2.2 and 8.2 income model yet: either halve them or accept about +1 level at Mataram and +3 at Timur, then re-run the model. Decision for the playtest.
+- Other minibosses: HP = about 40 s at that zone's damage per second, about 1100 in Sunda (Sandekala) and 1400 in Mataram.
 
 ### 7.1 Making "1-3 tries" true
 - A petilasan sits at most about 20 seconds' walk from every boss door ([world.md](world.md) already puts one before each boss).
@@ -234,7 +247,7 @@ One mode. Assist toggles live in Settings, can change at any time, and have no p
 ## 11. Playtest checks
 | Metric | Target |
 |--------|--------|
-| Main quest time | 2-3 hours |
+| Main quest time | 6.5-7 hours (section 2.1) |
 | Time to kill (reference player) | Chaser 1-2 s, tank 5-6 s, every zone |
 | Normal enemy hit | 6-10% of max HP |
 | Boss tries | Median 2, max 4 |
@@ -246,3 +259,4 @@ One mode. Assist toggles live in Settings, can change at any time, and have no p
 1. ~~Damage numbers on screen~~: shown, with a toggle ([combat.md](combat.md), **ASSUMED**). The large HP values read fine.
 2. ~~Timur shooter~~: Kemamang (2026-11-05, [bestiary.md](bestiary.md)).
 3. **Staff and bow upgrades:** the staff has no found upgrade and the bow has only Panah Pasopati. Ingatan covers the gap. Add one staff in P1 only if playtests show Mage behind.
+4. **Measure real minutes per act in the playtest** (section 2.1 is a target, not a promise; Act V and the Interlude are estimates). **TUNE**

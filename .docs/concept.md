@@ -46,6 +46,8 @@ Respectful, warm, a bit of humor from the punakawan (wayang clown-servants). Ene
 
 Culture is the spice, not the whole dish. Ordinary gear, common enemies and NPCs are regular fantasy-RPG fare. The setting, story, bosses, folklore spirits, mythic gear (pusaka) and aksara carry the culture. (decided 2026-11-05)
 
+Culture is the spice, the story is the meal (story v3.1, **ASSUMED**): each region tells one human story first, and the folklore lives inside it.
+
 ## Cultural sensitivity
 - Nyi Roro Kidul, Batara Kala and other figures are meaningful to many people. Portray them with respect. No mockery, no cheap jokes.
 - Avoid presenting folklore as religious doctrine. Present it as stories and heritage.

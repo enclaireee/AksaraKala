@@ -1,5 +1,8 @@
 # Story draft v2: "Aksara yang Terlupa", with Ciung Wanara embedded (for approval)
 
+> **Superseded (2026-11-06).** History only. The canon is [story.md](story.md) (v3.1) and the step tables are in [quests.md](quests.md) 4. Where this file disagrees with them, they win.
+
+
 **Status: v2 APPROVED by the user, 2026-11-06.** Nothing in the game data has changed yet. Next: it replaces [story.md](story.md) Spine, Characters and Acts, and quests.md section 4 is rewritten to match (Tier O, plan mode first).
 
 The user's decisions so far:

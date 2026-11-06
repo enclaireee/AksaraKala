@@ -5,7 +5,7 @@ Top-down 2D pixel-art action RPG set in Java and Sunda folklore. Real-time comba
 | Doc | What is in it |
 |-----|---------------|
 | [concept.md](concept.md) | Vision, pillars, tone, audience, cultural sensitivity |
-| [story.md](story.md) | Story spine, acts, characters, ending |
+| [story.md](story.md) | **Canon (v3.1).** Story spine, the Four Seals, Laras's trail, characters, pacing rules and runtime, acts, ending |
 | [world.md](world.md) | Map, zones, legends, gating, checkpoints, NPCs |
 | [quests.md](quests.md) | Main quest, side quests, rewards, quest system |
 | [script.md](script.md) | Every main-path line (EN and ID), dialogue entries and story beats, keyed |
@@ -16,11 +16,12 @@ Top-down 2D pixel-art action RPG set in Java and Sunda folklore. Real-time comba
 | [combat.md](combat.md) | Combo, dodge, perfect dodge, hit feel, poise, statuses, enemy behavior |
 | [balance.md](balance.md) | Progression, level targets, Ilmu economy, enemy and boss numbers |
 | [spells.md](spells.md) | Aksara drawing system and spell list (the gimmick) |
-| [glyph_strokes.py](glyph_strokes.py) | Single-stroke designs of the 8 glyphs and a confusability check (`python3 glyph_strokes.py`) |
+| [glyph_strokes.py](glyph_strokes.py) | Single-stroke designs of the 8 MVP glyphs, Ombak and the 3 write-only name glyphs, plus a confusability check (`python3 glyph_strokes.py`) |
 | [ui.md](ui.md) | HUD layout and sizes, fonts, menus |
 | [items.md](items.md) | Weapons, armor, accessories, consumables |
 | [assets.md](assets.md) | Art direction, asset needs, licenses |
 | [architecture.md](architecture.md) | Godot project structure and technical design |
+| [story_brainstorm.md](story_brainstorm.md), [story_ciung_wanara.md](story_ciung_wanara.md) | History only, superseded by story.md |
 | [scope.md](scope.md) | Priorities: must, should, stretch, out |
 | [schedule.md](schedule.md) | Phased roadmap with exit criteria (no fixed dates) |
 
