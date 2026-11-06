@@ -4,11 +4,11 @@ There is no fixed deadline, so scope is ordered by priority, not cut by time. Bu
 
 ## P0: must have (the game does not exist without these)
 - Player: move, aim, 3-hit combo, dodge and perfect dodge, stamina, HP, 4 statuses ([combat.md](combat.md))
-- Aksara casting: cast mode, recognizer, 8 glyphs (4 Sunda + 4 Jawa), sakti gauge, 8 spells, sanggar practice
+- Aksara casting: cast mode, recognizer, 9 glyphs (4 Sunda + 4 Jawa + Ombak) and 3 write-only name glyphs (La, Ra, Sa), sakti gauge, 9 spells, sanggar practice
 - 4 classes with the stats, weapons, passives and spell modifiers in [classes.md](classes.md)
 - Stats, Ilmu, level-up at petilasan, death and respawn
-- Open map: Desa Purwa + 3 zones (Sunda, Jawa, Timur) with zone loading and fog gates
-- Enemies for those zones (about 10 types) and 3 bosses + 1 miniboss
+- Open map: Desa Purwa + Tatar Sunda, Keraton Galuh, Mataram, Tanah Timur, Segara Kidul with zone loading and fog gates
+- Enemies for those zones (about 10 types) and the main-path bosses ([bestiary.md](bestiary.md))
 - Final zone: Gua Kala and Batara Kala (at least a basic version)
 - Gear: about 10 weapons, 5 armors, 4 accessories as data
 - Dialogue, NPCs, the story spine in [story.md](story.md)
@@ -18,10 +18,11 @@ There is no fixed deadline, so scope is ordered by priority, not cut by time. Bu
 - Pixel art, sfx, music, screenshake, hit flash
 - Main menu, pause, death, win screen
 - Autosave, one slot, Continue from the title screen ([rpg.md](rpg.md) 11, moved from P1 on 2026-11-05)
+- Segara Kidul with the Trial of the Waves, MQ4 and the Interlude (main path since story v3.1, moved from P1; **ASSUMED**). Ombak is the ninth glyph
+- Engine follow-ups the main path needs ([quests.md](quests.md) 7.1, not built yet): `all` steps (several triggers in one step), the `goto:<area>:<spawn>` and `restore` dialogue actions, and the `zone:<area_id>` condition
 
 ## P1: should have
-- Segara Kidul zone with the Nyi Roro Kidul trial
-- Miniboss in each zone
+- A miniboss or elite in each zone beyond the main-path ones (Sandekala in Act I and Buto Ijo in Act IV are on the main path)
 - Side quests (3-4 per zone) and the hub meta quests ([quests.md](quests.md))
 - Glyph mastery and always-on guide setting
 - Accessibility settings (assist toggles in [balance.md](balance.md) 9: gentle combat, drawing assist, slow-mo strength, draw time)

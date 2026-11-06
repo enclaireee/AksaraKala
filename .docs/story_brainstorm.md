@@ -1,5 +1,8 @@
 # Budayago — New RPG Storyline & Campaign Brainstorm
 
+> **Superseded (2026-11-06).** History only. The canon is [story.md](story.md) (v3.1) and the step tables are in [quests.md](quests.md) 4. Where this file disagrees with them, they win.
+
+
 ## 1. Diagnosis: Why the Current Campaign Still Feels Short & Disjointed
 
 Even with better dialogue, the underlying **campaign structure** (`mq0`–`mq5`) has four structural issues that keep it from feeling like *The Witcher 3*, *Bloodborne*, *Elden Ring*, or *Assassin's Creed*:

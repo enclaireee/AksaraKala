@@ -183,6 +183,45 @@ User report: no tutorial per glyph; the game felt like a lore dump, not an RPG. 
   - MQ2/MQ3 talks are capped at 4 lines, with new codex entries mataram_dalang and timur_empu. The epilogue went from 12 cards to 6.
   - Open: MQ3 3.5 is a second empu talk; it could become a small forge fight (quests.md note).
 
+### 5u. Story v3.1: pacing pass and the full doc sync (2026-11-06, docs only)
+User call: "finish every doc to v3; make it a proper RPG story, budaya-themed, not a budaya dump; like The Witcher, Elden Ring, Assassin's Creed; on pace, not too short." The other session's v3 run stopped after `story.md`. This run picked it up from `quests.md` and finished every doc. No code or data changed.
+- **Research** (a web pass, thin on sources). Sourced: The Witcher 3 runs one Ciri trail quest per region, and each region's main story is one morally grey person tied to the hunt (the Bloody Baron; its reveal order was designed). Elden Ring bosses carry the narrative, and lore lives in places and items. The AC investigation loop runs clues → lieutenant → target. Unsourced design rules adopted as TUNE: a beat every 8-12 min, a set piece every 15-20 min, the low point at 70-75%, a quiet scene after each boss, about 4 named characters per region, at most 2 plain steps before a payoff.
+- **story.md v3.1**:
+  - New "Pacing" section with 9 rules and a runtime table (70 steps, about 410 min main, about 10 h at 100%, TUNE).
+  - Each act has one regional character: Ibu, Naganingrum, Lengser and the Deserter, Ki Sumarto, Mpu Wirasana, Mbah Wiryo.
+  - Glyphs are earned by deeds.
+  - Act III has three leads in any order.
+  - The **Interlude** "The Quiet House" in Desa Purwa (MQ4 4.1-4.2) is the low point, and Segara Kidul is Act V on the main path.
+  - Camp talks with Ciung (II) and Hariang Banga (IV).
+  - The 3 choices each change something in play.
+- **quests.md**: §4 has 7 tables (8/13/8/13/11/9/8). Engine follow-ups are marked "not built yet" in §7.1 (`all`, `goto`, `restore`, `zone:`, glyph auto-complete). The echo quests SQ-S5 and SQ-M5 are retired; their lakons come with MQ1 and MQ2. Gates:
+  - Desa Purwa south to sk_pantai opens on `mq4_2`.
+  - tt_pesisir to sk_karang is a back route on `mq4_9`.
+  - Both Gua Kala entries open on `mq4_9`.
+- **Zone docs**: markers and spots for every step and beat. Map edits (sizes unchanged):
+  - Desa Purwa: the lontar, the riders' spawn `from_riders`, the Interlude cast, the south exit.
+  - Tatar Sunda: the ribbon, the kampung ambush, the lakeshore, the crater cast.
+  - Galuh: the camp spot, the throne-room cast, the wall message.
+  - Mataram: `arca_base`, the beat triggers.
+  - Tanah Timur: Hariang's camp talk, the shrine triggers.
+  - Segara Kidul: a new sk_karang↔sk_tebing stair replaces the pantai↔tebing link; petilasan `kidul_3`; the trial moves to sk_keraton.
+  - Gua Kala: the Deserter at the mouth.
+- **Other docs**: script.md was rewritten to v3.1. world, bestiary, balance §2, spells, ui, scope, items (`Batu Kali`, the Choice 3 rewards), concept, rpg, README and schedule (Phase 4c) were synced. story_brainstorm.md and story_ciung_wanara.md are marked superseded.
+- **Open**:
+  - gen_zones validation blocks were not re-run for the new map chars. Regenerate in Phase 4c and check.
+  - Balance §7 has no rows for Barma Wijaya or Hariang Banga (resolved in §5v).
+  - The first Arca fight comes before Na is read, a deliberate exception to the weakness rule.
+  - Sapto's name and the `Batu Kali` effect are ASSUMED.
+
+### 5v. v3.1 consistency pass (2026-11-06, docs only)
+A read-through of every doc against story.md > quests.md 4 > script.md > zone docs. No code or data changed.
+- **Gates:** no `mq3_8` gate is left. Desa Purwa south to `sk_pantai` is `mq4_2`, the `tt_pesisir` back route and both Gua Kala entries are `mq4_9`. Segara Kidul and Ombak are P0 everywhere. Coast juru kunci is Mbah Wiryo (no older name remains).
+- **Step ids:** script.md `step:` indices match the quests.md tables (Weaver `mq1=7`, pamali stone `mq2=11`, altar `mq4=8`). Fixed: Ciung's "one more bout" line is `step:mqg=2`.
+- **Spots added:** Nini and the Hunter at the Desa Purwa west gate; Sapto and Ciung at `kg_pamali` (plus the 2.12, `ford`, 2.13 and `truce` marker rows); Ciung and Hariang at the `gk_mulut` mouth. Naganingrum stays by the lake after MQ1 (her `D` spot keeps `flag:mq1_6b`).
+- **Retired:** SQ-S5 and SQ-M5 rows are gone from the zone docs.
+- **Systems:** balance.md 7 and `balance_model.py` have boss rows for the Captain, Barma Wijaya, Hariang Banga and the Hunter (bestiary.md HP and hits now match). Kala is 9300 HP (Segara Kidul is P0, so rank 4 always applies); the built boss still has 8400, a code follow-up. items.md has a "Main-path quest items" section (Laras's Lontar, Laras's Ribbon, Boeh Rarang); Choice 3 sink gives `batu_kali`.
+- **Open for the user:** the four new bosses' Ilmu (1,170) is not in the balance 2.2 / 8.2 income model (balance.md 7 note). The Ingatan rank list still counts only Sangkuriang, Bondowoso, the Keris and the trial.
+
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)
 2. ~~Move Wewe Gombel to Mataram~~: done 2026-11-05.
@@ -192,6 +231,8 @@ User report: no tutorial per glyph; the game felt like a lore dump, not an RPG. 
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
+**2026-11-06 (Story v3.1 docs done, §5u):** every doc is on v3.1, the code is not. Next: Phase 4c in [schedule.md](schedule.md). Engine features first (`deep-implementer`), then the quest data, beats and dialogue from script.md, the zone regeneration and tests. Then the user's playtest, New Game to the credits, timing each act against story.md "Pacing". The Story v2 notes below are history. §5v lists the 2026-11-06 consistency fixes (Kala HP 9300 in the docs, 8400 in the code).
+
 **2026-11-06 (Story v2 built):** the whole v2 story is in the game, from New Game to the credits. That covers name entry, the 5-card prologue, the story beats (`data/dialogue/beats.tres`, `ui/story_beat.gd`), the Faceless, 4 new bosses, Keraton Galuh (kg_*), the 3 choices, the name-writing finale and the epilogue variants. All tests pass, nothing is committed.
 - Security fixes: the finale write card replays after a quit until `mq5_4` is set (script.md, quests.md); the menu ignores input while the write card is open; `Game.play` skips the box for a do-only entry; `write:` ids are checked.
 - `faceless_archer` now has its own kind, so its codex entry unlocks on a kill.

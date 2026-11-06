@@ -4,12 +4,12 @@ Area graph on paper. Step 1 of the world design workflow ([AGENTS.md](../../AGEN
 
 Look: a dark cavern of wet black rock, hourglass and clock-like motifs carved into the walls, and the forgotten letters floating about, faded and dim. Sand trickles in thin streams from the ceiling in the deeper halls. The landmark is Kala's chamber. From the first area (`gk_mulut`), across a wide chasm, the player sees an enormous hourglass and a round clock-face set in the far wall, glowing faintly. It grows nearer in each area, and its ticking gets louder. Batara Kala is a deity figure and is not killed: he is calmed and turned back (a respectful ruwatan note is in the codex, per story.md). Tone stays warm and a bit cartoonish.
 
-Areas: 4. Critical path: `gk_mulut` -> `gk_pasir` -> (drop) `gk_lupa` -> `gk_ruang_kala`. A P0 build can reach Gua Kala directly (see conflicts).
+Areas: 4. Critical path: `gk_mulut` -> `gk_pasir` -> (drop) `gk_lupa` -> `gk_ruang_kala`. Gua Kala is Act VI (MQ5) and is entered from the sea pavilion (`sk_keraton`) once `quest:mq4=done`, the moment Ombak is earned. The Desa Purwa gate opens on the same flag, so a player who returns home after Act V can walk in from the village too (**ASSUMED**). Beat `mouth`/`mouth_freed`: Ciung Wanara and Hariang Banga hold the mouth, one king from each bank, and you go in alone. The Hunter does not appear in this act.
 
 ## Area table
 | id | size (screens, tiles) | look | purpose | contents |
 |----|-----------------------|------|---------|----------|
-| `gk_mulut` | 3x2, 90x34 | The cave mouth. Wet black rock, carved clock gears, drifting faded letters, the chasm with the far hourglass in view | Entry, first rest, landmark view | Spawns `from_desa_purwa` (W, P0 entry), `from_sk_keraton` (P1, pending), `from_gk_pasir` (link L1), `from_gk_lupa` (shortcut landing). Petilasan `kala_2` (near the entry). Encounter `kala_mulut`. Shortcut landing `sc:gk_lorong`. Quest marker `kala_mulut` |
+| `gk_mulut` | 3x2, 90x34 | The cave mouth. Wet black rock, carved clock gears, drifting faded letters, the chasm with the far hourglass in view | Entry, first rest, landmark view | Spawns `from_desa_purwa` (W, gate `quest:mq4=done`), `from_sk_keraton` (S, a sea-cave passage from the pavilion, gate `quest:mq4=done`), `from_gk_pasir` (link L1), `from_gk_lupa` (shortcut landing). Petilasan `kala_2` (near the entry). Encounter `kala_mulut`. Shortcut landing `sc:gk_lorong`. NPC variant spot `mouth_freed` (the Deserter, `deserter_mouth`, only when `choice_freed`). Quest markers `kala_mulut` (5.1, 5.2) |
 | `gk_pasir` | 3x3, 90x51 | The sand halls. Giant hourglass shapes in the walls, thin sand streams that only look pretty, rocky floors and pillars | The long way in, two fights, a secret | Spawns `from_gk_mulut` (W). Encounters `kala_pasir_1`, `kala_pasir_2`. Chest `kala_chest_1` (hidden sand cave, gap between pillars). Drop `D1` (high gallery, sand-slide) onto `gk_lupa`. Quest marker none |
 | `gk_lupa` | 2x3, 60x51 | The hall of faded letters. Aksara float like dim motes: Sunda, Jawa, forgotten scripts. Shelves of stone tablets | Rest before the boss, codex, the shortcut, the boss door | Spawns `from_gk_pasir` (drop landing, N), `from_gk_ruang_kala` (S door). Encounter `kala_lupa`. Chest `kala_chest_2` (behind tablets). Petilasan `kala_1` (south end, 10 tiles from the door, no fight between). NPC `semar` at `kala_1`. Codex spot `kala_aksara_pudar`. Shortcut gate `sc:gk_lorong` (opens from here). Quest markers `kala_1`, `kala_boss` (door) |
 | `gk_ruang_kala` | 2x2, 60x34 | A round chamber. A clock face on the floor, the great hourglass overhead. Four quadrants, each with a motif of an earlier region (phase 3 uses them all) | Boss arena, Batara Kala | Spawn `from_gk_lupa`. Boss `batara_kala` (marker `kala_boss`). After the fight a lit door leads to the epilogue (`kala_exit`, **ASSUMED**). No other enemies |
@@ -17,20 +17,21 @@ Areas: 4. Critical path: `gk_mulut` -> `gk_pasir` -> (drop) `gk_lupa` -> `gk_rua
 ## Region graph
 `--` link, `=sc=` shortcut, `~D~>` drop (one way), `==K==` kabut.
 ```
- [sk_keraton] ==K mq4_3== [gk_mulut] --L1-- [gk_pasir]
-                           (kala_2)   ^           |
+ [sk_keraton] ==K mq4_9== [gk_mulut] --L1-- [gk_pasir]
+ [desa_purwa] ==K mq4_9==^   (kala_2)  ^           |
                                       |           ~D1~> (one way)
                                       |                 |
                                       +==sc:gk_lorong== [gk_lupa] --L2-- [gk_ruang_kala]
                                                          (kala_1)         (Batara Kala)
                                                   codex, Semar
 ```
-Critical path: `sk_keraton` -> `gk_mulut` (rest `kala_2`) -> `gk_pasir` -> D1 -> `gk_lupa` (rest `kala_1`) -> `gk_ruang_kala`.
+Critical path: `sk_keraton` (or `desa_purwa`) -> `gk_mulut` (rest `kala_2`) -> `gk_pasir` -> D1 -> `gk_lupa` (rest `kala_1`) -> `gk_ruang_kala`.
 
 ### Link table
 | id | from area | to area | kind | gate flag | spawn ids |
 |----|-----------|---------|------|-----------|-----------|
-| X1 | `sk_keraton` | `gk_mulut` | link, kabut | `mq4_3` | `from_sk_keraton` (in `gk_mulut`), `from_gk_mulut` (in `sk_keraton`). In a P0 build the kabut is already open (see conflicts) |
+| X1 | `sk_keraton` | `gk_mulut` | link, kabut | `quest:mq4=done` (kabut flag `mq4_9`, set by step 4.9) | `from_sk_keraton` (in `gk_mulut`), `from_gk_mulut` (in `sk_keraton`). The main entry |
+| X0 | `desa_purwa` (N) | `gk_mulut` | link, kabut | `quest:mq4=done` (kabut flag `mq4_9`) | `from_desa_purwa` (in `gk_mulut`), `from_gk_mulut` (in `desa_purwa`). Opens on the same flag as X1 (quests.md Gating, v3.1) |
 | L1 | `gk_mulut` | `gk_pasir` | link | none | `from_gk_pasir` (in mulut), `from_gk_mulut` (in pasir) |
 | D1 | `gk_pasir` | `gk_lupa` | drop (one way) | none | `from_gk_pasir` (landing in lupa). No exit leads back up |
 | S1 | `gk_lupa` | `gk_mulut` | shortcut `sc:gk_lorong` | `sc:gk_lorong` | `from_gk_lupa` (in mulut), `from_gk_mulut` (in lupa) |
@@ -58,7 +59,7 @@ Bestiary: about 10 kills in Gua Kala, one mix from each earlier zone at tier 4. 
 | `kala_mulut` | mulut | Tatar Sunda (`sunda_batutulis`) | 2 Faceless, 1 Kuntilanak | Ka Bolt on the shriek |
 | `kala_pasir_1` | pasir | Mataram rock thrower | 1 Genderuwo, 2 Pocong | Ka Bolt on the rock, Nga Bind on a hopping Pocong |
 | `kala_pasir_2` | pasir | Tanah Timur wisps (dry riverbed with rock cover) | 2 Kemamang | Na Dash-strike |
-| `kala_lupa` | lupa | Tanah Timur Old guard (P0; Segara Kidul trial W3 in a P1 build) | 1 Prajurit Terkutuk, 2 Banaspati | Na Dash-strike behind the shield, Ga Ward on the burn. One tank |
+| `kala_lupa` | lupa | Tanah Timur Old guard (kept; the Segara Kidul W3 mix would also fit now, ASSUMED no change) | 1 Prajurit Terkutuk, 2 Banaspati | Na Dash-strike behind the shield, Ga Ward on the burn. One tank |
 
 Total 11 kills (about 10). Four encounters, no room with 4 or more enemies, so the 15x9 rule is met by default; the Bajul lane in `gk_lupa` is 8+ tiles. No second tank right before the boss (the pre-boss exception is not used). The newest glyph, Ombak, answers Kala's time-sand in the boss fight; its other uses here are on Lampor and projectiles.
 
@@ -77,15 +78,20 @@ Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Ev
 
 | Step | Marker id | Area | Event string |
 |------|-----------|------|--------------|
-| MQ5 5.1 enter Gua Kala | `kala_mulut` | `gk_mulut` | `zone_entered:gk_mulut`, sets `mq5_1`; beat `mouth` (the brothers hold the mouth) |
-| 5.2 rest at the last petilasan | `kala_1` | `gk_lupa` | `petilasan_activated:kala_1` (Q), sets `mq5_2`; Laras beat 5 |
-| 5.3 face Batara Kala | `kala_boss` | `gk_ruang_kala` | `boss_defeated:batara_kala` (Q), sets `mq5_3`; beat `write` opens the name card |
-| 5.4 write Laras's name | `kala_boss` | `gk_ruang_kala` | `name_written:laras` (Story v2), sets `mq5_4`; MQ5 done plays the epilogue (zones.gd). The lit door `kala_exit` stays as a walk home after the credits |
+| MQ5 5.1 enter Gua Kala | `kala_mulut` | `gk_mulut` (brothers `c` (3,14) and `h` (3,19), Deserter `d` (4,18)) | `zone_entered:gk_mulut` (Q), sets `mq5_1`. Requires `mq4_9`. Beats `mouth_freed` (if `flag:mq5_1`, `flag:choice_freed`) then `mouth` (if `flag:mq5_1`), both `do` `flag:beat_mouth` |
+| 5.2 reclaim the first Memory Seal, La, at the Maw | `kala_mulut` | `gk_mulut` | `area_cleared:kala_mulut` (Q), sets `mq5_1b`. The seal La is released by the clear (no map object, Phase 5 decides) |
+| 5.3 shatter the western time-ward | `kala_pasir_1` | `gk_pasir` (west half) | `area_cleared:kala_pasir_1` (Q) |
+| 5.4 shatter the eastern time-ward | `kala_pasir_2` | `gk_pasir` (east half, past the gallery) | `area_cleared:kala_pasir_2` (Q), sets `mq5_1c` |
+| 5.5 reclaim the second Memory Seal, Ra, in the Abyss of Forgetting | `kala_lupa` | `gk_lupa` | `area_cleared:kala_lupa` (Q), sets `mq5_1d` |
+| 5.6 rest at the last petilasan | `kala_1` | `gk_lupa` | `petilasan_activated:kala_1` (Q), sets `mq5_2`. The third seal, Sa; Semar waits here. Beat `laras_5` (if `step:mq5=6`): Laras's beat, "Who's there?", she has forgotten you but is still writing. `do` `flag:beat_laras_5` |
+| 5.7 calm Batara Kala | `kala_boss` | `gk_ruang_kala` | `boss_defeated:batara_kala` (Q), sets `mq5_3`. Beat `write` (if `flag:mq5_3`): Kala turns back into the dark, her lontar is blank, Semar: "Then write it." |
+| 5.8 write Laras's name | `kala_boss` | `gk_ruang_kala` | `name_written:laras` (Q), sets `mq5_4`. The name-writing card ends with the event; MQ5 done plays the epilogue (zones.gd). The lit door `kala_exit` stays as a walk home after the credits |
 | Petilasan | `kala_2` | `gk_mulut` | `petilasan_activated:kala_2` (not a quest step) |
 | Codex | `kala_aksara_pudar` | `gk_lupa` | `codex:batara_kala`, `codex:ruwatan` (ASSUMED) |
+| Variant spot `mouth_freed` | `deserter_mouth` | `gk_mulut` (map char `d`, near the entry) | NPC with `cond: flag:choice_freed`. If the player freed the Deserter (Choice 1), he stands beside the two brothers at the mouth (story.md Choices change more than a card). Not a quest step. His one line is in script.md (ASSUMED) |
 | Semar line | `semar_kala` | `gk_lupa` | `talked_to:semar_kala` (optional, not a step; a separate npc_id so it never counts for MQ steps waiting on `talked_to:semar`) |
 
-Flags: `mq4_3` (read, Segara Kidul trial passed), `sc:gk_lorong`. Post-game: after the credits the player wakes in Desa Purwa with every zone open.
+Flags: `mq4_9` / `quest:mq4=done` (read, Ombak earned; gates X0 and X1), `choice_freed` (read, variant spot `mouth_freed`), `sc:gk_lorong`. Post-game: after the credits the player wakes in Desa Purwa with every zone open.
 
 ## Flow
 Enter `gk_mulut` (the far hourglass in view) -> Sunda mix `kala_mulut` -> petilasan `kala_2` -> `gk_pasir` -> Mataram mix `kala_pasir_1` -> Timur mix `kala_pasir_2` -> high gallery, sand-slide drop -> `gk_lupa` -> open `sc:gk_lorong` (short way back to `kala_2`) -> Segara mix `kala_lupa` -> codex and Semar at petilasan `kala_1` -> door -> `gk_ruang_kala`, Batara Kala -> the lit door home.
@@ -98,7 +104,7 @@ Enter `gk_mulut` (the far hourglass in view) -> Sunda mix `kala_mulut` -> petila
 - [x] Rooms with 4 or more enemies: none. Bajul lane 8+ tiles.
 - [x] Newest glyph: Ombak answers time-sand and projectiles (boss), no weakness enemy here; Lampor can be pushed back with it.
 - [x] Every MQ5 step has a marker (table above).
-- [x] Critical path without any one glyph: no kabut inside Gua Kala; `mq4_3` opens on the trial flag (story), not on a glyph.
+- [x] Critical path without any one glyph: no kabut inside Gua Kala; the kabuts on X0 and X1 open on `mq4_9` (story), not on a glyph.
 - [x] Rule: at least 1 loop or 1 shortcut: loop `mulut-pasir-(D1)-lupa-(sc)-mulut` plus `sc:gk_lorong` back to `kala_2`.
 - [x] At least 1 drop: D1.
 - [x] Landmark: the hourglass chamber shows from `gk_mulut`.
@@ -116,23 +122,27 @@ Enter `gk_mulut` (the far hourglass in view) -> Sunda mix `kala_mulut` -> petila
 ## Open questions
 1. VERIFY (ruwatan): the codex note on ruwatan, and the claim that Kala is "turned back", not killed, need sources ([story.md](../story.md) says verified with nuance). Any new culture claim about hourglass or clock motifs for Kala is a design invention, not folklore.
 2. Should the arena be bigger than 2x2 for phase 3 "all arenas combined"? Here 60x34 with four quadrant motifs.
-3. P0 build without Segara Kidul has no Lampor or Bajul Putih. Swap `kala_lupa` to the Timur "Old guard" mix (1 Prajurit Terkutuk, 2 Banaspati)? No Jawa Ka then either.
+3. Segara Kidul is now on the main path, so Lampor, Bajul Putih and Ombak are all known by Act VI. `kala_lupa` keeps the Timur "Old guard" mix (1 Prajurit Terkutuk, 2 Banaspati); swap to the Segara W3 mix? (ASSUMED no.)
 4. How does the player return to Desa Purwa after the boss? A lit door (ASSUMED) or a cutscene.
 5. Is Semar at `kala_1` wanted, or does story.md want him silent in the finale?
 
-## P0 decisions (ASSUMED 2026-11-05, resolve open questions 2-5 and the conflicts)
-- Entry: link X0 from `desa_purwa` (a fogged east exit, kabut `mq3_8`) to `gk_mulut`, spawns `from_desa_purwa` (in mulut) and `from_gk_mulut` (in Desa Purwa). X1 from `sk_keraton` stays pending until Segara Kidul (P1). MQ5 requires `mq3_8`; the `hunter_name` beat after the Hunter starts it (Story v2).
+## Decisions (ASSUMED 2026-11-05, updated for v3.1 2026-11-06; resolve open questions 2-5 and the conflicts)
+- Entry: link X1 from `sk_keraton` (the main entry, a sea-cave passage in the south wall of `gk_mulut`, spawn `from_sk_keraton`) and link X0 from `desa_purwa` (the west exit, spawns `from_desa_purwa` in mulut and `from_gk_mulut` in Desa Purwa). Both open on `quest:mq4=done` (kabut flag `mq4_9`). MQ5 requires `mq4_9`; the beat `kidul` starts it (`start:mq5`). The Hunter does not appear in Act VI.
 - Arena: stays 2x2 (60x34), quadrant motifs are art only (open question 2).
 - `kala_lupa` uses the Timur Old guard mix (open question 3).
-- Return: the lit door `kala_exit`, an exit to `desa_purwa` (spawn `from_gua_kala`) that appears after `boss_defeated:batara_kala` (open question 4). Entering Desa Purwa completes 5.4 and MQ5, and the epilogue scene plays.
+- Return: the lit door `kala_exit`, an exit to `desa_purwa` (spawn `from_gua_kala`) that appears after `boss_defeated:batara_kala` (open question 4). Step 5.8 (`name_written:laras`) completes MQ5 and the epilogue plays first; after it the player wakes in Desa Purwa (`from_gua_kala`). The lit door is also a walk home afterwards.
 - Semar is at `kala_1` with one optional line, npc id `semar_kala` (open question 5).
-- Kala HP 8400 (P0). No tier scaling exists, so the reused mixes keep their own stats.
+- Kala HP 9300 (starting value; Segara Kidul is on the main path, so the old P0 figure 8400 no longer applies). No tier scaling exists, so the reused mixes keep their own stats.
 
 ## Doc conflicts found (not fixed)
-- world.md and quests.md say Gua Kala may be reached directly in a P0 build, but the only link to `gk_mulut` is from `sk_keraton`. A P0 fallback entry is needed (for example a temporary link from Desa Purwa, spawn `from_desa_purwa`). Not decided.
-- bestiary.md says Kala HP 9300 / 3 phases for a full build and 8400 for P0, with no arena size. world.md says 2x2 to 3x3 screens per area.
+- Resolved by v3.1: Segara Kidul is P0 and `gk_mulut` has two entries (`sk_keraton`, `desa_purwa`) on `quest:mq4=done`.
+- Resolved 2026-11-06 (consistency pass): desa_purwa.md gates its Gua Kala exit on `mq4_9`; bestiary.md calls Ombak P0 and Kala HP 9300.
+- The three Memory Seals (La, Ra, Sa) of quests.md MQ5 have no map object; they are released by the clears (La, Ra) and the petilasan (Sa). Phase 5 may want pickups.
+- Deserter at the mouth: `deserter_mouth` is a new npc id (ASSUMED) needing a script.md line and a sprite; quests.md names only the beat `mouth_freed`.
+- Quests.md 5.8 `name_written:laras` completes MQ5; the old 5.4 line `zone_entered:desa_purwa` in this doc is replaced.
+- bestiary.md gives Kala HP 9300 / 3 phases (the 8400 P0 figure is retired) with no arena size. world.md says 2x2 to 3x3 screens per area. The built boss still has 8400 HP: code follow-up.
 - quests.md fixes `kala_1` as "the last petilasan", so a two-petilasan region numbers its first rest `kala_2`.
-- quests.md 5.4 `zone_entered:desa_purwa` has no graph edge from Gua Kala in world.md.
+- The lit door to Desa Purwa (`kala_exit`) is not a link in world.md; quests.md says only that the player wakes in Desa Purwa after the epilogue.
 - world.md Points of interest asks 6-10 encounters and 3-5 NPCs per region; bestiary.md fixes about 10 kills for Gua Kala, which gives 4 encounters.
 
 ## Area maps (Phase 5)
@@ -142,7 +152,7 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 
 - Size: 90 x 34 tiles = 3 x 2 screens (30 x 17 each).
 - Look: Wet black cave mouth, carved clock gears, drifting faded letters, the far hourglass and clock face faint across the dark. A small sand-choked side pocket by the first petilasan.
-- Purpose: Entry from Desa Purwa, first rest `kala_2`, fight `kala_mulut`, link to gk_pasir, the gate of `sc:gk_lorong` (north wall, west) with its pocket and exit into gk_lupa.
+- Purpose: Entry from `sk_keraton` (south passage, `quest:mq4=done`) or Desa Purwa (west), MQ5 5.1-5.2 (beats `mouth_freed` / `mouth`, the first Memory Seal La), the `mouth_freed` Deserter spot, first rest `kala_2`, fight `kala_mulut`, link to gk_pasir, the gate of `sc:gk_lorong` (north wall, west) with its pocket and exit into gk_lupa.
 
 ### Map
 ```
@@ -160,12 +170,12 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 #___________________________________________________________________________#####________#
 #_______________________rr__________________________________rr______________#####________#
 #_______________________rr__________________________________rr______________#####________#
-#_______________rr_______________________________________________________________________#
+#__c____________rr_______________________________________________________________________#
 #_______________rr_______________________________________________________________________#
 Xe____________________________________________E_________________________________________yY
 X________________________________________________________________________________________Y
-#________________________________________________________________________________________#
-#________________________________________________________________________________________#
+#___d____________________________________________________________________________________#
+#__h_____________________________________________________________________________________#
 #_________________rr_____________________________________________________________________#
 #_________________rr_____________________________________________________________________#
 #_______________________________________________________________________________rr_______#
@@ -178,13 +188,18 @@ X_______________________________________________________________________________
 #_____________________________#########___________________________#########______________#
 #_____________________________#########__________________________________________________#
 #________________________________________________________________________________________#
-#________________________________________________________________________________________#
-##########################################################################################
+#___________________________________________z____________________________________________#
+############################################ZZ############################################
 ```
 
 ### Legend
 | Char | What | Scene | Props | Floor | Count |
 |------|------|-------|-------|-------|-------|
+| `Z` | exit to sk_keraton (south edge, a sea-cave passage, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_keraton", spawn_id:"from_gk_mulut"}` | floor | 2 |
+| `z` | spawn, arrival from sk_keraton | `res://entities/world/spawn.tscn` | `{id:"from_sk_keraton"}` | floor | 1 |
+| `d` | NPC the Faceless Deserter at the mouth, variant spot `mouth_freed` (only when Choice 1 freed him) | `res://entities/npc/npc.tscn` | `{npc_id:"deserter_mouth", cond:"flag:choice_freed"}` | floor | 1 |
+| `c` | NPC Ciung Wanara holding the mouth, staging for the `mouth` / `mouth_freed` beats (no talk of his own; same `ciung_wanara` id) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mq4_9"}` | floor | 1 |
+| `h` | NPC Hariang Banga holding the mouth, staging for the same beats (no talk of his own; same `hariang_banga` id) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga", cond:"flag:mq4_9"}` | floor | 1 |
 | `X` | exit to desa_purwa (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"desa_purwa", spawn_id:"from_gk_mulut"}` | floor | 2 |
 | `e` | spawn, arrival from desa_purwa | `res://entities/world/spawn.tscn` | `{id:"from_desa_purwa"}` | floor | 1 |
 | `Y` | exit to gk_pasir (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_pasir", spawn_id:"from_gk_mulut"}` | floor | 2 |

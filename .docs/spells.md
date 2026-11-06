@@ -24,9 +24,10 @@ Baku (standard) set: 7 vowels (swara), 23 consonants (ngalagena). Basic consonan
 ### Learning order (progression)
 - Zone 1 (Sunda) teaches 4 Sunda glyphs. Zone 2 (Jawa) teaches 4 Jawa glyphs.
 - The rule is "the first four letters of each script" (kept 2026-11-05 after the shape check in section 10).
-- Each glyph is taught by an NPC, practiced in the sanggar with a ghost guide, then unlocked.
+- Each glyph is earned by a deed (a fight, a rescue, an inscription read in place), then the lesson card runs ([story.md](story.md) Pacing rule 4, [quests.md](quests.md) 4). A teacher may name or show the glyph, never hand it over. Na is read off the Arca base (`arca_base`), not taught by an NPC. Practice in the sanggar with the ghost guide is optional (**ASSUMED**).
+- Zone 1 and 2 teach 4 glyphs each; Ombak (Jawa Ka) is the ninth, earned at the Trial of the Waves.
 
-## 3. Glyph and spell mapping (MVP: 8 glyphs)
+## 3. Glyph and spell mapping (8 MVP glyphs plus Ombak; La, Ra and Sa are write-only name glyphs, not spells)
 The spell assigned to a letter is a **gameplay assignment**, not a traditional meaning. The codex must say so.
 
 Damage, Ward absorb and Summon scale with Spirit and Ingatan ([balance.md](balance.md) 3.1).
@@ -41,10 +42,10 @@ Damage, Ward absorb and Summon scale with Spirit and Ingatan ([balance.md](balan
 | Jawa | Na | Dash-strike | Dash through enemies, 25 damage, brief invincibility | 20 |
 | Jawa | Ca | Rally | +30% attack speed, +50% stamina regen for 10 s | 40 |
 | Jawa | Ra | Summon | A tiger spirit fights for 10 s, about 15 damage per 0.6 s | 50 |
-| Jawa | Ka | Ombak (Tide), P1 final glyph | A wave in the aim direction: 35 damage, pushes enemies back 64 px, destroys enemy projectiles it touches | 35 |
+| Jawa | Ka | Ombak (Tide), P0 final glyph | A wave in the aim direction: 35 damage, pushes enemies back 64 px, destroys enemy projectiles it touches | 35 |
 
 Notes:
-- **Final glyph: Jawa Ka** (MQ4, P1; decided 2026-11-05, **ASSUMED**). It completes "ha na ca ra ka", the first line of the Hanacaraka ("there were messengers"), which the epilogue recites, and it is the next letter by the first-letters rule. Kala's P0 fight must stay beatable without it.
+- **Final glyph: Jawa Ka** (MQ4 4.9, P0 and main path since story v3.1; earned by passing the Trial of the Waves; **ASSUMED**). It completes "ha na ca ra ka", the first line of the Hanacaraka ("there were messengers"), which the epilogue recites, and it is the next letter by the first-letters rule. Kala's fight must stay beatable without it (it breaks the eclipse shield but is not required).
 - "Ca" and "Ka" exist in both scripts. They are different shapes, and the recognizer groups templates by script, so this is fine and also a good culture point.
 - The Boss 1 "light" mechanic reuses Ca (Burst), cast next to the boeh rarang banner: no extra glyph (**ASSUMED**, see [quests.md](quests.md) MQ1).
 

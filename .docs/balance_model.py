@@ -67,8 +67,9 @@ if __name__ == '__main__':
         print(T, ' '.join(f'{r} {round(h * HP_T[T])}/{round(d * DMG_T[T])}/{round(i * ILMU_T[T])}' for r, (h, d, i) in ROLE.items()))
 
     print('== 7 bosses (name, points, rank, armor, target seconds)')
-    for n, p, R, arm, sec in [('Sangkuriang', 6, 0, 1, 70), ('Bondowoso', 12, 1, 1, 80), ('Buto Ijo', 16, 2, 4, 75),
-                              ('Keris', 18, 2, 4, 90), ('Kala', 24, 4, 5, 150)]:
+    for n, p, R, arm, sec in [('Capt', 5, 0, 1, 60), ('Sangkuriang', 6, 0, 1, 70), ('Barma', 9, 1, 2, 65),
+                              ('Bondowoso', 12, 1, 1, 80), ('Hariang', 15, 2, 3, 70), ('Buto Ijo', 16, 2, 4, 75),
+                              ('Keris', 18, 2, 4, 90), ('Hunter', 19, 3, 4, 85), ('Kala', 24, 4, 5, 150)]:
         d = [power(c, p, R)[0] for c in CLASSES]
         hp = round(st.mean(d) * sec, -2)
         ref = 80 + 10 * (5.5 + round(p * 0.3))

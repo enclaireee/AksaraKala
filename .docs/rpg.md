@@ -73,7 +73,7 @@ Weapons differ in behavior, not only numbers (hit shapes per weapon: [combat.md]
 
 ## 9. Progression flow
 1. Choose a class.
-2. Learn glyphs by zone through the main quest ([spells.md](spells.md), [quests.md](quests.md)).
+2. Earn glyphs by deeds through the main quest (a fight, a rescue, an inscription read; the lesson card follows) ([spells.md](spells.md), [quests.md](quests.md)).
 3. Spend Ilmu on stats.
 4. Find and equip gear, mostly from side quests.
 5. Beat zone bosses to open the next region. Each main boss also raises Ingatan (+15% damage).

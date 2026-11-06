@@ -19,7 +19,7 @@ Design rules:
 | Kuntilanak | Shooter | 40 | 8 | 6 | Floats, keeps distance, shrieks in a short cone | Female ghost of Indonesian and Malay folklore |
 | Jurig Leuweung | Tank | 150 | 12 | 15 | Slow, wide swing. Bind roots it (see Glyph weaknesses) | Descriptive name: a "jurig" (ghost, verified) of the "leuweung" (forest, **VERIFY** spelling). No named Sundanese figure fits a slow giant without reusing Genderuwo, and a generic spirit claims no legend (decided 2026-11-05, **ASSUMED**) |
 
-**Miniboss: Sandekala** (P1, optional, in the bamboo forest at dusk). HP 1100, Dmg 14, Ilmu 100 (**TUNE**, [balance.md](balance.md) 7). Sundanese dusk spirit said to take children who stay outside after sunset (verified, 2 sources). Its form is not fixed in the belief, so the look is ours: a tall shadow with a lantern-less face.
+**Boss: Sandekala** (main path, Act I; the dusk fight in the river gorge, not a P1 optional). HP 1100, Dmg 14, Ilmu 100 (**TUNE**, [balance.md](balance.md) 7). Sundanese dusk spirit said to take children who stay outside after sunset (verified, 2 sources). Its form is not fixed in the belief, so the look is ours: a tall shadow with a lantern-less face.
 - The arena darkens over the fight. In shadow it fades out and reappears behind the player with a grab (0.6 s wind-up, ground marker).
 - Four oncor (torches) ring the arena. A hit lights one and shrinks the shadow. With all four lit it cannot fade.
 - Teaches: reading wind-ups and using the room, before Sangkuriang.
@@ -30,7 +30,7 @@ Design rules:
 - Teaches: casting under pressure.
 
 ## Zone 2: Mataram
-Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
+Mundane enemies: none are planned; the zone uses its three folklore enemies (zones/segara_kidul.md, an accepted exception to the mix rule).
 
 | Enemy | Archetype | HP | Dmg | Ilmu | Behavior | Folklore note |
 |-------|-----------|----|-----|------|----------|---------------|
@@ -51,7 +51,7 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
   - Shield: while any pillar stands he takes no damage (a hit shows a shield flash, no hit-stop). With no pillars he takes full damage.
   - Dawn beats: the lesung women at the arena edge pound a beat every 20 s, shown as the HUD dawn bar filling. On the beat every pillar is exposed for 3 s: one hit breaks it. Casting Jawa Ca (the lesung rhythm, taught at 2.5) triggers a beat at once, 8 s cooldown.
   - Phase 2 at 50% HP, after a 1 s pause: a pillar every 6 s, and every 5 s debris falls on 3 ground marks near the player (light 18, 0.8 s marks).
-  - Defeat: he stops building and kneels (a release, like Sangkuriang). `boss_defeated:bandung_bondowoso`; Baju Batik comes from MQ2.
+  - Defeat: he stops building and kneels (a release, like Sangkuriang). `boss_defeated:bandung_bondowoso`; Baju Batik comes from MQ2 (2.11).
 
 ## Zone 3: Tanah Timur
 Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
@@ -85,13 +85,14 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
   - Seven marks: when all 7 are lit it stops, a red ring fills the whole arena for 2 s, then a curse wave hits everyone in the arena (heavy 60, applies Curse). Only dash i-frames avoid it. All stakes then go out.
   - Phase 2 at 50% HP, after a 1 s pause: a stake every 5 s, and it darts twice in a row.
   - Defeat: the keris falls point-down into the earth and goes quiet (laid to rest). `boss_defeated:keris_gandring`, sets `mq3_7`.
-- Practice marks (MQ3 3.5): the same `curse_stake` with `practice` on, in the forge yard. It is always lit. Cleansing it emits `area_entered:timur_praktik_mark` (not `timur_praktik`, which the marker trigger emits on walk-in) and it relights after 2 s. Step 3.5 counts 2.
+- Practice marks (MQ3 3.6): the same `curse_stake` with `practice` on, in the forge yard. It is always lit. Cleansing it emits `area_entered:timur_praktik_mark` (not `timur_praktik`, which the marker trigger emits on walk-in) and it relights after 2 s. Step 3.6 counts 2.
 
 **Elites** (elite = x4 HP and x4 Ilmu of the base, as Wewe Gombel and Bajul Putih Tua; numbers **TUNE**). Both are plain spots, inert until their quest step, and not encounters.
 - **Yuyu Kangkang** (SQ-T1): giant river crab, elite charger. HP 384, Dmg 18, Ilmu 80. Charges sideways along the 12-tile crossing, pinches twice at close range. Weakness: Bind, as Keris Hantu. Leaves on the peaceful route (the river dries up).
 - **Banaspati elite** (SQ-T2): HP 256, Dmg 12, Ilmu 56. A larger flaming head, faster, its burn trail lasts twice as long. Weakness: Ward, as Banaspati.
 
 ## Zone 4: Segara Kidul
+Main path and P0 since story v3.1 (Act V).
 Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
 
 | Enemy | Archetype | HP | Dmg | Ilmu | Behavior | Note |
@@ -102,14 +103,14 @@ Mundane enemies to be added when the zone is built (Phase 5), per the mix rule.
 
 **Elite: Bajul Putih Tua** (old white crocodile, SQ-K2 bounty). HP 1140, Dmg 20, Ilmu 204 (elite x tier 3). Same moves, faster lunges, a second lunge in phase 2.
 
-**Trial of the waves** (MQ4 4.3, P1). Three waves on the beach at low tide, each with a clean glyph answer. As everywhere, the glyph is a shortcut, not a lock.
+**Trial of the waves** (MQ4 4.8, main path, held at the `sk_keraton` sea pavilion, not on the beach; **ASSUMED**). Three waves at low tide, each with a clean glyph answer. As everywhere, the glyph is a shortcut, not a lock.
 1. 5 Lampor in two lines: Ca Burst (Sunda).
 2. 2 Ula Segara, 3 Lampor: Ka Bolt during the spit wind-up.
 3. 1 Bajul Putih, 2 Lampor: Ga Ward bounces the lunge.
 
 Then the sea goes still and Nyi Roro Kidul speaks once (MQ4). She is not fought, and no enemy here is shown as her servant. Decided 2026-11-05 (**ASSUMED**, numbers **TUNE**).
 
-## Story v2 (Phase 4b, 2026-11-06)
+## Story v3.1 (Phase 4c, 2026-11-06)
 The story ([story.md](story.md)) adds one faction seen in every region and four bosses. All numbers are **TUNE**, all looks and moves are game inventions (**ASSUMED**). Galuh uses the Mataram tier (x1.3 HP, balance.md 6.2): it is the second region now.
 
 **The Faceless (Wong Tanpa Rupa).** People whose names were eaten: blank white masks, grey cloth, no gore. When one dies its mask cracks and a name-strip floats up for 1 s (art only). Mundane rules apply: no glyph weakness, beaten with combo and dodge.
@@ -121,40 +122,45 @@ The story ([story.md](story.md)) adds one faction seen in every region and four 
 
 They scale by the zone they spawn in, read from the zone id prefix on ready: `desa_`, `ts_` tier 0; `kg_`, `mt_` tier 1; `tt_` tier 2; `gk_` tier 4 (balance.md 6.2). One scene per role, so encounter waves can use them. They replace the bandits in Tatar Sunda and some Tuyul and Pocong packs in later zones (zone docs).
 
-**Boss: Faceless Captain** (Ch 1, ts_kawah, at Nagawiru's lair). HP 1800, Ilmu 150, speed 40, boss poise.
-- Spear sweep: 0.5 s wind-up with an arc marker (r 40, 120 degrees), heavy 18.
-- Lunge: 0.6 s wind-up, a line marker 6 tiles long, then a dash along it, heavy 16.
+**Boss: Faceless Captain** (Act I, ts_kawah, at Nagawiru's lair). HP 1800, Ilmu 150, speed 40, boss poise (balance.md 7).
+- Spear sweep: 0.5 s wind-up with an arc marker (r 40, 120 degrees), light 16.
+- Lunge: 0.6 s wind-up, a line marker 6 tiles long, then a dash along it, heavy 36.
 - Muster at 66% and 33% HP: he raises the spear (1.2 s) and calls 2 Faceless from the lair's edges with the usual 0.5 s ground warning. **Ca Burst** hitting him during the muster breaks it: no adds and a 2 s stun (the newest Sunda glyph earns its place).
-- Defeat: the mask cracks, `boss_defeated:faceless_captain`. The naga's beat follows (story.md Ch 1).
+- Defeat: the mask cracks, `boss_defeated:faceless_captain`. The `crater_seal` beat follows (he smashes the seal-stone and Sangkuriang wakes), then the Sangkuriang fight.
 
-**Boss: Prabu Barma Wijaya, the false king** (Ch 2, kg_keraton, the throne room). HP 2400, Ilmu 220, speed 45.
-- Phase 1: a kris thrust (0.4 s wind-up, line marker 3 tiles, light 14) and a fan of 3 thrown kris-darts (0.6 s wind-up, light 12 each).
+**Boss: Prabu Barma Wijaya, the false king** (Act II, kg_keraton, the throne room). HP 2400, Ilmu 220, speed 45 (balance.md 7).
+- Phase 1: a kris thrust (0.4 s wind-up, line marker 3 tiles, heavy 40) and a fan of 3 thrown kris-darts (0.6 s wind-up, light 18 each).
 - **Glamour** at 70% and 35% HP: he steps back and becomes 4 identical figures (3 copies and him), shuffled over 1 s. Copies take no damage from weapons (hits flicker through). **Any cast glyph that hits a copy breaks it** (aksara reveal true faces). Copies attack with the phase 1 moves at half damage. While any copy stands, the real one also takes no damage. When the last copy breaks he is stunned 3 s and open. A new glamour comes only at the next HP mark.
-- Defeat: at 0 HP he does not die. He drops to one knee, his face slips, `boss_defeated:barma_wijaya`. The cage beat follows.
+- Defeat: at 0 HP he does not die. He drops to one knee, his face slips, `boss_defeated:barma_wijaya`. The `confession` beat follows, then `cage`.
 
-**Boss: Hariang Banga** (Ch 3, kg_pamali, the river duel). HP 2800, Ilmu 320, speed 60. An honourable swordsman, never a villain.
+**Boss: Hariang Banga** (Act III, kg_pamali, the river duel). HP 3200, Ilmu 320, speed 60 (balance.md 7). An honourable swordsman, never a villain.
 - Guard: he faces the player with a raised blade. Weapon hits from the front do x0.2 damage. A **Jawa Na Dash-strike** through him breaks the guard: 2 s stagger, x1.5 damage taken for 3 s. Hits from behind always land.
-- Moves: a 3-cut combo (0.4 s wind-up each, light 15), a lunge (0.5 s, line 6 tiles, heavy 20), a ground cut that sends a wave along the floor (0.6 s, line 10 tiles, light 14).
-- Yield at 15% HP: he stops, sheathes, `boss_defeated:hariang_banga`. He never dies (the legend: neither brother wins). The truce beat follows.
+- Moves: a 3-cut combo (0.4 s wind-up each, light 21), a lunge (0.5 s, line 6 tiles, heavy 45), a ground cut that sends a wave along the floor (0.6 s, line 10 tiles, light 21).
+- Yield at 15% HP: he stops, sheathes, `boss_defeated:hariang_banga`. He never dies (the legend: neither brother wins). The `truce` beat follows (the `ford` beat came before the duel).
 
-**Boss: the Nameless Hunter (Si Tanpa Ngaran)** (Ch 4, tt_candi after the keris). HP 3600, Ilmu 480, speed 55. A tall shape in a hunter's cloak with no face at all.
-- Shadow-step: he fades out (0.3 s), a ground marker shows behind the player for 0.6 s, he reappears there with a cut (heavy 22). Rolling out of the marker dodges it.
-- Chain hook: 0.6 s wind-up, line marker 8 tiles, light 16, pulls the player 3 tiles toward him.
+**Boss: the Nameless Hunter (Si Tanpa Ngaran)** (Act IV, tt_candi after the keris). HP 4600, Ilmu 480, speed 55 (balance.md 7). A tall shape in a hunter's cloak with no face at all.
+- Shadow-step: he fades out (0.3 s), a ground marker shows behind the player for 0.6 s, he reappears there with a cut (heavy 54). Rolling out of the marker dodges it.
+- Chain hook: 0.6 s wind-up, line marker 8 tiles, light 24, pulls the player 3 tiles toward him.
 - **Forget**: 0.8 s wind-up with a pale cone marker (r 64, 90 degrees). Hit by it, the player's sakti empties and casting is locked for 4 s (the existing cast lockout). **Ga Ward** up when it lands blocks it completely.
 - Phase 2 at 50%: shadow-steps come in pairs and Forget follows the second.
-- Defeat: he comes apart into name-strips, `boss_defeated:nameless_hunter`. The beat reveals him as Aria Kebonan's true self.
+- Defeat: he comes apart into name-strips, `boss_defeated:nameless_hunter`. The `hunter_name` beat reveals him as Aria Kebonan's true self.
+
+## Main-path bosses in act order (story v3.1, **ASSUMED**)
+Sandekala (I), Faceless Captain (I), Sangkuriang (I), Barma Wijaya (II), Bandung Bondowoso (III), Hariang Banga (III), Buto Ijo (IV), Keris Mpu Gandring (IV), the Nameless Hunter (IV), the Trial of the Waves (V, waves, no boss HP), Batara Kala (VI).
+
+Each boss is a person with a stake in the plot (FromSoftware rule, [story.md](story.md) Pacing): a fight ends in a release, a yield, a confession or a calming, not just a death bar.
 
 ## Final: Gua Kala
-**Boss: Batara Kala.** HP 9300, 3 phases of 3100 (P0 build without Segara Kidul: 8400).
+**Boss: Batara Kala.** HP 9300, 3 phases of 3100.
 - Phase 1: devouring pulses and falling time-sand attacks.
 - Phase 2: the countdown starts. A shield is broken by drawing 3 glyphs in the shown order (stretch).
 - Phase 3: all arenas combined, every class mechanic matters.
-- Build spec (P0, 2026-11-05, all numbers **TUNE**, mechanics **ASSUMED**). Kala is a deity: he is calmed and turned back, never killed (story.md, codex `ruwatan`, **VERIFY**). Ombak is P1, so every attack can be dodged without it.
-  - HP 8400, Ilmu 1000 (**TUNE**, post-game only). Phases at 100 / 66 / 33% HP, with a 1 s pause at each phase start. He walks slowly (speed 22) and floats (no knockback, poise as a boss).
+- Build spec (P0, 2026-11-05, all numbers **TUNE**, mechanics **ASSUMED**). Kala is a deity: he is calmed and turned back, never killed (story.md, codex `ruwatan`, **VERIFY**). Ombak is earned at the Trial of the Waves before this fight, and breaks the eclipse shield (story.md Act V); every attack can still be dodged without it.
+  - HP 9300 (3 phases of 3100; Segara Kidul is on the main path, so Ingatan rank 4 always applies), Ilmu 1000 (**TUNE**, post-game only). Phases at 100 / 66 / 33% HP, with a 1 s pause at each phase start. He walks slowly (speed 22) and floats (no knockback, poise as a boss).
   - Attacks (balance.md 7): devouring pulse, a ring that grows from him to r 96 over 1.2 s after a 0.8 s wind-up, heavy 41 to a player the ring edge crosses (stand inside it close, or outside it, or dash through); time-sand, 3 ground-marked circles (r 20) at and around the player, 0.9 s mark, light 18 each, the same style as Sangkuriang's logs.
   - Phase 2, the countdown: he raises a shield (takes no damage) and shows a sequence of 3 glyphs, chosen at random from `Game.glyphs_learned` (no repeats when 3 or more are learned). The HUD shows the sequence under his bar and the countdown in the thin bar. Every `Events.spell_cast` is checked: the next glyph in the order moves the sequence on, any other glyph resets it to the first. The third one breaks the shield: he is stunned 3 s and open for 10 s, then shields again with a new sequence. The countdown is 30 s; if it runs out he "devours time": a red ring fills the arena 2 s, then heavy 60 to the player (only dash i-frames avoid it), then a new sequence and a full countdown. Pulses and time-sand go on during the shield.
   - Phase 3: both together and faster: wind-ups x0.7, a countdown of 20 s, 5 time-sand circles. The four floor quadrants show the earlier regions (art only, no extra hazards: ponytail, add them if the fight plays thin).
-  - Defeat: the hourglass turns over, he lowers his hands and fades back into the clock face. `boss_defeated:batara_kala` (MQ5 5.3); the `kala_exit` door lights.
+  - Defeat: the hourglass turns over, he lowers his hands and fades back into the clock face. `boss_defeated:batara_kala` (MQ5 5.7); the `write` beat follows and the `kala_exit` door lights.
 
 ## Encounters (confirmed 2026-11-05)
 Level design builds each zone's 6-10 encounters ([world.md](world.md)) from the rules and named mixes below. Size: 3-6 enemies, 20-40 s of fighting, then a breather ([balance.md](balance.md) 2.1).
@@ -175,7 +181,7 @@ The built mixes are the encounter table in [zones/tatar_sunda.md](zones/tatar_su
 | Mix | Enemies | Where | Tests |
 |-----|---------|-------|-------|
 | Village thieves | 5 Tuyul | Village lanes | Swarm control, Burst |
-| Ruins wake (MQ2 2.4) | 3 Arca, 2 Tuyul | Courtyard, statues on the edges | Shooters that do not move, crossfire |
+| Ruins wake (MQ2 2.3, the ruins lead) | 3 Arca, 2 Tuyul | Courtyard, statues on the edges | Shooters that do not move, crossfire |
 | Graveyard | 2 Pocong, 3 Tuyul | Graveyard, open ground | Hop timing, Bind mid-hop |
 | Rock thrower | 1 Genderuwo, 2 Pocong | Rocky field | Bolt on the rock, two threats at once |
 | Temple gate | 1 Genderuwo, 2 Arca, 3 Tuyul (2 waves) | Before the temple petilasan | Everything in the zone, Dash-strike on Arca |
@@ -200,15 +206,15 @@ Every normal enemy has one glyph that breaks its gimmick. It is a strong shortcu
 | Enemy | Glyph (learned) | Trigger | Effect |
 |-------|-----------------|---------|--------|
 | Kuntilanak | Ka Bolt (MQ0) | Bolt hits her during the shriek wind-up | Shriek cancelled, she drops to the ground for 2 s and can be hit by melee |
-| Wild Boar | Ga Ward (MQ1 1.3) | It dashes into the player while Ward is up | Bounces off as if it hit a wall: 1.5 s stagger |
-| Jurig Leuweung | Nga Bind (MQ1 1.5) | Bound | Cannot swing while Bound, takes x2 poise damage |
+| Wild Boar | Ga Ward (MQ1 1.4) | It dashes into the player while Ward is up | Bounces off as if it hit a wall: 1.5 s stagger |
+| Jurig Leuweung | Nga Bind (MQ1 1.6) | Bound | Cannot swing while Bound, takes x2 poise damage |
 | Bandit, Bandit Archer | None | Mundane | Beaten with the combo and dodge (**ASSUMED**) |
-| Tuyul | Ca Burst (MQ1 1.7) | Burst hits the group | 40 base damage beats their 31 HP: one cast clears a swarm |
+| Tuyul | Ca Burst (MQ1 1.10) | Burst hits the group | 40 base damage beats their 31 HP: one cast clears a swarm |
 | Genderuwo | Ka Bolt | Bolt hits the rock it holds during the throw wind-up | The rock shatters on its head: its own rock damage plus a 1.5 s stagger |
 | Pocong | Nga Bind | Bound mid-hop | Falls flat for 2 s and takes x1.5 damage |
-| Arca | Na Dash-strike (MQ2 2.4) | Dash-strike passes through it | The stone cracks: x3 damage, usually a kill |
+| Arca | Na Dash-strike (MQ2 2.5) | Dash-strike passes through it | The stone cracks: x3 damage, usually a kill |
 | Banaspati | Ga Ward | It touches the Ward | Flame snuffed for 3 s: no Burn, x1.5 damage taken |
-| Prajurit Terkutuk | Ra Summon (MQ2 2.6) | The tiger attacks it | It turns to face the tiger, which exposes its unshielded back to the player |
+| Prajurit Terkutuk | Ra Summon (MQ2 2.8) | The tiger attacks it | It turns to face the tiger, which exposes its unshielded back to the player |
 | Keris Hantu | Nga Bind | Bound mid-dart | Drops to the ground for 2.5 s |
 | Kemamang | Na Dash-strike | Dash-strike passes through it while it charges a spit | Snuffed: drops for 2 s and takes x2 damage |
 | Lampor | Ca Burst (Sunda) | Burst hits the line | The torches go out: the line staggers 1.5 s. One cast usually clears it |
