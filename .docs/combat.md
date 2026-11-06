@@ -175,6 +175,9 @@ Only a few enemies attack at once, so crowds stay readable.
 - Phase 2 at 50% HP with a 1.5 s invulnerable pause and a line of dialogue or a roar, so the player gets a beat to breathe.
 - Each boss has at least one 2-3 s punish window per attack cycle (after a heavy attack or a poise break).
 - Mechanics that use spells (the Keris's curse marks, Sangkuriang's fake dawn, Kala's shield) are in [bestiary.md](bestiary.md).
+- **Laras sabotage phases (Story v5, not built yet):** a boss reads `Game.has_flag("laras_sabotage...")` set by the cross-time chapters `LC1`-`LC5` and `LC6`. A flag adds a vulnerable phase or a visible flaw marker on the boss bar: Sangkuriang's cracked dawn groove, Barma Wijaya's copies that shatter in one glyph hit, Bondowoso's pillars that break on every lesung beat, the Keris's seventh stake, Kala's Eclipse shield. Without the flag the fight is still beatable, only harder to read (**ASSUMED**). Details per boss: [bestiary.md](bestiary.md).
+- **Stalking ambush (Buto Ijo, Story v5):** three arena-less ambushes in `tt_kulon`, `tt_kali` and `tt_beringin`. He does not die: he retreats when his HP falls below 80%, 65% and 50% of the bar, and the encounter ends with `area_cleared:buto_ambush_<n>`. The canyon lair then plays the full 4-phase fight. The ambush encounters exist as wave encounters in the area scripts; the retreat thresholds are not built yet.
+- **Choice effects in combat:** `choice_offer_memory` gives *Ombak* `+20%` poise damage to Eclipse enemies in Act VI ([spells.md](spells.md)). `choice_keep_secret` gives Ciung `+15%` ally damage in Galuh bouts. `choice_redeem_aria` adds `+6 s` to the Kala Phase 3 countdown (`batara_kala.gd` reads this flag).
 
 ## 6. Spells in combat
 Casting rules are in [spells.md](spells.md). Combat-specific rules:

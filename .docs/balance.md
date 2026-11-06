@@ -65,6 +65,7 @@ The player gets about 2x damage and 1.3x HP over the game. Each source has a cei
 | **Armor** | 5% damage reduction per Defense point, 5-25% | Batik and Kain Hijau are on the main path |
 | **Accessories** | Small flat bonuses (+1 Spirit, +10 HP, +8% speed and others) | No |
 | **Healing Flask** | 3-6 charges, 40-60% heal each | Base only. Upgrades are side-quest rewards |
+| **Major Choices** (Story v5) | One of two small rewards per Act, each inside the ceilings above: Sunda `Ca` radius +10%, Sabuk Galuh (+1 Vit, +8% damage reduction), Keris Mpu Gandring or Batu Kali, *Ombak* -3 Sakti and +20% poise damage on Eclipse enemies or the Berkah Pesisir revive/ward, Keteguhan Sunyi (+15% stamina and Sakti recovery in the Kala fight) or +6 s on the Phase 3 countdown ([items.md](items.md), [spells.md](spells.md)). Every choice is a side-grade, so neither branch changes the target levels in section 2.2 (**TUNE**, **ASSUMED**) | No, but one branch per choice is always taken |
 
 ### 3.1 Ingatan (new, confirmed 2026-11-05)
 As the letters return to the world, the hero's ilmu grows with them. This is what keeps a main-quest-only player on the curve without new items.

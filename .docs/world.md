@@ -13,7 +13,7 @@ An open map of connected regions on the island of Java (Sunda and Javanese lands
  --- link   === link plus a back-road shortcut   ... back-route shortcut
 ```
 - **Main path (Story v5, 138 steps, ~21.5 h):** Prologue Desa Purwa -> Act I Tatar Sunda -> Act II Keraton Galuh -> Act III Mataram -> Act IV Tanah Timur -> Interlude Desa Purwa -> Act V Segara Kidul -> Act VI Gua Kala -> Playable Epilogue Desa Purwa.
-- **Total Areas:** **49 areas** (`1` hub + `8` Tatar Sunda + `7` Keraton Galuh + `8` Mataram + `8` Tanah Timur + `7` Segara Kidul + `7` Gua Kala + `3` standalone test/tool rooms in dev). Every region has a full 7–8 area interlocking layout so late-game acts match the scale and depth of early acts.
+- **Total Areas:** **49 area scenes** in `zones/`: `1` Desa Purwa + `8` Tatar Sunda + `7` Keraton Galuh + `8` Mataram + `8` Tanah Timur + `7` Segara Kidul + `7` Gua Kala = 46 story areas, plus `3` dev rooms (`hub`, `sanggar`, `test_room`). `Zones.ZONES` lists 47 ids (the 46 plus `hub`). Every region has a full 7-8 area interlocking layout so late-game acts match the scale and depth of early acts.
 
 ## Technical frame
 - Viewport 480x270, 16 px tiles (30x17 tiles per screen), integer-scaled. See [architecture.md](architecture.md).
@@ -27,7 +27,7 @@ An open map of connected regions on the island of Java (Sunda and Javanese lands
 | Hub to Keraton Galuh | `desa_purwa` (E) | `kg_alun` | link, kabut | `mq1_10` (end of Act I) |
 | Galuh to Mataram | `kg_pamali` (E) | `mt_gapura` (W) | link | `mqg_7` (throne coup complete) |
 | Mataram to Tanah Timur | `mt_wetan` | `tt_kulon` | link, kabut | `mq2_9` (Pamali truce complete) |
-| Mataram back road | `mt_tegal` | `tt_sabana` / `tt_ladang` | shortcut `sc:mt_tt` | from Tanah Timur side |
+| Mataram back road | `mt_tegal` | `tt_sabana` | shortcut `sc:mt_tt` | from Tanah Timur side |
 | Hub to Segara Kidul | `desa_purwa` (S) | `sk_pantai` | link, kabut | `mq4_i5` (Interlude Semar talk) |
 | Tanah Timur to Segara Kidul | `tt_pesisir` | `sk_karang` | link, kabut | `mq4_9` (`quest:mq4=done`, back route) |
 | Tatar Sunda back route | `ts_situ` | `sk_tebing` | shortcut `sc:ts_sk` | from `sk_tebing` |
@@ -72,7 +72,7 @@ An open map of connected regions on the island of Java (Sunda and Javanese lands
 - **Petilasans:** 2 (`mataram_1` in `mt_pasar`, `mataram_2` in `mt_candi`).
 
 ### 4. Tanah Timur (8 Areas) — Act IV: "The Seven-Generation Blade"
-- **Areas:** `tt_kulon` (western savanna — **Buto Ijo Stalking Ambush #1**), `tt_pasar` (smiths' street & Mpu Wirasana's forge), `tt_kali` (dry riverbed & Mbok Srini's hut — **Buto Ijo Stalking Ambush #2**), `tt_beringin` (ancient banyan grove — **Buto Ijo Stalking Ambush #3** & final canyon lair), `tt_ladang` (cursed dry fields), `tt_pesisir` (volcanic ash coast), `tt_pasir` (blinding Sea of Sand & stone waymarkers), `tt_candi` (Eastern Shrine of the Keris & the Nameless Hunter).
+- **Areas:** `tt_kulon` (western savanna — **Buto Ijo Stalking Ambush #1**), `tt_sabana` (savanna hub, petilasan `timur_1`), `tt_kali` (dry riverbed & Mbok Srini's hut — **Buto Ijo Stalking Ambush #2**), `tt_beringin` (ancient banyan grove — **Buto Ijo Stalking Ambush #3** & Mpu Wirasana's forge), `tt_ladang` (cursed dry fields & Buto Ijo's lair arena), `tt_pesisir` (volcanic ash coast), `tt_pasir` (blinding Sea of Sand & stone waymarkers), `tt_candi` (Eastern Shrine of the Keris & the Nameless Hunter).
 - **Structural identity:** **3-Zone Stalking Predator (`Buto Ijo`), 7-Generation Blood-Curse Mystery (`Keris Mpu Gandring`) & Personal Showdown (`The Nameless Hunter`).**
 - **Laras cross-time mechanics (`LC4`):** Sets `laras_key:sand_tunnel` (opens the buried wind-tunnel shortcut in `tt_pasir`) and `laras_sabotage:keris_seventh_stake` (binds her *Ka* stroke onto the seventh curse stake at `tt_candi`).
 - **Petilasans:** 2 (`timur_1` in `tt_kulon`, `timur_2` in `tt_pasir`).

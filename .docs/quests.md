@@ -82,14 +82,14 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 
 | Quest | Part | Areas | Chapters | Steps | Target Min | Region |
 |-------|------|-------|----------|-------|------------|--------|
-| MQ0 | Prologue "Sehari di Desa Purwa" | 1 | 3 | 12 | 60 | Desa Purwa |
+| MQ0 | Prologue "Sehari di Desa Purwa" | 1 | 3 | 12 | 80 | Desa Purwa |
 | MQ1 | Act I "Segel Kawah" | 8 | 5 | 24 | 210 | Tatar Sunda |
-| MQG | Act II "Wajah Pinjaman" | 7 | 4 | 20 | 180 | Keraton Galuh |
-| MQ2 | Act III "Darah di Pamali" | 8 | 5 | 24 | 230 | Mataram |
-| MQ3 | Act IV "Bilah Tujuh Turunan" | 8 | 5 | 22 | 210 | Tanah Timur |
-| MQ4 | Interlude "Rumah yang Sunyi" (4.1–4.8) & Act V "Laut Tak Pernah Lupa" (4.9–4.22) | 1 + 7 | 2 + 4 | 8 + 14 (22) | 50 + 170 (220) | Desa Purwa, Segara Kidul |
-| MQ5 | Act VI "Ke Rahang Sang Waktu" | 7 | 4 | 14 | 170 | Gua Kala |
-| **Total** | | **49** | **32** | **138** | **1,280 (+15 epilogue = 1,295)** | |
+| MQG | Act II "Wajah Pinjaman" | 7 | 4 | 20 | 175 | Keraton Galuh |
+| MQ2 | Act III "Darah di Pamali" | 8 | 5 | 24 | 220 | Mataram |
+| MQ3 | Act IV "Bilah Tujuh Turunan" | 8 | 5 | 22 | 205 | Tanah Timur |
+| MQ4 | Interlude "Rumah yang Sunyi" (4.1–4.8) & Act V "Laut Tak Pernah Lupa" (4.9–4.22) | 1 + 7 | 2 + 4 | 8 + 14 (22) | 45 + 160 (205) | Desa Purwa, Segara Kidul |
+| MQ5 | Act VI "Ke Rahang Sang Waktu" | 7 | 4 | 14 | 160 | Gua Kala |
+| **Total** | | **46 story areas (49 scenes with the dev rooms)** | **32** | **138** | **1,255 target (+15 epilogue = 1,270); modeled 1,285** | |
 
 ### Earned Glyphs Table
 | Glyph | Deed (comes first) | Glyph step |
@@ -116,7 +116,7 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 
 ---
 
-### MQ0 Prologue: "Sehari di Desa Purwa" / "A Day in Desa Purwa" (Desa Purwa, 12 steps, ~60 min)
+### MQ0 Prologue: "Sehari di Desa Purwa" / "A Day in Desa Purwa" (Desa Purwa, 12 steps, ~80 min)
 Regional character: **Ibu**. Chapters: Morning and Market, The Sanggar and the Ruwatan Night, The Morning After.
 
 | # | Objective (EN) | Objective (ID) | Completes on | Play |
@@ -176,7 +176,7 @@ Structure: **Folklore Investigation Hunt (`Sandekala`) + Rising Floodwaters & Cr
 
 ---
 
-### MQG Act II: "Wajah Pinjaman" / "The Borrowed Face" (Keraton Galuh, 20 steps, 4 chapters, ~180 min)
+### MQG Act II: "Wajah Pinjaman" / "The Borrowed Face" (Keraton Galuh, 20 steps, 4 chapters, ~175 min)
 Structure: **Undercover Palace Intrigue, 3-Wing Faction Heist & Throne-Room Coup** across **7 areas** (`kg_alun`, `kg_pasar` **[NEW]**, `kg_pustaka` **[NEW]**, `kg_kaputren` **[NEW]**, `kg_keraton`, `kg_penjara`, `kg_pamali`). Regional characters: **Uwa Lengser**, **Nyai Sekar**, **Ranga (the Deserter)**. Ally: **Ciung Wanara**.
 
 | # | Objective (EN) | Objective (ID) | Completes on | Play |
@@ -208,7 +208,7 @@ Structure: **Undercover Palace Intrigue, 3-Wing Faction Heist & Throne-Room Coup
 
 ---
 
-### MQ2 Act III: "Darah di Pamali" / "Blood on the Pamali" (Mataram, 24 steps, 5 chapters, ~230 min)
+### MQ2 Act III: "Darah di Pamali" / "Blood on the Pamali" (Mataram, 24 steps, 5 chapters, ~220 min)
 Structure: **Two-Front War Campaign, Real-Time Night-Building Siege (`Bandung Bondowoso`) & River-Ford Duel (`Hariang Banga`)**. Regional characters: **Ki Sumarto** and **Nyai Gendhis**.
 
 | # | Objective (EN) | Objective (ID) | Completes on | Play |
@@ -245,15 +245,15 @@ Structure: **Two-Front War Campaign, Real-Time Night-Building Siege (`Bandung Bo
 
 ---
 
-### MQ3 Act IV: "Bilah Tujuh Turunan" / "The Seven-Generation Blade" (Tanah Timur, 22 steps, 5 chapters, ~210 min)
+### MQ3 Act IV: "Bilah Tujuh Turunan" / "The Seven-Generation Blade" (Tanah Timur, 22 steps, 5 chapters, ~205 min)
 Structure: **3-Zone Stalking Predator (`Buto Ijo`), 7-Generation Blood-Curse Mystery (`Keris Mpu Gandring`) & Personal Showdown (`The Nameless Hunter`)**. Regional characters: **Mpu Wirasana**, **Ratna**, **Mbok Srini**. Ally: **Hariang Banga**.
 
 | # | Objective (EN) | Objective (ID) | Completes on | Play |
 |---|----------------|----------------|--------------|------|
 | **Ch 1** | **Jalan Para Empu dan Raksasa Pengintai / The Smiths' Road and the Stalking Giant** | | | |
-| 3.1 | **Arrival.** Enter Tanah Timur (`tt_kulon` & `tt_pasar`), meet smith's apprentice Ratna, and rest at the savanna petilasan (`timur_1`) | Masuki Tanah Timur (`tt_kulon` & `tt_pasar`), temui Ratna sang murid empu, dan beristirahat di petilasan sabana (`timur_1`) | `talked_to:timur_daughter`, sets `mq3_a1`; then `petilasan_activated:timur_1`, sets `mq3_1` | `travel, talk x2, fight` |
+| 3.1 | **Arrival.** Enter Tanah Timur (`tt_kulon` & `tt_sabana`), meet smith's apprentice Ratna, and rest at the savanna petilasan (`timur_1`) | Masuki Tanah Timur (`tt_kulon` & `tt_sabana`), temui Ratna sang murid empu, dan beristirahat di petilasan sabana (`timur_1`) | `talked_to:timur_daughter`, sets `mq3_a1`; then `petilasan_activated:timur_1`, sets `mq3_1` | `travel, talk x2, fight` |
 | 3.2 | **Stalking Ambush #1.** Survive Buto Ijo's sudden rampage across the western savanna and drive him back with fire-wards | **Penyergapan #1.** Bertahan dari amukan mendadak Buto Ijo di sabana barat dan pukul mundur dia dengan penangkal api | `area_cleared:buto_ambush_1`, sets `mq3_b1` | `setpiece, miniboss, beat` |
-| 3.3 | Follow the burning red curse marks on village doorposts to Mpu Wirasana's forge in `tt_pasar` | Ikuti tanda kutukan merah yang menyala di tiang pintu desa menuju bengkel Mpu Wirasana di `tt_pasar` | `area_entered:timur_marks`, sets `mq3_h1`; then `talked_to:timur_empu`, sets `mq3_2` | `travel, clue, talk` |
+| 3.3 | Follow the burning red curse marks on village doorposts to Mpu Wirasana's forge in `tt_beringin` | Ikuti tanda kutukan merah yang menyala di tiang pintu desa menuju bengkel Mpu Wirasana di `tt_beringin` | `area_entered:timur_marks`, sets `mq3_h1`; then `talked_to:timur_empu`, sets `mq3_2` | `travel, clue, talk` |
 | 3.4 | Learn Mpu Wirasana's technique to extinguish blood-curse stakes in the forge yard | Pelajari teknik Mpu Wirasana untuk memadamkan patok kutukan darah di halaman tempa | `area_entered:timur_praktik_mark` x2, sets `flag:clue_practice_marks` | `lesson, puzzle, fight` |
 | **Ch 2** | **Empat Bungkusan Timun Mas / The Four Pouches of Timun Mas** | | | |
 | 3.5 | Reach Mbok Srini's smashed hut in `tt_kali` and examine the spilled relics of Timun Mas's flight | Capai pondok Mbok Srini yang hancur di `tt_kali` dan periksa peninggalan pelarian Timun Mas yang tercecer | `talked_to:mbok_srini`, sets `mq3_3`; then `all`: `clue_examined:seeds`, `clue_examined:needle_case`, `clue_examined:salt_terasi`; sets `mq3_h2` | `travel, talk, clue x3` |
@@ -280,7 +280,7 @@ Structure: **3-Zone Stalking Predator (`Buto Ijo`), 7-Generation Blood-Curse Mys
 
 ---
 
-### MQ4 Interlude ("Rumah yang Sunyi", 4.1–4.8, ~50 min) & Act V ("Laut Tak Pernah Lupa", 4.9–4.22, ~170 min)
+### MQ4 Interlude ("Rumah yang Sunyi", 4.1–4.8, ~45 min) & Act V ("Laut Tak Pernah Lupa", 4.9–4.22, ~160 min)
 Interlude structure: **Psychological Low Point & Village Name-Restoration** in `desa_purwa`.
 Act V structure: **Coastal Community Healing, Sunken Cavern & Three Sacred Sea Trials** across **7 areas** (`sk_pantai`, `sk_nelayan` **[NEW]**, `sk_bakau` **[NEW]**, `sk_karang`, `sk_gua` **[NEW]**, `sk_tebing`, `sk_keraton`). Regional characters: **Mbah Wiryo** and **Sari**.
 
@@ -423,13 +423,13 @@ To prevent side content from feeling repetitive, side quests are divided into **
 - Play: `talk, beat, travel x2, fight x2, clue x2, memory, puzzle, miniboss, talk`
 
 **SQ-T3 "Pamor dari Langit" / "Pamor from the Sky" (Cross-Region Smithing Quest, M)**
-- Giver: Mpu Wirasana & Ratna in `tt_pasar`. Unlock: `mq3_2`.
+- Giver: Mpu Wirasana & Ratna at the `tt_beringin` forge. Unlock: `mq3_2`.
 - Steps: (1) talk to `timur_empu`, (2) travel back to the Mataram temple plain (`mt_tegal`) to locate the fallen Prambanan meteorite (`batu_bintang`), (3) defend the crater site from stone guardians, (4) bring the meteorite back to Wirasana and help fold the pamor steel.
 - Reward: **Keris Luk 7**, Ilmu M.
 - Play: `talk, travel x2, fight x2, clue, puzzle, talk, beat`
 
 **SQ-T4 "Kuda Kepang yang Hilang" / "The Lost Kuda Kepang" (Cultural Performance Errand, S)**
-- Giver: Troupe leader in `tt_pasar`. Unlock: `mq3_1`.
+- Giver: Troupe leader at the `tt_beringin` troupe camp. Unlock: `mq3_1`.
 - Steps: (1) recover 3 woven bamboo horses (`kuda_kepang_1..3`) across `tt_kulon` and `tt_beringin`, (2) return them and watch the troupe's celebratory dance.
 - Reward: **Flask Shard #2**, Ilmu S.
 - Play: `talk, travel, fight, clue x2, beat`
@@ -529,8 +529,8 @@ Fits [architecture.md](architecture.md): data-driven resources, state in `Game`,
 | Ki Sumarto's Son | Sapto | `sapto` | Mataram / Pamali (`kg_pamali`), Epilogue |
 | Lesung Leader | Nyai Gendhis | `lesung_women` | Mataram (`mt_wetan` / `mt_candi`, **Named in v5**) |
 | Foothill Juru Kunci | Sang Juru Kunci | `juru_kunci` | Mataram (`mt_wetan`) |
-| Master Empu | Mpu Wirasana | `timur_empu` | Tanah Timur (`tt_pasar`), Epilogue |
-| Empu's Daughter | Ratna | `timur_daughter` | Tanah Timur (`tt_pasar`), Epilogue (**Named in v5**) |
+| Master Empu | Mpu Wirasana | `timur_empu` | Tanah Timur (`tt_beringin` forge), Epilogue |
+| Empu's Daughter | Ratna | `timur_daughter` | Tanah Timur (`tt_kulon` / `tt_beringin`), Epilogue (**Named in v5**) |
 | Timun Mas's Mother | Mbok Srini | `mbok_srini` | Tanah Timur (`tt_kali`) |
 | Unmasked Hunter | Aria Kebonan / Si Tanpa Ngaran | `aria_kebonan` | Every Act (`nameless_hunter`), Interlude (`desa_purwa`) |
 | Coast Juru Kunci | Mbah Wiryo | `kidul_jurukunci` | Segara Kidul (`sk_pantai` / `sk_nelayan`), Epilogue |

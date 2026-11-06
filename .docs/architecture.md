@@ -24,24 +24,27 @@ Also: remove the 3D Jolt physics setting if no 3D is used (harmless).
 res://
   main.tscn        Phase 0 crispness check, no longer the main scene (zones/test_room.tscn is, Phase 1a)
   autoload/        game.gd, events.gd, zones.gd, audio.gd
-  components/      health, stamina, sakti_gauge, hitbox, hurtbox, hit_flash, status
+  components/      health, stamina, sakti_gauge, hitbox, hurtbox, hit_flash, status, recognizer
   data/            combat_tuning.gd/.tres (every combat timing, combat.md 7)
     classes/       ClassData .tres
     items/         ItemData .tres
-    enemies/       EnemyData .tres
+    enemies/       EnemyData .tres (empty: enemy numbers live in the scene scripts, `enemy_base.gd` and role scripts)
     glyphs/        GlyphData .tres (templates + guide art)
     spells/        SpellData .tres
     codex/         CodexEntry .tres
-    quests/        QuestData .tres (see quests.md)
+    quests/        QuestData .tres (see quests.md), one per main quest (`mq0`..`mq5`, `mqg`) and side quest
     dialogue/      per-NPC dialogue entries with quest/flag conditions
+    memories/      GapMemoryData .tres (`gap_la`, `gap_ra`, `gap_sa`)
     text/          CSV string tables (keys,id,en): quests, dialogue, codex, items, ui
   entities/
-    player/        player.tscn, player.gd, states
-    enemies/       enemy_base.tscn, one scene per type
-    bosses/        one scene per boss
+    player/        player.tscn, player.gd, cast_controller.gd, lontar_shimmer.gd, stand_in scenes
+    enemies/       enemy_base.gd (role scripts chaser, shooter, charger and per-enemy scripts), one scene per type
+    bosses/        one scene and script per boss, plus arena helpers (`oncor`, `arena_post`, `pillar`, `pouch_field`, `curse_stake`)
     npc/           npc.tscn
-  zones/           one scene per zone, plus shared room pieces
-  ui/              hud, menus, dialogue box, codex, level-up, cast overlay
+    petilasan/     petilasan.tscn
+    world/         interactable.gd and its scenes: chest, clue, encounter, exit, kabut, pickup, shortcut, spawn, trigger
+  zones/           one scene and script per area (49 scenes, [world.md](world.md)), generated from `.docs/zones/*.md`; `zones/kelir/` holds the memory scenes
+  ui/              hud, menu (status, gear, aksara, journal, codex in one scene), dialogue box, class select, name entry, glyph lesson, cast overlay, death screen, title, prologue, story beat, epilogue
   spells/          spell scenes (projectile, burst, ward, summon)
   tools/           glyph_recorder.tscn (developer-only)
   tests/           headless test scripts (section 12)
@@ -53,9 +56,11 @@ res://
 | Name | Responsibility |
 |------|----------------|
 | `Game` | Run state: class, stats, Ilmu, glyphs learned, equipment, healing flask (charges, Flask Shards, Herb Pouches), last petilasan, story flags, quest state, codex unlocks. Advances quest steps on `Events` signals. Autosave and load, one slot (JSON in `user://`, [rpg.md](rpg.md) 11) |
-| `Events` | Global signals, decouples systems. Phase 4 list (**ASSUMED** 2026-11-05): `enemy_killed(enemy, ilmu)`, `player_died`, `rested(petilasan)`, `talked_to(npc_id)`, `item_picked(item_id)`, `boss_defeated(boss_id)`, `area_cleared(area_id)`, `area_entered(trigger_id)`, `zone_entered(zone_id)`, `petilasan_activated(id)`, `glyph_learned(id)`, `spell_cast(glyph_id, score)`, `class_chosen(class_id)`, `weakness_triggered(kind)`, `quest_started/updated/completed(id)`, `dialogue_requested(speaker_key, lines)`, `dialogue_finished`. Quest steps match `"<signal>:<arg>"`; for `enemy_killed` the arg is the enemy's `kind` ([quests.md](quests.md) 7.2) |
-| `Zones` | Zone loading, fade transitions, spawn points, tracking killed minibosses/bosses and opened gates (the lists live in `Game` so they are saved) |
+| `Events` | Global signals, decouples systems. Signals as built in `autoload/events.gd`: `enemy_killed(enemy, ilmu)`, `player_died`, `rested(petilasan)`, `talked_to(npc_id)`, `item_picked(item_id)`, `boss_defeated(boss_id)`, `area_cleared(area_id)`, `area_entered(trigger_id)`, `zone_entered(zone_id)`, `petilasan_activated(id)`, `glyph_learned(id)`, `spell_cast(glyph_id, score)`, `class_chosen(class_id)`, `weakness_triggered(kind)`, `clue_examined(clue_id)`, `memory_started(memory_id)`, `memory_done(memory_id)`, `puzzle_solved(puzzle_id)`, `trial_completed(trial_id)`, `quest_started/updated/completed(id)`, `dialogue_requested(speaker_key, lines)`, `dialogue_choices(keys)`, `dialogue_picked(index)`, `dialogue_finished`, `write_requested(seq_id, glyphs)`, `name_written(seq_id)`. Quest steps match `"<signal>:<arg>"` for the signals in `Game.QUEST_SIGNALS` (`talked_to`, `item_picked`, `boss_defeated`, `area_cleared`, `area_entered`, `zone_entered`, `petilasan_activated`, `glyph_learned`, `class_chosen`, `weakness_triggered`, `name_written`, `clue_examined`, `memory_done`, `puzzle_solved`, `trial_completed`); for `enemy_killed` the arg is the enemy's `kind` ([quests.md](quests.md) 7.2). Story v5 events: `puzzle_solved:<id>` and `trial_completed:<id>` (sluice wheels, mangrove beacons, sea trials), `area_cleared:buto_ambush_<n>`, `memory_done:lc<n>` |
+| `Zones` | Zone loading (`go_to`, `respawn`, `next_zone`), fade transitions, spawn points, the `ZONES`, `ADJ`, `SHORTCUTS` and `DROPS` tables, Kelir memories (`enter_memory`, `exit_memory`, `memory_path`). Killed minibosses/bosses and opened gates live in `Game` so they are saved |
 | `Audio` | Music crossfade, sfx pool, volume buses |
+
+**Flags (Story v5).** `Game.flags` is a dictionary of `name -> true`, read with `Game.has_flag(name)` and set with `Game.set_flag(name)` (the dialogue action `flag:<name>`; conditions `flag:`, `glyph:`, `item:`, `quest:<id>=<state>`, `step:<id>=<n>`, `zone:<area>`, joined with commas, `!` negates). Flag families: `choice_*` (the six Major Choices: `choice_tell_ciung` / `choice_keep_secret`, `choice_freed` / `choice_handed`, `choice_mercy` / `choice_judgment`, `choice_reforge` / `choice_sink`, `choice_offer_memory` / `choice_offer_song`, `choice_redeem_aria` / `choice_release_aria`), `clue_<id>`, `memory_<id>`, `puzzle_<id>`, `post:<id>`, `lakon:<id>`, `seen_name_<npc>`, and the cross-time Laras flags. `Game.LARAS_FLAGS` sets them when `LC1`-`LC6` finish: `laras_key:crater_post`, `archive_grate`, `candi_crypt`, `sand_tunnel`, `tidal_gate` and `laras_sabotage:crater_seal`, `glamour_seal`, `bondowoso_pillar`, `keris_seventh_stake`, `kala_eclipse`. Each is stored in both spellings (`laras_key:x` and `laras_key_x`) and `has_flag` accepts either. Boss and gate scripts read them, e.g. `batara_kala.gd` checks `choice_redeem_aria` and `player.gd` checks `choice_release_aria`.
 
 Keep the list short (4). No further autoloads without a reason.
 
@@ -63,7 +68,7 @@ Keep the list short (4). No further autoloads without a reason.
 Custom `Resource` types so adding content is data entry:
 - `ClassData`: name, starting stats, starting weapon, passive id, spell modifiers, sprite tint
 - `ItemData`: name key, slot, archetype, damage/defense, stat bonuses, description key, source note, icon
-- `EnemyData`: name, archetype, hp, damage, speed, attack pattern, drops, codex entry
+- `EnemyData`: name, archetype, hp, damage, speed, attack pattern, drops, codex entry (planned; `data/enemies/` is empty and enemies are scenes for now)
 - `GlyphData`: id, script (sunda/jawa), latin name, templates (array of point arrays), guide texture, true-form texture
 - `SpellData`: glyph id, name, gauge cost, base power, scene to spawn, class modifier table
 - `CodexEntry`: id, category, source; text keys `CODEX_<ID>_TITLE/_BODY/_WEAK` ([quests.md](quests.md) 7.1)
@@ -74,7 +79,7 @@ Custom `Resource` types so adding content is data entry:
 
 ## 5. Scene composition
 - **Player:** `CharacterBody2D` with child components (Health, Stamina, SaktiGauge, Hurtbox, weapon slot, sprite, `CastController`). A small state machine (idle, move, attack, dodge, hurt, cast, dead).
-- **Enemy base:** `CharacterBody2D` + Health + Hurtbox + `Hitbox` + state machine (idle, chase, windup, attack, recover, dead). Specific enemies set `EnemyData` and override patterns.
+- **Enemy base:** `CharacterBody2D` + Health + Hurtbox + `Hitbox` + state machine (idle, chase, windup, attack, recover, dead). Specific enemies are scenes that set exported numbers on `enemy_base.gd` or a role script and override patterns (no `EnemyData` resources are used yet).
 - **Boss:** an enemy with phases defined by HP thresholds, plus an arena script.
 - **Components over inheritance.** Reuse Health, Stamina, Hitbox, Hurtbox, HitFlash on both player and enemies.
 - **Weapons:** a weapon scene per archetype that spawns hitboxes or projectiles. Parameters from `ItemData`.
@@ -111,7 +116,7 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 - Exports: `clue_id: String`, `hunt_id: String = ""` (Story v5: groups clues by investigation/arc in the Journal), `lines: PackedStringArray` (dialogue keys `CLUE_<ID>_<n>`, 1-2 lines, the hero's own thought, shown as speaker `NPC_hero_NAME`), `journal_key: String` (`CLUE_<ID>_NOTE`, one line), `memory_id: String = ""`, `cond: String = ""` (hidden and not usable while `Game.check(cond)` is false, as `npc.gd`; zone legends need it), `verb = "UI_VERB_EXAMINE"`.
 - `interact()`: sets `usable = false` while the lines run. Calls `Game.play`-style dialogue (`Events.dialogue_requested`), and on `dialogue_finished`: `Game.set_flag("clue_" + clue_id)`, `Events.clue_examined.emit(clue_id)`, then if `memory_id != ""` calls `Zones.enter_memory(memory_id)`. A memory clue with no `CLUE_<ID>_<n>` text plays no lines and pulls you straight in (K0 `kelir_lamp`, `lc1_voice`). Examined clues stay examinable (lines replay, no new flag, no memory re-entry unless `flag:memory_<id>` is unset).
 - On `_ready`, if `flag:clue_<id>` is set the clue stays in the group but never shimmers. Journal notes are read from the flags: no clue list is stored apart from the flags.
-- New signals in `Events` (**ASSUMED**): `clue_examined(clue_id)`, `memory_started(memory_id)`, `memory_done(memory_id)`, `puzzle_solved(puzzle_id)`. Quest steps match `clue_examined:<id>`, `memory_done:<id>`, and `puzzle_solved:<id>` like the other signals ([quests.md](quests.md) 7.1). `memory_done` also sets `flag:memory_<id>`.
+- New signals in `Events` (**ASSUMED**): `clue_examined(clue_id)`, `memory_started(memory_id)`, `memory_done(memory_id)`, `puzzle_solved(puzzle_id)`, `trial_completed(trial_id)`. Quest steps match `clue_examined:<id>`, `memory_done:<id>`, and `puzzle_solved:<id>` like the other signals ([quests.md](quests.md) 7.1). `memory_done` also sets `flag:memory_<id>`.
 
 **Kelir memory** (`zones/kelir/<id>.tscn`, script `zones/kelir/memory.gd`, `class_name KelirMemory`; the scene ids are the `memory_done:<id>` ids in [quests.md](quests.md) 4, e.g. `k1_maghrib`, `h1`, `lc1`, `la`; short ids like `k1` below are labels only):
 - It is a small zone scene (one screen up to 2x2 screens, no exits, no enemies, no petilasan). Base script `memory.gd` is not a `Zone` subclass: it needs no `MAP`. Art is built from the same `TileMapLayer`s but tinted, plus sprites of black silhouettes.
@@ -145,6 +150,8 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 **Lontar shimmer.** Done by the player, not a new node tree: `entities/player/lontar_shimmer.gd` (child of Player, `Node2D`) polls every 0.25 s the `interactable` group for `Clue` nodes with `not has_flag("clue_" + id)` within `SHIMMER_RANGE = 48` px, and drives a `GPUParticles2D`-free effect: a small sprite glow on the player's belt lontar (6 flickering `ColorRect` 1x1 motes) whose alpha follows `1 - dist/48`. Also plays a soft chime `sfx_lontar` once when it first fires for a clue. The effect is off inside a memory, in cast mode, and while a dialogue is open. Visual and accessibility details: [ui.md](ui.md) 3 "Lontar shimmer". Shimmer is only a hint: clue prompts use the normal interact prompt.
 
 **Name tag data.** `Game.flag("seen_name_<npc_id>")` set the first time `dialogue_box` opens for a named NPC; the tag text key is `NPC_<id>_WHO` and is looked up with `tr()`, shown only if the key resolves. No new autoload. [ui.md](ui.md) 3.
+
+**Dialogue hubs and choices (Story v5).** `Game.play(name_key, entry)` already runs `choices` (each with a `do` list) through `Events.dialogue_choices` and `dialogue_picked`; the Major Choices use it. The `"Ask about..."` hub (an entry with `"hub": true`, or choices ending in `topic:<key>`, [quests.md](quests.md) 7.1) is not built yet: it loops `play` on the picked `"quiet": true` sub-entry until the player picks Leave, and `npc.gd` must not count a quiet entry as the talk (it already skips quiet entries for `talked_to`). Lines per entry: talks 8-12, beats 8-10; the dialogue box shows 3 lines at a time, so a long talk is several pages ([ui.md](ui.md) 3).
 
 **Journal data.** "Story so far" reads `QuestData` steps whose index is below the current step, using a new optional step field `recap: String` (key `Q_<QUEST>_S<n>_DONE`, 1 line); clues read from `flag:clue_*` and `CLUE_<ID>_NOTE`. Both are read-only views over `Game`.
 
