@@ -566,17 +566,23 @@ func run(action: String) -> void:
 					push_warning("dialogue: write '%s' names no known glyph" % arg)
 				else:
 					get_node("/root/Events").write_requested.emit(p[0], PackedStringArray(ids))
+		"topic":   # topic:<key>, a hub choice's action; play() handles it (script.md 2, topic hubs)
+			pass
 		_:
 			push_warning("dialogue: unknown action '%s'" % action)
 
 
 ## Plays one dialogue entry {"lines": [...], "choices": [{"text": KEY, "do": [...]}], "do": [...]} and returns
-## when it is over (await it). Contract, used by Npc.interact and ui/story_beat.gd:
+## when it is over (await it). `file` is the entry's whole dialogue file (DialogueData.entries); only a hub uses it.
+## A hub entry ("hub": true, with choices) goes to _play_hub instead. Contract for every other entry, used by Npc.interact and ui/story_beat.gd:
 ##   1. emits Events.dialogue_choices (only with choices), then Events.dialogue_requested(name_key, lines);
 ##   2. waits for Events.dialogue_finished (the box pauses the tree meanwhile);
 ##   3. runs the picked choice's `do`, then the entry's `do` (every action through run()).
 ## A line "@KEY" is not shown: it sets the speaker tag for the lines after it. Cancel never skips a choice.
-func play(name_key: String, entry: Dictionary) -> void:
+func play(name_key: String, entry: Dictionary, file: Array = []) -> void:
+	if entry.get("hub", false) and not entry.get("choices", []).is_empty():
+		await _play_hub(name_key, entry, file)
+		return
 	var ev := get_node("/root/Events")
 	var choices: Array = entry.get("choices", [])
 	var pick := [-1]   # a lambda cannot assign a captured int
@@ -594,6 +600,63 @@ func play(name_key: String, entry: Dictionary) -> void:
 			run(a)
 	for a: String in entry.get("do", []):
 		run(a)
+
+
+## "Ask about..." hub (script.md 2, quests.md 7.1 item 2): the hub's lines, then its choices. A choice whose `do`
+## has `topic:<key>` runs its other actions, plays topic_entry(file, key), then shows the choices again (no lines).
+## A choice without `topic:` (the leave choice) runs its `do`, then the hub's own `do`, and the talk ends.
+## Between rounds the box closes and reopens, so Events.dialogue_finished fires once per round.
+func _play_hub(name_key: String, entry: Dictionary, file: Array) -> void:
+	var choices: Array = entry.get("choices", [])
+	var lines := PackedStringArray(entry.get("lines", []))
+	while true:
+		var i: int = await _ask(name_key, lines, choices)
+		lines = PackedStringArray()
+		if i < 0 or i >= choices.size():
+			break   # no pick (the box did not choose): leave rather than loop
+		var topic := ""
+		for a: String in choices[i].get("do", []):
+			if a.begins_with("topic:"):
+				topic = a.substr(6)
+			else:
+				run(a)
+		if topic == "":
+			break
+		var t := topic_entry(file, topic)
+		if not t.is_empty():
+			await play(name_key, t)
+	for a: String in entry.get("do", []):
+		run(a)
+
+
+## Shows `lines` then `choices` in the box and returns the picked index (-1 if none).
+func _ask(name_key: String, lines: PackedStringArray, choices: Array) -> int:
+	var ev := get_node("/root/Events")
+	var pick := [-1]
+	var on_pick := func(i: int) -> void: pick[0] = i
+	ev.dialogue_picked.connect(on_pick)
+	ev.dialogue_choices.emit(PackedStringArray(choices.map(func(c: Dictionary) -> String: return c.get("text", ""))))
+	ev.dialogue_requested.emit(name_key, lines)
+	await ev.dialogue_finished
+	if ev.dialogue_picked.is_connected(on_pick):
+		ev.dialogue_picked.disconnect(on_pick)
+	return pick[0]
+
+
+## The normal first-match entry search: the first entry without a "topic" key whose `if` all holds, or {}.
+func pick_entry(entries: Array) -> Dictionary:
+	for e: Dictionary in entries:
+		if not e.has("topic") and e.get("if", []).all(func(c: String) -> bool: return check(c)):
+			return e
+	return {}
+
+
+## The first entry in `entries` with "topic": key whose `if` all holds, or {}.
+func topic_entry(entries: Array, key: String) -> Dictionary:
+	for e: Dictionary in entries:
+		if str(e.get("topic", "")) == key and e.get("if", []).all(func(c: String) -> bool: return check(c)):
+			return e
+	return {}
 
 
 ## Refill flask, HP and stamina: resting at a petilasan and the `restore` action. Does not save or reload the zone.

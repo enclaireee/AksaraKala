@@ -12,6 +12,9 @@ const STUNNED := Color(0.7, 0.75, 1.0)
 
 @export var boss_name_key := "BOSS_SANGKURIANG"
 @export var cond := ""                  # Game.check condition; empty = always on
+@export var sabotage_flag := "laras_sabotage_crater_seal"   # HUD boss bar reads this
+@export var sabotage_dawn_mult := 1.4   # TUNE (v5): the dawn groove is jammed, dawn fills this much slower
+@export var sabotage_stun_bonus := 2.0  # TUNE (v5): the fake dawn stuns this much longer
 @export var post_id := "east"
 @export var speed := 30.0              # TUNE
 @export var engage_range := 128.0      # 8 tiles
@@ -74,7 +77,7 @@ func _tick(delta: float) -> void:
 	if d <= engage_range:
 		engaged = true
 	if phase == 2 and state != State.STUN and state != State.PAUSE:
-		dawn = minf(1.0, dawn + delta / dawn_time)
+		dawn = minf(1.0, dawn + delta / (dawn_time * (sabotage_dawn_mult if _sabotaged() else 1.0)))   # ASSUMED (v5)
 		enraged = dawn >= 1.0
 	var k := rage_speed if enraged else 1.0
 	match state:
@@ -102,7 +105,7 @@ func _tick(delta: float) -> void:
 			if state_time >= pause_time:
 				_enter(State.CHASE)
 		State.STUN:
-			if state_time >= stun_time:
+			if state_time >= stun_time + (sabotage_stun_bonus if _sabotaged() else 0.0):   # ASSUMED (v5)
 				_enter(State.CHASE)
 	move_and_slide()
 
@@ -187,6 +190,12 @@ func _on_cast(glyph_id: String, _score: float) -> void:
 			enraged = false
 			_enter(State.STUN)
 			return
+
+
+## Story v5: Laras's sabotage flag is set (Game.has_flag, underscore form).
+func _sabotaged() -> bool:
+	var g := get_node_or_null("/root/Game")
+	return g != null and sabotage_flag != "" and g.has_flag(sabotage_flag)
 
 
 func _on_flinch() -> void:

@@ -15,6 +15,8 @@ const MARKS := [70, 35]   # spec: glamour at these HP percents
 const COPIES := 3         # spec
 
 @export var boss_name_key := "BOSS_BARMA_WIJAYA"
+@export var sabotage_flag := "laras_sabotage_glamour_seal"   # HUD boss bar reads this
+@export var sabotage_stun_bonus := 1.5  # TUNE (v5): signet wax stolen, the stun after the last copy breaks lasts this much longer
 @export var cond := ""                 # hidden and inert until Game.check(cond) holds (EliteGuard); "" = always
 @export var speed := 45.0              # spec
 @export var engage_range := 128.0      # 8 tiles
@@ -103,7 +105,7 @@ func _tick(delta: float) -> void:
 			if state_time >= glamour_time:
 				_enter(State.CHASE)
 		State.STUN:
-			if state_time >= stun_time:
+			if state_time >= stun_time + (sabotage_stun_bonus if (_sabotaged() and not copy) else 0.0):   # ASSUMED (v5)
 				_enter(State.CHASE)
 	move_and_slide()
 
@@ -230,6 +232,12 @@ func _copy_broken(c: BarmaWijaya) -> void:
 	if copies.is_empty() and not dead:
 		health.invincible_time = 0.0
 		_enter(State.STUN)
+
+
+## Story v5: Laras's sabotage flag is set (Game.has_flag, underscore form).
+func _sabotaged() -> bool:
+	var g := get_node_or_null("/root/Game")
+	return g != null and sabotage_flag != "" and g.has_flag(sabotage_flag)
 
 
 func _on_flinch() -> void:

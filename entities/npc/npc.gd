@@ -1,6 +1,7 @@
 class_name Npc extends Interactable
 ## Runs data/dialogue/<npc_id>.tres (quests.md 7). Indicator: gold lontar when a non-fallback entry
-## currently passes (new or advancing quest talk), grey otherwise; bobs when gold (7.6).
+## currently passes (new or advancing quest talk), grey otherwise; bobs when gold (7.6). Hub and topic entries
+## ("Ask about...", script.md 2) never light it, and hubs and topics never count as the talk (talked_to).
 
 @export var npc_id := ""
 @export var cond := ""   # hidden and not interactable while Game.check(cond) is false
@@ -42,7 +43,10 @@ func _recompute() -> void:
 	if data:
 		var game := get_node("/root/Game")
 		for i in data.entries.size() - 1:   # last entry is the fallback
-			if data.entries[i].get("if", []).all(func(c: String) -> bool: return game.check(c)):
+			var en: Dictionary = data.entries[i]
+			if en.get("hub", false) or en.has("topic"):
+				continue
+			if en.get("if", []).all(func(c: String) -> bool: return game.check(c)):
 				_gold = true
 	queue_redraw()
 
@@ -62,13 +66,13 @@ func _draw() -> void:
 func interact() -> void:
 	if _busy or data == null:
 		return
-	var e := data.pick(get_node("/root/Game"))
+	var e: Dictionary = get_node("/root/Game").pick_entry(data.entries)   # skips topic entries
 	if e.is_empty():
 		return
 	_busy = true
 	var ev := get_node("/root/Events")
-	await get_node("/root/Game").play(data.name_key, e)   # lines, choices, then the actions
+	await get_node("/root/Game").play(data.name_key, e, data.entries)   # lines, choices, then the actions (a hub loops its topics)
 	_busy = false
-	if not e.get("quiet", false):   # a quiet entry (a refusal) does not count as the talk
+	if not (e.get("quiet", false) or e.get("hub", false) or e.has("topic")):   # a quiet entry (a refusal) does not count as the talk
 		ev.talked_to.emit(npc_id)
 	_recompute()

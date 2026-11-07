@@ -12,6 +12,9 @@ const SHOT := preload("res://entities/enemies/spirit_shot.tscn")
 @export var boss_name_key := "BOSS_KERIS_GANDRING"
 @export var speed := 26.0              # TUNE
 @export var engage_range := 160.0      # TUNE
+@export var sabotage_flag := "laras_sabotage_keris_seventh_stake"   # HUD boss bar reads this
+@export var sabotage_mark_mult := 2.0  # TUNE (v5): the seventh stake takes this many times longer to light
+@export var sabotage_ha_range := 120.0  # TUNE (v5): Jawa Ha cleanses this far (spec 80)
 @export var arena_radius := 176.0      # TUNE: the curse wave reaches this far from the keris' start
 @export var dart_min := 48.0           # TUNE
 @export var dart_range := 200.0        # spec: it flies 200 px
@@ -55,6 +58,7 @@ func _ready() -> void:
 	stake_interval = stake_every
 	health.changed.connect(_on_health)
 	attack_hitbox.hit_landed.connect(_curse)
+	get_node("/root/Events").spell_cast.connect(_on_cast)
 
 
 func stakes() -> Array[CurseStake]:
@@ -133,9 +137,29 @@ func _run_stakes(delta: float) -> void:
 		_light_t = 0.0
 		var unlit := all.filter(func(s: CurseStake) -> bool: return s.state == CurseStake.State.UNLIT)
 		if not unlit.is_empty():
-			unlit.pick_random().start_mark()
+			var st: CurseStake = unlit.pick_random()
+			st.start_mark()
+			if _sabotaged() and st == _seventh():   # ASSUMED (v5): "seventh" = the highest stake_id
+				st._left = st.mark_time * sabotage_mark_mult
 	if not all.is_empty() and all.all(func(s: CurseStake) -> bool: return s.is_lit()):
 		_begin_ring()
+
+
+func _seventh() -> CurseStake:
+	var top: CurseStake = null
+	for s in stakes():
+		if top == null or s.stake_id > top.stake_id:
+			top = s
+	return top
+
+
+## v5: with the flag, Jawa Ha puts out every lit stake within sabotage_ha_range (the stake itself reaches 80).
+func _on_cast(glyph_id: String, _score: float) -> void:
+	if glyph_id != "jawa_ha" or dead or target == null or not _sabotaged():
+		return
+	for s in stakes():
+		if s.is_lit() and s.global_position.distance_to(target.global_position) <= sabotage_ha_range:   # ASSUMED (v5)
+			s.put_out()
 
 
 func _begin_ring() -> void:
@@ -234,6 +258,12 @@ func _on_health(hp: int, max_hp: int) -> void:
 		phase = 2
 		stake_interval = stake_every_2
 		_enter(State.PAUSE)
+
+
+## Story v5: Laras's sabotage flag is set (Game.has_flag, underscore form).
+func _sabotaged() -> bool:
+	var g := get_node_or_null("/root/Game")
+	return g != null and sabotage_flag != "" and g.has_flag(sabotage_flag)
 
 
 func _on_flinch() -> void:

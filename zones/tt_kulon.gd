@@ -50,7 +50,7 @@ const SPOTS := {
 	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_daughter"}, "tile": "."},   # NPC Ratna on the smiths' street (3.1 arrival slice; shows how a keris is folded, `codex:pamor`; the curse marks follow)
 	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "doorpost_mark"}, "tile": "."},   # clue, the first red curse mark on a stall doorpost (3.1 `clue` piece; journal note only, ASSUMED id)
 	"C": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "chest_tt_kulon", "item_id": "ilmu:150"}, "tile": "."},   # chest: 150 Ilmu (north-east hollow, rule 7 optional find, ASSUMED)
-	"D": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "buto_ambush_1", "size": Vector2i(16,9), "waves": [[["res://entities/enemies/banaspati.tscn", Vector2i(-4,-2)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,-2)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,2)]]]}, "tile": ","},   # encounter buto_ambush_1 (3.2 Stalking Ambush #1: Buto Ijo's sudden rampage across the western savanna)
+	"D": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "buto_ambush_1", "size": Vector2i(16,9), "waves": [[["res://entities/bosses/buto_ijo.tscn", Vector2i(0,-4)], ["res://entities/enemies/banaspati.tscn", Vector2i(-4,-2)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,-2)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,2)]]]}, "tile": ","},   # encounter buto_ambush_1 (3.2 Stalking Ambush #1: Buto Ijo's sudden rampage across the western savanna)
 }
 
 

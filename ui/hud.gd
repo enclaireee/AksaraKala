@@ -36,6 +36,7 @@ const BOSS_W := 240
 var _boss_root: Control
 var _boss_name: Label
 var _boss_fill: ColorRect
+var _boss_mark: Node2D   # cracked-glyph mark at the bar end: the boss's Laras sabotage flag is set (ui.md 2, v5)
 var _dawn_bg: ColorRect
 var _dawn_fill: ColorRect
 
@@ -188,6 +189,8 @@ func _build_extras() -> void:
 	_rect(Vector2(x, 247), Vector2(BOSS_W, 5), Color(0, 0, 0, 0.6), _boss_root)
 	_boss_fill = _rect(Vector2(x, 247), Vector2(BOSS_W, 5), HP_COL, _boss_root)
 	_rect(Vector2(x + BOSS_W / 2, 247), Vector2(1, 5), Color(0, 0, 0, 0.8), _boss_root)   # phase 2 at 50%
+	_boss_mark = _make_crack_mark(Vector2(x + BOSS_W + 5, 244))
+	_boss_root.add_child(_boss_mark)
 	_dawn_bg = _rect(Vector2(x, 253), Vector2(BOSS_W, 2), Color(0, 0, 0, 0.6), _boss_root)
 	_dawn_fill = _rect(Vector2(x, 253), Vector2(BOSS_W, 2), SK_COL, _boss_root)
 
@@ -250,6 +253,30 @@ func _update_toast(delta: float) -> void:
 		_toast_left = TOAST_TIME
 
 
+## Placeholder drawing, no asset: a small glyph box (open at the top right) with a zigzag crack through it.
+func _make_crack_mark(at: Vector2) -> Node2D:
+	var n := Node2D.new()
+	n.position = at
+	n.visible = false
+	var frame := Line2D.new()
+	frame.width = 1.0
+	frame.default_color = Color(0.95, 0.85, 0.5)
+	frame.points = PackedVector2Array([Vector2(7, 0), Vector2(0, 0), Vector2(0, 9), Vector2(9, 9), Vector2(9, 3)])
+	n.add_child(frame)
+	var crack := Line2D.new()
+	crack.width = 1.0
+	crack.default_color = Color(0.9, 0.2, 0.15)
+	crack.points = PackedVector2Array([Vector2(8, -2), Vector2(5, 3), Vector2(6, 5), Vector2(2, 11)])
+	n.add_child(crack)
+	return n
+
+
+## True when the current boss names a sabotage flag (`sabotage_flag`) and Game has it set.
+func boss_sabotaged(b: Node) -> bool:
+	var f: Variant = b.get("sabotage_flag") if b else null
+	return f is String and f != "" and get_node("/root/Game").has_flag(f)
+
+
 func _update_boss() -> void:
 	var b := get_tree().get_first_node_in_group("boss")
 	var h = b.get("health") if b else null
@@ -257,6 +284,7 @@ func _update_boss() -> void:
 	if not _boss_root.visible:
 		return
 	_boss_name.text = tr(str(b.get("boss_name_key")))
+	_boss_mark.visible = boss_sabotaged(b)
 	var seq = b.get("sequence")   # Batara Kala's shield: the glyphs to cast in order, the next one in brackets
 	if seq is PackedStringArray and not seq.is_empty() and b.get("dawn") != null:
 		var parts := PackedStringArray()
