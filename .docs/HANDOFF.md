@@ -357,10 +357,18 @@ User call: "generate and wire remaining data polish, and then push and commit, a
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
-**2026-11-07 (Story v5 100% Complete, §5zf):** All 138 main quest steps, 21 side/companion/meta quests (28 quests total), 48 codex entries, 46 story areas, 35 memory scenes, 6 Major Choices, topic hubs, and all 55 headless tests pass with 0 failures and 0 warnings.
-1. **User playtest:** Launch the game and play through the acts and side stories, checking combat/boss feel and story pacing.
-2. **Phase 6 (Art & Audio Pass, `schedule.md`):** Final tilesets, character/enemy/boss sprites, UI skin, culture-item icons, glyph art, SFX, music, and particles.
-3. **Phase 7–8 (Culture Polish & Release, `schedule.md`):** `researcher` pass on remaining `VERIFY` folklore/script items, accessibility/assist settings, and export builds.
+**2026-11-07 (Phase 6 Sprites & World Tilesets Complete):**
+- Generated and wired pixel-art sprite sheets for Hero (`hero_{base,warrior,archer,rogue,mage}.png`, `64x288` 4x12 frames + `hero_shadow.png`), all 34 enemy sheets and 10 boss sheets (`assets/art/enemies/*.png` + `components/enemy_art.gd`), 12 NPC/world archetypes (`assets/art/npcs.png`, `64x288`), Kelir stand-ins (`stand_in.tscn`, `stand_in_laras.tscn`), and layered pixel-art draw routines for chests, clues, and pickups.
+- Generated and wired 7 regional `128x256` (`8 cols x 16 rows` = 128 tiles per region, **896 tiles total**) multi-biome world tilesets (`assets/art/tiles_{sunda,galuh,mataram,timur,kidul,kala,kelir}.png` + `zones/tiles.tres`), covering **21 distinct sub-biomes** across all 46 zones and 29 Kelir memories (`Zone.sub_biome()`, `Zone._tile_row()`, `KelirMemory._skin_kelir_tiles()`).
+- Added `tests/art_test.gd` and `tests/items_test.gd`; all 57 headless tests pass cleanly.
+- Next: Remaining Phase 6 audio/particles/UI polish (`schedule.md`) and user playtest.
+
+**2026-11-07 (Phase 5 Complete, Ready for Phase 6):**
+- All 32 gear items (weapons, armor, accessories) in `data/items/*.tres` are fully wired to chests, starters, choices, and quest rewards.
+- `short_sword` wired to `sunda_chest_sawah` (ts_sawah), and zone regenerated.
+- `tests/items_test.gd` added, validating all 32 items, starter class gear, quest item rewards, and all 21 chests across 46 zones.
+- Full test suite (56 headless tests) passing cleanly with 0 failures and 0 warnings.
+- Next: **Phase 6: Art & Audio Pass** (`schedule.md`): Final tilesets, character/enemy/boss sprites, UI skin, culture-item icons, glyph art, SFX, music, and particles. User playtest deferred to after Phase 6 per user direction.
 
 **2026-11-07 (Story v5 Step 2 done, §5zd):** every doc is on v5; the code is not.
 1. User reviews `script.md` v5 (at least one act) and the open doc items in §5zd.

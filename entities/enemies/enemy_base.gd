@@ -40,6 +40,7 @@ func _ready() -> void:
 		queue_free()
 		return
 	add_to_group("enemy")
+	EnemyArt.attach(self)
 	home = global_position
 	target = get_tree().get_first_node_in_group("player") as Node2D
 	hurtbox.hurt.connect(_on_hurt)

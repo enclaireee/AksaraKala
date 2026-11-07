@@ -512,7 +512,7 @@ X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######
 | `i` | loose Jurig Leuweung (terrace), roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/jurig_leuweung.tscn` | `{}` | tea terrace | 1 |
 | `l` | clue, the Weaver's loom (K2 clue 3) | `res://entities/world/clue.tscn` | `{clue_id:"loom"}` | floor | 1 |
 | `o` | clue, the empty rooster coops on the terrace farmstead (K2 clue 2) | `res://entities/world/clue.tscn` | `{clue_id:"empty_coops"}` | tea terrace | 1 |
-| `s` | chest: 55 Ilmu (Ilmu S, ASSUMED), the sawah's optional find, behind the clearing rocks | `res://entities/world/chest.tscn` | `{chest_id:"sunda_chest_sawah", item_id:"ilmu:55"}` | grass | 1 |
+| `s` | chest: Short Sword (secret, sawah's optional find, behind clearing rocks) | `res://entities/world/chest.tscn` | `{chest_id:"sunda_chest_sawah", item_id:"short_sword"}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |

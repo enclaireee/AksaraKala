@@ -32,7 +32,11 @@ func _apply_cond() -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-4, -3, 8, 6), Color("D9C48A"))   # placeholder: a scrap of lontar
+	draw_rect(Rect2(-5, -4, 10, 8), Color(0.09, 0.07, 0.16))
+	draw_rect(Rect2(-4, -3, 8, 6), Color("E6D299"))
+	draw_rect(Rect2(-4, -3, 8, 1), Color("F6E8BE"))
+	draw_rect(Rect2(-1, -3, 2, 6), Color("B8353A"))
+	draw_rect(Rect2(-3, -1, 6, 1), Color("8A6A44"))
 
 
 func interact() -> void:

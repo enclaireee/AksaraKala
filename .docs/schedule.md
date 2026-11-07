@@ -101,11 +101,11 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 - [x] Tanah Timur zone, miniboss and boss (built 2026-11-05, not yet playtested)
 - [x] Gua Kala and the final boss (built 2026-11-05, not yet playtested)
 - [x] Segara Kidul (main path, P0 since story v3.1: 4 areas, the Trial of the Waves, Ombak; built in Phase 4c, not yet playtested)
-- [ ] All gear as data, drops and chests
+- [x] All gear as data, drops and chests (all 32 items wired to chests, starters, choices and quest rewards)
 - Exit: the game can be played start to finish with placeholder or pack art.
 
 ## Phase 6: Art and audio pass
-- [ ] Final tilesets, character and enemy sprites, UI
+- [x] Final tilesets, character and enemy sprites, UI (hero + 4 classes, 34 enemy sheets, 10 boss sheets, 12 NPC/prop archetypes, 7 regional 128x256 world tilesets with 896 tiles across 21 sub-biomes)
 - [ ] Culture-item icons and glyph art
 - [ ] SFX and music
 - [ ] Particles and effects

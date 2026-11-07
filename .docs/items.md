@@ -14,7 +14,7 @@ Numbers **TUNE**. Sources use "Zone N chest" or "drop"; shops are not designed y
 | Item | Archetype | Base dmg | Notes | Source |
 |------|-----------|----------|-------|--------|
 | Dagger | Light melee | 8 | Fast, short reach | Starter (Rogue) |
-| Short Sword | Light melee | 9 | Balanced blade | Zone 1 drop |
+| Short Sword | Light melee | 9 | Balanced blade | Zone 1 chest (ts_sawah) |
 | Broadsword | Heavy melee | 22 | Wide swing | Starter (Warrior) |
 | Axe | Heavy melee | 26 | Hits hard, slow | Zone 2 chest |
 | Spear | Heavy melee | 28 | Long reach | SQ-M3 Tuyul bounty (ex-Tombak) |

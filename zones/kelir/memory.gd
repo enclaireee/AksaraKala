@@ -62,6 +62,9 @@ func _ready() -> void:
 			s.gap = g
 			s.position = Vector2(g.get("pos", Vector2i.ZERO)) * 16.0 + Vector2(8, 8)
 			add_child(s)
+	var tiles_layer := get_node_or_null("Tiles") as TileMapLayer
+	if tiles_layer and tiles_layer.tile_set and tiles_layer.tile_set.has_source(6):
+		_skin_kelir_tiles(tiles_layer)
 	if find_children("*", "CanvasModulate", true, false).is_empty():
 		var cm := CanvasModulate.new()
 		cm.color = COOL if kind == "chapter" else WARM
@@ -75,6 +78,33 @@ func _ready() -> void:
 		hud.visible = false
 		hud.process_mode = Node.PROCESS_MODE_DISABLED
 	_start.call_deferred()
+
+
+func _skin_kelir_tiles(tl: TileMapLayer) -> void:
+	var b0 := 10 if kind == "chapter" else (5 if kind == "walk" else 0)
+	var cells := tl.get_used_cells()
+	var cols := {}
+	for cell: Vector2i in cells:
+		cols[cell] = tl.get_cell_atlas_coords(cell).x
+	for cell: Vector2i in cells:
+		var col: int = cols[cell]
+		var up: int = cols.get(cell + Vector2i(0, -1), 4)
+		var dn: int = cols.get(cell + Vector2i(0, 1), 4)
+		var lf: int = cols.get(cell + Vector2i(-1, 0), 4)
+		var rt: int = cols.get(cell + Vector2i(1, 0), 4)
+		var h := posmod(cell.x * 73 + cell.y * 37, 16)
+		var row := b0
+		if col == 4:
+			row = b0 + ((2 if (h % 4 == 0 and up == 4) else 3) if dn != 4 else (4 if up != 4 else posmod(cell.x + cell.y, 2)))
+		elif col == 5:
+			row = b0 + (3 if up != 5 else (4 if dn != 5 else (2 if h % 5 == 0 else posmod(cell.x + cell.y, 2))))
+		elif col == 1 and (up == 5 or dn == 5 or lf == 5 or rt == 5):
+			row = 15
+		elif col <= 3:
+			row = b0 + (3 if up == 4 else (2 if h < 2 else (1 if h < 7 else 0)))
+		else:
+			row = b0 + posmod(cell.x * 3 + cell.y * 5, 4)
+		tl.set_cell(cell, 6, Vector2i(col, row))
 
 
 func _start() -> void:
@@ -109,6 +139,13 @@ func _physics_process(delta: float) -> void:
 	stand_in.velocity = Vector2.ZERO if _busy or _done else \
 			Input.get_vector("move_left", "move_right", "move_up", "move_down") * SPEED
 	stand_in.move_and_slide()
+	var sp := stand_in.get_node_or_null("Sprite") as Sprite2D
+	if sp:
+		if absf(stand_in.velocity.x) > 2.0:
+			sp.flip_h = stand_in.velocity.x < 0.0
+		var col := int(Time.get_ticks_msec() / 160.0) % 4
+		var row := 6 if kind == "chapter" else (3 if stand_in.velocity.length() > 4.0 else 0)
+		sp.frame_coords = Vector2i(col, row)
 	for c in get_tree().get_nodes_in_group("checkpoint"):
 		if is_ancestor_of(c) and c.global_position.distance_to(stand_in.global_position) <= CHECKPOINT_RANGE:
 			checkpoint = c

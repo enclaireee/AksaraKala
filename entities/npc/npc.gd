@@ -11,10 +11,13 @@ const DRESSING := [
 	"nelayan_jala", "faceless_captain_seen", "wirasana_daughter",
 ]
 
+const SHEET: Texture2D = preload("res://assets/art/npcs.png")
+
 var data: DialogueData   # tests may preset this
 var _busy := false
 var _gold := false
 var _t := 0.0
+var _last_frame := -1
 
 
 func _ready() -> void:
@@ -57,15 +60,51 @@ func _recompute() -> void:
 
 
 func _process(delta: float) -> void:
-	if _gold:
-		_t += delta
+	_t += delta
+	var f := int(_t * 3.5) % 4
+	if _gold or f != _last_frame:
+		_last_frame = f
 		queue_redraw()
 
 
+func _row() -> int:
+	if npc_id in ["semar", "semar_kala"]:
+		return 4
+	if npc_id == "cepot":
+		return 5
+	if npc_id == "laras":
+		return 6
+	if npc_id in ["lutung_kasarung", "stray_cat"]:
+		return 8
+	if "lamp" in npc_id:
+		return 11
+	if npc_id.begins_with("door_") or npc_id.begins_with("sluice_") or npc_id in ["galuh_wagon", "purwa_stall"]:
+		return 10
+	if "stone" in npc_id or "altar" in npc_id or npc_id.begins_with("batu_") or npc_id in ["arca_base", "beats", "ririwa_name"]:
+		return 9
+	if npc_id in ["ciung_wanara", "purbasari", "nawang_wulan", "klething_kuning", "naganingrum", "galuh_queen"]:
+		return 3
+	if npc_id in ["ibu", "dayang_sumbi", "sunda_weaver", "tea_picker", "lesung_women", "leuwi_mother", "mbok_srini", "nini_balangantrang", "nyai_rukmi", "nyai_sekar", "g2_maid", "kidul_sari", "timur_daughter", "wirasana_daughter"]:
+		return 2
+	if npc_id in ["sunda_elder", "kepala_desa", "juru_kunci", "kidul_jurukunci", "lengser", "mataram_dalang", "ki_darsa", "ki_sumarto", "pak_karto", "nagawiru", "purwa_old_couple", "kidul_nelayan_tua"]:
+		return 1
+	if npc_id in ["pande_besi", "m3_smith", "timur_empu", "aria_kebonan", "pangrenyep", "galuh_official", "galuh_herald", "recruiter_a", "recruiter_b", "hariang_banga", "nameless_hunter", "faceless_deserter", "faceless_captain_seen"]:
+		return 7
+	return 0
+
+
 func _draw() -> void:
-	draw_rect(Rect2(-6, -8, 12, 16), Color(0.55, 0.4, 0.3))
-	var y := -18.0 + (sin(_t * 5.0) * 2.0 if _gold else 0.0)
-	draw_rect(Rect2(-3, y, 6, 4), Color(1.0, 0.82, 0.2) if _gold else Color(0.5, 0.5, 0.5))
+	draw_rect(Rect2(-5, -1, 10, 3), Color(0.09, 0.07, 0.16, 0.42))
+	if SHEET:
+		var col := int(_t * 3.5) % 4
+		var row := _row()
+		draw_texture_rect_region(SHEET, Rect2(-8, -22, 16, 24), Rect2(col * 16, row * 24, 16, 24))
+	else:
+		draw_rect(Rect2(-6, -8, 12, 16), Color(0.55, 0.4, 0.3))
+	if data != null:
+		var y := -26.0 + (sin(_t * 5.0) * 2.0 if _gold else 0.0)
+		draw_rect(Rect2(-4, y - 1, 8, 6), Color(0.09, 0.07, 0.16, 0.9))
+		draw_rect(Rect2(-3, y, 6, 4), Color(1.0, 0.82, 0.2) if _gold else Color(0.55, 0.55, 0.6))
 
 
 func interact() -> void:

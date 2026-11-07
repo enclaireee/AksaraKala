@@ -80,22 +80,125 @@ func _child(n: String, type: Variant) -> Node:
 	return c
 
 
+func region_source() -> int:
+	if zone_id.begins_with("kg_"):
+		return 1
+	if zone_id.begins_with("mt_"):
+		return 2
+	if zone_id.begins_with("tt_"):
+		return 3
+	if zone_id.begins_with("sk_"):
+		return 4
+	if zone_id.begins_with("gk_"):
+		return 5
+	return 0
+
+
+func sub_biome() -> int:
+	match zone_id:
+		# Tatar Sunda: 0 = Village & Terraces, 1 = Deep Forest & Lake, 2 = Kawah Volcanic Crater
+		"ts_hutan", "ts_hutan_2", "ts_leuweung", "ts_leuwi", "ts_situ":
+			return 1
+		"ts_kawah", "ts_kawah_2", "ts_kawah_boss":
+			return 2
+		# Karajaan Galuh: 0 = Keraton Palace & Gardens, 1 = Market & Lontar Archive, 2 = Prison & River
+		"kg_pasar", "kg_pustaka":
+			return 1
+		"kg_penjara", "kg_pamali":
+			return 2
+		# Bhumi Mataram: 0 = Village & Flooded Sawah, 1 = Candi Ruins, 2 = War Graveyard
+		"mt_reruntuhan", "mt_tegal", "mt_candi":
+			return 1
+		"mt_kuburan":
+			return 2
+		# Tanah Timur: 0 = Golden Savanna, 1 = Dry Riverbed & Banyan Forge, 2 = Volcanic Sea of Sand
+		"tt_kali", "tt_beringin":
+			return 1
+		"tt_pesisir", "tt_pasir", "tt_candi":
+			return 2
+		# Segara Kidul: 0 = Black-Sand Beach & Village, 1 = Mangrove Swamp, 2 = Coral Reef & Sea Palace
+		"sk_bakau":
+			return 1
+		"sk_karang", "sk_gua", "sk_keraton":
+			return 2
+		# Gua Kala: 0 = Cavern Mouth & Petrified Forest, 1 = Sands of Forgetting & Bridge, 2 = Kala Sanctum
+		"gk_pasir", "gk_lupa", "gk_jembatan":
+			return 1
+		"gk_pelataran", "gk_ruang_kala":
+			return 2
+	return 0
+
+
+func _tile_at(grid: Array[String], x: int, y: int) -> String:
+	if y >= 0 and y < grid.size() and x >= 0 and x < grid[y].length():
+		return grid[y][x]
+	return "#"
+
+
+func _tile_row(grid: Array[String], x: int, y: int, c: String) -> int:
+	if zone_id.begins_with("fixture"):
+		return 0
+	var b0 := sub_biome() * 5
+	var up := _tile_at(grid, x, y - 1)
+	var dn := _tile_at(grid, x, y + 1)
+	var lf := _tile_at(grid, x - 1, y)
+	var rt := _tile_at(grid, x + 1, y)
+	var h := (x * 73 + y * 37) % 16
+	if c == "#":
+		if dn != "#":
+			return b0 + (2 if (h % 4 == 0 and up == "#") else 3)
+		if up != "#":
+			return b0 + 4
+		return b0 + ((x + y) % 2)
+	if c == "~":
+		if up != "~":
+			return b0 + 3
+		if dn != "~":
+			return b0 + 4
+		return b0 + (2 if h % 5 == 0 else ((x + y) % 2))
+	if c == "," and (up == "~" or dn == "~" or lf == "~" or rt == "~"):
+		return 15
+	if c in ".,t_":
+		if up == "#":
+			return b0 + 3
+		if (c == "," or c == "_") and (up == "." or dn == "." or lf == "." or rt == "."):
+			return b0 + 4
+		return b0 + (2 if h < 2 else (1 if h < 7 else 0))
+	return b0 + ((x * 3 + y * 5) % 4)
+
+
 func _build() -> void:
 	var rows := map()
 	var sp := spots()
+	var src_id := region_source()
 	size = Vector2i(rows[0].length() if rows.size() > 0 else 0, rows.size())
 	if size.x % SCREEN.x != 0 or size.y % SCREEN.y != 0:
 		push_warning("zone %s: map %s is not a multiple of 30x17" % [zone_id, size])
-	var scenes := {}   # char -> PackedScene or null, loaded once
+	var grid: Array[String] = []
 	for y in rows.size():
 		if rows[y].length() != size.x:
 			push_error("zone %s: row %d is %d wide, want %d" % [zone_id, y, rows[y].length(), size.x])
+		var line := ""
+		for x in rows[y].length():
+			var ch := rows[y][x]
+			if sp.has(ch):
+				line += str((sp[ch] as Dictionary).get("tile", "."))
+			elif LEGEND.find(ch) >= 0:
+				line += ch
+			else:
+				line += "."
+		grid.append(line)
+	var scenes := {}   # char -> PackedScene or null, loaded once
+	for y in rows.size():
 		for x in rows[y].length():
 			var c := rows[y][x]
 			var cell := Vector2i(x, y)
+			var tc := grid[y][x]
+			var col := maxi(0, LEGEND.find(tc))
+			var row := _tile_row(grid, x, y, tc)
 			if sp.has(c):
 				var spec: Dictionary = sp[c]
-				tiles.set_cell(cell, 0, Vector2i(maxi(0, LEGEND.find(spec.get("tile", "."))), 0))
+				tiles.set_cell(cell, src_id, Vector2i(col, row))
 				if not scenes.has(c):
 					scenes[c] = _load(spec.get("scene", ""))
 				if scenes[c]:
@@ -106,11 +209,9 @@ func _build() -> void:
 					n.position = tiles.map_to_local(cell)
 					entities.add_child(n)
 				continue
-			var i := LEGEND.find(c)
-			if i < 0:
+			if LEGEND.find(c) < 0:
 				push_error("zone %s: unknown tile '%s' at %s" % [zone_id, c, cell])
-				i = 0
-			tiles.set_cell(cell, 0, Vector2i(i, 0))
+			tiles.set_cell(cell, src_id, Vector2i(col, row))
 
 
 # Bosses and elites are referenced by path before they exist (architecture.md 9).

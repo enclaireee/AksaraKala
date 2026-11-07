@@ -19,6 +19,8 @@ const SNAP_PAD := 6.0                           # ASSUMED: enemy body radius add
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var hit_flash: HitFlash = $HitFlash
 @onready var body: CanvasItem = $Body
+@onready var sprite: Sprite2D = get_node_or_null("Sprite")
+@onready var shadow: Sprite2D = get_node_or_null("Shadow")
 @onready var aim: Node2D = $Aim
 @onready var melee_hitbox: Hitbox = $Aim/MeleeHitbox
 @onready var melee_shape: CollisionPolygon2D = $Aim/MeleeHitbox/Shape
@@ -138,7 +140,11 @@ func _physics_process(delta: float) -> void:
 		State.HURT: _hurt()
 		State.DRINK: _drink()
 		State.DEAD: velocity = Vector2.ZERO
-	body.visible = clock >= blink_until or fmod(clock, 0.1) < 0.05
+	var vis := clock >= blink_until or fmod(clock, 0.1) < 0.05
+	body.visible = vis and sprite == null
+	if sprite:
+		sprite.visible = vis
+	_update_animation()
 	move_and_slide()
 	# ponytail: debug readout until the HUD (ui.md) exists
 	debug.text = "HP %d  ST %d  SK %d  %s [F1]  status [F2]" % [health.hp, stamina.value, sakti.value, tr(item.title)]
@@ -384,6 +390,8 @@ func _on_died() -> void:
 	_swing(false)
 	_enter(State.DEAD)
 	body.modulate = Color(0.4, 0.4, 0.4)
+	if sprite:
+		sprite.modulate = body.modulate
 	get_node("/root/Events").player_died.emit()   # the UI and zones handle the rest
 
 
@@ -426,6 +434,10 @@ func _is_backstab(e: Node) -> bool:
 ## Recompute everything that depends on Game. The first call fills HP and stamina; later calls keep them (clamped).
 func apply_from_game() -> void:
 	class_id = game.class_id
+	if sprite:
+		var tex_path := "res://assets/art/hero_%s.png" % (class_id if class_id != "" else "base")
+		if ResourceLoader.exists(tex_path):
+			sprite.texture = load(tex_path)
 	item = game.equipped_item("weapon")
 	if item == null:
 		item = ItemData.by_id("dagger")
@@ -465,3 +477,55 @@ static func _arc(arc_deg: float, reach: float) -> PackedVector2Array:
 	for i in 9:
 		pts.append(Vector2.RIGHT.rotated(deg_to_rad(-arc_deg / 2.0 + arc_deg * i / 8.0)) * reach)
 	return pts
+
+
+func _update_animation() -> void:
+	if not sprite:
+		return
+	var facing_dir := aim_dir if (state == State.ATTACK or move_dir == Vector2.ZERO) else move_dir
+	var row := 0
+	var col := 0
+	var dir_row := 0
+	if absf(facing_dir.x) > absf(facing_dir.y) * 0.7:
+		dir_row = 1
+		sprite.flip_h = facing_dir.x < 0
+	elif facing_dir.y < 0:
+		dir_row = 2
+		sprite.flip_h = false
+	else:
+		dir_row = 0
+		sprite.flip_h = false
+
+	match state:
+		State.FREE:
+			if move_dir != Vector2.ZERO:
+				row = 3 + dir_row
+				col = int(fmod(clock * 8.0, 4.0))
+			else:
+				row = dir_row
+				col = int(fmod(clock * 4.0, 4.0))
+		State.DRINK:
+			row = dir_row
+			col = 1
+		State.DODGE:
+			row = 9
+			col = mini(3, int(state_time / 0.1))
+			sprite.flip_h = facing_dir.x < -0.05
+		State.ATTACK:
+			row = 6 + clampi(hit, 0, 2)
+			sprite.flip_h = facing_dir.x < -0.05
+			match phase:
+				Phase.WINDUP: col = 0
+				Phase.ACTIVE: col = 1
+				Phase.RECOVERY: col = 2 if state_time < _phase_len(phase) * 0.5 else 3
+		State.HURT:
+			row = 10
+			col = 0 if state_time < 0.08 else 1
+			sprite.flip_h = facing_dir.x < -0.05
+		State.DEAD:
+			row = 11
+			col = mini(3, int(state_time / 0.15))
+			sprite.flip_h = facing_dir.x < -0.05
+
+	sprite.frame_coords = Vector2i(col, row)
+

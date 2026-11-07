@@ -57,7 +57,19 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-3, -3, 6, 6), Color(0.4, 0.8, 1.0) if codex_id != "" else Color(0.9, 0.9, 0.5))
+	draw_rect(Rect2(-4, -4, 8, 8), Color(0.09, 0.07, 0.16))
+	if codex_id != "":
+		draw_rect(Rect2(-3, -3, 6, 6), Color(0.25, 0.72, 0.95))
+		draw_rect(Rect2(-2, -2, 4, 2), Color(0.75, 0.95, 1.0))
+	elif item_id == "herb":
+		draw_rect(Rect2(-3, -3, 6, 6), Color(0.35, 0.78, 0.35))
+		draw_rect(Rect2(-2, -2, 3, 3), Color(0.68, 0.95, 0.52))
+	elif item_id == "flask":
+		draw_rect(Rect2(-3, -2, 6, 5), Color(0.88, 0.55, 0.18))
+		draw_rect(Rect2(-1, -4, 2, 2), Color(0.95, 0.82, 0.45))
+	else:
+		draw_rect(Rect2(-3, -3, 6, 6), Color(0.95, 0.76, 0.25))
+		draw_rect(Rect2(-2, -2, 3, 2), Color(1.0, 0.95, 0.72))
 
 
 func _on_touch(b: Node) -> void:

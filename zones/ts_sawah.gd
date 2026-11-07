@@ -53,7 +53,7 @@ const SPOTS := {
 	"i": {"scene": "res://entities/enemies/jurig_leuweung.tscn", "props": {}, "tile": "t"},   # loose Jurig Leuweung (terrace), roaming pack (respawns on zone reload, no unique_id)
 	"l": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "loom"}, "tile": "_"},   # clue, the Weaver's loom (K2 clue 3)
 	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "empty_coops"}, "tile": "t"},   # clue, the empty rooster coops on the terrace farmstead (K2 clue 2)
-	"s": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_chest_sawah", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu (Ilmu S, ASSUMED), the sawah's optional find, behind the clearing rocks
+	"s": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_chest_sawah", "item_id": "short_sword"}, "tile": "."},   # chest: Short Sword (secret, sawah's optional find, behind clearing rocks)
 }
 
 
