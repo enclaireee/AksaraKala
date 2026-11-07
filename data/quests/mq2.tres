@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ2_S1_OBJ"
-all = [{"on": "talked_to:recruiter_a", "set_flag": "", "objective": "Q_MQ2_S1_P1", "marker": {"zone": "mt_gapura", "id": "recruiter_a"}}, {"on": "talked_to:recruiter_b", "set_flag": "mq2_a1", "objective": "Q_MQ2_S1_P2", "marker": {"zone": "mt_gapura", "id": "recruiter_b"}}]
+all = [{"on": "talked_to:recruiter_a", "set_flag": "", "objective": "Q_MQ2_S1_P1"}, {"on": "talked_to:recruiter_b", "set_flag": "mq2_a1", "objective": "Q_MQ2_S1_P2"}]
 set_flag = "mq2_a1"
 recap = "Q_MQ2_S1_DONE"
 marker = {"zone": "mt_gapura", "id": "recruiter_a"}
@@ -14,7 +14,7 @@ marker = {"zone": "mt_gapura", "id": "recruiter_a"}
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ2_S2_OBJ"
-all = [{"on": "area_cleared:mataram_gerbang", "set_flag": "", "objective": "Q_MQ2_S2_P1", "marker": {"zone": "mt_gapura", "id": "mataram_gerbang"}}, {"on": "petilasan_activated:mataram_1", "set_flag": "mq2_1", "objective": "Q_MQ2_S2_P2", "marker": {"zone": "mt_sawah", "id": "mataram_1"}}]
+all = [{"on": "area_cleared:mataram_gerbang", "set_flag": "", "objective": "Q_MQ2_S2_P1"}, {"on": "petilasan_activated:mataram_1", "set_flag": "mq2_1", "objective": "Q_MQ2_S2_P2"}]
 set_flag = "mq2_1"
 recap = "Q_MQ2_S2_DONE"
 marker = {"zone": "mt_gapura", "id": "mataram_gerbang"}
@@ -46,7 +46,7 @@ marker = {"zone": "mt_sawah", "id": "mataram_sawah_road"}
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ2_S6_OBJ"
-all = [{"on": "area_cleared:mataram_ruins", "set_flag": "lead_ruins", "objective": "Q_MQ2_S6_P1", "marker": {"zone": "mt_reruntuhan", "id": "mataram_ruins"}}, {"on": "glyph_learned:jawa_na", "set_flag": "mq2_3", "objective": "Q_MQ2_S6_P2"}]
+all = [{"on": "area_cleared:mataram_ruins", "set_flag": "lead_ruins", "objective": "Q_MQ2_S6_P1"}, {"on": "glyph_learned:jawa_na", "set_flag": "mq2_3", "objective": "Q_MQ2_S6_P2"}]
 set_flag = "mq2_3"
 recap = "Q_MQ2_S6_DONE"
 marker = {"zone": "mt_reruntuhan", "id": "ka_chalk"}
@@ -94,7 +94,7 @@ marker = {"zone": "mt_wetan", "id": "shrine_chisel"}
 [sub_resource type="Resource" id="s12"]
 script = ExtResource("2")
 objective = "Q_MQ2_S12_OBJ"
-all = [{"on": "puzzle_solved:puzzle_wetan_lamps", "set_flag": "", "objective": "Q_MQ2_S12_P1", "marker": {"zone": "mt_wetan", "id": "puzzle_wetan_lamps"}}, {"on": "glyph_learned:jawa_ra", "set_flag": "mq2_6", "objective": "Q_MQ2_S12_P2"}]
+all = [{"on": "puzzle_solved:puzzle_wetan_lamps", "set_flag": "", "objective": "Q_MQ2_S12_P1"}, {"on": "glyph_learned:jawa_ra", "set_flag": "mq2_6", "objective": "Q_MQ2_S12_P2"}]
 set_flag = "mq2_6"
 recap = "Q_MQ2_S12_DONE"
 marker = {"zone": "mt_wetan", "id": "puzzle_wetan_lamps"}
@@ -110,7 +110,7 @@ marker = {"zone": "mt_tegal", "id": "pillar_prints"}
 [sub_resource type="Resource" id="s14"]
 script = ExtResource("2")
 objective = "Q_MQ2_S14_OBJ"
-all = [{"on": "area_cleared:mataram_candi", "set_flag": "", "objective": "Q_MQ2_S14_P1", "marker": {"zone": "mt_candi", "id": "mataram_candi"}}, {"on": "area_cleared:mataram_camp", "set_flag": "mq2_7", "objective": "Q_MQ2_S14_P2", "marker": {"zone": "mt_candi", "id": "mataram_camp"}}]
+all = [{"on": "area_cleared:mataram_candi", "set_flag": "", "objective": "Q_MQ2_S14_P1"}, {"on": "area_cleared:mataram_camp", "set_flag": "mq2_7", "objective": "Q_MQ2_S14_P2"}]
 set_flag = "mq2_7"
 recap = "Q_MQ2_S14_DONE"
 marker = {"zone": "mt_candi", "id": "mataram_candi"}
@@ -118,7 +118,7 @@ marker = {"zone": "mt_candi", "id": "mataram_candi"}
 [sub_resource type="Resource" id="s15"]
 script = ExtResource("2")
 objective = "Q_MQ2_S15_OBJ"
-all = [{"on": "clue_examined:rubble", "set_flag": "", "objective": "Q_MQ2_S15_P1", "marker": {"zone": "mt_candi", "id": "rubble"}}, {"on": "clue_examined:lesung_mid", "set_flag": "", "objective": "Q_MQ2_S15_P2", "marker": {"zone": "mt_candi", "id": "lesung_mid"}}, {"on": "clue_examined:ka_strip", "set_flag": "mq2_h1", "objective": "Q_MQ2_S15_P3", "marker": {"zone": "mt_candi", "id": "ka_strip"}}]
+all = [{"on": "clue_examined:rubble", "set_flag": "", "objective": "Q_MQ2_S15_P1"}, {"on": "clue_examined:lesung_mid", "set_flag": "", "objective": "Q_MQ2_S15_P2"}, {"on": "clue_examined:ka_strip", "set_flag": "mq2_h1", "objective": "Q_MQ2_S15_P3"}]
 set_flag = "mq2_h1"
 recap = "Q_MQ2_S15_DONE"
 marker = {"zone": "mt_candi", "id": "rubble"}

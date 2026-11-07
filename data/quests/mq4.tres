@@ -6,34 +6,34 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ4_S1_OBJ"
-marker = {"zone": "desa_purwa", "id": "desa_purwa"}
-all = [{"on": "zone_entered:desa_purwa", "set_flag": "", "objective": "Q_MQ4_S1_P1", "marker": {"zone": "desa_purwa", "id": "desa_purwa"}}, {"on": "area_entered:purwa_north_fog", "set_flag": "mq4_i0", "objective": "Q_MQ4_S1_P2", "marker": {"zone": "desa_purwa", "id": "purwa_north_fog"}}]
+all = [{"on": "zone_entered:desa_purwa", "set_flag": "", "objective": "Q_MQ4_S1_P1"}, {"on": "area_entered:purwa_north_fog", "set_flag": "mq4_i0", "objective": "Q_MQ4_S1_P2"}]
 set_flag = "mq4_i0"
 recap = "Q_MQ4_S1_DONE"
+marker = {"zone": "desa_purwa", "id": "from_riders"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ4_S2_OBJ"
-marker = {"zone": "desa_purwa", "id": "purwa_old_couple"}
-all = [{"on": "talked_to:purwa_old_couple", "set_flag": "", "objective": "Q_MQ4_S2_P1", "marker": {"zone": "desa_purwa", "id": "purwa_old_couple"}}, {"on": "talked_to:purwa_stall", "set_flag": "mq4_i0b", "objective": "Q_MQ4_S2_P2", "marker": {"zone": "desa_purwa", "id": "purwa_stall"}}]
+all = [{"on": "talked_to:purwa_old_couple", "set_flag": "", "objective": "Q_MQ4_S2_P1"}, {"on": "talked_to:purwa_stall", "set_flag": "mq4_i0b", "objective": "Q_MQ4_S2_P2"}]
 set_flag = "mq4_i0b"
 recap = "Q_MQ4_S2_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_old_couple"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ4_S3_OBJ"
-marker = {"zone": "desa_purwa", "id": "door_a"}
-all = [{"on": "name_written:door_a", "set_flag": "", "objective": "Q_MQ4_S3_P1", "marker": {"zone": "desa_purwa", "id": "door_a"}}, {"on": "name_written:door_b", "set_flag": "", "objective": "Q_MQ4_S3_P2", "marker": {"zone": "desa_purwa", "id": "door_b"}}, {"on": "name_written:door_c", "set_flag": "mq4_i1", "objective": "Q_MQ4_S3_P3", "marker": {"zone": "desa_purwa", "id": "door_c"}}]
+all = [{"on": "name_written:door_a", "set_flag": "", "objective": "Q_MQ4_S3_P1"}, {"on": "name_written:door_b", "set_flag": "", "objective": "Q_MQ4_S3_P2"}, {"on": "name_written:door_c", "set_flag": "mq4_i1", "objective": "Q_MQ4_S3_P3"}]
 set_flag = "mq4_i1"
 recap = "Q_MQ4_S3_DONE"
+marker = {"zone": "desa_purwa", "id": "door_a"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ4_S4_OBJ"
-marker = {"zone": "desa_purwa", "id": "shelf_ribbon"}
-all = [{"on": "clue_examined:shelf_ribbon", "set_flag": "", "objective": "Q_MQ4_S4_P1", "marker": {"zone": "desa_purwa", "id": "shelf_ribbon"}}, {"on": "clue_examined:shelf_board", "set_flag": "", "objective": "Q_MQ4_S4_P2", "marker": {"zone": "desa_purwa", "id": "shelf_board"}}, {"on": "clue_examined:shelf_strip", "set_flag": "", "objective": "Q_MQ4_S4_P3", "marker": {"zone": "desa_purwa", "id": "shelf_strip"}}, {"on": "talked_to:ibu", "set_flag": "mq4_2", "objective": "Q_MQ4_S4_P4", "marker": {"zone": "desa_purwa", "id": "ibu"}}]
+all = [{"on": "clue_examined:shelf_ribbon", "set_flag": "", "objective": "Q_MQ4_S4_P1"}, {"on": "clue_examined:shelf_board", "set_flag": "", "objective": "Q_MQ4_S4_P2"}, {"on": "clue_examined:shelf_strip", "set_flag": "", "objective": "Q_MQ4_S4_P3"}, {"on": "talked_to:ibu", "set_flag": "mq4_2", "objective": "Q_MQ4_S4_P4"}]
 set_flag = "mq4_2"
 recap = "Q_MQ4_S4_DONE"
+marker = {"zone": "desa_purwa", "id": "shelf_ribbon"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
@@ -63,14 +63,14 @@ marker = {"zone": "desa_purwa", "id": "semar"}
 script = ExtResource("2")
 objective = "Q_MQ4_S8_OBJ"
 on = "zone_entered:sk_pantai"
-marker = {"zone": "sk_pantai", "id": "kidul_nelayan_anak"}
 set_flag = "mq4_i6"
 recap = "Q_MQ4_S8_DONE"
+marker = {"zone": "desa_purwa", "id": "exit_pantai"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQ4_S9_OBJ"
-all = [{"on": "petilasan_activated:kidul_1", "set_flag": "", "objective": "Q_MQ4_S9_P1", "marker": {"zone": "sk_pantai", "id": "kidul_1"}}, {"on": "zone_entered:sk_nelayan", "set_flag": "mq4_a1", "objective": "Q_MQ4_S9_P2"}]
+all = [{"on": "petilasan_activated:kidul_1", "set_flag": "", "objective": "Q_MQ4_S9_P1"}, {"on": "zone_entered:sk_nelayan", "set_flag": "mq4_a1", "objective": "Q_MQ4_S9_P2"}]
 set_flag = "mq4_a1"
 recap = "Q_MQ4_S9_DONE"
 marker = {"zone": "sk_pantai", "id": "kidul_pantai_1"}
@@ -78,7 +78,7 @@ marker = {"zone": "sk_pantai", "id": "kidul_pantai_1"}
 [sub_resource type="Resource" id="s10"]
 script = ExtResource("2")
 objective = "Q_MQ4_S10_OBJ"
-all = [{"on": "talked_to:kidul_jurukunci", "set_flag": "mq4_4", "objective": "Q_MQ4_S10_P1", "marker": {"zone": "sk_nelayan", "id": "kidul_jurukunci"}}, {"on": "talked_to:kidul_sari", "set_flag": "mq4_4b", "objective": "Q_MQ4_S10_P2", "marker": {"zone": "sk_nelayan", "id": "kidul_sari"}}]
+all = [{"on": "talked_to:kidul_jurukunci", "set_flag": "mq4_4", "objective": "Q_MQ4_S10_P1"}, {"on": "talked_to:kidul_sari", "set_flag": "mq4_4b", "objective": "Q_MQ4_S10_P2"}]
 set_flag = "mq4_4b"
 recap = "Q_MQ4_S10_DONE"
 marker = {"zone": "sk_nelayan", "id": "kidul_jurukunci"}
@@ -86,7 +86,7 @@ marker = {"zone": "sk_nelayan", "id": "kidul_jurukunci"}
 [sub_resource type="Resource" id="s11"]
 script = ExtResource("2")
 objective = "Q_MQ4_S11_OBJ"
-all = [{"on": "clue_examined:song_1", "set_flag": "mq4_h1", "objective": "Q_MQ4_S11_P1", "marker": {"zone": "sk_pantai", "id": "song_1"}}]
+all = [{"on": "clue_examined:song_1", "set_flag": "mq4_h1", "objective": "Q_MQ4_S11_P1"}]
 set_flag = "mq4_h1"
 recap = "Q_MQ4_S11_DONE"
 marker = {"zone": "sk_pantai", "id": "song_1"}
@@ -142,7 +142,7 @@ marker = {"zone": "sk_gua", "id": "kidul_gua_trial"}
 [sub_resource type="Resource" id="s18"]
 script = ExtResource("2")
 objective = "Q_MQ4_S18_OBJ"
-all = [{"on": "area_cleared:kidul_tebing_2", "set_flag": "", "objective": "Q_MQ4_S18_P1", "marker": {"zone": "sk_tebing", "id": "kidul_tebing_2"}}, {"on": "petilasan_activated:kidul_3", "set_flag": "", "objective": "Q_MQ4_S18_P2", "marker": {"zone": "sk_tebing", "id": "kidul_3"}}, {"on": "memory_done:k9_queen_south", "set_flag": "mq4_h3", "objective": "Q_MQ4_S18_P3", "marker": {"zone": "sk_tebing", "id": "k9_queen_south"}}]
+all = [{"on": "area_cleared:kidul_tebing_2", "set_flag": "", "objective": "Q_MQ4_S18_P1"}, {"on": "petilasan_activated:kidul_3", "set_flag": "", "objective": "Q_MQ4_S18_P2"}, {"on": "memory_done:k9_queen_south", "set_flag": "mq4_h3", "objective": "Q_MQ4_S18_P3"}]
 set_flag = "mq4_h3"
 recap = "Q_MQ4_S18_DONE"
 marker = {"zone": "sk_tebing", "id": "kidul_tebing_1"}

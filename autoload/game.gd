@@ -129,14 +129,13 @@ static func clean_name(s: String, final := true) -> String:
 	return s if s != "" else DEFAULT_NAME
 
 
-## Fills {name}, {they}, {them}, {their}, {They}. Call it on the result of tr(). Plain replaces on purpose:
-## never String.format with player input.
+## Fills {name}, {they}, {them}, {their}, {They} referring to the hero by name. Call it on the result of tr().
+## Plain replaces on purpose: never String.format with player input.
 func fmt(s: String) -> String:
 	if not "{" in s:
 		return s
-	var p: Array = PRONOUNS.get(hero_pronoun, PRONOUNS.they)
-	return s.replace("{name}", hero_name).replace("{they}", p[0]).replace("{them}", p[1]) \
-			.replace("{their}", p[2]).replace("{They}", p[3])
+	return s.replace("{name}", hero_name).replace("{they}", hero_name).replace("{them}", hero_name) \
+			.replace("{their}", hero_name + "'s").replace("{They}", hero_name)
 
 
 # --- new game, leveling, inventory ---

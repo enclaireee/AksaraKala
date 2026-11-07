@@ -5,12 +5,12 @@ Q_MQ0_S1_OBJ,"Ajak Laras main kejar-kejaran dan tangkap dia di sumur tua, tak ja
 Q_MQ0_S2_OBJ,"Cari tahu apa yang dibutuhkan pasangan tua: minum teh bersama Ibu, lalu temui mereka.","Hear what the old couple need: share tea with Ibu, then visit them in the southeast."
 Q_MQ0_S1_HINT,"Kejar Laras dengan {move}, dan tekan {dodge} untuk melewati rintangan dengan cepat.","Chase Laras with {move}, and press {dodge} to dash past obstacles."
 Q_MQ0_S2_HINT,"Tekan {interact} pada Ibu, lalu pada pasangan tua di depan rumah mereka.","Press {interact} on Ibu, then on the old couple outside their house."
-Q_MQ0_S4_HINT,"Tekan {interact} di dekat penjaga lapak, di deretan lapak pasar di alun-alun.","Press {interact} near the stall-keeper, at the market stalls on the square."
-Q_MQ0_S5_HINT,"Masuk ke sanggar dan tekan {interact} pada Semar, lalu pada Cepot.","Enter the sanggar and press {interact} on Semar, then on Cepot."
+Q_MQ0_S4_HINT,"Tekan {interact} di dekat Cepot di depan pintu sanggar, di sisi barat desa.","Press {interact} near Cepot in front of the sanggar, on the west side of the village."
+Q_MQ0_S5_HINT,Masuk ke sanggar dan tekan {interact} pada Ki Semar.,Enter the sanggar and press {interact} on Ki Semar.
 Q_MQ0_S6_HINT,Jalan dengan {move} ke meja lontar di sanggar.,Walk with {move} to the lontar table in the sanggar.
 Q_MQ0_S3_OBJ,Cari tahu telur aneh Ciung Wanara: panjat pohon beringin besar di barat daya desa.,Find out about Ciung Wanara's strange egg: climb the great banyan in the southwest.
-Q_MQ0_S4_OBJ,Adakah yang melihat orang asing tadi? Tanya penjaga lapak di pasar pagi alun-alun.,Did anyone see the stranger? Ask the stall-keeper at the morning market on the square.
-Q_MQ0_S5_OBJ,"Cari tahu mengapa nama tertulis itu penting: tanya dalang Semar di sanggar, barat desa.",Find out why written names matter: ask the dalang Semar at the sanggar in the west.
+Q_MQ0_S4_OBJ,Pergi ke sanggar desa di sebelah barat dan temui Cepot.,Head to the village sanggar in the west and talk to Cepot.
+Q_MQ0_S5_OBJ,Bicara dengan Ki Semar di dalam sanggar untuk mempersiapkan Ruwatan.,Speak with Ki Semar inside the sanggar to prepare for the Ruwatan.
 Q_MQ0_S6_OBJ,Agar kalian tetap tercatat: tulis namamu dan nama Laras di lontarnya di meja sanggar.,So you both stay on record: write your name and Laras's on her lontar at the sanggar.
 Q_MQ0_S7_OBJ,Siapkan panggung wayang malam ini: nyalakan empat lampu upacaranya saat senja.,Ready the wayang stage for tonight: light its four ceremonial lamps at dusk.
 Q_MQ1_S1_OBJ,"Temukan jejak Laras: temui cucu sesepuh di teras kebun teh, cari pitanya yang jatuh.","Pick up Laras's trail: meet the elder's grandson at the tea terraces, find her ribbon."
@@ -18,15 +18,15 @@ Q_MQ1_S2_OBJ,Cari tahu ke mana jejak Laras menuju: ikuti bambu patah dan bersihk
 Q_MQ1_S3_OBJ,"Pulihkan tenaga: beristirahat di petilasan di teras kebun teh, lalu temui Cepot di dekatnya.","Recover your strength at the old shrine on the terraces, then find Cepot waiting nearby."
 Q_MQ1_S4_OBJ,Selamatkan kampung di bukit: lindungi dari serbuan Tanpa Rupa dan babi hutan yang menerjang.,Keep the hill kampung safe: defend it from Faceless raiders and charging wild boars.
 Q_MQ1_S5_OBJ,"Cari tahu apa yang sesepuh lihat soal Laras dan pelajari aksara Ga, lalu ikuti tangis ibu ke selatan.","Find out what the elder saw of Laras and learn Ga, then follow a mother's cries south."
-Q_MQ1_S6_OBJ,"Cari tahu nasib anak yang hilang: tanya ibunya, lalu periksa tepi sungai saat senja.","Learn what happened to the missing boy: ask his mother, then search the riverbank."
-Q_MQ1_S7_OBJ,Mengapa oncor padam? Periksa lentera bambu yang mati dan jejak kaki menuju ngarai.,Why are the oncor dark? Examine the unlit lanterns and the footprints into the gorge.
-Q_MQ1_S8_OBJ,Tahan kabut senja: nyalakan lagi lentera bambu di bagian luar dusun.,Hold back the creeping dusk mist: relight the outer bamboo lanterns of the hamlet.
-Q_MQ1_S9_OBJ,Cari tahu apa yang diingat lontar: hidupkan kembali anak yang bergegas pulang saat maghrib.,Find out what the lontar remembers: relive a child hurrying home at maghrib (sunset).
-Q_MQ1_S10_OBJ,Selamatkan dusun dari Sandekala: kalahkan roh senja sambil menjaga empat oncor tetap menyala.,Save the hamlet from Sandekala: defeat the dusk spirit while keeping four oncor lit.
+Q_MQ1_S6_OBJ,"Bantu Ceu Imas menyelamatkan anaknya: tanyakan ciri-ciri si anak, lalu cari jejaknya di ngarai sungai saat senja.","Help Ceu Imas save her lost boy: learn what he looks like, then search the river gorge at twilight."
+Q_MQ1_S7_OBJ,Cari tahu penyebab padamnya obor oncor: periksa lentera bambu yang mati dan telusuri jejak kaki Sandekala ke arah ngarai.,Find out why the oncor torches went dark: inspect the dead bamboo lanterns and track the Sandekala prints into the gorge.
+Q_MQ1_S8_OBJ,Halau kabut senja Sandekala: nyalakan kembali empat lentera oncor bambu di perbatasan luar dusun sebelum maghrib.,Hold back the dusk mist: relight the four bamboo oncor lanterns along the hamlet perimeter before twilight.
+Q_MQ1_S9_OBJ,Buka kenangan tersembunyi lontar: telusuri jejak anak kecil yang bergegas pulang sebelum maghrib tiba.,Unveil the hidden memory of the lontar: relive the steps of a child hurrying home before the evening call.
+Q_MQ1_S10_OBJ,Selamatkan dusun dari ancaman Sandekala: kalahkan roh bayangan senja sambil menjaga keempat obor oncor tetap berkobar.,Rescue the hamlet from Sandekala: vanquish the dusk shadow spirit while keeping all four oncor torches blazing.
 Q_MQ1_S11_OBJ,"Terus kejar Laras: daki hutan di balik ngarai, usir roh, tegakkan tiga batu nama.","Press on after Laras: climb past the gorge, clear the spirits, raise three name-stones."
-Q_MQ1_S12_OBJ,Cari tahu isi Batu Tulis: baca batu bertulis yang aus di rumpun itu dan pelajari aksara Nga.,Learn what the Batu Tulis says: read the worn stone in the grove and learn the Nga glyph.
-Q_MQ1_S13_OBJ,Cari tahu apa yang menggenangi lembah: turun ke sawah dekat bendungan baru.,Find out what is flooding the valley: go down to the rice paddies by the new dam.
-Q_MQ1_S14_OBJ,Rebut kembali sawah Penenun: usir Tanpa Rupa dan roh hutan dari tepi lembah.,Win back the Weaver's terraces: drive the Faceless and forest spirits off.
+Q_MQ1_S12_OBJ,Pecahkan misteri prasasti Batu Tulis: baca ukiran aksara kuno di tengah rumpun bambu untuk mempelajari aksara Nga.,Decipher the ancient Batu Tulis: read the weathered carvings in the bamboo grove to learn the sacred Nga glyph.
+Q_MQ1_S13_OBJ,Cari tahu sumber banjir lembah: periksa sawah tergenang di dekat bendungan kayu yang sengaja ditutup.,Investigate the valley flooding: inspect the submerged rice paddies by the sabotaged wooden dam.
+Q_MQ1_S14_OBJ,Rebut kembali sawah milik sang Penenun: kalahkan penjarah bertopeng dan roh liar yang mengacaukan pematang.,Reclaim the Weaver's terraces: defeat the masked looters and restless spirits occupying the field ridges.
 Q_SQ_S1_TITLE,Lutung Kasarung,Lutung Kasarung
 Q_SQ_S1_S1_OBJ,"Apa kisah gadis dan lutung itu? Tanyai Ki Darsa, pendongeng kampung","What is the tale of the girl and the langur? Ask Ki Darsa, the kampung storyteller"
 Q_SQ_S1_S2_OBJ,Ke mana persembahan lutung menuntun? Telusuri hutan ke mata air tersembunyi dan usir penjaganya,Where do the langur's offerings lead? Search the forest for the hidden spring and clear its guards
@@ -44,16 +44,16 @@ Q_SQ_S4_TITLE,Cepot yang Pemberani,Brave Cepot
 Q_SQ_S4_S1_OBJ,Mengapa bekal Cepot tertahan? Kalahkan babi hutan di kebun yang menjebaknya,Why is Cepot's pack stuck? Defeat the wild boars in the garden that trapped it
 Q_SQ_S4_S2_OBJ,"Bebaskan bekal Cepot dari tiga babi terakhir dengan mantra Ga Ward, lalu temui Cepot","Free Cepot's pack from the last three boars with the Ga Ward spell, then speak with Cepot"
 Q_MQ2_TITLE,Darah di Pamali,Blood on the Pamali
-Q_MQ2_S1_OBJ,Cari tahu siapa merekrut dan untuk apa: dengarkan kedua perekrut di pasar perbatasan Mataram.,Learn who is recruiting and why: hear both recruiters at the Mataram border market.
-Q_MQ2_S2_OBJ,"Lewati perbatasan: tembus blokade penjarah di gerbang, lalu istirahat di petilasan.","Get through the border: break the looters' blockade, then rest at the rice-field shrine."
-Q_MQ2_S3_OBJ,Jaga pertunjukan tetap hidup: lindungi panggung wayang Ki Sumarto dari penjarah dan Tuyul.,Keep the show alive: defend Ki Sumarto's wayang stage from looters and Tuyul.
-Q_MQ2_S4_OBJ,"Cari petunjuk soal Laras: tanya Ki Sumarto tentang putranya, pelajari aksara Ha, dengar tiga jejak.","Seek a lead on Laras: ask Ki Sumarto about his son, learn Ha, hear three trails."
+Q_MQ2_S1_OBJ,Selidiki ketegangan di perbatasan Mataram: dengarkan perdebatan kedua perekrut laskar di gerbang desa.,Investigate tensions at the Mataram border: listen to the rival recruiters debating at the village gate.
+Q_MQ2_S2_OBJ,"Tembus perbatasan Sungai Pamali: kalahkan blokade penjarah di gerbang tapal kuda, lalu cari petilasan aman.",Cross the Pamali border: breach the looters' barricade at the horseshoe gate and secure a safe petilasan.
+Q_MQ2_S3_OBJ,Selamatkan layar kelir wayang: lindungi panggung Ki Sumarto dari amukan prajurit penjarah di tepi barat.,Save the wayang screen: protect Ki Sumarto's stage from marauding soldiers on the western riverbank.
+Q_MQ2_S4_OBJ,Pelajari Aksara Ha sang penyembuh: bicaralah dengan Ki Sumarto dan cari tahu pergerakan pasukan Hariang Banga.,Learn Aksara Ha the healer: speak with Ki Sumarto and gather intel on Hariang Banga's troop movements.
 Q_MQ2_S5_OBJ,Bawa warga pasar ke tempat aman: kawal mereka melintasi sawah yang tergenang.,Get the market families to safety: escort them across the flooded paddies.
 Q_MQ2_S6_OBJ,"Periksa jejak pertama: kalahkan Arca yang bangkit di reruntuhan, baca aksara Na.",Check the first lead: beat the awakened Arca at the ruins and read the letter Na.
 Q_MQ2_S7_OBJ,Telusuri jejak kedua: hentikan prajurit Tanpa Rupa yang memanen nama gugur di kuburan tua.,Follow the second lead: stop soldiers harvesting the fallen's names in the old graveyard.
 Q_MQ2_S8_OBJ,"Cari tahu apa yang diingat pecahan topeng: ambil di makam, saksikan ingatan Si Tanpa Ngaran.","Learn what the mask fragment remembers: take it from the graves, watch its memory."
-Q_MQ2_S9_OBJ,Periksa jejak ketiga: bantu Nyai Gendhis membersihkan pelataran lesung angker di kaki bukit.,Check the third lead: help Nyai Gendhis clear the haunted lesung yard in the foothills.
-Q_MQ2_S10_OBJ,"Minta Nyai Gendhis, pemimpin penumbuk padi, mengajarkan irama fajar dan aksara Jawa Ca.","Ask Nyai Gendhis, the rice-pounders' leader, to teach the dawn rhythm and the letter Ca."
+Q_MQ2_S9_OBJ,Bantu Nyai Gendhis di pabrik gula kelapa: bersihkan pelataran lesung dari pengacau bersenjata.,Aid Nyai Gendhis at the palm sugar works: clear armed troublemakers off the mortar terrace.
+Q_MQ2_S10_OBJ,Pelajari tradisi Gejog Lesung: minta Nyai Gendhis mengajarkan irama tumbukan penipu fajar pemecah kutukan.,Learn the Gejog Lesung tradition: have Nyai Gendhis teach the rhythmic pestle cadence that mimics dawn.
 Q_MQ2_S11_OBJ,Buka jalan ke candi: patahkan kepungan roh pembangun di kuil kaki bukit.,Open the road to the temple: break the spirit builders' siege of the foothill shrine.
 Q_MQ2_S12_OBJ,Pelajari aksara Jawa Ra dari juru kunci: selaraskan dulu tungku api di pondoknya.,"Learn Ra from the juru kunci, keeper of the sacred hill: first align the braziers at his hut."
 Q_MQ2_S13_OBJ,"Bersihkan jalan candi: lewati dataran batu yang tumbuh, hancurkan pilar roh, kalahkan penjaga.","Clear the temple road: cross the rising stones, shatter the spirit pillars, beat the guards."
@@ -79,15 +79,15 @@ Q_SQ_M4_S1_OBJ,"Mengapa gamelan pasar membisu? Tanyai Ki Sumarto, sang dalang","
 Q_SQ_M4_S2_OBJ,"Cari gong ageng yang dicuri di ceruk tersegel reruntuhan Mataram, waspadai arca penjaganya","Find the stolen gong ageng in a sealed nook of the Mataram ruins, past the guarding statues"
 Q_SQ_M4_S3_OBJ,Kembalikan suara gamelan: gantung gong di balai gamelan pasar Ki Sumarto,Give the gamelan its voice back: hang the gong at Ki Sumarto's pavilion in the market
 Q_MQ3_TITLE,Bilah Tujuh Turunan,The Seven-Generation Blade
-Q_MQ3_S1_OBJ,"Cari pijakan di Tanah Timur: temui Ratna di jalan pandai besi Kulon, lalu istirahat di petilasan","Find your footing in Tanah Timur: meet Ratna on Kulon's smiths' street, rest at the petilasan"
-Q_MQ3_S2_OBJ,Bertahan melawan raksasa hijau Buto Ijo: pukul mundur dia dengan paku penolak api,Stay alive against the green giant Buto Ijo: drive him back with the fire-ward nails
-Q_MQ3_S3_OBJ,Cari tahu siapa yang mengutuk: ikuti tanda merah di tiang pintu ke tempa Mpu Wirasana di Beringin,Learn who cursed the doorposts: follow the red marks to Mpu Wirasana's forge in Beringin
-Q_MQ3_S4_OBJ,Bersiap memadamkan kutukan: latih aksara pada dua pancang latihan di halaman tempa,Prepare to douse the curse: practise your aksara on the two stakes in the forge yard
-Q_MQ3_S5_OBJ,Apa yang ditinggalkan anak Mbok Srini? Periksa gubuknya yang hancur di tepi Kali,What did Mbok Srini's daughter leave behind? Search her smashed hut by the River (Kali)
-Q_MQ3_S6_OBJ,Mampukah kantung biji semak menahan Buto Ijo? Ujilah saat disergap di dasar sungai kering,Can the bramble-seed pouch stop Buto Ijo? Test it in his ambush on the dry riverbed
-Q_MQ3_S7_OBJ,"Buat tiga kantung bertahan: bersihkan sergapan ketiga, lalu berkahi di batu beringin tua","Make the three pouches hold: clear the third ambush, then bless them at the old banyan stone"
+Q_MQ3_S1_OBJ,Masuki kawasan pandai besi Tanah Timur: temui Ratna di mulut jalan bengkel dan tanyakan hawa panas yang membakar lembah.,Enter the forge quarter of Tanah Timur: meet Ratna at the street entrance and ask about the scorch fires.
+Q_MQ3_S2_OBJ,Tahan amukan raksasa Buto Ijo: pukul mundur serbuan pertamanya sebelum ia menghancurkan bengkel senjata pusaka.,Hold back the rampaging Buto Ijo: repel his opening assault before he crushes the ancestral weapons forge.
+Q_MQ3_S3_OBJ,Telusuri kutukan Keris Mpu Gandring: ikuti tanda bara merah di tiang-tiang pancang menuju perapian agung.,Track the curse of Keris Mpu Gandring: follow the ember marks on the boundary stakes toward the grand forge.
+Q_MQ3_S4_OBJ,Kuasai Aksara Ta penempa batin: latih pemadaman hawa panas kutukan pada dua tiang latihan di halaman bengkel.,Master Aksara Ta the forge-glyph: practice quenching the burning curse on the training stakes in the yard.
+Q_MQ3_S5_OBJ,Bantu Mbok Srini menyelamatkan putrinya: periksa gubuk tepi rawa dan dengarkan kisah asal-usul Timun Mas.,Help Mbok Srini save her daughter: search her marsh cottage and hear the true origins of Timun Mas.
+Q_MQ3_S6_OBJ,Uji khasiat Biji Mentimun: lemparkan bungkusan pertama untuk menumbuhkan sulur duri yang mengikat kaki Buto Ijo.,Test the Cucumber Seeds pouch: cast the first charm to sprout thorny briars that ensnare Buto Ijo's strides.
+Q_MQ3_S7_OBJ,"Kumpulkan tiga bungkusan pusaka lainnya: sucikan bungkusan jarum, garam, dan terasi di pohon beringin tua.","Collect the remaining three charmed pouches: sanctify the needles, salt, and terasi paste at the ancient banyan."
 Q_MQ3_S8_OBJ,Apa yang diingat batu beringin? Jalani kenangan Timun Mas yang dibukanya,What does the banyan stone remember? Live through the Timun Mas memory it opened
-Q_MQ3_S9_OBJ,"Akhiri amukan Buto Ijo: pancing dia ke sarang tulangnya di ladang, kalahkan dengan empat medan kantung","End Buto Ijo's rampage: lure him into his lair in the dry field, using the four pouch fields"
+Q_MQ3_S9_OBJ,Tundukkan Buto Ijo selamanya: pancing sang raksasa ke ngarai lumpur mendidih menggunakan bungkusan terasi udang.,Subdue Buto Ijo once and for all: lure the giant into the boiling mud chasm using the pungent terasi pouch.
 Q_MQ3_S10_OBJ,Bebaskan ladang dari kutukan: padamkan pancang merah yang dinyalakan keris di Ladang kering,Free the farmland of the curse: douse the red stakes the keris lit in the dry Ladang
 Q_MQ3_S11_OBJ,Lindungi kawasan tempa: bantu Mpu Wirasana dan Ratna menahan Keris Hantu yang melayang,Protect the forge quarter: help Mpu Wirasana and Ratna hold off the flying Keris Hantu
 Q_MQ3_S12_OBJ,Apa yang mematahkan bilah ini? Periksa sarung patah dan catatan tempa di gudang Wirasana,What broke this blade? Examine the broken scabbard and forge records in Wirasana's vault
@@ -112,24 +112,24 @@ Q_SQ_T4_S2_OBJ,"Temukan tiga kuda kepang anyaman yang diterbangkan badai: cari d
 Q_SQ_T4_S3_OBJ,Kembalikan kuda-kuda itu: bawa tiga kuda kepang ke pemimpin rombongan di kemah Hutan Beringin,Return the horses: bring the three kuda kepang to the troupe leader at the Banyan Grove camp
 Q_SQ_T4_S4_OBJ,Saksikan rasa terima kasih mereka: tonton rombongan menari di panggung kepang Hutan Beringin,See their thanks: watch the troupe dance on the kepang stage in the Banyan Grove
 Q_MQ5_TITLE,Ke Rahang Sang Waktu,Into the Maw of Time
-Q_MQ5_S1_OBJ,"Bertahan di Pelataran Waktu di depan Gua Kala, bersama Ciung Wanara dan Hariang Banga","Make a stand in the Courtyard of Time before Gua Kala, with Ciung Wanara and Hariang Banga"
+Q_MQ5_S1_OBJ,"Pertahankan Pelataran Waktu di depan Gua Kala bersama Ciung Wanara, Hariang Banga, dan para sekutu nusantara.","Defend the Platform of Time outside Gua Kala alongside Ciung Wanara, Hariang Banga, and your loyal allies."
 Q_MQ5_S2_OBJ,"Tentukan nasib nama Aria Kebonan sebelum masuk gua, di Batu Leluhur",Settle Aria Kebonan's name before the cave: decide at the Ancestors' Stone (Batu Leluhur)
-Q_MQ5_S3_OBJ,"Masuki Gua Kala: gambar aksara Ombak untuk membelah tirai Gerhana, lalu terobos ke dalam","Get into Gua Kala: draw the Ombak glyph to part the Eclipse veil, then fight your way inside"
-Q_MQ5_S4_OBJ,Apa yang Laras tinggalkan di gua? Temukan huruf La pudar di jalan timur dan jalani kenangannya,What did Laras leave in the cave? Find the faded letter La on the east road and relive its memory
+Q_MQ5_S3_OBJ,Belah tirai Gerhana abadi: goreskan aksara suci Ombak untuk membuka gerbang menuju sarang Batara Kala.,Part the eternal Eclipse curtain: trace the sacred Ombak glyph to breach the threshold into Batara Kala's domain.
+Q_MQ5_S4_OBJ,Rebut kembali aksara pertama nama Laras (La) dalam ingatan permainan kejar-kejaran pagi hari.,Reclaim the first letter of Laras's name (La) within the restored memory of the morning tag game.
 Q_MQ5_S5_OBJ,"Patahkan penjaga waktu: seberangi Pasir Jam Pasir dan hancurkan dua penjaga, barat dan timur","Break the time-wards: cross the Hourglass Sands and shatter the two wards, west and east"
 Q_MQ5_S6_OBJ,Hentikan bisikan nama curian: turuni Hutan Lupa dan bungkam pohon-pohon nama,Stop the stolen names whispering: descend into Hutan Lupa and silence the name-trees
-Q_MQ5_S7_OBJ,"Rebut kembali huruf Ra: bersihkan Jurang Lupa, lalu jalani kenangan dua cawan","Win back the letter Ra: clear the Abyss of Forgetting, then relive the memory of the two cups"
+Q_MQ5_S7_OBJ,Rebut kembali aksara kedua nama Laras (Ra) dalam ingatan dua cangkir teh hangat di teras rumah Ibu.,Reclaim the second letter of Laras's name (Ra) within the memory of the two warm tea cups on Ibu's porch.
 Q_MQ5_S8_OBJ,Hadapi masa lalumu: seberangi Jembatan Bayangan dan kalahkan gema legenda yang pernah kau lawan,Face your past: cross the Shadow Bridge and defeat the echoes of the legends you faced
 Q_MQG_TITLE,Wajah Pinjaman,The Borrowed Face
 Q_MQ0_S8_OBJ,"Hidupkan kembali ruwatan Semar, ritual penolak bala: periksa lampu di belakang kelir yang menyala.","Relive Semar's ruwatan, a protective ritual: examine the lamp behind the lit kelir."
-Q_MQG_S1_OBJ,"Cari jalan masuk: temui penjual ayam jago di gerbang barat, lalu susun rencana bersama Ciung.","Find a way in: meet the rooster seller at the west gate, then plan with Ciung Wanara."
-Q_MQG_S2_OBJ,"Cari tahu apa yang lewat Pasar Kuta: tanya informan, lalu baca manifes kereta.","Find out what moves through Pasar Kuta: ask the informant, then read the manifest."
-Q_MQG_S3_OBJ,Cari siapa yang mencurangi sayembara: kalahkan para pencurang di gudang Pasar Kuta.,Find who rigs the tournament: expose and defeat the riggers in the Pasar Kuta storehouse.
-Q_MQG_S4_OBJ,Raih izin masuk istana: menangkan kedua babak sayembara di arena alun-alun.,Earn an audience in the palace: win both bouts in the square's ring.
-Q_MQG_S5_OBJ,"Masuk ke istana: temui Uwa Lengser, abdi tua, lalu nyalakan petilasan di taman dalam.","Get into the palace: meet old servant Uwa Lengser, then light the inner garden shrine."
-Q_MQG_S6_OBJ,Cari jejak Laras di catatan istana: susup ke Balai Pustaka dan temui juru arsip Nyai Sekar.,Look for Laras in the records: sneak into the Balai Pustaka and meet archivist Nyai Sekar.
-Q_MQG_S7_OBJ,"Cari tahu apa yang istana sembunyikan: pecahkan teka-teki lampu-cermin, periksa catatan dikerik.","Find what the palace hides: solve the mirror-lamp puzzle, examine the scraped record."
-Q_MQG_S8_OBJ,"Capai kediaman putri istana: bersihkan halaman Kaputren yang dijaga, selatan arsip.",Reach the royal women's quarters: clear the guarded Kaputren courtyard.
+Q_MQG_S1_OBJ,Cari jalan menyusup ke Galuh: temui penjual ayam jago di gerbang barat dan dengarkan kabar sayembara istana.,Find a way into Galuh: meet the rooster seller at the west gate and learn about the royal tourney.
+Q_MQG_S2_OBJ,Kumpulkan kabar dari Pasar Kuta: tanyakan informasi pada pedagang dan bantu warga yang diperas prajurit istana.,Gather intel at Kuta Market: question the market informant and aid citizens extorted by corrupt palace guards.
+Q_MQG_S3_OBJ,Bersihkan arena aduan: kalahkan para pencurang sayembara yang menyebarkan racun di gelanggang ayam.,Clean up the cockfighting arena: defeat the crooked thugs rigging the royal tournament matches.
+Q_MQG_S4_OBJ,Raih izin masuk keraton: menangkan kedua babak sayembara adu ayam di alun-alun bersama Ciung Wanara.,Earn palace entry: win both rounds of the cockfighting tournament in the square alongside Ciung Wanara.
+Q_MQG_S5_OBJ,Menyusup ke dalam istana: temui Uwa Lengser di balik paviliun dan pelajari rahasia aksara samaran Ja.,Infiltrate the royal court: meet Uwa Lengser behind the pavilion and learn the disguise secrets of Aksara Ja.
+Q_MQG_S6_OBJ,Cari bukti asal-usul Ciung Wanara: susup ke Balai Pustaka istana dan temukan gulungan silsilah yang disembunyikan.,Uncover proof of Ciung's birthright: sneak into the palace archives and retrieve the hidden lineage scroll.
+Q_MQG_S7_OBJ,Buka lemari arsip rahasia: pecahkan teka-teki layar lampu istana untuk mengambil stempel kerajaan.,Unlock the secret archives: solve the palace shadow lamp riddle to retrieve the royal seal.
+Q_MQG_S8_OBJ,Tembus keputren istana: lewati pengawal istana yang waspada dan bersihkan halaman dalam dari mata-mata Tamperan.,Infiltrate the inner Kaputren: bypass the vigilant sentries and clear Tamperan's court spies from the courtyard.
 Q_MQ0_S7_HINT,Tekan {interact} pada setiap lampu minyak.,Press {interact} on each oil lamp.
 Q_SQ_S5_TITLE,Gema: Sangkuriang,Echo: Sangkuriang
 Q_SQ_S5_S1_OBJ,Minta boeh rarang pada si penenun,Ask the weaver for the boeh rarang
@@ -137,13 +137,13 @@ Q_SQ_S5_S2_OBJ,Hentikan Sangkuriang sebelum malam berakhir,Stop Sangkuriang befo
 Q_SQ_M5_TITLE,Gema: Seribu Candi,Echo: A Thousand Temples
 Q_SQ_M5_S1_OBJ,Hentikan Bandung Bondowoso di candi,Stop Bandung Bondowoso at the temples
 Q_MQ4_TITLE,Laut Tak Pernah Lupa,The Sea Never Forgets
-Q_MQ4_S1_OBJ,"Apa yang dilakukan Gerhana pada rumah? Masuki Desa Purwa, lalu uji kabut di mulut gua","See what the Eclipse did to home: enter Desa Purwa, then test the fog at the cave mouth"
-Q_MQ4_S2_OBJ,Apa yang mulai dilupakan desa? Tanyai pasangan tua dan penjaga lapak,What has the village begun to forget? Ask the old couple and the stall-keeper
-Q_MQ4_S3_OBJ,Jangan biarkan keluarga terlupa: tulis nama mereka di tiang pintu tiga rumah Desa Purwa,Keep families from being forgotten: write their names on three doorposts in Desa Purwa
+Q_MQ4_S1_OBJ,Kembali ke Desa Purwa di bawah Gerhana: uji kabut pekat yang menyelimuti mulut gua utara.,Return to Desa Purwa under the Eclipse: investigate the impenetrable void fog sealing the northern cave mouth.
+Q_MQ4_S2_OBJ,Temui warga desa yang kebingungan di alun-alun dan cari tahu mengapa ingatan mereka mulai memudar.,Speak with the bewildered villagers in the square and discover why their memories are fading.
+Q_MQ4_S3_OBJ,Pancangkan ingatan warga desa: tuliskan nama-nama keluarga di tiang pintu rumah mereka agar tak ditelan kabut.,Anchor the villagers' memories: write the family names upon their doorposts so the fog cannot erase their identities.
 Q_MQ4_S4_OBJ,"Apa arti kenang-kenangan Laras bagi Ibu? Taruh pita, papan gerobak, dan lembar Ka di rak Ibu","What do Laras's keepsakes mean to Ibu? Set the ribbon, wagon board and Ka strip on her shelf"
-Q_MQ4_S5_OBJ,Dengar apa kata kedua raja bersaudara: duduk di meja makan ibumu bersama mereka,Hear what the two brother-kings have to say: sit at your mother's dinner table
+Q_MQ4_S5_OBJ,"Duduk bersama di meja makan Ibu: satukan kedua saudara raja, Ciung Wanara dan Hariang Banga, dalam kedamaian.","Sit at Ibu's dinner table: unite the two brother-kings, Ciung Wanara and Hariang Banga, in newfound peace."
 Q_MQ4_S6_OBJ,Siapa yang mengambil nama Laras? Tanyai Aria Kebonan di panggung wayang hangus utara alun-alun,Who took Laras's name? Ask Aria Kebonan at the burned wayang stage north of the plaza
-Q_MQ4_S7_OBJ,"Bagaimana menuju laut selatan? Tanyai Semar, dalang desa, di sanggar","How do you reach the southern sea? Ask Semar, the village dalang, in the sanggar"
+Q_MQ4_S7_OBJ,Cari jalan menembus Gua Kala: tanyai Ki Semar tentang berkat samudra Ombak dari sang penguasa Laut Selatan.,Seek the key to breach Gua Kala: consult Ki Semar about the ocean's sacred Ombak blessing from the Southern Queen.
 Q_MQ4_S8_OBJ,"Menuju Segara Kidul, Laut Selatan: berjalan ke selatan lewat gerbang desa yang terbuka","Head for Segara Kidul, the Southern Sea: walk south through the opened village gate"
 Q_MQ4_S9_OBJ,"Capai pantai: istirahat di petilasan pasir hitam, lalu masuki Kampung Nelayan","Reach the shore: rest at the black-sand petilasan, then enter Kampung Nelayan"
 Q_SQ_K1_TITLE,Tukik Pulang ke Laut,Hatchlings Home to the Sea
@@ -160,10 +160,10 @@ Q_MQG_S9_OBJ,"Cari tempat Laras ditahan: pecahkan teka-teki layar, geledah kamar
 Q_MQ0_S3_HINT,"Panjat dengan {move}, lalu tekan {interact} di dekat Ciung Wanara.","Climb with {move}, then press {interact} near Ciung Wanara."
 Q_MQ0_S9_OBJ,"Capai Laras menembus kerumunan panik di depan kelir, selagi bayangan-bayangan menyerang.",Reach Laras through the panicked crowd at the kelir while shadow figures attack.
 Q_MQ1_S15_OBJ,"Keringkan jalan banjir agar sampai ke Penenun: putar dua roda sluis atas, lalu bicara dengannya.","Drain the flooded road to reach the Weaver: turn both upper sluice wheels, then talk."
-Q_MQ4_S10_OBJ,Siapa yang ingat lagu laut yang terlupa? Temui Mbah Wiryo dan penyelam muda Sari,Who remembers the forgotten sea song? Meet Mbah Wiryo and the young diver Sari
-Q_MQ4_S11_OBJ,Buat laut mau mendengar: bantu tiga keluarga nelayan mengingat tiga bait lagu laut,Make the sea listen: help three fishing families recall the three verses of the sea song
+Q_MQ4_S10_OBJ,Temui Mbah Wiryo sang juru kunci pesisir dan penyelam Sari untuk mempelajari kidung sakral Sedekah Laut.,Meet coastal juru kunci Mbah Wiryo and diver Sari to learn the sacred Sedekah Laut sea-song.
+Q_MQ4_S11_OBJ,Satukan kembali tiga bait kidung laut yang terlupa bersama para nelayan pantai di Segara Kidul.,Reassemble the three forgotten verses of the ocean hymn with the coastal fishermen of Segara Kidul.
 Q_MQ4_S12_OBJ,Bagaimana Mbah Wiryo memanggil nama ke laut? Jalani kenangan istrinya di batu pantai saat senja,How did Mbah Wiryo learn to call names to the sea? Live his wife's memory on the shore rock
-Q_MQ5_S9_OBJ,"Cari huruf terakhir, Sa: istirahat di petilasan terakhir, temui Semar, lalu cari di Jurang","Seek the last letter, Sa: rest at the last petilasan, speak with Semar, then search the Abyss"
+Q_MQ5_S9_OBJ,Rebut kembali aksara ketiga nama Laras (Sa) dalam ingatan ikatan nama di atas lontar sanggar Ki Semar.,Reclaim the third letter of Laras's name (Sa) within the memory of the sacred name-binding at Ki Semar's sanggar.
 Q_MQ2_S1_A,Dengarkan perekrut tepi barat,Hear the west-bank recruiter
 Q_MQ2_S1_B,Dengarkan perekrut tepi timur,Hear the east-bank recruiter
 Q_MQ2_S2_A,Petunjuk pasar,The market lead
@@ -179,8 +179,8 @@ Q_MQ0_S8_HINT,"Tekan {interact} pada lampu di belakang kelir, dan tetaplah di ca
 Q_MQ0_S1_DONE,"Aku mengejar Laras sampai ke sumur tua. Ia memanggil seekor kucing liar dengan nama aslinya, dan kucing itu datang padanya.","I chased Laras to the old well. She called a stray cat by its real name, and it came to her."
 Q_MQ0_S2_DONE,Kami minum teh melati bersama Ibu. Pasangan tua di sebelah rumah lalu memintaku menjemput Ciung.,"We drank jasmine tea with Ibu, and the old couple next door asked me to fetch Ciung."
 Q_MQ0_S3_DONE,"Aku memanjat punggung beringin, dan Ciung turun dengan telur anehnya di pelukan.","I climbed the banyan ridge, and Ciung came down holding his strange egg."
-Q_MQ0_S4_DONE,"Aku bertanya pada penjaga lapak. Katanya, seorang pria tinggi bertopeng polos menanyakan nama anak-anak tadi pagi.",I asked the stall-keeper. He said a tall man in a blank mask had been asking for children's names this morning.
-Q_MQ0_S5_DONE,Aku mendengar dari Semar bahwa nama tertulis menjaga seseorang tetap ada di dunia. Cepot sibuk mengomeli lampu-lampu sepanjang waktu.,Semar told me a written name keeps a person in the world. Cepot fussed about the lamps the whole time.
+Q_MQ0_S4_DONE,Cepot memperingatkan kami: peronda desa melihat pria jangkung bertopeng polos menanyai nama anak-anak. Semar menyuruh kami segera masuk.,Cepot warned us: village scouts spotted a tall man in a blank mask asking for children's names. Semar wants us inside at once.
+Q_MQ0_S5_DONE,Ki Semar menjelaskan bahwa upacara Ruwatan dan nama yang terukir di daun lontar akan melindungi jiwa kami dari Batara Kala.,Ki Semar explained that the Ruwatan ceremony and the names inscribed on the lontar will protect our souls from Batara Kala.
 Q_MQ0_S6_DONE,"Laras dan aku menulis nama kami di kedua ujung satu lontar, memakai pena bambu milik Semar.","Laras and I wrote our names at opposite ends of one lontar, using Semar's bamboo pen."
 Q_MQ0_S7_DONE,Aku dan Laras menyalakan empat lampu di sekeliling panggung saat senja turun.,Laras and I lit four lamps around the stage as dusk fell.
 Q_MQ0_S8_DONE,"Aku melihat Semar memainkan ruwatan di balik kelir: Batara Kala, Empat Segel, dan nama-nama anak dibacakan keras-keras.","I watched Semar play the ruwatan behind the kelir: Batara Kala, the Four Seals, and the children's names read aloud."
@@ -259,58 +259,58 @@ Q_SQ_S2_S5_OBJ,Kembalikan nama perempuan yang terlupa: bantu kepala desa memahat
 Q_MQ0_S10_OBJ,"Apa yang terjadi pada Laras? Tanya Ibu, lalu ambil separuh lontarnya di panggung yang terbakar.","What happened to Laras? Ask Ibu, then recover her half of the lontar at the burned stage."
 Q_MQ0_S11_OBJ,"Pahami lontar yang robek: bawa ke Semar di sanggar, pelajari aksara Ka, lalu rapalkan.","Make sense of the torn lontar: take it to Semar, learn the Ka glyph, then cast it."
 Q_MQ0_S12_OBJ,"Usir penyerbu Tanpa Rupa dari alun-alun, lalu lihat siapa yang menunggu di gerbang barat.","Drive the Faceless raiders from the square, then see who waits at the west gate."
-Q_MQ1_S16_OBJ,"Cari sumber danau yang naik: susuri jalan sungai terbendung, kalahkan penjaga Tanpa Rupa.","Find why the lake rises: follow the dammed river road, beating Faceless guards."
-Q_MQ1_S17_OBJ,Cari tahu sebabnya: periksa pohon tumbang yang baru ditebang di lereng timur danau.,Find out why the lake is rising: examine the freshly felled trees on the hillside east of the lake.
-Q_MQ1_S18_OBJ,"Cari tahu siapa yang menguasai tepi danau: bersihkan Tanpa Rupa dan Kuntilanak, periksa benda jatuhan.","Learn who holds the shore: clear Faceless and Kuntilanak, then examine what one dropped."
-Q_MQ1_S19_OBJ,Cari tahu mengapa ia menunggu di tepi danau: bicara dengannya dan pelajari aksara Ca.,Find out why she waits by the lake: speak with her and learn the Ca glyph.
+Q_MQ1_S16_OBJ,Temukan sumber luapan danau: susuri tepi sungai yang terbendung dan atasi penjaga kawah di hulu.,Find the source of the lake overflow: follow the dammed river trail and defeat the crater sentries upstream.
+Q_MQ1_S17_OBJ,Selidiki sumbatan danau: periksa gelondongan kayu tebangan kuno yang menahan aliran air ke lembah.,Investigate the lake blockage: inspect the ancient felled timber damming the waters from reaching the valley.
+Q_MQ1_S18_OBJ,Bebaskan tepi danau dari cengkeraman musuh: kalahkan laskar Tanpa Rupa yang menjaga kemah rahasia di tepi air.,Clear the lake shore from enemy control: defeat the Faceless vanguard guarding the secluded water camp.
+Q_MQ1_S19_OBJ,Dengarkan rahasia sang Ratu Buangan: bicara dengan Dewi Naganingrum di tepi danau untuk mempelajari aksara Ca.,Learn the exiled Queen's secret: speak with Dewi Naganingrum by the water to master the sacred Ca glyph.
 Q_MQ1_S20_OBJ,Capai petilasan atas kawah: lawan jalan menanjak gunung dan beristirahat di ujung jalan.,Reach the crater's upper shrine: fight up the volcano road and rest at the road's far end.
 Q_MQ1_S21_OBJ,Dengarkan apa yang Laras baca di sini: periksa suaranya di dekat petilasan atas.,Hear what Laras read here: listen to her voice by the upper shrine.
-Q_MQ1_S22_OBJ,Lewati Kapten Tanpa Rupa di bibir kawah dan periksa pecahan topeng di baliknya.,Get past the Faceless Captain on the crater rim and examine the mask fragment beyond.
-Q_MQ1_S23_OBJ,"Pahami perahu setengah jadi: periksa rusuknya untuk melihat malam Dayang Sumbi, putri legenda lama.",Understand the half-built boat: examine its ribs to relive Dayang Sumbi's night.
-Q_MQ1_S24_OBJ,"Hentikan Sangkuriang yang terbangun saat batu segel retak, lalu putuskan apa yang kau katakan pada Ciung.","Stop Sangkuriang, woken when the seal-stone cracked, then decide what to tell Ciung."
+Q_MQ1_S22_OBJ,Hadapi Kapten Tanpa Rupa di bibir kawah dan periksa pecahan prasasti segel perahu raksasa.,Confront the Faceless Captain at the crater rim and inspect the broken seal stone of the giant boat.
+Q_MQ1_S23_OBJ,Selidiki kerangka perahu Sangkuriang: periksa lunas kayunya untuk mengetahui titik lemah amukan api kawah.,Examine the ribs of Sangkuriang's boat: inspect the timbers to locate the weak points in the crater's wrath.
+Q_MQ1_S24_OBJ,Tenangkan amarah Sangkuriang yang terbangun: bentangkan kain Boeh Rarang dan kalahkan wujud amuknya di kawah.,Calm the awakened fury of Sangkuriang: unfurl the Boeh Rarang cloth and defeat his raging avatar at the rim.
 Q_MQG_S10_OBJ,"Curi dengar rencana Pangeran Hariang Banga, lalu buka lorong ke halaman sel.","Overhear Prince Hariang Banga's plans, then open the passage to the cell yard."
 Q_MQG_S11_OBJ,Capai sel sebelum kereta tahanan berangkat: bertempurlah menuruni tangga.,Reach the cells before the prisoner wagon leaves: fight down the stairs.
 Q_MQG_S12_OBJ,Cegah Laras dibawa pergi: hentikan pengawal Tanpa Rupa selagi keretanya melaju ke timur.,Stop Laras being carried off: halt the Faceless escort as her wagon speeds east.
 Q_MQG_S13_OBJ,"Cari tahu apa yang Laras tinggalkan: kalahkan penjaga sel, baca pesannya di dinding.","Find what Laras left behind: beat the cell guards, then read her message on the wall."
 Q_MQG_S14_OBJ,Lihat apa yang Laras lihat: mainkan ingatannya tentang kamar tamu dan kereta.,See what Laras saw: play as her in the memory of the guest chamber and the wagon.
-Q_MQG_S15_OBJ,Cari tahu apa yang diketahui sang pembelot: hadapi penjaga yang mengawasi Laras dan putuskan nasibnya.,Learn what the deserter knows: face the guard who watched Laras and decide his fate.
+Q_MQG_S15_OBJ,Temui Deserter Ranga yang bersembunyi: putuskan apakah akan memaafkannya atau menyerahkannya ke mahkamah istana.,Confront Deserter Ranga in hiding: decide whether to show him mercy or turn him over to the court tribunal.
 Q_MQG_S16_OBJ,Naik ke galeri atas istana tanpa terlihat: pakai jeruji arsip Balai Pustaka yang dibuka Laras.,Reach the palace's upper gallery unseen: use the archive grate Laras unlocked.
 Q_MQG_S17_OBJ,"Cari tahu siapa yang dihapus: periksa potret istana yang dikerik, lalu jalani ingatan Uwa Lengser.","Learn who was erased: examine the scraped court portrait, then live Uwa Lengser's memory."
 Q_MQG_S18_OBJ,"Cari tahu apa yang ditunjukkan pecahan topeng kedua: ambil di belakang singgasana, saksikan ingatannya.",Learn what the second mask fragment shows: take it behind the throne and watch its memory.
 Q_MQG_S19_OBJ,"Bersama Ciung Wanara dan pengawal lama Lengser, terobos ruang takhta dan kalahkan para penjaga serta sang juara.","With Ciung Wanara and Lengser's old guards, break into the throne room and defeat the guards and the champion."
-Q_MQG_S20_OBJ,Minta pertanggungjawaban sang raja atas Laras: hadapi dia di ruang takhta dan kalahkan.,Make the king answer for Laras: confront him in the throne room and defeat him.
+Q_MQG_S20_OBJ,Bongkar kejahatan Barma Wijaya: hadapi sang raja palsu di singgasana agung dan kembalikan takhta kepada pewaris sah.,Expose Barma Wijaya's tyranny: confront the false king on the high throne and restore Galuh to its rightful heir.
 Q_MQ2_S16_OBJ,"Cari tahu apa yang Laras baca: periksa pecahan lontarnya di petilasan, lalu mainkan ingatannya.","Learn what Laras read: examine her lontar fragment at the shrine, then relive her memory."
 Q_MQ2_S17_OBJ,Susul Laras lebih dalam: turun lewat ruang bawah tanah yang ia buka menuju ruang suci utama candi.,Follow Laras deeper: descend the crypt she unbarred to the temple's central sanctum.
 Q_MQ2_S18_OBJ,Dengarkan ingatan ruang suci: ikuti irama lesung dan lihat para dayang menumbuk padi.,Hear the sanctum's memory: follow the lesung rhythm and relive the women pounding rice.
-Q_MQ2_S19_OBJ,Akhiri malam Bandung Bondowoso: kalahkan dia dengan irama lesung dan aksara Ca.,End Bandung Bondowoso's night: defeat him with the lesung rhythm and the letter Ca.
+Q_MQ2_S19_OBJ,Hentikan pembangunan candi raksasa: kalahkan bayangan Bandung Bondowoso dengan irama Gejog Lesung fajar buatan.,Halt the construction of the demon causeway: defeat the avatar of Bandung Bondowoso using the dawn Gejog Lesung.
 Q_MQ2_S20_OBJ,Kembali ke perbatasan: ambil jalan pintas candi ke barat dan capai Sungai Pamali.,Get back to the border: take the temple shortcut west and reach the Pamali river.
 Q_MQ2_S21_OBJ,"Biarkan Nagawiru beristirahat: selesaikan pertarungan di tepi sungai, tulis namanya di Batu Pamali.","Let Nagawiru rest: clear the riverbank fight, then write his name on the Pamali stone."
 Q_MQ2_S22_OBJ,Dengarkan kisah dua saudara yang membagi tanah: saksikan wayang kulit Ki Sumarto.,Hear the tale of two brothers who split the land: watch Ki Sumarto's wayang kulit.
 Q_MQ2_S23_OBJ,Cari tahu apa yang tak Hariang Banga kirim: baca surat untuk ibunya di kemah timur.,Learn what Hariang Banga never sent: read his unsent letters to his mother.
-Q_MQ2_S24_OBJ,"Tuntaskan di penyeberangan Pamali: duel Hariang Banga, saksikan gencatan senjata, pilih.","Settle it at the Pamali ford: duel Hariang Banga, see the river truce, then choose."
+Q_MQ2_S24_OBJ,Cegah pertumpahan darah saudara: hentikan duel Ciung Wanara dan Hariang Banga di atas jembatan Pamali.,Prevent brother from slaying brother: halt the duel between Ciung Wanara and Hariang Banga on the Pamali bridge.
 Q_MQ3_S15_OBJ,Capai timur lewat badai abu: ikuti penanda batu kuno menyeberangi Lautan Pasir,Reach the east through the ash-gale: follow the old stone waymarkers across the Sea of Sand
 Q_MQ3_S16_OBJ,"Kumpulkan tenaga: istirahat di petilasan ceruk pasir, lalu temui Hariang Banga di api unggun gurun","Regain your strength: rest at the sand-alcove petilasan, then see Hariang Banga by the fire"
 Q_MQ3_S17_OBJ,Apa yang ditinggalkan Laras di sini? Periksa serpihan lontarnya di ceruk pasir dan jalani kenangannya,What did Laras leave here? Examine her lontar fragment in the sand alcove and live her memory
 Q_MQ3_S18_OBJ,"Masuki Candi Gandring, Candi Timur: gunakan terowongan angin Laras untuk menembus bilik dalam","Get inside Candi Gandring, the Eastern Temple: use Laras's wind tunnel to breach the sanctum"
-Q_MQ3_S19_OBJ,Tenangkan Keris Gandring yang terjaga di halaman candi dengan pancang ketujuh Laras,Quiet the awakened Keris Gandring in the temple court with Laras's seventh stake
+Q_MQ3_S19_OBJ,Sucikan Keris Mpu Gandring: gunakan pasak penenang dan Aksara Ta untuk memadamkan dendam tujuh keturunan bilah itu.,Sanctify the Keris of Mpu Gandring: use the binding stakes and Aksara Ta to extinguish the blade's ancestral bloodlust.
 Q_MQ3_S20_OBJ,"Apa nasib bilah ini? Putuskan bersama Mpu Wirasana: tempa ulang, atau serahkan ke sungai","What becomes of the blade? Decide with Mpu Wirasana: reforge it, or give it to the river"
 Q_MQ3_S21_OBJ,"Lengkapi topeng: cari serpihan terakhir di tempat keris terbaring, lalu satukan di pintu kuil","Complete the mask: find the last fragment where the keris lay, then join it at the shrine door"
-Q_MQ3_S22_OBJ,"Hadapi Pemburu Tanpa Nama di halaman Candi Gandring, pertarungan yang kau tunggu-tunggu","Face the Nameless Hunter in the court of Candi Gandring, the fight you have been waiting for"
+Q_MQ3_S22_OBJ,"Bebaskan Sang Pemburu Tanpa Rupa: kalahkan wujud bayangannya dan ukirkan kembali nama aslinya, Aria Kebonan.","Liberate the Faceless Hunter: defeat his shadow vessel and carve his true name, Aria Kebonan, onto his mask."
 Q_MQ4_S13_OBJ,Terangi jalan lewat bakau yang banjir: nyalakan lagi tiga suar pasang bersama Sari,Light the way through the flooded mangrove: relight the three tidal beacons with Sari
 Q_MQ4_S14_OBJ,"Cobaan Suci I, Garis Obor: seberangi karang dan padamkan Lampor, roh lampu, untuk lewat","Sacred Trial I, the Torch-Lines: cross the reef and put out the Lampor lamp spirits to pass"
 Q_MQ4_S15_OBJ,Temukan kuil yang tenggelam: turuni Gua Karang yang bergema dan bersihkan jalan ke sana,Find the sunken shrine: descend into the echoing Gua Karang and clear the approach
 Q_MQ4_S16_OBJ,Apa yang ditemukan Laras di sini? Periksa tiga lonceng perunggu tenggelam dan jalani kenangannya,What did Laras find here? Examine the three sunken bronze bells to live her memory
 Q_MQ4_S17_OBJ,"Cobaan Suci II, Arus Jurang: lewati penjaga gua lewat gerbang pasang yang dibuka Laras","Sacred Trial II, the Abyssal Current: pass the guardians through the tidal gate Laras opened"
 Q_MQ4_S18_OBJ,"Siapa Ratu Selatan? Daki tebing badai, istirahat di kuil tebing, dan dengarkan kisahnya","Who is the Queen of the South? Climb the storm cliffs, rest at the shrine, and hear her tale"
-Q_MQ4_S19_OBJ,"Panggil nama Laras ke laut di Altar Tebing, dan pilih persembahan yang akan kau beri","Call Laras's name to the sea at the Cliff Altar, and choose what you will offer"
+Q_MQ4_S19_OBJ,Larung rakit sesaji Sedekah Laut di Altar Karang dan panggil nama Laras menembus deburan ombak pasang.,Release the Sedekah Laut offering raft at the Reef Altar and call Laras's name across the crashing breakers.
 Q_MQ4_S20_OBJ,"Capai Istana Laut: jalani jalan laut kuno, lalu istirahat di petilasan di sana","Reach the Sea Palace: walk the ancient sea causeway, then rest at the petilasan there"
 Q_MQ4_S21_OBJ,"Cobaan Suci III, Ombak: bertahan dari tiga gelombang di halaman luar Istana Laut","Sacred Trial III, the Waves: hold out against three waves in the Sea Palace's outer court"
-Q_MQ4_S22_OBJ,"Kuasai aksara Jawa Ka, Ombak: tulis di Altar Laut, lalu terima Kain Hijau","Master the Javanese glyph Ka, the Ombak: write it at the Sea Altar to receive the Kain Hijau"
+Q_MQ4_S22_OBJ,Terima berkah ombak Kanjeng Ratu Kidul: kuasai aksara Ombak untuk membelah tirai kegelapan Gua Kala.,Receive the wave blessing of Kanjeng Ratu Kidul: master the sacred Ombak glyph to part the void curtain of Gua Kala.
 Q_MQ5_S10_OBJ,Bagaimana menenangkan Kala? Periksa batu kisah Semar di Jurang untuk mendengar Murwakala,How do you soothe Kala? Examine Semar's tale stone in the Abyss to hear Murwakala
-Q_MQ5_S11_OBJ,"Pelajari cara meruwat Kala: gantikan dalang di kelir Semar, latih ruwatan dengan aksara Sunda, Jawa, Ombak","Learn to cleanse Kala: practise the ruwatan at Semar's kelir with the Sunda, Jawa and Ombak glyphs"
+Q_MQ5_S11_OBJ,Pelajari tata cara meruwat Batara Kala: ambil tempat di balik kelir wayang Ki Semar dan lantunkan kidung suci Murwakala.,Learn the sacred rites of Ruwatan: take your place behind Ki Semar's wayang screen and chant the hymn of Murwakala.
 Q_MQ5_S12_OBJ,Apa yang Laras tinggalkan di Jurang? Temukan serpihan lontarnya dan jalani kenangannya,What did Laras leave in the Abyss? Find her lontar fragment and relive her memory
-Q_MQ5_S13_OBJ,Bebaskan Laras dari bayangan Batara Kala: tenangkan sang raksasa waktu dengan Ruwatan Fajar,Free Laras from Batara Kala's shadow: calm the time giant with the Dawn Ruwatan
-Q_MQ5_S14_OBJ,"Bawa Laras pulang: tulis nama utuhnya, La - Ra - Sa, di lontarmu dan panggil dia","Bring Laras home: write her full name, La - Ra - Sa, on your lontar and call her"
+Q_MQ5_S13_OBJ,Tenangkan rasa lapar sang Waktu: lakukan Ruwatan Fajar bersama Laras untuk melepaskan Batara Kala dalam kedamaian.,Soothe the eternal hunger of Time: perform the Ruwatan of Dawn alongside Laras to grant Batara Kala peaceful rest.
+Q_MQ5_S14_OBJ,Bawa Laras pulang ke cahaya mentari: tuliskan nama lengkapnya (La - Ra - Sa) pada lontar pusaka yang telah bersatu.,Bring Laras home into the morning sun: write her full name (La - Ra - Sa) upon the reunited sacred lontar.
 Q_SQ_S3_S3_OBJ,Mainkan harmoninya bersama warga,Play the harmony with the villagers
 Q_SQ_S4_S3_OBJ,Lapor kembali kepada Cepot,Report back to Cepot
 Q_SQ_G1_TITLE,Akal Si Kabayan,The Wit of Si Kabayan

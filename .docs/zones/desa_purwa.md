@@ -257,8 +257,8 @@ Marker form `{zone: "desa_purwa", id: ...}`. Step numbers follow [quests.md](../
 | 0.1 catch Laras | `purwa_tag_cat`, `purwa_tag_banyan`, `purwa_tag_end` | `!` (54,40), `?` (55,35), `Z` (26,14, the well) | `area_entered:purwa_tag_end`, sets `mq0_d1` |
 | 0.2 tea and old couple | `ibu`, `purwa_old_couple` | `I` (62,58), `O` (84,61) | `talked_to:ibu` sets `mq0_d2`; `talked_to:purwa_old_couple` sets `mq0_d2b` |
 | 0.3 banyan ridge and Ciung | `purwa_banyan_climb`, `ciung_wanara` | `@` (7,77), `C` (6,77) | `puzzle_solved:purwa_banyan_climb`; `talked_to:ciung_wanara` sets `mq0_d3` |
-| 0.4 morning market (before the sanggar) | `purwa_stall` | `Y` (83,37) | `talked_to:purwa_stall`, sets `mq0_d6` |
-| 0.5 sanggar | `semar`, `cepot` | `M` (15,27), `e` (17,27) | `talked_to:semar` sets `mq0_d4`; `talked_to:cepot` sets `mq0_d4b` |
+| 0.4 sanggar entrance | `cepot` | `e` (17,27) | `talked_to:cepot`, sets `mq0_d6` |
+| 0.5 sanggar | `semar` | `M` (15,27) | `talked_to:semar`, sets `mq0_d4` |
 | 0.6 write names | `sanggar_lontar` | `i` (26,26) | `area_entered:sanggar_lontar`, sets `mq0_d5` |
 | 0.7 stage oil lamps | `purwa_stage_lamps` | `$` (73,11) | `puzzle_solved:purwa_stage_lamps`, sets `mq0_d6b` |
 | 0.8 the show | `kelir_lamp` (`k0_ruwatan`) | `q` (74,7) | `memory_done:k0_ruwatan`, sets `mq0_d7` |

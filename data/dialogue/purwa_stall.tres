@@ -8,6 +8,5 @@ npc_id = "purwa_stall"
 name_key = "NPC_PURWA_STALL_NAME"
 entries = Array[Dictionary]([
 	{"if": ["step:mq4=1"], "lines": ["@NPC_PURWA_STALL_NAME", "DLG_PURWA_STALL_V20", "@NPC_HERO_NAME", "DLG_PURWA_STALL_H20", "@NPC_PURWA_STALL_NAME", "DLG_PURWA_STALL_V21", "DLG_PURWA_STALL_V22", "@NPC_HERO_NAME", "DLG_PURWA_STALL_H21", "@NPC_PURWA_STALL_NAME", "DLG_PURWA_STALL_V23"], "do": []},
-	{"if": ["step:mq0=2", "flag:mq0_d5", "!flag:mq0_d6"], "lines": ["DLG_PURWA_STALL_V1", "DLG_PURWA_STALL_V2", "@NPC_HERO_NAME", "DLG_PURWA_STALL_H1", "@NPC_PURWA_STALL_NAME", "DLG_PURWA_STALL_V3"], "do": []},
 	{"if": [], "lines": ["DLG_PURWA_STALL_V4"], "do": []}
 ])

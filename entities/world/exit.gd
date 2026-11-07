@@ -3,6 +3,7 @@ extends Area2D
 
 const ARM_TIME := 0.5   # ignore the player right after load so arriving here never bounces back
 
+@export var id := ""
 @export var target_zone := ""   # a Zones.ZONES id (or a scene path)
 @export var spawn_id := ""
 @export var block := 1   # tiles per side of the exit's spot block (Zone.SCALE): the shape covers all of it

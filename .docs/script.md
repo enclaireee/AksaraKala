@@ -443,37 +443,36 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | P1 | DLG_CIUNG_WANARA_H102 | Kakek-nenekmu takut kau jatuh. | Your grandparents are afraid you'll fall. |
 | P1 | @NPC_CIUNG_WANARA_NAME | | |
 | P1 | DLG_CIUNG_WANARA_V103 | Mereka selalu takut. Aku tak akan jatuh. | They're always afraid. I won't fall. |
-| P1 | DLG_CIUNG_WANARA_V21 | Bicaramu aneh. Ya sudah, aku turun. Telurnya ikut. | You talk strange. Fine, I'm coming down. The egg comes too. |
+| P1 | DLG_CIUNG_WANARA_V21 | Iya, iya, aku turun sekarang! Telur ini kubawa pulang ya. Terima kasih sudah mengingatkan. | Alright, alright, I'm coming down! I'm bringing this egg home. Thanks for reminding me. |
 | P1 | @NPC_LARAS_NAME | | |
-| P1 | DLG_CIUNG_WANARA_L101 | Pasar dulu, Kak. Perutku bunyi dari tadi, dan katanya ada kabar aneh di sana. | Market first, Kak. My stomach's been growling, and they say there's strange news there. |
-| P2 | DLG_CIUNG_WANARA_V22 | Aku pulang dulu, lalu ke ruwatan. Jangan bilang siapa-siapa soal telur ini. | I'm going home, then to the ruwatan. Don't tell anyone about this egg. |
+| P1 | DLG_CIUNG_WANARA_L101 | Ayo langsung ke sanggar, Kak! Ki Semar dan Cepot sudah menunggu kita untuk persiapan Ruwatan. | Let's head straight to the sanggar, Kak! Ki Semar and Cepot are waiting for us to get ready for the Ruwatan. |
+| P2 | DLG_CIUNG_WANARA_V22 | Aku pulang ke rumah dulu ya. Sampai ketemu nanti malam di panggung wayang! | I'm heading home first. See you tonight at the wayang stage! |
 
-### Chapter 1, step 0.4: the market
-### purwa_stall (the market; name NPC_PURWA_STALL_NAME; new). Step 0.4 comes before the sanggar in v5, so the cond is the step, not `mq0_d5`
+### Chapter 1, step 0.4: Sanggar entrance (Cepot's warning)
+### cepot (the sanggar entrance, step 0.4; name NPC_CEPOT_NAME)
 | Entry | if | do |
 |-------|----|----|
 | 1 | `step:mq0=3` (0.4) | |
-| 2 | `quest:mq0=active` | |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| 1 | @NPC_CEPOT_NAME | | |
+| 1 | DLG_CEPOT_V01 | Waduh, kalian dari mana saja?! Syukurlah sudah sampai! Barusan peronda desa lapor ada orang asing jangkung bertopeng putih polos berkeliaran di dekat gerbang desa, terus nanya-nanyain nama anak-anak! | There you are! Thank goodness you made it! Village scouts just reported a tall stranger in a blank white mask lurking near the outskirts, asking for children's names! |
+| 1 | @NPC_HERO_NAME | | |
+| 1 | DLG_CEPOT_H01 | Orang asing bertopeng? Untuk apa dia menanyai nama anak-anak? | A masked stranger? What does he want with children's names? |
+| 1 | @NPC_CEPOT_NAME | | |
+| 1 | DLG_CEPOT_V02 | Mana kutahu! Pokoknya seram sekali! Makanya Bapak langsung menyuruh semua anak berkumpul di sanggar sekarang juga. | How should I know! It's creepy as hell! That's why Father ordered all the village kids into the sanggar right now. |
+| 1 | DLG_CEPOT_V03 | Ayo cepat masuk ke dalam, Bapak sudah menunggu kalian dari tadi! | Go on inside, quick! Father's been waiting for you both! |
+
+### purwa_stall (the market; ambient in Prologue, main role in Act V 4.2)
+| Entry | if | do |
+|-------|----|----|
+| 1 | `quest:mq0=active` | |
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_PURWA_STALL_NAME | | |
-| 1 | DLG_PURWA_STALL_V1 | Kau murid Semar, kan? Dengar, tadi pagi ada lelaki jangkung bertopeng polos menanyai nama anak-anak. | You're Semar's apprentice, aren't you? Listen, this morning a tall man in a blank mask was asking children's names. |
-| 1 | DLG_PURWA_STALL_V2 | Aku tak bilang apa-apa. Lapakku tutup sejam lebih awal hari ini. | I told him nothing. I'm shutting my stall an hour early today. |
-| 1 | DLG_PURWA_STALL_V5 | Dia tak menawar, tak membeli. Pembeli lain menyebut nama, dan dia mengulangnya pelan, seperti mencicipi. | He didn't haggle, didn't buy. Other shoppers said names, and he repeated them softly, like tasting. |
-| 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_PURWA_STALL_H101 | Mengulang nama? Untuk apa? | Repeating names? What for? |
-| 1 | @NPC_PURWA_STALL_NAME | | |
-| 1 | DLG_PURWA_STALL_V6 | Entah. Tapi kalau kau punya adik, simpan namanya di dalam rumah malam ini. | No idea. But if you have a little sister, keep her name indoors tonight. |
-| 1 | @NPC_LARAS_NAME | | |
-| 1 | DLG_PURWA_STALL_L1 | Tapi nama anak-anak dibacakan Semar malam ini. Itu untuk melindungi, kan? | But Semar reads the children's names tonight. That's to protect them, isn't it? |
-| 1 | @NPC_PURWA_STALL_NAME | | |
-| 1 | DLG_PURWA_STALL_V7 | Semoga begitu, Nak. Semoga. | I hope so, girl. I hope so. |
-| 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_PURWA_STALL_H1 | Topeng polos? Ke arah mana dia? | A blank mask? Which way did he go? |
-| 1 | @NPC_PURWA_STALL_NAME | | |
-| 1 | DLG_PURWA_STALL_V3 | Ke barat. Nanti malam kau ikut ruwatan, kan? Duduklah dekat Semar. | West. You're going to the ruwatan tonight? Sit near Semar. |
-| 2 | DLG_PURWA_STALL_V4 | Cabai segar, kemiri baru. Dan jangan tanya soal lelaki bertopeng. | Fresh chilli, new candlenut. And don't ask about the masked man. |
+| 1 | DLG_PURWA_STALL_V4 | Cabai segar, kemiri baru! Mau beli bumbu dapur, Nak? | Fresh chilli, new candlenut! Looking for kitchen spices, child? |
 
 ### Chapter 2: The Sanggar and the Ruwatan Night (0.5-0.8)
 

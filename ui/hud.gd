@@ -13,7 +13,7 @@ const UI_DIR := "res://assets/art/ui/"
 const LAG_HOLD := 0.4   # s before the cream lag chunk drains
 const LOW_HP := 0.25
 const MAX_OBJ := 4   # objective rows shown before "+n more"
-const TRACKER_W := 156   # TUNE: card width, text wraps inside
+const TRACKER_W := 140   # TUNE: tracker width, text wraps inside
 const MENU_HINT_SHOW := 25.0   # s the [Esc] hint stays before it fades
 
 var _bars := {}   # name -> [fill ColorRect, width, frame, lag ColorRect, well ColorRect]
@@ -38,6 +38,7 @@ var _tracker_panel: PanelContainer   # framed card around the tracker (ui.md 2, 
 var _tracker: VBoxContainer   # inside the card: title, rule, then the objectives (docs/quest_system.md 3.1)
 var _grp_hide: Control   # fades out while a dialogue is open: tracker, flasks, weapon, Ilmu, hints
 var _grp_bars: Control   # dims to 40% while a dialogue is open: the vitals
+var _dialogue_focus := false
 var _focus_tw: Tween
 var _hp_txt: Label   # "120/120" inside the HP bar
 var _dist_bg: ColorRect   # lacquer pill behind the distance label
@@ -154,10 +155,10 @@ func _ready() -> void:
 	_saved.visible = false
 	add_child(_saved)
 	_build_extras()
-	_tracker_panel = PanelContainer.new()   # a framed card under the vitals, never past x 164 (ui.md 2)
-	_tracker_panel.position = Vector2(6, 44)
+	_tracker_panel = PanelContainer.new()   # minimalistic floating quest HUD under vitals
+	_tracker_panel.position = Vector2(8, 48)
 	_tracker_panel.custom_minimum_size = Vector2(TRACKER_W, 0)
-	_tracker_panel.self_modulate = Color(1, 1, 1, 0.88)
+	_tracker_panel.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 	_tracker_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_tracker_panel.visible = false
 	_grp_hide.add_child(_tracker_panel)
@@ -189,6 +190,7 @@ func _ready() -> void:
 	ev.quest_started.connect(func(id: String) -> void:
 		_snap(id)
 		_push_banner("UI_Q_NEW", _title(id))
+		_show_step_hint(id)
 		refresh_arrow())
 	ev.quest_updated.connect(func(id: String) -> void:
 		_on_quest_updated(id)
@@ -219,11 +221,10 @@ func _ready() -> void:
 	refresh_objective()
 
 
-## The tracker (docs/quest_system.md 3.1): the tracked quest's title, every objective of its step (a multi-goal step
-## lists its sub-goals: [x] done, > the one the arrow follows, [ ] open) and the step's hint with live key names.
+## The tracker (docs/quest_system.md 3.1): the tracked quest's title and its current active objective.
 func refresh_objective() -> void:
 	var g := get_node("/root/Game")
-	var rows: Array = []   # [kind, text, colour, bullet]: kind "title", "obj" or "hint"
+	var rows: Array = []   # [kind, text, colour, bullet]: kind "title" or "obj"
 	for id in g._tracked():
 		var st: QuestStep = g.current_step(id)
 		if st == null:
@@ -233,31 +234,38 @@ func refresh_objective() -> void:
 		if st.all.is_empty():
 			rows.append(["obj", g.quest_objective_text(id), Color.WHITE, "bullet_now"])
 		else:
-			for c in g.step_checklist(id):
-				rows.append(["obj", str(c.text), DIM if c.done else (GOLD if c.active else Color.WHITE),
-						"bullet_check" if c.done else "bullet_now" if c.active else "bullet_open"])
-		var key := st.objective.replace("_OBJ", "_HINT")
-		if tr(key) != key:
-			var keys := {}
-			for a in ["interact", "cast", "attack", "dodge", "menu"]:
-				keys[a] = g.key_name(a)
-			keys.move = "%s%s%s%s" % [g.key_name("move_up"), g.key_name("move_left"), g.key_name("move_down"), g.key_name("move_right")]
-			rows.append(["hint", tr(key).format(keys), DIM, ""])
+			var checklist: Array = g.step_checklist(id)
+			var total: int = checklist.size()
+			var done_count: int = 0
+			var active_text := ""
+			for c in checklist:
+				if c.done:
+					done_count += 1
+				elif c.active and active_text == "":
+					active_text = str(c.text)
+			if active_text == "":
+				for c in checklist:
+					if not c.done:
+						active_text = str(c.text)
+						break
+			if active_text == "" and not checklist.is_empty():
+				active_text = str(checklist[0].text)
+			if active_text == "":
+				active_text = g.quest_objective_text(id)
+			if total > 1:
+				active_text += " (%d/%d)" % [done_count, total]
+			rows.append(["obj", active_text, Color.WHITE, "bullet_now"])
 		break
 	var sig := str(rows)
 	if sig == _tracker_sig:
 		return
 	_tracker_sig = sig
 	for c in _tracker.get_children():
+		_tracker.remove_child(c)
 		c.queue_free()
 	_tracker_panel.visible = not rows.is_empty()
-	var inner := TRACKER_W - 12.0   # card width minus its 6 px margins
-	var shown := 0
+	var inner := float(TRACKER_W)
 	for r in rows:
-		if r[0] == "obj":
-			shown += 1
-			if shown > MAX_OBJ:   # a long checklist: the rest collapses into "+n"
-				continue
 		var l := Label.new()
 		l.text = r[1]
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -266,14 +274,8 @@ func refresh_objective() -> void:
 		_outlined(l)
 		if r[0] == "title":
 			l.theme_type_variation = &"Heading"
-			l.add_theme_color_override("font_color", r[2])
 			l.custom_minimum_size.x = inner
 			_tracker.add_child(l)
-			var rule := ColorRect.new()   # 1 px gold rule under the title
-			rule.color = Color("7A5A22")
-			rule.custom_minimum_size = Vector2(inner, 1)
-			rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			_tracker.add_child(rule)
 		elif r[0] == "obj":
 			var row := HBoxContainer.new()
 			row.add_theme_constant_override("separation", 3)
@@ -289,17 +291,8 @@ func refresh_objective() -> void:
 			l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			row.add_child(l)
 			_tracker.add_child(row)
-		else:
-			l.custom_minimum_size.x = inner
-			_tracker.add_child(l)
-	var extra := shown - MAX_OBJ
-	if extra > 0:
-		var more := Label.new()
-		more.text = tr("UI_Q_MORE") % extra
-		more.add_theme_color_override("font_color", DIM)
-		more.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_tracker.add_child(more)
 	_tracker_panel.size = Vector2(TRACKER_W, 0)   # re-fit to the new rows
+	_tracker_panel.reset_size()
 
 
 ## Remembers a quest's step and finished sub-goal count, to tell later whether an update is news.
@@ -309,6 +302,21 @@ func _snap(id: String) -> void:
 	for i in 32:
 		bits += (int(q.get("all", 0)) >> i) & 1
 	_sub_seen[id] = [int(q.get("step", 0)), bits]
+
+
+## Shows step-specific control hints via toasts when newly activated.
+func _show_step_hint(id: String) -> void:
+	var g := get_node("/root/Game")
+	var st: QuestStep = g.current_step(id)
+	if st == null:
+		return
+	var key := st.objective.replace("_OBJ", "_HINT")
+	if tr(key) != key:
+		var keys := {}
+		for a in ["interact", "cast", "attack", "dodge", "menu"]:
+			keys[a] = g.key_name(a)
+		keys.move = "%s%s%s%s" % [g.key_name("move_up"), g.key_name("move_left"), g.key_name("move_down"), g.key_name("move_right")]
+		_push_toast(tr(key).format(keys))
 
 
 ## A new step or a finished sub-goal: banner with the objective now in force, and a gold pulse on the tracker.
@@ -321,6 +329,8 @@ func _on_quest_updated(id: String) -> void:
 		var t: String = get_node("/root/Game").quest_objective_text(id)
 		if t != "":
 			_push_banner("UI_Q_UPDATED", t)
+		if now[0] != seen[0]:
+			_show_step_hint(id)
 	_pulse_tracker()
 
 
@@ -343,15 +353,16 @@ func _update_banner(delta: float) -> void:
 			_banner_root.visible = false
 	if _banner_left <= 0.0 and not _banners.is_empty():
 		var b: Array = _banners.pop_front()
-		_banner_head.text = b[0]
+		_banner_head.text = "◆ %s ◆" % b[0]
 		_banner_body.text = b[1]
 		_banner_root.visible = true
 		_banner_left = BANNER_TIME
-	if _banner_root.visible:   # slide down, hold, fade
-		var k := clampf((BANNER_TIME - _banner_left) / 0.3, 0.0, 1.0)
+	if _banner_root.visible:   # slide in from top, hold, fade
+		var k := clampf((BANNER_TIME - _banner_left) / 0.25, 0.0, 1.0)
 		k = 1.0 - (1.0 - k) * (1.0 - k)
-		_banner_root.position.y = lerpf(16.0, 24.0, k)
-		_banner_root.modulate.a = minf(k, clampf(_banner_left / 0.5, 0.0, 1.0))
+		_banner_root.position.x = 158.0
+		_banner_root.position.y = lerpf(-18.0, 8.0, k)
+		_banner_root.modulate.a = minf(k, clampf(_banner_left / 0.4, 0.0, 1.0))
 
 
 ## Red flash on the bar whose resource ran out (ui.md 2).
@@ -386,7 +397,7 @@ func _rect(pos: Vector2, sz: Vector2, col: Color, parent: Node = self) -> ColorR
 
 func _outlined(l: Label) -> void:
 	l.add_theme_color_override("font_outline_color", OUTLINE)
-	l.add_theme_constant_override("outline_size", 1)
+	l.add_theme_constant_override("outline_size", 2)
 
 
 func _ui_tex(n: String) -> Texture2D:
@@ -405,6 +416,16 @@ func _group() -> Control:
 ## Dialogue open: the tracker, flasks, weapon, Ilmu and hints fade out and the vitals dim to 40%, so nothing
 ## competes with the speech (ui.md 2). Back to full on close. 0.2 s.
 func set_focus(on: bool) -> void:
+	_dialogue_focus = on
+	if on:
+		if is_instance_valid(_arrow):
+			_arrow.visible = false
+		if is_instance_valid(_diamond):
+			_diamond.visible = false
+		if is_instance_valid(_dist):
+			_dist.visible = false
+		if is_instance_valid(_dist_bg):
+			_dist_bg.visible = false
 	if _focus_tw != null and _focus_tw.is_valid():
 		_focus_tw.kill()
 	_focus_tw = create_tween().set_parallel(true)
@@ -427,41 +448,56 @@ func _nine(tex: String, rect: Rect2, m: Array, parent: Node = null) -> NinePatch
 
 
 func _build_extras() -> void:
+	const TOAST_W := 160.0
 	_toast_root = Control.new()
-	_toast_root.position = Vector2(90, 6)
-	_toast_root.size = Vector2(300, 14)
+	_toast_root.position = Vector2(160, 8)
+	_toast_root.size = Vector2(TOAST_W, 16)
 	_toast_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_toast_root.visible = false
 	add_child(_toast_root)
-	_rect(Vector2.ZERO, Vector2(300, 13), Color(OUTLINE, 0.6), _toast_root)
-	_toast_rule = _rect(Vector2(150, 13), Vector2(0, 1), Color("C9A24A"), _toast_root)   # gold rule grows from the centre
+	_nine("panel", Rect2(0, 0, TOAST_W, 16), [6, 6, 6, 6], _toast_root)
+	_toast_rule = _rect(Vector2(80, 15), Vector2(0, 1), Color("C9A24A"), _toast_root)   # gold rule grows from the centre
 	_toast = Label.new()
-	_toast.position = Vector2(0, 1)
-	_toast.size = Vector2(300, 12)
+	_toast.position = Vector2(4, 2)
+	_toast.size = Vector2(TOAST_W - 8, 12)
 	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_toast.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_toast.add_theme_font_size_override("font_size", 7)
 	_toast.add_theme_color_override("font_color", GOLD)
+	_toast.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_outlined(_toast)
 	_toast.visible = false
 	_toast_root.add_child(_toast)
+
+	const BANNER_W := 164.0
+	const BANNER_H := 24.0
 	_banner_root = Control.new()
-	_banner_root.position = Vector2(90, 24)
-	_banner_root.size = Vector2(300, 34)
+	_banner_root.position = Vector2(158, 8)
+	_banner_root.size = Vector2(BANNER_W, BANNER_H)
 	_banner_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_banner_root.visible = false
 	add_child(_banner_root)
-	_rect(Vector2.ZERO, Vector2(300, 34), Color(OUTLINE, 0.7), _banner_root)
-	_rect(Vector2(0, 0), Vector2(300, 1), Color("C9A24A"), _banner_root)
+	_nine("panel", Rect2(0, 0, BANNER_W, BANNER_H), [6, 6, 6, 6], _banner_root)
+	_rect(Vector2(6, BANNER_H - 1), Vector2(BANNER_W - 12, 1), Color("C9A24A", 0.75), _banner_root)
 	_banner_head = Label.new()
-	_banner_head.position = Vector2(0, 2)
-	_banner_head.size = Vector2(300, 10)
+	_banner_head.position = Vector2(4, 2)
+	_banner_head.size = Vector2(BANNER_W - 8, 9)
 	_banner_head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_banner_head.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_banner_head.add_theme_font_size_override("font_size", 7)
 	_banner_head.add_theme_color_override("font_color", GOLD)
+	_banner_head.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_outlined(_banner_head)
 	_banner_root.add_child(_banner_head)
 	_banner_body = Label.new()
-	_banner_body.position = Vector2(6, 13)
-	_banner_body.size = Vector2(288, 20)
+	_banner_body.position = Vector2(4, 12)
+	_banner_body.size = Vector2(BANNER_W - 8, 10)
 	_banner_body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_banner_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_banner_body.max_lines_visible = 2
+	_banner_body.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_banner_body.add_theme_font_size_override("font_size", 8)
+	_banner_body.add_theme_color_override("font_color", CREAM)
+	_banner_body.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_outlined(_banner_body)
 	_banner_root.add_child(_banner_body)
 	_diamond = Node2D.new()   # floats over an on-screen target
 	var dk := Polygon2D.new()
@@ -568,7 +604,7 @@ func _update_arrow() -> void:
 	_diamond.visible = false
 	_dist.visible = false
 	_dist_bg.visible = false
-	if _tnode == null or not is_instance_valid(_tnode) or not _tnode.is_inside_tree():
+	if _dialogue_focus or _tnode == null or not is_instance_valid(_tnode) or not _tnode.is_inside_tree():
 		_arrow.visible = false
 		return
 	var p: Vector2 = get_viewport().get_canvas_transform() * _tnode.global_position
@@ -630,10 +666,11 @@ func _update_toast(delta: float) -> void:
 	if _toast_root.visible:   # slide in from the top, hold, fade (a pure function of the timer)
 		var k := clampf((TOAST_TIME - _toast_left) / 0.25, 0.0, 1.0)
 		k = 1.0 - (1.0 - k) * (1.0 - k)
-		_toast_root.position.y = lerpf(-10.0, 6.0, k)
+		_toast_root.position.x = 160.0
+		_toast_root.position.y = lerpf(-15.0, 8.0, k)
 		_toast_root.modulate.a = minf(k, clampf(_toast_left / 0.4, 0.0, 1.0))
-		_toast_rule.size.x = 300.0 * k
-		_toast_rule.position.x = 150.0 - _toast_rule.size.x / 2.0
+		_toast_rule.size.x = (160.0 - 12.0) * k
+		_toast_rule.position.x = 80.0 - _toast_rule.size.x / 2.0
 
 
 ## Placeholder drawing, no asset: a small glyph box (open at the top right) with a zigzag crack through it.

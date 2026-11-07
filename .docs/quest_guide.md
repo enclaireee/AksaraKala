@@ -24,14 +24,13 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
    - [ ] Solve the climbing puzzle along the banyan's ridge.
    - [ ] Talk to Ciung Wanara, perched up in the tree.
    - Tip: Climb with WASD, then press E near Ciung Wanara.
-4. Walk the morning market on the square with Laras, and ask the stall-keeper whether he saw the stranger.  
+4. Head straight to the sanggar with Laras and speak with Cepot at the entrance about the commotion in the village.  
    *Where: Desa Purwa*
-   - Tip: Press E near the stall-keeper, at the market stalls on the square.
-5. Go to the sanggar, Semar's puppet hut west of the village, and ask the dalang why written names matter.  
+   - Tip: Press E near Cepot outside the sanggar doors, on the west side of the village.
+5. Enter the sanggar and speak with Ki Semar to prepare the sacred lontar before tonight's Ruwatan.  
    *Where: Desa Purwa*
    - [ ] Talk to Semar, the village dalang, inside the sanggar.
-   - [ ] Talk to Cepot, standing beside Semar.
-   - Tip: Enter the sanggar and press E on Semar, then on Cepot.
+   - Tip: Enter the sanggar and press E on Semar.
 6. Write your name and Laras's at opposite ends of her palm-leaf lontar on the sanggar table, so you both stay recorded.  
    *Where: Desa Purwa*
    - Tip: Walk with WASD to the lontar table in the sanggar.

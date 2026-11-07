@@ -199,10 +199,12 @@ def collect():
                 continue
             marker_id = first_id(row["marker"])
             area = first_id(row["area"])
+            if not area:
+                area = Path(doc).stem
             entry = {"on": on, "all": all_, "alt": alt, "set_flag": flag}
             if count > 1:
                 entry["count"] = count
-            if marker_id and area:
+            if marker_id:
                 entry["marker"] = (area, marker_id)
             steps.setdefault((q, n), entry)
     return steps
@@ -219,6 +221,9 @@ def fmt_step(q, n, st, keys):
     if st.get("alt"):
         lines.append("alt = %s" % gd(st["alt"]))
     if st.get("all"):
+        for i, sub in enumerate(st["all"]):
+            if "objective" not in sub or not sub["objective"]:
+                sub["objective"] = "Q_%s_S%d_P%d" % (q.upper(), n, i + 1)
         lines.append("all = %s" % gd(st["all"]))
     if st.get("set_flag"):
         lines.append('set_flag = "%s"' % st["set_flag"])

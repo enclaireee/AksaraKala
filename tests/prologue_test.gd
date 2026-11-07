@@ -63,13 +63,10 @@ func run() -> void:
 	await frames(3)
 	check(current_scene != null and current_scene.scene_file_path == "res://ui/class_select.tscn", "skip ends at class select")
 
-	# Variants and name substitution: card 2 uses _ALT while its flag is set; {name}/{they} are filled.
+	# Variants and name substitution: card 2 uses _ALT while its flag is set; {name} is filled.
 	var game := root.get_node("Game")
 	game.hero_name = "Ayu"
-	game.hero_pronoun = "she"
-	check(game.fmt("{name} {They} {them} {their} {they}") == "Ayu She her her she", "fmt: %s" % game.fmt("{name} {They} {them} {their} {they}"))
-	game.hero_pronoun = "he"
-	check(game.fmt("{They}/{they}/{them}/{their}") == "He/he/him/his", "fmt he")
+	check(game.fmt("{name} {They} {them} {their} {they}") == "Ayu Ayu Ayu Ayu's Ayu", "fmt: %s" % game.fmt("{name} {They} {them} {their} {they}"))
 	game.hero_name = "Jaka"
 	game.hero_pronoun = "they"
 	game.flags.clear()
