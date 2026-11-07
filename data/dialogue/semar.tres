@@ -15,7 +15,7 @@ entries = Array[Dictionary]([
 	{"if": ["step:mq0=6"], "lines": ["DLG_SEMAR_V7"], "do": []},
 	{"if": ["step:mq0=7"], "lines": ["DLG_SEMAR_V8"], "do": []},
 	{"if": ["step:mq0=8"], "lines": ["DLG_SEMAR_V9"], "do": []},
-	{"if": ["step:mq4=4"], "lines": ["DLG_SEMAR_V35", "@NPC_HERO_NAME", "DLG_SEMAR_H35", "@NPC_SEMAR_NAME", "DLG_SEMAR_V36", "DLG_SEMAR_V37"], "do": []},
+	{"if": ["step:mq4=6"], "lines": ["DLG_SEMAR_V35", "@NPC_HERO_NAME", "DLG_SEMAR_H35", "@NPC_SEMAR_NAME", "DLG_SEMAR_V36", "DLG_SEMAR_V37"], "do": []},
 	{"if": ["quest:mq4=active"], "lines": ["DLG_SEMAR_V10"], "do": []},
 	{"if": ["quest:mq5=active"], "lines": ["DLG_SEMAR_V14"], "do": []},
 	{"if": ["flag:mq5_4"], "lines": ["DLG_SEMAR_V15"], "do": []},

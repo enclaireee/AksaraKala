@@ -301,7 +301,7 @@ Small own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `g
 - The one action: none (walk only).
 - Goal: Relive the day Ranga's name was taken at the camp and the syllable cloth was hidden.
 - Checkpoints: none (no fail state).
-- Layout: S(2,8) -> T(10,8):DLG_MEM_C3_1 -> T(18,8):DLG_MEM_C3_2 -> E(26,8):DLG_MEM_C3_3
+- Layout: Stand(2,8) -> T(10,8):DLG_MEM_C3_1 -> T(18,8):DLG_MEM_C3_2 -> E(26,8):DLG_MEM_C3_3
 
 ## Flow
 Arrive at `sk_pantai` (`from_desa_purwa`, green glow on the horizon; 4.8) > petilasan `kidul_1` with Semar, teach encounters (Lampor, Ula Segara) (4.9) > west to `sk_nelayan`, beat `song_hook`, Mbah Wiryo and Sari (4.10) > the net yard and the shore in `sk_pantai`: three families, three verses (4.11), the K8 memory and the dusk talk (4.12) > `sk_nelayan` east to `sk_bakau`: the beacons with Sari (4.13) > `sk_karang`: Trial I across the reef, the thread clue, the tide-pool puzzle, the Ula Segara miniboss at the stair foot (4.14) > east to `sk_gua`: the bell marks and the approach fight (4.15), LC5 (4.16), Trial II (4.17) with Sari at the mouth > north to `sk_tebing`: two cliff fights, `kidul_3`, the K9 memory (4.18), the cliff altar and Choice 5 (4.19) > back down to `sk_karang` and the causeway (kabut `mq4_offering`, `causeway_post`) > `sk_keraton`: `kidul_2` with Semar (4.20), the Trial of the Waves (4.21), Nyi Roro Kidul speaks once, Ombak and the Kain Hijau at the Sea Altar (4.22) > kabut `mq4_9` gone > `gk_mulut`. Optional: the cove, chests, the turtle nest, `sc:sk_gerbang` and `sc:ts_sk`.

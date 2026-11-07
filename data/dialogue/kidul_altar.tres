@@ -7,6 +7,6 @@ script = ExtResource("1")
 npc_id = "kidul_altar"
 name_key = "NPC_KIDUL_ALTAR_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq4=8"], "lines": ["DLG_KIDUL_ALTAR_V1", "@NPC_HERO_NAME", "DLG_KIDUL_ALTAR_H1"], "do": ["write:ombak:jawa_ka", "learn:jawa_ka", "give:kain_hijau"]},
+	{"if": ["step:mq4=21"], "lines": ["DLG_KIDUL_ALTAR_V1", "@NPC_HERO_NAME", "DLG_KIDUL_ALTAR_H1"], "do": ["write:ombak:jawa_ka", "learn:jawa_ka", "give:kain_hijau"]},
 	{"if": [], "lines": ["DLG_KIDUL_ALTAR_V2"], "do": []}
 ])

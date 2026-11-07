@@ -3,7 +3,7 @@ extends SceneTree
 
 const SIGNALS := ["talked_to", "item_picked", "boss_defeated", "area_cleared", "area_entered", "zone_entered",
 	"petilasan_activated", "glyph_learned", "spell_cast", "class_chosen", "enemy_killed", "name_written",
-	"clue_examined", "memory_done"]
+	"clue_examined", "memory_done", "puzzle_solved", "trial_completed"]
 var fails := 0
 
 

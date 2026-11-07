@@ -1,40 +1,60 @@
 extends SceneTree
-## Scripted playthrough of Mataram (zones/mataram.md critical path): MQ2 start to end (Story v3.1: from kg_pamali to the Hariang Banga duel and the truce beat) plus SQ-M1 to M4,
-## in the real zones. Every hop and target must be walkable from where the player stands (physics on
-## layer 1: walls, live kabut, closed gates). Talks run the real dialogue, petilasans rest, encounters
-## and the boss are killed by hand. Run: $GODOT --headless --path . -s tests/mataram_play_test.gd
+## Scripted playthrough of Mataram (Story v5: MQ2 2.1-2.24, zones/mataram.md critical path) from the
+## border market to the Hariang Banga duel and the truce beat, in the real zones. Every hop and target
+## must be walkable from where the player stands (physics on layer 1: walls, live kabut, closed gates).
+## Talks run the real dialogue, petilasans rest, clues and memories play, encounters and bosses are
+## killed by hand. Run: $GODOT --headless --path . -s tests/mataram_play_test.gd
 ## ponytail: enemies are killed by fiat and the player is invincible; feel is the user's playtest.
 
 const ROUTE := [
 	"q:mq2=active:0",
-	"go:kg_alun", "go:kg_pamali", "go:mt_gapura", "do:mataram_gerbang", "q:mq2=active:1",
-	"go:mt_sawah", "do:mataram_1", "q:mq2=active:2",
-	"do:nawang_wulan", "q:sq_m1=active:1", "do:lumbung", "do:selendang_nawang", "do:nawang_wulan", "q:sq_m1=done",
-	# 2.3 the three leads (one `all` step, any order): market, ruins, graveyard. Each sets its lead flag.
-	"go:mt_pasar", "do:mataram_pasar", "flag:lead_pasar", "q:mq2=active:2",
-	"do:pande_besi", "q:sq_m3=active:1",
-	"go:mt_reruntuhan", "do:pak_karto", "do:mataram_ruins", "flag:lead_ruins", "q:mq2=active:2",
-	"go:mt_kuburan", "do:mataram_kuburan", "flag:lead_kuburan", "q:mq2=active:3", "beat:hunter_war",
-	# 2.4 Ha from Ki Sumarto, 2.5 Na from the Arca base, 2.6 Ca from the lesung women.
-	"go:mt_reruntuhan", "go:mt_sawah", "do:sc:mt_ruin_sawah", "go:mt_pasar", "do:mataram_dalang", "q:mq2=active:4", "do:mataram_dalang", "q:sq_m4=active:1",
-	"do:wewe_neighbor", "q:sq_m2=active:1", "do:wewe_parents",   # SQ-M2 and SQ-M4 unlock with 2.4 (mq2_2)
-	"go:mt_sawah", "go:mt_reruntuhan", "do:arca_base", "q:mq2=active:5",
-	"do:gong_ageng", "q:sq_m4=active:2",
-	"go:mt_sawah", "do:lesung_women", "q:mq2=active:6",
-	# 2.7 the foothill blockade, 2.8 Ra from the juru kunci.
-	"go:mt_reruntuhan", "go:mt_kuburan", "do:wewe_hill", "do:wewe_parents_2", "q:sq_m2=active:3", "go:mt_wetan", "do:mataram_batu", "q:mq2=active:7", "do:juru_kunci", "q:mq2=active:8",
-	"go:mt_tegal", "do:tuyul_hideout", "do:tuyul_leader", "q:sq_m3=active:3",
-	"go:mt_sawah", "go:mt_pasar", "do:pande_besi", "q:sq_m3=done", "do:wewe_neighbor", "q:sq_m2=done",
-	"do:mataram_dalang", "q:sq_m4=done",
-	# 2.9 the temple gate, 2.10 the camp (the turn), then the temple petilasan and the Laras beat.
-	"go:mt_reruntuhan", "go:mt_wetan", "go:mt_candi", "do:mataram_candi", "q:mq2=active:9", "do:mataram_camp", "q:mq2=active:10", "beat:camp",
-	"do:mataram_2", "beat:laras_3",
-	# 2.11 Bandung Bondowoso, 2.12 the Pamali stone, 2.13 the duel.
-	"do:bandung_bondowoso", "q:mq2=active:11",
-	"go:mt_gapura", "do:sc:mt_candi_gapura", "go:kg_pamali",
-	"do:pamali_stone", "write:nagawiru:jawa_na,sunda_ga", "q:mq2=active:12", "beat:ford",
+	# 2.1 both recruiters at the border market (`all`)
+	"go:kg_alun", "go:kg_pamali", "go:mt_gapura",
+	"do:recruiter_a", "do:recruiter_b", "q:mq2=active:1",
+	# 2.2 the blockade, then rest at mataram_1
+	"do:mataram_gerbang", "go:mt_sawah", "do:mataram_1", "q:mq2=active:2",
+	# 2.3 defend Ki Sumarto's stage
+	"go:mt_pasar", "do:mataram_pasar", "q:mq2=active:3",
+	# 2.4 Ha from Ki Sumarto
+	"do:mataram_dalang", "q:mq2=active:4",
+	# 2.5 escort the market families across the paddies
+	"go:mt_sawah", "do:mataram_sawah_road", "q:mq2=active:5",
+	# 2.6 the ruins: clear them, read Na off the Arca base (the north gate is still shut, so via the market)
+	"go:mt_pasar", "go:mt_reruntuhan", "do:ka_chalk", "do:mataram_ruins", "do:arca_base", "q:mq2=active:6",
+	# 2.7 cleanse the graveyard, 2.8 the third mask fragment and H3
+	"go:mt_kuburan", "do:mataram_kuburan", "q:mq2=active:7", "beat:hunter_war",
+	"do:hunter_mask_3", "q:mq2=active:8",
+	# 2.9 the lesung yard, 2.10 Ca from Nyai Gendhis
+	"go:mt_wetan", "do:mataram_lesung_yard", "q:mq2=active:9", "do:lesung_women", "q:mq2=active:10",
+	# 2.11 break the siege on the shrine, 2.12 align the braziers and take Ra
+	"do:mataram_batu", "q:mq2=active:11",
+	"do:puzzle_wetan_lamps", "do:juru_kunci", "q:mq2=active:12",
+	# 2.13 the plain of rising stones
+	"go:mt_tegal", "do:mataram_tegal_pillars", "q:mq2=active:13",
+	# 2.14 the temple gate and the camp (the turn)
+	"go:mt_sawah", "go:mt_pasar", "go:mt_reruntuhan", "go:mt_wetan", "go:mt_candi",
+	"do:mataram_candi", "do:mataram_camp", "q:mq2=active:14", "beat:camp",
+	# 2.15 the three K3 clues (no memory yet)
+	"do:rubble", "do:lesung_mid", "do:ka_strip", "q:mq2=active:15",
+	# 2.16 LC3 chapter: Laras unbars the crypt
+	"do:lc3_lontar", "q:mq2=active:16",
+	# 2.17 descend through the opened crypt
+	"do:candi_crypt_hall", "q:mq2=active:17",
+	# 2.18 the K3 memory of the false-dawn lesung
+	"do:k3_lesung", "q:mq2=active:18",
+	# 2.19 Bandung Bondowoso
+	"do:bandung_bondowoso", "q:mq2=active:19",
+	# 2.20 take the temple shortcut back to the border
+	"go:mt_gapura", "do:sc:mt_candi_gapura", "do:mataram_causeway", "do:mataram_tepi", "go:kg_pamali", "q:mq2=active:20",
+	# 2.21 the Pamali stone
+	"do:pamali_bank", "do:pamali_ford", "do:pamali_stone",
+	"write:nagawiru:jawa_na,sunda_ga", "q:mq2=active:21",
+	# 2.22 K-III, Ki Sumarto's shadow play
+	"do:sumarto_show", "q:mq2=active:22",
+	# 2.23 Hariang Banga's unsent letters
+	"do:hariang_letters", "q:mq2=active:23", "beat:ford",
+	# 2.24 the duel, then the truce beat's choice (1 = judgment)
 	"pick:1", "do:hariang_banga", "q:mq2=done", "beat:truce", "flag:choice_judgment", "q:mq3=active:0",
-	"go:mt_gapura", "go:mt_sawah", "go:mt_reruntuhan", "go:mt_wetan", "see:tt_kulon",
 ]
 
 var fails := 0
@@ -218,9 +238,52 @@ func _do(id: String) -> bool:
 		return check(game.inventory.has(id) or not is_instance_valid(n) or n.is_queued_for_deletion(), "%s: '%s' not picked" % [zone.zone_id, id])
 	elif f.ends_with("encounter.tscn"):
 		return await _clear(id)
+	elif f.ends_with("clue.tscn"):
+		return await _clue(n)
 	elif n.is_in_group("boss"):
 		return await _beat_boss(n)
 	return true
+
+
+## Examine a clue. A memory clue then enters its Kelir scene; finish it like the player would (draw the
+## chapter's Ka card) and come back to the zone.
+func _clue(n: Node) -> bool:
+	var zid := zone.zone_id   # the zone is freed when a memory scene loads, so keep its name now
+	var cid := String(n.get("clue_id"))
+	var mem_id := String(n.get("memory_id"))
+	if not check(bool(n.get("usable")), "%s: clue '%s' is not usable (cond)" % [zid, cid]):
+		return false
+	n.interact()
+	await _drain()
+	if mem_id == "":
+		return true
+	var zones := root.get_node("Zones")
+	for i in 300:
+		if current_scene is KelirMemory and not zones._busy:
+			break
+		await _drain()
+		await process_frame
+	if not check(current_scene is KelirMemory, "%s: clue '%s' did not enter memory '%s'" % [zid, cid, mem_id]):
+		return false
+	return await _memory()
+
+
+## Finish the current Kelir memory: close its narration, draw any chapter card, wait for the exit fade.
+func _memory() -> bool:
+	var mem := current_scene as KelirMemory
+	var mem_id := mem.memory_id
+	await _drain()
+	mem.finish()
+	for i in 60 * 60:
+		if current_scene != mem:
+			break
+		await _drain()
+		var lesson := _find("res://ui/glyph_lesson.gd")
+		if lesson and lesson.writing != "":
+			lesson.write_attempt(GlyphData.by_id("sunda_ka").templates[0])
+		await process_frame
+	await _settle()
+	return check(current_scene is Zone, "memory %s did not return to a zone" % mem_id)
 
 
 ## Cells to stand on: inside a trigger or encounter rect, else the node's cell or one next to it.
@@ -277,20 +340,30 @@ func _reach(goals: Array[Vector2i]) -> Vector2i:
 	return Vector2i(-1, -1)
 
 
-func _kill_all() -> void:
+## Damage the enemies inside a target encounter rect only. A zone-wide sweep would clear an encounter the
+## route has not visited yet: a later step then waits for an `area_cleared` that has already fired.
+func _hit_inside(rect: Rect2) -> void:
 	for e in zone.entities.get_children():   # not the "enemy" group: a dormant Arca is not in it
-		if e is EnemyBase and not e.dead and not e.is_in_group("boss"):
-			e.get_node("Health").take_damage(99999, player, true)
+		if not (e is EnemyBase) or e.dead or not rect.has_point(e.global_position):
+			continue
+		if e.is_in_group("boss"):
+			continue
+		e.get_node("Health").take_damage(99999, player, true)
 
 
 func _clear(id: String) -> bool:
 	var done := [false]
 	var cb := func(a: String) -> void: done[0] = done[0] or a == id
 	events.area_cleared.connect(cb)
+	var enc := _target(id)
+	var rect := Rect2(player.global_position - Vector2(8, 8), Vector2(16, 16))
+	if enc:
+		var sz: Vector2i = enc.get("size")
+		rect = Rect2(zone.tiles.map_to_local(_cell(enc.global_position)) - Vector2(sz) * 8.0, Vector2(sz) * 16.0)
 	for i in 60 * 30:
 		if done[0]:
 			break
-		_kill_all()
+		_hit_inside(rect)
 		await physics_frame
 	events.area_cleared.disconnect(cb)
 	return check(done[0], "%s: encounter %s never cleared" % [zone.zone_id, id])

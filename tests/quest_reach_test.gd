@@ -44,6 +44,8 @@ func _initialize() -> void:
 				src.talked_to[n.npc_id] = true
 			elif f.ends_with("trigger.tscn"):
 				src.area_entered[n.trigger_id] = true
+				src.puzzle_solved[n.trigger_id] = true
+				src.puzzle_solved[n.trigger_id.trim_prefix("puzzle_")] = true
 			elif f.ends_with("encounter.tscn"):
 				src.area_cleared[n.area_id] = true
 				for wave in n.waves:

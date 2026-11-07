@@ -172,10 +172,10 @@ Marker form `{zone: "<area id>", id: ...}` (the area in the Area column; `QuestD
 | 2.12 align the foothill shrine braziers and receive Jawa Ra | `puzzle, talk, lesson` | `puzzle_wetan_lamps` (Q), `juru_kunci` (Q) | `mt_wetan` (hut yard and hut) | `puzzle_solved:puzzle_wetan_lamps`; then `glyph_learned:jawa_ra` (Q), sets `mq2_6` (opens `K2`) |
 | 2.13 fight across the plain of rising stones (`mt_tegal`) | `travel, clue, fight x2, setpiece` | `pillar_prints` (**ASSUMED**), `mataram_tegal_pillars` (Q) | `mt_tegal` | `area_cleared:mataram_tegal_pillars`, sets `mq2_6b` |
 | 2.14 breach the outer temple gate of `mt_candi` and storm the Faceless reading-camp | `fight, talk, fight, miniboss, beat` | `mataram_candi` (Q), `hauler`, `mataram_camp_gate`, `mataram_camp_captain`, `mataram_camp` (Q) | `mt_candi` (front yard, temple court) | `area_cleared:mataram_candi`; then `area_cleared:mataram_camp` (Q), sets `mq2_7` (Beat `camp`) |
-| 2.15 K3 clues | `clue x3, talk` | `rubble`, `lesung_mid`, `ka_strip` (Q; `ka_strip` has `memory_id: k3_lesung`) | `mt_candi` (front yard east side, petilasan court, the court) | `all`: `clue_examined:rubble`, `clue_examined:lesung_mid`, `clue_examined:ka_strip`; sets `mq2_h1` |
+| 2.15 K3 clues | `clue x3, talk` | `rubble`, `lesung_mid`, `ka_strip` (Q) | `mt_candi` (front yard east side, petilasan court, the court) | `all`: `clue_examined:rubble`, `clue_examined:lesung_mid`, `clue_examined:ka_strip`; sets `mq2_h1` |
 | 2.16 LC3 Cross-Time Chapter: Laras in Candi Seribu | `chapter, puzzle` | `lc3_lontar` (`memory_id: lc3`) | `mt_candi` (petilasan court) and `zones/kelir/lc3.tscn` | `memory_done:lc3`, sets `mq2_lc`, `laras_key:candi_crypt`, `laras_sabotage:bondowoso_pillar` |
 | 2.17 descend through Laras's unlocked crypt to the central temple sanctum | `travel, puzzle, fight` | `candi_crypt_hall` (Q) | `mt_candi` (crypt corridor) | `area_cleared:candi_crypt_hall`, sets `mq2_7a` |
-| 2.18 K3 Memory: Roro Jonggrang's women pounding the false-dawn rhythm | `memory, beat` | `k3_lesung` | `zones/kelir/k3_lesung.tscn` | `memory_done:k3_lesung`, sets `mq2_h2` |
+| 2.18 K3 Memory: Roro Jonggrang's women pounding the false-dawn rhythm | `memory, beat` | `k3_lesung` (clue `k3_lesung`, cond `step:mq2=17`) | `mt_candi` (petilasan court) and `zones/kelir/k3_lesung.tscn` | `memory_done:k3_lesung`, sets `mq2_h2` |
 | 2.19 end Bandung Bondowoso's night | `boss, setpiece, beat` | `bandung_bondowoso` (Q) | `mt_candi` (boss arena `B`, cond `flag:mq2_lc`) | `boss_defeated:bandung_bondowoso` (Q); sets `mq2_7b` |
 | 2.20 take the temple shortcut back toward the western border and reach `kg_pamali` | `travel, fight x2, talk` | `mataram_causeway`, `mataram_tepi` | `mt_gapura` (causeway, west road) to `kg_pamali` | `zone_entered:kg_pamali`, sets `mq2_7c` |
 | 2.21 clear the river-bank skirmish and write Nagawiru's name (`Na-Ga`) on the Pamali Stone | `fight x2, write, beat` | `pamali_stone` (Q) | `kg_pamali` | `name_written:nagawiru` (Q); sets `mq2_8` |
@@ -193,7 +193,7 @@ Marker form `{zone: "<area id>", id: ...}` (the area in the Area column; `QuestD
 | `two_stories` | `flag:mq2_a1`, `zone:mt_gapura` | `mt_gapura` | `L` (7,16), trigger `beat_two_stories` | 2.1, after both recruiters: who is who, the lane divided by a rope |
 | `haulers` | `flag:beat_two_stories`, `zone:mt_gapura` | `mt_gapura` | `C`, trigger `beat_haulers` (see the legend) | K3 hook (2.1): villagers haul stone in the night, temples stand where yesterday there was a field |
 | `ranga_word` | `flag:choice_freed`, `flag:mq2_6`, `zone:mt_wetan` | `mt_wetan` | `Q` (45,10), trigger `beat_ranga_word` (**ASSUMED**) | Choice 2, freed: Ranga's scouting word, one tile east of `lengser_word` |
-| LC3 (was `laras_3`) | none: the chapter is step 2.16 | `mt_candi` | clue `lc3_lontar` beside petilasan `P` (30,25) `mataram_2` | Replaces the old beat. `do: flag:beat_laras_3` is set by `memory_done:lc3` |
+| LC3 (was `laras_3`) | none: the chapter is step 2.16 | `mt_candi` | clue `lc3_lontar` beside petilasan `P` (30,25) `mataram_2` | Replaces the retired v4 Laras beat |
 | `ford`, `truce` | `flag:mq2_h3`; `quest:mq2=done` (Choice 3) | `kg_pamali` | not in this doc | Staged in [keraton_galuh.md](keraton_galuh.md) (Sapto `s`, Ciung `c`, the boss `B`). Ki Sumarto's son Sapto (**ASSUMED**) wades back across the ford in `truce` |
 
 Ki Sumarto stays at his house in `mt_pasar` all act (his show K-III is staged at the ford camp in `kg_pamali`, with him). The cast budget is met: Ki Sumarto, the juru kunci and the lesung women are the only named or recurring speakers on the path; the two recruiters, the hauler and the sawah farmer are unnamed one-scene locals (Pak Karto is a side-quest NPC, Sapto is in `kg_pamali`).
@@ -822,7 +822,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 #............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
 #............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
 #............################,,,#################........................................#
-#............................,,,..................,,.....................................#
+#............................M,,..................,,.....................................#
 #............................,,,H.................,,.....................................#
 #............................,P,.L................,,.....................................#
 Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.D................,,.....................................#
@@ -869,11 +869,12 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | `A` | NPC bound hauler at the temple gate (2.14 `talk`; unnamed, says where the prisoners are held) | `res://entities/npc/npc.tscn` | `{npc_id:"hauler"}` | grass | 1 |
 | `C` | clue, rubble with fresh chisel marks and spirit hand-prints (2.15 K3, 1 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"rubble"}` | grass | 1 |
 | `D` | clue, a lesung left in the middle of its rhythm (2.15 K3, 2 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"lesung_mid"}` | grass | 1 |
-| `G` | clue, Laras's *Ka* strip in the cleared camp (2.15 K3, 3 of 3; opens memory `k3_lesung`) | `res://entities/world/clue.tscn` | `{clue_id:"ka_strip", memory_id:"k3_lesung"}` | path | 1 |
-| `H` | clue, Laras's lontar fragment at the petilasan (2.16, opens chapter `lc3`; ASSUMED id, cond `flag:memory_k3_lesung`) | `res://entities/world/clue.tscn` | `{clue_id:"lc3_lontar", memory_id:"lc3", cond:"flag:memory_k3_lesung"}` | grass | 1 |
+| `G` | clue, Laras's *Ka* strip in the cleared camp (2.15 K3, 3 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"ka_strip"}` | path | 1 |
+| `H` | clue, Laras's lontar fragment at the petilasan (2.16, opens chapter `lc3`; ASSUMED id, cond `step:mq2=15`) | `res://entities/world/clue.tscn` | `{clue_id:"lc3_lontar", memory_id:"lc3", cond:"step:mq2=15"}` | grass | 1 |
+| `M` | clue, the false-dawn rhythm still sounding in the lesung (2.18 K3 memory; opens `k3_lesung`; cond `step:mq2=17`) | `res://entities/world/clue.tscn` | `{clue_id:"k3_lesung", memory_id:"k3_lesung", cond:"step:mq2=17"}` | path | 1 |
 | `I` | encounter mataram_camp_gate (2.14, fight at the arena gate; cond `flag:mq2_6`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp_gate", cond:"flag:mq2_6", size:Vector2i(16,6), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(0,-3)]]]}` | path | 1 |
 | `J` | encounter mataram_camp_captain (**miniboss**, 2.14: the camp captain; cond `flag:mq2_6`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp_captain", cond:"flag:mq2_6", size:Vector2i(12,10), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(0,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)]]]}` | path | 1 |
-| `K` | encounter candi_crypt_hall (2.17 descend through Laras's unlocked crypt to the central temple sanctum) | `res://entities/world/encounter.tscn` | `{area_id:"candi_crypt_hall", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/arca_penjaga.tscn, Vector2i(3,0)]]]}` | path | 1 |
+| `K` | encounter candi_crypt_hall (2.17 descend through Laras's unlocked crypt to the central temple sanctum; cond `step:mq2=16`, so the front-yard fight cannot start it through the overlapping rect) | `res://entities/world/encounter.tscn` | `{area_id:"candi_crypt_hall", cond:"step:mq2=16", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/arca_penjaga.tscn, Vector2i(3,0)]]]}` | path | 1 |
 | `L` | clue, stitched syllable scrap / Lengser's note at the camp stake (SQ-C3 fragment 1) | `res://entities/world/clue.tscn` | `{clue_id:"c3_camp_scrap", cond:"flag:mq2_7"}` | grass | 1 |
 
 ### Rooms
@@ -883,9 +884,9 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | front yard fight | (36,30)-(64,46) 29x17 | Temple gate fight, 28x16, two waves | E (50,38) `mataram_candi` | 2.14 `area_cleared:mataram_candi` |
 | east yard | (66,28)-(88,48) 23x21 | Side yard | batu bintang `s` (72,36), chest `c` (80,30) | item_picked:batu_bintang |
 | west road | (1,26)-(28,27) 28x2 | Road to the petilasan, 30 tiles from the exit | exit `Y` (0,26..27), spawn `y` (1,26) | `sc:mt_candi_gapura` far side |
-| petilasan court | (29,23)-(31,27) 3x5 | Rest right before the arena, no fight | P (30,25) | LC3 clue `lc3_lontar` (32,24) at `mataram_2` |
+| petilasan court | (29,23)-(31,27) 3x5 | Rest right before the arena, no fight | P (30,25) | LC3 clue `lc3_lontar` (32,24) at `mataram_2`; K3 memory clue `k3_lesung` (29,23) |
 | boss arena | (14,2)-(47,21) 34x20 | 34x20 open floor, gate gap (29..31,22), pillars spawn 5-8 tiles around B | camp F (30,12), B (30,9), beat trigger `T` (30,15) | 2.14 `mataram_camp` (sets `mq2_7`), beat `camp`; 2.19 `bandung_bondowoso` |
-| clue spots | rubble (60,41) east side of the front yard; `lesung_mid` (33,26) beside the petilasan court; `ka_strip` (28,16) in the court by the `camp` beat spot | The K3 Hunt clues, walked in this order | clues `C` `D` `G`, hauler `A` (56,34), `lc3_lontar` `H` (32,24) | 2.15 `all` of three, 2.14 talk, 2.16 |
+| clue spots | rubble (60,41) east side of the front yard; `lesung_mid` (33,26) beside the petilasan court; `ka_strip` (28,16) in the court by the `camp` beat spot; `k3_lesung` (29,23) in the petilasan court | The K3 Hunt clues, walked in this order | clues `C` `D` `G`, `k3_lesung` `M` (29,23), hauler `A` (56,34), `lc3_lontar` `H` (32,24) | 2.15 `all` of three, 2.14 talk, 2.16, 2.18 memory |
 | camp sequence | the arena, gate (30,19), captain (20,9), camp (30,12) | In order: gate fight, captain miniboss, camp setpiece | E `I` (30,19), E `J` (20,9), `F` (30,12) | 2.14 |
 
 ### Encounters
@@ -974,7 +975,7 @@ None.
 Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and petilasan, outside the encounter rects): Tuyul (40,22), Tuyul (42,24), Pocong (41,26). 3 kills, skirtable.
 
 ## Side stories v4d spots (2026-11-06, [quests.md](../quests.md) 5)
-Spots that are not new map characters are listed here, not drawn into the maps (**ASSUMED**: the builder adds them as plain spots at these coordinates, on floor tiles inside the stated rooms; `gen_zones.py` does not read this section). Clue legend rows that changed in the maps (`mt_sawah` `L` and `s`, `mt_tegal` `L`, `q`, `mt_kuburan` `q`) are marked v4d in their legend. Props follow the clue convention `{clue_id, memory_id?, cond?}`; where a step is an `all` of clues and a memory follows, the memory id sits on the clue examined last (as `ka_strip` does, **ASSUMED**: the builder opens the memory only when the step's other pieces are already done). `cond` uses `quest:<id>=active` (the quest-state form in [quests.md](../quests.md) 7).
+Spots that are not new map characters are listed here, not drawn into the maps (**ASSUMED**: the builder adds them as plain spots at these coordinates, on floor tiles inside the stated rooms; `gen_zones.py` does not read this section). Clue legend rows that changed in the maps (`mt_sawah` `L` and `s`, `mt_tegal` `L`, `q`, `mt_kuburan` `q`) are marked v4d in their legend. Props follow the clue convention `{clue_id, memory_id?, cond?}`; where a memory follows a set of clues, its own clue carries the memory id and stays hidden until its step (`k3_lesung`, **ASSUMED**: the memory cannot fire early inside the clue `all`). `cond` uses `quest:<id>=active` (the quest-state form in [quests.md](../quests.md) 7) or `step:<quest>=<index>`.
 
 | Area | Spot | Scene and props | At | Card | Notes |
 |------|------|-----------------|----|------|-------|

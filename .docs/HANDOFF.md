@@ -1,6 +1,6 @@
 # Budayago: session handoff
 
-Paste or point a new session at this file. Everything below is the state of the project as of 2026-11-05. Design docs live in this folder (`.docs/`); nothing in the Godot project itself has been changed, and nothing is committed.
+Paste or point a new session at this file. Everything below is the state of the project as of 2026-11-07 (see §5ze and §7 for the newest state; the sections between are a dated log). Design docs live in this folder (`.docs/`). Some work is committed, wave 3 of Story v5 Step 3 is not (§5ze).
 
 ## 1. Project
 **Budayago**: top-down 2D pixel-art action RPG for a **culture competition (lomba budaya)**. Soul Knight style graphics and real-time 2D gameplay, but a real RPG, not a Soul Knight clone. Godot 4.7 (GDScript), project at `/Users/taufan.zamzami/Development/Coding/budayago`. User: Fatih. Time is not a concern: "make the game as good as possible".
@@ -323,6 +323,19 @@ User call: "sync all the docs to the current state of the game". Commits on `cla
 - **Code is behind the docs (Step 3 work):** `zones/*.gd`/`.tscn` were not regenerated; the CSVs and `beats.tres` were not regenerated (`script_to_data.py`); the topic-hub loop is not in the dialogue engine and hub entries need hand wiring in the NPC `.tres`; `data/dialogue/galuh_queen.tres`, `beats.tres` and `ui/epilogue.tscn` still use `choice_silent` and the 3-choice epilogue; `lontar_kuno.tres` is `+2 Spirit` but items.md/quests.md say the smudged threshold drops to 0.60; `LARAS_FLAGS` in `game.gd` has no `laras_sabotage` for lc5 and no `laras_key` for lc6 (matches the docs).
 - **Open doc items (ASSUMED until decided):** SQ-G1 spots exist in both `kg_alun` and `kg_pasar`; `g2_roll` is in `kg_kaputren` (quests.md says `kg_pustaka`); side cards vs zone docs differ on place for S1 giver, S3 tube count (3 vs 5), C1, T3 meteorite (`mt_tegal` vs `mt_candi`), T4, K2/C3 (`sk_nelayan`), C4 part 3 waves; no NPC spots for Ranga's three scout talks (`mt_candi`, `tt_pasir`, `sk_pantai`); no zone object for the 5.2 fight and no spot for the `choice_judgment` vanguard at `gk_pelataran`; `mqg_kp1` (SQ-G2 unlock) is set by nothing; segara_kidul link L1 lets a player skip `sk_nelayan`/`sk_bakau` (only the arrow holds the order); Ranga's display name should switch to "Ranga" after his name is written; Mbok Srini now has a display name (the v4 codex-only rule is dropped). Many new clue, trigger and flag ids are ASSUMED (marked in the docs).
 
+### 5ze. Story v5 Step 3, waves 1-3 complete (2026-11-07, all 55 headless tests pass)
+Completed and verified after the previous agent stopped mid-run during wave 3.
+- **Wave 1 (`ad4543f`):** Regenerated all 46 story area scripts (`gen_zones.py`), CSV translations, and `data/dialogue/beats.tres` (+2,157 keys).
+- **Wave 2 (`4154311`, `1b92be4`, `268e0fc`):** Implemented the 6 Major Choice gameplay effects (`choice_effects_test.gd`), Sabuk Galuh damage reduction, Lontar Kuno smudge threshold (`0.60`), `"Ask about..."` topic-hub loop in `Game.play` (`hub_test.gd`), 8-card six-choice epilogue (`ui/prologue.gd`), boss `sabotage_flag` hooks + Buto Ijo stalking retreats at 80/65/50% (`sabotage_test.gd`), and deleted retired NPC dialogue files.
+- **Wave 3 (completed in this session):**
+  - `.docs/gen_quests.py` (new): generates `data/quests/*.tres` from the step tables in `.docs/zones/*.md` and `data/text/quests.csv` with an `OVERRIDES` table for choice steps; regenerated all 7 main quest `.tres` files (138 steps total).
+  - Updated NPC dialogue `.tres` files to Story v5 keys and step numbers (`ibu.tres`, `semar.tres`, `purwa_stall.tres`, `sawah_farmer.tres`, etc.), added codex entries `keris_gandring.tres` and `nyai_gendhis.tres`, and re-imported `.translation` binaries.
+  - Updated `autoload/zones.gd` `ADJ` so Gua Kala is entered via `gk_pelataran` from `desa_purwa` and `sk_keraton`.
+  - Fixed `data/dialogue/beats.tres` malformed conditions/actions from `script.md` (`flag:epi_banyan`, `flag:c1_rooster_found`, `"do": ["flag:beat_table_dishes"]`, `"do": ["flag:beat_c1_rooster_found"]`), added `"credits"` action to `autoload/game.gd`, and made `entities/world/trigger.gd` set non-`beat_` trigger flags on entry.
+  - Fixed `.docs/zones/tanah_timur.md` step 3.4 marker id (`timur_praktik_mark`) and `.docs/zones/desa_purwa.md` (`purwa_old_couple` and `purwa_stall` visibility across MQ0 and Interlude 4.2), regenerating `zones/desa_purwa.gd` and `data/quests/mq3.tres`.
+  - Rewrote and verified all regional play-through and structural tests for Story v5 (`galuh_play_test.gd`, `mataram_play_test.gd`, `timur_play_test.gd`, `kidul_play_test.gd`, `kala_play_test.gd`, `quest_data_test.gd`, `quest_reach_test.gd`, `zone_build_test.gd`, `story_beat_test.gd`). All 55 headless tests in `tests/*_test.gd` pass with 0 failures.
+- **Still open from §5zd:** minor doc/data items in §5zd (crowd dressing NPCs without dialogue data, side-quest `.tres` expansion for the new v5 side steps beyond what `quest_data_test` checks, and `lc5` sabotage / `lc6` key in `LARAS_FLAGS`).
+
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)
 2. ~~Move Wewe Gombel to Mataram~~: done 2026-11-05.
@@ -332,6 +345,11 @@ User call: "sync all the docs to the current state of the game". Commits on `cla
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
+**2026-11-07 (Story v5 Step 3 complete, §5ze):** All 138 main quest steps, 46 story areas, 6 Major Choices, topic hubs, and all 55 headless tests are green.
+1. **User playtest:** Play New Game through Act I (Desa Purwa + Tatar Sunda) and Act II (Keraton Galuh), timing the acts against `python3 .docs/pacing_model.py` and checking combat/boss feel (`sabotage_flag` windows, Buto Ijo stalking retreats).
+2. **Side-quest v5 pass & open doc items (§5zd):** Wire any remaining v5 side-quest `.tres` steps/dialogue hubs (`SQ-G1/G2`, `SQ-C1..C4`, `SQ-D1/D2`), resolve the open `ASSUMED` items in §5zd, and add `DialogueData` or dressing-NPC suppression so crowd NPCs don't log `no dialogue data` warnings.
+3. **Phase 6–8 (Polish & Release, `schedule.md`):** Audio SFX hooks (`sfx_lontar`, combat/spell SFX), Journal clue grouping by `hunt_id` (`ui.md` 7.4), `researcher` pass on remaining `VERIFY` folklore/script items, and full release checks.
+
 **2026-11-07 (Story v5 Step 2 done, §5zd):** every doc is on v5; the code is not.
 1. User reviews `script.md` v5 (at least one act) and the open doc items in §5zd.
 2. **Phase 4f Step 3 (Code & Data Rollout), two regions at a time:** the engine first (`deep-implementer`: topic-hub loop, `puzzle_solved`, `hunt_id` on Clue, `laras_key`/`laras_sabotage` boss and gate hooks, six-choice epilogue, `choice_silent` -> `choice_judgment`), then per region `gen_zones.py`, `gen_memories.py`, `script_to_data.py`, the quest `.tres` (138 steps; the data has 74), the NPC `.tres` with hubs, and the headless tests. Run `--import` and every test on the Mac.

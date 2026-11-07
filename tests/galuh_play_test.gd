@@ -47,7 +47,7 @@ func _initialize() -> void:
 	check(alun_f == ["mqg_3", "mqg_3", "mqg_7", "mqg_7"], "kg_alun kabut %s" % [alun_f])
 	var ker_f := flags(built.get("kg_keraton"))
 	ker_f.sort()
-	check(ker_f == ["lamps_3", "lamps_3", "mqg_6", "mqg_6", "mqg_6", "mqg_6"], "kg_keraton kabut %s" % [ker_f])
+	check(ker_f == ["lamps_3", "lamps_3", "mqg_6b", "mqg_6b", "mqg_h2", "mqg_h2"], "kg_keraton kabut %s" % [ker_f])
 	for s: String in ["from_desa_purwa", "from_kg_keraton", "from_kg_pamali", "from_kg_pasar"]:
 		check(built["kg_alun"].spawn(s) != null, "kg_alun spawn " + s)
 	for s: String in ["from_kg_alun", "from_mt_gapura"]:

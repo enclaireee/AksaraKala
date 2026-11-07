@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=14 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=25 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -6,77 +6,177 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ3_S1_OBJ"
-on = "area_cleared:timur_gerbang"
-marker = {"zone": "tt_kulon", "id": "timur_gerbang"}
+all = [{"on": "talked_to:timur_daughter", "set_flag": "mq3_a1"}, {"on": "petilasan_activated:timur_1", "set_flag": "mq3_1"}]
+set_flag = "mq3_1"
+recap = "Q_MQ3_S1_DONE"
+marker = {"zone": "tt_kulon", "id": "timur_daughter"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ3_S2_OBJ"
-on = "petilasan_activated:timur_1"
-set_flag = "mq3_1"
-marker = {"zone": "tt_sabana", "id": "timur_1"}
+on = "area_cleared:buto_ambush_1"
+set_flag = "mq3_b1"
+recap = "Q_MQ3_S2_DONE"
+marker = {"zone": "tt_kulon", "id": "buto_ambush_1"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ3_S3_OBJ"
-on = "talked_to:timur_empu"
+all = [{"on": "area_entered:timur_marks", "set_flag": "mq3_h1"}, {"on": "talked_to:timur_empu", "set_flag": "mq3_2"}]
 set_flag = "mq3_2"
-marker = {"zone": "tt_beringin", "id": "timur_empu"}
+recap = "Q_MQ3_S3_DONE"
+marker = {"zone": "tt_beringin", "id": "timur_marks"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ3_S4_OBJ"
-on = "talked_to:mbok_srini"
-set_flag = "mq3_3"
-marker = {"zone": "tt_kali", "id": "mbok_srini"}
+on = "area_entered:timur_praktik_mark"
+count = 2
+recap = "Q_MQ3_S4_DONE"
+marker = {"zone": "tt_beringin", "id": "timur_praktik_mark"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ3_S5_OBJ"
-on = "boss_defeated:buto_ijo"
-set_flag = "mq3_4"
-marker = {"zone": "tt_ladang", "id": "buto_ijo"}
+all = [{"on": "talked_to:mbok_srini", "set_flag": "mq3_3"}, {"on": "clue_examined:seeds", "set_flag": ""}, {"on": "clue_examined:needle_case", "set_flag": ""}, {"on": "clue_examined:salt_terasi", "set_flag": "mq3_h2"}]
+set_flag = "mq3_h2"
+recap = "Q_MQ3_S5_DONE"
+marker = {"zone": "tt_kali", "id": "mbok_srini"}
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ3_S6_OBJ"
-on = "area_entered:timur_praktik_mark"
-count = 2
-marker = {"zone": "tt_beringin", "id": "timur_praktik"}
+on = "area_cleared:buto_ambush_2"
+set_flag = "mq3_b2"
+recap = "Q_MQ3_S6_DONE"
+marker = {"zone": "tt_kali", "id": "buto_ambush_2"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ3_S7_OBJ"
-on = "area_cleared:timur_pesisir"
-marker = {"zone": "tt_pesisir", "id": "timur_pesisir"}
+on = "area_cleared:buto_ambush_3"
+set_flag = "mq3_b3"
+recap = "Q_MQ3_S7_DONE"
+marker = {"zone": "tt_beringin", "id": "banyan_altar"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ3_S8_OBJ"
-on = "area_cleared:timur_pasir"
-marker = {"zone": "tt_pasir", "id": "timur_pasir"}
+on = "memory_done:k4_timun_mas"
+set_flag = "mq3_h3"
+recap = "Q_MQ3_S8_DONE"
+marker = {"zone": "tt_beringin", "id": "banyan_altar"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQ3_S9_OBJ"
-on = "petilasan_activated:timur_2"
-set_flag = "mq3_6"
-marker = {"zone": "tt_pasir", "id": "timur_2"}
+on = "boss_defeated:buto_ijo"
+set_flag = "mq3_4"
+recap = "Q_MQ3_S9_DONE"
+marker = {"zone": "tt_ladang", "id": "buto_ijo"}
 
 [sub_resource type="Resource" id="s10"]
 script = ExtResource("2")
 objective = "Q_MQ3_S10_OBJ"
-on = "boss_defeated:keris_gandring"
-set_flag = "mq3_7"
-marker = {"zone": "tt_candi", "id": "keris_gandring"}
+on = "area_cleared:timur_ladang_stakes"
+set_flag = "mq3_5a"
+recap = "Q_MQ3_S10_DONE"
+marker = {"zone": "tt_ladang", "id": "ladang_stake"}
 
 [sub_resource type="Resource" id="s11"]
 script = ExtResource("2")
 objective = "Q_MQ3_S11_OBJ"
+on = "area_cleared:timur_forge_defense"
+set_flag = "mq3_5b"
+recap = "Q_MQ3_S11_DONE"
+marker = {"zone": "tt_beringin", "id": "timur_forge_defense"}
+
+[sub_resource type="Resource" id="s12"]
+script = ExtResource("2")
+objective = "Q_MQ3_S12_OBJ"
+all = [{"on": "clue_examined:scabbard", "set_flag": ""}, {"on": "clue_examined:forge_records", "set_flag": "mq3_h4"}]
+set_flag = "mq3_h4"
+recap = "Q_MQ3_S12_DONE"
+marker = {"zone": "tt_beringin", "id": "scabbard"}
+
+[sub_resource type="Resource" id="s13"]
+script = ExtResource("2")
+objective = "Q_MQ3_S13_OBJ"
+on = "memory_done:k5_forge"
+set_flag = "mq3_h5"
+recap = "Q_MQ3_S13_DONE"
+marker = {"zone": "tt_beringin", "id": "forge_stone"}
+
+[sub_resource type="Resource" id="s14"]
+script = ExtResource("2")
+objective = "Q_MQ3_S14_OBJ"
+on = "area_cleared:timur_pesisir"
+set_flag = "mq3_5c"
+recap = "Q_MQ3_S14_DONE"
+marker = {"zone": "tt_pesisir", "id": "timur_pesisir"}
+
+[sub_resource type="Resource" id="s15"]
+script = ExtResource("2")
+objective = "Q_MQ3_S15_OBJ"
+all = [{"on": "area_cleared:timur_pasir", "set_flag": ""}, {"on": "puzzle_solved:pasir_waymarkers", "set_flag": "mq3_5d"}]
+set_flag = "mq3_5d"
+recap = "Q_MQ3_S15_DONE"
+marker = {"zone": "tt_pasir", "id": "timur_pasir"}
+
+[sub_resource type="Resource" id="s16"]
+script = ExtResource("2")
+objective = "Q_MQ3_S16_OBJ"
+on = "petilasan_activated:timur_2"
+set_flag = "mq3_6"
+recap = "Q_MQ3_S16_DONE"
+marker = {"zone": "tt_pasir", "id": "timur_2"}
+
+[sub_resource type="Resource" id="s17"]
+script = ExtResource("2")
+objective = "Q_MQ3_S17_OBJ"
+on = "memory_done:lc4"
+set_flag = "mq3_lc"
+recap = "Q_MQ3_S17_DONE"
+marker = {"zone": "tt_pasir", "id": "lc4_lontar"}
+
+[sub_resource type="Resource" id="s18"]
+script = ExtResource("2")
+objective = "Q_MQ3_S18_OBJ"
+on = "area_entered:candi_inner_sanctum"
+set_flag = "mq3_6b"
+recap = "Q_MQ3_S18_DONE"
+marker = {"zone": "tt_candi", "id": "candi_inner_sanctum"}
+
+[sub_resource type="Resource" id="s19"]
+script = ExtResource("2")
+objective = "Q_MQ3_S19_OBJ"
+on = "boss_defeated:keris_gandring"
+set_flag = "mq3_7"
+recap = "Q_MQ3_S19_DONE"
+marker = {"zone": "tt_candi", "id": "keris_gandring"}
+
+[sub_resource type="Resource" id="s20"]
+script = ExtResource("2")
+objective = "Q_MQ3_S20_OBJ"
+alt = {"item_picked:keris_gandring": "reforge", "item_picked:batu_kali": "sink"}
+recap = "Q_MQ3_S20_DONE"
+marker = {"zone": "tt_candi", "id": "beat_keris"}
+
+[sub_resource type="Resource" id="s21"]
+script = ExtResource("2")
+objective = "Q_MQ3_S21_OBJ"
+all = [{"on": "memory_done:h4", "set_flag": "mq3_h7"}, {"on": "memory_done:k6_servant", "set_flag": "mq3_h6"}]
+set_flag = "mq3_h6"
+recap = "Q_MQ3_S21_DONE"
+marker = {"zone": "tt_candi", "id": "hunter_mask_4"}
+
+[sub_resource type="Resource" id="s22"]
+script = ExtResource("2")
+objective = "Q_MQ3_S22_OBJ"
 on = "boss_defeated:nameless_hunter"
 set_flag = "mq3_8"
+recap = "Q_MQ3_S22_DONE"
 marker = {"zone": "tt_candi", "id": "nameless_hunter"}
-
 [resource]
 script = ExtResource("1")
 id = "mq3"
@@ -85,5 +185,5 @@ type = "main"
 zone = "tanah_timur"
 size = "L"
 requires = Array[String](["mq2_9"])
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10"), SubResource("s11")])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10"), SubResource("s11"), SubResource("s12"), SubResource("s13"), SubResource("s14"), SubResource("s15"), SubResource("s16"), SubResource("s17"), SubResource("s18"), SubResource("s19"), SubResource("s20"), SubResource("s21"), SubResource("s22")])
 rewards = {"lakon": "timun_mas", "codex": ["timun_mas"]}

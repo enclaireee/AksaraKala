@@ -48,7 +48,7 @@ const SPOTS := {
 	"E": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_empu"}, "tile": "_"},   # NPC Mpu Wirasana (3.3, SQ-T3 giver)
 	"R": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "sodo_lanang"}, "tile": "_"},   # pickup, sodo lanang (SQ-T1 step 2)
 	"S": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"practice": true}, "tile": "."},   # practice stake (3.4, one per tile)
-	"M": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "timur_praktik", "size": Vector2i(10,5)}, "tile": "."},   # trigger, practice marks marker `timur_praktik` (3.4)
+	"M": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "timur_praktik_mark", "size": Vector2i(10,5)}, "tile": "."},   # trigger, practice marks (3.4; id `timur_praktik_mark` so entering fires both the area and its puzzle alias, which is the step's `x2`)
 	"L": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kepang_leader"}, "tile": "."},   # NPC kuda lumping leader (SQ-T4 giver)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kepang_stage", "size": Vector2i(8,4)}, "tile": "."},   # trigger, kepang stage (SQ-T4 step 3)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "keris"}, "tile": "."},   # codex ruin, inscribed stone 1 (Keris)

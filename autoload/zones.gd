@@ -58,7 +58,7 @@ const ZONES := {
 ## structure). Kabut links are listed as open. ponytail: an opened shortcut's back edge is not added;
 ## the arrow just takes the long way round.
 const ADJ := {
-	"desa_purwa": ["ts_kebun", "kg_alun", "gk_mulut", "sk_pantai"],   # gk_mulut: kabut mq4_9, sk_pantai: kabut mq4_2
+	"desa_purwa": ["ts_kebun", "kg_alun", "gk_pelataran", "sk_pantai"],   # gk_pelataran: kabut mq4_9, sk_pantai: kabut mq4_2
 	"ts_kebun": ["desa_purwa", "ts_kampung"],
 	"ts_kampung": ["ts_kebun", "ts_leuweung", "ts_sawah", "ts_leuwi"],
 	"ts_leuweung": ["ts_kampung", "ts_kebun"],   # ts_kebun: sc:ts_pagar, opened from this side
@@ -86,7 +86,7 @@ const ADJ := {
 	"sk_karang": ["tt_pesisir", "sk_pantai", "sk_keraton", "sk_tebing", "sk_bakau", "sk_gua"],   # sk_keraton: S, kabut mq4_8; sk_tebing: L4
 	"sk_pantai": ["desa_purwa", "sk_karang", "sk_nelayan"],
 	"sk_tebing": ["sk_karang", "sk_keraton", "ts_situ", "sk_gua"],   # sk_keraton: one-way drop, ts_situ: sc:ts_sk
-	"sk_keraton": ["sk_karang", "sk_pantai", "gk_mulut"],   # sk_pantai: sc:sk_gerbang, gk_mulut: kabut mq4_9
+	"sk_keraton": ["sk_karang", "sk_pantai", "gk_pelataran"],   # sk_pantai: sc:sk_gerbang, gk_pelataran: kabut mq4_9
 	"sk_nelayan": ["sk_pantai", "sk_bakau"],
 	"sk_bakau": ["sk_nelayan", "sk_karang"],
 	"sk_gua": ["sk_karang", "sk_tebing"],
@@ -97,11 +97,11 @@ const ADJ := {
 	"kg_pasar": ["kg_alun", "kg_pustaka"],
 	"kg_pustaka": ["kg_pasar", "kg_kaputren", "kg_keraton"],
 	"kg_kaputren": ["kg_pustaka", "kg_penjara"],
-	"gk_mulut": ["desa_purwa", "gk_pasir", "gk_lupa", "sk_keraton", "gk_pelataran"],   # gk_lupa: sc:gk_lorong
+	"gk_mulut": ["gk_pasir", "gk_lupa", "gk_pelataran"],   # gk_lupa: sc:gk_lorong
 	"gk_pasir": ["gk_mulut", "gk_lupa", "gk_pelataran", "gk_hutan"],   # gk_lupa: the one-way drop
 	"gk_lupa": ["gk_mulut", "gk_ruang_kala", "gk_hutan", "gk_jembatan"],
 	"gk_ruang_kala": ["gk_lupa", "desa_purwa"],   # desa_purwa: kala_exit, kabut mq5_3
-	"gk_pelataran": ["gk_mulut", "gk_pasir"],
+	"gk_pelataran": ["gk_mulut", "gk_pasir", "desa_purwa", "sk_keraton"],
 	"gk_hutan": ["gk_pasir", "gk_lupa"],
 	"gk_jembatan": ["gk_lupa"],
 }

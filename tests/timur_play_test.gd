@@ -1,36 +1,50 @@
 extends SceneTree
-## Tanah Timur route (tanah_timur.md): MQ3 3.1-3.11 and SQ-T1..T4 walked area to area from the Mataram border (Story v3.1: ends on the keris choice, the Nameless Hunter and the hunter_name beat),
-## the way mataram_play_test.gd walks MQ2. Same actions, plus "kill:<kind>" (an active quest elite) and
-## "stakes" (cast next to the practice stakes). ponytail: kills and casts are faked, the user playtests combat.
+## Tanah Timur route (tanah_timur.md): the Story v5 MQ3 critical path 3.1-3.22 walked area to area from
+## the Mataram border, ending on the keris choice, the Nameless Hunter and the hunter_name beat. Same
+## actions as mataram_play_test.gd; the walkers for Kidul and Kala extend this one.
+## ponytail: kills and casts are faked, the user playtests combat.
 
 const ROUTE := [
-	# MQ3 step index = row order in quests.md 4 (3.1 = 0 ... 3.11 = 10).
+	# MQ3 step index = row order in quests.md 4 (3.1 = 0 ... 3.22 = 21).
 	"q:mq3=active:0",
-	"do:timur_gerbang", "q:mq3=active:1",
-	"go:tt_sabana", "do:timur_1", "q:mq3=active:2",
-	"do:timur_herder", "q:sq_t2=active:1", "do:timur_embers",
-	"go:tt_kali", "do:klething_kuning", "q:sq_t1=active:1",
-	"go:tt_sabana", "go:tt_beringin", "do:timur_empu", "q:mq3=active:3",
-	"do:kepang_leader", "q:sq_t4=active:1",
-	"do:sodo_lanang", "q:sq_t1=active:2",
-	"go:tt_sabana", "do:kuda_kepang_1", "go:tt_kali", "do:kuda_kepang_2",
-	"do:klething_kuning", "q:sq_t1=done", "has:stone_ring",
-	"do:timur_wisps", "do:mbok_srini", "q:mq3=active:4",
-	"go:tt_ladang", "do:timur_ladang", "do:buto_ijo", "q:mq3=active:5",
-	# SQ-T3 opens with 3.3; the empu offers it before his step hints (script.md timur_empu, fixed 2026-11-06).
-	"go:tt_beringin", "do:sc:tt_ladang", "do:timur_empu", "q:mq3=active:5", "q:sq_t3=active:1",
-	"do:timur_praktik", "q:mq3=active:5", "stakes", "q:mq3=active:6",
-	"go:tt_pesisir", "do:kuda_kepang_3", "q:sq_t4=active:2",
-	"do:burn_trail", "q:sq_t2=active:2", "kill:banaspati_elite", "q:sq_t2=active:3",
-	"do:timur_pesisir", "q:mq3=active:7",
-	"go:tt_sabana", "do:timur_herder", "q:sq_t2=done",
-	"go:tt_beringin", "do:kepang_leader", "q:sq_t4=active:3", "do:kepang_stage", "q:sq_t4=done",
-	"do:timur_empu", "q:sq_t3=active:1",
-	"go:tt_sabana", "go:tt_kulon", "go:mt_wetan", "go:mt_candi", "do:batu_bintang", "q:sq_t3=active:2",
-	"go:mt_wetan", "go:tt_kulon", "go:tt_sabana", "go:tt_beringin", "do:timur_empu", "q:sq_t3=done", "has:keris_luk_7",
-	"go:tt_ladang", "go:tt_pasir", "do:timur_pasir", "q:mq3=active:8", "do:timur_2", "q:mq3=active:9", "beat:laras_4",
-	"go:tt_candi", "pick:1", "do:keris_gandring", "q:mq3=active:10", "beat:keris", "flag:choice_sink",
-	"beat:hunter_shrine", "do:nameless_hunter", "q:mq3=done", "beat:hunter_name", "q:mq4=active",
+	# 3.1 Ratna on the smiths' street, then the savanna petilasan
+	"do:timur_daughter", "q:mq3=active:0",
+	"go:tt_sabana", "do:timur_1", "q:mq3=active:1",
+	# 3.2 Buto Ambush #1 back in the smiths' quarter
+	"go:tt_kulon", "do:buto_ambush_1", "q:mq3=active:2",
+	# 3.3 the red marks and Mpu Wirasana, then 3.4 the practice marks (one entry counts twice)
+	"go:tt_sabana", "go:tt_beringin", "do:timur_marks", "do:timur_empu", "q:mq3=active:3",
+	"do:timur_praktik_mark", "q:mq3=active:4",
+	# 3.5 Mbok Srini and the three spilled pouches
+	"go:tt_sabana", "go:tt_kali", "do:mbok_srini",
+	"do:seeds", "do:needle_case", "do:salt_terasi", "q:mq3=active:5",
+	# 3.6 Buto Ambush #2 in the canyon
+	"do:buto_ambush_2", "q:mq3=active:6",
+	# 3.7 Buto Ambush #3 at the banyan, then 3.8 the K4 memory
+	"go:tt_sabana", "go:tt_beringin", "do:buto_ambush_3", "q:mq3=active:7",
+	"do:banyan_altar", "q:mq3=active:8",
+	# 3.9 lure Buto Ijo into the lair (the long way round through the canyon road)
+	"go:tt_sabana", "go:tt_kali", "go:tt_ladang", "do:buto_ijo", "q:mq3=active:9",
+	# 3.10 the curse stakes in the dry field, then back through the opened shortcut
+	"do:timur_ladang_stakes", "q:mq3=active:10",
+	"go:tt_beringin", "do:sc:tt_ladang", "do:timur_forge_defense", "q:mq3=active:11",
+	# 3.12 the vault clues, 3.13 the anvil stone and the K5 memory
+	"do:scabbard", "do:forge_records", "q:mq3=active:12",
+	"do:forge_stone", "q:mq3=active:13",
+	# 3.14 the volcanic coast
+	"go:tt_pesisir", "do:timur_pesisir", "q:mq3=active:14",
+	# 3.15 the Sea of Sand: the plain fight, then the waymarkers
+	"go:tt_pasir", "do:timur_pasir", "do:pasir_waymarkers", "q:mq3=active:15",
+	# 3.16 the desert petilasan, 3.17 the LC4 chapter
+	"do:timur_2", "q:mq3=active:16",
+	"do:lc4_lontar", "q:mq3=active:17",
+	# 3.18 the wind tunnel into Candi Gandring, then the shrine sight beat
+	"go:tt_candi", "do:candi_inner_sanctum", "q:mq3=active:18", "beat:shrine_sight",
+	# 3.19 the keris, 3.20 choice 4 (sink it: pick 2 of 2, 0-based 1)
+	"do:keris_gandring", "pick:1", "q:mq3=active:20", "flag:choice_sink",
+	# 3.21 H4 and the joined mask, then 3.22 the Nameless Hunter and the riders home
+	"do:hunter_mask_4", "q:mq3=active:20", "do:mask_joined", "q:mq3=active:21",
+	"do:nameless_hunter", "q:mq3=done", "beat:hunter_name", "q:mq4=active:0",
 ]
 
 var fails := 0
@@ -102,8 +116,8 @@ func _settle() -> void:
 
 
 ## A story beat plays on its own (ui/story_beat.gd) once nothing else is open: close every box that opens, picking
-## choice `pick` (set by "pick:<n>", then back to 0) like the player would. Chains take a few frames.
-var pick := 0
+## choice `pick` (set by "pick:<n>", then back to -1) like the player would. Chains take a few frames.
+var pick := -1
 
 
 func _drain() -> void:
@@ -113,8 +127,8 @@ func _drain() -> void:
 			while not box._opts.is_empty() and not box._choosing:
 				box._next()   # read on to the choice list
 			if box._choosing:
-				events.dialogue_picked.emit(pick)
-				pick = 0
+				events.dialogue_picked.emit(maxi(0, pick))
+				pick = -1
 			box._close()
 		await process_frame
 
@@ -191,6 +205,7 @@ func _do(id: String) -> bool:
 	if not check(n != null, "%s has no '%s'" % [zone.zone_id, id]):
 		return false
 	var goals := _cells_of(n)
+	var was_in := _cell(player.global_position) in goals
 	var at := _reach(goals)
 	if not check(at != Vector2i(-1, -1), "%s: '%s' is not reachable from %s" % [zone.zone_id, id, _cell(player.global_position)]):
 		return false
@@ -198,10 +213,18 @@ func _do(id: String) -> bool:
 	player.reset_physics_interpolation()
 	await _settle()
 	var f: String = n.scene_file_path
+	if f.ends_with("trigger.tscn") and was_in:
+		n.body_entered.emit(player)
 	if f.ends_with("npc.tscn"):
 		n.interact()
 		var box := _find("res://ui/dialogue_box.gd")
 		while box and box.is_open():
+			if pick >= 0:
+				while not box._opts.is_empty() and not box._choosing:
+					box._next()
+				if box._choosing:
+					events.dialogue_picked.emit(pick)
+					pick = -1
 			box._close()
 		await process_frame
 	elif f.ends_with("petilasan.tscn"):
@@ -219,9 +242,52 @@ func _do(id: String) -> bool:
 		return check(game.inventory.has(id) or not is_instance_valid(n) or n.is_queued_for_deletion(), "%s: '%s' not picked" % [zone.zone_id, id])
 	elif f.ends_with("encounter.tscn"):
 		return await _clear(id)
+	elif f.ends_with("clue.tscn"):
+		return await _clue(n)
 	elif n.is_in_group("boss"):
 		return await _beat_boss(n)
 	return true
+
+
+## Examine a clue. A memory clue then enters its Kelir scene; finish it like the player would (draw the
+## chapter's Ka card) and come back to the zone.
+func _clue(n: Node) -> bool:
+	var zid := zone.zone_id   # the zone is freed when a memory scene loads, so keep its name now
+	var cid := String(n.get("clue_id"))
+	var mem_id := String(n.get("memory_id"))
+	if not check(bool(n.get("usable")), "%s: clue '%s' is not usable (cond)" % [zid, cid]):
+		return false
+	n.interact()
+	await _drain()
+	if mem_id == "":
+		return true
+	var zones := root.get_node("Zones")
+	for i in 300:
+		if current_scene is KelirMemory and not zones._busy:
+			break
+		await _drain()
+		await process_frame
+	if not check(current_scene is KelirMemory, "%s: clue '%s' did not enter memory '%s'" % [zid, cid, mem_id]):
+		return false
+	return await _memory()
+
+
+## Finish the current Kelir memory: close its narration, draw any chapter card, wait for the exit fade.
+func _memory() -> bool:
+	var mem := current_scene as KelirMemory
+	var mem_id := mem.memory_id
+	await _drain()
+	mem.finish()
+	for i in 60 * 60:
+		if current_scene != mem:
+			break
+		await _drain()
+		var lesson := _find("res://ui/glyph_lesson.gd")
+		if lesson and lesson.writing != "":
+			lesson.write_attempt(GlyphData.by_id("sunda_ka").templates[0])
+		await process_frame
+	await _settle()
+	return check(current_scene is Zone, "memory %s did not return to a zone" % mem_id)
 
 
 ## Cells to stand on: inside a trigger or encounter rect, else the node's cell or one next to it.
@@ -278,23 +344,37 @@ func _reach(goals: Array[Vector2i]) -> Vector2i:
 	return Vector2i(-1, -1)
 
 
-func _kill_all() -> void:
-	for e in zone.entities.get_children():   # not the "enemy" group: a dormant Arca is not in it
-		if e is EnemyBase and not e.dead and not e.is_in_group("boss"):
-			e.get_node("Health").take_damage(99999, player, true)
-
-
 func _clear(id: String) -> bool:
 	var done := [false]
 	var cb := func(a: String) -> void: done[0] = done[0] or a == id
 	events.area_cleared.connect(cb)
+	var enc := _target(id)   # the encounter rect: only its own enemies, or a zone boss elsewhere dies early
+	var rect := Rect2(player.global_position - Vector2(8, 8), Vector2(16, 16))
+	if enc:
+		var sz: Vector2i = enc.get("size")
+		rect = Rect2(zone.tiles.map_to_local(_cell(enc.global_position)) - Vector2(sz) * 8.0, Vector2(sz) * 16.0)
 	for i in 60 * 30:
 		if done[0]:
 			break
-		_kill_all()
+		_hit_inside(rect)
 		await physics_frame
 	events.area_cleared.disconnect(cb)
 	return check(done[0], "%s: encounter %s never cleared" % [zone.zone_id, id])
+
+
+## Damage the enemies inside an encounter rect. An ambush Buto Ijo must survive to retreat: bite him in
+## small bites so his HP crosses AMBUSH_RETREAT instead of 0 (a death would list him in Game.killed and
+## the lair fight at tt_ladang would never spawn).
+func _hit_inside(rect: Rect2) -> void:
+	for e in zone.entities.get_children():   # not the "enemy" group: a dormant Arca is not in it
+		if not (e is EnemyBase) or e.dead or not rect.has_point(e.global_position):
+			continue
+		if e.is_in_group("boss"):
+			if e.has_method("retreat_at") and e.retreat_at() > 0.0:
+				var h: Node = e.get_node("Health")
+				h.take_damage(maxi(1, int(h.max_hp * 0.1)), player, true)
+			continue
+		e.get_node("Health").take_damage(99999, player, true)
 
 
 func _beat_boss(b: Node) -> bool:

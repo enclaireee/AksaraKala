@@ -7,6 +7,7 @@ script = ExtResource("1")
 npc_id = "purwa_old_couple"
 name_key = "NPC_PURWA_OLD_COUPLE_NAME"
 entries = Array[Dictionary]([
+	{"if": ["step:mq4=1"], "lines": ["@NPC_PURWA_OLD_COUPLE_NAME", "DLG_PURWA_OLD_COUPLE_V20", "@NPC_HERO_NAME", "DLG_PURWA_OLD_COUPLE_H20", "@NPC_PURWA_OLD_COUPLE_NAME", "DLG_PURWA_OLD_COUPLE_V21", "DLG_PURWA_OLD_COUPLE_V22", "@NPC_HERO_NAME", "DLG_PURWA_OLD_COUPLE_H21", "@NPC_PURWA_OLD_COUPLE_NAME", "DLG_PURWA_OLD_COUPLE_V23", "DLG_PURWA_OLD_COUPLE_V24"], "do": []},
 	{"if": ["step:mq0=1", "!flag:mq0_d3"], "lines": ["DLG_PURWA_OLD_COUPLE_V1", "DLG_PURWA_OLD_COUPLE_V2", "@NPC_HERO_NAME", "DLG_PURWA_OLD_COUPLE_H1", "@NPC_PURWA_OLD_COUPLE_NAME", "DLG_PURWA_OLD_COUPLE_V3"], "do": []},
-	{"if": ["quest:mq0=active"], "lines": ["DLG_PURWA_OLD_COUPLE_V4"], "do": []}
+	{"if": [], "lines": ["DLG_PURWA_OLD_COUPLE_V4"], "do": []}
 ])

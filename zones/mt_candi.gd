@@ -25,7 +25,7 @@ const MAP := [
 	"#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
 	"#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
 	"#............################,,,#################........................................#",
-	"#............................,,,..................,,.....................................#",
+	"#............................M,,..................,,.....................................#",
 	"#............................,,,H.................,,.....................................#",
 	"#............................,P,.L................,,.....................................#",
 	"Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.D................,,.....................................#",
@@ -70,11 +70,12 @@ const SPOTS := {
 	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hauler"}, "tile": "."},   # NPC bound hauler at the temple gate (2.14 `talk`; unnamed, says where the prisoners are held)
 	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "rubble"}, "tile": "."},   # clue, rubble with fresh chisel marks and spirit hand-prints (2.15 K3, 1 of 3)
 	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lesung_mid"}, "tile": "."},   # clue, a lesung left in the middle of its rhythm (2.15 K3, 2 of 3)
-	"G": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ka_strip", "memory_id": "k3_lesung"}, "tile": ","},   # clue, Laras's *Ka* strip in the cleared camp (2.15 K3, 3 of 3; opens memory `k3_lesung`)
-	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lc3_lontar", "memory_id": "lc3", "cond": "flag:memory_k3_lesung"}, "tile": "."},   # clue, Laras's lontar fragment at the petilasan (2.16, opens chapter `lc3`; ASSUMED id, cond `flag:memory_k3_lesung`)
+	"G": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ka_strip"}, "tile": ","},   # clue, Laras's *Ka* strip in the cleared camp (2.15 K3, 3 of 3)
+	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lc3_lontar", "memory_id": "lc3", "cond": "step:mq2=15"}, "tile": "."},   # clue, Laras's lontar fragment at the petilasan (2.16, opens chapter `lc3`; ASSUMED id, cond `step:mq2=15`)
+	"M": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "k3_lesung", "memory_id": "k3_lesung", "cond": "step:mq2=17"}, "tile": ","},   # clue, the false-dawn rhythm still sounding in the lesung (2.18 K3 memory; opens `k3_lesung`; cond `step:mq2=17`)
 	"I": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_camp_gate", "cond": "flag:mq2_6", "size": Vector2i(16,6), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(0,-3)]]]}, "tile": ","},   # encounter mataram_camp_gate (2.14, fight at the arena gate; cond `flag:mq2_6`)
 	"J": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_camp_captain", "cond": "flag:mq2_6", "size": Vector2i(12,10), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(0,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,2)]]]}, "tile": ","},   # encounter mataram_camp_captain (**miniboss**, 2.14: the camp captain; cond `flag:mq2_6`)
-	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "candi_crypt_hall", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/arca_penjaga.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter candi_crypt_hall (2.17 descend through Laras's unlocked crypt to the central temple sanctum)
+	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "candi_crypt_hall", "cond": "step:mq2=16", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/arca_penjaga.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter candi_crypt_hall (2.17 descend through Laras's unlocked crypt to the central temple sanctum; cond `step:mq2=16`, so the front-yard fight cannot start it through the overlapping rect)
 	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c3_camp_scrap", "cond": "flag:mq2_7"}, "tile": "."},   # clue, stitched syllable scrap / Lengser's note at the camp stake (SQ-C3 fragment 1)
 }
 

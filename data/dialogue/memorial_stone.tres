@@ -7,6 +7,6 @@ script = ExtResource("1")
 npc_id = "memorial_stone"
 name_key = "NPC_MEMORIAL_STONE_NAME"
 entries = Array[Dictionary]([
-	{"if": ["!flag:memorial_chosen"], "lines": ["DLG_MEMORIAL_STONE_1"], "do": ["flag:memorial_chosen"], "choices": [{"text": "CHOICE_REDEEM_ARIA", "do": ["flag:choice_redeem_aria"]}, {"text": "CHOICE_RELEASE_ARIA", "do": ["flag:choice_release_aria"]}]},
+	{"if": ["!flag:memorial_chosen"], "lines": ["DLG_MEMORIAL_STONE_1"], "do": ["flag:memorial_chosen", "flag:mq5_choice6"], "choices": [{"text": "CHOICE_REDEEM_ARIA", "do": ["flag:choice_redeem_aria"]}, {"text": "CHOICE_RELEASE_ARIA", "do": ["flag:choice_release_aria"]}]},
 	{"if": [], "lines": ["DLG_MEMORIAL_STONE_2"], "do": []}
 ])

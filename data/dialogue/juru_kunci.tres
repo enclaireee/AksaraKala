@@ -7,7 +7,7 @@ script = ExtResource("1")
 npc_id = "juru_kunci"
 name_key = "NPC_JURU_KUNCI_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq2=7"], "lines": ["DLG_JURU_KUNCI_V1", "@NPC_HERO_NAME", "DLG_JURU_KUNCI_H1", "@NPC_JURU_KUNCI_NAME", "DLG_JURU_KUNCI_V2", "DLG_JURU_KUNCI_V3"], "do": ["learn:jawa_ra"]},
+	{"if": ["step:mq2=11"], "lines": ["DLG_JURU_KUNCI_V1", "@NPC_HERO_NAME", "DLG_JURU_KUNCI_H1", "@NPC_JURU_KUNCI_NAME", "DLG_JURU_KUNCI_V2", "DLG_JURU_KUNCI_V3"], "do": ["learn:jawa_ra"]},
 	{"if": ["quest:mq2=active", "flag:mq2_6"], "lines": ["DLG_JURU_KUNCI_V5"], "do": []},
 	{"if": [], "lines": ["DLG_JURU_KUNCI_V6"], "do": []}
 ])

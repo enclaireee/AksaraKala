@@ -544,6 +544,8 @@ func run(action: String) -> void:
 			set_flag("lakon:" + arg)
 		"restore":
 			restore()
+		"credits":
+			get_node("/root/Zones").go_to("res://ui/epilogue.tscn", "")
 		"goto":   # goto:<area>:<spawn>; the area may be a scene path, so split at the last colon
 			var p := arg.rsplit(":", true, 1)
 			if p.size() == 2:

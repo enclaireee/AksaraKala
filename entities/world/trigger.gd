@@ -12,6 +12,8 @@ func _ready() -> void:
 	$Shape.shape = r
 	body_entered.connect(func(b: Node) -> void:
 		if b.is_in_group("player") and get_node("/root/Game").check(cond):
+			if not trigger_id.begins_with("beat_"):
+				get_node("/root/Game").set_flag(trigger_id, false)
 			var ev := get_node("/root/Events")
 			ev.area_entered.emit(trigger_id)
 			ev.puzzle_solved.emit(trigger_id.trim_prefix("puzzle_")))

@@ -7,6 +7,6 @@ script = ExtResource("1")
 npc_id = "door_a"
 name_key = "NPC_DOOR_NEIGHBOUR_NAME"
 entries = Array[Dictionary]([
-	{"if": ["!flag:name_door_a"], "lines": ["DLG_DOOR_A_V1", "@NPC_HERO_NAME", "DLG_DOOR_A_H1", "@NPC_DOOR_NEIGHBOUR_NAME", "DLG_DOOR_A_V2"], "do": ["flag:name_door_a"]},
+	{"if": ["step:mq4=2", "!flag:name_door_a"], "lines": ["DLG_DOOR_A_V1", "@NPC_HERO_NAME", "DLG_DOOR_A_H1", "@NPC_DOOR_NEIGHBOUR_NAME", "DLG_DOOR_A_V2"], "do": ["write:door_a:sunda_ka,sunda_ga", "flag:name_door_a"]},
 	{"if": [], "lines": ["DLG_DOOR_A_V3"], "do": []}
 ])

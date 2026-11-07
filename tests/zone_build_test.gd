@@ -44,7 +44,7 @@ func _initialize() -> void:
 	if dp:
 		check(dp.size == Vector2i(60, 34), "desa_purwa size %s" % dp.size)
 		check(dp.spawn("start") != null and dp.spawn("from_ts_kebun") != null and dp.spawn("from_kg_alun") != null
-				and dp.spawn("from_gk_mulut") != null and dp.spawn("from_gua_kala") != null, "desa_purwa spawns")
+				and dp.spawn("from_gk_pelataran") != null and dp.spawn("from_gua_kala") != null, "desa_purwa spawns")
 		var dpf := flags(dp)
 		dpf.sort()
 		check(dpf == ["mq1_10", "mq1_10", "mq4_9", "mq4_9", "mq4_i5", "mq4_i5"], "desa_purwa kabut flags %s" % [dpf])
@@ -246,7 +246,7 @@ func _initialize() -> void:
 			gates.append(g.id)
 			check_gate(zones, z, g)
 	p.sort()
-	check(f == ["mq4_8", "mq4_8", "mq4_9", "mq4_9"], "segara_kidul kabut flags %s" % [f])
+	check(f == ["mq4_offering", "mq4_offering", "mq4_offering", "mq4_offering", "mq4_9", "mq4_9"], "segara_kidul kabut flags %s" % [f])
 	check(p == ["kidul_1", "kidul_2", "kidul_3"], "segara_kidul petilasans %s" % [p])
 	check(enc == 13, "segara_kidul has %d encounters, want 13" % enc)
 	check(gates == ["sc:sk_gerbang", "sc:sk_gerbang"], "segara_kidul shortcut gates %s" % [gates])
