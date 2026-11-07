@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="PackedScene" path="res://ui/hud.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://ui/menu.tscn" id="2"]
@@ -6,12 +6,25 @@
 [ext_resource type="PackedScene" path="res://ui/dialogue_box.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://ui/glyph_lesson.tscn" id="5"]
 [ext_resource type="Script" path="res://ui/story_beat.gd" id="6"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/vignette.png" id="7"]
+[ext_resource type="PackedScene" path="res://ui/area_title.tscn" id="8"]
 
 [node name="GameUI" type="CanvasLayer"]
 layer = 10
 process_mode = 3
 
+[node name="Vignette" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.45)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("7")
+stretch_mode = 0
+
 [node name="HUD" parent="." instance=ExtResource("1")]
+
+[node name="AreaTitle" parent="." instance=ExtResource("8")]
 
 [node name="Menu" parent="." instance=ExtResource("2")]
 

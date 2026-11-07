@@ -6,12 +6,29 @@ const HP_COL := Color("D55E00")
 const ST_COL := Color("F0E442")
 const SK_COL := Color("56B4E9")
 const FLASK_COL := Color("009E73")
-const GOLD := Color("E8D9A0")
+const GOLD := Color("F2D488")   # prada gold highlight (ui.md 3b)
+const CREAM := Color("EDE3CC")
+const OUTLINE := Color("0E0B0A")
+const UI_DIR := "res://assets/art/ui/"
+const LAG_HOLD := 0.4   # s before the cream lag chunk drains
+const LOW_HP := 0.25
 
-var _bars := {}   # name -> [fill ColorRect, width]
-var _pips: Array[ColorRect] = []
-var _ilmu: Label
+var _bars := {}   # name -> [fill ColorRect, width, frame, lag ColorRect, well ColorRect]
+var _pips: Array[TextureRect] = []
+var _ilmu: Label        # logical value ("%d"), hidden; _ilmu_disp is the rolling one the player sees
+var _ilmu_disp: Label
+var _ilmu_shown := -1.0
+var _weapon_icon: TextureRect
+var _flask_full: Texture2D
+var _flask_empty: Texture2D
+var _lag := -1.0
+var _lag_hold := 0.0
+var _hp_prev := -1.0
+var _st_full := 0.0
+var _st_nodes: Array[CanvasItem] = []
+var _t := 0.0
 var _saved: Label
+var _saved_icon: TextureRect
 var _saved_left := 0.0
 var _objective: Label
 var _hint: Label
@@ -20,6 +37,8 @@ var _player: Node   # the player whose `blocked` signal is connected (a new zone
 # toasts (quests.md 7.6): one at a time, TOAST_TIME each, queued
 const TOAST_TIME := 3.0
 var _toast: Label
+var _toast_root: Control
+var _toast_rule: ColorRect
 var _toasts: Array[String] = []
 var _toast_left := 0.0
 
@@ -42,40 +61,69 @@ var _dawn_fill: ColorRect
 
 
 func _ready() -> void:
-	var t := Theme.new()
-	t.default_font_size = 8
-	theme = t
-	_bars.hp = _bar(Vector2(6, 6), 80, 5, HP_COL)
-	_bars.st = _bar(Vector2(6, 13), 64, 3, ST_COL)
-	_bars.sk = _bar(Vector2(6, 18), 50, 3, SK_COL)
+	_flask_full = _ui_tex("flask_full")
+	_flask_empty = _ui_tex("flask_empty")
+	_bars.hp = _bar(Vector2(6, 6), 80, 5, HP_COL, "icon_heart")
+	_bars.st = _bar(Vector2(6, 17), 64, 3, ST_COL, "icon_bolt")
+	_bars.sk = _bar(Vector2(6, 26), 50, 3, SK_COL, "icon_brush")
+	_st_nodes = [_bars.st[2], _bars.st[4], _bars.st[5]]
 	for i in 6:
-		var p := ColorRect.new()
+		var p := TextureRect.new()
+		p.texture = _flask_full
 		p.position = Vector2(6 + i * 9, 270 - 6 - 9)
 		p.size = Vector2(7, 9)
+		p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(p)
 		_pips.append(p)
-	_ilmu = Label.new()
-	_ilmu.position = Vector2(480 - 6 - 80, 4)
-	_ilmu.size = Vector2(80, 12)
-	_ilmu.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_ilmu.add_theme_color_override("font_color", GOLD)
+	var well := TextureRect.new()   # weapon slot: slot.png well holding the equipped item's icon
+	well.texture = _ui_tex("slot")
+	well.position = Vector2(66, 270 - 6 - 20)
+	well.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(well)
+	_weapon_icon = TextureRect.new()
+	_weapon_icon.position = Vector2(2, 2)
+	_weapon_icon.size = Vector2(16, 16)
+	_weapon_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_weapon_icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	_weapon_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	well.add_child(_weapon_icon)
+	_ilmu = Label.new()   # logical value, never shown
+	_ilmu.visible = false
 	add_child(_ilmu)
+	var ii := TextureRect.new()
+	ii.texture = _ui_tex("icon_ilmu")
+	ii.position = Vector2(480 - 6 - 8, 6)
+	ii.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(ii)
+	_ilmu_disp = Label.new()
+	_ilmu_disp.position = Vector2(480 - 6 - 8 - 2 - 70, 4)
+	_ilmu_disp.size = Vector2(70, 12)
+	_ilmu_disp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_ilmu_disp.add_theme_color_override("font_color", GOLD)
+	add_child(_ilmu_disp)
+	_saved_icon = TextureRect.new()
+	_saved_icon.texture = _ui_tex("icon_save")
+	_saved_icon.position = Vector2(480 - 6 - 8, 270 - 6 - 8)
+	_saved_icon.visible = false
+	_saved_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_saved_icon)
 	_saved = Label.new()
 	_saved.text = "UI_SAVED"
-	_saved.position = Vector2(480 - 6 - 90, 270 - 6 - 12)
-	_saved.size = Vector2(90, 12)
+	_saved.position = Vector2(480 - 6 - 8 - 2 - 80, 270 - 6 - 10)
+	_saved.size = Vector2(80, 10)
 	_saved.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_saved.visible = false
 	add_child(_saved)
 	_build_extras()
-	_objective = _line(24, GOLD)
-	_hint = _line(34, Color.WHITE)
+	_objective = _line(38, GOLD)
+	_hint = _line(48, CREAM)
 	var g := get_node("/root/Game")
 	g.changed.connect(refresh)
 	g.changed.connect(refresh_objective)
 	g.saved.connect(func() -> void:
 		_saved_left = 1.0
-		_saved.visible = true)
+		_saved.visible = true
+		_saved_icon.visible = true)
 	var ev := get_node("/root/Events")
 	ev.quest_started.connect(func(id: String) -> void:
 		_push_toast(tr("UI_TOAST_QUEST_STARTED") % _title(id))
@@ -131,12 +179,18 @@ func refresh_objective() -> void:
 
 ## Red flash on the bar whose resource ran out (ui.md 2).
 func _on_blocked(what: String) -> void:
-	var nodes: Array = _pips if what == "flask" else [_bars[what][0].get_parent()]
-	for n: ColorRect in nodes:
-		n.color = Color.RED
-		var tw := create_tween()
-		tw.tween_property(n, "color", Color(0, 0, 0, 0.6) if what != "flask" else FLASK_COL, 0.25)
-		tw.finished.connect(refresh)   # restores the dim empty pips
+	if what == "flask":
+		for n in _pips:
+			n.modulate = Color(1, 0.25, 0.2)
+			var tw := create_tween()
+			tw.tween_property(n, "modulate", Color.WHITE, 0.25)
+			tw.finished.connect(refresh)
+	elif _bars.has(what):
+		var well: ColorRect = _bars[what][4]
+		well.color = Color.RED
+		var tw2 := create_tween()
+		tw2.tween_property(well, "color", Color(0, 0, 0, 0.6), 0.25)
+		_st_full = 0.0   # a flash on stamina shows the bar
 
 
 func _title(id: String) -> String:
@@ -154,25 +208,48 @@ func _rect(pos: Vector2, sz: Vector2, col: Color, parent: Node = self) -> ColorR
 
 
 func _outlined(l: Label) -> void:
-	l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
+	l.add_theme_color_override("font_outline_color", OUTLINE)
 	l.add_theme_constant_override("outline_size", 1)
 
 
+func _ui_tex(n: String) -> Texture2D:
+	return load(UI_DIR + n + ".png")
+
+
+func _nine(tex: String, rect: Rect2, m: Array) -> NinePatchRect:
+	var r := NinePatchRect.new()
+	r.texture = _ui_tex(tex)
+	r.position = rect.position
+	r.size = rect.size
+	r.patch_margin_left = m[0]
+	r.patch_margin_top = m[1]
+	r.patch_margin_right = m[2]
+	r.patch_margin_bottom = m[3]
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(r)
+	return r
+
+
 func _build_extras() -> void:
+	_toast_root = Control.new()
+	_toast_root.position = Vector2(90, 6)
+	_toast_root.size = Vector2(300, 14)
+	_toast_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_toast_root.visible = false
+	add_child(_toast_root)
+	_rect(Vector2.ZERO, Vector2(300, 13), Color(OUTLINE, 0.6), _toast_root)
+	_toast_rule = _rect(Vector2(150, 13), Vector2(0, 1), Color("C9A24A"), _toast_root)   # gold rule grows from the centre
 	_toast = Label.new()
-	_toast.position = Vector2(90, 6)
+	_toast.position = Vector2(0, 1)
 	_toast.size = Vector2(300, 12)
 	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_toast.add_theme_color_override("font_color", GOLD)
-	_outlined(_toast)
 	_toast.visible = false
-	add_child(_toast)
+	_toast_root.add_child(_toast)
 	_arrow = Node2D.new()
-	for pts: Array in [[Vector2(-4, -4), Vector2(5, 0), Vector2(-4, 4)], [Vector2(-3, -2.5), Vector2(3, 0), Vector2(-3, 2.5)]]:
-		var poly := Polygon2D.new()
-		poly.polygon = PackedVector2Array(pts)
-		poly.color = Color(0, 0, 0, 0.8) if pts[0].x < -3.5 else GOLD
-		_arrow.add_child(poly)
+	var spr := Sprite2D.new()
+	spr.texture = _ui_tex("arrow_objective")   # points right; rotated toward the target
+	_arrow.add_child(spr)
 	_arrow.visible = false
 	add_child(_arrow)
 	_boss_root = Control.new()
@@ -181,18 +258,28 @@ func _build_extras() -> void:
 	add_child(_boss_root)
 	var x := (480 - BOSS_W) / 2
 	_boss_name = Label.new()
-	_boss_name.position = Vector2(x, 234)
-	_boss_name.size = Vector2(BOSS_W, 12)
+	_boss_name.theme_type_variation = &"BossName"
+	_boss_name.position = Vector2(x - 40, 231)
+	_boss_name.size = Vector2(BOSS_W + 80, 13)
 	_boss_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_outlined(_boss_name)
 	_boss_root.add_child(_boss_name)
+	var bf := NinePatchRect.new()
+	bf.texture = _ui_tex("bar_frame")
+	bf.position = Vector2(x - 2, 245)
+	bf.size = Vector2(BOSS_W + 4, 9)
+	bf.patch_margin_left = 3
+	bf.patch_margin_right = 3
+	bf.patch_margin_top = 3
+	bf.patch_margin_bottom = 3
+	bf.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_boss_root.add_child(bf)
 	_rect(Vector2(x, 247), Vector2(BOSS_W, 5), Color(0, 0, 0, 0.6), _boss_root)
 	_boss_fill = _rect(Vector2(x, 247), Vector2(BOSS_W, 5), HP_COL, _boss_root)
-	_rect(Vector2(x + BOSS_W / 2, 247), Vector2(1, 5), Color(0, 0, 0, 0.8), _boss_root)   # phase 2 at 50%
+	_rect(Vector2(x + BOSS_W / 2, 247), Vector2(1, 5), Color(OUTLINE, 0.9), _boss_root)   # phase 2 at 50%
 	_boss_mark = _make_crack_mark(Vector2(x + BOSS_W + 5, 244))
 	_boss_root.add_child(_boss_mark)
-	_dawn_bg = _rect(Vector2(x, 253), Vector2(BOSS_W, 2), Color(0, 0, 0, 0.6), _boss_root)
-	_dawn_fill = _rect(Vector2(x, 253), Vector2(BOSS_W, 2), SK_COL, _boss_root)
+	_dawn_bg = _rect(Vector2(x, 256), Vector2(BOSS_W, 2), Color(0, 0, 0, 0.6), _boss_root)
+	_dawn_fill = _rect(Vector2(x, 256), Vector2(BOSS_W, 2), SK_COL, _boss_root)
 
 
 func _push_toast(text: String) -> void:
@@ -239,6 +326,7 @@ func _update_arrow() -> void:
 	var k := minf(half.x / maxf(absf(d.x), 0.001), half.y / maxf(absf(d.y), 0.001))
 	_arrow.position = (c + d * k).round()
 	_arrow.rotation = d.angle()
+	_arrow.scale = Vector2.ONE * (1.0 + 0.15 * sin(_t * 6.0))
 	_arrow.visible = true
 
 
@@ -247,10 +335,19 @@ func _update_toast(delta: float) -> void:
 		_toast_left -= delta
 		if _toast_left <= 0.0:
 			_toast.visible = false
+			_toast_root.visible = false
 	if _toast_left <= 0.0 and not _toasts.is_empty():
 		_toast.text = _toasts.pop_front()
 		_toast.visible = true
+		_toast_root.visible = true
 		_toast_left = TOAST_TIME
+	if _toast_root.visible:   # slide in from the top, hold, fade (a pure function of the timer)
+		var k := clampf((TOAST_TIME - _toast_left) / 0.25, 0.0, 1.0)
+		k = 1.0 - (1.0 - k) * (1.0 - k)
+		_toast_root.position.y = lerpf(-10.0, 6.0, k)
+		_toast_root.modulate.a = minf(k, clampf(_toast_left / 0.4, 0.0, 1.0))
+		_toast_rule.size.x = 300.0 * k
+		_toast_rule.position.x = 150.0 - _toast_rule.size.x / 2.0
 
 
 ## Placeholder drawing, no asset: a small glyph box (open at the top right) with a zigzag crack through it.
@@ -301,33 +398,64 @@ func _update_boss() -> void:
 		_dawn_fill.size.x = roundf(BOSS_W * clampf(float(dawn), 0.0, 1.0))
 
 
-func _bar(pos: Vector2, w: int, h: int, col: Color) -> Array:
-	var bg := ColorRect.new()
+func _bar(pos: Vector2, w: int, h: int, col: Color, icon: String) -> Array:
+	var ic := TextureRect.new()
+	ic.texture = _ui_tex(icon)
+	ic.position = Vector2(pos.x, pos.y + (h + 4 - 7) / 2)
+	ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(ic)
+	var frame := _nine("bar_frame", Rect2(pos.x + 9, pos.y, w + 4, h + 4), [3, 3, 3, 3])
+	var bg := ColorRect.new()   # the well: flashes red on a blocked action
 	bg.color = Color(0, 0, 0, 0.6)
-	bg.position = pos
+	bg.position = pos + Vector2(11, 2)
 	bg.size = Vector2(w, h)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
+	var lag := ColorRect.new()
+	lag.color = Color(CREAM, 0.9)
+	lag.size = Vector2(w, h)
+	lag.visible = false
+	bg.add_child(lag)
 	var fill := ColorRect.new()
 	fill.color = col
 	fill.size = Vector2(w, h)
 	bg.add_child(fill)
-	return [fill, w]
+	return [fill, w, frame, lag, bg, ic]
 
 
 func _fill(name: String, value: float, max_value: float) -> void:
 	var b: Array = _bars[name]
+	if name == "sk":   # Mage's 120 gauge draws 60 px wide (ui.md 2)
+		var w := roundi(max_value * 0.5)
+		if w != b[1]:
+			b[1] = w
+			b[2].size.x = w + 4
+			b[4].size.x = w
+			b[3].size.x = w
 	b[0].size.x = roundf(b[1] * clampf(value / maxf(max_value, 1.0), 0.0, 1.0))
 
 
 func refresh() -> void:
 	var g := get_node("/root/Game")
-	_ilmu.text = "Ilmu %d" % g.ilmu
+	_ilmu.text = "%d" % g.ilmu
+	if _ilmu_shown < 0.0 or g.ilmu < _ilmu_shown:
+		_ilmu_shown = float(g.ilmu)
+		_ilmu_disp.text = _ilmu.text
 	for i in _pips.size():
 		_pips[i].visible = i < g.flask_max
-		_pips[i].color = FLASK_COL if i < g.flask_charges else FLASK_COL.darkened(0.7)
+		_pips[i].texture = _flask_full if i < g.flask_charges else _flask_empty
+	var item = g.equipped_item("weapon")
+	var tex: Variant = null
+	if item:
+		tex = item.get("icon")   # `icon` export may not exist yet: fall back to the sheet by id
+		if not tex is Texture2D:
+			var path := "res://assets/art/items/%s.png" % item.id
+			tex = load(path) if ResourceLoader.exists(path) else null
+	_weapon_icon.texture = tex if tex is Texture2D else null
 
 
 func _process(delta: float) -> void:
+	_t += delta
 	var p := get_tree().get_first_node_in_group("player")
 	if p:
 		if p != _player:
@@ -336,9 +464,51 @@ func _process(delta: float) -> void:
 		_fill("hp", p.health.hp, p.health.max_hp)
 		_fill("st", p.stamina.value, p.stamina.max_stamina)
 		_fill("sk", p.sakti.value, p.sakti.max_value)
+		_update_hp_fx(delta, float(p.health.hp) / maxf(p.health.max_hp, 1.0))
+		_update_stamina_fade(delta, p.stamina.value >= p.stamina.max_stamina)
 	_update_toast(delta)
 	_update_arrow()
 	_update_boss()
+	if _ilmu_shown < float(get_node("/root/Game").ilmu):   # roll up
+		var target := float(get_node("/root/Game").ilmu)
+		_ilmu_shown = minf(target, _ilmu_shown + maxf(20.0 * delta, (target - _ilmu_shown) * 6.0 * delta))
+		_ilmu_disp.text = "%d" % roundi(_ilmu_shown) if _ilmu_shown < target else _ilmu.text
 	if _saved_left > 0.0:
 		_saved_left -= delta
 		_saved.visible = _saved_left > 0.0
+		_saved_icon.visible = _saved.visible
+		_saved.modulate.a = clampf(_saved_left / 0.3, 0.0, 1.0)
+		_saved_icon.modulate.a = _saved.modulate.a
+
+
+## HP: a cream lag chunk drains LAG_HOLD s after the fill drops; below 25% the fill and frame pulse.
+func _update_hp_fx(delta: float, ratio: float) -> void:
+	var b: Array = _bars.hp
+	var cur: float = b[0].size.x
+	if _lag < 0.0 or cur >= _lag:
+		_lag = cur
+	elif cur < _hp_prev:
+		_lag_hold = LAG_HOLD
+	elif _lag_hold > 0.0:
+		_lag_hold -= delta
+	else:
+		_lag = maxf(cur, _lag - 60.0 * delta)
+	_hp_prev = cur
+	b[3].visible = _lag > cur
+	b[3].size.x = _lag
+	if ratio < LOW_HP and ratio > 0.0:
+		var s := 0.5 + 0.5 * sin(_t * 7.0)
+		b[0].modulate = Color.WHITE.lerp(Color(1.5, 1.2, 1.0), s)
+		b[2].modulate = Color.WHITE.lerp(Color(1.4, 0.6, 0.5), s)
+	else:
+		b[0].modulate = Color.WHITE
+		b[2].modulate = Color.WHITE
+
+
+## Stamina hides after 2 s at full and shows on use (ui.md 2).
+func _update_stamina_fade(delta: float, full: bool) -> void:
+	_st_full = _st_full + delta if full else 0.0
+	var a := 0.0 if _st_full > 2.0 else 1.0
+	for n in _st_nodes:
+		n.modulate.a = move_toward(n.modulate.a, a, delta * 4.0)
+	_bars.st[5].modulate.a = _st_nodes[0].modulate.a

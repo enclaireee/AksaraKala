@@ -34,6 +34,9 @@ Log every third-party asset here the moment it is added. Check the license befor
 ## Third-party log
 | Asset | Source URL | License | Used for | Attribution needed? |
 |-------|-----------|---------|----------|---------------------|
+| Cinzel | https://github.com/google/fonts/tree/main/ofl/cinzel | OFL 1.1 | title, headings | license text shipped (`assets/fonts/OFL_Cinzel.txt`) |
+| Alegreya Sans | https://github.com/google/fonts/tree/main/ofl/alegreyasans | OFL 1.1 | body, dialogue, HUD | license text shipped |
+| Noto Sans Sundanese, Noto Sans Javanese | https://github.com/google/fonts/tree/main/ofl | OFL 1.1 | aksara | license text shipped |
 | _example: 0x72 Dungeon Tileset II_ | https://0x72.itch.io/dungeontileset-ii | CC0 | tiles, characters | no |
 
 ## Reference sources for cultural content (to be filled)

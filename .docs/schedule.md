@@ -106,6 +106,7 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 
 ## Phase 6: Art and audio pass
 - [x] Final tilesets, character and enemy sprites, UI (hero + 4 classes, 34 enemy sheets, 10 boss sheets, 12 NPC/prop archetypes, 7 regional 128x256 world tilesets with 896 tiles across 21 sub-biomes)
+- [ ] Phase 6b (user call 2026-11-07): themed UI and fonts ([ui.md](ui.md) 3b), Elden-style class select with 96x128 portraits, item icons, world scale x2 with erosion, deco and mood ([architecture.md](architecture.md) 9), and fixes for the prompt, NPC feet and quest marker
 - [ ] Culture-item icons and glyph art
 - [ ] SFX and music
 - [ ] Particles and effects

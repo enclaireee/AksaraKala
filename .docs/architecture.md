@@ -105,6 +105,18 @@ Custom `Resource` types so adding content is data entry:
 ## 9. Zone loading
 - Edge `Area2D` exits call `Zones.go_to(zone_id, spawn_id)`, which fades out, swaps the scene, places the player at the spawn marker and fades in. The new player starts with full HP, stamina and sakti; this is intended (user call, 2026-11-05).
 - Zone scripts extend `zones/zone.gd` (**ASSUMED** 2026-11-05): `zone_id`, an ASCII `MAP` (any size, in 30x17 screens), and a `SPOTS` dict mapping a map char to `{scene, props, tile}`. The base paints the tiles, places the spots, sets the camera limits from the map size and emits `Events.zone_entered`. Tile chars: `#` wall/cliff, `.` grass, `,` path, `~` water, `b` bamboo, `t` tea, `r` rock, `_` floor. `Zones.ZONES` maps area id to scene path and `Zones.ADJ` lists where you can walk from each area (two-way links; a one-way drop only from its top end; a shortcut only from the side that opens it, listed in `Zones.SHORTCUTS`, drops in `Zones.DROPS`) for the objective arrow's breadth-first search. Area scripts are generated from the region doc by `.docs/gen_zones.py`. Hand-written area code goes in `zones/<area>_base.gd` (extends `Zone`); the generated script extends it when it exists, so a re-run keeps it (desa_purwa: the sanggar practice mode and draw guide).
+- **World scale and dressing (Phase 6b, 2026-11-07, **ASSUMED**, numbers **TUNE**).** The region docs' ASCII maps are the macro layout. `Zone.SCALE` (2) expands each doc tile into a SCALE x SCALE block of game tiles, so a 60x34 doc map becomes 120x68 tiles (4x4 screens). A spot's entity sits at the centre of its block, and `Zone.cell_pos(doc_cell)` returns that position. After scaling:
+  1. A seeded erosion pass (seeded by `zone_id`) roughens the boundaries between solid and walkable tiles by 1-2 tiles. It never touches path `,` tiles, spot blocks, exits or the 3x3 around them, and it never cuts the walkable connectivity between spots, which a flood-fill check verifies.
+  2. `zones/deco.gd` adds a y-sorted `Deco` layer, seeded the same way. Solid outdoor ground grows tree canopies (32x48), rocks and bushes, so a forest or cliff edge reads as terrain, not a brick wall. Walkable grass gets tufts, flowers and pebbles that have no collision. Each sub-biome adds its own landmarks: ruins, statues, lanterns, shrines, boats or bones. Sprites come from `assets/art/props/` (`tools/gen_world_props.py`). Nothing is placed on a path, a spot block or an exit.
+  3. Mood: one `CanvasModulate` per region and a `GPUParticles2D` ambience picked by `sub_biome()`:
+     - fireflies or falling leaves in forest and village
+     - mist on water and sawah
+     - embers in Kala and the crater
+     - sea spray on the coast
+     - dust in the candi
+     - paper motes in Kelir
+     A screen vignette sits in the UI layer.
+- Interiors (`_` floor areas such as the keraton rooms) keep straight walls and get furniture props instead of trees.
 - Boss and elite scenes are referenced by path and loaded at runtime, so a zone imports cleanly before its boss exists.
 - Persistent state (killed bosses, opened fog gates, chests) lives in `Game`, not in the scene.
 - Normal enemies respawn by reloading the zone scene (state is intentionally not persisted for them).
@@ -163,7 +175,7 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 - Menus: pause, equipment and stats, level-up (at petilasan), codex, journal, glyph viewer, settings (incl. language).
 - Sizes and layout: [ui.md](ui.md).
 - Quest UI: soft edge-of-screen objective arrow, NPC quest icons, toasts ([quests.md](quests.md) section 7.4-7.6).
-- Use theme resources and a pixel font. Aksara text needs Noto Sans Javanese / Sundanese. **Test complex-script rendering early.** If Godot's text server does not shape them correctly, fall back to pre-rendered glyph images.
+- One global theme, `ui/theme.tres` (project `gui/theme/custom`), with the fonts and frames from [ui.md](ui.md) 3b. Earlier note: use theme resources and a pixel font. Aksara text needs Noto Sans Javanese / Sundanese. **Test complex-script rendering early.** If Godot's text server does not shape them correctly, fall back to pre-rendered glyph images.
 
 ## 11. Input map
 `move_up/down/left/right`, `attack`, `dodge`, `cast`, `heal_jamu`, `interact`, `menu`, `pause`. P0: two presets and a mouse-button swap; P1: free rebinding. Details and notes: [controls.md](controls.md).

@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
 [ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/short_sword.png" id="2_icon"]
 
 [resource]
 script = ExtResource("1")
+icon = ExtResource("2_icon")
 id = "short_sword"
 title = "ITEM_SHORT_SWORD_NAME"
 slot = "weapon"

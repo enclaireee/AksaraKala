@@ -9,6 +9,7 @@ class_name ItemData extends Resource
 @export var mythic := false              # pusaka: gold name and a lore line (items.md 1)
 @export_multiline var description := ""
 @export_multiline var lore := ""         # mythic only
+@export var icon: Texture2D              # 16x16, assets/art/items/<id>.png (tools/gen_items.py)
 
 @export_group("Weapon")
 @export var damage := 10

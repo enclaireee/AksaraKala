@@ -19,18 +19,9 @@ var _guide_line: Line2D
 
 
 func _ready() -> void:
-	var g := Gradient.new()
-	g.offsets = PackedFloat32Array([0.0, 0.5, 1.0])
-	g.colors = PackedColorArray([Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 0.7)])
-	var t := GradientTexture2D.new()
-	t.gradient = g
-	t.fill = GradientTexture2D.FILL_RADIAL
-	t.fill_from = Vector2(0.5, 0.5)
-	t.fill_to = Vector2(1.0, 0.5)
-	t.width = 96 # ponytail: low-res gradient stretched to screen; fine for a vignette
-	t.height = 54
 	_vignette = TextureRect.new()
-	_vignette.texture = t
+	_vignette.texture = load("res://assets/art/ui/vignette.png")
+	_vignette.self_modulate = Color("1F2A44").lightened(0.35)   # indigo cast tint (ui.md 3b)
 	_vignette.stretch_mode = TextureRect.STRETCH_SCALE
 	_vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_vignette.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -44,6 +35,7 @@ func _ready() -> void:
 	for i in 25:
 		_ring.add_point(Vector2.from_angle(TAU * i / 24.0) * RING_R)
 	_label = Label.new()
+	_label.theme_type_variation = &"HeaderLarge"
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_label.add_theme_color_override("font_outline_color", INK)
 	_label.add_theme_constant_override("outline_size", 3)

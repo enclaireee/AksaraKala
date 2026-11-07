@@ -26,6 +26,9 @@ func _initialize() -> void:
 			check(item.id == item_id, "Item %s has matching id" % item_id)
 			check(item.slot in ["weapon", "armor", "accessory"], "Item %s has valid slot: %s" % [item_id, item.slot])
 			check(item.title != "", "Item %s has non-empty title" % item_id)
+			check(item.icon != null, "Item %s has an icon" % item_id)
+			if item.icon:
+				check(item.icon.get_size() == Vector2(16, 16), "Item %s icon is 16x16" % item_id)
 			if item.mythic:
 				check(item.lore != "", "Mythic item %s has non-empty lore" % item_id)
 

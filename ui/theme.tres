@@ -1,0 +1,267 @@
+[gd_resource type="Theme" load_steps=31 format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Regular.ttf" id="f1"]
+[ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="f2"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Bold.ttf" id="f3"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Italic.ttf" id="f4"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/panel.png" id="t_panel"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/panel_dialogue.png" id="t_panel_dialogue"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/button_normal.png" id="t_button_normal"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/button_hover.png" id="t_button_hover"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/button_pressed.png" id="t_button_pressed"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/button_disabled.png" id="t_button_disabled"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/tab_on.png" id="t_tab_on"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/tab_off.png" id="t_tab_off"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/slot.png" id="t_slot"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/slot_selected.png" id="t_slot_selected"]
+
+[sub_resource type="StyleBoxTexture" id="s_panel"]
+texture = ExtResource("t_panel")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="s_panel_dialogue"]
+texture = ExtResource("t_panel_dialogue")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="s_button_normal"]
+texture = ExtResource("t_button_normal")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+content_margin_left = 7.0
+content_margin_top = 3.0
+content_margin_right = 7.0
+content_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="s_button_hover"]
+texture = ExtResource("t_button_hover")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+content_margin_left = 7.0
+content_margin_top = 3.0
+content_margin_right = 7.0
+content_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="s_button_pressed"]
+texture = ExtResource("t_button_pressed")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+content_margin_left = 7.0
+content_margin_top = 4.0
+content_margin_right = 7.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="s_button_disabled"]
+texture = ExtResource("t_button_disabled")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+content_margin_left = 7.0
+content_margin_top = 3.0
+content_margin_right = 7.0
+content_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="s_tab_on"]
+texture = ExtResource("t_tab_on")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+content_margin_left = 7.0
+content_margin_top = 5.0
+content_margin_right = 7.0
+content_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="s_tab_off"]
+texture = ExtResource("t_tab_off")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+content_margin_left = 7.0
+content_margin_top = 5.0
+content_margin_right = 7.0
+content_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="s_slot"]
+texture = ExtResource("t_slot")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="s_slot_selected"]
+texture = ExtResource("t_slot_selected")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="s_empty"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="s_none"]
+
+[sub_resource type="StyleBoxFlat" id="s_grab"]
+bg_color = Color(0.788, 0.635, 0.29, 0.8)
+content_margin_left = 2.0
+content_margin_right = 2.0
+
+[sub_resource type="StyleBoxFlat" id="s_scroll"]
+bg_color = Color(0.055, 0.043, 0.039, 0.6)
+content_margin_left = 2.0
+content_margin_right = 2.0
+
+[sub_resource type="StyleBoxFlat" id="s_edit"]
+bg_color = Color(0.055, 0.043, 0.039, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.788, 0.635, 0.29, 1)
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="s_sel"]
+bg_color = Color(0.122, 0.165, 0.267, 0.9)
+
+[resource]
+default_font = ExtResource("f1")
+default_font_size = 8
+Label/colors/font_color = Color(0.929, 0.89, 0.8, 1)
+Label/colors/font_outline_color = Color(0.055, 0.043, 0.039, 1)
+Label/constants/outline_size = 1
+Label/constants/line_spacing = 1
+Label/fonts/font = ExtResource("f1")
+RichTextLabel/colors/default_color = Color(0.929, 0.89, 0.8, 1)
+RichTextLabel/fonts/normal_font = ExtResource("f1")
+RichTextLabel/fonts/bold_font = ExtResource("f3")
+RichTextLabel/fonts/italics_font = ExtResource("f4")
+Panel/styles/panel = SubResource("s_panel")
+PanelContainer/styles/panel = SubResource("s_panel")
+TooltipPanel/styles/panel = SubResource("s_panel")
+TooltipLabel/colors/font_color = Color(0.929, 0.89, 0.8, 1)
+TooltipLabel/font_sizes/font_size = 8
+Button/fonts/font = ExtResource("f2")
+Button/font_sizes/font_size = 8
+Button/colors/font_color = Color(0.929, 0.89, 0.8, 1)
+Button/colors/font_hover_color = Color(0.949, 0.831, 0.533, 1)
+Button/colors/font_hover_pressed_color = Color(0.949, 0.831, 0.533, 1)
+Button/colors/font_focus_color = Color(0.949, 0.831, 0.533, 1)
+Button/colors/font_pressed_color = Color(0.788, 0.635, 0.29, 1)
+Button/colors/font_disabled_color = Color(0.4, 0.37, 0.32, 1)
+Button/colors/font_outline_color = Color(0.055, 0.043, 0.039, 1)
+Button/constants/outline_size = 1
+Button/constants/h_separation = 3
+Button/styles/normal = SubResource("s_button_normal")
+Button/styles/hover = SubResource("s_button_hover")
+Button/styles/pressed = SubResource("s_button_pressed")
+Button/styles/hover_pressed = SubResource("s_button_pressed")
+Button/styles/disabled = SubResource("s_button_disabled")
+Button/styles/focus = SubResource("s_button_hover")
+SlotButton/base_type = &"Button"
+SlotButton/styles/normal = SubResource("s_slot")
+SlotButton/styles/hover = SubResource("s_slot_selected")
+SlotButton/styles/pressed = SubResource("s_slot_selected")
+SlotButton/styles/hover_pressed = SubResource("s_slot_selected")
+SlotButton/styles/disabled = SubResource("s_slot")
+SlotButton/styles/focus = SubResource("s_slot_selected")
+LinkButton/colors/font_color = Color(0.929, 0.89, 0.8, 1)
+LinkButton/fonts/font = ExtResource("f1")
+CheckBox/colors/font_color = Color(0.929, 0.89, 0.8, 1)
+CheckBox/colors/font_hover_color = Color(0.949, 0.831, 0.533, 1)
+CheckBox/styles/focus = SubResource("s_none")
+TabContainer/fonts/font = ExtResource("f2")
+TabContainer/font_sizes/font_size = 8
+TabContainer/colors/font_selected_color = Color(0.949, 0.831, 0.533, 1)
+TabContainer/colors/font_unselected_color = Color(0.612, 0.561, 0.471, 1)
+TabContainer/colors/font_hovered_color = Color(0.929, 0.89, 0.8, 1)
+TabContainer/colors/font_outline_color = Color(0.055, 0.043, 0.039, 1)
+TabContainer/constants/outline_size = 1
+TabContainer/constants/side_margin = 0
+TabContainer/styles/panel = SubResource("s_empty")
+TabContainer/styles/tab_selected = SubResource("s_tab_on")
+TabContainer/styles/tab_unselected = SubResource("s_tab_off")
+TabContainer/styles/tab_hovered = SubResource("s_tab_on")
+TabContainer/styles/tab_focus = SubResource("s_none")
+TabContainer/styles/tab_disabled = SubResource("s_tab_off")
+TabBar/fonts/font = ExtResource("f2")
+TabBar/font_sizes/font_size = 8
+TabBar/colors/font_selected_color = Color(0.949, 0.831, 0.533, 1)
+TabBar/colors/font_unselected_color = Color(0.612, 0.561, 0.471, 1)
+TabBar/colors/font_hovered_color = Color(0.929, 0.89, 0.8, 1)
+TabBar/styles/tab_selected = SubResource("s_tab_on")
+TabBar/styles/tab_unselected = SubResource("s_tab_off")
+TabBar/styles/tab_hovered = SubResource("s_tab_on")
+TabBar/styles/tab_focus = SubResource("s_none")
+TabBar/styles/tab_disabled = SubResource("s_tab_off")
+ItemList/colors/font_color = Color(0.929, 0.89, 0.8, 1)
+ItemList/colors/font_selected_color = Color(0.949, 0.831, 0.533, 1)
+ItemList/styles/panel = SubResource("s_none")
+ItemList/styles/focus = SubResource("s_none")
+ItemList/styles/selected = SubResource("s_sel")
+ItemList/styles/selected_focus = SubResource("s_sel")
+ScrollContainer/styles/panel = SubResource("s_none")
+VScrollBar/styles/scroll = SubResource("s_scroll")
+VScrollBar/styles/grabber = SubResource("s_grab")
+VScrollBar/styles/grabber_highlight = SubResource("s_grab")
+VScrollBar/styles/grabber_pressed = SubResource("s_grab")
+HScrollBar/styles/scroll = SubResource("s_scroll")
+HScrollBar/styles/grabber = SubResource("s_grab")
+LineEdit/colors/font_color = Color(0.929, 0.89, 0.8, 1)
+LineEdit/colors/caret_color = Color(0.949, 0.831, 0.533, 1)
+LineEdit/fonts/font = ExtResource("f1")
+LineEdit/styles/normal = SubResource("s_edit")
+LineEdit/styles/focus = SubResource("s_edit")
+HeaderLarge/base_type = &"Label"
+HeaderLarge/fonts/font = ExtResource("f2")
+HeaderLarge/font_sizes/font_size = 10
+HeaderLarge/colors/font_color = Color(0.788, 0.635, 0.29, 1)
+Heading/base_type = &"Label"
+Heading/fonts/font = ExtResource("f2")
+Heading/font_sizes/font_size = 8
+Heading/colors/font_color = Color(0.949, 0.831, 0.533, 1)
+BossName/base_type = &"Label"
+BossName/fonts/font = ExtResource("f2")
+BossName/font_sizes/font_size = 10
+BossName/colors/font_color = Color(0.929, 0.89, 0.8, 1)
+Small/base_type = &"Label"
+Small/font_sizes/font_size = 7
+Dim/base_type = &"Label"
+Dim/colors/font_color = Color(0.612, 0.561, 0.471, 1)
+Italic/base_type = &"Label"
+Italic/fonts/font = ExtResource("f4")
+Italic/colors/font_color = Color(0.949, 0.902, 0.769, 1)

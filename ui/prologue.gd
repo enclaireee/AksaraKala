@@ -16,7 +16,6 @@ signal finished
 @export var extras := {}     # card number -> [key, cond]; while Game.check(cond) holds, tr(key) is added under card n after a blank line
 @export var next_scene := "res://ui/class_select.tscn"   # "" = back to Desa Purwa (epilogue)
 const HOLD := 1.0
-const JAWA := "/System/Library/Fonts/Supplemental/NotoSansJavanese-Regular.otf"
 const SHADOW := Color("14110f")
 
 var index := 0
@@ -28,22 +27,25 @@ var _aji: Node2D
 var _servants: Node2D
 var _aksara: Label
 var _tw: Tween
+var _card: Control
+var _arrow: TextureRect
+var _cover: ColorRect
+var _t := 0.0
 
 
 func _ready() -> void:
-	var t := Theme.new()
-	t.default_font_size = 8
-	theme = t
 	var bg := ColorRect.new()
 	bg.color = SHADOW
 	bg.set_anchors_preset(PRESET_FULL_RECT)
 	bg.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(bg)
+	add_child(UIFx.frame(Vector2(31, 3), Vector2(418, 168)))   # card frame round the kelir
 	var screen := ColorRect.new()   # the backlit kelir
 	screen.color = Color("d9a24a")
 	screen.position = Vector2(40, 12)
 	screen.size = Vector2(400, 150)
 	screen.mouse_filter = MOUSE_FILTER_IGNORE
+	screen.clip_contents = true
 	add_child(screen)
 	_aji = _silhouette(PackedVector2Array([Vector2(-14, 60), Vector2(-10, 20), Vector2(-6, 8), Vector2(-4, -14), Vector2(4, -14), Vector2(6, 8), Vector2(10, 20), Vector2(14, 60)]), Vector2(-60, 80))
 	_servants = Node2D.new()
@@ -55,11 +57,8 @@ func _ready() -> void:
 		_servants.add_child(s)
 	screen.add_child(_aji)
 	_aksara = Label.new()
-	_aksara.text = "ꦲꦤꦕꦫꦏ" if FileAccess.file_exists(JAWA) else "ha na ca ra ka"
-	if FileAccess.file_exists(JAWA):
-		var f := FontFile.new()
-		f.load_dynamic_font(JAWA)
-		_aksara.add_theme_font_override("font", f)
+	_aksara.text = "ꦲꦤꦕꦫꦏ"
+	_aksara.add_theme_font_override("font", load("res://assets/fonts/NotoSansJavanese.ttf"))
 	_aksara.add_theme_font_size_override("font_size", 28)
 	_aksara.add_theme_color_override("font_color", SHADOW)
 	_aksara.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -67,23 +66,30 @@ func _ready() -> void:
 	_aksara.size = Vector2(200, 40)
 	_aksara.modulate.a = 0.0 if key_prefix == "PROLOGUE" else 1.0   # the epilogue: the letters are back
 	screen.add_child(_aksara)
-	_name = Label.new()
-	_name.position = Vector2(40, 170)
-	_name.size = Vector2(400, 12)
-	_name.modulate = Color("E8D9A0")
-	add_child(_name)
-	_text = Label.new()
-	_text.position = Vector2(40, 184)
-	_text.size = Vector2(400, 64)   # room for an extras line under a card
+	add_child(UIFx.frame(Vector2(35, 171), Vector2(410, 82)))
+	_card = Control.new()   # name and text fade and rise together between cards
+	_card.mouse_filter = MOUSE_FILTER_IGNORE
+	add_child(_card)
+	_name = UIFx.label("", 8, Color("E8D9A0"), true)
+	_name.position = Vector2(48, 177)
+	_name.size = Vector2(384, 12)
+	_card.add_child(_name)
+	_text = UIFx.label("", 8, UIFx.CREAM)
+	_text.position = Vector2(48, 190)
+	_text.size = Vector2(384, 58)   # room for an extras line under a card
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	add_child(_text)
-	var hint := Label.new()
-	hint.text = "UI_HOLD_SKIP"
-	hint.position = Vector2(300, 252)
-	hint.size = Vector2(174, 12)
+	_card.add_child(_text)
+	_arrow = UIFx.rect_tex("continue_arrow", Vector2(432, 242))
+	_arrow.visible = false
+	add_child(_arrow)
+	var hint := UIFx.label("UI_HOLD_SKIP", 7, UIFx.DIM)
+	hint.position = Vector2(276, 256)
+	hint.size = Vector2(198, 10)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	hint.modulate = Color(1, 1, 1, 0.6)
 	add_child(hint)
+	_cover = UIFx.cover(self)
+	_cover.color.a = 1.0
+	create_tween().tween_property(_cover, "color:a", 0.0, 0.5)
 	advance()
 
 
@@ -124,6 +130,11 @@ func advance() -> void:
 		body += "\n\n" + tr(str(ex[0]))
 	_text.text = game.fmt(body)
 	_text.visible_ratio = 0.0
+	_card.modulate.a = 0.0   # fade and rise between cards
+	_card.position.y = 5.0
+	var rise := create_tween().set_parallel().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	rise.tween_property(_card, "modulate:a", 1.0, 0.3)
+	rise.tween_property(_card, "position:y", 0.0, 0.3)
 	_tw = create_tween()
 	_tw.tween_property(_text, "visible_ratio", 1.0, maxf(0.3, body.length() * 0.03))
 	if key_prefix != "PROLOGUE":
@@ -167,6 +178,9 @@ func _input(e: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	_t += delta
+	_arrow.visible = not _done and not (_tw and _tw.is_running())   # blinking continue arrow
+	_arrow.position.y = 242.0 + roundf(sin(_t * 5.0))
 	_hold = _hold + delta if Input.is_action_pressed("interact") else 0.0
 	if _hold >= HOLD:
 		skip()

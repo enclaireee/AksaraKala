@@ -10,9 +10,10 @@ extends CanvasLayer
 const NEEDED := 3   # TUNE: successful casts per lesson
 const HOLD := 1.0
 const GUIDE_RECT := Rect2(380, 20, 80, 80)   # same corner as zones/desa_purwa.gd
-const JAWA := "/System/Library/Fonts/Supplemental/NotoSansJavanese-Regular.otf"
-const SUNDA := "/System/Library/Fonts/Supplemental/NotoSansSundanese-Regular.ttf"
-# ponytail: system fonts like prologue.gd; falls back to the Latin name when missing
+const JAWA := "res://assets/fonts/NotoSansJavanese.ttf"
+const SUNDA := "res://assets/fonts/NotoSansSundanese.ttf"
+const GOLD := Color("F2D488")
+const DIM := Color("9C8F78")
 const CHARS := {
 	"sunda_ka": "ᮊ", "sunda_ga": "ᮌ", "sunda_nga": "ᮍ", "sunda_ca": "ᮎ",
 	"jawa_ha": "ꦲ", "jawa_na": "ꦤ", "jawa_ca": "ꦕ", "jawa_ra": "ꦫ",
@@ -60,25 +61,34 @@ func _ready() -> void:
 	_panel.visible = false
 	_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_panel)
-	var bg := ColorRect.new()
-	bg.color = Color(INK, 0.85)
+	var bg := NinePatchRect.new()   # framed card (ui.md 3b)
+	bg.texture = load("res://assets/art/ui/panel.png")
+	for side in ["left", "top", "right", "bottom"]:
+		bg.set("patch_margin_" + side, 6)
 	bg.position = Vector2(6, 6)
-	bg.size = Vector2(250, 108)
+	bg.size = Vector2(250, 112)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(bg)
-	_name = _label(Vector2(12, 9), Vector2(150, 12))
-	_aksara = _label(Vector2(200, 8), Vector2(50, 36))
+	_name = _label(Vector2(14, 11), Vector2(180, 12))
+	_name.theme_type_variation = &"Heading"
+	_aksara = _label(Vector2(200, 10), Vector2(50, 36))
 	_aksara.add_theme_font_size_override("font_size", 28)
+	_aksara.add_theme_color_override("font_color", GOLD)
 	_aksara.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_body = _label(Vector2(12, 22), Vector2(184, 36))
-	_tip = _label(Vector2(12, 60), Vector2(238, 28))
-	_tip.modulate = Color("E8D9A0")
-	_progress = _label(Vector2(12, 92), Vector2(150, 12))
-	_msg = _label(Vector2(12, 120), Vector2(250, 12))
+	var rule := TextureRect.new()
+	rule.texture = load("res://assets/art/ui/divider.png")
+	rule.position = Vector2(14, 24)
+	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(rule)
+	_body = _label(Vector2(14, 31), Vector2(182, 36))
+	_tip = _label(Vector2(14, 68), Vector2(236, 26))
+	_tip.modulate = GOLD
+	_progress = _label(Vector2(14, 99), Vector2(150, 12))
+	_msg = _label(Vector2(14, 122), Vector2(250, 12))
 	_msg.modulate = Color(0.9, 0.7, 0.5)
-	var hint := _label(Vector2(150, 92), Vector2(100, 12))
+	var hint := _label(Vector2(150, 99), Vector2(100, 12))
 	hint.text = tr("UI_HOLD_SKIP")
-	hint.modulate = Color(1, 1, 1, 0.6)
+	hint.modulate = DIM
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	var ev := get_node("/root/Events")
 	ev.glyph_learned.connect(_on_learned)
@@ -97,7 +107,7 @@ func _ready() -> void:
 	add_child(_wguide)
 	_stroke = Line2D.new()
 	_stroke.width = 2.0
-	_stroke.default_color = Color("E8D9A0")
+	_stroke.default_color = GOLD
 	_stroke.antialiased = false
 	_card.add_child(_stroke)
 	var hint_w := Label.new()
@@ -113,7 +123,6 @@ func _label(pos: Vector2, sz: Vector2) -> Label:
 	var l := Label.new()
 	l.position = pos
 	l.size = sz
-	l.add_theme_font_size_override("font_size", 8)
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(l)
@@ -172,10 +181,8 @@ func _t(key: String) -> String:
 ## The aksara system font on a label, or the Latin fallback text when it is missing.
 func _font(l: Label, g: GlyphData) -> void:
 	var path: String = JAWA if g.aksara == "jawa" else SUNDA
-	if FileAccess.file_exists(path) and CHARS.has(g.id):
-		var f := FontFile.new()
-		f.load_dynamic_font(path)
-		l.add_theme_font_override("font", f)
+	if CHARS.has(g.id) and ResourceLoader.exists(path):
+		l.add_theme_font_override("font", load(path))
 	else:
 		l.remove_theme_font_override("font")
 
@@ -266,7 +273,7 @@ func write_attempt(stroke: PackedVector2Array) -> bool:
 	l.text = CHARS.get(g.id, g.latin)
 	_font(l, g)
 	l.add_theme_font_size_override("font_size", 48)
-	l.add_theme_color_override("font_color", Color("E8D9A0"))
+	l.add_theme_color_override("font_color", GOLD)
 	l.position = _slot(_wi).position
 	l.size = SLOT
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

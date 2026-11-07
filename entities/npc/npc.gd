@@ -13,11 +13,18 @@ const DRESSING := [
 
 const SHEET: Texture2D = preload("res://assets/art/npcs.png")
 
+const TALL_RANGE := 64.0   # px: the grey talk marker shows only this close (ui.md 3b)
+const MARKER := "res://assets/art/ui/marker_%s.png"
+
+static var _bounds: Dictionary = {}    # sheet row -> Vector2i(highest, lowest opaque frame row) over its 4 frames
+static var _markers: Dictionary = {}   # "quest" / "talk" -> Texture2D or false (file not there yet)
+
 var data: DialogueData   # tests may preset this
 var _busy := false
 var _gold := false
 var _t := 0.0
 var _last_frame := -1
+var _near_player := false
 
 
 func _ready() -> void:
@@ -62,9 +69,44 @@ func _recompute() -> void:
 func _process(delta: float) -> void:
 	_t += delta
 	var f := int(_t * 3.5) % 4
-	if _gold or f != _last_frame:
+	var near := false
+	if data != null and not _gold and usable:
+		var pl := get_tree().get_first_node_in_group("player") as Node2D
+		near = pl != null and pl.global_position.distance_to(global_position) <= TALL_RANGE
+	if _gold or f != _last_frame or near != _near_player:
 		_last_frame = f
+		_near_player = near
 		queue_redraw()
+
+
+## Highest and lowest opaque rows of a sheet row's frames, so the feet can sit on y 0 over the shadow.
+static func frame_bounds(row: int) -> Vector2i:
+	if _bounds.is_empty():
+		var img: Image = SHEET.get_image() if SHEET else null
+		if img != null:
+			if img.is_compressed():
+				img.decompress()
+			for r in img.get_height() / 24:
+				var top := 24
+				var bot := -1
+				for c in 4:
+					for y in 24:
+						for x in 16:
+							if img.get_pixel(c * 16 + x, r * 24 + y).a > 0.1:
+								top = mini(top, y)
+								bot = maxi(bot, y)
+				if bot >= 0:
+					_bounds[r] = Vector2i(top, bot)
+		_bounds[-1] = Vector2i(2, 21)   # marks the scan as done; also the fallback
+	return _bounds.get(row, _bounds[-1])
+
+
+## res://assets/art/ui/marker_<kind>.png when it exists (checked once), else null.
+static func marker_texture(kind: String) -> Texture2D:
+	if not _markers.has(kind):
+		var path := MARKER % kind
+		_markers[kind] = load(path) if ResourceLoader.exists(path) else false
+	return _markers[kind] if _markers[kind] is Texture2D else null
 
 
 func _row() -> int:
@@ -95,16 +137,51 @@ func _row() -> int:
 
 func _draw() -> void:
 	draw_rect(Rect2(-5, -1, 10, 3), Color(0.09, 0.07, 0.16, 0.42))
+	var top := -20
 	if SHEET:
 		var col := int(_t * 3.5) % 4
 		var row := _row()
-		draw_texture_rect_region(SHEET, Rect2(-8, -22, 16, 24), Rect2(col * 16, row * 24, 16, 24))
+		var fb := frame_bounds(row)
+		var y0 := -(fb.y + 1)   # lowest opaque row ends on y 0, over the shadow
+		draw_texture_rect_region(SHEET, Rect2(-8, y0, 16, 24), Rect2(col * 16, row * 24, 16, 24))
+		top = y0 + fb.x
 	else:
 		draw_rect(Rect2(-6, -8, 12, 16), Color(0.55, 0.4, 0.3))
-	if data != null:
-		var y := -26.0 + (sin(_t * 5.0) * 2.0 if _gold else 0.0)
-		draw_rect(Rect2(-4, y - 1, 8, 6), Color(0.09, 0.07, 0.16, 0.9))
-		draw_rect(Rect2(-3, y, 6, 4), Color(1.0, 0.82, 0.2) if _gold else Color(0.55, 0.55, 0.6))
+		top = -8
+	if data == null:
+		return
+	if _gold:
+		var bob := roundi(sin(_t * 4.0))   # +-1 px
+		var tex := marker_texture("quest")
+		if tex:
+			draw_texture(tex, Vector2(-tex.get_width() * 0.5, top - 3 - tex.get_height() + bob))
+		else:
+			_draw_lontar(Vector2(-3, top - 3 - 9 + bob))
+	elif _near_player:
+		var tex := marker_texture("talk")
+		if tex:
+			draw_texture(tex, Vector2(-tex.get_width() * 0.5, top - 3 - tex.get_height()))
+		else:
+			_draw_dot(Vector2(-3, top - 3 - 5))
+
+
+## Fallback quest marker: a 7x9 gold lontar leaf with a dark "!" and a 1 px outline.
+func _draw_lontar(at: Vector2) -> void:
+	var dark := Color(0.09, 0.07, 0.16, 0.95)
+	draw_rect(Rect2(at, Vector2(7, 9)), dark)
+	draw_rect(Rect2(at + Vector2(1, 1), Vector2(5, 7)), Color(1.0, 0.82, 0.2))
+	draw_rect(Rect2(at + Vector2(1, 1), Vector2(5, 1)), Color(1.0, 0.94, 0.55))
+	draw_rect(Rect2(at + Vector2(3, 2), Vector2(1, 3)), dark)
+	draw_rect(Rect2(at + Vector2(3, 6), Vector2(1, 1)), dark)
+
+
+## Fallback talk marker: a grey 7x5 speech bubble with three dots.
+func _draw_dot(at: Vector2) -> void:
+	var dark := Color(0.09, 0.07, 0.16, 0.9)
+	draw_rect(Rect2(at, Vector2(7, 5)), dark)
+	draw_rect(Rect2(at + Vector2(1, 1), Vector2(5, 3)), Color(0.72, 0.72, 0.78))
+	for x in [1, 3, 5]:
+		draw_rect(Rect2(at + Vector2(x, 2), Vector2(1, 1)), dark)
 
 
 func interact() -> void:

@@ -5,6 +5,7 @@ extends Interactable
 
 @export var id := ""
 @export var open_side := "w"   # n, s, e or w: the side the player must stand on
+@export var block := 1   # tiles per side of the gate's spot block (Zone.SCALE): wall and prompt reach cover all of it
 
 const DIRS := {"n": Vector2.UP, "s": Vector2.DOWN, "e": Vector2.RIGHT, "w": Vector2.LEFT}
 
@@ -12,6 +13,12 @@ const DIRS := {"n": Vector2.UP, "s": Vector2.DOWN, "e": Vector2.RIGHT, "w": Vect
 func _ready() -> void:
 	verb = "UI_VERB_OPEN"
 	super()
+	var wall := RectangleShape2D.new()
+	wall.size = Vector2.ONE * 16.0 * block
+	$Wall/Shape.shape = wall
+	var reach := CircleShape2D.new()
+	reach.radius = 20.0 + 8.0 * (block - 1)
+	$Shape.shape = reach
 	_prompt.position = Vector2(-60, -30)
 	_prompt.size = Vector2(120, 12)
 	var game := get_node("/root/Game")
@@ -22,6 +29,7 @@ func _ready() -> void:
 
 
 func _draw() -> void:
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE * block)
 	for i in 4:   # placeholder bamboo bars
 		draw_rect(Rect2(-7 + i * 4, -8, 2, 16), Color(0.55, 0.6, 0.25))
 	draw_rect(Rect2(-8, -3, 16, 2), Color(0.4, 0.3, 0.15))
