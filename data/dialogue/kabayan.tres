@@ -7,7 +7,12 @@ script = ExtResource("1")
 npc_id = "kabayan"
 name_key = "NPC_KABAYAN_NAME"
 entries = Array[Dictionary]([
-	{"if": ["flag:kabayan_done"], "lines": ["DLG_KABAYAN_V25"], "do": []},
-	{"if": ["flag:kabayan_started"], "lines": ["DLG_KABAYAN_V21", "DLG_KABAYAN_V20"], "do": ["flag:kabayan_done"]},
-	{"if": [], "lines": ["DLG_KABAYAN_V22", "DLG_KABAYAN_V23", "DLG_KABAYAN_V24"], "do": ["flag:kabayan_started"]}
+	{"if": ["quest:sq_g1=done"], "lines": ["DLG_KABAYAN_V26"], "do": [], "hub": true, "choices": [{"text": "CHOICE_KABAYAN_ASK_1", "do": ["topic:malas"]}, {"text": "CHOICE_KABAYAN_ASK_2", "do": ["topic:iteung"]}, {"text": "CHOICE_KABAYAN_ASK_3", "do": ["topic:akal"]}, {"text": "CHOICE_KABAYAN_ASK_4", "do": []}]},
+	{"if": [], "topic": "malas", "quiet": true, "lines": ["DLG_KABAYAN_V27", "DLG_KABAYAN_V28", "@NPC_HERO_NAME", "DLG_KABAYAN_H21", "@NPC_KABAYAN_NAME", "DLG_KABAYAN_V29"], "do": []},
+	{"if": [], "topic": "iteung", "quiet": true, "lines": ["DLG_KABAYAN_V30", "DLG_KABAYAN_V31", "DLG_KABAYAN_V32"], "do": []},
+	{"if": [], "topic": "akal", "quiet": true, "lines": ["DLG_KABAYAN_V33", "DLG_KABAYAN_V34", "DLG_KABAYAN_V35"], "do": []},
+	{"if": ["step:sq_g1=3"], "lines": ["@NPC_KABAYAN_NAME", "DLG_KABAYAN_V36", "@NPC_GALUH_OFFICIAL_NAME", "DLG_GALUH_OFFICIAL_V20", "@", "DLG_KABAYAN_N1", "@NPC_GALUH_OFFICIAL_NAME", "DLG_GALUH_OFFICIAL_V21", "@NPC_KABAYAN_NAME", "DLG_KABAYAN_V37", "@NPC_GALUH_OFFICIAL_NAME", "DLG_GALUH_OFFICIAL_V22", "@NPC_KABAYAN_NAME", "DLG_KABAYAN_V20", "DLG_KABAYAN_V38"], "do": ["lakon:si_kabayan", "codex:kabayan"]},
+	{"if": ["quest:sq_g1=active"], "lines": ["DLG_KABAYAN_V21"], "do": []},
+	{"if": ["quest:sq_g1=available", "flag:mqg_a1"], "lines": ["DLG_KABAYAN_V22", "DLG_KABAYAN_V23", "@NPC_HERO_NAME", "DLG_KABAYAN_H20", "@NPC_KABAYAN_NAME", "DLG_KABAYAN_V39", "DLG_KABAYAN_V24"], "do": ["start:sq_g1"]},
+	{"if": [], "lines": ["DLG_KABAYAN_V25"], "do": []}
 ])

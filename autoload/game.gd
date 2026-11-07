@@ -249,6 +249,13 @@ func has_flag(f: String) -> bool:
 		var alt := f.replace(":", "_") if ":" in f else f.replace("laras_key_", "laras_key:").replace("laras_sabotage_", "laras_sabotage:")
 		var va: Variant = flags.get(alt, false)
 		return va is bool and va
+	match f:
+		"lakon_4": return flags.keys().filter(func(k: String) -> bool: return k.begins_with("lakon:") and bool(flags.get(k, false))).size() >= 4
+		"lakon_9": return flags.keys().filter(func(k: String) -> bool: return k.begins_with("lakon:") and bool(flags.get(k, false))).size() >= 9
+		"codex_25": return codex_percent() >= 25.0
+		"codex_50": return codex_percent() >= 50.0
+		"codex_75": return codex_percent() >= 75.0
+		"codex_100": return codex_percent() >= 100.0
 	return false
 
 

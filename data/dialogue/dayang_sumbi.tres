@@ -7,5 +7,5 @@ script = ExtResource("1")
 npc_id = "dayang_sumbi"
 name_key = "NPC_DAYANG_SUMBI_NAME"
 entries = Array[Dictionary]([
-	{"if": ["quest:mq1=done"], "lines": ["DLG_DAYANG_SUMBI_V6"], "do": []}
+	{"if": ["quest:mq1=done"], "lines": ["DLG_NAGANINGRUM_V6"], "do": []}
 ])

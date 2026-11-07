@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_G2_S1_OBJ"
+on = "talked_to:g2_maid"
+marker = {"zone": "kg_kaputren", "id": "g2_maid"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_G2_S2_OBJ"
+all = [{"on": "clue_examined:g2_broom"}, {"on": "clue_examined:g2_roll"}]
+marker = {"zone": "kg_kaputren", "id": "g2_broom"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_G2_S3_OBJ"
+on = "memory_done:sq_g2_servant"
+marker = {"zone": "kg_kaputren", "id": "sq_g2_servant"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_G2_S4_OBJ"
+on = "name_written:ririwa_name"
+alt = {"name_written:ririwa_name": "peaceful", "enemy_killed:ririwa": "fight"}
+marker = {"zone": "kg_kaputren", "id": "ririwa_name"}
+
+[sub_resource type="Resource" id="s5"]
+script = ExtResource("2")
+objective = "Q_SQ_G2_S5_OBJ"
+on = "talked_to:g2_maid"
+marker = {"zone": "kg_kaputren", "id": "g2_maid"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_g2"
+kind = "side"
+type = "bounty"
+zone = "keraton_galuh"
+size = "L"
+giver = "g2_maid"
+requires = Array[String](["mqg_kp1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5")])
+rewards = {"codex": ["ririwa"]}

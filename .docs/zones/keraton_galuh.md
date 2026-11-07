@@ -525,7 +525,7 @@ W,,,,,,,,,,,,,,,,,,_______________________.................#
 #............________________________________..............#
 #............_____________________________U__..............#
 #............________________________________..............#
-#.......M....___F_____G___I__________________..............#
+#.......M....___F_____G___I_____s____________..............#
 #............________________________________..............#
 #............________________________________..............#
 #...bbb.............................................bbb....#
@@ -557,6 +557,7 @@ W,,,,,,,,,,,,,,,,,,_______________________.................#
 | `c` | chest galuh_chest_kaputren (55 Ilmu) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_kaputren", item_id:"ilmu:55"}` | grass | 1 |
 | `Q` | clue, a covered mirror in the courtyard (MQG g.8; journal note only; id `kaputren_mirror` **ASSUMED**, not in quests.md; hunt `k_ii`) | `res://entities/world/clue.tscn` | `{clue_id:"kaputren_mirror", cond:"flag:mqg_ar2"}` | floor | 1 |
 | `U` | elite ririwa (SQ-G2 fight branch, the miniboss): `unique_id`, elite stats (HP 312, Dmg 16, Ilmu 56, bestiary, **TUNE**), a plain spot inert until `mqg_kp1`, not an encounter; moved here from `kg_keraton` so SQ-G2 lives in one area; `ririwa.tscn` is new (a Pocong-class Charger, **ASSUMED**) | `res://entities/enemies/ririwa.tscn` | `{unique_id:"ririwa", cond:"flag:mqg_kp1"}` | floor | 1 |
+| `s` | clue c2_signet, Queen Pangrenyep's signet ring on the table (SQ-C2) | `res://entities/world/clue.tscn` | `{clue_id:"c2_signet", cond:"flag:c2_reply"}` | floor | 1 |
 
 ## Piece placement per step (Story v5)
 Every piece in the `Play` column of [quests.md](../quests.md) MQG g.1-g.20 has a place. Conds are the v5 flags (see the intro). The champion is `faceless_champion.tscn` (**ASSUMED**), wave 2 of `galuh_bout_2`, the elite of `kaputren_courtyard` and of `keraton_throne_approach`.

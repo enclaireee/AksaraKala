@@ -24,7 +24,7 @@ const MAP := [
 	"#............________________________________..............#",
 	"#............_____________________________U__..............#",
 	"#............________________________________..............#",
-	"#.......M....___F_____G___I__________________..............#",
+	"#.......M....___F_____G___I_____s____________..............#",
 	"#............________________________________..............#",
 	"#............________________________________..............#",
 	"#...bbb.............................................bbb....#",
@@ -54,6 +54,7 @@ const SPOTS := {
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "galuh_chest_kaputren", "item_id": "ilmu:55"}, "tile": "."},   # chest galuh_chest_kaputren (55 Ilmu)
 	"Q": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "kaputren_mirror", "cond": "flag:mqg_ar2"}, "tile": "_"},   # clue, a covered mirror in the courtyard (MQG g.8; journal note only; id `kaputren_mirror` **ASSUMED**, not in quests.md; hunt `k_ii`)
 	"U": {"scene": "res://entities/enemies/ririwa.tscn", "props": {"unique_id": "ririwa", "cond": "flag:mqg_kp1"}, "tile": "_"},   # elite ririwa (SQ-G2 fight branch, the miniboss): `unique_id`, elite stats (HP 312, Dmg 16, Ilmu 56, bestiary, **TUNE**), a plain spot inert until `mqg_kp1`, not an encounter; moved here from `kg_keraton` so SQ-G2 lives in one area; `ririwa.tscn` is new (a Pocong-class Charger, **ASSUMED**)
+	"s": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c2_signet", "cond": "flag:c2_reply"}, "tile": "_"},   # clue c2_signet, Queen Pangrenyep's signet ring on the table (SQ-C2)
 }
 
 

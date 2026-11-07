@@ -7,7 +7,8 @@ script = ExtResource("1")
 npc_id = "deserter_stone"
 name_key = "NPC_DESERTER_STONE_NAME"
 entries = Array[Dictionary]([
-	{"if": ["!flag:ranga_named", "flag:choice_freed"], "lines": ["DLG_DESERTER_STONE_V20", "DLG_DESERTER_STONE_V21", "DLG_DESERTER_STONE_V22"], "do": ["flag:ranga_named"]},
-	{"if": ["!flag:ranga_named"], "lines": ["DLG_DESERTER_STONE_V20", "DLG_DESERTER_STONE_V21", "DLG_DESERTER_STONE_V23"], "do": ["flag:ranga_named"]},
+	{"if": ["step:sq_c3=3", "!flag:name_deserter_name"], "lines": ["DLG_DESERTER_STONE_V20", "DLG_DESERTER_STONE_V21"], "do": ["write:deserter_name:jawa_ra,sunda_nga", "flag:name_deserter_name"]},
+	{"if": ["flag:deserter_named", "flag:choice_freed"], "lines": ["DLG_DESERTER_STONE_V22", "@NPC_FACELESS_DESERTER_NAME", "DLG_FACELESS_DESERTER_V505", "DLG_FACELESS_DESERTER_V506"], "do": ["flag:deserter_named", "codex:deserter_name"]},
+	{"if": ["flag:deserter_named", "flag:choice_handed"], "lines": ["DLG_DESERTER_STONE_V23"], "do": ["flag:deserter_named", "codex:deserter_name"]},
 	{"if": [], "lines": ["DLG_DESERTER_STONE_V24"], "do": []}
 ])

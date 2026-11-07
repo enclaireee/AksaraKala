@@ -7,7 +7,6 @@ NPC_SUNDA_ELDER_NAME,Sesepuh Kampung,The kampung elder
 NPC_DAYANG_SUMBI_NAME,Dayang Sumbi,Dayang Sumbi
 NPC_SUNDA_WEAVER_NAME,Penenun,The Weaver
 NPC_BATU_TULIS_NAME,Batu Tulis,Batu Tulis
-NPC_KI_WANGSA_NAME,Ki Wangsa,Ki Wangsa
 NPC_NYAI_RUKMI_NAME,Nyai Rukmi,Nyai Rukmi
 NPC_KI_DARSA_NAME,Ki Darsa,Ki Darsa
 NPC_KEPALA_DESA_NAME,Kepala desa,The village head
@@ -376,10 +375,6 @@ DLG_SEMAR_V10,"Laut selatan. Orang pesisir bilang laut tak pernah lupa. Semoga m
 DLG_SEMAR_V14,"Gua itu lewat kabut di belakang desa. Aku sampai duluan, hehe.","The cave is through the fog behind the village. I'll get there first, hehe."
 DLG_SEMAR_V15,"Ssst, pertunjukannya mulai. Tebak lakon siapa.","Shh, the show's starting. Guess whose lakon it is."
 DLG_SEMAR_V16,Setiap kisah dimulai dari orang yang mengingatnya.,Every story starts with someone who remembers it.
-DLG_KI_WANGSA_V1,Malam ini kita mainkan lakon baru. Ada yang menuliskannya untukku.,Tonight we play a new lakon. Someone wrote it down for me.
-DLG_KI_WANGSA_V2,"Pertunjukan semalam bagus. Tapi penontonnya sepi, seperti ada yang kurang.","Good show last night. Quiet crowd, though. Like someone was missing."
-DLG_KI_WANGSA_V3,"Ambilkan minyak blencong kalau sudah pulang, ya, muridku.","Fetch the blencong oil when you're back, apprentice."
-DLG_KI_WANGSA_V4,"Dalang bercerita. Penulis menjaga. Jadilah keduanya, kalau bisa.","A dalang tells. A writer keeps. Be both, if you can."
 BEAT_HUNTER_RAID_1,"Di gerbang barat, sosok jangkung berdiri membelakangi fajar. Topeng kosong, seperti yang lain. Sikapnya tidak.","At the west gate a tall figure stands against the dawn. A blank mask, like the others. The bearing is not."
 BEAT_HUNTER_RAID_H1,Kembalikan dia!,Give her back!
 BEAT_HUNTER_RAID_2,Pulanglah. Kau bukan bagian lakon ini.,Go home. You're not part of this lakon.
@@ -411,7 +406,6 @@ BEAT_NAGA_3,"Orang di singgasana Galuh, kerajaan di timur, memakai wajahku, Nak.
 BEAT_NAGA_4,"Telur di dekapan Ciung retak. Seekor anak ayam jantan menggelinding keluar, sudah galak.","The egg in Ciung's arms cracks. A rooster chick tumbles out, already angry."
 BEAT_NAGA_5,Nak...?,Child...?
 BEAT_NAGA_6,"Hati-hati, Bu, licin di sini. Nah, kau. Galuh. Ikut? Gerbang timur desamu jalan pintasnya.","Careful, ma'am, it's slippery here. Now you. Galuh. Coming? Your village's east gate is the short way."
-DLG_DAYANG_SUMBI_V6,Danau ini ingat segalanya. Andai saja tidak.,The lake remembers everything. I wish it didn't.
 DLG_CIUNG_WANARA_V1,"Katanya putra sang permaisuri yang kita kurung sedang mengumpulkan pasukan. Saudaraku, rupanya.","They say the caged queen's son is raising an army. My brother, apparently."
 DLG_CIUNG_WANARA_H1,Lewat mana kita masuk? Gerbang istana dijaga ketat.,How do we get in? The palace gate is watched.
 DLG_CIUNG_WANARA_V3,"Lewat sayembara raja. Ayamku bertarung di gelanggang, kau hajar siapa pun yang curang.","Through the king's tournament. My rooster fights in the ring, you thrash whoever cheats."
@@ -422,7 +416,6 @@ BEAT_GALUH_BOUT_1,"Sorak membahana dari gelanggang di balik tembok. Ayam Ciung W
 BEAT_GALUH_BOUT_2,"Mata itu... mata seorang ratu yang pernah kukenal. Temui aku, kalian berdua, diam-diam. Dan jangan tersenyum.","Those eyes... the eyes of a queen I used to know. Come and see me, both of you, quietly. And don't smile."
 DLG_LENGSER_V1,"Jangan menoleh. Aku Uwa Lengser, abdi di sini sejak raja yang sah masih bujang. Lima belas tahun kusimpan satu rahasia, dan lututku sudah tak sanggup menanggungnya.","Don't turn around. I'm Uwa Lengser, I've served here since the true king was a bachelor. Fifteen years I've kept one secret, and my knees can't carry it anymore."
 DLG_LENGSER_H1,"Orang-orang yang diculik, Uwa. Dibawa ke mana?","The taken, Uwa. Where are they kept?"
-DLG_LENGSER_V2,"Lewat gerbang sel, malam hari. Tak pernah keluar lagi. Kubukakan pelataran: istirahatlah, lalu geledah selnya.","In through the cell gate at night. Never out again. I'll open the courtyard: rest, then search the cells."
 DLG_LENGSER_V5,"Pembelot itu kau lepaskan? Hm. Ampun itu kebiasaan raja. Hati-hati, menular.","You let that deserter go? Hm. Mercy is a king's habit. Careful, it's catching."
 DLG_LENGSER_V6,Pembelotmu sudah kenyang dan terkunci. Galuh akan mengadilinya dengan adil. Aku yang jamin.,Your deserter is fed and locked up. Galuh will judge him fairly. I'll see to it.
 DLG_LENGSER_V7,"Pelan-pelan. Penjaga di sini menghitung jarinya sendiri pun salah, tapi tetap saja.","Quietly. The guards here can't count their own fingers, but still."
@@ -437,8 +430,6 @@ DLG_FACELESS_DESERTER_V3,Tuan kami bicara dengan suara raja. Aku tak pernah bert
 DLG_FACELESS_DESERTER_V4,Aku pergi saat penjaga lengah. Terima kasih.,I'll go when the guards look away. Thank you.
 DLG_FACELESS_DESERTER_V5,"Lengser, kalau begitu. Lebih baik daripada gelap.","Lengser, then. Better than the dark."
 DLG_FACELESS_DESERTER_V6,Singkirkan mereka dulu!,Get them off me first!
-CHOICE_DESERTER_1,Pergilah. Carilah wajah istrimu.,Go. Find your wife's face.
-CHOICE_DESERTER_2,"Lengser akan menjagamu, dan mengadilimu.","Lengser will keep you safe, and judge you."
 BEAT_CAGE_1,"Ciung Wanara menyeret mereka ke kandang besi di pelataran, seperti dalam kisah: sang raja palsu, dan sang permaisuri bersamanya.","Ciung Wanara drags them to the iron cage in the courtyard, as in the legend: the false king, and the queen with him."
 BEAT_CAGE_2,"Putraku akan datang, Nak. Yang dikurung selalu ditebus.","My son will come, child. What is caged is always ransomed."
 BEAT_CAGE_H1,Yang menyuruh mereka belum tertangkap. Kita hanya mengunci bayangannya.,Whoever sent them isn't caught. We've only locked up the shadow.
@@ -447,14 +438,12 @@ BEAT_CAGE_3B,"Ia sudah menyeberang ke timur menuju Mataram! Putra Pangrenyep—P
 BEAT_CAGE_4,"Suara itu datang dari balik singgasana. Saat kau menoleh, hanya bayangan yang tersisa.","The voice comes from behind the throne. When you turn, only shadow is left."
 DLG_MATARAM_DALANG_V1,"Kelirku selamat, dan kau yang menyelamatkannya. Aku Ki Sumarto, dalang. Pagi untuk tepi barat, malam untuk tepi timur.","My screen survived, and you saved it. I'm Ki Sumarto, dalang. Mornings for the west bank, evenings for the east."
 DLG_MATARAM_DALANG_V2,"Anakku Sapto berbaris dengan pasukan Hariang Banga. Selama dua tepi mau menonton, tak ada yang memanah panggungku. Ini Ha, penyembuh; di timur katanya juga mengangkat kutukan.","My son Sapto marches with Hariang Banga's army. As long as both banks want a show, nobody shoots my stage. This is Ha, it heals; out east they say it lifts curses too."
-DLG_MATARAM_DALANG_V3,"Digiring lewat pasar, ke arah Candi Seribu, seribu candi yang sedang didirikan para pengangkut batu. Ada tiga jalan ke sana: reruntuhan, kuburan, dan pasar ini. Tempuh semuanya.","Marched through this market toward Candi Seribu, the Thousand Temples the haulers are raising. Three roads lead there: the ruins, the graveyard, and this market. Walk them all."
 DLG_MATARAM_DALANG_V4,"Tolong, Nak! Mereka menjarah kelirku! Hajar mereka, nanti kubayar dengan cerita!","Help, child! They're looting my screen! Thrash them, and I'll pay you in stories!"
 DLG_MATARAM_DALANG_V6,"Hariang Banga bukan orang kejam. Ia ingin ibunya kembali. Aku pun begitu, dengan anakku.","Hariang Banga isn't cruel. He wants his mother back. So would I, with my boy."
 DLG_PAK_KARTO_H1,"Pak Karto, bagaimana cara kita menembus reruntuhan ini menuju markas Si Tanpa Ngaran di candi timur?","Pak Karto, how do we break through these ruins to reach the Nameless Hunter's camp at the eastern temple?"
 DLG_LESUNG_WOMEN_V1,"Dengar? Tuk, tuk, tuk. Setahun kami tak berani menumbuk. Kuburan itu membuat kami bisu.","Hear that? Tuk, tuk, tuk. A year we haven't dared to pound. That graveyard struck us dumb."
 DLG_LESUNG_WOMEN_H1,Sudah kubersihkan. Irama apa itu?,I cleared it. What rhythm is that?
 DLG_LESUNG_WOMEN_V2,"Irama fajar palsu. Konon dayang Roro Jonggrang, putri kisah seribu candi, menumbuk begini agar ayam berkokok lebih awal. Ini Ca: gambarlah mengikuti irama, dan tanganmu lebih cepat dari amarah.","The false-dawn rhythm. They say the women of Roro Jonggrang, princess of the thousand-temples tale, pounded like this to fake the dawn. This is Ca: draw to the beat, and your hand outruns anger."
-DLG_LESUNG_WOMEN_V3,"Batu-batunya bergerak lagi tiap malam. Juru kunci, penjaga kunci bukit, memegang kuncinya. Tembus blokade, dan dia akan menemuimu.","The stones move again every night. The juru kunci, the hill's key-keeper, holds the key. Break the blockade and he'll receive you."
 DLG_LESUNG_WOMEN_V10,Kami menumbuk padi dan bernyanyi. Ikutlah kapan saja.,We pound rice and sing. Join us anytime.
 DLG_JURU_KUNCI_V1,"Blokade itu runtuh? Dua hari aku tak bisa turun menyalakan dupa. Aku juru kunci bukit ini, penjaga kunci candi.","The blockade fell? Two days I couldn't come down to light incense. I'm the juru kunci of this hill, keeper of the temple keys."
 DLG_JURU_KUNCI_H1,"Kata orang, Mbah memegang kunci Candi Seribu.",They say you hold the keys to Candi Seribu.
@@ -570,7 +559,6 @@ DLG_CIUNG_WANARA_H2,Aku tak menyentuh ayam. Dan aku tak bertaruh.,I don't touch 
 DLG_CIUNG_WANARA_V7,"Siapa yang menyuruh? Ayam itu urusanku. Menangkan dua babak, dan raja terpaksa menemui kita.",Who asked you to? The bird's my business. Win two bouts and the king has to see us.
 DLG_CIUNG_WANARA_V8,"Kupikir singgasana itu akan terasa seperti pulang. Nyatanya seperti baju kakak: kebesaran, dan bukan milikku.","I thought the throne would feel like coming home. It feels like a big brother's coat: too large, and not mine."
 DLG_CIUNG_WANARA_H3,Lalu kenapa kau mau?,Then why take it?
-DLG_CIUNG_WANARA_V9,"Kau mau adikmu, aku mau yang dicuri dariku. Sama saja. Tidur. Besok kita buka topeng raja.","You want your sister, I want what was stolen from me. Same thing. Sleep. Tomorrow we lift the king's mask."
 BEAT_GALUH_BOUT_3,Kakek itu menatapku seperti melihat hantu.,The old man looked at me like he'd seen a ghost.
 BEAT_GALUH_ESCORT_1,Penjaga terakhir tumbang tepat saat pedati itu lolos dari gerbang. Sesuatu melayang dari balik tembok.,The last guard falls just as the wagon clears the gate. Something comes over the wall.
 BEAT_GALUH_ESCORT_2,"Secarik lontar, dengan satu huruf goyah: Ka. Saat kau mendongak, pedati itu sudah hilang ke timur.","A strip of lontar, one shaky letter on it: Ka. When you look up, the wagon is gone east."

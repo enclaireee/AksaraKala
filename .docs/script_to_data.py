@@ -48,7 +48,7 @@ def put(k, i, e, n):
 VERIFY = re.compile(r"\s*\(\*\*VERIFY\*\*\)|\*\*VERIFY\*\*: ?|\*\*VERIFY\*\*")
 for heading, rows in sections:
     if heading.startswith("## 13"):
-        for r in rows:
+        for idx, r in enumerate(rows):
             cid = r["id"].upper()
             te, ti = [x.strip() for x in r["title en / id"].split(" / ", 1)]
             clean = lambda s: VERIFY.sub(lambda m: "(" if m.group().endswith(": ") else "", s) if "**VERIFY**: " in s else VERIFY.sub("", s)
@@ -57,9 +57,21 @@ for heading, rows in sections:
             if r["weak en / id"] not in ("—", ""):
                 we, wi = [x.strip() for x in r["weak en / id"].split(" / ", 1)]
                 put(f"CODEX_{cid}_WEAK", wi, we, r["_n"])
+            tres = ROOT / f"data/codex/{r['id']}.tres"
+            if not tres.exists():
+                cat = "enemy" if idx < 6 else "legend"
+                tres.write_text(
+                    '[gd_resource type="Resource" script_class="CodexEntry" load_steps=2 format=3]\n\n'
+                    '[ext_resource type="Script" path="res://data/codex_entry.gd" id="1"]\n\n'
+                    f'[resource]\nscript = ExtResource("1")\nid = "{r["id"]}"\ncategory = "{cat}"\nsource = "{r["src"]}"\n',
+                    encoding="utf-8",
+                )
         continue
     for r in rows:
-        k = re.sub(r"\s*\(.*\)$", "", r.get("key", ""))
+        raw_k = r.get("key", "")
+        if "(keep)" in raw_k:
+            continue
+        k = re.sub(r"\s*\(.*\)$", "", raw_k)
         if not KEY.match(k) or "id" not in r or "en" not in r:
             continue
         i, e = r["id"], r["en"]
@@ -154,8 +166,15 @@ def build_beats():
             continue
         bid, paren = m.groups()
         cond, _, do = paren.partition("; do ")
-        cond = cond.split(";")[0]
-        e = {"if": codes(cond), "lines": [], "do": codes(do)}
+        cond = re.sub(r"area `(\w+)`", r"`flag:\1`", cond.split(";")[0])
+        do = do.split(";")[0]
+        ifs = codes(cond)
+        dos = codes(do)
+        if not any(c.startswith("!flag:beat_") for c in ifs):
+            ifs.insert(0, f"!flag:beat_{bid}")
+        if not any(c.startswith("flag:beat_") for c in dos):
+            dos.insert(0, f"flag:beat_{bid}")
+        e = {"if": ifs, "lines": [], "do": dos}
         choices = []
         for r in rows:
             if "do" in r:
@@ -179,14 +198,15 @@ pre, body = text.split("entries = Array[Dictionary]([\n", 1)
 body = body.rsplit("\n])", 1)[0]
 old = json.loads("[" + body + "]")
 new = build_beats()
-ids = {b for b, _ in new}
+ids = {b for b, _ in new} | {"offering"}
+new_lines = {tuple(e["lines"]) for _, e in new}
 anchor_after, anchor = {}, None
 extras = []
 for e in old:
     m = re.match(r"flag:beat_(\w+)", (e.get("do") or [""])[0])
     if m and m.group(1) in ids:
-        anchor = m.group(1)
-    else:
+        anchor = "offering_song" if m.group(1) == "offering" else m.group(1)
+    elif tuple(e.get("lines", [])) not in new_lines:
         anchor_after.setdefault(anchor, []).append(e); extras.append(e)
 out = list(anchor_after.get(None, []))
 for b, e in new:

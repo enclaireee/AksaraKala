@@ -8,7 +8,7 @@ npc_id = "mataram_dalang"
 name_key = "NPC_MATARAM_DALANG_NAME"
 entries = Array[Dictionary]([
 	{"if": ["quest:mq2=done"], "lines": ["DLG_MATARAM_DALANG_V7"], "do": []},
-	{"if": ["flag:lead_pasar", "!flag:mq2_2"], "lines": ["DLG_MATARAM_DALANG_V1", "@NPC_MATARAM_DALANG_NAME", "DLG_MATARAM_DALANG_V2", "@NPC_HERO_NAME", "DLG_MATARAM_DALANG_H2", "@NPC_MATARAM_DALANG_NAME", "DLG_MATARAM_DALANG_V3"], "do": ["learn:jawa_ha"]},
+	{"if": ["flag:lead_pasar", "!flag:mq2_2"], "lines": ["DLG_MATARAM_DALANG_V1", "@NPC_MATARAM_DALANG_NAME", "DLG_MATARAM_DALANG_V2", "@NPC_HERO_NAME", "DLG_MATARAM_DALANG_H2", "@NPC_MATARAM_DALANG_NAME", "DLG_MATARAM_DALANG_V222", "DLG_MATARAM_DALANG_V223", "DLG_MATARAM_DALANG_V224", "DLG_MATARAM_DALANG_V225"], "do": ["learn:jawa_ha"]},
 	{"if": ["step:sq_m4=2"], "lines": ["DLG_MATARAM_DALANG_8", "DLG_MATARAM_DALANG_9"], "do": []},
 	{"if": ["quest:sq_m4=done"], "lines": ["DLG_MATARAM_DALANG_10"], "do": []},
 	{"if": ["quest:sq_m4=active"], "lines": ["DLG_MATARAM_DALANG_11"], "do": []},

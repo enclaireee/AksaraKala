@@ -26,7 +26,7 @@ func _initialize() -> void:
 	_reset()
 	check(is_equal_approx(_radius(burst), 64.0), "burst radius 64 without the flag (%s)" % _radius(burst))
 	g.flags["choice_tell_ciung"] = true
-	check(is_equal_approx(_radius(burst), 64.0 * SpellUtil.TELL_CIUNG_BURST_RADIUS), "burst radius +10% with the flag (%s)" % _radius(burst))
+	check(is_equal_approx(_radius(burst), 64.0 * SpellUtil.TELL_CIUNG_BURST_RADIUS), "burst radius +10%% with the flag (%s)" % _radius(burst))
 	check(is_equal_approx(SpellUtil.radius_mult(ombak), 1.0), "tell_ciung leaves other spells alone")
 
 	# choice_offer_memory: Ombak costs 3 less; +20% poise only in Act VI
@@ -38,7 +38,7 @@ func _initialize() -> void:
 	check(is_equal_approx(SpellUtil.cost(p, burst), 30.0), "offer_memory leaves other costs alone")
 	check(is_equal_approx(_poise(ombak), p.tuning.spell_poise_mult), "no poise bonus outside Act VI")
 	zones.current_zone = "gk_lupa"
-	check(is_equal_approx(_poise(ombak), p.tuning.spell_poise_mult * 1.2), "+20% poise in Act VI (%s)" % _poise(ombak))
+	check(is_equal_approx(_poise(ombak), p.tuning.spell_poise_mult * 1.2), "+20%% poise in Act VI (%s)" % _poise(ombak))
 	g.flags.erase("choice_offer_memory")
 	check(is_equal_approx(_poise(ombak), p.tuning.spell_poise_mult), "no poise bonus in Act VI without the flag")
 
@@ -90,7 +90,7 @@ func _initialize() -> void:
 	g.add_item("sabuk_galuh", false)
 	g.equip("sabuk_galuh")
 	check(g.stat("vit") == 6 and p.health.max_hp == hp0 + p.tuning.stat_hp_per, "sabuk +1 vit (max hp %d vs %d)" % [p.health.max_hp, hp0])
-	check(is_equal_approx(p.health.reduction, 0.08), "sabuk sets 8% reduction (%s)" % p.health.reduction)
+	check(is_equal_approx(p.health.reduction, 0.08), "sabuk sets 8%% reduction (%s)" % p.health.reduction)
 	p.health.hp = p.health.max_hp
 	p.health.take_damage(50, null, true)
 	check(p.health.hp == p.health.max_hp - 46, "50 damage becomes 46 (hp %d/%d)" % [p.health.hp, p.health.max_hp])

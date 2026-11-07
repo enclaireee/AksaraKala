@@ -6054,9 +6054,11 @@ Ratna's reforge entry sets `flag:epi_ratna_temper`, the moment she tempers your 
 | Q_SQ_C3_S3_OBJ | Find the driftwood charm in the fishing village and relive his memory | Temukan bandul kayu hanyut di desa nelayan dan hidupi ingatannya |
 | Q_SQ_C3_S4_OBJ | Write his true name at the courtyard of time | Tulis nama aslinya di halaman waktu |
 | Q_SQ_C4_TITLE | Brave Cepot | Cepot Si Pemberani |
+| Q_SQ_C4_2_TITLE | Brave Cepot (Part 2) | Cepot Si Pemberani (Bagian 2) |
 | Q_SQ_C4_2_S1_OBJ | Part 2. Look at both recruiters' rolls | Bagian 2. Lihat kedua daftar perekrut |
 | Q_SQ_C4_2_S2_OBJ | Part 2. Sneak Cepot out of the border market | Bagian 2. Selundupkan Cepot keluar dari pasar perbatasan |
 | Q_SQ_C4_2_S3_OBJ | Part 2. Talk to Cepot | Bagian 2. Bicara dengan Cepot |
+| Q_SQ_C4_3_TITLE | Brave Cepot (Part 3) | Cepot Si Pemberani (Bagian 3) |
 | Q_SQ_C4_3_S1_OBJ | Part 3. Talk to Cepot on the beach | Bagian 3. Bicara dengan Cepot di pantai |
 | Q_SQ_C4_3_S2_OBJ | Part 3. Hold the ward-lamp through the night waves | Bagian 3. Pegang lentera penjaga melewati ombak malam |
 | Q_SQ_C4_3_S3_OBJ | Part 3. Talk to Cepot | Bagian 3. Bicara dengan Cepot |

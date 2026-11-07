@@ -5,8 +5,9 @@
 [resource]
 script = ExtResource("1")
 npc_id = "ririwa_name"
-name_key = "NPC_RIRIWA_NAME_NAME"
+name_key = "NPC_RIRIWA_ROLL_NAME"
 entries = Array[Dictionary]([
-	{"if": ["!flag:ririwa_named"], "lines": ["DLG_RIRIWA_ROLL_V20", "DLG_RIRIWA_ROLL_V21", "DLG_RIRIWA_ROLL_V22"], "do": ["flag:ririwa_named"]},
+	{"if": ["step:sq_g2=3", "!flag:sq_g2_fight", "!flag:name_ririwa_name"], "lines": ["DLG_RIRIWA_ROLL_V20", "DLG_RIRIWA_ROLL_V21"], "do": ["write:ririwa_name:sunda_ca,sunda_nga", "flag:name_ririwa_name"]},
+	{"if": ["flag:sq_g2_peaceful"], "lines": ["DLG_RIRIWA_ROLL_V22"], "do": ["flag:sq_g2_peaceful"]},
 	{"if": [], "lines": ["DLG_RIRIWA_ROLL_V23"], "do": []}
 ])

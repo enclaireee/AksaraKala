@@ -3,7 +3,7 @@ extends SceneTree
 ## and CLUE_<ID>_1 for every Clue placed in a built zone (a memory clue may have none: it pulls you straight in).
 ## MEM_* keys are not required yet.
 
-const LATER := ["shelf_ribbon", "shelf_board", "shelf_strip"]   # Milestone B: Interlude 4.3 shelf text not in script.md yet
+const LATER: Array[String] = []
 
 var fails := 0
 var keys := {}

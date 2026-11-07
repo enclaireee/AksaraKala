@@ -32,4 +32,4 @@ size = "S"
 giver = "cepot"
 requires = Array[String](["c4_2", "mq4_4"])
 steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3")])
-rewards = {}
+rewards = {"lakon": "cepot", "codex": ["cepot"]}

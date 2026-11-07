@@ -6,6 +6,11 @@ class_name Npc extends Interactable
 @export var npc_id := ""
 @export var cond := ""   # hidden and not interactable while Game.check(cond) is false
 
+const DRESSING := [
+	"villager", "laras_crowd", "laras_tag", "stray_cat", "galuh_crowd",
+	"nelayan_jala", "faceless_captain_seen", "wirasana_daughter",
+]
+
 var data: DialogueData   # tests may preset this
 var _busy := false
 var _gold := false
@@ -17,7 +22,7 @@ func _ready() -> void:
 	super()
 	if data == null:
 		data = DialogueData.by_id(npc_id)
-	if data == null:
+	if data == null and npc_id not in DRESSING:
 		push_warning("npc '%s': no dialogue data" % npc_id)
 	var ev := get_node("/root/Events")
 	for s in [ev.quest_started, ev.quest_updated, ev.quest_completed, ev.talked_to]:

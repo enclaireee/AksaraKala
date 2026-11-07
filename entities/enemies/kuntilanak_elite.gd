@@ -7,12 +7,16 @@ const FADE_IN := 0.8   # TUNE
 var active := false
 
 
+func _is_quest_step(game: Node) -> bool:
+	return game.check("step:sq_s2=2") or game.check("step:sq_s2=3")
+
+
 func _ready() -> void:
 	super()
 	if is_queued_for_deletion():
 		return
 	var game := get_node("/root/Game")
-	if game.check("step:sq_s2=2"):
+	if _is_quest_step(game):
 		active = true
 		return
 	_set_active(false)
@@ -20,7 +24,7 @@ func _ready() -> void:
 
 
 func _on_game_changed() -> void:
-	if not active and get_node("/root/Game").check("step:sq_s2=2"):
+	if not active and _is_quest_step(get_node("/root/Game")):
 		_set_active(true)
 		modulate.a = 0.0
 		create_tween().tween_property(self, "modulate:a", 1.0, FADE_IN)

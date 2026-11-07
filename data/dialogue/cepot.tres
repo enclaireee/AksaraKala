@@ -7,8 +7,16 @@ script = ExtResource("1")
 npc_id = "cepot"
 name_key = "NPC_CEPOT_NAME"
 entries = Array[Dictionary]([
+	{"if": ["flag:mq5_4", "flag:c4_done"], "lines": ["@NPC_CEPOT_NAME", "DLG_CEPOT_V413", "@NPC_HERO_NAME", "DLG_CEPOT_H403", "@NPC_CEPOT_NAME", "DLG_CEPOT_V414", "DLG_CEPOT_V415"], "do": []},
+	{"if": ["flag:mq5_4"], "lines": ["@NPC_CEPOT_NAME", "DLG_CEPOT_V416", "@NPC_HERO_NAME", "DLG_CEPOT_H404", "@NPC_CEPOT_NAME", "DLG_CEPOT_V417"], "do": []},
 	{"if": ["step:mq0=2"], "lines": ["DLG_CEPOT_P1", "DLG_CEPOT_P2"], "do": [], "quiet": true},
-	{"if": ["step:sq_s4=1"], "lines": ["DLG_CEPOT_1", "DLG_CEPOT_2", "DLG_CEPOT_3", "DLG_CEPOT_4"], "do": []},
+	{"if": ["step:sq_c4_3=2"], "lines": ["DLG_CEPOT_V27", "DLG_CEPOT_V512"], "do": ["flag:c4_done"]},
+	{"if": ["quest:sq_c4_3=active"], "lines": ["DLG_CEPOT_V26"], "do": []},
+	{"if": ["quest:sq_c4_3=available", "flag:c4_2", "flag:mq4_4"], "lines": ["DLG_CEPOT_V24", "DLG_CEPOT_V25"], "do": ["start:sq_c4_3"]},
+	{"if": ["step:sq_c4_2=2"], "lines": ["DLG_CEPOT_V23", "DLG_CEPOT_V511"], "do": ["flag:c4_2"]},
+	{"if": ["quest:sq_c4_2=active"], "lines": ["DLG_CEPOT_V22"], "do": []},
+	{"if": ["quest:sq_c4_2=available", "flag:c4_1", "flag:mq2_a1"], "lines": ["DLG_CEPOT_V20", "DLG_CEPOT_V21", "@NPC_HERO_NAME", "DLG_CEPOT_H510", "@NPC_CEPOT_NAME", "DLG_CEPOT_V510"], "do": ["start:sq_c4_2"]},
+	{"if": ["step:sq_s4=1"], "lines": ["DLG_CEPOT_1", "DLG_CEPOT_2", "DLG_CEPOT_3", "DLG_CEPOT_4"], "do": ["flag:c4_1"]},
 	{"if": ["step:sq_s4=0", "glyph:sunda_ga", "!flag:cepot_ga_hint"], "lines": ["DLG_CEPOT_15"], "do": ["flag:cepot_ga_hint"]},
 	{"if": ["step:sq_s4=0"], "lines": ["DLG_CEPOT_5", "DLG_CEPOT_6", "DLG_CEPOT_7", "DLG_CEPOT_8"], "do": []},
 	{"if": ["quest:sq_s4=done"], "lines": ["DLG_CEPOT_9", "DLG_CEPOT_10"], "do": []},

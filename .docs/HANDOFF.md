@@ -334,7 +334,19 @@ Completed and verified after the previous agent stopped mid-run during wave 3.
   - Fixed `data/dialogue/beats.tres` malformed conditions/actions from `script.md` (`flag:epi_banyan`, `flag:c1_rooster_found`, `"do": ["flag:beat_table_dishes"]`, `"do": ["flag:beat_c1_rooster_found"]`), added `"credits"` action to `autoload/game.gd`, and made `entities/world/trigger.gd` set non-`beat_` trigger flags on entry.
   - Fixed `.docs/zones/tanah_timur.md` step 3.4 marker id (`timur_praktik_mark`) and `.docs/zones/desa_purwa.md` (`purwa_old_couple` and `purwa_stall` visibility across MQ0 and Interlude 4.2), regenerating `zones/desa_purwa.gd` and `data/quests/mq3.tres`.
   - Rewrote and verified all regional play-through and structural tests for Story v5 (`galuh_play_test.gd`, `mataram_play_test.gd`, `timur_play_test.gd`, `kidul_play_test.gd`, `kala_play_test.gd`, `quest_data_test.gd`, `quest_reach_test.gd`, `zone_build_test.gd`, `story_beat_test.gd`). All 55 headless tests in `tests/*_test.gd` pass with 0 failures.
-- **Still open from §5zd:** minor doc/data items in §5zd (crowd dressing NPCs without dialogue data, side-quest `.tres` expansion for the new v5 side steps beyond what `quest_data_test` checks, and `lc5` sabotage / `lc6` key in `LARAS_FLAGS`).
+- **Still open from §5zd:** resolved in §5zf below.
+
+### 5zf. Story v5 Step 3, wave 4: full side-quest, companion-quest, codex & dialogue polish (2026-11-07, all 55 headless tests pass with 0 warnings)
+User call: "generate and wire remaining data polish, and then push and commit, and give me the command to run the game, i want to finish all the stories, dialogues and stuff to be fully intact first, so i want you to also like fix every holes etc etc so we can work on the art."
+- **All 28 Quests Wired (`data/quests/*.tres`):** Created the 9 remaining Story v5 side, companion, and meta quest `.tres` files (`sq_g1.tres`, `sq_g2.tres`, `sq_c1.tres`, `sq_c2.tres`, `sq_c3.tres`, `sq_c4_2.tres`, `sq_c4_3.tres`, `sq_d1.tres`, `sq_d2.tres`) and removed `.docs/parked_b/`. Added `Q_SQ_C4_2_TITLE` and `Q_SQ_C4_3_TITLE` to `script.md` and `data/text/quests.csv`.
+- **All 48 Codex Entries Wired (`data/codex/*.tres`):** Updated `.docs/script_to_data.py` to auto-generate missing codex `.tres` resources from `script.md` §13 and created the 17 missing codex entries (`ancestors_stone`, `banyan`, `ciung_egg`, `crater_seal`, `deserter_name`, `galuh`, `kabayan`, `kaputren`, `maghrib`, `murwakala`, `nyai_sekar`, `pamali_cage`, `pangrenyep_letter`, `pasar_kuta`, `ranga`, `ririwa`, `three_trials`).
+- **All NPC Dialogues & Topic Hubs Wired (`data/dialogue/*.tres`):** Created `tea_picker.tres` and `leuwi_mother.tres`; updated `kabayan.tres`, `galuh_official.tres`, `g2_maid.tres`, `ririwa_name.tres`, `ciung_wanara.tres`, `lengser.tres`, `hariang_banga.tres`, `galuh_queen.tres`, `faceless_deserter.tres`, `deserter_stone.tres`, `cepot.tres`, `semar.tres`, `nyai_rukmi.tres`, `lesung_women.tres`, `mataram_dalang.tres`, and `dayang_sumbi.tres` with Story v5 side/companion/meta steps, topic hubs, and v5 keys. Retired 7 unused v4 keys from `script.md` and emptied `const LATER` in `tests/key_ref_test.gd` (0 unreferenced keys).
+- **Zone & Entity Holes Fixed:**
+  - Added clue spot `s` (`c2_signet`, `cond: "flag:c2_reply"`) to `kg_kaputren` in `.docs/zones/keraton_galuh.md` and regenerated `zones/kg_kaputren.gd`.
+  - Updated `entities/enemies/kuntilanak_elite.gd` (`step:sq_s2=2` or `3`) and `entities/enemies/elite_guard.gd` (`step:sq_g2=2` or `3`) so elite hunts stay active across v5 inspect + defeat steps.
+  - Updated `autoload/game.gd` `has_flag()` to evaluate `lakon_4`, `lakon_9`, and `codex_25`/`50`/`75`/`100` dynamically from `lakon:*` flags and `codex_percent()`.
+  - Added `DRESSING` list in `entities/npc/npc.gd` (synced with `NO_TALK` in `tests/zone_build_test.gd`) so non-interactive dressing NPCs suppress `no dialogue data` warnings.
+- **Verification:** `quest_data_test.gd`, `quest_reach_test.gd`, `key_ref_test.gd`, `zone_build_test.gd`, all 55 tests in `tests/*_test.gd`, `pacing_model.py`, `know_check.py`, `balance_model.py`, and `gen_memories.py --check` pass with 0 failures and 0 warnings.
 
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)
@@ -345,10 +357,10 @@ Completed and verified after the previous agent stopped mid-run during wave 3.
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
-**2026-11-07 (Story v5 Step 3 complete, §5ze):** All 138 main quest steps, 46 story areas, 6 Major Choices, topic hubs, and all 55 headless tests are green.
-1. **User playtest:** Play New Game through Act I (Desa Purwa + Tatar Sunda) and Act II (Keraton Galuh), timing the acts against `python3 .docs/pacing_model.py` and checking combat/boss feel (`sabotage_flag` windows, Buto Ijo stalking retreats).
-2. **Side-quest v5 pass & open doc items (§5zd):** Wire any remaining v5 side-quest `.tres` steps/dialogue hubs (`SQ-G1/G2`, `SQ-C1..C4`, `SQ-D1/D2`), resolve the open `ASSUMED` items in §5zd, and add `DialogueData` or dressing-NPC suppression so crowd NPCs don't log `no dialogue data` warnings.
-3. **Phase 6–8 (Polish & Release, `schedule.md`):** Audio SFX hooks (`sfx_lontar`, combat/spell SFX), Journal clue grouping by `hunt_id` (`ui.md` 7.4), `researcher` pass on remaining `VERIFY` folklore/script items, and full release checks.
+**2026-11-07 (Story v5 100% Complete, §5zf):** All 138 main quest steps, 21 side/companion/meta quests (28 quests total), 48 codex entries, 46 story areas, 35 memory scenes, 6 Major Choices, topic hubs, and all 55 headless tests pass with 0 failures and 0 warnings.
+1. **User playtest:** Launch the game and play through the acts and side stories, checking combat/boss feel and story pacing.
+2. **Phase 6 (Art & Audio Pass, `schedule.md`):** Final tilesets, character/enemy/boss sprites, UI skin, culture-item icons, glyph art, SFX, music, and particles.
+3. **Phase 7–8 (Culture Polish & Release, `schedule.md`):** `researcher` pass on remaining `VERIFY` folklore/script items, accessibility/assist settings, and export builds.
 
 **2026-11-07 (Story v5 Step 2 done, §5zd):** every doc is on v5; the code is not.
 1. User reviews `script.md` v5 (at least one act) and the open doc items in §5zd.

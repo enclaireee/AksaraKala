@@ -9,10 +9,9 @@ var fails := 0
 const PENDING := []
 ## Shortcuts opened only from a pending area: id -> that area.
 const PENDING_OPENERS := {}
-## Placed NPCs with no dialogue file: dressing with no lines in script.md (no Talk prompt), and Milestone B ids
-## (doorposts and epilogue).
-const NO_TALK := ["villager", "laras_crowd", "laras_tag", "stray_cat", "tea_picker", "leuwi_mother", "faceless_captain_seen",
-	"galuh_crowd", "nelayan_jala", "door_a", "door_b", "door_c", "aria_kebonan", "wirasana_daughter"]
+## Placed NPCs with no dialogue file: dressing with no lines in script.md (no Talk prompt).
+const NO_TALK := ["villager", "laras_crowd", "laras_tag", "stray_cat", "faceless_captain_seen",
+	"galuh_crowd", "nelayan_jala", "wirasana_daughter"]
 const INTERNAL_GATES := {"sc:ts_leuwi": "s"}
 
 

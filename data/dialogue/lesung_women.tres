@@ -7,6 +7,6 @@ script = ExtResource("1")
 npc_id = "lesung_women"
 name_key = "NPC_LESUNG_WOMEN_NAME"
 entries = Array[Dictionary]([
-	{"if": ["flag:lead_kuburan", "!flag:mq2_5"], "lines": ["DLG_LESUNG_WOMEN_V1", "@NPC_HERO_NAME", "DLG_LESUNG_WOMEN_H1", "@NPC_LESUNG_WOMEN_NAME", "DLG_LESUNG_WOMEN_V2", "DLG_LESUNG_WOMEN_V3"], "do": ["learn:jawa_ca"]},
+	{"if": ["flag:lead_kuburan", "!flag:mq2_5"], "lines": ["DLG_LESUNG_WOMEN_V1", "@NPC_HERO_NAME", "DLG_LESUNG_WOMEN_H1", "@NPC_LESUNG_WOMEN_NAME", "DLG_LESUNG_WOMEN_V2", "DLG_LESUNG_WOMEN_V18", "DLG_LESUNG_WOMEN_V19", "DLG_LESUNG_WOMEN_V20"], "do": ["learn:jawa_ca"]},
 	{"if": [], "lines": ["DLG_LESUNG_WOMEN_V10"], "do": []}
 ])

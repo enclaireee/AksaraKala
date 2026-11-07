@@ -7,7 +7,8 @@ script = ExtResource("1")
 npc_id = "galuh_queen"
 name_key = "NPC_GALUH_QUEEN_NAME"
 entries = Array[Dictionary]([
-	{"if": ["flag:choice_mercy"], "lines": ["DLG_GALUH_QUEEN_V20", "DLG_GALUH_QUEEN_V21"], "do": ["flag:c2_queen_replied"]},
-	{"if": ["flag:choice_silent"], "lines": ["DLG_GALUH_QUEEN_V22", "DLG_GALUH_QUEEN_V23"], "do": ["flag:c2_queen_replied"]},
+	{"if": ["step:sq_c2=1", "flag:choice_mercy"], "lines": ["DLG_GALUH_QUEEN_V20", "DLG_GALUH_QUEEN_V21", "DLG_GALUH_QUEEN_V25", "DLG_GALUH_QUEEN_V26"], "do": ["flag:c2_reply"]},
+	{"if": ["step:sq_c2=1", "flag:choice_judgment"], "lines": ["DLG_GALUH_QUEEN_V22", "DLG_GALUH_QUEEN_V23", "DLG_GALUH_QUEEN_V27", "DLG_GALUH_QUEEN_V28"], "do": ["flag:c2_reply"]},
+	{"if": ["step:sq_c2=3", "!flag:c2_sealed"], "lines": ["DLG_GALUH_QUEEN_V29", "DLG_GALUH_QUEEN_V30", "DLG_GALUH_QUEEN_V31"], "do": ["flag:c2_sealed"], "quiet": true},
 	{"if": [], "lines": ["DLG_GALUH_QUEEN_V24"], "do": []}
 ])

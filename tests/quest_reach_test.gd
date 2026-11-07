@@ -46,8 +46,12 @@ func _initialize() -> void:
 				src.area_entered[n.trigger_id] = true
 				src.puzzle_solved[n.trigger_id] = true
 				src.puzzle_solved[n.trigger_id.trim_prefix("puzzle_")] = true
+				src.trial_completed[n.trigger_id] = true
+				src.trial_completed[n.trigger_id.trim_prefix("trial_")] = true
 			elif f.ends_with("encounter.tscn"):
 				src.area_cleared[n.area_id] = true
+				src.trial_completed[n.area_id] = true
+				src.trial_completed[n.area_id.trim_prefix("trial_")] = true
 				for wave in n.waves:
 					for e in wave:
 						add_enemy(src, load(e[0]).instantiate())
