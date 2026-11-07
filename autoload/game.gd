@@ -156,6 +156,8 @@ func new_game(cls: ClassData) -> void:
 			equipped[ItemData.by_id(id).slot] = id
 	if start_quest("mq0"):
 		quests.mq0.step = 2   # 0.1-0.2 (prologue, class) are struck before the save; 0.3 Ibu is next (quests.md MQ0)
+		for f in ["mq0_d1", "mq0_d2", "mq0_d2b"]:
+			flags[f] = true
 	save_game()
 	changed.emit()
 
@@ -822,6 +824,9 @@ func from_dict(d: Dictionary) -> void:
 			quests[id] = {"state": str(q.state), "step": maxi(0, _num(q.get("step"))), "count": maxi(0, _num(q.get("count"))), "resolution": str(q.get("resolution", "")), "all": maxi(0, _num(q.get("all")))}
 		else:
 			quests.erase(id)
+	if quests.has("mq0") and int(quests.mq0.get("step", 0)) >= 2:
+		for f in ["mq0_d1", "mq0_d2", "mq0_d2b"]:
+			flags[f] = true
 	changed.emit()
 
 
