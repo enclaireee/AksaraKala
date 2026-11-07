@@ -97,7 +97,7 @@ func _ready() -> void:
 
 
 func _entry(c: ClassData) -> void:
-	var b := LozengeButton.new(tr(c.title))
+	var b := LozengeButton.new(tr(c.title), 10)
 	b.focus_entered.connect(_preview.bind(c))
 	b.pressed.connect(_ask.bind(c))
 	_list.add_child(b)
@@ -311,4 +311,4 @@ class StatBar extends Control:
 			if f > 0.0:
 				draw_rect(Rect2(r.position, Vector2(7.0 * f, 7)), UIFx.GOLD)
 				draw_rect(Rect2(r.position, Vector2(7.0 * f, 1)), UIFx.GOLD_HI)
-		draw_string(UIFx.body_font(), Vector2(82, 7), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, UIFx.CREAM)
+		draw_string(UIFx.body_font(), Vector2(82, 7), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, 7, UIFx.CREAM)

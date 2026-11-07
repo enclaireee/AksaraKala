@@ -135,6 +135,8 @@ func run() -> void:
 	await frames(2)
 	check(not hud._arrow.visible, "arrow hidden when the target is on screen")
 	ex.queue_free()
+	game.quests.erase("t_arrow")
+	game.pinned = ""
 	zones.current_zone = ""
 
 	# Boss bar.

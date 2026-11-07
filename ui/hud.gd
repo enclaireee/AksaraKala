@@ -99,6 +99,7 @@ func _ready() -> void:
 	_hp_txt.position = Vector2(0, -1)
 	_hp_txt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_hp_txt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_hp_txt.add_theme_font_size_override("font_size", 7)
 	_hp_txt.add_theme_constant_override("outline_size", 2)
 	_hp_txt.add_theme_color_override("font_color", CREAM)
 	_hp_txt.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -168,6 +169,7 @@ func _ready() -> void:
 	_menu_hint.text = tr("UI_HINT_MENU") % get_node("/root/Game").key_name("pause").replace("Escape", "Esc")
 	_menu_hint.position = Vector2(480 - 6 - 70, 24)
 	_menu_hint.size = Vector2(70, 12)
+	_menu_hint.add_theme_font_size_override("font_size", 7)
 	_menu_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_menu_hint.modulate.a = 0.55
 	_menu_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE

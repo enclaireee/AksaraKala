@@ -27,9 +27,7 @@ count of any quest, so every `step:<quest>=N` and `flag:` condition in zones and
 | `#wait:<seconds>` | the box holds on a beat of silence (max 3 s), then continues |
 
 **Auto-direction (no data change needed).** `story_beat.gd` wraps every beat: bars on before the first line, and
-whenever the speaker tag (`@NPC_<ID>_NAME`) names an NPC that exists in the zone the camera eases to that NPC (hero
-speaker or narration `@` = back to the hero). At the end of the beat bars off and the camera is released. Explicit cues
-override the auto camera. Normal NPC talks (`Npc.interact`) get no bars, only the existing box.
+whenever the speaker tag (`@NPC_<ID>_NAME`) names a visible, condition-active NPC within `160 px` of the hero (`find_node_by_id` skips hidden and unmet-`cond` nodes, supports `npc_id` prefixes like `laras_tag`, and picks the node nearest the hero), the camera eases toward that NPC (clamped to `80 px` offset; hero speaker, narration `@`, or distant off-screen voice = back to the hero). At the end of the beat bars off and the camera is released. Explicit cues override the auto camera. Normal NPC talks (`Npc.interact`) get no bars, only the existing box.
 
 The tree is paused while the box is open, so the director runs with `process_mode` always (GameUI already is).
 

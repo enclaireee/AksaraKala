@@ -135,7 +135,7 @@ func _marker(p: Vector2, kind: String) -> void:
 			draw_rect(Rect2(p - Vector2(2.5, 2), Vector2(5, 4)), Color.BLACK)
 			draw_rect(Rect2(p - Vector2(1.7, 1.2), Vector2(3.4, 2.4)), CHEST)
 		"clue":
-			draw_string(get_theme_default_font(), p + Vector2(-2, 3), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, CLUE)
+			draw_string(get_theme_default_font(), p + Vector2(-2, 3), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, 7, CLUE)
 		"goal":
 			var r := 4.0 + sin(_pulse * 4.0) * 0.8
 			draw_colored_polygon(PackedVector2Array([p + Vector2(0, -r - 1), p + Vector2(r + 1, 0), p + Vector2(0, r + 1), p + Vector2(-r - 1, 0)]), Color.BLACK)
@@ -160,10 +160,10 @@ func _draw() -> void:
 			if kind == "exit" and not seen.has(f.name):   # one label per destination
 				seen[f.name] = true
 				var tp := p + Vector2(4, 3)
-				var lw := font.get_string_size(f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x
+				var lw := font.get_string_size(f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, 7).x
 				if tp.x + lw > size.x - 2:   # near the right edge: label sits left of the marker
 					tp.x = p.x - 4 - lw
-				draw_string(font, tp, f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, EXIT)
+				draw_string(font, tp, f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, 7, EXIT)
 	var h := _to_screen(_hero)
 	draw_circle(h, 3.5, Color.BLACK)
 	draw_circle(h, 2.5, Color.WHITE)
@@ -180,5 +180,5 @@ func _legend(font: Font) -> void:
 		else:
 			_marker(Vector2(x + 3, y), it[0])
 		var t: String = tr(it[1])
-		draw_string(font, Vector2(x + 9, y + 3), t, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(1, 1, 1, 0.8))
-		x += 14.0 + font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x
+		draw_string(font, Vector2(x + 9, y + 3), t, HORIZONTAL_ALIGNMENT_LEFT, -1, 7, Color(1, 1, 1, 0.8))
+		x += 16.0 + font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, 7).x

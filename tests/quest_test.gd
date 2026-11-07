@@ -156,6 +156,7 @@ func _initialize() -> void:
 	check(g.quests.t_e.step == 2, "kill catch-up: %s" % g.quests.t_e)
 
 	# Save round trip keeps quests, codex, pin and flags.
+	g.pin_quest("t_c")
 	var before := JSON.stringify(g.to_dict())
 	check(g.save_game(), "save failed")
 	g._reset()

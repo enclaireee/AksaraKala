@@ -1,9 +1,9 @@
 [gd_resource type="Theme" load_steps=38 format=3]
 
-[ext_resource type="FontFile" path="res://assets/fonts/Jersey10-Regular.ttf" id="f1"]
-[ext_resource type="FontFile" path="res://assets/fonts/Jersey15-Regular.ttf" id="f2"]
-[ext_resource type="FontFile" path="res://assets/fonts/Jersey10-Regular.ttf" id="f3"]
-[ext_resource type="FontFile" path="res://assets/fonts/Jersey10-Regular.ttf" id="f4"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Regular.ttf" id="f1"]
+[ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="f2"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Bold.ttf" id="f3"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Italic.ttf" id="f4"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/panel.png" id="t_panel"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/panel_dialogue.png" id="t_panel_dialogue"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/button_normal.png" id="t_button_normal"]
@@ -186,7 +186,7 @@ vertical = true
 
 [resource]
 default_font = ExtResource("f1")
-default_font_size = 10
+default_font_size = 8
 Label/colors/font_color = Color(0.929, 0.89, 0.8, 1)
 Label/colors/font_outline_color = Color(0.055, 0.043, 0.039, 1)
 Label/constants/outline_size = 1
@@ -200,9 +200,9 @@ Panel/styles/panel = SubResource("s_panel")
 PanelContainer/styles/panel = SubResource("s_panel")
 TooltipPanel/styles/panel = SubResource("s_panel")
 TooltipLabel/colors/font_color = Color(0.929, 0.89, 0.8, 1)
-TooltipLabel/font_sizes/font_size = 10
-Button/fonts/font = ExtResource("f1")
-Button/font_sizes/font_size = 10
+TooltipLabel/font_sizes/font_size = 8
+Button/fonts/font = ExtResource("f2")
+Button/font_sizes/font_size = 8
 Button/colors/font_color = Color(0.929, 0.89, 0.8, 1)
 Button/colors/font_hover_color = Color(0.949, 0.831, 0.533, 1)
 Button/colors/font_hover_pressed_color = Color(0.949, 0.831, 0.533, 1)
@@ -230,8 +230,8 @@ LinkButton/fonts/font = ExtResource("f1")
 CheckBox/colors/font_color = Color(0.929, 0.89, 0.8, 1)
 CheckBox/colors/font_hover_color = Color(0.949, 0.831, 0.533, 1)
 CheckBox/styles/focus = SubResource("s_none")
-TabContainer/fonts/font = ExtResource("f1")
-TabContainer/font_sizes/font_size = 10
+TabContainer/fonts/font = ExtResource("f2")
+TabContainer/font_sizes/font_size = 8
 TabContainer/colors/font_selected_color = Color(0.949, 0.831, 0.533, 1)
 TabContainer/colors/font_unselected_color = Color(0.612, 0.561, 0.471, 1)
 TabContainer/colors/font_hovered_color = Color(0.929, 0.89, 0.8, 1)
@@ -244,8 +244,8 @@ TabContainer/styles/tab_unselected = SubResource("s_tab_off")
 TabContainer/styles/tab_hovered = SubResource("s_tab_on")
 TabContainer/styles/tab_focus = SubResource("s_none")
 TabContainer/styles/tab_disabled = SubResource("s_tab_off")
-TabBar/fonts/font = ExtResource("f1")
-TabBar/font_sizes/font_size = 10
+TabBar/fonts/font = ExtResource("f2")
+TabBar/font_sizes/font_size = 8
 TabBar/colors/font_selected_color = Color(0.949, 0.831, 0.533, 1)
 TabBar/colors/font_unselected_color = Color(0.612, 0.561, 0.471, 1)
 TabBar/colors/font_hovered_color = Color(0.929, 0.89, 0.8, 1)
@@ -274,18 +274,18 @@ LineEdit/styles/normal = SubResource("s_edit")
 LineEdit/styles/focus = SubResource("s_edit")
 HeaderLarge/base_type = &"Label"
 HeaderLarge/fonts/font = ExtResource("f2")
-HeaderLarge/font_sizes/font_size = 15
+HeaderLarge/font_sizes/font_size = 10
 HeaderLarge/colors/font_color = Color(0.788, 0.635, 0.29, 1)
 Heading/base_type = &"Label"
-Heading/fonts/font = ExtResource("f1")
-Heading/font_sizes/font_size = 10
+Heading/fonts/font = ExtResource("f3")
+Heading/font_sizes/font_size = 8
 Heading/colors/font_color = Color(0.949, 0.831, 0.533, 1)
 BossName/base_type = &"Label"
 BossName/fonts/font = ExtResource("f2")
-BossName/font_sizes/font_size = 15
+BossName/font_sizes/font_size = 10
 BossName/colors/font_color = Color(0.929, 0.89, 0.8, 1)
 Small/base_type = &"Label"
-Small/font_sizes/font_size = 10
+Small/font_sizes/font_size = 7
 Dim/base_type = &"Label"
 Dim/colors/font_color = Color(0.612, 0.561, 0.471, 1)
 Italic/base_type = &"Label"
@@ -293,7 +293,7 @@ Italic/fonts/font = ExtResource("f4")
 Italic/colors/font_color = Color(0.949, 0.902, 0.769, 1)
 ProgressBar/styles/background = SubResource("s_pbar_bg")
 ProgressBar/styles/fill = SubResource("s_pbar_fill")
-ProgressBar/font_sizes/font_size = 10
+ProgressBar/font_sizes/font_size = 8
 HSlider/styles/slider = SubResource("s_pbar_bg")
 HSlider/styles/grabber_area = SubResource("s_pbar_fill")
 HSlider/styles/grabber_area_highlight = SubResource("s_pbar_fill_hi")

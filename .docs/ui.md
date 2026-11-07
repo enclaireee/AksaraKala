@@ -3,7 +3,7 @@
 Canvas 480x270, integer-scaled, no sub-pixel UI. All sizes in native pixels and **TUNE** until seen on the real canvas. Layout follows the genre norm (Hyper Light Drifter, Death's Door, Hollow Knight): vitals small in the top-left, the center empty. Decided 2026-11-05, Claude's calls (**ASSUMED**) unless noted.
 
 ## 1. Fonts and text
-- **Latin text: pixel font (user call, 2026-11-07, replaces the 2026-11-05 smooth-text call).** Jersey 10 (body, HUD, dialogue, menus, 10 px, 20 px when big) and Jersey 15 (headings, area and quest titles, boss names, 15 px, 30 px when big), SIL OFL, `assets/fonts/Jersey*.ttf`, imported with antialiasing and hinting off so edges stay crisp. Pixel fonts stay sharp only on their grid, so every size snaps to 10/20 or 15/30 (`UIFx.snap`). There is no italic: Semar's narration is the pale cream colour only. The minimum text size is 10 px.
+- **Latin text: smooth vector fonts (user call, 2026-11-07, reverted from the Jersey pixel pass).** `AlegreyaSans-Regular` / `Bold` / `Italic` (body, HUD, dialogue, menus, 7–8 px) and `Cinzel` (headings, area and quest titles, boss names, 10–16 px, 20–28 px for cards/logo), SIL OFL, `assets/fonts/`, rendered smoothly at window resolution (`canvas_items` stretch mode). `UIFx.snap` returns the requested size unchanged. Semar's narration uses the `Italic` variation in pale cream.
 - **VERIFY** the chosen font has the characters the text needs. Indonesian is plain Latin, but Sundanese romanization uses é and eu (Cépot, leuweung).
 - Aksara: Noto Sans Javanese and Noto Sans Sundanese (OFL), see [spells.md](spells.md) 10 for the render test.
 - Text over the world always has a 1 px dark outline.
@@ -91,7 +91,7 @@ Replaces the bare-Control placeholders. Mood: a wayang kelir at night, lacquered
 
 **Palette.** Lacquer black #0E0B0A (panel fill, 92% alpha), sogan brown #3A2618 (inner fill, wells), prada gold #C9A24A (frames, headings; highlight #F2D488, shadow #7A5A22), cream #EDE3CC (body text), dim #9C8F78 (secondary), indigo #1F2A44 (selection and cast tint), vermillion #B8432B (danger). Gameplay colours (HP, stamina, sakti, flask, section 2) are unchanged.
 
-**Fonts** (`assets/fonts/`, OFL, logged in [assets.md](assets.md)). Jersey 10 body, Jersey 15 headings (see section 1). Noto Sans Sundanese / Javanese: aksara. All set in `ui/theme.tres`, the project's `gui/theme/custom`. Sizes in canvas px: body 10, heading 10-15, title 15-30. Text over the world always has a 1 px outline #0E0B0A.
+**Fonts** (`assets/fonts/`, OFL, logged in [assets.md](assets.md)). Alegreya Sans (Regular, Bold, Italic) body, Cinzel headings (see section 1). Noto Sans Sundanese / Javanese: aksara. All set in `ui/theme.tres`, the project's `gui/theme/custom`. Sizes in canvas px: small 7, body 8, heading 8–10, title 16–28. Text over the world always has a 1 px outline #0E0B0A.
 
 **Frames (pixel pass, 2026-11-07).** Flat and hard-edged: a 1 px near-black outline with stepped corners, one flat gold line, one dark inner line, no gradients or lit edges, drawn by `tools/gen_ui.py`. 9-patch (`NinePatchRect` / `StyleBoxTexture`): `panel.png` (gold 1 px line, 1 px dark inset, kawung corner ornament 5x5), `panel_dialogue.png`, `button_{normal,hover,pressed,disabled}.png`, `tab_{on,off}.png`, `slot.png` (item well 20x20), `divider.png` (gold line with a centre lozenge). Hover: the frame brightens and a 1 px gold shimmer sweeps left to right (0.4 s).
 

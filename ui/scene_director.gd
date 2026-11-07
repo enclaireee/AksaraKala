@@ -8,6 +8,8 @@ const BAR_H := 28.0        # TUNE: letterbox bar height in the 480x270 screen
 const BAR_TIME := 0.4      # TUNE: slide in/out seconds
 const FOLLOW := 6.0        # TUNE: camera ease rate (1/s)
 const SHAKE_TIME := 0.6    # TUNE: seconds a #shake takes to die out
+const MAX_SPEAKER_DIST := 160.0   # TUNE: auto-follow only speakers in the local scene around the hero
+const MAX_PAN := 80.0      # TUNE: max camera offset (px) so the scene stays framed near the hero
 const SCREEN := Vector2(480, 270)
 
 var _beat := false
@@ -76,7 +78,7 @@ func set_bars(on: bool) -> void:
 	_tween.tween_property(_bottom, "position:y", SCREEN.y - BAR_H if on else SCREEN.y, BAR_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
-## Auto-direction: an `NPC_<ID>_NAME` speaker key sends the camera to that NPC; any other key (hero, narration) back.
+## Auto-direction: an `NPC_<ID>_NAME` speaker key sends the camera to that NPC if nearby; any other key (hero, narration, distant voice) back.
 ## Only while a beat plays (a normal NPC talk keeps the plain box).
 func focus_speaker(name_key: String) -> void:
 	if not _beat:
@@ -86,25 +88,39 @@ func focus_speaker(name_key: String) -> void:
 		return
 	if name_key.begins_with("NPC_") and name_key.ends_with("_NAME"):
 		var n := find_node_by_id(name_key.trim_prefix("NPC_").trim_suffix("_NAME").to_lower())
-		if n != null:
+		var pl := get_tree().get_first_node_in_group("player") as Node2D if is_inside_tree() else null
+		if n != null and (pl == null or n.global_position.distance_to(pl.global_position) <= MAX_SPEAKER_DIST):
 			_target = n
 			return
-		if _target != null:
-			return   # unknown NPC in this zone: stay where we are
 	_target = null
 
 
-## The Node2D matching id (npc_id / id / name, like the HUD arrow), or null.
+## The visible, active Node2D matching id (npc_id / id / name, or npc_id prefix like laras_tag) nearest the player, or null.
 func find_node_by_id(id: String) -> Node2D:
 	if id == "" or id == "hero" or not is_inside_tree():
 		return null
+	var game := get_node_or_null("/root/Game")
+	var pl := get_tree().get_first_node_in_group("player") as Node2D
+	var best: Node2D = null
+	var best_rank := 99
+	var best_dist := INF
 	for c in get_tree().root.find_children("*", "Node2D", true, false):
 		var n := c as Node2D
-		if n == null or n is Camera2D:
+		if n == null or n is Camera2D or not n.is_visible_in_tree():
 			continue
-		if id in [n.get("npc_id"), n.get("id"), n.name]:
-			return n
-	return null
+		if "cond" in n and str(n.cond) != "" and game != null and not game.check(str(n.cond)):
+			continue
+		var exact := id in [n.get("npc_id"), n.get("id"), n.get("trigger_id"), n.get("area_id"), n.get("clue_id"), n.get("memory_id"), n.name]
+		var prefix := not exact and str(n.get("npc_id")).begins_with(id + "_")
+		if not exact and not prefix:
+			continue
+		var rank := 0 if exact else 1
+		var dist := pl.global_position.distance_squared_to(n.global_position) if pl != null else 0.0
+		if rank < best_rank or (rank == best_rank and dist < best_dist):
+			best = n
+			best_rank = rank
+			best_dist = dist
+	return best
 
 
 ## Stops following; the offset eases back to 0. `instant` snaps (zone change).
@@ -138,7 +154,7 @@ func _on_dialogue_finished() -> void:
 
 
 func _process(delta: float) -> void:
-	if _target != null and (not is_instance_valid(_target) or not _target.is_inside_tree()):
+	if _target != null and (not is_instance_valid(_target) or not _target.is_inside_tree() or not _target.is_visible_in_tree()):
 		_target = null
 	if _target == null and _off == Vector2.ZERO and _shake_left <= 0.0:
 		return
@@ -152,7 +168,7 @@ func _process(delta: float) -> void:
 		return
 	var want := Vector2.ZERO
 	if _target != null:
-		want = _target.global_position - cam.global_position
+		want = (_target.global_position - cam.global_position).limit_length(MAX_PAN)
 	_off = _off.lerp(want, 1.0 - exp(-FOLLOW * delta))
 	if _target == null and _off.length() < 0.5:
 		_off = Vector2.ZERO

@@ -55,7 +55,24 @@ func run() -> void:
 	check(not dir.bars_on(), "bars:off cue")
 	check(dir.find_node_by_id("hero") == null, "hero is not a node")
 
+	# hidden and distant nodes are ignored by auto-direction; visible nearest or prefix node wins
+	var hidden_npc := Node2D.new()
+	hidden_npc.name = "laras"
+	hidden_npc.visible = false
+	root.add_child(hidden_npc)
+	check(dir.find_node_by_id("laras") == null, "hidden node ignored by find_node_by_id")
+	var vis_npc := Node2D.new()
+	var ns := GDScript.new()
+	ns.source_code = "extends Node2D\nvar npc_id := 'laras_tag'\nvar cond := ''\n"
+	ns.reload()
+	vis_npc.set_script(ns)
+	root.add_child(vis_npc)
+	check(dir.find_node_by_id("laras") == vis_npc, "visible prefix npc_id matched when exact is hidden")
+	hidden_npc.free()
+	vis_npc.free()
+
 	# a cue line is emitted and never shown
+	cues.clear()
 	ev.dialogue_requested.emit("", PackedStringArray(["#cam:x", "#shake:1", "HELLO_LINE"]))
 	check(box.is_open(), "box open")
 	check(cues.size() == 2 and cues[0] == ["cam", "x"] and cues[1] == ["shake", "1"], "cues emitted in order: %s" % [cues])

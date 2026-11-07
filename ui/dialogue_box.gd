@@ -21,7 +21,7 @@ const PAD_TOP := 8.0      # TUNE: space above the text (the name plate adds PLAT
 const PLATE_DROP := 6.0   # how far the name plate reaches into the frame
 const PAD_BOT := 13.0     # room for the continue arrow and hint under the text
 const MIN_H := 40.0
-const LINE_H := 11.0      # 10 px pixel font + 1 px line spacing
+const LINE_H := 10.0      # 8 px font + line spacing
 const MAX_WAIT := 3.0   # seconds a #wait cue may hold
 const NARRATION := Color("F2E6C4")   # Semar (Dalang): italic, pale cream (ui.md 3)
 
@@ -66,6 +66,7 @@ func _ready() -> void:
 	_speaker.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_plate.add_child(_speaker)
 	_who = _label(Vector2.ZERO, Vector2(260, 12), Color("D8CFB4"))   # sits on the plate row, beside the name plate
+	_who.add_theme_font_size_override("font_size", 7)
 	_text = _label(Vector2.ZERO, Vector2(BOX_W - PAD_X * 2.0, LINE_H), Color.TRANSPARENT)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_sel_bar = ColorRect.new()
@@ -85,6 +86,7 @@ func _ready() -> void:
 	_cue.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_cue)
 	_hint = _label(Vector2.ZERO, Vector2(120, 12), Color("9C8F78"))
+	_hint.add_theme_font_size_override("font_size", 7)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_frame.z_index = -1
 	_layout()

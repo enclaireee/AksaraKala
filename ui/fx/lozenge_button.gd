@@ -12,9 +12,9 @@ func _init(label := "", size := 10) -> void:
 	flat = true
 	alignment = HORIZONTAL_ALIGNMENT_LEFT
 	custom_minimum_size.y = 18
-	var big := size >= 12
-	add_theme_font_override("font", UIFx.cinzel() if big else UIFx.body_font())
-	add_theme_font_size_override("font_size", UIFx.snap(size, big))
+	if size >= 10:
+		add_theme_font_override("font", UIFx.cinzel())
+	add_theme_font_size_override("font_size", size)
 	add_theme_color_override("font_color", UIFx.CREAM)
 	for c in ["font_hover_color", "font_focus_color", "font_pressed_color", "font_hover_pressed_color"]:
 		add_theme_color_override(c, UIFx.GOLD_HI)
