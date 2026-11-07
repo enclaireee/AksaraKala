@@ -257,7 +257,7 @@ Q_MQ5_S9_DONE,"Di petilasan terakhir Semar menjaga apinya, dan kuputar ulang nam
 Q_SQ_S1_S5_OBJ,"Kabari Ki Darsa bagaimana dongengnya berakhir, kembali ke kampung",Let Ki Darsa know how the tale ended: return to him in the kampung
 Q_SQ_S2_S5_OBJ,Kembalikan nama perempuan yang terlupa: bantu kepala desa memahatnya di nisannya,Give the forgotten woman her name back: help the village head carve it on her grave marker
 Q_MQ0_S10_OBJ,"Apa yang terjadi pada Laras? Tanya Ibu, lalu ambil separuh lontarnya di panggung yang terbakar.","What happened to Laras? Ask Ibu, then recover her half of the lontar at the burned stage."
-Q_MQ0_S11_OBJ,"Pahami lontar yang robek: bawa ke Semar di sanggar, pelajari aksara Ka, lalu rapalkan.","Make sense of the torn lontar: take it to Semar, learn the Ka glyph, then cast it."
+Q_MQ0_S11_OBJ,"Bawa sobekan lontar Laras ke Ki Semar di sanggar untuk memahami aksara Ka.","Bring Laras's torn lontar to Ki Semar at the sanggar to understand the Ka glyph."
 Q_MQ0_S12_OBJ,"Usir penyerbu Tanpa Rupa dari alun-alun, lalu lihat siapa yang menunggu di gerbang barat.","Drive the Faceless raiders from the square, then see who waits at the west gate."
 Q_MQ1_S16_OBJ,Temukan sumber luapan danau: susuri tepi sungai yang terbendung dan atasi penjaga kawah di hulu.,Find the source of the lake overflow: follow the dammed river trail and defeat the crater sentries upstream.
 Q_MQ1_S17_OBJ,Selidiki sumbatan danau: periksa gelondongan kayu tebangan kuno yang menahan aliran air ke lembah.,Investigate the lake blockage: inspect the ancient felled timber damming the waters from reaching the valley.
@@ -432,8 +432,9 @@ Q_MQ0_S5_P1,"Bicara dengan Semar, dalang desa, di dalam sanggar.","Talk to Semar
 Q_MQ0_S5_P2,Bicara dengan Cepot yang berdiri di samping Semar.,"Talk to Cepot, standing beside Semar."
 Q_MQ0_S10_P1,"Tanya Ibu soal Laras di rumahmu, sebelah selatan alun-alun.","Ask Ibu about Laras at your house, south of the square."
 Q_MQ0_S10_P2,Ambil separuh lontar Laras di panggung wayang yang terbakar.,Pick up Laras's half of the lontar on the burned wayang stage.
-Q_MQ0_S11_P1,Ikuti pola di panduan untuk mempelajari aksara Ka.,Trace the Ka glyph over the guide to learn it.
-Q_MQ0_S11_P2,Rapalkan aksara Ka yang baru saja kau pelajari.,Cast the Ka glyph you just learned.
+Q_MQ0_S11_P0,"Temui Ki Semar di dalam sanggar untuk menunjukkan sobekan lontar Laras.","Meet Ki Semar inside the sanggar to show him Laras's torn lontar."
+Q_MQ0_S11_P1,"Pelajari aksara Ka yang terukir di lontar Laras.","Learn the Ka glyph inscribed on Laras's lontar."
+Q_MQ0_S11_P2,"Rapalkan aksara Ka untuk menguji kekuatannya.","Cast the Ka glyph to test its power."
 Q_MQ0_S12_P1,Kalahkan semua penyerbu Tanpa Rupa di alun-alun.,Defeat all the Faceless raiders in the square.
 Q_MQ0_S12_P2,"Keluar lewat gerbang barat menuju Tatar Sunda, dataran tinggi.","Walk out the west gate into Tatar Sunda, the highlands."
 Q_MQ1_S1_P1,"Tanya cucu sesepuh, yang menunggu di jalan dekat tepi teras, apa yang ia lihat.","Ask the elder's grandson, waiting on the road at the terrace edge, what he saw."
@@ -549,7 +550,7 @@ Q_SQ_S2_S2_P1,Temukan pohon cempaka di atas makam tanpa nisan di rumpun gelap.,F
 Q_SQ_S2_S2_P2,"Periksa kain putih robek yang tersangkut di bambu, setelah makam ditemukan.","Examine the torn white cloth snagged on the bamboo, once the grave is found."
 Q_MQ0_S9_HINT,"Serang bayangan dengan {attack}, dan tekan {dodge} untuk menghindar.","Press {attack} to strike the shadows, and {dodge} to slip past them."
 Q_MQ0_S10_HINT,"Tekan {interact} pada Ibu, lalu jalan ke panggung terbakar dan tekan {interact} pada lontar.","Press {interact} on Ibu, then walk to the burned stage and press {interact} on the lontar."
-Q_MQ0_S11_HINT,"Tahan {cast}, ikuti pola Ka di panduan, lalu lepaskan.","Hold {cast}, trace Ka over the guide, then release."
+Q_MQ0_S11_HINT,"Masuk ke sanggar di sebelah barat, temui Ki Semar, lalu gambar aksara Ka.","Enter the sanggar in the west, speak to Ki Semar, then trace the Ka glyph."
 Q_MQ0_S12_HINT,"Pukul dengan {attack}, dan hindari serangan mereka dengan {dodge}.","Strike with {attack}, and avoid their blows with {dodge}."
 Q_MQ0_DESC,"Laras, adik perempuanmu, ingin satu kali lagi kejar-kejaran sebelum malam wayang dimulai di Desa Purwa. Di tengah keributan persiapan, Ibu menyiapkan teh dan Semar menyalakan panggung di alun-alun. Siapa orang asing yang menanyakan nama anak-anak di pasar, dan mengapa ia menginginkannya?","Laras, your little sister, wants one more game of tag before the wayang night begins in Desa Purwa. Between Ibu's morning tea and the village's preparations, it feels like an ordinary day. Who is the stranger asking the children's names in the market, and why does he want them?"
 Q_MQ4_DESC,"Gerhana telah menyelimuti Desa Purwa, dan warganya mulai melupakan keluarga mereka sendiri. Kata orang tua, Laut Selatan tak pernah melepaskan apa yang sudah diambilnya. Akankah laut itu mengembalikan Laras padamu?","The Eclipse has settled over Desa Purwa, and its people are forgetting their own families. Old folk say the Southern Sea never gives back what it takes. Will it return Laras to you?"

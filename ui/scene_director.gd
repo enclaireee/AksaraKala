@@ -112,9 +112,10 @@ func find_node_by_id(id: String) -> Node2D:
 			continue
 		var exact := id in [n.get("npc_id"), n.get("id"), n.get("trigger_id"), n.get("area_id"), n.get("clue_id"), n.get("memory_id"), n.name]
 		var prefix := not exact and str(n.get("npc_id")).begins_with(id + "_")
-		if not exact and not prefix:
+		var contains_id := not exact and not prefix and (id.length() >= 4 and id in str(n.get("npc_id")))
+		if not exact and not prefix and not contains_id:
 			continue
-		var rank := 0 if exact else 1
+		var rank := 0 if exact else (1 if prefix else 2)
 		var dist := pl.global_position.distance_squared_to(n.global_position) if pl != null else 0.0
 		if rank < best_rank or (rank == best_rank and dist < best_dist):
 			best = n

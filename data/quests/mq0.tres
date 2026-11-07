@@ -78,7 +78,7 @@ marker = {"zone": "desa_purwa", "id": "purwa_crowd"}
 [sub_resource type="Resource" id="s10"]
 script = ExtResource("2")
 objective = "Q_MQ0_S10_OBJ"
-all = [{"on": "talked_to:ibu", "set_flag": "mq0_4", "objective": "Q_MQ0_S10_P1"}, {"on": "item_picked:laras_lontar", "set_flag": "mq0_5", "objective": "Q_MQ0_S10_P2"}]
+all = [{"marker": {"id": "ibu", "zone": "desa_purwa"}, "objective": "Q_MQ0_S10_P1", "on": "talked_to:ibu", "set_flag": "mq0_4"}, {"marker": {"id": "laras_lontar", "zone": "desa_purwa"}, "objective": "Q_MQ0_S10_P2", "on": "item_picked:laras_lontar", "set_flag": "mq0_5"}]
 set_flag = "mq0_5"
 recap = "Q_MQ0_S10_DONE"
 marker = {"zone": "desa_purwa", "id": "ibu"}
@@ -86,16 +86,16 @@ marker = {"zone": "desa_purwa", "id": "ibu"}
 [sub_resource type="Resource" id="s11"]
 script = ExtResource("2")
 objective = "Q_MQ0_S11_OBJ"
-all = [{"on": "glyph_learned:sunda_ka", "set_flag": "", "objective": "Q_MQ0_S11_P1"}, {"on": "spell_cast:sunda_ka", "set_flag": "", "objective": "Q_MQ0_S11_P2"}]
+all = [{"marker": {"id": "semar", "zone": "desa_purwa"}, "objective": "Q_MQ0_S11_P0", "on": "talked_to:semar", "set_flag": "mq0_semar_ka"}, {"marker": {"id": "semar", "zone": "desa_purwa"}, "objective": "Q_MQ0_S11_P1", "on": "glyph_learned:sunda_ka", "set_flag": ""}, {"objective": "Q_MQ0_S11_P2", "on": "spell_cast:sunda_ka", "set_flag": ""}]
 recap = "Q_MQ0_S11_DONE"
 marker = {"zone": "desa_purwa", "id": "semar"}
 
 [sub_resource type="Resource" id="s12"]
 script = ExtResource("2")
 objective = "Q_MQ0_S12_OBJ"
-all = [{"on": "area_cleared:purwa_raid", "set_flag": "mq0_7", "objective": "Q_MQ0_S12_P1"}, {"on": "zone_entered:ts_kebun", "set_flag": "", "objective": "Q_MQ0_S12_P2"}]
+all = [{"marker": {"id": "purwa_raid", "zone": "desa_purwa"}, "objective": "Q_MQ0_S12_P1", "on": "area_cleared:purwa_raid", "set_flag": "mq0_7"}, {"marker": {"id": "exit_tatar_sunda", "zone": "desa_purwa"}, "objective": "Q_MQ0_S12_P2", "on": "zone_entered:ts_kebun", "set_flag": ""}]
 recap = "Q_MQ0_S12_DONE"
-marker = {"zone": "desa_purwa", "id": "purwa_raid"}
+marker = {"zone": "desa_purwa", "id": "exit_tatar_sunda"}
 [resource]
 script = ExtResource("1")
 id = "mq0"

@@ -595,6 +595,47 @@ func refresh_arrow() -> void:
 			return
 
 
+## True when the player is inside the arena/encounter where the hunt/fight is taking place.
+func _is_in_target_arena() -> bool:
+	if _tzone != "" or _tnode == null or not is_instance_valid(_tnode):
+		return false
+	var pl := get_tree().get_first_node_in_group("player") as Node2D
+	if pl == null or not is_instance_valid(pl):
+		return false
+	var pl_pos := pl.global_position
+
+	# 1. Target node is an Encounter (has area_id and size).
+	if "size" in _tnode and ("area_id" in _tnode or "waves" in _tnode):
+		var s: Vector2 = Vector2(_tnode.size * 16)
+		var r := Rect2(_tnode.global_position - s * 0.5, s)
+		if r.grow(16.0).has_point(pl_pos):
+			return true
+
+	# 2. Target node is a Boss or has arena_radius.
+	if _tnode.is_in_group("boss") or "boss_name_key" in _tnode or "arena_radius" in _tnode:
+		var rad: float = float(_tnode.arena_radius) if "arena_radius" in _tnode else 176.0
+		if pl_pos.distance_to(_tnode.global_position) <= rad + 16.0:
+			return true
+
+	# 3. Target is an enemy in close combat engagement range.
+	if _tnode.is_in_group("enemy") or _tnode.get("role") in ["charger", "chaser", "shooter", "tank"]:
+		if pl_pos.distance_to(_tnode.global_position) <= 120.0:
+			return true
+
+	# 4. Target matches an active encounter in this zone whose arena the player is inside.
+	var m: Dictionary = get_node("/root/Game").objective_marker()
+	var tid: String = str(m.get("id", ""))
+	if tid != "":
+		for enc in get_tree().get_nodes_in_group("encounter"):
+			if is_instance_valid(enc) and "area_id" in enc and enc.area_id == tid:
+				var s: Vector2 = Vector2(enc.size * 16)
+				var r := Rect2(enc.global_position - s * 0.5, s)
+				if r.grow(16.0).has_point(pl_pos):
+					return true
+
+	return false
+
+
 ## World position of the objective node the arrow follows (an exit when the target is in another zone), or null.
 func target_pos() -> Variant:
 	return _tnode.global_position if _tnode != null and is_instance_valid(_tnode) else null
@@ -605,6 +646,9 @@ func _update_arrow() -> void:
 	_dist.visible = false
 	_dist_bg.visible = false
 	if _dialogue_focus or _tnode == null or not is_instance_valid(_tnode) or not _tnode.is_inside_tree():
+		_arrow.visible = false
+		return
+	if _is_in_target_arena():
 		_arrow.visible = false
 		return
 	var p: Vector2 = get_viewport().get_canvas_transform() * _tnode.global_position

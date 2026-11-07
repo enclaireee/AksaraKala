@@ -145,6 +145,59 @@ func run() -> void:
 	game.pinned = ""
 	zones.current_zone = ""
 
+	# Arena arrow suppression and report-back test.
+	var arena_enc: Node2D = load("res://entities/world/encounter.tscn").instantiate()
+	arena_enc.area_id = "test_arena"
+	arena_enc.size = Vector2i(10, 10)
+	arena_enc.position = Vector2(500, 500)
+	root.add_child(arena_enc)
+	qd = QuestData.new()
+	qd.id = "t_arena"
+	st = QuestStep.new()
+	st.on = "area_cleared:test_arena"
+	st.marker = {"zone": "desa_purwa", "id": "test_arena"}
+	var st2 := QuestStep.new()
+	st2.on = "talked_to:test_npc"
+	st2.marker = {"zone": "desa_purwa", "id": "test_npc"}
+	var arena_steps: Array[QuestStep] = [st, st2]
+	qd.steps = arena_steps
+	ResourceSaver.save(qd, zdir + "/t_arena.tres")
+	zones.current_zone = "desa_purwa"
+	game.start_quest("t_arena")
+	hud.refresh_arrow()
+	await frames(2)
+	player.global_position = Vector2(0, 0)
+	hud._update_arrow()
+	check(hud._arrow.visible or hud._diamond.visible, "arrow/marker visible when outside arena")
+
+	# Walk into the arena
+	player.global_position = Vector2(500, 500)
+	hud._update_arrow()
+	check(not hud._arrow.visible and not hud._diamond.visible and not hud._dist.visible, "arrow and diamond hidden inside arena")
+
+	# Walk out of the arena
+	player.global_position = Vector2(0, 0)
+	hud._update_arrow()
+	check(hud._arrow.visible, "arrow restored when stepping out of arena")
+
+	# Finish the hunt (encounter cleared)
+	var npc: Node2D = load("res://entities/npc/npc.tscn").instantiate()
+	npc.npc_id = "test_npc"
+	npc.position = Vector2(1000, 0)
+	root.add_child(npc)
+	root.get_node("Events").area_cleared.emit("test_arena")
+	await frames(2)
+	check(hud._tnode == npc, "target updated to report-back NPC after hunt")
+	player.global_position = Vector2(0, 0)
+	hud._update_arrow()
+	check(hud._arrow.visible, "arrow restored to guide report-back")
+
+	arena_enc.queue_free()
+	npc.queue_free()
+	game.quests.erase("t_arena")
+	game.pinned = ""
+	zones.current_zone = ""
+
 	# Boss bar.
 	var boss := Node2D.new()
 	var gs := GDScript.new()   # stub following the boss-bar contract (ui/hud.gd)

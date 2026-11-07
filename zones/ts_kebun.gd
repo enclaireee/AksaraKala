@@ -26,7 +26,7 @@ const MAP := [
 	"#.............,,........bbb...r...............bbb..........#",
 	"#.............,,..........w.w.......................J......#",
 	"#.............,,.............v.........................1...#",
-	"#.............,,...........................................#",
+	"#.............,,............B..............................#",
 	"####..........,,....ttttttttttttttttttttttttttttttttt......#",
 	"&!,=,,,,,,,,,,,,....ttttttttttttttttttttttttttttttttt..bbb.#",
 	"&,,=,,,,,,,,,,,,....ttttttttttttttttttttttttttttttttt..bbb.#",
@@ -59,6 +59,7 @@ const SPOTS := {
 	"g": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_grandson"}, "tile": "."},   # NPC the elder's grandson, shows the bamboo he is learning to play (angklung, codex); arrival slice (MQ1 1.1, `talked_to:sunda_grandson`; SQ-S3 giver)
 	"k": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tea_picker"}, "tile": "t"},   # NPC tea picker singing on the terraces (dressing, same props on all 4 tiles)
 	"J": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_picket", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": "."},   # encounter sunda_picket, the first skirmish at the field's east end (MQ1 1.1, new; 2 plain Faceless, no Kuntilanak)
+	"B": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "s4_boars", "cond": "quest:sq_s4=active", "size": Vector2i(14, 8), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(-3, 0)], ["res://entities/enemies/wild_boar.tscn", Vector2i(3, 0)], ["res://entities/enemies/wild_boar.tscn", Vector2i(0, 2)]]]}, "tile": "."},   # encounter s4_boars, wild boars trapping Cepot's pack (SQ-S4 1.1)
 }
 
 

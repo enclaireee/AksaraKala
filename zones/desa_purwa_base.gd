@@ -8,6 +8,8 @@ var _in_sanggar := false
 
 func _ready() -> void:
 	super()
+	var stage_decor := RuwatanStageDecor.new()
+	add_child(stage_decor)
 	guide = preload("res://ui/cast_overlay.tscn").instantiate()
 	guide.layer = 4
 	add_child(guide)

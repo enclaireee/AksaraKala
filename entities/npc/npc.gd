@@ -114,7 +114,7 @@ func _row() -> int:
 		return 4
 	if npc_id == "cepot":
 		return 5
-	if npc_id == "laras":
+	if npc_id == "laras" or npc_id.begins_with("laras_"):
 		return 6
 	if npc_id in ["lutung_kasarung", "stray_cat"]:
 		return 8
