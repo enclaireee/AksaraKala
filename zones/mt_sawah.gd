@@ -20,14 +20,14 @@ const MAP := [
 	"#...................,,...................................................................#",
 	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,P,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,zZ",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Z",
-	"#...........................................,,...........................................#",
+	"#................................W..........,,...........................................#",
 	"#...........................................,,..........bbbbbb,,bbbbbbbbb................#",
 	"#...........................................,,..........b,,,,,,,,,,,,,,,b................#",
 	"#...####,####...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#_______#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#______s#...ttttttttttttttttttttttttt...,,.....u....b,,,g,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#__ULV__#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
-	"#...#_______#...ttttttttttttttttttttttttt...,,.......u..b,,,,,,,W,,,,,,,b.ttttttttttttt..#",
+	"#...#_______#...ttttttttttttttttttttttttt...,,.......u..b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#_______#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#########...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...............ttttttttttttttttttttttttt...,,......u...b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
@@ -50,7 +50,7 @@ const SPOTS := {
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:mt_ruin_sawah", "open_side": "n"}, "tile": ","},   # shortcut gate, barred wooden gate in the north wall (opens from the north pocket, 2 tiles)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "mataram_1"}, "tile": ","},   # petilasan 1
 	"N": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nawang_wulan"}, "tile": "."},   # NPC Nawang Wulan (SQ-M1 giver)
-	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lesung_women"}, "tile": ","},   # NPC lesung women (2.6, teaches Ca)
+	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sawah_farmer"}, "tile": "."},   # NPC sawah_farmer, an unnamed farmer by the petilasan (2.2 `talk`, `quiet`, never completes a step; v5; was a stale `lesung_women` spot, the lesung women are `A` in `mt_wetan`)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "gejog_lesung"}, "tile": ","},   # codex spot, gejog lesung
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_sawah", "item_id": "axe"}, "tile": "."},   # chest: Axe (items.md Zone 2 chest)
 	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "m1_pot_lid", "cond": "quest:sq_m1=active"}, "tile": "_"},   # clue, a cooking pot's lifted lid on the barn floor (SQ-M1 clue 1 of 2; v4d, replaces the `lumbung` trigger; cond `quest:sq_m1=active`)

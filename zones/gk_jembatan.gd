@@ -20,7 +20,7 @@ const MAP := [
 	"#__________________________________________________________#",
 	"Ww____________________________E____________________________#",
 	"W__________________________________________________________#",
-	"#__________________________________________________________#",
+	"#_____________________________B____________________________#",
 	"#__________________________________________________________#",
 	"#___________________rr________________rr___________________#",
 	"#___________________rr________________rr___________________#",
@@ -41,8 +41,9 @@ const MAP := [
 const SPOTS := {
 	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_lupa", "spawn_id": "from_gk_jembatan"}, "tile": "_"},   # exit to gk_lupa (west edge, 2 tiles)
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_lupa"}, "tile": "_"},   # spawn, arrival from gk_lupa
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_jembatan_echoes", "size": Vector2i(16,9), "waves": [[["res://entities/enemies/arca_penjaga.tscn", Vector2i(-4,0)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,0)], ["res://entities/enemies/bajul_putih.tscn", Vector2i(4,0)]]]}, "tile": "_"},   # encounter kala_jembatan_echoes
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_jembatan_echoes", "size": Vector2i(16,9), "cond": "flag:mq5_ra,!flag:mq5_1e", "waves": [[["res://entities/enemies/arca_penjaga.tscn", Vector2i(-4,0)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,0)], ["res://entities/enemies/bajul_putih.tscn", Vector2i(4,0)]]]}, "tile": "_"},   # encounter kala_jembatan_echoes (5.8, the miniboss is the Prajurit; sets `mq5_1e`; the beat `bridge` plays in this zone)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kala_chest_jembatan", "item_id": "ilmu:55"}, "tile": "_"},   # chest: 55 Ilmu
+	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "bridge_echo", "cond": "flag:mq5_ra"}, "tile": "_"},   # clue, the row of name-stones at the end of the bridge (5.8; journal note only; id `bridge_echo`, hunt `kala`; ASSUMED position)
 }
 
 

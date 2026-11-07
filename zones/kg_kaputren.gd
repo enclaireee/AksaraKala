@@ -14,7 +14,7 @@ const MAP := [
 	"#............________________________________..............#",
 	"#............________________________________..............#",
 	"#............__H__T__________________________..............#",
-	"#............________________________________..............#",
+	"#............____________________Q___________..............#",
 	"#............________________________________..............#",
 	"#............___________________________V____..............#",
 	"#............________________________________..............#",
@@ -22,7 +22,7 @@ const MAP := [
 	"#............________________________________,,,,,,,,,,,,,,E",
 	"#............________________________________..............#",
 	"#............________________________________..............#",
-	"#............________________________________..............#",
+	"#............_____________________________U__..............#",
 	"#............________________________________..............#",
 	"#.......M....___F_____G___I__________________..............#",
 	"#............________________________________..............#",
@@ -43,15 +43,17 @@ const SPOTS := {
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_pustaka"}, "tile": ","},   # spawn, arrival from kg_pustaka
 	"E": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_penjara", "spawn_id": "from_kg_kaputren"}, "tile": ","},   # exit to kg_penjara (east edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_penjara"}, "tile": ","},   # spawn, arrival from kg_penjara
-	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kaputren_courtyard", "size": Vector2i(15,9), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,0)], ["res://entities/enemies/faceless_champion.tscn", Vector2i(0,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,0)]]]}, "tile": "_"},   # encounter kaputren_courtyard (MQG g.8)
-	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kaputren_screens", "size": Vector2i(4,4)}, "tile": "_"},   # trigger kaputren_screens, guest chamber screen puzzle (MQG g.9)
-	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "laras_hairpin"}, "tile": "_"},   # clue laras_hairpin, Laras's hairpin in the guest chamber (MQG g.9)
-	"V": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kaputren_eavesdrop", "size": Vector2i(5,4)}, "tile": "_"},   # trigger kaputren_eavesdrop, overhear Hariang Banga (MQG g.10)
-	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "g2_maid"}, "tile": "."},   # NPC g2_maid, old palace maid of the Kaputren (SQ-G2)
-	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g2_broom"}, "tile": "_"},   # clue g2_broom, worn-down broom in the Kaputren (SQ-G2)
-	"G": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g2_roll", "memory_id": "sq_g2_servant"}, "tile": "_"},   # clue g2_roll, scraped servants' roll; pulls into sq_g2_servant (SQ-G2)
-	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ririwa_name"}, "tile": "_"},   # write stone ririwa_name, write Ca-Nga on the roll (SQ-G2)
+	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kaputren_courtyard", "size": Vector2i(15,9), "cond": "flag:mqg_ar2,!flag:mqg_kp1", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,0)], ["res://entities/enemies/faceless_champion.tscn", Vector2i(0,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,0)]]]}, "tile": "_"},   # encounter kaputren_courtyard (MQG g.8, `area_cleared:kaputren_courtyard`, sets `mqg_kp1`; the champion is the miniboss)
+	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kaputren_screens", "size": Vector2i(4,4), "cond": "flag:mqg_kp1"}, "tile": "_"},   # trigger kaputren_screens, guest chamber screen puzzle (MQG g.9 `puzzle_solved:kaputren_screens`; sets `flag:puzzle_kaputren_screens`)
+	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "laras_hairpin", "cond": "flag:puzzle_kaputren_screens"}, "tile": "_"},   # clue laras_hairpin, Laras's hairpin in the guest chamber (MQG g.9, `clue_examined:laras_hairpin`, sets `mqg_kp2`)
+	"V": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kaputren_eavesdrop", "size": Vector2i(5,4), "cond": "flag:mqg_kp2"}, "tile": "_"},   # trigger kaputren_eavesdrop, overhear Hariang Banga (MQG g.10 `area_entered:kaputren_eavesdrop`, sets `mqg_kp3`)
+	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "g2_maid", "cond": "flag:mqg_kp1"}, "tile": "."},   # NPC g2_maid, old palace maid of the Kaputren (SQ-G2 giver, quests.md section 5; unlock `mqg_kp1`; replaces the v4d `kaputren_maid`)
+	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g2_broom", "cond": "flag:mqg_kp1"}, "tile": "_"},   # clue g2_broom, worn-down broom in the Kaputren (SQ-G2)
+	"G": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g2_roll", "memory_id": "sq_g2_servant", "cond": "flag:clue_g2_broom"}, "tile": "_"},   # clue g2_roll, scraped servants' roll; pulls into sq_g2_servant (SQ-G2)
+	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ririwa_name", "cond": "flag:memory_sq_g2_servant"}, "tile": "_"},   # write stone ririwa_name, write Ca-Nga on the roll (SQ-G2)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "galuh_chest_kaputren", "item_id": "ilmu:55"}, "tile": "."},   # chest galuh_chest_kaputren (55 Ilmu)
+	"Q": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "kaputren_mirror", "cond": "flag:mqg_ar2"}, "tile": "_"},   # clue, a covered mirror in the courtyard (MQG g.8; journal note only; id `kaputren_mirror` **ASSUMED**, not in quests.md; hunt `k_ii`)
+	"U": {"scene": "res://entities/enemies/ririwa.tscn", "props": {"unique_id": "ririwa", "cond": "flag:mqg_kp1"}, "tile": "_"},   # elite ririwa (SQ-G2 fight branch, the miniboss): `unique_id`, elite stats (HP 312, Dmg 16, Ilmu 56, bestiary, **TUNE**), a plain spot inert until `mqg_kp1`, not an encounter; moved here from `kg_keraton` so SQ-G2 lives in one area; `ririwa.tscn` is new (a Pocong-class Charger, **ASSUMED**)
 }
 
 

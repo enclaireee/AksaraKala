@@ -6,7 +6,7 @@ const MAP := [
 	"#..........................................................#n,#..........................#",
 	"#..........................................................#,,#.............###########..#",
 	"#.......#############...................#############......#++#.............#_________#..#",
-	"#.......#___________#.........rr........#___________#.......,,..............#____c____#..#",
+	"#.......#__________Q#.........rr........#___________#.......,,..............#____c____#..#",
 	"#.......#___________#.........rr........#___________#.......,,..............#_________#..#",
 	"#.......#_____E_____#...................#_____R_____#.......,,..............#_________#..#",
 	"#.......#___________#...................#___________#.......,,..............#_________#..#",
@@ -16,7 +16,7 @@ const MAP := [
 	"#.............,..........rr...................,.............,,...................,.......#",
 	"#.............B...............................,.............,,...................,.......#",
 	"#..........S..S..S............................,.............,,...................,.......#",
-	"#.............M...............................,.............,,...................,.......#",
+	"#.............M...............................,...V.........,,...................,.......#",
 	"#.............,...............................,.............,,...................,.......#",
 	"Xe,,,,A,,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,,,,,,,,,H,,,,,,,,,,,,,,,,,,,,,,,,,,,,..........#",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..........#",
@@ -45,10 +45,10 @@ const SPOTS := {
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_ladang"}, "tile": ","},   # spawn, arrival from tt_ladang (on the open side of the gate)
 	"+": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:tt_ladang", "open_side": "n"}, "tile": ","},   # shortcut gate sc:tt_ladang, root-choked door (opens from the north pocket, 2 tiles)
 	"D": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pesisir", "spawn_id": "from_tt_beringin"}, "tile": ","},   # exit, the drop to tt_pesisir (south rim, 2 tiles, one way, no spawn back)
-	"E": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_empu"}, "tile": "_"},   # NPC Mpu Wirasana (3.2, SQ-T3 giver)
+	"E": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_empu"}, "tile": "_"},   # NPC Mpu Wirasana (3.3, SQ-T3 giver)
 	"R": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "sodo_lanang"}, "tile": "_"},   # pickup, sodo lanang (SQ-T1 step 2)
-	"S": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"practice": true}, "tile": "."},   # practice stake (3.5, one per tile)
-	"M": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "timur_praktik", "size": Vector2i(10,5)}, "tile": "."},   # trigger, practice marks marker `timur_praktik` (3.6)
+	"S": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"practice": true}, "tile": "."},   # practice stake (3.4, one per tile)
+	"M": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "timur_praktik", "size": Vector2i(10,5)}, "tile": "."},   # trigger, practice marks marker `timur_praktik` (3.4)
 	"L": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kepang_leader"}, "tile": "."},   # NPC kuda lumping leader (SQ-T4 giver)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kepang_stage", "size": Vector2i(8,4)}, "tile": "."},   # trigger, kepang stage (SQ-T4 step 3)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "keris"}, "tile": "."},   # codex ruin, inscribed stone 1 (Keris)
@@ -57,12 +57,14 @@ const SPOTS := {
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "chest_tt_beringin", "item_id": "chainmail"}, "tile": "_"},   # chest: Chainmail (secret, hollow banyan)
 	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "."},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)
 	"j": {"scene": "res://entities/enemies/prajurit_terkutuk.tscn", "props": {}, "tile": "."},   # loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id)
-	"A": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "timur_marks", "size": Vector2i(8,6)}, "tile": ","},   # trigger, `timur_marks` entered: the village mouth with the red marks on the doorposts (3.2; beat `marks_hook`)
-	"B": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "puzzle_timur_forgemark", "size": Vector2i(6,4)}, "tile": ","},   # trigger, puzzle `puzzle_timur_forgemark` (3.2: break the curse mark on the forge door with the empu's technique; sets `flag:puzzle_timur_forgemark`, no gate)
-	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "scabbard"}, "tile": "_"},   # clue, the broken scabbard inside the forge (3.6, K5 clue 1 of 3 is the practice marks)
-	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "forge_records"}, "tile": "_"},   # clue, Wirasana's forge records, "seven generations" (3.6, K5)
+	"A": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "timur_marks", "size": Vector2i(8,6)}, "tile": ","},   # trigger, `timur_marks` entered: the village mouth with the red marks on the doorposts (3.3; beat `marks_hook`, sets `mq3_h1`)
+	"B": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "puzzle_timur_forgemark", "size": Vector2i(6,4)}, "tile": ","},   # trigger, puzzle `puzzle_timur_forgemark` (3.4: break the curse mark on the forge door with the empu's technique; sets `flag:puzzle_timur_forgemark`, no gate)
+	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "scabbard"}, "tile": "_"},   # clue, the broken scabbard in Wirasana's vault, the forge interior (3.12, K5 clue 1 of 3 is the practice marks; sits with `forge_records` and `forge_stone`)
+	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "forge_records"}, "tile": "_"},   # clue, Wirasana's forge records, "seven generations" (3.12, K5)
 	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_forge_defense", "size": Vector2i(15,9), "waves": [[["res://entities/enemies/keris_hantu.tscn", Vector2i(-4,-2)], ["res://entities/enemies/keris_hantu.tscn", Vector2i(4,-2)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,2)]]]}, "tile": ","},   # encounter timur_forge_defense (3.11 defend the forge quarter from flying Keris Hantu packs)
 	"H": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "buto_ambush_3", "size": Vector2i(16,9), "waves": [[["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(-4,0)], ["res://entities/enemies/keris_hantu.tscn", Vector2i(0,-2)], ["res://entities/enemies/keris_hantu.tscn", Vector2i(4,2)]]]}, "tile": ","},   # encounter buto_ambush_3 (3.7 Stalking Ambush #3: consecrate the pouches at the ancient banyan while holding off Buto Ijo)
+	"V": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "banyan_altar", "memory_id": "k4_timun_mas", "cond": "flag:mq3_b3"}, "tile": "."},   # clue, the flat stone with small handprints in the hollow of the ancient banyan, beside Buto Ambush #3 (3.7 `clue_examined:banyan_altar`; shows after the ambush is cleared, then opens memory `k4_timun_mas` at 3.8; ASSUMED id)
+	"Q": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "forge_stone", "memory_id": "k5_forge", "cond": "flag:mq3_h4"}, "tile": "_"},   # clue, the old anvil stone in the corner of Wirasana's vault (3.13 K5; opens memory `k5_forge`; appears once the vault clues are done; moved here from `tt_candi`)
 }
 
 

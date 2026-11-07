@@ -9,7 +9,7 @@ const MAP := [
 	"#______________rr__________________________rr______________#",
 	"#__________________________________________________________#",
 	"#______________________C___________H_______________________#",
-	"#__________________________________________________________#",
+	"#___________________________R__G______T____________________#",
 	"#__________________________________________________________#",
 	"#___________________rr________________rr___________________#",
 	"#___________________rr________________rr___________________#",
@@ -18,8 +18,8 @@ const MAP := [
 	"#__________________________________________________________#",
 	"#__________________________________________________________#",
 	"#___________________rr________________rr___________________#",
-	"#___________________rr________________rr__________________yY",
-	"#__________________________________________________________Y",
+	"Kk__________________rr________________rr__________________yY",
+	"K__________________________________________________________Y",
 	"#__________________________________________________________#",
 	"#__________________________________________________________#",
 	"#______________rr__________________________rr______________#",
@@ -34,21 +34,28 @@ const MAP := [
 	"#__________________________________________________________#",
 	"#__________________________________________________________#",
 	"#__________________________________________________________#",
-	"#__________________________________________________________#",
-	"############################################################",
+	"#_______________________________________w__________________#",
+	"########################################WW##################",
 ]
 
 const SPOTS := {
 	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_mulut", "spawn_id": "from_gk_pelataran"}, "tile": "_"},   # exit to gk_mulut (north edge, 2 tiles)
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_mulut"}, "tile": "_"},   # spawn, arrival from gk_mulut
+	"K": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "desa_purwa", "spawn_id": "from_gk_pelataran"}, "tile": "_"},   # exit to desa_purwa (west edge, 2 tiles; the Act VI gate from the village north road)
+	"k": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_desa_purwa"}, "tile": "_"},   # spawn, arrival from desa_purwa
+	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_keraton", "spawn_id": "from_gk_pelataran"}, "tile": "_"},   # exit to sk_keraton (south edge, a sea-cave passage, 2 tiles)
+	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_keraton"}, "tile": "_"},   # spawn, arrival from sk_keraton
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_pasir", "spawn_id": "from_gk_pelataran"}, "tile": "_"},   # exit to gk_pasir (east edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_pasir"}, "tile": "_"},   # spawn, arrival from gk_pasir
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_pelataran_siege", "size": Vector2i(16,9), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,2)]]]}, "tile": "_"},   # encounter kala_pelataran_siege
-	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "memorial_stone"}, "tile": "_"},   # NPC ancestors' memorial stone for Choice 6 (`mq5_choice6`)
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_pelataran_siege", "size": Vector2i(16,9), "cond": "flag:mq4_9,!flag:mq5_0", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,2)]]]}, "tile": "_"},   # encounter kala_pelataran_siege (5.1 setpiece with the allies, `area_cleared:kala_pelataran_siege` sets `mq5_0`)
+	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "memorial_stone", "cond": "flag:mq5_0,!flag:mq5_choice6"}, "tile": "_"},   # NPC ancestors' memorial stone for Choice 6 (5.2, `step:mq5=1`; the talk sets `mq5_choice6` and `choice_redeem_aria` / `choice_release_aria`, **Choice 6**)
 	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "deserter_stone"}, "tile": "_"},   # NPC write stone for Ranga's name (SQ-C3)
-	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara"}, "tile": "_"},   # NPC Ciung Wanara holding the courtyard
-	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga"}, "tile": "_"},   # NPC Hariang Banga holding the courtyard
+	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara"}, "tile": "_"},   # NPC Ciung Wanara holding the courtyard (5.1 main talk, hub; always here; if `choice_judgment` his royal vanguard stands on the walls, no spot)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga"}, "tile": "_"},   # NPC Hariang Banga holding the courtyard (5.1, hub; always here)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kala_0"}, "tile": "_"},   # petilasan 0 (courtyard rest)
+	"R": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "faceless_deserter", "cond": "flag:choice_freed"}, "tile": "_"},   # NPC Ranga, the freed Faceless Deserter, an ally in the siege (Choice 2; replaces the retired `gk_mulut` spot `deserter_mouth`; the write stone `D` is his SQ-C3 stone)
+	"G": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "flag:choice_tell_ciung"}, "tile": "_"},   # NPC Dewi Naganingrum with her lake-wardens (Choice 1, Tell Ciung)
+	"T": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cepot", "cond": "flag:c4_done"}, "tile": "_"},   # NPC Cepot with the lamp from the turtle beach (SQ-C4 done)
 }
 
 

@@ -20,7 +20,7 @@ const MAP := [
 	"#__________________________________________________________#",
 	"Ww____________________________E____________________________#",
 	"W__________________________________________________________#",
-	"#__________________________________________________________#",
+	"#_______________________________________N__________________#",
 	"#__________________________________________________________#",
 	"#___________________rr________________rr___________________#",
 	"#___________________rr________________rr___________________#",
@@ -43,9 +43,10 @@ const SPOTS := {
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_pasir"}, "tile": "_"},   # spawn, arrival from gk_pasir
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_lupa", "spawn_id": "from_gk_hutan"}, "tile": "_"},   # exit to gk_lupa (south edge, 2 tiles)
 	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_lupa"}, "tile": "_"},   # spawn, arrival from gk_lupa
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_hutan_echoes", "size": Vector2i(15,9), "waves": [[["res://entities/enemies/kuntilanak.tscn", Vector2i(-4,0)], ["res://entities/enemies/kemamang.tscn", Vector2i(4,-2)], ["res://entities/enemies/kemamang.tscn", Vector2i(4,2)]]]}, "tile": "_"},   # encounter kala_hutan_echoes
-	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "hutan_name_chimes", "size": Vector2i(4,4)}, "tile": "_"},   # trigger, whispering name-chimes puzzle
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_hutan_echoes", "size": Vector2i(15,9), "cond": "flag:mq5_1c,!flag:mq5_1cb", "waves": [[["res://entities/enemies/kuntilanak.tscn", Vector2i(-4,0)], ["res://entities/enemies/kemamang.tscn", Vector2i(4,-2)], ["res://entities/enemies/kemamang.tscn", Vector2i(4,2)]]]}, "tile": "_"},   # encounter kala_hutan_echoes (5.6 `area_cleared:kala_hutan_echoes`)
+	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "hutan_name_chimes", "size": Vector2i(4,4), "cond": "flag:mq5_1c"}, "tile": "_"},   # trigger, whispering name-chimes puzzle (5.6 `puzzle_solved:hutan_name_chimes`, sets `mq5_1cb`)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kala_chest_hutan", "item_id": "ilmu:55"}, "tile": "_"},   # chest: 55 Ilmu
+	"N": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "name_trees", "cond": "flag:mq5_1c"}, "tile": "_"},   # clue, the whispering stone name-trees (5.6; journal note only; id `name_trees`, hunt `kala`; ASSUMED position)
 }
 
 

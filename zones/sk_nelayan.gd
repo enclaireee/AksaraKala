@@ -15,8 +15,8 @@ const MAP := [
 	"#..........................................................#",
 	"#..................____________________....................#",
 	"#..................____________________....................#",
-	"#.................._____S______________....................#",
-	"#..................____________________....................#",
+	"#.................._____S___J__________....................#",
+	"#..................__s_________________....................#",
 	"#..................___________C________....................#",
 	"Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY",
 	"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
@@ -43,7 +43,9 @@ const SPOTS := {
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_pantai"}, "tile": ","},   # spawn, arrival from sk_pantai
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_bakau", "spawn_id": "from_sk_nelayan"}, "tile": ","},   # exit to sk_bakau (east edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_bakau"}, "tile": ","},   # spawn, arrival from sk_bakau
-	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_sari"}, "tile": "_"},   # NPC Sari, young diver
+	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_sari", "cond": "!flag:mq4_h2"}, "tile": "_"},   # NPC Sari, young diver (4.10 entries 1 and 2; stays until the K8 memory is done)
+	"J": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_jurukunci", "cond": "!flag:mq4_4"}, "tile": "_"},   # NPC Mbah Wiryo, first met here (4.10, `talked_to:kidul_jurukunci`, sets `mq4_4`; the instance in `sk_pantai` takes over once `mq4_4` is set)
+	"s": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_sari", "cond": "flag:mq4_8"}, "tile": "_"},   # NPC Sari after the Trial of the Waves (entry 5, `"quiet": true`, hub `H`)
 	"F": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "k2_fisher"}, "tile": "."},   # NPC river-mouth fisher (SQ-K2)
 	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c3_shore_net", "memory_id": "sq_c3_ranga"}, "tile": "_"},   # clue, Ranga's carved driftwood token in the shore net (SQ-C3)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_nelayan", "item_id": "ilmu:55"}, "tile": "_"},   # chest: 55 Ilmu

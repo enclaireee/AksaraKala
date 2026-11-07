@@ -29,11 +29,11 @@ CODEX_SUNDA_CA_BODY,"Cahaya sebelum fajar. Dirapal sebagai Burst, ledakan cahaya
 CODEX_KUJANG_TITLE,Kujang,Kujang
 CODEX_KUJANG_BODY,"Bilah khas Sunda, ikon Jawa Barat. Ringan dan cepat.","A Sundanese blade, iconic to West Java. Light and quick."
 CODEX_BOEH_RARANG_TITLE,Boeh Rarang,Boeh Rarang
-CODEX_BOEH_RARANG_BODY,Kain tenun tua dari penenun Tatar Sunda. Dipakai untuk membuat fajar palsu.,An old woven cloth from a Tatar Sunda weaver. Used to make the fake dawn.
+CODEX_BOEH_RARANG_BODY,"Dalam sebagian penuturan, kain putih yang dibentangkan Dayang Sumbi di timur untuk memalsukan fajar. Dalam gim, keluarga Penenun menenunnya turun-temurun.","In some tellings, the white cloth Dayang Sumbi spread in the east to fake the dawn. In the game the Weaver's family has woven it for generations."
 CODEX_HANACARAKA_TITLE,Hanacaraka,Hanacaraka
 CODEX_HANACARAKA_BODY,"Deretan aksara Jawa, lahir dari kisah Aji Saka dan dua abdinya, Dora dan Sembada.","The row of Javanese letters, born from the tale of Aji Saka and his servants Dora and Sembada."
-CODEX_TANGKUBAN_PERAHU_TITLE,Tangkuban Perahu,Tangkuban Perahu
-CODEX_TANGKUBAN_PERAHU_BODY,"Gunung berbentuk perahu terbalik. Menurut legenda, itulah perahu Sangkuriang.","A mountain shaped like an overturned boat. In the legend, it is Sangkuriang's boat."
+CODEX_TANGKUBAN_PERAHU_TITLE,Tangkuban Parahu,Tangkuban Parahu
+CODEX_TANGKUBAN_PERAHU_BODY,"Namanya berarti ""perahu terbalik"". Dalam kisah Sangkuriang gunung itu adalah perahu yang ia tendang karena murka. Segel Kawah gim ini berada di bibirnya.","The name means ""upturned boat"". In the Sangkuriang tale the mountain is the boat he kicked over in rage. The game's Crater Seal sits on its rim."
 CODEX_LUTUNG_KASARUNG_TITLE,Lutung Kasarung,Lutung Kasarung
 CODEX_LUTUNG_KASARUNG_BODY,"Legenda Purbasari dan seekor lutung hitam yang sejatinya Guruminda, makhluk langit.","The legend of Purbasari and a black lutung who is really Guruminda, a heavenly being."
 CODEX_KUNTILANAK_RUMPUN_TITLE,Kuntilanak dan Rumpun Bambu,The Kuntilanak and the Bamboo
@@ -67,7 +67,7 @@ CODEX_POCONG_WEAK,Nga Bind saat ia melompat: ia jatuh 2 detik dan lebih rapuh.,B
 CODEX_WEWE_GOMBEL_TITLE,Wewe Gombel,Wewe Gombel
 CODEX_WEWE_GOMBEL_BODY,"Hantu perempuan dari cerita Jawa yang konon membawa anak yang terlantar, bukan untuk menyakiti. Kisahnya peringatan agar anak diperhatikan. Konon terkait Bukit Gombel, Semarang. Sumber: cerita rakyat Jawa Tengah.","A female ghost of Javanese tales said to take neglected children, not to harm them. Her tale warns that children need care. Said to be tied to Bukit Gombel, Semarang. Source: Central Javanese folklore."
 CODEX_BANDUNG_BONDOWOSO_TITLE,Bandung Bondowoso,Bandung Bondowoso
-CODEX_BANDUNG_BONDOWOSO_BODY,Tokoh sakti dalam legenda yang dibantu roh pembangun untuk mendirikan seribu candi. Di sini kutukan lupa membuatnya terus membangun. Sumber: legenda rakyat Jawa.,"A mighty figure of legend, aided by spirit builders to raise a thousand temples. Here the curse of forgetting keeps him building. Source: Javanese folk legend."
+CODEX_BANDUNG_BONDOWOSO_BODY,"Dalam kisah Prambanan ia diminta membangun seribu candi dalam semalam, dan fajar palsu membuatnya kurang satu. Dalam gim kutukan malamnya ditenangkan oleh fajar yang sungguhan, tak pernah dibunuh.","In the Prambanan tale he is asked to raise a thousand temples in one night, and the faked dawn leaves him one short. In the game his night-curse is calmed by a true dawn, never killed."
 CODEX_JAKA_TARUB_TITLE,Jaka Tarub dan Nawang Wulan,Jaka Tarub and Nawang Wulan
 CODEX_JAKA_TARUB_BODY,Jaka Tarub menyembunyikan selendang bidadari Nawang Wulan. Sebutir padi memenuhi periuk selama tutupnya tak dibuka. Sumber: cerita rakyat Jawa.,Jaka Tarub hid the shawl of the celestial maiden Nawang Wulan. A single grain filled the pot while its lid stayed closed. Source: Javanese folk tale.
 CODEX_KERIS_TITLE,Keris,Keris
@@ -89,7 +89,7 @@ CODEX_KERIS_HANTU_TITLE,Keris Hantu,Haunted Keris
 CODEX_KERIS_HANTU_BODY,"Roh keris terbang yang melesat dalam garis lurus. Pukulannya menimbulkan Kutukan. Tokoh ciptaan permainan, terinspirasi kisah Mpu Gandring.",A flying keris spirit that darts in straight lines. Its hits apply Curse. A game creation inspired by Mpu Gandring's tale.
 CODEX_KERIS_HANTU_WEAK,"Ikat dengan Nga saat melesat: ia jatuh ke tanah 2,5 detik. Ha Heal menyembuhkan Kutukan.",Bind it with Nga mid-dart: it drops for 2.5 seconds. Ha Heal cures Curse.
 CODEX_BUTO_IJO_TITLE,Buto Ijo,Buto Ijo
-CODEX_BUTO_IJO_BODY,"Raksasa hijau dalam kisah Timun Mas yang mengejar anak itu. Timun Mas lolos dengan empat bekal dari pertapa: biji timun, jarum, garam, dan terasi. Sumber: cerita rakyat Jawa.","The green giant of the Timun Mas tale who chases the girl. Timun Mas escapes with four gifts from a hermit: cucumber seeds, needles, salt and terasi. Source: Javanese folktale."
+CODEX_BUTO_IJO_BODY,"Dalam kisah Timun Mas, raksasa hijau dijanjikan seorang anak oleh perempuan kesepian dan mengejar gadis itu, yang melempar empat bungkusan untuk lolos ((biji, jarum, garam, terasi). Di sini kutukan yang bangkit membuatnya gila, dan ia mengintai sabana.","In the Timun Mas tale, a green giant is promised a child by a lonely woman and chases the girl, who throws four pouches to escape ((seeds, needles, salt, terasi). Here the waking curse drove him mad, and he stalks the savanna."
 CODEX_TIMUN_MAS_TITLE,Timun Mas,Timun Mas
 CODEX_TIMUN_MAS_BODY,"Anak Mbok Srini yang dikaruniakan oleh seorang raksasa dan dikejar olehnya. Ia lolos berkat empat bekal ajaib, dan raksasa itu binasa. Sumber: cerita rakyat Jawa.","The daughter of Mbok Srini, given by a giant who then hunts her. She escapes thanks to four magical gifts, and the giant perishes. Source: Javanese folktale."
 CODEX_ANDE_ANDE_LUMUT_TITLE,Ande-Ande Lumut,Ande-Ande Lumut
@@ -97,7 +97,7 @@ CODEX_ANDE_ANDE_LUMUT_BODY,"Kisah Panji: seorang pemuda menyamar sebagai Ande-An
 CODEX_KUDA_KEPANG_TITLE,Kuda Kepang,Kuda Kepang
 CODEX_KUDA_KEPANG_BODY,Kuda anyaman bambu yang ditunggangi penari kuda lumping atau jaran kepang. Di sini hanya pertunjukan tari dan musik. Sumber: kesenian rakyat Jawa.,The woven bamboo horse ridden by kuda lumping or jaran kepang dancers. Here it is a dance and music show only. Source: Javanese folk art.
 CODEX_BATARA_KALA_TITLE,Batara Kala,Batara Kala
-CODEX_BATARA_KALA_BODY,"Dewa waktu dan penelan dalam pewayangan Jawa, putra Batara Guru dalam penceritaan. Dalam permainan ini ia ditenangkan dan dipulangkan, bukan dibunuh. Sumber: tradisi pewayangan; rincian berbeda antar penceritaan.","The deity of time and devouring in Javanese wayang, a son of Batara Guru in the tellings. In this game he is calmed and turned back, not killed. Source: wayang tradition; details differ between tellings."
+CODEX_BATARA_KALA_BODY,"Dalam kepercayaan Jawa dan Sunda, dewa waktu dan pelahap, lahir lapar, yang boleh memakan mereka yang lahir pada hari tak baik. Dalam permainan ia ditenangkan dan dibalikkan lewat ruwatan, tak pernah dibunuh.","In Javanese and Sundanese belief a god of time and devouring, born hungry, who may eat those born on an unlucky day. In the game he is calmed and turned back by the ruwatan, never killed."
 CODEX_RUWATAN_TITLE,Ruwatan,Ruwatan
 CODEX_RUWATAN_BODY,"Ruwatan adalah ritus pembersihan yang masih hidup di Jawa dan Sunda, kerap dengan pertunjukan wayang lakon Murwakala, untuk membebaskan seseorang dari cengkeraman Kala. Dalam gim, Kala ditenangkan dan dikembalikan, tak pernah dibunuh.","Ruwatan is a living Javanese and Sundanese rite of cleansing, often with a wayang performance of the Murwakala tale, to free someone from Kala's grip. In the game Kala is calmed and turned back, never killed."
 CODEX_AJI_SAKA_TITLE,Aji Saka,Aji Saka
@@ -178,3 +178,45 @@ CODEX_PAMOR_BODY,"Pola berlapis pada bilah keris, hasil melipat beberapa logam. 
 CODEX_SANDEKALA_WEAK,Nyalakan oncor.,Light the oncor.
 CODEX_SEDEKAH_LAUT_TITLE,Sedekah Laut,Sea Offering
 CODEX_SEDEKAH_LAUT_BODY,"Masyarakat pesisir bersyukur kepada laut dengan lagu, makanan, dan sebuah perahu yang dilepas (sedekah laut, labuhan; ). Lagu desa yang hilang adalah rekaan gim.","Coastal communities give thanks to the sea with songs, food and a boat set afloat (sedekah laut, labuhan; ). The village's lost song is the game's."
+CODEX_BANYAN_TITLE,Beringin,The Banyan
+CODEX_BANYAN_BODY,"Beringin tua (waringin) kerap berdiri di jantung desa Jawa dan Sunda, dan orang menyapanya serta meletakkan sesaji. Ki Waringin di Desa Purwa adalah tokoh rekaan gim.","Old banyans (waringin) often stand at the heart of a Javanese or Sundanese village, and people greet them and leave offerings. Ki Waringin of Desa Purwa is a game character."
+CODEX_MAGHRIB_TITLE,Maghrib,Maghrib
+CODEX_MAGHRIB_BODY,"Maghrib adalah waktu salat saat matahari terbenam. Banyak keluarga Sunda memanggil anak pulang saat itu, dan sebagian berkata roh senja mengambil yang masih di luar. Kebiasaan oncor dusun itu rekaan gim.","Maghrib is the sunset prayer time. Many Sundanese families call children indoors then, and some say a dusk spirit takes those still outside. The hamlet's oncor custom is the game's."
+CODEX_CRATER_SEAL_TITLE,Segel Kawah,The Crater Seal
+CODEX_CRATER_SEAL_BODY,"Segel pertama dari Empat Segel Agung: batu di bibir kawah yang menjaga malam Sangkuriang tetap belum selesai. Seseorang membacanya separuh jalan, pelan-pelan, dan batu itu retak.","The first of the Four Great Seals: a stone on the crater rim that keeps Sangkuriang's night unfinished. Someone read it halfway, slowly, and it cracked."
+CODEX_NYAI_SEKAR_TITLE,Nyai Sekar,Nyai Sekar
+CODEX_NYAI_SEKAR_BODY,"Juru arsip istana Galuh, yang mengerik silsilah raja dari tiga puluh gulung dan menyimpan serpihannya. Tokoh rekaan gim. Sandi lampu-cermin adalah rekaan gim.","The palace archivist of Galuh, who scraped the king's lineage off thirty rolls and kept the shavings. A game character. The mirror-lamp cipher is the game's."
+CODEX_KAPUTREN_TITLE,Kaputren,The Kaputren
+CODEX_KAPUTREN_BODY,"Bagian istana tempat tinggal para perempuan keraton (keputren dalam bahasa Jawa,  ejaan dan pemakaian dalam bahasa Sunda). Dalam gim di sinilah Laras ditahan dan para dayang berbincang.","The royal women's quarters of a palace (keputren in Javanese,  spelling and Sundanese usage). In the game it is where Laras was held and where the attendants talk."
+CODEX_PASAR_KUTA_TITLE,Pasar Kuta,Pasar Kuta
+CODEX_PASAR_KUTA_BODY,Pasar luar di bawah tembok Galuh. Kuta berarti benteng atau kota bertembok dalam bahasa Jawa dan Sunda kuno. Para pengatur curang dan daftar angkutan pedati adalah rekaan gim.,The outer market below Galuh's walls. Kuta means a fortress or walled town in old Javanese and Sundanese. The riggers and the wagon ledgers are the game's.
+CODEX_GALUH_TITLE,Galuh,Galuh
+CODEX_GALUH_BODY,"Kerajaan Galuh, digambarkan mengikuti situs Karang Kamulyan di Ciamis, Jawa Barat, yang dikaitkan dengan legenda Ciung Wanara. Alun-alun, gelanggang, dan tata istana adalah rekaan gim.","The kingdom of Galuh, shown here after the Karang Kamulyan site in Ciamis, West Java, linked to the Ciung Wanara legend. The square, the tournament ring and the palace layout are the game's."
+CODEX_PAMALI_CAGE_TITLE,Kandang Besi,The Iron Cage
+CODEX_PAMALI_CAGE_BODY,"Dalam legenda Ciung Wanara mengurung raja palsu dan permaisurinya dalam kandang besi. Gim mempertahankan kandang itu dan menambahkan bahwa kandang menahan orang, bukan nama.","In the legend Ciung Wanara shut the false king and his queen in an iron cage. The game keeps the cage and adds that the cage holds a man, not a name."
+CODEX_RANGA_TITLE,Ranga,Ranga
+CODEX_RANGA_BODY,Kapten tanpa rupa yang mengingat namanya dengan ikut bersenandung bersama Ka Laras. Tokoh rekaan gim; para tanpa rupa adalah orang yang namanya diambil.,A faceless captain who remembered his name by humming along to Laras's Ka. A game character; the faceless are people whose names were taken.
+CODEX_NYAI_GENDHIS_TITLE,Nyai Gendhis,Nyai Gendhis
+CODEX_NYAI_GENDHIS_BODY,"Pemimpin perempuan lesung di kaki bukit Mataram. Lesung adalah lumpang padi dan alu penumbuknya, ditumbuk berirama dalam tradisi desa. Tokoh rekaan gim.","Leader of the lesung women of the Mataram foothills. A lesung is a rice mortar and the alu its pestle, pounded in rhythm in village tradition. A game character."
+CODEX_BANDUNG_BONDOWOSO_WEAK,Ca pada irama lesung memecahkan pilarnya.,Ca on the lesung beat cracks his pillars.
+CODEX_BUTO_IJO_WEAK,Semak berduri memperlambat terjangannya; keempat bungkusan memutus tiap fasenya.,Brambles slow his charge; the four pouches break each of his phases.
+CODEX_KERIS_GANDRING_TITLE,Keris Mpu Gandring,The Keris of Mpu Gandring
+CODEX_KERIS_GANDRING_BODY,"Dalam legenda, empu Mpu Gandring dibunuh karena keris yang belum selesai, dan ia mengutuknya ((korban dan jumlah turunannya). Tujuh empu yang merawatnya, tonggak-tonggaknya, dan garis keluarga Wirasana adalah rekaan gim.","In the legend, the smith Mpu Gandring was killed over a keris not yet finished, and cursed it ((its victims and the number of generations). The seven smiths who tended it, their stakes and Wirasana's line are the game's."
+CODEX_KERIS_GANDRING_WEAK,"Ha melunasi tanda kutukan; tenangkan, jangan patahkan.","Ha settles a curse mark; calm it, don't break it."
+CODEX_THREE_TRIALS_TITLE,Tiga Ujian Suci,The Three Sacred Trials
+CODEX_THREE_TRIALS_BODY,"Pesisir bercerita tentang karang, gua dan keraton sebagai tempat laut menguji tata krama tamu ((adakah tradisi seperti itu). Tiga ujian yang disebut di sini (obor, arus, ombak) adalah rekaan gim.","The coast tells of the reef, the cave and the pavilion as places where the sea tests a visitor's manners ((any such tradition). The three trials named here (torches, current, waves) are the game's."
+CODEX_BATARA_KALA_WEAK,"Sunda, lalu Jawa, lalu Ombak.","Sunda, then Jawa, then Ombak."
+CODEX_MURWAKALA_TITLE,Murwakala,Murwakala
+CODEX_MURWAKALA_BODY,"Kisah yang dituturkan pada ruwatan: Kala meminta makanan pada ayahnya, dan kata-kata dalang serta nama si anak membalikkannya ((rincian lakon berbeda antarpenuturan).","The tale told at a ruwatan: Kala asks his father for food, and a dalang's words and the child's name turn him back ((the details of the lakon vary between tellings)."
+CODEX_ANCESTORS_STONE_TITLE,Batu Leluhur,The Ancestors' Stone
+CODEX_ANCESTORS_STONE_BODY,Batu hitam di Pelataran Waktu tempat Galuh dan Mataram memahat nama orang-orang mereka yang telah tiada. Satu ruang di tengahnya tak pernah dipahat. Ini rekaan permainan.,A black stone at the Courtyard of Time where Galuh and Mataram carved the names of their dead. One space in the middle was never carved. It is the game's.
+CODEX_DESERTER_NAME_TITLE,Nama si Pembelot,The Deserter's Name
+CODEX_DESERTER_NAME_BODY,"Sebuah sel di Galuh menjadi sunyi, atau seorang lelaki berdiri di sampingmu. Nama Ranga tertulis, bunyi Ra dan Nga akhirnya berada di satu tempat.","A cell in Galuh goes quiet, or a man stands beside you. The name Ranga is written, the sounds Ra and Nga at last in one place."
+CODEX_CIUNG_EGG_TITLE,Telur di Keranjang,The Egg in the Basket
+CODEX_CIUNG_EGG_BODY,"Dalam kisahnya, Ciung Wanara dihanyutkan di sungai sebagai bayi, dengan sebutir telur yang menetas menjadi ayam jagonya. Dalam permainan ini seorang abdi tua mengikatkan bandul kayu pada keranjang itu ( bagian legenda; abdi itu rekaan permainan).","In the tale, Ciung Wanara was set adrift on a river as a baby, with an egg that hatched into his rooster. In the game an old servant tied a wooden charm to that basket ( the legend's part, the servant is the game's own)."
+CODEX_KABAYAN_TITLE,Si Kabayan,Si Kabayan
+CODEX_KABAYAN_BODY,"Lelaki malas tapi cerdik dalam cerita rakyat Sunda, yang mengalahkan si sombong dengan kata-katanya sendiri ( kisah yang dipakai).","A lazy but clever man in Sundanese folk tales, who beats the proud with their own words ( the tale used)."
+CODEX_RIRIWA_TITLE,Ririwa,Ririwa
+CODEX_RIRIWA_BODY,"Hantu yang terus mengerjakan tugas lamanya sampai ada yang mengingat namanya ( istilah Sunda). Dalam permainan, pelayan Canga diingat dengan menuliskan namanya, atau diusir.","A ghost that keeps doing its old chore until someone remembers its name ( the Sundanese term). In the game the servant Canga is remembered by writing his name, or driven off."
+CODEX_PANGRENYEP_LETTER_TITLE,Surat Sang Permaisuri,The Queen's Letter
+CODEX_PANGRENYEP_LETTER_BODY,"Balasan seorang ibu dari seberang sungai: surat pendek bersegel cincinnya sendiri, dengan kata-kata yang bergantung pada keputusan di Pamali.","A mother's reply across the river: a short letter sealed with her own ring, wording that depends on the judgment given at the Pamali."
