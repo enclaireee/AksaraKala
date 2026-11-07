@@ -335,6 +335,10 @@ func refresh_arrow() -> void:
 				_tnode = n
 				return
 		elif id in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.get("clue_id"), n.get("memory_id"), n.name]:
+			if "visible" in n and not n.visible:
+				continue
+			if "cond" in n and str(n.cond) != "" and not get_node("/root/Game").check(str(n.cond)):
+				continue
 			_tnode = n
 			return
 
