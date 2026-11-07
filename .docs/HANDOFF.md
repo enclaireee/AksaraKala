@@ -348,6 +348,33 @@ User call: "generate and wire remaining data polish, and then push and commit, a
   - Added `DRESSING` list in `entities/npc/npc.gd` (synced with `NO_TALK` in `tests/zone_build_test.gd`) so non-interactive dressing NPCs suppress `no dialogue data` warnings.
 - **Verification:** `quest_data_test.gd`, `quest_reach_test.gd`, `key_ref_test.gd`, `zone_build_test.gd`, all 55 tests in `tests/*_test.gd`, `pacing_model.py`, `know_check.py`, `balance_model.py`, and `gen_memories.py --check` pass with 0 failures and 0 warnings.
 
+### 5zg. Phase 6b: themed UI, class portraits, item icons, world scale (2026-11-07, all 63 headless tests pass twice, pushed)
+User call: "design the UI... a bigger more detailed pixel art for the character selection (like Elden Ring)... fix the big E, flying NPCs and quest marker... redesign the world layout, it looks VERY small... design the items too, and wire everything." The spec is in ui.md 3b, architecture.md 9 ("World scale and dressing") and items.md "Data per item".
+- **Fonts and theme.** These OFL fonts are in `assets/fonts/` and logged in assets.md: Cinzel, Alegreya Sans and Noto Sans Sundanese/Javanese. `ui/theme.tres` is the global theme (`gui/theme/custom`). `ui/fx/ui_fx.gd` (`UIFx`) and `ui/fx/lozenge_button.gd` are shared helpers.
+- **Art generators.** All are stdlib-only Python, since PIL is not installed:
+  - `tools/gen_ui.py`: 36 UI sprites into `assets/art/ui/`
+  - `tools/gen_portraits.py`: 4 class figures at 96x128, a 6-frame idle each
+  - `tools/gen_items.py`: 16x16 icons for all 32 items plus 9 extras, wired to `ItemData.icon` and checked by `items_test`
+  - `tools/gen_world_props.py`: 252 props into `assets/art/props/`
+  Each one writes a `tools/*_preview.png`.
+- **Front-end.** Animated title (parallax kelir, gunungan, embers, ink-wipe logo). Elden-style class select (list, then a lit figure on a pedestal with an ink dissolve, then stat bars, weapon icon and passive). Name entry, death and prologue are restyled.
+- **In-game.** Framed HUD with an HP lag chunk, flask sprites and a weapon icon slot. The dialogue box slides in with a name plate, and choices use a lozenge. The tab menu has page slides and an Equipment grid with icons and a compare tooltip. Also: the area title card (`ui/area_title.*`, flag `seen_area_<id>`), a vignette, and the keycap interact prompt (fixes the 16 px "E").
+- **World.**
+  - `Zone.SCALE = 2`, so areas are 4x4 to 6x6 screens. `cell_pos()` maps a doc cell to its world position. Blocking shapes (exit, kabut, shortcut) get `block = SCALE`, and trigger and encounter sizes are scaled.
+  - Seeded erosion makes edges organic, checked with a flood fill.
+  - `zones/deco.gd` adds edge forests and cliffs, ground cover, landmarks, furniture, a region tint and CPUParticles2D ambience (at most 40 particles).
+  - NPC feet sit on the shadow, and the quest and talk markers are new.
+  - New `tests/world_dress_test.gd`.
+- **Doc drift accepted:** CPUParticles2D instead of GPU. Not in the docs yet: the `OPEN_FLOOR` and `INDOOR` lists in zone.gd, and deco props have no collision (the player walks through landmarks).
+- **VERIFY:** the title subtitle is Javanese ꦧꦸꦢꦪꦒꦺꦴ and Sundanese ᮘᮥᮓᮚᮌᮧ ("budayago"). Both render correctly with Noto.
+- **TUNE:** pacing and walking times roughly double after the 2x scale. Re-time the acts against `pacing_model.py` in the playtest.
+- **Open:**
+  - ts_sawah reads as forest: solid ground becomes canopy whatever the sub-biome, so it should get rice terraces.
+  - The Equipment tooltip's stat names (ATK, DEF, HP, Speed, Stamina regen) are hard-coded English, because no keys exist.
+  - The sakti "can draw" tick and the 50% HUD dim in cast mode are not built.
+  - There is no Aksara tab.
+  - The gamepad pass on the menus has not been done.
+
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)
 2. ~~Move Wewe Gombel to Mataram~~: done 2026-11-05.
@@ -357,6 +384,8 @@ User call: "generate and wire remaining data polish, and then push and commit, a
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
+**2026-11-07 (Phase 6b UI and world done, §5zg):** next is the user playtest of the new look and the 2x world (feel, walking times, readability), then the open §5zg items, then the rest of Phase 6: SFX and music, particles and glyph art.
+
 **2026-11-07 (Phase 6 Sprites & World Tilesets Complete):**
 - Generated and wired pixel-art sprite sheets for Hero (`hero_{base,warrior,archer,rogue,mage}.png`, `64x288` 4x12 frames + `hero_shadow.png`), all 34 enemy sheets and 10 boss sheets (`assets/art/enemies/*.png` + `components/enemy_art.gd`), 12 NPC/world archetypes (`assets/art/npcs.png`, `64x288`), Kelir stand-ins (`stand_in.tscn`, `stand_in_laras.tscn`), and layered pixel-art draw routines for chests, clues, and pickups.
 - Generated and wired 7 regional `128x256` (`8 cols x 16 rows` = 128 tiles per region, **896 tiles total**) multi-biome world tilesets (`assets/art/tiles_{sunda,galuh,mataram,timur,kidul,kala,kelir}.png` + `zones/tiles.tres`), covering **21 distinct sub-biomes** across all 46 zones and 29 Kelir memories (`Zone.sub_biome()`, `Zone._tile_row()`, `KelirMemory._skin_kelir_tiles()`).
