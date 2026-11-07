@@ -32,6 +32,7 @@ var _saved_icon: TextureRect
 var _saved_left := 0.0
 var _objective: Label
 var _hint: Label
+var _sub_seen := {}   # quest id -> [step, finished sub-goals] last seen, to spot a new sub-goal
 var _player: Node   # the player whose `blocked` signal is connected (a new zone brings a new one)
 
 # toasts (quests.md 7.6): one at a time, TOAST_TIME each, queued
@@ -115,8 +116,15 @@ func _ready() -> void:
 	_saved.visible = false
 	add_child(_saved)
 	_build_extras()
-	_objective = _line(38, GOLD)
-	_hint = _line(48, CREAM)
+	add_child(Compass.new())
+	_objective = _line(50, GOLD)
+	_hint = _line(60, CREAM)
+	var menu_hint := Label.new()   # subtle [Esc] Menu prompt, bottom left
+	menu_hint.text = tr("UI_HINT_MENU") % get_node("/root/Game").key_name("pause").replace("Escape", "Esc")
+	menu_hint.position = Vector2(200, 270 - 12)   # bottom centre: the corners hold the flasks and "Saved"
+	menu_hint.modulate.a = 0.55
+	menu_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(menu_hint)
 	var g := get_node("/root/Game")
 	g.changed.connect(refresh)
 	g.changed.connect(refresh_objective)
@@ -128,7 +136,9 @@ func _ready() -> void:
 	ev.quest_started.connect(func(id: String) -> void:
 		_push_toast(tr("UI_TOAST_QUEST_STARTED") % _title(id))
 		refresh_arrow())
-	ev.quest_updated.connect(func(_id: String) -> void: refresh_arrow())
+	ev.quest_updated.connect(func(id: String) -> void:
+		_check_subgoal(id)
+		refresh_arrow())
 	for s in ["quest_started", "quest_updated", "quest_completed", "zone_entered"]:
 		ev.connect(s, refresh_objective.unbind(1))
 	ev.area_entered.connect(func(id: String) -> void:
@@ -175,6 +185,23 @@ func refresh_objective() -> void:
 				keys.move = "%s%s%s%s" % [g.key_name("move_up"), g.key_name("move_left"), g.key_name("move_down"), g.key_name("move_right")]
 				_hint.text = tr(key).format(keys)
 			return
+
+
+## A finished sub-goal of the current `all` step: toast and a brief gold pulse on the objective line.
+func _check_subgoal(id: String) -> void:
+	var g := get_node("/root/Game")
+	var q: Dictionary = g.quests.get(id, {})
+	var bits := 0
+	for i in 32:
+		bits += (int(q.get("all", 0)) >> i) & 1
+	var step := int(q.get("step", 0))
+	var seen: Array = _sub_seen.get(id, [step, 0])
+	_sub_seen[id] = [step, bits]
+	if seen[0] == step and bits > seen[1]:
+		_push_toast(tr("UI_TOAST_SUBGOAL"))
+		var tw := create_tween()
+		_objective.modulate = Color(2.0, 1.7, 0.7)
+		tw.tween_property(_objective, "modulate", Color.WHITE, 0.7)
 
 
 ## Red flash on the bar whose resource ran out (ui.md 2).
@@ -310,6 +337,11 @@ func refresh_arrow() -> void:
 		elif id in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.get("clue_id"), n.get("memory_id"), n.name]:
 			_tnode = n
 			return
+
+
+## World position of the objective node the arrow follows (an exit when the target is in another zone), or null.
+func target_pos() -> Variant:
+	return _tnode.global_position if _tnode != null and is_instance_valid(_tnode) else null
 
 
 func _update_arrow() -> void:

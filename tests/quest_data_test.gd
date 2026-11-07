@@ -29,6 +29,7 @@ func _initialize() -> void:
 	var qt := table("res://data/text/quests.csv")
 	var dt := table("res://data/text/dialogue.csv")
 	var quests := QuestData.all()
+	check(quests.size() == 29 or quests.size() == 30, "expected 29 quest files, got %d" % quests.size())
 	check(quests.size() >= 6, "expected at least 6 quests, got %d" % quests.size())
 	var dialogues: Array[DialogueData] = []
 	for f in DirAccess.get_files_at("res://data/dialogue"):
@@ -58,6 +59,15 @@ func _initialize() -> void:
 			# A step has its own `on`, or an empty `on` plus an `all` array of {on, set_flag} leads (quests.md 7.1).
 			for o: String in ([s.on] if s.on != "" else s.all.map(func(a: Dictionary) -> String: return a.on)):
 				check(o.split(":")[0] in SIGNALS, "%s: unknown signal in '%s'" % [q.id, o])
+			# every step points somewhere; an `all` step's sub-goals are {on, objective, marker?} with real text
+			check(not s.marker.is_empty(), "%s: step %s has no marker" % [q.id, s.objective])
+			if not s.all.is_empty():
+				check(s.on == "", "%s: all step %s must leave `on` empty" % [q.id, s.objective])
+			for sub: Dictionary in s.all:
+				check(str(sub.get("on", "")) != "", "%s: sub-step of %s has no `on`" % [q.id, s.objective])
+				check(qt.get(str(sub.get("objective", "")), false), "%s: sub-goal key '%s' missing" % [q.id, sub.get("objective", "")])
+				var sm: Dictionary = sub.get("marker", {})
+				check(sm.is_empty() or (sm.get("zone", "") != "" and sm.get("id", "") != ""), "%s: sub-marker needs zone and id" % q.id)
 			# ponytail: markers are only checked for shape, not against the zone docs
 			check(s.marker.is_empty() or (s.marker.get("zone", "") != "" and s.marker.get("id", "") != ""),
 				"%s: marker needs zone and id" % q.id)

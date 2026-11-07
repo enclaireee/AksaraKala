@@ -155,6 +155,38 @@ func _initialize() -> void:
 	check(pl != null and s != null and pl.global_position == s.global_position, "beat goto: player not on spawn start")
 	sb.queue_free()
 
+	# 7. Sub-goals: the HUD line, the arrow marker and the journal checklist follow the first unfinished one.
+	g._reset()
+	g.class_id = "warrior"
+	var subs := [
+		{"on": "talked_to:s1", "objective": "SUB_ONE", "marker": {"zone": "za", "id": "n1"}},
+		{"on": "area_cleared:s2", "objective": "SUB_TWO", "marker": {"zone": "zb", "id": "n2"}},
+		{"on": "item_picked:s3", "objective": "SUB_THREE"},
+		{"on": "puzzle_solved:s4", "marker": {"zone": "zd", "id": "n4"}}]
+	var cs := step("", "sub_done", subs)
+	cs.objective = "STEP_OBJ"
+	cs.marker = {"zone": "zstep", "id": "nstep"}
+	var sq := QuestData.new()
+	sq.id = "sub_q"
+	sq.kind = "main"
+	sq.zone = "tatar_sunda"
+	sq.size = "S"
+	sq.steps = [cs]
+	ResourceSaver.save(sq, QDIR + "/sub_q.tres")
+	g.start_quest("sub_q")
+	check(g.objective_marker().get("id") == "n1" and g.active_sub("sub_q") == 0, "sub: marker of sub-goal 1: %s" % g.objective_marker())
+	check(g.objective_text().ends_with("(1/4)"), "sub: HUD line progress 1/4: %s" % g.objective_text())
+	check(g.step_checklist("sub_q").size() == 4 and g.step_checklist("sub_q")[0].active, "sub: checklist")
+	ev.talked_to.emit("s1")
+	check(g.objective_marker().get("id") == "n2" and g.objective_text().ends_with("(2/4)"), "sub: pivots to sub-goal 2: %s" % g.objective_marker())
+	check(g.step_checklist("sub_q")[0].done and g.step_checklist("sub_q")[1].active, "sub: checklist after 1")
+	ev.puzzle_solved.emit("s4")   # any order: sub-goal 4 done early
+	ev.area_cleared.emit("s2")
+	check(g.active_sub("sub_q") == 2, "sub: skips the finished sub-goal 4: %d" % g.active_sub("sub_q"))
+	check(g.objective_marker().get("id") == "nstep", "sub: no sub-marker falls back to the step marker: %s" % g.objective_marker())
+	ev.item_picked.emit("s3")
+	check(g.quest_state("sub_q") == "done" and g.has_flag("sub_done") and g.objective_marker().is_empty(), "sub: all sub-goals complete the quest")
+
 	for p in [PATH, "user://quest_engine_test.bak", PATH + ".tmp"]:
 		DirAccess.remove_absolute(p)
 	for f in DirAccess.get_files_at(QDIR):

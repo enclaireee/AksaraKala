@@ -8,6 +8,7 @@ If you are a subagent with a brief, do only the brief and skip the rest of this 
 1. Read `.docs/HANDOFF.md` §7 (next step) and §8 (standing rules). Read the rest only if needed.
 2. Find your phase in `.docs/schedule.md` and work only on that phase. Do not start the next phase until the exit criteria hold.
 3. Delegate the way [AGENTS.md](AGENTS.md) says.
+4. Follow the Autonomous Execution & Token-Efficiency Protocol in [AGENTS.md](AGENTS.md) §8 at all times.
 
 ## Docs are the source of truth
 - `.docs/README.md` maps the docs. Read only the section you need: `grep -n "^#" .docs/x.md`, then read with `sed -n`. Never read a whole doc.

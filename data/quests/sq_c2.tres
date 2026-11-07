@@ -25,7 +25,7 @@ marker = {"zone": "kg_kaputren", "id": "c2_signet"}
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_SQ_C2_S4_OBJ"
-all = [{"on": "talked_to:hariang_banga"}, {"on": "clue_examined:c2_reply_letter"}]
+all = [{"on": "talked_to:hariang_banga", "objective": "Q_SQ_C2_S4_P1", "marker": {"zone": "desa_purwa", "id": "hariang_banga"}}, {"on": "clue_examined:c2_reply_letter", "objective": "Q_SQ_C2_S4_P2", "marker": {"zone": "desa_purwa", "id": "c2_reply_letter"}}]
 marker = {"zone": "desa_purwa", "id": "c2_reply_letter"}
 
 [resource]

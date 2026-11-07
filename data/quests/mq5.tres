@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ5_S1_OBJ"
-all = [{"on": "zone_entered:gk_pelataran", "set_flag": ""}, {"on": "area_cleared:kala_pelataran_siege", "set_flag": "mq5_0"}]
+all = [{"on": "zone_entered:gk_pelataran", "set_flag": "", "objective": "Q_MQ5_S1_P1"}, {"on": "area_cleared:kala_pelataran_siege", "set_flag": "mq5_0", "objective": "Q_MQ5_S1_P2", "marker": {"zone": "gk_pelataran", "id": "kala_pelataran_siege"}}]
 set_flag = "mq5_0"
 recap = "Q_MQ5_S1_DONE"
 marker = {"zone": "gk_pelataran", "id": "kala_pelataran_siege"}
@@ -38,7 +38,7 @@ marker = {"zone": "gk_mulut", "id": "letter_la"}
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ5_S5_OBJ"
-all = [{"on": "area_cleared:kala_pasir_1", "set_flag": ""}, {"on": "area_cleared:kala_pasir_2", "set_flag": "mq5_1c"}]
+all = [{"on": "area_cleared:kala_pasir_1", "set_flag": "", "objective": "Q_MQ5_S5_P1", "marker": {"zone": "gk_pasir", "id": "kala_pasir_1"}}, {"on": "area_cleared:kala_pasir_2", "set_flag": "mq5_1c", "objective": "Q_MQ5_S5_P2", "marker": {"zone": "gk_pasir", "id": "kala_pasir_2"}}]
 set_flag = "mq5_1c"
 recap = "Q_MQ5_S5_DONE"
 marker = {"zone": "gk_pasir", "id": "ward_inscription"}
@@ -46,7 +46,7 @@ marker = {"zone": "gk_pasir", "id": "ward_inscription"}
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ5_S6_OBJ"
-all = [{"on": "area_cleared:kala_hutan_echoes", "set_flag": ""}, {"on": "puzzle_solved:hutan_name_chimes", "set_flag": "mq5_1cb"}]
+all = [{"on": "area_cleared:kala_hutan_echoes", "set_flag": "", "objective": "Q_MQ5_S6_P1", "marker": {"zone": "gk_hutan", "id": "kala_hutan_echoes"}}, {"on": "puzzle_solved:hutan_name_chimes", "set_flag": "mq5_1cb", "objective": "Q_MQ5_S6_P2", "marker": {"zone": "gk_hutan", "id": "hutan_name_chimes"}}]
 set_flag = "mq5_1cb"
 recap = "Q_MQ5_S6_DONE"
 marker = {"zone": "gk_hutan", "id": "name_trees"}
@@ -54,7 +54,7 @@ marker = {"zone": "gk_hutan", "id": "name_trees"}
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ5_S7_OBJ"
-all = [{"on": "area_cleared:kala_lupa", "set_flag": "mq5_1d"}, {"on": "memory_done:ra", "set_flag": "mq5_ra"}]
+all = [{"on": "area_cleared:kala_lupa", "set_flag": "mq5_1d", "objective": "Q_MQ5_S7_P1", "marker": {"zone": "gk_lupa", "id": "kala_lupa"}}, {"on": "memory_done:ra", "set_flag": "mq5_ra", "objective": "Q_MQ5_S7_P2", "marker": {"zone": "gk_lupa", "id": "ra"}}]
 set_flag = "mq5_ra"
 recap = "Q_MQ5_S7_DONE"
 marker = {"zone": "gk_lupa", "id": "kala_lupa_1"}
@@ -70,7 +70,7 @@ marker = {"zone": "gk_jembatan", "id": "bridge_echo"}
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQ5_S9_OBJ"
-all = [{"on": "petilasan_activated:kala_1", "set_flag": "mq5_2"}, {"on": "memory_done:sa", "set_flag": "mq5_sa"}]
+all = [{"on": "petilasan_activated:kala_1", "set_flag": "mq5_2", "objective": "Q_MQ5_S9_P1", "marker": {"zone": "gk_lupa", "id": "kala_1"}}, {"on": "memory_done:sa", "set_flag": "mq5_sa", "objective": "Q_MQ5_S9_P2", "marker": {"zone": "gk_lupa", "id": "sa"}}]
 set_flag = "mq5_sa"
 recap = "Q_MQ5_S9_DONE"
 marker = {"zone": "gk_lupa", "id": "kala_1"}

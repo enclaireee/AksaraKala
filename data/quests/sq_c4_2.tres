@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_SQ_C4_2_S1_OBJ"
-all = [{"on": "clue_examined:c4_roll_a"}, {"on": "clue_examined:c4_roll_b"}]
+all = [{"on": "clue_examined:c4_roll_a", "objective": "Q_SQ_C4_2_S1_P1", "marker": {"zone": "mt_gapura", "id": "c4_roll_a"}}, {"on": "clue_examined:c4_roll_b", "objective": "Q_SQ_C4_2_S1_P2", "marker": {"zone": "mt_gapura", "id": "c4_roll_b"}}]
 marker = {"zone": "mt_gapura", "id": "c4_roll_a"}
 
 [sub_resource type="Resource" id="s2"]

@@ -12,7 +12,7 @@ marker = {"zone": "ts_kampung", "id": "kepala_desa"}
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_S2_S2_OBJ"
-all = [{"on": "clue_examined:s2_cempaka"}, {"on": "clue_examined:s2_white_cloth"}]
+all = [{"on": "clue_examined:s2_cempaka", "objective": "Q_SQ_S2_S2_P1", "marker": {"zone": "ts_leuweung", "id": "s2_cempaka"}}, {"on": "clue_examined:s2_white_cloth", "objective": "Q_SQ_S2_S2_P2", "marker": {"zone": "ts_leuweung", "id": "s2_white_cloth"}}]
 marker = {"zone": "ts_leuweung", "id": "s2_cempaka"}
 
 [sub_resource type="Resource" id="s3"]

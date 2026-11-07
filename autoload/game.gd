@@ -368,6 +368,7 @@ func _all_hit(id: String, i: int) -> bool:
 	for j in st.all.size():
 		if not _all_bit(id, j):
 			_emit("quest_updated", id)
+			changed.emit()   # the HUD line and arrow pivot to the next sub-goal
 			return false
 	quests[id].count = st.count - 1
 	_bump(id)
@@ -433,11 +434,30 @@ func _complete(id: String) -> void:
 	_emit("quest_completed", id)
 
 
-## The objective to point the arrow at: the pinned side quest, else the first active main quest.
+## Index of the first unfinished trigger of the current `all` step, or -1 (no all step, or all done).
+func active_sub(id: String) -> int:
+	var st := current_step(id)
+	if st == null:
+		return -1
+	for i in st.all.size():
+		if not _all_bit(id, i):
+			return i
+	return -1
+
+
+## The objective to point the arrow at: the pinned side quest, else the first active main quest. In an `all`
+## step it is the marker of the first unfinished sub-goal, falling back to the step's own marker.
 func objective_marker() -> Dictionary:
 	for id in _tracked():
 		var st := current_step(id)
-		if st and not st.marker.is_empty():
+		if st == null:
+			continue
+		var i := active_sub(id)
+		if i >= 0:
+			var sm: Variant = st.all[i].get("marker", {})
+			if sm is Dictionary and not sm.is_empty():
+				return sm
+		if not st.marker.is_empty():
 			return st.marker
 	return {}
 
@@ -453,12 +473,32 @@ func _tracked() -> Array:
 
 
 ## The HUD objective line (ui.md 2): the first tracked step's objective, plus "n/count" for counted steps.
+## In an `all` step it is the first unfinished sub-goal's `objective` key with "(i/total)"; a sub-goal without
+## a key shows the step objective with the same progress.
 func objective_text() -> String:
 	for id in _tracked():
 		var st := current_step(id)
 		if st:
+			var i := active_sub(id)
+			if i >= 0:
+				var key := str(st.all[i].get("objective", ""))
+				return "%s (%d/%d)" % [tr(key if key != "" else st.objective), i + 1, st.all.size()]
 			return tr(st.objective) + (" %d/%d" % [quests[id].count, st.count] if st.count > 1 else "")
 	return ""
+
+
+## Journal checklist of the current step: [{text, done, active}] per sub-goal ([] for a plain step).
+func step_checklist(id: String) -> Array:
+	var out := []
+	var st := current_step(id)
+	if st == null:
+		return out
+	var act := active_sub(id)
+	for i in st.all.size():
+		var key := str(st.all[i].get("objective", ""))
+		out.append({"text": tr(key) if key != "" else "%s (%d/%d)" % [tr(st.objective), i + 1, st.all.size()],
+				"done": _all_bit(id, i), "active": i == act})
+	return out
 
 
 ## The first key bound to an input action, for prompts and hints ("E", "Right Mouse").

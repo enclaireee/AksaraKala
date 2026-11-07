@@ -103,3 +103,81 @@ BOSS_NAMELESS_HUNTER,Si Tanpa Ngaran,The Nameless Hunter
 BOSS_BARMA_WIJAYA,Prabu Barma Wijaya,Prabu Barma Wijaya
 BOSS_HARIANG_BANGA,Hariang Banga,Hariang Banga
 LESSON_JAWA_KA,"Seperti Na dengan satu punuk lagi: lengkung kiri, kaki turun-naik, simpul kecil, lalu dua punuk ke kanan.","Like Na with one more hump: left arch, leg down and up, small loop, then two humps to the right."
+UI_TAB_PUSTAKA,Pustaka,Pustaka
+UI_TAB_SYSTEM,Sistem,System
+UI_FOOTER,[Q/E] Ganti Tab   [Panah/Mouse] Pilih   [Enter/E] Konfirmasi   [Esc] Lanjut / Kembali,[Q/E] Switch Tab   [Arrows/Mouse] Navigate   [Enter/E] Confirm   [Esc] Resume / Back
+UI_SYS_MASTER,Volume Utama,Master volume
+UI_SYS_MUSIC,Musik,Music
+UI_SYS_SFX,Efek suara,Sound effects
+UI_SYS_LANG,Bahasa,Language
+UI_SYS_FULLSCREEN,Layar penuh,Fullscreen
+UI_ON,Nyala,On
+UI_OFF,Mati,Off
+UI_SYS_RESUME,Lanjutkan permainan,Resume game
+UI_SYS_TITLE,Kembali ke judul,Quit to title
+UI_SYS_QUIT,Keluar dari permainan,Quit game
+UI_SYS_CONFIRM_TITLE,Kembali ke judul? Kemajuan yang belum tersimpan hilang.,Quit to title? Unsaved progress is lost.
+UI_SYS_CONFIRM_QUIT,Keluar dari permainan?,Quit the game?
+UI_TOAST_SUBGOAL,Tujuan diperbarui,Sub-goal updated
+UI_HINT_MENU,[%s] Menu,[%s] Menu
+UI_TAB_MAP,Peta,Map
+UI_WHERE,Lokasi,Where
+UI_TIP,Tips,Tip
+UI_MAP_HERE,Kamu di,You are in
+UI_MAP_GOAL,Tujuan,Goal
+UI_DER_HP,HP maks,Max HP
+UI_DER_ATK,Serangan,ATK
+UI_DER_DEF,Pertahanan,DEF
+UI_DER_FLASK,Labu jamu,Jamu flask
+UI_ZONE_TS_KEBUN,Kebun Teh,Tea Gardens
+UI_ZONE_TS_KAMPUNG,Kampung Sunda,Sunda Hamlet
+UI_ZONE_TS_LEUWEUNG,Leuweung,The Leuweung Forest
+UI_ZONE_TS_LEUWI,Leuwi,River Pool
+UI_ZONE_TS_SAWAH,Sawah Terasering,Rice Terraces
+UI_ZONE_TS_SITU,Situ,The Lake
+UI_ZONE_TS_KAWAH_JALAN,Jalan Kawah,Crater Road
+UI_ZONE_TS_KAWAH,Kawah,The Crater
+UI_ZONE_KG_ALUN,Alun-alun Galuh,Galuh Town Square
+UI_ZONE_KG_KERATON,Keraton Galuh,Galuh Palace
+UI_ZONE_KG_PENJARA,Penjara,Palace Prison
+UI_ZONE_KG_PAMALI,Pamali,Forbidden Grounds
+UI_ZONE_KG_PASAR,Pasar Galuh,Galuh Market
+UI_ZONE_KG_PUSTAKA,Pustaka Keraton,Palace Archive
+UI_ZONE_KG_KAPUTREN,Kaputren,Women's Quarters
+UI_ZONE_MT_GAPURA,Gapura Mataram,Mataram Gate
+UI_ZONE_MT_SAWAH,Sawah Mataram,Mataram Rice Fields
+UI_ZONE_MT_PASAR,Pasar Mataram,Mataram Market
+UI_ZONE_MT_RERUNTUHAN,Reruntuhan,The Ruins
+UI_ZONE_MT_KUBURAN,Kuburan,Graveyard
+UI_ZONE_MT_WETAN,Wetan,East Quarter
+UI_ZONE_MT_CANDI,Candi,The Temple
+UI_ZONE_MT_TEGAL,Tegal,Dry Fields
+UI_ZONE_TT_KULON,Kulon,Western Edge
+UI_ZONE_TT_SABANA,Sabana,The Savanna
+UI_ZONE_TT_KALI,Kali,The River
+UI_ZONE_TT_BERINGIN,Beringin,Banyan Grove
+UI_ZONE_TT_LADANG,Ladang,Farm Fields
+UI_ZONE_TT_PASIR,Pasir,The Sands
+UI_ZONE_TT_CANDI,Candi Timur,Eastern Temple
+UI_ZONE_TT_PESISIR,Pesisir,The Coast
+UI_ZONE_SK_KARANG,Karang,Coral Cliffs
+UI_ZONE_SK_PANTAI,Pantai Selatan,South Beach
+UI_ZONE_SK_TEBING,Tebing,Sea Cliff
+UI_ZONE_SK_KERATON,Keraton Kidul,Sea Palace
+UI_ZONE_SK_NELAYAN,Kampung Nelayan,Fishing Village
+UI_ZONE_SK_BAKAU,Bakau,Mangroves
+UI_ZONE_SK_GUA,Gua Laut,Sea Cave
+UI_ZONE_GK_MULUT,Mulut Gua Kala,Cave Mouth
+UI_ZONE_GK_PASIR,Pasir Waktu,Sands of Time
+UI_ZONE_GK_LUPA,Lembah Lupa,Valley of Forgetting
+UI_ZONE_GK_RUANG_KALA,Ruang Kala,Kala's Chamber
+UI_ZONE_GK_PELATARAN,Pelataran,The Courtyard
+UI_ZONE_GK_HUTAN,Hutan Jam,Clockwork Wood
+UI_ZONE_GK_JEMBATAN,Jembatan Jam,Hourglass Bridge
+UI_LEG_YOU,Kamu,You
+UI_LEG_GOAL,Tujuan,Goal
+UI_LEG_NPC,Warga,Person
+UI_LEG_REST,Petilasan,Shrine
+UI_LEG_CHEST,Peti,Chest
+UI_LEG_CLUE,Petunjuk,Clue
+UI_LEG_EXIT,Jalan keluar,Exit

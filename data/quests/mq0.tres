@@ -9,18 +9,21 @@ objective = "Q_MQ0_S1_OBJ"
 on = "area_entered:purwa_tag_end"
 set_flag = "mq0_d1"
 recap = "Q_MQ0_S1_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_tag_end"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ0_S2_OBJ"
-all = [{"on": "talked_to:ibu", "set_flag": "mq0_d2"}, {"on": "talked_to:purwa_old_couple", "set_flag": "mq0_d2b"}]
+marker = {"zone": "desa_purwa", "id": "ibu"}
+all = [{"on": "talked_to:ibu", "set_flag": "mq0_d2", "objective": "Q_MQ0_S2_P1", "marker": {"zone": "desa_purwa", "id": "ibu"}}, {"on": "talked_to:purwa_old_couple", "set_flag": "mq0_d2b", "objective": "Q_MQ0_S2_P2", "marker": {"zone": "desa_purwa", "id": "purwa_old_couple"}}]
 set_flag = "mq0_d2b"
 recap = "Q_MQ0_S2_DONE"
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ0_S3_OBJ"
-all = [{"on": "puzzle_solved:purwa_banyan_climb", "set_flag": ""}, {"on": "talked_to:ciung_wanara", "set_flag": "mq0_d3"}]
+marker = {"zone": "desa_purwa", "id": "purwa_banyan_climb"}
+all = [{"on": "puzzle_solved:purwa_banyan_climb", "set_flag": "", "objective": "Q_MQ0_S3_P1", "marker": {"zone": "desa_purwa", "id": "purwa_banyan_climb"}}, {"on": "talked_to:ciung_wanara", "set_flag": "mq0_d3", "objective": "Q_MQ0_S3_P2", "marker": {"zone": "desa_purwa", "id": "ciung_wanara"}}]
 set_flag = "mq0_d3"
 recap = "Q_MQ0_S3_DONE"
 
@@ -30,11 +33,13 @@ objective = "Q_MQ0_S4_OBJ"
 on = "talked_to:purwa_stall"
 set_flag = "mq0_d6"
 recap = "Q_MQ0_S4_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_stall"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ0_S5_OBJ"
-all = [{"on": "talked_to:semar", "set_flag": "mq0_d4"}, {"on": "talked_to:cepot", "set_flag": "mq0_d4b"}]
+marker = {"zone": "desa_purwa", "id": "semar"}
+all = [{"on": "talked_to:semar", "set_flag": "mq0_d4", "objective": "Q_MQ0_S5_P1", "marker": {"zone": "desa_purwa", "id": "semar"}}, {"on": "talked_to:cepot", "set_flag": "mq0_d4b", "objective": "Q_MQ0_S5_P2", "marker": {"zone": "desa_purwa", "id": "cepot"}}]
 set_flag = "mq0_d4b"
 recap = "Q_MQ0_S5_DONE"
 
@@ -44,6 +49,7 @@ objective = "Q_MQ0_S6_OBJ"
 on = "area_entered:sanggar_lontar"
 set_flag = "mq0_d5"
 recap = "Q_MQ0_S6_DONE"
+marker = {"zone": "desa_purwa", "id": "sanggar_lontar"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
@@ -51,6 +57,7 @@ objective = "Q_MQ0_S7_OBJ"
 on = "puzzle_solved:purwa_stage_lamps"
 set_flag = "mq0_d6b"
 recap = "Q_MQ0_S7_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_stage_lamps"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
@@ -58,6 +65,7 @@ objective = "Q_MQ0_S8_OBJ"
 on = "memory_done:k0_ruwatan"
 set_flag = "mq0_d7"
 recap = "Q_MQ0_S8_DONE"
+marker = {"zone": "desa_purwa", "id": "k0_ruwatan"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
@@ -65,24 +73,28 @@ objective = "Q_MQ0_S9_OBJ"
 on = "area_entered:purwa_crowd"
 set_flag = "mq0_d8"
 recap = "Q_MQ0_S9_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_crowd"}
 
 [sub_resource type="Resource" id="s10"]
 script = ExtResource("2")
 objective = "Q_MQ0_S10_OBJ"
-all = [{"on": "talked_to:ibu", "set_flag": "mq0_4"}, {"on": "item_picked:laras_lontar", "set_flag": "mq0_5"}]
+marker = {"zone": "desa_purwa", "id": "ibu"}
+all = [{"on": "talked_to:ibu", "set_flag": "mq0_4", "objective": "Q_MQ0_S10_P1", "marker": {"zone": "desa_purwa", "id": "ibu"}}, {"on": "item_picked:laras_lontar", "set_flag": "mq0_5", "objective": "Q_MQ0_S10_P2", "marker": {"zone": "desa_purwa", "id": "laras_lontar"}}]
 set_flag = "mq0_5"
 recap = "Q_MQ0_S10_DONE"
 
 [sub_resource type="Resource" id="s11"]
 script = ExtResource("2")
 objective = "Q_MQ0_S11_OBJ"
-all = [{"on": "glyph_learned:sunda_ka", "set_flag": ""}, {"on": "spell_cast:sunda_ka", "set_flag": ""}]
+marker = {"zone": "desa_purwa", "id": "semar"}
+all = [{"on": "glyph_learned:sunda_ka", "set_flag": "", "objective": "Q_MQ0_S11_P1"}, {"on": "spell_cast:sunda_ka", "set_flag": "", "objective": "Q_MQ0_S11_P2"}]
 recap = "Q_MQ0_S11_DONE"
 
 [sub_resource type="Resource" id="s12"]
 script = ExtResource("2")
 objective = "Q_MQ0_S12_OBJ"
-all = [{"on": "area_cleared:purwa_raid", "set_flag": "mq0_7"}, {"on": "zone_entered:ts_kebun", "set_flag": ""}]
+marker = {"zone": "desa_purwa", "id": "purwa_raid"}
+all = [{"on": "area_cleared:purwa_raid", "set_flag": "mq0_7", "objective": "Q_MQ0_S12_P1", "marker": {"zone": "desa_purwa", "id": "purwa_raid"}}, {"on": "zone_entered:ts_kebun", "set_flag": "", "objective": "Q_MQ0_S12_P2"}]
 recap = "Q_MQ0_S12_DONE"
 [resource]
 script = ExtResource("1")

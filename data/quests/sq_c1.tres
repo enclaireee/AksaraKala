@@ -12,7 +12,7 @@ marker = {"zone": "kg_alun", "id": "ciung_wanara"}
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_C1_S2_OBJ"
-all = [{"on": "clue_examined:c1_feathers"}, {"on": "clue_examined:c1_basket"}]
+all = [{"on": "clue_examined:c1_feathers", "objective": "Q_SQ_C1_S2_P1", "marker": {"zone": "kg_alun", "id": "c1_feathers"}}, {"on": "clue_examined:c1_basket", "objective": "Q_SQ_C1_S2_P2", "marker": {"zone": "kg_alun", "id": "c1_basket"}}]
 marker = {"zone": "kg_alun", "id": "c1_feathers"}
 
 [sub_resource type="Resource" id="s3"]
@@ -30,7 +30,7 @@ marker = {"zone": "kg_pasar", "id": "c1_rooster_found"}
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_SQ_C1_S5_OBJ"
-all = [{"on": "talked_to:lengser", "set_flag": "c1_token"}, {"on": "talked_to:ciung_wanara"}]
+all = [{"on": "talked_to:lengser", "set_flag": "c1_token", "objective": "Q_SQ_C1_S5_P1", "marker": {"zone": "kg_alun", "id": "lengser"}}, {"on": "talked_to:ciung_wanara", "objective": "Q_SQ_C1_S5_P2", "marker": {"zone": "kg_alun", "id": "ciung_wanara"}}]
 set_flag = "c1_token"
 marker = {"zone": "kg_alun", "id": "ciung_wanara"}
 

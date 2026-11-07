@@ -10,6 +10,8 @@ const CATS := ["enemy", "legend", "item", "aksara"]
 const DIM := Color("9C8F78")
 const GREEN := Color("6FCF8A")
 const RED := Color("E0644A")
+const TitleScript := preload("res://ui/title.gd")   # settings path and language save
+const BUSES := ["Master", "Music", "SFX"]
 const ITEM_DIR := "res://assets/art/items/"
 const STAT_LABELS := {"max_hp": "HP", "move_speed": "Speed", "stamina_regen": "Stamina regen", "damage": "ATK", "defense": "DEF"}
 
@@ -34,6 +36,19 @@ var _tip_name: Label
 var _tip_slot: Label
 var _tip_stats: VBoxContainer
 var _tip_desc: Label
+var _system: VBoxContainer
+var _jlist: VBoxContainer
+var _jsel := ""   # quest id shown in the journal detail pane
+var _ilmu_bar: ProgressBar
+var _derived: Label
+var _map_view: MapView
+var _map_note: Label
+var _sys_modal: HBoxContainer
+var _sys_modal_lbl: Label
+var _sys_action := ""   # "title" or "quit" while the confirmation modal is open
+var _sys_lang: Button
+var _sys_full: Button
+var _footer: Label
 var _eq_focus := ""   # item id focused in the equipment grid (kept across a rebuild)
 
 
@@ -56,10 +71,46 @@ func _ready() -> void:
 	_equip = VBoxContainer.new()
 	_equip.name = "Equipment"
 	_tabs.add_child(_equip)
-	_journal = _scroll("Journal")
+	var jroot := HBoxContainer.new()
+	jroot.name = "Journal"
+	_tabs.add_child(jroot)
+	var jl := ScrollContainer.new()
+	jl.custom_minimum_size.x = 118
+	jl.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	jroot.add_child(jl)
+	_jlist = VBoxContainer.new()
+	_jlist.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	jl.add_child(_jlist)
+	jroot.add_child(VSeparator.new())
+	var jr := ScrollContainer.new()
+	jr.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	jr.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	jroot.add_child(jr)
+	_journal = VBoxContainer.new()
+	_journal.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	jr.add_child(_journal)
+	_build_map()
 	_codex = _scroll("Codex")
+	_build_system()
+	_tabs.tab_alignment = TabBar.ALIGNMENT_CENTER
+	_tabs.offset_bottom = -16
+	_footer = Label.new()
+	_footer.text = "UI_FOOTER"
+	_footer.position = Vector2(8, 216)
+	_footer.size = Vector2(344, 12)
+	_footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_footer.add_theme_color_override("font_color", DIM)
+	_panel.add_child(_footer)
+	for side in 2:   # shoulder prompts at both ends of the tab bar (ui.md 3)
+		var sh := Label.new()
+		sh.text = "[Q]" if side == 0 else "[E]"
+		sh.position = Vector2(6 if side == 0 else 332, 4)
+		sh.add_theme_color_override("font_color", GOLD)
+		_panel.add_child(sh)
+	_apply_settings()
 	_tabs.tab_changed.connect(func(i: int) -> void:
 		_last_tab = i
+		_refresh_map()
 		var dir := signi(i - _prev_tab)
 		_prev_tab = i
 		if dir != 0 and visible:
@@ -81,11 +132,31 @@ func _scroll(tab_name: String) -> VBoxContainer:
 
 
 func _build_status() -> void:
-	var v := VBoxContainer.new()
-	v.name = "Status"
-	_tabs.add_child(v)
+	var root := HBoxContainer.new()
+	root.name = "Status"
+	_tabs.add_child(root)
+	# left card: who you are
+	var card := VBoxContainer.new()
+	card.custom_minimum_size.x = 120
+	root.add_child(card)
 	_summary = Label.new()
-	v.add_child(_summary)
+	_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_summary.custom_minimum_size.x = 118
+	card.add_child(_summary)
+	_ilmu_bar = ProgressBar.new()
+	_ilmu_bar.custom_minimum_size = Vector2(110, 8)
+	_ilmu_bar.show_percentage = false
+	card.add_child(_ilmu_bar)
+	_hint = Label.new()
+	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_hint.custom_minimum_size.x = 118
+	_hint.add_theme_color_override("font_color", DIM)
+	card.add_child(_hint)
+	root.add_child(VSeparator.new())
+	# right: attributes, then the numbers they give
+	var v := VBoxContainer.new()
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	root.add_child(v)
 	for s in NAMES:
 		var row := HBoxContainer.new()
 		v.add_child(row)
@@ -99,8 +170,6 @@ func _build_status() -> void:
 		b.pressed.connect(_ask.bind(s))
 		row.add_child(b)
 		_raise[s] = b
-	_hint = Label.new()
-	v.add_child(_hint)
 	_confirm = HBoxContainer.new()
 	_confirm.visible = false
 	v.add_child(_confirm)
@@ -114,6 +183,24 @@ func _build_status() -> void:
 	no.text = "UI_CANCEL"
 	no.pressed.connect(_cancel)
 	_confirm.add_child(no)
+	v.add_child(HSeparator.new())
+	_derived = Label.new()
+	_derived.add_theme_color_override("font_color", GOLD)
+	v.add_child(_derived)
+
+
+## Numbers the attributes and gear give right now (ATK from the weapon, HP from the live hero).
+func _refresh_derived(g: Node) -> void:
+	var lines := PackedStringArray()
+	var pl := get_tree().get_first_node_in_group("player")
+	if pl and pl.get("health"):
+		lines.append("%s %d" % [tr("UI_DER_HP"), pl.health.max_hp])
+	var w: ItemData = g.equipped_item("weapon")
+	if w:
+		lines.append("%s %d" % [tr("UI_DER_ATK"), w.damage])
+	lines.append("%s %d" % [tr("UI_DER_DEF"), int(g.bonus("defense"))])
+	lines.append("%s %d/%d" % [tr("UI_DER_FLASK"), g.flask_charges, g.flask_max])
+	_derived.text = "   ".join(lines)
 
 
 func open(petilasan := false) -> void:
@@ -123,6 +210,7 @@ func open(petilasan := false) -> void:
 	if pl and pl.get("cast"):
 		pl.cast.cancel()   # a paused tree never sees the cast release: slow-mo would stick
 	get_tree().paused = true
+	_set_hud(false)
 	_cancel()
 	refresh()
 	_prev_tab = _last_tab
@@ -175,6 +263,7 @@ func _first_button(n: Node) -> Button:
 
 func close() -> void:
 	visible = false
+	_set_hud(true)
 	at_petilasan = false
 	get_tree().paused = false
 
@@ -184,7 +273,7 @@ func _input(e: InputEvent) -> void:
 	var lesson := get_node_or_null("../GlyphLesson")
 	if (box and box.is_open()) or (lesson and lesson.writing != ""):
 		return   # the box and the write card own pause and input while they are open
-	if e.is_action_pressed("menu"):
+	if (e.is_action_pressed("menu") and not _modal_open()) or (e.is_action_pressed("pause") and not visible):
 		if visible:
 			close()
 		else:
@@ -202,8 +291,8 @@ func _input(e: InputEvent) -> void:
 			get_node("/root/Game").pin_quest(f.get_meta("pin"))
 			get_viewport().set_input_as_handled()
 	elif visible and e.is_action_pressed("pause"):
-		if _pending != "":
-			_cancel()
+		if _pending != "" or _sys_action != "":
+			_cancel()   # the first Esc dismisses a modal, the next closes the menu
 		else:
 			close()
 		get_viewport().set_input_as_handled()
@@ -223,6 +312,9 @@ func _do_raise() -> void:
 
 
 func _cancel() -> void:
+	_sys_action = ""
+	if _sys_modal:
+		_sys_modal.visible = false
 	var s := _pending
 	_pending = ""
 	_confirm.visible = false
@@ -234,6 +326,9 @@ func refresh() -> void:
 	var g := get_node("/root/Game")
 	var can: bool = at_petilasan and g.ilmu >= g.level_cost()
 	_summary.text = tr("UI_LEVEL_LINE") % [g.level(), g.ilmu, g.level_cost()]
+	_ilmu_bar.max_value = maxf(g.level_cost(), 1)
+	_ilmu_bar.value = mini(g.ilmu, g.level_cost())
+	_refresh_derived(g)
 	_hint.text = "" if at_petilasan else "UI_REST_HINT"
 	for s in NAMES:
 		_stat_lbl[s].text = "%s %d  (%s)" % [tr(NAMES[s]), g.stat(s), tr(HINTS[s])]
@@ -242,9 +337,11 @@ func refresh() -> void:
 		_confirm.visible = false
 	_refresh_equipment(g)
 	for i in _tabs.get_tab_count():
-		_tabs.set_tab_title(i, ["UI_TAB_STATUS", "UI_TAB_EQUIP", "UI_TAB_JOURNAL", "UI_TAB_CODEX"][i])
+		_tabs.set_tab_title(i, ["UI_TAB_STATUS", "UI_TAB_EQUIP", "UI_TAB_JOURNAL", "UI_TAB_MAP", "UI_TAB_PUSTAKA", "UI_TAB_SYSTEM"][i])
 	_refresh_journal(g)
 	_refresh_codex(g)
+	_refresh_system()
+	_refresh_map()
 
 
 func _item_icon(item: ItemData) -> Texture2D:
@@ -422,7 +519,7 @@ func _zone_name(zone: String) -> String:
 func _refresh_journal(g: Node) -> void:
 	var focus_pin: String = get_viewport().gui_get_focus_owner().get_meta("pin", "") if get_viewport().gui_get_focus_owner() else ""
 	_clear(_journal)
-	_story_and_clues(g)
+	_clear(_jlist)
 	var lists := {"main": [], "side": [], "done": []}
 	for id in g.quests:
 		var q := QuestData.by_id(id)
@@ -433,16 +530,34 @@ func _refresh_journal(g: Node) -> void:
 			lists.done.append(q)
 		elif st == "active":
 			lists[q.kind].append(q)
-	var any := false
-	for key in lists:
+	var first: QuestData = null
+	for key in ["main", "side", "done"]:
+		if not lists[key].is_empty():
+			first = lists[key][0]
+			break
+	if not g.quests.has(_jsel) or QuestData.by_id(_jsel) == null:
+		_jsel = ""
+	if _jsel == "" and first:
+		_jsel = first.id
+	if first == null:
+		_label(_journal, "UI_JOURNAL_EMPTY", DIM)
+	for key in ["main", "side", "done"]:
 		if lists[key].is_empty():
 			continue
-		any = true
-		_label(_journal, "UI_JOURNAL_" + key.to_upper(), GOLD)
+		_label(_jlist, "UI_JOURNAL_" + key.to_upper(), GOLD)
 		for q: QuestData in lists[key]:
-			_quest_block(g, q, key == "done")
-	if not any:
-		_label(_journal, "UI_JOURNAL_EMPTY", DIM)
+			var b := Button.new()
+			b.text = ("> " if q.id == _jsel else "") + tr("Q_%s_TITLE" % q.id.to_upper()) + (" *" if g.pinned == q.id else "")
+			b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			b.clip_text = true
+			b.custom_minimum_size.x = 110
+			b.pressed.connect(func() -> void:
+				_jsel = q.id
+				_refresh_journal(g))
+			_jlist.add_child(b)
+	if _jsel != "":
+		_quest_block(g, QuestData.by_id(_jsel), g.quest_state(_jsel) == "done")
+	_story_and_clues(g)
 	if focus_pin != "":
 		for b in _journal.find_children("*", "Button", true, false):
 			if b.get_meta("pin", "") == focus_pin:
@@ -484,10 +599,21 @@ func _quest_block(g: Node, q: QuestData, done: bool) -> void:
 		title += " " + tr("UI_PINNED")
 	_label(_journal, title)
 	_label(_journal, "%s: %s" % [tr("UI_ZONE"), _zone_name(q.zone)], DIM)
+	var dk := "Q_%s_DESC" % q.id.to_upper()
+	if tr(dk) != dk:
+		var dl := _label(_journal, tr(dk))
+		dl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		dl.custom_minimum_size.x = 200
 	if done:
 		return
 	var cur: int = int(g.quests[q.id].step)
 	for i in mini(cur + 1, q.steps.size()):
+		if i == cur and not q.steps[i].all.is_empty():
+			_label(_journal, "  " + tr(q.steps[i].objective))
+			for c in g.step_checklist(q.id):
+				_label(_journal, ("    [x] " if c.done else "    [>] " if c.active else "    [ ] ") + c.text,
+						DIM if c.done else GOLD if c.active else Color.WHITE)
+			continue
 		var obj := tr(q.steps[i].objective)
 		if i < cur:
 			_label(_journal, "  ✓ " + obj, DIM)
@@ -495,6 +621,17 @@ func _quest_block(g: Node, q: QuestData, done: bool) -> void:
 			if q.steps[i].count > 1:
 				obj += " (%d/%d)" % [int(g.quests[q.id].get("count", 0)), q.steps[i].count]
 			_label(_journal, "  > " + obj)
+	var st: QuestStep = g.current_step(q.id)
+	if st:
+		if not st.marker.is_empty() and str(st.marker.get("zone", "")) != q.zone:
+			_label(_journal, "%s: %s" % [tr("UI_WHERE"), _zone_name(str(st.marker.get("zone", "")))], GOLD)
+		var hk := st.objective.replace("_OBJ", "_HINT")
+		if tr(hk) != hk:
+			var keys := {}
+			for act in ["interact", "cast", "attack", "dodge", "menu"]:
+				keys[act] = g.key_name(act)
+			keys.move = "%s%s%s%s" % [g.key_name("move_up"), g.key_name("move_left"), g.key_name("move_down"), g.key_name("move_right")]
+			_label(_journal, "%s: %s" % [tr("UI_TIP"), tr(hk).format(keys)], DIM)
 	if q.kind == "side":
 		var b := Button.new()
 		b.text = "UI_UNPIN" if g.pinned == q.id else "UI_PIN"
@@ -529,3 +666,166 @@ func _refresh_codex(g: Node) -> void:
 			_label(_codex, "CODEX_%s_BODY" % U, DIM)
 			if g.has_flag("weak:" + e.id):
 				_label(_codex, "%s: %s" % [tr("UI_WEAKNESS"), tr("CODEX_%s_WEAK" % U)])
+
+
+# --- System tab: audio, language, display, session (ui.md 3) ---
+
+func _build_system() -> void:
+	_system = _scroll("System")
+	for b in BUSES:
+		var row := HBoxContainer.new()
+		_system.add_child(row)
+		var l := Label.new()
+		l.text = "UI_SYS_" + b.to_upper()
+		l.custom_minimum_size.x = 110
+		row.add_child(l)
+		var sl := HSlider.new()
+		sl.name = b
+		sl.min_value = 0
+		sl.max_value = 100
+		sl.step = 5
+		sl.custom_minimum_size = Vector2(160, 12)
+		sl.value = _load_setting("vol_" + b.to_lower(), 100)
+		sl.value_changed.connect(_set_volume.bind(b))
+		row.add_child(sl)
+	_sys_lang = _sys_button(_toggle_language)
+	_sys_full = _sys_button(_toggle_fullscreen)
+	_sys_button(close).text = "UI_SYS_RESUME"
+	_sys_button(_ask_sys.bind("title")).text = "UI_SYS_TITLE"
+	_sys_button(_ask_sys.bind("quit")).text = "UI_SYS_QUIT"
+	_sys_modal = HBoxContainer.new()
+	_sys_modal.visible = false
+	_system.add_child(_sys_modal)
+	_sys_modal_lbl = Label.new()
+	_sys_modal.add_child(_sys_modal_lbl)
+	var yes := Button.new()
+	yes.text = "UI_YES"
+	yes.pressed.connect(_do_sys)
+	_sys_modal.add_child(yes)
+	var no := Button.new()
+	no.text = "UI_CANCEL"
+	no.pressed.connect(_cancel)
+	_sys_modal.add_child(no)
+
+
+func _sys_button(cb: Callable) -> Button:
+	var b := Button.new()
+	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	b.pressed.connect(cb)
+	_system.add_child(b)
+	return b
+
+
+func _refresh_system() -> void:
+	_sys_lang.text = "%s: %s" % [tr("UI_SYS_LANG"), "Bahasa Indonesia" if TranslationServer.get_locale().begins_with("id") else "English"]
+	_sys_full.text = "%s: %s" % [tr("UI_SYS_FULLSCREEN"), tr("UI_ON") if _is_fullscreen() else tr("UI_OFF")]
+
+
+func _is_fullscreen() -> bool:
+	return DisplayServer.window_get_mode() in [DisplayServer.WINDOW_MODE_FULLSCREEN, DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN]
+
+
+func _load_setting(key: String, default: Variant) -> Variant:
+	var cf := ConfigFile.new()
+	cf.load(TitleScript.settings_path)
+	return cf.get_value("settings", key, default)
+
+
+func _save_setting(key: String, v: Variant) -> void:
+	var cf := ConfigFile.new()
+	cf.load(TitleScript.settings_path)   # keep the other settings
+	cf.set_value("settings", key, v)
+	cf.save(TitleScript.settings_path)
+
+
+## Volumes and display from user://settings.cfg; the Music and SFX buses are created on first use.
+func _apply_settings() -> void:
+	for b in BUSES:
+		_apply_volume(b, float(_load_setting("vol_" + b.to_lower(), 100)))
+
+
+func _apply_volume(bus: String, pct: float) -> void:
+	var i := AudioServer.get_bus_index(bus)
+	if i < 0:
+		AudioServer.add_bus()
+		i = AudioServer.bus_count - 1
+		AudioServer.set_bus_name(i, bus)
+		AudioServer.set_bus_send(i, "Master")
+	AudioServer.set_bus_volume_db(i, linear_to_db(pct / 100.0))
+
+
+func _set_volume(v: float, bus: String) -> void:
+	_apply_volume(bus, v)
+	_save_setting("vol_" + bus.to_lower(), int(v))
+
+
+func _toggle_language() -> void:
+	var lang := "en" if TranslationServer.get_locale().begins_with("id") else "id"
+	TranslationServer.set_locale(lang)
+	TitleScript.save_language(lang)
+	refresh()
+
+
+func _toggle_fullscreen() -> void:
+	var on := not _is_fullscreen()
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if on else DisplayServer.WINDOW_MODE_WINDOWED)
+	_save_setting("fullscreen", on)
+	refresh()
+
+
+func _modal_open() -> bool:
+	return _pending != "" or _sys_action != ""
+
+
+func _ask_sys(action: String) -> void:
+	_sys_action = action
+	_sys_modal_lbl.text = "UI_SYS_CONFIRM_" + action.to_upper()
+	_sys_modal.visible = true
+
+
+func _do_sys() -> void:
+	var action := _sys_action
+	_cancel()
+	close()
+	if action == "title":
+		get_tree().change_scene_to_file("res://ui/title.tscn")
+	elif action == "quit":
+		get_tree().quit()
+
+
+# --- Peta tab ---
+
+func _build_map() -> void:
+	var v := VBoxContainer.new()
+	v.name = "Map"
+	_tabs.add_child(v)
+	_map_view = MapView.new()
+	_map_view.custom_minimum_size = Vector2(340, 162)
+	v.add_child(_map_view)
+	_map_note = Label.new()
+	_map_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_map_note.custom_minimum_size.x = 340
+	v.add_child(_map_note)
+
+
+func _refresh_map() -> void:
+	if _map_view == null or not visible:
+		return
+	_map_view.refresh(_zone_name)
+	var g := get_node("/root/Game")
+	var z: String = get_node("/root/Zones").current_zone
+	var line := "%s: %s" % [tr("UI_MAP_HERE"), _zone_name(z)] if z != "" else ""
+	var obj: String = g.objective_text()
+	if obj != "":
+		line += "\n" + tr("UI_MAP_GOAL") + ": " + obj
+		var m: Dictionary = g.objective_marker()
+		if m.get("zone", z) != z:
+			line += "  (" + _zone_name(str(m.zone)) + ")"
+	_map_note.text = line
+
+
+## The HUD (objective lines, compass) would show through the translucent panel.
+func _set_hud(on: bool) -> void:
+	var hud := get_node_or_null("../HUD")
+	if hud:
+		hud.visible = on

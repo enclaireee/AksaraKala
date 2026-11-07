@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQG_S1_OBJ"
-all = [{"on": "talked_to:galuh_seller", "set_flag": "mqg_a1"}, {"on": "talked_to:ciung_wanara", "set_flag": "mqg_0"}]
+all = [{"on": "talked_to:galuh_seller", "set_flag": "mqg_a1", "objective": "Q_MQG_S1_P1", "marker": {"zone": "kg_alun", "id": "galuh_seller"}}, {"on": "talked_to:ciung_wanara", "set_flag": "mqg_0", "objective": "Q_MQG_S1_P2", "marker": {"zone": "kg_alun", "id": "ciung_wanara"}}]
 set_flag = "mqg_0"
 recap = "Q_MQG_S1_DONE"
 marker = {"zone": "kg_alun", "id": "galuh_seller"}
@@ -14,7 +14,7 @@ marker = {"zone": "kg_alun", "id": "galuh_seller"}
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQG_S2_OBJ"
-all = [{"on": "talked_to:pasar_informant", "set_flag": ""}, {"on": "clue_examined:wagon_manifest", "set_flag": "mqg_p1"}]
+all = [{"on": "talked_to:pasar_informant", "set_flag": "", "objective": "Q_MQG_S2_P1", "marker": {"zone": "kg_pasar", "id": "pasar_informant"}}, {"on": "clue_examined:wagon_manifest", "set_flag": "mqg_p1", "objective": "Q_MQG_S2_P2", "marker": {"zone": "kg_pasar", "id": "wagon_manifest"}}]
 set_flag = "mqg_p1"
 recap = "Q_MQG_S2_DONE"
 marker = {"zone": "kg_pasar", "id": "pasar_informant"}
@@ -30,7 +30,7 @@ marker = {"zone": "kg_pasar", "id": "galuh_market_riggers"}
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQG_S4_OBJ"
-all = [{"on": "area_cleared:galuh_bout_1", "set_flag": "mqg_1"}, {"on": "area_cleared:galuh_bout_2", "set_flag": "mqg_2"}]
+all = [{"on": "area_cleared:galuh_bout_1", "set_flag": "mqg_1", "objective": "Q_MQG_S4_P1", "marker": {"zone": "kg_alun", "id": "galuh_bout_1"}}, {"on": "area_cleared:galuh_bout_2", "set_flag": "mqg_2", "objective": "Q_MQG_S4_P2", "marker": {"zone": "kg_alun", "id": "galuh_bout_2"}}]
 set_flag = "mqg_2"
 recap = "Q_MQG_S4_DONE"
 marker = {"zone": "kg_alun", "id": "galuh_bout_1"}
@@ -38,7 +38,7 @@ marker = {"zone": "kg_alun", "id": "galuh_bout_1"}
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQG_S5_OBJ"
-all = [{"on": "talked_to:lengser", "set_flag": "mqg_3"}, {"on": "petilasan_activated:galuh_1", "set_flag": "mqg_4"}]
+all = [{"on": "talked_to:lengser", "set_flag": "mqg_3", "objective": "Q_MQG_S5_P1", "marker": {"zone": "kg_alun", "id": "lengser"}}, {"on": "petilasan_activated:galuh_1", "set_flag": "mqg_4", "objective": "Q_MQG_S5_P2", "marker": {"zone": "kg_keraton", "id": "galuh_1"}}]
 set_flag = "mqg_4"
 recap = "Q_MQG_S5_DONE"
 marker = {"zone": "kg_alun", "id": "lengser"}
@@ -46,7 +46,7 @@ marker = {"zone": "kg_alun", "id": "lengser"}
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQG_S6_OBJ"
-all = [{"on": "area_cleared:pustaka_guards", "set_flag": ""}, {"on": "talked_to:nyai_sekar", "set_flag": "mqg_ar1"}]
+all = [{"on": "area_cleared:pustaka_guards", "set_flag": "", "objective": "Q_MQG_S6_P1", "marker": {"zone": "kg_pustaka", "id": "pustaka_guards"}}, {"on": "talked_to:nyai_sekar", "set_flag": "mqg_ar1", "objective": "Q_MQG_S6_P2", "marker": {"zone": "kg_pustaka", "id": "nyai_sekar"}}]
 set_flag = "mqg_ar1"
 recap = "Q_MQG_S6_DONE"
 marker = {"zone": "kg_pustaka", "id": "pustaka_guards"}
@@ -54,7 +54,7 @@ marker = {"zone": "kg_pustaka", "id": "pustaka_guards"}
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQG_S7_OBJ"
-all = [{"on": "puzzle_solved:pustaka_cipher", "set_flag": ""}, {"on": "clue_examined:scraped_genealogy", "set_flag": "mqg_ar2"}]
+all = [{"on": "puzzle_solved:pustaka_cipher", "set_flag": "", "objective": "Q_MQG_S7_P1", "marker": {"zone": "kg_pustaka", "id": "pustaka_cipher"}}, {"on": "clue_examined:scraped_genealogy", "set_flag": "mqg_ar2", "objective": "Q_MQG_S7_P2", "marker": {"zone": "kg_pustaka", "id": "scraped_genealogy"}}]
 set_flag = "mqg_ar2"
 recap = "Q_MQG_S7_DONE"
 marker = {"zone": "kg_pustaka", "id": "pustaka_cipher"}
@@ -70,7 +70,7 @@ marker = {"zone": "kg_kaputren", "id": "kaputren_courtyard"}
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQG_S9_OBJ"
-all = [{"on": "puzzle_solved:kaputren_screens", "set_flag": ""}, {"on": "clue_examined:laras_hairpin", "set_flag": "mqg_kp2"}]
+all = [{"on": "puzzle_solved:kaputren_screens", "set_flag": "", "objective": "Q_MQG_S9_P1", "marker": {"zone": "kg_kaputren", "id": "kaputren_screens"}}, {"on": "clue_examined:laras_hairpin", "set_flag": "mqg_kp2", "objective": "Q_MQG_S9_P2", "marker": {"zone": "kg_kaputren", "id": "laras_hairpin"}}]
 set_flag = "mqg_kp2"
 recap = "Q_MQG_S9_DONE"
 marker = {"zone": "kg_kaputren", "id": "kaputren_screens"}
@@ -134,7 +134,7 @@ marker = {"zone": "kg_keraton", "id": "keraton_upper_gallery"}
 [sub_resource type="Resource" id="s17"]
 script = ExtResource("2")
 objective = "Q_MQG_S17_OBJ"
-all = [{"on": "clue_examined:court_portrait", "set_flag": "mqg_h1"}, {"on": "memory_done:k_ii", "set_flag": "mqg_h2"}]
+all = [{"on": "clue_examined:court_portrait", "set_flag": "mqg_h1", "objective": "Q_MQG_S17_P1", "marker": {"zone": "kg_keraton", "id": "court_portrait"}}, {"on": "memory_done:k_ii", "set_flag": "mqg_h2", "objective": "Q_MQG_S17_P2", "marker": {"zone": "kg_keraton", "id": "k_ii"}}]
 set_flag = "mqg_h2"
 recap = "Q_MQG_S17_DONE"
 marker = {"zone": "kg_keraton", "id": "court_portrait"}

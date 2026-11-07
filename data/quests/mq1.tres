@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ1_S1_OBJ"
-all = [{"on": "talked_to:sunda_grandson", "set_flag": "mq1_a1"}, {"on": "area_cleared:sunda_edge", "set_flag": ""}, {"on": "clue_examined:laras_ribbon_spot", "set_flag": ""}]
+all = [{"on": "talked_to:sunda_grandson", "set_flag": "mq1_a1", "objective": "Q_MQ1_S1_P1", "marker": {"zone": "ts_kebun", "id": "sunda_grandson"}}, {"on": "area_cleared:sunda_edge", "set_flag": "", "objective": "Q_MQ1_S1_P2", "marker": {"zone": "ts_kebun", "id": "sunda_edge"}}, {"on": "clue_examined:laras_ribbon_spot", "set_flag": "", "objective": "Q_MQ1_S1_P3", "marker": {"zone": "ts_kebun", "id": "laras_ribbon_spot"}}]
 recap = "Q_MQ1_S1_DONE"
 marker = {"zone": "ts_kebun", "id": "sunda_grandson"}
 
@@ -21,7 +21,7 @@ marker = {"zone": "ts_kebun", "id": "sunda_kebun_camp"}
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ1_S3_OBJ"
-all = [{"on": "petilasan_activated:sunda_1", "set_flag": "mq1_1"}, {"on": "talked_to:cepot", "set_flag": ""}]
+all = [{"on": "petilasan_activated:sunda_1", "set_flag": "mq1_1", "objective": "Q_MQ1_S3_P1", "marker": {"zone": "ts_kebun", "id": "sunda_1"}}, {"on": "talked_to:cepot", "set_flag": "", "objective": "Q_MQ1_S3_P2", "marker": {"zone": "ts_kebun", "id": "cepot"}}]
 recap = "Q_MQ1_S3_DONE"
 marker = {"zone": "ts_kebun", "id": "sunda_1"}
 
@@ -36,7 +36,7 @@ marker = {"zone": "ts_kampung", "id": "sunda_kampung"}
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ1_S5_OBJ"
-all = [{"on": "glyph_learned:sunda_ga", "set_flag": "mq1_3"}, {"on": "area_entered:sunda_hamlet", "set_flag": "mq1_h1"}]
+all = [{"on": "glyph_learned:sunda_ga", "set_flag": "mq1_3", "objective": "Q_MQ1_S5_P1"}, {"on": "area_entered:sunda_hamlet", "set_flag": "mq1_h1", "objective": "Q_MQ1_S5_P2", "marker": {"zone": "ts_kampung", "id": "sunda_hamlet"}}]
 set_flag = "mq1_h1"
 recap = "Q_MQ1_S5_DONE"
 marker = {"zone": "ts_kampung", "id": "sunda_elder"}
@@ -44,14 +44,14 @@ marker = {"zone": "ts_kampung", "id": "sunda_elder"}
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ1_S6_OBJ"
-all = [{"on": "talked_to:leuwi_mother", "set_flag": "mq1_h1b"}, {"on": "clue_examined:sandal", "set_flag": ""}]
+all = [{"on": "talked_to:leuwi_mother", "set_flag": "mq1_h1b", "objective": "Q_MQ1_S6_P1", "marker": {"zone": "ts_leuwi", "id": "leuwi_mother"}}, {"on": "clue_examined:sandal", "set_flag": "", "objective": "Q_MQ1_S6_P2", "marker": {"zone": "ts_leuwi", "id": "sandal"}}]
 recap = "Q_MQ1_S6_DONE"
 marker = {"zone": "ts_leuwi", "id": "leuwi_mother"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ1_S7_OBJ"
-all = [{"on": "clue_examined:oncor", "set_flag": ""}, {"on": "clue_examined:gorge_prints", "set_flag": "mq1_h2"}]
+all = [{"on": "clue_examined:oncor", "set_flag": "", "objective": "Q_MQ1_S7_P1", "marker": {"zone": "ts_leuwi", "id": "oncor"}}, {"on": "clue_examined:gorge_prints", "set_flag": "mq1_h2", "objective": "Q_MQ1_S7_P2", "marker": {"zone": "ts_leuwi", "id": "gorge_prints"}}]
 set_flag = "mq1_h2"
 recap = "Q_MQ1_S7_DONE"
 marker = {"zone": "ts_leuwi", "id": "oncor"}
@@ -83,7 +83,7 @@ marker = {"zone": "ts_leuwi", "id": "sandekala"}
 [sub_resource type="Resource" id="s11"]
 script = ExtResource("2")
 objective = "Q_MQ1_S11_OBJ"
-all = [{"on": "area_cleared:sunda_batutulis", "set_flag": ""}, {"on": "puzzle_solved:batu_stones_123", "set_flag": "mq1_4"}]
+all = [{"on": "area_cleared:sunda_batutulis", "set_flag": "", "objective": "Q_MQ1_S11_P1", "marker": {"zone": "ts_leuweung", "id": "sunda_batutulis"}}, {"on": "puzzle_solved:batu_stones_123", "set_flag": "mq1_4", "objective": "Q_MQ1_S11_P2", "marker": {"zone": "ts_leuweung", "id": "batu_stones_123"}}]
 set_flag = "mq1_4"
 recap = "Q_MQ1_S11_DONE"
 marker = {"zone": "ts_leuweung", "id": "sunda_batutulis"}
@@ -115,7 +115,7 @@ marker = {"zone": "ts_sawah", "id": "sunda_terraces"}
 [sub_resource type="Resource" id="s15"]
 script = ExtResource("2")
 objective = "Q_MQ1_S15_OBJ"
-all = [{"on": "puzzle_solved:sawah_sluices", "set_flag": ""}, {"on": "talked_to:sunda_weaver", "set_flag": "mq1_6"}]
+all = [{"on": "puzzle_solved:sawah_sluices", "set_flag": "", "objective": "Q_MQ1_S15_P1", "marker": {"zone": "ts_sawah", "id": "sawah_sluices"}}, {"on": "talked_to:sunda_weaver", "set_flag": "mq1_6", "objective": "Q_MQ1_S15_P2", "marker": {"zone": "ts_sawah", "id": "sunda_weaver"}}]
 set_flag = "mq1_6"
 recap = "Q_MQ1_S15_DONE"
 marker = {"zone": "ts_sawah", "id": "sawah_sluices"}
@@ -131,7 +131,7 @@ marker = {"zone": "ts_situ", "id": "sunda_lakeroad"}
 [sub_resource type="Resource" id="s17"]
 script = ExtResource("2")
 objective = "Q_MQ1_S17_OBJ"
-all = [{"on": "clue_examined:felled_trees", "set_flag": "mq1_h4"}]
+all = [{"on": "clue_examined:felled_trees", "set_flag": "mq1_h4", "objective": "Q_MQ1_S17_P1", "marker": {"zone": "ts_situ", "id": "felled_trees"}}]
 set_flag = "mq1_h4"
 recap = "Q_MQ1_S17_DONE"
 marker = {"zone": "ts_situ", "id": "felled_trees"}
@@ -139,7 +139,7 @@ marker = {"zone": "ts_situ", "id": "felled_trees"}
 [sub_resource type="Resource" id="s18"]
 script = ExtResource("2")
 objective = "Q_MQ1_S18_OBJ"
-all = [{"on": "area_cleared:sunda_lakeshore", "set_flag": "mq1_6b"}, {"on": "clue_examined:faceless_toy", "set_flag": "mq1_h5"}]
+all = [{"on": "area_cleared:sunda_lakeshore", "set_flag": "mq1_6b", "objective": "Q_MQ1_S18_P1", "marker": {"zone": "ts_situ", "id": "sunda_lakeshore"}}, {"on": "clue_examined:faceless_toy", "set_flag": "mq1_h5", "objective": "Q_MQ1_S18_P2", "marker": {"zone": "ts_situ", "id": "faceless_toy"}}]
 set_flag = "mq1_h5"
 recap = "Q_MQ1_S18_DONE"
 marker = {"zone": "ts_situ", "id": "sunda_lakeshore"}
@@ -155,7 +155,7 @@ marker = {"zone": "ts_situ", "id": "naganingrum"}
 [sub_resource type="Resource" id="s20"]
 script = ExtResource("2")
 objective = "Q_MQ1_S20_OBJ"
-all = [{"on": "area_cleared:sunda_crater", "set_flag": ""}, {"on": "petilasan_activated:sunda_2", "set_flag": "mq1_7b"}]
+all = [{"on": "area_cleared:sunda_crater", "set_flag": "", "objective": "Q_MQ1_S20_P1", "marker": {"zone": "ts_kawah_jalan", "id": "sunda_crater"}}, {"on": "petilasan_activated:sunda_2", "set_flag": "mq1_7b", "objective": "Q_MQ1_S20_P2", "marker": {"zone": "ts_kawah_jalan", "id": "sunda_2"}}]
 set_flag = "mq1_7b"
 recap = "Q_MQ1_S20_DONE"
 marker = {"zone": "ts_kawah_jalan", "id": "sunda_crater"}
@@ -171,7 +171,7 @@ marker = {"zone": "ts_kawah_jalan", "id": "lc1_voice"}
 [sub_resource type="Resource" id="s22"]
 script = ExtResource("2")
 objective = "Q_MQ1_S22_OBJ"
-all = [{"on": "boss_defeated:faceless_captain", "set_flag": "mq1_8"}, {"on": "memory_done:h1", "set_flag": "mq1_h7"}]
+all = [{"on": "boss_defeated:faceless_captain", "set_flag": "mq1_8", "objective": "Q_MQ1_S22_P1"}, {"on": "memory_done:h1", "set_flag": "mq1_h7", "objective": "Q_MQ1_S22_P2", "marker": {"zone": "ts_kawah", "id": "h1"}}]
 set_flag = "mq1_h7"
 recap = "Q_MQ1_S22_DONE"
 marker = {"zone": "ts_kawah", "id": "faceless_captain"}

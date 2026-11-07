@@ -12,7 +12,7 @@ marker = {"zone": "kg_pasar", "id": "kabayan"}
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_G1_S2_OBJ"
-all = [{"on": "clue_examined:g1_debt_ledger"}, {"on": "clue_examined:g1_palm_sack"}]
+all = [{"on": "clue_examined:g1_debt_ledger", "objective": "Q_SQ_G1_S2_P1", "marker": {"zone": "kg_pasar", "id": "g1_debt_ledger"}}, {"on": "clue_examined:g1_palm_sack", "objective": "Q_SQ_G1_S2_P2", "marker": {"zone": "kg_pasar", "id": "g1_palm_sack"}}]
 marker = {"zone": "kg_pasar", "id": "g1_debt_ledger"}
 
 [sub_resource type="Resource" id="s3"]

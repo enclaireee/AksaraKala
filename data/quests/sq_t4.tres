@@ -13,8 +13,8 @@ marker = {"zone": "tt_beringin", "id": "kepang_leader"}
 script = ExtResource("2")
 objective = "Q_SQ_T4_S2_OBJ"
 on = "item_picked:kuda_kepang_*"
+marker = {"zone": "tt_beringin", "id": "kepang_leader"}
 count = 3
-marker = {}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")

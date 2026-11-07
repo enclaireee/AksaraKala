@@ -91,3 +91,36 @@ The docs give the targets: [world.md](.docs/world.md) zone section and "Points o
 - `reviewer` checks diffs of 3 or more files, and all save, recognizer and quest-engine code. It reports correctness bugs and gaps against the brief only. Run at most 2 review loops.
 - A runnable check beats a review. Each system leaves one headless test in `tests/` that exits 0 on pass.
 - Game feel (timings, hit-stop, readability) is judged by the user playing, not by agents. Ask for a playtest at each phase's exit.
+
+## 8. Autonomous Execution & Token-Efficiency Protocol
+Applies to every session and every subagent. These rules protect context tokens and prevent races and stray edits.
+
+**8.1 No blind sleeps or polling loops**
+- Never use `sleep <N>`, `time.sleep()` or fixed timeouts to wait for servers, daemons, builds or subtasks.
+- Block on readiness instead: `npx wait-on http://localhost:<PORT> -t 20000`, an inline `until curl -s ... ; do sleep 0.2; done` retry, explicit exit codes, or IPC status files.
+- Subagents return control only at an explicit terminal state. Do not poll for file existence across turns.
+
+**8.2 No phantom-bug spirals**
+- If a port or endpoint fails on the first try right after a process start, do not assume the code is broken. Check the PID is alive (`ps aux`, `lsof -i :<PORT>`) and read stdout/stderr first.
+- Do not read unrelated config files to diagnose a connection error unless the logs show a crash or fatal syntax error.
+
+**8.3 Context conservation**
+- Read line ranges (`sed -n 'a,bp'`) or `grep`, never whole files over 200 lines.
+- Pipe noisy output through `tail`, or send it to a temp file (`> /tmp/x.log 2>&1; tail -n 30 /tmp/x.log`).
+- Make small, atomic edits. Never rewrite a whole file to change a few lines. Keep surrounding comments and logic.
+
+**8.4 Dependency discipline**
+- Never install a package to fix an import error before checking typos, path aliases and what the manifest or lockfile already declares.
+
+**8.5 Loop breaker and clean verification**
+- Two strikes: if a command, test or patch fails twice with the same error, stop. State the error and your hypothesis to the user.
+- Before calling a task done, run `git status` and `git diff --stat`. Only the intended files may change. Leave no scratch scripts, `.log` files or debug prints.
+
+**8.6 Scope**
+- Change only what was asked. Do not refactor or reformat untouched files. Match existing patterns and add no new libraries.
+
+**8.7 Search and port hygiene**
+- Never search `.git/`, `.godot/` or build output. Scope `grep`/`find` to source folders.
+- Free a stale port (`lsof -ti :<PORT> | xargs kill -9`) before launching a server. Never change the default port to dodge `EADDRINUSE`.
+- Iterate with the one relevant test file. Run the full suite once at the end.
+- Never print `.env` files or secret keys.
