@@ -6,17 +6,25 @@ class_name Zone extends Node2D
 
 const TILE := 16
 const SCREEN := Vector2i(30, 17)
-## Each doc tile becomes SCALE x SCALE game tiles (architecture.md 9, Phase 6b). size is in game tiles.
+## Default scale: each doc tile becomes SCALE x SCALE game tiles (architecture.md 9, Phase 6b). An area overrides
+## area_scale() (towns: 1). size is in game tiles.
 const SCALE := 2
 const WALK := ".,t_"        # chars the player can stand on
 const SOLID := "#~br"       # chars that collide
+## Town chars (Phase 6c): solid, grass painted under them, collision from the Solids layer. Never eroded or dressed.
+const TOWN_SOLID := "[-'{"
+## Town areas: buildings.gd and town_life.gd run on these.
+const TOWNS := ["desa_purwa", "ts_kampung", "kg_alun", "kg_pasar", "mt_pasar", "sk_nelayan"]
+const BUILDINGS_SCRIPT := "res://zones/buildings.gd"
+const TOWN_LIFE_SCRIPT := "res://zones/town_life.gd"
 ## Areas whose `_` floor is open ground (caves, sand, fields): erosion and dressing treat `_` as the ground.
 const OPEN_FLOOR := ["gk_mulut", "gk_pasir", "gk_lupa", "gk_hutan", "gk_jembatan", "tt_pasir", "tt_ladang", "sk_gua"]
 ## Areas that are rooms: straight walls, furniture, no outdoor dressing.
 const INDOOR := ["kg_penjara", "kg_pustaka", "sk_keraton", "gk_ruang_kala", "gk_pelataran", "tt_candi"]
 const DECO_SCRIPT := preload("res://zones/deco.gd")
-## Tile chars in atlas order of zones/tiles.tres. # ~ b r are solid (physics layer 1).
-const LEGEND := ".,t_#~br"
+## Tile chars in atlas order of zones/tiles.tres (the first 8). # ~ b r are solid (physics layer 1); the town chars
+## after them have no atlas tile of their own.
+const LEGEND := ".,t_#~br[-'{"
 const PLAYER_SCENE := "res://entities/player/player.tscn"
 const UI_SCENE := "res://ui/game_ui.tscn"
 
@@ -24,7 +32,10 @@ const UI_SCENE := "res://ui/game_ui.tscn"
 
 var tiles: TileMapLayer
 var entities: Node2D
-var size := Vector2i.ZERO   # in game tiles (doc size * SCALE)
+var k := SCALE              # this area's scale, cached from area_scale() at the start of _build
+var solids: TileMapLayer            # collision only: the town chars
+var claimed := {}                   # game cell (Vector2i) -> true: cells a town module placed things on; deco skips them
+var size := Vector2i.ZERO   # in game tiles (doc size * k)
 var doc_size := Vector2i.ZERO
 var grid_base: Array[String] = []   # scaled map before erosion, spot tiles substituted
 var grid: Array[String] = []        # scaled map after erosion: what is painted and collides
@@ -44,13 +55,30 @@ func spots() -> Dictionary:
 	return {}
 
 
+## Doc tile -> game tile scale. Generated areas override it (`Scale: n` in the region doc).
+func area_scale() -> int:
+	return SCALE
+
+
+func is_town() -> bool:
+	return zone_id in TOWNS
+
+
+## "sunda", "galuh", "mataram", "timur", "kidul", "kala" or "kelir": the art kit of this area (deco's REGIONS).
+func region_key() -> String:
+	if zone_id.begins_with("kelir"):
+		return "kelir"
+	return ["sunda", "galuh", "mataram", "timur", "kidul", "kala"][clampi(region_source(), 0, 5)]
+
+
 func map_rect() -> Rect2:
 	return Rect2(Vector2.ZERO, Vector2(size * TILE))
 
 
-## Centre of the SCALE x SCALE block of a doc cell, in zone pixels: where its spot entity sits.
+## Centre of the k x k block of a doc cell, in zone pixels: where its spot entity sits.
 func cell_pos(doc_cell: Vector2i) -> Vector2:
-	return Vector2(doc_cell * SCALE * TILE) + Vector2.ONE * (SCALE * TILE) * 0.5
+	var s := area_scale()
+	return Vector2(doc_cell * s * TILE) + Vector2.ONE * (s * TILE) * 0.5
 
 
 ## Game-tile cell holding a zone pixel position.
@@ -199,8 +227,9 @@ func _build() -> void:
 	var rows := map()
 	var sp := spots()
 	var src_id := region_source()
+	k = area_scale()
 	doc_size = Vector2i(rows[0].length() if rows.size() > 0 else 0, rows.size())
-	size = doc_size * SCALE
+	size = doc_size * k
 	if size.x % SCREEN.x != 0 or size.y % SCREEN.y != 0:
 		push_warning("zone %s: map %s is not a multiple of 30x17" % [zone_id, size])
 	var dgrid: Array[String] = []
@@ -223,7 +252,7 @@ func _build() -> void:
 	for y in size.y:
 		var line := ""
 		for x in size.x:
-			line += dgrid[y / SCALE][x / SCALE]
+			line += dgrid[y / k][x / k]
 		grid_base.append(line)
 	grid = grid_base.duplicate()
 	indoor = zone_id in INDOOR
@@ -231,9 +260,14 @@ func _build() -> void:
 	var dress := not zone_id.begins_with("fixture") and not rows.is_empty()
 	if dress:
 		_erode()
+	solids = _child("Solids", TileMapLayer) as TileMapLayer
+	solids.tile_set = _solid_tileset()
 	for y in size.y:
 		for x in size.x:
 			var tc := grid[y][x]
+			if TOWN_SOLID.find(tc) >= 0:   # grass to look at, a collision-only tile to bump into
+				solids.set_cell(Vector2i(x, y), 0, Vector2i.ZERO)
+				tc = "."
 			tiles.set_cell(Vector2i(x, y), src_id, Vector2i(maxi(0, LEGEND.find(tc)), _tile_row(grid, x, y, tc)))
 	var scenes := {}   # char -> PackedScene or null, loaded once
 	for dc: Vector2i in spot_cells:
@@ -249,6 +283,9 @@ func _build() -> void:
 			_scale_spot(n)
 			n.position = cell_pos(dc)
 			entities.add_child(n)
+	if is_town() and dress:   # modules first: they claim the cells deco must leave alone
+		_run_module(BUILDINGS_SCRIPT, "Buildings")
+		_run_module(TOWN_LIFE_SCRIPT, "TownLife")
 	if dress:
 		deco = DECO_SCRIPT.new()
 		deco.name = "Deco"
@@ -257,21 +294,55 @@ func _build() -> void:
 		deco.build(self)
 
 
+## Instantiates a town module (a Node2D script with build(zone)) under the y-sorted Entities, when the file exists.
+func _run_module(path: String, node_name: String) -> void:
+	if not ResourceLoader.exists(path):
+		return
+	var n: Node2D = (load(path) as GDScript).new()
+	n.name = node_name
+	entities.add_child(n)
+	if n.has_method("build"):
+		n.call("build", self)
+
+
+static var _solid_ts: TileSet
+
+
+## A TileSet with one invisible full-cell collider on the same physics layer as tiles.tres.
+func _solid_tileset() -> TileSet:
+	if _solid_ts:
+		return _solid_ts
+	var ts := TileSet.new()
+	ts.tile_size = Vector2i(TILE, TILE)
+	ts.add_physics_layer()
+	ts.set_physics_layer_collision_layer(0, (preload("res://zones/tiles.tres") as TileSet).get_physics_layer_collision_layer(0))
+	var src := TileSetAtlasSource.new()
+	src.texture = ImageTexture.create_from_image(Image.create(TILE, TILE, false, Image.FORMAT_RGBA8))
+	src.texture_region_size = Vector2i(TILE, TILE)
+	ts.add_source(src, 0)   # the tile data only gets its physics layers once the source belongs to the set
+	src.create_tile(Vector2i.ZERO)
+	var td := src.get_tile_data(Vector2i.ZERO, 0)
+	td.add_collision_polygon(0)
+	td.set_collision_polygon_points(0, 0, PackedVector2Array([Vector2(-8, -8), Vector2(8, -8), Vector2(8, 8), Vector2(-8, 8)]))
+	_solid_ts = ts
+	return ts
+
+
 ## Spot entities that block or detect a passage cover their whole block: `block` (exit, kabut, shortcut)
 ## or `size` in tiles (trigger, encounter, whose wave offsets are in tiles too).
 func _scale_spot(n: Node) -> void:
 	if "block" in n:
-		n.set("block", SCALE)
+		n.set("block", k)
 	var s: Variant = n.get("size")
 	if s is Vector2i:
-		n.set("size", (s as Vector2i) * SCALE)
+		n.set("size", (s as Vector2i) * k)
 	var w: Variant = n.get("waves")
 	if w is Array:
 		var out := []
 		for wave: Array in w:
 			var ow := []
 			for e: Array in wave:
-				ow.append([e[0], (e[1] as Vector2i) * SCALE])
+				ow.append([e[0], (e[1] as Vector2i) * k])
 			out.append(ow)
 		n.set("waves", out)
 
@@ -374,7 +445,7 @@ func _start_index() -> int:
 	for dc: Vector2i in spot_cells:
 		var spec: Dictionary = sp[spot_cells[dc]]
 		if String(spec.get("scene", "")).ends_with("spawn.tscn"):
-			var i := (dc.y * SCALE) * size.x + dc.x * SCALE
+			var i := (dc.y * k) * size.x + dc.x * k
 			if (spec.get("props", {}) as Dictionary).get("id", "") == "start":
 				return i
 			if any < 0:
@@ -385,18 +456,19 @@ func _start_index() -> int:
 func _erode() -> void:
 	var w := size.x
 	var h := size.y
-	if indoor:
-		return   # a room-and-corridor area keeps its straight walls
+	if indoor or (is_town() and k == 1):
+		return   # a room-and-corridor area keeps its straight walls; a 1x town keeps its lanes and building rings
 	var seed_i := zone_id.hash() & 0xFFFFFF
 	var prot := PackedByteArray()   # cells erosion may not touch
 	prot.resize(w * h)
-	var floor_d := dist_field(grid_base, "_", 5)
+	var ring := 3 * k - 1   # tiles around a `_` floor that stay as they are (5 at 2x, 2 at 1x)
+	var floor_d := dist_field(grid_base, "_", ring)
 	var dw := dist_field(grid_base, WALK, 3)
 	var ds := dist_field(grid_base, SOLID, 3)
 	for y in h:
 		for x in w:
 			var i := y * w + x
-			if x < 2 or y < 2 or x >= w - 2 or y >= h - 2 or grid_base[y][x] == "," or (floor_d[i] <= 5 and ground_char == "."):
+			if x < 2 or y < 2 or x >= w - 2 or y >= h - 2 or grid_base[y][x] == "," or (floor_d[i] <= ring and ground_char == "."):
 				prot[i] = 1
 	var sp := spots()
 	for dc: Vector2i in spot_cells:
@@ -446,8 +518,8 @@ func _erode() -> void:
 
 ## Marks the block of a doc cell and 2 tiles around it as off limits for erosion.
 func _protect(prot: PackedByteArray, dc: Vector2i) -> void:
-	for y in range(dc.y * SCALE - 2, dc.y * SCALE + SCALE + 2):
-		for x in range(dc.x * SCALE - 2, dc.x * SCALE + SCALE + 2):
+	for y in range(dc.y * k - 2, dc.y * k + k + 2):
+		for x in range(dc.x * k - 2, dc.x * k + k + 2):
 			if x >= 0 and y >= 0 and x < size.x and y < size.y:
 				prot[y * size.x + x] = 1
 
@@ -455,7 +527,7 @@ func _protect(prot: PackedByteArray, dc: Vector2i) -> void:
 ## True when every spot reachable in `base` is reachable in `now`.
 func _spots_reached(base: PackedByteArray, now: PackedByteArray) -> bool:
 	for dc: Vector2i in spot_cells:
-		var i := (dc.y * SCALE) * size.x + dc.x * SCALE
+		var i := (dc.y * k) * size.x + dc.x * k
 		if base[i] == 1 and now[i] == 0:
 			return false
 	return true

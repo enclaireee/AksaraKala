@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://components/health.gd" id="2"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://entities/player/cast_controller.gd" id="10"]
 [ext_resource type="PackedScene" path="res://ui/cast_overlay.tscn" id="11"]
 [ext_resource type="Script" path="res://entities/player/lontar_shimmer.gd" id="12"]
+[ext_resource type="Script" path="res://entities/player/attack_fx.gd" id="15_fx"]
 [ext_resource type="Texture2D" path="res://assets/art/hero_shadow.png" id="13_shadow"]
 [ext_resource type="Texture2D" path="res://assets/art/hero_base.png" id="14_hero_base"]
 
@@ -51,8 +52,8 @@ texture = ExtResource("13_shadow")
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -11)
 texture = ExtResource("14_hero_base")
-hframes = 4
-vframes = 12
+hframes = 6
+vframes = 18
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
@@ -132,3 +133,6 @@ overlay = NodePath("../CastOverlay")
 
 [node name="LontarShimmer" type="Node2D" parent="."]
 script = ExtResource("12")
+
+[node name="AttackFX" type="Node2D" parent="."]
+script = ExtResource("15_fx")

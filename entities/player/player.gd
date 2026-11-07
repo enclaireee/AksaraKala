@@ -31,6 +31,7 @@ const SNAP_PAD := 6.0                           # ASSUMED: enemy body radius add
 @onready var status: Status = $Status
 @onready var sakti: SaktiGauge = $Sakti
 @onready var cast: CastController = $CastController
+@onready var fx = get_node_or_null("AttackFX")   # AttackFX: visual only (combat.md 2.3b)
 
 var state := State.FREE
 var phase := Phase.WINDUP
@@ -271,6 +272,7 @@ func _swing(on: bool) -> void:
 	melee_hitbox.heavy = finisher
 	melee_hitbox.knockback = tuning.enemy_knockback_finisher if finisher else tuning.enemy_knockback_light
 	melee_hitbox.activate()
+	if fx: fx.on_swing()
 
 
 func _shoot() -> void:
@@ -293,6 +295,7 @@ func _shoot() -> void:
 	# ASSUMED: a ranged hit freezes only the target; the archer is not touching it
 	arrow.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, null, finisher, arrow.damage))
 	get_parent().add_child(arrow)
+	if fx: fx.on_shoot(arrow)
 
 
 func _snap_aim(dir: Vector2) -> Vector2:
@@ -325,6 +328,7 @@ func _on_hit_landed(hb: Hurtbox, attacker: Node, heavy: bool, dmg: int) -> void:
 	var s := tuning.shake_kill if kill else tuning.shake_heavy if heavy else Vector2.ZERO
 	if s.x > 0.0:
 		camera.shake(s.x, s.y)
+	if fx: fx.on_hit(hb, heavy, kill)
 
 
 # --- getting hit ---
@@ -509,15 +513,16 @@ func _update_animation() -> void:
 			col = 1
 		State.DODGE:
 			row = 9
-			col = mini(3, int(state_time / 0.1))
+			col = mini(5, int(state_time / 0.075))   # 6 frames over the dodge and its recovery (0.45 s)
 			sprite.flip_h = facing_dir.x < -0.05
 		State.ATTACK:
-			row = 6 + clampi(hit, 0, 2)
-			sprite.flip_h = facing_dir.x < -0.05
-			match phase:
-				Phase.WINDUP: col = 0
-				Phase.ACTIVE: col = 1
-				Phase.RECOVERY: col = 2 if state_time < _phase_len(phase) * 0.5 else 3
+			row = [12, 6, 15][dir_row] + clampi(hit, 0, 2)   # down, side, up rows (hero sheet contract)
+			var plen := maxf(_phase_len(phase), 0.001)
+			var prog := clampf(state_time / plen, 0.0, 0.999)
+			if item.is_melee():   # wind-up 0-1, active 2-3, recovery 4-5
+				col = int(prog * 2.0) + [0, 2, 4][phase]
+			else:                 # no active phase: wind-up 0-2 (raise, draw, hold), recovery 3-5 (release, recoil, settle)
+				col = int(prog * 3.0) + (0 if phase == Phase.WINDUP else 3)
 		State.HURT:
 			row = 10
 			col = 0 if state_time < 0.08 else 1

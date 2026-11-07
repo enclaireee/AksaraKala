@@ -18,7 +18,7 @@ func _initialize() -> void:
 		var tex := load(p) as Texture2D
 		check(tex != null, "hero sheet exists: " + p)
 		if tex:
-			check(tex.get_width() == 64 and tex.get_height() == 288, "hero sheet 64x288: " + p)
+			check(tex.get_width() == 144 and tex.get_height() == 432, "hero sheet 144x432 (6 cols x 18 rows of 24x24): " + p)
 
 	# 2. NPC sheet & regional world tilesets
 	var npc_tex := load("res://assets/art/npcs.png") as Texture2D

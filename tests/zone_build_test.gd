@@ -41,7 +41,7 @@ func _initialize() -> void:
 		built[id] = z
 	var dp: Zone = built.get("desa_purwa")
 	if dp:
-		check(dp.size == Vector2i(60, 34) * Zone.SCALE, "desa_purwa size %s" % dp.size)
+		check(dp.size == dp.doc_size * dp.area_scale(), "desa_purwa size %s" % dp.size)
 		check(dp.spawn("start") != null and dp.spawn("from_ts_kebun") != null and dp.spawn("from_kg_alun") != null
 				and dp.spawn("from_gk_pelataran") != null and dp.spawn("from_gua_kala") != null, "desa_purwa spawns")
 		var dpf := flags(dp)
@@ -70,7 +70,7 @@ func _initialize() -> void:
 	var loose := 0
 	for id: String in ts:
 		var z: Zone = built[id]
-		check(z.size == Vector2i(60, 34) * Zone.SCALE, "%s size %s" % [id, z.size])
+		check(z.size == z.doc_size * z.area_scale(), "%s size %s" % [id, z.size])
 		f += flags(z)
 		p += pets(z)
 		enc += encounters(z).size()

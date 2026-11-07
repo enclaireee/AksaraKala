@@ -30,7 +30,7 @@ func _initialize() -> void:
 		root.add_child(z)
 		await process_frame
 		check(z.zone_id == id, "%s zone_id %s" % [id, z.zone_id])
-		check(z.size == Vector2i(60, 34) * Zone.SCALE, "%s size %s" % [id, z.size])
+		check(z.size == z.doc_size * z.area_scale(), "%s size %s" % [id, z.size])
 		built[id] = z
 	for id: String in built:
 		for n in built[id].entities.get_children():

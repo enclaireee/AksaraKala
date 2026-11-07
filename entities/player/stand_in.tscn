@@ -17,8 +17,8 @@ polygon = PackedVector2Array(-4, -13, 4, -13, 5, 0, -5, 0)
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -12)
 texture = ExtResource("1_hero")
-hframes = 4
-vframes = 12
+hframes = 6
+vframes = 18
 modulate = Color(0.88, 0.78, 0.62, 1)
 
 [node name="Collision" type="CollisionShape2D" parent="."]

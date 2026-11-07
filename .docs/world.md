@@ -36,6 +36,22 @@ An open map of connected regions on the island of Java (Sunda and Javanese lands
 
 ---
 
+## Town design rules (Phase 6c, 2026-11-07, **ASSUMED**, numbers **TUNE**)
+Research summary: Eastward (gamedeveloper.com "Road to the IGF: Pixpil's Eastward"), Sea of Stars (mobilesyrup.com 2023-09-11 level-design interview), Stardew Valley NPC schedules (wiki.stardewvalley.net/NPCs), and Knight Shift's devlog (itch.io/devlog/314447). The engine side is in [architecture.md](architecture.md) 9 "Towns".
+1. **Many pockets, not one field.** A town is a set of dense yard-and-lane pockets around one plaza, with open lanes between them. Each town has one landmark that the main lanes have sightlines to: the gapura gate, a giant waringin, a joglo pendopo, or a leuit cluster.
+2. **Scale.** Towns are drawn at 1x. Houses are 6-10 tiles wide (a landmark up to 14), and 2-3 fit on a screen. Lanes are 2-3 tiles wide, the plaza is at least 10x8, and doors are 1-2 tiles.
+3. **Variety from a kit.** Each building takes a roof type, a wall material, a door, a palette and extras. No two neighbours share both roof and palette. Every building gets one unique detail.
+4. **Every yard is dressed.** Each house has a threshold (a step, mat or pot), a side prop (firewood, gentong jar or bird cage) and a fence or hedge run (`-`). Some have a garden bed (`'`). The props cluster at doors, walls and lane edges, and the lane centres stay clear. Aim for about 15-25 props per screen.
+5. **Life.** Wandering villagers at 3-6 per screen, chickens, cats, ducks and goats at 2-4 per screen, and desynced 2-4 frame loops: smoke, laundry and flags.
+6. **Bigger at the edges.** The map border carries back-row rooftops (`[` blocks against the wall), tree lines and a half-seen gate, so the town reads as continuing past the edge.
+7. **Ground wear.** Worn paths with soft edges, mud at doors and wells, and decals.
+8. **Culture props** (**VERIFY** the details before shipping): sumur well with a pulley, pancuran bamboo spout, kolam fish pond, leuit or lumbung, gardu with a kentongan, gapura, warung, tampah of drying rice or chilli, jemuran clothes line, chicken coop, saung or bale pavilion, lesung rice mortar, firewood stack, banana and coconut palms, a pedati cart, and a waringin with a small shrine.
+9. **Architecture by region** (**VERIFY**):
+   - Sunda: julang ngapak, badak heuay, parahu kumureb and jolopong roofs in black ijuk; bilik walls; short stilts on umpak stones; leuit at the village edge (Kampung Naga).
+   - Java (Galuh, Mataram): kampung, limasan and joglo roofs in red genteng; teak and gebyok walls; a pendopo.
+   - Kidul: stilt houses with nipah thatch, jukung boats, drying racks and nets.
+   - Pasar: warung stalls (`{`) with cloth or tin awnings.
+
 ## Regions & Area Roster (49 Areas)
 
 ### 0. Desa Purwa (1 Area: `desa_purwa`) — Prologue, Interlude & Playable Epilogue

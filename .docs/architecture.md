@@ -116,6 +116,29 @@ Custom `Resource` types so adding content is data entry:
      - dust in the candi
      - paper motes in Kelir
      A screen vignette sits in the UI layer.
+- **Towns (Phase 6c, 2026-11-07, **ASSUMED**, numbers **TUNE**).** The town areas are desa_purwa, ts_kampung, kg_alun, kg_pasar, mt_pasar and sk_nelayan (`Zone.TOWNS`).
+  - **Scale.** A town is drawn at 1x on a bigger doc map. A `Scale: 1` line in its area section makes `gen_zones.py` emit `area_scale()`. Every zone method uses `area_scale()` instead of `SCALE`. Houses are 6-12 tiles wide, lanes 2-4 tiles, and there is one plaza.
+  - **Town tile chars**, all solid except where noted:
+    - `[`: a non-enterable house footprint
+    - `-`: a fence or low wall
+    - `'`: a garden or crop bed (solid, low)
+    - `{`: a market stall
+    The ground under them is painted as `.` grass.
+  - **Buildings** (`zones/buildings.gd`, art from `tools/gen_buildings.py` into `assets/art/buildings/`).
+    - Every `[` rectangle and every enterable room (a `#` ring around `_` floor) becomes a composed building. The roof style, wall material, palette, door, windows and extras are picked per building by seed from the region's kit:
+      - Sunda: julang ngapak and jolopong roofs, bilik bamboo walls, stilts, leuit rice barns
+      - Galuh and Mataram: joglo, limasan and kampung roofs, teak and gebyok walls, red tile
+      - Kidul: stilt fishing houses with nipah thatch
+      - Pasar: warung stalls
+      No two neighbouring buildings share both the roof style and the palette.
+    - An enterable building's roof and front wall fade to 15% alpha while the player stands inside its footprint (0.25 s), so the interior shows.
+  - **Town life** (`zones/town_life.gd`, `entities/ambient/`, art from `tools/gen_ambient.py`). It adds these to towns only, with no dialogue and no collision with the player:
+    - wandering villagers in many outfit variants that idle, chat in pairs and walk short routes
+    - children who run, chickens, ducks, cats, dogs and goats
+    - chimney or kitchen smoke, laundry lines, steaming pots, drying mats
+    - stall goods that fill `{`, plus fences and gardens drawn on `-` and `'`
+    Density is about 6-10 living things per screen in a town.
+  - **Ground.** Tiles have several variants per ground type, soft transitions between grass, path, dirt and water, and decals (worn tracks, puddles, leaves), so no 3x3 area of ground repeats.
 - Interiors (`_` floor areas such as the keraton rooms) keep straight walls and get furniture props instead of trees.
 - Boss and elite scenes are referenced by path and loaded at runtime, so a zone imports cleanly before its boss exists.
 - Persistent state (killed bosses, opened fog gates, chests) lives in `Game`, not in the scene.

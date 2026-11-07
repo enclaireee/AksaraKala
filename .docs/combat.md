@@ -65,6 +65,24 @@ Weapons of one archetype share timing ([balance.md](balance.md) section 3) and d
 
 - **Cutting projectiles:** a melee hit destroys normal enemy projectiles it touches. Boss heavy projectiles cannot be cut. This gives melee classes an answer to shooters without a parry.
 
+### 2.3b Attack animation and FX (Phase 6c, 2026-11-07, **ASSUMED**, frames **TUNE**)
+Visual only: timings, hitboxes and damage stay as in 2.2 and 2.3. The goal is fluid, readable, weighty attacks in the manner of Hyper Light Drifter, Death's Door and CrossCode.
+- **Directional attack frames.** Each combo hit has its own pose in 3 views (down, side and up; the side view is flipped for left). It runs 6 frames, mapped onto the phases:
+  - wind-up: anticipation, then a coil
+  - active: the strike, then the smear
+  - recovery: the follow-through, then settle
+  Hits 1, 2 and 3 differ: hit 1 is a forehand slash, hit 2 a backhand slash, hit 3 the finisher (thrust, slam or lunge, per 2.2). Bow and staff have draw, release and recoil poses.
+- **Weapon smear.** A separate sprite rotates to the swing direction and is sized to the weapon's arc and reach (2.3). It is a 4-frame crescent with the archetype's shape:
+  - light: a thin, fast arc
+  - heavy: a wide, thick arc with dust at the end
+  - spear: a straight thrust streak
+  - finishers: a bigger arc and a white core
+  Its colour comes from the class: warrior steel and ember, rogue indigo and violet, archer and mage use draw and cast glows.
+- **Impact.** On a hit there is a 3-4 frame spark star at the contact point, plus a small ink splash in the hit direction. A finisher or heavy hit adds an impact ring and a 2-frame white flash on the target. A kill leaves an ink-puff burst (3.2).
+- **Movement.** The lunge leaves 1-2 afterimages (alpha 0.35, 0.12 s). A dodge shows a dust puff at the start, 3 afterimages and a dust puff on landing. Footstep dust appears every 4th walk frame on dirt and path.
+- **Bow and staff.** A string-draw glow and a muzzle flash on the shot. The arrow has a 2-frame trail, and the bolt has an orb glow with sparks.
+- All of this respects "Reduce flashing" ([controls.md](controls.md) 6): the white flashes are off, and the sparks are kept.
+
 ### 2.4 Dodge
 | Value | Number |
 |-------|--------|

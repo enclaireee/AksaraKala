@@ -300,11 +300,11 @@ func _cells_of(n: Node) -> Array[Vector2i]:
 			for x in range(-(sz.x / 2), sz.x - sz.x / 2):
 				out.append(c + Vector2i(x, y))
 		return out
-	# A spot is a Zone.SCALE x Zone.SCALE block centred on the node: stand on it or on a tile edge-adjacent to it.
-	var o := Vector2i(((n.global_position - Vector2.ONE * Zone.SCALE * 8.0) / 16.0).round())
-	for y in range(-1, Zone.SCALE + 1):
-		for x in range(-1, Zone.SCALE + 1):
-			if (x < 0 or x >= Zone.SCALE) and (y < 0 or y >= Zone.SCALE):
+	# A spot is a zone.area_scale() x zone.area_scale() block centred on the node: stand on it or on a tile edge-adjacent to it.
+	var o := Vector2i(((n.global_position - Vector2.ONE * zone.area_scale() * 8.0) / 16.0).round())
+	for y in range(-1, zone.area_scale() + 1):
+		for x in range(-1, zone.area_scale() + 1):
+			if (x < 0 or x >= zone.area_scale()) and (y < 0 or y >= zone.area_scale()):
 				continue   # corners touch the block only diagonally
 			out.append(o + Vector2i(x, y))
 	return out

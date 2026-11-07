@@ -18,7 +18,7 @@ Sizes are in screens (30x17 tiles each). Exit sides are ASSUMED and only fix the
 |----|------|------|---------|
 | `mt_gapura` | 2x2 = 60x34 | Stone split gateway, dusty road, banyan, the temple silhouette in the east. The border market stalls stand in the entry yard | Entry from the Pamali ford (Keraton Galuh). **Arrival slice:** two recruiters, one per bank, tell the same war the other way round (2.1). First teach fight (Tuyul with Burst), a second road ambush, the K3 hook beat. Road branches to the rice fields. Far end of the causeway shortcut; the Faceless remnants after Bondowoso (2.20) |
 | `mt_sawah` | 3x2 = 90x34 | Stepped rice paddies, a lumbung, a farm yard with a lesung, irrigation channels | Rest hub: petilasan `mataram_1`. SQ-M1, a farmer for flavor, the lesung codex. Safe area, no fight near the petilasan |
-| `mt_pasar` | 2x3 = 60x51 | Village: roofed market lanes, gamelan pavilion, blacksmith stall, dalang's house | Story and quest hub (lead 1: the setpiece that defends Ki Sumarto's stage, then he teaches Ha, 2.3/2.4; SQ-M2, SQ-M3, SQ-M4 givers). First Pocong teach on the east road |
+| `mt_pasar` | 4x4 = 120x68 (Scale 1) | Village: roofed market lanes, gamelan pavilion, blacksmith stall, dalang's house | Story and quest hub (lead 1: the setpiece that defends Ki Sumarto's stage, then he teaches Ha, 2.3/2.4; SQ-M2, SQ-M3, SQ-M4 givers). First Pocong teach on the east road |
 | `mt_reruntuhan` | 3x3 = 90x51 | Broken candi walls, courtyards, fallen carved stones, a small site museum | Lead 2: Arca fight (`mataram_ruins`), the `arca_base` inscription (Na, 2.6), Pak Karto (side-quest NPC), codex-rich ruin, gong nook, the far side of the `sc:mt_ruin_sawah` gate. Hub of the loops |
 | `mt_kuburan` | 2x2 = 60x34 | Old graveyard with frangipani, a bare hill with one tree, mist | Lead 3 (required since v3.1): graveyard fight `mataram_kuburan`, the Hunter beat `hunter_war`. Optional: Wewe Gombel hill (elite, SQ-M2), crypt secret |
 | `mt_wetan` | 3x2 = 90x34 | Rocky foothill field, dry grass, boulders, a cliff ledge, the juru kunci's hut, a lesung yard of the foothill hamlet | The lesung women (Ca once `lead_kuburan`, 2.9-2.10: moved here from `mt_sawah` so the glyph step is on the way, Pacing rule 5). Rock thrower fight (2.11). The juru kunci (2.12, lamp puzzle at his hut). East exit to Tanah Timur. Start of the drop. Stairs up to the temples |
@@ -129,7 +129,7 @@ Arrival from a shortcut places the player on the near side with the gate already
 
 | Lead | Area | Completes on, sets | Route from `mataram_1` (`mt_sawah`) | Notes |
 |------|------|--------------------|--------------------------------------|-------|
-| Market | `mt_pasar` | `area_cleared:mataram_pasar`, `lead_pasar` | `mt_sawah` S exit > `mt_pasar` N spawn > plaza `E (28,36)`. 1 link | Ki Sumarto's house is at the north end, so Ha can be learned at once (2.3). The lone Pocong (`mataram_pocong`) is on the side road and is not on this route |
+| Market | `mt_pasar` | `area_cleared:mataram_pasar`, `lead_pasar` | `mt_sawah` S exit > `mt_pasar` N spawn > plaza `E (60,34)`. 1 link | Ki Sumarto's house is at the north end, so Ha can be learned at once (2.3). The lone Pocong (`mataram_pocong`) is on the side road and is not on this route |
 | Ruins | `mt_reruntuhan` | `area_cleared:mataram_ruins`, `lead_ruins` | `mt_sawah` > `mt_pasar` > `mt_reruntuhan` N spawn > courtyard `E (44,26)` on the central path. 2 links | `arca_base` stands beside the path 5 tiles north of the Arca fight, so Na can be read at once (2.3). Pak Karto is in the outer yard (side quest) |
 | Graveyard | `mt_kuburan` | `area_cleared:mataram_kuburan`, `lead_kuburan` | `mt_reruntuhan` S exit (44..45,50) > `mt_kuburan` N spawn > graveyard `E (22,18)`. Or `mt_reruntuhan` E road > `mt_wetan` > its S exit (14..15,33) > `mt_kuburan` E spawn. 3 links | The only way to `mt_kuburan` is through `mt_reruntuhan`, and the central path crosses the Arca fight. The Arca wake when passed but there are no arena doors, so a player can run past and finish the fight on the way back (**ASSUMED**). The Hunter beat `hunter_war` plays after the clear. Ca can be learned at once (2.3) at the lesung in `mt_sawah`; `sc:mt_ruin_sawah` (opened from the ruins) is the short way back |
 
@@ -412,64 +412,82 @@ None.
 Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and petilasan, outside the encounter rects): Tuyul (51,23), Tuyul (53,25), Tuyul (52,28). 3 kills, skirtable.
 
 ## Area 3: mt_pasar
+Scale: 1
 
-- Size: 60 x 51 tiles = 2 x 3 screens (30 x 17 each).
+- Size: 120 x 68 tiles = 4 x 4 screens (30 x 17 each), drawn at Scale 1 (a town, Phase 6c; it was 60 x 51). 4 enterable rooms (dalang house, smithy, parents' house, the pendopo), about 26 `[` houses, about 36 `{` stalls, a 44 x 26 market ground with the plaza at its south half, and the pendopo as the landmark on the plaza's north edge.
 - Look: Orange roofed village: market lanes, a gamelan pavilion, a blacksmith stall, the dalang's house. Spires peek over the roofs.
 - Purpose: Story and quest hub (Ki Sumarto, SQ-M2, SQ-M3, SQ-M4 givers). Lead 1: the thieves fight in the market plaza (`mataram_pasar`, step 2.3, now a setpiece), which saves Ki Sumarto's show; he teaches Ha at 2.4. His son Sapto is not here (he is at the ford, `kg_pamali`). First Pocong teach on the east road (`mataram_pocong`).
 
 ### Map
 ```
-############################XX##############################
-#...........................e,.............................#
-#...........................,,.............................#
-#.....###########...........,,..........#############......#
-#.....#_________#...........,,..........#___________#......#
-#.....#_________#...........,,..........#___________#......#
-#.....#____D____#...........,,..........#___B___M___#......#
-#.....#_________#...........,,..........#___F___H___#......#
-#.....#_________#...........,,..........#___________#......#
-#.....#_________#...........,,..........#___________#......#
-#.....#####,#####...........,,..........######,######......#
-#..........,................,,................,............#
-#..........,................,,................,............#
-#..........,................,,................,............#
-#..........,................,,................,............#
-#..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..#
-#..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..#
-#...........................,,.............................#
-#.............I...J.W.......,,.............................#
-#....####,####..............,,........_____________........#
-#....#_______#..............,,........_____________........#
-#....#_______#..............,,........_____________........#
-#....#_______#..............,,........______G______........#
-#....#__P_K__#..............,,........_____________........#
-#....#_______#..............,,........_____________........#
-#....#########..............,,........_____________........#
-#...........................,,........_____________........#
-#...........................,,.............................#
-#...........................,,.............................#
-#...........................,,.............................#
-#..............bb...........,,..........bb.................#
-#.......u......bb...........,,..........bb..bbbbbbbbbbbbbbb#
-#...........................,,.............................#
-#.........u.................A,.............................#
-#......u....................,,.............................#
-#...........................,,.............................#
-#...........................E,,,,,,,,,,,,,,,,,,,,,O,,,,,,,.#
-#...........................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.#
-#...........................,,.............................#
-#...........................,,.............................#
-#..............bb...........,,..........bb.................#
-#..............bb...........,,..........bb..............c..#
-#...........................,,.............................#
-#...........................,,..............bbbbbbbbbbbbbbb#
-#...........................,,.............................#
-#...........................,,.............................#
-#...........................,,.............................#
-#...........................,,.............................#
-#...........................,,.............................#
-#...........................y,.............................#
-############################YY##############################
+###########################################################XX###########################################################
+#..............[[[[[[.........,,,.[[[[[[b[[[[[[...........,e,.[[[[[[bbb[[[[[[...........,,,..............[[[[[[........#
+#..............[[[[[[......r..,,,.[[[[[[b[[[[[[.bb.bbb....,,,.[[[[[[bbb[[[[[[.........b.,,,..............[[[[[[...bb...#
+#..############[[[[[[......r..,,,.[[[[[[b[[[[[[.bb.bbb....,,,.[[[[[[bbb[[[[[[...........,,,..############[[[[[[...bb...#
+#..#__________#...............,,,..[[[[[[[[[.......bbb..r.,,,..[[[[[[[[[................,,,..#__________#..............#
+#..#__________#...[[[[[[[[....,,,..[[[[[[[[[............r.,,,..[[[[[[[[[...[[[[[[[..b...,,,..#__________#.r.[[[[[[[[[..#
+#..#____D_____#...[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[...[[[[[[[......,,,..#___B__M___#.r.[[[[[[[[[..#
+#..#__________#.b.[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[.r.[[[[[[[..bbb.,,,..#___F__H___#...[[[[[[[[[..#
+#..#__________#.b.[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[.r.[[[[[[[..bbb.,,,..#__________#...[[[[[[[[[..#
+#..#__________#...[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[...[[[[[[[..bbb.,,,..#__________#...[[[[[[[[[..#
+#..#####,,#####..-........-...,,,.-.........-.-........-..,,,.-.........-.-.......-.....,,,..#####,,#####..-.........-.#
+#.-............-.-''''....-...,,,.-''''.....-.-''''....-..,,,.-''''.....-.-''''...-.....,,,.-............-.-''''.....-.#
+#.-............-.-........-...,,,.-.........-.-........-..,,,.-.........-.-.......-.....,,,.-............-.-.........-.#
+#.------..------.----..----...,,,.----..-----.----..----..,,,.----..-----.---..----.....,,,.------..------.----..-----.#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#.------..------.----..----...,,,.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,##############,,......,,,.----..----.----..-----.....#
+#.-............-.-''''....-.r.,,,.....{{{,{{{,{{{,{{{,{{{,,,,,{{{,#____________#,,......,,,.-''''....-.-''''.....-.....#
+#..#####,,#####..-........-.r.,,,.....{{{,{{{,{{{,{{{,{{{,,,,,{{{,#____________#,,...r..,,,.-........-.-.........-.....#
+#..#__________#...[[[[[[[[....,,,.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,#____________#,,.b....,,,..[[[[[[[[...[[[[[[[[[...r..#
+#..#__________#...[[[[[[[[....,,,.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,#_____G______#,,.b....,,,..[[[[[[[[...[[[[[[[[[......#
+#..#__________#...[[[[[[[[....,,,.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,#____________#,,......,,,..[[[[[[[[...[[[[[[[[[......#
+#..#____P_K___#...[[[[[[[[.bb.,,,.....{{{,{{{,{{{,{{{,{{{,,,,,{{{,#____________#,,......,,,..[[[[[[[[...[[[[[[[[[..r...#
+#..#__________#...[[[[[[[[.bb.,,,.....{{{,{{{,{{{,{{{,{{{,,,,,{{{,#____________#,,......,,,.............[[[[[[[[[..r...#
+#..#__________#............bb.,,,.bb..,,,,,,,,,,,,,,,,,,,,,,,,,,,,##,,#####,,###,,...r..,,,..[[[[[[[[...[[[[[[[[[......#
+#..############....bbb........,,,.bb..,,{{{,,,,,,,{{{,,{{{,,,,{{{,,{{{,,{{{,,{{{,,...r..,,,..[[[[[[[[...[[[[[[[[[...r..#
+#..................bbb....bbb.,,,.....,,{{{,,,,,,,{{{,,{{{,,,,{{{,,{{{,,{{{,,{{{,,......,,,..[[[[[[[[...[[[[[[[[[...r..#
+#.........................bbb.,,,.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.bbb..,,,..[[[[[[[[...[[[[[[[[[......#
+#.....r.......I...W.J..bb.bbb.,,,.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.bbb..,,,.-........-.-.........-.r...#
+#........b.............bb.....,,,.bb..,,,{{{,{{{,,,,,,,,,,,,,,,,,,,,,,,,,{{{,{{{,,.bbb..,,,.----..----.----..-----.r...#
+#..........bbb.......b.bb.....,,,.bb..,,,{{{,{{{,,,,,,,,,,,,A,,,,,,,,,,,,{{{,{{{,,......,,,............................#
+#.bb.......bbb.......b........,,,.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,......,,,.................---------..#
+#.bb.b..u......b..b...........,,,.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.'''....-..#
+#....b......bb.......bbb......,,,.....,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,O,,,,,,,,,,,.....c..-..#
+#.........u.bb.......bbb......,,,..bb.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.'''..''-..#
+#....................bbb..bb..,,,..bb.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,......,,,.................---------..#
+#......u.....b..bb........bb..,,,.....,,,{{{,{{{,,,,,,,,,,,,,,,,,,,,,,,,,{{{,{{{,,..bb..,,,.bbb........................#
+#...............bb....bb......,,,.....,,,{{{,{{{,,,,,,,,,,,,,,,,,,,,,,,,,{{{,{{{,,..bb..,,,.bbb.....bb.....bb..........#
+#..b.r..r.............bb...b..,,,.bbb.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,......,,,.........bb..bb.bb....b.....#
+#..b.......bbb.bb...b.bb...b..,,,.bbb.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,......,,,.r..bb...bb..bb.........r...#
+#..........bbb.bb.............,,,.....,,{{{,,{{{,,{{{,,{{{,,,,{{{,,,,,,,{{{,,{{{,,......,,,.r..bb......................#
+#.............................,,,.....,,{{{,,{{{,,{{{,,{{{,,,,{{{,,,,,,,{{{,,{{{,,......,,,............................#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#.----..-----.----..----......,,,.----..-----.----..----..,,,.----..-----.----..----....,,,.----..-----.----..----.....#
+#.-''''.....-.-''''....-.bb.r.,,,.-''''.....-.-''''....-..,,,.-''''.....-.-''''....-....,,,.-''''.....-.-''''....-.r...#
+#.-.........-.-........-.bb...,,,.-.........-.-........-..,,,.-.........-.-........-..r.,,,.-.........-.-........-.r...#
+#..[[[[[[[[[...[[[[[[[[.......,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[...[[[[[[[[.....,,,..[[[[[[[[[...[[[[[[[[......#
+#..[[[[[[[[[...[[[[[[[[.......,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[...[[[[[[[[..bb.,,,..[[[[[[[[[...[[[[[[[[.bb...#
+#..[[[[[[[[[...[[[[[[[[..bb...,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[.b.[[[[[[[[..bb.,,,..[[[[[[[[[...[[[[[[[[.bb...#
+#..[[[[[[[[[...[[[[[[[[..bb...,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[.b.[[[[[[[[.....,,,..[[[[[[[[[...[[[[[[[[......#
+#..[[[[[[[[[...[[[[[[[[.......,,,..[[[[[[[[[..............,,,..[[[[[[[[[...[[[[[[[[...r.,,,..[[[[[[[[[...[[[[[[[[......#
+#..............[[[[[[[[.......,,,.........................,,,..[[[[[[[[[..............r.,,,..............[[[[[[[[...b..#
+#.............................,,,.........................,,,...........................,,,............................#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#.-----..-----.----..----.....,,,.----..----.----..-----..,,,.----..----.-----..-----...,,,.----..-----.----..-----....#
+#.-''''......-.-''''....-.....,,,.-''''....-.-''''.....-..,,,.-''''....-.-''''......-...,,,.-''''.....-.-''''.....-....#
+#.-..........-.-........-.b...,,,.-........-.-.........-..,,,.-........-.-..........-...,,,.-.........-.-.........-....#
+#..[[[[[[[[[[...[[[[[[[[..b...,,,..[[[[[[[[...[[[[[[[[[...,,,..[[[[[[[[...[[[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[[.....#
+#..[[[[[[[[[[...[[[[[[[[......,,,..[[[[[[[[...[[[[[[[[[...,,,..[[[[[[[[...[[[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[[.....#
+#..[[[[[[[[[[...[[[[[[[[......,,,..[[[[[[[[...[[[[[[[[[...,,,..[[[[[[[[...[[[[[[[[[[..b.,,,..[[[[[[[[[...[[[[[[[[[.....#
+#..[[[[[[[[[[...[[[[[[[[......,,,..[[[[[[[[...[[[[[[[[[...,,,..[[[[[[[[...[[[[[[[[[[..b.,,,..[[[[[[[[[...[[[[[[[[[.....#
+#.............................,,,..[[[[[[[[...............,y,...........................,,,............................#
+###########################################################YY###########################################################
 ```
 
 ### Legend
@@ -499,23 +517,23 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
-| north gate | (28,1)-(29,3) 2x3 | Arrival from mt_sawah | exit `X` (28..29,0), spawn `e` (28,1) | none |
-| dalang house | (6,3)-(16,10) 11x8 | Ki Sumarto, door (11,10) | D (11,6) | 2.4 `mataram_dalang`, SQ-M4 steps 1 and 3 |
-| smithy | (40,3)-(52,10) 13x8 | Blacksmith stall, door (46,10) | B (46,6) | SQ-M3 `m3_smith` |
-| cross lane | (3,15)-(56,16) 54x2 | East-west lane, no enemies | neighbor `W` (20,18) | SQ-M2 `m2_neighbour` |
-| parents' house | (5,19)-(13,25) 9x7 | Door (9,19) | P (9,23) | SQ-M2 alt `m2_parents_1` |
-| gamelan pavilion | (38,19)-(50,26) 13x8 | Open pavilion | codex `G` (44,22) | codex:gamelan |
-| market plaza | (17,30)-(39,41) 23x12 | Thieves fight, 22x12 | E (28,36) `mataram_pasar` | 2.3 lead 1 `area_cleared:mataram_pasar` |
-| east road and yard | (30,36)-(58,37) 29x2 lane, yard (44,32)-(58,42) | Straight lane 28 tiles into a yard | O (50,36) `mataram_pocong` (Pocong at +4), chest `c` (56,41) | none |
-| south gate | (28,44)-(29,49) 2x6 | To mt_reruntuhan | exit `Y` (28..29,50), spawn `y` (28,49) | none |
+| north gate | (58,1)-(60,3) 3x3 | Arrival from mt_sawah, on the main lane | exit `X` (59..60,0), spawn `e` (59,1) | none |
+| dalang house | (3,3)-(14,10) 12x8 | Ki Sumarto, door (8..9,10) | D (8,6) | 2.4 `mataram_dalang`, SQ-M4 steps 1 and 3 |
+| smithy | (93,3)-(104,10) 12x8 | Blacksmith, door (98..99,10) | B (97,6), M (100,6), F (97,7), H (100,7) | SQ-M3 `m3_smith`, clues `m3_footprints`, `m3_beans` |
+| parents' house | (3,19)-(14,26) 12x8 | Door (8..9,19) on the north lane | P (8,23), K (10,23) | SQ-M2 alt `m2_parents_1` |
+| pendopo (landmark) | (66,17)-(79,25) 14x9 | Gamelan pavilion, doors (68..69,25) and (75..76,25) onto the plaza | codex `G` (72,21) | codex:gamelan |
+| market ground | (38,17)-(81,42) 44x26 | Stall block in the north half (rows y18-24), the plaza in the south half (y26-42, stalls along its rim and four stall islands); the centre (49-70, 28-39) is kept clear for the fight | E (60,34), A (60,31) | 2.3 lead 1 `area_cleared:mataram_pasar` |
+| west lot | (2,28)-(29,42) 28x15 | Grass lot with bamboo, rocks and the neighbours on its north rim | W (18,29), J (20,29), I (14,29); Tuyul `u` (8,33), (10,35), (7,37) | SQ-M2 `m2_neighbour`, clue `m2_toy` |
+| east road and yard | road (82,33)-(107,35) 26x3, yard (108,32)-(116,36) | Straight lane 26 tiles from the plaza into a fenced chest yard; the 16x7 Pocong rect is kept clear of buildings | O (96,34) `mataram_pocong`, chest `c` (113,34) | none |
+| south gate | (58,59)-(60,66) 3x8 | To mt_reruntuhan, on the main lane | exit `Y` (59..60,67), spawn `y` (59,66) | none |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
-| `mataram_pasar` | `E (28,36)` | 22x12 | **Setpiece.** W1: Tuyul (-8,-3), Tuyul (-4,+3), Tuyul (+0,-4), Tuyul (+5,+2), Tuyul (+9,-2); W2: Tuyul (-6,0), Tuyul (0,+5), Tuyul (+6,+1). The stage trigger `A` (28,33) holds the 'hold' meter | Burst (swarm); Bind a runner |
-| `mataram_pocong` | `O (50,36)` | 16x7 | W1: Pocong (+4,+0) | Bind mid-hop (Pocong charger lane 10+ tiles) |
+| `mataram_pasar` | `E (60,34)` | 22x12 | **Setpiece.** W1: Tuyul (-8,-3), Tuyul (-4,+3), Tuyul (+0,-4), Tuyul (+5,+2), Tuyul (+9,-2); W2: Tuyul (-6,0), Tuyul (0,+5), Tuyul (+6,+1). The stage trigger `A` (60,31) holds the 'hold' meter | Burst (swarm); Bind a runner |
+| `mataram_pocong` | `O (96,34)` | 16x7 | W1: Pocong (+4,+0) | Bind mid-hop (Pocong charger lane 10+ tiles) |
 
-Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and petilasan, outside the encounter rects): Tuyul (8,31), Tuyul (10,33), Tuyul (7,34). 3 kills, skirtable.
+Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and petilasan, outside the encounter rects): Tuyul (8,33), Tuyul (10,35), Tuyul (7,37). 3 kills, skirtable.
 
 ## Area 4: mt_reruntuhan
 
@@ -980,8 +998,8 @@ Spots that are not new map characters are listed here, not drawn into the maps (
 | Area | Spot | Scene and props | At | Card | Notes |
 |------|------|-----------------|----|------|-------|
 | `mt_sawah` | pot lid, rice gone | clues `L`, `s` (see its legend) | (8,24), (11,23) | SQ-M1 | Both in the lumbung; memory `sq_m1_selendang` follows. `nawang_wulan` `N` (36,14) is the giver and the turn-in |
-| `mt_pasar` | `m2_neighbour`, `m2_parents_1`, `m3_smith` | NPCs `W`, `P`, `B` (legend, ids renamed v4d) | (20,18), (9,23), (46,6) | SQ-M2, SQ-M3 | `m2_parents_1` says "nobody called him" (step 2) and takes the child home (step 5, **ASSUMED**) |
-| `mt_pasar` | `m3_footprints` | `clue.tscn` `{clue_id:"m3_footprints", cond:"quest:sq_m3=active"}` | (48,8) | SQ-M3 | Tiny footprints in the smithy hearth ash |
+| `mt_pasar` | `m2_neighbour`, `m2_parents_1`, `m3_smith` | NPCs `W`, `P`, `B` (legend, ids renamed v4d) | (18,29), (8,23), (97,6) | SQ-M2, SQ-M3 | `m2_parents_1` says "nobody called him" (step 2) and takes the child home (step 5, **ASSUMED**) |
+| `mt_pasar` | `m3_footprints` | `clue.tscn` `{clue_id:"m3_footprints", cond:"quest:sq_m3=active"}` | (97,7) | SQ-M3 | Tiny footprints in the smithy hearth ash |
 | `mt_tegal` | `m3_beans` | `clue.tscn` `{clue_id:"m3_beans", memory_id:"sq_m3_tuyul", cond:"quest:sq_m3=active"}` | (38,11) | SQ-M3 | Spilled green beans, half counted. Names the tuyul. Opens `sq_m3_tuyul` once the footprints are also done |
 | `mt_tegal` | `m3_trap_sprung` | trigger `L` (legend), `trigger_id` `puzzle_m3_trap_sprung` | (40,9) | SQ-M3 peaceful | Puzzle: the player sets out the beans (a 3-bean pile, **VERIFY** beans or crabs) at three marked spots along the leader's path; it stops to count each pile (4 s, **TUNE**); when the third is counted the net drops. The elite `q` (44,9) is caught, not fought; kills nothing |
 | `mt_kuburan` | `m2_toy` | `clue.tscn` `{clue_id:"m2_toy", memory_id:"sq_m2_child", cond:"quest:sq_m2=active"}` | (44,14) | SQ-M2 | The boy's toy on the hill path (inside the hill room (40,3)-(56,16)), south of the tree. Its note names the Wewe Gombel. Opens `sq_m2_child` once the parents have been talked to |

@@ -88,7 +88,7 @@ class DecoChunk extends Node2D:
 
 func build(z: Zone) -> void:
 	zone = z
-	region = REGIONS[clampi(z.region_source(), 0, REGIONS.size() - 1)]
+	region = z.region_key() if z.region_key() in REGIONS else "kala"
 	style = STYLE.get("%s_%d" % [region, z.sub_biome()], STYLE["sunda_0"])
 	rng.seed = z.zone_id.hash()
 	_g = z.grid
@@ -101,6 +101,7 @@ func build(z: Zone) -> void:
 		_layers.append(layer)
 	_prepare()
 	if not z.indoor:
+		_ground()
 		_terrain()
 		_ground_cover()
 		_landmarks()
@@ -110,17 +111,22 @@ func build(z: Zone) -> void:
 
 # ---------------------------------------------------------------- setup
 func _prepare() -> void:
-	var floor_d := Zone.dist_field(_g, "_", 5)
+	var ring := 3 * zone.k - 1   # `#` this close to a `_` floor is a room wall, not terrain (5 at 2x, 2 at 1x)
+	var floor_d := Zone.dist_field(_g, "_", ring)
 	_outdoor.resize(_w * _h)
 	clear.resize(_w * _h)
 	for y in _h:
 		for x in _w:
 			var i := y * _w + x
-			if _g[y][x] == "#" and not zone.indoor and (floor_d[i] > 5 or zone.ground_char == "_"):
+			if _g[y][x] == "#" and not zone.indoor and (floor_d[i] > ring or zone.ground_char == "_"):
 				_outdoor[i] = 1
 			if _g[y][x] == ",":
 				clear[i] = 1
-	var s := Zone.SCALE
+	var s := zone.k
+	for c: Vector2i in zone.claimed:   # a town module placed something here
+		if c.x >= 0 and c.y >= 0 and c.x < _w and c.y < _h:
+			clear[c.y * _w + c.x] = 1
+			_outdoor[c.y * _w + c.x] = 0
 	for dc: Vector2i in zone.spot_cells:
 		for y in range(maxi(0, dc.y * s - 2), mini(_h, dc.y * s + s + 2)):
 			for x in range(maxi(0, dc.x * s - 2), mini(_w, dc.x * s + s + 2)):
@@ -174,6 +180,220 @@ func _ok(x: int, y: int) -> bool:
 
 func _jitter(r: float) -> float:
 	return rng.randf_range(-r, r)
+
+
+# ---------------------------------------------------------------- ground variety
+## tools/gen_ground_tiles.py sheet: 8 columns, 3 sub-biome blocks of G_BLOCK rows (see that file's docstring).
+## Opaque variants of grass, path, plaza stone, sand and wood floor are chosen per cell by a seeded hash (never the same as
+## the left or upper neighbour), soft edge pieces bleed path, sand and shore onto the grass next to them, and decals add
+## worn tracks, puddles, leaves, flowers, cracks and moss. All of it is non-colliding TileMapLayers under the Deco node.
+const GROUND_TEX := "res://assets/art/ground/ground_%s.png"
+const G_BLOCK := 24
+const G_GRASS := 1
+const G_PATH := 2
+const G_PLAZA := 3
+const G_SAND := 4
+const G_WOOD := 5
+const G_NB := [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
+const G_DIAG := [Vector2i(1, -1), Vector2i(1, 1), Vector2i(-1, 1), Vector2i(-1, -1)]
+const G_CRACKS := [Vector2i(7, 21), Vector2i(6, 22), Vector2i(7, 22), Vector2i(0, 23)]
+
+static var _gts := {}   # region -> TileSet or null
+
+var ground_mat := PackedByteArray()   # per cell G_* (0 = not ground art), read by tests
+var ground_var := PackedByteArray()   # per cell variant 0..7
+var ground_layers: Array[TileMapLayer] = []   # tiles, edges, shore, decals
+
+
+func _ground_tileset() -> TileSet:
+	if _gts.has(region):
+		return _gts[region]
+	var ts: TileSet = null
+	var path := GROUND_TEX % region
+	if ResourceLoader.exists(path):
+		var tex := load(path) as Texture2D
+		var src := TileSetAtlasSource.new()
+		src.texture = tex
+		src.texture_region_size = Vector2i(16, 16)
+		for r in tex.get_height() / 16:
+			for c in tex.get_width() / 16:
+				src.create_tile(Vector2i(c, r))
+		ts = TileSet.new()
+		ts.tile_size = Vector2i(16, 16)
+		ts.add_source(src, 0)
+	_gts[region] = ts
+	return ts
+
+
+func _ground_mat(x: int, y: int) -> int:
+	return ground_mat[y * _w + x] if x >= 0 and y >= 0 and x < _w and y < _h else 0
+
+
+func _ground() -> void:
+	var ts := _ground_tileset()
+	if ts == null:
+		return
+	for n in ["GroundTiles", "GroundEdges", "GroundShore", "GroundDecals"]:
+		var l := TileMapLayer.new()
+		l.name = n
+		l.tile_set = ts
+		add_child(l)
+		ground_layers.append(l)
+	var sbo := zone.sub_biome() * G_BLOCK
+	var seed_i := zone.zone_id.hash() & 0xFFFFFF
+	ground_mat.resize(_w * _h)
+	ground_var.resize(_w * _h)
+	var open_floor := zone.ground_char == "_"
+	var plaza_cells := _plaza_cells()
+	for y in _h:
+		for x in _w:
+			var c := _g[y][x]
+			var m := 0
+			if c == ".":
+				m = G_GRASS
+			elif c == ",":
+				m = G_PATH
+				for o: Vector2i in G_NB:   # a path beside water is a bridge: keep the tileset's planks
+					if _tile(x + o.x, y + o.y) == "~":
+						m = 0
+			elif c == "_":
+				m = G_SAND if open_floor else (G_PLAZA if plaza_cells.has(Vector2i(x, y)) else G_WOOD)
+			ground_mat[y * _w + x] = m
+	for y in _h:
+		for x in _w:
+			var i := y * _w + x
+			var m := ground_mat[i]
+			if m == 0:
+				continue
+			var v := int(Zone._hash2(x, y, seed_i) * 8.0) % 8
+			if m == G_GRASS:   # broad light and dark patches
+				var dark := Zone.noise(x / 7.0, y / 7.0, seed_i + 3) > 0.5
+				if Zone._hash2(x, y, seed_i + 1) < 0.15:
+					dark = not dark
+				v = v % 4 + (4 if dark else 0)
+			var tries := 0
+			while tries < 4 and ((x > 0 and ground_mat[i - 1] == m and ground_var[i - 1] == v) or (y > 0 and ground_mat[i - _w] == m and ground_var[i - _w] == v)):
+				v = (v + 1 + int(Zone._hash2(x, y, seed_i + 50 + tries) * 6.0)) % 8
+				tries += 1
+			ground_var[i] = v
+			ground_layers[0].set_cell(Vector2i(x, y), 0, Vector2i(v, sbo + m - 1))
+	var dtree := Zone.dist_field(_g, "#", 3)
+	for y in _h:
+		for x in _w:
+			var m := ground_mat[y * _w + x]
+			if m == 0:
+				continue
+			var cell := Vector2i(x, y)
+			if (m == G_GRASS or m == G_SAND) and _edge(cell, 1, sbo, seed_i, ground_layers[2]):
+				pass
+			if m == G_GRASS:
+				if not _edge(cell, 0, sbo, seed_i, ground_layers[1]):
+					_edge(cell, 2, sbo, seed_i, ground_layers[1])
+			var d := _decal(x, y, m, dtree[y * _w + x] <= 3, seed_i)
+			if d.x >= 0 and not zone.claimed.has(cell):
+				ground_layers[3].set_cell(cell, 0, Vector2i(d.x, sbo + d.y))
+
+
+func _tile(x: int, y: int) -> String:
+	return _g[y][x] if x >= 0 and y >= 0 and x < _w and y < _h else "#"
+
+
+## Which neighbours of the edge kind (0 path, 1 water, 2 sand) are at (x, y) + o.
+func _is_kind(kind: int, x: int, y: int) -> bool:
+	match kind:
+		0:
+			return _ground_mat(x, y) == G_PATH
+		1:
+			return _tile(x, y) == "~"
+	return _ground_mat(x, y) == G_SAND
+
+
+## Soft edge of a neighbouring material bleeding onto this cell: a side-mask piece, or a corner piece when only a diagonal touches.
+func _edge(cell: Vector2i, kind: int, sbo: int, seed_i: int, layer: TileMapLayer) -> bool:
+	if layer.get_cell_source_id(cell) != -1:
+		return false
+	var mask := 0
+	for i in 4:
+		if _is_kind(kind, cell.x + G_NB[i].x, cell.y + G_NB[i].y):
+			mask |= 1 << i
+	var piece := mask - 1
+	if mask == 0:
+		piece = -1
+		for i in 4:
+			if _is_kind(kind, cell.x + G_DIAG[i].x, cell.y + G_DIAG[i].y):
+				piece = 15 + i
+				break
+	if piece < 0:
+		return false
+	var idx := int(Zone._hash2(cell.x, cell.y, seed_i + 11) * 2.0) % 2 * 19 + piece
+	layer.set_cell(cell, 0, Vector2i(idx % 8, sbo + 5 + kind * 5 + idx / 8))
+	return true
+
+
+## Decal atlas coords (column, block row) for a cell, or (-1, -1).
+func _decal(x: int, y: int, m: int, near_tree: bool, seed_i: int) -> Vector2i:
+	if _tile(x, y - 1) == "#" and not zone.claimed.has(Vector2i(x, y - 1)):
+		return Vector2i(0, 20)   # shadow under a north wall
+	var h := Zone._hash2(x, y, seed_i + 21)
+	var h2 := Zone._hash2(x, y, seed_i + 22)
+	var pn := Zone.noise(x / 5.0, y / 5.0, seed_i + 23)
+	var pick := int(Zone._hash2(x, y, seed_i + 24) * 6.0) % 6
+	match m:
+		G_GRASS:
+			if (pn > 0.62 and h < 0.22) or h < 0.012:
+				return Vector2i(pick, 22)
+			if near_tree and h2 < 0.1:
+				return Vector2i(pick % 4, 21)
+		G_PATH:
+			var hz := _ground_mat(x - 1, y) == G_PATH and _ground_mat(x + 1, y) == G_PATH
+			var vt := _ground_mat(x, y - 1) == G_PATH and _ground_mat(x, y + 1) == G_PATH
+			if hz != vt and Zone.noise(x / 9.0, y / 9.0, seed_i + 24) > 0.35 and h < 0.6:
+				return Vector2i(1 + (0 if hz else 2) + pick % 2, 20)
+			if h2 < 0.06:
+				return Vector2i(5 + pick % 3, 20)
+			if near_tree and h < 0.1:
+				return Vector2i(pick % 4, 21)
+		G_PLAZA:
+			if h < 0.1:
+				return G_CRACKS[pick % 4]
+			if h2 < 0.06:
+				return Vector2i(4 + pick % 3, 21)
+		G_WOOD:
+			if h < 0.05:
+				return G_CRACKS[pick % 4]
+	return Vector2i(-1, -1)
+
+
+## `_` cells of open (plaza) floors, as opposed to rooms: a connected `_` area touching more than a few open ground cells,
+## or any `_` area outside a town. Rooms get wood.
+func _plaza_cells() -> Dictionary:
+	var out := {}
+	var seen := PackedByteArray()
+	seen.resize(_w * _h)
+	for sy in _h:
+		for sx in _w:
+			if _g[sy][sx] != "_" or seen[sy * _w + sx] == 1:
+				continue
+			var comp: Array[Vector2i] = [Vector2i(sx, sy)]
+			seen[sy * _w + sx] = 1
+			var head := 0
+			var open := 0
+			while head < comp.size():
+				var c := comp[head]
+				head += 1
+				for o: Vector2i in G_NB:
+					var n: Vector2i = c + o
+					var t := _tile(n.x, n.y)
+					if t == "_":
+						if seen[n.y * _w + n.x] == 0:
+							seen[n.y * _w + n.x] = 1
+							comp.append(n)
+					elif t == "." or t == ",":
+						open += 1
+			if not zone.is_town() or open > 6:
+				for c in comp:
+					out[c] = true
+	return out
 
 
 # ---------------------------------------------------------------- solid ground

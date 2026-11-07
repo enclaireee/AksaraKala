@@ -1,5 +1,5 @@
 extends SceneTree
-## World scale and dressing (architecture.md 9, Phase 6b), every area in Zones.ZONES: SCALE x SCALE blocks, erosion keeps
+## World scale and dressing (architecture.md 9, Phase 6b), every area in Zones.ZONES: scale x scale blocks, erosion keeps
 ## every spot reachable, passage entities cover their whole block, deco never lands on a spot block, exit or path tile,
 ## the ambience stays under 40 particles, and a rebuild is identical.
 
@@ -21,8 +21,8 @@ func _initialize() -> void:
 		if id == "hub":
 			continue
 		var z := await build(zones.ZONES[id])
-		check(z.size == z.doc_size * Zone.SCALE, "%s size %s is not doc %s * %d" % [id, z.size, z.doc_size, Zone.SCALE])
-		check(z.cell_pos(Vector2i(1, 1)) == Vector2(Zone.SCALE * 16 * 1.5, Zone.SCALE * 16 * 1.5), "%s cell_pos" % id)
+		check(z.size == z.doc_size * z.area_scale(), "%s size %s is not doc %s * %d" % [id, z.size, z.doc_size, z.area_scale()])
+		check(z.cell_pos(Vector2i(1, 1)) == Vector2(z.area_scale() * 16 * 1.5, z.area_scale() * 16 * 1.5), "%s cell_pos" % id)
 		check(z.deco != null, "%s has no Deco" % id)
 		if z.deco == null:
 			z.free()
@@ -33,7 +33,7 @@ func _initialize() -> void:
 		var base := z._flood(z.grid_base, start)
 		var now := z._flood(z.grid, start)
 		for dc: Vector2i in z.spot_cells:
-			var i: int = dc.y * Zone.SCALE * z.size.x + dc.x * Zone.SCALE
+			var i: int = dc.y * z.area_scale() * z.size.x + dc.x * z.area_scale()
 			check(base[i] == 0 or now[i] == 1, "%s: spot '%s' at %s is cut off by erosion" % [id, z.spot_cells[dc], dc])
 		for y in z.size.y:
 			if z.grid[y] != z.grid_base[y]:
@@ -48,7 +48,7 @@ func _initialize() -> void:
 		for p: Dictionary in z.deco.placed:
 			for c: Vector2i in p.cells:
 				var on_path: bool = z.grid_base[c.y][c.x] == ","
-				var on_spot: bool = z.spot_cells.has(c / Zone.SCALE)
+				var on_spot: bool = z.spot_cells.has(c / z.area_scale())
 				if on_path or on_spot or z.deco.clear[c.y * z.size.x + c.x] == 1:
 					bad += 1
 		check(bad == 0, "%s: %d deco footprint cells sit on a path, spot block or near one" % [id, bad])
@@ -59,10 +59,10 @@ func _initialize() -> void:
 		for n in z.entities.get_children():
 			if n.scene_file_path.ends_with("exit.tscn") or n.scene_file_path.ends_with("kabut.tscn"):
 				var sh: RectangleShape2D = n.get_node("Shape").shape
-				check(sh.size == Vector2.ONE * 16.0 * Zone.SCALE, "%s: %s shape %s does not cover its block" % [id, n.scene_file_path.get_file(), sh.size])
+				check(sh.size == Vector2.ONE * 16.0 * z.area_scale(), "%s: %s shape %s does not cover its block" % [id, n.scene_file_path.get_file(), sh.size])
 			elif n.scene_file_path.ends_with("shortcut.tscn"):
 				var sh: RectangleShape2D = n.get_node("Wall/Shape").shape
-				check(sh.size == Vector2.ONE * 16.0 * Zone.SCALE, "%s: shortcut wall %s does not cover its block" % [id, sh.size])
+				check(sh.size == Vector2.ONE * 16.0 * z.area_scale(), "%s: shortcut wall %s does not cover its block" % [id, sh.size])
 		# Mood.
 		var cm := z.get_node_or_null("Mood") as CanvasModulate
 		check(cm != null, "%s has no CanvasModulate" % id)

@@ -79,22 +79,22 @@ func run() -> void:
 	await physics_frame
 	await physics_frame
 	var z: Zone = current_scene
-	check(z.size == Vector2i(60, 34) * Zone.SCALE, "fixture A size %s" % z.size)
-	# Doc cells are SCALE x SCALE blocks: check every game tile of the block.
+	check(z.size == z.doc_size * z.area_scale(), "fixture A size %s" % z.size)
+	# Doc cells are scale x scale blocks: check every game tile of the block.
 	var want := {Vector2i(0, 0): 4, Vector2i(5, 5): 0, Vector2i(2, 4): 1, Vector2i(3, 4): 5, Vector2i(4, 4): 6,
 		Vector2i(5, 4): 2, Vector2i(6, 4): 7, Vector2i(7, 4): 3, Vector2i(10, 2): 1}
 	for dcell: Vector2i in want:
-		for o in Zone.SCALE * Zone.SCALE:
-			var cell := dcell * Zone.SCALE + Vector2i(o % Zone.SCALE, o / Zone.SCALE)
+		for o in z.area_scale() * z.area_scale():
+			var cell := dcell * z.area_scale() + Vector2i(o % z.area_scale(), o / z.area_scale())
 			check(z.tiles.get_cell_atlas_coords(cell) == Vector2i(want[dcell], 0),
 				"tile at %s is %s, want %d" % [cell, z.tiles.get_cell_atlas_coords(cell), want[dcell]])
 	for dcell in [Vector2i(0, 0), Vector2i(3, 4), Vector2i(4, 4), Vector2i(6, 4)]:
-		for o in Zone.SCALE * Zone.SCALE:
-			var cell: Vector2i = dcell * Zone.SCALE + Vector2i(o % Zone.SCALE, o / Zone.SCALE)
+		for o in z.area_scale() * z.area_scale():
+			var cell: Vector2i = dcell * z.area_scale() + Vector2i(o % z.area_scale(), o / z.area_scale())
 			check(solid_at(cell), "tile %s does not collide" % cell)
 	for dcell in [Vector2i(5, 5), Vector2i(2, 4), Vector2i(5, 4), Vector2i(7, 4)]:
-		for o in Zone.SCALE * Zone.SCALE:
-			var cell: Vector2i = dcell * Zone.SCALE + Vector2i(o % Zone.SCALE, o / Zone.SCALE)
+		for o in z.area_scale() * z.area_scale():
+			var cell: Vector2i = dcell * z.area_scale() + Vector2i(o % z.area_scale(), o / z.area_scale())
 			check(not solid_at(cell), "walkable tile %s collides" % cell)
 	check(z.find_child("GameUI", true, false) != null, "the zone did not add the UI")
 	var p := player()

@@ -375,6 +375,41 @@ User call: "design the UI... a bigger more detailed pixel art for the character 
   - There is no Aksara tab.
   - The gamepad pass on the menus has not been done.
 
+### 5zh. Phase 6c: living towns, building kit, ground expansion, attack animation (2026-11-07, all 67 headless tests pass twice, pushed)
+User call: "the towns are small... every house is the same and repetitive... a whole big expansion on the tiles, make the town not feel empty, research other RPGs". Then "animate the attacks more... attack sprites so the combat feels more fluid". The spec is in world.md "Town design rules (Phase 6c)", architecture.md 9 "Towns (Phase 6c)" and combat.md "2.3b".
+- **Towns at 1x.** A `Scale: 1` line in an area doc makes `gen_zones.py` emit `area_scale()`; Zone now uses `k`/`area_scale()` everywhere. The new solid town chars are `[` house, `-` fence, `'` garden and `{` stall, with collision on a `Solids` layer. `Zone.TOWNS`, `is_town()`, `region_key()` and `claimed` were added. A 1x town skips erosion.
+- **Six towns redrawn.** desa_purwa is 150x85 with about 59 houses and 4 rooms. ts_kampung (leuit compound), kg_alun (waringin and gapura), kg_pasar (31 stalls and the market hall), mt_pasar (36 stalls and the pendopo) and sk_nelayan (beach, jetty and stilt houses) are each 120-150 x 68. Every spot is kept, and reachability is checked.
+- **Building kit.**
+  - `tools/gen_buildings.py` writes 5 kits (sunda, galuh, mataram, kidul, pasar) of 4 palettes each into `assets/art/buildings/`.
+  - Roof styles: julang ngapak with capit gunting, jolopong, parahu kumureb, leuit, joglo, limasan, kampung, pendopo, nipah stilts and warung.
+  - `zones/buildings.gd` detects `[` blocks and `#`/`_` rooms and composes each building by seed (no neighbour shares roof plus palette). The roof fades to 15% while you are inside. Test: `tests/buildings_test.gd`.
+- **Town life.**
+  - `tools/gen_ambient.py`: 30 villager variants, 8 animal types, smoke, pots, fires, laundry, mats, 3 fence styles, crops and stall goods.
+  - `entities/ambient/` (villager, animal, fx, prop_batch) and `zones/town_life.gd`: at most 60 live things, idle beyond 400 px.
+  - Test: `tests/town_life_test.gd`.
+- **Ground.**
+  - `tools/gen_ground_tiles.py` writes `assets/art/ground/ground_<region>.png`: 8 variants each of grass, path, plaza, sand and wood; edge transitions; decals.
+  - It is drawn by deco on 4 ground layers, and no cell repeats its neighbour.
+  - Test: `tests/town_zone_test.gd` with fixtures.
+- **Attacks.**
+  - Hero sheets are now 144x432, 24x24 cells in 6 cols by 18 rows. Directional 6-frame attacks for hits 1-3 (side 6-8, down 12-14, up 15-17) and a 6-frame dodge.
+  - `tools/gen_combat_fx.py` writes the smears, spark, ink splash, ring, ink puff, dust, muzzle flash, trail and bolt glow.
+  - `entities/player/attack_fx.gd` drives them by `tick()`, with no timers.
+  - `tools/pilite.py` is a stdlib PIL shim.
+  - Tests: `tests/attack_fx_test.gd` and `art_test` (sheet size).
+- **Fixes and rules.**
+  - The flaky `sandekala_test` "boss bar contract" was a physics-tick race; physics is now off before the first tick.
+  - AGENTS.md has the new CRITICAL no-sleep rule, in section 1 and in the brief template.
+- **VERIFY:** the house and roof cues and the village props (world.md Town rules 8-9) come from secondary sources.
+- **TUNE:** pacing again, now that towns are bigger. Town density (villagers 3-6 per screen, animals 2-4).
+- **Open:**
+  - The down and up attack views are projected from the side view and read weaker.
+  - Game has no `reduce_flashes` setting yet; attack_fx reads it when it exists.
+  - The kerbau reads a bit hippo-like.
+  - The Laras `route` prop in desa_purwa.md has old 60x34 coordinates, but nothing reads it.
+  - Town coordinates quoted in other tables of tatar_sunda.md and keraton_galuh.md (piece placement, quest markers) are stale.
+  - Deco props still have no collision.
+
 ## 6. Pending decisions for the user
 1. Veto anything in 5i. (The Mage lineage option is moot: lineages were dropped in §5n.)
 2. ~~Move Wewe Gombel to Mataram~~: done 2026-11-05.
@@ -384,6 +419,8 @@ User call: "design the UI... a bigger more detailed pixel art for the character 
 - 2026-11-05 playtest: UI text was pixel-blurry. Stretch mode is now `canvas_items` and font antialiasing is back to the defaults, so text is smooth at full resolution. The m5x7 plan is dropped (ui.md 1, architecture.md 1). Watch for sprites sitting between game pixels. The fix if they do: put the world in a 480x270 SubViewport.
 
 ## 7. Next step
+**2026-11-07 (Phase 6c towns and attacks done, §5zh):** next is the user playtest (town feel, walk times, attack feel), then the §5zh open items, then SFX and music.
+
 **2026-11-07 (Phase 6b UI and world done, §5zg):** next is the user playtest of the new look and the 2x world (feel, walking times, readability), then the open §5zg items, then the rest of Phase 6: SFX and music, particles and glyph art.
 
 **2026-11-07 (Phase 6 Sprites & World Tilesets Complete):**
