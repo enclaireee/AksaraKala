@@ -86,7 +86,7 @@ func _epilogue() -> void:
 		if ep._done:
 			break
 		ep.advance()
-	check(ep.index == 7, "epilogue stopped at line %d, want 7" % ep.index)
+	check(ep.index == 8, "epilogue stopped at line %d, want 8" % ep.index)
 	for i in 600:
 		if current_scene is Zone and current_scene.zone_id == "desa_purwa":
 			break

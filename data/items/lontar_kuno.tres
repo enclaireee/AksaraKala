@@ -10,4 +10,4 @@ slot = "accessory"
 mythic = true
 description = "ITEM_LONTAR_KUNO_DESC"
 lore = "ITEM_LONTAR_KUNO_LORE"
-bonus = {"spi": 2}
+bonus = {"smudge": -0.05}

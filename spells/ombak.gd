@@ -14,7 +14,7 @@ func _ready() -> void:
 	max_range = 160.0   # TUNE
 	pierce = true
 	knockback = 64.0    # px of push: enemy_base flinches at knockback / enemy_flinch for enemy_flinch s (spells.md 3)
-	poise_mult = preload("res://data/combat_tuning.tres").spell_poise_mult
+	poise_mult = preload("res://data/combat_tuning.tres").spell_poise_mult * SpellUtil.poise_mult(data)
 	super()
 
 

@@ -16,12 +16,12 @@ Sizes are in screens (30x17 tiles each). Exit sides are ASSUMED and only fix the
 
 | Id | Size | Look | Purpose |
 |----|------|------|---------|
-| `mt_gapura` | 2x2 = 60x34 | Stone split gateway, dusty road, banyan, the temple silhouette in the east. The border market stalls stand in the entry yard | Entry from the Pamali ford (Keraton Galuh). **Arrival slice:** two recruiters, one per bank, tell the same war the other way round (2.1). First teach fight (Tuyul with Burst), a second road ambush, the K3 hook beat. Road branches to the rice fields. Far end of the causeway shortcut; the Faceless remnants after Bondowoso (2.11) |
+| `mt_gapura` | 2x2 = 60x34 | Stone split gateway, dusty road, banyan, the temple silhouette in the east. The border market stalls stand in the entry yard | Entry from the Pamali ford (Keraton Galuh). **Arrival slice:** two recruiters, one per bank, tell the same war the other way round (2.1). First teach fight (Tuyul with Burst), a second road ambush, the K3 hook beat. Road branches to the rice fields. Far end of the causeway shortcut; the Faceless remnants after Bondowoso (2.20) |
 | `mt_sawah` | 3x2 = 90x34 | Stepped rice paddies, a lumbung, a farm yard with a lesung, irrigation channels | Rest hub: petilasan `mataram_1`. SQ-M1, a farmer for flavor, the lesung codex. Safe area, no fight near the petilasan |
-| `mt_pasar` | 2x3 = 60x51 | Village: roofed market lanes, gamelan pavilion, blacksmith stall, dalang's house | Story and quest hub (lead 1: the setpiece that defends Ki Sumarto's stage, then he teaches Ha, 2.2/2.3; SQ-M2, SQ-M3, SQ-M4 givers). First Pocong teach on the east road |
-| `mt_reruntuhan` | 3x3 = 90x51 | Broken candi walls, courtyards, fallen carved stones, a small site museum | Lead 2: Arca fight (`mataram_ruins`), the `arca_base` inscription (Na, 2.3), Pak Karto (side-quest NPC), codex-rich ruin, gong nook, the far side of the `sc:mt_ruin_sawah` gate. Hub of the loops |
+| `mt_pasar` | 2x3 = 60x51 | Village: roofed market lanes, gamelan pavilion, blacksmith stall, dalang's house | Story and quest hub (lead 1: the setpiece that defends Ki Sumarto's stage, then he teaches Ha, 2.3/2.4; SQ-M2, SQ-M3, SQ-M4 givers). First Pocong teach on the east road |
+| `mt_reruntuhan` | 3x3 = 90x51 | Broken candi walls, courtyards, fallen carved stones, a small site museum | Lead 2: Arca fight (`mataram_ruins`), the `arca_base` inscription (Na, 2.6), Pak Karto (side-quest NPC), codex-rich ruin, gong nook, the far side of the `sc:mt_ruin_sawah` gate. Hub of the loops |
 | `mt_kuburan` | 2x2 = 60x34 | Old graveyard with frangipani, a bare hill with one tree, mist | Lead 3 (required since v3.1): graveyard fight `mataram_kuburan`, the Hunter beat `hunter_war`. Optional: Wewe Gombel hill (elite, SQ-M2), crypt secret |
-| `mt_wetan` | 3x2 = 90x34 | Rocky foothill field, dry grass, boulders, a cliff ledge, the juru kunci's hut, a lesung yard of the foothill hamlet | The lesung women (Ca once `lead_kuburan`, 2.3: moved here from `mt_sawah` so the glyph step is on the way, Pacing rule 5). Rock thrower fight (2.5). The juru kunci (2.5, lamp puzzle at his hut). East exit to Tanah Timur. Start of the drop. Stairs up to the temples |
+| `mt_wetan` | 3x2 = 90x34 | Rocky foothill field, dry grass, boulders, a cliff ledge, the juru kunci's hut, a lesung yard of the foothill hamlet | The lesung women (Ca once `lead_kuburan`, 2.9-2.10: moved here from `mt_sawah` so the glyph step is on the way, Pacing rule 5). Rock thrower fight (2.11). The juru kunci (2.12, lamp puzzle at his hut). East exit to Tanah Timur. Start of the drop. Stairs up to the temples |
 | `mt_candi` | 3x3 = 90x51 | The unfinished temples: spires, spirit builders, scaffolds, temple gate, the boss court | Front yard with the temple gate fight and the K3 clues, the camp sequence in the court (gate fight, captain miniboss, setpiece), petilasan `mataram_2` with Laras's lontar (LC3), boss arena (>= 1 screen, 30x17 **ASSUMED**), the far side of the causeway gate |
 | `mt_tegal` | 2x2 = 60x34 | Dry field, a tuyul-haunted well, old brick kiln | Landing of the drop. End of the back road `sc:mt_tt`. SQ-M3 hideout. Secret well chamber. One link from petilasan `mataram_1` |
 
@@ -30,13 +30,13 @@ Encounter ids are proposed `mataram_*` (**ASSUMED**) except `mataram_ruins`, `ma
 
 | Id | Encounters | NPCs | Chests, petilasan, codex, secrets |
 |----|------------|------|-----------------------------------|
-| `mt_gapura` | `mataram_gerbang`: 3 Tuyul, one wave (new, teach: Burst clears a swarm; Ca learned in MQ1 1.7). `mataram_jalan`: 4 Tuyul on the east road (2.1, second fight). After 2.10 (`flag:mq2_7b`): `mataram_tepi` (2 Faceless, 1 archer, west road) and `mataram_causeway` (3 Faceless, in front of the opened causeway gate), the 2.11 return fights | `recruiter_a`, `recruiter_b` (2.1, the two banks; unnamed) | Chest `mataram_chest_gapura` (55 Ilmu). Codex spot `codex:gapura` (stone gate). Beat spot `beat_haulers` (K3 hook) |
+| `mt_gapura` | `mataram_gerbang`: 3 Tuyul, one wave (new, teach: Burst clears a swarm; Ca learned in MQ1 1.7). `mataram_jalan`: 4 Tuyul on the east road (2.2, second fight). After 2.19 (`flag:mq2_7b`): `mataram_tepi` (2 Faceless, 1 archer, west road) and `mataram_causeway` (3 Faceless, in front of the opened causeway gate), the 2.20 return fights | `recruiter_a`, `recruiter_b` (2.1, the two banks; unnamed) | Chest `mataram_chest_gapura` (55 Ilmu). Codex spot `codex:gapura` (stone gate). Beat spot `beat_haulers` (K3 hook) |
 | `mt_sawah` | none (safe) | `nawang_wulan` (SQ-M1 giver), `sawah_farmer` (flavor), no lesung women since v4c | Petilasan **`mataram_1`** (Q). Chest `mataram_chest_sawah`. Codex `codex:gejog_lesung` (the lesung that the women later pound in `mt_wetan`). Lumbung: SQ-M1 clues `m1_pot_lid`, `m1_rice_gone` (v4d). Barred north gate of `sc:mt_ruin_sawah` |
-| `mt_pasar` | `mataram_pasar` (**setpiece**, 2.2): 5 Tuyul (Village thieves) come for Ki Sumarto's stage, 2 waves (5 then 3, **ASSUMED**), the stage prop must not fall. `mataram_pocong`: 1 Pocong alone on the east road (new, teach: Bind mid-hop, 8-tile lane) | `mataram_dalang` = Ki Sumarto (Q, 2.3 teaches Ha once `lead_pasar`; regional character; SQ-M4 giver), `m3_smith` (SQ-M3 giver), `m2_neighbour` (SQ-M2 giver), `m2_parents_1` (SQ-M2 alt, later `wewe_parents_2` at the hill) | Chest `mataram_chest_pasar`. Codex `codex:gamelan` |
-| `mt_reruntuhan` | `mataram_ruins` (Q, **miniboss**, 2.2): 3 Arca on the edges (the middle one is the elite `mt_arca_penjaga`), 2 Tuyul, courtyard. Wakes when passed (Ruins wake) | `pak_karto` = Pak Karto (side-quest NPC, off the main path), in the safe outer yard before the courtyard. `arca_base` = inscribed base of an Arca (2.3, cond `flag:lead_ruins`), in the courtyard beside the central path | **Codex-rich ruin**: site museum with `codex:candi_seribu`, `codex:roro_jonggrang`, `codex:arca`. Secret 1: sealed nook behind a cracked wall holding the gong ageng (SQ-M4) and a gear chest `mataram_secret_gong`. Far side of `sc:mt_ruin_sawah` |
-| `mt_kuburan` | `mataram_kuburan_gate` (2.2, fight 1): 3 Tuyul, 1 Pocong on the north field. `mataram_kuburan`: 2 Pocong, 3 Tuyul (Graveyard, open ground; lead 3, required). `mataram_pemanen` (**miniboss**, 2.4, cond `flag:memory_h3`): the harvest captain, an elite Faceless with 2 Pocong, on the east road. `mataram_wewe`: elite Wewe Gombel (only if SQ-M2 is fought, HP 780) | `wewe_parents_2` arrive at the hill if SQ-M2 is peaceful | Secret 2: crypt under the hill, chest **Panah Pasopati** (`mataram_secret_pasopati`, Q reward source "Mataram secret"). Marker `wewe_hill` (Q) |
-| `mt_wetan` | `mataram_batu`: 1 Genderuwo, 2 Pocong (Rock thrower, rocky field). `mataram_batu_2` (2.5, fight 1): 3 Tuyul on the junction field. Puzzle `puzzle_wetan_lamps` (2.5) | `juru_kunci` (comment: was Mbah Marto; 2.5, teaches Ra after the blockade falls), `lesung_women` (2.3, teaches Ca once `lead_kuburan`; lesung yard, moved from `mt_sawah`) | Chest `mataram_chest_wetan`. Codex `codex:genderuwo`. Kabut `K3` to `tt_kulon` on the east edge. Drop ledge on the south cliff |
-| `mt_candi` | `mataram_candi`: Temple gate, wave 1: 1 Genderuwo, 2 Arca; wave 2: 3 Tuyul rising from a heap of dropped stones with a 0.5 s warning (2 waves). Then, in the court (2.6, cond `flag:mq2_6`): `mataram_camp_gate` (3 Faceless), `mataram_camp_captain` (**miniboss**, elite Faceless), `mataram_camp` (**setpiece**, the Pamali stone wakes). The petilasan sits after them, no fight between it and the boss | `hauler` (2.6, a bound hauler at the temple gate, unnamed); the lesung women do not stand at the arena edge (see ASSUMED 9) | Petilasan **`mataram_2`** (Q) right before the boss arena. Boss **Bandung Bondowoso** (`bandung_bondowoso`). Chest `mataram_chest_candi`. Batu bintang (SQ-T3 meteorite fragment) in the front yard (**ASSUMED**). Far side of `sc:mt_candi_gapura`. K3 clues `rubble`, `lesung_mid`, `ka_strip`; Laras's lontar `lc3_lontar` at the petilasan |
+| `mt_pasar` | `mataram_pasar` (**setpiece**, 2.3): 5 Tuyul (Village thieves) come for Ki Sumarto's stage, 2 waves (5 then 3, **ASSUMED**), the stage prop must not fall. `mataram_pocong`: 1 Pocong alone on the east road (new, teach: Bind mid-hop, 8-tile lane) | `mataram_dalang` = Ki Sumarto (Q, 2.4 teaches Ha once `lead_pasar`; regional character; SQ-M4 giver), `m3_smith` (SQ-M3 giver), `m2_neighbour` (SQ-M2 giver), `m2_parents_1` (SQ-M2 alt, later `wewe_parents_2` at the hill) | Chest `mataram_chest_pasar`. Codex `codex:gamelan` |
+| `mt_reruntuhan` | `mataram_ruins` (Q, **miniboss**, 2.6): 3 Arca on the edges (the middle one is the elite `mt_arca_penjaga`), 2 Tuyul, courtyard. Wakes when passed (Ruins wake) | `pak_karto` = Pak Karto (side-quest NPC, off the main path), in the safe outer yard before the courtyard. `arca_base` = inscribed base of an Arca (2.6, cond `flag:lead_ruins`), in the courtyard beside the central path | **Codex-rich ruin**: site museum with `codex:candi_seribu`, `codex:roro_jonggrang`, `codex:arca`. Secret 1: sealed nook behind a cracked wall holding the gong ageng (SQ-M4) and a gear chest `mataram_secret_gong`. Far side of `sc:mt_ruin_sawah` |
+| `mt_kuburan` | `mataram_kuburan_gate` (2.7, fight 1): 3 Tuyul, 1 Pocong on the north field. `mataram_kuburan`: 2 Pocong, 3 Tuyul (Graveyard, open ground; lead 3, required). `mataram_pemanen` (**miniboss**, 2.8, cond `flag:memory_h3`): the harvest captain, an elite Faceless with 2 Pocong, on the east road. `mataram_wewe`: elite Wewe Gombel (only if SQ-M2 is fought, HP 780) | `wewe_parents_2` arrive at the hill if SQ-M2 is peaceful | Secret 2: crypt under the hill, chest **Panah Pasopati** (`mataram_secret_pasopati`, Q reward source "Mataram secret"). Marker `wewe_hill` (Q) |
+| `mt_wetan` | `mataram_batu`: 1 Genderuwo, 2 Pocong (Rock thrower, rocky field). `mataram_batu_2` (2.11, fight 1): 3 Tuyul on the junction field. Puzzle `puzzle_wetan_lamps` (2.12) | `juru_kunci` (comment: was Mbah Marto; 2.12, teaches Ra after the blockade falls), `lesung_women` (2.9-2.10, teaches Ca once `lead_kuburan`; lesung yard, moved from `mt_sawah`) | Chest `mataram_chest_wetan`. Codex `codex:genderuwo`. Kabut `K3` to `tt_kulon` on the east edge. Drop ledge on the south cliff |
+| `mt_candi` | `mataram_candi`: Temple gate, wave 1: 1 Genderuwo, 2 Arca; wave 2: 3 Tuyul rising from a heap of dropped stones with a 0.5 s warning (2 waves). Then, in the court (2.14, cond `flag:mq2_6`): `mataram_camp_gate` (3 Faceless), `mataram_camp_captain` (**miniboss**, elite Faceless), `mataram_camp` (**setpiece**, the Pamali stone wakes). The petilasan sits after them, no fight between it and the boss | `hauler` (2.14, a bound hauler at the temple gate, unnamed); the lesung women do not stand at the arena edge (see ASSUMED 9) | Petilasan **`mataram_2`** (Q) right before the boss arena. Boss **Bandung Bondowoso** (`bandung_bondowoso`). Chest `mataram_chest_candi`. Batu bintang (SQ-T3 meteorite fragment) in the front yard (**ASSUMED**). Far side of `sc:mt_candi_gapura`. K3 clues `rubble`, `lesung_mid`, `ka_strip`; Laras's lontar `lc3_lontar` at the petilasan |
 | `mt_tegal` | `mataram_tuyul`: elite tuyul leader (`unique_id` `tuyul_leader`) + 3 Tuyul swarm (SQ-M3 fight, new). Peaceful ending has no fight (puzzle `puzzle_m3_trap_sprung`) | none | Secret 3: dry well chamber, gear chest `mataram_secret_sumur`. Marker `tuyul_hideout` |
 
 NPC count is 10 ids (the 9 NPC ids plus `arca_base`, a read-in-place object) because of the side quests (world.md says 3-5, Tatar Sunda has 10 for the same reason, **ASSUMED**).
@@ -135,7 +135,7 @@ Arrival from a shortcut places the player on the near side with the gate already
 
 Possible orders: market first (natural), ruins first, or graveyard first (the ruins fight is crossed on the way). The market can also be last: from the ruins, `sc:mt_ruin_sawah` leads to `mt_sawah` and the market is one link. All three leads are required for 2.2, so every route must reach all three areas, and they do. Lead rooms are ordered by distance from `mataram_1` (1, 2, 3 links), so the natural order is market, ruins, graveyard, as the Act III text lists them.
 
-**Critical path** (MQ2 v4c order, 7 of 8 areas): `kg_pamali` > `mt_gapura` (2.1: the two recruiters in the entry yard, E gerbang, the `haulers` beat, E jalan) > `mt_sawah` (petilasan `mataram_1`, sets `mq2_1`) > the three leads in any order (2.2): `mt_pasar` (the stage setpiece, then Ki Sumarto), `mt_reruntuhan` (clue `ka_chalk`, the Arca miniboss), `mt_kuburan` (two fights, beat `hunter_war`) > the glyphs as each lead opens its source (2.3): Ha from Ki Sumarto in `mt_pasar`, Na read off `arca_base` in `mt_reruntuhan` (the stones puzzle), Ca from the lesung women in the `mt_wetan` lesung yard (moved from `mt_sawah`) > H3 (2.4): the mask fragment in `mt_kuburan` (clue `hunter_mask_3`), memory `h3`, then the harvest-captain miniboss on the east road > `mt_wetan` (2.5: E batu_2, E batu, the lamp puzzle, the juru kunci and Ra, sets `mq2_6`; beat `lengser_word` if `choice_handed`) > `K2` > `mt_candi` (2.6: E candi, the hauler, E camp_gate, the captain miniboss, the camp setpiece, beat `camp`; 2.7: clues `rubble`, `lesung_mid`, `ka_strip`; 2.8: memory `k3_lesung`; rest at `mataram_2` and take `lc3_lontar`; 2.9: chapter `lc3`; 2.10: Bandung Bondowoso) > open `sc:mt_candi_gapura` > `mt_gapura` (2.11: E causeway, E tepi) > west to `kg_pamali` (2.11 the stone; 2.12 K-III; 2.13 the letters and Hariang Banga, sets `mq2_9`; beats `ford` and `truce`) > back east.
+**Critical path** (MQ2 v5 order; see the Flow section for the v5 step numbers, 7 of 8 areas): `kg_pamali` > `mt_gapura` (2.1: the two recruiters in the entry yard, E gerbang, the `haulers` beat, E jalan) > `mt_sawah` (petilasan `mataram_1`, sets `mq2_1`) > the three leads in any order (2.2): `mt_pasar` (the stage setpiece, then Ki Sumarto), `mt_reruntuhan` (clue `ka_chalk`, the Arca miniboss), `mt_kuburan` (two fights, beat `hunter_war`) > the glyphs as each lead opens its source (2.3): Ha from Ki Sumarto in `mt_pasar`, Na read off `arca_base` in `mt_reruntuhan` (the stones puzzle), Ca from the lesung women in the `mt_wetan` lesung yard (moved from `mt_sawah`) > H3 (2.4): the mask fragment in `mt_kuburan` (clue `hunter_mask_3`), memory `h3`, then the harvest-captain miniboss on the east road > `mt_wetan` (2.5: E batu_2, E batu, the lamp puzzle, the juru kunci and Ra, sets `mq2_6`; beat `lengser_word` if `choice_handed`) > `K2` > `mt_candi` (2.6: E candi, the hauler, E camp_gate, the captain miniboss, the camp setpiece, beat `camp`; 2.7: clues `rubble`, `lesung_mid`, `ka_strip`; 2.8: memory `k3_lesung`; rest at `mataram_2` and take `lc3_lontar`; 2.9: chapter `lc3`; 2.10: Bandung Bondowoso) > open `sc:mt_candi_gapura` > `mt_gapura` (2.11: E causeway, E tepi) > west to `kg_pamali` (2.11 the stone; 2.12 K-III; 2.13 the letters and Hariang Banga, sets `mq2_9`; beats `ford` and `truce`) > back east.
 
 **Return trips (Pacing rule 5).** After 2.10 the way home is the opened causeway (0 minutes; `sc:mt_candi_gapura`), and the gapura it lands in is a changed area: the Faceless remnants fight there (`mataram_causeway`, `mataram_tepi`, counted as the `travel` and `fight x2` of 2.11). After 2.13 the Tanah Timur gate `K3` is two areas from `kg_pamali` by the causeway, not five: `mt_gapura` (east road) > causeway pocket > `mt_candi` (west road, the builders gone: scaffolds down, the lesung women's beat now plays in the court, **ASSUMED**) > south gate > `mt_wetan` (stairs corridor) > east road > `K3`. No plain backtrack through sawah, pasar and ruins is needed. The lesung women moved to `mt_wetan` for the same reason: with Ca at `mt_sawah` the graveyard-to-wetan trip would have gone kuburan > ruins > `sc:mt_ruin_sawah` > sawah and back, four empty areas.
 
@@ -159,18 +159,18 @@ Marker form `{zone: "<area id>", id: ...}` (the area in the Area column; `QuestD
 |------|---------------|-----------|------|--------------|
 | Unlock: from Keraton Galuh | | none | `mt_gapura` entry | `zone_entered:mataram` |
 | 2.1 (`all`) hear both recruiters | `travel, talk x2, beat` | `recruiter_a` (Q), `recruiter_b` (Q) | `mt_gapura` entry yard, the two banks of the lane (the north stall and the south stall) | `talked_to:recruiter_a`, `talked_to:recruiter_b`; sets `mq2_a1` |
-| 2.2 break the blockade at the border gate and rest at `mataram_1` | `fight x2, travel, talk` | `mataram_gerbang` (Q), `mataram_jalan`, `mataram_1` (Q) | `mt_gapura` (gerbang field, east road), `mt_sawah` | `area_cleared:mataram_gerbang`; then `petilasan_activated:mataram_1` (Q); sets `mq2_1` |
+| 2.2 break the blockade at the border gate and rest at `mataram_1` | `fight x2, travel, talk` | `mataram_gerbang` (Q), `mataram_jalan`, `mataram_1` (Q), `sawah_farmer` (quiet talk, `mt_sawah` `W`) | `mt_gapura` (gerbang field, east road), `mt_sawah` | `area_cleared:mataram_gerbang`; then `petilasan_activated:mataram_1` (Q); sets `mq2_1` |
 | 2.3 defend Ki Sumarto's wayang stage | `setpiece, fight x2` | `mataram_pasar` (Q), `pasar_stage` | `mt_pasar` (plaza `E`) | `area_cleared:mataram_pasar`; sets `lead_pasar` |
-| 2.4 speak with Ki Sumarto, learn Jawa Ha, map the three leads | `talk, lesson, clue, fight` | `mataram_dalang` (Q) | `mt_pasar` (dalang house) | `glyph_learned:jawa_ha` (Q); sets `mq2_2` |
+| 2.4 speak with Ki Sumarto, learn Jawa Ha, map the three leads | `talk, lesson, clue, fight` | `mataram_dalang` (Q; Ki Sumarto) | `mt_pasar` (dalang house) | `glyph_learned:jawa_ha` (Q); sets `mq2_2` |
 | 2.5 escort displaced market families across the flooded paddies | `travel, fight x2, talk` | `mataram_sawah_road` (Q) | `mt_sawah` (east road) | `area_cleared:mataram_sawah_road`; sets `mq2_2b` |
 | 2.6 Lead 1 (The Ruins): defeat the awakened Arca guardians and read Jawa Na | `travel, clue, fight, miniboss, lesson` | `ka_chalk`, `mataram_ruins` (Q), `arca_base` (Q) | `mt_reruntuhan` (courtyard) | `area_cleared:mataram_ruins`, sets `lead_ruins`; then `glyph_learned:jawa_na`, sets `mq2_3` |
 | 2.7 Lead 2 (The Graveyard): cleanse `mt_kuburan` | `travel, clue, fight x2, beat` | `mataram_kuburan_gate`, `mataram_kuburan` (Q) | `mt_kuburan` (north field, graveyard `E`) | `area_cleared:mataram_kuburan`; sets `lead_kuburan` (plays beat `hunter_war`) |
 | 2.8 claim the third mask fragment and witness H3 | `clue, memory, fight` | `hunter_mask_3` (Q; `memory_id: h3`), `mataram_pemanen` | `mt_kuburan` (north grave rows, east road) | `memory_done:h3`, sets `mq2_h4` |
 | 2.9 Lead 3 (The Lesung Yard): help Nyai Gendhis clear the haunted mill yard | `travel, fight, talk, puzzle, beat` | `mataram_lesung_yard` (Q) | `mt_wetan` (lesung yard) | `area_cleared:mataram_lesung_yard`, sets `mq2_4` |
 | 2.10 learn the dawn rhythm and Jawa Ca from Nyai Gendhis | `talk, lesson, fight x2` | `lesung_women` (Q) | `mt_wetan` (lesung yard) | `glyph_learned:jawa_ca` (Q); sets `mq2_5` |
-| 2.11 break the spirit-builder siege on the foothill shrine | `travel, clue, fight x2, miniboss` | `mataram_batu_2`, `mataram_batu` (Q) | `mt_wetan` | `area_cleared:mataram_batu` (Q); sets `mq2_5b` |
+| 2.11 break the spirit-builder siege on the foothill shrine | `travel, clue, fight x2, miniboss` | `shrine_chisel` (**ASSUMED**), `mataram_batu_2`, `mataram_batu` (Q) | `mt_wetan` | `area_cleared:mataram_batu` (Q); sets `mq2_5b` |
 | 2.12 align the foothill shrine braziers and receive Jawa Ra | `puzzle, talk, lesson` | `puzzle_wetan_lamps` (Q), `juru_kunci` (Q) | `mt_wetan` (hut yard and hut) | `puzzle_solved:puzzle_wetan_lamps`; then `glyph_learned:jawa_ra` (Q), sets `mq2_6` (opens `K2`) |
-| 2.13 fight across the plain of rising stones (`mt_tegal`) | `travel, clue, fight x2, setpiece` | `mataram_tegal_pillars` (Q) | `mt_tegal` | `area_cleared:mataram_tegal_pillars`, sets `mq2_6b` |
+| 2.13 fight across the plain of rising stones (`mt_tegal`) | `travel, clue, fight x2, setpiece` | `pillar_prints` (**ASSUMED**), `mataram_tegal_pillars` (Q) | `mt_tegal` | `area_cleared:mataram_tegal_pillars`, sets `mq2_6b` |
 | 2.14 breach the outer temple gate of `mt_candi` and storm the Faceless reading-camp | `fight, talk, fight, miniboss, beat` | `mataram_candi` (Q), `hauler`, `mataram_camp_gate`, `mataram_camp_captain`, `mataram_camp` (Q) | `mt_candi` (front yard, temple court) | `area_cleared:mataram_candi`; then `area_cleared:mataram_camp` (Q), sets `mq2_7` (Beat `camp`) |
 | 2.15 K3 clues | `clue x3, talk` | `rubble`, `lesung_mid`, `ka_strip` (Q; `ka_strip` has `memory_id: k3_lesung`) | `mt_candi` (front yard east side, petilasan court, the court) | `all`: `clue_examined:rubble`, `clue_examined:lesung_mid`, `clue_examined:ka_strip`; sets `mq2_h1` |
 | 2.16 LC3 Cross-Time Chapter: Laras in Candi Seribu | `chapter, puzzle` | `lc3_lontar` (`memory_id: lc3`) | `mt_candi` (petilasan court) and `zones/kelir/lc3.tscn` | `memory_done:lc3`, sets `mq2_lc`, `laras_key:candi_crypt`, `laras_sabotage:bondowoso_pillar` |
@@ -188,11 +188,13 @@ Marker form `{zone: "<area id>", id: ...}` (the area in the Area column; `QuestD
 | Beat | `if` | Area | Spot | Notes |
 |------|------|------|------|-------|
 | `hunter_war` | `flag:lead_kuburan`, `zone:mt_kuburan` | `mt_kuburan` | `H` (23,8), trigger `beat_hunter_war` | Moved from the old graveyard-optional placement to the lead flag. The Hunter's servants harvest the fallen among the graves; he stands at the north grave rows |
-| `lengser_word` | `flag:choice_handed`, `flag:mq2_6`, `zone:mt_wetan` | `mt_wetan` | `L` (44,10), trigger `beat_lengser_word` | One line, in the stairs corridor just below `K2`, before the camp |
+| `lengser_word` | `flag:choice_handed`, `flag:mq2_6`, `zone:mt_wetan` | `mt_wetan` | `L` (44,10), trigger `beat_lengser_word` | Choice 2, handed: Lengser's extracted camp layout (opens `sc:mt_candi_crypt` early), in the stairs corridor just below `K2`, before the camp |
 | `camp` | `flag:mq2_7`, `zone:mt_candi` | `mt_candi` | `T` (30,15), trigger `beat_camp` | Staged in the cleared camp: Laras's lontar strip with your name. Seal 3 breaks and Bandung Bondowoso wakes |
-| `haulers` | `step:mq2=0`, `zone:mt_gapura`, `flag:mq2_a1` | `mt_gapura` | trigger `beat_haulers` (see the legend) | K3 hook: villagers haul stone in the night, temples stand where yesterday there was a field. Plays after `mataram_gerbang` is cleared |
-| LC3 (was `laras_3`) | none: the chapter is step 2.9 | `mt_candi` | clue `lc3_lontar` beside petilasan `P` (30,25) `mataram_2` | Replaces the old beat. `do: flag:beat_laras_3` is set by `memory_done:lc3` |
-| `ford`, `truce` | `flag:mq2_8`; `quest:mq2=done` | `kg_pamali` | not in this doc | Staged in [keraton_galuh.md](keraton_galuh.md) (Sapto `s`, Ciung `c`, the boss `B`). Ki Sumarto's son Sapto (**ASSUMED**) wades back across the ford in `truce` |
+| `two_stories` | `flag:mq2_a1`, `zone:mt_gapura` | `mt_gapura` | `L` (7,16), trigger `beat_two_stories` | 2.1, after both recruiters: who is who, the lane divided by a rope |
+| `haulers` | `flag:beat_two_stories`, `zone:mt_gapura` | `mt_gapura` | `C`, trigger `beat_haulers` (see the legend) | K3 hook (2.1): villagers haul stone in the night, temples stand where yesterday there was a field |
+| `ranga_word` | `flag:choice_freed`, `flag:mq2_6`, `zone:mt_wetan` | `mt_wetan` | `Q` (45,10), trigger `beat_ranga_word` (**ASSUMED**) | Choice 2, freed: Ranga's scouting word, one tile east of `lengser_word` |
+| LC3 (was `laras_3`) | none: the chapter is step 2.16 | `mt_candi` | clue `lc3_lontar` beside petilasan `P` (30,25) `mataram_2` | Replaces the old beat. `do: flag:beat_laras_3` is set by `memory_done:lc3` |
+| `ford`, `truce` | `flag:mq2_h3`; `quest:mq2=done` (Choice 3) | `kg_pamali` | not in this doc | Staged in [keraton_galuh.md](keraton_galuh.md) (Sapto `s`, Ciung `c`, the boss `B`). Ki Sumarto's son Sapto (**ASSUMED**) wades back across the ford in `truce` |
 
 Ki Sumarto stays at his house in `mt_pasar` all act (his show K-III is staged at the ford camp in `kg_pamali`, with him). The cast budget is met: Ki Sumarto, the juru kunci and the lesung women are the only named or recurring speakers on the path; the two recruiters, the hauler and the sawah farmer are unnamed one-scene locals (Pak Karto is a side-quest NPC, Sapto is in `kg_pamali`).
 
@@ -237,7 +239,7 @@ The 8 sections below follow the format of [tatar_sunda.md](tatar_sunda.md) (tile
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Stone split gateway, dusty road, banyan trees, the Candi Seribu silhouette far in the east sky. A paved causeway wall runs along the north-east.
-- Purpose: Entry from `kg_pamali` (the gate is kabut `mqg_7` in Keraton Galuh), first fight `mataram_gerbang` (step 2.1; Tuyul teach), road to the rice fields. Holds the gate of shortcut `sc:mt_candi_gapura` (walled causeway end).
+- Purpose: Entry from `kg_pamali` (the gate is kabut `mqg_7` in Keraton Galuh), first fight `mataram_gerbang` (step 2.2; Tuyul teach), road to the rice fields. Holds the gate of shortcut `sc:mt_candi_gapura` (walled causeway end).
 
 ### Map
 ```
@@ -257,7 +259,7 @@ The 8 sections below follow the format of [tatar_sunda.md](tatar_sunda.md) (tile
 #...A.I...##...............................................#
 #..........................................................#
 #..........................................................#
-Xe,,,,H,,,K,,,F,,,,,,,,,,,,,,,E,,,,,,,,,C,,,,,,,,,D,,,,,,,yY
+Xe,,,,HL,,K,,,F,,,,,,,,,,,,,,,E,,,,,,,,,C,,,,,,,,,D,,,,,,,yY
 X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 #..........................................................#
 #..........................................................#
@@ -293,26 +295,27 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `u` | loose Tuyul, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/tuyul.tscn` | `{}` | grass | 3 |
 | `A` | NPC recruiter of the north bank at the border market (2.1, `all` with recruiter_b; tells the war one way) | `res://entities/npc/npc.tscn` | `{npc_id:"recruiter_a"}` | grass | 1 |
 | `B` | NPC recruiter of the south bank at the border market (2.1; tells the same war the other way round) | `res://entities/npc/npc.tscn` | `{npc_id:"recruiter_b"}` | grass | 1 |
-| `C` | trigger, beat `haulers` staging (K3 hook; plays when `step:mq2=0`, `flag:mq2_a1`, after `mataram_gerbang` is cleared; villagers haul stone in the night) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_haulers", size:Vector2i(10,4)}` | path | 1 |
-| `D` | encounter mataram_jalan (2.1, second ambush on the east road) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_jalan", size:Vector2i(18,9), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-5,-2)], [res://entities/enemies/tuyul.tscn, Vector2i(-1,3)], [res://entities/enemies/tuyul.tscn, Vector2i(3,-3)], [res://entities/enemies/tuyul.tscn, Vector2i(6,2)]]]}` | path | 1 |
-| `F` | encounter mataram_tepi (2.11 return fight: Faceless remnants on the west road; cond `flag:mq2_7b`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_tepi", cond:"flag:mq2_7b", size:Vector2i(18,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,-2)], [res://entities/enemies/faceless.tscn, Vector2i(3,2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(7,-1)]]]}` | path | 1 |
-| `G` | encounter mataram_causeway (2.11 return fight in front of the opened causeway gate; cond `flag:mq2_7b`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_causeway", cond:"flag:mq2_7b", size:Vector2i(16,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,0)], [res://entities/enemies/faceless.tscn, Vector2i(0,3)], [res://entities/enemies/faceless_archer.tscn, Vector2i(5,-1)]]]}` | grass | 1 |
+| `C` | trigger, beat `haulers` staging (K3 hook; plays when `flag:beat_two_stories`, `zone:mt_gapura` (v5; after both recruiters and the `two_stories` beat); the beat spot is east of the market; villagers haul stone in the night) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_haulers", size:Vector2i(10,4)}` | path | 1 |
+| `D` | encounter mataram_jalan (2.2, second ambush on the east road) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_jalan", size:Vector2i(18,9), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-5,-2)], [res://entities/enemies/tuyul.tscn, Vector2i(-1,3)], [res://entities/enemies/tuyul.tscn, Vector2i(3,-3)], [res://entities/enemies/tuyul.tscn, Vector2i(6,2)]]]}` | path | 1 |
+| `F` | encounter mataram_tepi (2.20 return fight: Faceless remnants on the west road; cond `flag:mq2_7b`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_tepi", cond:"flag:mq2_7b", size:Vector2i(18,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,-2)], [res://entities/enemies/faceless.tscn, Vector2i(3,2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(7,-1)]]]}` | path | 1 |
+| `G` | encounter mataram_causeway (2.20 return fight in front of the opened causeway gate; cond `flag:mq2_7b`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_causeway", cond:"flag:mq2_7b", size:Vector2i(16,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,0)], [res://entities/enemies/faceless.tscn, Vector2i(0,3)], [res://entities/enemies/faceless_archer.tscn, Vector2i(5,-1)]]]}` | grass | 1 |
 | `H` | NPC Cepot at the border market (SQ-C4 part 2) | `res://entities/npc/npc.tscn` | `{npc_id:"cepot"}` | path | 1 |
 | `I` | clue, north muster roll with Cepot's name (SQ-C4 part 2, 1 of 2) | `res://entities/world/clue.tscn` | `{clue_id:"c4_roll_a"}` | grass | 1 |
 | `J` | clue, south muster roll with Cepot's name (SQ-C4 part 2, 2 of 2) | `res://entities/world/clue.tscn` | `{clue_id:"c4_roll_b"}` | grass | 1 |
 | `K` | trigger, distraction puzzle to sneak Cepot out of the border market (SQ-C4 part 2) | `res://entities/world/trigger.tscn` | `{trigger_id:"c4_market_clear", size:Vector2i(4,4)}` | path | 1 |
+| `L` | trigger, beat `two_stories` staging (who's who at the border market; plays when `flag:mq2_a1`, `zone:mt_gapura`, right after both recruiters have spoken; trigger id `beat_two_stories` **ASSUMED**) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_two_stories", size:Vector2i(6,4)}` | path | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | entry yard | (1,14)-(9,19) 9x6 | Arrival from the Pamali ford | exit `X` (0,16..17), spawn `e` (1,16) | gate is on the Galuh side |
 | gateway | (10,14)-(11,19) 2x6 | Split stone gate, 6 tiles wide, silhouette view | codex `g` (13,12) just east | none |
-| gerbang field | (19,11)-(41,21) 23x11 | First teach fight, open road | E (30,16) `mataram_gerbang`, chest `c` (46,28) in the banyan corner | 2.1 `area_cleared:mataram_gerbang` |
+| gerbang field | (19,11)-(41,21) 23x11 | First teach fight, open road | E (30,16) `mataram_gerbang`, chest `c` (46,28) in the banyan corner | 2.2 `area_cleared:mataram_gerbang` |
 | east road | (42,16)-(58,17) 17x2 | Road to mt_sawah | exit `Y` (59,16..17), spawn `y` (58,16) | none |
 | causeway pocket | (50,2)-(58,3) 9x2 | Walled paved causeway, 9x2, open side east of the gate | gate `=` (49,2..3) `sc:mt_candi_gapura` (open_side `e`), exit `Z` (59,2..3), spawn `z` (58,2) | none |
 | border market | (1,12)-(9,22) 9x11 | The arrival slice: two stalls on the two banks of the lane, a recruiter each | `A` recruiter_a (4,13), `B` recruiter_b (4,20) | 2.1 `talked_to:recruiter_a`, `talked_to:recruiter_b` (`all`, sets `mq2_a1`) |
 | east road ambush | (41,12)-(59,20) 19x9 | Second fight, and the K3 hook staging at (40,16) | E `D` (50,16) `mataram_jalan`, trigger `C` (40,16) | 2.1 beat `haulers` |
-| return fights | west road (5..23,12..20) and the causeway gate (36..52,0..8) | Faceless remnants after Bondowoso, cond `flag:mq2_7b` | E `F` (14,16) `mataram_tepi`, E `G` (44,4) `mataram_causeway` | 2.11 (two `fight`) |
+| return fights | west road (5..23,12..20) and the causeway gate (36..52,0..8) | Faceless remnants after Bondowoso, cond `flag:mq2_7b` | E `F` (14,16) `mataram_tepi`, E `G` (44,4) `mataram_causeway` | 2.20 (two `fight`) |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -327,7 +330,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 
 - Size: 90 x 34 tiles = 3 x 2 screens (30 x 17 each).
 - Look: Stepped green padi terraces, irrigation channels, a lumbung, a farm yard with a lesung. The temple spires stand larger in the east sky.
-- Purpose: Rest hub: petilasan `mataram_1` (2.1). SQ-M1 (Nawang Wulan, lumbung), a farmer, the lesung codex. No enemies; the lesung women now teach Ca in `mt_wetan`.  Holds the gate of shortcut `sc:mt_ruin_sawah` in the north wall.
+- Purpose: Rest hub: petilasan `mataram_1` (2.2). SQ-M1 (Nawang Wulan, lumbung), a farmer, the lesung codex. No enemies; the lesung women now teach Ca in `mt_wetan`.  Holds the gate of shortcut `sc:mt_ruin_sawah` in the north wall.
 
 ### Map
 ```
@@ -349,14 +352,14 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 #...................,,...................................................................#
 Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,P,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,zZ
 X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Z
-#...........................................,,...........................................#
+#................................W..........,,...........................................#
 #...........................................,,..........bbbbbb,,bbbbbbbbb................#
 #...........................................,,..........b,,,,,,,,,,,,,,,b................#
 #...####,####...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#
 #...#_______#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#
 #...#______s#...ttttttttttttttttttttttttt...,,.....u....b,,,g,,,,,,,,,,,b.ttttttttttttt..#
 #...#__ULV__#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#
-#...#_______#...ttttttttttttttttttttttttt...,,.......u..b,,,,,,,W,,,,,,,b.ttttttttttttt..#
+#...#_______#...ttttttttttttttttttttttttt...,,.......u..b,,,,,,,,,,,,,,,b.ttttttttttttt..#
 #...#_______#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#
 #...#########...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#
 #...............ttttttttttttttttttttttttt...,,......u...b,,,,,,,,,,,,,,,b.ttttttttttttt..#
@@ -381,7 +384,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `=` | shortcut gate, barred wooden gate in the north wall (opens from the north pocket, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:mt_ruin_sawah", open_side:"n"}` | path | 2 |
 | `P` | petilasan 1 | `res://entities/petilasan/petilasan.tscn` | `{id:"mataram_1"}` | path | 1 |
 | `N` | NPC Nawang Wulan (SQ-M1 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"nawang_wulan"}` | grass | 1 |
-| `W` | NPC lesung women (2.6, teaches Ca) | `res://entities/npc/npc.tscn` | `{npc_id:"lesung_women"}` | path | 1 |
+| `W` | NPC sawah_farmer, an unnamed farmer by the petilasan (2.2 `talk`, `quiet`, never completes a step; v5; was a stale `lesung_women` spot, the lesung women are `A` in `mt_wetan`) | `res://entities/npc/npc.tscn` | `{npc_id:"sawah_farmer"}` | grass | 1 |
 | `g` | codex spot, gejog lesung | `res://entities/world/pickup.tscn` | `{codex_id:"gejog_lesung"}` | path | 1 |
 | `c` | chest: Axe (items.md Zone 2 chest) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_chest_sawah", item_id:"axe"}` | grass | 1 |
 | `L` | clue, a cooking pot's lifted lid on the barn floor (SQ-M1 clue 1 of 2; v4d, replaces the `lumbung` trigger; cond `quest:sq_m1=active`) | `res://entities/world/clue.tscn` | `{clue_id:"m1_pot_lid", cond:"quest:sq_m1=active"}` | floor | 1 |
@@ -395,10 +398,10 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | west road | (1,16)-(29,17) 29x2 | Arrival from mt_gapura | exit `X` (0,16..17), spawn `e` (1,16) | none |
-| rest area | (26,14)-(38,19) 13x6 | Petilasan and Nawang Wulan, safe | P (30,16), Nawang Wulan `N` (36,14) | 2.1 `mataram_1`, SQ-M1 `nawang_wulan` |
+| rest area | (26,14)-(38,19) 13x6 | Petilasan and Nawang Wulan, safe | P (30,16), Nawang Wulan `N` (36,14), farmer `W` (33,18) | 2.2 `mataram_1` and `sawah_farmer` talk, SQ-M1 `nawang_wulan` |
 | north gate pocket | (20,1)-(21,3) 2x3 | Pocket and gate of `sc:mt_ruin_sawah`, corridor (20..21,4..15) down to the road | gate `=` (20..21,3) open_side `n`, exit `Q` (20..21,0), spawn `q` (20,1) | none |
 | lumbung | (4,21)-(12,27) 9x7 | Barn, door (8,21) | clue `L` `m1_pot_lid` (8,24), clue `s` `m1_rice_gone` (11,23) | SQ-M1 (2) `all` of two, then memory `sq_m1_selendang` |
-| farm yard | (57,20)-(71,30) 15x11 | Lesung yard, fence gate (62..63,19) | farmer `W` (64,25), codex `g` (60,23) | none |
+| farm yard | (57,20)-(71,30) 15x11 | Lesung yard, fence gate (62..63,19) | codex `g` (60,23) | none |
 | east terraces | (50,3)-(86,12) 37x10 | Padi, chest behind the channel | chest `c` (84,14) | none |
 | south road | (44,18)-(45,32) 2x15 | Road to mt_pasar | exit `Y` (44..45,33), spawn `y` (44,32) | none |
 | east road | (46,16)-(88,17) 43x2 | Road to mt_tegal | exit `Z` (89,16..17), spawn `z` (88,16) | none |
@@ -412,7 +415,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 
 - Size: 60 x 51 tiles = 2 x 3 screens (30 x 17 each).
 - Look: Orange roofed village: market lanes, a gamelan pavilion, a blacksmith stall, the dalang's house. Spires peek over the roofs.
-- Purpose: Story and quest hub (Ki Sumarto, SQ-M2, SQ-M3, SQ-M4 givers). Lead 1: the thieves fight in the market plaza (`mataram_pasar`, step 2.2, now a setpiece), which saves Ki Sumarto's show; he teaches Ha at 2.3. His son Sapto is not here (he is at the ford, `kg_pamali`). First Pocong teach on the east road (`mataram_pocong`).
+- Purpose: Story and quest hub (Ki Sumarto, SQ-M2, SQ-M3, SQ-M4 givers). Lead 1: the thieves fight in the market plaza (`mataram_pasar`, step 2.3, now a setpiece), which saves Ki Sumarto's show; he teaches Ha at 2.4. His son Sapto is not here (he is at the ford, `kg_pamali`). First Pocong teach on the east road (`mataram_pocong`).
 
 ### Map
 ```
@@ -476,7 +479,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 | `e` | spawn, arrival from mt_sawah | `res://entities/world/spawn.tscn` | `{id:"from_mt_sawah"}` | path | 1 |
 | `Y` | exit to mt_reruntuhan (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"mt_reruntuhan", spawn_id:"from_mt_pasar"}` | path | 2 |
 | `y` | spawn, arrival from mt_reruntuhan | `res://entities/world/spawn.tscn` | `{id:"from_mt_reruntuhan"}` | path | 1 |
-| `D` | NPC Ki Sumarto, the dalang (2.3, teaches Ha once `lead_pasar`; regional character; SQ-M4 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"mataram_dalang"}` | floor | 1 |
+| `D` | NPC Ki Sumarto, the dalang (2.4, teaches Ha once `lead_pasar`; regional character; SQ-M4 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"mataram_dalang"}` | floor | 1 |
 | `B` | NPC pande besi, blacksmith (SQ-M3 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"pande_besi"}` | floor | 1 |
 | `M` | NPC smith assistant (SQ-M3 v4d) | `res://entities/npc/npc.tscn` | `{npc_id:"m3_smith"}` | floor | 1 |
 | `W` | NPC worried neighbor (SQ-M2 giver) | `res://entities/npc/npc.tscn` | `{npc_id:"wewe_neighbor"}` | grass | 1 |
@@ -484,7 +487,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 | `P` | NPC Wewe's parents (SQ-M2 alt) | `res://entities/npc/npc.tscn` | `{npc_id:"wewe_parents"}` | floor | 1 |
 | `K` | NPC parents (SQ-M2 v4d) | `res://entities/npc/npc.tscn` | `{npc_id:"m2_parents_1"}` | floor | 1 |
 | `G` | codex spot, gamelan (pavilion) | `res://entities/world/pickup.tscn` | `{codex_id:"gamelan"}` | floor | 1 |
-| `E` | encounter mataram_pasar (**setpiece**, 2.2: defend Ki Sumarto's stage; the show goes on if it holds) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_pasar", size:Vector2i(22,12), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-8,-3)], [res://entities/enemies/tuyul.tscn, Vector2i(-4,3)], [res://entities/enemies/tuyul.tscn, Vector2i(0,-4)], [res://entities/enemies/tuyul.tscn, Vector2i(5,2)], [res://entities/enemies/tuyul.tscn, Vector2i(9,-2)]], [[res://entities/enemies/tuyul.tscn, Vector2i(-6,0)], [res://entities/enemies/tuyul.tscn, Vector2i(0,5)], [res://entities/enemies/tuyul.tscn, Vector2i(6,1)]]]}` | path | 1 |
+| `E` | encounter mataram_pasar (**setpiece**, 2.3: defend Ki Sumarto's stage; the show goes on if it holds) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_pasar", size:Vector2i(22,12), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-8,-3)], [res://entities/enemies/tuyul.tscn, Vector2i(-4,3)], [res://entities/enemies/tuyul.tscn, Vector2i(0,-4)], [res://entities/enemies/tuyul.tscn, Vector2i(5,2)], [res://entities/enemies/tuyul.tscn, Vector2i(9,-2)]], [[res://entities/enemies/tuyul.tscn, Vector2i(-6,0)], [res://entities/enemies/tuyul.tscn, Vector2i(0,5)], [res://entities/enemies/tuyul.tscn, Vector2i(6,1)]]]}` | path | 1 |
 | `O` | encounter mataram_pocong | `res://entities/world/encounter.tscn` | `{area_id:"mataram_pocong", size:Vector2i(16,7), waves:[[[res://entities/enemies/pocong.tscn, Vector2i(4,0)]]]}` | path | 1 |
 | `c` | chest: 55 Ilmu (Ilmu S, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_chest_pasar", item_id:"ilmu:55"}` | grass | 1 |
 | `u` | loose Tuyul, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/tuyul.tscn` | `{}` | grass | 3 |
@@ -497,12 +500,12 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | north gate | (28,1)-(29,3) 2x3 | Arrival from mt_sawah | exit `X` (28..29,0), spawn `e` (28,1) | none |
-| dalang house | (6,3)-(16,10) 11x8 | Ki Sumarto, door (11,10) | D (11,6) | 2.3 `mataram_dalang`, SQ-M4 steps 1 and 3 |
+| dalang house | (6,3)-(16,10) 11x8 | Ki Sumarto, door (11,10) | D (11,6) | 2.4 `mataram_dalang`, SQ-M4 steps 1 and 3 |
 | smithy | (40,3)-(52,10) 13x8 | Blacksmith stall, door (46,10) | B (46,6) | SQ-M3 `m3_smith` |
 | cross lane | (3,15)-(56,16) 54x2 | East-west lane, no enemies | neighbor `W` (20,18) | SQ-M2 `m2_neighbour` |
 | parents' house | (5,19)-(13,25) 9x7 | Door (9,19) | P (9,23) | SQ-M2 alt `m2_parents_1` |
 | gamelan pavilion | (38,19)-(50,26) 13x8 | Open pavilion | codex `G` (44,22) | codex:gamelan |
-| market plaza | (17,30)-(39,41) 23x12 | Thieves fight, 22x12 | E (28,36) `mataram_pasar` | 2.2 lead 1 `area_cleared:mataram_pasar` |
+| market plaza | (17,30)-(39,41) 23x12 | Thieves fight, 22x12 | E (28,36) `mataram_pasar` | 2.3 lead 1 `area_cleared:mataram_pasar` |
 | east road and yard | (30,36)-(58,37) 29x2 lane, yard (44,32)-(58,42) | Straight lane 28 tiles into a yard | O (50,36) `mataram_pocong` (Pocong at +4), chest `c` (56,41) | none |
 | south gate | (28,44)-(29,49) 2x6 | To mt_reruntuhan | exit `Y` (28..29,50), spawn `y` (28,49) | none |
 
@@ -518,7 +521,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 
 - Size: 90 x 51 tiles = 3 x 3 screens (30 x 17 each).
 - Look: Sandstone-grey broken candi walls, courtyards, fallen carved stones, a small site museum. Spires stand behind the broken wall.
-- Purpose: Lead 2: Arca fight `mataram_ruins` (step 2.2) and the `arca_base` inscription beside it (Na, step 2.3). Pak Karto stays in the safe outer yard as a side-quest NPC. The codex-rich site museum, the gong nook, the far side of the `sc:mt_ruin_sawah` gate (exit `W` in the side yard past the fight). Hub of loops B and C.
+- Purpose: Lead 2: Arca fight `mataram_ruins` (step 2.6) and the `arca_base` inscription beside it (Na, step 2.6). Pak Karto stays in the safe outer yard as a side-quest NPC. The codex-rich site museum, the gong nook, the far side of the `sc:mt_ruin_sawah` gate (exit `W` in the side yard past the fight). Hub of loops B and C.
 
 ### Map
 ```
@@ -587,8 +590,8 @@ W,,,,,,,,,,.................................,,.............................#____
 | `W` | exit to mt_sawah (west edge, side yard, the `sc:mt_ruin_sawah` pocket, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"mt_sawah", spawn_id:"from_mt_reruntuhan"}` | path | 2 |
 | `w` | spawn, arrival from mt_sawah (through the gate) | `res://entities/world/spawn.tscn` | `{id:"from_mt_sawah"}` | path | 1 |
 | `K` | NPC Pak Karto (side-quest NPC since v3.1, no quest assigned yet; no longer teaches Na) | `res://entities/npc/npc.tscn` | `{npc_id:"pak_karto"}` | grass | 1 |
-| `A` | inscribed base of an Arca, read in place (2.3, teaches Na; cond `flag:lead_ruins`, set by clearing `mataram_ruins`) | `res://entities/npc/npc.tscn` | `{npc_id:"arca_base", cond:"flag:lead_ruins"}` | grass | 1 |
-| `E` | encounter mataram_ruins (**miniboss**, 2.2: the first Arca at (-11,-5) is the elite `mt_arca_penjaga`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_ruins", size:Vector2i(24,14), waves:[[[res://entities/enemies/arca.tscn, Vector2i(-11,-5)], [res://entities/enemies/arca.tscn, Vector2i(11,5)], [res://entities/enemies/arca.tscn, Vector2i(0,-6)], [res://entities/enemies/tuyul.tscn, Vector2i(-4,2)], [res://entities/enemies/tuyul.tscn, Vector2i(5,-1)]]]}` | path | 1 |
+| `A` | inscribed base of an Arca, read in place (2.6, teaches Na; cond `flag:lead_ruins`, set by clearing `mataram_ruins`) | `res://entities/npc/npc.tscn` | `{npc_id:"arca_base", cond:"flag:lead_ruins"}` | grass | 1 |
+| `E` | encounter mataram_ruins (**miniboss**, 2.6: the first Arca at (-11,-5) is the elite `mt_arca_penjaga`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_ruins", size:Vector2i(24,14), waves:[[[res://entities/enemies/arca.tscn, Vector2i(-11,-5)], [res://entities/enemies/arca.tscn, Vector2i(11,5)], [res://entities/enemies/arca.tscn, Vector2i(0,-6)], [res://entities/enemies/tuyul.tscn, Vector2i(-4,2)], [res://entities/enemies/tuyul.tscn, Vector2i(5,-1)]]]}` | path | 1 |
 | `m` | codex spot, Candi Seribu (museum) | `res://entities/world/pickup.tscn` | `{codex_id:"candi_seribu"}` | floor | 1 |
 | `n` | codex spot, Roro Jonggrang (museum) | `res://entities/world/pickup.tscn` | `{codex_id:"roro_jonggrang"}` | floor | 1 |
 | `o` | codex spot, Arca (museum) | `res://entities/world/pickup.tscn` | `{codex_id:"arca"}` | floor | 1 |
@@ -596,19 +599,19 @@ W,,,,,,,,,,.................................,,.............................#____
 | `c` | chest: Longbow (secret 1, items.md Zone 2 chest) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_secret_gong", item_id:"longbow"}` | floor | 1 |
 | `u` | loose Tuyul, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/tuyul.tscn` | `{}` | grass | 2 |
 | `k` | loose Pocong, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/pocong.tscn` | `{}` | grass | 3 |
-| `B` | clue, Laras's chalked *Ka* on the courtyard wall (2.2 `clue` piece; journal note only, no quest trigger; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"ka_chalk"}` | grass | 1 |
+| `B` | clue, Laras's chalked *Ka* on the courtyard wall (2.6 `clue` piece; journal note only, no quest trigger; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"ka_chalk"}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | entry and outer yard | (1,1)-(88,13) 88x13 | Safe yard before the courtyard | exit `X` (44..45,0), spawn `e` (44,1), Pak Karto `K` (40,8) | side-quest NPC `pak_karto` (none yet) |
 | site museum | (62,3)-(82,11) 21x9 | Codex-rich room, door (72,11) | `m` (66,7), `n` (72,7), `o` (78,7) | codex:candi_seribu, roro_jonggrang, arca |
-| courtyard | (26,15)-(63,38) 38x24 | Ruins wake fight, 24x14 room in the middle | E (44,26) `mataram_ruins`, 3 Arca on the edges, 2 Tuyul; `arca_base` `A` (47,21), 3 tiles east of the central path and 5 north of the fight spot | 2.2 lead 2 `mataram_ruins` (sets `lead_ruins`), 2.3 `arca_base` |
+| courtyard | (26,15)-(63,38) 38x24 | Ruins wake fight, 24x14 room in the middle | E (44,26) `mataram_ruins`, 3 Arca on the edges, 2 Tuyul; `arca_base` `A` (47,21), 3 tiles east of the central path and 5 north of the fight spot | 2.6 lead 2 `mataram_ruins` (sets `lead_ruins`), 2.6 `arca_base` |
 | side yard (west) | (1,15)-(24,49) 24x35 | Past the fight, reached by the west gap (25,31..32) | exit `W` (0,40..41), spawn `w` (1,40) | `sc:mt_ruin_sawah` far side |
 | east road | (65,26)-(88,27) 24x2 | Road to mt_wetan | exit `Y` (89,26..27), spawn `y` (88,26) | none |
 | south yard | (44,40)-(45,49) 2x10 | Road to mt_kuburan | exit `Z` (44..45,50), spawn `z` (44,49) | none |
 | gong nook | (75,40)-(85,46) 11x7 | Secret 1, door (80,40) between two rocks (ASSUMED: open gap, no breakable wall) | gong `g` (80,43), chest `c` (83,44) | SQ-M4 `gong_ageng` |
-| chalk wall | (40,17)-(43,21) | The `clue` piece of lead 2, west of the central path just before the fight | clue `B` (42,19) | 2.2 journal note |
+| chalk wall | (40,17)-(43,21) | The `clue` piece of lead 2, west of the central path just before the fight | clue `B` (42,19) | 2.6 journal note |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -621,7 +624,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Old graveyard under frangipani, a bare hill with one tree, a low mist.
-- Purpose: Lead 3 (step 2.2, required): graveyard fight `mataram_kuburan` and the `hunter_war` beat. Optional rooms: Wewe Gombel hill (SQ-M2 elite or peaceful end), crypt secret with Panah Pasopati. Branches off loop C.
+- Purpose: Lead 3 (step 2.7, required): graveyard fight `mataram_kuburan` and the `hunter_war` beat. Optional rooms: Wewe Gombel hill (SQ-M2 elite or peaceful end), crypt secret with Panah Pasopati. Branches off loop C.
 
 ### Map
 ```
@@ -674,20 +677,20 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 | `p` | NPC Wewe's parents at the hill (SQ-M2 peaceful) | `res://entities/npc/npc.tscn` | `{npc_id:"wewe_parents_2"}` | grass | 1 |
 | `c` | chest: Panah Pasopati (secret 2, crypt) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_secret_pasopati", item_id:"panah_pasopati"}` | floor | 1 |
 | `H` | trigger, beat `hunter_war` staging (the Hunter among the graves; plays when `flag:lead_kuburan`, `zone:mt_kuburan`) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_hunter_war", size:Vector2i(19,6)}` | grass | 1 |
-| `A` | clue, the Hunter's third mask fragment among the graves (2.4 H3; opens memory `h3`; appears when `flag:lead_kuburan`) | `res://entities/world/clue.tscn` | `{clue_id:"hunter_mask_3", memory_id:"h3", cond:"flag:lead_kuburan"}` | grass | 1 |
-| `B` | encounter mataram_kuburan_gate (2.2, fight 1 of the graveyard lead, north field) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_kuburan_gate", size:Vector2i(20,9), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-6,-1)], [res://entities/enemies/tuyul.tscn, Vector2i(-3,3)], [res://entities/enemies/tuyul.tscn, Vector2i(5,0)], [res://entities/enemies/pocong.tscn, Vector2i(8,2)]]]}` | grass | 1 |
-| `C` | encounter mataram_pemanen (**miniboss**, 2.4: the harvest captain on the east road; cond `flag:memory_h3`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_pemanen", cond:"flag:memory_h3", size:Vector2i(18,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(0,0)], [res://entities/enemies/pocong.tscn, Vector2i(6,-3)], [res://entities/enemies/pocong.tscn, Vector2i(6,3)]]]}` | path | 1 |
+| `A` | clue, the Hunter's third mask fragment among the graves (2.8 H3; opens memory `h3`; appears when `flag:lead_kuburan`) | `res://entities/world/clue.tscn` | `{clue_id:"hunter_mask_3", memory_id:"h3", cond:"flag:lead_kuburan"}` | grass | 1 |
+| `B` | encounter mataram_kuburan_gate (2.7, fight 1 of the graveyard lead, north field) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_kuburan_gate", size:Vector2i(20,9), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-6,-1)], [res://entities/enemies/tuyul.tscn, Vector2i(-3,3)], [res://entities/enemies/tuyul.tscn, Vector2i(5,0)], [res://entities/enemies/pocong.tscn, Vector2i(8,2)]]]}` | grass | 1 |
+| `C` | encounter mataram_pemanen (**miniboss**, 2.8: the harvest captain on the east road; cond `flag:memory_h3`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_pemanen", cond:"flag:memory_h3", size:Vector2i(18,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(0,0)], [res://entities/enemies/pocong.tscn, Vector2i(6,-3)], [res://entities/enemies/pocong.tscn, Vector2i(6,3)]]]}` | path | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | north gate | (10,1)-(11,12) 2x12 | Arrival from mt_reruntuhan, path into the graveyard | exit `X` (10..11,0), spawn `e` (10,1) | none |
-| graveyard | (9,11)-(35,25) 27x15 | Lead 3 fight, 26x15, open ground, lane 10+; the beat spot `H` (23,8) is 3 rows above its rect | E (22,18) `mataram_kuburan`, trigger `H` (23,8) | 2.2 lead 3 `area_cleared:mataram_kuburan` (sets `lead_kuburan`); beat `hunter_war` |
+| graveyard | (9,11)-(35,25) 27x15 | Lead 3 fight, 26x15, open ground, lane 10+; the beat spot `H` (23,8) is 3 rows above its rect | E (22,18) `mataram_kuburan`, trigger `H` (23,8) | 2.7 lead 3 `area_cleared:mataram_kuburan` (sets `lead_kuburan`); beat `hunter_war` |
 | wewe hill | (40,3)-(56,16) 17x14 | Bare hill, one tree (52,6) | trigger `T` (48,10), elite `q` (46,11), parents `p` (50,13) | SQ-M2 `wewe_hill`, `wewe_parents_2`, `wewe_elite` |
 | east road | (37,18)-(58,19) 22x2 | Road to mt_wetan | exit `Y` (59,18..19), spawn `y` (58,18) | none |
 | crypt | (40,22)-(52,30) 13x9 | Secret 2, door (46,22), stairs (46,20..21) | chest `c` (46,27) | Panah Pasopati source |
-| north field | (12,1)-(28,8) 17x8 | Fight 1 of lead 3 before the graveyard, and the mask fragment | E `B` (18,3) `mataram_kuburan_gate`, clue `A` (30,8) | 2.2 fight, 2.4 `clue_examined:hunter_mask_3` |
-| harvest road | (41,14)-(58,22) 18x9 | The captain waits on the east road once the memory is done | E `C` (50,18) `mataram_pemanen` | 2.4 miniboss |
+| north field | (12,1)-(28,8) 17x8 | Fight 1 of lead 3 before the graveyard, and the mask fragment | E `B` (18,3) `mataram_kuburan_gate`, clue `A` (30,8) | 2.7 fight, 2.8 `clue_examined:hunter_mask_3` |
+| harvest road | (41,14)-(58,22) 18x9 | The captain waits on the east road once the memory is done | E `C` (50,18) `mataram_pemanen` | 2.8 miniboss |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -699,7 +702,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 
 - Size: 90 x 34 tiles = 3 x 2 screens (30 x 17 each).
 - Look: Rocky foothill field, dry grass, boulders, a cliff ledge in the south, the juru kunci's hut.
-- Purpose: Rock thrower fight `mataram_batu` (2.5), the juru kunci (2.5, teaches Ra), the lesung women (2.3, Ca), the `lengser_word` beat spot, K2 north to the temples, K3 east to Tanah Timur, the drop ledge south, link to mt_kuburan.
+- Purpose: Rock thrower fight `mataram_batu` (2.11), the juru kunci (2.12, teaches Ra), the lesung women (2.9-2.10, Ca), the `lengser_word` beat spot, K2 north to the temples, K3 east to Tanah Timur, the drop ledge south, link to mt_kuburan.
 
 ### Map
 ```
@@ -713,7 +716,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 #...................#________#......G.......,,....................rrr....................#
 #...................#________#..............,,................g...rrr...........c........#
 #...................####,#####..............,,...........................................#
-#.......................,...................L,...........................................#
+#.......................,...................LQ...........................................#
 #.......................,...................,,...........................................#
 Xe,,,,,,,,,,,,,,,,,,,,,,C,,,,,,,,,,,,,,,,,,,,,...........................................#
 X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,...........................................#
@@ -725,7 +728,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................................
 #.............,,......u..................................................................#
 #.............,,..............rr..................E......................................#
 #.............,,..............rr.........................................................#
-#.............,,.....u................................................,,.................#
+#.............,,.....u........................H.......................,,.................#
 #.............,,......................................................,,.................#
 #.............,,......................................................,,....rrr..........#
 #.............,,......................................................,,....rrr..........#
@@ -753,31 +756,33 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................................
 | `T` | exit to tt_kulon (east edge, not built yet, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_kulon", spawn_id:"from_mt_wetan"}` | path | 2 |
 | `t` | spawn, arrival from tt_kulon | `res://entities/world/spawn.tscn` | `{id:"from_tt_kulon"}` | path | 1 |
 | `J` | kabut K3, east gate to Tanah Timur (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq2_9"}` | path | 2 |
-| `M` | NPC juru kunci the juru kunci (2.5, teaches Ra after `mataram_batu`) | `res://entities/npc/npc.tscn` | `{npc_id:"juru_kunci"}` | floor | 1 |
+| `M` | NPC juru kunci the juru kunci (2.12, teaches Ra after `mataram_batu`) | `res://entities/npc/npc.tscn` | `{npc_id:"juru_kunci"}` | floor | 1 |
 | `E` | encounter mataram_batu | `res://entities/world/encounter.tscn` | `{area_id:"mataram_batu", size:Vector2i(24,14), waves:[[[res://entities/enemies/genderuwo.tscn, Vector2i(9,0)], [res://entities/enemies/pocong.tscn, Vector2i(4,-4)], [res://entities/enemies/pocong.tscn, Vector2i(4,4)]]]}` | grass | 1 |
 | `c` | chest: Iron Staff (items.md Zone 2, no drops yet) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_chest_wetan", item_id:"iron_staff"}` | grass | 1 |
 | `g` | codex spot, Genderuwo | `res://entities/world/pickup.tscn` | `{codex_id:"genderuwo"}` | grass | 1 |
 | `u` | loose Tuyul, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/tuyul.tscn` | `{}` | grass | 2 |
 | `k` | loose Pocong, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/pocong.tscn` | `{}` | grass | 1 |
 | `L` | trigger, beat `lengser_word` staging (plays when `flag:choice_handed`, `flag:mq2_6`, `zone:mt_wetan`; one line, in the stairs corridor below K2) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_lengser_word", size:Vector2i(2,3)}` | path | 1 |
-| `A` | NPC Nyai Gendhis and the lesung women of the foothill hamlet (2.10, teaches Ca once `mataram_lesung_yard` is cleared) | `res://entities/npc/npc.tscn` | `{npc_id:"lesung_women"}` | grass | 1 |
-| `B` | encounter mataram_batu_2 (2.5, fight 1 on the junction field) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_batu_2", size:Vector2i(18,9), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-5,-1)], [res://entities/enemies/tuyul.tscn, Vector2i(0,3)], [res://entities/enemies/tuyul.tscn, Vector2i(5,0)]]]}` | grass | 1 |
+| `A` | NPC Nyai Gendhis and the lesung women of the foothill hamlet (2.9-2.10, teaches Ca once `mataram_lesung_yard` is cleared) | `res://entities/npc/npc.tscn` | `{npc_id:"lesung_women"}` | grass | 1 |
+| `B` | encounter mataram_batu_2 (2.11, fight 1 on the junction field) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_batu_2", size:Vector2i(18,9), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-5,-1)], [res://entities/enemies/tuyul.tscn, Vector2i(0,3)], [res://entities/enemies/tuyul.tscn, Vector2i(5,0)]]]}` | grass | 1 |
 | `C` | trigger, puzzle `puzzle_wetan_lamps` (2.12: align the foothill shrine braziers; sets `flag:puzzle_wetan_lamps`) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_wetan_lamps", size:Vector2i(4,4)}` | path | 1 |
 | `G` | encounter mataram_lesung_yard (2.9 Lead 3: clear the haunted mill yard for Nyai Gendhis) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_lesung_yard", size:Vector2i(14,8), waves:[[[res://entities/enemies/pocong.tscn, Vector2i(-3,0)], [res://entities/enemies/tuyul.tscn, Vector2i(3,-2)], [res://entities/enemies/tuyul.tscn, Vector2i(3,2)]]]}` | grass | 1 |
+| `H` | clue, the foothill shrine steps, fresh chisel work and cold hand-prints (2.11; journal note only; id `shrine_chisel` **ASSUMED**, not in quests.md; hunt `k3`) | `res://entities/world/clue.tscn` | `{clue_id:"shrine_chisel", cond:"flag:mq2_5"}` | grass | 1 |
+| `Q` | trigger, beat `ranga_word` staging (Choice 2, freed: Ranga scouts in Act III, `SQ-C3`; plays when `flag:choice_freed`, `flag:mq2_6`, `zone:mt_wetan`; same spot as `lengser_word`, one tile east; trigger id `beat_ranga_word` **ASSUMED**) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_ranga_word", size:Vector2i(2,3)}` | path | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | west road | (1,12)-(43,13) 43x2 | Arrival from mt_reruntuhan | exit `X` (0,12..13), spawn `e` (1,12) | none |
-| juru kunci hut | (20,3)-(29,9) 10x7 | Door (24,9) | M (24,6) | 2.5 `juru_kunci`, sets `mq2_6` |
-| north stairs | (44,1)-(45,13) 2x13 | Corridor to the temples; K2 at (44..45,3) | K `K`, exit `N` (44..45,0), spawn `n` (44,1), trigger `L` (44,10) | 2.5 flag `mq2_6` opens K2; beat `lengser_word` |
-| rocky field | (38,13)-(62,27) 25x15 | Rock thrower fight, 24x14, lane 16 | E (50,20) `mataram_batu` | 2.5 `area_cleared:mataram_batu` |
+| juru kunci hut | (20,3)-(29,9) 10x7 | Door (24,9) | M (24,6) | 2.12 `juru_kunci`, sets `mq2_6` |
+| north stairs | (44,1)-(45,13) 2x13 | Corridor to the temples; K2 at (44..45,3) | K `K`, exit `N` (44..45,0), spawn `n` (44,1), trigger `L` (44,10) | 2.12 flag `mq2_6` opens K2; beat `lengser_word` |
+| rocky field | (38,13)-(62,27) 25x15 | Rock thrower fight, 24x14, lane 16 | E (50,20) `mataram_batu` | 2.11 `area_cleared:mataram_batu` |
 | kuburan road | (14,14)-(15,32) 2x19 | Road to mt_kuburan | exit `Y` (14..15,33), spawn `y` (14,32) | none |
 | drop ledge | (70,22)-(71,32) 2x11 | Worn path and railing gaps, south cliff | exit `D` (70..71,33), no spawn back | none |
 | east road | (62,16)-(88,17) 27x2 | Walled road to tt_kulon; K3 at (84,16..17) | J, exit `T` (89,16..17), spawn `t` (88,16) | mq2_9 opens K3 |
 | boulder corner | (60,3)-(86,10) 27x8 | Chest and codex | chest `c` (80,8), codex `g` (62,8) | codex:genderuwo |
-| lesung yard | (32,2)-(41,9) 10x8 | Foothill hamlet yard east of the hut | lesung women `A` (36,5) | 2.3 `lesung_women` (Ca) |
-| hut path | (14,10)-(34,16) | Lamp puzzle in front of the hut, door kabut `F` (24,9), fight 1 of 2.5 | trigger `C` (24,12), E `B` (34,15) `mataram_batu_2` | 2.5 puzzle, fight |
+| lesung yard | (32,2)-(41,9) 10x8 | Foothill hamlet yard east of the hut | lesung women `A` (36,5) | 2.10 `lesung_women` (Ca) |
+| hut path | (14,10)-(34,16) | Lamp puzzle in front of the hut, door kabut `F` (24,9), fight 1 of 2.12 | trigger `C` (24,12), E `B` (34,15) `mataram_batu_2` | 2.12 puzzle, fight |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -855,19 +860,19 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | `Y` | exit to mt_gapura (west edge, front yard, the `sc:mt_candi_gapura` pocket, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"mt_gapura", spawn_id:"from_mt_candi"}` | path | 2 |
 | `y` | spawn, arrival from mt_gapura (through the gate) | `res://entities/world/spawn.tscn` | `{id:"from_mt_gapura"}` | path | 1 |
 | `P` | petilasan 2 | `res://entities/petilasan/petilasan.tscn` | `{id:"mataram_2"}` | path | 1 |
-| `B` | boss Bandung Bondowoso (2.10), awakened after the camp turn, the K3 memory and the LC3 chapter (`flag:mq2_lc`) | `res://entities/bosses/bandung_bondowoso.tscn` | `{cond:"flag:mq2_lc"}` | path | 1 |
-| `F` | encounter mataram_camp (**setpiece**, 2.6: the Pamali stone wakes; hold the court until the seal cracks, MQ2 2.6) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp", cond:"flag:mq2_6", size:Vector2i(30,16), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(0,4)], [res://entities/enemies/faceless_archer.tscn, Vector2i(0,-6)]], [[res://entities/enemies/faceless.tscn, Vector2i(-8,2)], [res://entities/enemies/faceless.tscn, Vector2i(8,2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(-4,-6)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,-6)]]]}` | path | 1 |
+| `B` | boss Bandung Bondowoso (2.19), awakened after the camp turn, the K3 memory and the LC3 chapter (`flag:mq2_lc`) | `res://entities/bosses/bandung_bondowoso.tscn` | `{cond:"flag:mq2_lc"}` | path | 1 |
+| `F` | encounter mataram_camp (**setpiece**, 2.14: the Pamali stone wakes; hold the court until the seal cracks, MQ2 2.14) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp", cond:"flag:mq2_6", size:Vector2i(30,16), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(0,4)], [res://entities/enemies/faceless_archer.tscn, Vector2i(0,-6)]], [[res://entities/enemies/faceless.tscn, Vector2i(-8,2)], [res://entities/enemies/faceless.tscn, Vector2i(8,2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(-4,-6)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,-6)]]]}` | path | 1 |
 | `E` | encounter mataram_candi | `res://entities/world/encounter.tscn` | `{area_id:"mataram_candi", size:Vector2i(28,16), waves:[[[res://entities/enemies/genderuwo.tscn, Vector2i(8,-4)], [res://entities/enemies/arca.tscn, Vector2i(-12,-5)], [res://entities/enemies/arca.tscn, Vector2i(12,-5)]], [[res://entities/enemies/tuyul.tscn, Vector2i(0,-3)], [res://entities/enemies/tuyul.tscn, Vector2i(-4,0)], [res://entities/enemies/tuyul.tscn, Vector2i(4,0)]]]}` | path | 1 |
 | `s` | pickup, batu bintang (SQ-T3 meteorite fragment) | `res://entities/world/pickup.tscn` | `{item_id:"batu_bintang"}` | grass | 1 |
 | `c` | chest: 110 Ilmu (Ilmu M, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_chest_candi", item_id:"ilmu:110"}` | grass | 1 |
 | `T` | trigger, beat `camp` staging (plays when `flag:mq2_7`, `zone:mt_candi`; the cleared camp, Laras's lontar strip) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_camp", size:Vector2i(12,6)}` | path | 1 |
-| `A` | NPC bound hauler at the temple gate (2.6 `talk`; unnamed, says where the prisoners are held) | `res://entities/npc/npc.tscn` | `{npc_id:"hauler"}` | grass | 1 |
-| `C` | clue, rubble with fresh chisel marks and spirit hand-prints (2.7 K3, 1 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"rubble"}` | grass | 1 |
-| `D` | clue, a lesung left in the middle of its rhythm (2.7 K3, 2 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"lesung_mid"}` | grass | 1 |
-| `G` | clue, Laras's *Ka* strip in the cleared camp (2.7 K3, 3 of 3; opens memory `k3_lesung`) | `res://entities/world/clue.tscn` | `{clue_id:"ka_strip", memory_id:"k3_lesung"}` | path | 1 |
-| `H` | clue, Laras's lontar fragment at the petilasan (2.9, opens chapter `lc3`; ASSUMED id, cond `flag:memory_k3_lesung`) | `res://entities/world/clue.tscn` | `{clue_id:"lc3_lontar", memory_id:"lc3", cond:"flag:memory_k3_lesung"}` | grass | 1 |
-| `I` | encounter mataram_camp_gate (2.6, fight at the arena gate; cond `flag:mq2_6`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp_gate", cond:"flag:mq2_6", size:Vector2i(16,6), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(0,-3)]]]}` | path | 1 |
-| `J` | encounter mataram_camp_captain (**miniboss**, 2.6: the camp captain; cond `flag:mq2_6`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp_captain", cond:"flag:mq2_6", size:Vector2i(12,10), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(0,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)]]]}` | path | 1 |
+| `A` | NPC bound hauler at the temple gate (2.14 `talk`; unnamed, says where the prisoners are held) | `res://entities/npc/npc.tscn` | `{npc_id:"hauler"}` | grass | 1 |
+| `C` | clue, rubble with fresh chisel marks and spirit hand-prints (2.15 K3, 1 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"rubble"}` | grass | 1 |
+| `D` | clue, a lesung left in the middle of its rhythm (2.15 K3, 2 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"lesung_mid"}` | grass | 1 |
+| `G` | clue, Laras's *Ka* strip in the cleared camp (2.15 K3, 3 of 3; opens memory `k3_lesung`) | `res://entities/world/clue.tscn` | `{clue_id:"ka_strip", memory_id:"k3_lesung"}` | path | 1 |
+| `H` | clue, Laras's lontar fragment at the petilasan (2.16, opens chapter `lc3`; ASSUMED id, cond `flag:memory_k3_lesung`) | `res://entities/world/clue.tscn` | `{clue_id:"lc3_lontar", memory_id:"lc3", cond:"flag:memory_k3_lesung"}` | grass | 1 |
+| `I` | encounter mataram_camp_gate (2.14, fight at the arena gate; cond `flag:mq2_6`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp_gate", cond:"flag:mq2_6", size:Vector2i(16,6), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(0,-3)]]]}` | path | 1 |
+| `J` | encounter mataram_camp_captain (**miniboss**, 2.14: the camp captain; cond `flag:mq2_6`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp_captain", cond:"flag:mq2_6", size:Vector2i(12,10), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(0,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)]]]}` | path | 1 |
 | `K` | encounter candi_crypt_hall (2.17 descend through Laras's unlocked crypt to the central temple sanctum) | `res://entities/world/encounter.tscn` | `{area_id:"candi_crypt_hall", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/arca_penjaga.tscn, Vector2i(3,0)]]]}` | path | 1 |
 | `L` | clue, stitched syllable scrap / Lengser's note at the camp stake (SQ-C3 fragment 1) | `res://entities/world/clue.tscn` | `{clue_id:"c3_camp_scrap", cond:"flag:mq2_7"}` | grass | 1 |
 
@@ -875,13 +880,13 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | south gate | (50,47)-(51,49) 2x3 | Arrival from mt_wetan | exit `X` (50..51,50), spawn `e` (50,49) | none |
-| front yard fight | (36,30)-(64,46) 29x17 | Temple gate fight, 28x16, two waves | E (50,38) `mataram_candi` | 2.6 `area_cleared:mataram_candi` |
+| front yard fight | (36,30)-(64,46) 29x17 | Temple gate fight, 28x16, two waves | E (50,38) `mataram_candi` | 2.14 `area_cleared:mataram_candi` |
 | east yard | (66,28)-(88,48) 23x21 | Side yard | batu bintang `s` (72,36), chest `c` (80,30) | item_picked:batu_bintang |
 | west road | (1,26)-(28,27) 28x2 | Road to the petilasan, 30 tiles from the exit | exit `Y` (0,26..27), spawn `y` (1,26) | `sc:mt_candi_gapura` far side |
 | petilasan court | (29,23)-(31,27) 3x5 | Rest right before the arena, no fight | P (30,25) | LC3 clue `lc3_lontar` (32,24) at `mataram_2` |
-| boss arena | (14,2)-(47,21) 34x20 | 34x20 open floor, gate gap (29..31,22), pillars spawn 5-8 tiles around B | camp F (30,12), B (30,9), beat trigger `T` (30,15) | 2.6 `mataram_camp` (sets `mq2_7`), beat `camp`; 2.10 `bandung_bondowoso` |
-| clue spots | rubble (60,41) east side of the front yard; `lesung_mid` (33,26) beside the petilasan court; `ka_strip` (28,16) in the court by the `camp` beat spot | The K3 Hunt clues, walked in this order | clues `C` `D` `G`, hauler `A` (56,34), `lc3_lontar` `H` (32,24) | 2.7 `all` of three, 2.6 talk, 2.9 |
-| camp sequence | the arena, gate (30,19), captain (20,9), camp (30,12) | In order: gate fight, captain miniboss, camp setpiece | E `I` (30,19), E `J` (20,9), `F` (30,12) | 2.6 |
+| boss arena | (14,2)-(47,21) 34x20 | 34x20 open floor, gate gap (29..31,22), pillars spawn 5-8 tiles around B | camp F (30,12), B (30,9), beat trigger `T` (30,15) | 2.14 `mataram_camp` (sets `mq2_7`), beat `camp`; 2.19 `bandung_bondowoso` |
+| clue spots | rubble (60,41) east side of the front yard; `lesung_mid` (33,26) beside the petilasan court; `ka_strip` (28,16) in the court by the `camp` beat spot | The K3 Hunt clues, walked in this order | clues `C` `D` `G`, hauler `A` (56,34), `lc3_lontar` `H` (32,24) | 2.15 `all` of three, 2.14 talk, 2.16 |
+| camp sequence | the arena, gate (30,19), captain (20,9), camp (30,12) | In order: gate fight, captain miniboss, camp setpiece | E `I` (30,19), E `J` (20,9), `F` (30,12) | 2.14 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -889,7 +894,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | `mataram_candi` | `E (50,38)` | 28x16 | W1: Genderuwo (+8,-4), Arca (-12,-5), Arca (+12,-5); W2: Tuyul (+0,-3), Tuyul (-4,+0), Tuyul (+4,+0) | Na (Dash-strike) on the Arca; Bind then Burst for wave 2 |
 | `mataram_camp_gate` | `E (30,19)` | 16x6 | W1: Faceless (-3,0), Faceless (+3,0), Faceless archer (0,-3); cond `flag:mq2_6` | Dash-strike the archer; Faceless are known |
 | `mataram_camp_captain` | `E (20,9)` | 12x10 | **Miniboss.** W1: Faceless captain (0,0) elite `mt_camp_captain` (HP x4, **TUNE**), Faceless archer (+4,-2), Faceless (-4,+2); cond `flag:mq2_6` | Dash-strike the archer, then the captain |
-| `mataram_camp` | `F (30,12)` | 30x16 | **Setpiece** (as before, W1/W2, 2.6): while it runs, the Pamali stone `T` (30,15) glows; the encounter ends when the stone cracks (the turn) | as before |
+| `mataram_camp` | `F (30,12)` | 30x16 | **Setpiece** (as before, W1/W2, 2.14): while it runs, the Pamali stone `T` (30,15) glows; the encounter ends when the stone cracks (the turn) | as before |
 ## Area 8: mt_tegal
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
@@ -910,7 +915,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 #.......................,...........#___L_M_q___#..........#
 #.......................,...........#_____T_____#..........#
 #.......................,...........#___________#..........#
-#.......................,...........#___________#..........#
+#....................H..,...........#___________#..........#
 #.......................,...........######,######..........#
 #.......................,.................,.........#......#
 #.......................,.................,.........########
@@ -952,6 +957,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,=,,,,,,Y
 | `k` | loose Pocong, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/pocong.tscn` | `{}` | grass | 1 |
 | `E` | encounter mataram_tegal_pillars (2.13 fight across the plain of rising stones) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_tegal_pillars", size:Vector2i(15,9), waves:[[[res://entities/enemies/arca_penjaga.tscn, Vector2i(-4,0)], [res://entities/enemies/genderuwo.tscn, Vector2i(4,0)]]]}` | path | 1 |
 | `s` | pickup, batu bintang (SQ-T3 fallen meteorite fragment) | `res://entities/world/pickup.tscn` | `{item_id:"batu_bintang"}` | grass | 1 |
+| `H` | clue, scuffed prints around a fallen pillar on the plain of rising stones (2.13; journal note only; id `pillar_prints` **ASSUMED**, not in quests.md; hunt `k3`) | `res://entities/world/clue.tscn` | `{clue_id:"pillar_prints", cond:"flag:mq2_6"}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -979,7 +985,7 @@ Spots that are not new map characters are listed here, not drawn into the maps (
 | `mt_tegal` | `m3_trap_sprung` | trigger `L` (legend), `trigger_id` `puzzle_m3_trap_sprung` | (40,9) | SQ-M3 peaceful | Puzzle: the player sets out the beans (a 3-bean pile, **VERIFY** beans or crabs) at three marked spots along the leader's path; it stops to count each pile (4 s, **TUNE**); when the third is counted the net drops. The elite `q` (44,9) is caught, not fought; kills nothing |
 | `mt_kuburan` | `m2_toy` | `clue.tscn` `{clue_id:"m2_toy", memory_id:"sq_m2_child", cond:"quest:sq_m2=active"}` | (44,14) | SQ-M2 | The boy's toy on the hill path (inside the hill room (40,3)-(56,16)), south of the tree. Its note names the Wewe Gombel. Opens `sq_m2_child` once the parents have been talked to |
 | `mt_kuburan` | hill-path arena | trigger `T` (48,10) `wewe_hill`, elite `q` (46,11) `wewe_elite`, parents `p` (50,13) `wewe_parents_2` | see legend | SQ-M2 | Fight branch: the elite alone in the hill room (no wave), HP 780, **TUNE**. Peaceful branch: `wewe_parents_2` arrive at (50,13) after the memory, call kindly and bang pots (**VERIFY**), and the elite `q` is not spawned (cond `!flag:sq_m2_peaceful`, **ASSUMED**); the child is at the parents' feet |
-| `mt_candi` | `c3_camp_scrap` | `clue.tscn` `{clue_id:"c3_camp_scrap", cond:"flag:mq2_7"}` | (31,26) | SQ-C3 fragment 1 | The Mataram camp of step 2.6 (`mq2_7`) is the court of `mt_candi`; the scrap hangs on a stake in the petilasan court, a few tiles from the cleared camp, so it is still reachable after the boss. Freed variant: a scrap of cloth with a stitched sound. Handed variant: Uwa Lengser's note. Not in `kg_pamali` |
+| `mt_candi` | `c3_camp_scrap` | `clue.tscn` `{clue_id:"c3_camp_scrap", cond:"flag:mq2_7"}` | (31,26) | SQ-C3 fragment 1 | The Mataram camp of step 2.14 (`mq2_7`) is the court of `mt_candi`; the scrap hangs on a stake in the petilasan court, a few tiles from the cleared camp, so it is still reachable after the boss. Freed variant: a scrap of cloth with a stitched sound. Handed variant: Uwa Lengser's note. Not in `kg_pamali` |
 | `mt_gapura` | `cepot` | NPC `{npc_id:"cepot", cond:"flag:c4_1,flag:mq2_a1,!flag:c4_2"}` | (7,17) | SQ-C4 part 2 | In the border market lane between the two stalls. `quiet` entries (**ASSUMED**); he sets `c4_2` at the end |
 | `mt_gapura` | `c4_roll_a`, `c4_roll_b` | `clue.tscn` `{clue_id:"c4_roll_a", cond:"flag:c4_1,flag:mq2_a1"}` and `{clue_id:"c4_roll_b", ...}` | (6,13), (6,20) | SQ-C4 part 2 | The two recruiters' rolls, beside `recruiter_a` (4,13) and `recruiter_b` (4,20): his name on both |
 | `mt_gapura` | `c4_market_clear` | trigger, `trigger_id` `puzzle_c4_market_clear`, `size:Vector2i(9,10)` | rect (1,13)-(9,22), goal (10,16) | SQ-C4 part 2 | Stealth puzzle, no combat: Cepot follows two tiles behind. Each recruiter looks down the lane in turns (3 s each, **TUNE**); the player moves him along the crates and the stall shade, two crate hides at (3,16) and (7,19), to the gateway (10..11,14..19). If a recruiter sees him, he walks back to (7,17) and it restarts, no counter. Solving fires `area_entered:c4_market_clear` |
@@ -1178,7 +1184,7 @@ Small own scenes under `zones/kelir/`, not areas: they have no `## Area n:` head
 - Layout: a plain 30x17 floor room, Stand (3,13), first stall at (10,4), second stall at (17,4), third stall at (24,4), decor spills at (10,9), (17,12), (24,9), the master's lamp `K` at (14,8), door `G` (3,3), all **TUNE**.
 
 ## Flow
-Gapura entry, the two recruiters in the border market (the same war told both ways), `mataram_gerbang` and the road ambush `mataram_jalan` with the `haulers` beat > petilasan `mataram_1` (2.1) > **three leads in any order (2.2)**: the market plaza (the stage setpiece; Ki Sumarto teaches Ha, 2.3), the ruins courtyard (chalk clue, the Arca miniboss, Na read off `arca_base` as a puzzle, 2.3; Pak Karto waits in the yard as a side NPC), the graveyard (two fights, `hunter_war`) > the mask fragment and the H3 memory, the harvest captain (2.4) > the foothill: lesung women (Ca, 2.3), `mataram_batu_2`, `mataram_batu`, the lamp puzzle, the juru kunci and Ra (2.5) > `K2` > `mt_candi`: the temple gate fight, the hauler, the camp gate, the captain, the camp setpiece and the `camp` beat (2.6) > three K3 clues (2.7) > the K3 memory (2.8) > rest at `mataram_2`, Laras's chapter LC3 (2.9) > Bandung Bondowoso (2.10) > `sc:mt_candi_gapura` > the Faceless remnants in the gapura (2.11) > `kg_pamali`: the Pamali stone (2.11), K-III (2.12), the letters and the ford duel (2.13, beats `ford`, `truce`) > the causeway and `mt_wetan` > `K3`.
+Gapura entry, the two recruiters (2.1) and the `two_stories` and `haulers` beats > `mataram_gerbang` and `mataram_jalan`, then petilasan `mataram_1` and the farmer (2.2) > the market plaza stage setpiece (2.3) and Ki Sumarto, Ha (2.4) > the sawah road escort (2.5) > **three leads in any order**: the ruins (the Arca miniboss, Na off `arca_base`, 2.6), the graveyard (2.7) with the H3 fragment and memory (2.8), the lesung yard and Nyai Gendhis, Ca (2.9-2.10) > the foothill siege `mataram_batu` and `shrine_chisel` (2.11), the lamp puzzle and the juru kunci, Ra (2.12), `K2` > `mt_tegal` pillars and `pillar_prints` (2.13) > `mt_candi`: the gate, the hauler, the camp and the `camp` beat (2.14), the three K3 clues (2.15), LC3 (2.16), the crypt (2.17), the K3 memory (2.18), Bandung Bondowoso (2.19) > `sc:mt_candi_gapura` > the remnants in the gapura and the causeway, `kg_pamali` (2.20): the pickets and the Pamali stone (2.21), K-III (2.22), the letters (2.23) and the ford duel and `truce` (2.24, Choice 3) > `mt_wetan` > `K3`.
 
 ## Encounter list (18)
 | Id | Area | Mix | Notes |
@@ -1228,6 +1234,7 @@ Interlock rules:
 8. [x] The critical path visits 7 of 8 areas; gates follow story flags (`mq1_10`, `mq2_6`, `mq2_9`) and one puzzle flag (`puzzle_wetan_lamps`); glyphs are rewards, not keys.
 
 ## ASSUMED (every decision made here)
+- **Story v5 pass (2026-11-06):** step numbers in the area text are the v5 ones (2.1-2.24, 0-based `step:` indices where a cond uses one; `haulers` no longer needs `step:mq2=0`). New ASSUMED clues `shrine_chisel` (2.11, `mt_wetan` `H`) and `pillar_prints` (2.13, `mt_tegal` `H`), journal notes only. `sawah_farmer` has a spot (`mt_sawah` `W` (33,18), the old stale `lesung_women` farm-yard spot is retargeted). Nyai Gendhis is the NPC id `lesung_women` (`mt_wetan` `A`). The border-gate area is `mt_gapura` (there is no `mt_gerbang`); `mataram_gerbang` is only an encounter id. New ASSUMED beat triggers `beat_two_stories` (`mt_gapura` `L`) and `beat_ranga_word` (`mt_wetan` `Q`). `hauler` stays at `mt_candi` `A`. Ki Sumarto is `mataram_dalang` here and `ki_sumarto` at the ford camp in `kg_pamali`.
 1. 8 areas with the names and sizes in the Area table. Exit sides (W/E/N/S) only fix the graph.
 2. Gate flags `mq2_6` (kabut `K2` before the temples, set by the juru kunci at 2.5) and `mq2_9` (kabut `K3` to Tanah Timur, set when Hariang Banga is beaten at 2.13).
 3. Shortcut ids `sc:mt_ruin_sawah` and `sc:mt_candi_gapura`. Both are the Tatar Sunda shortcut gate (`entities/world/shortcut.tscn`): it stands in the gate area and opens from the side the opener area's exit arrives on. No levers (2026-11-05).

@@ -10,6 +10,8 @@ class_name DialogueData extends Resource
 ## The first entry whose conditions all hold under Game.check, or {} if none.
 func pick(game: Node) -> Dictionary:
 	for e in entries:
+		if e.has("topic"):
+			continue   # topic entries are reached only from a hub (quests.md 7.1)
 		if e.get("if", []).all(func(c: String) -> bool: return game.check(c)):
 			return e
 	return {}

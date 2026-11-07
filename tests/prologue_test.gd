@@ -95,3 +95,28 @@ func run() -> void:
 	e.queue_free()
 	game.flags.clear()
 	check(plain != "", "plain card 2 has text")
+
+	# Six-choice epilogue (script.md 11): 8 cards, Semar on card 7, one variant per Major Choice, extras under cards 2 and 5.
+	e = load("res://ui/epilogue.tscn").instantiate()
+	check(e.lines == 8 and e.semar_from == 7 and e.semar_to == 7, "epilogue cards: %d, semar %d-%d" % [e.lines, e.semar_from, e.semar_to])
+	check(e.variants.size() == 6 and e.variants.get(3) == "choice_judgment" and not e.variants.values().has("choice_silent"), "epilogue variants: %s" % e.variants)
+	check(e.extras.has(2) and e.extras.has(5), "epilogue extras: %s" % e.extras)
+	e.free()
+	# An extras line is added under its card, after a blank line, only while its cond holds.
+	for on in [false, true]:
+		game.flags.clear()
+		if on:
+			game.set_flag("ex", false)
+		e = load("res://ui/epilogue.tscn").instantiate()
+		e.key_prefix = "NOPE"
+		e.variants = {}
+		e.extras = {2: ["NOPE_EXTRA", "flag:ex"]}
+		root.add_child(e)
+		await frames(2)
+		e.advance()
+		e.advance()
+		e.advance()
+		var want := "NOPE_2\n\nNOPE_EXTRA" if on else "NOPE_2"
+		check(e.index == 2 and e._text.text == want, "extras (%s): '%s'" % [on, e._text.text])
+		e.queue_free()
+	game.flags.clear()

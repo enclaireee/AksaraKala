@@ -13,6 +13,7 @@ signal finished
 @export var semar_from := 4
 @export var semar_to := 5
 @export var variants := {}   # card number -> flag; while the flag is set, card n uses <PREFIX>_<n>_ALT
+@export var extras := {}     # card number -> [key, cond]; while Game.check(cond) holds, tr(key) is added under card n after a blank line
 @export var next_scene := "res://ui/class_select.tscn"   # "" = back to Desa Purwa (epilogue)
 const HOLD := 1.0
 const JAWA := "/System/Library/Fonts/Supplemental/NotoSansJavanese-Regular.otf"
@@ -73,7 +74,7 @@ func _ready() -> void:
 	add_child(_name)
 	_text = Label.new()
 	_text.position = Vector2(40, 184)
-	_text.size = Vector2(400, 40)
+	_text.size = Vector2(400, 64)   # room for an extras line under a card
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_text)
 	var hint := Label.new()
@@ -116,7 +117,12 @@ func advance() -> void:
 		key += "_ALT"
 	_name.text = "NPC_SEMAR_NAME" if index >= semar_from and index <= semar_to else ""
 	var body := tr(key)
-	_text.text = game.fmt(body % int(game.codex_percent()) if "%d" in body else body)
+	if "%d" in body:
+		body = body % int(game.codex_percent())
+	var ex: Variant = extras.get(index, extras.get(str(index), null))
+	if ex is Array and ex.size() >= 2 and game.check(str(ex[1])):
+		body += "\n\n" + tr(str(ex[0]))
+	_text.text = game.fmt(body)
 	_text.visible_ratio = 0.0
 	_tw = create_tween()
 	_tw.tween_property(_text, "visible_ratio", 1.0, maxf(0.3, body.length() * 0.03))

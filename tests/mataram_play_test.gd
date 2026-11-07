@@ -33,7 +33,7 @@ const ROUTE := [
 	"do:bandung_bondowoso", "q:mq2=active:11",
 	"go:mt_gapura", "do:sc:mt_candi_gapura", "go:kg_pamali",
 	"do:pamali_stone", "write:nagawiru:jawa_na,sunda_ga", "q:mq2=active:12", "beat:ford",
-	"pick:1", "do:hariang_banga", "q:mq2=done", "beat:truce", "flag:choice_silent", "q:mq3=active:0",
+	"pick:1", "do:hariang_banga", "q:mq2=done", "beat:truce", "flag:choice_judgment", "q:mq3=active:0",
 	"go:mt_gapura", "go:mt_sawah", "go:mt_reruntuhan", "go:mt_wetan", "see:tt_kulon",
 ]
 

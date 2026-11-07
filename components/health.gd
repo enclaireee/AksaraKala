@@ -7,6 +7,7 @@ signal died
 @export var max_hp: int = 100
 var hp: int
 var shield := 0   # absorbs damage before hp (Ward)
+var reduction := 0.0   # fraction of damage taken removed (Sabuk Galuh bonus "defense"), min 1 damage
 var defense := 0  # armor points: 5% less damage each, min 1 (rpg.md 5); enemies leave it 0
 var invincible_time: float = 0.0
 
@@ -36,6 +37,8 @@ func take_damage(amount: int, source: Node = null, ignore_iframes := false) -> b
 		return false
 	if defense > 0 and amount > 0:
 		amount = maxi(1, roundi(amount * (1.0 - 0.05 * defense)))
+	if reduction > 0.0 and amount > 0:
+		amount = maxi(1, roundi(amount * (1.0 - reduction)))
 	var soaked := mini(shield, amount)
 	shield -= soaked
 	hp = maxi(0, hp - (amount - soaked))

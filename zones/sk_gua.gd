@@ -20,10 +20,10 @@ const MAP := [
 	"#_____________________________L____________________________#",
 	"Ww_________________________________________________________#",
 	"W__________________________________________________________#",
-	"#__________________________________________________________#",
+	"#___S______________________________________________________#",
 	"#__________________________________________________________#",
 	"#______________rr__________________________rr______________#",
-	"#______________rr__________________________rr______________#",
+	"#______________rr___________G______________rr______________#",
 	"#__________________________________________________________#",
 	"#_____________________________E____________________________#",
 	"#__________________________________________________________#",
@@ -43,9 +43,11 @@ const SPOTS := {
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": "_"},   # spawn, arrival from sk_karang
 	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_tebing", "spawn_id": "from_sk_gua"}, "tile": "_"},   # exit to sk_tebing (north edge, 2 tiles)
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_tebing"}, "tile": "_"},   # spawn, arrival from sk_tebing
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "gua_karang_approach", "size": Vector2i(15,9), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(4,-2)], ["res://entities/enemies/ula_segara.tscn", Vector2i(0,2)]]]}, "tile": "_"},   # encounter gua_karang_approach
-	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_gua_trial", "size": Vector2i(16,9), "waves": [[["res://entities/enemies/ula_segara.tscn", Vector2i(-4,0)], ["res://entities/enemies/bajul_putih.tscn", Vector2i(0,0)], ["res://entities/enemies/lampor.tscn", Vector2i(4,0)]]]}, "tile": "_"},   # encounter kidul_gua_trial
-	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lc5_cavern", "memory_id": "lc5"}, "tile": "_"},   # clue, sunken bronze bells (LC5)
+	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_sari", "cond": "step:mq4=16"}, "tile": "_"},   # NPC Sari at the mouth of the cavern (4.17 entry 4, `"quiet": true`)
+	"G": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "gua_bell_marks"}, "tile": "_"},   # clue, green stains and bronze marks on the cave wall (4.15 `clue` piece; journal note only, ASSUMED id)
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "gua_karang_approach", "size": Vector2i(15,9), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(4,-2)], ["res://entities/enemies/ula_segara.tscn", Vector2i(0,2)]]]}, "tile": "_"},   # encounter gua_karang_approach (4.15)
+	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_gua_trial", "size": Vector2i(16,9), "cond": "flag:laras_key_tidal_gate", "waves": [[["res://entities/enemies/ula_segara.tscn", Vector2i(-4,0)], ["res://entities/enemies/bajul_putih.tscn", Vector2i(0,0)], ["res://entities/enemies/lampor.tscn", Vector2i(4,0)]]]}, "tile": "_"},   # encounter kidul_gua_trial (4.17 Sacred Trial II; inert until Laras opens the tidal gate)
+	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lc5_cavern", "memory_id": "lc5"}, "tile": "_"},   # clue, the sunken bronze bells (4.16, opens chapter `lc5`; replaces the retired `lc5_lontar`)
 }
 
 

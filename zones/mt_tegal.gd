@@ -14,7 +14,7 @@ const MAP := [
 	"#.......................,...........#___L_M_q___#..........#",
 	"#.......................,...........#_____T_____#..........#",
 	"#.......................,...........#___________#..........#",
-	"#.......................,...........#___________#..........#",
+	"#....................H..,...........#___________#..........#",
 	"#.......................,...........######,######..........#",
 	"#.......................,.................,.........#......#",
 	"#.......................,.................,.........########",
@@ -54,6 +54,7 @@ const SPOTS := {
 	"k": {"scene": "res://entities/enemies/pocong.tscn", "props": {}, "tile": "."},   # loose Pocong, roaming pack (respawns on zone reload, no unique_id)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_tegal_pillars", "size": Vector2i(15,9), "waves": [[["res://entities/enemies/arca_penjaga.tscn", Vector2i(-4,0)], ["res://entities/enemies/genderuwo.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter mataram_tegal_pillars (2.13 fight across the plain of rising stones)
 	"s": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "batu_bintang"}, "tile": "."},   # pickup, batu bintang (SQ-T3 fallen meteorite fragment)
+	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "pillar_prints", "cond": "flag:mq2_6"}, "tile": "."},   # clue, scuffed prints around a fallen pillar on the plain of rising stones (2.13; journal note only; id `pillar_prints` **ASSUMED**, not in quests.md; hunt `k3`)
 }
 
 

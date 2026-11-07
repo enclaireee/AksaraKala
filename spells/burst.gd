@@ -14,7 +14,7 @@ func _ready() -> void:
 	damage = roundi(data.power * power * SpellUtil.damage(caster))
 	source = caster
 	poise_mult = preload("res://data/combat_tuning.tres").spell_poise_mult
-	_radius = data.radius * (1.25 if SpellUtil.class_id(caster) == "warrior" else 1.0)   # Warrior +25%
+	_radius = data.radius * (1.25 if SpellUtil.class_id(caster) == "warrior" else 1.0) * SpellUtil.radius_mult(data)   # Warrior +25%, Tell Ciung +10%
 	var cs := CircleShape2D.new()   # own shape: the scene's is shared between instances
 	cs.radius = _radius
 	$Shape.shape = cs

@@ -43,12 +43,12 @@ const SPOTS := {
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_pasar"}, "tile": ","},   # spawn, arrival from kg_pasar
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_kaputren", "spawn_id": "from_kg_pustaka"}, "tile": ","},   # exit to kg_kaputren (south edge, 2 tiles)
 	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_kaputren"}, "tile": ","},   # spawn, arrival from kg_kaputren
-	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_keraton", "spawn_id": "from_kg_pustaka"}, "tile": "_"},   # exit to kg_keraton (north edge, 2 tiles, archive grate)
+	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_keraton", "spawn_id": "from_kg_pustaka"}, "tile": "_"},   # exit to kg_keraton (north edge, 2 tiles, archive grate; the link needs `laras_key:archive_grate`, set by LC2)
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_keraton"}, "tile": "_"},   # spawn, arrival from kg_keraton
-	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "pustaka_guards", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(3,0)]]]}, "tile": "_"},   # encounter pustaka_guards, archive guards (MQG g.6)
-	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nyai_sekar"}, "tile": "_"},   # NPC Nyai Sekar, royal archivist (MQG g.6)
-	"P": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "pustaka_cipher", "size": Vector2i(4,4)}, "tile": "_"},   # trigger pustaka_cipher, mirror-lamp cipher (MQG g.7)
-	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "scraped_genealogy"}, "tile": "_"},   # clue scraped_genealogy, King Nagawiru's scraped lontar (MQG g.7)
+	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "pustaka_guards", "size": Vector2i(14,8), "cond": "flag:mqg_4,!flag:mqg_ar1", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(3,0)]]]}, "tile": "_"},   # encounter pustaka_guards, archive guards (MQG g.6, `area_cleared:pustaka_guards`)
+	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nyai_sekar", "cond": "flag:mqg_4"}, "tile": "_"},   # NPC Nyai Sekar, royal archivist (MQG g.6 `talked_to:nyai_sekar`, sets `mqg_ar1`; hub; her closing lines after the grate, g.16)
+	"P": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "pustaka_cipher", "size": Vector2i(4,4), "cond": "flag:mqg_ar1"}, "tile": "_"},   # trigger pustaka_cipher, mirror-lamp cipher (MQG g.7 `puzzle_solved:pustaka_cipher`; sets `flag:puzzle_pustaka_cipher`)
+	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "scraped_genealogy", "cond": "flag:puzzle_pustaka_cipher"}, "tile": "_"},   # clue scraped_genealogy, King Nagawiru's scraped lontar (MQG g.7, `clue_examined:scraped_genealogy`, sets `mqg_ar2`)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "galuh_chest_pustaka", "item_id": "ilmu:55"}, "tile": "_"},   # chest galuh_chest_pustaka (55 Ilmu)
 }
 
