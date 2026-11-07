@@ -289,6 +289,8 @@ func start_quest(id: String) -> bool:
 	if quest_state(id) != "available":
 		return false
 	quests[id] = {"state": "active", "step": 0, "count": 0, "resolution": "", "all": 0}
+	if QuestData.by_id(id).kind == "side" and not QuestData.by_id(id).steps.is_empty():
+		pinned = id   # a new side quest is tracked at once (docs/quest_system.md 3.2)
 	_emit("quest_started", id)
 	if QuestData.by_id(id).steps.is_empty():
 		_complete(id)
@@ -445,14 +447,47 @@ func active_sub(id: String) -> int:
 	return -1
 
 
-## The objective to point the arrow at: the pinned side quest, else the first active main quest. In an `all`
-## step it is the marker of the first unfinished sub-goal, falling back to the step's own marker.
+## The open sub-goal the HUD and arrow follow: the first open one whose marker is in the zone the player is in,
+## else the first open one. -1 when the step has no sub-goals or all are done.
+func focus_sub(id: String) -> int:
+	var st := current_step(id)
+	if st == null:
+		return -1
+	var first := -1
+	var zones := get_node_or_null("/root/Zones")
+	var here: String = str(zones.current_zone) if zones != null else ""
+	for i in st.all.size():
+		if _all_bit(id, i):
+			continue
+		if first < 0:
+			first = i
+		var sm: Variant = st.all[i].get("marker", {})
+		if here != "" and sm is Dictionary and str(sm.get("zone", "")) == here:
+			return i
+	return first
+
+
+## Finished and total sub-goals of the current step (a counted step: kills so far and needed). Vector2i.ZERO if none.
+func step_progress(id: String) -> Vector2i:
+	var st := current_step(id)
+	if st == null:
+		return Vector2i.ZERO
+	if not st.all.is_empty():
+		var done := 0
+		for i in st.all.size():
+			done += 1 if _all_bit(id, i) else 0
+		return Vector2i(done, st.all.size())
+	return Vector2i(int(quests[id].count), st.count) if st.count > 1 else Vector2i.ZERO
+
+
+## The objective to point the arrow at: the tracked side quest, else the first active main quest. In an `all`
+## step it is the marker of the focus sub-goal, falling back to the step's own marker.
 func objective_marker() -> Dictionary:
 	for id in _tracked():
 		var st := current_step(id)
 		if st == null:
 			continue
-		var i := active_sub(id)
+		var i := focus_sub(id)
 		if i >= 0:
 			var sm: Variant = st.all[i].get("marker", {})
 			if sm is Dictionary and not sm.is_empty():
@@ -462,7 +497,7 @@ func objective_marker() -> Dictionary:
 	return {}
 
 
-## Quests the HUD follows, in order: the pinned side quest, then active main quests.
+## Quests the HUD follows, in order: the tracked side quest, then active main quests.
 func _tracked() -> Array:
 	var ids: Array = [pinned] if quest_state(pinned) == "active" else []
 	for id in quests.keys():
@@ -472,18 +507,26 @@ func _tracked() -> Array:
 	return ids
 
 
-## The HUD objective line (ui.md 2): the first tracked step's objective, plus "n/count" for counted steps.
-## In an `all` step it is the first unfinished sub-goal's `objective` key with "(i/total)"; a sub-goal without
-## a key shows the step objective with the same progress.
+## The current objective line of one quest: the focus sub-goal's `objective` key (the step objective when it has
+## none) with "(done/total)", or the step objective with "n/count" for a counted step. "" if the quest is not active.
+func quest_objective_text(id: String) -> String:
+	var st := current_step(id)
+	if st == null:
+		return ""
+	var pr := step_progress(id)
+	var i := focus_sub(id)
+	if i >= 0:
+		var key := str(st.all[i].get("objective", ""))
+		return "%s (%d/%d)" % [tr(key if key != "" else st.objective), pr.x, pr.y]
+	return tr(st.objective) + (" %d/%d" % [pr.x, pr.y] if pr.y > 1 else "")
+
+
+## The HUD objective line (ui.md 2): the first tracked quest's current objective.
 func objective_text() -> String:
 	for id in _tracked():
-		var st := current_step(id)
-		if st:
-			var i := active_sub(id)
-			if i >= 0:
-				var key := str(st.all[i].get("objective", ""))
-				return "%s (%d/%d)" % [tr(key if key != "" else st.objective), i + 1, st.all.size()]
-			return tr(st.objective) + (" %d/%d" % [quests[id].count, st.count] if st.count > 1 else "")
+		var t := quest_objective_text(id)
+		if t != "":
+			return t
 	return ""
 
 
@@ -493,7 +536,7 @@ func step_checklist(id: String) -> Array:
 	var st := current_step(id)
 	if st == null:
 		return out
-	var act := active_sub(id)
+	var act := focus_sub(id)
 	for i in st.all.size():
 		var key := str(st.all[i].get("objective", ""))
 		out.append({"text": tr(key) if key != "" else "%s (%d/%d)" % [tr(st.objective), i + 1, st.all.size()],
@@ -615,6 +658,9 @@ func run(action: String) -> void:
 					push_warning("dialogue: write '%s' names no known glyph" % arg)
 				else:
 					get_node("/root/Events").write_requested.emit(p[0], PackedStringArray(ids))
+		"remember":   # remember:<key>, a choice with a visible consequence (docs/quest_story_ux.md 3)
+			set_flag("remember_" + arg)
+			_emit("consequence_noted", arg)
 		"topic":   # topic:<key>, a hub choice's action; play() handles it (script.md 2, topic hubs)
 			pass
 		_:

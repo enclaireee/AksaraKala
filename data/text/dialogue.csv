@@ -383,8 +383,8 @@ BEAT_HUNTER_RAID_4,"Mereka mencari Ciung kami, bocah dengan telur itu. Ia lari k
 BEAT_HUNTER_RAID_H2,"Bocah yang dicari pemburu bertopeng tadi... anak yang kau besarkan itu?","The boy that masked hunter is chasing... he's the prince you raised?"
 BEAT_HUNTER_RAID_5,Di rumput dekat gerbang tergeletak serpihan topeng putih. Lontarmu bergetar saat kau memungutnya.,A white mask fragment lies in the grass by the gate. Your lontar hums as you pick it up.
 DLG_SUNDA_ELDER_H1,"Adikku, Laras. Kecil, membawa lontar. Abah lihat?","My sister, Laras. Small, carrying a lontar. Did you see her?"
-DLG_SUNDA_ELDER_V2,"Lihat. Kemarin subuh, lari dari rumpun bambu bersama bocah liar yang menggendong telur. Bocah itu menariknya seperti menarik layangan.","I did. Yesterday at dawn, running from the bamboo with a wild boy hugging an egg. He towed her like a kite."
-DLG_SUNDA_ELDER_V3,"Hilir, ke ngarai sungai. Orang tua bilang di sana Sandekala, roh senja, menjemput anak yang masih di luar saat maghrib. Bawa Ga: angkat, dan cahaya jadi dinding.","Downstream, to the river gorge. The old folk say Sandekala, the dusk spirit, collects any child still outside at maghrib. Take Ga: raise it, and the light becomes a wall."
+DLG_SUNDA_ELDER_V2,Lihat. Kemarin subuh ia lari dari rumpun bambu bersama bocah liar yang menggendong telur.,I did. Yesterday at dawn she ran from the bamboo with a wild boy hugging an egg.
+DLG_SUNDA_ELDER_V3,"Hilir, ke ngarai sungai. Orang tua bilang Sandekala, roh senja, menjemput anak yang masih di luar saat maghrib.","Downstream, to the river gorge. The old folk say Sandekala, the dusk spirit, collects any child still outside at maghrib."
 DLG_SUNDA_ELDER_V4,"Ikuti sungai ke hilir, ke dusun di tepi ngarai. Kau akan tahu saat langit mulai jingga.",Follow the river down to the hamlet by the gorge. You'll know it when the sky turns orange.
 DLG_SUNDA_ELDER_V6,"Batu tulis, batu berukir itu, ada di atas jalan setapak. Teras sawah di baliknya.","The batu tulis, the carved stone, is up the path. The terraces are past it."
 DLG_BATU_TULIS_V1,"Wajah seorang raja terpahat di batu ini, digores habis dalam-dalam. Debunya masih putih.","A king's face is carved into this stone, scraped out deep. The dust is still white."
@@ -762,7 +762,7 @@ CLUE_MASK_GATE_NOTE,Serpihan topeng putih di gerbang barat. Milik si Pemburu.,A 
 DLG_SUNDA_GRANDSON_V1,Dengar para pemetik teh? Mereka bernyanyi supaya daun tak merasa sepi.,Hear the pickers? They sing so the leaves don't feel lonely.
 DLG_SUNDA_GRANDSON_V2,"Aku belajar angklung. Satu ruas bambu, satu nada. Sendirian hambar, ramai-ramai merdu.","I'm learning the angklung. One bamboo, one note. Alone it's dull, together it sings."
 DLG_SUNDA_GRANDSON_H1,Kau lihat gadis kecil membawa lontar?,Did you see a little girl with a lontar?
-DLG_SUNDA_GRANDSON_V3,"Tanyakan pada kakekku, sesepuh kampung. Dia tahu semua yang lewat. Kampungnya di utara, lewat petilasan.","Ask my grandfather, the kampung elder. He knows everyone who passes. The kampung is north, past the petilasan."
+DLG_SUNDA_GRANDSON_V3,"Tanyakan pada kakekku, sesepuh kampung. Kampungnya di utara, lewat petilasan.","Ask my grandfather, the kampung elder. The kampung is north, past the petilasan."
 DLG_SUNDA_GRANDSON_V4,"Nanti kuajari satu nada, kalau kau kembali utuh.","I'll teach you a note, if you come back in one piece."
 DLG_RIBBON_H1,"Pita Laras, tersangkut di bambu. Dia lolos dari sini, dan melawan.","Laras's ribbon, caught on the bamboo. She broke free here, and fought."
 HUNT_K1_TITLE,Sandekala,Sandekala
@@ -1688,19 +1688,19 @@ DLG_TEA_PICKER_V1,"Dua daun dan satu pucuk, begitu aturannya. Petik lebih, tehny
 DLG_TEA_PICKER_V2,"Dengar, kami bernyanyi pelan. Daun lebih suka lagu daripada sunyi.","Listen, we sing softly. Leaves prefer a song to silence."
 DLG_TEA_PICKER_V3,"Kalau cari anak kecil, tanya cucu sesepuh di ujung kebun. Dia tak pernah diam.","If you're after a child, ask the elder's grandson at the end of the field. He never sits still."
 DLG_SUNDA_GRANDSON_H10,Kau sendirian di sini? Fajar baru lewat.,You're out here alone? Dawn has only just passed.
-DLG_SUNDA_GRANDSON_V10,"Kakek menyuruhku menjaga pucuk dari burung. Burungnya tak peduli, nadaku yang sumbang.","Grandfather told me to guard the buds from birds. The birds don't care, it's my notes that are sour."
-DLG_SUNDA_GRANDSON_V11,"Tidak. Tapi sejak subuh orang-orang bertopeng polos lewat. Mereka tak menyentuh teh, hanya menanyai nama.","No. But since dawn, people in blank masks have been passing. They don't touch the tea, only ask for names."
+DLG_SUNDA_GRANDSON_V10,"Kakek menyuruhku jaga pucuk dari burung. Burungnya tak peduli, nadaku yang sumbang.","Grandfather told me to guard the buds from birds. The birds don't care, it's my notes that are sour."
+DLG_SUNDA_GRANDSON_V11,"Tidak. Tapi sejak subuh ada orang bertopeng polos lewat. Mereka tak menyentuh teh, hanya menanyai nama.","No. But since dawn, people in blank masks have been passing. They don't touch the tea, they only ask for names."
 DLG_SUNDA_GRANDSON_H11,Di mana mereka sekarang?,Where are they now?
-DLG_SUNDA_GRANDSON_V12,"Di rumpun bambu ujung timur. Mereka tak mau mendekat ke kampung, entah kenapa.","In the bamboo at the east end. They won't come near the kampung, I don't know why."
+DLG_SUNDA_GRANDSON_V12,"Di rumpun bambu ujung timur. Anehnya, mereka menjauhi kampung.","In the bamboo at the east end. Strangely, they keep away from the kampung."
 CLUE_LARAS_RIBBON_SPOT_2,Pitanya tersangkut tinggi di cabang. Dia sengaja meninggalkannya untukku.,"Her ribbon is hung high on a branch. She left it there on purpose, for me."
 CLUE_LARAS_RIBBON_SPOT_NOTE,Bambu patah dan jejak sepatu kain di tepi kebun teh. Laras sempat lolos.,Snapped bamboo and cloth-shoe prints at the tea field's edge. Laras got free for a while.
-BEAT_SCOUT_CAMP_1,"Di perkemahan yang ditinggalkan, api masih berasap, dan di tanah terhampar potongan lontar yang dicoret-coret.","In the abandoned camp the fire still smokes, and scraps of lontar lie scrawled over on the ground."
+BEAT_SCOUT_CAMP_1,"Di perkemahan yang ditinggalkan, api masih berasap. Potongan lontar berserakan, penuh coretan.","In the abandoned camp the fire still smokes. Scraps of lontar lie scattered, scrawled over."
 BEAT_SCOUT_CAMP_H1,"Daftar nama. Banyak sekali, dan hampir semuanya dicoret.","Lists of names. So many, and nearly all crossed out."
-BEAT_SCOUT_CAMP_2,"Beberapa masih terbaca: seorang tukang kayu, seorang pembuat gula, seorang bidan. Di sampingnya, tanda silang kasar.","A few can still be read: a carpenter, a sugar-maker, a midwife. Beside each, a rough cross."
+BEAT_SCOUT_CAMP_2,"Beberapa masih terbaca: tukang kayu, pembuat gula, bidan. Di samping tiap nama, tanda silang kasar.","A few can still be read: a carpenter, a sugar-maker, a midwife. Beside each name, a rough cross."
 BEAT_SCOUT_CAMP_H2,Mereka tidak mencatat. Mereka menghapus.,They aren't recording. They're erasing.
 BEAT_SCOUT_CAMP_3,"Satu lontar terlipat rapi di bawah batu, dan satu nama di atasnya tak dicoret: Laras.","One lontar is folded neatly under a stone, and one name on it isn't crossed out: Laras."
 BEAT_SCOUT_CAMP_H3,Namanya tak dicoret. Mereka masih membutuhkannya.,Her name isn't crossed out. They still need her.
-BEAT_SCOUT_CAMP_4,"Dari bawah daftar, jejak sepatu kain kecil mengarah ke utara, ke kampung, bergegas dan tak ragu.","Below the lists, small cloth-shoe prints head north toward the kampung, hurried and unhesitating."
+BEAT_SCOUT_CAMP_4,"Di bawah daftar, jejak sepatu kain kecil mengarah ke utara, ke kampung. Bergegas, tanpa ragu.","Below the lists, small cloth-shoe prints head north toward the kampung. Hurried, unhesitating."
 BEAT_SCOUT_CAMP_H4,"Sebentar lagi, Laras.","Soon, Laras."
 DLG_CEPOT_H110,Cepot. Kenapa kau di sini?,Cepot. Why are you here?
 DLG_CEPOT_V110,"Ayah menyuruhku menyusul. Katanya kau mencari seseorang yang tak seorang pun ingat, dan aku harus percaya.","Father sent me after you. He said you're looking for someone nobody remembers, and I should believe it."
@@ -1719,15 +1719,15 @@ DLG_CEPOT_V118,Dekat yang dengan jarak aman. Kira-kira sepuluh langkah. Dua pulu
 CHOICE_CEPOT_ASK_101,Ceritakan soal ayahmu.,Tell me about your father.
 CHOICE_CEPOT_ASK_102,Kau sungguh pemberani?,Are you really brave?
 CHOICE_CEPOT_ASK_103,"Nanti saja, Cepot.","Later, Cepot."
-BEAT_KAMPUNG_RAID_1,"Babi hutan terakhir lari ke ladang, dan para bertopeng lenyap ke kebun teh. Kampung berdiri sunyi, napasnya masih terengah.","The last boar bolts for the fields, and the masked ones vanish into the tea. The kampung stands silent, still catching its breath."
-BEAT_KAMPUNG_RAID_2,"Berhenti dulu, Nak. Kau berdarah, dan kampung kami berutang padamu.","Stop a moment, child. You're bleeding, and this kampung owes you."
-BEAT_KAMPUNG_RAID_3,"Para penduduk keluar dari balik pagar, memegang cangkul dan periuk yang tadi jadi senjata.","The villagers step out from behind the fences, holding hoes and pots that were weapons a moment ago."
+BEAT_KAMPUNG_RAID_1,"Babi hutan terakhir lari ke ladang. Para bertopeng kabur ke kebun teh, kecuali satu yang terjatuh.","The last boar bolts for the fields. The masked ones flee into the tea, all but one who has fallen."
+BEAT_KAMPUNG_RAID_2,"Berhenti dulu, Nak. Kau berdarah, dan kampung ini berutang padamu.","Stop a moment, child. You're bleeding, and this kampung owes you."
+BEAT_KAMPUNG_RAID_3,"Penduduk keluar dari balik pagar, memegang cangkul dan periuk yang tadi jadi senjata.","The villagers step out from behind the fences, holding hoes and pots that were weapons a moment ago."
 BEAT_KAMPUNG_RAID_H1,Mereka bukan merampok.,They weren't robbing you.
 BEAT_KAMPUNG_RAID_4,"Bukan. Perampok ada habisnya. Yang ini mencatat, lalu menghapus.","No. Robbers have an end to them. This lot records, then erases."
 BEAT_KAMPUNG_RAID_H2,"Aku mencari adikku, Laras.","I'm looking for my sister, Laras."
 BEAT_KAMPUNG_RAID_5,"Datanglah ke rumahku. Cucuku sudah bercerita sedikit, dan aku punya sisanya.","Come to my house. My grandson has told you a little, and I have the rest."
 BEAT_KAMPUNG_RAID_6,"Ia menunjuk rumah beratap ijuk, asapnya naik lurus seperti garis di lontar.","He points to a house with a palm-fibre roof, its smoke rising straight as a line on a lontar."
-DLG_SUNDA_ELDER_V10,"Duduk dulu, Nak. Kampung kami berutang padamu, dan tehku masih hangat.","Sit a moment, child. This kampung owes you, and my tea is still warm."
+DLG_SUNDA_ELDER_V10,"Duduk dulu, Nak. Tehku masih hangat.","Sit a moment, child. My tea is still warm."
 DLG_SUNDA_ELDER_H11,"Bocah liar itu, Abah kenal?","The wild boy, do you know him?"
 DLG_SUNDA_ELDER_V11,"Tidak. Wajahnya mengingatkanku pada seseorang, tapi aku tak sanggup menyebut siapa.","No. His face reminds me of someone, but I can't bring myself to say who."
 DLG_SUNDA_ELDER_V12,Gambar Ga dengan satu goresan tak putus. Jangan ragu di tikungan.,Draw Ga in one unbroken stroke. Don't hesitate at the turn.
@@ -3481,3 +3481,18 @@ CHOICE_NYAI_RUKMI_ASK_1,Tentang lontar.,About lontar.
 CHOICE_NYAI_RUKMI_ASK_2,Tentang catatanmu.,About your notes.
 CHOICE_NYAI_RUKMI_ASK_3,Tentang lupa.,About forgetting.
 CHOICE_NYAI_RUKMI_ASK_4,"Cukup, terima kasih.","That's enough, thank you."
+DLG_SUNDA_ELDER_V20,"Bawa Ga: angkat, dan cahaya jadi dinding.","Take Ga: raise it, and the light becomes a wall."
+DLG_SUNDA_ELDER_V21,"Kau melepas anak bertopeng itu. Kampung akan menggerutu, tapi aku melihat caramu menatapnya.","You let that masked boy go. The kampung will grumble, but I saw how you looked at him."
+DLG_SUNDA_ELDER_V22,"Kau memaksa tawanan itu bicara. Keras, tapi malam ini kampung tidur lebih tenang.","You made the prisoner talk. Harsh, but the kampung will sleep easier tonight."
+DLG_SUNDA_ELDER_V23,Kau menyembunyikan tawanan itu dari kampung. Aku tak akan bertanya di mana. Semoga kau benar.,You hid the prisoner from the kampung. I won't ask where. I hope you were right.
+BEAT_KAMPUNG_RAID_7,"Di belakangnya, dua lelaki menahan satu bertopeng yang tertinggal. Ia tak melawan, hanya gemetar.","Behind him, two men hold the one masked figure left behind. He doesn't fight, he only trembles."
+BEAT_KAMPUNG_RAID_8,"Dia masih bernapas, Nak. Kaulah yang bertarung. Apa yang kita lakukan padanya?","He's still breathing, child. You did the fighting. What do we do with him?"
+CHOICE_KAMPUNG_RAID_1,Lepaskan dia.,Let him go.
+CHOICE_KAMPUNG_RAID_2,Buat dia bicara.,Make him talk.
+CHOICE_KAMPUNG_RAID_3,Sembunyikan dia dari kampung.,Hide him from the kampung.
+REMEMBER_FREED_SCOUT,Sesepuh kampung akan mengingat bahwa kau melepaskan tawanan bertopeng itu.,The kampung elder will remember that you let the masked prisoner go.
+REMEMBER_QUESTIONED_SCOUT,Sesepuh kampung akan mengingat bahwa kau memaksa tawanan bertopeng itu bicara.,The kampung elder will remember that you made the masked prisoner talk.
+REMEMBER_HID_SCOUT,Sesepuh kampung akan mengingat bahwa kau menyembunyikan tawanan itu dari kampung.,The kampung elder will remember that you hid the prisoner from the kampung.
+DLG_SUNDA_GRANDSON_V20,Kakek bilang kau melepas orang bertopeng itu. Aku bingung harus marah atau lega.,Grandfather says you let the masked man go. I can't tell if I should be angry or relieved.
+DLG_SUNDA_GRANDSON_V21,Kudengar kau membuat orang bertopeng itu bicara. Kakek tak mau cerita isinya.,I heard you made the masked man talk. Grandfather won't say what he said.
+DLG_SUNDA_GRANDSON_V22,Orang bertopeng itu kau sembunyikan? Tetangga berbisik-bisik. Aku tutup mulut.,You hid the masked man? The neighbours are whispering. I'll keep quiet.

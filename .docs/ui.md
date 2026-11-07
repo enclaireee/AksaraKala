@@ -9,6 +9,8 @@ Canvas 480x270, integer-scaled, no sub-pixel UI. All sizes in native pixels and 
 - Smallest text 7 px tall, always with a 1 px dark outline or shadow over the game world.
 
 ## 2. HUD (in play)
+> Quest HUD (tracker top left, banner top centre, arrow with distance, no compass) is specified in [quest_system.md](quest_system.md) 3 and replaces the objective/hint lines and quest toasts below.
+
 Safe margin 6 px from every edge. Nothing in the central 240x140 px.
 
 | Element | Where | Size | Notes |

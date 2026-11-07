@@ -38,9 +38,9 @@ UI_JOURNAL_DONE,Selesai,Done
 UI_JOURNAL_EMPTY,Belum ada misi.,No quests yet.
 UI_JOURNAL_STORY,Cerita sejauh ini,Story so far
 UI_JOURNAL_CLUES,Petunjuk,Clues
-UI_PIN,Sematkan,Pin
-UI_UNPIN,Lepas sematan,Unpin
-UI_PINNED,[disematkan],[pinned]
+UI_PIN,Lacak,Track
+UI_UNPIN,Berhenti melacak,Untrack
+UI_PINNED,[dilacak],[tracked]
 UI_ZONE,Zona,Zone
 UI_ZONE_HUB,Hub uji,Test hub
 UI_ZONE_DESA_PURWA,Desa Purwa,Desa Purwa
@@ -181,3 +181,8 @@ UI_LEG_REST,Petilasan,Shrine
 UI_LEG_CHEST,Peti,Chest
 UI_LEG_CLUE,Petunjuk,Clue
 UI_LEG_EXIT,Jalan keluar,Exit
+UI_Q_NEW,MISI BARU,NEW QUEST
+UI_Q_UPDATED,MISI DIPERBARUI,QUEST UPDATED
+UI_Q_DONE,MISI SELESAI,QUEST COMPLETE
+UI_Q_REMEMBER,INGATAN,THEY WILL REMEMBER
+UI_JOURNAL_CHOICES,Pilihan,Choices

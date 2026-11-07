@@ -564,23 +564,8 @@ func _refresh_journal(g: Node) -> void:
 				b.grab_focus()
 
 
-## "Story so far": recap of every step below the current one (all steps when done); "Clues": set clue_* flags.
+## "Clues": set clue_* flags; "Choices": set remember_* flags as their REMEMBER_<KEY> sentence (quest_story_ux.md 3, 5).
 func _story_and_clues(g: Node) -> void:
-	var recaps := PackedStringArray()
-	for id in g.quests:
-		var q := QuestData.by_id(id)
-		var st: String = g.quest_state(id)
-		if q == null or st == "available" or q.kind != "main":
-			continue
-		var cur: int = q.steps.size() if st == "done" else int(g.quests[id].step)
-		for i in mini(cur, q.steps.size()):
-			var r: String = q.steps[i].get("recap") if q.steps[i].get("recap") != null else ""
-			if r != "":
-				recaps.append(tr(r))
-	if not recaps.is_empty():
-		_label(_journal, "UI_JOURNAL_STORY", GOLD)
-		for r in recaps.slice(-6):   # ui.md: last 6 only
-			_label(_journal, r, DIM)
 	var notes := PackedStringArray()
 	for f: String in g.flags:
 		if f.begins_with("clue_") and g.has_flag(f):
@@ -591,6 +576,18 @@ func _story_and_clues(g: Node) -> void:
 		_label(_journal, "UI_JOURNAL_CLUES", GOLD)
 		for n in notes:
 			_label(_journal, n, DIM)
+	var choices := PackedStringArray()
+	var keys: Array = g.flags.keys()
+	keys.sort()   # the order flags were set is not stored: alphabetical is stable
+	for f: String in keys:
+		if f.begins_with("remember_") and g.has_flag(f):
+			var rk := "REMEMBER_%s" % f.trim_prefix("remember_").to_upper()
+			if tr(rk) != rk:
+				choices.append(tr(rk))
+	if not choices.is_empty():
+		_label(_journal, "UI_JOURNAL_CHOICES", GOLD)
+		for c in choices:
+			_label(_journal, c, DIM)
 
 
 func _quest_block(g: Node, q: QuestData, done: bool) -> void:
@@ -604,22 +601,27 @@ func _quest_block(g: Node, q: QuestData, done: bool) -> void:
 		var dl := _label(_journal, tr(dk))
 		dl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		dl.custom_minimum_size.x = 200
+	var cur: int = q.steps.size() if done else int(g.quests[q.id].step)
+	var entry := PackedStringArray()   # finished steps read as one flowing entry, in order
+	for i in mini(cur, q.steps.size()):
+		if q.steps[i].recap != "":
+			entry.append(tr(q.steps[i].recap))
+	if not entry.is_empty():
+		var el := _label(_journal, " ".join(entry), DIM)
+		el.custom_minimum_size.x = 200
 	if done:
 		return
-	var cur: int = int(g.quests[q.id].step)
-	for i in mini(cur + 1, q.steps.size()):
-		if i == cur and not q.steps[i].all.is_empty():
-			_label(_journal, "  " + tr(q.steps[i].objective))
+	if cur < q.steps.size():   # the open question
+		var step: QuestStep = q.steps[cur]
+		if not step.all.is_empty():
+			_label(_journal, "  " + tr(step.objective))
 			for c in g.step_checklist(q.id):
 				_label(_journal, ("    [x] " if c.done else "    [>] " if c.active else "    [ ] ") + c.text,
 						DIM if c.done else GOLD if c.active else Color.WHITE)
-			continue
-		var obj := tr(q.steps[i].objective)
-		if i < cur:
-			_label(_journal, "  ✓ " + obj, DIM)
 		else:
-			if q.steps[i].count > 1:
-				obj += " (%d/%d)" % [int(g.quests[q.id].get("count", 0)), q.steps[i].count]
+			var obj := tr(step.objective)
+			if step.count > 1:
+				obj += " (%d/%d)" % [int(g.quests[q.id].get("count", 0)), step.count]
 			_label(_journal, "  > " + obj)
 	var st: QuestStep = g.current_step(q.id)
 	if st:
@@ -824,7 +826,7 @@ func _refresh_map() -> void:
 	_map_note.text = line
 
 
-## The HUD (objective lines, compass) would show through the translucent panel.
+## The HUD (quest tracker, banner, arrow) would show through the translucent panel.
 func _set_hud(on: bool) -> void:
 	var hud := get_node_or_null("../HUD")
 	if hud:

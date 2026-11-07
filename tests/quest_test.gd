@@ -77,9 +77,10 @@ func _initialize() -> void:
 	ev.enemy_killed.emit(boar, 9)
 	ev.enemy_killed.emit(boar, 9)
 	check(g.quests.t_a.step == 0 and g.quests.t_a.count == 2, "count: %s" % g.quests.t_a)
-	check(g.objective_text() == "", "objective line for an unpinned side quest")
-	g.pin_quest("t_a")
+	check(g.pinned == "t_a", "a started side quest is tracked")
 	check(g.objective_text().ends_with(" 2/3"), "objective count: '%s'" % g.objective_text())
+	g.pin_quest("t_a")
+	check(g.objective_text() == "", "objective line for an untracked side quest")
 	g.pin_quest("t_a")
 	check("wild_boar" in g.codex, "first kill did not unlock the codex entry")
 	ev.enemy_killed.emit(boar, 9)
@@ -103,7 +104,9 @@ func _initialize() -> void:
 
 	# Pinning and the marker.
 	g.start_quest("t_c")
-	check(g.objective_marker().is_empty(), "marker without a pin or main quest")
+	check(g.pinned == "t_c" and g.objective_marker().get("id") == "spring", "a started side quest's marker is followed")
+	g.pin_quest("t_c")
+	check(g.objective_marker().is_empty(), "marker without a tracked quest or main quest")
 	g.pin_quest("t_c")
 	check(g.pinned == "t_c" and g.objective_marker().get("id") == "spring", "pinned marker")
 	g.pin_quest("t_a")

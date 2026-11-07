@@ -80,7 +80,7 @@ func _goal_nodes(z: Node, g: Node) -> Array:
 		if st == null:
 			continue
 		var m: Dictionary = st.marker
-		var i: int = g.active_sub(id)
+		var i: int = g.focus_sub(id)
 		if i >= 0 and st.all[i].get("marker", {}) is Dictionary and not st.all[i].get("marker", {}).is_empty():
 			m = st.all[i].marker
 		if m.is_empty() or m.get("zone", zone_id) != zone_id:

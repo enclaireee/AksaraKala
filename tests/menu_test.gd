@@ -64,5 +64,20 @@ func run() -> void:
 	check(int(cf.get_value("settings", "vol_music", -1)) == 40, "volume saved")
 	await key(KEY_ESCAPE)
 	check(not menu.visible and not paused, "Esc closes the menu and unpauses")
+	# Choices section: a set remember_ flag with a translation is listed; without one it is skipped.
+	for loc in ["id", "en"]:
+		var tr_: Translation = Translation.new()
+		tr_.locale = loc
+		tr_.add_message("REMEMBER_TEST_KEY", "Tes akan mengingat ini")
+		TranslationServer.add_translation(tr_)
+	game.set_flag("remember_test_key")
+	game.set_flag("remember_no_text")
+	menu._refresh_journal(game)
+	var texts := []
+	for l in menu._journal.find_children("*", "Label", true, false):
+		texts.append(l.text)
+	check(texts.has("UI_JOURNAL_CHOICES") or texts.has(tr("UI_JOURNAL_CHOICES")), "choices heading shown")
+	check(texts.has("Tes akan mengingat ini"), "remember sentence listed in the Journal")
+	check(not texts.has("REMEMBER_NO_TEXT"), "untranslated remember flag skipped")
 	DirAccess.remove_absolute(settings)
 	DirAccess.remove_absolute("user://test_menu.json")

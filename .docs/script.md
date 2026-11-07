@@ -763,7 +763,8 @@ Regional character: Dewi Naganingrum (want: a son she held for one night; turn: 
 | Entry | if | do |
 |-------|----|----|
 | 1 | `quest:mq1=active`, `!flag:mq1_a1` (1.1, sets `mq1_a1`) | `codex:angklung` |
-| 2 | (none) | |
+| 2-4 | `flag:remember_freed_scout` / `flag:remember_questioned_scout` / `flag:remember_hid_scout`, `!flag:grandson_noted` (the echo of the kampung choice, once) | `flag:grandson_noted` |
+| 5 | (none) | |
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
@@ -773,17 +774,21 @@ Regional character: Dewi Naganingrum (want: a son she held for one night; turn: 
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_GRANDSON_H10 | Kau sendirian di sini? Fajar baru lewat. | You're out here alone? Dawn has only just passed. |
 | 1 | @NPC_SUNDA_GRANDSON_NAME | | |
-| 1 | DLG_SUNDA_GRANDSON_V10 | Kakek menyuruhku menjaga pucuk dari burung. Burungnya tak peduli, nadaku yang sumbang. | Grandfather told me to guard the buds from birds. The birds don't care, it's my notes that are sour. |
+| 1 | DLG_SUNDA_GRANDSON_V10 | Kakek menyuruhku jaga pucuk dari burung. Burungnya tak peduli, nadaku yang sumbang. | Grandfather told me to guard the buds from birds. The birds don't care, it's my notes that are sour. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_GRANDSON_H1 | Kau lihat gadis kecil membawa lontar? | Did you see a little girl with a lontar? |
 | 1 | @NPC_SUNDA_GRANDSON_NAME | | |
-| 1 | DLG_SUNDA_GRANDSON_V11 | Tidak. Tapi sejak subuh orang-orang bertopeng polos lewat. Mereka tak menyentuh teh, hanya menanyai nama. | No. But since dawn, people in blank masks have been passing. They don't touch the tea, only ask for names. |
+| 1 | `#wait:1` (cue line, no key) | | |
+| 1 | DLG_SUNDA_GRANDSON_V11 | Tidak. Tapi sejak subuh ada orang bertopeng polos lewat. Mereka tak menyentuh teh, hanya menanyai nama. | No. But since dawn, people in blank masks have been passing. They don't touch the tea, they only ask for names. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_GRANDSON_H11 | Di mana mereka sekarang? | Where are they now? |
 | 1 | @NPC_SUNDA_GRANDSON_NAME | | |
-| 1 | DLG_SUNDA_GRANDSON_V12 | Di rumpun bambu ujung timur. Mereka tak mau mendekat ke kampung, entah kenapa. | In the bamboo at the east end. They won't come near the kampung, I don't know why. |
-| 1 | DLG_SUNDA_GRANDSON_V3 | Tanyakan pada kakekku, sesepuh kampung. Dia tahu semua yang lewat. Kampungnya di utara, lewat petilasan. | Ask my grandfather, the kampung elder. He knows everyone who passes. The kampung is north, past the petilasan. |
-| 2 | DLG_SUNDA_GRANDSON_V4 | Nanti kuajari satu nada, kalau kau kembali utuh. | I'll teach you a note, if you come back in one piece. |
+| 1 | DLG_SUNDA_GRANDSON_V12 | Di rumpun bambu ujung timur. Anehnya, mereka menjauhi kampung. | In the bamboo at the east end. Strangely, they keep away from the kampung. |
+| 1 | DLG_SUNDA_GRANDSON_V3 | Tanyakan pada kakekku, sesepuh kampung. Kampungnya di utara, lewat petilasan. | Ask my grandfather, the kampung elder. The kampung is north, past the petilasan. |
+| 2 | DLG_SUNDA_GRANDSON_V20 | Kakek bilang kau melepas orang bertopeng itu. Aku bingung harus marah atau lega. | Grandfather says you let the masked man go. I can't tell if I should be angry or relieved. |
+| 3 | DLG_SUNDA_GRANDSON_V21 | Kudengar kau membuat orang bertopeng itu bicara. Kakek tak mau cerita isinya. | I heard you made the masked man talk. Grandfather won't say what he said. |
+| 4 | DLG_SUNDA_GRANDSON_V22 | Orang bertopeng itu kau sembunyikan? Tetangga berbisik-bisik. Aku tutup mulut. | You hid the masked man? The neighbours are whispering. I'll keep quiet. |
+| 5 | DLG_SUNDA_GRANDSON_V4 | Nanti kuajari satu nada, kalau kau kembali utuh. | I'll teach you a note, if you come back in one piece. |
 
 `DLG_SUNDA_GRANDSON_V3` keeps its v4 key and changes text (it now points to the elder and the road).
 
@@ -799,19 +804,21 @@ Regional character: Dewi Naganingrum (want: a son she held for one night; turn: 
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_SCOUT_CAMP_1 | Di perkemahan yang ditinggalkan, api masih berasap, dan di tanah terhampar potongan lontar yang dicoret-coret. | In the abandoned camp the fire still smokes, and scraps of lontar lie scrawled over on the ground. |
+| BEAT_SCOUT_CAMP_1 | Di perkemahan yang ditinggalkan, api masih berasap. Potongan lontar berserakan, penuh coretan. | In the abandoned camp the fire still smokes. Scraps of lontar lie scattered, scrawled over. |
 | @NPC_HERO_NAME | | |
 | BEAT_SCOUT_CAMP_H1 | Daftar nama. Banyak sekali, dan hampir semuanya dicoret. | Lists of names. So many, and nearly all crossed out. |
 | @ | | |
-| BEAT_SCOUT_CAMP_2 | Beberapa masih terbaca: seorang tukang kayu, seorang pembuat gula, seorang bidan. Di sampingnya, tanda silang kasar. | A few can still be read: a carpenter, a sugar-maker, a midwife. Beside each, a rough cross. |
+| BEAT_SCOUT_CAMP_2 | Beberapa masih terbaca: tukang kayu, pembuat gula, bidan. Di samping tiap nama, tanda silang kasar. | A few can still be read: a carpenter, a sugar-maker, a midwife. Beside each name, a rough cross. |
+| `#wait:1` (cue line) | | |
 | @NPC_HERO_NAME | | |
 | BEAT_SCOUT_CAMP_H2 | Mereka tidak mencatat. Mereka menghapus. | They aren't recording. They're erasing. |
 | @ | | |
+| `#wait:1` (cue line) | | |
 | BEAT_SCOUT_CAMP_3 | Satu lontar terlipat rapi di bawah batu, dan satu nama di atasnya tak dicoret: Laras. | One lontar is folded neatly under a stone, and one name on it isn't crossed out: Laras. |
 | @NPC_HERO_NAME | | |
 | BEAT_SCOUT_CAMP_H3 | Namanya tak dicoret. Mereka masih membutuhkannya. | Her name isn't crossed out. They still need her. |
 | @ | | |
-| BEAT_SCOUT_CAMP_4 | Dari bawah daftar, jejak sepatu kain kecil mengarah ke utara, ke kampung, bergegas dan tak ragu. | Below the lists, small cloth-shoe prints head north toward the kampung, hurried and unhesitating. |
+| BEAT_SCOUT_CAMP_4 | Di bawah daftar, jejak sepatu kain kecil mengarah ke utara, ke kampung. Bergegas, tanpa ragu. | Below the lists, small cloth-shoe prints head north toward the kampung. Hurried, unhesitating. |
 | @NPC_HERO_NAME | | |
 | BEAT_SCOUT_CAMP_H4 | Sebentar lagi, Laras. | Soon, Laras. |
 
@@ -866,17 +873,20 @@ Choices for the Cepot hub:
 | CHOICE_CEPOT_ASK_102 | Kau sungguh pemberani? | Are you really brave? | `topic:ask_brave` |
 | CHOICE_CEPOT_ASK_103 | Nanti saja, Cepot. | Later, Cepot. | |
 
-### Beat `kampung_raid` (if `!flag:beat_kampung_raid`, `flag:mq1_2`; do `flag:beat_kampung_raid`). Area `sunda_kampung` cleared sets `mq1_2` (1.4). The elder is first seen here. New in v5
+### Beat `kampung_raid` (if `!flag:beat_kampung_raid`, `flag:mq1_2`; do `flag:beat_kampung_raid`; `choices` remember `freed_scout`, `questioned_scout` or `hid_scout`). Area `sunda_kampung` cleared sets `mq1_2` (1.4). The elder is first seen here. The chapter's one real choice (cue lines `#shake:1`, `#cam:sunda_elder`, `#wait:1`, `#cam:hero`): what to do with the one masked scout the villagers hold. The elder reacts in his house talk (entries 1a-1c) and the grandson once; the banner sentences are `REMEMBER_FREED_SCOUT`, `REMEMBER_QUESTIONED_SCOUT`, `REMEMBER_HID_SCOUT`. New in v5
 | Key | ID | EN |
 |-----|----|----|
+| `#shake:1` (cue line) | | |
 | @ | | |
-| BEAT_KAMPUNG_RAID_1 | Babi hutan terakhir lari ke ladang, dan para bertopeng lenyap ke kebun teh. Kampung berdiri sunyi, napasnya masih terengah. | The last boar bolts for the fields, and the masked ones vanish into the tea. The kampung stands silent, still catching its breath. |
+| BEAT_KAMPUNG_RAID_1 | Babi hutan terakhir lari ke ladang. Para bertopeng kabur ke kebun teh, kecuali satu yang terjatuh. | The last boar bolts for the fields. The masked ones flee into the tea, all but one who has fallen. |
+| `#cam:sunda_elder` (cue line) | | |
 | @NPC_SUNDA_ELDER_NAME | | |
-| BEAT_KAMPUNG_RAID_2 | Berhenti dulu, Nak. Kau berdarah, dan kampung kami berutang padamu. | Stop a moment, child. You're bleeding, and this kampung owes you. |
+| BEAT_KAMPUNG_RAID_2 | Berhenti dulu, Nak. Kau berdarah, dan kampung ini berutang padamu. | Stop a moment, child. You're bleeding, and this kampung owes you. |
 | @ | | |
-| BEAT_KAMPUNG_RAID_3 | Para penduduk keluar dari balik pagar, memegang cangkul dan periuk yang tadi jadi senjata. | The villagers step out from behind the fences, holding hoes and pots that were weapons a moment ago. |
+| BEAT_KAMPUNG_RAID_3 | Penduduk keluar dari balik pagar, memegang cangkul dan periuk yang tadi jadi senjata. | The villagers step out from behind the fences, holding hoes and pots that were weapons a moment ago. |
 | @NPC_HERO_NAME | | |
 | BEAT_KAMPUNG_RAID_H1 | Mereka bukan merampok. | They weren't robbing you. |
+| `#wait:1` (cue line) | | |
 | @NPC_SUNDA_ELDER_NAME | | |
 | BEAT_KAMPUNG_RAID_4 | Bukan. Perampok ada habisnya. Yang ini mencatat, lalu menghapus. | No. Robbers have an end to them. This lot records, then erases. |
 | @NPC_HERO_NAME | | |
@@ -885,10 +895,29 @@ Choices for the Cepot hub:
 | BEAT_KAMPUNG_RAID_5 | Datanglah ke rumahku. Cucuku sudah bercerita sedikit, dan aku punya sisanya. | Come to my house. My grandson has told you a little, and I have the rest. |
 | @ | | |
 | BEAT_KAMPUNG_RAID_6 | Ia menunjuk rumah beratap ijuk, asapnya naik lurus seperti garis di lontar. | He points to a house with a palm-fibre roof, its smoke rising straight as a line on a lontar. |
+| `#cam:hero` (cue line) | | |
+| BEAT_KAMPUNG_RAID_7 | Di belakangnya, dua lelaki menahan satu bertopeng yang tertinggal. Ia tak melawan, hanya gemetar. | Behind him, two men hold the one masked figure left behind. He doesn't fight, he only trembles. |
+| @NPC_SUNDA_ELDER_NAME | | |
+| BEAT_KAMPUNG_RAID_8 | Dia masih bernapas, Nak. Kaulah yang bertarung. Apa yang kita lakukan padanya? | He's still breathing, child. You did the fighting. What do we do with him? |
+
+Choices for the beat (the pick runs `remember:<key>`, which sets `remember_<key>`):
+| Key | ID | EN | do |
+|-----|----|----|----|
+| CHOICE_KAMPUNG_RAID_1 | Lepaskan dia. | Let him go. | `remember:freed_scout` |
+| CHOICE_KAMPUNG_RAID_2 | Buat dia bicara. | Make him talk. | `remember:questioned_scout` |
+| CHOICE_KAMPUNG_RAID_3 | Sembunyikan dia dari kampung. | Hide him from the kampung. | `remember:hid_scout` |
+
+Banner sentences:
+| Key | ID | EN |
+|-----|----|----|
+| REMEMBER_FREED_SCOUT | Sesepuh kampung akan mengingat bahwa kau melepaskan tawanan bertopeng itu. | The kampung elder will remember that you let the masked prisoner go. |
+| REMEMBER_QUESTIONED_SCOUT | Sesepuh kampung akan mengingat bahwa kau memaksa tawanan bertopeng itu bicara. | The kampung elder will remember that you made the masked prisoner talk. |
+| REMEMBER_HID_SCOUT | Sesepuh kampung akan mengingat bahwa kau menyembunyikan tawanan itu dari kampung. | The kampung elder will remember that you hid the prisoner from the kampung. |
 
 ### sunda_elder (the kampung elder; replace the main-path entries, keep the SQ-S1/S2 entries after them, put hub `H` after those, then the idle entry last)
 | Entry | if | do |
 |-------|----|----|
+| 1a-1c | `step:mq1=4`, `!glyph:sunda_ga`, `flag:remember_freed_scout` / `_questioned_scout` / `_hid_scout` (1.5; the same talk with one opening reaction line, `DLG_SUNDA_ELDER_V21` / `_V22` / `_V23`, before `V10`) | `flag:mq1_3`, `learn:sunda_ga` |
 | 1 | `step:mq1=4`, `!glyph:sunda_ga` (1.5) | `flag:mq1_3`, `learn:sunda_ga` |
 | 2 | `step:mq1=4`, `glyph:sunda_ga` | |
 | (keep) | SQ-S1 / SQ-S2 entries, in their current order | |
@@ -900,11 +929,11 @@ Choices for the Cepot hub:
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
-| 1 | DLG_SUNDA_ELDER_V10 | Duduk dulu, Nak. Kampung kami berutang padamu, dan tehku masih hangat. | Sit a moment, child. This kampung owes you, and my tea is still warm. |
+| 1 | DLG_SUNDA_ELDER_V10 | Duduk dulu, Nak. Tehku masih hangat. | Sit a moment, child. My tea is still warm. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_ELDER_H1 | Adikku, Laras. Kecil, membawa lontar. Abah lihat? | My sister, Laras. Small, carrying a lontar. Did you see her? |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
-| 1 | DLG_SUNDA_ELDER_V2 | Lihat. Kemarin subuh, lari dari rumpun bambu bersama bocah liar yang menggendong telur. Bocah itu menariknya seperti menarik layangan. | I did. Yesterday at dawn, running from the bamboo with a wild boy hugging an egg. He towed her like a kite. |
+| 1 | DLG_SUNDA_ELDER_V2 | Lihat. Kemarin subuh ia lari dari rumpun bambu bersama bocah liar yang menggendong telur. | I did. Yesterday at dawn she ran from the bamboo with a wild boy hugging an egg. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_ELDER_H11 | Bocah liar itu, Abah kenal? | The wild boy, do you know him? |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
@@ -912,12 +941,17 @@ Choices for the Cepot hub:
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_ELDER_H2 | Ke mana mereka? | Where did they go? |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
-| 1 | DLG_SUNDA_ELDER_V3 | Hilir, ke ngarai sungai. Orang tua bilang di sana Sandekala, roh senja, menjemput anak yang masih di luar saat maghrib. Bawa Ga: angkat, dan cahaya jadi dinding. | Downstream, to the river gorge. The old folk say Sandekala, the dusk spirit, collects any child still outside at maghrib. Take Ga: raise it, and the light becomes a wall. |
+| 1 | `#wait:1` (cue line) | | |
+| 1 | DLG_SUNDA_ELDER_V3 | Hilir, ke ngarai sungai. Orang tua bilang Sandekala, roh senja, menjemput anak yang masih di luar saat maghrib. | Downstream, to the river gorge. The old folk say Sandekala, the dusk spirit, collects any child still outside at maghrib. |
+| 1 | DLG_SUNDA_ELDER_V20 | Bawa Ga: angkat, dan cahaya jadi dinding. | Take Ga: raise it, and the light becomes a wall. |
 | 1 | DLG_SUNDA_ELDER_V12 | Gambar Ga dengan satu goresan tak putus. Jangan ragu di tikungan. | Draw Ga in one unbroken stroke. Don't hesitate at the turn. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_ELDER_H12 | Aku akan mencobanya. | I'll try it. |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
 | 1 | DLG_SUNDA_ELDER_V13 | Cobalah di jalan ke ngarai, bukan di kebun lobak kami. | Try it on the road to the gorge, not in our radish patch. |
+| 1a | DLG_SUNDA_ELDER_V21 | Kau melepas anak bertopeng itu. Kampung akan menggerutu, tapi aku melihat caramu menatapnya. | You let that masked boy go. The kampung will grumble, but I saw how you looked at him. |
+| 1b | DLG_SUNDA_ELDER_V22 | Kau memaksa tawanan itu bicara. Keras, tapi malam ini kampung tidur lebih tenang. | You made the prisoner talk. Harsh, but the kampung will sleep easier tonight. |
+| 1c | DLG_SUNDA_ELDER_V23 | Kau menyembunyikan tawanan itu dari kampung. Aku tak akan bertanya di mana. Semoga kau benar. | You hid the prisoner from the kampung. I won't ask where. I hope you were right. |
 | 2 | DLG_SUNDA_ELDER_V4 | Ikuti sungai ke hilir, ke dusun di tepi ngarai. Kau akan tahu saat langit mulai jingga. | Follow the river down to the hamlet by the gorge. You'll know it when the sky turns orange. |
 | H | @NPC_SUNDA_ELDER_NAME | | |
 | H | DLG_SUNDA_ELDER_V6 | Batu tulis, batu berukir itu, ada di atas jalan setapak. Teras sawah di baliknya. | The batu tulis, the carved stone, is up the path. The terraces are past it. |

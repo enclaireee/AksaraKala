@@ -158,6 +158,8 @@ func _find(script: String) -> Node:
 ## Every dialogue line the player sees must have a translation.
 func _on_dialogue(_who: String, lines: PackedStringArray) -> void:
 	for l in lines:
+		if l.begins_with("#"):   # scene cue, not text
+			continue
 		if l.begins_with("@"):   # speaker switch; a bare "@" clears the tag
 			l = l.substr(1)
 			if l == "":

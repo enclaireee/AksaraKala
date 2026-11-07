@@ -37,6 +37,12 @@ signal dialogue_finished
 signal dialogue_choices(keys: PackedStringArray)   # Game.play emits this just before dialogue_requested; the box shows them after the last line
 signal dialogue_picked(index: int)                  # the box emits this just before dialogue_finished when choices were shown
 
+# scene direction (docs/quest_story_ux.md 2): a dialogue line "#name" or "#name:arg" is not shown; when the box reaches it
+# it emits this. Cues: cam:<npc_id|hero>, bars:on|off, shake:<0-3>, wait:<seconds>. ui/scene_director.gd listens.
+signal scene_cue(cue: String, arg: String)
+# the `remember:<key>` dialogue action (sets flag remember_<key>); HUD banner "X will remember this", Journal "Choices" page
+signal consequence_noted(key: String)
+
 # write mode (ui/glyph_lesson): the player draws these glyphs in order
 signal write_requested(seq_id: String, glyphs: PackedStringArray)
 signal name_written(seq_id: String)

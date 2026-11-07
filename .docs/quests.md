@@ -487,6 +487,8 @@ To prevent side content from feeling repetitive, side quests are divided into **
 ## 7. Quest & Narrative System (Technical, Story v5)
 Fits [architecture.md](architecture.md): data-driven resources, state in `Game`, signals in `Events`. **No new autoload.**
 
+> **7.5/7.6 (HUD objective line, toasts) are superseded by [quest_system.md](quest_system.md) (tracker, banner, arrow with distance, no compass).**
+
 ### 7.1 New & Updated Mechanics in Story v5
 1. **Cross-Time Laras Flags (`laras_key:<id>` & `laras_sabotage:<id>`):**
    - Set automatically when the corresponding `MemorySpot` inside `LC1`–`LC6` is completed (or when `memory_done:lc<n>` fires).

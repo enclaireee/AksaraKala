@@ -30,9 +30,19 @@ var _t := 0.0
 var _saved: Label
 var _saved_icon: TextureRect
 var _saved_left := 0.0
-var _objective: Label
-var _hint: Label
-var _sub_seen := {}   # quest id -> [step, finished sub-goals] last seen, to spot a new sub-goal
+const DIM := Color(0.62, 0.6, 0.55)
+var _tracker: VBoxContainer   # the tracked quest: title, then its objectives (docs/quest_system.md 3.1)
+var _tracker_sig := ""
+var _pulse_tw: Tween
+var _sub_seen := {}   # quest id -> [step, finished sub-goals] last seen, to spot a new step or sub-goal
+
+# quest banner (docs/quest_system.md 3.3): caption + title or new objective, queued, one at a time
+const BANNER_TIME := 3.6
+var _banner_root: Control
+var _banner_head: Label
+var _banner_body: Label
+var _banners: Array = []
+var _banner_left := 0.0
 var _player: Node   # the player whose `blocked` signal is connected (a new zone brings a new one)
 
 # toasts (quests.md 7.6): one at a time, TOAST_TIME each, queued
@@ -48,6 +58,9 @@ const SCREEN := Vector2(480, 270)
 const ARROW_MARGIN := 10.0
 var _arrow: Node2D
 var _tnode: Node2D   # what the arrow points at: a marker node, or the exit toward the target zone
+var _tzone := ""     # the target's zone while _tnode is only the exit toward it, else ""
+var _diamond: Node2D   # marker over an on-screen target
+var _dist: Label       # metres to the target, or "-> zone" when it is elsewhere
 
 # boss bar (ui.md 2). Contract: node in group "boss" with `health` (Health), `boss_name_key: String`,
 # optional `dawn: float` (0-1), optional `sequence: PackedStringArray` + `seq_index: int` (shown while dawn
@@ -116,9 +129,12 @@ func _ready() -> void:
 	_saved.visible = false
 	add_child(_saved)
 	_build_extras()
-	add_child(Compass.new())
-	_objective = _line(50, GOLD)
-	_hint = _line(60, CREAM)
+	_tracker = VBoxContainer.new()
+	_tracker.position = Vector2(6, 48)
+	_tracker.custom_minimum_size = Vector2(190, 0)
+	_tracker.add_theme_constant_override("separation", 0)
+	_tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_tracker)
 	var menu_hint := Label.new()   # subtle [Esc] Menu prompt, bottom left
 	menu_hint.text = tr("UI_HINT_MENU") % get_node("/root/Game").key_name("pause").replace("Escape", "Esc")
 	menu_hint.position = Vector2(200, 270 - 12)   # bottom centre: the corners hold the flasks and "Saved"
@@ -133,11 +149,14 @@ func _ready() -> void:
 		_saved.visible = true
 		_saved_icon.visible = true)
 	var ev := get_node("/root/Events")
+	for qid in g.quests:   # what a loaded game already finished is not news
+		_snap(qid)
 	ev.quest_started.connect(func(id: String) -> void:
-		_push_toast(tr("UI_TOAST_QUEST_STARTED") % _title(id))
+		_snap(id)
+		_push_banner("UI_Q_NEW", _title(id))
 		refresh_arrow())
 	ev.quest_updated.connect(func(id: String) -> void:
-		_check_subgoal(id)
+		_on_quest_updated(id)
 		refresh_arrow())
 	for s in ["quest_started", "quest_updated", "quest_completed", "zone_entered"]:
 		ev.connect(s, refresh_objective.unbind(1))
@@ -145,8 +164,14 @@ func _ready() -> void:
 		if id == "sande_room" and not g.has_flag("hint_sande"):   # one-time hint (bestiary.md Sandekala)
 			g.run("flag:hint_sande")
 			_push_toast(tr("UI_HINT_SANDE")))
+	ev.consequence_noted.connect(func(key: String) -> void:
+		var rk := "REMEMBER_" + key.to_upper()
+		if tr(rk) == rk:
+			return   # no sentence written yet: stay silent
+		_push_banner("UI_Q_REMEMBER", tr(rk))
+		_pulse_tracker())
 	ev.quest_completed.connect(func(id: String) -> void:
-		_push_toast(tr("UI_TOAST_QUEST_DONE") % _title(id))
+		_push_banner("UI_Q_DONE", _title(id))
 		refresh_arrow())
 	ev.item_picked.connect(func(id: String) -> void:
 		var what := "%s Ilmu" % id.get_slice(":", 1) if id.begins_with("ilmu:") else tr("ITEM_%s_NAME" % id.to_upper())
@@ -159,49 +184,98 @@ func _ready() -> void:
 	refresh_objective()
 
 
-func _line(y: int, col: Color) -> Label:
-	var l := Label.new()
-	l.position = Vector2(6, y)
-	l.size = Vector2(200, 10)
-	l.add_theme_color_override("font_color", col)
-	_outlined(l)
-	add_child(l)
-	return l
-
-
-## Objective and hint lines (ui.md 2). A hint is the objective key with _HINT, filled with live key names.
+## The tracker (docs/quest_system.md 3.1): the tracked quest's title, every objective of its step (a multi-goal step
+## lists its sub-goals: [x] done, > the one the arrow follows, [ ] open) and the step's hint with live key names.
 func refresh_objective() -> void:
 	var g := get_node("/root/Game")
-	_objective.text = g.objective_text()
-	_hint.text = ""
+	var rows: Array = []   # [text, colour]
 	for id in g._tracked():
 		var st: QuestStep = g.current_step(id)
-		if st:
-			var key := st.objective.replace("_OBJ", "_HINT")
-			if tr(key) != key:
-				var keys := {}
-				for a in ["interact", "cast", "attack", "dodge", "menu"]:
-					keys[a] = g.key_name(a)
-				keys.move = "%s%s%s%s" % [g.key_name("move_up"), g.key_name("move_left"), g.key_name("move_down"), g.key_name("move_right")]
-				_hint.text = tr(key).format(keys)
-			return
+		if st == null:
+			continue
+		var q := QuestData.by_id(id)
+		rows.append([_title(id), GOLD if q.kind == "main" else CREAM])
+		if st.all.is_empty():
+			rows.append(["> " + g.quest_objective_text(id), Color.WHITE])
+		else:
+			for c in g.step_checklist(id):
+				rows.append([("[x] " if c.done else "> " if c.active else "[ ] ") + str(c.text),
+						DIM if c.done else (GOLD if c.active else Color.WHITE)])
+		var key := st.objective.replace("_OBJ", "_HINT")
+		if tr(key) != key:
+			var keys := {}
+			for a in ["interact", "cast", "attack", "dodge", "menu"]:
+				keys[a] = g.key_name(a)
+			keys.move = "%s%s%s%s" % [g.key_name("move_up"), g.key_name("move_left"), g.key_name("move_down"), g.key_name("move_right")]
+			rows.append([tr(key).format(keys), DIM])
+		break
+	var sig := str(rows)
+	if sig == _tracker_sig:
+		return
+	_tracker_sig = sig
+	for c in _tracker.get_children():
+		c.queue_free()
+	for r in rows:
+		var l := Label.new()
+		l.text = r[0]
+		l.custom_minimum_size = Vector2(190, 0)
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		l.add_theme_color_override("font_color", r[1])
+		_outlined(l)
+		_tracker.add_child(l)
 
 
-## A finished sub-goal of the current `all` step: toast and a brief gold pulse on the objective line.
-func _check_subgoal(id: String) -> void:
-	var g := get_node("/root/Game")
-	var q: Dictionary = g.quests.get(id, {})
+## Remembers a quest's step and finished sub-goal count, to tell later whether an update is news.
+func _snap(id: String) -> void:
+	var q: Dictionary = get_node("/root/Game").quests.get(id, {})
 	var bits := 0
 	for i in 32:
 		bits += (int(q.get("all", 0)) >> i) & 1
-	var step := int(q.get("step", 0))
-	var seen: Array = _sub_seen.get(id, [step, 0])
-	_sub_seen[id] = [step, bits]
-	if seen[0] == step and bits > seen[1]:
-		_push_toast(tr("UI_TOAST_SUBGOAL"))
-		var tw := create_tween()
-		_objective.modulate = Color(2.0, 1.7, 0.7)
-		tw.tween_property(_objective, "modulate", Color.WHITE, 0.7)
+	_sub_seen[id] = [int(q.get("step", 0)), bits]
+
+
+## A new step or a finished sub-goal: banner with the objective now in force, and a gold pulse on the tracker.
+## A counted step ticking up (2/3) only pulses.
+func _on_quest_updated(id: String) -> void:
+	var seen: Array = _sub_seen.get(id, [0, 0])
+	_snap(id)
+	var now: Array = _sub_seen[id]
+	if now[0] != seen[0] or now[1] > seen[1]:
+		var t: String = get_node("/root/Game").quest_objective_text(id)
+		if t != "":
+			_push_banner("UI_Q_UPDATED", t)
+	_pulse_tracker()
+
+
+func _pulse_tracker() -> void:
+	if _pulse_tw != null and _pulse_tw.is_valid():
+		_pulse_tw.kill()
+	_pulse_tw = create_tween()
+	_tracker.modulate = Color(1.8, 1.6, 0.9)
+	_pulse_tw.tween_property(_tracker, "modulate", Color.WHITE, 0.7)
+
+
+func _push_banner(head_key: String, body: String) -> void:
+	_banners.append([tr(head_key), body])
+
+
+func _update_banner(delta: float) -> void:
+	if _banner_left > 0.0:
+		_banner_left -= delta
+		if _banner_left <= 0.0:
+			_banner_root.visible = false
+	if _banner_left <= 0.0 and not _banners.is_empty():
+		var b: Array = _banners.pop_front()
+		_banner_head.text = b[0]
+		_banner_body.text = b[1]
+		_banner_root.visible = true
+		_banner_left = BANNER_TIME
+	if _banner_root.visible:   # slide down, hold, fade
+		var k := clampf((BANNER_TIME - _banner_left) / 0.3, 0.0, 1.0)
+		k = 1.0 - (1.0 - k) * (1.0 - k)
+		_banner_root.position.y = lerpf(16.0, 24.0, k)
+		_banner_root.modulate.a = minf(k, clampf(_banner_left / 0.5, 0.0, 1.0))
 
 
 ## Red flash on the bar whose resource ran out (ui.md 2).
@@ -273,6 +347,46 @@ func _build_extras() -> void:
 	_toast.add_theme_color_override("font_color", GOLD)
 	_toast.visible = false
 	_toast_root.add_child(_toast)
+	_banner_root = Control.new()
+	_banner_root.position = Vector2(90, 24)
+	_banner_root.size = Vector2(300, 34)
+	_banner_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_banner_root.visible = false
+	add_child(_banner_root)
+	_rect(Vector2.ZERO, Vector2(300, 34), Color(OUTLINE, 0.7), _banner_root)
+	_rect(Vector2(0, 0), Vector2(300, 1), Color("C9A24A"), _banner_root)
+	_banner_head = Label.new()
+	_banner_head.position = Vector2(0, 2)
+	_banner_head.size = Vector2(300, 10)
+	_banner_head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_banner_head.add_theme_color_override("font_color", GOLD)
+	_banner_root.add_child(_banner_head)
+	_banner_body = Label.new()
+	_banner_body.position = Vector2(6, 13)
+	_banner_body.size = Vector2(288, 20)
+	_banner_body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_banner_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_banner_body.max_lines_visible = 2
+	_banner_root.add_child(_banner_body)
+	_diamond = Node2D.new()   # floats over an on-screen target
+	var dk := Polygon2D.new()
+	dk.polygon = PackedVector2Array([Vector2(0, -5), Vector2(5, 0), Vector2(0, 5), Vector2(-5, 0)])
+	dk.color = OUTLINE
+	_diamond.add_child(dk)
+	var dg := Polygon2D.new()
+	dg.polygon = PackedVector2Array([Vector2(0, -4), Vector2(4, 0), Vector2(0, 4), Vector2(-4, 0)])
+	dg.color = GOLD
+	_diamond.add_child(dg)
+	_diamond.visible = false
+	add_child(_diamond)
+	_dist = Label.new()
+	_dist.size = Vector2(80, 10)
+	_dist.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_dist.add_theme_color_override("font_color", GOLD)
+	_dist.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_outlined(_dist)
+	_dist.visible = false
+	add_child(_dist)
 	_arrow = Node2D.new()
 	var spr := Sprite2D.new()
 	spr.texture = _ui_tex("arrow_objective")   # points right; rotated toward the target
@@ -317,6 +431,7 @@ func _push_toast(text: String) -> void:
 ## Called on quest events and zone_entered; the position is read every frame.
 func refresh_arrow() -> void:
 	_tnode = null
+	_tzone = ""
 	var m: Dictionary = get_node("/root/Game").objective_marker()
 	if m.is_empty():
 		return
@@ -328,6 +443,7 @@ func refresh_arrow() -> void:
 		nxt = zones.next_zone(zones.current_zone, zone)
 		if nxt == "":
 			return
+		_tzone = zone
 	# ponytail: one scan of the tree per event; no group or lookup hook in Zone yet
 	for n in get_tree().root.find_children("*", "Node2D", true, false):
 		if nxt != "":
@@ -345,12 +461,20 @@ func target_pos() -> Variant:
 
 
 func _update_arrow() -> void:
+	_diamond.visible = false
+	_dist.visible = false
 	if _tnode == null or not is_instance_valid(_tnode) or not _tnode.is_inside_tree():
 		_arrow.visible = false
 		return
 	var p: Vector2 = get_viewport().get_canvas_transform() * _tnode.global_position
+	var label := _target_label()
 	if Rect2(Vector2.ZERO, SCREEN).has_point(p):
 		_arrow.visible = false
+		_diamond.position = (p + Vector2(0, -14.0 + 2.0 * sin(_t * 4.0))).round()
+		_diamond.visible = true
+		_dist.text = label
+		_dist.position = (p + Vector2(-40, 4)).round()
+		_dist.visible = true
 		return
 	var c := SCREEN / 2
 	var d := p - c
@@ -360,6 +484,21 @@ func _update_arrow() -> void:
 	_arrow.rotation = d.angle()
 	_arrow.scale = Vector2.ONE * (1.0 + 0.15 * sin(_t * 6.0))
 	_arrow.visible = true
+	_dist.text = label
+	var lp := _arrow.position - d.normalized() * 16.0 - Vector2(40, 5)
+	_dist.position = Vector2(clampf(lp.x, 0.0, SCREEN.x - 80.0), clampf(lp.y, 0.0, SCREEN.y - 10.0)).round()
+	_dist.visible = true
+
+
+## Metres to the target (1 tile = 1 m), or "-> <zone>" while the arrow only points at the exit toward another zone.
+func _target_label() -> String:
+	if _tzone != "":
+		var key := "UI_ZONE_" + _tzone.to_upper()
+		return "-> " + (tr(key) if tr(key) != key else _tzone.capitalize())
+	var pl := get_tree().get_first_node_in_group("player") as Node2D
+	if pl == null:
+		return ""
+	return "%d m" % roundi(pl.global_position.distance_to(_tnode.global_position) / float(Zone.TILE))
 
 
 func _update_toast(delta: float) -> void:
@@ -499,6 +638,7 @@ func _process(delta: float) -> void:
 		_update_hp_fx(delta, float(p.health.hp) / maxf(p.health.max_hp, 1.0))
 		_update_stamina_fade(delta, p.stamina.value >= p.stamina.max_stamina)
 	_update_toast(delta)
+	_update_banner(delta)
 	_update_arrow()
 	_update_boss()
 	if _ilmu_shown < float(get_node("/root/Game").ilmu):   # roll up

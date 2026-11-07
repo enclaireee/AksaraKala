@@ -75,6 +75,8 @@ func _initialize() -> void:
 		check(d.name_key == "" or dt.get(d.name_key, false), "%s: name key %s missing" % [d.npc_id, d.name_key])
 		for e in d.entries:
 			for k in e.get("lines", []):
+				if k.begins_with("#"):   # scene cue (#cam, #wait ...), not a text key
+					continue
 				if k.begins_with("@"):   # speaker switch; a bare "@" clears the tag
 					k = k.substr(1)
 					if k == "":

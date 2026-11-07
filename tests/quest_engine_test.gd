@@ -175,10 +175,10 @@ func _initialize() -> void:
 	ResourceSaver.save(sq, QDIR + "/sub_q.tres")
 	g.start_quest("sub_q")
 	check(g.objective_marker().get("id") == "n1" and g.active_sub("sub_q") == 0, "sub: marker of sub-goal 1: %s" % g.objective_marker())
-	check(g.objective_text().ends_with("(1/4)"), "sub: HUD line progress 1/4: %s" % g.objective_text())
+	check(g.objective_text().ends_with("(0/4)"), "sub: HUD line progress 0/4: %s" % g.objective_text())
 	check(g.step_checklist("sub_q").size() == 4 and g.step_checklist("sub_q")[0].active, "sub: checklist")
 	ev.talked_to.emit("s1")
-	check(g.objective_marker().get("id") == "n2" and g.objective_text().ends_with("(2/4)"), "sub: pivots to sub-goal 2: %s" % g.objective_marker())
+	check(g.objective_marker().get("id") == "n2" and g.objective_text().ends_with("(1/4)"), "sub: pivots to sub-goal 2: %s" % g.objective_marker())
 	check(g.step_checklist("sub_q")[0].done and g.step_checklist("sub_q")[1].active, "sub: checklist after 1")
 	ev.puzzle_solved.emit("s4")   # any order: sub-goal 4 done early
 	ev.area_cleared.emit("s2")
@@ -186,6 +186,29 @@ func _initialize() -> void:
 	check(g.objective_marker().get("id") == "nstep", "sub: no sub-marker falls back to the step marker: %s" % g.objective_marker())
 	ev.item_picked.emit("s3")
 	check(g.quest_state("sub_q") == "done" and g.has_flag("sub_done") and g.objective_marker().is_empty(), "sub: all sub-goals complete the quest")
+
+	# focus_sub prefers an open sub-goal marked in the player's zone; step_progress counts done/total.
+	var fsubs := [
+		{"on": "talked_to:f1", "objective": "F_ONE", "marker": {"zone": "za", "id": "f1"}},
+		{"on": "talked_to:f2", "objective": "F_TWO", "marker": {"zone": "zb", "id": "f2"}}]
+	var fq := QuestData.new()
+	fq.id = "foc_q"
+	fq.kind = "main"
+	fq.zone = "tatar_sunda"
+	fq.size = "S"
+	fq.steps = [step("", "foc_done", fsubs)]
+	ResourceSaver.save(fq, QDIR + "/foc_q.tres")
+	var zn := root.get_node("Zones")
+	var was_zone: String = zn.current_zone
+	g.start_quest("foc_q")
+	zn.current_zone = "zb"
+	check(g.focus_sub("foc_q") == 1 and g.objective_marker().get("id") == "f2", "focus: the sub-goal in this zone first")
+	zn.current_zone = "zc"
+	check(g.focus_sub("foc_q") == 0, "focus: else the first open one")
+	check(g.step_progress("foc_q") == Vector2i(0, 2), "progress 0/2: %s" % g.step_progress("foc_q"))
+	ev.talked_to.emit("f2")
+	check(g.step_progress("foc_q") == Vector2i(1, 2) and g.focus_sub("foc_q") == 0, "progress 1/2 after sub-goal 2")
+	zn.current_zone = was_zone
 
 	for p in [PATH, "user://quest_engine_test.bak", PATH + ".tmp"]:
 		DirAccess.remove_absolute(p)

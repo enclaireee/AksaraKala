@@ -5,11 +5,16 @@ extends Control
 ## A line "@KEY" is not shown: it sets the speaker tag for the lines after it. Events.dialogue_choices (sent just
 ## before the request) lists 2-3 choices under the last line: move_up/move_down move, interact picks, cancel does
 ## nothing; Events.dialogue_picked(index) then dialogue_finished. All text goes through tr() then Game.fmt().
+## A line "#name" or "#name:arg" is a scene cue (quest_story_ux.md 2): not shown, emitted as Events.scene_cue(name, arg).
+## "#wait:<seconds>" holds the box on a silent beat (max 3 s, real time) before the next line.
+
+signal speaker_changed(key: String)   # the speaker tag was set (SceneDirector auto-camera)
 
 const CPS := 45.0   # TUNE: characters per second
 const OUTLINE := Color("0E0B0A")
 const UI_DIR := "res://assets/art/ui/"
 const BOX := Rect2(32, 180, 416, 86)
+const MAX_WAIT := 3.0   # seconds a #wait cue may hold
 const NARRATION := Color("F2E6C4")   # Semar (Dalang): italic, pale cream (ui.md 3)
 
 var _lines := PackedStringArray()
@@ -31,6 +36,7 @@ var _choosing := false
 var _sel := 0
 var _list: Label
 var _who: Label   # name tag (ui.md 3)
+var _hold_until := 0   # Time.get_ticks_msec() when a #wait ends, 0 = not holding
 var _fresh := {}   # npc ids whose tag is up for this first talk
 
 
@@ -122,6 +128,7 @@ func _on_requested(speaker_key: String, lines: PackedStringArray) -> void:
 	_lozenge.visible = false
 	_i = -1
 	_opened_frame = Engine.get_process_frames()
+	_hold_until = 0
 	_was_paused = get_tree().paused
 	get_tree().paused = true
 	_fresh.clear()
@@ -152,6 +159,7 @@ func _pop_plate() -> void:
 
 ## Sets the name and, for a named NPC (key NPC_<ID>_NAME) with a NPC_<ID>_WHO text, the tag; flag seen_name_<id> on first sight.
 func _set_speaker(key: String) -> void:
+	speaker_changed.emit(key)
 	var prev := _speaker.text
 	_speaker.text = _t(key)
 	_plate.visible = _speaker.text != ""
@@ -183,9 +191,21 @@ func _t(key: String) -> String:
 
 func _next() -> void:
 	_i += 1
-	while _i < _lines.size() and _lines[_i].begins_with("@"):
-		_set_speaker(_lines[_i].substr(1))
+	while _i < _lines.size() and (_lines[_i].begins_with("@") or _lines[_i].begins_with("#")):
+		var ln := _lines[_i]
 		_i += 1
+		if ln.begins_with("@"):
+			_set_speaker(ln.substr(1))
+			continue
+		var cue := ln.substr(1).get_slice(":", 0)
+		var arg := ln.substr(1).substr(cue.length() + 1) if ln.contains(":") else ""
+		get_node("/root/Events").scene_cue.emit(cue, arg)
+		if cue == "wait":
+			_text.text = ""
+			_text.visible_characters = 0
+			_hold_until = Time.get_ticks_msec() + int(clampf(arg.to_float(), 0.0, MAX_WAIT) * 1000.0)
+			_i -= 1   # _process calls _next() when the hold ends, which steps forward again
+			return
 	if _i >= _lines.size():
 		if _opts.is_empty():
 			_close()
@@ -218,16 +238,20 @@ func _close() -> void:
 	_sel_bar.visible = false
 	_lozenge.visible = false
 	_open = false
+	_hold_until = 0
 	visible = false
 	get_tree().paused = _was_paused
 	get_node("/root/Events").dialogue_finished.emit()
 
 
 func _process(delta: float) -> void:
+	if _open and _hold_until > 0 and Time.get_ticks_msec() >= _hold_until:
+		_hold_until = 0
+		_next()
 	if _open and _text.visible_characters < _text.get_total_character_count():
 		_shown += delta * CPS
 		_text.visible_characters = int(_shown)
-	_cue.visible = _open and not _choosing and _text.visible_characters >= _text.get_total_character_count() \
+	_cue.visible = _open and _hold_until == 0 and not _choosing and _text.visible_characters >= _text.get_total_character_count() \
 			and Time.get_ticks_msec() % 800 < 500
 	_cue.position.y = 254.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)
 
@@ -235,6 +259,8 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	# the press that opened the box arrives in the same frame: not an advance
 	if not _open or Engine.get_process_frames() == _opened_frame:
+		return
+	if _hold_until > 0:   # a #wait beat: input does not skip it
 		return
 	if _choosing:
 		var d := int(event.is_action_pressed("move_down") or event.is_action_pressed("ui_down")) \

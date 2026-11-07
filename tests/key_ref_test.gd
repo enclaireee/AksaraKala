@@ -35,6 +35,8 @@ func _initialize() -> void:
 			ref(d.name_key, f)
 			for e in d.entries:
 				for l: String in e.get("lines", []):
+					if l.begins_with("#"):   # scene cue, not a text key
+						continue
 					ref(l.trim_prefix("@"), f)
 	for q in QuestData.all():
 		for s in q.steps:
