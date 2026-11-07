@@ -57,6 +57,12 @@ var move_mult := 1.0
 var dodge_cost := 20.0
 var _applied := false
 var _regen_base := 35.0
+var _zone_seen := ""
+
+# Story v5 Major Choice effects (quests.md 4, items.md). TUNE.
+const ARIA_REGEN := 0.15            # choice_release_aria: +15% stamina and Sakti regen in gk_ruang_kala
+const ARIA_ZONE := "gk_ruang_kala"
+const BERKAH_USED := "berkah_pesisir_used"   # flag: the one use per save
 
 
 func _ready() -> void:
@@ -104,6 +110,10 @@ func _physics_process(delta: float) -> void:
 	if frozen > 0.0:
 		frozen -= delta
 		return
+	var zone := _zone_id()
+	if zone != _zone_seen:   # zone-gated choice effects (Keteguhan Sunyi) follow the area
+		_zone_seen = zone
+		apply_from_game()
 	clock += delta
 	state_time += delta
 	since_recovery += delta
@@ -351,7 +361,26 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	create_tween().tween_property(vignette, "modulate:a", 0.0, 0.4)
 
 
+func _zone_id() -> String:
+	var z := get_node_or_null("/root/Zones")
+	return str(z.get("current_zone")) if z else ""
+
+
+## Berkah Pesisir (choice_offer_song): in Act VI the first lethal hit leaves 1 HP instead. One use per save.
+func _try_berkah_pesisir() -> bool:
+	if not game.has_flag("choice_offer_song") or game.has_flag(BERKAH_USED) or not _zone_id().begins_with("gk_"):
+		return false
+	game.set_flag(BERKAH_USED)
+	health.hp = 1
+	health.shield = 0
+	health.set_invincible(tuning.hurt_iframes)
+	health.changed.emit(health.hp, health.max_hp)
+	return true
+
+
 func _on_died() -> void:
+	if _try_berkah_pesisir():
+		return
 	_swing(false)
 	_enter(State.DEAD)
 	body.modulate = Color(0.4, 0.4, 0.4)
@@ -409,7 +438,9 @@ func apply_from_game() -> void:
 		health.defense += g.defense if g else 0
 	stamina.max_stamina = tuning.stat_stamina_base + tuning.stat_stamina_per * game.stat("end")
 	stamina.value = stamina.max_stamina if not _applied else minf(stamina.value, stamina.max_stamina)
-	var aria_regen := 0.15 if game.has_flag("choice_release_aria") else 0.0
+	_zone_seen = _zone_id()
+	health.reduction = game.bonus("defense")   # Sabuk Galuh
+	var aria_regen := ARIA_REGEN if game.has_flag("choice_release_aria") and _zone_seen == ARIA_ZONE else 0.0
 	stamina.regen = _regen_base * (1.0 + tuning.stat_speed_per * game.stat("end") + game.bonus("stamina_regen") + aria_regen)
 	dmg_mult = 1.0 + tuning.stat_damage_per * game.stat("str" if item.is_melee() else "dex")
 	atk_speed = 1.0 + tuning.stat_speed_per * game.stat("dex")
