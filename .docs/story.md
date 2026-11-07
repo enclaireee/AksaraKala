@@ -9,7 +9,7 @@ All legends and details are summarized from common retellings. They were fact-ch
 - **Deeper dialogue & cast:** Lifted the strict 4-line cap to **8–12 lines for main-path and camp talks** (and **8–10 lines for story beats**), added optional **"Ask about..."** dialogue branches (`"quiet": true` topic loops) on major NPCs and companions, and expanded the regional cast budget to **4–5 named characters per region** with multi-act arcs.
 - **Six Major Choices (one per Act):** Choices now ripple across regions—changing which allies fight beside you, unlocking secret routes, modifying boss phases, and shaping the playable Epilogue.
 
-This file is the canon. [quests.md](quests.md) 4 has the step tables, [script.md](script.md) has every line, and the zone docs place everything. [story_brainstorm.md](story_brainstorm.md) and [story_ciung_wanara.md](story_ciung_wanara.md) are history; where they disagree with this file, this file wins.
+This file is the canon. [quests.md](quests.md) 4 has the step tables, [script.md](script.md) has every line, and the zone docs place everything.
 
 ---
 

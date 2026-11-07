@@ -905,7 +905,7 @@ Kind `walk`, 30 x 17 tiles, about 1 minute (**TUNE**). Entered from the clue `c1
 | `1`-`3` | drift points (9,9) (15,9) (21,9) | triggers |
 | `B` (26,9) | the far bank | the scene ends here |
 - **The one action.** None. Movement only (a walk memory: no action, no fail state).
-- **Goal.** Drift to `B`. The egg is the one that became his rooster (**VERIFY** the Ciung Wanara motif in [story_ciung_wanara.md](../story_ciung_wanara.md)). It teaches nothing to fight.
+- **Goal.** Drift to `B`. The egg is the one that became his rooster (**VERIFY** the Ciung Wanara motif). It teaches nothing to fight.
 - **Narration.** Semar start (`MEM_SQ_C1_START_1`) and end (`MEM_SQ_C1_END_1`: "The rooster is the only family he knew he had."). No bout is shown (Sensitivity).
 
 ## Validation

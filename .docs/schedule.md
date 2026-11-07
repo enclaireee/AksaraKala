@@ -55,7 +55,7 @@ No fixed dates. Phases run in order. Each phase has **exit criteria**: do not st
 - Exit (main path playtested and confirmed 2026-11-05; SQ-S1 to S4 and Sandekala wait for the user's playtest): New Game to Sangkuriang's release and the Mataram gate opening is playable (about 40 min, [balance.md](balance.md) 2.1), with SQ-S1 to S4 and Sandekala completable, on placeholder art.
 
 ## Phase 4b: Story v2 (user call 2026-11-06; built, then superseded by Phase 4c)
-The main story becomes [story_ciung_wanara.md](story_ciung_wanara.md) v2: Laras taken, the Faceless, the Nameless Hunter, Ciung Wanara, Kala. Plan: rewrite every main quest, add Keraton Galuh, and write all main-path dialogue in [script.md](script.md).
+The main story becomes the Ciung Wanara integration v2: Laras taken, the Faceless, the Nameless Hunter, Ciung Wanara, Kala. Plan: rewrite every main quest, add Keraton Galuh, and write all main-path dialogue in [script.md](script.md).
 - [ ] Name entry, dialogue choices, the name-writing finale ([ui.md](ui.md) 3)
 - [ ] The Faceless, the captain, Barma Wijaya, Hariang Banga, the Nameless Hunter ([bestiary.md](bestiary.md) Story v2)
 - [ ] Keraton Galuh, 4 areas ([zones/keraton_galuh.md](zones/keraton_galuh.md))
@@ -104,25 +104,27 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 - [x] All gear as data, drops and chests (all 32 items wired to chests, starters, choices and quest rewards)
 - Exit: the game can be played start to finish with placeholder or pack art.
 
-## Phase 6: Art and audio pass
-- [x] Final tilesets, character and enemy sprites, UI (hero + 4 classes, 34 enemy sheets, 10 boss sheets, 12 NPC/prop archetypes, 7 regional 128x256 world tilesets with 896 tiles across 21 sub-biomes)
-- [ ] Phase 6b (user call 2026-11-07): themed UI and fonts ([ui.md](ui.md) 3b), Elden-style class select with 96x128 portraits, item icons, world scale x2 with erosion, deco and mood ([architecture.md](architecture.md) 9), and fixes for the prompt, NPC feet and quest marker
-- [ ] Culture-item icons and glyph art
-- [ ] SFX and music
-- [ ] Particles and effects
-- Exit: the game looks and sounds consistent and complete.
+## Phase 6: Art, audio and presentation pass
+- [x] World and entity art: hero + 4 classes, 34 enemy sheets, 10 boss sheets, 12 NPC/prop archetypes, 7 regional 128x256 world tilesets with 896 tiles across 21 sub-biomes
+- [x] Phase 6b: themed UI and smooth typography ([ui.md](ui.md)), Elden-style class select with 96x128 animated portraits, 32 item icons, world scale x2 with erosion, deco and ambient mood ([architecture.md](architecture.md) 9)
+- [x] Phase 6c: living towns (`zones/town_life.gd`), regional building kit (`zones/buildings.gd`), ground expansion, and fluid 4-directional attack animations with weapon arcs
+- [x] Quest & narrative UX: Scene Director camera easing, letterbox bars, choices with consequences (`remember:<key>`), and HUD quest cards
+- [ ] Culture-item icons and glyph art refinement
+- [ ] Final SFX and music pass
+- [ ] Custom particle polish
+- Exit: the game looks, sounds, and feels consistent, responsive, and complete.
 
 ## Phase 7: Culture and polish
-- [ ] VERIFY pass on every doc, source list filled in
-- [ ] Codex entries written and cited
-- [ ] Expert review of text and cultural content, if possible
-- [ ] Balance pass: run [balance.md](balance.md) section 11 checks, re-run `balance_model.py` after any change; stamina, costs, glyph thresholds
-- [ ] Accessibility settings, assist mode
-- [ ] Bug sweep and full-run playtests with several people
-- Exit: someone unfamiliar with the game can finish it without help.
+- [ ] VERIFY pass on cultural claims, source citations complete
+- [ ] In-game codex entries cited and verified
+- [ ] Full text review and dialogue balance pass
+- [ ] Combat and balance tuning: verify [balance.md](balance.md) metrics across all classes
+- [ ] Accessibility options and assist mode testing
+- [ ] Full end-to-end playtests
+- Exit: someone unfamiliar with the game can finish it smoothly without assistance.
 
 ## Phase 8: Release
-- [ ] Export builds (PC, web if possible)
-- [ ] Title and credits, asset attributions
-- [ ] Submission materials for the competition
-- Exit: build runs on a clean machine.
+- [ ] Export builds for macOS, Windows, Linux (and Web if possible)
+- [ ] Title, credits, and asset attributions
+- [ ] Release distribution and packaging
+- Exit: standalone builds run cleanly on all target platforms.

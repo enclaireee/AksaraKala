@@ -479,7 +479,7 @@ Enter `tt_kulon` (landmark on the horizon): the smiths' street and Ratna, `doorp
 - quests.md SQ-T2 needs an elite Banaspati (added to bestiary.md 2026-11-05); SQ-T1 needs a river with a crab (a dry bed plus one trickle channel).
 - world.md "Points of interest" asks for 1 miniboss or elite room; MQ3 3.9 makes Buto Ijo mandatory, so the miniboss is on the critical path (rule 4 only applies to optional areas).
 - Resolved 2026-11-06 (consistency pass): world.md now gates the Mataram kabut on `mq2_9` and `tt_pesisir` to `sk_karang` on `mq4_9`; `tt_pesisir` is main path (step 3.14); the `goto` spawn is `from_riders`; step 3.4 counts `area_entered:timur_praktik_mark`; the caged king's face at `hunter_name` is narration only.
-- quests.md and story_brainstorm.md mention an encounter `timur_candi`. This zone has no such encounter (the court holds the two bosses). Add one only if a guard fight before `shrine_sight` is wanted.
+- quests.md mentions an encounter `timur_candi`. This zone has no such encounter (the court holds the two bosses). Add one only if a guard fight before `shrine_sight` is wanted.
 - `goto`, `restore` and the `zone:` condition are not built yet (quests.md 7.1/7.2); the beats here need them.
 - Hariang Banga is a boss in `kg_pamali` and an NPC here under the same id `hariang_banga`; the dialogue file needs the `camp_timur` entry (cond `flag:mq3_6`) and the zone must pick the NPC scene, not the boss scene.
 

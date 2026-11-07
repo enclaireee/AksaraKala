@@ -1,33 +1,46 @@
-# Budayago: design docs
+# Budayago: Design Documentation
 
-Top-down 2D pixel-art action RPG set in Java and Sunda folklore. Real-time combat plus a gimmick: draw aksara (Sundanese and Javanese script) with the mouse to cast spells.
+Top-down 2D pixel-art action RPG set in the mythical folklore and landscapes of Java and Sunda. Real-time action combat combined with an authentic spellcasting mechanic: drawing Aksara Sunda and Aksara Jawa script with the mouse to unleash spells.
 
-| Doc | What is in it |
-|-----|---------------|
-| [concept.md](concept.md) | Vision, pillars, tone, audience, cultural sensitivity |
-| [story.md](story.md) | **Canon (v5).** Story spine, the Four Seals, cross-time Laras chapters (`LC1`–`LC6`), characters, anti-repetition Act structures, 6 Major Choices, pacing rules and runtime (~21.5 h main, 138 steps), acts, ending |
-| [world.md](world.md) | Map, 49 areas across 6 regions + Desa Purwa hub, legends, gating, checkpoints, NPCs |
-| [quests.md](quests.md) | Main quest (138 steps), 20 side & companion quests, rewards, quest system |
-| [script.md](script.md) | Every main-path and side line (EN and ID), dialogue entries and story beats, keyed |
-| [bestiary.md](bestiary.md) | Enemies, minibosses, bosses, cross-time Laras sabotage, 3-zone Buto Ijo ambushes, 3 Sacred Sea Trials |
-| [classes.md](classes.md) | The 4 classes |
-| [rpg.md](rpg.md) | Stats, stamina, damage, currency, checkpoints, controls |
-| [controls.md](controls.md) | Key bindings, what each input does per state, accessibility options |
-| [combat.md](combat.md) | Combo, dodge, perfect dodge, hit feel, poise, statuses, enemy behavior |
-| [balance.md](balance.md) | Progression, level targets, Ilmu economy, enemy and boss numbers |
-| [spells.md](spells.md) | Aksara drawing system and spell list (the gimmick) |
-| [glyph_strokes.py](glyph_strokes.py) | Single-stroke designs of the 8 MVP glyphs, Ombak and the 3 write-only name glyphs, plus a confusability check (`python3 glyph_strokes.py`) |
-| [pacing_model.py](pacing_model.py) | Minutes per act from the typed pieces in quests.md 4 (the `Play` column), checked against story.md "Pacing & Dialogue Rules (Story v5)" (`python3 pacing_model.py`) |
-| [ui.md](ui.md) | HUD layout and sizes, fonts, menus |
-| [items.md](items.md) | Weapons, armor, accessories, consumables |
-| [assets.md](assets.md) | Art direction, asset needs, licenses |
-| [architecture.md](architecture.md) | Godot project structure and technical design |
-| [story_brainstorm.md](story_brainstorm.md), [story_ciung_wanara.md](story_ciung_wanara.md) | History only, superseded by story.md |
-| [scope.md](scope.md) | Priorities: must, should, stretch, out |
-| [schedule.md](schedule.md) | Phased roadmap with exit criteria (no fixed dates) |
+---
 
-## Conventions
-- **ASSUMED**: a decision I made without confirmation. Change freely.
-- **VERIFY**: a cultural fact or script detail that must be checked against a reliable source before it ships. The game teaches real culture, so accuracy matters.
-- **TUNE**: a number that is a starting value, to be adjusted in playtests.
-- Names in Indonesian are draft names. Gloss in English the first time.
+## Documentation Map
+
+| Document | Purpose & Contents |
+|---|---|
+| [concept.md](concept.md) | Vision, gameplay pillars, tone, core loop, and cultural sensitivity principles |
+| [story.md](story.md) | **Canon (v5).** Story spine, the Four Seals, cross-time Laras chapters (`LC1`–`LC6`), characters, 6 Major Choices, anti-repetition regional structures, runtime budget (~21.5 h main story, 138 steps), and ending |
+| [world.md](world.md) | World layout, 49 interconnected areas across 6 regions + Desa Purwa hub, environmental gating, checkpoints, and NPCs |
+| [quests.md](quests.md) | Main quest (138 steps), 20 side & companion quests, reward economy, scene direction, and technical quest architecture |
+| [quest_guide.md](quest_guide.md) | Step-by-step quest walkthrough and objective guide generated from quest data |
+| [script.md](script.md) | Complete dialogue script (Indonesian & English), story beats, NPC interactions, and director cues |
+| [bestiary.md](bestiary.md) | Enemy archetypes, boss mechanics, cross-time Laras sabotage, Sacred Sea Trials, and complete glyph counter weaknesses |
+| [classes.md](classes.md) | The 4 core classes (Warrior, Archer, Rogue, Mage), starting equipment, passives, and spell modifiers |
+| [rpg.md](rpg.md) | Character stats, stamina economy, damage calculations, Ilmu currency, Petilasan shrines, death flow, and autosave |
+| [controls.md](controls.md) | Key bindings, input buffering, mouse aiming, and accessibility/comfort settings |
+| [combat.md](combat.md) | 3-hit combo, dodge i-frames, perfect-dodge rewards, poise/stagger, statuses, and audiovisual hit feedback |
+| [balance.md](balance.md) | Level targets, Ingatan rank progression, damage curves, enemy tier scaling, and boss HP numbers |
+| [spells.md](spells.md) | Aksara drawing system, point-cloud gesture recognizer, and spell effects (8 MVP glyphs + Ombak + 3 name glyphs) |
+| [ui.md](ui.md) | In-game HUD (tracker card, banners, vitals), Esc menu with left rail, Elden-style class select, and smooth typography |
+| [items.md](items.md) | Weapons (common & mythic pusaka), armors, accessories, and consumables |
+| [assets.md](assets.md) | Visual art standards, tilesets, spritesheets, font licensing (Alegreya Sans, Cinzel, Noto Sans), and audio sources |
+| [architecture.md](architecture.md) | Godot 4 project architecture, autoloads, scene composition, physics layers, and technical systems |
+| [scope.md](scope.md) | Priority tiers: P0 (must-have), P1 (should-have), P2 (stretch), and explicit cuts |
+| [schedule.md](schedule.md) | Phased roadmap and completion milestones with exit criteria |
+| [HANDOFF.md](HANDOFF.md) | Session handoff notes, active progress status, verified cultural findings, and next development steps |
+
+---
+
+## Design Check Scripts
+- `python3 .docs/glyph_strokes.py`: Stroke designs and confusability simulation for the 8 core glyphs, Ombak, and name glyphs.
+- `python3 .docs/balance_model.py`: Validates class DPS, time-to-kill curves, and enemy/boss scaling.
+- `python3 .docs/pacing_model.py`: Checks runtime minutes per act and side quest pacing targets against `quests.md`.
+- `python3 .docs/know_check.py`: Verifies narrative introduction order so characters are introduced before being referenced.
+- `python3 .docs/gen_zones.py .docs/zones/<region>.md`: Generates `zones/<area>.gd/.tscn` scenes from zone doc ASCII maps and legends.
+
+---
+
+## Documentation Conventions
+- **ASSUMED**: Design choices made by pair programming that can be tuned.
+- **VERIFY**: Cultural facts, folkloric details, or script orthography to be corroborated against authoritative sources.
+- **TUNE**: Numerical balance values, timings, or parameters subject to playtest refinement.

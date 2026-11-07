@@ -4,17 +4,17 @@ The main quest, all side quests, the reward economy and the quest system that ru
 
 Conventions as in [README.md](README.md): **ASSUMED**, **VERIFY**, **TUNE**. Every legend detail in this file is from general knowledge and is **VERIFY** unless it is already in the Nov 2026 fact-check (see [HANDOFF.md](HANDOFF.md) section 4).
 
-## 1. Decisions (confirmed by the user, updated 2026-11-06 for Story v5)
-| Topic | Decision |
-|-------|----------|
-| Guidance | Quest journal in the Tab menu, plus a soft edge-of-screen arrow for the **active main objective only** (the player may pin one side quest instead) |
-| Main order | Fixed (v5): Desa Purwa (Prologue, 12 steps), Tatar Sunda (Act I, 24 steps), Keraton Galuh (Act II, 20 steps), Mataram (Act III, 24 steps), Tanah Timur (Act IV, 22 steps), Desa Purwa (Interlude, 8 steps), Segara Kidul (Act V, 14 steps), Gua Kala (Act VI, 14 steps). Total: **138 main steps (~21.5 hours)**. All P0. Fog gates enforce it |
-| Anti-repetition | Each Act and boss has a distinct gameplay & narrative structure (Folklore Hunt, Rising Floodwaters, 3-Wing Palace Heist, Two-Front War & Night-Building Siege, 3-Zone Stalking Predator & 7-Generation Curse, Coastal Recovery & 3 Sacred Trials, 3-Realm Memory Descent & Dual Finale) |
+## 1. Structure and Scope
+| Topic | Specification |
+|-------|---------------|
+| Guidance | Quest journal in the Tab/Esc menu, Tracker Card on HUD top-left, soft edge-of-screen arrow with distance/zone label, and floating in-world diamond for the active objective |
+| Main order | Fixed: Desa Purwa (Prologue, 12 steps), Tatar Sunda (Act I, 24 steps), Keraton Galuh (Act II, 20 steps), Mataram (Act III, 24 steps), Tanah Timur (Act IV, 22 steps), Desa Purwa (Interlude, 8 steps), Segara Kidul (Act V, 14 steps), Gua Kala (Act VI, 14 steps). Total: **138 main steps (~21.5 hours)**. Fog gates enforce regional gating |
+| Anti-repetition | Each Act and boss features a distinct gameplay and narrative structure (Folklore Hunt, Rising Floodwaters, 3-Wing Palace Heist, Two-Front War & Night-Building Siege, 3-Zone Stalking Predator & 7-Generation Curse, Coastal Recovery & 3 Sacred Trials, 3-Realm Memory Descent & Dual Finale) |
 | Side quest types | 4 distinct types: Folklore Re-tellings, Two-Way Spirit Investigations, Cultural Craft/World-State Quests, and Multi-Act Companion Chains (`SQ-C1`–`SQ-C4`). 20 side quests total (~7+ hours) |
-| Missable | Never. No quest closes, fails or times out. All stay open after their zone's boss and after the ending |
+| Missable | Never. No quest closes, fails, or times out. All stay accessible after their zone's boss and in post-game |
 | Choices | **6 Major Choices** (one per Act) that ripple across quests, allies, boss mechanics, and the Epilogue, plus two-way side quest resolutions (peaceful vs. fight) |
 | Dialogue depth | Main-path & camp talks up to **8–12 lines**; story beats **8–10 lines**; major NPCs and companions offer optional **"Ask about..."** (`"quiet": true`) topic branches |
-| Language | All quest and dialogue text in **Indonesian and English** from the start |
+| Language | All quest, dialogue, item, codex, and UI text in **Indonesian and English** via CSV tables |
 
 ## 2. Principles
 1. **Every quest is a piece of culture.** A quest exists to deliver one legend, custom, object or place. If it would work just as well with generic fantasy names, cut it.
@@ -484,26 +484,76 @@ To prevent side content from feeling repetitive, side quests are divided into **
 
 ---
 
-## 7. Quest & Narrative System (Technical, Story v5)
-Fits [architecture.md](architecture.md): data-driven resources, state in `Game`, signals in `Events`. **No new autoload.**
+## 7. Quest & Narrative System (Technical Architecture)
+Fits [architecture.md](architecture.md): data-driven resources, state in `Game`, signals in `Events`. No separate autoload.
 
-> **7.5/7.6 (HUD objective line, toasts) are superseded by [quest_system.md](quest_system.md) (tracker, banner, arrow with distance, no compass).**
-
-### 7.1 New & Updated Mechanics in Story v5
+### 7.1 Cross-Time Mechanics & Story Flags
 1. **Cross-Time Laras Flags (`laras_key:<id>` & `laras_sabotage:<id>`):**
    - Set automatically when the corresponding `MemorySpot` inside `LC1`–`LC6` is completed (or when `memory_done:lc<n>` fires).
-   - Stored in `Game.flags` like any other flag (`flag:laras_key_archive_grate`, `flag:laras_sabotage_crater_seal`).
-   - Zone doors/gates (`kabut.gd` / `shortcut.gd`) and boss scripts (`sangkuriang.gd`, `barma_wijaya.gd`, `bandung_bondowoso.gd`, `keris_gandring.gd`, `batara_kala.gd`) check `Game.has_flag("laras_sabotage_...")` to enable the boss's vulnerable phase or show a visual flaw indicator on the HUD boss bar.
-2. **Deeper Dialogue & Optional `"Ask about..."` Topic Hubs:**
-   - Main-path and camp talks support **8–12 lines** per entry; story beats support **8–10 lines**.
-   - An NPC dialogue entry with `"hub": true` (or choices whose actions end with `topic:<key>`) plays the chosen sub-entry (`"quiet": true`) and then re-opens the choice list until the player selects the `"Leave / Continue"` option. This allows deep RPG conversations with companions and regional NPCs without advancing quest steps prematurely.
-3. **Puzzle & Stalking Ambush Events:**
-   - `puzzle_solved:<id>` (or `area_entered:<puzzle_id>`): emitted when a multi-step environmental puzzle (name-stones, sluice wheels, archive mirror-cipher, mangrove beacons, sand waymarkers) completes.
-   - Buto Ijo's 3 stalking ambushes (`buto_ambush_1..3` in `tt_kulon`, `tt_kali`, `tt_beringin`) use `area_cleared:buto_ambush_<n>` when the player drives him below his retreat HP threshold (80% / 65% / 50%).
-4. **Six Major Choices:**
+   - Stored in `Game.flags` (`flag:laras_key_archive_grate`, `flag:laras_sabotage_crater_seal`).
+   - Zone doors/gates (`kabut.gd` / `shortcut.gd`) and boss scripts (`sangkuriang.gd`, `barma_wijaya.gd`, `bandung_bondowoso.gd`, `keris_gandring.gd`, `batara_kala.gd`) check `Game.has_flag("laras_sabotage_...")` to trigger vulnerabilities or show cracked-glyph indicators on the boss bar.
+2. **Six Major Choices:**
    - Recorded in `Game.flags`: `choice_tell_ciung` / `choice_keep_secret` (Act I), `choice_freed` / `choice_handed` (Act II), `choice_mercy` / `choice_judgment` (Act III), `choice_reforge` / `choice_sink` (Act IV), `choice_offer_memory` / `choice_offer_song` (Act V), `choice_redeem_aria` / `choice_release_aria` (Act VI).
-5. **Grouped Journal Clues:**
-   - `Clue` nodes export `hunt_id: String = ""` so the Journal tab groups examined clues under their active investigation/arc header (`HUNT_<ID>_TITLE`).
+3. **Puzzles & Stalking Ambushes:**
+   - `puzzle_solved:<id>`: emitted when multi-step environmental puzzles (name-stones, sluice wheels, archive cipher, mangrove beacons, sand markers) complete.
+   - Buto Ijo's 3 stalking ambushes (`buto_ambush_1..3` in `tt_kulon`, `tt_kali`, `tt_beringin`) complete on `area_cleared:buto_ambush_<n>` when forced below HP thresholds (80% / 65% / 50%).
+
+### 7.2 Dialogue, Topics & Scene Direction
+1. **Dialogue Entries:**
+   - Main-path and camp talks support 8–12 lines; story beats support 8–10 lines.
+   - Entries with `"hub": true` (or choices ending in `topic:<key>`) loop quiet sub-entries (`"quiet": true`) until `"Leave / Continue"` is chosen, allowing full lore exploration without skipping quest progression.
+2. **Scene Director (`ui/scene_director.gd`):**
+   - Dialogue lines starting with `#` are director cues:
+     - `#cam:<npc_id>`: Smooth camera pan to specified NPC, entity, or `#cam:hero`.
+     - `#bars:on` / `#bars:off`: Eases cinematic letterbox bars in/out.
+     - `#shake:<0-3>`: Triggers screenshake of intensity 0 to 3.
+     - `#wait:<seconds>`: Holds a silent dramatic pause (up to 3 s).
+   - Auto-direction smoothly frames speakers within 160 px during story beats.
+3. **Choices with Consequences:**
+   - Dialogue actions execute `remember:<key>`, setting `remember_<key>` flag and emitting `Events.consequence_noted`.
+   - Triggers the `UI_Q_REMEMBER` banner ("<Character> will remember that you...") and records the entry in the Journal's Choices section.
+
+### 7.3 Data Architecture
+- `QuestData`: `id`, `name_key`, `desc_key`, `type` (main/side), `zone`, `steps: Array[QuestStep]`.
+- `QuestStep`: `target`, `desc_key`, `recap_key`, `marker: {zone, pos}`, `count`, `sub_goals: Array`, `completes_on: String`.
+- `DialogueData`: `npc_id`, `name_key`, `entries: Array` with conditions (`if`), text lines, and actions (`do`).
+
+### 7.4 In-Game Guidance (HUD & World)
+1. **Tracker Panel (HUD top-left, 156 px):**
+   - Displays tracked quest title in Cinzel, gold divider line, and objective checklist.
+   - Objectives show active status (`bullet_now`, gold), completed status (`bullet_check`, dim), and open status (`bullet_open`). Multi-part or counted goals show progress `n/total`.
+   - Starting a side quest automatically tracks it (`Game.pinned`), with fallback to main quest upon completion. Track/untrack toggle available in the Journal.
+2. **World Navigation:**
+   - Screen-edge directional arrow showing distance in meters (1 tile = 1 m) or destination zone name (`-> <zone name>`) for cross-region travel.
+   - When the objective is on-screen, a floating gold diamond appears 46 px above the target with a distance pill.
+   - The old compass UI is removed in favor of direct in-world guidance.
+
+### 7.5 Banners & Cards
+1. **Banners (HUD top-center):**
+   - Concise gold banners for `NEW QUEST`, `QUEST UPDATED`, `QUEST COMPLETE`, and `UI_Q_REMEMBER`. Queued sequentially.
+2. **Quest Cards (`ui/quest_card.gd`):**
+   - Title card on main quest start (act name, title, stakes sentence).
+   - Summary card on quest completion (title, Ilmu earned, items, codex unlocks).
+
+### 7.6 Journal as Story Log
+The Journal tab in the Esc/Tab menu functions as an ongoing chronicle:
+- **Story Log:** Narrative paragraph detailing quest premise, sequential `_DONE` recap entries of finished steps, and the active objective.
+- **Choices:** Chronicled log of all major choices and remembered story actions.
+- **Clues:** Examined clues grouped by investigation arc (`hunt_id`) with associated notes and Kelir memories.
+
+### 7.7 Text & String Tables
+All player-facing text is localized via CSV string tables in `data/text/`:
+- `quests.csv`: `Q_<ID>_TITLE`, `Q_<ID>_DESC`, `Q_<ID>_S<n>_OBJ`, `Q_<ID>_S<n>_DONE`, `Q_<ID>_S<n>_HINT`.
+- `dialogue.csv`: `NPC_<id>_NAME`, `NPC_<id>_<n>`, `DLG_*`, `REMEMBER_*`.
+- `codex.csv`: `CODEX_<ID>_TITLE`, `CODEX_<ID>_BODY`, `CODEX_<ID>_WEAK`.
+- `ui.csv`: UI labels, verbs, and prompts.
+
+### 7.8 Validation & Headless Checks
+Headless test scripts verify integrity without opening the Godot editor:
+- `tests/quest_test.gd`: Verifies step progression, signals, and multi-goal completion.
+- `tests/quest_engine_test.gd`: Verifies auto-tracking, sub-goal focus, and done/total counters.
+- `.docs/know_check.py`: Ensures every character is properly introduced before being named.
+- `.docs/pacing_model.py`: Validates runtime budgets and pacing distribution across all acts.
 
 ---
 

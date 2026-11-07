@@ -3,26 +3,24 @@
 Project: Godot 4.7 (`config/features` in `project.godot`), GDScript. Related: [rpg.md](rpg.md), [spells.md](spells.md), [world.md](world.md).
 
 ## 1. Project settings for pixel art
-Current `project.godot` has the defaults: renderer Forward Plus, stretch mode `canvas_items`, aspect `expand`. Change to:
+Configured in `project.godot`:
 
-| Setting | Value | Why |
-|---------|-------|-----|
-| `display/window/size/viewport_width` x `viewport_height` | 480 x 270 | Soul Knight-like low-res, 30x17 tiles of 16 px |
-| `display/window/size/window_width_override` x `height` | 1440 x 810 | Starting window size: exactly 3x. 1280 x 720 is not a whole multiple, so integer scaling would show 2x with borders (changed 2026-11-05) |
-| `display/window/stretch/mode` | `canvas_items` | Layout is 480x270, drawn at window resolution: smooth, non-pixel UI text (user call, 2026-11-05). Art stays crisp through Nearest filtering. Cost: sprites can sit between game pixels. If that shimmers in play, move the world into a 480x270 SubViewport and keep only the UI at full resolution |
-| `display/window/stretch/scale_mode` | `integer` | No blurry fractional scales |
-| `display/window/stretch/aspect` | `keep` | Letterbox instead of stretching |
-| `rendering/textures/canvas_textures/default_texture_filter` | `Nearest` | Sharp pixels |
-| `rendering/2d/snap/snap_2d_transforms_to_pixel` and `snap_2d_vertices_to_pixel` | on | No sub-pixel shimmer |
-| `gui/theme/default_font_antialiasing` and `default_font_subpixel_positioning` | defaults (Grayscale, Auto) | Text is smooth at full resolution under `canvas_items`. The earlier None setting was only needed for `viewport` stretch |
-| Renderer | **Compatibility** | Forward Plus is overkill for 2D, and Compatibility is required for web export (confirmed 2026-11-05) |
-
-Also: remove the 3D Jolt physics setting if no 3D is used (harmless).
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| `display/window/size/viewport_width` x `viewport_height` | 480 x 270 | Native low-res resolution, 30x17 tiles of 16 px |
+| `display/window/size/window_width_override` x `height` | 1440 x 810 | Starting window size: exactly 3x integer scale |
+| `display/window/stretch/mode` | `canvas_items` | Viewport layout is 480x270; UI text renders smoothly at window resolution, art remains crisp via Nearest filtering |
+| `display/window/stretch/scale_mode` | `integer` | Clean integer scaling |
+| `display/window/stretch/aspect` | `keep` | Maintains aspect ratio with letterboxing |
+| `rendering/textures/canvas_textures/default_texture_filter` | `Nearest` | Sharp pixel rendering |
+| `rendering/2d/snap/snap_2d_transforms_to_pixel` and `snap_2d_vertices_to_pixel` | on | Prevents sub-pixel jitter |
+| `gui/theme/default_font_antialiasing` and `default_font_subpixel_positioning` | defaults (Grayscale, Auto) | Smooth typography at window resolution |
+| Renderer | **Compatibility** | Efficient 2D performance and web export readiness |
 
 ## 2. Folder structure
 ```
 res://
-  main.tscn        Phase 0 crispness check, no longer the main scene (zones/test_room.tscn is, Phase 1a)
+  main.tscn        Initial launch harness; main game entrypoint is ui/title.tscn
   autoload/        game.gd, events.gd, zones.gd, audio.gd
   components/      health, stamina, sakti_gauge, hitbox, hurtbox, hit_flash, status, recognizer
   data/            combat_tuning.gd/.tres (every combat timing, combat.md 7)
@@ -192,13 +190,15 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 
 **Tests.** `tests/clue_test.gd` (a Clue sets the flag, emits the signal, enters its memory), `tests/memory_test.gd` (every `zones/kelir/*.tscn` loads, has a `Stand` marker and calls `finish`; fail resets; return restores zone and position), and a key check that every `CLUE_*`, `MEM_*` and `NPC_*_WHO` key exists in both languages.
 
-## 10. UI
-- `CanvasLayer` HUD: bars (HP, stamina, sakti), flask, weapon, Ilmu.
-- Dialogue box with typewriter text and a speaker name. Optional portraits (stretch).
-- Menus: pause, equipment and stats, level-up (at petilasan), codex, journal, glyph viewer, settings (incl. language).
-- Sizes and layout: [ui.md](ui.md).
-- Quest UI: soft edge-of-screen objective arrow, NPC quest icons, toasts ([quests.md](quests.md) section 7.4-7.6).
-- One global theme, `ui/theme.tres` (project `gui/theme/custom`), with the fonts and frames from [ui.md](ui.md) 3b. Earlier note: use theme resources and a pixel font. Aksara text needs Noto Sans Javanese / Sundanese. **Test complex-script rendering early.** If Godot's text server does not shape them correctly, fall back to pre-rendered glyph images.
+## 10. UI & Presentation
+- `CanvasLayer` HUD: vitals (HP, stamina, sakti), weapon well, flask slots, Ilmu counter, boss bar.
+- Quest Tracker card (`ui/hud.gd`): tracked quest title, checklist of sub-objectives with bullet markers (`bullet_now`, `bullet_check`, `bullet_open`), and hints.
+- Directional arrow with meter distance / zone destination, plus floating in-world diamond over targets.
+- Dialogue box: auto-height, typewriter text, speaker plate, first-meeting "who" descriptors (`NPC_<id>_WHO`).
+- Scene Director (`ui/scene_director.gd`): handles `#cam`, `#bars`, `#shake`, and `#wait` dialogue cues, auto-framing speakers during story beats.
+- Quest cards (`ui/quest_card.gd`): cinematic title card on quest start, summary reward card on completion.
+- Menus: title screen, pause menu, Esc menu left rail (Status, Perlengkapan, Catatan/Journal, Peta, Pustaka/Codex, Sistem/Settings).
+- Typography & Theme: `ui/theme.tres` with smooth vector fonts (`AlegreyaSans` body, `Cinzel` titles and headings). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
 
 ## 11. Input map
 `move_up/down/left/right`, `attack`, `dodge`, `cast`, `heal_jamu`, `interact`, `menu`, `pause`. P0: two presets and a mouse-button swap; P1: free rebinding. Details and notes: [controls.md](controls.md).

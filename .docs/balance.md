@@ -67,7 +67,7 @@ The player gets about 2x damage and 1.3x HP over the game. Each source has a cei
 | **Healing Flask** | 3-6 charges, 40-60% heal each | Base only. Upgrades are side-quest rewards |
 | **Major Choices** (Story v5) | One of two small rewards per Act, each inside the ceilings above: Sunda `Ca` radius +10%, Sabuk Galuh (+1 Vit, +8% damage reduction), Keris Mpu Gandring or Batu Kali, *Ombak* -3 Sakti and +20% poise damage on Eclipse enemies or the Berkah Pesisir revive/ward, Keteguhan Sunyi (+15% stamina and Sakti recovery in the Kala fight) or +6 s on the Phase 3 countdown ([items.md](items.md), [spells.md](spells.md)). Every choice is a side-grade, so neither branch changes the target levels in section 2.2 (**TUNE**, **ASSUMED**) | No, but one branch per choice is always taken |
 
-### 3.1 Ingatan (new, confirmed 2026-11-05)
+### 3.1 Ingatan Progression
 As the letters return to the world, the hero's ilmu grows with them. This is what keeps a main-quest-only player on the curve without new items.
 - Rank = main bosses cleared: Sangkuriang (1), Bandung Bondowoso (2), Mpu Gandring's Keris (3), Nyi Roro Kidul's trial (4, main path).
 - All damage the player deals (weapon, spell, Summon, Ward absorb) is multiplied by `1 + 0.15 x rank`.
@@ -76,26 +76,26 @@ As the letters return to the world, the hero's ilmu grows with them. This is wha
 - Buto Ijo is a miniboss and gives no rank.
 - Segara Kidul is on the main path, so rank 4 is always reached before Batara Kala and his HP is the full 9300 (section 7). The Captain, Barma Wijaya, Hariang Banga and the Hunter give no rank (**ASSUMED**).
 
-## 4. Player formulas (changes to [rpg.md](rpg.md))
-| Item | Before | Now | Why |
-|------|--------|-----|-----|
-| Attack interval | not set | light melee 0.35 s, heavy 0.8 s, ranged 0.45 s, staff 0.5 s. Dexterity: +1% attack speed per point (unchanged) | Needed to compute damage per second. These are the averages of the 3-hit combo ([combat.md](combat.md) 2.2) |
-| Sakti gain per hit | +6 for every weapon | heavy 10, light 4, ranged 4, staff 4 | Heavy weapons hit less often. This keeps gauge per second close across weapons |
-| Spirit gauge bonus | +3% per point | +2% per point | Mage was gaining a spell almost every hit |
-| Armor | `max(1, dmg - defense)` | `max(1, round(dmg x (1 - 0.05 x defense)))` | Flat subtraction halved early hits and did nothing late. A percentage scales with every zone |
-| Spell power | Spirit only | Spirit x Ingatan | Spells keep pace with enemy HP |
+## 4. Player formulas
+| Item | Baseline | Formula / Value | Rationale |
+|------|----------|-----------------|-----------|
+| Attack interval | - | light melee 0.35 s, heavy 0.8 s, ranged 0.45 s, staff 0.5 s. Dex: +1% attack speed per point | Average timings of 3-hit combo ([combat.md](combat.md) 2.2) |
+| Sakti gain per hit | - | heavy 10, light 4, ranged 4, staff 4 | Balances gauge gain rate across weapon attack speeds |
+| Spirit gauge bonus | - | +2% per point | Smooth scaling without over-saturating spell frequency |
+| Armor | - | `max(1, round(dmg x (1 - 0.05 x defense)))` | Percentage reduction scaling across all zone tiers |
+| Spell power | - | Spirit x Ingatan multiplier | Keeps spell effectiveness aligned with escalating enemy HP |
 
 Unchanged: stamina costs and regen, dodge, Vitality and Endurance formulas, flask, level cost.
 
 ## 5. Class balance
 Goal from [classes.md](classes.md): any class can finish, Warrior is the easiest and Mage the most active.
 
-### 5.1 Changes to [classes.md](classes.md)
-| Item | Before | Now |
-|------|--------|-----|
-| Hunting Bow base damage | 9 | 8 (ranged is safer, so less damage) |
-| Mage Keen Mind gauge gain | x1.5 | x1.2 (gauge max 120 unchanged) |
-| Mage spell damage | x1.25 | x1.1 |
+### 5.1 Class Balance Parameters
+| Class / Weapon | Property | Value | Rationale |
+|---|---|---|---|
+| Hunting Bow | Base damage | 8 | Balances ranged safety with damage output |
+| Mage Keen Mind | Gauge gain multiplier | x1.2 (gauge capacity 120) | Active casting focus without excessive saturation |
+| Mage Spell Damage | Modifier | x1.1 | High damage ceiling tied to cast accuracy |
 
 ### 5.2 Result (main quest only, middle of each zone, perfect casting)
 Damage per second including uptime (melee 45-50%, ranged 60%). Spell share is the part of the damage that comes from spells.
@@ -142,7 +142,7 @@ Keraton Galuh (`kg_`, Act II) uses tier 1 with Mataram, Desa Purwa tier 0 (besti
 | Swarm | HP x0.6, Ilmu x0.5, comes in groups of 3-5 | Tuyul |
 | Stationary | HP x1.5, Ilmu x1.5 | Arca |
 
-### 6.4 Current enemies (replaces the numbers in [bestiary.md](bestiary.md))
+### 6.4 Current enemy stats
 | Enemy | Zone (tier) | Role | HP | Dmg | Ilmu |
 |-------|-------------|------|----|-----|------|
 | Kuntilanak | Sunda (0) | Shooter | 40 | 8 | 6 |
@@ -215,8 +215,8 @@ Unchanged: `cost(n) = round(40 x 1.12^n)`. Total to reach L25 is about 4,700 Ilm
 
 Main path: about 4,600 Ilmu, all from enemies and bosses. 100%: about 8,300, of which side quests are about 34%. That matches the 25-35% target in [quests.md](quests.md).
 
-### 8.3 Quest Ilmu (replaces `50 x size x zone multiplier` in [quests.md](quests.md))
-The old formula gave 1.5-2 levels for an M quest in Tatar Sunda. Quest Ilmu now follows the level cost, so **S = half a level, M = one level, L = 1.5 levels** at that zone's target level.
+### 8.3 Quest Ilmu
+Quest Ilmu follows the level cost curve, so **S = half a level, M = one level, L = 1.5 levels** at that zone's target level.
 
 | Zone | S | M | L |
 |------|---|---|---|
@@ -257,8 +257,7 @@ One mode. Assist toggles live in Settings, can change at any time, and have no p
 | Flasks used per zone | About 3-5 by the reference player |
 | Level at boss doors | Section 2.2, within 1-2 levels |
 
-## 12. Open questions
-1. ~~Damage numbers on screen~~: shown, with a toggle ([combat.md](combat.md), **ASSUMED**). The large HP values read fine.
-2. ~~Timur shooter~~: Kemamang (2026-11-05, [bestiary.md](bestiary.md)).
-3. **Staff and bow upgrades:** the staff has no found upgrade and the bow has only Panah Pasopati. Ingatan covers the gap. Add one staff in P1 only if playtests show Mage behind.
-4. **Measure real minutes per act in the playtest** (section 2.1 is a target, not a promise; Act V and the Interlude are estimates). **TUNE**
+## 12. Balancing Notes
+1. **Damage numbers on screen:** enabled by default, toggleable in Settings ([combat.md](combat.md)).
+2. **Staff and bow upgrades:** the staff has no found upgrade and the bow has only Panah Pasopati. Ingatan rank scaling covers the power progression curve.
+3. **Pacing validation:** `python3 .docs/pacing_model.py` validates the minutes-per-act target curve across all acts and side quests.

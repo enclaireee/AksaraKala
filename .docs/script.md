@@ -445,7 +445,7 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | P1 | DLG_CIUNG_WANARA_V103 | Mereka selalu takut. Aku tak akan jatuh. | They're always afraid. I won't fall. |
 | P1 | DLG_CIUNG_WANARA_V21 | Iya, iya, aku turun sekarang! Telur ini kubawa pulang ya. Terima kasih sudah mengingatkan. | Alright, alright, I'm coming down! I'm bringing this egg home. Thanks for reminding me. |
 | P1 | @NPC_LARAS_NAME | | |
-| P1 | DLG_CIUNG_WANARA_L101 | Ayo langsung ke sanggar, Kak! Ki Semar dan Cepot sudah menunggu kita untuk persiapan Ruwatan. | Let's head straight to the sanggar, Kak! Ki Semar and Cepot are waiting for us to get ready for the Ruwatan. |
+| P1 | DLG_CIUNG_WANARA_L101 | Ayo langsung ke sanggar, Kak! Ki Semar sudah menunggu kita untuk persiapan Ruwatan. | Let's head straight to the sanggar, Kak! Ki Semar is waiting for us to get ready for the Ruwatan. |
 | P2 | DLG_CIUNG_WANARA_V22 | Aku pulang ke rumah dulu ya. Sampai ketemu nanti malam di panggung wayang! | I'm heading home first. See you tonight at the wayang stage! |
 
 ### Chapter 1, step 0.4: Sanggar entrance (Cepot's warning)

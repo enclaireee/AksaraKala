@@ -81,7 +81,7 @@ Weapons differ in behavior, not only numbers (hit shapes per weapon: [combat.md]
 ## 10. HUD
 Layout, sizes, colors, fonts and menus: [ui.md](ui.md).
 
-## 11. Save (confirmed 2026-11-05)
+## 11. Save System
 P0. One slot, saved automatically. No manual save, no save menu.
 
 **When it saves**

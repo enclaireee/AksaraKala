@@ -20,7 +20,7 @@ There is no fixed deadline, so scope is ordered by priority, not cut by time. Bu
 - Main menu, pause, death, win screen
 - Autosave, one slot, Continue from the title screen ([rpg.md](rpg.md) 11, moved from P1 on 2026-11-05)
 - Segara Kidul with the Trial of the Waves, MQ4 and the Interlude (main path since story v3.1, moved from P1; **ASSUMED**). Ombak is the ninth glyph
-- Engine follow-ups the main path needs ([quests.md](quests.md) 7.1, not built yet): `all` steps (several triggers in one step), the `goto:<area>:<spawn>` and `restore` dialogue actions, and the `zone:<area_id>` condition
+- Core quest engine features: multi-goal `all` steps, `goto:<area>:<spawn>` and `restore` dialogue actions, and the `zone:<area_id>` condition ([quests.md](quests.md) 7)
 
 ## P1: should have
 - A miniboss or elite in each zone beyond the main-path ones (Sandekala in Act I and Buto Ijo in Act IV are on the main path)

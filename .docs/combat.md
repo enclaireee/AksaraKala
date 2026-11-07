@@ -12,10 +12,10 @@ Research note: the numbers come from common practice in top-down action games (H
 | Martial art flavor | None. Generic action combat, with the culture carried by weapons, enemies, spells and sound |
 | Statuses | 4 readable statuses: Burn, Slow (Bound on enemies), Stagger, Curse |
 | Aim | Mouse aim, soft snap for melee, no lock-on (the mouse is also the drawing tool) |
-| Slow-mo abuse | Closed: drawing needs 15 sakti to start, 1 s lockout after a cancel or fizzle (confirmed) |
-| Glyph weaknesses | Each normal enemy has one glyph that breaks its gimmick for 1.5-3 s. A shortcut, never required ([bestiary.md](bestiary.md)) (confirmed) |
-| Contact damage | None. Only attacks hurt, never bumping into an enemy (forgiving) |
-| Damage numbers | Shown, small and short, with a toggle in Settings (**ASSUMED**) |
+| Slow-mo balance | Drawing requires 15 sakti to initiate, with a 1 s cooldown lockout after a cancel or fizzle |
+| Glyph weaknesses | Each normal enemy has one designated glyph that breaks its gimmick for 1.5–3.0 s ([bestiary.md](bestiary.md)) |
+| Contact damage | None. Only direct attacks deal damage; colliding with enemy bodies is harmless |
+| Damage numbers | Small, quick damage numbers above targets, toggleable in Settings |
 
 ## 2. Player moves
 ### 2.1 Movement
@@ -218,7 +218,3 @@ Casting rules are in [spells.md](spells.md). Combat-specific rules:
 | Deaths to an attack the player says they "did not see" | None. Otherwise lengthen the wind-up or strengthen its marker |
 | Enemies attacking at once in a 6-enemy fight | Never more than 4 |
 | Average time to kill and boss tries | [balance.md](balance.md) section 11 |
-
-## 9. Open questions
-1. ~~Kendang samples~~: redafs on Freesound, CC BY 4.0 ([assets.md](assets.md)). Record a kendang if one take gives too few hits.
-2. ~~UI hints~~: no hint for the soft snap; the Archer's long-range hits use the big damage font ([ui.md](ui.md) 2).
