@@ -21,15 +21,31 @@ static func tex(name: String) -> Texture2D:
 	return _cache[name]
 
 
+const FONT_BODY := "res://assets/fonts/Jersey10-Regular.ttf"      # pixel face for 10, 20 px text (ui.md 1)
+const FONT_DISPLAY := "res://assets/fonts/Jersey15-Regular.ttf"   # pixel face for 15, 30 px headings
+
+
+## The pixel display face (kept under its old name: callers still ask for "cinzel").
 static func cinzel() -> Font:
-	return load("res://assets/fonts/Cinzel.ttf")
+	return load(FONT_DISPLAY)
+
+
+static func body_font() -> Font:
+	return load(FONT_BODY)
+
+
+## Pixel fonts stay crisp only on their grid: body text 10 (20 when big), display text 15 (30 when big).
+static func snap(size: int, display: bool) -> int:
+	if display:
+		return 15 if size < 22 else 30
+	return 10 if size < 16 else 20
 
 
 ## A Label in the theme's body font, or Cinzel, with the 1 px outline.
 static func label(text: String, size := 8, color := CREAM, use_cinzel := false) -> Label:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_font_size_override("font_size", snap(size, use_cinzel))
 	l.add_theme_color_override("font_color", color)
 	l.add_theme_color_override("font_outline_color", LACQUER)
 	l.add_theme_constant_override("outline_size", 1)

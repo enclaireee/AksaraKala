@@ -1,9 +1,9 @@
-[gd_resource type="Theme" load_steps=31 format=3]
+[gd_resource type="Theme" load_steps=38 format=3]
 
-[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Regular.ttf" id="f1"]
-[ext_resource type="FontFile" path="res://assets/fonts/Cinzel.ttf" id="f2"]
-[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Bold.ttf" id="f3"]
-[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Italic.ttf" id="f4"]
+[ext_resource type="FontFile" path="res://assets/fonts/Jersey10-Regular.ttf" id="f1"]
+[ext_resource type="FontFile" path="res://assets/fonts/Jersey15-Regular.ttf" id="f2"]
+[ext_resource type="FontFile" path="res://assets/fonts/Jersey10-Regular.ttf" id="f3"]
+[ext_resource type="FontFile" path="res://assets/fonts/Jersey10-Regular.ttf" id="f4"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/panel.png" id="t_panel"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/panel_dialogue.png" id="t_panel_dialogue"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/button_normal.png" id="t_button_normal"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" path="res://assets/art/ui/tab_off.png" id="t_tab_off"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/slot.png" id="t_slot"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/slot_selected.png" id="t_slot_selected"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/lozenge.png" id="t_lozenge"]
 
 [sub_resource type="StyleBoxTexture" id="s_panel"]
 texture = ExtResource("t_panel")
@@ -158,9 +159,34 @@ content_margin_bottom = 2.0
 [sub_resource type="StyleBoxFlat" id="s_sel"]
 bg_color = Color(0.122, 0.165, 0.267, 0.9)
 
+[sub_resource type="StyleBoxFlat" id="s_pbar_bg"]
+bg_color = Color(0.055, 0.043, 0.039, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.478, 0.353, 0.133, 1)
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="s_pbar_fill"]
+bg_color = Color(0.788, 0.635, 0.29, 1)
+
+[sub_resource type="StyleBoxFlat" id="s_pbar_fill_hi"]
+bg_color = Color(0.949, 0.831, 0.533, 1)
+
+[sub_resource type="StyleBoxLine" id="s_hline"]
+color = Color(0.478, 0.353, 0.133, 1)
+thickness = 1
+
+[sub_resource type="StyleBoxLine" id="s_vline"]
+color = Color(0.478, 0.353, 0.133, 1)
+thickness = 1
+vertical = true
+
 [resource]
 default_font = ExtResource("f1")
-default_font_size = 8
+default_font_size = 10
 Label/colors/font_color = Color(0.929, 0.89, 0.8, 1)
 Label/colors/font_outline_color = Color(0.055, 0.043, 0.039, 1)
 Label/constants/outline_size = 1
@@ -174,9 +200,9 @@ Panel/styles/panel = SubResource("s_panel")
 PanelContainer/styles/panel = SubResource("s_panel")
 TooltipPanel/styles/panel = SubResource("s_panel")
 TooltipLabel/colors/font_color = Color(0.929, 0.89, 0.8, 1)
-TooltipLabel/font_sizes/font_size = 8
-Button/fonts/font = ExtResource("f2")
-Button/font_sizes/font_size = 8
+TooltipLabel/font_sizes/font_size = 10
+Button/fonts/font = ExtResource("f1")
+Button/font_sizes/font_size = 10
 Button/colors/font_color = Color(0.929, 0.89, 0.8, 1)
 Button/colors/font_hover_color = Color(0.949, 0.831, 0.533, 1)
 Button/colors/font_hover_pressed_color = Color(0.949, 0.831, 0.533, 1)
@@ -204,8 +230,8 @@ LinkButton/fonts/font = ExtResource("f1")
 CheckBox/colors/font_color = Color(0.929, 0.89, 0.8, 1)
 CheckBox/colors/font_hover_color = Color(0.949, 0.831, 0.533, 1)
 CheckBox/styles/focus = SubResource("s_none")
-TabContainer/fonts/font = ExtResource("f2")
-TabContainer/font_sizes/font_size = 8
+TabContainer/fonts/font = ExtResource("f1")
+TabContainer/font_sizes/font_size = 10
 TabContainer/colors/font_selected_color = Color(0.949, 0.831, 0.533, 1)
 TabContainer/colors/font_unselected_color = Color(0.612, 0.561, 0.471, 1)
 TabContainer/colors/font_hovered_color = Color(0.929, 0.89, 0.8, 1)
@@ -218,8 +244,8 @@ TabContainer/styles/tab_unselected = SubResource("s_tab_off")
 TabContainer/styles/tab_hovered = SubResource("s_tab_on")
 TabContainer/styles/tab_focus = SubResource("s_none")
 TabContainer/styles/tab_disabled = SubResource("s_tab_off")
-TabBar/fonts/font = ExtResource("f2")
-TabBar/font_sizes/font_size = 8
+TabBar/fonts/font = ExtResource("f1")
+TabBar/font_sizes/font_size = 10
 TabBar/colors/font_selected_color = Color(0.949, 0.831, 0.533, 1)
 TabBar/colors/font_unselected_color = Color(0.612, 0.561, 0.471, 1)
 TabBar/colors/font_hovered_color = Color(0.929, 0.89, 0.8, 1)
@@ -248,20 +274,33 @@ LineEdit/styles/normal = SubResource("s_edit")
 LineEdit/styles/focus = SubResource("s_edit")
 HeaderLarge/base_type = &"Label"
 HeaderLarge/fonts/font = ExtResource("f2")
-HeaderLarge/font_sizes/font_size = 10
+HeaderLarge/font_sizes/font_size = 15
 HeaderLarge/colors/font_color = Color(0.788, 0.635, 0.29, 1)
 Heading/base_type = &"Label"
-Heading/fonts/font = ExtResource("f2")
-Heading/font_sizes/font_size = 8
+Heading/fonts/font = ExtResource("f1")
+Heading/font_sizes/font_size = 10
 Heading/colors/font_color = Color(0.949, 0.831, 0.533, 1)
 BossName/base_type = &"Label"
 BossName/fonts/font = ExtResource("f2")
-BossName/font_sizes/font_size = 10
+BossName/font_sizes/font_size = 15
 BossName/colors/font_color = Color(0.929, 0.89, 0.8, 1)
 Small/base_type = &"Label"
-Small/font_sizes/font_size = 7
+Small/font_sizes/font_size = 10
 Dim/base_type = &"Label"
 Dim/colors/font_color = Color(0.612, 0.561, 0.471, 1)
 Italic/base_type = &"Label"
 Italic/fonts/font = ExtResource("f4")
 Italic/colors/font_color = Color(0.949, 0.902, 0.769, 1)
+ProgressBar/styles/background = SubResource("s_pbar_bg")
+ProgressBar/styles/fill = SubResource("s_pbar_fill")
+ProgressBar/font_sizes/font_size = 10
+HSlider/styles/slider = SubResource("s_pbar_bg")
+HSlider/styles/grabber_area = SubResource("s_pbar_fill")
+HSlider/styles/grabber_area_highlight = SubResource("s_pbar_fill_hi")
+HSlider/icons/grabber = ExtResource("t_lozenge")
+HSlider/icons/grabber_highlight = ExtResource("t_lozenge")
+HSlider/icons/grabber_disabled = ExtResource("t_lozenge")
+HSeparator/styles/separator = SubResource("s_hline")
+HSeparator/constants/separation = 5
+VSeparator/styles/separator = SubResource("s_vline")
+VSeparator/constants/separation = 7

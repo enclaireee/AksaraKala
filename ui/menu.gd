@@ -49,6 +49,15 @@ var _sys_action := ""   # "title" or "quit" while the confirmation modal is open
 var _sys_lang: Button
 var _sys_full: Button
 var _footer: Label
+var _dim: ColorRect
+var _rail: Array[Button] = []   # left tab rail, one button per tab (the TabContainer's own tab bar is hidden)
+var _title: Label               # current page name over the content frame
+var _frame: NinePatchRect
+const PANEL_POS := Vector2(10, 10)
+const PANEL_SIZE := Vector2(460, 250)
+const RAIL_W := 80.0
+const TAB_KEYS := ["UI_TAB_STATUS", "UI_TAB_EQUIP", "UI_TAB_JOURNAL", "UI_TAB_MAP", "UI_TAB_PUSTAKA", "UI_TAB_SYSTEM"]
+const TAB_ICONS := ["icon_tab_status", "icon_tab_equip", "icon_tab_journal", "icon_tab_map", "icon_tab_pustaka", "icon_tab_system"]
 var _eq_focus := ""   # item id focused in the equipment grid (kept across a rebuild)
 
 
@@ -56,16 +65,20 @@ func _ready() -> void:
 	add_to_group("game_menu")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	visible = false
+	_dim = ColorRect.new()   # the world dims behind the menu
+	_dim.color = Color(0.02, 0.016, 0.014, 0.62)
+	_dim.set_anchors_preset(PRESET_FULL_RECT)
+	_dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_dim)
 	_panel = Panel.new()
-	_panel.position = Vector2(60, 20)
-	_panel.size = Vector2(360, 230)
+	_panel.position = PANEL_POS
+	_panel.size = PANEL_SIZE
 	add_child(_panel)
+	_build_chrome()
 	_tabs = TabContainer.new()
-	_tabs.set_anchors_preset(PRESET_FULL_RECT)
-	_tabs.offset_left = 5
-	_tabs.offset_top = 3
-	_tabs.offset_right = -5
-	_tabs.offset_bottom = -5
+	_tabs.tabs_visible = false   # the rail replaces the tab bar
+	_tabs.position = Vector2(RAIL_W + 14.0, 34)
+	_tabs.size = Vector2(PANEL_SIZE.x - RAIL_W - 24.0, PANEL_SIZE.y - 34 - 28)
 	_panel.add_child(_tabs)
 	_build_status()
 	_equip = VBoxContainer.new()
@@ -92,24 +105,10 @@ func _ready() -> void:
 	_build_map()
 	_codex = _scroll("Codex")
 	_build_system()
-	_tabs.tab_alignment = TabBar.ALIGNMENT_CENTER
-	_tabs.offset_bottom = -16
-	_footer = Label.new()
-	_footer.text = "UI_FOOTER"
-	_footer.position = Vector2(8, 216)
-	_footer.size = Vector2(344, 12)
-	_footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_footer.add_theme_color_override("font_color", DIM)
-	_panel.add_child(_footer)
-	for side in 2:   # shoulder prompts at both ends of the tab bar (ui.md 3)
-		var sh := Label.new()
-		sh.text = "[Q]" if side == 0 else "[E]"
-		sh.position = Vector2(6 if side == 0 else 332, 4)
-		sh.add_theme_color_override("font_color", GOLD)
-		_panel.add_child(sh)
 	_apply_settings()
 	_tabs.tab_changed.connect(func(i: int) -> void:
 		_last_tab = i
+		_rail_sync()
 		_refresh_map()
 		var dir := signi(i - _prev_tab)
 		_prev_tab = i
@@ -118,6 +117,87 @@ func _ready() -> void:
 	var g := get_node("/root/Game")
 	g.changed.connect(refresh)
 	get_node("/root/Events").rested.connect(func(_p: Node2D) -> void: open(true))
+
+
+## Frame around the pages: a left rail of icon + name buttons, a title with a gold rule, a framed content area and one
+## key-hint footer for every page (ui.md 3, pixel pass).
+func _build_chrome() -> void:
+	for i in TAB_KEYS.size():
+		var b := Button.new()
+		b.clip_text = true
+		b.focus_mode = Control.FOCUS_NONE   # Q/E and the mouse switch pages: the rail never steals the pad's focus
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.icon = load("res://assets/art/ui/%s.png" % TAB_ICONS[i])
+		b.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.add_theme_constant_override("h_separation", 4)
+		b.position = Vector2(6, 30 + i * 30)
+		b.size = Vector2(RAIL_W, 26)
+		b.pressed.connect(_on_rail.bind(i))
+		_panel.add_child(b)
+		_rail.append(b)
+	var q := Label.new()   # shoulder prompts above and below the rail
+	q.text = "[Q]"
+	q.position = Vector2(6, 17)
+	q.add_theme_color_override("font_color", GOLD)
+	_panel.add_child(q)
+	var e := Label.new()
+	e.text = "[E]"
+	e.position = Vector2(6, 30 + TAB_KEYS.size() * 30 - 2)
+	e.add_theme_color_override("font_color", GOLD)
+	_panel.add_child(e)
+	_title = Label.new()
+	_title.theme_type_variation = &"HeaderLarge"
+	_title.add_theme_color_override("font_color", GOLD)
+	_title.position = Vector2(RAIL_W + 14.0, 7)
+	_title.size = Vector2(280, 18)
+	_panel.add_child(_title)
+	var rule := ColorRect.new()
+	rule.color = Color("7A5A22")
+	rule.position = Vector2(RAIL_W + 14.0, 26)
+	rule.size = Vector2(PANEL_SIZE.x - RAIL_W - 24.0, 1)
+	_panel.add_child(rule)
+	_frame = NinePatchRect.new()   # recessed well behind the page
+	_frame.texture = load("res://assets/art/ui/slot.png")
+	_frame.patch_margin_left = 4
+	_frame.patch_margin_top = 4
+	_frame.patch_margin_right = 4
+	_frame.patch_margin_bottom = 4
+	_frame.position = Vector2(RAIL_W + 10.0, 30)
+	_frame.size = Vector2(PANEL_SIZE.x - RAIL_W - 16.0, PANEL_SIZE.y - 30 - 24)
+	_frame.modulate = Color(1, 1, 1, 0.55)
+	_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(_frame)
+	_footer = Label.new()
+	_footer.text = "UI_FOOTER"
+	_footer.position = Vector2(8, PANEL_SIZE.y - 18)
+	_footer.size = Vector2(PANEL_SIZE.x - 16.0, 12)
+	_footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_footer.add_theme_color_override("font_color", DIM)
+	_panel.add_child(_footer)
+
+
+func _on_rail(i: int) -> void:
+	if _tabs.current_tab != i:
+		_tabs.current_tab = i
+		_cancel()
+		_focus_tab()
+
+
+## The rail button of the open page is lit (gold, raised frame); the others are dim.
+func _rail_sync() -> void:
+	for i in _rail.size():
+		var on := i == _tabs.current_tab
+		var b := _rail[i]
+		var box := UIFx.box("tab_on" if on else "tab_off", 5.0)
+		box.content_margin_left = 6.0
+		for st in ["normal", "hover", "pressed", "focus", "hover_pressed", "disabled"]:
+			b.add_theme_stylebox_override(st, box if st == "normal" or on else UIFx.box("tab_on", 5.0))
+		var col := GOLD if on else DIM
+		for c in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:
+			b.add_theme_color_override(c, col if c == "font_color" or on else GOLD)
+		b.add_theme_color_override("icon_normal_color", Color.WHITE if on else Color(0.6, 0.56, 0.48))
+	if _title and _tabs:
+		_title.text = tr(TAB_KEYS[clampi(_tabs.current_tab, 0, TAB_KEYS.size() - 1)])
 
 
 func _scroll(tab_name: String) -> VBoxContainer:
@@ -161,7 +241,7 @@ func _build_status() -> void:
 		var row := HBoxContainer.new()
 		v.add_child(row)
 		var l := Label.new()
-		l.custom_minimum_size.x = 200
+		l.custom_minimum_size.x = 190
 		row.add_child(l)
 		_stat_lbl[s] = l
 		var b := Button.new()
@@ -219,10 +299,10 @@ func open(petilasan := false) -> void:
 	if _tween:
 		_tween.kill()
 	modulate.a = 0.0   # fade + rise 6 px (ui.md 3b)
-	_panel.position.y = 26.0
+	_panel.position.y = PANEL_POS.y + 6.0
 	_tween = create_tween().set_parallel(true)
 	_tween.tween_property(self, "modulate:a", 1.0, 0.2)
-	_tween.tween_property(_panel, "position:y", 20.0, 0.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	_tween.tween_property(_panel, "position:y", PANEL_POS.y, 0.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 
 
 ## Page slide: 12 px in the switch direction while fading in (ui.md 3b).
@@ -337,7 +417,9 @@ func refresh() -> void:
 		_confirm.visible = false
 	_refresh_equipment(g)
 	for i in _tabs.get_tab_count():
-		_tabs.set_tab_title(i, ["UI_TAB_STATUS", "UI_TAB_EQUIP", "UI_TAB_JOURNAL", "UI_TAB_MAP", "UI_TAB_PUSTAKA", "UI_TAB_SYSTEM"][i])
+		_tabs.set_tab_title(i, TAB_KEYS[i])
+		_rail[i].text = tr(TAB_KEYS[i])
+	_rail_sync()
 	_refresh_journal(g)
 	_refresh_codex(g)
 	_refresh_system()
