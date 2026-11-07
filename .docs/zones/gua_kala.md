@@ -1,4 +1,4 @@
-# Gua Kala (region id `gua_kala`), the finale (Act VI, v4c)
+# Gua Kala (region id `gua_kala`), the finale (Act VI, Story v5)
 
 Area graph on paper. Step 1 of the world design workflow ([AGENTS.md](../../AGENTS.md) section 5), graph level only: no tile maps until Phase 5. Prefix `gk_`. Sources: [world.md](../world.md) (World structure, link table, Gua Kala, Checkpoints), [bestiary.md](../bestiary.md) (Final: Gua Kala, Encounters, Glyph weaknesses), [quests.md](../quests.md) (MQ5, 7.5, 9), [story.md](../story.md) (Batara Kala). Format follows [tatar_sunda.md](tatar_sunda.md).
 
@@ -8,34 +8,48 @@ Look: a dark cavern of wet black rock, hourglass and clock-like motifs carved in
 
 Areas: 4. Critical path: `gk_mulut` -> `gk_pasir` -> (drop) `gk_lupa` -> `gk_ruang_kala`. Gua Kala is Act VI (MQ5) and is entered from the sea pavilion (`sk_keraton`) once `quest:mq4=done`, the moment Ombak is earned. The Desa Purwa gate opens on the same flag, so a player who returns home after Act V can walk in from the village too (**ASSUMED**). Beat `mouth`/`mouth_freed`: Ciung Wanara and Hariang Banga hold the mouth, one king from each bank, and you go in alone. The Hunter does not appear in this act.
 
+**Story v5 pass (2026-11-06, ASSUMED until playtest).** MQ5 is 14 steps (5.1-5.14) over 7 areas: `gk_pelataran`, `gk_mulut`, `gk_pasir`, `gk_hutan`, `gk_lupa`, `gk_jembatan`, `gk_ruang_kala`. The brothers hold `gk_pelataran` (the retired `mouth` and `mouth_freed` beats and the `gk_mulut` spots `c`, `h` and `deserter_mouth` are gone); Ranga (`faceless_deserter`, `choice_freed`), Naganingrum (`choice_tell_ciung`) and Cepot (`c4_done`) stand there by their conds, and the `memorial_stone` object (Choice 6) is there. The three memories run K10 (`mq5_h2`), K7 (`mq5_h1`), LC6 (`mq5_lc`), then the boss. The area table and graph below are the v4c four-area ones for the original areas; the three newer areas are listed in the extra rows.
+
 ## Area table
 | id | size (screens, tiles) | look | purpose | contents |
 |----|-----------------------|------|---------|----------|
 | `gk_mulut` | 3x2, 90x34 | The cave mouth. Wet black rock, carved clock gears, drifting faded letters, the chasm with the far hourglass in view | Entry, first rest, landmark view | Spawns `from_desa_purwa` (W, gate `quest:mq4=done`), `from_sk_keraton` (S, a sea-cave passage from the pavilion, gate `quest:mq4=done`), `from_gk_pasir` (link L1), `from_gk_lupa` (shortcut landing). Petilasan `kala_2` (near the entry). Encounters `kala_mulut` and `kala_mulut_2` (5.1). Gap memory letter `letter_la` (east road). Optional chest `kala_chest_0` (rule 7). Shortcut landing `sc:gk_lorong`. NPC variant spot `mouth_freed` (the Deserter, `deserter_mouth`, only when `choice_freed`). Quest markers `kala_mulut` (5.1, 5.2) |
 | `gk_pasir` | 3x3, 90x51 | The sand halls. Giant hourglass shapes in the walls, thin sand streams that only look pretty, rocky floors and pillars | The long way in, two fights, a secret | Spawns `from_gk_mulut` (W). Encounters `kala_pasir_1`, `kala_pasir_2`. Time-ward puzzles `puzzle_pasir_ward_w`, `puzzle_pasir_ward_e`, clue `ward_inscription`, beat spot `beat_wards_down` (5.2). Chest `kala_chest_1` (hidden sand cave, gap between pillars). Drop `D1` (high gallery, sand-slide) onto `gk_lupa`. Quest marker none |
 | `gk_lupa` | 2x3, 60x51 | The hall of faded letters. Aksara float like dim motes: Sunda, Jawa, forgotten scripts. Shelves of stone tablets | Rest before the boss, codex, the shortcut, the boss door | Spawns `from_gk_pasir` (drop landing, N), `from_gk_ruang_kala` (S door). Encounters `kala_lupa_1` (fight) and `kala_lupa` (**miniboss**) (5.3). Gap memory letter `letter_ra` (5.3). Chest `kala_chest_2` (behind tablets). Petilasan `kala_1` (south end, 10 tiles from the door, no fight between). NPC `semar` at `kala_1`. Codex spot `kala_aksara_pudar`. Shortcut gate `sc:gk_lorong` (opens from here). Quest markers `kala_1`, `kala_boss` (door) |
+| `gk_pelataran` | 2x2, 60x34 | Pelataran Waktu, the black-stone forecourt with ancestral pillars | First area of Act VI (5.1-5.2), the allies, the memorial stone, the siege | Spawns `from_gk_mulut` (N), `from_gk_pasir` (E). Encounter `kala_pelataran_siege`. NPCs `ciung_wanara`, `hariang_banga`, `faceless_deserter`, `naganingrum`, `cepot`, `memorial_stone`, `deserter_stone`. Petilasan `kala_0` |
+| `gk_hutan` | 2x2, 60x34 | Hutan Lupa, a petrified forest of name-trees and stone chimes | 5.6: fight, name-chimes puzzle, chest | Spawns `from_gk_pasir` (W), `from_gk_lupa` (S). Encounter `kala_hutan_echoes`, puzzle `hutan_name_chimes`, clue `name_trees`, chest `kala_chest_hutan` |
+| `gk_jembatan` | 2x2, 60x34 | Jembatan Bayang, the causeway over the chasm of eaten time | 5.8: the echoes of fallen legends | Spawns `from_gk_lupa` (W). Encounter `kala_jembatan_echoes`, clue `bridge_echo`, chest `kala_chest_jembatan` |
 | `gk_ruang_kala` | 2x2, 60x34 | A round chamber. A clock face on the floor, the great hourglass overhead. Four quadrants, each with a motif of an earlier region (phase 3 uses them all) | Boss arena, Batara Kala | Spawn `from_gk_lupa`. Boss `batara_kala` (marker `kala_boss`). After the fight a lit door leads to the epilogue (`kala_exit`, **ASSUMED**). No other enemies |
 
 ## Region graph
-`--` link, `=sc=` shortcut, `~D~>` drop (one way), `==K==` kabut.
+`--` link, `=sc=` shortcut, `~D~>` drop (one way), `==K==` kabut. Story v5 (2026-11-07): the region is entered at `gk_pelataran`; the v4 entry into `gk_mulut` is retired.
 ```
- [sk_keraton] ==K mq4_9== [gk_mulut] --L1-- [gk_pasir]
- [desa_purwa] ==K mq4_9==^   (kala_2)  ^           |
-                                      |           ~D1~> (one way)
-                                      |                 |
-                                      +==sc:gk_lorong== [gk_lupa] --L2-- [gk_ruang_kala]
-                                                         (kala_1)         (Batara Kala)
-                                                  codex, Semar
+ [sk_keraton] ==K mq4_9==+
+                         v
+ [desa_purwa] ==K mq4_9== [gk_pelataran] --L0-- [gk_mulut] --L1-- [gk_pasir] --L3-- [gk_hutan]
+                (kala_0)     |   (kala_2)  ^        |  ~D1~> (one way)     |
+                             +-----L4------+--------+       |              L5
+                                           |                v              |
+                                           +==sc:gk_lorong== [gk_lupa] -----+
+                                                             (kala_1)
+                                                        L6 /        \ L2
+                                               [gk_jembatan]      [gk_ruang_kala]
+                                               (out and back)     (Batara Kala)
 ```
-Critical path: `sk_keraton` (or `desa_purwa`) -> `gk_mulut` (rest `kala_2`) -> `gk_pasir` -> D1 -> `gk_lupa` (rest `kala_1`) -> `gk_ruang_kala`.
+Critical path (v5): `sk_keraton` (or `desa_purwa`) -> `gk_pelataran` (5.1-5.2, rest `kala_0`) -> L0 -> `gk_mulut` (5.3-5.4, rest `kala_2`) -> L1 -> `gk_pasir` (5.5) -> L3 -> `gk_hutan` (5.6) -> L5 -> `gk_lupa` (5.7) -> L6 -> `gk_jembatan` (5.8) and back -> `gk_lupa` (rest `kala_1`, 5.9-5.12) -> L2 -> `gk_ruang_kala` (5.13-5.14). The drop D1 is the fast way down from `gk_pasir` for a return trip.
 
 ### Link table
 | id | from area | to area | kind | gate flag | spawn ids |
 |----|-----------|---------|------|-----------|-----------|
-| X1 | `sk_keraton` | `gk_mulut` | link, kabut | `quest:mq4=done` (kabut flag `mq4_9`, set by step 4.9) | `from_sk_keraton` (in `gk_mulut`), `from_gk_mulut` (in `sk_keraton`). The main entry |
-| X0 | `desa_purwa` (N) | `gk_mulut` | link, kabut | `quest:mq4=done` (kabut flag `mq4_9`) | `from_desa_purwa` (in `gk_mulut`), `from_gk_mulut` (in `desa_purwa`). Opens on the same flag as X1 (quests.md Gating, v3.1) |
+| X1 | `sk_keraton` | `gk_pelataran` | link, kabut | `quest:mq4=done` (kabut flag `mq4_9`, on the `sk_keraton` side) | `from_sk_keraton` (in `gk_pelataran`), `from_gk_pelataran` (in `sk_keraton`). The main entry |
+| X0 | `desa_purwa` (N) | `gk_pelataran` | link, kabut | `quest:mq4=done` (kabut flag `mq4_9`, on the village side) | `from_desa_purwa` (in `gk_pelataran`), `from_gk_pelataran` (in `desa_purwa`) |
+| L0 | `gk_pelataran` | `gk_mulut` | link | none | `from_gk_mulut` (in pelataran), `from_gk_pelataran` (in mulut) |
+| L4 | `gk_pelataran` | `gk_pasir` | link | none | `from_gk_pasir` (in pelataran), `from_gk_pelataran` (in pasir) |
 | L1 | `gk_mulut` | `gk_pasir` | link | none | `from_gk_pasir` (in mulut), `from_gk_mulut` (in pasir) |
+| L3 | `gk_pasir` | `gk_hutan` | link | none | `from_gk_hutan` (in pasir), `from_gk_pasir` (in hutan) |
 | D1 | `gk_pasir` | `gk_lupa` | drop (one way) | none | `from_gk_pasir` (landing in lupa). No exit leads back up |
+| L5 | `gk_hutan` | `gk_lupa` | link | none | `from_gk_lupa` (in hutan), `from_gk_hutan` (in lupa) |
+| L6 | `gk_lupa` | `gk_jembatan` | link | none | `from_gk_jembatan` (in lupa), `from_gk_lupa` (in jembatan). Out and back: the bridge has no other exit |
 | S1 | `gk_lupa` | `gk_mulut` | shortcut `sc:gk_lorong` | `sc:gk_lorong` | `from_gk_lupa` (in mulut), `from_gk_mulut` (in lupa) |
 | L2 | `gk_lupa` | `gk_ruang_kala` | link | none (the door is a plain door, closed during the fight) | `from_gk_lupa` (in ruang), `from_gk_ruang_kala` (in lupa) |
 
@@ -80,30 +94,30 @@ Total about 20 kills after v4c (two more fights, the Abyss fight and the minibos
 | Petilasans | 2 | `kala_2` (mulut), `kala_1` (lupa, the last one) |
 
 ## Quest step locations
-Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Everything else is **ASSUMED**. Step numbers are the MQ5 v4c ones (9 steps, [quests.md](../quests.md) 4, `Play` column). Every piece has a place: `travel` = crossing that area with its fights and one find; `fight` = one encounter; `clue`, `puzzle`, `miniboss`, `setpiece`, `memory`, `chapter` as named. Unnamed clue ids (`letter_la`, `letter_ra`, `letter_sa`, `ward_inscription`, `lc6_lontar`) are **ASSUMED**; `ward_inscription` is a journal-note clue only.
+Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Everything else is **ASSUMED**. Step numbers are the MQ5 Story v5 ones (14 steps 5.1-5.14, [quests.md](../quests.md) 4, `Play` column; `step:mq5=n` is step 5.(n+1)). The v5 flag order is K10 (`mq5_h2`), K7 (`mq5_h1`), LC6 (`mq5_lc`): `semar_kelir` needs `mq5_h2`, `lc6_lontar` needs `mq5_h1`, the boss needs `mq5_lc`. Unnamed clue ids (`letter_la`, `letter_ra`, `letter_sa`, `ward_inscription`, `eclipse_veil`, `name_trees`, `bridge_echo`, `lc6_lontar`) are **ASSUMED** journal or memory clues.
 
 | Step | Pieces (Play) | Marker id | Area | Event string |
 |------|---------------|-----------|------|--------------|
-| 5.1 enter Gua Kala, the mouth | `travel, fight, beat` | `kala_mulut` (Q) | `gk_mulut` (brothers `c` (3,14) and `h` (3,19), Deserter `d` (4,18)) | `zone_entered:gk_mulut` (Q), sets `mq5_1`. Requires `mq4_9`. Beats `mouth_freed` (if `flag:mq5_1`, `flag:choice_freed`) then `mouth` (if `flag:mq5_1`), both `do` `flag:beat_mouth` |
-| 5.1 break the Maw's guard | `fight` | `kala_mulut` (Q), `kala_mulut_2` | `gk_mulut` (field `E`, east road) | `area_cleared:kala_mulut` (Q), sets `mq5_1b` |
-| 5.1 reclaim La in the tag game | `memory` | `letter_la` (`memory_id: la`, cond `flag:mq5_1b`) | `gk_mulut` (east road) and `zones/kelir/gap.tscn` (data `gap_la`) | `memory_done:la` |
-| 5.2 shatter the western time-ward | `travel, fight, clue, puzzle` | `kala_pasir_1`, `ward_inscription`, `puzzle_pasir_ward_w` | `gk_pasir` (west half) | `area_cleared:kala_pasir_1` (Q) |
-| 5.2 shatter the eastern time-ward | `fight, puzzle, beat` | `kala_pasir_2`, `puzzle_pasir_ward_e`, `beat_wards_down` | `gk_pasir` (east half, past the gallery) | `area_cleared:kala_pasir_2` (Q), sets `mq5_1c` |
-| 5.3 cross the Abyss of Forgetting | `travel, fight, miniboss` | `kala_lupa_1`, `kala_lupa` (Q, miniboss) | `gk_lupa` (north to centre) | `area_cleared:kala_lupa` (Q), sets `mq5_1d` |
-| 5.3 reclaim Ra in the two cups | `memory` | `letter_ra` (`memory_id: ra`, cond `flag:mq5_1d`) | `gk_lupa` and `zones/kelir/gap.tscn` (`gap_ra`) | `memory_done:ra` |
-| 5.4 rest at the last petilasan, reclaim Sa | `talk, memory, beat` | `kala_1` (Q), `semar_kala`, `letter_sa` (`memory_id: sa`, cond `flag:mq5_2`) | `gk_lupa` (south) and `zones/kelir/gap.tscn` (`gap_sa`) | `petilasan_activated:kala_1` (Q), sets `mq5_2`; then `memory_done:sa`. Semar waits here |
-| 5.5 K10: Semar's tale of Murwakala | `memory, beat` | `semar_tale` (Q; `memory_id: k10_murwakala`, cond `flag:memory_sa`) | `gk_lupa` (beside `kala_1`) and `zones/kelir/k10_murwakala.tscn` | `memory_done:k10_murwakala`, sets `mq5_h2` (**VERIFY** the Murwakala lakon) |
-| 5.6 LC6: who's there? | `chapter` | `lc6_lontar` (`memory_id: lc6`, cond `flag:mq5_h2`) | `gk_lupa` and `zones/kelir/lc6.tscn` | `memory_done:lc6`, sets `mq5_lc` |
-| 5.7 K7: read the names aloud | `clue, memory` | `semar_kelir` (Q; `memory_id: k7_ruwatan`, cond `flag:mq5_lc`) | `gk_lupa` (beside `kala_1`) and `zones/kelir/k7_ruwatan.tscn` | `memory_done:k7_ruwatan`, sets `mq5_h1` (casting on) |
-| 5.8 calm Batara Kala | `boss, setpiece, beat` | `kala_boss` (Q) | `gk_ruang_kala` (boss `B`, cond `flag:mq5_h1`; phase 3 is the ruwatan setpiece) | `boss_defeated:batara_kala` (Q), sets `mq5_3`. Beat `write` (if `flag:mq5_3`): Kala turns back into the dark, Semar: "Then write it." |
-| 5.9 write Laras's name | `setpiece, beat` | `kala_boss` (Q) | `gk_ruang_kala` | `name_written:laras` (Q), sets `mq5_4`. The name-writing card ends with the event; MQ5 done plays the epilogue (zones.gd). The lit door `kala_exit` stays as a walk home after the credits |
-| Petilasan | `kala_2` | `gk_mulut` | `petilasan_activated:kala_2` (not a quest step) |
+| 5.1 arrival, the siege with the allies | `travel, talk, setpiece, fight x2` | `kala_pelataran_siege` (Q), `ciung_wanara`, `hariang_banga` | `gk_pelataran` (`E`, `C`, `H`; allies `R` Ranga if `choice_freed`, `G` Naganingrum if `choice_tell_ciung`, `T` Cepot if `c4_done`) | `zone_entered:gk_pelataran`; then `area_cleared:kala_pelataran_siege`, sets `mq5_0`. Beat `pelataran` (`step:mq5=0`) |
+| 5.2 the memorial stone, Choice 6 | `talk, write, fight, beat` | `memorial_stone` | `gk_pelataran` (`M`; stone `D` is the SQ-C3 write stone) | `flag:mq5_choice6` (`choice_redeem_aria` / `choice_release_aria`); beats `aria_redeem`, `aria_release` |
+| 5.3 part the Eclipse, fight into the mouth | `travel, clue, fight x2, miniboss` | `eclipse_veil`, `kala_mulut` (Q), `kala_mulut_2` | `gk_mulut` (`V`, `E`, `A`) | `area_cleared:kala_mulut`, sets `mq5_1b` |
+| 5.4 Gap Memory `La` | `memory, puzzle, fight, beat` | `letter_la` (`memory_id: la`, cond `flag:mq5_1b`) | `gk_mulut` (east road `B`) and `zones/kelir/gap.tscn` (`gap_la`) | `memory_done:la`, sets `mq5_la`; beat `la_back` |
+| 5.5 the time-wards | `travel, clue, fight x2, puzzle, beat` | `ward_inscription`, `kala_pasir_1`, `kala_pasir_2`, `puzzle_pasir_ward_w`, `puzzle_pasir_ward_e`, `beat_wards_down` | `gk_pasir` | `area_cleared:kala_pasir_1`; then `area_cleared:kala_pasir_2`, sets `mq5_1c` |
+| 5.6 the name-trees | `travel, clue, fight, puzzle` | `name_trees`, `kala_hutan_echoes`, `hutan_name_chimes` | `gk_hutan` (`N`, `E`, `T`) | `area_cleared:kala_hutan_echoes`; then `puzzle_solved:hutan_name_chimes`, sets `mq5_1cb` |
+| 5.7 the Abyss, Gap Memory `Ra` | `fight, miniboss, memory, puzzle, beat` | `kala_lupa_1`, `kala_lupa` (Q, miniboss), `letter_ra` (`memory_id: ra`, cond `flag:mq5_1d`) | `gk_lupa` and `zones/kelir/gap.tscn` (`gap_ra`) | `area_cleared:kala_lupa`, sets `mq5_1d`; then `memory_done:ra`, sets `mq5_ra`; beat `ra_back` |
+| 5.8 the Shadow Bridge | `travel, clue, setpiece, miniboss` | `bridge_echo`, `kala_jembatan_echoes` | `gk_jembatan` (`B`, `E`) | `area_cleared:kala_jembatan_echoes`, sets `mq5_1e`; beat `bridge` (`step:mq5=7`) |
+| 5.9 the last petilasan, Gap Memory `Sa` | `talk, memory, puzzle, beat` | `kala_1` (Q), `semar_kala`, `letter_sa` (`memory_id: sa`, cond `flag:mq5_2`) | `gk_lupa` (south) and `zones/kelir/gap.tscn` (`gap_sa`) | `petilasan_activated:kala_1`, sets `mq5_2`; then `memory_done:sa`, sets `mq5_sa`; beat `sa_back` |
+| 5.10 K10 Murwakala | `memory, talk, fight, clue` | `semar_tale` (Q; `memory_id: k10_murwakala`, cond `flag:memory_sa`) | `gk_lupa` (beside `kala_1`) and `zones/kelir/k10_murwakala.tscn` | `memory_done:k10_murwakala`, sets `mq5_h2` (**VERIFY** the Murwakala lakon) |
+| 5.11 K7 the dalang's place | `memory, puzzle, beat` | `semar_kelir` (Q; `memory_id: k7_ruwatan`, cond `flag:mq5_h2`) | `gk_lupa` and `zones/kelir/k7_ruwatan.tscn` | `memory_done:k7_ruwatan`, sets `mq5_h1` (casting on) |
+| 5.12 LC6, the bottom of the dark | `chapter, puzzle, beat` | `lc6_lontar` (`memory_id: lc6`, cond `flag:mq5_h1`) | `gk_lupa` and `zones/kelir/lc6.tscn` | `memory_done:lc6`, sets `mq5_lc` and `laras_sabotage:kala_eclipse`; no `laras_key` in Act VI |
+| 5.13 calm Batara Kala | `boss, setpiece, beat` | `kala_boss` (Q) | `gk_ruang_kala` (boss `B`, cond `flag:mq5_lc`; phase 3 is the ruwatan setpiece; kabut `K` lifts on `mq5_3`) | `boss_defeated:batara_kala`, sets `mq5_3`. Beats `kala_wake`, `kala_p2`, `kala_p3`, then `kala_p3_redeem` or `kala_p3_release` (Choice 6) |
+| 5.14 write Laras's name | `write, setpiece, beat` | `kala_boss` (Q) | `gk_ruang_kala` | `name_written:laras`, sets `mq5_4` (epilogue, `from_gua_kala`); beat `write`. The lit door `kala_exit` stays as a walk home after the credits |
+| Petilasans | `kala_0` (`gk_pelataran`), `kala_2` (`gk_mulut`), `kala_1` (`gk_lupa`) | | | `petilasan_activated:<id>` (not quest steps except `kala_1`) |
 | Codex | `kala_aksara_pudar` | `gk_lupa` | `codex:batara_kala`, `codex:ruwatan` (ASSUMED) |
-| Variant spot `mouth_freed` | `deserter_mouth` | `gk_mulut` (map char `d`, near the entry) | NPC with `cond: flag:choice_freed`. If the player freed the Deserter (Choice 1), he stands beside the two brothers at the mouth (story.md Choices change more than a card). Not a quest step. His one line is in script.md (ASSUMED) |
-| SQ-C3 step 4: write the Deserter's name | `deserter_stone` | `gk_mulut` (stone `(6,17)` beside the entry, near `d` (4,18)) | NPC `deserter_stone`, the write stone; entry cond `flag:mq5_1`, `clue_examined:c3_camp_scrap`, `clue_examined:c3_road_mark`, `clue_examined:c3_shore_net`; runs the write card `write:deserter_name:jawa_ra,sunda_nga` (Ra, Nga), event `name_written:deserter_name`; the stone's `quiet` entries never complete an MQ5 step and the quest is optional (**ASSUMED**). Two variants by Choice 1: **freed** (`flag:choice_freed`): the Deserter `deserter_mouth` stands by the stone, hears his name and the card is written beside him; **handed** (`flag:choice_handed`): the stone alone, the name is written alone and a line says a cell in Galuh is quiet. Reward: freed adds a line on his epilogue card, handed adds the codex entry `deserter_name`. Ilmu: none from the reward, **TUNE** |
-| Semar line | `semar_kala` | `gk_lupa` | `talked_to:semar_kala` (optional, not a step; a separate npc_id so it never counts for MQ steps waiting on `talked_to:semar`) |
+| SQ-C3 step 4: write the Deserter's name | `deserter_stone` | `gk_pelataran` (`D`; the duplicate stone in `gk_mulut` is removed) | NPC `deserter_stone`, the write stone; runs `write:deserter_name:jawa_ra,sunda_nga`, event `name_written:deserter_name`; its `quiet` entries never complete an MQ5 step; two variants by Choice 2: **freed** (Ranga `R` stands by it) and **handed** (a quiet stone with no one beside it) (**ASSUMED**) |
+| Semar line | `semar_kala` | `gk_lupa` | `talked_to:semar_kala` is the step 5.9 main talk (hubs after it); a separate npc_id so it never counts for MQ steps waiting on `talked_to:semar` |
 
-Flags: `mq4_9` / `quest:mq4=done` (read, Ombak earned; gates X0 and X1), `choice_freed` (read, variant spot `mouth_freed`), `sc:gk_lorong`. Post-game: after the credits the player wakes in Desa Purwa with every zone open.
+Flags: `mq4_9` / `quest:mq4=done` (read, Ombak earned; gates X0 and X1), `choice_freed`, `choice_tell_ciung`, `choice_judgment`, `c4_done`, `deserter_named` (read), `mq5_0`, `mq5_choice6`, `mq5_1b`, `mq5_la`, `mq5_1c`, `mq5_1cb`, `mq5_1d`, `mq5_ra`, `mq5_1e`, `mq5_2`, `mq5_sa`, `mq5_h2`, `mq5_h1`, `mq5_lc`, `mq5_3`, `mq5_4`, `kala_p2`, `kala_p3`, `sc:gk_lorong`. Post-game: after the credits the player wakes in Desa Purwa with every zone open.
 
 ## Memory scenes (Story v4/v4b, [architecture.md](../architecture.md) 9b)
 Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zones.py` skips them). Built on `memory.gd` with a `Stand` marker and `Checkpoint` markers. Chars are this section's own (`_` lit floor, `#` dark wall). Gap memories use one scene `zones/kelir/gap.tscn` plus data `data/memories/gap_<la|ra|sa>.tres` and reuse the prologue-day spots of [desa_purwa.md](desa_purwa.md): the tag route, Ibu's table (house_a, (25,22)-(30,26)) and Laras's lontar spot (the burned stage, (37,3)-(47,9)); the builder copies those tile rects. Every `correct` option must match what script.md and the prologue (quests.md 0.1, 0.2) show; the script owner fixes the texts. All numbers **TUNE**.
@@ -336,6 +350,7 @@ Own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `gen_zon
 | `1-6` | name markers | (8..23,10), 3 tiles apart; odd = Sunda, even = Jawa |
 
 ## Flow
+Story v5 order: `gk_pelataran` (siege, allies, memorial stone, 5.1-5.2) -> `gk_mulut` (veil, `kala_mulut`, letter La, 5.3-5.4) -> `gk_pasir` (wards, 5.5) -> `gk_hutan` (name-trees, 5.6) -> drop or link to `gk_lupa` (Abyss, letter Ra, 5.7) -> `gk_jembatan` (5.8) -> `gk_lupa` (`kala_1`, Sa, K10, K7, LC6, 5.9-5.12) -> `gk_ruang_kala` (5.13-5.14). The v4c flow below is kept for the original four areas.
 Enter `gk_mulut` (the far hourglass in view) > `kala_mulut`, beat `mouth`, `kala_mulut_2`, letter La and the tag game (5.1) > petilasan `kala_2` is optional > `gk_pasir`: `kala_pasir_1`, the inscription, the west ward puzzle, `kala_pasir_2`, the east ward puzzle, the gallery beat (5.2) > sand-slide drop > `gk_lupa`: `kala_lupa_1`, the elite `kala_lupa`, letter Ra and the two cups (5.3) > open `sc:gk_lorong` (short way back) > petilasan `kala_1`, Semar, letter Sa (5.4), K10 (5.5), LC6 (5.6), K7 (5.7) > door > `gk_ruang_kala`, Batara Kala (5.8), write her name (5.9) > the lit door home.
 
 ## Self-check ([AGENTS.md](../../AGENTS.md) section 5 Step 2), re-run for v4c 2026-11-06
@@ -351,6 +366,7 @@ Enter `gk_mulut` (the far hourglass in view) > `kala_mulut`, beat `mouth`, `kala
 - [x] Pacing rule 5 (forward only) and rule 7 (finds in every area but the arena).
 
 ## ASSUMED
+- **Story v5 (2026-11-06):** conds follow the v5 step map (see the quest-step table). New ASSUMED clues `eclipse_veil` (`gk_mulut` `V`), `name_trees` (`gk_hutan` `N`), `bridge_echo` (`gk_jembatan` `B`), journal notes only. New ally spots in `gk_pelataran`: `R` Ranga, `G` Naganingrum, `T` Cepot. Removed: `gk_mulut` spots `c`, `h`, `d` (`deserter_mouth`) and the duplicate write stone `D` (the stone is in `gk_pelataran`). The royal vanguard of `choice_judgment` has no spot (it stands on the walls in the beat). `step:mq5=n` is step 5.(n+1).
 - Area names `gk_pasir`, `gk_lupa`, `gk_ruang_kala` (only `gk_mulut` is fixed), their sizes, the loop layout, D1 and `sc:gk_lorong`.
 - `kala_2` is in `gk_mulut`; `kala_1` in `gk_lupa`.
 - Encounter ids, chest ids, `kala_aksara_pudar`, `kala_exit`, codex ids, spawn `from_gua_kala` in Desa Purwa.
@@ -368,7 +384,7 @@ Enter `gk_mulut` (the far hourglass in view) > `kala_mulut`, beat `mouth`, `kala
 5. Is Semar at `kala_1` wanted, or does story.md want him silent in the finale?
 
 ## Decisions (ASSUMED 2026-11-05, updated for v3.1 2026-11-06; resolve open questions 2-5 and the conflicts)
-- Entry: link X1 from `sk_keraton` (the main entry, a sea-cave passage in the south wall of `gk_mulut`, spawn `from_sk_keraton`) and link X0 from `desa_purwa` (the west exit, spawns `from_desa_purwa` in mulut and `from_gk_mulut` in Desa Purwa). Both open on `quest:mq4=done` (kabut flag `mq4_9`). MQ5 requires `mq4_9`; the beat `kidul` starts it (`start:mq5`). The Hunter does not appear in Act VI.
+- Entry (v5): link X1 from `sk_keraton` (the main entry, a sea-cave passage in the south wall of `gk_pelataran`, spawn `from_sk_keraton`) and link X0 from `desa_purwa` (the west exit of `gk_pelataran`, spawns `from_desa_purwa` in pelataran and `from_gk_pelataran` in Desa Purwa). Both open on `quest:mq4=done` (kabut flag `mq4_9`). MQ5 requires `mq4_9`; the beat `kidul` starts it (`start:mq5`). The Hunter does not appear in Act VI.
 - Arena: stays 2x2 (60x34), quadrant motifs are art only (open question 2).
 - `kala_lupa` uses the Timur Old guard mix (open question 3).
 - Return: the lit door `kala_exit`, an exit to `desa_purwa` (spawn `from_gua_kala`) that appears after `boss_defeated:batara_kala` (open question 4). Step 5.9 (`name_written:laras`) completes MQ5 and the epilogue plays first; after it the player wakes in Desa Purwa (`from_gua_kala`). The lit door is also a walk home afterwards.
@@ -376,6 +392,7 @@ Enter `gk_mulut` (the far hourglass in view) > `kala_mulut`, beat `mouth`, `kala
 - Kala HP 9300 (starting value; Segara Kidul is on the main path, so the old P0 figure 8400 no longer applies). No tier scaling exists, so the reused mixes keep their own stats.
 
 ## Doc conflicts found (not fixed)
+- v5 (2026-11-06): the link table still routes `sk_keraton` and `desa_purwa` into `gk_mulut`, while step 5.1 is `zone_entered:gk_pelataran` and `gk_pelataran` links only to `gk_mulut` and `gk_pasir`; the player walks mulut -> pelataran for 5.1-5.2 and back for 5.3. Needs a design call (an entry link into `gk_pelataran`, or 5.1 starting at the mouth). The critical-path and self-check paragraphs below are the v4c four-area text.
 - Resolved by v3.1: Segara Kidul is P0 and `gk_mulut` has two entries (`sk_keraton`, `desa_purwa`) on `quest:mq4=done`.
 - Resolved 2026-11-06 (consistency pass): desa_purwa.md gates its Gua Kala exit on `mq4_9`; bestiary.md calls Ombak P0 and Kala HP 9300.
 - The three letters of her name (*huruf nama*: La, Ra, Sa) of quests.md MQ5 have no map object; they are released by the clears (La, Ra) and the petilasan (Sa). Phase 5 may want pickups.
@@ -393,7 +410,7 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 
 - Size: 90 x 34 tiles = 3 x 2 screens (30 x 17 each).
 - Look: Wet black cave mouth, carved clock gears, drifting faded letters, the far hourglass and clock face faint across the dark. A small sand-choked side pocket by the first petilasan.
-- Purpose: Entry from `sk_keraton` (south passage, `quest:mq4=done`) or Desa Purwa (west), MQ5 5.1 (beats `mouth_freed` / `mouth`, the first letter, La), the `mouth_freed` Deserter spot, first rest `kala_2`, fight `kala_mulut`, link to gk_pasir, the gate of `sc:gk_lorong` (north wall, west) with its pocket and exit into gk_lupa.
+- Purpose: Second area of Act VI, entered from `gk_pelataran` (Story v5: the region entries from `sk_keraton` and Desa Purwa land in `gk_pelataran`). MQ5 5.3-5.4 (the veil, `kala_mulut`, the first letter, La), first rest `kala_2`, link to gk_pasir, the gate of `sc:gk_lorong` (north wall, west) with its pocket and exit into gk_lupa.
 
 ### Map
 ```
@@ -411,12 +428,12 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 #___________________________________________________________________________#####________#
 #_______________________rr__________________________________rr______________#####________#
 #_______________________rr__________________________________rr______________#####________#
-#__c____________rr_______________________________________________________________________#
 #_______________rr_______________________________________________________________________#
-Xe____________________________________________E_______________________A_________________yY
-X_____D__________________________________________________________________________________Y
-#___d_______________________________________________________________________________B____#
-#__h_____________________________________________________________________________________#
+#_______________rr_______________________________________________________________________#
+#_____________________________________________E_______________________A_________________yY
+#________________________________________________________________________________________Y
+#___________________________________________________________________________________B____#
+#________________________________________________________________________________________#
 #_________________rr_____________________________________________________________________#
 #_________________rr_____________________________________________________________________#
 #_______________________________________________________________________________rr_______#
@@ -427,35 +444,28 @@ X_____D_________________________________________________________________________
 #_______#####_________________#########_____________rr____________#########______________#
 #_______#####_________________#########___________________________#########______________#
 #_____________________________#########___________________________#########______________#
-#_____________________________#########__________________________________________________#
+#_____________________V_______#########__________________________________________________#
 #________________________________________________________________________________________#
-#___________________s_______________________z____________________________________________#
-####################SS######################ZZ############################################
+#___________________s____________________________________________________________________#
+####################SS####################################################################
 ```
 
 ### Legend
 | Char | What | Scene | Props | Floor | Count |
 |------|------|-------|-------|-------|-------|
-| `Z` | exit to sk_keraton (south edge, a sea-cave passage, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_keraton", spawn_id:"from_gk_mulut"}` | floor | 2 |
-| `z` | spawn, arrival from sk_keraton | `res://entities/world/spawn.tscn` | `{id:"from_sk_keraton"}` | floor | 1 |
 | `S` | exit to gk_pelataran (south-west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_pelataran", spawn_id:"from_gk_mulut"}` | floor | 2 |
 | `s` | spawn, arrival from gk_pelataran | `res://entities/world/spawn.tscn` | `{id:"from_gk_pelataran"}` | floor | 1 |
-| `d` | NPC the Faceless Deserter at the mouth, variant spot `mouth_freed` (only when Choice 1 freed him) | `res://entities/npc/npc.tscn` | `{npc_id:"deserter_mouth", cond:"flag:choice_freed"}` | floor | 1 |
-| `c` | NPC Ciung Wanara holding the mouth, staging for the `mouth` / `mouth_freed` beats (no talk of his own; same `ciung_wanara` id) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mq4_9"}` | floor | 1 |
-| `h` | NPC Hariang Banga holding the mouth, staging for the same beats (no talk of his own; same `hariang_banga` id) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga", cond:"flag:mq4_9"}` | floor | 1 |
-| `X` | exit to desa_purwa (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"desa_purwa", spawn_id:"from_gk_mulut"}` | floor | 2 |
-| `e` | spawn, arrival from desa_purwa | `res://entities/world/spawn.tscn` | `{id:"from_desa_purwa"}` | floor | 1 |
 | `Y` | exit to gk_pasir (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_pasir", spawn_id:"from_gk_mulut"}` | floor | 2 |
 | `y` | spawn, arrival from gk_pasir | `res://entities/world/spawn.tscn` | `{id:"from_gk_pasir"}` | floor | 1 |
 | `N` | exit to gk_lupa (north edge, plain exit from the `sc:gk_lorong` pocket, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_mulut"}` | floor | 2 |
 | `n` | spawn, arrival from gk_lupa (inside the pocket) | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
 | `+` | shortcut gate sc:gk_lorong, sand-choked arch (opens from the north pocket, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:gk_lorong", open_side:"n"}` | floor | 2 |
 | `P` | petilasan 2 | `res://entities/petilasan/petilasan.tscn` | `{id:"kala_2"}` | floor | 1 |
-| `E` | encounter kala_mulut | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut", size:Vector2i(20,11), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,3)], [res://entities/enemies/kuntilanak.tscn, Vector2i(8,0)]]]}` | floor | 1 |
-| `A` | encounter kala_mulut_2 (5.1, second fight, east road) | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut_2", size:Vector2i(18,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)], [res://entities/enemies/kuntilanak.tscn, Vector2i(4,0)]]]}` | floor | 1 |
-| `B` | clue, a faded floating letter *La* (5.1; opens gap memory `la`; cond `flag:mq5_1b`; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"letter_la", memory_id:"la", cond:"flag:mq5_1b"}` | floor | 1 |
+| `E` | encounter kala_mulut (5.3 `area_cleared:kala_mulut`, sets `mq5_1b`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut", size:Vector2i(20,11), cond:"flag:mq5_choice6,!flag:mq5_1b", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,3)], [res://entities/enemies/kuntilanak.tscn, Vector2i(8,0)]]]}` | floor | 1 |
+| `A` | encounter kala_mulut_2 (5.3, second fight, east road) | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut_2", size:Vector2i(18,9), cond:"flag:mq5_choice6", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)], [res://entities/enemies/kuntilanak.tscn, Vector2i(4,0)]]]}` | floor | 1 |
+| `B` | clue, a faded floating letter *La* (5.4; opens gap memory `la`; cond `flag:mq5_1b`; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"letter_la", memory_id:"la", cond:"flag:mq5_1b"}` | floor | 1 |
 | `C` | chest: 300 Ilmu (north nook, rule 7 optional find, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_0", item_id:"ilmu:300"}` | floor | 1 |
-| `D` | NPC write stone for Ranga's name (SQ-C3) | `res://entities/npc/npc.tscn` | `{npc_id:"deserter_stone"}` | floor | 1 |
+| `V` | clue, the Eclipse veil across the cave mouth; the player draws *Ombak* to part it (5.3 `clue` piece; journal note only; id `eclipse_veil`, hunt `kala`; ASSUMED position by the arrival from `gk_pelataran`) | `res://entities/world/clue.tscn` | `{clue_id:"eclipse_veil", cond:"flag:mq5_choice6"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -466,7 +476,8 @@ X_____D_________________________________________________________________________
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
-| east road | (60,12)-(88,20) | Fight 2 and the letter | E `A` (70,16), clue `B` letter_la (84,18) | 5.1 |
+| east road | (60,12)-(88,20) | Fight 2 and the letter | E `A` (70,16), clue `B` letter_la (84,18) | 5.3, 5.4 |
+| veil | (18,28)-(26,32) | The Eclipse veil by the arrival from `gk_pelataran` | clue `V` eclipse_veil (22,30) | 5.3 |
 | north nook | (28,2)-(34,6) | Optional chest | `C` (30,4) | rule 7 |
 | name stone (v4d) | (5,16)-(7,18) | SQ-C3 step 4: the write stone `deserter_stone` at (6,17), not drawn on the map (**ASSUMED**: a plain NPC spot on floor; `gen_zones.py` reads only the legend). The stone is the only side spot in Gua Kala; it sits 2 tiles from the Deserter spot `d` (4,18), so the freed variant is one scene | NPC `{npc_id:"deserter_stone", cond:"flag:mq5_1"}` (the three clue conds are in the quest step table) | SQ-C3 `name_written:deserter_name` |
 ## Area 2: gk_pasir
@@ -540,13 +551,13 @@ X_________________________________E_________________________rr__________________
 | `Y` | exit to gk_hutan (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_hutan", spawn_id:"from_gk_pasir"}` | floor | 2 |
 | `y` | spawn, arrival from gk_hutan | `res://entities/world/spawn.tscn` | `{id:"from_gk_hutan"}` | floor | 1 |
 | `D` | exit, the drop D1 to gk_lupa (east rim of the high gallery, 2 tiles, one way, no spawn back) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_pasir"}` | floor | 2 |
-| `E` | encounter kala_pasir_1 | `res://entities/world/encounter.tscn` | `{area_id:"kala_pasir_1", size:Vector2i(22,12), waves:[[[res://entities/enemies/genderuwo.tscn, Vector2i(7,0)], [res://entities/enemies/pocong.tscn, Vector2i(3,-4)], [res://entities/enemies/pocong.tscn, Vector2i(3,4)]]]}` | floor | 1 |
-| `F` | encounter kala_pasir_2 | `res://entities/world/encounter.tscn` | `{area_id:"kala_pasir_2", size:Vector2i(20,11), waves:[[[res://entities/enemies/kemamang.tscn, Vector2i(6,-3)], [res://entities/enemies/kemamang.tscn, Vector2i(6,3)]]]}` | floor | 1 |
+| `E` | encounter kala_pasir_1 (5.5) | `res://entities/world/encounter.tscn` | `{area_id:"kala_pasir_1", size:Vector2i(22,12), cond:"flag:mq5_la,!flag:mq5_1c", waves:[[[res://entities/enemies/genderuwo.tscn, Vector2i(7,0)], [res://entities/enemies/pocong.tscn, Vector2i(3,-4)], [res://entities/enemies/pocong.tscn, Vector2i(3,4)]]]}` | floor | 1 |
+| `F` | encounter kala_pasir_2 (5.5, sets `mq5_1c`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_pasir_2", size:Vector2i(20,11), cond:"flag:mq5_la,!flag:mq5_1c", waves:[[[res://entities/enemies/kemamang.tscn, Vector2i(6,-3)], [res://entities/enemies/kemamang.tscn, Vector2i(6,3)]]]}` | floor | 1 |
 | `c` | chest: 300 Ilmu (secret, sand cave behind the pillar gap) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_1", item_id:"ilmu:300"}` | floor | 1 |
-| `A` | clue, the time-ward inscription (5.2 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"ward_inscription"}` | floor | 1 |
-| `B` | trigger, puzzle `puzzle_pasir_ward_w` (5.2: turn the three hourglass stones until the sand runs up; the western ward shatters) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_pasir_ward_w", size:Vector2i(12,8)}` | floor | 1 |
-| `C` | trigger, puzzle `puzzle_pasir_ward_e` (5.2: same, mirrored; the eastern ward shatters) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_pasir_ward_e", size:Vector2i(12,8)}` | floor | 1 |
-| `G` | trigger, beat spot at the high gallery (5.2: both wards down, Semar's one line; ASSUMED) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_wards_down", size:Vector2i(8,6)}` | floor | 1 |
+| `A` | clue, the time-ward inscription (5.5 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"ward_inscription", cond:"flag:mq5_la"}` | floor | 1 |
+| `B` | trigger, puzzle `puzzle_pasir_ward_w` (5.5: turn the three hourglass stones until the sand runs up; the western ward shatters) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_pasir_ward_w", size:Vector2i(12,8), cond:"flag:mq5_la"}` | floor | 1 |
+| `C` | trigger, puzzle `puzzle_pasir_ward_e` (5.5: same, mirrored; the eastern ward shatters) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_pasir_ward_e", size:Vector2i(12,8), cond:"flag:mq5_la"}` | floor | 1 |
+| `G` | trigger, beat spot at the high gallery (5.5: both wards down, Semar's one line; ASSUMED) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_wards_down", size:Vector2i(8,6), cond:"flag:mq5_1c"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -630,20 +641,20 @@ X__________________________________________________________#
 | `Y` | exit to gk_jembatan (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_jembatan", spawn_id:"from_gk_lupa"}` | floor | 2 |
 | `y` | spawn, arrival from gk_jembatan | `res://entities/world/spawn.tscn` | `{id:"from_gk_jembatan"}` | floor | 1 |
 | `l` | spawn, landing of the drop D1 from gk_pasir (no exit back) | `res://entities/world/spawn.tscn` | `{id:"from_gk_pasir"}` | floor | 1 |
-| `E` | encounter kala_lupa (**miniboss**, 5.3: the Prajurit is the elite `kala_lupa_elite`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_lupa", size:Vector2i(20,11), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(7,0)], [res://entities/enemies/banaspati.tscn, Vector2i(3,-3)], [res://entities/enemies/banaspati.tscn, Vector2i(3,3)]]]}` | floor | 1 |
+| `E` | encounter kala_lupa (**miniboss**, 5.7: the Prajurit is the elite `kala_lupa_elite`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_lupa", size:Vector2i(20,11), cond:"flag:mq5_1cb,!flag:mq5_1d", waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(7,0)], [res://entities/enemies/banaspati.tscn, Vector2i(3,-3)], [res://entities/enemies/banaspati.tscn, Vector2i(3,3)]]]}` | floor | 1 |
 | `c` | chest: 300 Ilmu (secret, behind stone tablets) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_2", item_id:"ilmu:300"}` | floor | 1 |
 | `g` | codex spot kala_aksara_pudar, faded letters 1 (Batara Kala) | `res://entities/world/pickup.tscn` | `{codex_id:"batara_kala"}` | floor | 1 |
 | `i` | codex spot kala_aksara_pudar, faded letters 2 (ruwatan) | `res://entities/world/pickup.tscn` | `{codex_id:"ruwatan"}` | floor | 1 |
 | `P` | petilasan 1 (last rest, no enemy and no encounter between it and the door) | `res://entities/petilasan/petilasan.tscn` | `{id:"kala_1"}` | floor | 1 |
-| `H` | NPC Semar (optional line) | `res://entities/npc/npc.tscn` | `{npc_id:"semar_kala"}` | floor | 1 |
+| `H` | NPC Semar (`semar_kala`: step 5.9 main talk after `kala_1`, hubs; a separate id so it never counts for `talked_to:semar`) | `res://entities/npc/npc.tscn` | `{npc_id:"semar_kala"}` | floor | 1 |
 | `S` | exit to gk_ruang_kala (south edge, the boss door, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_ruang_kala", spawn_id:"from_gk_lupa"}` | floor | 2 |
 | `s` | spawn, arrival from gk_ruang_kala | `res://entities/world/spawn.tscn` | `{id:"from_gk_ruang_kala"}` | floor | 1 |
-| `A` | encounter kala_lupa_1 (5.3, fight before the miniboss) | `res://entities/world/encounter.tscn` | `{area_id:"kala_lupa_1", size:Vector2i(14,8), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(-3,-1)], [res://entities/enemies/lampor.tscn, Vector2i(0,2)], [res://entities/enemies/lampor.tscn, Vector2i(3,-1)]]]}` | floor | 1 |
-| `B` | clue, a faded floating letter *Ra* (5.3; opens gap memory `ra`; cond `flag:mq5_1d`) | `res://entities/world/clue.tscn` | `{clue_id:"letter_ra", memory_id:"ra", cond:"flag:mq5_1d"}` | floor | 1 |
-| `C` | clue, a faded floating letter *Sa* (5.4; opens gap memory `sa`; cond `flag:mq5_2`) | `res://entities/world/clue.tscn` | `{clue_id:"letter_sa", memory_id:"sa", cond:"flag:mq5_2"}` | floor | 1 |
-| `D` | clue, Semar's tale stone (5.5 K10; opens `k10_murwakala`; cond `flag:memory_sa`) | `res://entities/world/clue.tscn` | `{clue_id:"semar_tale", memory_id:"k10_murwakala", cond:"flag:memory_sa"}` | floor | 1 |
-| `F` | clue, Laras's lontar fragment (5.6 LC6; opens `lc6`; ASSUMED id; cond `flag:mq5_h2`) | `res://entities/world/clue.tscn` | `{clue_id:"lc6_lontar", memory_id:"lc6", cond:"flag:mq5_h2"}` | floor | 1 |
-| `G` | clue, Semar's kelir (5.7 K7; opens `k7_ruwatan`; cond `flag:mq5_lc`) | `res://entities/world/clue.tscn` | `{clue_id:"semar_kelir", memory_id:"k7_ruwatan", cond:"flag:mq5_lc"}` | floor | 1 |
+| `A` | encounter kala_lupa_1 (5.7, fight before the miniboss) | `res://entities/world/encounter.tscn` | `{area_id:"kala_lupa_1", size:Vector2i(14,8), cond:"flag:mq5_1cb,!flag:mq5_1d", waves:[[[res://entities/enemies/lampor.tscn, Vector2i(-3,-1)], [res://entities/enemies/lampor.tscn, Vector2i(0,2)], [res://entities/enemies/lampor.tscn, Vector2i(3,-1)]]]}` | floor | 1 |
+| `B` | clue, a faded floating letter *Ra* (5.7; opens gap memory `ra`; cond `flag:mq5_1d`) | `res://entities/world/clue.tscn` | `{clue_id:"letter_ra", memory_id:"ra", cond:"flag:mq5_1d"}` | floor | 1 |
+| `C` | clue, a faded floating letter *Sa* (5.9; opens gap memory `sa`; cond `flag:mq5_2`) | `res://entities/world/clue.tscn` | `{clue_id:"letter_sa", memory_id:"sa", cond:"flag:mq5_2"}` | floor | 1 |
+| `D` | clue, Semar's tale stone (5.10 K10; opens `k10_murwakala`; cond `flag:memory_sa`) | `res://entities/world/clue.tscn` | `{clue_id:"semar_tale", memory_id:"k10_murwakala", cond:"flag:memory_sa"}` | floor | 1 |
+| `F` | clue, Laras's lontar fragment (5.12 LC6, after K7; opens `lc6`; ASSUMED id; cond `flag:mq5_h2`) | `res://entities/world/clue.tscn` | `{clue_id:"lc6_lontar", memory_id:"lc6", cond:"flag:mq5_h1"}` | floor | 1 |
+| `G` | clue, Semar's kelir (5.11 K7, after K10; opens `k7_ruwatan`; cond `flag:mq5_lc`) | `res://entities/world/clue.tscn` | `{clue_id:"semar_kelir", memory_id:"k7_ruwatan", cond:"flag:mq5_h2"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -654,8 +665,8 @@ X__________________________________________________________#
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
-| last rest | (24,34)-(38,46) | Petilasan `kala_1`, Semar, five clues in order: `C` letter_sa, `D` semar_tale, `F` lc6_lontar, `G` semar_kelir | 5.4-5.7 |
-| abyss | (4,4)-(40,28) | Fight (14,8), miniboss (32,13), letter_ra `B` (30,24) | 5.3 |
+| last rest | (24,34)-(38,46) | Petilasan `kala_1`, Semar, clues in v5 order: `C` letter_sa (5.9), `D` semar_tale (K10, 5.10), `G` semar_kelir (K7, 5.11), `F` lc6_lontar (LC6, 5.12) | 5.9-5.12 |
+| abyss | (4,4)-(40,28) | Fight (14,8), miniboss (32,13), letter_ra `B` (30,24) | 5.7 |
 ## Area 4: gk_ruang_kala
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
@@ -705,7 +716,7 @@ X__________________________________________________________#
 |------|------|-------|-------|-------|-------|
 | `N` | exit to gk_lupa (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_ruang_kala"}` | floor | 2 |
 | `n` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
-| `B` | boss Batara Kala (arena centre; wakes after K7, `flag:mq5_h1`; phase 3 is the ruwatan setpiece) | `res://entities/bosses/batara_kala.tscn` | `{cond:"flag:mq5_h1"}` | floor | 1 |
+| `B` | boss Batara Kala (arena centre; wakes after LC6, `flag:mq5_lc`, step 5.13; phase 3 is the ruwatan setpiece) | `res://entities/bosses/batara_kala.tscn` | `{cond:"flag:mq5_lc"}` | floor | 1 |
 | `S` | exit to desa_purwa (south edge, the lit door, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"desa_purwa", spawn_id:"from_gua_kala"}` | floor | 2 |
 | `K` | kabut, lifts on the boss (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq5_3"}` | floor | 2 |
 | `T` | trigger, quest marker kala_exit (4x2) | `res://entities/world/trigger.tscn` | `{trigger_id:"kala_exit", size:Vector2i(4,2)}` | floor | 1 |
@@ -719,7 +730,7 @@ X__________________________________________________________#
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Pelataran Waktu (Courtyard of Time), outer temple forecourt of black stone with ancestral pillars, memorial stones, and a petilasan flame.
-- Purpose: MQ5 5.1–5.2 (`kala_pelataran_siege`, `memorial_stone` for Choice 6, `ciung_wanara`, `hariang_banga`), SQ-C3 step 4 (`deserter_stone`), and petilasan `kala_0`. Links to `gk_mulut` and `gk_pasir`.
+- Purpose: MQ5 5.1–5.2 (`kala_pelataran_siege`, `memorial_stone` for Choice 6, `ciung_wanara`, `hariang_banga`), SQ-C3 step 4 (`deserter_stone`), and petilasan `kala_0`. The region entry: links to `desa_purwa` (west) and `sk_keraton` (south, both behind the `mq4_9` kabut on their side), `gk_mulut` and `gk_pasir`.
 
 ### Map
 ```
@@ -730,7 +741,7 @@ X__________________________________________________________#
 #______________rr__________________________rr______________#
 #__________________________________________________________#
 #______________________C___________H_______________________#
-#__________________________________________________________#
+#___________________________R__G______T____________________#
 #__________________________________________________________#
 #___________________rr________________rr___________________#
 #___________________rr________________rr___________________#
@@ -739,8 +750,8 @@ X__________________________________________________________#
 #__________________________________________________________#
 #__________________________________________________________#
 #___________________rr________________rr___________________#
-#___________________rr________________rr__________________yY
-#__________________________________________________________Y
+Kk__________________rr________________rr__________________yY
+K__________________________________________________________Y
 #__________________________________________________________#
 #__________________________________________________________#
 #______________rr__________________________rr______________#
@@ -755,8 +766,8 @@ X__________________________________________________________#
 #__________________________________________________________#
 #__________________________________________________________#
 #__________________________________________________________#
-#__________________________________________________________#
-############################################################
+#_______________________________________w__________________#
+########################################WW##################
 ```
 
 ### Legend
@@ -764,14 +775,21 @@ X__________________________________________________________#
 |------|------|-------|-------|-------|-------|
 | `N` | exit to gk_mulut (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_mulut", spawn_id:"from_gk_pelataran"}` | floor | 2 |
 | `n` | spawn, arrival from gk_mulut | `res://entities/world/spawn.tscn` | `{id:"from_gk_mulut"}` | floor | 1 |
+| `K` | exit to desa_purwa (west edge, 2 tiles; the Act VI gate from the village north road) | `res://entities/world/exit.tscn` | `{target_zone:"desa_purwa", spawn_id:"from_gk_pelataran"}` | floor | 2 |
+| `k` | spawn, arrival from desa_purwa | `res://entities/world/spawn.tscn` | `{id:"from_desa_purwa"}` | floor | 1 |
+| `W` | exit to sk_keraton (south edge, a sea-cave passage, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_keraton", spawn_id:"from_gk_pelataran"}` | floor | 2 |
+| `w` | spawn, arrival from sk_keraton | `res://entities/world/spawn.tscn` | `{id:"from_sk_keraton"}` | floor | 1 |
 | `Y` | exit to gk_pasir (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_pasir", spawn_id:"from_gk_pelataran"}` | floor | 2 |
 | `y` | spawn, arrival from gk_pasir | `res://entities/world/spawn.tscn` | `{id:"from_gk_pasir"}` | floor | 1 |
-| `E` | encounter kala_pelataran_siege | `res://entities/world/encounter.tscn` | `{area_id:"kala_pelataran_siege", size:Vector2i(16,9), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,2)]]]}` | floor | 1 |
-| `M` | NPC ancestors' memorial stone for Choice 6 (`mq5_choice6`) | `res://entities/npc/npc.tscn` | `{npc_id:"memorial_stone"}` | floor | 1 |
+| `E` | encounter kala_pelataran_siege (5.1 setpiece with the allies, `area_cleared:kala_pelataran_siege` sets `mq5_0`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_pelataran_siege", size:Vector2i(16,9), cond:"flag:mq4_9,!flag:mq5_0", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,2)]]]}` | floor | 1 |
+| `M` | NPC ancestors' memorial stone for Choice 6 (5.2, `step:mq5=1`; the talk sets `mq5_choice6` and `choice_redeem_aria` / `choice_release_aria`, **Choice 6**) | `res://entities/npc/npc.tscn` | `{npc_id:"memorial_stone", cond:"flag:mq5_0,!flag:mq5_choice6"}` | floor | 1 |
 | `D` | NPC write stone for Ranga's name (SQ-C3) | `res://entities/npc/npc.tscn` | `{npc_id:"deserter_stone"}` | floor | 1 |
-| `C` | NPC Ciung Wanara holding the courtyard | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara"}` | floor | 1 |
-| `H` | NPC Hariang Banga holding the courtyard | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga"}` | floor | 1 |
+| `C` | NPC Ciung Wanara holding the courtyard (5.1 main talk, hub; always here; if `choice_judgment` his royal vanguard stands on the walls, no spot) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara"}` | floor | 1 |
+| `H` | NPC Hariang Banga holding the courtyard (5.1, hub; always here) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga"}` | floor | 1 |
 | `P` | petilasan 0 (courtyard rest) | `res://entities/petilasan/petilasan.tscn` | `{id:"kala_0"}` | floor | 1 |
+| `R` | NPC Ranga, the freed Faceless Deserter, an ally in the siege (Choice 2; replaces the retired `gk_mulut` spot `deserter_mouth`; the write stone `D` is his SQ-C3 stone) | `res://entities/npc/npc.tscn` | `{npc_id:"faceless_deserter", cond:"flag:choice_freed"}` | floor | 1 |
+| `G` | NPC Dewi Naganingrum with her lake-wardens (Choice 1, Tell Ciung) | `res://entities/npc/npc.tscn` | `{npc_id:"naganingrum", cond:"flag:choice_tell_ciung"}` | floor | 1 |
+| `T` | NPC Cepot with the lamp from the turtle beach (SQ-C4 done) | `res://entities/npc/npc.tscn` | `{npc_id:"cepot", cond:"flag:c4_done"}` | floor | 1 |
 
 ## Area 6: gk_hutan
 
@@ -799,7 +817,7 @@ X__________________________________________________________#
 #__________________________________________________________#
 Ww____________________________E____________________________#
 W__________________________________________________________#
-#__________________________________________________________#
+#_______________________________________N__________________#
 #__________________________________________________________#
 #___________________rr________________rr___________________#
 #___________________rr________________rr___________________#
@@ -824,9 +842,10 @@ W__________________________________________________________#
 | `w` | spawn, arrival from gk_pasir | `res://entities/world/spawn.tscn` | `{id:"from_gk_pasir"}` | floor | 1 |
 | `S` | exit to gk_lupa (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_hutan"}` | floor | 2 |
 | `s` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
-| `E` | encounter kala_hutan_echoes | `res://entities/world/encounter.tscn` | `{area_id:"kala_hutan_echoes", size:Vector2i(15,9), waves:[[[res://entities/enemies/kuntilanak.tscn, Vector2i(-4,0)], [res://entities/enemies/kemamang.tscn, Vector2i(4,-2)], [res://entities/enemies/kemamang.tscn, Vector2i(4,2)]]]}` | floor | 1 |
-| `T` | trigger, whispering name-chimes puzzle | `res://entities/world/trigger.tscn` | `{trigger_id:"hutan_name_chimes", size:Vector2i(4,4)}` | floor | 1 |
+| `E` | encounter kala_hutan_echoes (5.6 `area_cleared:kala_hutan_echoes`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_hutan_echoes", size:Vector2i(15,9), cond:"flag:mq5_1c,!flag:mq5_1cb", waves:[[[res://entities/enemies/kuntilanak.tscn, Vector2i(-4,0)], [res://entities/enemies/kemamang.tscn, Vector2i(4,-2)], [res://entities/enemies/kemamang.tscn, Vector2i(4,2)]]]}` | floor | 1 |
+| `T` | trigger, whispering name-chimes puzzle (5.6 `puzzle_solved:hutan_name_chimes`, sets `mq5_1cb`) | `res://entities/world/trigger.tscn` | `{trigger_id:"hutan_name_chimes", size:Vector2i(4,4), cond:"flag:mq5_1c"}` | floor | 1 |
 | `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_hutan", item_id:"ilmu:55"}` | floor | 1 |
+| `N` | clue, the whispering stone name-trees (5.6; journal note only; id `name_trees`, hunt `kala`; ASSUMED position) | `res://entities/world/clue.tscn` | `{clue_id:"name_trees", cond:"flag:mq5_1c"}` | floor | 1 |
 
 ## Area 7: gk_jembatan
 
@@ -854,7 +873,7 @@ W__________________________________________________________#
 #__________________________________________________________#
 Ww____________________________E____________________________#
 W__________________________________________________________#
-#__________________________________________________________#
+#_____________________________B____________________________#
 #__________________________________________________________#
 #___________________rr________________rr___________________#
 #___________________rr________________rr___________________#
@@ -877,5 +896,6 @@ W__________________________________________________________#
 |------|------|-------|-------|-------|-------|
 | `W` | exit to gk_lupa (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_jembatan"}` | floor | 2 |
 | `w` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
-| `E` | encounter kala_jembatan_echoes | `res://entities/world/encounter.tscn` | `{area_id:"kala_jembatan_echoes", size:Vector2i(16,9), waves:[[[res://entities/enemies/arca_penjaga.tscn, Vector2i(-4,0)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,0)], [res://entities/enemies/bajul_putih.tscn, Vector2i(4,0)]]]}` | floor | 1 |
+| `E` | encounter kala_jembatan_echoes (5.8, the miniboss is the Prajurit; sets `mq5_1e`; the beat `bridge` plays in this zone) | `res://entities/world/encounter.tscn` | `{area_id:"kala_jembatan_echoes", size:Vector2i(16,9), cond:"flag:mq5_ra,!flag:mq5_1e", waves:[[[res://entities/enemies/arca_penjaga.tscn, Vector2i(-4,0)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,0)], [res://entities/enemies/bajul_putih.tscn, Vector2i(4,0)]]]}` | floor | 1 |
 | `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_jembatan", item_id:"ilmu:55"}` | floor | 1 |
+| `B` | clue, the row of name-stones at the end of the bridge (5.8; journal note only; id `bridge_echo`, hunt `kala`; ASSUMED position) | `res://entities/world/clue.tscn` | `{clue_id:"bridge_echo", cond:"flag:mq5_ra"}` | floor | 1 |

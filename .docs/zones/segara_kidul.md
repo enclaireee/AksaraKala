@@ -33,7 +33,7 @@ Sizes: screens are 30 x 17 tiles. All seven maps are 60 x 34 tiles (2x2). Spawn 
                           |        \                              \
                        L9 (link)    L4 (stair)                     v
                           |           \
- [sk_gua] ==L8== [sk_karang] ==L3 K mq4_offering== [sk_keraton] (kidul_2, trial) ==K mq4_9== [gk_mulut]
+ [sk_gua] ==L8== [sk_karang] ==L3 K mq4_offering== [sk_keraton] (kidul_2, trial) ==K mq4_9== [gk_pelataran]
                      |   \                                 |
                      |    X2 ==K mq4_9== [tt_pesisir]      +==sc:sk_gerbang==+
                     L7 (bakau)                                              |
@@ -59,7 +59,7 @@ Critical path (v5): `desa_purwa` -> `sk_pantai` -> L5 -> `sk_nelayan` -> L6 -> `
 | D1 | `sk_tebing` | `sk_keraton` | drop (one way, behind kabut `Z`) | `mq4_offering` | `from_sk_tebing` (landing in keraton). No exit leads back up |
 | S1 | `sk_keraton` | `sk_pantai` | shortcut `sc:sk_gerbang` | `sc:sk_gerbang` | `from_sk_keraton` (in pantai), `from_sk_pantai` (in keraton) |
 | S2 | `sk_tebing` | `ts_situ` | shortcut `sc:ts_sk` | `sc:ts_sk` | `from_ts_situ` (in tebing), `from_sk_tebing` (in ts_situ) |
-| X3 | `sk_keraton` | `gk_mulut` | link, kabut | `mq4_9` (`quest:mq4=done`) | `from_sk_keraton` (in gk_mulut), `from_gk_mulut` (in keraton) |
+| X3 | `sk_keraton` | `gk_pelataran` | link, kabut | `mq4_9` (`quest:mq4=done`) | `from_sk_keraton` (in gk_pelataran), `from_gk_pelataran` (in keraton) |
 
 `mq4_2` is set by MQ4 step 4.3 (`talked_to:ibu`, the Interlude talk in Desa Purwa), as quests.md Gating says. `mq4_offering` is set by Choice 5 at the cliff altar (4.19) and opens the causeway (L3) and the drop (D1). `mq4_8` is set when the Trial of the Waves is passed (4.21). `mq4_9` is set by step 4.22, the last step, so the kabut flag `mq4_9` and `quest:mq4=done` hold together (the gen_zones kabut takes `flag` only). A kabut is lifted by a story flag, never by a glyph.
 
@@ -640,8 +640,8 @@ W__________________________________________________________#
 | `P` | petilasan 2 (inner pendopo; 4.20) | `res://entities/petilasan/petilasan.tscn` | `{id:"kidul_2"}` | floor | 1 |
 | `x` | codex spot, Kanjeng Ratu Kidul | `res://entities/world/pickup.tscn` | `{codex_id:"nyi_roro_kidul"}` | floor | 1 |
 | `A` | Sea Altar of the Southern Sanctuary (4.22, inscribe jawa_ka; the altar entry waits on `step:mq4=21`) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_altar"}` | floor | 1 |
-| `X` | exit to gk_mulut (south edge, 2 tiles, behind the kabut) | `res://entities/world/exit.tscn` | `{target_zone:"gk_mulut", spawn_id:"from_sk_keraton"}` | floor | 2 |
-| `m` | spawn, arrival from gk_mulut | `res://entities/world/spawn.tscn` | `{id:"from_gk_mulut"}` | floor | 1 |
+| `X` | exit to gk_pelataran (south edge, 2 tiles, behind the kabut) | `res://entities/world/exit.tscn` | `{target_zone:"gk_pelataran", spawn_id:"from_sk_keraton"}` | floor | 2 |
+| `m` | spawn, arrival from gk_pelataran | `res://entities/world/spawn.tscn` | `{id:"from_gk_pelataran"}` | floor | 1 |
 | `K` | kabut to Gua Kala, lifts when MQ4 is done (`quest:mq4=done`, set with step 4.22, so flag `mq4_9`; one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq4_9"}` | floor | 2 |
 | `B` | clue, a sign that rises from the shallows after wave 1: the water says names back (4.21 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"trial_sign_1"}` | floor | 1 |
 | `C` | clue, a second sign after wave 2 (4.21 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"trial_sign_2"}` | floor | 1 |
