@@ -1082,6 +1082,170 @@ def make_pedestal():
 
 
 # ---------------------------------------------------------------- 9-patch preview helper
+
+# ---------------------------------------------------------------- pixel pass (2026-11-07)
+# Flat, hard-edged frames: a 1 px near-black outline with notched corners, one flat gold line, one dark inner
+# line, no gradients. Same sizes and 9-patch margins as before, so theme.tres and the scripts do not change.
+OL = hexc("060403")
+INNER = hexc("3A2618")
+PGOLD = hexc("C9A24A")
+
+
+def px_frame(w, h, fill, line, inner, step=1):
+    im = Img(w, h)
+    im.rect(0, 0, w - 1, h - 1, OL)
+    im.rect(1, 1, w - 2, h - 2, line)
+    im.rect(2, 2, w - 3, h - 3, inner)
+    im.rect(3, 3, w - 4, h - 4, fill)
+    for k in range(step):   # notched corners: the outline steps in, so the corner reads round without AA
+        for (x, y) in ((k, 0), (0, k), (w - 1 - k, 0), (w - 1, k), (k, h - 1), (0, h - 1 - k), (w - 1 - k, h - 1), (w - 1, h - 1 - k)):
+            im.put(x, y, CLEAR)
+    for (x, y) in ((1, 1), (w - 2, 1), (1, h - 2), (w - 2, h - 2)):
+        im.put(x, y, OL if step > 1 else line)
+    return im
+
+
+def make_panel_px():
+    im = px_frame(24, 24, alpha(LACQUER, 240), PGOLD, INNER)
+    for (ox, oy, fx, fy) in ((3, 3, 1, 1), (20, 3, -1, 1), (3, 20, 1, -1), (20, 20, -1, -1)):
+        im.put(ox, oy, HI)
+        im.put(ox + fx, oy, PGOLD)
+        im.put(ox, oy + fy, PGOLD)
+    return im
+
+
+def make_panel_dialogue_px():
+    im = px_frame(32, 32, alpha(LACQUER, 245), PGOLD, INNER, 2)
+    for (ox, oy, fx, fy) in ((4, 4, 1, 1), (27, 4, -1, 1), (4, 27, 1, -1), (27, 27, -1, -1)):
+        for k in range(0, 4):   # L bracket in each corner
+            im.put(ox + fx * k, oy, PGOLD)
+            im.put(ox, oy + fy * k, PGOLD)
+        im.put(ox, oy, HI)
+        im.put(ox + fx * 2, oy + fy * 2, SH)
+    return im
+
+
+def make_button_px(line, top, fa, fb):
+    w, h = 24, 14
+    im = px_frame(w, h, fa, line, fa)
+    im.rect(2, 2, w - 3, 2, top)           # flat 1 px light row along the top inside
+    im.rect(2, h - 4, w - 3, h - 3, fb)    # darker 2 px foot
+    for (x, y) in ((2, 2), (w - 3, 2)):
+        im.put(x, y, line)
+    return im
+
+
+def make_tab_px(on):
+    w, h = 24, 14
+    if on:
+        im = px_frame(w, h, hexc("2A1B11"), PGOLD, hexc("5A3C24"))
+        im.rect(2, 2, 3, h - 3, HI)         # gold accent bar down the left edge: the selected row
+    else:
+        im = px_frame(w, h, hexc("120D0A"), hexc("3E3018"), hexc("17110D"))
+    return im
+
+
+def make_slot_px(selected):
+    w = h = 20
+    im = px_frame(w, h, hexc("4A3020") if selected else SOGAN, PGOLD if selected else hexc("5E4C2C"),
+                  hexc("1A0F08"))
+    im.rect(3, 3, w - 4, 3, hexc("1A0F08"))     # inset shadow top and left
+    im.rect(3, 3, 3, h - 4, hexc("1A0F08"))
+    im.rect(4, h - 4, w - 4, h - 4, hexc("6B4A2C") if selected else hexc("4E3321"))
+    im.rect(w - 4, 4, w - 4, h - 4, hexc("6B4A2C") if selected else hexc("4E3321"))
+    if selected:
+        for (x, y) in ((1, 1), (w - 2, 1), (1, h - 2), (w - 2, h - 2)):
+            im.put(x, y, HI)
+    return im
+
+
+def make_divider_px():
+    w, h = 64, 5
+    im = Img(w, h)
+    c = w // 2
+    for x in range(w):
+        if abs(x - c + 0.5) > 5:
+            im.put(x, 2, PGOLD if abs(x - c + 0.5) < 26 else SH)
+    loz = ["..H..", ".HGG.", "HGGGS", ".GSS.", "..S.."]
+    im.paste(sprite(loz, {"H": HI, "G": PGOLD, "S": SH}), c - 3, 0)
+    return im
+
+
+def make_bar_frame_px():
+    im = Img(12, 7)
+    for y in range(7):
+        for x in range(12):
+            ring = min(x, y, 11 - x, 6 - y)
+            im.put(x, y, PGOLD if ring == 0 else OL if ring == 1 else LACQUER)
+    for (x, y) in ((0, 0), (11, 0), (0, 6), (11, 6)):
+        im.put(x, y, CLEAR)
+    return im
+
+
+def make_keycap_px():
+    im = px_frame(10, 10, hexc("EDE3CC"), hexc("EDE3CC"), hexc("EDE3CC"))
+    im.rect(1, 1, 8, 1, CREAM)
+    im.rect(1, 8, 8, 8, hexc("B7A98A"))   # key's shaded lower edge
+    for (x, y) in ((1, 1), (8, 1), (1, 8), (8, 8)):
+        im.put(x, y, hexc("EDE3CC") if y == 1 else hexc("B7A98A"))
+    return im
+
+
+def make_row_highlight():
+    """Selected list row (9-patch, margin 3): indigo bar with a gold lozenge-side accent."""
+    w, h = 12, 12
+    im = Img(w, h)
+    im.rect(0, 0, w - 1, h - 1, hexc("1F2A44"))
+    im.rect(0, 0, w - 1, 0, hexc("2E3E66"))
+    im.rect(0, h - 1, w - 1, h - 1, hexc("141C30"))
+    im.rect(0, 0, 1, h - 1, PGOLD)
+    return im
+
+
+def make_scroll_px():
+    s = Img(5, 12)
+    s.rect(1, 0, 3, 11, hexc("120D0A"))
+    g = Img(5, 12)
+    g.rect(1, 0, 3, 11, PGOLD)
+    g.rect(1, 0, 1, 11, HI)
+    return s, g
+
+
+TAB_ICONS = {
+    "icon_tab_status": ["...CCC....", "..C...C...", "..C...C...", "...CCC....", "..CCCCC...", ".CCCCCCC..",
+                         ".C.CCC.C..", "...C.C....", "..CC.CC...", "..CC.CC..."],
+    "icon_tab_equip": ["........CC", ".......CCD", "......CCD.", ".C...CCD..", ".CC.CCD...", "..CCCD....",
+                        "...CC.....", "..CCCC....", ".CC..CC...", "CC...."  + "...."],
+    "icon_tab_journal": ["..CCCCCCC.", ".C.......C", ".C.CCCC..C", ".C.......C", ".C.CCCC..C", ".C.......C",
+                          ".C.CCC...C", ".C.......C", "..CCCCCCC.", ".........."],
+    "icon_tab_map": ["..........", "CCCCCCCCCC", "C..C..C..C", "C..C.CCC.C", "C.CCC.C..C", "C..C..C.CC",
+                      "C..CC.C..C", "C..C..C..C", "CCCCCCCCCC", ".........."],
+    "icon_tab_pustaka": [".CCCCCCCC.", "CDDDCDDDDC", "CDCDCDCCDC", "CDDDCDDDDC", "CDCDCDCCDC", "CDDDCDDDDC",
+                          "CDCDCDDDDC", "CDDDCDDDDC", ".CCCCCCCC.", ".........."],
+    "icon_tab_system": ["....CC....", ".C.CCCC.C.", "..CCDDCC..", ".CCD..DCC.", "CCD....DCC", "CCD....DCC",
+                         ".CCD..DCC.", "..CCDDCC..", ".C.CCCC.C.", "....CC...."],
+}
+
+
+def make_tab_icons():
+    out = {}
+    for name, rows in TAB_ICONS.items():
+        rows = [r.ljust(10, ".")[:10] for r in rows]
+        out[name] = sprite(rows, {"C": CREAM, "D": hexc("8A7C60")})
+    return out
+
+
+def make_bullets():
+    out = {}
+    out["bullet_open"] = sprite(["CCCCCCC", "C.....C", "C.....C", "C.....C", "C.....C", "C.....C", "CCCCCCC"],
+                                {"C": hexc("9C8F78")})
+    out["bullet_check"] = sprite(["CCCCCCC", "C....GC", "C...G.C", "CG.G..C", "C.G...C", "C.....C", "CCCCCCC"],
+                                 {"C": hexc("6FCF8A"), "G": hexc("6FCF8A")})
+    out["bullet_now"] = sprite(["CCCCCCC", "C..H..C", "C.HGG.C", "CHGGGSC", "C.GSS.C", "C..S..C", "CCCCCCC"],
+                               {"C": PGOLD, "H": HI, "G": PGOLD, "S": SH})
+    return out
+
+
 def nine_patch(src, m, w, h):
     l, t, r, b = m
     out = Img(w, h)
@@ -1098,6 +1262,8 @@ def nine_patch(src, m, w, h):
 
 
 NINE = {
+    "row_highlight": (3, 3, 3, 3),
+    "keycap": (3, 3, 3, 3),
     "panel": (6, 6, 6, 6),
     "panel_dialogue": (8, 8, 8, 8),
     "button_normal": (5, 5, 5, 5),
@@ -1113,21 +1279,25 @@ NINE = {
 
 def main():
     A = {}
-    A["panel"] = make_panel()
-    A["panel_dialogue"] = make_panel_dialogue()
-    A["button_normal"] = make_button(GOLD, SH, hexc("2A1B12"), hexc("1E140D"), hexc("4A3220"), GOLD)
-    A["button_hover"] = make_button(HI, GOLD, hexc("40291A"), hexc("301F13"), hexc("6E4D2E"), HI)
-    A["button_pressed"] = make_button(SH, GOLD, hexc("160E09"), hexc("1D130C"), None, None,
-                                      shadow_top=hexc("0A0605"))
-    A["button_disabled"] = make_button(hexc("4D4538"), hexc("2E2A24"), hexc("17130F"), hexc("14110D"), None, None)
-    A["tab_on"] = make_tab(True)
-    A["tab_off"] = make_tab(False)
-    A["slot"] = make_slot(False)
-    A["slot_selected"] = make_slot(True)
-    A["divider"] = make_divider()
-    A["bar_frame"] = make_bar_frame()
+    A["panel"] = make_panel_px()
+    A["panel_dialogue"] = make_panel_dialogue_px()
+    A["button_normal"] = make_button_px(PGOLD, hexc("4A3220"), hexc("2A1B12"), hexc("1E140D"))
+    A["button_hover"] = make_button_px(HI, hexc("6E4D2E"), hexc("40291A"), hexc("301F13"))
+    A["button_pressed"] = make_button_px(SH, hexc("0A0605"), hexc("160E09"), hexc("1D130C"))
+    A["button_disabled"] = make_button_px(hexc("4D4538"), hexc("2E2A24"), hexc("17130F"), hexc("14110D"))
+    A["tab_on"] = make_tab_px(True)
+    A["tab_off"] = make_tab_px(False)
+    A["slot"] = make_slot_px(False)
+    A["slot_selected"] = make_slot_px(True)
+    A["divider"] = make_divider_px()
+    A["bar_frame"] = make_bar_frame_px()
     A["frame_portrait"] = make_portrait_frame()
     A.update(make_icons())
+    A["keycap"] = make_keycap_px()
+    A["row_highlight"] = make_row_highlight()
+    A["scroll_track"], A["scroll_grab"] = make_scroll_px()
+    A.update(make_tab_icons())
+    A.update(make_bullets())
     A["cursor"] = make_cursor()
     A["title_sky"] = make_sky()
     A["title_mountains"] = make_mountains()
@@ -1170,7 +1340,8 @@ def make_preview(A):
     small = ["button_normal", "button_hover", "button_pressed", "button_disabled", "tab_on", "tab_off",
              "slot", "slot_selected", "lozenge", "bar_frame", "icon_heart", "icon_bolt", "icon_brush",
              "icon_ilmu", "icon_save", "flask_full", "flask_empty", "keycap", "marker_quest", "marker_talk",
-             "arrow_objective", "continue_arrow", "cursor", "ink_mote", "ember", "divider"]
+             "arrow_objective", "continue_arrow", "cursor", "ink_mote", "ember", "divider", "row_highlight",
+             "scroll_track", "scroll_grab", "bullet_open", "bullet_check", "bullet_now"] + sorted(TAB_ICONS)
     for n in small:
         place(A[n])
     newrow()

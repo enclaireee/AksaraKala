@@ -32,13 +32,13 @@ func _ready() -> void:
 	modulate.a = 0.0
 	visible = false
 	var fv := FontVariation.new()
-	fv.base_font = load("res://assets/fonts/Cinzel.ttf")
-	fv.spacing_glyph = 2
+	fv.base_font = load("res://assets/fonts/Jersey15-Regular.ttf")
+	fv.spacing_glyph = 1
 	_band = _rect(BAND)
 	_rule_top = _rect(GOLD)
 	_rule_bottom = _rect(GOLD)
-	_caption = _label(fv, 10, CREAM)
-	_title = _label(fv, 20, GOLD_LIGHT)
+	_caption = _label(fv, 15, CREAM)
+	_title = _label(fv, 30, GOLD_LIGHT)
 	_body = _label(null, 0, CREAM)
 	_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var ev := get_node_or_null("/root/Events")
@@ -184,8 +184,8 @@ func _show(card: Dictionary) -> void:
 	_body.text = "\n".join(lines)
 	_body.visible = not lines.is_empty()
 	# layout: caption (12) + title (26) + body lines (11 each), centred on CENTER_Y
-	var body_h := 11.0 * lines.size() + (4.0 if not lines.is_empty() else 0.0)
-	var h := 12.0 + 26.0 + body_h + 16.0
+	var body_h := 12.0 * lines.size() + (4.0 if not lines.is_empty() else 0.0)
+	var h := 14.0 + 30.0 + body_h + 16.0
 	var top := CENTER_Y - h / 2.0
 	_band.position = Vector2(0, top)
 	_band.size = Vector2(480, h)
@@ -194,10 +194,10 @@ func _show(card: Dictionary) -> void:
 	_rule_bottom.position = Vector2(0, top + h - 1.0)
 	_rule_bottom.size = Vector2(480, 1)
 	_caption.position = Vector2(0, top + 6.0)
-	_caption.size = Vector2(480, 12)
-	_title.position = Vector2(0, top + 18.0)
-	_title.size = Vector2(480, 26)
-	_body.position = Vector2(60, top + 46.0)
+	_caption.size = Vector2(480, 14)
+	_title.position = Vector2(0, top + 20.0)
+	_title.size = Vector2(480, 30)
+	_body.position = Vector2(60, top + 52.0)
 	_body.size = Vector2(360, body_h)
 	if _tween:
 		_tween.kill()

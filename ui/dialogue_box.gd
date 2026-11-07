@@ -13,7 +13,15 @@ signal speaker_changed(key: String)   # the speaker tag was set (SceneDirector a
 const CPS := 45.0   # TUNE: characters per second
 const OUTLINE := Color("0E0B0A")
 const UI_DIR := "res://assets/art/ui/"
-const BOX := Rect2(32, 180, 416, 86)
+const BOX_X := 28.0       # frame left and width (centred in 480)
+const BOX_W := 424.0
+const BOX_BOTTOM := 264.0 # frame bottom edge: the box grows upward from here
+const PAD_X := 14.0
+const PAD_TOP := 8.0      # TUNE: space above the text (the name plate adds PLATE_DROP)
+const PLATE_DROP := 6.0   # how far the name plate reaches into the frame
+const PAD_BOT := 13.0     # room for the continue arrow and hint under the text
+const MIN_H := 40.0
+const LINE_H := 11.0      # 10 px pixel font + 1 px line spacing
 const MAX_WAIT := 3.0   # seconds a #wait cue may hold
 const NARRATION := Color("F2E6C4")   # Semar (Dalang): italic, pale cream (ui.md 3)
 
@@ -29,6 +37,8 @@ var _cue: TextureRect   # gold ▼ once the line is fully shown
 var _plate: NinePatchRect   # gold name plate over the top edge
 var _sel_bar: ColorRect
 var _lozenge: TextureRect
+var _frame: NinePatchRect
+var _hint: Label   # "[E] Continue" until the first advance of a save
 var _tween: Tween
 var _choices := PackedStringArray()   # for the next request
 var _opts := PackedStringArray()      # for the open box
@@ -46,21 +56,21 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	visible = false
 	add_to_group("dialogue_box")
-	var frame := _nine("panel_dialogue", BOX, 8)
-	_plate = _nine("button_normal", Rect2(46, 172, 60, 14), 5)
+	_frame = _nine("panel_dialogue", Rect2(BOX_X, BOX_BOTTOM - MIN_H, BOX_W, MIN_H), 8)
+	_plate = _nine("button_normal", Rect2(BOX_X + 14, 0, 60, 14), 5)
 	_speaker = Label.new()
 	_speaker.theme_type_variation = &"Heading"
 	_speaker.position = Vector2(7, 1)
 	_speaker.size = Vector2(160, 12)
+	_speaker.add_theme_constant_override("outline_size", 0)
 	_speaker.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_plate.add_child(_speaker)
-	_who = _label(Vector2(44, 189), Vector2(396, 10), Color("BDB59A"))
-	_who.add_theme_font_size_override("font_size", 7)
-	_text = _label(Vector2(44, 190), Vector2(392, 44), Color.TRANSPARENT)
+	_who = _label(Vector2.ZERO, Vector2(260, 12), Color("D8CFB4"))   # sits on the plate row, beside the name plate
+	_text = _label(Vector2.ZERO, Vector2(BOX_W - PAD_X * 2.0, LINE_H), Color.TRANSPARENT)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_sel_bar = ColorRect.new()
-	_sel_bar.color = Color(0.122, 0.165, 0.267, 0.8)   # indigo selection (ui.md 3b)
-	_sel_bar.size = Vector2(380, 10)
+	_sel_bar.color = Color(0.122, 0.165, 0.267, 0.9)   # indigo selection (ui.md 3b)
+	_sel_bar.size = Vector2(BOX_W - PAD_X * 2.0, 10)
 	_sel_bar.visible = false
 	_sel_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_sel_bar)
@@ -69,13 +79,15 @@ func _ready() -> void:
 	_lozenge.visible = false
 	_lozenge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_lozenge)
-	_list = _label(Vector2(62, 232), Vector2(372, 32), Color.TRANSPARENT)
+	_list = _label(Vector2.ZERO, Vector2(BOX_W - PAD_X * 2.0 - 12.0, 32), Color.TRANSPARENT)
 	_cue = TextureRect.new()
 	_cue.texture = load(UI_DIR + "continue_arrow.png")
-	_cue.position = Vector2(433, 254)
 	_cue.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_cue)
-	frame.z_index = -1
+	_hint = _label(Vector2.ZERO, Vector2(120, 12), Color("9C8F78"))
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_frame.z_index = -1
+	_layout()
 	var ev := get_node("/root/Events")
 	ev.dialogue_requested.connect(_on_requested)
 	ev.dialogue_choices.connect(func(keys: PackedStringArray) -> void: _choices = keys)
@@ -132,6 +144,8 @@ func _on_requested(speaker_key: String, lines: PackedStringArray) -> void:
 	_was_paused = get_tree().paused
 	get_tree().paused = true
 	_fresh.clear()
+	var g0 := get_node("/root/Game")
+	_hint.text = "" if g0.has_flag("seen_hint_continue") else "[%s] %s" % [g0.key_name("interact"), tr("UI_HINT_CONTINUE")]
 	_set_speaker(speaker_key)
 	visible = true
 	_animate_open()
@@ -169,7 +183,6 @@ func _set_speaker(key: String) -> void:
 	var narr := key.contains("DALANG") or _speaker.text.to_lower().contains("(dalang)")
 	_text.theme_type_variation = &"Italic" if narr else &""
 	_who.text = ""
-	_text.position.y = 190
 	if not (key.begins_with("NPC_") and key.ends_with("_NAME")):
 		return
 	var nid := key.trim_prefix("NPC_").trim_suffix("_NAME").to_lower()
@@ -181,8 +194,7 @@ func _set_speaker(key: String) -> void:
 		return
 	_fresh[nid] = true
 	g.set_flag("seen_name_" + nid)
-	_who.text = _t(wk)
-	_text.position.y = 200   # TUNE: body moves down under the tag
+	_who.text = _t(wk)   # shown on the plate row, so the body text never shifts
 
 
 func _t(key: String) -> String:
@@ -217,6 +229,7 @@ func _next() -> void:
 	_text.text = _t(_lines[_i])
 	_text.visible_characters = 0
 	_shown = 0.0
+	_layout()
 
 
 func _show_choices() -> void:
@@ -224,13 +237,36 @@ func _show_choices() -> void:
 	for i in _opts.size():
 		out.append(_t(_opts[i]))
 	_list.text = "\n".join(out)
+	_layout()
 	var lh := _list.get_line_height() + 1.0   # theme line_spacing 1
-	_list.position.y = 262.0 - _opts.size() * lh
 	_sel_bar.size.y = lh
-	_sel_bar.position = Vector2(48, _list.position.y + _sel * lh)
-	_lozenge.position = Vector2(52, _sel_bar.position.y + roundf((lh - 5.0) / 2.0))
+	_sel_bar.position = Vector2(_list.position.x - 14.0, _list.position.y + _sel * lh)
+	_lozenge.position = Vector2(_sel_bar.position.x + 4.0, _sel_bar.position.y + roundf((lh - 5.0) / 2.0))
 	_sel_bar.visible = true
 	_lozenge.visible = true
+
+
+## Sizes the frame to its content and places everything from the bottom edge up: the box is only as tall as the
+## text (and choices) need, so one line leaves no empty slab over the world.
+func _layout() -> void:
+	var tw := BOX_W - PAD_X * 2.0
+	_text.custom_minimum_size.x = tw
+	_text.size.x = tw
+	var th := maxf(_text.get_minimum_size().y, LINE_H) if _text.text != "" else 0.0
+	var top := PAD_TOP + (PLATE_DROP if _plate.visible else 0.0)
+	var lh := _list.get_line_height() + 1.0
+	var ch := (3.0 + lh * _opts.size()) if (_choosing and not _opts.is_empty()) else 0.0
+	var h := maxf(MIN_H, top + th + ch + PAD_BOT)
+	_frame.size = Vector2(BOX_W, h)
+	_frame.position = Vector2(BOX_X, BOX_BOTTOM - h)
+	var fy := _frame.position.y
+	_plate.position = Vector2(BOX_X + 14.0, fy - 8.0)
+	_who.position = Vector2(_plate.position.x + _plate.size.x + 6.0, fy - 7.0)
+	_text.position = Vector2(BOX_X + PAD_X, fy + top)
+	_text.size.y = th
+	_list.position = Vector2(BOX_X + PAD_X + 14.0, fy + top + th + 3.0)
+	_cue.position = Vector2(BOX_X + BOX_W - 20.0, fy + h - 12.0)
+	_hint.position = Vector2(BOX_X + BOX_W - 20.0 - _hint.size.x - 3.0, fy + h - 13.0)
 
 
 func _close() -> void:
@@ -253,7 +289,8 @@ func _process(delta: float) -> void:
 		_text.visible_characters = int(_shown)
 	_cue.visible = _open and _hold_until == 0 and not _choosing and _text.visible_characters >= _text.get_total_character_count() \
 			and Time.get_ticks_msec() % 800 < 500
-	_cue.position.y = 254.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)
+	_cue.position.y = _frame.position.y + _frame.size.y - 12.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)
+	_hint.visible = _cue.visible and _hint.text != ""
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -280,4 +317,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _text.visible_characters < _text.get_total_character_count():
 		_text.visible_characters = _text.get_total_character_count()
 	else:
+		if _hint.text != "":   # the player found the key: the hint has done its job
+			_hint.text = ""
+			get_node("/root/Game").set_flag("seen_hint_continue")
 		_next()

@@ -102,7 +102,7 @@ func _ready() -> void:
 ## Styled toggle: dark well when off, gold-lit frame when on (the focused one is the chosen one).
 func _style_toggle(b: Button) -> void:
 	b.add_theme_font_override("font", UIFx.cinzel())
-	b.add_theme_font_size_override("font_size", 8)
+	b.add_theme_font_size_override("font_size", 10)
 	b.add_theme_color_override("font_color", UIFx.DIM)
 	for c in ["font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color"]:
 		b.add_theme_color_override(c, UIFx.GOLD_HI)

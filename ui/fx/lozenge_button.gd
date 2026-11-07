@@ -1,5 +1,5 @@
 class_name LozengeButton extends Button
-## Frameless menu entry: Cinzel text, a gold lozenge cursor on hover or focus, a slight indent and a 0.4 s
+## Frameless menu entry: pixel-font text, a gold lozenge cursor on hover or focus, a slight indent and a 0.4 s
 ## shimmer sweep (ui.md 3b). Hovering takes focus, so mouse, keyboard and gamepad share one cursor.
 
 var _indent := 0.0
@@ -12,8 +12,9 @@ func _init(label := "", size := 10) -> void:
 	flat = true
 	alignment = HORIZONTAL_ALIGNMENT_LEFT
 	custom_minimum_size.y = 18
-	add_theme_font_override("font", UIFx.cinzel())
-	add_theme_font_size_override("font_size", size)
+	var big := size >= 12
+	add_theme_font_override("font", UIFx.cinzel() if big else UIFx.body_font())
+	add_theme_font_size_override("font_size", UIFx.snap(size, big))
 	add_theme_color_override("font_color", UIFx.CREAM)
 	for c in ["font_hover_color", "font_focus_color", "font_pressed_color", "font_hover_pressed_color"]:
 		add_theme_color_override(c, UIFx.GOLD_HI)

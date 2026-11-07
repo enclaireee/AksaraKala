@@ -12,6 +12,9 @@ const OUTLINE := Color("0E0B0A")
 const UI_DIR := "res://assets/art/ui/"
 const LAG_HOLD := 0.4   # s before the cream lag chunk drains
 const LOW_HP := 0.25
+const MAX_OBJ := 4   # objective rows shown before "+n more"
+const TRACKER_W := 156   # TUNE: card width, text wraps inside
+const MENU_HINT_SHOW := 25.0   # s the [Esc] hint stays before it fades
 
 var _bars := {}   # name -> [fill ColorRect, width, frame, lag ColorRect, well ColorRect]
 var _pips: Array[TextureRect] = []
@@ -31,7 +34,15 @@ var _saved: Label
 var _saved_icon: TextureRect
 var _saved_left := 0.0
 const DIM := Color(0.62, 0.6, 0.55)
-var _tracker: VBoxContainer   # the tracked quest: title, then its objectives (docs/quest_system.md 3.1)
+var _tracker_panel: PanelContainer   # framed card around the tracker (ui.md 2, pixel pass)
+var _tracker: VBoxContainer   # inside the card: title, rule, then the objectives (docs/quest_system.md 3.1)
+var _grp_hide: Control   # fades out while a dialogue is open: tracker, flasks, weapon, Ilmu, hints
+var _grp_bars: Control   # dims to 40% while a dialogue is open: the vitals
+var _focus_tw: Tween
+var _hp_txt: Label   # "120/120" inside the HP bar
+var _dist_bg: ColorRect   # lacquer pill behind the distance label
+var _menu_hint: Label
+var _ilmu_plate: NinePatchRect
 var _tracker_sig := ""
 var _pulse_tw: Tween
 var _sub_seen := {}   # quest id -> [step, finished sub-goals] last seen, to spot a new step or sub-goal
@@ -77,23 +88,26 @@ var _dawn_fill: ColorRect
 func _ready() -> void:
 	_flask_full = _ui_tex("flask_full")
 	_flask_empty = _ui_tex("flask_empty")
-	_bars.hp = _bar(Vector2(6, 6), 80, 5, HP_COL, "icon_heart")
-	_bars.st = _bar(Vector2(6, 17), 64, 3, ST_COL, "icon_bolt")
-	_bars.sk = _bar(Vector2(6, 26), 50, 3, SK_COL, "icon_brush")
+	_grp_bars = _group()
+	_grp_hide = _group()
+	_bars.hp = _bar(Vector2(6, 6), 96, 9, HP_COL, "icon_heart", _grp_bars)
+	_bars.st = _bar(Vector2(6, 22), 64, 3, ST_COL, "icon_bolt", _grp_bars)
+	_bars.sk = _bar(Vector2(6, 31), 50, 3, SK_COL, "icon_brush", _grp_bars)
 	_st_nodes = [_bars.st[2], _bars.st[4], _bars.st[5]]
-	for i in 6:
-		var p := TextureRect.new()
-		p.texture = _flask_full
-		p.position = Vector2(6 + i * 9, 270 - 6 - 9)
-		p.size = Vector2(7, 9)
-		p.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(p)
-		_pips.append(p)
-	var well := TextureRect.new()   # weapon slot: slot.png well holding the equipped item's icon
+	_hp_txt = Label.new()   # number inside the bar, right aligned, 1 px outline from the theme
+	_hp_txt.size = Vector2(96, 9)
+	_hp_txt.position = Vector2(0, -1)
+	_hp_txt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_hp_txt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_hp_txt.add_theme_constant_override("outline_size", 2)
+	_hp_txt.add_theme_color_override("font_color", CREAM)
+	_hp_txt.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_bars.hp[4].add_child(_hp_txt)
+	var well := TextureRect.new()   # weapon slot: slot.png well holding the equipped item's icon (bottom left cluster)
 	well.texture = _ui_tex("slot")
-	well.position = Vector2(66, 270 - 6 - 20)
+	well.position = Vector2(6, 270 - 6 - 20)
 	well.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(well)
+	_grp_hide.add_child(well)
 	_weapon_icon = TextureRect.new()
 	_weapon_icon.position = Vector2(2, 2)
 	_weapon_icon.size = Vector2(16, 16)
@@ -101,20 +115,30 @@ func _ready() -> void:
 	_weapon_icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
 	_weapon_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	well.add_child(_weapon_icon)
+	for i in 6:   # flasks sit to the right of the weapon well, on its baseline
+		var p := TextureRect.new()
+		p.texture = _flask_full
+		p.position = Vector2(6 + 20 + 5 + i * 9, 270 - 6 - 9)
+		p.size = Vector2(7, 9)
+		p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_grp_hide.add_child(p)
+		_pips.append(p)
 	_ilmu = Label.new()   # logical value, never shown
 	_ilmu.visible = false
 	add_child(_ilmu)
+	_ilmu_plate = _nine("panel", Rect2(480 - 6 - 62, 6, 62, 16), [6, 6, 6, 6], _grp_hide)   # pill behind Ilmu: legible on any tile
+	_ilmu_plate.modulate.a = 0.85
 	var ii := TextureRect.new()
 	ii.texture = _ui_tex("icon_ilmu")
-	ii.position = Vector2(480 - 6 - 8, 6)
+	ii.position = Vector2(480 - 6 - 62 + 6, 10)
 	ii.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(ii)
+	_grp_hide.add_child(ii)
 	_ilmu_disp = Label.new()
-	_ilmu_disp.position = Vector2(480 - 6 - 8 - 2 - 70, 4)
-	_ilmu_disp.size = Vector2(70, 12)
+	_ilmu_disp.position = Vector2(480 - 6 - 62 + 16, 8)
+	_ilmu_disp.size = Vector2(40, 12)
 	_ilmu_disp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_ilmu_disp.add_theme_color_override("font_color", GOLD)
-	add_child(_ilmu_disp)
+	_grp_hide.add_child(_ilmu_disp)
 	_saved_icon = TextureRect.new()
 	_saved_icon.texture = _ui_tex("icon_save")
 	_saved_icon.position = Vector2(480 - 6 - 8, 270 - 6 - 8)
@@ -129,18 +153,25 @@ func _ready() -> void:
 	_saved.visible = false
 	add_child(_saved)
 	_build_extras()
+	_tracker_panel = PanelContainer.new()   # a framed card under the vitals, never past x 164 (ui.md 2)
+	_tracker_panel.position = Vector2(6, 44)
+	_tracker_panel.custom_minimum_size = Vector2(TRACKER_W, 0)
+	_tracker_panel.self_modulate = Color(1, 1, 1, 0.88)
+	_tracker_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_tracker_panel.visible = false
+	_grp_hide.add_child(_tracker_panel)
 	_tracker = VBoxContainer.new()
-	_tracker.position = Vector2(6, 48)
-	_tracker.custom_minimum_size = Vector2(190, 0)
-	_tracker.add_theme_constant_override("separation", 0)
+	_tracker.add_theme_constant_override("separation", 2)
 	_tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_tracker)
-	var menu_hint := Label.new()   # subtle [Esc] Menu prompt, bottom left
-	menu_hint.text = tr("UI_HINT_MENU") % get_node("/root/Game").key_name("pause").replace("Escape", "Esc")
-	menu_hint.position = Vector2(200, 270 - 12)   # bottom centre: the corners hold the flasks and "Saved"
-	menu_hint.modulate.a = 0.55
-	menu_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(menu_hint)
+	_tracker_panel.add_child(_tracker)
+	_menu_hint = Label.new()   # quiet [Esc] Menu prompt under Ilmu; fades after a while
+	_menu_hint.text = tr("UI_HINT_MENU") % get_node("/root/Game").key_name("pause").replace("Escape", "Esc")
+	_menu_hint.position = Vector2(480 - 6 - 70, 24)
+	_menu_hint.size = Vector2(70, 12)
+	_menu_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_menu_hint.modulate.a = 0.55
+	_menu_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_grp_hide.add_child(_menu_hint)
 	var g := get_node("/root/Game")
 	g.changed.connect(refresh)
 	g.changed.connect(refresh_objective)
@@ -149,6 +180,8 @@ func _ready() -> void:
 		_saved.visible = true
 		_saved_icon.visible = true)
 	var ev := get_node("/root/Events")
+	ev.dialogue_requested.connect(func(_k: String, _l: PackedStringArray) -> void: set_focus(true))
+	ev.dialogue_finished.connect(func() -> void: set_focus(false))
 	for qid in g.quests:   # what a loaded game already finished is not news
 		_snap(qid)
 	ev.quest_started.connect(func(id: String) -> void:
@@ -188,26 +221,26 @@ func _ready() -> void:
 ## lists its sub-goals: [x] done, > the one the arrow follows, [ ] open) and the step's hint with live key names.
 func refresh_objective() -> void:
 	var g := get_node("/root/Game")
-	var rows: Array = []   # [text, colour]
+	var rows: Array = []   # [kind, text, colour, bullet]: kind "title", "obj" or "hint"
 	for id in g._tracked():
 		var st: QuestStep = g.current_step(id)
 		if st == null:
 			continue
 		var q := QuestData.by_id(id)
-		rows.append([_title(id), GOLD if q.kind == "main" else CREAM])
+		rows.append(["title", _title(id), GOLD if q.kind == "main" else CREAM, ""])
 		if st.all.is_empty():
-			rows.append(["> " + g.quest_objective_text(id), Color.WHITE])
+			rows.append(["obj", g.quest_objective_text(id), Color.WHITE, "bullet_now"])
 		else:
 			for c in g.step_checklist(id):
-				rows.append([("[x] " if c.done else "> " if c.active else "[ ] ") + str(c.text),
-						DIM if c.done else (GOLD if c.active else Color.WHITE)])
+				rows.append(["obj", str(c.text), DIM if c.done else (GOLD if c.active else Color.WHITE),
+						"bullet_check" if c.done else "bullet_now" if c.active else "bullet_open"])
 		var key := st.objective.replace("_OBJ", "_HINT")
 		if tr(key) != key:
 			var keys := {}
 			for a in ["interact", "cast", "attack", "dodge", "menu"]:
 				keys[a] = g.key_name(a)
 			keys.move = "%s%s%s%s" % [g.key_name("move_up"), g.key_name("move_left"), g.key_name("move_down"), g.key_name("move_right")]
-			rows.append([tr(key).format(keys), DIM])
+			rows.append(["hint", tr(key).format(keys), DIM, ""])
 		break
 	var sig := str(rows)
 	if sig == _tracker_sig:
@@ -215,15 +248,56 @@ func refresh_objective() -> void:
 	_tracker_sig = sig
 	for c in _tracker.get_children():
 		c.queue_free()
+	_tracker_panel.visible = not rows.is_empty()
+	var inner := TRACKER_W - 12.0   # card width minus its 6 px margins
+	var shown := 0
 	for r in rows:
+		if r[0] == "obj":
+			shown += 1
+			if shown > MAX_OBJ:   # a long checklist: the rest collapses into "+n"
+				continue
 		var l := Label.new()
-		l.text = r[0]
-		l.custom_minimum_size = Vector2(190, 0)
+		l.text = r[1]
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		l.add_theme_color_override("font_color", r[1])
+		l.add_theme_color_override("font_color", r[2])
 		_outlined(l)
-		_tracker.add_child(l)
+		if r[0] == "title":
+			l.theme_type_variation = &"Heading"
+			l.add_theme_color_override("font_color", r[2])
+			l.custom_minimum_size.x = inner
+			_tracker.add_child(l)
+			var rule := ColorRect.new()   # 1 px gold rule under the title
+			rule.color = Color("7A5A22")
+			rule.custom_minimum_size = Vector2(inner, 1)
+			rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_tracker.add_child(rule)
+		elif r[0] == "obj":
+			var row := HBoxContainer.new()
+			row.add_theme_constant_override("separation", 3)
+			row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			var ic := TextureRect.new()
+			ic.texture = _ui_tex(r[3])
+			ic.stretch_mode = TextureRect.STRETCH_KEEP
+			ic.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+			ic.custom_minimum_size = Vector2(7, 9)
+			ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			row.add_child(ic)
+			l.custom_minimum_size.x = inner - 10.0
+			l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			row.add_child(l)
+			_tracker.add_child(row)
+		else:
+			l.custom_minimum_size.x = inner
+			_tracker.add_child(l)
+	var extra := shown - MAX_OBJ
+	if extra > 0:
+		var more := Label.new()
+		more.text = tr("UI_Q_MORE") % extra
+		more.add_theme_color_override("font_color", DIM)
+		more.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_tracker.add_child(more)
+	_tracker_panel.size = Vector2(TRACKER_W, 0)   # re-fit to the new rows
 
 
 ## Remembers a quest's step and finished sub-goal count, to tell later whether an update is news.
@@ -252,8 +326,8 @@ func _pulse_tracker() -> void:
 	if _pulse_tw != null and _pulse_tw.is_valid():
 		_pulse_tw.kill()
 	_pulse_tw = create_tween()
-	_tracker.modulate = Color(1.8, 1.6, 0.9)
-	_pulse_tw.tween_property(_tracker, "modulate", Color.WHITE, 0.7)
+	_tracker_panel.modulate = Color(1.8, 1.6, 0.9)
+	_pulse_tw.tween_property(_tracker_panel, "modulate", Color.WHITE, 0.7)
 
 
 func _push_banner(head_key: String, body: String) -> void:
@@ -317,7 +391,26 @@ func _ui_tex(n: String) -> Texture2D:
 	return load(UI_DIR + n + ".png")
 
 
-func _nine(tex: String, rect: Rect2, m: Array) -> NinePatchRect:
+## A full-screen, click-through wrapper: one modulate fades everything inside it.
+func _group() -> Control:
+	var c := Control.new()
+	c.set_anchors_preset(Control.PRESET_FULL_RECT)
+	c.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(c)
+	return c
+
+
+## Dialogue open: the tracker, flasks, weapon, Ilmu and hints fade out and the vitals dim to 40%, so nothing
+## competes with the speech (ui.md 2). Back to full on close. 0.2 s.
+func set_focus(on: bool) -> void:
+	if _focus_tw != null and _focus_tw.is_valid():
+		_focus_tw.kill()
+	_focus_tw = create_tween().set_parallel(true)
+	_focus_tw.tween_property(_grp_hide, "modulate:a", 0.0 if on else 1.0, 0.2)
+	_focus_tw.tween_property(_grp_bars, "modulate:a", 0.4 if on else 1.0, 0.2)
+
+
+func _nine(tex: String, rect: Rect2, m: Array, parent: Node = null) -> NinePatchRect:
 	var r := NinePatchRect.new()
 	r.texture = _ui_tex(tex)
 	r.position = rect.position
@@ -327,7 +420,7 @@ func _nine(tex: String, rect: Rect2, m: Array) -> NinePatchRect:
 	r.patch_margin_right = m[2]
 	r.patch_margin_bottom = m[3]
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(r)
+	(parent if parent != null else self).add_child(r)
 	return r
 
 
@@ -379,8 +472,13 @@ func _build_extras() -> void:
 	_diamond.add_child(dg)
 	_diamond.visible = false
 	add_child(_diamond)
+	_dist_bg = ColorRect.new()   # lacquer pill: "1 m" never floats loose over a character
+	_dist_bg.color = Color(OUTLINE, 0.72)
+	_dist_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_dist_bg.visible = false
+	add_child(_dist_bg)
 	_dist = Label.new()
-	_dist.size = Vector2(80, 10)
+	_dist.size = Vector2(80, 12)
 	_dist.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_dist.add_theme_color_override("font_color", GOLD)
 	_dist.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -467,6 +565,7 @@ func target_pos() -> Variant:
 func _update_arrow() -> void:
 	_diamond.visible = false
 	_dist.visible = false
+	_dist_bg.visible = false
 	if _tnode == null or not is_instance_valid(_tnode) or not _tnode.is_inside_tree():
 		_arrow.visible = false
 		return
@@ -474,11 +573,12 @@ func _update_arrow() -> void:
 	var label := _target_label()
 	if Rect2(Vector2.ZERO, SCREEN).has_point(p):
 		_arrow.visible = false
-		_diamond.position = (p + Vector2(0, -14.0 + 2.0 * sin(_t * 4.0))).round()
+		_diamond.position = (p + Vector2(0, -46.0 + 2.0 * sin(_t * 4.0))).round()   # above the NPC's own prompt
 		_diamond.visible = true
 		_dist.text = label
 		_dist.position = (p + Vector2(-40, 4)).round()
 		_dist.visible = true
+		_fit_pill()
 		return
 	var c := SCREEN / 2
 	var d := p - c
@@ -490,8 +590,17 @@ func _update_arrow() -> void:
 	_arrow.visible = true
 	_dist.text = label
 	var lp := _arrow.position - d.normalized() * 16.0 - Vector2(40, 5)
-	_dist.position = Vector2(clampf(lp.x, 0.0, SCREEN.x - 80.0), clampf(lp.y, 0.0, SCREEN.y - 10.0)).round()
+	_dist.position = Vector2(clampf(lp.x, 0.0, SCREEN.x - 80.0), clampf(lp.y, 0.0, SCREEN.y - 12.0)).round()
 	_dist.visible = true
+	_fit_pill()
+
+
+## Sizes the pill to the label text (the label is centred in its 80 px box).
+func _fit_pill() -> void:
+	var w := ceilf(_dist.get_minimum_size().x) + 8.0
+	_dist_bg.size = Vector2(w, 11)
+	_dist_bg.position = _dist.position + Vector2(roundf((_dist.size.x - w) / 2.0), 0)
+	_dist_bg.visible = _dist.text != ""
 
 
 ## Metres to the target (1 tile = 1 m), or "-> <zone>" while the arrow only points at the exit toward another zone.
@@ -573,19 +682,19 @@ func _update_boss() -> void:
 		_dawn_fill.size.x = roundf(BOSS_W * clampf(float(dawn), 0.0, 1.0))
 
 
-func _bar(pos: Vector2, w: int, h: int, col: Color, icon: String) -> Array:
+func _bar(pos: Vector2, w: int, h: int, col: Color, icon: String, parent: Node) -> Array:
 	var ic := TextureRect.new()
 	ic.texture = _ui_tex(icon)
 	ic.position = Vector2(pos.x, pos.y + (h + 4 - 7) / 2)
 	ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(ic)
-	var frame := _nine("bar_frame", Rect2(pos.x + 9, pos.y, w + 4, h + 4), [3, 3, 3, 3])
+	parent.add_child(ic)
+	var frame := _nine("bar_frame", Rect2(pos.x + 9, pos.y, w + 4, h + 4), [3, 3, 3, 3], parent)
 	var bg := ColorRect.new()   # the well: flashes red on a blocked action
 	bg.color = Color(0, 0, 0, 0.6)
 	bg.position = pos + Vector2(11, 2)
 	bg.size = Vector2(w, h)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(bg)
+	parent.add_child(bg)
 	var lag := ColorRect.new()
 	lag.color = Color(CREAM, 0.9)
 	lag.size = Vector2(w, h)
@@ -639,8 +748,10 @@ func _process(delta: float) -> void:
 		_fill("hp", p.health.hp, p.health.max_hp)
 		_fill("st", p.stamina.value, p.stamina.max_stamina)
 		_fill("sk", p.sakti.value, p.sakti.max_value)
+		_hp_txt.text = "%d/%d" % [ceili(p.health.hp), roundi(p.health.max_hp)]
 		_update_hp_fx(delta, float(p.health.hp) / maxf(p.health.max_hp, 1.0))
 		_update_stamina_fade(delta, p.stamina.value >= p.stamina.max_stamina)
+	_menu_hint.modulate.a = 0.55 * clampf((MENU_HINT_SHOW + 2.0 - _t) / 2.0, 0.0, 1.0)
 	_update_toast(delta)
 	_update_banner(delta)
 	_update_arrow()

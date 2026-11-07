@@ -1,5 +1,5 @@
 class_name AreaTitle extends Control
-## Area title card (ui.md 3b): region name in Cinzel caps, a gold rule growing from the centre, the area name under it.
+## Area title card (ui.md 3b): region name in pixel display caps, a gold rule growing from the centre, the area name under it.
 ## Shown on a region change and on the first visit of an area in a save (flag seen_area_<id>); never blocks or pauses.
 ## Region names are proper nouns (no REGION_<PREFIX> key exists), so they live here; AREA_<ID> is used when a key exists.
 
@@ -31,11 +31,11 @@ func _ready() -> void:
 	modulate.a = 0.0
 	visible = false
 	var fv := FontVariation.new()
-	fv.base_font = load("res://assets/fonts/Cinzel.ttf")
-	fv.spacing_glyph = 2
+	fv.base_font = load("res://assets/fonts/Jersey15-Regular.ttf")
+	fv.spacing_glyph = 1
 	_region = Label.new()
 	_region.add_theme_font_override("font", fv)
-	_region.add_theme_font_size_override("font_size", 16)
+	_region.add_theme_font_size_override("font_size", 15)
 	_region.add_theme_color_override("font_color", Color("F2D488"))
 	_region.add_theme_color_override("font_outline_color", OUTLINE)
 	_region.add_theme_constant_override("outline_size", 1)
@@ -53,7 +53,7 @@ func _ready() -> void:
 	_area = Label.new()
 	_area.add_theme_color_override("font_color", CREAM)
 	_area.position = Vector2(0, Y + 24)
-	_area.size = Vector2(480, 12)
+	_area.size = Vector2(480, 14)
 	_area.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_area.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_area)
