@@ -32,6 +32,10 @@ func _apply_cond() -> void:
 
 
 func _draw() -> void:
+	var art := StoryArt.tex(clue_id)
+	if art != null:
+		StoryArt.draw_standing(self, art)
+		return
 	draw_rect(Rect2(-5, -4, 10, 8), Color(0.09, 0.07, 0.16))
 	draw_rect(Rect2(-4, -3, 8, 6), Color("E6D299"))
 	draw_rect(Rect2(-4, -3, 8, 1), Color("F6E8BE"))

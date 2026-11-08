@@ -63,7 +63,7 @@ Scale: 1
 #[[[[..............,,,..l........bb......r....,,,..........bb.,,,,,,,,,,,,,,,,,,,,,,,,,,.....[[[[[[[[.,,,-..........bb.[[[[[.-,,,-.[[[[..............#
 #[[[[...........Q..,,,...........bb...........,,,......?...bb.,,{{{,{{{,,,,,,,{{{,{{{,,,.....[[[[[[[[.,,,-.........rbb.[[[[[..,,,-.[[[[..............#
 #..................,,,........................,,,.............,,,,,,,,,,,,,,,,,,,,,,,,,,..''.[[[[[[[[.,,,...........bb.[[[[[..,,,..[[[[..............#
-#..................,,,.......,,,,,,,,,,,,.....,,,...../.bb....,,,,,,,,,,,,P,,,,,,,,Y,,,,..''.[[[[[[[[.,,,...bbbb....bb.[[[[[.-,,,..[[[[..............#
+#..................,,,.......,,,,,,,,,,,,.....,,,...../.bb....,,,,,,,,,,,,P,,,,,|,,Y,,,,..''.[[[[[[[[.,,,...bbbb....bb.[[[[[.-,,,..[[[[..............#
 #..................,,,..bb...,,,,,,,,,,,,.....,,,.......bb....,,,,,,,,,,,,,,,,,,,,,,,,,,..''.[[[[[[[[.,,,.bbbbbb..............,,,-.[[[[..............#
 #............r.....,,,..bb...,,,,,,,,,,,,.....,,,............Z,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,.bb..................,,,....................#
 #..h..n............,,,.......,,,,,,,,,,,,.....,,,.....!..c....,,,,,,,,,,,,F,,,,,,,,,,U,,..----..-----.,,,.....................,,,....................#
@@ -158,6 +158,7 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `C` | NPC Ciung Wanara up the big tree with his egg (MQ0 0.3, `talked_to:ciung_wanara` sets `mq0_d3`; he stays up the tree until the Semar talk, `mq0_d4`, step 0.5, since he walks with you in the v5 script) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"!flag:mq0_d4"}` | grass | 1 |
 | `8` | codex spot, the old banyan shrine on the road to the tree (MQ0 0.3 `travel` find; id ASSUMED) | `res://entities/world/pickup.tscn` | `{codex_id:"banyan"}` | grass | 1 |
 | `Y` | NPC the stall-keeper at the market stall (MQ0 0.4, which now comes before the sanggar, sets `mq0_d6`; and Interlude 4.2 `talked_to:purwa_stall`; asks children's names, "a tall man in a blank mask") | `res://entities/npc/npc.tscn` | `{npc_id:"purwa_stall"}` | grass | 1 |
+| `|` | NPC the tall masked stranger lingering three tiles from the market stall (MQ0 0.4, dressing, no talk; the man the stall-keeper describes; gone by dusk `mq0_d6b`; `npc_id` ASSUMED) | `res://entities/npc/npc.tscn` | `{npc_id:"market_stranger", cond:"!flag:mq0_d6b"}` | path | 1 |
 | `q` | clue, the lamp behind the kelir; examining it pulls you into K0 (MQ0 0.8, after the lamps are lit (`mq0_d6b`, step 0.7), `memory_id` `k0_ruwatan`) | `res://entities/world/clue.tscn` | `{clue_id:"kelir_lamp", memory_id:"k0_ruwatan", cond:"flag:mq0_d6b,!flag:memory_k0_ruwatan"}` | floor | 1 |
 | `p` | NPC villager in the show crowd (same props on all 6 tiles; dressing, they scatter in the `raid` beat) | `res://entities/npc/npc.tscn` | `{npc_id:"villager", cond:"!flag:mq0_d8"}` | floor | 6 |
 | `V` | trigger, the crowd in front of the kelir (MQ0 0.9 `area_entered:purwa_crowd`) | `res://entities/world/trigger.tscn` | `{trigger_id:"purwa_crowd", size:Vector2i(9,3)}` | floor | 1 |

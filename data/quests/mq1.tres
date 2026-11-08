@@ -36,7 +36,7 @@ marker = {"zone": "ts_kampung", "id": "sunda_kampung"}
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ1_S5_OBJ"
-all = [{"on": "glyph_learned:sunda_ga", "set_flag": "mq1_3", "objective": "Q_MQ1_S5_P1"}, {"on": "area_entered:sunda_hamlet", "set_flag": "mq1_h1", "objective": "Q_MQ1_S5_P2"}]
+all = [{"on": "glyph_learned:sunda_ga", "set_flag": "mq1_3", "objective": "Q_MQ1_S5_P1", "marker": {"zone": "ts_kampung", "id": "sunda_elder"}}, {"on": "area_entered:sunda_hamlet", "set_flag": "mq1_h1", "objective": "Q_MQ1_S5_P2", "marker": {"zone": "ts_leuwi", "id": "sunda_hamlet"}}]
 set_flag = "mq1_h1"
 recap = "Q_MQ1_S5_DONE"
 marker = {"zone": "ts_kampung", "id": "sunda_elder"}

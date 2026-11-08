@@ -52,6 +52,8 @@ var _wdraw := false
 var _wfade := false
 var _wpaused := false
 var _card: Control
+var _leaf: NinePatchRect
+var _lamp: TextureRect
 var _wguide: CastOverlay
 var _stroke: Line2D
 
@@ -126,6 +128,22 @@ func _ready() -> void:
 	_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_card.visible = false
 	add_child(_card)
+	_leaf = NinePatchRect.new()   # the lontar leaf the glyphs are written on (tools/gen_story_props.py)
+	_leaf.texture = load("res://assets/art/ui/lontar_card.png")
+	_leaf.patch_margin_left = 18
+	_leaf.patch_margin_right = 18
+	_leaf.patch_margin_top = 4
+	_leaf.patch_margin_bottom = 4
+	_leaf.modulate = Color(0.42, 0.34, 0.24)   # lamplit and dim, so the gold ink still reads
+	_leaf.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_leaf.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_card.add_child(_leaf)
+	_lamp = TextureRect.new()
+	_lamp.texture = StoryArt.tex("kelir_lamp")
+	_lamp.scale = Vector2(2, 2)
+	_lamp.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_lamp.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_card.add_child(_lamp)
 	_wguide = preload("res://ui/cast_overlay.tscn").instantiate()
 	_wguide.layer = 12   # over the card
 	add_child(_wguide)
@@ -282,6 +300,10 @@ func _on_write(seq_id: String, glyphs: PackedStringArray) -> void:
 	_wdraw = false
 	_card.modulate.a = 1.0
 	_card.visible = true
+	var lx := (480.0 - _seq.size() * SLOT.x) / 2.0 - 26.0
+	_leaf.position = Vector2(lx, 58)
+	_leaf.size = Vector2(_seq.size() * SLOT.x + 52.0, 124)
+	_lamp.position = Vector2(lx - 36.0, 120)
 	for c in _card.get_children():
 		if c is Label and c.has_meta("written"):
 			c.queue_free()

@@ -39,7 +39,7 @@ const MAP := [
 	"#[[[[..............,,,..l........bb......r....,,,..........bb.,,,,,,,,,,,,,,,,,,,,,,,,,,.....[[[[[[[[.,,,-..........bb.[[[[[.-,,,-.[[[[..............#",
 	"#[[[[...........Q..,,,...........bb...........,,,......?...bb.,,{{{,{{{,,,,,,,{{{,{{{,,,.....[[[[[[[[.,,,-.........rbb.[[[[[..,,,-.[[[[..............#",
 	"#..................,,,........................,,,.............,,,,,,,,,,,,,,,,,,,,,,,,,,..''.[[[[[[[[.,,,...........bb.[[[[[..,,,..[[[[..............#",
-	"#..................,,,.......,,,,,,,,,,,,.....,,,...../.bb....,,,,,,,,,,,,P,,,,,,,,Y,,,,..''.[[[[[[[[.,,,...bbbb....bb.[[[[[.-,,,..[[[[..............#",
+	"#..................,,,.......,,,,,,,,,,,,.....,,,...../.bb....,,,,,,,,,,,,P,,,,,|,,Y,,,,..''.[[[[[[[[.,,,...bbbb....bb.[[[[[.-,,,..[[[[..............#",
 	"#..................,,,..bb...,,,,,,,,,,,,.....,,,.......bb....,,,,,,,,,,,,,,,,,,,,,,,,,,..''.[[[[[[[[.,,,.bbbbbb..............,,,-.[[[[..............#",
 	"#............r.....,,,..bb...,,,,,,,,,,,,.....,,,............Z,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,.bb..................,,,....................#",
 	"#..h..n............,,,.......,,,,,,,,,,,,.....,,,.....!..c....,,,,,,,,,,,,F,,,,,,,,,,U,,..----..-----.,,,.....................,,,....................#",
@@ -90,11 +90,11 @@ const MAP := [
 ]
 
 const SPOTS := {
-	"W": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_tatar_sunda", "target_zone": "ts_kebun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Tatar Sunda
+	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kebun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Tatar Sunda
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kebun"}, "tile": ","},   # spawn, arrival from Tatar Sunda
 	"v": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_alun"}, "tile": ","},   # spawn, arrival from Keraton Galuh
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_10"}, "tile": ","},   # kabut, Galuh gate (one per tile)
-	"E": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_keraton_galuh", "target_zone": "kg_alun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Keraton Galuh
+	"E": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_alun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Keraton Galuh
 	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ibu"}, "tile": "_"},   # NPC Ibu, the hero's mother (MQ0 0.2 tea and 0.10, Interlude 4.4, epilogue cups)
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid", "cond": "step:mq0=11", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]]]}, "tile": ","},   # encounter purwa_raid, the plaza fight, 3 Faceless (MQ0 0.12, last of three skirmishes; `area_cleared:purwa_raid` sets `mq0_7`; v5 step index 11)
 	"9": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid_a", "cond": "step:mq0=11", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter purwa_raid_a, west road skirmish, 2 Faceless (MQ0 0.12, first)
@@ -109,13 +109,13 @@ const SPOTS := {
 	"$": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_stage_lamps", "size": Vector2i(3,3)}, "tile": "_"},   # trigger, lighting the four ceremonial stage oil lamps at dusk (MQ0 0.7 `puzzle_solved:purwa_stage_lamps`)
 	"S": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sanggar_enter", "size": Vector2i(16,9)}, "tile": "_"},   # trigger, sanggar entered (shows draw tutorial)
 	"i": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sanggar_lontar", "size": Vector2i(3,3)}, "tile": "_"},   # trigger, the lontar table in the sanggar (MQ0 0.6 `area_entered:sanggar_lontar`; the write card for the hero's and Laras's names)
-	"J": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_gua_kala", "target_zone": "gk_pelataran", "spawn_id": "from_desa_purwa"}, "tile": "."},   # exit to Gua Kala (P0 entry, the Act VI gate)
+	"J": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_pelataran", "spawn_id": "from_desa_purwa"}, "tile": "."},   # exit to Gua Kala (P0 entry, the Act VI gate)
 	"k": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_9"}, "tile": "."},   # kabut, Gua Kala gate (one per tile), lifts when MQ4 is done (flag `mq4_9`, set by step 4.22)
 	"%": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_north_fog", "size": Vector2i(4,3)}, "tile": "."},   # trigger, test the impenetrable fog at the northern cave mouth (Interlude 4.1 `area_entered:purwa_north_fog`)
 	"j": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_pelataran"}, "tile": "."},   # spawn, arrival from Gua Kala's courtyard
 	"u": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gua_kala"}, "tile": "."},   # spawn, arrival home after Batara Kala (`kala_exit`)
 	"L": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "laras_lontar", "cond": "flag:mq0_4"}, "tile": "_"},   # pickup, Laras's lontar on the burned stage (MQ0 0.10, the deed before Ka; the `clue` piece)
-	"X": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_pantai", "target_zone": "sk_pantai", "spawn_id": "from_desa_purwa"}, "tile": "."},   # exit to Segara Kidul `sk_pantai` (south edge, 2 tiles)
+	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_pantai", "spawn_id": "from_desa_purwa"}, "tile": "."},   # exit to Segara Kidul `sk_pantai` (south edge, 2 tiles)
 	"x": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_i5"}, "tile": "."},   # kabut, south gate to the coast, lifts on the Semar talk (flag `mq4_i5`, step 4.7; one per tile)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_pantai"}, "tile": "."},   # spawn, arrival from `sk_pantai`
 	"z": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_riders"}, "tile": ","},   # spawn, the riders drop you here (Interlude 4.1, target of the `goto` after Act IV)
@@ -132,6 +132,7 @@ const SPOTS := {
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "!flag:mq0_d4"}, "tile": "."},   # NPC Ciung Wanara up the big tree with his egg (MQ0 0.3, `talked_to:ciung_wanara` sets `mq0_d3`; he stays up the tree until the Semar talk, `mq0_d4`, step 0.5, since he walks with you in the v5 script)
 	"8": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "banyan"}, "tile": "."},   # codex spot, the old banyan shrine on the road to the tree (MQ0 0.3 `travel` find; id ASSUMED)
 	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purwa_stall"}, "tile": "."},   # NPC the stall-keeper at the market stall (MQ0 0.4, which now comes before the sanggar, sets `mq0_d6`; and Interlude 4.2 `talked_to:purwa_stall`; asks children's names, "a tall man in a blank mask")
+	"|": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "market_stranger", "cond": "!flag:mq0_d6b"}, "tile": ","},   # NPC the tall masked stranger lingering three tiles from the market stall (MQ0 0.4, dressing, no talk; the man the stall-keeper describes; gone by dusk `mq0_d6b`; `npc_id` ASSUMED)
 	"q": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "kelir_lamp", "memory_id": "k0_ruwatan", "cond": "flag:mq0_d6b,!flag:memory_k0_ruwatan"}, "tile": "_"},   # clue, the lamp behind the kelir; examining it pulls you into K0 (MQ0 0.8, after the lamps are lit (`mq0_d6b`, step 0.7), `memory_id` `k0_ruwatan`)
 	"p": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "villager", "cond": "!flag:mq0_d8"}, "tile": "_"},   # NPC villager in the show crowd (same props on all 6 tiles; dressing, they scatter in the `raid` beat)
 	"V": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_crowd", "size": Vector2i(9,3)}, "tile": "_"},   # trigger, the crowd in front of the kelir (MQ0 0.9 `area_entered:purwa_crowd`)

@@ -57,6 +57,10 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	var art := StoryArt.tex(_key(), true)
+	if art != null and not drop:
+		StoryArt.draw_standing(self, art)
+		return
 	draw_rect(Rect2(-4, -4, 8, 8), Color(0.09, 0.07, 0.16))
 	if codex_id != "":
 		draw_rect(Rect2(-3, -3, 6, 6), Color(0.25, 0.72, 0.95))

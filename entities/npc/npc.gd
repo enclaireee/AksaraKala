@@ -8,7 +8,7 @@ class_name Npc extends Interactable
 
 const DRESSING := [
 	"villager", "laras_crowd", "laras_tag", "stray_cat", "galuh_crowd",
-	"nelayan_jala", "faceless_captain_seen", "wirasana_daughter",
+	"nelayan_jala", "faceless_captain_seen", "wirasana_daughter", "market_stranger",
 ]
 
 const SHEET: Texture2D = preload("res://assets/art/npcs.png")
@@ -110,6 +110,10 @@ static func marker_texture(kind: String) -> Texture2D:
 
 
 func _row() -> int:
+	if npc_id in ["nameless_hunter", "faceless_captain_seen", "market_stranger"]:
+		return 12   # tall stranger in the blank mask
+	if npc_id == "faceless_deserter":
+		return 13   # hooded, face a smooth blank
 	if npc_id in ["semar", "semar_kala"]:
 		return 4
 	if npc_id == "cepot":
@@ -130,7 +134,7 @@ func _row() -> int:
 		return 2
 	if npc_id in ["sunda_elder", "kepala_desa", "juru_kunci", "kidul_jurukunci", "lengser", "mataram_dalang", "ki_darsa", "ki_sumarto", "pak_karto", "nagawiru", "purwa_old_couple", "kidul_nelayan_tua"]:
 		return 1
-	if npc_id in ["pande_besi", "m3_smith", "timur_empu", "aria_kebonan", "pangrenyep", "galuh_official", "galuh_herald", "recruiter_a", "recruiter_b", "hariang_banga", "nameless_hunter", "faceless_deserter", "faceless_captain_seen"]:
+	if npc_id in ["pande_besi", "m3_smith", "timur_empu", "aria_kebonan", "pangrenyep", "galuh_official", "galuh_herald", "recruiter_a", "recruiter_b", "hariang_banga"]:
 		return 7
 	return 0
 

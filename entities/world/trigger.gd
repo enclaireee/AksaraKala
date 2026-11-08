@@ -7,6 +7,10 @@ extends Area2D
 
 
 func _ready() -> void:
+	if StoryArt.tex(trigger_id) != null:   # a quest object stands here (lontar table, lamps...): draw it
+		get_node("/root/Game").changed.connect(func() -> void: visible = get_node("/root/Game").check(cond))
+		visible = get_node("/root/Game").check(cond)
+		queue_redraw()
 	var r := RectangleShape2D.new()
 	r.size = Vector2(size * 16)
 	$Shape.shape = r
@@ -17,3 +21,9 @@ func _ready() -> void:
 			var ev := get_node("/root/Events")
 			ev.area_entered.emit(trigger_id)
 			ev.puzzle_solved.emit(trigger_id.trim_prefix("puzzle_")))
+
+
+func _draw() -> void:
+	var art := StoryArt.tex(trigger_id)
+	if art != null:
+		StoryArt.draw_centered(self, art)

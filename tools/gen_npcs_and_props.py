@@ -13,6 +13,8 @@
   9: stone / prasasti / altar (inscribed candi monolith)
  10: wooden mechanism / door / stall / wheel
  11: stone oil lamp (galuh_lamp)
+ 12: masked stranger (tall blank mask, wide hat: nameless hunter, market stranger)
+ 13: faceless villager (hooded, blank face: deserter)
 """
 import os
 from PIL import Image
@@ -36,6 +38,8 @@ PAL = {
     "n": hexc("36304A"), "N": hexc("211C30"),                      # dark pangsi
     "q": hexc("8C8881"), "Q": hexc("5E5A54"), "l": hexc("B5B0A6"), # candi stone
     "f": hexc("FF9F1C"), "F": hexc("FFE066"),                      # flame / glow
+    "z": hexc("6E6A78"), "Z": hexc("46424F"),                      # faceless grey cloak
+    "y": hexc("EDE6D2"), "Y": hexc("BDB59C"),                      # blank mask
 }
 
 
@@ -75,6 +79,22 @@ HEAD_STD = [
     "...hsessesh...",
     "...hssssssh...",
     "....SssssS....",
+]
+HEAD_MASKED = [   # tall stranger: wide hat brim, smooth blank mask, no eyes
+    "...ZZZZZZZZ...",
+    "..ZZzzzzzzZZ..",
+    "...ZyyyyyyZ...",
+    "...ZyyyyyyZ...",
+    "...ZyyyyyyZ...",
+    "....ZYyyYZ....",
+]
+HEAD_FACELESS = [   # hooded, face a smooth blank
+    "....ZZZZZZ....",
+    "...ZzzzzzzZ...",
+    "...ZzyyyyzZ...",
+    "...ZzyyyyzZ...",
+    "...ZzyyyyzZ...",
+    "....ZzyyzZ....",
 ]
 HEAD_ELDER = [
     "....wwwwww....",
@@ -170,6 +190,20 @@ def row_frames(kind):
                 ["...nnnnnnnn...", "...nnNnnNnn...", "...nnN..Nnn...", "...PP....PP..."],
                 bob=bob, hat_rows=["....nnnnnn...."],
             )
+        elif kind == 12:  # masked stranger (nameless hunter, market stranger, captain seen)
+            im = make_human(
+                HEAD_MASKED,
+                ["..zzzzzzzzzz..", ".zzZzzzzzzZzz.", ".zZZzzzzzzZZz.", "..zZzzzzzzZz.."],
+                ["...ZZZZZZZZ...", "...ZZNZZNZZ...", "...ZZN..NZZ...", "...NN....NN..."],
+                bob=bob, staff=(12, "P"),
+            )
+        elif kind == 13:  # faceless villager (deserter)
+            im = make_human(
+                HEAD_FACELESS,
+                ["..zzzzzzzzzz..", ".zzZzzzzzzZzz.", ".sZzzzzzzzzZs.", "..zZzzzzzzZz.."],
+                ["...pppppppp...", "...ppPppPpp...", "...ppP..Ppp...", "...SS....SS..."],
+                bob=bob,
+            )
         elif kind == 8:  # lutung / sacred monkey / cat
             rows = [
                 "..............",
@@ -257,8 +291,8 @@ def row_frames(kind):
 
 
 def main():
-    sh = Image.new("RGBA", (CW * 4, CH * 12), (0, 0, 0, 0))
-    for r in range(12):
+    sh = Image.new("RGBA", (CW * 4, CH * 14), (0, 0, 0, 0))
+    for r in range(14):
         for c, fr in enumerate(row_frames(r)):
             sh.alpha_composite(fr, (c * CW, r * CH))
     out = px.save(sh, "npcs.png")

@@ -9,6 +9,7 @@ enum State { IDLE, CHASE, FADING, GONE, WINDUP, GRAB, RECOVER, DEAD }
 const GRAB_R := 24.0
 const OVERLAY_SIZE := Vector2(368, 192)   # the ts_leuwi Sandekala room, 23x12 tiles (zones/tatar_sunda.md)
 
+@export var cond := ""                # Game.check condition; empty = always on (zone: `flag:mq1_h3`, after K1)
 @export var engage_dist := 140.0      # TUNE
 @export var move_speed := 36.0        # TUNE
 @export var darken_time := 20.0       # TUNE: seconds to full darkness
@@ -23,6 +24,7 @@ const OVERLAY_SIZE := Vector2(368, 192)   # the ts_leuwi Sandekala room, 23x12 t
 @export var attack_gap := 2.5         # TUNE
 
 var boss_name_key := "BOSS_SANDEKALA"
+var active := true                    # EliteGuard flips it
 var engaged := false
 var state := State.IDLE
 var state_time := 0.0
@@ -39,6 +41,10 @@ func _ready() -> void:
 	if is_queued_for_deletion():
 		return
 	add_to_group("boss")
+	if cond != "":   # hidden and inert until Game.check(cond) holds, so he can't be fought before the Hunt (elite_guard.gd)
+		var g := EliteGuard.new()
+		g.cond = cond
+		add_child(g)
 	marker.polygon = _circle(GRAB_R)
 	var ov := Polygon2D.new()
 	ov.polygon = PackedVector2Array([-OVERLAY_SIZE / 2.0, Vector2(OVERLAY_SIZE.x, -OVERLAY_SIZE.y) / 2.0,

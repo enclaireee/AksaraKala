@@ -379,7 +379,9 @@ func _all_hit(id: String, i: int) -> bool:
 
 
 ## How much of `on` already happened in a way that cannot fire again, capped at `need`: held items and known
-## glyphs count each match, a unique kill (boss, elite) already in `killed` meets it (it never respawns).
+## glyphs count each match, a unique kill (boss, elite) already in `killed` meets it (it never respawns), and
+## a lived memory, an examined clue or a solved puzzle meets it through the flag it left (so doing the Hunt's
+## clues, the K1 memory or the lanterns in any order cannot soft-lock the quest).
 func _already(on: String, need: int) -> int:
 	var kv := on.split(":", true, 1)
 	if kv.size() < 2:
@@ -388,6 +390,12 @@ func _already(on: String, need: int) -> int:
 	match kv[0]:
 		"boss_defeated", "enemy_killed":
 			return need if kv[1] in killed else 0
+		"memory_done":   # a Kelir memory can only be lived once: its flag stays set after the signal is gone
+			return need if has_flag("memory_" + kv[1]) else 0
+		"clue_examined":   # entered out of order, the signal fired before the step was current
+			return need if has_flag("clue_" + kv[1]) else 0
+		"puzzle_solved":
+			return need if has_flag("puzzle_" + kv[1]) or has_flag(kv[1]) else 0
 		"item_picked":
 			pool = inventory
 		"glyph_learned":
