@@ -24,9 +24,9 @@ func _initialize() -> void:
 
 	# choice_tell_ciung: Sunda Ca radius +10%
 	_reset()
-	check(is_equal_approx(_radius(burst), 64.0), "burst radius 64 without the flag (%s)" % _radius(burst))
+	check(is_equal_approx(_radius(burst), burst.radius), "burst radius unchanged without the flag (%s)" % _radius(burst))
 	g.flags["choice_tell_ciung"] = true
-	check(is_equal_approx(_radius(burst), 64.0 * SpellUtil.TELL_CIUNG_BURST_RADIUS), "burst radius +10%% with the flag (%s)" % _radius(burst))
+	check(is_equal_approx(_radius(burst), burst.radius * SpellUtil.TELL_CIUNG_BURST_RADIUS), "burst radius +10%% with the flag (%s)" % _radius(burst))
 	check(is_equal_approx(SpellUtil.radius_mult(ombak), 1.0), "tell_ciung leaves other spells alone")
 
 	# choice_offer_memory: Ombak costs 3 less; +20% poise only in Act VI

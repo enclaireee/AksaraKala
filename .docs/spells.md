@@ -34,15 +34,32 @@ Damage, Ward absorb and Summon scale with Spirit and Ingatan ([balance.md](balan
 
 | Script | Glyph | Spell | Effect (base, **TUNE**) | Gauge cost |
 |--------|-------|-------|-------------------------|------------|
-| Sunda | Ka | Bolt | Projectile, 30 damage | 15 |
-| Sunda | Ga | Ward | Shield absorbing 40 damage for 8 s | 25 |
-| Sunda | Nga | Bind | Area: normal enemies Bound (rooted) 2 s, elites and bosses slowed 60% for 4 s ([combat.md](combat.md) 4) | 20 |
-| Sunda | Ca | Burst | Area blast around the player, 40 damage, radius 64 px | 30 |
-| Jawa | Ha | Heal | Restore 30% max HP, clears Curse | 35 |
-| Jawa | Na | Dash-strike | Dash through enemies, 25 damage, brief invincibility | 20 |
-| Jawa | Ca | Rally | +30% attack speed, +50% stamina regen for 10 s | 40 |
-| Jawa | Ra | Summon | A tiger spirit fights for 10 s, about 15 damage per 0.6 s | 50 |
-| Jawa | Ka | Ombak (Tide), P0 final glyph | A wave in the aim direction: 35 damage, pushes enemies back 64 px, destroys enemy projectiles it touches | 35 |
+| Sunda | Ka | Bolt | Piercing bolt, 36 damage to the first enemy and 27 to a second; sets both burning (30% of the hit over 1.5 s) | 15 |
+| Sunda | Ga | Ward | Shield absorbing 60 damage for 10 s. **Same for every class.** When damage breaks it, it bursts: 22 damage and a shove in 56 px | 25 |
+| Sunda | Nga | Bind | Area 88 px: roots every enemy 2 s and deals 14 thorn damage. Bosses are slowed 60% for 4 s instead ([combat.md](combat.md) 4) | 20 |
+| Sunda | Ca | Burst | Shockwave around the player, 52 damage, radius 72 px, pushes enemies back | 30 |
+| Jawa | Ha | Heal | Restore 30% max HP at once and 20% more over 5 s; clears Curse, Burn and Slow | 35 |
+| Jawa | Na | Dash-strike | Dash 112 px through enemies, 34 damage, invincible during the dash | 20 |
+| Jawa | Ca | Rally | 12 s: +35% attack speed, x2 stamina regen, 40 stamina back at once | 40 |
+| Jawa | Ra | Summon | A tiger spirit hunts for 10 s: a swipe of 18 every 0.55 s and a pounce (x2) every 2.2 s | 50 |
+| Jawa | Ka | Ombak (Tide), P0 final glyph | A wave in the aim direction: 44 damage, pushes enemies back 64 px, destroys enemy projectiles it touches | 35 |
+
+### Perfect casts and class variants (2026-11-08 redesign, **TUNE**)
+Every spell now pays for the effort of drawing it. A stroke scoring at least 0.92 is a **Perfect cast**: +12% power (damage, shield, heal, duration), a gold flourish and a camera nudge. A smudged cast (below 0.80) still works at 70%.
+Each class bends the six spells that gain from it; **Ga is identical for all four** (a shared safety net), and Ha, Ca (Jawa) and Ra keep the same core with a different edge:
+
+| Glyph | Hulubalang (warrior) | Pamanah (archer) | Pendekar (rogue) | Wiku (mage) |
+|-------|-----|-----|-----|-----|
+| Ka Bolt | Slow heavy bolt: x1.35 damage, knockback, double poise | Fan of 3 that pierce everything | Twin: a second bolt 0.14 s behind at 80% | Homing: curves toward the nearest foe ahead |
+| Nga Bind | Radius x1.3, thorns x1.5 | Slow 50% for 3 s after the root | Root x1.3 longer, 0.5 s invincible | Each rooted enemy returns 3 Sakti (max 6) |
+| Ca Burst | Radius x1.25, double poise, long knockback | Also looses 8 piercing shards | Slows what it hits 3 s, 0.6 s invincible | A second blast (70%, radius x1.15) 0.45 s later |
+| Ha Heal | 12% of max HP becomes a shield | Stamina refilled | 1 s invincible | Both parts x1.2 |
+| Na Dash | 96 px, x1.25 damage, shove, double poise | 140 px, ends with a piercing arrow | 128 px, hits bleed, longer i-frames | 104 px, ends with a small blast |
+| Ca Rally | Damage taken -20% | Attack speed +50%, move speed +20% | Dodge costs half | Sakti gain x1.5 |
+| Ra Summon | Each claw mends the summoner 1.5% | Faster tiger, pounces from 120 px | Two tigers (second at 60%) | 14 s, claws burn |
+| Ka Ombak | Wall of water: 90 px push, double poise | Fan of 3 waves | Cold: slows 3 s | Rolls further, a second wave follows |
+
+Spirit scaling and Ingatan still apply to every number. Spells never refill Sakti, except Wiku's Bind refund, which is capped.
 
 Notes:
 - **Final glyph: Jawa Ka** (MQ4 4.9, P0 and main path since story v3.1; earned by passing the Trial of the Waves; **ASSUMED**). It completes "ha na ca ra ka", the first line of the Hanacaraka ("there were messengers"), which the epilogue recites, and it is the next letter by the first-letters rule. Kala's fight must stay beatable without it (it breaks the eclipse shield but is not required).
@@ -88,7 +105,9 @@ Class changes numbers and delivery, not the glyph set. See [classes.md](classes.
 ## 7. Feedback and juice
 - Ink-trail with a soft glow, ends with a flare on success.
 - Short sfx on start, ending (success and fizzle), and per spell.
-- On success the glyph briefly appears large at the cursor with its Latin name.
+- On success the glyph briefly appears large at the cursor with its Latin name, a quality line under it ("Perfect +12% - 25 sakti", "Clean", "Smudged 70%") and a rune ring blooming around the caster, tinted with the glyph's element colour (`SpellUtil.ELEMENT`). Perfect adds a second gold ring.
+- The cursor ring warms toward red and flickers as the 2.5 s draw time runs out.
+- Every spell has sprite FX (`assets/art/fx/spells/`, `tools/gen_spell_fx.py`, played by `spells/spell_anim.gd` and `spell_fx.gd`): bolt with impact starbursts, ward bubble and shatter, root eruptions under bound foes, shockwave ring, rising leaves, dash streak, rally aura, a tiger spirit with run and pounce frames, and the Ombak crest.
 - Screenshake and hit flash on impact.
 - Cast failures fizzle with a gentle puff, not a harsh buzz (forgiving).
 

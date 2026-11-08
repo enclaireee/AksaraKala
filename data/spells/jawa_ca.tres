@@ -9,6 +9,6 @@ glyph_id = "jawa_ca"
 title = "SPELL_JAWA_CA_NAME"
 cost = 40.0
 power = 0.0
-duration = 10.0
+duration = 12.0
 radius = 0.0
 scene = ExtResource("2")

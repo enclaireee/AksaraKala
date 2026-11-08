@@ -10,5 +10,5 @@ title = "SPELL_SUNDA_NGA_NAME"
 cost = 20.0
 power = 0.0
 duration = 0.0
-radius = 64.0
+radius = 88.0
 scene = ExtResource("2")

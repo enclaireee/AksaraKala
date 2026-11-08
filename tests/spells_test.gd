@@ -26,30 +26,30 @@ func _initialize() -> void:
 	root.add_child(player)
 	await physics_frame
 
-	# Bolt vs chaser: 30, flinch; 0.7 -> 21
+	# Bolt vs chaser: 36, flinch; 0.7 -> 25 (burn ticks only start after 0.5 s)
 	var c := await _enemy("chaser", Vector2(60, 0))
 	await _bolt(1.0, Vector2.ZERO)
-	check(c.health.hp == 10, "bolt deals 30 (hp %d)" % c.health.hp)
+	check(c.health.hp == 4, "bolt deals 36 (hp %d)" % c.health.hp)
 	check((c as Chaser).state == Chaser.State.FLINCH, "bolt flinches chaser")
 	c.queue_free()
 	c = await _enemy("chaser", Vector2(60, 0))
 	await _bolt(0.7, Vector2.ZERO)
-	check(c.health.hp == 40 - 21, "rough bolt deals 21 (hp %d)" % c.health.hp)
+	check(c.health.hp == 40 - 25, "rough bolt deals 25 (hp %d)" % c.health.hp)
 	c.queue_free()
 
-	# Bolt vs tank: 45 poise
+	# Bolt vs tank: 54 poise (36 x 1.5)
 	var t := await _enemy("tank", Vector2(60, 0))
 	var p0: float = t.poise
 	await _bolt(1.0, Vector2.ZERO)
-	check(is_equal_approx(p0 - t.poise, 45.0), "bolt removes 45 poise (%f)" % (p0 - t.poise))
+	check(is_equal_approx(p0 - t.poise, 54.0), "bolt removes 54 poise (%f)" % (p0 - t.poise))
 	t.queue_free()
 
 	# Ward
 	var h := player.health
 	var w1 := await _spell("sunda_ga", 1.0)
-	check(h.shield == 40, "ward shield 40")
-	h.take_damage(40, null, true)
-	check(h.hp == h.max_hp, "ward absorbed 40")
+	check(h.shield == 60, "ward shield 60")
+	h.take_damage(60, null, true)
+	check(h.hp == h.max_hp, "ward absorbed 60")
 	await physics_frame
 	await physics_frame
 	check(h.shield == 0 and not is_instance_valid(w1), "ward gone at 0 shield")
@@ -59,10 +59,10 @@ func _initialize() -> void:
 	var w2 := await _spell("sunda_ga", 1.0)
 	await physics_frame
 	check(get_nodes_in_group("ward").size() == 1 and not is_instance_valid(w1), "recast leaves one ward")
-	check(h.shield == 40, "recast shield intact (%d)" % h.shield)
-	for i in 520:
+	check(h.shield == 60, "recast shield intact (%d)" % h.shield)
+	for i in 640:
 		await physics_frame
-	check(not is_instance_valid(w2) and h.shield == 0, "ward ends after 8 s")
+	check(not is_instance_valid(w2) and h.shield == 0, "ward ends after 10 s")
 
 	# Bind
 	var near := await _enemy("chaser", Vector2(500, 0))
@@ -83,7 +83,7 @@ func _initialize() -> void:
 		await physics_frame
 	check(near.global_position.distance_to(n0) < 0.5, "bound enemy does not move")
 
-	# Burst: 40 in 64 px, nothing beyond. Warrior x0.9 damage, +25% radius.
+	# Burst: 52 in 72 px, nothing beyond. Warrior x0.9 damage (47), +25% radius (90).
 	player.position = Vector2(0, 0)
 	var bn := await _enemy("chaser", Vector2(40, 0))
 	var bf := await _enemy("chaser", Vector2(76, 0))
@@ -99,7 +99,7 @@ func _initialize() -> void:
 	await _spell("sunda_ca", 1.0)
 	for i in 4:
 		await physics_frame
-	check(bf.health.hp == 40 - 36, "warrior burst: radius 80, damage 36 (hp %d)" % bf.health.hp)
+	check(bf.health.hp == 0, "warrior burst: radius 90 reaches 76 px, damage 47 (hp %d)" % bf.health.hp)
 	for i in 20:
 		await physics_frame
 	player.class_id = ""
@@ -121,7 +121,7 @@ func _initialize() -> void:
 	check(h.hp == 46, "mage heal x1.2 (hp %d)" % h.hp)
 	player.class_id = ""
 
-	# Dash-strike: moves 80 px along direction, damages, invincible
+	# Dash-strike: moves 112 px along direction, damages, invincible
 	player.position = Vector2(0, 0)
 	var de := await _enemy("chaser", Vector2(40, 0))
 	var d := SpellData.for_glyph("jawa_na")
@@ -132,8 +132,8 @@ func _initialize() -> void:
 	root.add_child(ds)
 	for i in 15:
 		await physics_frame
-	check(absf(player.position.x - 80.0) < 1.0, "dash moved player to %s" % player.position)
-	check(de.health.hp == 40 - 25, "dash deals 25 (hp %d)" % de.health.hp)
+	check(absf(player.position.x - 112.0) < 1.0, "dash moved player to %s" % player.position)
+	check(de.health.hp == 40 - 34, "dash deals 34 (hp %d)" % de.health.hp)
 
 	de.queue_free()
 
@@ -141,12 +141,12 @@ func _initialize() -> void:
 	var a0: float = player.atk_speed
 	var r0: float = player.stamina.regen
 	var r1 := await _spell("jawa_ca", 1.0)
-	check(is_equal_approx(player.atk_speed, a0 * 1.3) and is_equal_approx(player.stamina.regen, r0 * 1.5), "rally buffs")
+	check(is_equal_approx(player.atk_speed, a0 * 1.35) and is_equal_approx(player.stamina.regen, r0 * 2.0), "rally buffs")
 	var r2 := await _spell("jawa_ca", 1.0)
-	check(is_equal_approx(player.atk_speed, a0 * 1.3), "rally recast does not stack (%f)" % player.atk_speed)
-	for i in 640:
+	check(is_equal_approx(player.atk_speed, a0 * 1.35), "rally recast does not stack (%f)" % player.atk_speed)
+	for i in 760:
 		await physics_frame
-	check(not is_instance_valid(r2) and is_equal_approx(player.atk_speed, a0) and is_equal_approx(player.stamina.regen, r0), "rally ends after 10 s")
+	check(not is_instance_valid(r2) and is_equal_approx(player.atk_speed, a0) and is_equal_approx(player.stamina.regen, r0), "rally ends after 12 s")
 
 	# Summon: spawns, hits an enemy every 0.6 s, expires after 10 s
 	player.position = Vector2(0, 0)
@@ -164,9 +164,70 @@ func _initialize() -> void:
 	# Spirit scaling reaches Ward and Bolt
 	player.mult = 2.0
 	var w3 := await _spell("sunda_ga", 1.0)
-	check(h.shield == 80, "ward scaled by spell_mult (%d)" % h.shield)
+	check(h.shield == 120, "ward scaled by spell_mult (%d)" % h.shield)
 	w3.queue_free()
 	player.mult = 1.0
+
+	# Ward is the same for every class
+	for cls in ["warrior", "archer", "rogue", "mage"]:
+		player.class_id = cls
+		var wc := await _spell("sunda_ga", 1.0)
+		check(h.shield == 60, "%s ward is 60 like everyone's (%d)" % [cls, h.shield])
+		wc.queue_free()
+		await physics_frame
+	player.class_id = ""
+	h.shield = 0
+
+	# Bolt pierces one extra enemy at 75%, and burns
+	player.position = Vector2(-1000, 0)
+	var b1 := await _enemy("chaser", Vector2(40, 0))
+	var b2 := await _enemy("chaser", Vector2(80, 0))
+	var bd := SpellData.for_glyph("sunda_ka")
+	var bs: Bolt = bd.scene.instantiate()
+	bs.caster = player
+	bs.data = bd
+	bs.direction = Vector2.RIGHT
+	bs.global_position = Vector2(10, -6)
+	root.add_child(bs)
+	for i in 24:
+		await physics_frame
+	check(b1.health.hp <= 40 - 36 and b2.health.hp <= 40 - 27, "bolt pierces: 36 then 27 (%d, %d)" % [b1.health.hp, b2.health.hp])
+	check(b1.status.has(Status.Type.BURN), "bolt burns")
+	b1.queue_free()
+	b2.queue_free()
+
+	# Bind: thorns 14 on top of the root
+	player.position = Vector2(0, 0)
+	var th := await _enemy("chaser", Vector2(50, 0))
+	await _spell("sunda_nga", 1.0)
+	check(th.health.hp == 40 - 14 and th.status.speed_mult() == 0.0, "bind thorns 14 and roots (hp %d)" % th.health.hp)
+	th.queue_free()
+
+	# Heal: 30% now, 20% more over 5 s; Pamanah refills stamina
+	h.hp = 10
+	var hl := await _spell("jawa_ha", 1.0)
+	check(h.hp == 40, "heal 30 at once (hp %d)" % h.hp)
+	for i in 330:
+		await physics_frame
+	check(h.hp == 60 and not is_instance_valid(hl), "heal regen adds 20 over 5 s (hp %d)" % h.hp)
+	player.class_id = "archer"
+	player.stamina.value = 10.0
+	await _spell("jawa_ha", 1.0)
+	check(is_equal_approx(player.stamina.value, player.stamina.max_stamina), "archer heal refills stamina")
+	player.class_id = ""
+	h.hp = h.max_hp
+
+	# Perfect cast: +12% power on the Ward
+	var wp := SpellData.for_glyph("sunda_ga").scene.instantiate()
+	wp.caster = player
+	wp.data = SpellData.for_glyph("sunda_ga")
+	wp.perfect = true
+	root.add_child(wp)
+	await physics_frame
+	check(h.shield == roundi(60 * SpellUtil.PERFECT_BONUS), "perfect ward %d" % h.shield)
+	wp.queue_free()
+	await physics_frame
+	h.shield = 0
 
 	# Every glyph maps to a spell
 	for id in ["sunda_ka", "sunda_ga", "sunda_nga", "sunda_ca", "jawa_ha", "jawa_na", "jawa_ca", "jawa_ra"]:

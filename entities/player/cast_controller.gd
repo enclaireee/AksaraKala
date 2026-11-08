@@ -8,6 +8,8 @@ signal read(result: Dictionary)   # every recognized stroke: {glyph, score, powe
 @export var overlay: CastOverlay
 @export var practice := false   # sanggar: no sakti gate, no cost (spells.md 9)
 
+const KICK := {"sunda_ca": 2.5, "jawa_ka": 2.0, "jawa_ra": 1.5, "jawa_na": 1.5}   # camera shake px per glyph
+
 @onready var player: Player = get_parent()
 
 var drawing := false
@@ -45,8 +47,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(_delta: float) -> void:
-	if drawing and Time.get_ticks_msec() - _started > player.tuning.cast_draw_limit * 1000.0:
+	if not drawing:
+		return
+	var limit := player.tuning.cast_draw_limit * 1000.0
+	var used := float(Time.get_ticks_msec() - _started)
+	if used > limit:
 		cancel()
+	else:
+		overlay.set_time_left(1.0 - used / limit)   # the ring warms toward red as the time runs out
 
 
 func start() -> bool:
@@ -94,8 +102,12 @@ func release() -> void:
 		_fizzle(tr("UI_FIZZLE_NEEDS") % ceili(SpellUtil.cost(player, spell)))
 	else:
 		_exit_cast_mode()
-		overlay.finish(true, "%s · %s" % [glyph.latin.capitalize(), tr(spell.title)])
-		_spawn(spell, power)
+		var perfect := r.score >= SpellUtil.PERFECT_SCORE and power >= 1.0
+		overlay.finish(true, "%s · %s" % [glyph.latin.capitalize(), tr(spell.title)], {
+			glyph_id = glyph.id, perfect = perfect, power = power, cost = SpellUtil.cost(player, spell),
+			screen_pos = player.get_global_transform_with_canvas().origin + Vector2(0, -6),
+		})
+		_spawn(spell, power, perfect)
 		get_node("/root/Events").spell_cast.emit(glyph.id, power)
 
 
@@ -116,14 +128,19 @@ func _lock() -> void:
 	_locked_until = Time.get_ticks_msec() + int(player.tuning.cast_lockout * 1000.0)
 
 
-func _spawn(spell: SpellData, power: float) -> void:
+func _spawn(spell: SpellData, power: float, perfect := false) -> void:
 	var s: Node2D = spell.scene.instantiate()
 	s.caster = player
 	s.data = spell
 	s.direction = aim
 	s.power = power
+	if "perfect" in s:
+		s.perfect = perfect   # a clean stroke: the spell applies SpellUtil.PERFECT_BONUS itself
 	s.global_position = player.global_position
 	player.get_parent().add_child(s)
+	var kick: float = KICK.get(spell.glyph_id, 0.0) + (1.0 if perfect else 0.0)   # a heavy spell and a Perfect cast shake the screen
+	if kick > 0.0 and player.get("camera") != null:
+		player.camera.shake(kick, 0.2)
 
 
 func _exit_cast_mode() -> void:

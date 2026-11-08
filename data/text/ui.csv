@@ -244,3 +244,7 @@ UI_ACT_HEAL_JAMU,Minum jamu,Drink jamu
 UI_ACT_INTERACT,Bertindak,Interact
 UI_ACT_MENU,Buku,Book
 UI_ACT_PAUSE,Jeda,Pause
+UI_CAST_PERFECT,Sempurna,Perfect
+UI_CAST_GOOD,Bersih,Clean
+UI_CAST_SMUDGED,Kabur,Smudged
+UI_CAST_SAKTI,sakti,sakti
