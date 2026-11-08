@@ -102,7 +102,7 @@ func _ready() -> void:
 	_hp_txt.position = Vector2(0, -1)
 	_hp_txt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_hp_txt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_hp_txt.add_theme_font_size_override("font_size", 7)
+	_hp_txt.add_theme_font_size_override("font_size", 10)
 	_hp_txt.add_theme_constant_override("outline_size", 2)
 	_hp_txt.add_theme_color_override("font_color", CREAM)
 	_hp_txt.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -172,7 +172,7 @@ func _ready() -> void:
 	_menu_hint.text = tr("UI_HINT_MENU") % get_node("/root/Game").key_name("pause").replace("Escape", "Esc")
 	_menu_hint.position = Vector2(480 - 6 - 70, 24)
 	_menu_hint.size = Vector2(70, 12)
-	_menu_hint.add_theme_font_size_override("font_size", 7)
+	_menu_hint.add_theme_font_size_override("font_size", 10)
 	_menu_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_menu_hint.modulate.a = 0.55
 	_menu_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -329,7 +329,7 @@ func _on_quest_updated(id: String) -> void:
 	if now[0] != seen[0] or now[1] > seen[1]:
 		var t: String = get_node("/root/Game").quest_objective_text(id)
 		if t != "":
-			_push_banner("UI_Q_UPDATED", t)
+			_push_banner("UI_Q_UPDATED", _title(id))   # just the quest name; the tracker card holds the detail
 		if now[0] != seen[0]:
 			_show_step_hint(id)
 	_pulse_tracker()
@@ -354,7 +354,7 @@ func _update_banner(delta: float) -> void:
 			_banner_root.visible = false
 	if _banner_left <= 0.0 and not _banners.is_empty():
 		var b: Array = _banners.pop_front()
-		_banner_head.text = "◆ %s ◆" % b[0]
+		_banner_head.text = b[0]
 		_banner_body.text = b[1]
 		_banner_root.visible = true
 		_banner_left = BANNER_TIME
@@ -463,7 +463,7 @@ func _build_extras() -> void:
 	_toast.size = Vector2(TOAST_W - 8, 12)
 	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_toast.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_toast.add_theme_font_size_override("font_size", 7)
+	_toast.add_theme_font_size_override("font_size", 10)
 	_toast.add_theme_color_override("font_color", GOLD)
 	_toast.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_outlined(_toast)
@@ -471,7 +471,7 @@ func _build_extras() -> void:
 	_toast_root.add_child(_toast)
 
 	const BANNER_W := 164.0
-	const BANNER_H := 24.0
+	const BANNER_H := 29.0
 	_banner_root = Control.new()
 	_banner_root.position = Vector2(158, 8)
 	_banner_root.size = Vector2(BANNER_W, BANNER_H)
@@ -481,21 +481,22 @@ func _build_extras() -> void:
 	_nine("panel", Rect2(0, 0, BANNER_W, BANNER_H), [6, 6, 6, 6], _banner_root)
 	_rect(Vector2(6, BANNER_H - 1), Vector2(BANNER_W - 12, 1), Color("C9A24A", 0.75), _banner_root)
 	_banner_head = Label.new()
-	_banner_head.position = Vector2(4, 2)
-	_banner_head.size = Vector2(BANNER_W - 8, 9)
+	_banner_head.position = Vector2(4, 3)
+	_banner_head.size = Vector2(BANNER_W - 8, 10)
 	_banner_head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_banner_head.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_banner_head.add_theme_font_size_override("font_size", 7)
+	_banner_head.add_theme_font_size_override("font_size", 10)
 	_banner_head.add_theme_color_override("font_color", GOLD)
 	_banner_head.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_outlined(_banner_head)
 	_banner_root.add_child(_banner_head)
 	_banner_body = Label.new()
-	_banner_body.position = Vector2(4, 12)
-	_banner_body.size = Vector2(BANNER_W - 8, 10)
+	_banner_body.position = Vector2(4, 13)
+	_banner_body.size = Vector2(BANNER_W - 8, 14)
 	_banner_body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_banner_body.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_banner_body.add_theme_font_size_override("font_size", 8)
+	_banner_body.theme_type_variation = &"HeaderLarge"   # Jersey 15, the display face
+	_banner_body.add_theme_font_size_override("font_size", 15)
 	_banner_body.add_theme_color_override("font_color", CREAM)
 	_banner_body.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_outlined(_banner_body)

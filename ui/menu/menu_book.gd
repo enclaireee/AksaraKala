@@ -26,7 +26,7 @@ const WAX := Color("9E2B25")
 const VERD := Color("3F7A66")
 
 const FONT_NUM := "res://assets/fonts/Jersey10-Regular.ttf"
-const FONT_ITALIC := "res://assets/fonts/CrimsonPro-Italic.ttf"
+const FONT_ITALIC := "res://assets/fonts/Jersey10-Regular.ttf"
 
 var content: Control           # the menu adds its TabContainer here (between the pages and the front ornaments)
 var footer_box: HBoxContainer
@@ -58,7 +58,7 @@ func build(titles: Array, icons: Array) -> void:
 		b.expand_icon = false
 		b.clip_text = true
 		b.add_theme_font_override("font", UIFx.cinzel())
-		b.add_theme_font_size_override("font_size", 8)
+		b.add_theme_font_size_override("font_size", 10)
 		b.add_theme_constant_override("h_separation", 4)
 		b.add_theme_constant_override("outline_size", 0)
 		b.set_meta("title", titles[i])
@@ -288,7 +288,7 @@ static func keycap(k: String) -> Control:
 		var l := Label.new()
 		l.text = k
 		l.add_theme_font_override("font", f)
-		l.add_theme_font_size_override("font_size", 7)
+		l.add_theme_font_size_override("font_size", 10)
 		l.add_theme_color_override("font_color", INK)
 		l.add_theme_constant_override("outline_size", 0)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -332,7 +332,7 @@ static func small_button(t: String) -> Button:
 	b.text = t
 	b.focus_mode = FOCUS_ALL
 	b.add_theme_font_override("font", UIFx.cinzel())
-	b.add_theme_font_size_override("font_size", 8)
+	b.add_theme_font_size_override("font_size", 10)
 	b.add_theme_constant_override("outline_size", 0)
 	for c in ["font_color", "font_pressed_color"]:
 		b.add_theme_color_override(c, INK)

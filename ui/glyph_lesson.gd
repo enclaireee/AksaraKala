@@ -9,7 +9,10 @@ extends CanvasLayer
 
 const NEEDED := 3   # TUNE: successful casts per lesson
 const HOLD := 1.0
-const GUIDE_RECT := Rect2(380, 20, 80, 80)   # same corner as zones/desa_purwa.gd
+const CARD := Rect2(292, 44, 180, 160)   # right edge, under the Ilmu plate: clear of the tracker, banner and dialogue box
+const GUIDE_RECT := Rect2(CARD.position.x + 14.0, CARD.position.y + 32.0, 68.0, 68.0)   # the ghost glyph sits in the card's slot
+const INK_HEAD := Color("7A2A1E")
+const HINT_COL := Color("7A6A50")
 const JAWA := "res://assets/fonts/NotoSansJavanese.ttf"
 const SUNDA := "res://assets/fonts/NotoSansSundanese.ttf"
 const GOLD := Color("F3E3B8")
@@ -37,6 +40,8 @@ var _aksara: Label
 var _body: Label
 var _tip: Label
 var _progress: Label
+var _pips: Array[TextureRect] = []
+var _hold_bar: ColorRect
 var _msg: Label
 var writing := ""   # write-mode sequence id while the card is up
 var _seq := PackedStringArray()
@@ -61,35 +66,54 @@ func _ready() -> void:
 	_panel.visible = false
 	_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_panel)
-	var bg := NinePatchRect.new()   # framed card (ui.md 3b)
-	bg.texture = load("res://assets/art/ui/panel.png")
-	for side in ["left", "top", "right", "bottom"]:
-		bg.set("patch_margin_" + side, 6)
-	bg.position = Vector2(6, 6)
-	bg.size = Vector2(250, 112)
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_panel.add_child(bg)
-	_name = _label(Vector2(14, 11), Vector2(180, 12))
+	var cx := CARD.position.x
+	var cy := CARD.position.y
+	var bg := _nine("panel", CARD, 6)   # framed card (ui.md 3b)
+	_panel.move_child(bg, 0)
+	_name = _label(Vector2(cx + 10, cy + 8), Vector2(CARD.size.x - 20, 12))
 	_name.theme_type_variation = &"Heading"
-	_aksara = _label(Vector2(200, 10), Vector2(50, 36))
-	_aksara.add_theme_font_size_override("font_size", 28)
-	_aksara.add_theme_color_override("font_color", GOLD)
-	_aksara.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_name.autowrap_mode = TextServer.AUTOWRAP_OFF
 	var rule := TextureRect.new()
 	rule.texture = load("res://assets/art/ui/divider.png")
-	rule.position = Vector2(14, 24)
+	rule.position = Vector2(cx + 10, cy + 21)
 	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(rule)
-	_body = _label(Vector2(14, 31), Vector2(182, 36))
-	_tip = _label(Vector2(14, 68), Vector2(236, 26))
-	_tip.modulate = GOLD
-	_progress = _label(Vector2(14, 99), Vector2(150, 12))
-	_msg = _label(Vector2(14, 122), Vector2(250, 12))
-	_msg.modulate = Color(0.9, 0.7, 0.5)
-	var hint := _label(Vector2(150, 99), Vector2(100, 12))
+	_nine("slot", Rect2(cx + 10, cy + 28, 76, 76), 4)   # the drawing slot holding the ghost glyph
+	_aksara = _label(Vector2(cx + 92, cy + 28), Vector2(78, 38))
+	_aksara.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_aksara.add_theme_font_size_override("font_size", 28)
+	_aksara.add_theme_color_override("font_color", INK_HEAD)
+	_aksara.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_aksara.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	for i in NEEDED:   # one lozenge per cast: lit once done
+		var d := TextureRect.new()
+		d.texture = load("res://assets/art/ui/lozenge.png")
+		d.position = Vector2(cx + 92 + (78 - NEEDED * 5 - (NEEDED - 1) * 6) / 2 + i * 11, cy + 72)
+		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_panel.add_child(d)
+		_pips.append(d)
+	_progress = _label(Vector2(cx + 92, cy + 82), Vector2(78, 12))
+	_progress.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_progress.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_msg = _label(Vector2(cx + 92, cy + 94), Vector2(78, 12))
+	_msg.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_msg.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_msg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_msg.add_theme_color_override("font_color", INK_HEAD)
+	_tip = _label(Vector2(cx + 10, cy + 108), Vector2(CARD.size.x - 20, 36))
+	_body = _label(Vector2.ZERO, Vector2.ONE)   # the codex lore stays in the codex; the card only teaches the stroke
+	_body.visible = false
+	var hint := _label(Vector2(cx + 10, cy + CARD.size.y - 17), Vector2(CARD.size.x - 20, 12))
 	hint.text = tr("UI_HOLD_SKIP")
-	hint.modulate = DIM
+	hint.autowrap_mode = TextServer.AUTOWRAP_OFF
+	hint.add_theme_color_override("font_color", HINT_COL)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_hold_bar = ColorRect.new()
+	_hold_bar.color = INK_HEAD
+	_hold_bar.position = Vector2(cx + 10, cy + CARD.size.y - 8)
+	_hold_bar.size = Vector2(0, 1)
+	_hold_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(_hold_bar)
 	var ev := get_node("/root/Events")
 	ev.glyph_learned.connect(_on_learned)
 	ev.dialogue_requested.connect(func(_s, _l): _dialogue = true)
@@ -111,12 +135,24 @@ func _ready() -> void:
 	_stroke.antialiased = false
 	_card.add_child(_stroke)
 	var hint_w := Label.new()
-	hint_w.text = "UI_WRITE_HINT"
+	hint_w.text = tr("UI_WRITE_HINT")
 	hint_w.position = Vector2(0, 220)
 	hint_w.size = Vector2(480, 12)
 	hint_w.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hint_w.modulate = Color(1, 1, 1, 0.6)
 	_card.add_child(hint_w)
+
+
+func _nine(tex: String, rect: Rect2, m: int) -> NinePatchRect:
+	var r := NinePatchRect.new()
+	r.texture = load("res://assets/art/ui/%s.png" % tex)
+	for side in ["left", "top", "right", "bottom"]:
+		r.set("patch_margin_" + side, m)
+	r.position = rect.position
+	r.size = rect.size
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(r)
+	return r
 
 
 func _label(pos: Vector2, sz: Vector2) -> Label:
@@ -188,8 +224,9 @@ func _font(l: Label, g: GlyphData) -> void:
 
 
 func _set_progress(power: float, shown := true) -> void:
-	var t := _t("UI_LESSON_PROGRESS") % [count, NEEDED]
-	_progress.text = t + (" · %d%%" % roundi(power * 100.0) if shown else "")
+	_progress.text = "%d / %d" % [count, NEEDED] + ("  %d%%" % roundi(power * 100.0) if shown and count > 0 else "")
+	for i in _pips.size():
+		_pips[i].modulate = Color.WHITE if i < count else Color(1, 1, 1, 0.3)
 
 
 func _on_cast(glyph_id: String, score: float) -> void:
@@ -222,6 +259,8 @@ func finish() -> void:
 
 func _process(delta: float) -> void:
 	_hold = _hold + delta if active != "" and not get_tree().paused and Input.is_action_pressed("interact") else 0.0
+	if _hold_bar != null:
+		_hold_bar.size.x = (CARD.size.x - 20.0) * clampf(_hold / HOLD, 0.0, 1.0)
 	if _hold >= HOLD:
 		_hold = 0.0
 		finish()

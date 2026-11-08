@@ -8,33 +8,41 @@ var _near := false
 var _prompt: Label   # the verb text; subclasses read and write its text, visible and position
 var _prompt_root: Node2D
 var _cap: NinePatchRect
+var _pill: NinePatchRect
 var _key_lbl: Label
 var _tween: Tween
 var _hid_far := false   # the prompt is hidden only because a nearer one is in range
 
 const KEYCAP := preload("res://assets/art/ui/keycap.png")
-const KEY_FONT := preload("res://assets/fonts/CrimsonPro.ttf")
+const KEY_FONT := preload("res://assets/fonts/Jersey10-Regular.ttf")
+const PILL := preload("res://assets/art/ui/button_normal.png")
 const RISE := 3.0
 
 
 func _ready() -> void:
 	add_to_group("interactable")
-	# ui.md 3b: an 8x8 keycap with the key in 6 px bold plus the verb in 7 px, outlined; <= 9 px tall, 4 px above the sprite
+	# a small lacquer pill: gold keycap + one cream word, no loose text over the sprite
 	_prompt_root = Node2D.new()
 	add_child(_prompt_root)
+	_pill = NinePatchRect.new()
+	_pill.texture = PILL
+	for side in ["left", "top", "right", "bottom"]:
+		_pill.set("patch_margin_" + side, 5)
+	_pill.size = Vector2(32, 14)
+	_pill.visible = false
+	_prompt_root.add_child(_pill)
 	_cap = NinePatchRect.new()
 	_cap.texture = KEYCAP
 	_cap.patch_margin_left = 3
 	_cap.patch_margin_right = 3
 	_cap.patch_margin_top = 3
 	_cap.patch_margin_bottom = 3
-	_cap.size = Vector2(8, 8)
-	_cap.position = Vector2(0, -9)
+	_cap.size = Vector2(9, 9)
 	_cap.visible = false
 	_prompt_root.add_child(_cap)
 	_key_lbl = Label.new()
 	_key_lbl.add_theme_font_override("font", KEY_FONT)
-	_key_lbl.add_theme_font_size_override("font_size", 6)
+	_key_lbl.add_theme_font_size_override("font_size", 10)
 	_key_lbl.add_theme_color_override("font_color", Color("140E0A"))
 	_key_lbl.add_theme_constant_override("outline_size", 0)
 	_key_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -42,7 +50,9 @@ func _ready() -> void:
 	_key_lbl.visible = false
 	_prompt_root.add_child(_key_lbl)
 	_prompt = Label.new()
-	_prompt.add_theme_font_size_override("font_size", 7)
+	_prompt.add_theme_font_size_override("font_size", 10)
+	_prompt.add_theme_color_override("font_color", Color("F3E3B8"))
+	_prompt.add_theme_constant_override("outline_size", 0)
 	_prompt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_prompt.visible = false
 	_prompt_root.add_child(_prompt)
@@ -92,19 +102,24 @@ func _sprite_top() -> float:
 func _layout_prompt() -> void:
 	if _prompt == null:
 		return
-	var kw := maxf(8.0, KEY_FONT.get_string_size(_key_lbl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 6).x + 4.0)
-	_cap.size = Vector2(kw, 8)
-	_key_lbl.size = Vector2(kw, 7)
-	_key_lbl.position = Vector2(0, -9)
+	var kw := maxf(9.0, KEY_FONT.get_string_size(_key_lbl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x + 4.0)
 	_prompt.reset_size()
 	var vs := _prompt.get_minimum_size()
 	_prompt.size = vs
-	_prompt.position = Vector2(kw + 1.0, -9.0 + (8.0 - vs.y) / 2.0)
-	_prompt_root.position = Vector2(-roundf((kw + 1.0 + vs.x) / 2.0), roundf(_sprite_top() - 4.0))
+	var w := 4.0 + kw + 3.0 + vs.x + 5.0
+	_pill.size = Vector2(w, 14)
+	_pill.position = Vector2(0, -14)
+	_cap.size = Vector2(kw, 9)
+	_cap.position = Vector2(4, -12)
+	_key_lbl.size = Vector2(kw, 9)
+	_key_lbl.position = Vector2(4, -12)
+	_prompt.position = Vector2(4.0 + kw + 3.0, -7.0 - roundf(vs.y / 2.0))
+	_prompt_root.position = Vector2(-roundf(w / 2.0), roundf(_sprite_top() - 3.0))
 
 
 func _on_prompt_visibility() -> void:
 	var on := _prompt.visible
+	_pill.visible = on
 	_cap.visible = on
 	_key_lbl.visible = on
 	if _tween:

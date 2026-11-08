@@ -15,15 +15,18 @@ signal speaker_changed(key: String)   # the speaker tag was set (SceneDirector a
 const CPS := 45.0   # TUNE: characters per second
 const OUTLINE := Color("140E0A")
 const UI_DIR := "res://assets/art/ui/"
-const BOX_X := 28.0       # frame left and width (centred in 480)
-const BOX_W := 424.0
-const BOX_BOTTOM := 264.0 # frame bottom edge: the box grows upward from here
-const PAD_X := 14.0
+const BOX_X := 40.0       # frame left and width (centred in 480)
+const BOX_W := 400.0
+const BOX_BOTTOM := 262.0 # frame bottom edge: the box grows upward from here
+const PAD_X := 18.0
 const PAD_TOP := 8.0      # TUNE: space above the text (the name plate adds PLATE_DROP)
 const PLATE_DROP := 6.0   # how far the name plate reaches into the frame
 const PAD_BOT := 13.0     # room for the continue arrow and hint under the text
-const MIN_H := 40.0
-const LINE_H := 10.0      # 8 px font + line spacing
+const MIN_H := 46.0
+const LINE_H := 11.0      # 10 px pixel font + line spacing
+const FACE_W := 74.0      # left gutter holding the portrait frame when a face is shown
+const MIN_H_FACE := 72.0  # a face needs the box to be at least as tall as its frame plus air
+const DIM_SHADER := preload("res://ui/fx/focus_dim.gdshader")
 const MAX_WAIT := 3.0   # seconds a #wait cue may hold
 const PORTRAIT := 48.0    # bust size inside the 56x56 frame_portrait (ui.md 3.1)
 const PORTRAIT_INSET := 4.0
@@ -56,6 +59,10 @@ var _portrait: TextureRect
 var _speaker_key := ""
 var _mood := ""   # current #face mood, "" = neutral
 var _fresh := {}   # npc ids whose tag is up for this first talk
+var _dim: ColorRect   # lit spot on the speaker, dimmed world around it
+var _dim_mat: ShaderMaterial
+var _focus: Node2D
+var _dim_center := Vector2(240, 110)
 
 
 func _ready() -> void:
@@ -64,6 +71,14 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	visible = false
 	add_to_group("dialogue_box")
+	_dim = ColorRect.new()
+	_dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_dim.size = Vector2(480, 270)
+	_dim_mat = ShaderMaterial.new()
+	_dim_mat.shader = DIM_SHADER
+	_dim.material = _dim_mat
+	_dim.z_index = -2   # under the frame (z -1)
+	add_child(_dim)
 	_frame = _nine("panel_dialogue", Rect2(BOX_X, BOX_BOTTOM - MIN_H, BOX_W, MIN_H), 8)
 	_plate = _nine("button_normal", Rect2(BOX_X + 14, 0, 60, 14), 5)
 	_speaker = Label.new()
@@ -75,7 +90,7 @@ func _ready() -> void:
 	_speaker.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_plate.add_child(_speaker)
 	_who = _label(Vector2.ZERO, Vector2(260, 12), Color("D8CFB4"))   # sits on the plate row, beside the name plate
-	_who.add_theme_font_size_override("font_size", 8)
+	_who.add_theme_font_size_override("font_size", 10)
 	_who.add_theme_color_override("font_color", Color("F3E3B8"))
 	_who.add_theme_color_override("font_outline_color", Color("140E0A"))
 	_who.add_theme_constant_override("outline_size", 3)   # it sits over the world, so it needs a strong outline
@@ -98,7 +113,7 @@ func _ready() -> void:
 	_cue.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_cue)
 	_hint = _label(Vector2.ZERO, Vector2(120, 12), Color("6B5A44"))
-	_hint.add_theme_font_size_override("font_size", 7)
+	_hint.add_theme_font_size_override("font_size", 10)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_frame.z_index = -1
 	_portrait = TextureRect.new()
@@ -175,6 +190,25 @@ func _on_requested(speaker_key: String, lines: PackedStringArray) -> void:
 	_next()
 
 
+## Lights the speaker: world position -> screen, eased. Hero, narration and unknown voices fall back to the hero or the upper middle.
+func _pick_focus(key: String) -> void:
+	_focus = null
+	var sd: Node = get_parent().get_node_or_null("SceneDirector") if get_parent() != null else null
+	if key.begins_with("NPC_") and key.ends_with("_NAME") and key != "NPC_HERO_NAME" and sd != null and sd.has_method("find_node_by_id"):
+		_focus = sd.call("find_node_by_id", key.trim_prefix("NPC_").trim_suffix("_NAME").to_lower())
+	if _focus == null:
+		_focus = get_tree().get_first_node_in_group("player") as Node2D
+
+
+func _update_dim(delta: float) -> void:
+	var want := Vector2(240, 100)
+	if _focus != null and is_instance_valid(_focus) and _focus.is_inside_tree():
+		want = get_viewport().get_canvas_transform() * (_focus.global_position + Vector2(0, -10))
+	_dim_center = _dim_center.lerp(want, 1.0 - exp(-10.0 * delta))
+	_dim_mat.set_shader_parameter("center", _dim_center.round())
+	_dim.position.y = -position.y   # the box slides in; the dim must not
+
+
 ## Slide up 8 px and fade in; the name plate pops (ui.md 3b).
 func _animate_open() -> void:
 	if _tween:
@@ -197,6 +231,7 @@ func _pop_plate() -> void:
 ## Sets the name and, for a named NPC (key NPC_<ID>_NAME) with a NPC_<ID>_WHO text, the tag; flag seen_name_<id> on first sight.
 func _set_speaker(key: String) -> void:
 	speaker_changed.emit(key)
+	_pick_focus(key)
 	var prev := _speaker.text
 	_speaker.text = _t(key)
 	_plate.visible = _speaker.text != ""
@@ -293,28 +328,34 @@ func _show_choices() -> void:
 ## Sizes the frame to its content and places everything from the bottom edge up: the box is only as tall as the
 ## text (and choices) need, so one line leaves no empty slab over the world.
 func _layout() -> void:
-	var tw := BOX_W - PAD_X * 2.0
+	var has_face := _portrait.visible
+	var tx := BOX_X + (FACE_W if has_face else PAD_X)
+	var tw := BOX_X + BOX_W - PAD_X - tx
 	_text.custom_minimum_size.x = tw
 	_text.size.x = tw
 	var th := maxf(_text.get_minimum_size().y, LINE_H) if _text.text != "" else 0.0
 	var top := PAD_TOP + (PLATE_DROP if _plate.visible else 0.0)
 	var lh := _list.get_line_height() + 1.0
 	var ch := (3.0 + lh * _opts.size()) if (_choosing and not _opts.is_empty()) else 0.0
-	var h := maxf(MIN_H, top + th + ch + PAD_BOT)
+	var h := maxf(MIN_H_FACE if has_face else MIN_H, top + th + ch + PAD_BOT)
 	_frame.size = Vector2(BOX_W, h)
 	_frame.position = Vector2(BOX_X, BOX_BOTTOM - h)
 	var fy := _frame.position.y
-	var fs := PORTRAIT + PORTRAIT_INSET * 2.0   # 56: the frame overlaps the box by 8 px
-	var px_off := 66.0 if _portrait.visible else 14.0   # the plate steps right of the face
-	_portrait_frame.position = Vector2(BOX_X + 6.0, fy - fs + 8.0)
+	var fs := PORTRAIT + PORTRAIT_INSET * 2.0   # 56
+	_portrait_frame.position = Vector2(BOX_X + 10.0, fy + roundf((h - fs) / 2.0))   # inside the box, centred on its height
 	_portrait.position = _portrait_frame.position + Vector2(PORTRAIT_INSET, PORTRAIT_INSET)
-	_plate.position = Vector2(BOX_X + px_off, fy - 8.0)
-	_who.position = Vector2(_plate.position.x + _plate.size.x + 6.0, fy - 7.0)
-	_text.position = Vector2(BOX_X + PAD_X, fy + top)
+	_plate.position = Vector2(tx, fy - 7.0)
+	_who.position = Vector2(_plate.position.x + _plate.size.x + 6.0, fy - 6.0)
+	# the text block sits in the middle of the space between the plate and the footer; choices pin it to the top
+	var avail := h - top - PAD_BOT
+	var ty := fy + top + (0.0 if ch > 0.0 else roundf(maxf(avail - th, 0.0) / 2.0))
+	_text.position = Vector2(tx, ty)
 	_text.size.y = th
-	_list.position = Vector2(BOX_X + PAD_X + 14.0, fy + top + th + 3.0)
-	_cue.position = Vector2(BOX_X + BOX_W - 20.0, fy + h - 12.0)
-	_hint.position = Vector2(BOX_X + BOX_W - 20.0 - _hint.size.x - 3.0, fy + h - 13.0)
+	_list.position = Vector2(tx + 14.0, ty + th + 3.0)
+	_list.size.x = tw - 14.0
+	_sel_bar.size.x = tw
+	_cue.position = Vector2(BOX_X + BOX_W - 20.0, fy + h - 11.0)
+	_hint.position = Vector2(BOX_X + BOX_W - 20.0 - _hint.size.x - 3.0, fy + h - 14.0)
 
 
 func _close() -> void:
@@ -329,6 +370,8 @@ func _close() -> void:
 
 
 func _process(delta: float) -> void:
+	if _open:
+		_update_dim(delta)
 	if _open and _hold_until > 0 and Time.get_ticks_msec() >= _hold_until:
 		_hold_until = 0
 		_next()
@@ -337,7 +380,7 @@ func _process(delta: float) -> void:
 		_text.visible_characters = int(_shown)
 	_cue.visible = _open and _hold_until == 0 and not _choosing and _text.visible_characters >= _text.get_total_character_count() \
 			and Time.get_ticks_msec() % 800 < 500
-	_cue.position.y = _frame.position.y + _frame.size.y - 12.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)
+	_cue.position.y = _frame.position.y + _frame.size.y - 11.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)
 	_hint.visible = _cue.visible and _hint.text != ""
 
 
