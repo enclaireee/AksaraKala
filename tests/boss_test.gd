@@ -36,6 +36,31 @@ func _initialize() -> void:
 	check(b.attacks > 0 and b.engaged, "phase 1 attacks")
 	check(b.dawn == 0.0, "dawn stays 0 in phase 1")
 
+	# Deck: phase 1 has 5 moves, never the same heavy twice in a row.
+	check(b._pool().size() == 5 and not ("earthshaker" in b._pool()) and not ("wrath" in b._pool()), "phase 1 pool")
+	b._deck.clear()
+	b._last = ""
+	var prev := ""
+	var dup := false
+	for i in 60:
+		var pm: String = b._pick(100.0)
+		dup = dup or (pm == prev and pm in Sangkuriang.HEAVY)
+		check(pm != "", "a move fits at 100 px")
+		prev = pm
+	check(not dup, "deck: no heavy twice in a row")
+
+	# Every move runs to its recovery and is counted.
+	for m in ["throw", "slam", "timber", "cleave", "roll", "earthshaker", "wrath"]:
+		var before: int = int(b.moves_used.get(m, 0))
+		check(run_move(b, m), "move %s ends in RECOVER" % m)
+		check(int(b.moves_used.get(m, 0)) == before + 1, "move %s counted" % m)
+	b._enter(Sangkuriang.State.CHASE)
+	b.global_position = Vector2(100, 135)
+	b._deck.clear()
+	b._since_wrath = 99
+	player.position = Vector2(200, 135)
+	check(b.dawn == 0.0 and b.phase == 1, "moves leave the dawn alone in phase 1")
+
 	# no cloth: interact does nothing
 	post.interact()
 	check(not post.hung and not game.has_flag("post:east"), "post stays bare without the item")
@@ -70,6 +95,8 @@ func _initialize() -> void:
 	for i in int(b.dawn_time / DT) + 60:
 		b._physics_process(DT)
 	check(b.dawn == 1.0 and b.enraged, "dawn 1 enrages")
+	b._since_wrath = 99   # he may already have thrown one in the last second
+	check("earthshaker" in b._pool() and "wrath" in b._pool(), "enraged: the Dawn Wrath joins the deck")
 	events.spell_cast.emit("sunda_ca", 1.0)
 	check(b.state == Sangkuriang.State.STUN and not b.enraged and b.dawn == 0.0, "stun repeats and calms him")
 
@@ -82,6 +109,19 @@ func _initialize() -> void:
 	game.killed.clear()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(game.save_path))
 	quit(1 if fails > 0 else 0)
+
+
+## Runs one move by hand until it reaches RECOVER. The test player has no hurtbox, so nothing is hurt.
+func run_move(b: Sangkuriang, m: String) -> bool:
+	b._enter(Sangkuriang.State.CHASE)
+	b.global_position = Vector2(100, 135)
+	player.position = Vector2(200, 135)
+	b._begin_move(m)
+	for i in 900:
+		b._physics_process(DT)
+		if b.state == Sangkuriang.State.RECOVER:
+			break
+	return b.state == Sangkuriang.State.RECOVER
 
 
 func check(ok: bool, msg: String) -> void:

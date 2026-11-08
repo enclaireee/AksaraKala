@@ -97,6 +97,24 @@ func _initialize() -> void:
 	check(hp.hp == 86, "grab did 14")
 	check(not s.health.is_invincible(), "vulnerable again after reappearing")
 
+	# new moves: each runs to its recovery and is counted; the deck never repeats a heavy move; nightfall adds two more
+	check(s.phase == 1 and s._pool().size() == 5 and not ("eclipse" in s._pool()), "phase 1 pool has 5 moves")
+	for m in ["claws", "lantern", "pillars", "pulse", "grab"]:
+		check(run_move(s, m), "move %s ends in RECOVER and is counted" % m)
+	s.health.take_damage(600, player)
+	check(s.phase == 2 and "flurry" in s._pool() and "eclipse" in s._pool(), "nightfall at 50% adds flurry and eclipse")
+	for m in ["flurry", "eclipse"]:
+		check(run_move(s, m), "move %s ends in RECOVER and is counted" % m)
+	s._deck.clear()
+	var prev := ""
+	var dup := false
+	for i in 60:
+		var pm: String = s._pick(20.0)
+		dup = dup or (pm == prev and pm in Sandekala.HEAVY)
+		prev = pm
+	check(not dup and prev != "", "deck: no heavy twice in a row")
+	check(s.moves_used.get("fade", 0) >= 1, "the fade ambush is counted")
+
 	# all lit: no fade
 	for o in oncors:
 		o.light()
@@ -137,6 +155,20 @@ func _initialize() -> void:
 
 	player.free()
 	quit(1 if fails > 0 else 0)
+
+
+## Runs one move by hand until it reaches RECOVER, with the player standing next to him.
+func run_move(s: Sandekala, m: String) -> bool:
+	s._enter(Sandekala.State.CHASE)
+	s.global_position = Vector2(300, 100)
+	player.global_position = Vector2(300, 125)
+	hp.hp = hp.max_hp
+	s._begin_move(m)
+	for i in 900:
+		s._physics_process(DT)
+		if s.state == Sandekala.State.RECOVER:
+			break
+	return s.state == Sandekala.State.RECOVER and int(s.moves_used.get(m, 0)) >= 1
 
 
 func _run(s: Sandekala, frames: int) -> void:
