@@ -84,9 +84,10 @@ func _ready() -> void:
 	_speaker = Label.new()
 	_speaker.theme_type_variation = &"Heading"
 	_speaker.position = Vector2(7, 1)
-	_speaker.size = Vector2(160, 12)
+	_speaker.size = Vector2(60, 12)
 	_speaker.add_theme_constant_override("outline_size", 0)
 	_speaker.add_theme_color_override("font_color", Color("F3E3B8"))   # on the leather plate
+	_speaker.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_speaker.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_plate.add_child(_speaker)
 	_who = _label(Vector2.ZERO, Vector2(260, 12), Color("D8CFB4"))   # sits on the plate row, beside the name plate
@@ -96,6 +97,7 @@ func _ready() -> void:
 	_who.add_theme_constant_override("outline_size", 3)   # it sits over the world, so it needs a strong outline
 	_text = _label(Vector2.ZERO, Vector2(BOX_W - PAD_X * 2.0, LINE_H), Color.TRANSPARENT)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_sel_bar = ColorRect.new()
 	_sel_bar.color = Color(0.62, 0.17, 0.145, 0.28)   # wax-red wash selection
 	_sel_bar.size = Vector2(BOX_W - PAD_X * 2.0, 10)
@@ -243,6 +245,7 @@ func _set_speaker(key: String) -> void:
 	_portrait.visible = face != null
 	_portrait_frame.visible = face != null
 	_plate.size.x = ceilf(_speaker.get_minimum_size().x) + 14.0
+	_speaker.size.x = _plate.size.x - 14.0
 	if _open and _speaker.text != prev:
 		_pop_plate()
 	var narr := key.contains("DALANG") or _speaker.text.to_lower().contains("(dalang)")
@@ -325,6 +328,17 @@ func _show_choices() -> void:
 	_lozenge.visible = true
 
 
+func _calc_text_height(tw: float) -> float:
+	if _text.text == "":
+		return 0.0
+	var font := _text.get_theme_font("font")
+	var font_size := _text.get_theme_font_size("font_size")
+	if font != null:
+		var sz := font.get_multiline_string_size(_text.text, _text.horizontal_alignment, tw, font_size)
+		return maxf(sz.y, LINE_H)
+	return maxf(_text.get_minimum_size().y, LINE_H)
+
+
 ## Sizes the frame to its content and places everything from the bottom edge up: the box is only as tall as the
 ## text (and choices) need, so one line leaves no empty slab over the world.
 func _layout() -> void:
@@ -333,7 +347,7 @@ func _layout() -> void:
 	var tw := BOX_X + BOX_W - PAD_X - tx
 	_text.custom_minimum_size.x = tw
 	_text.size.x = tw
-	var th := maxf(_text.get_minimum_size().y, LINE_H) if _text.text != "" else 0.0
+	var th := _calc_text_height(tw)
 	var top := PAD_TOP + (PLATE_DROP if _plate.visible else 0.0)
 	var lh := _list.get_line_height() + 1.0
 	var ch := (3.0 + lh * _opts.size()) if (_choosing and not _opts.is_empty()) else 0.0
