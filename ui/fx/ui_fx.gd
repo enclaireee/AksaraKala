@@ -27,8 +27,8 @@ static func tex(name: String) -> Texture2D:
 	return _cache[name]
 
 
-const FONT_BODY := "res://assets/fonts/CrimsonPro.ttf"
-const FONT_DISPLAY := "res://assets/fonts/Almendra-Bold.ttf"
+const FONT_BODY := "res://assets/fonts/Jersey10-Regular.ttf"
+const FONT_DISPLAY := "res://assets/fonts/Jersey15-Regular.ttf"
 
 
 ## The body face (`CrimsonPro`).
@@ -38,12 +38,11 @@ static func body_font() -> Font:
 
 static var _bold: FontVariation
 
-## Bold body face for headings and menu entries up to 16 px (Crimson Pro at weight 700): clean at small sizes.
+## Heading face: Jersey 10 (crisp at 10 px multiples).
 static func cinzel() -> Font:
 	if _bold == null:
 		_bold = FontVariation.new()
 		_bold.base_font = load(FONT_BODY)
-		_bold.variation_opentype = {2003265652: 700.0}   # the 'wght' axis
 	return _bold
 
 

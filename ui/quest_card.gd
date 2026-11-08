@@ -32,7 +32,7 @@ func _ready() -> void:
 	modulate.a = 0.0
 	visible = false
 	var fv := FontVariation.new()
-	fv.base_font = load("res://assets/fonts/Almendra-Bold.ttf")
+	fv.base_font = load("res://assets/fonts/Jersey15-Regular.ttf")
 	fv.spacing_glyph = 2
 	_band = _rect(BAND)
 	_rule_top = _rect(GOLD)
