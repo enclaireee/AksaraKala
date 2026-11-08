@@ -103,11 +103,15 @@ func release() -> void:
 	else:
 		_exit_cast_mode()
 		var perfect := r.score >= SpellUtil.PERFECT_SCORE and power >= 1.0
-		overlay.finish(true, "%s · %s" % [glyph.latin.capitalize(), tr(spell.title)], {
+		var variant := SpellVariants.title(glyph.id, SpellUtil.class_id(player))   # the class's own spell, if it has one
+		overlay.finish(true, "%s · %s" % [glyph.latin.capitalize(), variant if variant != "" else tr(spell.title)], {
 			glyph_id = glyph.id, perfect = perfect, power = power, cost = SpellUtil.cost(player, spell),
 			screen_pos = player.get_global_transform_with_canvas().origin + Vector2(0, -6),
 		})
-		_spawn(spell, power, perfect)
+		if SpellVariants.cast(spell, player, aim, power, perfect):
+			_kick(spell, perfect)   # built from zones and blasts: no scene to spawn
+		else:
+			_spawn(spell, power, perfect)
 		get_node("/root/Events").spell_cast.emit(glyph.id, power)
 
 
@@ -138,7 +142,12 @@ func _spawn(spell: SpellData, power: float, perfect := false) -> void:
 		s.perfect = perfect   # a clean stroke: the spell applies SpellUtil.PERFECT_BONUS itself
 	s.global_position = player.global_position
 	player.get_parent().add_child(s)
-	var kick: float = KICK.get(spell.glyph_id, 0.0) + (1.0 if perfect else 0.0)   # a heavy spell and a Perfect cast shake the screen
+	_kick(spell, perfect)
+
+
+## A heavy spell and a Perfect cast shake the screen.
+func _kick(spell: SpellData, perfect: bool) -> void:
+	var kick: float = KICK.get(spell.glyph_id, 0.0) + (1.0 if perfect else 0.0)
 	if kick > 0.0 and player.get("camera") != null:
 		player.camera.shake(kick, 0.2)
 

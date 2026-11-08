@@ -44,22 +44,23 @@ Damage, Ward absorb and Summon scale with Spirit and Ingatan ([balance.md](balan
 | Jawa | Ra | Summon | A tiger spirit hunts for 10 s: a swipe of 18 every 0.55 s and a pounce (x2) every 2.2 s | 50 |
 | Jawa | Ka | Ombak (Tide), P0 final glyph | A wave in the aim direction: 44 damage, pushes enemies back 64 px, destroys enemy projectiles it touches | 35 |
 
-### Perfect casts and class variants (2026-11-08 redesign, **TUNE**)
-Every spell now pays for the effort of drawing it. A stroke scoring at least 0.92 is a **Perfect cast**: +12% power (damage, shield, heal, duration), a gold flourish and a camera nudge. A smudged cast (below 0.80) still works at 70%.
-Each class bends the six spells that gain from it; **Ga is identical for all four** (a shared safety net), and Ha, Ca (Jawa) and Ra keep the same core with a different edge:
+### Perfect casts and class spells (2026-11-08 redesign, **TUNE**)
+A stroke scoring at least 0.92 is a **Perfect cast**: +12% power (damage, shield, heal, duration), a gold flourish and a camera nudge. A smudged cast (below 0.80) still works at 70%.
+
+**Ga (Ward) is the only glyph that is the same for every class.** For every other glyph each class casts a different spell: the aksara is the key, the class decides what opens. The table above is the base spell (also used when no class is set, as in tests); in play the player casts the class spell below. Numbers are damage before Spirit and Perfect scaling.
 
 | Glyph | Hulubalang (warrior) | Pamanah (archer) | Pendekar (rogue) | Wiku (mage) |
 |-------|-----|-----|-----|-----|
-| Ka Bolt | Slow heavy bolt: x1.35 damage, knockback, double poise | Fan of 3 that pierce everything | Twin: a second bolt 0.14 s behind at 80% | Homing: curves toward the nearest foe ahead |
-| Nga Bind | Radius x1.3, thorns x1.5 | Slow 50% for 3 s after the root | Root x1.3 longer, 0.5 s invincible | Each rooted enemy returns 3 Sakti (max 6) |
-| Ca Burst | Radius x1.25, double poise, long knockback | Also looses 8 piercing shards | Slows what it hits 3 s, 0.6 s invincible | A second blast (70%, radius x1.15) 0.45 s later |
-| Ha Heal | 12% of max HP becomes a shield | Stamina refilled | 1 s invincible | Both parts x1.2 |
-| Na Dash | 96 px, x1.25 damage, shove, double poise | 140 px, ends with a piercing arrow | 128 px, hits bleed, longer i-frames | 104 px, ends with a small blast |
-| Ca Rally | Damage taken -20% | Attack speed +50%, move speed +20% | Dodge costs half | Sakti gain x1.5 |
-| Ra Summon | Each claw mends the summoner 1.5% | Faster tiger, pounces from 120 px | Two tigers (second at 60%) | 14 s, claws burn |
-| Ka Ombak | Wall of water: 90 px push, double poise | Fan of 3 waves | Cold: slows 3 s | Rolls further, a second wave follows |
+| Ka (Sunda) | **Tombak Petir**: a thrown spear that impales (roots the target 0.9 s), then detonates (26, r46, double poise) | **Hujan Panah**: arrows rain on a zone (telegraph 0.3 s, then 5 ticks of 13, r38) | **Petir Berantai**: instant lightning through up to 4 foes (38, x0.85 per jump), burns and staggers | **Bola Petir**: a storm orb drifts forward 3.6 s, tugging foes in (14 per 0.32 s, r26), bursts at the end (22) |
+| Nga | **Benteng Akar**: a thorn wall follows you 6.5 s (9 per 0.5 s, slow 50%, r58) and destroys enemy shots | **Jerat Pemburu**: a hidden snare 90 px ahead (10 s): roots 3 s and cuts 32 on the first foe to step in | **Tarik Bayangan**: a vacuum drags every foe within 118 px to a point ahead, then roots them 1.4 s (14) | **Sulur Pengisap**: vines hold everything in r84 for 3.2 s (8 per 0.5 s) and return 60% of the damage to you as HP |
+| Ca (Sunda) | **Gempa Mengamuk**: five eruptions run forward in a line (26 each, r32, double poise, long shove) | **Suar Pemburu**: a flare lands where you aim, bursts (28, r54) and releases 8 homing sparks | **Putaran Silat**: a spin of 4 slashes around you (17 each, r52) while you cannot be hit 0.55 s | **Lingkar Aksara**: a rune circle stays 5.5 s (11 per 0.5 s, slow 50%, r68) and destroys enemy shots; one at a time |
+| Ha | **Doa Penjaga**: no heal, but a shield of 55% max HP | **Angin Segar**: heal 25%, stamina full, +30% move speed 6 s | **Napas Bayangan**: heal 35% over 1.5 s while invincible | **Mata Air Batin**: heal 10% and a spring (r52, 6 s) healing 7% max HP per second while you stand in it, slowing foes |
+| Na | **Terjang Banteng**: a 124 px bull charge (39, big shove), ends in a slam (28, r46) | **Lompat Mundur**: leap 112 px backward while loosing three arrows forward | **Tebas Bayangan**: teleport behind the nearest foe and stab (54, bleeds), 0.55 s invincible | **Langkah Kabut**: blink 120 px; a rune left behind blows after 0.5 s (30, r54) |
+| Ca (Jawa) | **Seruan Perang**: a war cry staggers everything within 80 px; 12 s of -25% damage taken, +15% attack speed | **Fokus Pemburu**: 12 s of +60% attack speed, +20% move speed, stamina regen x2.5 | **Langkah Silat**: 12 s of free dodges and +25% attack speed | **Fokus Batin**: 12 s: spells cost 25% less, Sakti gain x1.5, +15 Sakti now |
+| Ra | **Macan Penjaga**: a tiger that guards you (fights within 120 px of you) and mends you 1.5% per claw | **Sepasang Elang**: two spirit hawks dive again and again (55% damage each) | **Macan Bayangan**: two fast shadow tigers (60% each) | **Macan Api**: one huge fire tiger, claws burn, it scorches the ground and explodes at the end (36, r56) |
+| Ka (Jawa) | **Pasang Menghantam**: a slow wall of water carries enemies with it and crashes at the end (32, r56) | **Pasang Surut**: the wave goes out, turns, and hits everything again on its way back (x0.8) | **Arus Bawah**: an undertow zone ahead (r52, 2.8 s) pulls foes in, slows them 60% and cuts them (11 per 0.4 s) | **Banjir Aksara**: the wave rolls out in all six directions (the extra five at 60%) |
 
-Spirit scaling and Ingatan still apply to every number. Spells never refill Sakti, except Wiku's Bind refund, which is capped.
+Class spell names show in the cast result ("Ka . Petir Berantai"). Code: class spells that are zones or blasts are built in `spells/spell_variants.gd` from `spells/spell_zone.gd`; the rest live in each spell's scene script and read the caster's class (`bolt.gd` for the spear, `heal.gd`, `dash_strike.gd`, `rally.gd`, `summon.gd`, `ombak.gd`). Spirit scaling and Ingatan still apply. Spells never refill Sakti (Wiku's Fokus Batin gives 15 once). Unit-style numbers stay **TUNE**: play each one.
 
 Notes:
 - **Final glyph: Jawa Ka** (MQ4 4.9, P0 and main path since story v3.1; earned by passing the Trial of the Waves; **ASSUMED**). It completes "ha na ca ra ka", the first line of the Hanacaraka ("there were messengers"), which the epilogue recites, and it is the next letter by the first-letters rule. Kala's fight must stay beatable without it (it breaks the eclipse shield but is not required).

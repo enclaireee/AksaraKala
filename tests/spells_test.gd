@@ -83,7 +83,7 @@ func _initialize() -> void:
 		await physics_frame
 	check(near.global_position.distance_to(n0) < 0.5, "bound enemy does not move")
 
-	# Burst: 52 in 72 px, nothing beyond. Warrior x0.9 damage (47), +25% radius (90).
+	# Burst: 52 in 72 px, nothing beyond.
 	player.position = Vector2(0, 0)
 	var bn := await _enemy("chaser", Vector2(40, 0))
 	var bf := await _enemy("chaser", Vector2(76, 0))
@@ -94,19 +94,10 @@ func _initialize() -> void:
 	for i in 20:
 		await physics_frame
 	check(bf.health.hp == 40, "burst skips 76 px (hp %d)" % bf.health.hp)
-	player.class_id = "warrior"
-	bf.health.hp = 40
-	await _spell("sunda_ca", 1.0)
-	for i in 4:
-		await physics_frame
-	check(bf.health.hp == 0, "warrior burst: radius 90 reaches 76 px, damage 47 (hp %d)" % bf.health.hp)
-	for i in 20:
-		await physics_frame
-	player.class_id = ""
 	if is_instance_valid(bn): bn.queue_free()
 	bf.queue_free()
 
-	# Heal: 30% max HP scaled by spell_mult, clears Curse; Mage x1.2
+	# Heal: 30% max HP scaled by spell_mult, clears Curse; Wiku's is a 10% heal plus a spring
 	h.hp = 10
 	player.status.apply(Status.Type.CURSE)
 	await _spell("jawa_ha", 1.0)
@@ -118,7 +109,7 @@ func _initialize() -> void:
 	player.class_id = "mage"
 	h.hp = 10
 	await _spell("jawa_ha", 1.0)
-	check(h.hp == 46, "mage heal x1.2 (hp %d)" % h.hp)
+	check(h.hp == 20, "mage heal is 10% now and a spring (hp %d)" % h.hp)
 	player.class_id = ""
 
 	# Dash-strike: moves 112 px along direction, damages, invincible
@@ -228,6 +219,40 @@ func _initialize() -> void:
 	wp.queue_free()
 	await physics_frame
 	h.shield = 0
+
+	# Every class glyph except Ga has a named class spell
+	var named := 0
+	for g in ["sunda_ka", "sunda_nga", "sunda_ca", "jawa_ha", "jawa_na", "jawa_ca", "jawa_ra", "jawa_ka"]:
+		for cls in ["warrior", "archer", "rogue", "mage"]:
+			named += int(SpellVariants.title(g, cls) != "")
+	check(named == 32 and SpellVariants.title("sunda_ga", "warrior") == "", "32 class spells, Ga stays shared (%d)" % named)
+
+	# Pendekar's Ka is chain lightning: it jumps to a second foe
+	player.position = Vector2(0, 0)
+	player.class_id = "rogue"
+	var c1 := await _enemy("chaser", Vector2(60, 0))
+	var c2 := await _enemy("chaser", Vector2(120, 0))
+	check(SpellVariants.cast(SpellData.for_glyph("sunda_ka"), player, Vector2.RIGHT, 1.0, false), "rogue Ka is built by SpellVariants")
+	await physics_frame
+	check(c1.health.hp <= 2 and c2.health.hp <= 8, "chain hits both (%d, %d)" % [c1.health.hp, c2.health.hp])
+	c1.queue_free()
+	c2.queue_free()
+
+	# Pamanah's Nga is a hidden snare: roots and hurts the next enemy to step in
+	player.class_id = "archer"
+	var tr1 := await _enemy("chaser", Vector2(90, 0))
+	check(SpellVariants.cast(SpellData.for_glyph("sunda_nga"), player, Vector2.RIGHT, 1.0, false), "archer Nga is a snare")
+	for i in 45:
+		await physics_frame
+	check(tr1.status.has(Status.Type.BOUND) and tr1.health.hp <= 8, "snare roots and cuts 32 (hp %d)" % tr1.health.hp)
+	tr1.queue_free()
+	player.class_id = ""
+
+	# Ga is not rebuilt by any class
+	for cls in ["warrior", "archer", "rogue", "mage"]:
+		player.class_id = cls
+		check(not SpellVariants.cast(SpellData.for_glyph("sunda_ga"), player, Vector2.RIGHT, 1.0, false), "Ga is the same for %s" % cls)
+	player.class_id = ""
 
 	# Every glyph maps to a spell
 	for id in ["sunda_ka", "sunda_ga", "sunda_nga", "sunda_ca", "jawa_ha", "jawa_na", "jawa_ca", "jawa_ra"]:

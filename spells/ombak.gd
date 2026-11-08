@@ -1,22 +1,26 @@
 class_name Ombak extends Arrow
-## Jawa Ka: a wave in the aim direction that pierces, pushes enemies back and eats enemy shots (spells.md 3).
-## Hulubalang's wave hits like a wall, Pamanah throws three, Pendekar's chills (slow), Wiku's rolls further
-## and a second wave follows.
+## Jawa Ka (spells.md 3). Base: a wave that pierces, pushes enemies back 64 px and eats enemy shots.
+## Hulubalang's is a slow wall that carries enemies along and crashes at the end (Pasang Menghantam),
+## Pamanah's goes out and comes back (Pasang Surut), Wiku's rolls out in every direction (Banjir Aksara).
+## Pendekar's is an undertow built in spell_variants.gd (Arus Bawah).
 
 var caster: Node2D
 var data: SpellData
 var power := 1.0
 var perfect := false
-var _side := false   # a fan wave or echo: does not spawn more
+var _side := false   # one of the flood's other waves: does not spawn more
+var _cls := ""
 var _tint := Color.WHITE
+var _ebb := false    # Pamanah's wave is on its way back
 var _spr: SpellAnim
-const EAT := 20.0   # px: an enemy shot this close to the wave is destroyed (TUNE)
-const FAN := 0.3    # rad, about 17 degrees (ASSUMED)
-const ECHO_DELAY := 0.35
+const EAT := 20.0    # px: an enemy shot this close to the wave is destroyed (TUNE)
+const CARRY := 26.0  # px ahead of the wall that Hulubalang's wave carries
+const FLOOD := 5     # extra waves in Wiku's ring
 
 
 func _ready() -> void:
 	power *= SpellUtil.perfect_mult(perfect)
+	_cls = SpellUtil.class_id(caster)
 	damage = roundi(data.power * power * SpellUtil.damage(caster))
 	source = caster
 	speed = 190.0       # TUNE
@@ -26,21 +30,19 @@ func _ready() -> void:
 	poise_mult = preload("res://data/combat_tuning.tres").spell_poise_mult * SpellUtil.poise_mult(data)
 	_tint = SpellUtil.tint(data.glyph_id, caster)
 	var size := 0.75 if _side else 1.0
-	match SpellUtil.class_id(caster):
-		"warrior":   # Hulubalang: a wall of water
-			knockback = 90.0
+	match _cls:
+		"warrior":   # a slow wall of water that shoves everything ahead of it
+			speed = 120.0
+			max_range = 150.0
+			knockback = 20.0
 			poise_mult *= 2.0
-			size = 1.25
-		"archer":    # Pamanah: three waves
+			size = 1.7
+		"archer":    # out and back: it hits again on the return
+			max_range = 100000.0
+		"mage":      # a ring of waves
 			if not _side:
-				for a in [-FAN, FAN]:
-					_spawn_copy(power * 0.6, direction.rotated(a), 0.0)
-		"rogue":     # Pendekar: the cold sea slows
-			hit_landed.connect(func(hb: Hurtbox) -> void: SpellUtil.slow(hb.owner, 3.0, 0.5))
-		"mage":      # Wiku: rolls further, a second wave follows
-			max_range = 250.0
-			if not _side:
-				_spawn_copy(power * 0.7, direction, ECHO_DELAY)
+				for i in FLOOD:
+					_spawn_wave(direction.rotated(TAU * (i + 1) / (FLOOD + 1.0)))
 	hit_landed.connect(func(_hb: Hurtbox) -> void: SpellFX.burst(get_parent(), "hit_burst", 5, global_position, _tint, 1.0, 20.0))
 	super()
 	_spr = SpellFX.make("ombak_wave", 5, 12.0)
@@ -54,31 +56,37 @@ func _ready() -> void:
 			c.visible = false
 
 
-## A fan wave or echo of this one. `delay` 0 spawns next frame.
-func _spawn_copy(p: float, dir: Vector2, delay: float) -> void:
-	var par := get_parent()
-	var sc := data.scene
-	var who := caster
-	var d := data
-	var pos := global_position
-	var make := func() -> void:
-		if not is_instance_valid(who) or not is_instance_valid(par) or not par.is_inside_tree():
-			return
-		var s: Ombak = sc.instantiate()
-		s._side = true
-		s.caster = who
-		s.data = d
-		s.power = p
-		s.direction = dir
-		s.global_position = pos if delay <= 0.0 else who.global_position
-		par.add_child(s)
-	if delay <= 0.0:
-		make.call_deferred()
-	else:
-		get_tree().create_timer(delay).timeout.connect(make)
+## One more wave of Wiku's flood, at 60% strength.
+func _spawn_wave(dir: Vector2) -> void:
+	var s: Ombak = data.scene.instantiate()
+	s._side = true
+	s.caster = caster
+	s.data = data
+	s.power = power * 0.6
+	s.direction = dir
+	s.global_position = global_position
+	get_parent().add_child.call_deferred(s)
 
 
 func _physics_process(delta: float) -> void:
+	if _cls == "archer":
+		if not _ebb and _travelled >= 130.0:
+			_ebb = true
+			_hit.clear()   # it may hit everything again on the way back
+			damage = roundi(damage * 0.8)
+		if _ebb and is_instance_valid(caster):
+			var back: Vector2 = caster.global_position - global_position
+			if back.length() < 14.0 or _travelled > 420.0:
+				queue_free()
+				return
+			direction = back.normalized()
+			rotation = direction.angle()
+	elif _cls == "warrior":
+		for e in SpellUtil.enemies_near(get_tree(), global_position + direction * CARRY * 0.6, CARRY):
+			if not e.is_in_group("boss"):
+				e.global_position += direction * speed * delta   # carried along
+		if _travelled + speed * delta >= max_range:
+			SpellVariants.blast(caster, global_position, data.glyph_id, 32.0, 56.0, power, 2.0, 50.0)   # the crash
 	super(delta)
 	# ponytail: enemy shots aren't monitorable, so scan siblings; fine for a handful of shots on screen.
 	for a in get_parent().get_children():

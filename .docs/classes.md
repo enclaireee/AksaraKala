@@ -47,28 +47,28 @@ Displayed level is calculated as `1 + points spent`, ensuring classes with lower
 - **Fantasy:** Resilient frontliner who shrugs off blows.
 - **Starting Weapon:** Broadsword (heavy melee, sweeping arc, 25 stamina).
 - **Passive:** **Iron Skin** — Light enemy hits do not stagger or knock you back ([combat.md](combat.md) 2.7).
-- **Spell Modifiers:** spell damage x0.9; heavy Bolt, wide Bind and Burst, Heal shield, shoulder-charge Dash, damage-guard Rally, healing tiger, wall-of-water Ombak (see [spells.md](spells.md) 3). Ward is the same for every class.
+- **Spell Modifiers:** spell damage x0.9. Every glyph except Ga casts a Hulubalang spell: thrown spear, thorn wall, fissure, shield-prayer, bull charge, war cry, guardian tiger, wall of water ([spells.md](spells.md) 3).
 - **Playstyle:** Close combat, high poise defense, utilizing spells for radial crowd control and shielding.
 
 ### Archer
 - **Fantasy:** Nimble ranged marksman controlling distance.
 - **Starting Weapon:** Hunting Bow (ranged projectile, 4 stamina per shot, 8 base damage).
 - **Passive:** **Eagle Eye** — +15% damage at long range (>120 px); arrows pierce initial targets.
-- **Spell Modifiers:** piercing Bolt fan, Burst shards, Dash ends in an arrow, Heal refills stamina, Rally adds move speed, Ombak fans into three; spell damage x1.0.
+- **Spell Modifiers:** spell damage x1.0. Pamanah spells: arrow rain, snare trap, flare with homing sparks, wind heal, backward leap volley, hunter focus, two hawks, boomerang tide.
 - **Playstyle:** Kiting, positioning, zone control with fan-shaped spell bursts.
 
 ### Rogue
 - **Fantasy:** Agile skirmisher thriving on mobility and lethal backstabs.
 - **Starting Weapon:** Dagger (light melee, rapid strikes, 10 stamina).
 - **Passive:** **Light Step** — Dodge stamina cost reduced from 20 to 14; deals 2x damage on attacks from behind (within 60 degrees of enemy's rear arc).
-- **Spell Modifiers:** Dash-strike cost x0.7 and bleeds, Bind +30% duration, twin Bolt, Burst smoke, Heal i-frames, half-cost dodge Rally, twin tigers, chilling Ombak; spell damage x1.0.
+- **Spell Modifiers:** Dash-strike cost x0.7, spell damage x1.0. Pendekar spells: chain lightning, vacuum, silat spin, untouchable breath, teleport stab, free-dodge footwork, shadow tigers, undertow.
 - **Playstyle:** Flanking, hit-and-run tactics, capitalizing on dodge i-frames and binding enemies.
 
 ### Mage
 - **Fantasy:** Scholar of the sacred script with unmatched casting prowess.
 - **Starting Weapon:** Oak Staff (ranged mystical projectile, 5 stamina).
 - **Passive:** **Keen Mind** — Sakti gauge capacity expanded from 100 to 120; gauge fills 1.2x faster from combat actions.
-- **Spell Modifiers:** spell damage x1.1, all spell costs x0.9, Heal x1.2; homing Bolt, Bind refunds Sakti, double-blast Burst, blink-blast Dash, Sakti-gain Rally, long burning tiger, echoing Ombak.
+- **Spell Modifiers:** spell damage x1.1, all spell costs x0.9. Wiku spells: storm orb, draining vines, rune circle, healing spring, blink bomb, focus (cheaper spells), fire tiger, flood of waves.
 - **Playstyle:** Frequent spellcaster, fragile in melee, relies on rapid aksara execution.
 
 ---

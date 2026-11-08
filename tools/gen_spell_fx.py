@@ -387,6 +387,40 @@ def make_tiger():
     save("tiger_pounce", [tiger_frame(0.4, 0.0), tiger_frame(0.8, 0.6), tiger_frame(1.2, 1.0)])
 
 
+
+# ---- spirit hawk: 4 frames 36x28, facing right --------------------------------------------------------
+def make_hawk():
+    fr = frame(4, 36, 28)
+    BODY = (200, 240, 235, 240)
+    WING = (120, 200, 210, 235)
+    DARKW = (60, 120, 150, 240)
+    for i, im in enumerate(fr):
+        up = [1.0, 0.3, -0.6, 0.3][i]
+        cx, cy = 18, 15
+        for y in range(-4, 5):
+            for x in range(-9, 10):
+                if (x / 9.5) ** 2 + (y / 4.2) ** 2 <= 1:
+                    px(im, cx + x, cy + y, BODY if y < 2 else WING)
+        # wings: a filled triangle from the shoulder to a tip that flaps up and down
+        tipx, tipy = cx - 7, cy - 2 - up * 11
+        for t in range(0, 41):
+            u = t / 40.0
+            for v in range(0, 11):
+                w = v / 10.0
+                x = (cx - 5) * (1 - u) + tipx * u + (cx + 3 - (cx - 5)) * w * (1 - u)
+                y = (cy - 2) * (1 - u) + tipy * u
+                px(im, x, y, DARKW if (u > 0.6 and w < 0.3) else WING)
+        # head and beak
+        disc(im, cx + 10, cy - 1, 3, BODY)
+        px(im, cx + 13, cy, (255, 200, 90, 255)); px(im, cx + 14, cy + 1, (255, 200, 90, 255))
+        px(im, cx + 11, cy - 2, (40, 255, 230, 255))
+        # tail
+        for k in range(5):
+            px(im, cx - 10 - k, cy + 1 + k // 3, WING)
+            px(im, cx - 10 - k, cy + 2 + k // 3, DARKW)
+    save("hawk_fly", fr)
+
+
 # ---- ombak: wave crest 5 frames 48x32 facing right -------------------------------------------------
 def make_ombak():
     fr = frame(5, 48, 32)
@@ -451,7 +485,7 @@ def make_spark():
 
 def preview():
     names = ["bolt_fly", "hit_burst", "ward_bubble", "ward_break", "shock", "bind_roots", "bind_ring", "heal_rise",
-             "dash_slash", "rally_aura", "tiger_run", "tiger_pounce", "ombak_wave", "cast_sigil", "ember"]
+             "dash_slash", "rally_aura", "tiger_run", "tiger_pounce", "hawk_fly", "ombak_wave", "cast_sigil", "ember"]
     sheets = [Image.open(os.path.join(OUT, n + ".png")) for n in names]
     W = max(s.width for s in sheets) + 8
     H = sum(s.height + 6 for s in sheets) + 6
@@ -465,6 +499,6 @@ def preview():
 
 if __name__ == "__main__":
     make_bolt(); make_hit(); make_ward(); make_shock(); make_bind(); make_heal(); make_slash()
-    make_aura(); make_tiger(); make_ombak(); make_sigil(); make_spark()
+    make_aura(); make_tiger(); make_hawk(); make_ombak(); make_sigil(); make_spark()
     preview()
     print("ok", sorted(os.listdir(OUT)))

@@ -1,21 +1,20 @@
 class_name Bolt extends Arrow
-## Sunda Ka: a bolt of light that burns what it hits (spells.md 3). Reuses Arrow flight and wall check.
-## Every class bends it: Hulubalang a slow heavy bolt, Pamanah a piercing fan, Pendekar a twin strike, Wiku a seeker.
+## Sunda Ka base spell: a bolt of light that burns what it hits and pierces one extra enemy (spells.md 3).
+## Modes: "" the plain bolt, "spear" (Hulubalang: a thrown lightning spear that impales, roots and detonates),
+## "seek" (homing sparks from Pamanah's flare). Other classes cast other spells (spells/spell_variants.gd).
 
 var caster: Node2D   # a Player; typed loosely so spells load before player.gd does
 var data: SpellData
 var power := 1.0     # damage multiplier (0.7 for a rough cast)
 var perfect := false
-var reach := 220.0   # px of flight; Pamanah's Burst shards fly shorter
-var _side := false   # a fan arrow, echo or shard: does not spawn more
+var mode := ""
+var reach := 220.0   # px of flight
 var _hits_left := 2  # pierces one extra enemy, the second takes 75%
-var _homing := false
 var _tint := Color.WHITE
 var _spr: SpellAnim
-const FAN := 0.26    # rad, about 15 degrees (ASSUMED)
-const ECHO_DELAY := 0.14
 const HOME_RANGE := 150.0
 const HOME_TURN := 4.5   # rad per second
+const SPEAR_FUSE := 0.6  # s from impale to detonation
 
 
 func _ready() -> void:
@@ -27,25 +26,20 @@ func _ready() -> void:
 	poise_mult = preload("res://data/combat_tuning.tres").spell_poise_mult
 	_tint = SpellUtil.tint(data.glyph_id, caster)
 	pierce = true       # Arrow frees a non-piercing shot on its first hit; _on_bolt_hit counts the hits instead
-	var cls := SpellUtil.class_id(caster)
-	var size := 0.8 if _side else 1.0
-	match cls:
-		"warrior":   # Hulubalang: a slow, heavy bolt that staggers
-			damage = roundi(damage * 1.35)
-			speed = 200.0
-			knockback = 18.0
-			poise_mult *= 1.6
+	if mode == "" and SpellUtil.class_id(caster) == "warrior":
+		mode = "spear"
+	var size := 1.0
+	match mode:
+		"spear":
+			speed = 330.0
+			max_range = 200.0
+			damage = roundi(damage * 1.2)
+			knockback = 14.0
 			_hits_left = 1
-			size = 1.3
-		"archer":    # Pamanah: pierces everything, fans into three arrows
-			_hits_left = 99
-			if not _side:
-				_fan()
-		"rogue":     # Pendekar: a second bolt follows right behind
-			if not _side:
-				_echo()
-		"mage":      # Wiku: the bolt curves toward the nearest foe ahead
-			_homing = true
+			size = 1.4
+		"seek":
+			_hits_left = 1
+			size = 0.7
 	hit_landed.connect(_on_bolt_hit)
 	super()
 	_spr = SpellFX.make("bolt_fly", 4, 16.0)
@@ -57,56 +51,46 @@ func _ready() -> void:
 		var d := get_node_or_null("Diamond")
 		if d:
 			d.visible = false
-	if not _side:
+	if mode == "":
 		SpellFX.burst(get_parent(), "hit_burst", 5, global_position, _tint, 0.6, 24.0)   # muzzle flash
 
 
-func _fan() -> void:
-	for a in [-FAN, FAN]:
-		var s: Bolt = data.scene.instantiate()
-		s._side = true
-		s.caster = caster
-		s.data = data
-		s.power = power * 0.6   # ASSUMED: side arrows deal 60%
-		s.direction = direction.rotated(a)
-		s.global_position = global_position
-		get_parent().add_child.call_deferred(s)
-
-
-func _echo() -> void:
-	var par := get_parent()
-	var dir := direction
-	var sc := data.scene
-	var who := caster
-	var d := data
-	var p := power * 0.8   # ASSUMED
-	get_tree().create_timer(ECHO_DELAY).timeout.connect(func() -> void:
-		if not is_instance_valid(who) or not is_instance_valid(par) or not par.is_inside_tree():
-			return
-		var s: Bolt = sc.instantiate()
-		s._side = true
-		s.caster = who
-		s.data = d
-		s.power = p
-		s.direction = dir
-		s.global_position = who.global_position
-		par.add_child(s))
-
-
 func _on_bolt_hit(hb: Hurtbox) -> void:
-	SpellUtil.burn(hb.owner, damage)   # burn_share of the hit, as ticks
 	SpellFX.burst(get_parent(), "hit_burst", 5, global_position, _tint, 0.9, 20.0)
+	if mode == "spear":
+		_impale(hb.owner)
+	else:
+		SpellUtil.burn(hb.owner, damage)   # burn_share of the hit, as ticks
+		if _hits_left > 1:
+			damage = roundi(damage * 0.75)   # the next foe takes less
 	_hits_left -= 1
-	if _hits_left < 50:
-		damage = roundi(damage * 0.75)   # the next foe takes less (Pamanah's pierce is full strength)
 	if _hits_left <= 0:
 		_spent = true
 		queue_free()
 
 
+## Hulubalang: the spear pins its target for the fuse, then detonates there.
+func _impale(e: Node) -> void:
+	if e == null or not e is Node2D:
+		return
+	if e.get("status") != null:
+		var tuning: CombatTuning = e.status.tuning
+		if e.is_in_group("boss"):
+			e.status.apply(Status.Type.SLOW, SPEAR_FUSE + 1.0, tuning.bind_slow_mult)
+		else:
+			e.status.apply(Status.Type.BOUND, SPEAR_FUSE + 0.3)
+	var pos: Vector2 = (e as Node2D).global_position
+	var who := caster
+	var p := power
+	var par := get_parent()
+	SpellFX.burst(par, "cast_sigil", 6, pos, _tint, 0.5, 8.0)
+	SpellVariants.later(who, SPEAR_FUSE, func() -> void:
+		SpellVariants.blast(who, pos, "sunda_ka", 26.0, 46.0, p, 2.0, 30.0))
+
+
 func _physics_process(delta: float) -> void:
-	if _homing:
-		var t := SpellUtil.nearest_enemy(get_tree(), global_position, HOME_RANGE, direction, 1.0)
+	if mode == "seek":
+		var t := SpellUtil.nearest_enemy(get_tree(), global_position, HOME_RANGE, direction, 1.2)
 		if t != null:
 			var want := (t.global_position + Vector2(0, -6) - global_position).angle()
 			direction = Vector2.from_angle(rotate_toward(direction.angle(), want, HOME_TURN * delta))

@@ -66,6 +66,9 @@ static func cost(caster: Node, spell: SpellData) -> float:
 	var c := spell.cost
 	if spell.glyph_id == "jawa_ka" and has_flag("choice_offer_memory"):
 		c = maxf(0.0, c - OFFER_MEMORY_OMBAK_COST_CUT)
+	var loop := Engine.get_main_loop()
+	if loop is SceneTree and not (loop as SceneTree).get_nodes_in_group("focus").is_empty():
+		c *= 0.75   # Wiku's Fokus Batin (Jawa Ca)
 	match class_id(caster):
 		"mage": c *= 0.9
 		"rogue": c *= 0.7 if spell.glyph_id == "jawa_na" else 1.0
