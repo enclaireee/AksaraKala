@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "hauler"
+name_key = "NPC_HAULER_NAME"
+entries = Array[Dictionary]([
+	{"if": [], "lines": ["DLG_HAULER_1"], "do": []}
+])

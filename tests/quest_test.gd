@@ -77,9 +77,10 @@ func _initialize() -> void:
 	ev.enemy_killed.emit(boar, 9)
 	ev.enemy_killed.emit(boar, 9)
 	check(g.quests.t_a.step == 0 and g.quests.t_a.count == 2, "count: %s" % g.quests.t_a)
-	check(g.objective_text() == "", "objective line for an unpinned side quest")
-	g.pin_quest("t_a")
+	check(g.pinned == "t_a", "a started side quest is tracked")
 	check(g.objective_text().ends_with(" 2/3"), "objective count: '%s'" % g.objective_text())
+	g.pin_quest("t_a")
+	check(g.objective_text() == "", "objective line for an untracked side quest")
 	g.pin_quest("t_a")
 	check("wild_boar" in g.codex, "first kill did not unlock the codex entry")
 	ev.enemy_killed.emit(boar, 9)
@@ -103,7 +104,9 @@ func _initialize() -> void:
 
 	# Pinning and the marker.
 	g.start_quest("t_c")
-	check(g.objective_marker().is_empty(), "marker without a pin or main quest")
+	check(g.pinned == "t_c" and g.objective_marker().get("id") == "spring", "a started side quest's marker is followed")
+	g.pin_quest("t_c")
+	check(g.objective_marker().is_empty(), "marker without a tracked quest or main quest")
 	g.pin_quest("t_c")
 	check(g.pinned == "t_c" and g.objective_marker().get("id") == "spring", "pinned marker")
 	g.pin_quest("t_a")
@@ -153,6 +156,7 @@ func _initialize() -> void:
 	check(g.quests.t_e.step == 2, "kill catch-up: %s" % g.quests.t_e)
 
 	# Save round trip keeps quests, codex, pin and flags.
+	g.pin_quest("t_c")
 	var before := JSON.stringify(g.to_dict())
 	check(g.save_game(), "save failed")
 	g._reset()
@@ -167,6 +171,17 @@ func _initialize() -> void:
 	check(not g.quests.has("x") and not g.quests.has("z") and g.quests.y.step == 0 and g.quests.y.count == 0, "malformed quests: %s" % g.quests)
 	check(not g.has_flag("s"), "a non-bool flag counted as set")
 	check(g.current_step("y") == null, "a quest with no data returned a step")
+
+	# MQ0 step 10 & 11 objectives and west gate marker verification
+	var mq0: QuestData = load("res://data/quests/mq0.tres") as QuestData
+	check(mq0 != null, "mq0 loaded")
+	var s11: QuestStep = mq0.steps[10]
+	check(s11.all.size() >= 3 and s11.all[0].get("on") == "talked_to:semar", "mq0 step 10 asks to consult Semar first")
+	var s12: QuestStep = mq0.steps[11]
+	check(s12.all.size() == 2, "mq0 step 11 has raid and west gate sub-goals")
+	check(s12.all[0].get("marker", {}).get("id") == "purwa_raid", "s12 sub 0 points to raid")
+	check(s12.all[1].get("marker", {}).get("id") == "exit_tatar_sunda", "s12 sub 1 points to exit_tatar_sunda")
+	check(s12.marker.get("id") == "exit_tatar_sunda", "s12 step marker points to exit_tatar_sunda")
 
 	for p in [PATH, "user://quest_test.bak", PATH + ".tmp"]:
 		DirAccess.remove_absolute(p)

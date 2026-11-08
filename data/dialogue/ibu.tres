@@ -7,8 +7,11 @@ script = ExtResource("1")
 npc_id = "ibu"
 name_key = "NPC_IBU_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq0=3"], "lines": ["DLG_IBU_V1", "@NPC_HERO_NAME", "DLG_IBU_H1", "@NPC_IBU_NAME", "DLG_IBU_V2", "DLG_IBU_V3", "DLG_IBU_V4"], "do": []},
-	{"if": ["flag:mq5_4"], "lines": ["DLG_IBU_V5", "DLG_IBU_V6"], "do": []},
+	{"if": ["step:mq0=1", "!flag:mq0_d2"], "lines": ["DLG_IBU_V20", "@NPC_LARAS_NAME", "DLG_IBU_L1", "@NPC_IBU_NAME", "DLG_IBU_V21", "@NPC_HERO_NAME", "DLG_IBU_H20"], "do": []},
+	{"if": ["step:mq4=3", "item:laras_ribbon", "item:laras_board", "item:laras_strip_ka"], "lines": ["@NPC_HERO_NAME", "DLG_IBU_H5", "@NPC_IBU_NAME", "DLG_IBU_V12", "DLG_IBU_V13", "@NPC_HERO_NAME", "DLG_IBU_H6"], "do": []},
+	{"if": ["step:mq4=3"], "lines": ["@NPC_HERO_NAME", "DLG_IBU_H3", "@NPC_IBU_NAME", "DLG_IBU_V10", "@NPC_HERO_NAME", "DLG_IBU_H4", "@NPC_IBU_NAME", "DLG_IBU_V11"], "do": [], "quiet": true},
+	{"if": ["step:mq0=5"], "lines": ["@NPC_HERO_NAME", "DLG_IBU_H1", "@NPC_IBU_NAME", "DLG_IBU_V2", "@NPC_HERO_NAME", "DLG_IBU_H2", "@NPC_IBU_NAME", "DLG_IBU_V4"], "do": []},
+	{"if": ["flag:mq5_4"], "lines": ["DLG_IBU_V5", "@NPC_LARAS_NAME", "DLG_IBU_L2", "@NPC_IBU_NAME", "DLG_IBU_V6", "DLG_IBU_V23"], "do": []},
 	{"if": ["quest:mq0=active"], "lines": ["DLG_IBU_V7"], "do": []},
 	{"if": [], "lines": ["DLG_IBU_V8"], "do": []}
 ])

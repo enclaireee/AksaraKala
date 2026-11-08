@@ -7,14 +7,13 @@ script = ExtResource("1")
 npc_id = "timur_empu"
 name_key = "NPC_TIMUR_EMPU_NAME"
 entries = Array[Dictionary]([
-	{"if": ["quest:mq3=active", "!flag:mq3_1"], "lines": ["DLG_TIMUR_EMPU_V1"], "do": []},
-	{"if": ["step:mq3=3"], "lines": ["@NPC_HERO_NAME", "DLG_TIMUR_EMPU_H1", "@NPC_TIMUR_EMPU_NAME", "DLG_TIMUR_EMPU_V2", "DLG_TIMUR_EMPU_V3", "DLG_TIMUR_EMPU_V4", "DLG_TIMUR_EMPU_V5"], "do": []},
+	{"if": ["step:mq3=2"], "lines": ["DLG_TIMUR_EMPU_V1", "@NPC_HERO_NAME", "DLG_TIMUR_EMPU_H1", "@NPC_TIMUR_EMPU_NAME", "DLG_TIMUR_EMPU_V2", "DLG_TIMUR_EMPU_V3"], "do": []},
 	{"if": ["quest:sq_t3=available"], "lines": ["DLG_TIMUR_EMPU_15", "DLG_TIMUR_EMPU_16", "DLG_TIMUR_EMPU_17"], "do": ["start:sq_t3"]},
-	{"if": ["quest:mq3=active", "flag:mq3_2", "!flag:mq3_4"], "lines": ["DLG_TIMUR_EMPU_V6"], "do": []},
-	{"if": ["step:mq3=8"], "lines": ["DLG_TIMUR_EMPU_V7"], "do": []},
+	{"if": ["step:sq_t3=2"], "lines": ["DLG_TIMUR_EMPU_12", "DLG_TIMUR_EMPU_13", "DLG_TIMUR_EMPU_14"], "do": []},
 	{"if": ["flag:choice_reforge"], "lines": ["DLG_TIMUR_EMPU_V8"], "do": []},
 	{"if": ["flag:choice_sink"], "lines": ["DLG_TIMUR_EMPU_V9"], "do": []},
-	{"if": ["step:sq_t3=2"], "lines": ["DLG_TIMUR_EMPU_12", "DLG_TIMUR_EMPU_13", "DLG_TIMUR_EMPU_14"], "do": []},
+	{"if": ["step:mq3=3"], "lines": ["DLG_TIMUR_EMPU_V6"], "do": []},
+	{"if": ["step:mq3=5"], "lines": ["DLG_TIMUR_EMPU_V7"], "do": []},
 	{"if": ["quest:sq_t3=active"], "lines": ["DLG_TIMUR_EMPU_19"], "do": []},
 	{"if": [], "lines": ["DLG_TIMUR_EMPU_22"], "do": []}
 ])

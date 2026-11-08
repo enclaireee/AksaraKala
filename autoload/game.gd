@@ -5,20 +5,31 @@ extends Node
 signal changed   # ilmu, stats, gear, glyphs or flask changed
 signal saved     # HUD shows "Saved" for 1 s
 
-const VERSION := 1
+const VERSION := 3   # 2: quest records gain `all` (bits of an all step). Older saves load with all = 0.
+                     # 3: memory_return (architecture.md 9b). Older saves load with none.
 const STATS := ["vit", "end", "str", "dex", "spi"]
 const STARTER_GLYPHS: Array[String] = []   # glyphs come from the main quest (quests.md 3.3)
 ## Quest Ilmu by zone and size S/M/L (quests.md 3.1, TUNE). Desa Purwa uses the Act 1 row for now.
-const QUEST_ILMU := {"tatar_sunda": [30, 60, 90], "desa_purwa": [30, 60, 90], "mataram": [55, 110, 165],
+const QUEST_ILMU := {"tatar_sunda": [30, 60, 90], "desa_purwa": [30, 60, 90], "keraton_galuh": [30, 60, 90], "mataram": [55, 110, 165],
 	"tanah_timur": [110, 220, 330], "segara_kidul": [190, 380, 570],
 	"gua_kala": [190, 380, 570]}
 ## Quest-trigger signals on Events with one String arg (quests.md 7.2).
 const QUEST_SIGNALS := ["talked_to", "item_picked", "boss_defeated", "area_cleared", "area_entered",
-	"zone_entered", "petilasan_activated", "glyph_learned", "class_chosen", "weakness_triggered", "name_written"]
+	"zone_entered", "petilasan_activated", "glyph_learned", "class_chosen", "weakness_triggered", "name_written",
+	"clue_examined", "memory_done", "puzzle_solved", "trial_completed"]
+## Cross-time Laras flags set automatically when LC1-LC6 complete (quests.md 7.1).
+const LARAS_FLAGS := {
+	"lc1": ["mq1_lc", "laras_sabotage:crater_seal", "laras_key:crater_post", "laras_sabotage_crater_seal", "laras_key_crater_post"],
+	"lc2": ["mqg_lc", "laras_sabotage:glamour_seal", "laras_key:archive_grate", "laras_sabotage_glamour_seal", "laras_key_archive_grate"],
+	"lc3": ["mq2_lc", "laras_key:candi_crypt", "laras_sabotage:bondowoso_pillar", "laras_key_candi_crypt", "laras_sabotage_bondowoso_pillar"],
+	"lc4": ["mq3_lc", "laras_key:sand_tunnel", "laras_sabotage:keris_seventh_stake", "laras_key_sand_tunnel", "laras_sabotage_keris_seventh_stake"],
+	"lc5": ["mq4_lc", "laras_key:tidal_gate", "laras_key_tidal_gate"],
+	"lc6": ["mq5_lc", "laras_sabotage:kala_eclipse", "laras_sabotage_kala_eclipse"],
+}
 ## Saved fields, in to_dict order. Add a field here and in _reset(); old saves get its default.
 const FIELDS := ["class_id", "stats", "ilmu", "points_spent", "glyphs_learned", "inventory", "equipped",
 	"flask_charges", "flask_max", "herb_pouches", "last_petilasan", "killed", "flags", "play_time", "quests", "codex", "pinned",
-	"hero_name", "hero_pronoun"]
+	"hero_name", "hero_pronoun", "memory_return"]
 const DEFAULT_NAME := "Jaka"   # ASSUMED (ui.md 3)
 ## he / she / they -> [they, them, their, They] for Game.fmt.
 const PRONOUNS := {"he": ["he", "him", "his", "He"], "she": ["she", "her", "her", "She"], "they": ["they", "them", "their", "They"]}
@@ -39,11 +50,12 @@ var last_petilasan := {}               # zone (scene path) and id
 var killed := PackedStringArray()      # bosses, minibosses, other unique ids that stay dead
 var flags := {}
 var play_time := 0.0
-var quests := {}                       # id -> {state: active|done, step, count} (quests.md 7.3)
+var quests := {}                       # id -> {state: active|done, step, count, resolution, all} (quests.md 7.3)
 var codex := PackedStringArray()       # unlocked CodexEntry ids
 var pinned := ""                       # pinned side quest id, "" follows the main quest
 var hero_name := DEFAULT_NAME          # set on the name screen; new_game keeps it
 var hero_pronoun := "they"             # he, she or they
+var memory_return := {}                # inside a Kelir memory: {zone: scene path, pos: [x, y]} to go back to (Zones.enter_memory)
 
 
 func _init() -> void:
@@ -70,6 +82,7 @@ func _reset() -> void:
 	pinned = ""
 	hero_name = DEFAULT_NAME
 	hero_pronoun = "they"
+	memory_return = {}
 
 
 func _ready() -> void:
@@ -88,6 +101,9 @@ func _connect_events() -> void:
 		if kind != "":
 			on_event("enemy_killed", kind))
 	ev.weakness_triggered.connect(func(kind: String) -> void: set_flag("weak:" + kind))
+	ev.memory_done.connect(func(mid: String) -> void:
+		for fl: String in LARAS_FLAGS.get(mid, []):
+			set_flag(fl, false))
 
 
 func _process(delta: float) -> void:
@@ -113,14 +129,13 @@ static func clean_name(s: String, final := true) -> String:
 	return s if s != "" else DEFAULT_NAME
 
 
-## Fills {name}, {they}, {them}, {their}, {They}. Call it on the result of tr(). Plain replaces on purpose:
-## never String.format with player input.
+## Fills {name}, {they}, {them}, {their}, {They} referring to the hero by name. Call it on the result of tr().
+## Plain replaces on purpose: never String.format with player input.
 func fmt(s: String) -> String:
 	if not "{" in s:
 		return s
-	var p: Array = PRONOUNS.get(hero_pronoun, PRONOUNS.they)
-	return s.replace("{name}", hero_name).replace("{they}", p[0]).replace("{them}", p[1]) \
-			.replace("{their}", p[2]).replace("{They}", p[3])
+	return s.replace("{name}", hero_name).replace("{they}", hero_name).replace("{them}", hero_name) \
+			.replace("{their}", hero_name + "'s").replace("{They}", hero_name)
 
 
 # --- new game, leveling, inventory ---
@@ -139,7 +154,9 @@ func new_game(cls: ClassData) -> void:
 			add_item(id, false)
 			equipped[ItemData.by_id(id).slot] = id
 	if start_quest("mq0"):
-		quests.mq0.step = 3   # 0.1-0.3 (prologue, Semar, class) came before the save (quests.md MQ0)
+		quests.mq0.step = 2   # 0.1-0.2 (prologue, class) are struck before the save; 0.3 Ibu is next (quests.md MQ0)
+		for f in ["mq0_d1", "mq0_d2", "mq0_d2b"]:
+			flags[f] = true
 	save_game()
 	changed.emit()
 
@@ -227,7 +244,20 @@ func learned_glyphs() -> Array[GlyphData]:
 
 func has_flag(f: String) -> bool:
 	var v: Variant = flags.get(f, false)
-	return v is bool and v
+	if v is bool and v:
+		return true
+	if f.begins_with("laras_"):
+		var alt := f.replace(":", "_") if ":" in f else f.replace("laras_key_", "laras_key:").replace("laras_sabotage_", "laras_sabotage:")
+		var va: Variant = flags.get(alt, false)
+		return va is bool and va
+	match f:
+		"lakon_4": return flags.keys().filter(func(k: String) -> bool: return k.begins_with("lakon:") and bool(flags.get(k, false))).size() >= 4
+		"lakon_9": return flags.keys().filter(func(k: String) -> bool: return k.begins_with("lakon:") and bool(flags.get(k, false))).size() >= 9
+		"codex_25": return codex_percent() >= 25.0
+		"codex_50": return codex_percent() >= 50.0
+		"codex_75": return codex_percent() >= 75.0
+		"codex_100": return codex_percent() >= 100.0
+	return false
 
 
 func set_flag(f: String, save := true) -> void:
@@ -259,7 +289,9 @@ func current_step(id: String) -> QuestStep:
 func start_quest(id: String) -> bool:
 	if quest_state(id) != "available":
 		return false
-	quests[id] = {"state": "active", "step": 0, "count": 0, "resolution": ""}
+	quests[id] = {"state": "active", "step": 0, "count": 0, "resolution": "", "all": 0}
+	if QuestData.by_id(id).kind == "side" and not QuestData.by_id(id).steps.is_empty():
+		pinned = id   # a new side quest is tracked at once (docs/quest_system.md 3.2)
 	_emit("quest_started", id)
 	if QuestData.by_id(id).steps.is_empty():
 		_complete(id)
@@ -277,7 +309,13 @@ func on_event(sig: String, arg: String) -> void:
 	var hit := false
 	for id in quests.keys():
 		var st := current_step(id)
-		if st != null and (_matches(st.on, sig, arg) or st.alt.has(sig + ":" + arg)):
+		if st != null and not st.all.is_empty():
+			for i in st.all.size():
+				if not _all_bit(id, i) and _matches(str(st.all[i].get("on", "")), sig, arg):
+					hit = true
+					if _all_hit(id, i):
+						break
+		elif st != null and (_matches(st.on, sig, arg) or st.alt.has(sig + ":" + arg)):
 			hit = true
 			if st.alt.has(sig + ":" + arg):
 				quests[id].resolution = st.alt[sig + ":" + arg]
@@ -290,7 +328,18 @@ func on_event(sig: String, arg: String) -> void:
 ## "sig:arg" exact, bare "sig" for any arg, or a trailing * as a prefix ("item_picked:angklung_*").
 func _matches(on: String, sig: String, arg: String) -> bool:
 	var ev := sig + ":" + arg
-	return on == ev or on == sig or (on.ends_with("*") and ev.begins_with(on.trim_suffix("*")))
+	if on == ev or on == sig or (on.ends_with("*") and ev.begins_with(on.trim_suffix("*"))):
+		return true
+	if on.begins_with("puzzle_solved:") and sig in ["area_entered", "puzzle_solved"]:
+		var pid := on.substr(14)
+		return arg == pid or arg == "puzzle_" + pid or "puzzle_" + arg == pid
+	if on.begins_with("area_entered:") and sig in ["area_entered", "puzzle_solved"]:
+		var tid := on.substr(13)
+		return arg == tid or arg == "puzzle_" + tid or "puzzle_" + arg == tid
+	if on.begins_with("trial_completed:") and sig in ["area_cleared", "area_entered", "trial_completed"]:
+		var trid := on.substr(16)
+		return arg == trid or arg == "puzzle_" + trid
+	return false
 
 
 func _bump(id: String) -> void:
@@ -302,6 +351,7 @@ func _bump(id: String) -> void:
 	set_flag(st.set_flag, false)
 	quests[id].step = int(quests[id].step) + 1
 	quests[id].count = 0
+	quests[id].all = 0
 	if int(quests[id].step) >= QuestData.by_id(id).steps.size():
 		_complete(id)
 	else:
@@ -309,20 +359,54 @@ func _bump(id: String) -> void:
 		_catch_up(id)
 
 
-## A collect step counts items already held, so picking them up early can't soft-lock the quest.
-## A kill step for a unique enemy (boss, elite) already in `killed` is met: it never respawns to fire again.
+func _all_bit(id: String, i: int) -> bool:
+	return (int(quests[id].get("all", 0)) >> i) & 1 == 1
+
+
+## Marks trigger i of the current all step done and sets its flag. True when that finished the step.
+func _all_hit(id: String, i: int) -> bool:
+	var st := current_step(id)
+	quests[id].all = int(quests[id].get("all", 0)) | (1 << i)
+	set_flag(str(st.all[i].get("set_flag", "")), false)
+	for j in st.all.size():
+		if not _all_bit(id, j):
+			_emit("quest_updated", id)
+			changed.emit()   # the HUD line and arrow pivot to the next sub-goal
+			return false
+	quests[id].count = st.count - 1
+	_bump(id)
+	return true
+
+
+## How much of `on` already happened in a way that cannot fire again, capped at `need`: held items and known
+## glyphs count each match, a unique kill (boss, elite) already in `killed` meets it (it never respawns).
+func _already(on: String, need: int) -> int:
+	var kv := on.split(":", true, 1)
+	if kv.size() < 2:
+		return 0
+	var pool := PackedStringArray()
+	match kv[0]:
+		"boss_defeated", "enemy_killed":
+			return need if kv[1] in killed else 0
+		"item_picked":
+			pool = inventory
+		"glyph_learned":
+			pool = glyphs_learned
+	return mini(need, Array(pool).filter(func(x: String) -> bool: return _matches(on, kv[0], x)).size())
+
+
+## A step (or all-trigger) that becomes current counts what already happened (_already), so early pickups,
+## early glyphs and bosses beaten before the quest started can't soft-lock it.
 func _catch_up(id: String) -> void:
 	var st := current_step(id)
 	if st == null:
 		return
-	var kv := st.on.split(":", true, 1)
-	if kv[0] in ["boss_defeated", "enemy_killed"] and kv.size() == 2 and kv[1] in killed:
-		quests[id].count = st.count - 1
-		_bump(id)
+	if not st.all.is_empty():
+		for i in st.all.size():
+			if _already(str(st.all[i].get("on", "")), 1) > 0 and _all_hit(id, i):
+				return
 		return
-	if not st.on.begins_with("item_picked:"):
-		return
-	var n := Array(inventory).filter(func(i: String) -> bool: return _matches(st.on, "item_picked", i)).size()
+	var n := _already(st.on, st.count)
 	if n >= st.count:
 		quests[id].count = st.count - 1
 		_bump(id)
@@ -353,16 +437,68 @@ func _complete(id: String) -> void:
 	_emit("quest_completed", id)
 
 
-## The objective to point the arrow at: the pinned side quest, else the first active main quest.
+## Index of the first unfinished trigger of the current `all` step, or -1 (no all step, or all done).
+func active_sub(id: String) -> int:
+	var st := current_step(id)
+	if st == null:
+		return -1
+	for i in st.all.size():
+		if not _all_bit(id, i):
+			return i
+	return -1
+
+
+## The open sub-goal the HUD and arrow follow: the first open one whose marker is in the zone the player is in,
+## else the first open one. -1 when the step has no sub-goals or all are done.
+func focus_sub(id: String) -> int:
+	var st := current_step(id)
+	if st == null:
+		return -1
+	var first := -1
+	var zones := get_node_or_null("/root/Zones")
+	var here: String = str(zones.current_zone) if zones != null else ""
+	for i in st.all.size():
+		if _all_bit(id, i):
+			continue
+		if first < 0:
+			first = i
+		var sm: Variant = st.all[i].get("marker", {})
+		if here != "" and sm is Dictionary and str(sm.get("zone", "")) == here:
+			return i
+	return first
+
+
+## Finished and total sub-goals of the current step (a counted step: kills so far and needed). Vector2i.ZERO if none.
+func step_progress(id: String) -> Vector2i:
+	var st := current_step(id)
+	if st == null:
+		return Vector2i.ZERO
+	if not st.all.is_empty():
+		var done := 0
+		for i in st.all.size():
+			done += 1 if _all_bit(id, i) else 0
+		return Vector2i(done, st.all.size())
+	return Vector2i(int(quests[id].count), st.count) if st.count > 1 else Vector2i.ZERO
+
+
+## The objective to point the arrow at: the tracked side quest, else the first active main quest. In an `all`
+## step it is the marker of the focus sub-goal, falling back to the step's own marker.
 func objective_marker() -> Dictionary:
 	for id in _tracked():
 		var st := current_step(id)
-		if st and not st.marker.is_empty():
+		if st == null:
+			continue
+		var i := focus_sub(id)
+		if i >= 0:
+			var sm: Variant = st.all[i].get("marker", {})
+			if sm is Dictionary and not sm.is_empty():
+				return sm
+		if not st.marker.is_empty():
 			return st.marker
 	return {}
 
 
-## Quests the HUD follows, in order: the pinned side quest, then active main quests.
+## Quests the HUD follows, in order: the tracked side quest, then active main quests.
 func _tracked() -> Array:
 	var ids: Array = [pinned] if quest_state(pinned) == "active" else []
 	for id in quests.keys():
@@ -372,13 +508,41 @@ func _tracked() -> Array:
 	return ids
 
 
-## The HUD objective line (ui.md 2): the first tracked step's objective, plus "n/count" for counted steps.
+## The current objective line of one quest: the focus sub-goal's `objective` key (the step objective when it has
+## none) with "(done/total)", or the step objective with "n/count" for a counted step. "" if the quest is not active.
+func quest_objective_text(id: String) -> String:
+	var st := current_step(id)
+	if st == null:
+		return ""
+	var pr := step_progress(id)
+	var i := focus_sub(id)
+	if i >= 0:
+		var key := str(st.all[i].get("objective", ""))
+		return "%s (%d/%d)" % [tr(key if key != "" else st.objective), pr.x, pr.y]
+	return tr(st.objective) + (" %d/%d" % [pr.x, pr.y] if pr.y > 1 else "")
+
+
+## The HUD objective line (ui.md 2): the first tracked quest's current objective.
 func objective_text() -> String:
 	for id in _tracked():
-		var st := current_step(id)
-		if st:
-			return tr(st.objective) + (" %d/%d" % [quests[id].count, st.count] if st.count > 1 else "")
+		var t := quest_objective_text(id)
+		if t != "":
+			return t
 	return ""
+
+
+## Journal checklist of the current step: [{text, done, active}] per sub-goal ([] for a plain step).
+func step_checklist(id: String) -> Array:
+	var out := []
+	var st := current_step(id)
+	if st == null:
+		return out
+	var act := focus_sub(id)
+	for i in st.all.size():
+		var key := str(st.all[i].get("objective", ""))
+		out.append({"text": tr(key) if key != "" else "%s (%d/%d)" % [tr(st.objective), i + 1, st.all.size()],
+				"done": _all_bit(id, i), "active": i == act})
+	return out
 
 
 ## The first key bound to an input action, for prompts and hints ("E", "Right Mouse").
@@ -442,6 +606,9 @@ func check(cond: String) -> bool:
 		"step":
 			var p := arg.split("=")
 			return p.size() == 2 and quest_state(p[0]) == "active" and int(quests[p[0]].step) == int(p[1])
+		"zone":   # the area the player is in (Zones.current_zone, set by Zone._ready)
+			var z := get_node_or_null("/root/Zones")
+			return z != null and z.current_zone == arg
 	push_warning("dialogue: unknown condition '%s'" % cond)
 	return false
 
@@ -464,6 +631,26 @@ func run(action: String) -> void:
 			set_flag(arg)
 		"codex":
 			unlock_codex(arg)
+		"lakon":   # same flag as a quest's lakon reward
+			set_flag("lakon:" + arg)
+		"restore":
+			restore()
+		"credits":
+			get_node("/root/Zones").go_to("res://ui/epilogue.tscn", "")
+		"goto":   # goto:<area>:<spawn>; the area may be a scene path, so split at the last colon
+			var p := arg.rsplit(":", true, 1)
+			if p.size() == 2:
+				get_node("/root/Zones").go_to(p[0], p[1])   # actions run after the box closed; this fires zone_entered
+			else:
+				push_warning("dialogue: goto '%s' needs <area>:<spawn>" % arg)
+		"clue":   # clue:<id>, what a Clue runs after its lines (architecture.md 9b)
+			set_flag("clue_" + arg)
+			_emit("clue_examined", arg)
+		"puzzle":
+			set_flag("puzzle_" + arg)
+			_emit("puzzle_solved", arg)
+		"memory":
+			get_node("/root/Zones").enter_memory(arg)
 		"write":   # write:<seq_id>:<glyph_id>,<glyph_id>,... (ui/glyph_lesson)
 			var p := arg.split(":", true, 1)
 			if p.size() == 2:
@@ -472,17 +659,26 @@ func run(action: String) -> void:
 					push_warning("dialogue: write '%s' names no known glyph" % arg)
 				else:
 					get_node("/root/Events").write_requested.emit(p[0], PackedStringArray(ids))
+		"remember":   # remember:<key>, a choice with a visible consequence (docs/quest_story_ux.md 3)
+			set_flag("remember_" + arg)
+			_emit("consequence_noted", arg)
+		"topic":   # topic:<key>, a hub choice's action; play() handles it (script.md 2, topic hubs)
+			pass
 		_:
 			push_warning("dialogue: unknown action '%s'" % action)
 
 
 ## Plays one dialogue entry {"lines": [...], "choices": [{"text": KEY, "do": [...]}], "do": [...]} and returns
-## when it is over (await it). Contract, used by Npc.interact and ui/story_beat.gd:
+## when it is over (await it). `file` is the entry's whole dialogue file (DialogueData.entries); only a hub uses it.
+## A hub entry ("hub": true, with choices) goes to _play_hub instead. Contract for every other entry, used by Npc.interact and ui/story_beat.gd:
 ##   1. emits Events.dialogue_choices (only with choices), then Events.dialogue_requested(name_key, lines);
 ##   2. waits for Events.dialogue_finished (the box pauses the tree meanwhile);
 ##   3. runs the picked choice's `do`, then the entry's `do` (every action through run()).
 ## A line "@KEY" is not shown: it sets the speaker tag for the lines after it. Cancel never skips a choice.
-func play(name_key: String, entry: Dictionary) -> void:
+func play(name_key: String, entry: Dictionary, file: Array = []) -> void:
+	if entry.get("hub", false) and not entry.get("choices", []).is_empty():
+		await _play_hub(name_key, entry, file)
+		return
 	var ev := get_node("/root/Events")
 	var choices: Array = entry.get("choices", [])
 	var pick := [-1]   # a lambda cannot assign a captured int
@@ -500,6 +696,73 @@ func play(name_key: String, entry: Dictionary) -> void:
 			run(a)
 	for a: String in entry.get("do", []):
 		run(a)
+
+
+## "Ask about..." hub (script.md 2, quests.md 7.1 item 2): the hub's lines, then its choices. A choice whose `do`
+## has `topic:<key>` runs its other actions, plays topic_entry(file, key), then shows the choices again (no lines).
+## A choice without `topic:` (the leave choice) runs its `do`, then the hub's own `do`, and the talk ends.
+## Between rounds the box closes and reopens, so Events.dialogue_finished fires once per round.
+func _play_hub(name_key: String, entry: Dictionary, file: Array) -> void:
+	var choices: Array = entry.get("choices", [])
+	var lines := PackedStringArray(entry.get("lines", []))
+	while true:
+		var i: int = await _ask(name_key, lines, choices)
+		lines = PackedStringArray()
+		if i < 0 or i >= choices.size():
+			break   # no pick (the box did not choose): leave rather than loop
+		var topic := ""
+		for a: String in choices[i].get("do", []):
+			if a.begins_with("topic:"):
+				topic = a.substr(6)
+			else:
+				run(a)
+		if topic == "":
+			break
+		var t := topic_entry(file, topic)
+		if not t.is_empty():
+			await play(name_key, t)
+	for a: String in entry.get("do", []):
+		run(a)
+
+
+## Shows `lines` then `choices` in the box and returns the picked index (-1 if none).
+func _ask(name_key: String, lines: PackedStringArray, choices: Array) -> int:
+	var ev := get_node("/root/Events")
+	var pick := [-1]
+	var on_pick := func(i: int) -> void: pick[0] = i
+	ev.dialogue_picked.connect(on_pick)
+	ev.dialogue_choices.emit(PackedStringArray(choices.map(func(c: Dictionary) -> String: return c.get("text", ""))))
+	ev.dialogue_requested.emit(name_key, lines)
+	await ev.dialogue_finished
+	if ev.dialogue_picked.is_connected(on_pick):
+		ev.dialogue_picked.disconnect(on_pick)
+	return pick[0]
+
+
+## The normal first-match entry search: the first entry without a "topic" key whose `if` all holds, or {}.
+func pick_entry(entries: Array) -> Dictionary:
+	for e: Dictionary in entries:
+		if not e.has("topic") and e.get("if", []).all(func(c: String) -> bool: return check(c)):
+			return e
+	return {}
+
+
+## The first entry in `entries` with "topic": key whose `if` all holds, or {}.
+func topic_entry(entries: Array, key: String) -> Dictionary:
+	for e: Dictionary in entries:
+		if str(e.get("topic", "")) == key and e.get("if", []).all(func(c: String) -> bool: return check(c)):
+			return e
+	return {}
+
+
+## Refill flask, HP and stamina: resting at a petilasan and the `restore` action. Does not save or reload the zone.
+func restore() -> void:
+	flask_charges = flask_max
+	var p: Node = get_tree().get_first_node_in_group("player") if is_inside_tree() else null
+	if p and p.get("health") and p.get("stamina"):
+		p.health.heal(p.health.max_hp)   # no-op when dead
+		p.stamina.refund(p.stamina.max_stamina)
+	changed.emit()
 
 
 func _emit(sig: String, id: String) -> void:
@@ -548,19 +811,31 @@ func from_dict(d: Dictionary) -> void:
 	hero_name = clean_name(hero_name)
 	if hero_pronoun not in PRONOUNS:
 		hero_pronoun = "they"
+	var mp: Variant = memory_return.get("pos")
+	if not (memory_return.get("zone") is String and memory_return.zone != "" and mp is Array and mp.size() == 2 \
+			and mp.all(func(x: Variant) -> bool: return x is float or x is int)):
+		memory_return = {}
 	for s in STATS:   # JSON reads numbers back as floats
 		stats[s] = int(stats.get(s, 5))
 	for id in quests.keys():   # drop malformed quest records from old or hand-edited saves
 		var q: Variant = quests[id]
 		if q is Dictionary and str(q.get("state", "")) in ["active", "done"]:
-			quests[id] = {"state": str(q.state), "step": maxi(0, _num(q.get("step"))), "count": maxi(0, _num(q.get("count"))), "resolution": str(q.get("resolution", ""))}
+			quests[id] = {"state": str(q.state), "step": maxi(0, _num(q.get("step"))), "count": maxi(0, _num(q.get("count"))), "resolution": str(q.get("resolution", "")), "all": maxi(0, _num(q.get("all")))}
 		else:
 			quests.erase(id)
+	if quests.has("mq0") and int(quests.mq0.get("step", 0)) >= 2:
+		for f in ["mq0_d1", "mq0_d2", "mq0_d2b"]:
+			flags[f] = true
 	changed.emit()
 
 
 func _num(v: Variant) -> int:
 	return int(v) if v is int or v is float else 0
+
+
+## True while a Kelir memory is the current scene (architecture.md 9b).
+func in_memory() -> bool:
+	return is_inside_tree() and get_tree().current_scene is KelirMemory
 
 
 func has_save() -> bool:
@@ -570,6 +845,8 @@ func has_save() -> bool:
 ## Write tmp, copy the current save to .bak, rename tmp over the save. A crash mid-write never
 ## leaves a broken save.json.
 func save_game() -> bool:
+	if in_memory():
+		return false   # no saves inside a Kelir memory: the one made at the clue (with memory_return) resumes there
 	var tmp := save_path + ".tmp"
 	var f := FileAccess.open(tmp, FileAccess.WRITE)
 	if f == null:

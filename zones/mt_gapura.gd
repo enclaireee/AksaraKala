@@ -6,7 +6,7 @@ const MAP := [
 	"#.........##.....................................###########",
 	"#.........##.....................................=,,,,,,,,zZ",
 	"#.........##.....................................=,,,,,,,,,Z",
-	"#...bbb...##.....................................###########",
+	"#...bbb...##................................G....###########",
 	"#...bbb...##..................bbb..........................#",
 	"#...bbb...##..................bbb..........................#",
 	"#.........##..................bbb..........................#",
@@ -15,14 +15,14 @@ const MAP := [
 	"#.........##...............................................#",
 	"#.........##...............................................#",
 	"#.........##.g.............................................#",
-	"#.........##...............................................#",
+	"#...A.I...##...............................................#",
 	"#..........................................................#",
 	"#..........................................................#",
-	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,yY",
+	"Xe,,,,HL,,K,,,F,,,,,,,,,,,,,,,E,,,,,,,,,C,,,,,,,,,D,,,,,,,yY",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
 	"#..........................................................#",
 	"#..........................................................#",
-	"#.........##...............................................#",
+	"#...B.J...##...............................................#",
 	"#.........##...............................................#",
 	"#.........##......................................bbbb.....#",
 	"#.........##..................................u...bbbb.....#",
@@ -50,6 +50,17 @@ const SPOTS := {
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_gapura", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu (Ilmu S, ASSUMED)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "gapura"}, "tile": "."},   # codex spot, stone gate
 	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
+	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "recruiter_a"}, "tile": "."},   # NPC recruiter of the north bank at the border market (2.1, `all` with recruiter_b; tells the war one way)
+	"B": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "recruiter_b"}, "tile": "."},   # NPC recruiter of the south bank at the border market (2.1; tells the same war the other way round)
+	"C": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_haulers", "size": Vector2i(10,4)}, "tile": ","},   # trigger, beat `haulers` staging (K3 hook; plays when `flag:beat_two_stories`, `zone:mt_gapura` (v5; after both recruiters and the `two_stories` beat); the beat spot is east of the market; villagers haul stone in the night)
+	"D": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_jalan", "size": Vector2i(18,9), "waves": [[["res://entities/enemies/tuyul.tscn", Vector2i(-5,-2)], ["res://entities/enemies/tuyul.tscn", Vector2i(-1,3)], ["res://entities/enemies/tuyul.tscn", Vector2i(3,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(6,2)]]]}, "tile": ","},   # encounter mataram_jalan (2.2, second ambush on the east road)
+	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_tepi", "cond": "flag:mq2_7b", "size": Vector2i(18,9), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(3,2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(7,-1)]]]}, "tile": ","},   # encounter mataram_tepi (2.20 return fight: Faceless remnants on the west road; cond `flag:mq2_7b`)
+	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_causeway", "cond": "flag:mq2_7b", "size": Vector2i(16,9), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,0)], ["res://entities/enemies/faceless.tscn", Vector2i(0,3)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(5,-1)]]]}, "tile": "."},   # encounter mataram_causeway (2.20 return fight in front of the opened causeway gate; cond `flag:mq2_7b`)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cepot"}, "tile": ","},   # NPC Cepot at the border market (SQ-C4 part 2)
+	"I": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c4_roll_a"}, "tile": "."},   # clue, north muster roll with Cepot's name (SQ-C4 part 2, 1 of 2)
+	"J": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c4_roll_b"}, "tile": "."},   # clue, south muster roll with Cepot's name (SQ-C4 part 2, 2 of 2)
+	"K": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "c4_market_clear", "size": Vector2i(4,4)}, "tile": ","},   # trigger, distraction puzzle to sneak Cepot out of the border market (SQ-C4 part 2)
+	"L": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_two_stories", "size": Vector2i(6,4)}, "tile": ","},   # trigger, beat `two_stories` staging (who's who at the border market; plays when `flag:mq2_a1`, `zone:mt_gapura`, right after both recruiters have spoken; trigger id `beat_two_stories` **ASSUMED**)
 }
 
 

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="GapMemoryData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/gap_memory_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+memory_id = "sa"
+scene_spot = "sanggar_lontar"
+gaps = Array[Dictionary]([{
+"correct": "GAP_SA_PEN_2",
+"gap_id": "sa_pen",
+"options": ["GAP_SA_PEN_1", "GAP_SA_PEN_2", "GAP_SA_PEN_3"],
+"pos": Vector2i(9, 5),
+"prompt_key": "GAP_SA_PEN_P"
+}, {
+"correct": "GAP_SA_FIRST_3",
+"gap_id": "sa_first",
+"options": ["GAP_SA_FIRST_1", "GAP_SA_FIRST_2", "GAP_SA_FIRST_3"],
+"pos": Vector2i(15, 9),
+"prompt_key": "GAP_SA_FIRST_P"
+}, {
+"correct": "GAP_SA_SAID_1",
+"gap_id": "sa_said",
+"options": ["GAP_SA_SAID_1", "GAP_SA_SAID_2", "GAP_SA_SAID_3"],
+"pos": Vector2i(22, 6),
+"prompt_key": "GAP_SA_SAID_P"
+}])

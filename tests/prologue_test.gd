@@ -32,7 +32,7 @@ func start() -> Control:
 func run() -> void:
 	for loc in ["id", "en"]:
 		TranslationServer.set_locale(loc)
-		for i in range(1, 6):
+		for i in range(1, 3):
 			var k := "PROLOGUE_%d" % i
 			check(tr(k) != k and tr(k) != "", "%s translates in %s" % [k, loc])
 	check(tr("UI_HOLD_SKIP") != "UI_HOLD_SKIP", "hold hint translates")
@@ -40,16 +40,16 @@ func run() -> void:
 	var p := await start()
 	var seen := [p.index]
 	for i in 40:
-		if p.index == 5 and not p._tw.is_running():
+		if p.index == 2 and not p._tw.is_running():
 			break
 		p.advance()   # first call finishes the typing, the second moves on
 		if p.index != seen[-1]:
 			seen.append(p.index)
-	check(seen == range(1, 6), "advance visits lines 1..5, got %s" % str(seen))
+	check(seen == range(1, 3), "advance visits lines 1..2, got %s" % str(seen))
 	check(not p._done, "still on the last line until advanced past it")
 	p.advance()
 	p.advance()
-	check(p._done, "advancing past line 5 ends the prologue")
+	check(p._done, "advancing past line 2 ends the prologue")
 	await frames(3)
 	check(current_scene != null and current_scene.scene_file_path == "res://ui/class_select.tscn", "ends at class select")
 
@@ -63,13 +63,10 @@ func run() -> void:
 	await frames(3)
 	check(current_scene != null and current_scene.scene_file_path == "res://ui/class_select.tscn", "skip ends at class select")
 
-	# Variants and name substitution: card 2 uses _ALT while its flag is set; {name}/{they} are filled.
+	# Variants and name substitution: card 2 uses _ALT while its flag is set; {name} is filled.
 	var game := root.get_node("Game")
 	game.hero_name = "Ayu"
-	game.hero_pronoun = "she"
-	check(game.fmt("{name} {They} {them} {their} {they}") == "Ayu She her her she", "fmt: %s" % game.fmt("{name} {They} {them} {their} {they}"))
-	game.hero_pronoun = "he"
-	check(game.fmt("{They}/{they}/{them}/{their}") == "He/he/him/his", "fmt he")
+	check(game.fmt("{name} {They} {them} {their} {they}") == "Ayu Ayu Ayu Ayu's Ayu", "fmt: %s" % game.fmt("{name} {They} {them} {their} {they}"))
 	game.hero_name = "Jaka"
 	game.hero_pronoun = "they"
 	game.flags.clear()
@@ -95,3 +92,28 @@ func run() -> void:
 	e.queue_free()
 	game.flags.clear()
 	check(plain != "", "plain card 2 has text")
+
+	# Six-choice epilogue (script.md 11): 8 cards, Semar on card 7, one variant per Major Choice, extras under cards 2 and 5.
+	e = load("res://ui/epilogue.tscn").instantiate()
+	check(e.lines == 8 and e.semar_from == 7 and e.semar_to == 7, "epilogue cards: %d, semar %d-%d" % [e.lines, e.semar_from, e.semar_to])
+	check(e.variants.size() == 6 and e.variants.get(3) == "choice_judgment" and not e.variants.values().has("choice_silent"), "epilogue variants: %s" % e.variants)
+	check(e.extras.has(2) and e.extras.has(5), "epilogue extras: %s" % e.extras)
+	e.free()
+	# An extras line is added under its card, after a blank line, only while its cond holds.
+	for on in [false, true]:
+		game.flags.clear()
+		if on:
+			game.set_flag("ex", false)
+		e = load("res://ui/epilogue.tscn").instantiate()
+		e.key_prefix = "NOPE"
+		e.variants = {}
+		e.extras = {2: ["NOPE_EXTRA", "flag:ex"]}
+		root.add_child(e)
+		await frames(2)
+		e.advance()
+		e.advance()
+		e.advance()
+		var want := "NOPE_2\n\nNOPE_EXTRA" if on else "NOPE_2"
+		check(e.index == 2 and e._text.text == want, "extras (%s): '%s'" % [on, e._text.text])
+		e.queue_free()
+	game.flags.clear()

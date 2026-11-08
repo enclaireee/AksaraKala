@@ -19,6 +19,8 @@ const SNAP_PAD := 6.0                           # ASSUMED: enemy body radius add
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var hit_flash: HitFlash = $HitFlash
 @onready var body: CanvasItem = $Body
+@onready var sprite: Sprite2D = get_node_or_null("Sprite")
+@onready var shadow: Sprite2D = get_node_or_null("Shadow")
 @onready var aim: Node2D = $Aim
 @onready var melee_hitbox: Hitbox = $Aim/MeleeHitbox
 @onready var melee_shape: CollisionPolygon2D = $Aim/MeleeHitbox/Shape
@@ -29,6 +31,7 @@ const SNAP_PAD := 6.0                           # ASSUMED: enemy body radius add
 @onready var status: Status = $Status
 @onready var sakti: SaktiGauge = $Sakti
 @onready var cast: CastController = $CastController
+@onready var fx = get_node_or_null("AttackFX")   # AttackFX: visual only (combat.md 2.3b)
 
 var state := State.FREE
 var phase := Phase.WINDUP
@@ -57,6 +60,12 @@ var move_mult := 1.0
 var dodge_cost := 20.0
 var _applied := false
 var _regen_base := 35.0
+var _zone_seen := ""
+
+# Story v5 Major Choice effects (quests.md 4, items.md). TUNE.
+const ARIA_REGEN := 0.15            # choice_release_aria: +15% stamina and Sakti regen in gk_ruang_kala
+const ARIA_ZONE := "gk_ruang_kala"
+const BERKAH_USED := "berkah_pesisir_used"   # flag: the one use per save
 
 
 func _ready() -> void:
@@ -104,6 +113,10 @@ func _physics_process(delta: float) -> void:
 	if frozen > 0.0:
 		frozen -= delta
 		return
+	var zone := _zone_id()
+	if zone != _zone_seen:   # zone-gated choice effects (Keteguhan Sunyi) follow the area
+		_zone_seen = zone
+		apply_from_game()
 	clock += delta
 	state_time += delta
 	since_recovery += delta
@@ -128,7 +141,11 @@ func _physics_process(delta: float) -> void:
 		State.HURT: _hurt()
 		State.DRINK: _drink()
 		State.DEAD: velocity = Vector2.ZERO
-	body.visible = clock >= blink_until or fmod(clock, 0.1) < 0.05
+	var vis := clock >= blink_until or fmod(clock, 0.1) < 0.05
+	body.visible = vis and sprite == null
+	if sprite:
+		sprite.visible = vis
+	_update_animation()
 	move_and_slide()
 	# ponytail: debug readout until the HUD (ui.md) exists
 	debug.text = "HP %d  ST %d  SK %d  %s [F1]  status [F2]" % [health.hp, stamina.value, sakti.value, tr(item.title)]
@@ -255,6 +272,7 @@ func _swing(on: bool) -> void:
 	melee_hitbox.heavy = finisher
 	melee_hitbox.knockback = tuning.enemy_knockback_finisher if finisher else tuning.enemy_knockback_light
 	melee_hitbox.activate()
+	if fx: fx.on_swing()
 
 
 func _shoot() -> void:
@@ -277,6 +295,7 @@ func _shoot() -> void:
 	# ASSUMED: a ranged hit freezes only the target; the archer is not touching it
 	arrow.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, null, finisher, arrow.damage))
 	get_parent().add_child(arrow)
+	if fx: fx.on_shoot(arrow)
 
 
 func _snap_aim(dir: Vector2) -> Vector2:
@@ -309,6 +328,7 @@ func _on_hit_landed(hb: Hurtbox, attacker: Node, heavy: bool, dmg: int) -> void:
 	var s := tuning.shake_kill if kill else tuning.shake_heavy if heavy else Vector2.ZERO
 	if s.x > 0.0:
 		camera.shake(s.x, s.y)
+	if fx: fx.on_hit(hb, heavy, kill)
 
 
 # --- getting hit ---
@@ -351,10 +371,31 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	create_tween().tween_property(vignette, "modulate:a", 0.0, 0.4)
 
 
+func _zone_id() -> String:
+	var z := get_node_or_null("/root/Zones")
+	return str(z.get("current_zone")) if z else ""
+
+
+## Berkah Pesisir (choice_offer_song): in Act VI the first lethal hit leaves 1 HP instead. One use per save.
+func _try_berkah_pesisir() -> bool:
+	if not game.has_flag("choice_offer_song") or game.has_flag(BERKAH_USED) or not _zone_id().begins_with("gk_"):
+		return false
+	game.set_flag(BERKAH_USED)
+	health.hp = 1
+	health.shield = 0
+	health.set_invincible(tuning.hurt_iframes)
+	health.changed.emit(health.hp, health.max_hp)
+	return true
+
+
 func _on_died() -> void:
+	if _try_berkah_pesisir():
+		return
 	_swing(false)
 	_enter(State.DEAD)
 	body.modulate = Color(0.4, 0.4, 0.4)
+	if sprite:
+		sprite.modulate = body.modulate
 	get_node("/root/Events").player_died.emit()   # the UI and zones handle the rest
 
 
@@ -397,6 +438,10 @@ func _is_backstab(e: Node) -> bool:
 ## Recompute everything that depends on Game. The first call fills HP and stamina; later calls keep them (clamped).
 func apply_from_game() -> void:
 	class_id = game.class_id
+	if sprite:
+		var tex_path := "res://assets/art/hero_%s.png" % (class_id if class_id != "" else "base")
+		if ResourceLoader.exists(tex_path):
+			sprite.texture = load(tex_path)
 	item = game.equipped_item("weapon")
 	if item == null:
 		item = ItemData.by_id("dagger")
@@ -409,13 +454,16 @@ func apply_from_game() -> void:
 		health.defense += g.defense if g else 0
 	stamina.max_stamina = tuning.stat_stamina_base + tuning.stat_stamina_per * game.stat("end")
 	stamina.value = stamina.max_stamina if not _applied else minf(stamina.value, stamina.max_stamina)
-	stamina.regen = _regen_base * (1.0 + tuning.stat_speed_per * game.stat("end") + game.bonus("stamina_regen"))
+	_zone_seen = _zone_id()
+	health.reduction = game.bonus("defense")   # Sabuk Galuh
+	var aria_regen := ARIA_REGEN if game.has_flag("choice_release_aria") and _zone_seen == ARIA_ZONE else 0.0
+	stamina.regen = _regen_base * (1.0 + tuning.stat_speed_per * game.stat("end") + game.bonus("stamina_regen") + aria_regen)
 	dmg_mult = 1.0 + tuning.stat_damage_per * game.stat("str" if item.is_melee() else "dex")
 	atk_speed = 1.0 + tuning.stat_speed_per * game.stat("dex")
 	move_mult = 1.0 + game.bonus("move_speed")
 	dodge_cost = tuning.rogue_dodge_cost if class_id == "rogue" else tuning.dodge_cost
 	sakti.max_value = tuning.keen_mind_max if mage else tuning.sakti_max   # Keen Mind
-	sakti.gain_mult = (1.0 + tuning.stat_sakti_per * game.stat("spi")) * (tuning.keen_mind_gain if mage else 1.0)
+	sakti.gain_mult = (1.0 + tuning.stat_sakti_per * game.stat("spi") + aria_regen) * (tuning.keen_mind_gain if mage else 1.0)
 	sakti.value = minf(sakti.value, sakti.max_value)
 	_applied = true
 	health.changed.emit(health.hp, health.max_hp)
@@ -433,3 +481,56 @@ static func _arc(arc_deg: float, reach: float) -> PackedVector2Array:
 	for i in 9:
 		pts.append(Vector2.RIGHT.rotated(deg_to_rad(-arc_deg / 2.0 + arc_deg * i / 8.0)) * reach)
 	return pts
+
+
+func _update_animation() -> void:
+	if not sprite:
+		return
+	var facing_dir := aim_dir if (state == State.ATTACK or move_dir == Vector2.ZERO) else move_dir
+	var row := 0
+	var col := 0
+	var dir_row := 0
+	if absf(facing_dir.x) > absf(facing_dir.y) * 0.7:
+		dir_row = 1
+		sprite.flip_h = facing_dir.x < 0
+	elif facing_dir.y < 0:
+		dir_row = 2
+		sprite.flip_h = false
+	else:
+		dir_row = 0
+		sprite.flip_h = false
+
+	match state:
+		State.FREE:
+			if move_dir != Vector2.ZERO:
+				row = 3 + dir_row
+				col = int(fmod(clock * 8.0, 4.0))
+			else:
+				row = dir_row
+				col = int(fmod(clock * 4.0, 4.0))
+		State.DRINK:
+			row = dir_row
+			col = 1
+		State.DODGE:
+			row = 9
+			col = mini(5, int(state_time / 0.075))   # 6 frames over the dodge and its recovery (0.45 s)
+			sprite.flip_h = facing_dir.x < -0.05
+		State.ATTACK:
+			row = [12, 6, 15][dir_row] + clampi(hit, 0, 2)   # down, side, up rows (hero sheet contract)
+			var plen := maxf(_phase_len(phase), 0.001)
+			var prog := clampf(state_time / plen, 0.0, 0.999)
+			if item.is_melee():   # wind-up 0-1, active 2-3, recovery 4-5
+				col = int(prog * 2.0) + [0, 2, 4][phase]
+			else:                 # no active phase: wind-up 0-2 (raise, draw, hold), recovery 3-5 (release, recoil, settle)
+				col = int(prog * 3.0) + (0 if phase == Phase.WINDUP else 3)
+		State.HURT:
+			row = 10
+			col = 0 if state_time < 0.08 else 1
+			sprite.flip_h = facing_dir.x < -0.05
+		State.DEAD:
+			row = 11
+			col = mini(3, int(state_time / 0.15))
+			sprite.flip_h = facing_dir.x < -0.05
+
+	sprite.frame_coords = Vector2i(col, row)
+

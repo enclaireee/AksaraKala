@@ -43,18 +43,18 @@ func run() -> void:
 
 	menu.open()
 	check(paused, "menu pauses the tree")
-	for s in menu._raise:
-		check(menu._raise[s].disabled, "level-up disabled outside petilasan")
+	for s in menu.tab(0).raise:
+		check(menu.tab(0).raise[s].disabled, "level-up disabled outside petilasan")
 	menu.close()
 	check(not paused, "menu unpauses the tree")
 
 	game.ilmu = 1000
 	var before: int = game.stats.vit
 	menu.open(true)
-	check(not menu._raise.vit.disabled, "level-up enabled at petilasan")
-	menu._raise.vit.pressed.emit()
+	check(not menu.tab(0).raise.vit.disabled, "level-up enabled at petilasan")
+	menu.tab(0).raise.vit.pressed.emit()
 	check(game.stats.vit == before, "raise needs confirm")
-	menu._confirm_yes.pressed.emit()
+	menu.tab(0).confirm_yes.pressed.emit()
 	check(game.stats.vit == before + 1, "confirm raises the stat")
 	menu.close()
 
@@ -101,15 +101,101 @@ func run() -> void:
 	ex.position = Vector2(2000, 0)
 	root.add_child(ex)
 	game.start_quest("t_arrow")
-	game.pin_quest("t_arrow")
 	hud.refresh_arrow()
 	await frames(2)
 	check(hud._tnode == ex and hud._arrow.visible, "arrow points to the exit toward the target zone")
+	check(hud._dist.visible and hud._dist.text.begins_with("-> "), "label names the target zone: '%s'" % hud._dist.text)
+	hud.set_focus(true)
+	hud._update_arrow()
+	check(not hud._arrow.visible and not hud._dist.visible, "arrow and dist hidden during dialogue")
+	hud.set_focus(false)
+	hud._update_arrow()
+	check(hud._arrow.visible and hud._dist.visible, "arrow and dist restored after dialogue")
+	hud.refresh_objective()
+	await frames(1)
+	check(hud._tracker.get_child_count() >= 2, "tracker lists the started side quest")
+	hud._banners.clear()
+	hud._banner_left = 0.0
+	hud._push_banner("UI_Q_NEW", "Judul")
+	hud._update_banner(0.0)
+	check(hud._banner_root.visible and hud._banner_body.text == "Judul", "banner shown")
+	hud._update_banner(hud.BANNER_TIME + 0.1)
+	check(not hud._banner_root.visible, "banner leaves after BANNER_TIME")
+	for loc in ["id", "en"]:
+		var rt: Translation = Translation.new()
+		rt.locale = loc
+		rt.add_message("REMEMBER_UI_TEST", "Dia akan mengingat")
+		TranslationServer.add_translation(rt)
+	hud._banners.clear()
+	hud._banner_left = 0.0
+	root.get_node("Events").consequence_noted.emit("ui_test")
+	hud._update_banner(0.0)
+	check(hud._banner_root.visible and hud._banner_body.text == "Dia akan mengingat", "consequence banner shows the REMEMBER sentence")
+	hud._banners.clear()
+	hud._banner_left = 0.0
+	hud._update_banner(hud.BANNER_TIME + 0.1)
+	root.get_node("Events").consequence_noted.emit("ui_missing")
+	check(hud._banners.is_empty(), "no banner when the REMEMBER text is missing")
 	check(absf(hud._arrow.rotation) < 0.1 and hud._arrow.position.x > 400, "arrow at the right edge")
 	ex.position = Vector2(100, 100)
 	await frames(2)
 	check(not hud._arrow.visible, "arrow hidden when the target is on screen")
 	ex.queue_free()
+	game.quests.erase("t_arrow")
+	game.pinned = ""
+	zones.current_zone = ""
+
+	# Arena arrow suppression and report-back test.
+	var arena_enc: Node2D = load("res://entities/world/encounter.tscn").instantiate()
+	arena_enc.area_id = "test_arena"
+	arena_enc.size = Vector2i(10, 10)
+	arena_enc.position = Vector2(500, 500)
+	root.add_child(arena_enc)
+	qd = QuestData.new()
+	qd.id = "t_arena"
+	st = QuestStep.new()
+	st.on = "area_cleared:test_arena"
+	st.marker = {"zone": "desa_purwa", "id": "test_arena"}
+	var st2 := QuestStep.new()
+	st2.on = "talked_to:test_npc"
+	st2.marker = {"zone": "desa_purwa", "id": "test_npc"}
+	var arena_steps: Array[QuestStep] = [st, st2]
+	qd.steps = arena_steps
+	ResourceSaver.save(qd, zdir + "/t_arena.tres")
+	zones.current_zone = "desa_purwa"
+	game.start_quest("t_arena")
+	hud.refresh_arrow()
+	await frames(2)
+	player.global_position = Vector2(0, 0)
+	hud._update_arrow()
+	check(hud._arrow.visible or hud._diamond.visible, "arrow/marker visible when outside arena")
+
+	# Walk into the arena
+	player.global_position = Vector2(500, 500)
+	hud._update_arrow()
+	check(not hud._arrow.visible and not hud._diamond.visible and not hud._dist.visible, "arrow and diamond hidden inside arena")
+
+	# Walk out of the arena
+	player.global_position = Vector2(0, 0)
+	hud._update_arrow()
+	check(hud._arrow.visible, "arrow restored when stepping out of arena")
+
+	# Finish the hunt (encounter cleared)
+	var npc: Node2D = load("res://entities/npc/npc.tscn").instantiate()
+	npc.npc_id = "test_npc"
+	npc.position = Vector2(1000, 0)
+	root.add_child(npc)
+	root.get_node("Events").area_cleared.emit("test_arena")
+	await frames(2)
+	check(hud._tnode == npc, "target updated to report-back NPC after hunt")
+	player.global_position = Vector2(0, 0)
+	hud._update_arrow()
+	check(hud._arrow.visible, "arrow restored to guide report-back")
+
+	arena_enc.queue_free()
+	npc.queue_free()
+	game.quests.erase("t_arena")
+	game.pinned = ""
 	zones.current_zone = ""
 
 	# Boss bar.
@@ -150,6 +236,89 @@ func run() -> void:
 	box._unhandled_input(press)
 	check(not box.is_open() and done[0] == 1 and paused, "closed, finished once, pause restored")
 	paused = false
+
+	# Name tag, journal recap/clues, lontar shimmer (Story v4).
+	var tr_en := Translation.new()
+	tr_en.locale = TranslationServer.get_locale()
+	tr_en.add_message("NPC_CEPOT_NAME", "Cepot")
+	tr_en.add_message("NPC_CEPOT_WHO", "Semar's son. Loud.")
+	tr_en.add_message("NPC_MUTE_NAME", "Mute")
+	tr_en.add_message("CLUE_ASH_NOTE", "Ash by the door")
+	tr_en.add_message("T_RECAP_0", "recap zero")
+	tr_en.add_message("T_RECAP_1", "recap one")
+	tr_en.add_message("T_RECAP_2", "recap two")
+	TranslationServer.add_translation(tr_en)
+	ev.dialogue_requested.emit("NPC_MUTE_NAME", PackedStringArray(["hi"]))
+	check(box._who.text == "" and not game.has_flag("seen_name_mute"), "no tag without a WHO key")
+	box._close()
+	ev.dialogue_requested.emit("NPC_CEPOT_NAME", PackedStringArray(["a", "b"]))
+	check(box._who.text == "Semar's son. Loud." and game.has_flag("seen_name_cepot"), "tag shown and seen flag set")
+	await frames(1)
+	box._unhandled_input(press)
+	box._unhandled_input(press)
+	check(box._who.text != "", "tag stays up for the whole first talk")
+	box._close()
+	ev.dialogue_requested.emit("NPC_CEPOT_NAME", PackedStringArray(["a"]))
+	check(box._who.text == "", "no tag on a later talk")
+	box._close()
+	paused = false
+
+	var rq := QuestData.new()
+	rq.id = "t_recap"
+	rq.kind = "main"   # recap lists main quests only
+	for i in 3:
+		var s2 := QuestStep.new()
+		s2.on = "talked_to:r%d" % i
+		rq.steps.append(s2)
+	ResourceSaver.save(rq, zdir + "/t_recap.tres")
+	var rq2 := QuestData.by_id("t_recap")
+	for i in 3:
+		rq2.steps[i].set("recap", "" if i == 1 else "T_RECAP_%d" % i)
+	rq2.steps[0].set("recap", "T_RECAP_0")
+	game.start_quest("t_recap")
+	game.quests.t_recap.step = 2
+	game.flags["clue_ash"] = true
+	game.flags["clue_unknown"] = true   # no note key: skipped
+	menu.refresh()
+	var texts := PackedStringArray()
+	for l in menu.tab(2).detail.find_children("*", "Label", true, false):
+		texts.append(l.text)
+	check("recap zero" in texts and "recap two" not in texts and "recap one" not in texts, "recap lists steps below current, skips empty: %s" % str(texts))
+	check("Ash by the door" in texts and texts.size() >= 2, "clue note listed from flags")
+
+	var sh: LontarShimmer = player.get_node("LontarShimmer")
+	var clue := Node2D.new()
+	var cs2 := GDScript.new()
+	cs2.source_code = "extends Node2D\nvar clue_id := 'well'\nvar memory_id := 'm'\n"
+	cs2.reload()
+	clue.set_script(cs2)
+	root.add_child(clue)
+	clue.add_to_group("interactable")
+	player.global_position = Vector2.ZERO
+	clue.global_position = sh.global_position + Vector2(12, 0)
+	sh.poll()
+	var near := sh.strength
+	clue.global_position = sh.global_position + Vector2(36, 0)
+	sh.poll()
+	var far := sh.strength
+	check(absf(near - 0.75) < 0.01 and absf(far - 0.25) < 0.01, "shimmer alpha follows 1 - dist/48: %f %f" % [near, far])
+	clue.global_position = sh.global_position + Vector2(60, 0)
+	sh.poll()
+	check(sh.strength == 0.0, "no shimmer beyond 48 px")
+	clue.global_position = sh.global_position + Vector2(12, 0)
+	game.flags["clue_well"] = true
+	sh.poll()
+	check(sh.strength == 0.0, "no shimmer for an examined clue")
+	game.flags.erase("clue_well")
+	ev.dialogue_requested.emit("NPC_X", PackedStringArray(["x"]))
+	sh.poll()
+	check(sh.strength == 0.0, "shimmer off while a dialogue is open")
+	box._close()
+	paused = false
+	sh.poll()
+	check(sh.strength > 0.0, "shimmer back after the dialogue")
+	clue.queue_free()
+	game.quests.erase("t_recap")
 
 	game._reset()
 	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://test_ui.json"))

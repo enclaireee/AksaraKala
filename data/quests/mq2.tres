@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=18 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=27 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -6,102 +6,194 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ2_S1_OBJ"
-on = "area_cleared:mataram_gerbang"
-marker = {"zone": "mt_gapura", "id": "mataram_gerbang"}
+all = [{"on": "talked_to:recruiter_a", "set_flag": "", "objective": "Q_MQ2_S1_P1"}, {"on": "talked_to:recruiter_b", "set_flag": "mq2_a1", "objective": "Q_MQ2_S1_P2"}]
+set_flag = "mq2_a1"
+recap = "Q_MQ2_S1_DONE"
+marker = {"zone": "mt_gapura", "id": "recruiter_a"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ2_S2_OBJ"
-on = "petilasan_activated:mataram_1"
-marker = {"zone": "mt_sawah", "id": "mataram_1"}
+all = [{"on": "area_cleared:mataram_gerbang", "set_flag": "", "objective": "Q_MQ2_S2_P1"}, {"on": "petilasan_activated:mataram_1", "set_flag": "mq2_1", "objective": "Q_MQ2_S2_P2"}]
 set_flag = "mq2_1"
+recap = "Q_MQ2_S2_DONE"
+marker = {"zone": "mt_gapura", "id": "mataram_gerbang"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ2_S3_OBJ"
 on = "area_cleared:mataram_pasar"
+set_flag = "lead_pasar"
+recap = "Q_MQ2_S3_DONE"
 marker = {"zone": "mt_pasar", "id": "mataram_pasar"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ2_S4_OBJ"
 on = "glyph_learned:jawa_ha"
-marker = {"zone": "mt_pasar", "id": "mataram_dalang"}
 set_flag = "mq2_2"
+recap = "Q_MQ2_S4_DONE"
+marker = {"zone": "mt_pasar", "id": "mataram_dalang"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ2_S5_OBJ"
-on = "glyph_learned:jawa_na"
-marker = {"zone": "mt_reruntuhan", "id": "pak_karto"}
-set_flag = "mq2_3"
+on = "area_cleared:mataram_sawah_road"
+set_flag = "mq2_2b"
+recap = "Q_MQ2_S5_DONE"
+marker = {"zone": "mt_sawah", "id": "mataram_sawah_road"}
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ2_S6_OBJ"
-on = "area_cleared:mataram_ruins"
-marker = {"zone": "mt_reruntuhan", "id": "mataram_ruins"}
+all = [{"on": "area_cleared:mataram_ruins", "set_flag": "lead_ruins", "objective": "Q_MQ2_S6_P1"}, {"on": "glyph_learned:jawa_na", "set_flag": "mq2_3", "objective": "Q_MQ2_S6_P2"}]
+set_flag = "mq2_3"
+recap = "Q_MQ2_S6_DONE"
+marker = {"zone": "mt_reruntuhan", "id": "ka_chalk"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ2_S7_OBJ"
-on = "glyph_learned:jawa_ca"
-marker = {"zone": "mt_sawah", "id": "lesung_women"}
-set_flag = "mq2_5"
+on = "area_cleared:mataram_kuburan"
+set_flag = "lead_kuburan"
+recap = "Q_MQ2_S7_DONE"
+marker = {"zone": "mt_kuburan", "id": "mataram_kuburan_gate"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ2_S8_OBJ"
-on = "area_cleared:mataram_kuburan"
-marker = {"zone": "mt_kuburan", "id": "mataram_kuburan"}
+on = "memory_done:h3"
+set_flag = "mq2_h4"
+recap = "Q_MQ2_S8_DONE"
+marker = {"zone": "mt_kuburan", "id": "hunter_mask_3"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQ2_S9_OBJ"
-on = "area_cleared:mataram_batu"
-marker = {"zone": "mt_wetan", "id": "mataram_batu"}
+on = "area_cleared:mataram_lesung_yard"
+set_flag = "mq2_4"
+recap = "Q_MQ2_S9_DONE"
+marker = {"zone": "mt_wetan", "id": "mataram_lesung_yard"}
 
 [sub_resource type="Resource" id="s10"]
 script = ExtResource("2")
 objective = "Q_MQ2_S10_OBJ"
-on = "glyph_learned:jawa_ra"
-marker = {"zone": "mt_wetan", "id": "juru_kunci"}
-set_flag = "mq2_6"
+on = "glyph_learned:jawa_ca"
+set_flag = "mq2_5"
+recap = "Q_MQ2_S10_DONE"
+marker = {"zone": "mt_wetan", "id": "lesung_women"}
 
 [sub_resource type="Resource" id="s11"]
 script = ExtResource("2")
 objective = "Q_MQ2_S11_OBJ"
-on = "area_cleared:mataram_candi"
-marker = {"zone": "mt_candi", "id": "mataram_candi"}
+on = "area_cleared:mataram_batu"
+set_flag = "mq2_5b"
+recap = "Q_MQ2_S11_DONE"
+marker = {"zone": "mt_wetan", "id": "shrine_chisel"}
 
 [sub_resource type="Resource" id="s12"]
 script = ExtResource("2")
 objective = "Q_MQ2_S12_OBJ"
-on = "area_cleared:mataram_camp"
-marker = {"zone": "mt_candi", "id": "mataram_camp"}
-set_flag = "mq2_7"
+all = [{"on": "puzzle_solved:puzzle_wetan_lamps", "set_flag": "", "objective": "Q_MQ2_S12_P1"}, {"on": "glyph_learned:jawa_ra", "set_flag": "mq2_6", "objective": "Q_MQ2_S12_P2"}]
+set_flag = "mq2_6"
+recap = "Q_MQ2_S12_DONE"
+marker = {"zone": "mt_wetan", "id": "puzzle_wetan_lamps"}
 
 [sub_resource type="Resource" id="s13"]
 script = ExtResource("2")
 objective = "Q_MQ2_S13_OBJ"
-on = "boss_defeated:bandung_bondowoso"
-marker = {"zone": "mt_candi", "id": "bandung_bondowoso"}
-set_flag = "mq2_7b"
+on = "area_cleared:mataram_tegal_pillars"
+set_flag = "mq2_6b"
+recap = "Q_MQ2_S13_DONE"
+marker = {"zone": "mt_tegal", "id": "pillar_prints"}
 
 [sub_resource type="Resource" id="s14"]
 script = ExtResource("2")
 objective = "Q_MQ2_S14_OBJ"
-on = "name_written:nagawiru"
-marker = {"zone": "kg_pamali", "id": "pamali_stone"}
-set_flag = "mq2_8"
+all = [{"on": "area_cleared:mataram_candi", "set_flag": "", "objective": "Q_MQ2_S14_P1"}, {"on": "area_cleared:mataram_camp", "set_flag": "mq2_7", "objective": "Q_MQ2_S14_P2"}]
+set_flag = "mq2_7"
+recap = "Q_MQ2_S14_DONE"
+marker = {"zone": "mt_candi", "id": "mataram_candi"}
 
 [sub_resource type="Resource" id="s15"]
 script = ExtResource("2")
 objective = "Q_MQ2_S15_OBJ"
-on = "boss_defeated:hariang_banga"
-marker = {"zone": "kg_pamali", "id": "hariang_banga"}
-set_flag = "mq2_9"
+all = [{"on": "clue_examined:rubble", "set_flag": "", "objective": "Q_MQ2_S15_P1"}, {"on": "clue_examined:lesung_mid", "set_flag": "", "objective": "Q_MQ2_S15_P2"}, {"on": "clue_examined:ka_strip", "set_flag": "mq2_h1", "objective": "Q_MQ2_S15_P3"}]
+set_flag = "mq2_h1"
+recap = "Q_MQ2_S15_DONE"
+marker = {"zone": "mt_candi", "id": "rubble"}
 
+[sub_resource type="Resource" id="s16"]
+script = ExtResource("2")
+objective = "Q_MQ2_S16_OBJ"
+on = "memory_done:lc3"
+set_flag = "mq2_lc"
+recap = "Q_MQ2_S16_DONE"
+marker = {"zone": "mt_candi", "id": "lc3_lontar"}
+
+[sub_resource type="Resource" id="s17"]
+script = ExtResource("2")
+objective = "Q_MQ2_S17_OBJ"
+on = "area_cleared:candi_crypt_hall"
+set_flag = "mq2_7a"
+recap = "Q_MQ2_S17_DONE"
+marker = {"zone": "mt_candi", "id": "candi_crypt_hall"}
+
+[sub_resource type="Resource" id="s18"]
+script = ExtResource("2")
+objective = "Q_MQ2_S18_OBJ"
+on = "memory_done:k3_lesung"
+set_flag = "mq2_h2"
+recap = "Q_MQ2_S18_DONE"
+marker = {"zone": "mt_candi", "id": "k3_lesung"}
+
+[sub_resource type="Resource" id="s19"]
+script = ExtResource("2")
+objective = "Q_MQ2_S19_OBJ"
+on = "boss_defeated:bandung_bondowoso"
+set_flag = "mq2_7b"
+recap = "Q_MQ2_S19_DONE"
+marker = {"zone": "mt_candi", "id": "bandung_bondowoso"}
+
+[sub_resource type="Resource" id="s20"]
+script = ExtResource("2")
+objective = "Q_MQ2_S20_OBJ"
+on = "zone_entered:kg_pamali"
+set_flag = "mq2_7c"
+recap = "Q_MQ2_S20_DONE"
+marker = {"zone": "kg_pamali", "id": "from_mt_gapura"}
+
+[sub_resource type="Resource" id="s21"]
+script = ExtResource("2")
+objective = "Q_MQ2_S21_OBJ"
+on = "name_written:nagawiru"
+set_flag = "mq2_8"
+recap = "Q_MQ2_S21_DONE"
+marker = {"zone": "kg_pamali", "id": "pamali_stone"}
+
+[sub_resource type="Resource" id="s22"]
+script = ExtResource("2")
+objective = "Q_MQ2_S22_OBJ"
+on = "memory_done:k_iii"
+set_flag = "mq2_h5"
+recap = "Q_MQ2_S22_DONE"
+marker = {"zone": "kg_pamali", "id": "ki_sumarto"}
+
+[sub_resource type="Resource" id="s23"]
+script = ExtResource("2")
+objective = "Q_MQ2_S23_OBJ"
+on = "clue_examined:hariang_letters"
+set_flag = "mq2_h3"
+recap = "Q_MQ2_S23_DONE"
+marker = {"zone": "kg_pamali", "id": "hariang_letters"}
+
+[sub_resource type="Resource" id="s24"]
+script = ExtResource("2")
+objective = "Q_MQ2_S24_OBJ"
+on = "boss_defeated:hariang_banga"
+set_flag = "mq2_9"
+recap = "Q_MQ2_S24_DONE"
+marker = {"zone": "kg_pamali", "id": "hariang_banga"}
 [resource]
 script = ExtResource("1")
 id = "mq2"
@@ -110,5 +202,5 @@ type = "main"
 zone = "mataram"
 size = "L"
 requires = Array[String](["mqg_7"])
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10"), SubResource("s11"), SubResource("s12"), SubResource("s13"), SubResource("s14"), SubResource("s15")])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10"), SubResource("s11"), SubResource("s12"), SubResource("s13"), SubResource("s14"), SubResource("s15"), SubResource("s16"), SubResource("s17"), SubResource("s18"), SubResource("s19"), SubResource("s20"), SubResource("s21"), SubResource("s22"), SubResource("s23"), SubResource("s24")])
 rewards = {"items": ["baju_batik"], "lakon": "roro_jonggrang", "codex": ["roro_jonggrang", "candi_seribu"]}

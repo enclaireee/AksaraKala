@@ -1,58 +1,88 @@
 # Classes
 
-The player is a custom hero. At the start they choose one of four plain archetypes: Warrior, Archer, Rogue, Mage (decided 2026-11-05). Culture lives in the setting, bosses, mythic gear and aksara, not in the class names.
+The player is a custom hero. At the start of their journey, they choose one of four core archetypes: Warrior, Archer, Rogue, or Mage. Cultural lore lives in the setting, bosses, mythic pusaka weapons, and aksara scripts.
 
-## Shared rules
-- Every class can cast aksara spells ([spells.md](spells.md)).
-- Everyone has the same 5 stats ([rpg.md](rpg.md)) and the same 3 gear slots.
-- Classes differ in starting stats, starting weapon, one passive and spell modifiers.
-- Visual: one shared base sprite, re-tinted, with class headgear and weapon (cheap art).
-- Class is chosen once. No respec in v1 (**ASSUMED**). A respec at a petilasan is a stretch goal.
+---
 
-## Starting stats (Vitality, Endurance, Strength, Dexterity, Spirit)
-| Class | Vit | End | Str | Dex | Spi | Total |
-|-------|-----|-----|-----|-----|-----|-------|
-| Warrior | 8 | 6 | 8 | 4 | 3 | 29 |
-| Archer | 5 | 6 | 4 | 9 | 4 | 28 |
-| Rogue | 5 | 7 | 6 | 7 | 3 | 28 |
-| Mage | 4 | 5 | 3 | 4 | 10 | 26 |
+## Identity (redesign 2026-11-08)
+Code ids stay `warrior`, `archer`, `rogue`, `mage`; mechanics below are unchanged. Display names, art and FX colours change so the heroes read as Sundanese/Javanese, not European. Both languages show the Indonesian title; English adds a role word.
 
-Level is shown as `1 + points spent`, so classes with a lower total are not penalized (see [rpg.md](rpg.md)).
+| id | Title (ID / EN) | Look | Weapon (display) | Palette |
+|----|-----------------|------|------------------|---------|
+| warrior | Hulubalang / Hulubalang, Vanguard | red udeng with a front knot, bare chest with selempang, kain with wiru pleats and tumpal hem, round tameng on the back | Kelewang (the heavy sweep) | wax red, leather, brass |
+| archer | Pamanah / Pamanah, Bowman | brown iket with one front peak and a feather, dark-green kampret jacket, brown pangsi, bamboo quiver | Gendewa | verdigris, bamboo, brown |
+| rogue | Pendekar / Pendekar, Silat Fighter | dark headwrap, black pangsi, wide red sabuk, open-palm silat guard, low stance | Kujang (a plain working one, reverse grip) | ink black, wax red |
+| mage | Wiku / Wiku, Scribe-Sage | topknot with sumping, cream robe over batik kain, lontar at the hip that gives off teal ink-light | Tongkat with a ring top | paper cream, verdigris |
 
-## Warrior
-- Fantasy: unbreakable frontliner.
-- Starting weapon: Broadsword: heavy melee, 25 stamina.
-- Passive **Iron Skin**: light hits do not stagger or knock you back ([combat.md](combat.md) 2.7).
-- Spell modifiers: Ward x1.3 absorb, Burst +25% radius, spell damage x0.9.
-- Playstyle: close range, tanky, spells as shockwaves.
+- All four go barefoot in-world. The starting rogue weapon is a kujang, not a keris: a keris is a pusaka. ASSUMED.
+- VERIFY: Sundanese iket styles (the single front peak replaced the two-corner style, which read as horns at 96x128); Majapahit-era soldier dress on the Hulubalang; wayang costume terms on the Wiku; "Pendekar" chosen over "Jawara" (local-strongman connotation).
+- Art: `tools/gen_portraits.py` (96x128 class figures, 6-frame idle) and `tools/gen_hero_sprites.py` (in-world sprites) share the skin ramps and top-left light of the speaker portraits (ui.md 3.1).
 
-## Archer
-- Fantasy: precise ranged fighter.
-- Starting weapon: Hunting Bow: ranged, 4 stamina per shot.
-- Passive **Eagle Eye**: +15% damage at long range (over 120 px), Bolt pierces.
-- Spell modifiers: Bolt fires as a 3-arrow fan, Dash cost x1.0, spell damage x1.0.
-- Playstyle: kiting, positioning.
+## Shared Rules
+- Every class can draw and cast aksara spells ([spells.md](spells.md)).
+- All classes share the same 5 core stats ([rpg.md](rpg.md)) and 3 equipment slots (weapon, armor, accessory).
+- Classes differ in starting stat allocation, starting weapon, one distinctive passive, and spell affinity modifiers.
+- Visuals: Dedicated class sprites with custom headgear, attire, and starting weapons.
+- Class selection occurs in the Prologue (`MQ0` Step 0.2) in the Desa Purwa Sanggar.
 
-## Rogue
-- Fantasy: fast and deadly.
-- Starting weapon: Dagger: light melee, 10 stamina.
-- Passive **Light Step**: dodge costs 14 instead of 20 stamina, x2 damage on hits from behind (within 60 degrees of the enemy's back, not on bosses). Set it up by dodging through an enemy during its wind-up: enemies cannot turn while attacking ([combat.md](combat.md) 5.1).
-- Spell modifiers: Dash-strike cost x0.7, Bind lasts +30%, spell damage x1.0.
-- Playstyle: hit-and-run, backstabs.
+---
 
-## Mage
-- Fantasy: master of the written word, the class closest to the aksara theme.
-- Starting weapon: Oak Staff: weak ranged bolt, 5 stamina.
-- Passive **Keen Mind**: spell gauge fills 1.2x faster and holds 120 instead of 100 ([balance.md](balance.md)).
-- Spell modifiers: spell damage x1.1, all spell costs x0.9, Heal x1.2.
-- Playstyle: casts constantly, fragile.
+## Starting Stats
+Stats: Vitality (Vit), Endurance (End), Strength (Str), Dexterity (Dex), Spirit (Spi / Batin).
 
-## Balance goals
-- Any class can finish the game. No class is required.
-- Warrior is the easiest, Mage the most active, Archer and Rogue in the middle (**TUNE**).
-- Spells should feel strong enough that melee-only play is slower, not impossible.
+| Class | Vit | End | Str | Dex | Spi | Total | Starting Weapon | Base Dmg |
+|---|---|---|---|---|---|---|---|---|
+| **Warrior** | 8 | 6 | 8 | 4 | 3 | 29 | Broadsword (Heavy Melee) | 22 |
+| **Archer** | 5 | 6 | 4 | 9 | 4 | 28 | Hunting Bow (Ranged) | 8 |
+| **Rogue** | 5 | 7 | 6 | 7 | 3 | 28 | Dagger (Light Melee) | 8 |
+| **Mage** | 4 | 5 | 3 | 4 | 10 | 26 | Oak Staff (Staff Bolt) | 8 |
 
-## Class selection UX
-- After New Game, a screen of 4 class cards: name, 2-line description, stats, start weapon, passive.
-- A final confirm step prevents accidental picks.
-- No altars. (**ASSUMED**; the Desa Purwa prologue may stage it later.)
+Displayed level is calculated as `1 + points spent`, ensuring classes with lower initial totals are not penalized.
+
+---
+
+## Class Profiles
+
+### Warrior
+- **Fantasy:** Resilient frontliner who shrugs off blows.
+- **Starting Weapon:** Broadsword (heavy melee, sweeping arc, 25 stamina).
+- **Passive:** **Iron Skin** — Light enemy hits do not stagger or knock you back ([combat.md](combat.md) 2.7).
+- **Spell Modifiers:** Ward x1.3 absorb, Burst +25% radius, spell damage x0.9.
+- **Playstyle:** Close combat, high poise defense, utilizing spells for radial crowd control and shielding.
+
+### Archer
+- **Fantasy:** Nimble ranged marksman controlling distance.
+- **Starting Weapon:** Hunting Bow (ranged projectile, 4 stamina per shot, 8 base damage).
+- **Passive:** **Eagle Eye** — +15% damage at long range (>120 px); arrows pierce initial targets.
+- **Spell Modifiers:** Bolt fires as a 3-arrow fan, Dash cost x1.0, spell damage x1.0.
+- **Playstyle:** Kiting, positioning, zone control with fan-shaped spell bursts.
+
+### Rogue
+- **Fantasy:** Agile skirmisher thriving on mobility and lethal backstabs.
+- **Starting Weapon:** Dagger (light melee, rapid strikes, 10 stamina).
+- **Passive:** **Light Step** — Dodge stamina cost reduced from 20 to 14; deals 2x damage on attacks from behind (within 60 degrees of enemy's rear arc).
+- **Spell Modifiers:** Dash-strike cost x0.7, Bind duration +30%, spell damage x1.0.
+- **Playstyle:** Flanking, hit-and-run tactics, capitalizing on dodge i-frames and binding enemies.
+
+### Mage
+- **Fantasy:** Scholar of the sacred script with unmatched casting prowess.
+- **Starting Weapon:** Oak Staff (ranged mystical projectile, 5 stamina).
+- **Passive:** **Keen Mind** — Sakti gauge capacity expanded from 100 to 120; gauge fills 1.2x faster from combat actions.
+- **Spell Modifiers:** Spell damage x1.1, all spell costs x0.9, Heal effectiveness x1.2.
+- **Playstyle:** Frequent spellcaster, fragile in melee, relies on rapid aksara execution.
+
+---
+
+## Balance Goals
+- Any class can complete the full campaign and defeat every boss. No class is mandatory.
+- Warrior offers the highest baseline survivability; Mage boasts the highest damage ceiling tied to drawing precision.
+- Melee-only completion is viable, but drawn spells significantly enhance combat efficiency.
+
+---
+
+## Class Selection Presentation (`ui/class_select.gd`)
+Presented after the opening prologue events:
+- **Left Column:** Class roster (Almendra Display 10) with gold lozenge navigation cursor.
+- **Center Pedestal:** 96x128 animated character sprite standing on a stone pedestal illuminated by lantern light with gentle floor mist. Switching classes dissolves the character into rising ink particles.
+- **Right Panel:** Detailed panel showing archetype title, narrative description, animated stat bars, starting equipment icon, and passive ability.
+- **Confirmation:** Framed confirmation prompt prevents accidental selection before saving.

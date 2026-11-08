@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "leuwi_mother"
+name_key = "NPC_SUNDA_MOTHER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq1=5"], "lines": ["@NPC_HERO_NAME", "DLG_LEUWI_MOTHER_H1", "@NPC_SUNDA_MOTHER_NAME", "DLG_LEUWI_MOTHER_V1", "DLG_LEUWI_MOTHER_V2", "@NPC_HERO_NAME", "DLG_LEUWI_MOTHER_H2", "@NPC_SUNDA_MOTHER_NAME", "DLG_LEUWI_MOTHER_V3", "@NPC_HERO_NAME", "DLG_LEUWI_MOTHER_H3", "@NPC_SUNDA_MOTHER_NAME", "DLG_LEUWI_MOTHER_V4", "@NPC_HERO_NAME", "DLG_LEUWI_MOTHER_H4", "@NPC_SUNDA_MOTHER_NAME", "DLG_LEUWI_MOTHER_V5"], "do": []},
+	{"if": ["step:mq1=8"], "lines": ["@NPC_SUNDA_MOTHER_NAME", "DLG_LEUWI_MOTHER_V6", "@NPC_HERO_NAME", "DLG_LEUWI_MOTHER_H5", "@NPC_SUNDA_MOTHER_NAME", "DLG_LEUWI_MOTHER_V7"], "do": [], "quiet": true},
+	{"if": ["step:mq1=9"], "lines": ["DLG_LEUWI_MOTHER_V8"], "do": [], "quiet": true},
+	{"if": ["flag:mq1_3b"], "lines": ["DLG_LEUWI_MOTHER_V9"], "do": []},
+	{"if": [], "lines": ["DLG_LEUWI_MOTHER_V10"], "do": []}
+])

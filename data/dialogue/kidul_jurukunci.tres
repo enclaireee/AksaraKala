@@ -5,9 +5,10 @@
 [resource]
 script = ExtResource("1")
 npc_id = "kidul_jurukunci"
-name_key = "NPC_KIDUL_JURUKUNCI_NAME"
+name_key = "NPC_WIRYO_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq4=3"], "lines": ["@NPC_HERO_NAME", "NPC_KIDUL_JURUKUNCI_H1", "@NPC_KIDUL_JURUKUNCI_NAME", "NPC_KIDUL_JURUKUNCI_1", "NPC_KIDUL_JURUKUNCI_2", "@NPC_HERO_NAME", "NPC_KIDUL_JURUKUNCI_H2", "@NPC_KIDUL_JURUKUNCI_NAME", "NPC_KIDUL_JURUKUNCI_3"], "do": ["codex:nyi_roro_kidul"]},
-	{"if": ["flag:mq4_5"], "lines": ["NPC_KIDUL_JURUKUNCI_4"]},
-	{"lines": ["NPC_KIDUL_JURUKUNCI_5"]}
+	{"if": ["quest:mq4=done"], "lines": ["DLG_WIRYO_V6"], "do": []},
+	{"if": ["step:mq4=9"], "lines": ["DLG_WIRYO_V1", "@NPC_HERO_NAME", "DLG_WIRYO_H1", "@NPC_WIRYO_NAME", "DLG_WIRYO_V2", "DLG_WIRYO_V3"], "do": ["codex:nyi_roro_kidul"]},
+	{"if": ["quest:mq4=active"], "lines": ["DLG_WIRYO_V4"], "do": []},
+	{"if": [], "lines": ["DLG_WIRYO_V1"], "do": []}
 ])

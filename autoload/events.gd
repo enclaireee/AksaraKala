@@ -18,6 +18,13 @@ signal glyph_learned(id: String)
 signal spell_cast(glyph_id: String, score: float)
 signal class_chosen(class_id: String)
 signal weakness_triggered(kind: String)         # an enemy reacted to its glyph weakness (bestiary.md)
+signal clue_examined(clue_id: String)           # Clue lines done, or the `clue:<id>` action (architecture.md 9b)
+signal memory_done(memory_id: String)           # KelirMemory.finish(); flag memory_<id> is already set
+signal puzzle_solved(puzzle_id: String)         # environmental puzzle solved (quests.md 7.1)
+signal trial_completed(trial_id: String)        # trial / defense completed (quests.md 7.1)
+
+# Kelir memory (architecture.md 9b)
+signal memory_started(memory_id: String)        # Zones.enter_memory, before the fade
 
 # outgoing
 signal quest_started(id: String)
@@ -29,6 +36,12 @@ signal dialogue_requested(speaker_key: String, lines: PackedStringArray)
 signal dialogue_finished
 signal dialogue_choices(keys: PackedStringArray)   # Game.play emits this just before dialogue_requested; the box shows them after the last line
 signal dialogue_picked(index: int)                  # the box emits this just before dialogue_finished when choices were shown
+
+# scene direction (docs/quest_story_ux.md 2): a dialogue line "#name" or "#name:arg" is not shown; when the box reaches it
+# it emits this. Cues: cam:<npc_id|hero>, bars:on|off, shake:<0-3>, wait:<seconds>. ui/scene_director.gd listens.
+signal scene_cue(cue: String, arg: String)
+# the `remember:<key>` dialogue action (sets flag remember_<key>); HUD banner "X will remember this", Journal "Choices" page
+signal consequence_noted(key: String)
 
 # write mode (ui/glyph_lesson): the player draws these glyphs in order
 signal write_requested(seq_id: String, glyphs: PackedStringArray)

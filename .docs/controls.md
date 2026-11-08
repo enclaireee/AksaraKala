@@ -120,6 +120,3 @@ Rules behind the table:
 - Closing dialogue with a click never triggers an attack.
 - A trackpad player can cast every glyph with toggle cast and assist on.
 - A left-handed player can finish the Sangkuriang fight on the Left-handed preset.
-
-## 9. Open questions
-None. Ranged 50% movement and the full-HP flask block were confirmed on 2026-11-05.

@@ -71,6 +71,11 @@ func _min_sakti() -> float:
 	return player.tuning.cast_min_sakti - (1.0 if c == "mage" or c == "rogue" else 0.0)
 
 
+## Smudged-cast threshold: 0.65, minus the equipped item's "smudge" bonus (Lontar Kuno -0.05 -> 0.60).
+func smudge_threshold() -> float:
+	return Recognizer.SMUDGE + get_node("/root/Game").bonus("smudge")
+
+
 func release() -> void:
 	if not drawing:
 		return
@@ -78,7 +83,7 @@ func release() -> void:
 		cancel()   # a click or a twitch: no cost (spells.md 9)
 		return
 	# /root/Game, not the Game identifier: -s test scripts compile this before autoloads exist
-	var r := Recognizer.classify(points, get_node("/root/Game").learned_glyphs())
+	var r := Recognizer.classify(points, get_node("/root/Game").learned_glyphs(), smudge_threshold())
 	read.emit(r)
 	var glyph: GlyphData = r.glyph
 	var power: float = r.power

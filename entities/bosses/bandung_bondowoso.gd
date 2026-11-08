@@ -16,6 +16,9 @@ const SHIELD_HP := 1 << 30
 
 @export var boss_name_key := "BOSS_BANDUNG_BONDOWOSO"
 @export var cond := ""                  # Game.check condition; empty = always on
+@export var sabotage_flag := "laras_sabotage_bondowoso_pillar"   # HUD boss bar reads this
+@export var sabotage_beat_every := 12.0  # TUNE (v5): no keystone, the lesung beat comes this often (spec 20)
+@export var sabotage_expose_time := 4.5  # TUNE (v5): pillars stay open this long (spec 3)
 @export var speed := 28.0              # TUNE
 @export var engage_range := 128.0      # 8 tiles
 @export var stomp_range := 48.0        # spec
@@ -154,7 +157,7 @@ func _run_builders(delta: float) -> void:
 			_debris_t = 0.0
 			for i in debris_count:
 				_mark(target.global_position + Vector2.from_angle(randf() * TAU) * randf() * debris_spread, debris_mark, "debris")
-	dawn = minf(1.0, dawn + delta / beat_every)
+	dawn = minf(1.0, dawn + delta / (sabotage_beat_every if _sabotaged() else beat_every))   # ASSUMED (v5)
 	if dawn >= 1.0:
 		_beat()
 	for m in _marks.duplicate():
@@ -171,7 +174,7 @@ func _run_builders(delta: float) -> void:
 func _beat() -> void:
 	dawn = 0.0
 	for p in pillars:
-		p.expose(expose_time)
+		p.expose(sabotage_expose_time if _sabotaged() else expose_time)   # ASSUMED (v5)
 
 
 func _pending(kind: String) -> int:
@@ -318,6 +321,12 @@ func _on_health(hp: int, max_hp: int) -> void:
 		phase = 2
 		build_interval = pillar_every_2
 		_enter(State.PAUSE)
+
+
+## Story v5: Laras's sabotage flag is set (Game.has_flag, underscore form).
+func _sabotaged() -> bool:
+	var g := get_node_or_null("/root/Game")
+	return g != null and sabotage_flag != "" and g.has_flag(sabotage_flag)
 
 
 func _on_flinch() -> void:

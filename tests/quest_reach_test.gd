@@ -19,7 +19,8 @@ func _initialize() -> void:
 	var src := {}   # signal -> {arg: true}
 	var marks := {}   # zone -> {id: true}, the same fields hud.gd refresh_arrow() matches
 	for s in ["talked_to", "area_entered", "area_cleared", "petilasan_activated", "enemy_killed", "boss_defeated",
-			"item_picked", "glyph_learned", "zone_entered", "name_written"]:
+			"item_picked", "glyph_learned", "zone_entered", "name_written", "clue_examined", "memory_done",
+			"puzzle_solved", "trial_completed"]:
 		src[s] = {}
 	for id: String in zones.ZONES:
 		if id == "hub":
@@ -30,16 +31,27 @@ func _initialize() -> void:
 		await process_frame
 		marks[id] = {}
 		for n in z.find_children("*", "", true, false):
-			for k in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.name]:
+			for k in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.get("clue_id"), n.get("memory_id"), n.name]:
 				if k is String or k is StringName:
 					marks[id][String(k)] = true
+			if n is Clue:
+				if n.clue_id != "":
+					src.clue_examined[n.clue_id] = true
+				if n.memory_id != "":
+					src.memory_done[n.memory_id] = true
 			var f := n.scene_file_path
 			if f.ends_with("npc.tscn"):
 				src.talked_to[n.npc_id] = true
 			elif f.ends_with("trigger.tscn"):
 				src.area_entered[n.trigger_id] = true
+				src.puzzle_solved[n.trigger_id] = true
+				src.puzzle_solved[n.trigger_id.trim_prefix("puzzle_")] = true
+				src.trial_completed[n.trigger_id] = true
+				src.trial_completed[n.trigger_id.trim_prefix("trial_")] = true
 			elif f.ends_with("encounter.tscn"):
 				src.area_cleared[n.area_id] = true
+				src.trial_completed[n.area_id] = true
+				src.trial_completed[n.area_id.trim_prefix("trial_")] = true
 				for wave in n.waves:
 					for e in wave:
 						add_enemy(src, load(e[0]).instantiate())
@@ -53,6 +65,16 @@ func _initialize() -> void:
 			elif n is EnemyBase:
 				add_enemy(src, n)
 		z.free()
+	for f in DirAccess.get_files_at("res://zones/kelir"):   # every Kelir memory scene finishes as its memory_id
+		if f.ends_with(".tscn"):
+			var m := (load("res://zones/kelir/" + f.trim_suffix(".remap")) as PackedScene).instantiate()
+			if m is KelirMemory and m.memory_id != "":
+				src.memory_done[m.memory_id] = true
+			m.free()
+	for f in DirAccess.get_files_at("res://data/memories"):   # gap_<id>.tres: id and gap_<id> both enter it
+		var mid := f.get_basename().trim_suffix(".tres")
+		src.memory_done[mid] = true
+		src.memory_done[mid.trim_prefix("gap_")] = true
 	var starts := {}
 	for f in DirAccess.get_files_at("res://data/dialogue"):
 		if not f.ends_with(".tres"):
@@ -90,6 +112,8 @@ func _initialize() -> void:
 
 func add_enemy(src: Dictionary, e: Node) -> void:
 	src.enemy_killed[e.kind] = true
+	if e.kind == "tuyul_leader":
+		src.talked_to[e.kind] = true
 	if e.is_in_group("boss") or e is Sangkuriang or e is Sandekala:
 		src.boss_defeated[e.kind] = true
 	if not e.is_inside_tree():

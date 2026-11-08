@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "g2_maid"
+name_key = "NPC_KAPUTREN_MAID_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:sq_g2=4", "flag:sq_g2_peaceful"], "lines": ["DLG_KAPUTREN_MAID_V20", "DLG_KAPUTREN_MAID_V21", "DLG_KAPUTREN_MAID_V29"], "do": ["codex:ririwa"]},
+	{"if": ["step:sq_g2=4", "flag:sq_g2_fight"], "lines": ["DLG_KAPUTREN_MAID_V22", "DLG_KAPUTREN_MAID_V23"], "do": ["codex:ririwa"]},
+	{"if": ["step:sq_g2=3"], "lines": ["DLG_KAPUTREN_MAID_V30"], "do": []},
+	{"if": ["quest:sq_g2=active"], "lines": ["DLG_KAPUTREN_MAID_V24"], "do": []},
+	{"if": ["quest:sq_g2=available", "flag:mqg_kp1"], "lines": ["DLG_KAPUTREN_MAID_V25", "DLG_KAPUTREN_MAID_V26", "@NPC_HERO_NAME", "DLG_KAPUTREN_MAID_H20", "@NPC_KAPUTREN_MAID_NAME", "DLG_KAPUTREN_MAID_V31"], "do": ["start:sq_g2"]},
+	{"if": [], "lines": ["DLG_KAPUTREN_MAID_V28"], "do": []}
+])

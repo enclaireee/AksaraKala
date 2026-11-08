@@ -18,9 +18,9 @@ const MAP := [
 	"#.............rr...........,,...................rr.........#",
 	"#..........................,,..............................#",
 	"#..........................,,..............................#",
-	"#..........................,,..............................D",
-	"#..........................,,..............................D",
-	"#..........................,,..............................#",
+	"#..........................,,........................C.P..ZD",
+	"#..........................,,.............................ZD",
+	"#..........................,,........................A.....#",
 	"#..........................,,..............................#",
 	"#.......rr.................,,..............rr..............#",
 	"#.......rr.................,,..............rr..............#",
@@ -34,19 +34,25 @@ const MAP := [
 	"#..........................,,..............................#",
 	"#..........................,,..............................#",
 	"#..........................,,..............................#",
-	"#..........................s,..............................#",
-	"###########################SS###############################",
+	"#.............g............s,..............................#",
+	"#############GG############SS###############################",
 ]
 
 const SPOTS := {
-	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_pantai", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit to sk_pantai (south edge, 2 tiles)
-	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_pantai"}, "tile": ","},   # spawn, arrival from sk_pantai
+	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit to sk_karang (south edge, 2 tiles)
+	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
+	"G": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_gua", "spawn_id": "from_sk_tebing"}, "tile": "."},   # exit to sk_gua (south-west edge, 2 tiles)
+	"g": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_gua"}, "tile": "."},   # spawn, arrival from sk_gua
+	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kidul_3"}, "tile": ","},   # petilasan 3, the cliff shrine (K9 memory and LC5 chapter)
 	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_situ", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit to ts_situ (west edge, opens sc:ts_sk in ts_situ, 2 tiles)
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_situ"}, "tile": ","},   # spawn, arrival from ts_situ
 	"D": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_keraton", "spawn_id": "from_sk_tebing"}, "tile": ","},   # exit, one-way drop D1 to sk_keraton (east cliff edge, 2 tiles)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_tebing_1", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(3,-3)], ["res://entities/enemies/lampor.tscn", Vector2i(4,-1)], ["res://entities/enemies/lampor.tscn", Vector2i(4,1)], ["res://entities/enemies/lampor.tscn", Vector2i(3,3)]]]}, "tile": ","},   # encounter kidul_tebing_1
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_tebing_2", "size": Vector2i(19,9), "waves": [[["res://entities/enemies/ula_segara.tscn", Vector2i(7,0)], ["res://entities/enemies/bajul_putih.tscn", Vector2i(4,0)], ["res://entities/enemies/lampor.tscn", Vector2i(2,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(2,2)]]]}, "tile": "."},   # encounter kidul_tebing_2
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_3", "item_id": "ilmu:380"}, "tile": "."},   # chest: 380 Ilmu (sea cave)
+	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "shrine_tale", "memory_id": "k9_queen_south"}, "tile": "."},   # clue, the shrine's carved tale and lamp, Ki Sumarto's version (4.18; opens memory `k9_queen_south`; ASSUMED id)
+	"Z": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_offering"}, "tile": ","},   # kabut on the drop D1, lifts with Choice 5 (`mq4_offering`; one per tile; ASSUMED, keeps the drop from skipping the causeway walk)
+	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cliff_altar"}, "tile": "."},   # NPC cliff altar for Choice 5 (4.19, sets `mq4_offering`)
 }
 
 

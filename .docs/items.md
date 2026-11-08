@@ -14,7 +14,7 @@ Numbers **TUNE**. Sources use "Zone N chest" or "drop"; shops are not designed y
 | Item | Archetype | Base dmg | Notes | Source |
 |------|-----------|----------|-------|--------|
 | Dagger | Light melee | 8 | Fast, short reach | Starter (Rogue) |
-| Short Sword | Light melee | 9 | Balanced blade | Zone 1 drop |
+| Short Sword | Light melee | 9 | Balanced blade | Zone 1 chest (ts_sawah) |
 | Broadsword | Heavy melee | 22 | Wide swing | Starter (Warrior) |
 | Axe | Heavy melee | 26 | Hits hard, slow | Zone 2 chest |
 | Spear | Heavy melee | 28 | Long reach | SQ-M3 Tuyul bounty (ex-Tombak) |
@@ -30,7 +30,7 @@ Numbers **TUNE**. Sources use "Zone N chest" or "drop"; shops are not designed y
 |------|-----------|----------|-----------------|--------|
 | Kujang | Light melee | 9 | Sundanese blade, iconic to West Java | Zone 1 chest |
 | Keris Luk 7 | Light melee | 10 | A keris with 7 curves ("luk"; keris luk are odd numbers 3 to 13; the meaning of 7 varies by source, say "traditionally associated with"). Keris is a cultural heritage object (UNESCO Intangible Heritage, inscribed 2008; sacred pusaka, treat respectfully) | SQ-T3 Pamor errand |
-| Keris Mpu Gandring | Light melee | 14 | Cursed: strong, but each hit costs 1 HP (**TUNE**). Lore: in the Pararaton legend (label it legend), the keris was forged unfinished for Ken Arok, and Mpu Gandring's dying curse followed it. Never say it is a historical fact. **VERIFY** | Late-game secret (after MQ3) |
+| Keris Mpu Gandring | Light melee | 14 | Cursed: strong, but each hit costs 1 HP (**TUNE**). Lore: in the Pararaton legend (label it legend), the keris was forged unfinished for Ken Arok, and Mpu Gandring's dying curse followed it. Never say it is a historical fact. **VERIFY** | MQ3 Choice 4, reforge (`choice_reforge`, Wirasana gives it tamed) |
 | Panah Pasopati | Ranged | 10 | Named after Arjuna's arrow (verified). Arjuna is the famous archer of wayang; who gave him Pasopati is unconfirmed | Zone 2 secret |
 | Cakra | Thrown | 12 | Krishna/Kresna's disc (Cakra Baskara or Sudarsana) from wayang, returns like a boomerang (stretch) | SQ-K2 sea spirit bounty (P2) |
 
@@ -47,7 +47,7 @@ Body armor only, one slot.
 | Iket Sunda | Mythic | 2 | Sundanese cloth head wrap, tied by the wearer | SQ-S1 Lutung Kasarung |
 | Blangkon | Mythic | 3 | Javanese ready-made batik head cloth | SQ-M4 Gamelan errand |
 | Baju Batik | Mythic | 4 | Batik clothing, patterns carry meaning (pick a named pattern with a verified meaning; some, like parang, were royal-only) | MQ2 boss, Bandung Bondowoso |
-| Kain Hijau | Mythic | 5 | Green cloth, linked to Nyi Roro Kidul lore (a belief, see world.md) | MQ4 Segara Kidul trial (P1) |
+| Kain Hijau | Mythic | 5 | Green cloth, linked to Nyi Roro Kidul lore (a belief, see world.md) | MQ4 Trial of the Waves (main path) |
 
 ## Accessories
 | Item | Tier | Effect | Notes | Source |
@@ -58,7 +58,27 @@ Body armor only, one slot.
 | Silver Bangle | Common | +10% stamina regen | (ex-Gelang Perak) | SQ-S4 Cepot |
 | Stone Ring | Common | +1 Spirit | A ring with a stone (ex-Cincin Batu) | SQ-T1 Ande-Ande Lumut |
 | Lontar Kuno | Mythic | Smudged-cast threshold 0.65 -> 0.60 (**TUNE**) | Old palm-leaf manuscript, how aksara were written | SQ-D2 Pustaka, 50% codex (P1) |
+| Batu Kali | Mythic | +1 Spirit, +5% stamina regen (**TUNE**, **ASSUMED**). Design: also cleanses one status now and then (not built) | A smooth river stone ("river stone") the river gives back when you sink the keris | MQ3 Choice 4, sink (`choice_sink`) |
+| Sabuk Galuh | Mythic | +1 Vitality, +8% damage taken reduction (`bonus` keys `vit`, `defense`, **TUNE**, **ASSUMED**) | A royal belt of Galuh, a defense ward from the court smiths. A belt, not body armor, so it sits in the accessory slot | MQ2 Choice 3, judgment (`choice_judgment`) |
 | Jimat | Mythic | +10 max HP | A small protective charm, a jimat carried for luck and protection (ex-Jimat Kecil) | SQ-M2 Wewe Gombel |
+
+## Main-path quest items
+Not equipment. Each is a data resource with `quest_item = true` (**ASSUMED**), shown in the journal's items list, never sold or dropped. Ids are the ones quests.md and script.md use. Side-quest pickups (angklung, selendang, gong, batu bintang, sodo lanang, kuda kepang, tukik) are listed with their quests in [quests.md](quests.md) section 5.
+
+| Item | Id | Effect | Notes | Source |
+|------|----|--------|-------|--------|
+| Laras's Lontar | `laras_lontar` | None | Her palm-leaf strip, with your name on the back. The letters fade as the Curse of Forgetting grows. Semar reads it | MQ0 0.4, pickup on the burned stage (`item_picked:laras_lontar`) |
+| Laras's Ribbon | `laras_ribbon` | None (flavor) | Her hair ribbon, caught on the bamboo where she broke free. Step 1.1 completes on the fight, not on the pickup | MQ1 1.1, pickup at the bamboo edge |
+| Boeh Rarang | `boeh_rarang` | Hung on the eastern post at the crater to call the false dawn (`arena_post`, post_id "east"), then Ca | A woven cloth that, in the Sangkuriang legend, helps raise the false dawn (**VERIFY** the legend detail). The Weaver gives it | MQ1 1.8 (`give:boeh_rarang`) |
+
+The Hunter's empty mask in the Interlude (`hunter_mask`) is a codex entry, not an item. The Keris Mpu Gandring (weapon) and the Batu Kali (accessory) are in the tables above; Choice 4 gives one of them. Kain Hijau (armor) is given at the altar (`give:kain_hijau`, MQ4 4.9; the file is `data/items/kain_hijau.tres`, defense 5).
+
+## Choice rewards that are not items
+Two of the six Major Choices ([story.md](story.md) "Six Major Choices") give a blessing or passive, not gear. They are flags, not `ItemData` resources (**ASSUMED**):
+- **Berkah Pesisir** (`choice_offer_song`, Act V): once in Act VI, an auto-revive or ward shield.
+- **Keteguhan Sunyi** (`choice_release_aria`, Act VI): `+15%` stamina and Sakti recovery in the final fight.
+
+Choice flags with spell effects (Sunda `Ca` radius `+10%`, *Ombak* cost and poise) are in [spells.md](spells.md).
 
 ## Consumables and pickups
 - **Healing Flask**: heal item, 3 charges, 40% heal each, refilled at a petilasan ([rpg.md](rpg.md)).
@@ -70,6 +90,8 @@ Body armor only, one slot.
 
 ## Data per item
 Mythic items: `name_key`, `description_key`, `lore_key` (translation keys with Indonesian and English text, see [architecture.md](architecture.md)), `source_note` (the reference used, for the codex), `icon`, `mythic = true`. Commons: `name_key`, `description_key` (one line), `icon`. Lore lines are 1-2 sentences.
+
+`icon` is a 16x16 PNG at `assets/art/items/<id>.png` generated by `tools/gen_items.py` (Phase 6b), exported on `ItemData.icon`. Consumables and quest items get icons in the same folder.
 
 ## Pickup and equip
 - Chests show a short item card. Equip from the menu at any time (not only at petilasans) (**ASSUMED**).

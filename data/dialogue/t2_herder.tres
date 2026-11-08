@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "t2_herder"
+name_key = "NPC_T2_HERDER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_t2=done"], "lines": ["DLG_T2_HERDER_V20"], "do": []},
+	{"if": ["step:sq_t2=3"], "lines": ["DLG_T2_HERDER_V20", "DLG_T2_HERDER_V21"], "do": []},
+	{"if": ["quest:sq_t2=active"], "lines": ["DLG_T2_HERDER_V22"], "do": []},
+	{"if": ["flag:mq3_1"], "lines": ["DLG_T2_HERDER_V23", "DLG_T2_HERDER_V24", "DLG_T2_HERDER_V25"], "do": ["start:sq_t2"]},
+	{"if": [], "lines": ["DLG_T2_HERDER_V26"], "do": []}
+])

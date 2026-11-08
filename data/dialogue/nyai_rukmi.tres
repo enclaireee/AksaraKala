@@ -7,6 +7,12 @@ script = ExtResource("1")
 npc_id = "nyai_rukmi"
 name_key = "NPC_NYAI_RUKMI_NAME"
 entries = Array[Dictionary]([
-	{"if": ["quest:mq1=done"], "lines": ["DLG_NYAI_RUKMI_1", "DLG_NYAI_RUKMI_2"], "do": []},
-	{"if": [], "lines": ["DLG_NYAI_RUKMI_3", "DLG_NYAI_RUKMI_4", "DLG_NYAI_RUKMI_5", "DLG_NYAI_RUKMI_6"], "do": []}
+	{"if": ["flag:codex_100", "!flag:rukmi_100"], "lines": ["DLG_NYAI_RUKMI_V30", "DLG_NYAI_RUKMI_V31"], "do": ["flag:rukmi_100"]},
+	{"if": ["flag:codex_75", "!flag:rukmi_75"], "lines": ["DLG_NYAI_RUKMI_V32", "DLG_NYAI_RUKMI_V33"], "do": ["flag:rukmi_75"]},
+	{"if": ["flag:codex_50", "!flag:rukmi_50"], "lines": ["DLG_NYAI_RUKMI_V34", "DLG_NYAI_RUKMI_V35"], "do": ["flag:rukmi_50"]},
+	{"if": ["flag:codex_25", "!flag:rukmi_25"], "lines": ["DLG_NYAI_RUKMI_V36"], "do": ["flag:rukmi_25", "start:sq_d2"]},
+	{"if": [], "lines": ["DLG_NYAI_RUKMI_V37"], "do": [], "hub": true, "choices": [{"text": "CHOICE_NYAI_RUKMI_ASK_1", "do": ["topic:lontar"]}, {"text": "CHOICE_NYAI_RUKMI_ASK_2", "do": ["topic:catatan"]}, {"text": "CHOICE_NYAI_RUKMI_ASK_3", "do": ["topic:lupa"]}, {"text": "CHOICE_NYAI_RUKMI_ASK_4", "do": []}]},
+	{"if": [], "topic": "lontar", "quiet": true, "lines": ["DLG_NYAI_RUKMI_V38", "DLG_NYAI_RUKMI_V39"], "do": []},
+	{"if": [], "topic": "catatan", "quiet": true, "lines": ["DLG_NYAI_RUKMI_V40", "DLG_NYAI_RUKMI_V41"], "do": []},
+	{"if": [], "topic": "lupa", "quiet": true, "lines": ["DLG_NYAI_RUKMI_V42", "DLG_NYAI_RUKMI_V43"], "do": []}
 ])

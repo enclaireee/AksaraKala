@@ -18,12 +18,22 @@ var _started := false
 
 
 func _ready() -> void:
+	add_to_group("encounter")
 	var r := RectangleShape2D.new()
 	r.size = Vector2(size * 16)
 	$Shape.shape = r
 	body_entered.connect(_on_body_entered)
 	if cond != "":
 		get_node("/root/Game").changed.connect(_on_game_changed)
+
+
+## True when the given player node is physically within this encounter's arena rect.
+func is_player_inside(pl: Node2D) -> bool:
+	if pl == null or not is_instance_valid(pl):
+		return false
+	var s := Vector2(size * 16)
+	var r := Rect2(global_position - s * 0.5, s)
+	return r.grow(16.0).has_point(pl.global_position)
 
 
 ## The condition came true with the player already inside the rect.

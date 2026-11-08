@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/hero_base.png" id="1_hero"]
+
+[sub_resource type="CircleShape2D" id="body_shape"]
+radius = 5.0
+
+[node name="StandIn" type="CharacterBody2D" groups=["player"]]
+collision_layer = 2
+collision_mask = 1
+motion_mode = 1
+
+[node name="Body" type="Polygon2D" parent="."]
+color = Color(0.101961, 0.0627451, 0.0313726, 0)
+polygon = PackedVector2Array(-4, -13, 4, -13, 5, 0, -5, 0)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("1_hero")
+hframes = 6
+vframes = 18
+modulate = Color(0.88, 0.78, 0.62, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("body_shape")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(0, -6)

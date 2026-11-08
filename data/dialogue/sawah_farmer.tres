@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "sawah_farmer"
+name_key = "NPC_SAWAH_FARMER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:mq2=active", "flag:mq2_1", "!flag:lead_pasar"], "quiet": true, "lines": ["@NPC_SAWAH_FARMER_NAME", "DLG_SAWAH_FARMER_V1", "@NPC_HERO_NAME", "DLG_SAWAH_FARMER_H1", "@NPC_SAWAH_FARMER_NAME", "DLG_SAWAH_FARMER_V2", "DLG_SAWAH_FARMER_V3", "@NPC_HERO_NAME", "DLG_SAWAH_FARMER_H2", "@NPC_SAWAH_FARMER_NAME", "DLG_SAWAH_FARMER_V4", "DLG_SAWAH_FARMER_V5"], "do": []},
+	{"if": [], "quiet": true, "lines": ["DLG_SAWAH_FARMER_V6"], "do": []}
+])

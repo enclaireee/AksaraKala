@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_C3_S1_OBJ"
+on = "clue_examined:c3_camp_scrap"
+marker = {"zone": "mt_candi", "id": "c3_camp_scrap"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_C3_S2_OBJ"
+on = "clue_examined:c3_road_mark"
+marker = {"zone": "tt_pasir", "id": "c3_road_mark"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_C3_S3_OBJ"
+on = "memory_done:sq_c3_ranga"
+marker = {"zone": "sk_pantai", "id": "sq_c3_ranga"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_C3_S4_OBJ"
+on = "name_written:deserter_name"
+set_flag = "deserter_named"
+marker = {"zone": "gk_pelataran", "id": "deserter_stone"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_c3"
+kind = "side"
+type = "retelling"
+zone = "gua_kala"
+size = "L"
+giver = "faceless_deserter"
+requires = Array[String](["mq2_7"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"codex": ["deserter_name", "ranga"]}

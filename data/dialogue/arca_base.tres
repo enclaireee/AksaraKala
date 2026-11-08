@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "arca_base"
+name_key = "NPC_ARCA_BASE_NAME"
+entries = Array[Dictionary]([
+	{"if": ["flag:lead_ruins", "!flag:mq2_3"], "lines": ["DLG_ARCA_BASE_V1", "@NPC_HERO_NAME", "DLG_ARCA_BASE_H1", "@NPC_ARCA_BASE_NAME", "DLG_ARCA_BASE_V2", "DLG_ARCA_BASE_V3"], "do": ["learn:jawa_na"]},
+	{"if": [], "lines": ["DLG_ARCA_BASE_V4"], "do": []}
+])

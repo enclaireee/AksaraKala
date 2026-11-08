@@ -19,18 +19,9 @@ var _guide_line: Line2D
 
 
 func _ready() -> void:
-	var g := Gradient.new()
-	g.offsets = PackedFloat32Array([0.0, 0.5, 1.0])
-	g.colors = PackedColorArray([Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 0.7)])
-	var t := GradientTexture2D.new()
-	t.gradient = g
-	t.fill = GradientTexture2D.FILL_RADIAL
-	t.fill_from = Vector2(0.5, 0.5)
-	t.fill_to = Vector2(1.0, 0.5)
-	t.width = 96 # ponytail: low-res gradient stretched to screen; fine for a vignette
-	t.height = 54
 	_vignette = TextureRect.new()
-	_vignette.texture = t
+	_vignette.texture = load("res://assets/art/ui/vignette.png")
+	_vignette.self_modulate = Color("1F2A44").lightened(0.35)   # indigo cast tint (ui.md 3b)
 	_vignette.stretch_mode = TextureRect.STRETCH_SCALE
 	_vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_vignette.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -44,9 +35,11 @@ func _ready() -> void:
 	for i in 25:
 		_ring.add_point(Vector2.from_angle(TAU * i / 24.0) * RING_R)
 	_label = Label.new()
+	_label.theme_type_variation = &"HeaderLarge"
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_label.add_theme_font_size_override("font_size", 15)   # Jersey 15 at its native size: crisp, never scaled
 	_label.add_theme_color_override("font_outline_color", INK)
-	_label.add_theme_constant_override("outline_size", 3)
+	_label.add_theme_constant_override("outline_size", 4)
 	add_child(_label)
 
 
@@ -105,15 +98,26 @@ func finish(ok: bool, text: String) -> void:
 		return
 	_open = false # stops the ring tracking; stays visible until the tween ends
 	_kill()
-	var last := _ink.points[-1] if _ink.get_point_count() > 0 else get_viewport().get_mouse_position()
+	var last: Vector2 = _ink.points[-1] if _ink.get_point_count() > 0 else get_viewport().get_mouse_position()
+	var bb := Rect2(last, Vector2.ZERO)
+	for pt in _ink.points:
+		bb = bb.expand(pt)
 	_label.text = text
-	_label.scale = Vector2.ONE * (3.0 if ok else 1.0)
+	_label.scale = Vector2.ONE
 	_label.reset_size()
-	_label.position = (last + Vector2(8, -28)).round()
-	_label.position.x = clampf(_label.position.x, 4.0, 476.0 - _label.size.x * _label.scale.x)
-	_label.position.y = clampf(_label.position.y, 4.0, 266.0 - _label.size.y * _label.scale.y)
-	_label.modulate = Color.WHITE if ok else Color(0.75, 0.75, 0.75)
+	# centred over the stroke, just above it; flips below when there is no room
+	var lw := _label.size.x
+	var pos := Vector2(bb.get_center().x - lw / 2.0, bb.position.y - _label.size.y - 6.0)
+	if pos.y < 6.0:
+		pos.y = bb.end.y + 6.0
+	_label.position = Vector2(clampf(pos.x, 6.0, 474.0 - lw), clampf(pos.y, 6.0, 264.0 - _label.size.y)).round()
+	_label.pivot_offset = _label.size / 2.0
+	_label.add_theme_color_override("font_color", Color("F3E3B8") if ok else Color("B8AE98"))
+	_label.modulate = Color.WHITE
 	_label.modulate.a = 1.0 if text != "" else 0.0
+	if ok:
+		_label.scale = Vector2(1.35, 1.35)   # a small pop, then settle
+		create_tween().set_ignore_time_scale(true).tween_property(_label, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_tween.tween_property(_vignette, "modulate:a", 0.0, 0.3)
 	if ok:
 		_glow.modulate = Color(2, 2, 2)
@@ -161,7 +165,7 @@ func show_guide(template: PackedVector2Array, rect: Rect2) -> void:
 	var off := rect.get_center() - bb.get_center() * s
 	for i in pts.size():
 		pts[i] = (pts[i] * s + off).round()
-	var c := Color(SKY, 0.35)
+	var c := Color(SKY, 0.7)
 	_guide_line = Line2D.new()
 	_guide_line.width = 2.0
 	_guide_line.default_color = c

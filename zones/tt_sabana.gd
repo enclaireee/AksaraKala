@@ -24,7 +24,7 @@ const MAP := [
 	"#.............................,,...........................................rr............#",
 	"#.............................,,.........................................................#",
 	"#.............................,,.........................................................#",
-	"#.........H...................,,.........................................................#",
+	"#.........H..T................,,.........................................................#",
 	"#.............................,,.........................................................#",
 	"Xe,,,,,P,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
@@ -71,6 +71,7 @@ const SPOTS := {
 	"+": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:tt_pasir", "open_side": "e"}, "tile": ","},   # shortcut gate sc:tt_pasir, sand-choked slab (opens from the east pocket, 2 tiles)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "timur_1"}, "tile": ","},   # petilasan 1
 	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_herder"}, "tile": "."},   # NPC herder (SQ-T2 giver)
+	"T": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "t2_herder"}, "tile": "."},   # NPC herder v4d (SQ-T2)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "chest_tt_sabana", "item_id": "crossbow"}, "tile": "."},   # chest: Crossbow (secret, mound ring)
 	"k": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "kuda_kepang_1"}, "tile": "."},   # pickup, kuda kepang 1 (SQ-T4)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_embers", "size": Vector2i(26,14), "waves": [[["res://entities/enemies/banaspati.tscn", Vector2i(8,-4)], ["res://entities/enemies/banaspati.tscn", Vector2i(8,4)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,-5)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,5)]]]}, "tile": ","},   # encounter timur_embers

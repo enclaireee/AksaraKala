@@ -46,8 +46,8 @@ func _initialize() -> void:
 	var s := (load("res://entities/bosses/sandekala.tscn") as PackedScene).instantiate() as Sandekala
 	s.position = Vector2(300, 100)
 	root.add_child(s)
+	s.set_physics_process(false)   # before any physics tick: the player is inside engage_dist, so a tick would engage it
 	await process_frame
-	s.set_physics_process(false)
 	check(s.is_in_group("boss") and s.is_in_group("enemy"), "groups boss and enemy")
 	check(s.boss_name_key == "BOSS_SANDEKALA" and s.health.max_hp == 1100 and not s.engaged, "boss bar contract")
 

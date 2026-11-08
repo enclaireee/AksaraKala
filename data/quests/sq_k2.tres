@@ -35,6 +35,6 @@ type = "bounty"
 zone = "segara_kidul"
 size = "L"
 giver = "kidul_nelayan_tua"
-requires = Array[String](["mq4_1"])
+requires = Array[String](["mq4_2"])
 steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
 rewards = {"items": ["cakra"]}

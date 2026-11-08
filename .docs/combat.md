@@ -12,10 +12,10 @@ Research note: the numbers come from common practice in top-down action games (H
 | Martial art flavor | None. Generic action combat, with the culture carried by weapons, enemies, spells and sound |
 | Statuses | 4 readable statuses: Burn, Slow (Bound on enemies), Stagger, Curse |
 | Aim | Mouse aim, soft snap for melee, no lock-on (the mouse is also the drawing tool) |
-| Slow-mo abuse | Closed: drawing needs 15 sakti to start, 1 s lockout after a cancel or fizzle (confirmed) |
-| Glyph weaknesses | Each normal enemy has one glyph that breaks its gimmick for 1.5-3 s. A shortcut, never required ([bestiary.md](bestiary.md)) (confirmed) |
-| Contact damage | None. Only attacks hurt, never bumping into an enemy (forgiving) |
-| Damage numbers | Shown, small and short, with a toggle in Settings (**ASSUMED**) |
+| Slow-mo balance | Drawing requires 15 sakti to initiate, with a 1 s cooldown lockout after a cancel or fizzle |
+| Glyph weaknesses | Each normal enemy has one designated glyph that breaks its gimmick for 1.5–3.0 s ([bestiary.md](bestiary.md)) |
+| Contact damage | None. Only direct attacks deal damage; colliding with enemy bodies is harmless |
+| Damage numbers | Small, quick damage numbers above targets, toggleable in Settings |
 
 ## 2. Player moves
 ### 2.1 Movement
@@ -64,6 +64,24 @@ Weapons of one archetype share timing ([balance.md](balance.md) section 3) and d
 | Iron Staff | Bolt 210 px/s, range 170 (**TUNE**) |
 
 - **Cutting projectiles:** a melee hit destroys normal enemy projectiles it touches. Boss heavy projectiles cannot be cut. This gives melee classes an answer to shooters without a parry.
+
+### 2.3b Attack animation and FX (Phase 6c, 2026-11-07, **ASSUMED**, frames **TUNE**)
+Visual only: timings, hitboxes and damage stay as in 2.2 and 2.3. The goal is fluid, readable, weighty attacks in the manner of Hyper Light Drifter, Death's Door and CrossCode.
+- **Directional attack frames.** Each combo hit has its own pose in 3 views (down, side and up; the side view is flipped for left). It runs 6 frames, mapped onto the phases:
+  - wind-up: anticipation, then a coil
+  - active: the strike, then the smear
+  - recovery: the follow-through, then settle
+  Hits 1, 2 and 3 differ: hit 1 is a forehand slash, hit 2 a backhand slash, hit 3 the finisher (thrust, slam or lunge, per 2.2). Bow and staff have draw, release and recoil poses.
+- **Weapon smear.** A separate sprite rotates to the swing direction and is sized to the weapon's arc and reach (2.3). It is a 4-frame crescent with the archetype's shape:
+  - light: a thin, fast arc
+  - heavy: a wide, thick arc with dust at the end
+  - spear: a straight thrust streak
+  - finishers: a bigger arc and a white core
+  Its colour comes from the class: warrior steel and ember, rogue indigo and violet, archer and mage use draw and cast glows.
+- **Impact.** On a hit there is a 3-4 frame spark star at the contact point, plus a small ink splash in the hit direction. A finisher or heavy hit adds an impact ring and a 2-frame white flash on the target. A kill leaves an ink-puff burst (3.2).
+- **Movement.** The lunge leaves 1-2 afterimages (alpha 0.35, 0.12 s). A dodge shows a dust puff at the start, 3 afterimages and a dust puff on landing. Footstep dust appears every 4th walk frame on dirt and path.
+- **Bow and staff.** A string-draw glow and a muzzle flash on the shot. The arrow has a 2-frame trail, and the bolt has an orb glow with sparks.
+- All of this respects "Reduce flashing" ([controls.md](controls.md) 6): the white flashes are off, and the sparks are kept.
 
 ### 2.4 Dodge
 | Value | Number |
@@ -175,6 +193,9 @@ Only a few enemies attack at once, so crowds stay readable.
 - Phase 2 at 50% HP with a 1.5 s invulnerable pause and a line of dialogue or a roar, so the player gets a beat to breathe.
 - Each boss has at least one 2-3 s punish window per attack cycle (after a heavy attack or a poise break).
 - Mechanics that use spells (the Keris's curse marks, Sangkuriang's fake dawn, Kala's shield) are in [bestiary.md](bestiary.md).
+- **Laras sabotage phases (Story v5, not built yet):** a boss reads `Game.has_flag("laras_sabotage...")` set by the cross-time chapters `LC1`-`LC5` and `LC6`. A flag adds a vulnerable phase or a visible flaw marker on the boss bar: Sangkuriang's cracked dawn groove, Barma Wijaya's copies that shatter in one glyph hit, Bondowoso's pillars that break on every lesung beat, the Keris's seventh stake, Kala's Eclipse shield. Without the flag the fight is still beatable, only harder to read (**ASSUMED**). Details per boss: [bestiary.md](bestiary.md).
+- **Stalking ambush (Buto Ijo, Story v5):** three arena-less ambushes in `tt_kulon`, `tt_kali` and `tt_beringin`. He does not die: he retreats when his HP falls below 80%, 65% and 50% of the bar, and the encounter ends with `area_cleared:buto_ambush_<n>`. The canyon lair then plays the full 4-phase fight. The ambush encounters exist as wave encounters in the area scripts; the retreat thresholds are not built yet.
+- **Choice effects in combat:** `choice_offer_memory` gives *Ombak* `+20%` poise damage to Eclipse enemies in Act VI ([spells.md](spells.md)). `choice_keep_secret` gives Ciung `+15%` ally damage in Galuh bouts. `choice_redeem_aria` adds `+6 s` to the Kala Phase 3 countdown (`batara_kala.gd` reads this flag).
 
 ## 6. Spells in combat
 Casting rules are in [spells.md](spells.md). Combat-specific rules:
@@ -197,7 +218,3 @@ Casting rules are in [spells.md](spells.md). Combat-specific rules:
 | Deaths to an attack the player says they "did not see" | None. Otherwise lengthen the wind-up or strengthen its marker |
 | Enemies attacking at once in a 6-enemy fight | Never more than 4 |
 | Average time to kill and boss tries | [balance.md](balance.md) section 11 |
-
-## 9. Open questions
-1. ~~Kendang samples~~: redafs on Freesound, CC BY 4.0 ([assets.md](assets.md)). Record a kendang if one take gives too few hits.
-2. ~~UI hints~~: no hint for the soft snap; the Archer's long-range hits use the big damage font ([ui.md](ui.md) 2).

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "sunda_grandson"
+name_key = "NPC_SUNDA_GRANDSON_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:mq1=active", "!flag:mq1_a1"], "lines": ["DLG_SUNDA_GRANDSON_V1", "DLG_SUNDA_GRANDSON_V2", "@NPC_HERO_NAME", "DLG_SUNDA_GRANDSON_H10", "@NPC_SUNDA_GRANDSON_NAME", "DLG_SUNDA_GRANDSON_V10", "@NPC_HERO_NAME", "DLG_SUNDA_GRANDSON_H1", "@NPC_SUNDA_GRANDSON_NAME", "#wait:1", "DLG_SUNDA_GRANDSON_V11", "@NPC_HERO_NAME", "DLG_SUNDA_GRANDSON_H11", "@NPC_SUNDA_GRANDSON_NAME", "DLG_SUNDA_GRANDSON_V12", "DLG_SUNDA_GRANDSON_V3"], "do": ["codex:angklung"]},
+	{"if": ["flag:remember_freed_scout", "!flag:grandson_noted"], "lines": ["DLG_SUNDA_GRANDSON_V20"], "do": ["flag:grandson_noted"]},
+	{"if": ["flag:remember_questioned_scout", "!flag:grandson_noted"], "lines": ["DLG_SUNDA_GRANDSON_V21"], "do": ["flag:grandson_noted"]},
+	{"if": ["flag:remember_hid_scout", "!flag:grandson_noted"], "lines": ["DLG_SUNDA_GRANDSON_V22"], "do": ["flag:grandson_noted"]},
+	{"if": [], "lines": ["DLG_SUNDA_GRANDSON_V4"], "do": []}
+])

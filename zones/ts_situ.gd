@@ -6,34 +6,34 @@ const MAP := [
 	"############################################################",
 	"#######....................................................#",
 	"#######....................................................#",
-	"#######.......rr....~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
+	"#######.......rr....~~~~~~~~~~~~~~~~~~~~~~~~~~~.....1......#",
 	"#######.........r...~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
+	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~.o..........#",
 	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
-	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
-	"&!,,,,K,,,,,,.......~~~~~~~~~~~~~~~~~~~~~~~~~~~............#",
+	"&!,,,,K,,,,,,.......~~~~~~~~~~~~~~~~~~~~~~~~~~~.l..........#",
 	"&,,,,,K,,,,,,.......~~~~~~~~~~~~~~~~~~~~~~~~~~~....#########",
 	"#######...dD........~~~~~~~~~~~~~~~~~~~~~~~~~~~....#.......#",
-	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~....r.......#",
+	"#######.....C.......~~~~~~~~~~~~~~~~~~~~~~~~~~~....r.......#",
 	"#######.............~~~~~~~~~~~~~~~~~~~~~~~~~~~.........k..#",
 	"#######............................................r.......#",
 	"#######.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#.......#",
 	"#######.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#.......#",
 	"#######.,,....................,,...................#########",
-	"#######.,,....................,,........r...r..............#",
+	"#######.,,....................Z,.T......r...r..............#",
 	"#######.,,5...................,,..........x................#",
 	"#######.,,....................,,........r...r...........####",
 	"#######.,,....................,,,,,,,,,,,,,,,,,,,,,,,,,,=,;$",
 	"#######.,,....................,,,,,,,,,,,,,,,,,,,,,,,,,,=,,$",
 	"#######.,,....................,,........................####",
 	"#######.,,....................,,...........................#",
-	"#######.,,........w...v.......,,...........................#",
+	"#######.,,........w...v.......A,...........................#",
 	"#######.,,....................,,...........................#",
-	"#######.,,....r.....w.........,,................r..........#",
+	"#######.,,....r.....w.........R,................r..........#",
 	"#######.,,.....r..............,,............y....r.........#",
-	"#######.,,....................,,...........................#",
+	"#######.,,....................FF...........................#",
 	"#######.,,....................,,..............y............#",
 	"#######.,,....................,,...........................#",
-	"#######.,,....................,,...........................#",
+	"#######.,,............a.......,,......c....................#",
 	"#######.@,....................e,...........................#",
 	"########%%####################XX############################",
 ]
@@ -49,14 +49,25 @@ const SPOTS := {
 	";": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_tebing"}, "tile": ","},   # spawn, arrival from `sk_tebing` (in the pocket on the open side of `=`)
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:ts_sk", "open_side": "e"}, "tile": ","},   # shortcut gate, back route to Segara Kidul (opens only from `sk_tebing`, 2 tiles)
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_7"}, "tile": ","},   # kabut, crater path gate (one per tile)
-	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "!quest:mq1=done"}, "tile": "."},   # NPC Naganingrum, the woman by the lake, teaches Ca (MQ1 1.6), gone after MQ1
-	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "dayang_sumbi", "cond": "quest:mq1=done"}, "tile": "."},   # NPC Dayang Sumbi, gives SQ-S5 after MQ1
+	"D": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "naganingrum", "cond": "flag:mq1_6b"}, "tile": "."},   # NPC Naganingrum, the woman by the lake, shows Ca (MQ1 1.19, the turn); appears once the shore is clear and stays by the lake after MQ1 (story.md; her arc closes in the epilogue)
+	"A": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_lake_approach", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter sunda_lake_approach, follow the dammed river channel toward the rising lake (MQ1 1.16 `area_cleared:sunda_lake_approach`)
+	"Z": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_lakeshore", "size": Vector2i(16,9), "cond": "step:mq1=17", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-5,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-5,2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(6,2)]], [["res://entities/enemies/kuntilanak_elite.tscn", Vector2i(0,0)]]]}, "tile": ","},   # encounter sunda_lakeshore, clear the lake shore; wave 2 is the elite, the `miniboss` piece (MQ1 1.18)
+	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mq1_9"}, "tile": "."},   # NPC Ciung Wanara by the lake after Sangkuriang (MQ1 camp talk `camp_sunda`: optional, 2-4 lines, `quiet`, `do`: `flag:camp_sunda`; his anger and the mother he does not know, who is the woman `D` two tiles away; entry cond `flag:mq1_9`, `zone:ts_situ`, so it never replays later, **ASSUMED**)
+	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "dayang_sumbi", "cond": "quest:mq1=done"}, "tile": "."},   # NPC Dayang Sumbi, idle talk at the lake after MQ1 (SQ-S5 is retired)
 	"x": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "tangkuban_perahu"}, "tile": "."},   # codex spot, ruin on the lake shore
 	"5": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_5"}, "tile": "."},   # angklung 5
 	"k": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_kujang", "item_id": "kujang"}, "tile": "."},   # chest: Kujang (secret 1)
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
 	"v": {"scene": "res://entities/enemies/faceless_archer.tscn", "props": {}, "tile": "."},   # loose faceless archer, roaming pack (respawns on zone reload, no unique_id)
 	"y": {"scene": "res://entities/enemies/wild_boar.tscn", "props": {}, "tile": "."},   # loose wild boar, roaming pack (respawns on zone reload, no unique_id)
+	"1": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "felled_trees"}, "tile": "."},   # clue, the hillside of freshly felled trees (MQ1 1.17 K2 clue 1)
+	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "empty_coops"}, "tile": "."},   # clue, empty rooster coops along the flooded shore (MQ1 1.17 K2 clue 2)
+	"l": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "loom"}, "tile": "."},   # clue, the abandoned loom along the flooded shore (MQ1 1.17 K2 clue 3)
+	"a": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_1"}, "tile": "."},   # puzzle, sluice wheel 1, west (sets `sluice_1`)
+	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_2"}, "tile": "."},   # puzzle, sluice wheel 2, east (entry needs `flag:sluice_1`, sets `sluice_2`)
+	"F": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "sluice_2"}, "tile": ","},   # kabut, the flooded shore path, the dam's overnight flood (one per tile; drains when wheel 2 turns; same scene as the fog, flood art)
+	"T": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "faceless_toy", "cond": "flag:mq1_6b"}, "tile": "."},   # clue, the carved toy a fallen Faceless dropped (the Captain clue, MQ1 1.18; appears when the shore is clear)
+	"R": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sunda_lakeroad", "size": Vector2i(4,4), "cond": "flag:mq1_6"}, "tile": ","},   # trigger, the lake road below the first guards, plays `lake_hook` (MQ1 1.16, `area_entered:sunda_lakeroad`; the beat also fires on `zone:ts_situ` with `flag:mq1_6`, so this trigger only places it; no step waits on it; id and spot ASSUMED)
 }
 
 

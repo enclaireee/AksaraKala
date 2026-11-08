@@ -7,10 +7,19 @@ script = ExtResource("1")
 npc_id = "ciung_wanara"
 name_key = "NPC_CIUNG_WANARA_NAME"
 entries = Array[Dictionary]([
+	{"if": ["quest:mq0=active", "flag:mq0_d2", "!flag:mq0_d3"], "lines": ["@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H10", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V20", "@NPC_LARAS_NAME", "DLG_CIUNG_WANARA_L1", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V21"], "do": []},
+	{"if": ["quest:mq0=active", "flag:mq0_d3"], "lines": ["DLG_CIUNG_WANARA_V22"], "do": []},
+	{"if": ["flag:mq1_9", "zone:ts_situ"], "lines": ["DLG_CIUNG_WANARA_V35", "DLG_CIUNG_WANARA_V36", "@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H4", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V37"], "do": ["flag:camp_sunda"], "quiet": true},
+	{"if": ["flag:mq4_9"], "lines": ["DLG_CIUNG_WANARA_V10"], "do": []},
+	{"if": ["quest:mq4=active"], "lines": ["DLG_CIUNG_WANARA_V11"], "do": []},
 	{"if": ["quest:mq2=active"], "lines": ["DLG_CIUNG_WANARA_V1"], "do": []},
-	{"if": ["step:mqg=0"], "lines": ["@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H1", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V2", "DLG_CIUNG_WANARA_V3"], "do": []},
-	{"if": ["step:mqg=1"], "lines": ["DLG_CIUNG_WANARA_V4"], "do": []},
+	{"if": ["step:mqg=0"], "lines": ["@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H1", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V3", "@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H2", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V7"], "do": []},
 	{"if": ["step:mqg=2"], "lines": ["DLG_CIUNG_WANARA_V4"], "do": []},
+	{"if": ["flag:mqg_4", "!flag:mqg_7", "zone:kg_keraton"], "lines": ["DLG_CIUNG_WANARA_V8", "@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H3", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V262", "DLG_CIUNG_WANARA_V263"], "do": ["flag:camp_galuh"], "quiet": true},
+	{"if": ["quest:sq_c1=done"], "lines": ["DLG_CIUNG_WANARA_V30", "DLG_CIUNG_WANARA_V31"], "do": []},
+	{"if": ["step:sq_c1=4", "flag:c1_token"], "lines": ["DLG_CIUNG_WANARA_V504", "@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H501", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V505", "DLG_CIUNG_WANARA_V506", "DLG_CIUNG_WANARA_V507", "DLG_CIUNG_WANARA_V508"], "do": ["codex:ciung_egg"]},
+	{"if": ["quest:sq_c1=active"], "lines": ["DLG_CIUNG_WANARA_V34", "DLG_CIUNG_WANARA_V503"], "do": []},
+	{"if": ["quest:sq_c1=available", "flag:mqg_a1"], "lines": ["DLG_CIUNG_WANARA_V32", "@NPC_HERO_NAME", "DLG_CIUNG_WANARA_H500", "@NPC_CIUNG_WANARA_NAME", "DLG_CIUNG_WANARA_V500", "DLG_CIUNG_WANARA_V501", "DLG_CIUNG_WANARA_V502"], "do": ["start:sq_c1"]},
 	{"if": ["quest:mqg=active"], "lines": ["DLG_CIUNG_WANARA_V5"], "do": []},
 	{"if": [], "lines": ["DLG_CIUNG_WANARA_V6"], "do": []}
 ])

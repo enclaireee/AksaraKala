@@ -79,26 +79,33 @@ func run() -> void:
 	await physics_frame
 	await physics_frame
 	var z: Zone = current_scene
-	check(z.size == Vector2i(60, 34), "fixture A size %s" % z.size)
+	check(z.size == z.doc_size * z.area_scale(), "fixture A size %s" % z.size)
+	# Doc cells are scale x scale blocks: check every game tile of the block.
 	var want := {Vector2i(0, 0): 4, Vector2i(5, 5): 0, Vector2i(2, 4): 1, Vector2i(3, 4): 5, Vector2i(4, 4): 6,
 		Vector2i(5, 4): 2, Vector2i(6, 4): 7, Vector2i(7, 4): 3, Vector2i(10, 2): 1}
-	for cell: Vector2i in want:
-		check(z.tiles.get_cell_atlas_coords(cell) == Vector2i(want[cell], 0),
-			"tile at %s is %s, want %d" % [cell, z.tiles.get_cell_atlas_coords(cell), want[cell]])
-	for cell in [Vector2i(0, 0), Vector2i(3, 4), Vector2i(4, 4), Vector2i(6, 4)]:
-		check(solid_at(cell), "tile %s does not collide" % cell)
-	for cell in [Vector2i(5, 5), Vector2i(2, 4), Vector2i(5, 4), Vector2i(7, 4)]:
-		check(not solid_at(cell), "walkable tile %s collides" % cell)
+	for dcell: Vector2i in want:
+		for o in z.area_scale() * z.area_scale():
+			var cell := dcell * z.area_scale() + Vector2i(o % z.area_scale(), o / z.area_scale())
+			check(z.tiles.get_cell_atlas_coords(cell) == Vector2i(want[dcell], 0),
+				"tile at %s is %s, want %d" % [cell, z.tiles.get_cell_atlas_coords(cell), want[dcell]])
+	for dcell in [Vector2i(0, 0), Vector2i(3, 4), Vector2i(4, 4), Vector2i(6, 4)]:
+		for o in z.area_scale() * z.area_scale():
+			var cell: Vector2i = dcell * z.area_scale() + Vector2i(o % z.area_scale(), o / z.area_scale())
+			check(solid_at(cell), "tile %s does not collide" % cell)
+	for dcell in [Vector2i(5, 5), Vector2i(2, 4), Vector2i(5, 4), Vector2i(7, 4)]:
+		for o in z.area_scale() * z.area_scale():
+			var cell: Vector2i = dcell * z.area_scale() + Vector2i(o % z.area_scale(), o / z.area_scale())
+			check(not solid_at(cell), "walkable tile %s collides" % cell)
 	check(z.find_child("GameUI", true, false) != null, "the zone did not add the UI")
 	var p := player()
 	check(p.get_parent() == z.entities, "player is not in Entities")
-	check(p.global_position == Vector2(40, 40), "player at %s, not spawn start" % p.global_position)
+	check(p.global_position == z.cell_pos(Vector2i(2, 2)), "player at %s, not spawn start" % p.global_position)
 	await frames(2)
 	check(entered == ["fixture_a"], "zone_entered: %s" % [entered])
 
 	# Spot props.
 	var exits := by_scene("res://entities/world/exit.tscn")
-	check(exits.size() == 1 and exits[0].spawn_id == "west" and exits[0].position == Vector2(952, 88),
+	check(exits.size() == 1 and exits[0].spawn_id == "west" and exits[0].position == z.cell_pos(Vector2i(59, 5)),
 		"exit spot missing or wrong props")
 	var trig := by_scene("res://entities/world/trigger.tscn")
 	check(trig.size() == 1 and trig[0].trigger_id == "fx_trig", "trigger spot missing or wrong props")

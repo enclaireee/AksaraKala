@@ -14,14 +14,14 @@ const MAP := [
 	"#.......................~~~~~~~~~~~~.......................#",
 	"#.......................,,,,,,,,,,,,.......................#",
 	"#.......................,,,,,r,,,,,,.......................#",
-	"#.......................,,,r,,,,,,,,..............bbb......#",
+	"#.......................,,,r,,,,,,,,....L.........bbb......#",
 	"#.......................,,,,,,,,,,,,..............bbb......#",
-	"#...............S.......,,,,,,,,,,,,..............bbb......#",
-	"#.......................,,,,,,,,,,,,.......................#",
+	"#...............S.......,,,,,,,,,,,,..QK..........bbb......#",
+	"#...............N....c..,,,,,,,,,,,,......P................#",
 	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,,,,,,,,,,,,yY",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
-	"#.......................,,,,,,,,,,,,.......................#",
-	"#.......................,,,,,,,,,,,,.......................#",
+	"#.......................,,,,,s,,,,,,H......................#",
+	"#.........1.............,,,,,,,,,,,,....2..................#",
 	"#.......................,,,,,,,,,,,,.......................#",
 	"#.......................,,,,,,,,r,,,.......................#",
 	"#.......................,,,,,,r,,,,,.......................#",
@@ -43,9 +43,19 @@ const SPOTS := {
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_alun"}, "tile": ","},   # spawn, arrival from kg_alun
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_gapura", "spawn_id": "from_kg_pamali"}, "tile": ","},   # exit to mt_gapura (east edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_gapura"}, "tile": ","},   # spawn, arrival from mt_gapura
-	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pamali_stone", "cond": "flag:mq2_7"}, "tile": "."},   # NPC the Pamali stone, west bank (Ch 3)
-	"B": {"scene": "res://entities/bosses/hariang_banga.tscn", "props": {"unique_id": "hariang_banga", "cond": "flag:mq2_8"}, "tile": ","},   # boss Hariang Banga, the duel on the ford
+	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pamali_stone", "cond": "flag:mq2_7c"}, "tile": "."},   # NPC the Pamali stone, west bank (MQ2 2.21 `name_written:nagawiru`, sets `mq2_8`; the entry needs `mq2_7c`, set by 2.20 `zone_entered:kg_pamali`)
+	"B": {"scene": "res://entities/bosses/hariang_banga.tscn", "props": {"unique_id": "hariang_banga", "cond": "flag:mq2_h3"}, "tile": ","},   # boss Hariang Banga, the duel on the ford (MQ2 2.24 `boss_defeated:hariang_banga`, sets `mq2_9`; he wades in after the letters, `mq2_h3`, beat `ford`)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "pamali"}, "tile": "."},   # codex spot, the Pamali river
+	"s": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sapto", "cond": "quest:mq2=done,!flag:beat_truce"}, "tile": ","},   # NPC Sapto, Ki Sumarto's son, a soldier of Hariang Banga's army; wades home across the ford in the `truce` beat (name key `NPC_SAPTO_NAME`, **ASSUMED**)
+	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "quest:mq2=done,!flag:beat_truce"}, "tile": "."},   # NPC Ciung Wanara on the west bank, staging for the `truce` beat (the same `ciung_wanara` NPC id as Act II; he has no talk here)
+	"1": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "pamali_bank", "size": Vector2i(14,8), "cond": "step:mq2=20", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,0)], ["res://entities/enemies/faceless.tscn", Vector2i(0,3)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-1)]]]}, "tile": "."},   # encounter pamali_bank, the Faceless pickets on the west bank (MQ2 2.21 `fight x2`, only while step 2.21 is current)
+	"2": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "pamali_ford", "size": Vector2i(14,8), "cond": "step:mq2=20", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-1)], ["res://entities/enemies/faceless.tscn", Vector2i(2,2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(5,-1)]]]}, "tile": "."},   # encounter pamali_ford, the guards of Hariang Banga's camp at the ford's east side (MQ2 2.21 `fight x2`)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga", "cond": "flag:beat_truce,!flag:mq3_1"}, "tile": "."},   # NPC Hariang Banga at the ford after the truce (MQ2 camp talk `camp_mataram`: optional, 2-4 lines, `quiet`, `do`: `flag:camp_mataram`; the first time you two talk as brothers, not rivals; entry cond `flag:beat_truce`, `!flag:mq3_1`, **ASSUMED**; the same `hariang_banga` NPC id as the boss `B`, whose spot is gone after the duel)
+	"K": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ki_sumarto", "cond": "flag:mq2_8,!flag:mq2_h5"}, "tile": "."},   # NPC Ki Sumarto at the ford camp, the dalang of the brothers' show (MQ2 2.22; he is a staging figure, the clue `Q` starts the memory)
+	"Q": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "sumarto_show", "memory_id": "k_iii", "cond": "flag:mq2_8"}, "tile": "."},   # clue, Ki Sumarto's show at the ford camp; pulls you into K-III (MQ2 2.22, `memory_done:k_iii`, sets `mq2_h5`; `memory_id` `k_iii`, scene specified in mataram.md)
+	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hariang_letters", "cond": "flag:mq2_h5"}, "tile": "."},   # clue, Hariang Banga's camp letters to his mother, the person-boss clue (MQ2 2.23, `clue_examined:hariang_letters`, sets `mq2_h3`; appears once K-III is done, then he comes to the ford)
+	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "galuh_2"}, "tile": "."},   # petilasan galuh_2, at the river camp
+	"N": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nagawiru", "cond": "flag:mq2_7c"}, "tile": "."},   # write spot nagawiru, on the Pamali stone (MQ2 2.21)
 }
 
 

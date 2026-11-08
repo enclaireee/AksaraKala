@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "m2_neighbour"
+name_key = "NPC_M2_NEIGHBOUR_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_m2=done"], "lines": ["DLG_M2_NEIGHBOUR_V21"], "do": []},
+	{"if": ["step:sq_m2=3"], "lines": ["DLG_M2_NEIGHBOUR_V20", "DLG_M2_NEIGHBOUR_V22"], "do": []},
+	{"if": ["quest:sq_m2=active"], "lines": ["DLG_M2_NEIGHBOUR_V25"], "do": []},
+	{"if": ["flag:mq2_2"], "lines": ["DLG_M2_NEIGHBOUR_V26", "DLG_M2_NEIGHBOUR_V27", "DLG_M2_NEIGHBOUR_V28"], "do": ["start:sq_m2"]},
+	{"if": [], "lines": ["DLG_M2_NEIGHBOUR_V29"], "do": []}
+])

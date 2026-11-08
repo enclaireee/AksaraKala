@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "batu_stone_3"
+name_key = ""
+entries = Array[Dictionary]([
+	{"if": ["flag:batu_2", "!flag:batu_3"], "lines": [], "do": ["flag:batu_3"]},
+	{"if": [], "lines": [], "do": []}
+])

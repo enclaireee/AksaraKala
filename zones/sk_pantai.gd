@@ -17,21 +17,21 @@ const MAP := [
 	"#...........................,,.............................#",
 	"#...........................,,.............................#",
 	"#...................P....J..,,.............................#",
-	"#...........................,,.............................#",
-	"#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,yY",
-	"#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
+	"#.....................M.....,,.............................#",
+	"Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,yY",
+	"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
 	"#...........................,,.............................#",
 	"#.........G.................,,.............................#",
 	"#...........................,,........................######",
 	"#......____________________.,,........................=,;..$",
 	"#......____________________.,,........................=,,..$",
-	"#......____________________.,,........................######",
-	"#......_________W__________.,,.............................#",
-	"#......____________________.,,.............................#",
-	"#......____________________.,,.............................#",
-	"#......____________________.,,.............................#",
-	"#...........................,,............T................#",
-	"#..........................................................#",
+	"#......___A________________.,,........................######",
+	"#......_______H____________.,,.............................#",
+	"#......_________________s__.,,.............................#",
+	"#......__________B_________.,,.............................#",
+	"#......____________________.,,........k....................#",
+	"#...........................,,.......p....T...l............#",
+	"#..............................D...........................#",
 	"#.....~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.....#",
 	"#.....~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.....#",
 	"#..........................................................#",
@@ -41,13 +41,14 @@ const MAP := [
 const SPOTS := {
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to sk_karang (east edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
-	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_tebing", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to sk_tebing (north edge, 2 tiles)
-	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_tebing"}, "tile": ","},   # spawn, arrival from sk_tebing
+	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "desa_purwa", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to desa_purwa (north edge, 2 tiles; X1, kabut `mq4_2` is on the desa_purwa side)
+	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_desa_purwa"}, "tile": ","},   # spawn, arrival from desa_purwa
 	"$": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_keraton", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to sk_keraton (east edge behind shortcut gate, 2 tiles)
 	";": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_keraton"}, "tile": ","},   # spawn, arrival from sk_keraton (on open side of `=`)
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:sk_gerbang", "open_side": "e"}, "tile": ","},   # shortcut gate sc:sk_gerbang (opens from sk_keraton, 2 tiles)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kidul_1"}, "tile": "."},   # petilasan 1
-	"J": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_jurukunci"}, "tile": "."},   # NPC Nyai Ranti, juru kunci of the Southern Shore
+	"J": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_jurukunci", "cond": "flag:mq4_4"}, "tile": "."},   # NPC Mbah Wiryo, juru kunci of the Southern Shore (regional character; stands here after the first talk in `sk_nelayan`, hosts the K8 dusk calling and the camp talk)
+	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "semar", "cond": "step:mq4=8"}, "tile": "."},   # NPC Semar at petilasan `kidul_1` (4.9 entry K, `"quiet": true`; shared NPC)
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_nelayan_anak"}, "tile": "."},   # NPC Damar, fisher child (SQ-K1)
 	"1": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "tukik_1"}, "tile": "."},   # pickup, stranded hatchling 1 (SQ-K1)
 	"2": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "tukik_2"}, "tile": "."},   # pickup, stranded hatchling 2 (SQ-K1)
@@ -56,8 +57,17 @@ const SPOTS := {
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_pantai_1", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(5,0)], ["res://entities/enemies/lampor.tscn", Vector2i(4,2)]]]}, "tile": "."},   # encounter kidul_pantai_1
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_pantai_2", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/ula_segara.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(3,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(3,2)]]]}, "tile": ","},   # encounter kidul_pantai_2
 	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_pantai_3", "size": Vector2i(17,9), "waves": [[["res://entities/enemies/bajul_putih.tscn", Vector2i(6,0)]]]}, "tile": "."},   # encounter kidul_pantai_3
-	"W": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kidul_trial", "size": Vector2i(21,11), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-5,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(-3,2)], ["res://entities/enemies/lampor.tscn", Vector2i(3,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(5,2)]], [["res://entities/enemies/ula_segara.tscn", Vector2i(-6,0)], ["res://entities/enemies/ula_segara.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(0,-3)]], [["res://entities/enemies/bajul_putih.tscn", Vector2i(6,0)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,-2)], ["res://entities/enemies/lampor.tscn", Vector2i(-4,2)]]]}, "tile": "_"},   # encounter kidul_trial (Trial of the Southern Waves)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_1", "item_id": "ilmu:380"}, "tile": "."},   # chest: 380 Ilmu (behind driftwood)
+	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "song_1"}, "tile": "_"},   # clue, the first forgotten verse, with the net-mending family at the west end of the net yard (4.11 K8, 1 of 3)
+	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "song_2"}, "tile": "_"},   # clue, the second verse, with the family drying the sea-offering baskets (4.11 K8, 2 of 3)
+	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "song_3", "memory_id": "k8_wiryo_wife"}, "tile": "."},   # clue, the third verse, with Mbah Wiryo's own family on the shore rock where he calls his wife's name at dusk (4.11 K8, 3 of 3; opens memory `k8_wiryo_wife`)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nelayan_jala"}, "tile": "_"},   # NPC net mender (arrival slice, flavor: the village is mending nets for the sea offering but nobody remembers the songs; unnamed)
+	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_nelayan", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to sk_nelayan (west edge, 2 tiles)
+	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_nelayan"}, "tile": ","},   # spawn, arrival from sk_nelayan
+	"k": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "k2_fisher"}, "tile": "."},   # NPC river-mouth fisher (SQ-K2)
+	"s": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c3_shore_net", "memory_id": "sq_c3_ranga"}, "tile": "_"},   # clue, Ranga's carved driftwood token in the shore net (SQ-C3)
+	"p": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cepot"}, "tile": "."},   # NPC Cepot on the coast (SQ-C4 part 3)
+	"l": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "c4_lamp", "size": Vector2i(7,5)}, "tile": "."},   # trigger, hold the ward-lamp through the wave (SQ-C4 part 3)
 }
 
 

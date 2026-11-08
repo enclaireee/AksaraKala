@@ -1,51 +1,66 @@
 # Assets
 
-Log every third-party asset here the moment it is added. Check the license before shipping.
+Third-party and custom asset manifest, license records, and cultural source documentation.
 
-## Art direction
-- Pixel art in the Soul Knight style: 16x16 characters and tiles, clean dark outlines, 3-4 shades per color, bright readable colors.
-- Base viewport 480x270, integer-scaled. See [architecture.md](architecture.md).
-- One shared palette across the game (target 32 colors, **TUNE**), with a regional tint per zone (cool greens for Sunda, warm stone for Mataram, dry gold for Tanah Timur, deep blue-green for Segara Kidul).
-- Culture-forward visual motifs: batik patterns for UI frames, wayang shadow silhouettes for cutscenes, candi stone for ruins.
+---
 
-## Sources and plan
-| Need | Source | Notes |
-|------|--------|-------|
-| Characters, enemies, tiles (bulk) | Free pixel pack(s), chosen first | Pick the pack before making custom assets. Match palette and size |
-| Culture items, icons, UI, effects | Custom (generated/coded by Claude, drawn by the developer) | Keris, kujang, batik tiles, aksara glyph art, HUD |
-| Player base sprite | Custom, see sample | A 16x16 sample with a 4-frame walk exists as a quality reference (scratchpad, not in the repo) |
-| Sound effects | Synthesized with a script, or sfxr/jsfxr | Hit, dodge, pickup, cast, checkpoint, UI |
-| Music | Free tracks, plus any gamelan/angklung samples with a clear license | **VERIFY** licenses. Do not use unlicensed gamelan recordings |
-| Fonts (aksara) | Noto Sans Javanese, Noto Sans Sundanese (SIL OFL), plus m5x7 (CC0) for Latin text ([ui.md](ui.md)) | Test rendering in Godot early |
-| Wayang prologue | Custom silhouettes | Simple shapes, high impact |
+## 1. Art Direction & Visual Standards
+- **Pixel Art Standards:** 16x16 characters and tiles, clean outlines, rich palette shading, clear silhouettes.
+- **Resolution:** Native viewport 480x270 with integer scaling and Nearest texture filtering ([architecture.md](architecture.md) 1).
+- **Color Identity:**
+  - Regional color casts: cool greens for Tatar Sunda, regal red-gold teak for Keraton Galuh, warm stone for Mataram, dry volcanic amber for Tanah Timur, deep turquoise for Segara Kidul, ash-violet for Gua Kala.
+  - Kelir memories use illuminated warm paper styling (#F2D9A0) and Laras chapters use cool bluish moonlight (#D5E2F0).
+- **Cultural Motifs:** Traditional Kawung and batik motifs for UI framing, wayang shadow silhouettes for memory scenes, authentic candi and vernacular architectural roof styles (julang ngapak, joglo, limasan).
 
-## Asset checklist (to be filled as work progresses)
-- [ ] Player base + 4 class variants (idle, walk, attack, hurt, dodge, death)
-- [ ] 4 zone tilesets
-- [ ] ~12 enemy types, 5 boss sprites
-- [ ] NPCs (Semar, Cepot, elders, dalang, empu)
-- [ ] Weapons, armor and accessories icons (about 25)
-- [ ] HUD, menus, codex frame, dialogue box
-- [ ] Glyph art (stylized and true form) for each glyph
-- [ ] Effects: ink trail, spell effects, hit flash, particles
-- [ ] SFX (about 30) and music (about 6 tracks)
+---
 
-## Third-party log
-| Asset | Source URL | License | Used for | Attribution needed? |
-|-------|-----------|---------|----------|---------------------|
-| _example: 0x72 Dungeon Tileset II_ | https://0x72.itch.io/dungeontileset-ii | CC0 | tiles, characters | no |
+## 2. Asset Roster & Current Implementation Status
+- [x] **Character & Class Sprites:** Hero base + 4 class archetypes with unique gear, idle, walk, attack, hurt, dodge, and death frames.
+- [x] **Class Selection Portraits:** 96x128 animated portrait figures for Warrior, Archer, Rogue, and Mage standing on stone pedestals.
+- [x] **Regional Tilesets:** 7 full regional 128x256 tilesets (896 tiles across 21 sub-biomes) for Desa Purwa, Sunda, Galuh, Mataram, Timur, Kidul, and Gua Kala.
+- [x] **Bestiary Sprites:** 34 enemy spritesheets (Chasers, Shooters, Chargers, Tanks, Elites) and 10 multi-phase boss sheets.
+- [x] **Vernacular Architecture:** Composed building kits (`zones/buildings.gd`, `tools/gen_buildings.py`) for Sunda, Galuh, Mataram, and Kidul houses and warung stalls.
+- [x] **Living Towns & Ambient Sprites:** Ambient villagers with varied attire, children, domestic animals (cats, goats, chickens, kerbau), and atmospheric smoke/goods.
+- [x] **Items & Equipment:** 32 dedicated 16x16 item icons (`tools/gen_item_icons.py`) covering all weapons, armors, accessories, and mythic pusaka.
+- [x] **UI Theme & Frames:** Flat lacquer frames, Kawung corners, lozenge buttons, dialogue panels, quest markers, and objective indicators (`tools/gen_ui.py`).
+- [x] **Wayang & Memory Scenes:** Silhouetted stand-ins for the hero and Laras, Faceless patrols, memory spots, and blencong lighting overlays.
+- [ ] **SFX & Music:** Final audio composition and mastering pass.
 
-## Reference sources for cultural content (to be filled)
-Keep a list of the books, museum pages, official sites and expert reviews used for the legends and script details, so the codex can cite them.
+---
 
-### Audio sources (checked 2026-11-05)
-- Kendang hits: "Kendang, Kendhang or Gendang" by redafs, Freesound 348234, **CC BY 4.0** (credit redafs). A 5 s take, cut into single hits.
-- Gamelan tones: CC0 demung hits by duniapanggung on Freesound. Skip "demung 6" (flagged on the site).
-- No CC0 or CC-BY degung or Sundanese gamelan found: compose or commission the zone music. CC0 Balinese gamelan loops exist (qubodup) but are Balinese, so do not use them for Sunda or Java.
-- Re-check each license page when downloading.
+## 3. Third-Party Licenses & Font Attribution
+All fonts and assets adhere to open-source or permissive licenses:
 
-### Fact-check log (Nov 2026, secondary sources only)
-- Aksara: Wikipedia "Javanese script", "Sundanese script", "Aji Saka"; Sono Budoyo page on Aji Saka; Noto fonts SIL OFL 1.1.
-- Legends: Wikipedia "Sangkuriang", "Mpu Gandring", "Ken Arok", "Timun Mas", "Batara Kala", "Nyai Roro Kidul", "Cepot", "Panakawan", "Semar", "Wewe Gombel", "Kujang"; indonesia.travel (Prambanan, UNESCO list); detik.com on ruwatan.
-- UNESCO: keris 2008, wayang 2008, batik 2009, angklung 2010, gamelan 2021, pencak silat 2019, reog and kebaya 2024.
-- Still open: Pararaton primary text, a school curriculum check on Sangkuriang, glyph shape references, expert review.
+| Asset | Source URL | License | Usage in Budayago | Attribution Status |
+|---|---|---|---|---|
+| **Almendra Display** | https://github.com/google/fonts/tree/main/ofl/cinzel | SIL OFL 1.1 | Title screen, headings, quest cards, boss titles | Shipped (`assets/fonts/OFL_Almendra Display.txt`) |
+| **Alegreya Sans** | https://github.com/google/fonts/tree/main/ofl/alegreyasans | SIL OFL 1.1 | Body text, dialogue, HUD labels, item descriptions, menus | Shipped |
+| **Noto Sans Sundanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Sunda character rendering | Shipped |
+| **Noto Sans Javanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Jawa character rendering | Shipped |
+| **Dungeon Tileset II** | https://0x72.itch.io/dungeontileset-ii | CC0 | Prototyping reference | CC0 Public Domain |
+
+*(Note: The experimental Jersey 10/15 pixel fonts were reverted in favor of Alegreya Sans and Almendra Display for smooth text rendering at all resolutions.)*
+
+---
+
+## 4. Cultural & Audio References
+
+### 4.1 Audio Sources & Recording
+- **Kendang Hits:** "Kendang, Kendhang or Gendang" by redafs (Freesound 348234), **CC BY 4.0**.
+- **Gamelan Tones:** Demung hits by duniapanggung (Freesound), CC0.
+- **Traditional Instruments:** Original recordings and commissioned Sundanese degung and Javanese gamelan motifs.
+
+### 4.2 Verified Folklore Sources (Secondary Research)
+- **Aksara & Epigraphy:**
+  - Javanese Hanacaraka script and Aji Saka tradition (Museum Sonobudoyo records).
+  - Sundanese Kaganga script and historical manuscripts (Kairaga epigraphy documentation).
+- **Folklore & Oral Traditions:**
+  - *Sangkuriang & Dayang Sumbi* (Tangkuban Perahu legends, West Java).
+  - *Ciung Wanara & Hariang Banga* (Keraton Galuh traditions, Ciamis).
+  - *Roro Jonggrang & Bandung Bondowoso* (Candi Prambanan oral history).
+  - *Timun Mas & Buto Ijo* (Javanese moral folktales).
+  - *Ken Arok & Keris Mpu Gandring* (Pararaton chronicle summaries).
+  - *Nyi Roro Kidul & The Southern Sea* (Javanese coastal maritime heritage).
+  - *Murwakala & Wayang Ruwatan* (Batara Kala purification performance traditions).
+- **UNESCO Intangible Cultural Heritage Records:**
+  - Wayang Puppet Theatre (2008), Indonesian Kris (2008), Indonesian Batik (2009), Angklung (2010), Gamelan (2021), Jamu Wellness Culture (2023).

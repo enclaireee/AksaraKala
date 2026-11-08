@@ -7,6 +7,7 @@
 script = ExtResource("2")
 objective = "Q_SQ_S3_S1_OBJ"
 on = "item_picked:angklung_*"
+marker = {"zone": "ts_kampung", "id": "angklung_leader"}
 count = 5
 
 [sub_resource type="Resource" id="s2"]

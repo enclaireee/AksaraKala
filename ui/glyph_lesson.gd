@@ -9,10 +9,14 @@ extends CanvasLayer
 
 const NEEDED := 3   # TUNE: successful casts per lesson
 const HOLD := 1.0
-const GUIDE_RECT := Rect2(380, 20, 80, 80)   # same corner as zones/desa_purwa.gd
-const JAWA := "/System/Library/Fonts/Supplemental/NotoSansJavanese-Regular.otf"
-const SUNDA := "/System/Library/Fonts/Supplemental/NotoSansSundanese-Regular.ttf"
-# ponytail: system fonts like prologue.gd; falls back to the Latin name when missing
+const CARD := Rect2(292, 44, 180, 160)   # right edge, under the Ilmu plate: clear of the tracker, banner and dialogue box
+const GUIDE_RECT := Rect2(CARD.position.x + 14.0, CARD.position.y + 32.0, 68.0, 68.0)   # the ghost glyph sits in the card's slot
+const INK_HEAD := Color("7A2A1E")
+const HINT_COL := Color("7A6A50")
+const JAWA := "res://assets/fonts/NotoSansJavanese.ttf"
+const SUNDA := "res://assets/fonts/NotoSansSundanese.ttf"
+const GOLD := Color("F3E3B8")
+const DIM := Color("A59A82")
 const CHARS := {
 	"sunda_ka": "ᮊ", "sunda_ga": "ᮌ", "sunda_nga": "ᮍ", "sunda_ca": "ᮎ",
 	"jawa_ha": "ꦲ", "jawa_na": "ꦤ", "jawa_ca": "ꦕ", "jawa_ra": "ꦫ",
@@ -36,6 +40,8 @@ var _aksara: Label
 var _body: Label
 var _tip: Label
 var _progress: Label
+var _pips: Array[TextureRect] = []
+var _hold_bar: ColorRect
 var _msg: Label
 var writing := ""   # write-mode sequence id while the card is up
 var _seq := PackedStringArray()
@@ -54,32 +60,60 @@ func _ready() -> void:
 	layer = 11
 	process_mode = Node.PROCESS_MODE_ALWAYS   # write mode runs with the tree paused
 	_guide = preload("res://ui/cast_overlay.tscn").instantiate()
-	_guide.layer = 4
+	_guide.layer = 12   # over the card panel and slot
 	add_child(_guide)
 	_panel = Control.new()
 	_panel.visible = false
 	_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_panel)
-	var bg := ColorRect.new()
-	bg.color = Color(INK, 0.85)
-	bg.position = Vector2(6, 6)
-	bg.size = Vector2(250, 108)
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_panel.add_child(bg)
-	_name = _label(Vector2(12, 9), Vector2(150, 12))
-	_aksara = _label(Vector2(200, 8), Vector2(50, 36))
+	var cx := CARD.position.x
+	var cy := CARD.position.y
+	var bg := _nine("panel", CARD, 6)   # framed card (ui.md 3b)
+	_panel.move_child(bg, 0)
+	_name = _label(Vector2(cx + 10, cy + 8), Vector2(CARD.size.x - 20, 12))
+	_name.theme_type_variation = &"Heading"
+	_name.autowrap_mode = TextServer.AUTOWRAP_OFF
+	var rule := TextureRect.new()
+	rule.texture = load("res://assets/art/ui/divider.png")
+	rule.position = Vector2(cx + 10, cy + 21)
+	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(rule)
+	_nine("slot", Rect2(cx + 10, cy + 28, 76, 76), 4)   # the drawing slot holding the ghost glyph
+	_aksara = _label(Vector2(cx + 92, cy + 28), Vector2(78, 38))
+	_aksara.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_aksara.add_theme_font_size_override("font_size", 28)
+	_aksara.add_theme_color_override("font_color", INK_HEAD)
 	_aksara.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_body = _label(Vector2(12, 22), Vector2(184, 36))
-	_tip = _label(Vector2(12, 60), Vector2(238, 28))
-	_tip.modulate = Color("E8D9A0")
-	_progress = _label(Vector2(12, 92), Vector2(150, 12))
-	_msg = _label(Vector2(12, 120), Vector2(250, 12))
-	_msg.modulate = Color(0.9, 0.7, 0.5)
-	var hint := _label(Vector2(150, 92), Vector2(100, 12))
+	_aksara.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	for i in NEEDED:   # one lozenge per cast: lit once done
+		var d := TextureRect.new()
+		d.texture = load("res://assets/art/ui/lozenge.png")
+		d.position = Vector2(cx + 92 + (78 - NEEDED * 5 - (NEEDED - 1) * 6) / 2 + i * 11, cy + 72)
+		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_panel.add_child(d)
+		_pips.append(d)
+	_progress = _label(Vector2(cx + 92, cy + 82), Vector2(78, 12))
+	_progress.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_progress.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_msg = _label(Vector2(cx + 92, cy + 94), Vector2(78, 12))
+	_msg.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_msg.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_msg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_msg.add_theme_color_override("font_color", INK_HEAD)
+	_tip = _label(Vector2(cx + 10, cy + 108), Vector2(CARD.size.x - 20, 36))
+	_body = _label(Vector2.ZERO, Vector2.ONE)   # the codex lore stays in the codex; the card only teaches the stroke
+	_body.visible = false
+	var hint := _label(Vector2(cx + 10, cy + CARD.size.y - 17), Vector2(CARD.size.x - 20, 12))
 	hint.text = tr("UI_HOLD_SKIP")
-	hint.modulate = Color(1, 1, 1, 0.6)
+	hint.autowrap_mode = TextServer.AUTOWRAP_OFF
+	hint.add_theme_color_override("font_color", HINT_COL)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_hold_bar = ColorRect.new()
+	_hold_bar.color = INK_HEAD
+	_hold_bar.position = Vector2(cx + 10, cy + CARD.size.y - 8)
+	_hold_bar.size = Vector2(0, 1)
+	_hold_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(_hold_bar)
 	var ev := get_node("/root/Events")
 	ev.glyph_learned.connect(_on_learned)
 	ev.dialogue_requested.connect(func(_s, _l): _dialogue = true)
@@ -97,11 +131,11 @@ func _ready() -> void:
 	add_child(_wguide)
 	_stroke = Line2D.new()
 	_stroke.width = 2.0
-	_stroke.default_color = Color("E8D9A0")
+	_stroke.default_color = GOLD
 	_stroke.antialiased = false
 	_card.add_child(_stroke)
 	var hint_w := Label.new()
-	hint_w.text = "UI_WRITE_HINT"
+	hint_w.text = tr("UI_WRITE_HINT")
 	hint_w.position = Vector2(0, 220)
 	hint_w.size = Vector2(480, 12)
 	hint_w.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -109,11 +143,22 @@ func _ready() -> void:
 	_card.add_child(hint_w)
 
 
+func _nine(tex: String, rect: Rect2, m: int) -> NinePatchRect:
+	var r := NinePatchRect.new()
+	r.texture = load("res://assets/art/ui/%s.png" % tex)
+	for side in ["left", "top", "right", "bottom"]:
+		r.set("patch_margin_" + side, m)
+	r.position = rect.position
+	r.size = rect.size
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(r)
+	return r
+
+
 func _label(pos: Vector2, sz: Vector2) -> Label:
 	var l := Label.new()
 	l.position = pos
 	l.size = sz
-	l.add_theme_font_size_override("font_size", 8)
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(l)
@@ -136,7 +181,7 @@ func _on_dialogue_finished() -> void:
 
 
 func _next() -> void:
-	if active != "" or _dialogue or _queue.is_empty():
+	if active != "" or writing != "" or _dialogue or _queue.is_empty():   # a write card holds lessons back
 		return
 	var id: String = _queue.pop_front()
 	var g := GlyphData.by_id(id)
@@ -172,17 +217,16 @@ func _t(key: String) -> String:
 ## The aksara system font on a label, or the Latin fallback text when it is missing.
 func _font(l: Label, g: GlyphData) -> void:
 	var path: String = JAWA if g.aksara == "jawa" else SUNDA
-	if FileAccess.file_exists(path) and CHARS.has(g.id):
-		var f := FontFile.new()
-		f.load_dynamic_font(path)
-		l.add_theme_font_override("font", f)
+	if CHARS.has(g.id) and ResourceLoader.exists(path):
+		l.add_theme_font_override("font", load(path))
 	else:
 		l.remove_theme_font_override("font")
 
 
 func _set_progress(power: float, shown := true) -> void:
-	var t := _t("UI_LESSON_PROGRESS") % [count, NEEDED]
-	_progress.text = t + (" · %d%%" % roundi(power * 100.0) if shown else "")
+	_progress.text = "%d / %d" % [count, NEEDED] + ("  %d%%" % roundi(power * 100.0) if shown and count > 0 else "")
+	for i in _pips.size():
+		_pips[i].modulate = Color.WHITE if i < count else Color(1, 1, 1, 0.3)
 
 
 func _on_cast(glyph_id: String, score: float) -> void:
@@ -215,6 +259,8 @@ func finish() -> void:
 
 func _process(delta: float) -> void:
 	_hold = _hold + delta if active != "" and not get_tree().paused and Input.is_action_pressed("interact") else 0.0
+	if _hold_bar != null:
+		_hold_bar.size.x = (CARD.size.x - 20.0) * clampf(_hold / HOLD, 0.0, 1.0)
 	if _hold >= HOLD:
 		_hold = 0.0
 		finish()
@@ -266,7 +312,7 @@ func write_attempt(stroke: PackedVector2Array) -> bool:
 	l.text = CHARS.get(g.id, g.latin)
 	_font(l, g)
 	l.add_theme_font_size_override("font_size", 48)
-	l.add_theme_color_override("font_color", Color("E8D9A0"))
+	l.add_theme_color_override("font_color", GOLD)
 	l.position = _slot(_wi).position
 	l.size = SLOT
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -294,6 +340,7 @@ func _write_done() -> void:
 	_stroke.clear_points()
 	get_tree().paused = _wpaused
 	get_node("/root/Events").name_written.emit(id)
+	_next()
 
 
 func _input(e: InputEvent) -> void:

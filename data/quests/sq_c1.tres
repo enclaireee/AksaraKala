@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_C1_S1_OBJ"
+on = "talked_to:ciung_wanara"
+marker = {"zone": "kg_alun", "id": "ciung_wanara"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_C1_S2_OBJ"
+all = [{"on": "clue_examined:c1_feathers", "objective": "Q_SQ_C1_S2_P1", "marker": {"zone": "kg_alun", "id": "c1_feathers"}}, {"on": "clue_examined:c1_basket", "objective": "Q_SQ_C1_S2_P2", "marker": {"zone": "kg_alun", "id": "c1_basket"}}]
+marker = {"zone": "kg_alun", "id": "c1_feathers"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_C1_S3_OBJ"
+on = "memory_done:sq_c1_basket"
+marker = {"zone": "kg_alun", "id": "sq_c1_basket"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_C1_S4_OBJ"
+on = "area_entered:c1_rooster_found"
+marker = {"zone": "kg_pasar", "id": "c1_rooster_found"}
+
+[sub_resource type="Resource" id="s5"]
+script = ExtResource("2")
+objective = "Q_SQ_C1_S5_OBJ"
+all = [{"on": "talked_to:lengser", "set_flag": "c1_token", "objective": "Q_SQ_C1_S5_P1", "marker": {"zone": "kg_alun", "id": "lengser"}}, {"on": "talked_to:ciung_wanara", "objective": "Q_SQ_C1_S5_P2", "marker": {"zone": "kg_alun", "id": "ciung_wanara"}}]
+set_flag = "c1_token"
+marker = {"zone": "kg_alun", "id": "ciung_wanara"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_c1"
+kind = "side"
+type = "retelling"
+zone = "keraton_galuh"
+size = "M"
+giver = "ciung_wanara"
+requires = Array[String](["mqg_a1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5")])
+rewards = {"codex": ["ciung_egg"]}

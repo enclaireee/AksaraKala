@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "hariang_banga"
+name_key = "NPC_HARIANG_BANGA_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:sq_c2=3", "flag:c2_sealed", "zone:tt_pasir", "!flag:c2_delivered"], "lines": ["DLG_HARIANG_BANGA_V10", "DLG_HARIANG_BANGA_V514", "@NPC_HERO_NAME", "DLG_HARIANG_BANGA_H504", "@NPC_HARIANG_BANGA_NAME", "DLG_HARIANG_BANGA_V515"], "do": ["flag:c2_delivered"], "quiet": true},
+	{"if": ["quest:sq_c2=active"], "lines": ["DLG_HARIANG_BANGA_V13"], "do": []},
+	{"if": ["quest:sq_c2=available", "quest:mq2=done", "flag:choice_mercy"], "lines": ["DLG_HARIANG_BANGA_V11", "DLG_HARIANG_BANGA_V12", "DLG_HARIANG_BANGA_V510", "DLG_HARIANG_BANGA_V512", "@NPC_HERO_NAME", "DLG_HARIANG_BANGA_H503", "@NPC_HARIANG_BANGA_NAME", "DLG_HARIANG_BANGA_V513"], "do": ["start:sq_c2"]},
+	{"if": ["quest:sq_c2=available", "quest:mq2=done", "flag:choice_judgment"], "lines": ["DLG_HARIANG_BANGA_V516", "DLG_HARIANG_BANGA_V511", "DLG_HARIANG_BANGA_V517", "@NPC_HERO_NAME", "DLG_HARIANG_BANGA_H505", "@NPC_HARIANG_BANGA_NAME", "DLG_HARIANG_BANGA_V518"], "do": ["start:sq_c2"]},
+	{"if": ["flag:mq4_9"], "lines": ["DLG_HARIANG_BANGA_V401"], "do": []},
+	{"if": ["quest:mq4=active"], "lines": ["DLG_HARIANG_BANGA_V4"], "do": []},
+	{"if": ["flag:mq3_6", "zone:tt_pasir"], "lines": ["DLG_HARIANG_BANGA_V1", "@NPC_HERO_NAME", "DLG_HARIANG_BANGA_H1", "@NPC_HARIANG_BANGA_NAME", "DLG_HARIANG_BANGA_V2"], "do": ["flag:camp_timur"], "quiet": true},
+	{"if": [], "lines": ["DLG_HARIANG_BANGA_V5"], "do": []}
+])

@@ -38,6 +38,12 @@ func _try() -> void:
 		return
 	_busy = true
 	_pending = false
+	var dir := get_node_or_null("../SceneDirector")
+	var staged: bool = dir != null and not (e.get("lines", []) as Array).is_empty()   # a do-only entry shows no box: no bars
+	if staged:
+		dir.begin_beat()
 	await game.play("", e)
+	if staged and is_instance_valid(dir):
+		dir.end_beat()
 	_busy = false
 	_try()

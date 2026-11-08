@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "purwa_stall"
+name_key = "NPC_PURWA_STALL_NAME"
+entries = Array[Dictionary]([
+	{"if": ["step:mq4=1"], "lines": ["@NPC_PURWA_STALL_NAME", "DLG_PURWA_STALL_V20", "@NPC_HERO_NAME", "DLG_PURWA_STALL_H20", "@NPC_PURWA_STALL_NAME", "DLG_PURWA_STALL_V21", "DLG_PURWA_STALL_V22", "@NPC_HERO_NAME", "DLG_PURWA_STALL_H21", "@NPC_PURWA_STALL_NAME", "DLG_PURWA_STALL_V23"], "do": []},
+	{"if": [], "lines": ["DLG_PURWA_STALL_V4"], "do": []}
+])

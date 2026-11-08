@@ -4,7 +4,7 @@ extends Zone
 const MAP := [
 	"############################################################",
 	"#...........................################################",
-	"#...........................################################",
+	"#.........................A.################################",
 	"#.......x.......v...........################################",
 	"#...........b.........rr....################################",
 	"#....rr...............rr....################################",
@@ -16,16 +16,16 @@ const MAP := [
 	"#...........................#__rr_____________________rr_###",
 	"#.......rr..............rr..#__rr_____________________rr_###",
 	"#.......rr.....E........rr..#____________________________###",
-	"#...........................#____________________________###",
+	"#......................L....#____________________________###",
 	"#...........................,____________________________###",
-	"#.............,,,,,,,,,,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,KzZ",
+	"#.............,,,,,,,,C,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,KzZ",
 	"#.............,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,Z",
 	"#...rr........,,............,____________________________###",
 	"#...rr........,,............#____________________________###",
-	"#.............,,....rr......#____________________________###",
+	"#.............,,....rr..D...#____________________________###",
 	"#.............,,....rr......#____________________________###",
 	"#.............,,............#__rr_____________________rr_###",
-	"#.............,,............#__rr_____________________rr_###",
+	"#.............,,........F...#__rr_____________________rr_###",
 	"Yy,,,,,,,,,,,,,,............#____________________________###",
 	"Y,,,,,,,,,,,,,,,............################################",
 	"#...........................################################",
@@ -51,6 +51,11 @@ const SPOTS := {
 	"x": {"scene": "res://entities/enemies/keris_hantu.tscn", "props": {}, "tile": "."},   # loose keris hantu, roaming pack (respawns on zone reload, no unique_id)
 	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "."},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)
 	"v": {"scene": "res://entities/enemies/kemamang.tscn", "props": {}, "tile": "."},   # loose kemamang, roaming pack (respawns on zone reload, no unique_id)
+	"A": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "chest_tt_ladang", "item_id": "ilmu:160"}, "tile": "."},   # chest: 160 Ilmu (north-west nook, rule 7 optional find, ASSUMED)
+	"C": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_ladang_stakes", "size": Vector2i(15,9), "waves": [[["res://entities/enemies/keris_hantu.tscn", Vector2i(-3,0)], ["res://entities/enemies/banaspati.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter timur_ladang_stakes (3.10 waking Keris ignites seven-generation curse stakes across the dry fields)
+	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ladang_stake"}, "tile": "."},   # clue, the first red curse stake in the dry field, a name charring on it (3.10 `clue_examined:ladang_stake`; journal note only; ASSUMED id)
+	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "t2_burn_trail", "cond": "quest:sq_t2=active"}, "tile": "."},   # clue, circular scorched grass trail in the dry field (SQ-T2 clue 1 of 2)
+	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "t2_campfire", "memory_id": "sq_t2_herder", "cond": "quest:sq_t2=active"}, "tile": "."},   # clue, unlit campsite in the field (SQ-T2 clue 2 of 2; opens memory `sq_t2_herder`)
 }
 
 

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=25 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -6,66 +6,178 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ4_S1_OBJ"
-on = "zone_entered:sk_karang"
-set_flag = "mq4_1"
-marker = {"zone": "sk_karang", "id": "from_tt_pesisir"}
+all = [{"on": "zone_entered:desa_purwa", "set_flag": "", "objective": "Q_MQ4_S1_P1"}, {"on": "area_entered:purwa_north_fog", "set_flag": "mq4_i0", "objective": "Q_MQ4_S1_P2"}]
+set_flag = "mq4_i0"
+recap = "Q_MQ4_S1_DONE"
+marker = {"zone": "desa_purwa", "id": "from_riders"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ4_S2_OBJ"
-on = "area_cleared:kidul_karang_2"
-set_flag = "mq4_2"
-marker = {"zone": "sk_karang", "id": "kidul_karang_2"}
+all = [{"on": "talked_to:purwa_old_couple", "set_flag": "", "objective": "Q_MQ4_S2_P1"}, {"on": "talked_to:purwa_stall", "set_flag": "mq4_i0b", "objective": "Q_MQ4_S2_P2"}]
+set_flag = "mq4_i0b"
+recap = "Q_MQ4_S2_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_old_couple"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ4_S3_OBJ"
-on = "petilasan_activated:kidul_1"
-set_flag = "mq4_3"
-marker = {"zone": "sk_pantai", "id": "kidul_1"}
+all = [{"on": "name_written:door_a", "set_flag": "", "objective": "Q_MQ4_S3_P1"}, {"on": "name_written:door_b", "set_flag": "", "objective": "Q_MQ4_S3_P2"}, {"on": "name_written:door_c", "set_flag": "mq4_i1", "objective": "Q_MQ4_S3_P3"}]
+set_flag = "mq4_i1"
+recap = "Q_MQ4_S3_DONE"
+marker = {"zone": "desa_purwa", "id": "door_a"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ4_S4_OBJ"
-on = "talked_to:kidul_jurukunci"
-set_flag = "mq4_4"
-marker = {"zone": "sk_pantai", "id": "kidul_jurukunci"}
+all = [{"on": "clue_examined:shelf_ribbon", "set_flag": "", "objective": "Q_MQ4_S4_P1"}, {"on": "clue_examined:shelf_board", "set_flag": "", "objective": "Q_MQ4_S4_P2"}, {"on": "clue_examined:shelf_strip", "set_flag": "", "objective": "Q_MQ4_S4_P3"}, {"on": "talked_to:ibu", "set_flag": "mq4_2", "objective": "Q_MQ4_S4_P4"}]
+set_flag = "mq4_2"
+recap = "Q_MQ4_S4_DONE"
+marker = {"zone": "desa_purwa", "id": "shelf_ribbon"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ4_S5_OBJ"
-on = "area_cleared:kidul_trial"
-set_flag = "mq4_5"
-marker = {"zone": "sk_pantai", "id": "kidul_trial"}
+on = "area_entered:purwa_table"
+set_flag = "mq4_i3"
+recap = "Q_MQ4_S5_DONE"
+marker = {"zone": "desa_purwa", "id": "purwa_table"}
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ4_S6_OBJ"
-on = "area_cleared:kidul_keraton_1"
-set_flag = "mq4_6"
-marker = {"zone": "sk_keraton", "id": "kidul_keraton_1"}
+on = "talked_to:aria_kebonan"
+set_flag = "mq4_i4"
+recap = "Q_MQ4_S6_DONE"
+marker = {"zone": "desa_purwa", "id": "aria_kebonan"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ4_S7_OBJ"
-on = "petilasan_activated:kidul_2"
-set_flag = "mq4_7"
-marker = {"zone": "sk_keraton", "id": "kidul_2"}
+on = "talked_to:semar"
+set_flag = "mq4_i5"
+recap = "Q_MQ4_S7_DONE"
+marker = {"zone": "desa_purwa", "id": "semar"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ4_S8_OBJ"
-on = "name_written:ombak"
-set_flag = "mq4_8"
-marker = {"zone": "sk_keraton", "id": "kidul_altar"}
+on = "zone_entered:sk_pantai"
+set_flag = "mq4_i6"
+recap = "Q_MQ4_S8_DONE"
+marker = {"zone": "desa_purwa", "id": "exit_pantai"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
 objective = "Q_MQ4_S9_OBJ"
-on = "area_cleared:kidul_tebing_2"
-set_flag = "mq4_9"
-marker = {"zone": "sk_tebing", "id": "kidul_tebing_2"}
+all = [{"on": "petilasan_activated:kidul_1", "set_flag": "", "objective": "Q_MQ4_S9_P1"}, {"on": "zone_entered:sk_nelayan", "set_flag": "mq4_a1", "objective": "Q_MQ4_S9_P2"}]
+set_flag = "mq4_a1"
+recap = "Q_MQ4_S9_DONE"
+marker = {"zone": "sk_pantai", "id": "kidul_pantai_1"}
 
+[sub_resource type="Resource" id="s10"]
+script = ExtResource("2")
+objective = "Q_MQ4_S10_OBJ"
+all = [{"on": "talked_to:kidul_jurukunci", "set_flag": "mq4_4", "objective": "Q_MQ4_S10_P1"}, {"on": "talked_to:kidul_sari", "set_flag": "mq4_4b", "objective": "Q_MQ4_S10_P2"}]
+set_flag = "mq4_4b"
+recap = "Q_MQ4_S10_DONE"
+marker = {"zone": "sk_nelayan", "id": "kidul_jurukunci"}
+
+[sub_resource type="Resource" id="s11"]
+script = ExtResource("2")
+objective = "Q_MQ4_S11_OBJ"
+all = [{"on": "clue_examined:song_1", "set_flag": "mq4_h1", "objective": "Q_MQ4_S11_P1"}]
+set_flag = "mq4_h1"
+recap = "Q_MQ4_S11_DONE"
+marker = {"zone": "sk_pantai", "id": "song_1"}
+
+[sub_resource type="Resource" id="s12"]
+script = ExtResource("2")
+objective = "Q_MQ4_S12_OBJ"
+on = "memory_done:k8_wiryo_wife"
+set_flag = "mq4_h2"
+recap = "Q_MQ4_S12_DONE"
+marker = {"zone": "sk_pantai", "id": "k8_wiryo_wife"}
+
+[sub_resource type="Resource" id="s13"]
+script = ExtResource("2")
+objective = "Q_MQ4_S13_OBJ"
+on = "puzzle_solved:bakau_beacons"
+set_flag = "mq4_5a"
+recap = "Q_MQ4_S13_DONE"
+marker = {"zone": "sk_bakau", "id": "kidul_sari"}
+
+[sub_resource type="Resource" id="s14"]
+script = ExtResource("2")
+objective = "Q_MQ4_S14_OBJ"
+on = "area_cleared:kidul_karang_2"
+set_flag = "mq4_5b"
+recap = "Q_MQ4_S14_DONE"
+marker = {"zone": "sk_karang", "id": "kidul_karang_3"}
+
+[sub_resource type="Resource" id="s15"]
+script = ExtResource("2")
+objective = "Q_MQ4_S15_OBJ"
+on = "area_cleared:gua_karang_approach"
+set_flag = "mq4_6a"
+recap = "Q_MQ4_S15_DONE"
+marker = {"zone": "sk_gua", "id": "gua_bell_marks"}
+
+[sub_resource type="Resource" id="s16"]
+script = ExtResource("2")
+objective = "Q_MQ4_S16_OBJ"
+on = "memory_done:lc5"
+set_flag = "mq4_lc"
+recap = "Q_MQ4_S16_DONE"
+marker = {"zone": "sk_gua", "id": "lc5_cavern"}
+
+[sub_resource type="Resource" id="s17"]
+script = ExtResource("2")
+objective = "Q_MQ4_S17_OBJ"
+on = "area_cleared:kidul_gua_trial"
+set_flag = "mq4_6b"
+recap = "Q_MQ4_S17_DONE"
+marker = {"zone": "sk_gua", "id": "kidul_gua_trial"}
+
+[sub_resource type="Resource" id="s18"]
+script = ExtResource("2")
+objective = "Q_MQ4_S18_OBJ"
+all = [{"on": "area_cleared:kidul_tebing_2", "set_flag": "", "objective": "Q_MQ4_S18_P1"}, {"on": "petilasan_activated:kidul_3", "set_flag": "", "objective": "Q_MQ4_S18_P2"}, {"on": "memory_done:k9_queen_south", "set_flag": "mq4_h3", "objective": "Q_MQ4_S18_P3"}]
+set_flag = "mq4_h3"
+recap = "Q_MQ4_S18_DONE"
+marker = {"zone": "sk_tebing", "id": "kidul_tebing_1"}
+
+[sub_resource type="Resource" id="s19"]
+script = ExtResource("2")
+objective = "Q_MQ4_S19_OBJ"
+on = "talked_to:cliff_altar"
+set_flag = "mq4_offering"
+recap = "Q_MQ4_S19_DONE"
+marker = {"zone": "sk_tebing", "id": "cliff_altar"}
+
+[sub_resource type="Resource" id="s20"]
+script = ExtResource("2")
+objective = "Q_MQ4_S20_OBJ"
+on = "petilasan_activated:kidul_2"
+set_flag = "mq4_7"
+recap = "Q_MQ4_S20_DONE"
+marker = {"zone": "sk_karang", "id": "causeway_post"}
+
+[sub_resource type="Resource" id="s21"]
+script = ExtResource("2")
+objective = "Q_MQ4_S21_OBJ"
+on = "area_cleared:kidul_trial"
+set_flag = "mq4_8"
+recap = "Q_MQ4_S21_DONE"
+marker = {"zone": "sk_keraton", "id": "kidul_trial"}
+
+[sub_resource type="Resource" id="s22"]
+script = ExtResource("2")
+objective = "Q_MQ4_S22_OBJ"
+on = "glyph_learned:jawa_ka"
+set_flag = "mq4_9"
+recap = "Q_MQ4_S22_DONE"
+marker = {"zone": "sk_keraton", "id": "kidul_altar"}
 [resource]
 script = ExtResource("1")
 id = "mq4"
@@ -75,5 +187,5 @@ zone = "segara_kidul"
 size = "L"
 giver = "beats"
 requires = Array[String](["mq3_8"])
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9")])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10"), SubResource("s11"), SubResource("s12"), SubResource("s13"), SubResource("s14"), SubResource("s15"), SubResource("s16"), SubResource("s17"), SubResource("s18"), SubResource("s19"), SubResource("s20"), SubResource("s21"), SubResource("s22")])
 rewards = {"items": ["kain_hijau"], "codex": ["nyi_roro_kidul"]}

@@ -7,9 +7,9 @@ script = ExtResource("1")
 npc_id = "mbok_srini"
 name_key = "NPC_MBOK_SRINI_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq3=5"], "lines": ["DLG_MBOK_SRINI_V1", "@NPC_HERO_NAME", "DLG_MBOK_SRINI_H1", "@NPC_MBOK_SRINI_NAME", "DLG_MBOK_SRINI_2", "DLG_MBOK_SRINI_V2", "DLG_MBOK_SRINI_V3"], "do": []},
+	{"if": ["step:mq3=4"], "lines": ["DLG_MBOK_SRINI_V1", "@NPC_HERO_NAME", "DLG_MBOK_SRINI_H1", "@NPC_MBOK_SRINI_NAME", "DLG_MBOK_SRINI_2", "@NPC_HERO_NAME", "DLG_MBOK_SRINI_H2", "@NPC_MBOK_SRINI_NAME", "DLG_MBOK_SRINI_V2"], "do": []},
 	{"if": ["flag:mq3_4"], "lines": ["DLG_MBOK_SRINI_5", "DLG_MBOK_SRINI_6"], "do": []},
-	{"if": ["quest:mq3=active", "!flag:mq3_2"], "lines": ["DLG_MBOK_SRINI_7"], "do": []},
+	{"if": ["step:mq3=1"], "lines": ["DLG_MBOK_SRINI_7"], "do": []},
 	{"if": ["quest:mq3=active"], "lines": ["DLG_MBOK_SRINI_V4"], "do": []},
 	{"if": [], "lines": ["DLG_MBOK_SRINI_8"], "do": []}
 ])

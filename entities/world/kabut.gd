@@ -5,6 +5,7 @@ extends StaticBody2D
 const FADE := 0.6   # TUNE
 
 @export var flag := ""
+@export var block := 1   # tiles per side of the gate's spot block (Zone.SCALE): the shape and the fog cover all of it
 
 var _pulse: Tween
 
@@ -14,7 +15,11 @@ func _ready() -> void:
 		queue_free()
 		return
 	get_node("/root/Game").changed.connect(_on_changed)
+	var r := RectangleShape2D.new()
+	r.size = Vector2.ONE * 16.0 * block
+	$Shape.shape = r
 	var fog: Node2D = $Fog
+	fog.scale = Vector2.ONE * block
 	_pulse = create_tween().set_loops()
 	_pulse.tween_property(fog, "modulate:a", 0.55, 1.2).set_trans(Tween.TRANS_SINE)   # TUNE
 	_pulse.tween_property(fog, "modulate:a", 1.0, 1.2).set_trans(Tween.TRANS_SINE)

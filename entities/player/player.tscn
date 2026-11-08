@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://components/health.gd" id="2"]
@@ -11,6 +11,10 @@
 [ext_resource type="Script" path="res://components/sakti_gauge.gd" id="9"]
 [ext_resource type="Script" path="res://entities/player/cast_controller.gd" id="10"]
 [ext_resource type="PackedScene" path="res://ui/cast_overlay.tscn" id="11"]
+[ext_resource type="Script" path="res://entities/player/lontar_shimmer.gd" id="12"]
+[ext_resource type="Script" path="res://entities/player/attack_fx.gd" id="15_fx"]
+[ext_resource type="Texture2D" path="res://assets/art/hero_shadow.png" id="13_shadow"]
+[ext_resource type="Texture2D" path="res://assets/art/hero_base.png" id="14_hero_base"]
 
 [sub_resource type="CircleShape2D" id="body_shape"]
 radius = 5.0
@@ -37,8 +41,19 @@ motion_mode = 1
 script = ExtResource("1")
 
 [node name="Body" type="Polygon2D" parent="."]
+visible = false
 color = Color(0.85, 0.7, 0.35, 1)
 polygon = PackedVector2Array(-5, -13, 5, -13, 6, 0, -6, 0)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("13_shadow")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -11)
+texture = ExtResource("14_hero_base")
+hframes = 6
+vframes = 18
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
@@ -82,12 +97,12 @@ script = ExtResource("3")
 
 [node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("6")
-target = NodePath("../Body")
+target = NodePath("../Sprite")
 
 [node name="Status" type="Node" parent="." node_paths=PackedStringArray("health", "tint_target")]
 script = ExtResource("8")
 health = NodePath("../Health")
-tint_target = NodePath("../Body")
+tint_target = NodePath("../Sprite")
 
 [node name="Sakti" type="Node" parent="." node_paths=PackedStringArray("status")]
 script = ExtResource("9")
@@ -115,3 +130,9 @@ offset_top = 2.0
 [node name="CastController" type="Node" parent="." node_paths=PackedStringArray("overlay")]
 script = ExtResource("10")
 overlay = NodePath("../CastOverlay")
+
+[node name="LontarShimmer" type="Node2D" parent="."]
+script = ExtResource("12")
+
+[node name="AttackFX" type="Node2D" parent="."]
+script = ExtResource("15_fx")

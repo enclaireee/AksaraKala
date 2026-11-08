@@ -1,0 +1,12 @@
+; Wave elite (tatar_sunda.md "New scenes", bestiary Elites): x4 HP and Ilmu of wild_boar, TUNE. Its encounter cond gates it, so no script.
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://entities/enemies/wild_boar.tscn" id="1"]
+
+[node name="WildBoarElite" instance=ExtResource("1")]
+scale = Vector2(1.25, 1.25)
+kind = "wild_boar_elite"
+ilmu = 36
+
+[node name="Health" parent="."]
+max_hp = 240

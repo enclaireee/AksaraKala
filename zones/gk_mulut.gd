@@ -6,7 +6,7 @@ const MAP := [
 	"#__________#n_#__________________________________________________________________________#",
 	"#__________#__#_____________________________#####________________________________________#",
 	"#__________#++#_____________________________#####___________#########____________________#",
-	"#___________________#######_________________#####___________#########_______________rr___#",
+	"#___________________#######___C_____________#####___________#########_______________rr___#",
 	"#___________________#######_____________________________rr__#########_______________rr___#",
 	"#___________________#######_____________rr______________rr__#########____________________#",
 	"#___________________#######_____________rr__________________#########____________________#",
@@ -18,9 +18,9 @@ const MAP := [
 	"#_______________________rr__________________________________rr______________#####________#",
 	"#_______________rr_______________________________________________________________________#",
 	"#_______________rr_______________________________________________________________________#",
-	"Xe____________________________________________E_________________________________________yY",
-	"X________________________________________________________________________________________Y",
-	"#________________________________________________________________________________________#",
+	"#_____________________________________________E_______________________A_________________yY",
+	"#________________________________________________________________________________________Y",
+	"#___________________________________________________________________________________B____#",
 	"#________________________________________________________________________________________#",
 	"#_________________rr_____________________________________________________________________#",
 	"#_________________rr_____________________________________________________________________#",
@@ -32,22 +32,26 @@ const MAP := [
 	"#_______#####_________________#########_____________rr____________#########______________#",
 	"#_______#####_________________#########___________________________#########______________#",
 	"#_____________________________#########___________________________#########______________#",
-	"#_____________________________#########__________________________________________________#",
+	"#_____________________V_______#########__________________________________________________#",
 	"#________________________________________________________________________________________#",
-	"#________________________________________________________________________________________#",
-	"##########################################################################################",
+	"#___________________s____________________________________________________________________#",
+	"####################SS####################################################################",
 ]
 
 const SPOTS := {
-	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "desa_purwa", "spawn_id": "from_gk_mulut"}, "tile": "_"},   # exit to desa_purwa (west edge, 2 tiles)
-	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_desa_purwa"}, "tile": "_"},   # spawn, arrival from desa_purwa
+	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_pelataran", "spawn_id": "from_gk_mulut"}, "tile": "_"},   # exit to gk_pelataran (south-west edge, 2 tiles)
+	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_pelataran"}, "tile": "_"},   # spawn, arrival from gk_pelataran
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_pasir", "spawn_id": "from_gk_mulut"}, "tile": "_"},   # exit to gk_pasir (east edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_pasir"}, "tile": "_"},   # spawn, arrival from gk_pasir
 	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_lupa", "spawn_id": "from_gk_mulut"}, "tile": "_"},   # exit to gk_lupa (north edge, plain exit from the `sc:gk_lorong` pocket, 2 tiles)
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_lupa"}, "tile": "_"},   # spawn, arrival from gk_lupa (inside the pocket)
 	"+": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:gk_lorong", "open_side": "n"}, "tile": "_"},   # shortcut gate sc:gk_lorong, sand-choked arch (opens from the north pocket, 2 tiles)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kala_2"}, "tile": "_"},   # petilasan 2
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_mulut", "size": Vector2i(20,11), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(8,0)]]]}, "tile": "_"},   # encounter kala_mulut
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_mulut", "size": Vector2i(20,11), "cond": "flag:mq5_choice6,!flag:mq5_1b", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(8,0)]]]}, "tile": "_"},   # encounter kala_mulut (5.3 `area_cleared:kala_mulut`, sets `mq5_1b`)
+	"A": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_mulut_2", "size": Vector2i(18,9), "cond": "flag:mq5_choice6", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,2)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(4,0)]]]}, "tile": "_"},   # encounter kala_mulut_2 (5.3, second fight, east road)
+	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "letter_la", "memory_id": "la", "cond": "flag:mq5_1b"}, "tile": "_"},   # clue, a faded floating letter *La* (5.4; opens gap memory `la`; cond `flag:mq5_1b`; ASSUMED id)
+	"C": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kala_chest_0", "item_id": "ilmu:300"}, "tile": "_"},   # chest: 300 Ilmu (north nook, rule 7 optional find, ASSUMED)
+	"V": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "eclipse_veil", "cond": "flag:mq5_choice6"}, "tile": "_"},   # clue, the Eclipse veil across the cave mouth; the player draws *Ombak* to part it (5.3 `clue` piece; journal note only; id `eclipse_veil`, hunt `kala`; ASSUMED position by the arrival from `gk_pelataran`)
 }
 
 

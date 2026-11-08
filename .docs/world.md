@@ -1,131 +1,120 @@
 # World
 
-An open map of connected zones on the island of Java (Sunda and Javanese lands). Zones join at their edges and load when crossed. Legend details fact-checked Nov 2026 (secondary sources).
+An open map of connected regions on the island of Java (Sunda and Javanese lands). Areas join at their edges and load when crossed. Legend details fact-checked Nov 2026 (secondary sources). Synced to **Story v5 (49 areas across 6 regions + Desa Purwa hub)**.
 
 ## Layout (west to east)
 ```
- [Tatar Sunda]---[Desa Purwa]---[Keraton Galuh]---[Mataram]===[Tanah Timur]
-      :               |    |                                        |
-      :               |    +-------------[Segara Kidul]-------------+
-      :               |                       |
-      :            [Gua Kala]  (P0: from the hub; P1: also from Segara Kidul)
-      :.......................................:
+ [Tatar Sunda (8)]---[Desa Purwa (1)]---[Keraton Galuh (7)]---[Mataram (8)]===[Tanah Timur (8)]
+        :                   |    |                                                   |
+        :                   |    +---------------[Segara Kidul (7)]------------------+
+        :                   |                            |
+        :             [Gua Kala (7)]  (from Segara Kidul or Desa Purwa; opens on quest:mq4=done)
+        :................................................:
  --- link   === link plus a back-road shortcut   ... back-route shortcut
- Each box is a region of several areas; see World structure.
 ```
-- Desa Purwa (village) is the start and the hub. Zones are first reached in the order shown, but the map is connected so the player can backtrack.
-- Segara Kidul unlocks after the third boss. Gua Kala unlocks after the Nyi Roro Kidul trial.
+- **Main path (Story v5, 138 steps, ~21.5 h):** Prologue Desa Purwa -> Act I Tatar Sunda -> Act II Keraton Galuh -> Act III Mataram -> Act IV Tanah Timur -> Interlude Desa Purwa -> Act V Segara Kidul -> Act VI Gua Kala -> Playable Epilogue Desa Purwa.
+- **Total Areas:** **49 area scenes** in `zones/`: `1` Desa Purwa + `8` Tatar Sunda + `7` Keraton Galuh + `8` Mataram + `8` Tanah Timur + `7` Segara Kidul + `7` Gua Kala = 46 story areas, plus `3` dev rooms (`hub`, `sanggar`, `test_room`). `Zones.ZONES` lists 47 ids (the 46 plus `hub`). Every region has a full 7-8 area interlocking layout so late-game acts match the scale and depth of early acts.
 
 ## Technical frame
 - Viewport 480x270, 16 px tiles (30x17 tiles per screen), integer-scaled. See [architecture.md](architecture.md).
-- A region is split into areas (see World structure). Each area is one zone scene of 2x2 to 3x3 screens. The camera follows the player and is clamped to the area bounds.
-- Edges between areas are doors/paths that load the next area scene.
+- Each **Area** is one zone scene of 2x2 to 3x3 screens (60x34 to 90x51 tiles). Area IDs use `<prefix>_<name>`: `ts_` Tatar Sunda, `kg_` Keraton Galuh, `mt_` Mataram, `tt_` Tanah Timur, `sk_` Segara Kidul, `gk_` Gua Kala.
+- **Cross-time Laras keys (`laras_key:<id>`):** In Story v5, Laras's playable chapters (`LC1`–`LC6`) unlock physical grates, crypt doors, wind-tunnels, and tidal gates that persist in the area scenes when the hero arrives.
 
-## World structure (interlocking, user call 2026-11-05)
-The world should feel like one tangled place, not a corridor of rooms: paths fold back on themselves, and opening a shortcut to a petilasan you rested at an hour ago is a reward in itself. Inspired by Bloodborne's level design only. Tone and difficulty stay as [concept.md](concept.md) says (warm, forgiving, nothing lost on death).
-
-**Terms**
-- **Region:** one act (Tatar Sunda, Mataram, Tanah Timur, Segara Kidul, Gua Kala). Desa Purwa is the hub, not a region. Quests, Ilmu tiers and enemy tiers use the region id (`QuestData.zone`).
-- **Area:** one zone scene, 2x2 to 3x3 screens (60x34 to 90x51 tiles). Id `<prefix>_<name>`: `ts_` Tatar Sunda, `mt_` Mataram, `tt_` Tanah Timur, `sk_` Segara Kidul, `gk_` Gua Kala. A region has 5-8 areas (Segara Kidul and Gua Kala may have 3-4).
-- **Link:** a two-way edge exit between two areas.
-- **Shortcut:** a gate (`shortcut`, flag `sc:<id>`) that opens only from one side, the far side, and then stays open for good. It always leads back toward a petilasan.
-- **Drop:** a one-way exit (a ledge, a slide, a river current). No exit leads back the same way.
-
-**Interlock rules (every region)**
-1. At least 2 loops in the area graph. A loop closes with a shortcut or a drop, so the first trip around is long and later trips are short.
-2. At least 2 shortcuts. Each one ends in an area with a petilasan or one link away from it.
-3. At least 1 drop.
-4. Optional areas (miniboss, secret, codex ruin) branch off a loop, never off the end of a dead-end chain, so turning back is never a long walk.
-5. The boss site is a landmark: its silhouette shows in the background of the region's first area and grows nearer on the way.
-6. A petilasan sits right before the boss area, with no fight between them (AGENTS.md 5 checklist).
-7. Petilasans are few on purpose (2 per region, 3 in the largest): shortcuts, not lamps, shorten the way back.
-8. The critical path visits most areas, and the gates (kabut) still follow the story flags. Glyphs stay rewards, not keys.
-
-**Links between regions**
-Each region has its main link toward the hub and, later, at least one back route to a neighbour. A back route is a shortcut opened from the later region's side, so it never lets the player skip ahead. Planned back routes: Tatar Sunda lake to the Segara Kidul coast, and a Mataram back road to Tanah Timur. Each region doc names its own.
-
-Endpoint area ids are fixed here so the region docs agree (**ASSUMED** 2026-11-05). Spawn ids follow `from_<other area id>`. Gate flags for acts 2-4 are proposed by the region docs until quests.md names them.
-
+## Inter-Region Links
 | Link | Area A | Area B | Kind | Opens |
 |------|--------|--------|------|-------|
 | Hub to Tatar Sunda | `desa_purwa` (W) | `ts_kebun` | link | always |
-| Hub to Keraton Galuh | `desa_purwa` (E) | `kg_alun` | link, kabut | `mq1_10` (Story v2, 2026-11-06; was the Mataram link) |
-| Galuh to Mataram | `kg_pamali` (E) | `mt_gapura` (W) | link | always (`kg_alun` to `kg_pamali` is behind kabut `mqg_7`) |
-| Hub to Gua Kala (P0) | `desa_purwa` (S) | `gk_mulut` | link, kabut | `mq3_8` |
-| Mataram to Tanah Timur | `mt_wetan` | `tt_kulon` | link, kabut | `mq2_9` (MQ2 2.9, back at Semar) |
-| Mataram back road | `mt_tegal` | `tt_sabana` | shortcut `sc:mt_tt` | from `tt_sabana` |
-| Hub to Segara Kidul | `desa_purwa` (S, new) | `sk_pantai` | link, kabut | `mq3_8` (MQ3 3.8, back at Semar) |
-| Tanah Timur to Segara Kidul | `tt_pesisir` | `sk_karang` | link, kabut | `mq3_8` (MQ3 3.8, back at Semar) |
+| Hub to Keraton Galuh | `desa_purwa` (E) | `kg_alun` | link, kabut | `mq1_10` (end of Act I) |
+| Galuh to Mataram | `kg_pamali` (E) | `mt_gapura` (W) | link | `mqg_7` (throne coup complete) |
+| Mataram to Tanah Timur | `mt_wetan` | `tt_kulon` | link, kabut | `mq2_9` (Pamali truce complete) |
+| Mataram back road | `mt_tegal` | `tt_sabana` | shortcut `sc:mt_tt` | from Tanah Timur side |
+| Hub to Segara Kidul | `desa_purwa` (S) | `sk_pantai` | link, kabut | `mq4_i5` (Interlude Semar talk) |
+| Tanah Timur to Segara Kidul | `tt_pesisir` | `sk_karang` | link, kabut | `mq4_9` (`quest:mq4=done`, back route) |
 | Tatar Sunda back route | `ts_situ` | `sk_tebing` | shortcut `sc:ts_sk` | from `sk_tebing` |
-| Segara Kidul to Gua Kala | `sk_keraton` | `gk_mulut` | link, kabut | Nyi Roro Kidul trial passed |
+| Hub to Gua Kala | `desa_purwa` (N) | `gk_pelataran` | link, kabut | `mq4_9` (`quest:mq4=done`) |
+| Segara Kidul to Gua Kala | `sk_keraton` | `gk_pelataran` | link, kabut | `mq4_9` (`quest:mq4=done`) |
 
-Region area graphs live in `.docs/zones/<region>.md`. Tatar Sunda has full tile maps (built in Phase 4); the other regions have graphs only until Phase 5 adds their maps.
+---
 
-## Gating
-Soft and story-driven:
-- Zone exits are blocked by "kabut" (fog/curse barriers) that clear when the zone boss is defeated.
-- Enemy level rises per zone, so rushing ahead is possible but hard.
-- Glyph unlocks are tied to zones, so skipping around never breaks progression.
+## Town design rules (Phase 6c, 2026-11-07, **ASSUMED**, numbers **TUNE**)
+Research summary: Eastward (gamedeveloper.com "Road to the IGF: Pixpil's Eastward"), Sea of Stars (mobilesyrup.com 2023-09-11 level-design interview), Stardew Valley NPC schedules (wiki.stardewvalley.net/NPCs), and Knight Shift's devlog (itch.io/devlog/314447). The engine side is in [architecture.md](architecture.md) 9 "Towns".
+1. **Many pockets, not one field.** A town is a set of dense yard-and-lane pockets around one plaza, with open lanes between them. Each town has one landmark that the main lanes have sightlines to: the gapura gate, a giant waringin, a joglo pendopo, or a leuit cluster.
+2. **Scale.** Towns are drawn at 1x. Houses are 6-10 tiles wide (a landmark up to 14), and 2-3 fit on a screen. Lanes are 2-3 tiles wide, the plaza is at least 10x8, and doors are 1-2 tiles.
+3. **Variety from a kit.** Each building takes a roof type, a wall material, a door, a palette and extras. No two neighbours share both roof and palette. Every building gets one unique detail.
+4. **Every yard is dressed.** Each house has a threshold (a step, mat or pot), a side prop (firewood, gentong jar or bird cage) and a fence or hedge run (`-`). Some have a garden bed (`'`). The props cluster at doors, walls and lane edges, and the lane centres stay clear. Aim for about 15-25 props per screen.
+5. **Life.** Wandering villagers at 3-6 per screen, chickens, cats, ducks and goats at 2-4 per screen, and desynced 2-4 frame loops: smoke, laundry and flags.
+6. **Bigger at the edges.** The map border carries back-row rooftops (`[` blocks against the wall), tree lines and a half-seen gate, so the town reads as continuing past the edge.
+7. **Ground wear.** Worn paths with soft edges, mud at doors and wells, and decals.
+8. **Culture props** (**VERIFY** the details before shipping): sumur well with a pulley, pancuran bamboo spout, kolam fish pond, leuit or lumbung, gardu with a kentongan, gapura, warung, tampah of drying rice or chilli, jemuran clothes line, chicken coop, saung or bale pavilion, lesung rice mortar, firewood stack, banana and coconut palms, a pedati cart, and a waringin with a small shrine.
+9. **Architecture by region** (**VERIFY**):
+   - Sunda: julang ngapak, badak heuay, parahu kumureb and jolopong roofs in black ijuk; bilik walls; short stilts on umpak stones; leuit at the village edge (Kampung Naga).
+   - Java (Galuh, Mataram): kampung, limasan and joglo roofs in red genteng; teak and gebyok walls; a pendopo.
+   - Kidul: stilt houses with nipah thatch, jukung boats, drying racks and nets.
+   - Pasar: warung stalls (`{`) with cloth or tin awnings.
 
-## Zones
+## Regions & Area Roster (49 Areas)
 
-### Desa Purwa (start village)
-- Purpose: prologue, class choice, tutorial, shop-free hub with the first petilasan.
-- Features: the sanggar (practice hall) where you draw glyphs with a guide, the wayang stage, Semar.
-- No hostile enemies except tutorial dummies.
+### 0. Desa Purwa (1 Area: `desa_purwa`) — Prologue, Interlude & Playable Epilogue
+- **Regional character:** **Ibu**.
+- **State changes across the campaign:**
+  1. **Prologue Day (`MQ0` 0.1–0.8):** Sunny festival preparation, tag game lane, banyan ridge, sanggar, morning market, lit wayang stage (`K0`).
+  2. **Morning After (`MQ0` 0.9–0.12):** Burned wayang stage, amnesia in Ibu's house, Faceless raid in the square.
+  3. **Interlude under the Eclipse (`MQ4` 4.1–4.8):** Darkened sky, northern fog at the cave gate, three village doorposts (`door_a`, `door_b`, `door_c`), brothers' dinner table (`purwa_table`), broken Aria Kebonan by the ashes.
+  4. **Playable Epilogue (`mq5_4`):** Restored festival day populated by allies and regional friends shaped by your **6 Major Choices**.
 
-### Tatar Sunda (West Java), Act 1
-- Look: misty highlands, tea terraces, bamboo, volcanic crater rim.
-- Legend: **Sangkuriang and Tangkuban Perahu** (the upturned boat mountain). The crater is the boss arena.
-- Glyphs learned: Aksara Sunda (4).
-- NPCs: Cepot (comic relief), Abah Karna, the elder who teaches a glyph, side-quest givers ([quests.md](quests.md)).
-- Culture: rumah panggung (stilt house), iket (cloth head wrap), angklung (verified: Sundanese, UNESCO 2010), kujang weapon.
-- Petilasans: 2 (entrance, before the crater).
-- Boss: Sangkuriang ([bestiary.md](bestiary.md)). Miniboss: Sandekala. Elite: the bamboo-grove Kuntilanak (SQ-S2, a locally darkened arena, no day/night cycle).
-- Gates (**ASSUMED** 2026-11-05): a kabut on the crater path lifts with flag `mq1_7` (Dayang Sumbi teaches Ca). The Desa Purwa east gate to Mataram stays fogged until flag `mq1_10`.
-- Room layout: [zones/tatar_sunda.md](zones/tatar_sunda.md). Desa Purwa: [zones/desa_purwa.md](zones/desa_purwa.md). The sanggar is a room inside Desa Purwa.
+### 1. Tatar Sunda (8 Areas) — Act I: "The Crater Seal"
+- **Areas:** `ts_kebun` (tea terraces), `ts_kampung` (stilt-house village), `ts_leuwi` (river gorge & dusk hamlet), `ts_leuweung` (deep bamboo forest & Batu Tulis), `ts_sawah` (terraced paddies & Weaver's loom), `ts_situ` (flooded lake & Naganingrum's exile), `ts_kawah_jalan` (volcanic ascent), `ts_kawah` (Tangkuban Perahu crater rim).
+- **Structural identity:** Classic **Folklore Hunt (`Sandekala`)** in the gorge + **Rising Floodwaters & Cross-Time Sabotage (`Faceless Captain` & `Sangkuriang`)** as the dammed river floods `ts_sawah` and `ts_situ`.
+- **Laras cross-time mechanics (`LC1`):** Sets `laras_sabotage:crater_seal` (cracks the dawn groove on the seal-stone) and `laras_key:crater_post` (marks the eastern post for the *Boeh Rarang*).
+- **Petilasans:** 2 (`sunda_1` in `ts_kebun`, `sunda_2` in `ts_kawah_jalan`).
 
-### Keraton Galuh (the Galuh capital), Ch 2 (Story v2, 2026-11-06)
-- Look: a Sundanese royal capital, stone terraces and walls, a square with a tournament ring, banyan trees. Loosely Karang Kamulyan, Ciamis (**VERIFY**).
-- Legend: **Ciung Wanara** ([story_ciung_wanara.md](story_ciung_wanara.md)). Areas `kg_alun`, `kg_keraton`, `kg_penjara`, `kg_pamali` ([zones/keraton_galuh.md](zones/keraton_galuh.md)). Enemy tier 1 (Mataram numbers).
-- No new glyph: the region tests the four Sunda glyphs. Boss: Prabu Barma Wijaya. The Pamali crossing holds the Hariang Banga duel later (Ch 3).
-- Petilasans: 1 (`galuh_1`).
+### 2. Keraton Galuh (7 Areas, Expanded in v5) — Act II: "The Borrowed Face"
+- **Areas:**
+  1. `kg_alun` — Royal square & tournament ring.
+  2. `kg_pasar` (**NEW in v5**) — **Pasar Kuta**, the bustling outer market and storehouses where the king's tournament riggers and prisoner wagons operate (`SQ-G1` Si Kabayan, `SQ-C1` Ciung's Rooster).
+  3. `kg_pustaka` (**NEW in v5**) — **Balai Pustaka**, the royal palm-leaf archive overseen by **Nyai Sekar**, holding the mirror-lamp cipher and King Nagawiru's scraped genealogy.
+  4. `kg_kaputren` (**NEW in v5**) — **Kaputren**, the royal women's quarters and gardens where Laras was held before her transfer (`LC2`, `SQ-G2` Ririwa).
+  5. `kg_penjara` — Dungeon stairs, cell yard (Wagon Escort setpiece), and Ranga the Deserter's post (**Choice 2**).
+  6. `kg_keraton` — Inner palace garden (`galuh_1`), portrait gallery (`K-II`), and Barma Wijaya's throne room.
+  7. `kg_pamali` — The eastern Pamali river border and sacred ford (used in Act III's finale duel against Hariang Banga and **Choice 3**).
+- **Structural identity:** **Undercover Palace Intrigue, 3-Wing Faction Heist & Throne-Room Coup.**
+- **Laras cross-time mechanics (`LC2`):** Sets `laras_key:archive_grate` (unlocks the drainage passage from `kg_pustaka`/`kg_penjara` into `kg_keraton`) and `laras_sabotage:glamour_seal` (steals Barma Wijaya's signet wax so his Glamour copies shatter in one glyph hit).
+- **Petilasans:** 2 (`galuh_1` in `kg_keraton` garden, `galuh_2` at `kg_pamali` camp).
 
-### Mataram (Central Java), Act 2
-- Look: temple ruins, rice fields, volcano silhouette, stone gateways.
-- Legend: **Roro Jonggrang and the thousand temples (Prambanan)**.
-- Glyphs learned: Aksara Jawa / Hanacaraka (4).
-- NPCs: Ki Sumarto, a dalang (wayang puppeteer) who tells Hanacaraka lore, Pak Karto the stone-carver, side-quest givers ([quests.md](quests.md)).
-- Culture: batik, blangkon, gamelan (zone music hook), candi architecture, keris.
-- Petilasans: 2.
-- Boss: Bandung Bondowoso.
+### 3. Mataram (8 Areas) — Act III: "Blood on the Pamali"
+- **Areas:** `mt_gapura` (border gate & two-bank recruiters), `mt_pasar` (river market & Ki Sumarto's stage), `mt_sawah` (flooded paddies & Nawang Wulan's hut), `mt_reruntuhan` (sunken temple ruins & `arca_base`), `mt_kuburan` (war graveyard), `mt_wetan` (foothill shrine & Nyai Gendhis's lesung yard), `mt_tegal` (plain of rising spirit-pillars), `mt_candi` (Candi Seribu camp, crypt & Bondowoso arena).
+- **Structural identity:** **Two-Front War Campaign, Real-Time Night-Building Siege (`Bandung Bondowoso`) & River-Ford Duel (`Hariang Banga`).**
+- **Laras cross-time mechanics (`LC3`):** Sets `laras_key:candi_crypt` (unbars the subterranean crypt flank into `mt_candi`) and `laras_sabotage:bondowoso_pillar` (hides the master chisel so Bondowoso's pillars crack on every lesung beat).
+- **Petilasans:** 2 (`mataram_1` in `mt_pasar`, `mataram_2` in `mt_candi`).
 
-### Tanah Timur (East Java), Act 3
-- Look: dry savanna, sea-sand crater plain, banyan and ancient shrines.
-- Legends: **Timun Mas and Buto Ijo** (miniboss), **Ken Arok and the keris of Mpu Gandring** (boss). Bromo/Tengger as visual motif (Yadnya Kasada is a living Hindu Tengger ritual: use the landscape as scenery only, never as a quest, mechanic or enemy event; at most a short factual codex entry).
-- Glyphs: diacritic/modifier marks (stretch, see [spells.md](spells.md)).
-- NPCs: Mpu Wirasana, a keris-smith (empu), side-quest givers ([quests.md](quests.md)).
-- Culture: keris making, reog? (skip, not in scope), kuda lumping (verified as a trance dance with disputed origin: show it as performance only, no glass-eating or fire mechanics, no horror trance).
-- Petilasans: 2.
+### 4. Tanah Timur (8 Areas) — Act IV: "The Seven-Generation Blade"
+- **Areas:** `tt_kulon` (western savanna — **Buto Ijo Stalking Ambush #1**), `tt_sabana` (savanna hub, petilasan `timur_1`), `tt_kali` (dry riverbed & Mbok Srini's hut — **Buto Ijo Stalking Ambush #2**), `tt_beringin` (ancient banyan grove — **Buto Ijo Stalking Ambush #3** & Mpu Wirasana's forge), `tt_ladang` (cursed dry fields & Buto Ijo's lair arena), `tt_pesisir` (volcanic ash coast), `tt_pasir` (blinding Sea of Sand & stone waymarkers), `tt_candi` (Eastern Shrine of the Keris & the Nameless Hunter).
+- **Structural identity:** **3-Zone Stalking Predator (`Buto Ijo`), 7-Generation Blood-Curse Mystery (`Keris Mpu Gandring`) & Personal Showdown (`The Nameless Hunter`).**
+- **Laras cross-time mechanics (`LC4`):** Sets `laras_key:sand_tunnel` (opens the buried wind-tunnel shortcut in `tt_pasir`) and `laras_sabotage:keris_seventh_stake` (binds her *Ka* stroke onto the seventh curse stake at `tt_candi`).
+- **Petilasans:** 2 (`timur_1` in `tt_kulon`, `timur_2` in `tt_pasir`).
 
-### Segara Kidul (Southern Sea), Act 4
-- Look: black-sand cliffs, green sea, a palace beneath waves.
-- Figure: **Nyi Roro Kidul**, shown with respect. The green association is verified as a belief (wearing green on the south coast is said to attract her). Present it as belief, not a punishment.
-- Trial instead of boss: three waves of Lampor, Ula Segara and Bajul Putih ([bestiary.md](bestiary.md)).
-- Reward: the final glyph, Jawa Ka (Ombak).
-- Petilasans: 1-2.
+### 5. Segara Kidul (7 Areas, Expanded in v5) — Act V: "The Sea Does Not Forget"
+- **Areas:**
+  1. `sk_pantai` — Black-sand beach and turtle dunes (`kidul_1`, `SQ-K1`, `SQ-C4` Part 3).
+  2. `sk_nelayan` (**NEW in v5**) — **Kampung Nelayan**, the stilt-house fishing village where **Mbah Wiryo**, young diver **Sari**, and the three coastal families live (`K8` sea-song verses).
+  3. `sk_bakau` (**NEW in v5**) — **Hutan Bakau**, the flooded coastal mangrove forest and river mouth holding the three tidal beacons and `SQ-K2` Bajul Putih Tua's lagoon.
+  4. `sk_karang` — Low-tide coral reef (**Sacred Trial I: Trial of the Torch-Lines**).
+  5. `sk_gua` (**NEW in v5**) — **Gua Karang**, the echoing sunken sea cavern where Laras's `LC5` bronze bells lower the abyssal barrier (**Sacred Trial II: Trial of the Abyssal Current**).
+  6. `sk_tebing` — Storm-swept cliff path and cliff shrine (`kidul_3`, `K9`, **Choice 5: The Sea's Offering**).
+  7. `sk_keraton` — Sea Pavilion court (`kidul_2`, **Sacred Trial III: The Trial of the Waves**, Sea Altar for `jawa_ka` *Ombak*).
+- **Structural identity:** **Coastal Community Healing, Sunken Cavern & Three Sacred Sea Trials.**
+- **Laras cross-time mechanics (`LC5`):** Sets `laras_key:tidal_gate` (rings the three sunken bells to open the abyssal causeway in `sk_gua`).
+- **Petilasans:** 3 (`kidul_1` in `sk_pantai`, `kidul_3` in `sk_tebing`, `kidul_2` in `sk_keraton`).
 
-### Gua Kala (finale)
-- Look: dark cavern, hourglass and clock-like motifs, the forgotten letters floating faded.
-- Boss: Batara Kala.
-
-## Checkpoints (petilasan)
-- A petilasan is a place where a revered figure once rested or meditated (verified usage). Shown as a small shrine with incense and a lit lamp.
-- On interact: heal fully, refill flask charges, set respawn, respawn normal enemies, open the menu (level up, equip, codex).
-- 2 per region (3 in the largest), plus Desa Purwa. At least one before each boss (World structure rule 7).
-
-## Points of interest per region (target)
-- Spread over the region's areas: 1 boss arena, 1 miniboss or elite room, 3-5 NPCs (Tatar Sunda has 10 because it teaches the quest loop, **ASSUMED** 2026-11-05), 2-3 secret rooms (chests with gear), 1 codex-rich location (e.g. a museum-like ruin), 6-10 enemy encounters.
-
-## Codex
-Fed by: first meeting an enemy, first picking an item, first learning a glyph, talking to key NPCs, visiting landmarks. Each entry has a title, 1-3 sentences, a source line and (for glyphs) the character and its Latin transliteration.
+### 6. Gua Kala (7 Areas, Expanded in v5) — Act VI: "Into the Maw of Time"
+- **Areas:**
+  1. `gk_pelataran` (**NEW in v5**) — **Pelataran Waktu (Courtyard of Time)**, the outer temple forecourt where Ciung Wanara, Hariang Banga, and your gathered allies hold the line against the shadow tide, and where the ancestors' memorial stone stands (**Choice 6: Aria Kebonan's Name**).
+  2. `gk_mulut` — The Cave Mouth and the first Prologue **Gap Memory `La` (The Morning Tag Game)**.
+  3. `gk_pasir` — The Hourglass Sands and its western/eastern time-wards.
+  4. `gk_hutan` (**NEW in v5**) — **Hutan Lupa (The Forgotten Woods)**, a petrified forest of whispering name-trees and chime puzzles.
+  5. `gk_lupa` — The Abyss of Forgetting and the second Prologue **Gap Memory `Ra` (The Two Cups of Tea)**.
+  6. `gk_jembatan` (**NEW in v5**) — **Jembatan Bayang (The Shadow Bridge)**, spanning the chasm of eaten time where echoes of past bosses manifest, leading to the final petilasan (`kala_1`), **Gap Memory `Sa`**, `K10` (*Murwakala*), `K7`, and `LC6`.
+  7. `gk_ruang_kala` — The Maw of Time, arena of the **Dual-Perspective Finale against Batara Kala**.
+- **Structural identity:** **Allied Defense, Three-Realm Memory Descent & Dual-Perspective Finale.**
+- **Laras cross-time mechanics (`LC6`):** Sets `laras_sabotage:kala_eclipse` (Laras speaks the true names of the stolen letters from inside Kala's shadow during Phases 2 & 3).
+- **Petilasans:** 2 (`kala_0` in `gk_pelataran`, `kala_1` in `gk_jembatan` before `gk_ruang_kala`).

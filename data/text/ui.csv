@@ -36,13 +36,16 @@ UI_JOURNAL_MAIN,Utama,Main
 UI_JOURNAL_SIDE,Sampingan,Side
 UI_JOURNAL_DONE,Selesai,Done
 UI_JOURNAL_EMPTY,Belum ada misi.,No quests yet.
-UI_PIN,Sematkan,Pin
-UI_UNPIN,Lepas sematan,Unpin
-UI_PINNED,[disematkan],[pinned]
+UI_JOURNAL_STORY,Cerita sejauh ini,Story so far
+UI_JOURNAL_CLUES,Petunjuk,Clues
+UI_PIN,Lacak,Track
+UI_UNPIN,Berhenti melacak,Untrack
+UI_PINNED,[dilacak],[tracked]
 UI_ZONE,Zona,Zone
 UI_ZONE_HUB,Hub uji,Test hub
 UI_ZONE_DESA_PURWA,Desa Purwa,Desa Purwa
 UI_ZONE_TATAR_SUNDA,Tatar Sunda,Tatar Sunda
+UI_ZONE_KERATON_GALUH,Keraton Galuh,Keraton Galuh
 UI_ZONE_MATARAM,Mataram,Mataram
 UI_ZONE_TANAH_TIMUR,Tanah Timur,Tanah Timur
 UI_ZONE_SEGARA_KIDUL,Segara Kidul,Segara Kidul
@@ -69,6 +72,7 @@ UI_VERB_USE,Pakai,Use
 UI_VERB_TALK,Bicara,Talk
 UI_VERB_OPEN,Buka,Open
 UI_VERB_TAKE,Ambil,Take
+UI_VERB_EXAMINE,Periksa,Examine
 UI_SC_LOCKED,Tidak terbuka dari sisi ini,Does not open from this side
 UI_KEY_LMB,LMB,LMB
 UI_KEY_RMB,RMB,RMB
@@ -98,3 +102,145 @@ BOSS_FACELESS_CAPTAIN,Kapten Tanpa Rupa,Faceless Captain
 BOSS_NAMELESS_HUNTER,Si Tanpa Ngaran,The Nameless Hunter
 BOSS_BARMA_WIJAYA,Prabu Barma Wijaya,Prabu Barma Wijaya
 BOSS_HARIANG_BANGA,Hariang Banga,Hariang Banga
+LESSON_JAWA_KA,"Seperti Na dengan satu punuk lagi: lengkung kiri, kaki turun-naik, simpul kecil, lalu dua punuk ke kanan.","Like Na with one more hump: left arch, leg down and up, small loop, then two humps to the right."
+UI_TAB_PUSTAKA,Pustaka,Pustaka
+UI_TAB_SYSTEM,Sistem,System
+UI_FOOTER,[Q/E] Ganti Tab   [Panah/Mouse] Pilih   [Enter/E] Konfirmasi   [Esc] Lanjut / Kembali,[Q/E] Switch Tab   [Arrows/Mouse] Navigate   [Enter/E] Confirm   [Esc] Resume / Back
+UI_SYS_MASTER,Volume Utama,Master volume
+UI_SYS_MUSIC,Musik,Music
+UI_SYS_SFX,Efek suara,Sound effects
+UI_SYS_LANG,Bahasa,Language
+UI_SYS_FULLSCREEN,Layar penuh,Fullscreen
+UI_ON,Nyala,On
+UI_OFF,Mati,Off
+UI_SYS_RESUME,Lanjutkan permainan,Resume game
+UI_SYS_TITLE,Kembali ke judul,Quit to title
+UI_SYS_QUIT,Keluar dari permainan,Quit game
+UI_SYS_CONFIRM_TITLE,Kembali ke judul? Kemajuan yang belum tersimpan hilang.,Quit to title? Unsaved progress is lost.
+UI_SYS_CONFIRM_QUIT,Keluar dari permainan?,Quit the game?
+UI_TOAST_SUBGOAL,Tujuan diperbarui,Sub-goal updated
+UI_HINT_MENU,[%s] Menu,[%s] Menu
+UI_TAB_MAP,Peta,Map
+UI_WHERE,Lokasi,Where
+UI_TIP,Tips,Tip
+UI_MAP_HERE,Kamu di,You are in
+UI_MAP_GOAL,Tujuan,Goal
+UI_DER_HP,HP maks,Max HP
+UI_DER_ATK,Serangan,ATK
+UI_DER_DEF,Pertahanan,DEF
+UI_DER_FLASK,Labu jamu,Jamu flask
+UI_ZONE_TS_KEBUN,Kebun Teh,Tea Gardens
+UI_ZONE_TS_KAMPUNG,Kampung Sunda,Sunda Hamlet
+UI_ZONE_TS_LEUWEUNG,Leuweung,The Leuweung Forest
+UI_ZONE_TS_LEUWI,Leuwi,River Pool
+UI_ZONE_TS_SAWAH,Sawah Terasering,Rice Terraces
+UI_ZONE_TS_SITU,Situ,The Lake
+UI_ZONE_TS_KAWAH_JALAN,Jalan Kawah,Crater Road
+UI_ZONE_TS_KAWAH,Kawah,The Crater
+UI_ZONE_KG_ALUN,Alun-alun Galuh,Galuh Town Square
+UI_ZONE_KG_KERATON,Keraton Galuh,Galuh Palace
+UI_ZONE_KG_PENJARA,Penjara,Palace Prison
+UI_ZONE_KG_PAMALI,Pamali,Forbidden Grounds
+UI_ZONE_KG_PASAR,Pasar Galuh,Galuh Market
+UI_ZONE_KG_PUSTAKA,Pustaka Keraton,Palace Archive
+UI_ZONE_KG_KAPUTREN,Kaputren,Women's Quarters
+UI_ZONE_MT_GAPURA,Gapura Mataram,Mataram Gate
+UI_ZONE_MT_SAWAH,Sawah Mataram,Mataram Rice Fields
+UI_ZONE_MT_PASAR,Pasar Mataram,Mataram Market
+UI_ZONE_MT_RERUNTUHAN,Reruntuhan,The Ruins
+UI_ZONE_MT_KUBURAN,Kuburan,Graveyard
+UI_ZONE_MT_WETAN,Wetan,East Quarter
+UI_ZONE_MT_CANDI,Candi,The Temple
+UI_ZONE_MT_TEGAL,Tegal,Dry Fields
+UI_ZONE_TT_KULON,Kulon,Western Edge
+UI_ZONE_TT_SABANA,Sabana,The Savanna
+UI_ZONE_TT_KALI,Kali,The River
+UI_ZONE_TT_BERINGIN,Beringin,Banyan Grove
+UI_ZONE_TT_LADANG,Ladang,Farm Fields
+UI_ZONE_TT_PASIR,Pasir,The Sands
+UI_ZONE_TT_CANDI,Candi Timur,Eastern Temple
+UI_ZONE_TT_PESISIR,Pesisir,The Coast
+UI_ZONE_SK_KARANG,Karang,Coral Cliffs
+UI_ZONE_SK_PANTAI,Pantai Selatan,South Beach
+UI_ZONE_SK_TEBING,Tebing,Sea Cliff
+UI_ZONE_SK_KERATON,Keraton Kidul,Sea Palace
+UI_ZONE_SK_NELAYAN,Kampung Nelayan,Fishing Village
+UI_ZONE_SK_BAKAU,Bakau,Mangroves
+UI_ZONE_SK_GUA,Gua Laut,Sea Cave
+UI_ZONE_GK_MULUT,Mulut Gua Kala,Cave Mouth
+UI_ZONE_GK_PASIR,Pasir Waktu,Sands of Time
+UI_ZONE_GK_LUPA,Lembah Lupa,Valley of Forgetting
+UI_ZONE_GK_RUANG_KALA,Ruang Kala,Kala's Chamber
+UI_ZONE_GK_PELATARAN,Pelataran,The Courtyard
+UI_ZONE_GK_HUTAN,Hutan Jam,Clockwork Wood
+UI_ZONE_GK_JEMBATAN,Jembatan Jam,Hourglass Bridge
+UI_LEG_YOU,Kamu,You
+UI_LEG_GOAL,Tujuan,Goal
+UI_LEG_NPC,Warga,Person
+UI_LEG_REST,Petilasan,Shrine
+UI_LEG_CHEST,Peti,Chest
+UI_LEG_CLUE,Petunjuk,Clue
+UI_LEG_EXIT,Jalan keluar,Exit
+UI_Q_NEW,MISI BARU,NEW QUEST
+UI_Q_UPDATED,MISI DIPERBARUI,QUEST UPDATED
+UI_Q_DONE,MISI SELESAI,QUEST COMPLETE
+UI_Q_REMEMBER,INGATAN,THEY WILL REMEMBER
+UI_JOURNAL_CHOICES,Pilihan,Choices
+UI_Q_MORE,+%d lainnya,+%d more
+UI_HINT_CONTINUE,Lanjut,Continue
+UI_BK_TAB_STATUS,Diri,Self
+UI_BK_TAB_EQUIP,Perlengkapan,Gear
+UI_BK_TAB_JOURNAL,Catatan,Journal
+UI_BK_TAB_MAP,Peta,Map
+UI_BK_TAB_CODEX,Pustaka,Codex
+UI_BK_TAB_CONTROLS,Penuntun,Controls
+UI_BK_TAB_SYSTEM,Sistem,System
+UI_BK_LEVEL,Tingkat,Level
+UI_BK_TIME,Waktu main,Play time
+UI_BK_ILMU,Ilmu,Ilmu
+UI_BK_ATTRS,Sifat,Attributes
+UI_BK_POINTS,Poin,Points
+UI_BK_DERIVED,Kekuatan,Strength
+UI_BK_STAMINA,Stamina,Stamina
+UI_BK_SAKTI,Sakti,Sakti
+UI_BK_JAMU,Jamu,Jamu
+UI_BK_GLYPHS,Aksara dikuasai,Glyphs known
+UI_BK_NO_GLYPHS,Belum ada aksara.,No glyphs yet.
+UI_BK_AT_SHRINE,Pilih sifat untuk dinaikkan.,Choose an attribute to raise.
+UI_BK_NEED_ILMU,Butuh %d Ilmu lagi.,%d more Ilmu needed.
+UI_BK_EQUIPPED,Dikenakan,Equipped
+UI_BK_GEAR_TOTALS,Total,Totals
+UI_BK_INVENTORY,Barang,Inventory
+UI_BK_NO_ITEMS,Belum ada barang.,No items yet.
+UI_BK_EMPTY_SLOT,Kosong,Empty
+UI_BK_PUSAKA,Pusaka,Pusaka
+UI_BK_WORN,Dikenakan,Worn
+UI_BK_SPEED,Kecepatan,Speed
+UI_BK_STA_REGEN,Pulih stamina,Stamina regen
+UI_BK_TRACKED,Dilacak,Tracked
+UI_BK_OBJECTIVE,Tujuan,Objective
+UI_BK_OTHER,Lainnya,Other
+UI_BK_AUDIO,Suara,Audio
+UI_BK_DISPLAY,Tampilan,Display
+UI_BK_GAME,Permainan,Game
+UI_BK_HINT_SELECT,Pilih,Select
+UI_BK_HINT_RAISE,Naikkan,Raise
+UI_BK_HINT_EQUIP,Pakai,Equip
+UI_BK_HINT_CHOOSE,Pilih,Choose
+UI_BK_HINT_SCROLL,Gulir,Scroll
+UI_BK_HINT_CONFIRM,Setuju,Confirm
+UI_BK_HINT_BACK,Kembali,Back
+UI_BK_HINT_TABS,Ganti tab,Tabs
+UI_BK_HOWTO,Cara menulis aksara,How to write an aksara
+UI_BK_HOWTO_BODY,"Tahan tombol mantra, lalu gambar aksara dengan mouse mengikuti urutan goresan. Lepas untuk merapal.","Hold the cast button, then draw the aksara with the mouse in stroke order. Release to cast."
+UI_ACT_MOVE_UP,Maju,Up
+UI_ACT_MOVE_DOWN,Mundur,Down
+UI_ACT_MOVE_LEFT,Kiri,Left
+UI_ACT_MOVE_RIGHT,Kanan,Right
+UI_ACT_ATTACK,Serang,Attack
+UI_ACT_CAST,Mantra,Cast
+UI_ACT_DODGE,Menghindar,Dodge
+UI_ACT_HEAL_JAMU,Minum jamu,Drink jamu
+UI_ACT_INTERACT,Bertindak,Interact
+UI_ACT_MENU,Buku,Book
+UI_ACT_PAUSE,Jeda,Pause

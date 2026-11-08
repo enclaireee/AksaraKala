@@ -7,8 +7,5 @@ script = ExtResource("1")
 npc_id = "pak_karto"
 name_key = "NPC_PAK_KARTO_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq2=4"], "lines": ["DLG_PAK_KARTO_V1", "@NPC_HERO_NAME", "DLG_PAK_KARTO_H1", "@NPC_PAK_KARTO_NAME", "DLG_PAK_KARTO_V2", "DLG_PAK_KARTO_V3", "DLG_PAK_KARTO_V4"], "do": ["learn:jawa_na"]},
-	{"if": ["step:mq2=5"], "lines": ["DLG_PAK_KARTO_V5"], "do": []},
-	{"if": ["quest:mq2=active", "!flag:mq2_3"], "lines": ["DLG_PAK_KARTO_V6"], "do": []},
-	{"if": [], "lines": ["DLG_PAK_KARTO_V7"], "do": []}
+	{"if": [], "lines": ["DLG_PAK_KARTO_IDLE"], "do": []}
 ])

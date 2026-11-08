@@ -18,16 +18,16 @@ const MAP := [
 	"#..tttttttttttt.....,,...................................................................#",
 	"#...................,,..............N...............~~~~~~~~~~~.....~~~~~~~~~~~.....c....#",
 	"#...................,,...................................................................#",
-	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,P,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,zZ",
+	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,P,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,zZ",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Z",
-	"#...........................................,,...........................................#",
+	"#................................W..........,,...........................................#",
 	"#...........................................,,..........bbbbbb,,bbbbbbbbb................#",
 	"#...........................................,,..........b,,,,,,,,,,,,,,,b................#",
 	"#...####,####...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#_______#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#______s#...ttttttttttttttttttttttttt...,,.....u....b,,,g,,,,,,,,,,,b.ttttttttttttt..#",
-	"#...#___L___#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
-	"#...#_______#...ttttttttttttttttttttttttt...,,.......u..b,,,,,,,W,,,,,,,b.ttttttttttttt..#",
+	"#...#__ULV__#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
+	"#...#_______#...ttttttttttttttttttttttttt...,,.......u..b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#_______#...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...#########...ttttttttttttttttttttttttt...,,..........b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
 	"#...............ttttttttttttttttttttttttt...,,......u...b,,,,,,,,,,,,,,,b.ttttttttttttt..#",
@@ -50,12 +50,15 @@ const SPOTS := {
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:mt_ruin_sawah", "open_side": "n"}, "tile": ","},   # shortcut gate, barred wooden gate in the north wall (opens from the north pocket, 2 tiles)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "mataram_1"}, "tile": ","},   # petilasan 1
 	"N": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nawang_wulan"}, "tile": "."},   # NPC Nawang Wulan (SQ-M1 giver)
-	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lesung_women"}, "tile": ","},   # NPC lesung women (2.5, teaches Ca)
+	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sawah_farmer"}, "tile": "."},   # NPC sawah_farmer, an unnamed farmer by the petilasan (2.2 `talk`, `quiet`, never completes a step; v5; was a stale `lesung_women` spot, the lesung women are `A` in `mt_wetan`)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "gejog_lesung"}, "tile": ","},   # codex spot, gejog lesung
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_sawah", "item_id": "axe"}, "tile": "."},   # chest: Axe (items.md Zone 2 chest)
-	"L": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "lumbung", "size": Vector2i(7,5)}, "tile": "_"},   # trigger, lumbung entered (SQ-M1 search)
-	"s": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "selendang_nawang"}, "tile": "_"},   # pickup, selendang Nawang Wulan (sparkle, SQ-M1)
+	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "m1_pot_lid", "cond": "quest:sq_m1=active"}, "tile": "_"},   # clue, a cooking pot's lifted lid on the barn floor (SQ-M1 clue 1 of 2; v4d, replaces the `lumbung` trigger; cond `quest:sq_m1=active`)
+	"U": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "lumbung", "size": Vector2i(7,5)}, "tile": "_"},   # trigger, lumbung barn entered (SQ-M1 step 2)
+	"V": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "selendang_nawang"}, "tile": "_"},   # pickup, selendang Nawang Wulan (SQ-M1 step 3)
+	"s": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "m1_rice_gone", "memory_id": "sq_m1_selendang", "cond": "quest:sq_m1=active"}, "tile": "_"},   # clue, the rice gone down in the lumbung all at once (SQ-M1 clue 2 of 2; v4d, replaces the selendang pickup; opens memory `sq_m1_selendang` once the lid is also examined)
 	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_sawah_road", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/tuyul.tscn", Vector2i(-3,0)], ["res://entities/enemies/tuyul.tscn", Vector2i(3,0)], ["res://entities/enemies/pocong.tscn", Vector2i(0,2)]]]}, "tile": ","},   # encounter mataram_sawah_road (2.5 escort displaced market families across the flooded paddies)
 }
 
 

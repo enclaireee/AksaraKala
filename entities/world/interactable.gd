@@ -5,17 +5,64 @@ class_name Interactable extends Area2D
 var usable := true   # false hides the prompt and ignores input
 var verb := "UI_VERB_USE"   # prompt word (ui.md 2: key glyph + 1 word); subclasses set their own
 var _near := false
-var _prompt: Label
+var _prompt: Label   # the verb text; subclasses read and write its text, visible and position
+var _prompt_root: Node2D
+var _cap: NinePatchRect
+var _pill: NinePatchRect
+var _key_lbl: Label
+var _tween: Tween
+var _hid_far := false   # the prompt is hidden only because a nearer one is in range
+
+const KEYCAP := preload("res://assets/art/ui/keycap.png")
+const KEY_FONT := preload("res://assets/fonts/Jersey10-Regular.ttf")
+const PILL := preload("res://assets/art/ui/button_normal.png")
+const RISE := 3.0
 
 
 func _ready() -> void:
 	add_to_group("interactable")
+	# a small lacquer pill: gold keycap + one cream word, no loose text over the sprite
+	_prompt_root = Node2D.new()
+	add_child(_prompt_root)
+	_pill = NinePatchRect.new()
+	_pill.texture = PILL
+	for side in ["left", "top", "right", "bottom"]:
+		_pill.set("patch_margin_" + side, 5)
+	_pill.size = Vector2(32, 14)
+	_pill.visible = false
+	_prompt_root.add_child(_pill)
+	_cap = NinePatchRect.new()
+	_cap.texture = KEYCAP
+	_cap.patch_margin_left = 3
+	_cap.patch_margin_right = 3
+	_cap.patch_margin_top = 3
+	_cap.patch_margin_bottom = 3
+	_cap.size = Vector2(9, 9)
+	_cap.visible = false
+	_prompt_root.add_child(_cap)
+	_key_lbl = Label.new()
+	_key_lbl.add_theme_font_override("font", KEY_FONT)
+	_key_lbl.add_theme_font_size_override("font_size", 10)
+	_key_lbl.add_theme_color_override("font_color", Color("140E0A"))
+	_key_lbl.add_theme_constant_override("outline_size", 0)
+	_key_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_key_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_key_lbl.visible = false
+	_prompt_root.add_child(_key_lbl)
 	_prompt = Label.new()
-	_prompt.position = Vector2(-30, -30)
-	_prompt.size = Vector2(60, 12)
-	_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_prompt.add_theme_font_size_override("font_size", 10)
+	_prompt.add_theme_color_override("font_color", Color("F3E3B8"))
+	_prompt.add_theme_constant_override("outline_size", 0)
+	_prompt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_prompt.visible = false
-	add_child(_prompt)
+	_prompt_root.add_child(_prompt)
+	_prompt.visibility_changed.connect(_on_prompt_visibility)
+	_prompt.minimum_size_changed.connect(_layout_prompt)
+	var tick := Timer.new()   # only the nearest of several overlapping prompts shows (ui.md 3b)
+	tick.wait_time = 0.1
+	tick.autostart = true
+	tick.timeout.connect(_retarget)
+	add_child(tick)
 	body_entered.connect(func(b: Node) -> void: _set_near(b, true))
 	body_exited.connect(func(b: Node) -> void: _set_near(b, false))
 
@@ -27,14 +74,84 @@ func _set_near(b: Node, on: bool) -> void:
 
 
 func _refresh_prompt() -> void:
-	_prompt.text = "[%s] %s" % [get_node("/root/Game").key_name("interact"), tr(verb)]
+	_key_lbl.text = get_node("/root/Game").key_name("interact").left(5)
+	_prompt.text = tr(verb)
 	_prompt.visible = _near and usable
+	_layout_prompt()
+
+
+## Top of the object's sprite in local px (the prompt sits 4 px above it).
+func _sprite_top() -> float:
+	var top := 0.0
+	var found := false
+	for c in find_children("*", "Node2D", true, false):
+		if c is Sprite2D and c.texture:
+			var h: float = c.texture.get_height() / maxf(c.vframes, 1) * absf(c.scale.y)
+			var y: float = (c.global_position - global_position).y - (h / 2.0 if c.centered else 0.0) + c.offset.y
+			top = minf(top, y) if found else y
+			found = true
+		elif c is AnimatedSprite2D and c.sprite_frames and c.sprite_frames.has_animation(c.animation):
+			var t: Texture2D = c.sprite_frames.get_frame_texture(c.animation, 0)
+			if t:
+				var y2: float = (c.global_position - global_position).y - (t.get_height() * absf(c.scale.y) / 2.0 if c.centered else 0.0) + c.offset.y
+				top = minf(top, y2) if found else y2
+				found = true
+	return top if found else -16.0
+
+
+func _layout_prompt() -> void:
+	if _prompt == null:
+		return
+	var kw := maxf(9.0, KEY_FONT.get_string_size(_key_lbl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x + 4.0)
+	_prompt.reset_size()
+	var vs := _prompt.get_minimum_size()
+	_prompt.size = vs
+	var w := 4.0 + kw + 3.0 + vs.x + 5.0
+	_pill.size = Vector2(w, 14)
+	_pill.position = Vector2(0, -14)
+	_cap.size = Vector2(kw, 9)
+	_cap.position = Vector2(4, -12)
+	_key_lbl.size = Vector2(kw, 9)
+	_key_lbl.position = Vector2(4, -12)
+	_prompt.position = Vector2(4.0 + kw + 3.0, -7.0 - roundf(vs.y / 2.0))
+	_prompt_root.position = Vector2(-roundf(w / 2.0), roundf(_sprite_top() - 3.0))
+
+
+func _on_prompt_visibility() -> void:
+	var on := _prompt.visible
+	_pill.visible = on
+	_cap.visible = on
+	_key_lbl.visible = on
+	if _tween:
+		_tween.kill()
+	if on:
+		_layout_prompt()
+		var y := _prompt_root.position.y
+		_prompt_root.modulate.a = 0.0
+		_prompt_root.position.y = y + RISE
+		_tween = create_tween().set_parallel(true)
+		_tween.tween_property(_prompt_root, "modulate:a", 1.0, 0.15)
+		_tween.tween_property(_prompt_root, "position:y", y, 0.15).set_ease(Tween.EASE_OUT)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _near and usable and event.is_action_pressed("interact") and _is_nearest():
 		get_viewport().set_input_as_handled()
 		interact()
+
+
+## Hides this prompt while a nearer interactable is also in range, and brings it back when it becomes the nearest.
+func _retarget() -> void:
+	if not (_near and usable):
+		_hid_far = false
+		return
+	var nearest := _is_nearest()
+	if not nearest and _prompt.visible:
+		_prompt.visible = false
+		_hid_far = true
+	elif nearest and _hid_far:
+		_prompt.visible = true
+		_hid_far = false
 
 
 func _is_nearest() -> bool:

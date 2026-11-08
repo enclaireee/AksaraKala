@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -6,26 +6,32 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_SQ_S1_S1_OBJ"
-on = "talked_to:lutung_kasarung"
-marker = {"zone": "ts_leuweung", "id": "lutung_kasarung"}
+on = "talked_to:ki_darsa"
+marker = {"zone": "ts_kampung", "id": "ki_darsa"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_S1_S2_OBJ"
-on = "area_cleared:sunda_spring"
-marker = {"zone": "ts_leuweung", "id": "sunda_spring"}
+all = [{"on": "clue_examined:s1_offerings", "objective": "Q_SQ_S1_S2_P1", "marker": {"zone": "ts_leuweung", "id": "s1_offerings"}}, {"on": "clue_examined:s1_spring", "objective": "Q_SQ_S1_S2_P2", "marker": {"zone": "ts_leuweung", "id": "s1_spring"}}, {"on": "area_cleared:sunda_spring", "objective": "Q_SQ_S1_S2_P3", "marker": {"zone": "ts_leuweung", "id": "sunda_spring"}}]
+marker = {"zone": "ts_leuweung", "id": "s1_spring"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_SQ_S1_S3_OBJ"
-on = "talked_to:purbasari"
-marker = {"zone": "ts_kampung", "id": "purbasari"}
+on = "memory_done:sq_s1_lutung"
+marker = {"zone": "ts_leuweung", "id": "sq_s1_lutung"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_SQ_S1_S4_OBJ"
-on = "area_entered:spring_bath"
-marker = {"zone": "ts_leuweung", "id": "spring_bath"}
+on = "talked_to:purbasari"
+marker = {"zone": "ts_leuweung", "id": "purbasari"}
+
+[sub_resource type="Resource" id="s5"]
+script = ExtResource("2")
+objective = "Q_SQ_S1_S5_OBJ"
+on = "talked_to:ki_darsa"
+marker = {"zone": "ts_kampung", "id": "ki_darsa"}
 
 [resource]
 script = ExtResource("1")
@@ -35,6 +41,6 @@ type = "retelling"
 zone = "tatar_sunda"
 size = "M"
 giver = "ki_darsa"
-requires = Array[String](["mq1_2"])
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+requires = Array[String](["mq1_3"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5")])
 rewards = {"items": ["iket_sunda"], "lakon": "lutung_kasarung", "codex": ["lutung_kasarung"]}

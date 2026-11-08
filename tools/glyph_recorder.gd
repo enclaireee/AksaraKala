@@ -133,6 +133,7 @@ func _unhandled_key_input(e: InputEvent) -> void:
 	if e.pressed and not e.echo:
 		if e.keycode == KEY_S:
 			save_current()
+			
 		elif e.keycode == KEY_D:
 			discard()
 

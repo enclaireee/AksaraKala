@@ -36,13 +36,14 @@ func _initialize() -> void:
 	for a in truce["choices"][0]["do"]:
 		game.run(a)
 	check(game.flags.get("choice_mercy", false), "choice_mercy not set")
+	game.flags["beat_truce_mercy"] = true
 	# the write card replays after a reload until Laras's name is written (mq5_4), not just once
 	game.flags["mq5_3"] = true
 	game.flags["beat_write"] = true
 	var card := d.pick(game)
 	check(card.get("lines", ["x"]).is_empty() and "write:" in str(card["do"]), "write card not re-offered after reload: %s" % [card])
 	game.flags["mq5_4"] = true
-	check(d.pick(game).is_empty(), "write card still offered after the name was written")
+	check(not ("write:" in str(d.pick(game).get("do", []))), "write card still offered after the name was written")
 	# a do-only entry must not wait on a dialogue box that never opens
 	await game.play("", {"lines": [], "do": ["flag:t_do_only"]})
 	check(game.flags.get("t_do_only", false), "do-only play did not run its do")

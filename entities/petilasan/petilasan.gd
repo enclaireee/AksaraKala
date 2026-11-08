@@ -32,7 +32,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func rest() -> void:
 	var game := get_node("/root/Game")
 	game.last_petilasan = {"zone": get_tree().current_scene.scene_file_path, "id": id}
-	game.flask_charges = game.flask_max
+	game.restore()   # flask now; HP and stamina also come back full when respawn reloads the zone
 	game.save_game()
 	get_node("/root/Events").petilasan_activated.emit(id)
 	get_node("/root/Zones").respawn(true)

@@ -1,60 +1,62 @@
 # Concept
 
-**Title:** Budayago
-**Made for:** a culture competition (lomba budaya). The brief is not a design input (decided 2026-11-05): the goal is simply a good game.
-**Genre:** top-down 2D action RPG, Soul Knight-style pixel art and real-time combat, with RPG structure (open map, stats, gear, checkpoints, NPCs, quests).
-**Engine:** Godot 4. **Platform:** PC first. Web export is a stretch goal (**ASSUMED**).
-**Setting:** the island of Java, Sunda and Javanese lands, drawn from folklore and legend.
+**Title:** The Last Aksara (code name Budayago)  
+**Genre:** Top-down 2D action RPG featuring real-time combat, responsive movement, and classic RPG depth (connected world, character stats, equipment, checkpoints, NPCs, quests).  
+**Engine:** Godot 4.7. **Platform:** PC (macOS, Windows, Linux), with Web export planned.  
+**Setting:** The mythical lands of Sunda and Java, rooted in classical folklore, architecture, and living heritage.
 
-## One-line pitch
-Learn to write the lost aksara of Java and Sunda, and use them as spells, to stop a curse of forgetting.
+---
+
+## One-Line Pitch
+Learn to write the lost aksara of Java and Sunda, wielding them as dynamic spells to unravel an ancient curse of forgetting and rescue your sister Laras.
+
+---
 
 ## Pillars
-1. **Learn the script by using it.** Drawing aksara is the combat gimmick, and learning each script is the progression.
-2. **Folklore is the world, not decoration.** Zones, enemies, bosses, gear and NPCs all come from real legends.
-3. **Forgiving, readable, juicy action.** Not a hardcore game. Soul Knight-style clarity, with screenshake, hit flash and loud simple sfx.
-4. **Accurate and cited.** Every cultural claim and every glyph is checked against reliable sources. Sources go in-game (codex) and in [assets.md](assets.md).
+1. **Learn the Script by Using It:** Drawing aksara characters with the mouse is the central combat gimmick and progression system.
+2. **Folklore is the World, Not Mere Decoration:** Regions, enemies, bosses, legendary pusaka heirlooms, and NPCs are deeply rooted in classical tales.
+3. **Responsive, Readable, Satisfying Action:** Crisp real-time combat featuring attack combos, dodging with i-frames, perfect-dodge rewards, and impactful audio-visual feedback.
+4. **Cultural Accuracy & Respect:** Every folklore element, legend retelling, and script stroke is verified against authentic sources and documented in the in-game Codex.
 
-## Core loop
-Explore a zone -> fight folklore enemies with weapon and drawn spells -> earn Ilmu (knowledge, the currency) and gear -> rest at a petilasan (checkpoint: heal, level up, equip) -> learn new glyphs -> boss -> next zone.
+---
 
-## The gimmick: aksara casting
-Hold the right mouse button, the world slows, and draw a character from Aksara Sunda or Aksara Jawa. A recognizer matches the stroke to a glyph and casts its spell. Every class can cast. Full design: [spells.md](spells.md).
+## Core Loop
+Explore interconnected regions -> Fight folklore-inspired enemies using weapons and drawn aksara spells -> Earn Ilmu and discover gear -> Rest at Petilasan shrines (heal, replenish flask, level up, equip gear) -> Master new glyphs -> Confront regional bosses -> Progress the story.
 
-## Player and classes
-The player is a custom hero (the player names them). At the start they choose one of 4 plain classes (decided 2026-11-05). They are classes, not separate characters.
+---
 
-| Class |
-|-------|
-| Warrior |
-| Archer |
-| Rogue |
-| Mage |
+## The Gimmick: Aksara Casting
+Hold the cast key/button to enter slow-motion time dilation, then draw an Aksara Sunda or Aksara Jawa character with the mouse. An in-engine point-cloud gesture recognizer classifies the stroke and executes the corresponding spell. Full design: [spells.md](spells.md).
 
-Details: [classes.md](classes.md).
+---
 
-## Win / lose
-- **Win:** defeat the final boss and restore the aksara.
-- **Lose:** no real fail state. Dying returns you to the last petilasan with nothing lost ([rpg.md](rpg.md)).
+## Character & Archetypes
+The player names their custom hero. During the prologue, they select one of four core classes ([classes.md](classes.md)):
+- **Warrior:** High durability, heavy melee broadswords, crowd-clearing radial shockwaves.
+- **Archer:** Precision kiting, long-range bows, piercing multi-arrow spell fans.
+- **Rogue:** Lethal flanking, agile daggers, backstab damage bonuses, binding spells.
+- **Mage:** Expanded sakti capacity, rapid gauge recharge, powerful staff-boosted spellcraft.
 
-## Audience and first impression
-- The first 10-15 minutes should show what makes the game itself: class choice, drawing a glyph, a folklore enemy with an on-screen description, the codex, and a boss tease ([quests.md](quests.md) 8). The competition brief is not a design input (2026-11-05).
-- A **quick-start option** that skips the prologue and gives starting glyphs may be useful for demos (**ASSUMED**, stretch).
+---
 
-## Tone
-Respectful, warm, a bit of humor from the punakawan (wayang clown-servants). Enemies are stylized and cartoonish in the Soul Knight way, not gory.
+## Victory & Defeat
+- **Victory:** Defeat Batara Kala in the depths of Gua Kala, restore the forgotten scripts, and bring Laras home. Six Major Choices (one per Act) shape alliances, regional outcomes, boss phases, and the Epilogue ([story.md](story.md)).
+- **Defeat:** Forgiving design. Dying returns the hero to the last rested Petilasan with full health and flask charges; no currency or progress is lost ([rpg.md](rpg.md)).
 
-Culture is the spice, not the whole dish. Ordinary gear, common enemies and NPCs are regular fantasy-RPG fare. The setting, story, bosses, folklore spirits, mythic gear (pusaka) and aksara carry the culture. (decided 2026-11-05)
+---
 
-## Cultural sensitivity
-- Nyi Roro Kidul, Batara Kala and other figures are meaningful to many people. Portray them with respect. No mockery, no cheap jokes.
-- Avoid presenting folklore as religious doctrine. Present it as stories and heritage.
-- Horror figures (pocong, kuntilanak) stay cartoonish and are labeled as folklore.
-- Have someone familiar with Sundanese and Javanese culture review the final text, if possible.
+## Tone & Narrative Depth
+Respectful, grounded, and human, enriched by dry wit and wisdom from Semar and Cepot. Enemies are stylized and clear rather than gory.
+- **Folklore in Service of Story:** Each region presents a compelling personal drama first, with folklore traditions forming the natural fabric of the world.
+- **Anti-Repetitive Structure:** Across 138 main steps (~21.5 hours) and 20 side quests, no two acts share the same template—ranging from environmental flood navigation and palace faction intrigue to siege warfare and multi-zone predator hunts.
 
-## Open questions
-- Final game title (draft)
-- ~~Class names~~: decided 2026-11-05 (Warrior, Archer, Rogue, Mage)
-- ~~Language~~: decided 2026-11-05, all text in Indonesian and English ([quests.md](quests.md) section 7.7)
+---
 
-Related: [story.md](story.md), [world.md](world.md), [rpg.md](rpg.md), [spells.md](spells.md).
+## Cultural Sensitivity Guidelines
+- Sacred figures (Batara Kala, Nyi Roro Kidul, Semar) are portrayed with dignity and cultural resonance. Deities and revered guardians are never framed as petty monsters.
+- Traditional rituals (Ruwatan, sedekah laut, labuhan) and performances (wayang kulit, angklung, gamelan) reflect authentic community life.
+- Classical spirits (Pocong, Wewe Gombel, Tuyul) are stylized respectfully within folklore bounds.
+
+---
+
+Related documents: [story.md](story.md), [world.md](world.md), [rpg.md](rpg.md), [spells.md](spells.md), [quests.md](quests.md).

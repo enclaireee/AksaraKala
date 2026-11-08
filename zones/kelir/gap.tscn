@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://zones/kelir/memory.gd" id="1"]
+
+[node name="Gap" type="Node2D"]
+script = ExtResource("1")
+kind = "gap"
+
+[node name="Floor" type="ColorRect" parent="."]
+z_index = -10
+offset_right = 480.0
+offset_bottom = 272.0
+mouse_filter = 2
+color = Color(0.78, 0.66, 0.47, 1)
+
+[node name="Stand" type="Marker2D" parent="."]
+position = Vector2(56, 216)

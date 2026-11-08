@@ -12,6 +12,8 @@ const MARKER := Color(1.0, 0.3, 0.3, 0.35)
 const STUNNED := Color(0.7, 0.75, 1.0)
 
 @export var boss_name_key := "BOSS_BATARA_KALA"
+@export var sabotage_flag := "laras_sabotage_kala_eclipse"   # HUD boss bar reads this
+@export var sabotage_stun_bonus := 1.0  # TUNE (v5): Laras cracks the Eclipse shield, stun after a break is this much longer (3 -> 4 s)
 @export var speed := 22.0              # TUNE
 @export var engage_range := 160.0      # TUNE
 @export var pulse_windup := 0.8        # TUNE
@@ -132,7 +134,7 @@ func _tick(delta: float) -> void:
 			if state_time >= pause_time:
 				_enter(State.CHASE)
 		State.STUN:
-			if state_time >= stun_time:
+			if state_time >= stun_time + (sabotage_stun_bonus if _sabotaged() else 0.0):   # ASSUMED (v5)
 				_enter(State.CHASE)
 		State.DEVOUR:
 			if is_instance_valid(_fill):
@@ -146,7 +148,11 @@ func _tick(delta: float) -> void:
 
 
 func _countdown() -> float:
-	return countdown_p3 if phase >= 3 else countdown_p2
+	var c := countdown_p3 if phase >= 3 else countdown_p2
+	var g := get_node_or_null("/root/Game")
+	if phase >= 3 and g and g.has_flag("choice_redeem_aria"):
+		c += 6.0   # Choice 6: Aria's shadow adds +6 s to Phase 3 countdown (bestiary.md)
+	return c
 
 
 func _enter(s: State) -> void:
@@ -244,13 +250,24 @@ func _new_sequence() -> void:
 	if pool.is_empty():
 		pool = PackedStringArray(["sunda_ka"])
 	sequence = PackedStringArray()
-	if pool.size() >= 3:
+	if "jawa_ka" in pool:   # bestiary.md: a Sunda glyph, a Jawa glyph, then Ombak breaks the shield
+		var sunda := Array(pool).filter(func(g: String) -> bool: return g.begins_with("sunda_"))
+		var jawa := Array(pool).filter(func(g: String) -> bool: return g.begins_with("jawa_") and g != "jawa_ka")
+		var rest := Array(pool).filter(func(g: String) -> bool: return g != "jawa_ka")
+		if rest.is_empty():
+			rest = ["jawa_ka"]
+		sequence.append(sunda.pick_random() if not sunda.is_empty() else rest.pick_random())
+		sequence.append(jawa.pick_random() if not jawa.is_empty() else rest.pick_random())
+		sequence.append("jawa_ka")
+	elif pool.size() >= 3:
 		var a := Array(pool)
 		a.shuffle()
 		sequence = PackedStringArray(a.slice(0, 3))
 	else:
 		for i in 3:
 			sequence.append(pool[randi() % pool.size()])
+	if _sabotaged():
+		seq_index = 1   # ASSUMED (v5): Laras has already spoken the first name, so the first glyph is done
 
 
 func _break_shield() -> void:
@@ -285,6 +302,12 @@ func _on_health(hp: int, max_hp: int) -> void:
 		phase = 3
 		_enter(State.PAUSE)
 		_raise_shield()
+
+
+## Story v5: Laras's sabotage flag is set (Game.has_flag, underscore form).
+func _sabotaged() -> bool:
+	var g := get_node_or_null("/root/Game")
+	return g != null and sabotage_flag != "" and g.has_flag(sabotage_flag)
 
 
 func _on_flinch() -> void:

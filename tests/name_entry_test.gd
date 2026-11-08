@@ -38,19 +38,15 @@ func run() -> void:
 	root.add_child(n)
 	current_scene = n
 	await frames(2)
-	check(n._edit.text == "Jaka" and n.pronoun == "they", "defaults: Jaka, they")
+	check(n._edit.text == "Jaka", "defaults: Jaka")
 	n._edit.text = "[b]x{y}"
 	n._edit.text_changed.emit(n._edit.text)
 	check(n._edit.text == "bxy", "typing drops bad characters: '%s'" % n._edit.text)
-	n._buttons["she"].grab_focus()
-	check(n.pronoun == "she", "focusing the she button selects it")
 	n.confirm()
-	check(g.hero_name == "bxy" and g.hero_pronoun == "she", "confirm stores name and pronoun")
+	check(g.hero_name == "bxy", "confirm stores name")
 	await frames(3)
 	check(current_scene != null and current_scene.scene_file_path == "res://ui/prologue.tscn", "continues to the prologue")
-	check(g.fmt("{name} {They} {them} {their}") == "bxy She her her", "fmt she: %s" % g.fmt("{name} {They} {them} {their}"))
-	g.hero_pronoun = "they"
-	check(g.fmt("{They} {they} {them} {their}") == "They they them their", "fmt they")
+	check(g.fmt("{name} {They} {them} {their}") == "bxy bxy bxy bxy's", "fmt: %s" % g.fmt("{name} {They} {them} {their}"))
 
 	# blank name: Jaka
 	current_scene.queue_free()

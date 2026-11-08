@@ -11,18 +11,18 @@ const MAP := [
 	"#.......................,...........#############...rr.....#",
 	"#.......................,...........#___________#..........#",
 	"#.......................,...........#___________#..........#",
-	"#.......................,...........#___L___q___#..........#",
+	"#.......................,...........#___L_M_q___#..........#",
 	"#.......................,...........#_____T_____#..........#",
 	"#.......................,...........#___________#..........#",
-	"#.......................,...........#___________#..........#",
+	"#....................H..,...........#___________#..........#",
 	"#.......................,...........######,######..........#",
 	"#.......................,.................,.........#......#",
 	"#.......................,.................,.........########",
-	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,=,,,,,yY",
+	"Xe,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,=,,,,,yY",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,=,,,,,,Y",
 	"#...................................................########",
 	"#...................................................#......#",
-	"#..........rr..............................................#",
+	"#..........rr...............s..............................#",
 	"#..........rr..............................................#",
 	"#............,..........................u..................#",
 	"#............,.............................................#",
@@ -47,10 +47,14 @@ const SPOTS := {
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:mt_tt", "open_side": "e"}, "tile": ","},   # shortcut gate, boulder-blocked back road (opens from the east pocket, 2 tiles)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "tuyul_hideout", "size": Vector2i(11,6)}, "tile": "_"},   # trigger, tuyul hideout entered (SQ-M3)
 	"L": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tuyul_leader"}, "tile": "_"},   # NPC tuyul leader (SQ-M3, talk for the peaceful end)
-	"q": {"scene": "res://entities/enemies/tuyul_leader.tscn", "props": {}, "tile": "_"},   # elite tuyul leader (SQ-M3, inert until step 2)
+	"M": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "m3_trap_sprung", "size": Vector2i(4,4)}, "tile": "_"},   # trigger, green-bean counting trap in the kiln (SQ-M3 peaceful end; fires `area_entered:m3_trap_sprung`)
+	"q": {"scene": "res://entities/enemies/tuyul_leader.tscn", "props": {"unique_id": "tuyul_leader"}, "tile": "_"},   # elite tuyul leader (SQ-M3, inert until step 4; `unique_id` `tuyul_leader`, elite stats HP x4, Ilmu x4, **TUNE**; in the peaceful end it is the one caught while counting, in the fight end the swarm of `mataram_tuyul` wakes with it)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_secret_sumur", "item_id": "amulet"}, "tile": "_"},   # chest: Amulet (secret 3, well chamber, ASSUMED)
 	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
 	"k": {"scene": "res://entities/enemies/pocong.tscn", "props": {}, "tile": "."},   # loose Pocong, roaming pack (respawns on zone reload, no unique_id)
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_tegal_pillars", "size": Vector2i(15,9), "waves": [[["res://entities/enemies/arca_penjaga.tscn", Vector2i(-4,0)], ["res://entities/enemies/genderuwo.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter mataram_tegal_pillars (2.13 fight across the plain of rising stones)
+	"s": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "batu_bintang"}, "tile": "."},   # pickup, batu bintang (SQ-T3 fallen meteorite fragment)
+	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "pillar_prints", "cond": "flag:mq2_6"}, "tile": "."},   # clue, scuffed prints around a fallen pillar on the plain of rising stones (2.13; journal note only; id `pillar_prints` **ASSUMED**, not in quests.md; hunt `k3`)
 }
 
 

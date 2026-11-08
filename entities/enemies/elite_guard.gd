@@ -6,10 +6,14 @@ var cond := ""
 var enemy: EnemyBase
 
 
+func _is_on(game: Node) -> bool:
+	return game.check(cond) or (cond == "step:sq_g2=2" and game.check("step:sq_g2=3"))
+
+
 func _ready() -> void:
 	enemy = get_parent() as EnemyBase
 	var game := get_node("/root/Game")
-	if game.check(cond):
+	if _is_on(game):
 		enemy.set("active", true)
 		return
 	_set_active(false)
@@ -17,7 +21,7 @@ func _ready() -> void:
 
 
 func _on_game_changed() -> void:
-	var on: bool = get_node("/root/Game").check(cond)
+	var on: bool = _is_on(get_node("/root/Game"))
 	if enemy.get("active") and not on and not enemy.dead:
 		_set_active(false)   # resolved peacefully: the elite leaves
 		return
@@ -33,6 +37,8 @@ func _set_active(on: bool) -> void:
 	enemy.set_physics_process(on)
 	if on:
 		enemy.add_to_group("enemy")
+		if enemy.target == null:
+			enemy.target = get_tree().get_first_node_in_group("player") as Node2D
 	else:
 		enemy.remove_from_group("enemy")
 	enemy.collision_layer = 4 if on else 0

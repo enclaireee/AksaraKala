@@ -11,7 +11,7 @@ const HALF_DIAG := 0.70710678
 
 ## {glyph: GlyphData or null, score: float, power: 1.0 full, 0.7 smudged, 0.0 fizzle}.
 ## glyph is the best guess even on a fizzle, so the sanggar can show what it looked like.
-static func classify(stroke: PackedVector2Array, glyphs: Array[GlyphData]) -> Dictionary:
+static func classify(stroke: PackedVector2Array, glyphs: Array[GlyphData], smudge := SMUDGE) -> Dictionary:
 	var s := normalize(stroke)
 	var best: GlyphData
 	var s1 := 0.0
@@ -27,7 +27,7 @@ static func classify(stroke: PackedVector2Array, glyphs: Array[GlyphData]) -> Di
 		elif top > s2:
 			s2 = top
 	var power := 0.0
-	if s1 >= SMUDGE and s1 - s2 >= TIE:
+	if s1 >= smudge - 0.000001 and s1 - s2 >= TIE:
 		power = 1.0 if s1 >= FULL else 0.7   # smudged cast at 70% power
 	return {glyph = best, score = s1, power = power}
 

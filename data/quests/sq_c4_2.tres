@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_C4_2_S1_OBJ"
+all = [{"on": "clue_examined:c4_roll_a", "objective": "Q_SQ_C4_2_S1_P1", "marker": {"zone": "mt_gapura", "id": "c4_roll_a"}}, {"on": "clue_examined:c4_roll_b", "objective": "Q_SQ_C4_2_S1_P2", "marker": {"zone": "mt_gapura", "id": "c4_roll_b"}}]
+marker = {"zone": "mt_gapura", "id": "c4_roll_a"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_C4_2_S2_OBJ"
+on = "area_entered:c4_market_clear"
+marker = {"zone": "mt_gapura", "id": "c4_market_clear"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_C4_2_S3_OBJ"
+on = "talked_to:cepot"
+set_flag = "c4_2"
+marker = {"zone": "mt_gapura", "id": "cepot"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_c4_2"
+kind = "side"
+type = "errand"
+zone = "mataram"
+size = "S"
+giver = "cepot"
+requires = Array[String](["c4_1", "mq2_a1"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3")])
+rewards = {}

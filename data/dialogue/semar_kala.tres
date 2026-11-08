@@ -7,6 +7,6 @@ script = ExtResource("1")
 npc_id = "semar_kala"
 name_key = "NPC_SEMAR_NAME"
 entries = Array[Dictionary]([
-	{"if": ["!flag:mq5_3"], "lines": ["DLG_SEMAR_KALA_V1", "@NPC_HERO_NAME", "DLG_SEMAR_KALA_H1", "@NPC_SEMAR_NAME", "DLG_SEMAR_KALA_V2", "DLG_SEMAR_KALA_V3"], "do": []},
+	{"if": ["!flag:mq5_3"], "lines": ["DLG_SEMAR_KALA_V1", "@NPC_HERO_NAME", "DLG_SEMAR_KALA_H1", "@NPC_SEMAR_NAME", "DLG_SEMAR_KALA_V2", "@NPC_HERO_NAME", "DLG_SEMAR_KALA_H2", "@NPC_SEMAR_NAME", "DLG_SEMAR_KALA_V3"], "do": []},
 	{"if": [], "lines": ["DLG_SEMAR_KALA_V4"], "do": []}
 ])

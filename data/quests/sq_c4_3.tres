@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_C4_3_S1_OBJ"
+on = "talked_to:cepot"
+marker = {"zone": "sk_pantai", "id": "cepot"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_C4_3_S2_OBJ"
+on = "trial_completed:c4_lamp"
+marker = {"zone": "sk_pantai", "id": "c4_lamp"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_C4_3_S3_OBJ"
+on = "talked_to:cepot"
+set_flag = "c4_done"
+marker = {"zone": "sk_pantai", "id": "cepot"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_c4_3"
+kind = "side"
+type = "errand"
+zone = "segara_kidul"
+size = "S"
+giver = "cepot"
+requires = Array[String](["c4_2", "mq4_4"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3")])
+rewards = {"lakon": "cepot", "codex": ["cepot"]}

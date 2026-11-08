@@ -10,12 +10,17 @@ enum State { IDLE, CHASE, WINDUP, CHARGE, RECOVER, PAUSE, STUN }
 const MARKER := Color(1.0, 0.3, 0.3, 0.35)
 const FIELD_SCENE := preload("res://entities/bosses/pouch_field.tscn")
 const KINDS := ["bramble", "bamboo", "salt", "mud"]
+const AMBUSH_RETREAT := {"buto_ambush_1": 0.80, "buto_ambush_2": 0.65, "buto_ambush_3": 0.50}   # TUNE: HP fraction he retreats at (quests.md 7.1)
 const ROWS := [0.2, 0.4, 0.6, 0.8]   # TUNE: per phase, how far from his start to the arena centre its 3 fields sit
 
 @export var boss_name_key := "BOSS_BUTO_IJO"
 @export var speed := 30.0              # TUNE
 @export var engage_range := 128.0      # 8 tiles
 @export var arena_center := Vector2.INF
+## Stalking ambush (v5): "buto_ambush_1..3" makes him retreat at that HP and emit area_cleared. "" = the lair fight.
+## Left empty, _ready takes it from an Encounter sibling whose area_id starts with "buto_ambush_" (the zone he is placed in).
+@export var ambush_id := ""
+@export var retreat_fade := 0.6        # TUNE: seconds he takes to slip away
 @export var charge_min := 64.0         # spec
 @export var charge_max := 200.0        # spec
 @export var charge_length := 220.0     # spec
@@ -47,6 +52,7 @@ var _from := Vector2.ZERO
 var _pound := false
 var _marker: Polygon2D
 var _blast_left := 0.0
+var retreated := false
 
 
 func _ready() -> void:
@@ -56,6 +62,23 @@ func _ready() -> void:
 	add_to_group("boss")
 	_start = global_position
 	health.changed.connect(_on_health)
+	if ambush_id == "":
+		_find_ambush.call_deferred()   # siblings may be added after him
+
+
+func _find_ambush() -> void:
+	if ambush_id != "" or not is_inside_tree() or get_parent() == null:
+		return
+	for n in get_parent().get_children():
+		var a: Variant = n.get("area_id")
+		if a is String and a.begins_with("buto_ambush_"):
+			ambush_id = a
+			return
+
+
+## Retreat threshold of this ambush as an HP fraction, or 0.0 in the lair fight.
+func retreat_at() -> float:
+	return AMBUSH_RETREAT.get(ambush_id, 0.0)
 
 
 func in_field(kind: String) -> bool:
@@ -166,8 +189,35 @@ func _spawn_fields(kind: String) -> void:
 
 func _on_health(hp: int, max_hp: int) -> void:
 	_engage()   # first hit
+	var r := retreat_at()
+	if r > 0.0 and not retreated and hp > 0 and hp <= max_hp * r:
+		retreated = true
+		_retreat.call_deferred()   # the hit can come mid physics query
+		return
 	while phase > 0 and phase < 4 and hp > 0 and hp * 4 <= max_hp * (4 - phase):
 		_next_phase()
+
+
+## Ambush over: he drops back into the grass (not killed, so the lair fight stays), the encounter reports cleared.
+func _retreat() -> void:
+	if dead or is_queued_for_deletion():
+		return
+	engaged = false
+	set_physics_process(false)
+	attack_hitbox.deactivate()
+	_clear_attack()
+	velocity = Vector2.ZERO
+	remove_from_group("boss")
+	remove_from_group("enemy")
+	hurtbox.set_deferred("monitorable", false)
+	for f in fields:
+		if is_instance_valid(f):
+			f.queue_free()
+	fields.clear()
+	var tw := body.create_tween()
+	tw.tween_property(body, "modulate:a", 0.0, retreat_fade)
+	tw.tween_callback(queue_free)
+	get_node("/root/Events").area_cleared.emit(ambush_id)
 
 
 # --- attacks (same telegraph style as Sangkuriang) ---

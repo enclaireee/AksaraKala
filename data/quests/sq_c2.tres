@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_C2_S1_OBJ"
+on = "talked_to:hariang_banga"
+marker = {"zone": "kg_pamali", "id": "hariang_banga"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_C2_S2_OBJ"
+on = "talked_to:galuh_queen"
+set_flag = "c2_reply"
+marker = {"zone": "kg_keraton", "id": "galuh_queen"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_C2_S3_OBJ"
+on = "clue_examined:c2_signet"
+marker = {"zone": "kg_kaputren", "id": "c2_signet"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_C2_S4_OBJ"
+all = [{"on": "talked_to:hariang_banga", "objective": "Q_SQ_C2_S4_P1", "marker": {"zone": "desa_purwa", "id": "hariang_banga"}}, {"on": "clue_examined:c2_reply_letter", "objective": "Q_SQ_C2_S4_P2", "marker": {"zone": "desa_purwa", "id": "c2_reply_letter"}}]
+marker = {"zone": "desa_purwa", "id": "c2_reply_letter"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_c2"
+kind = "side"
+type = "errand"
+zone = "keraton_galuh"
+size = "M"
+giver = "hariang_banga"
+requires = Array[String](["mq2_9"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"codex": ["pangrenyep_letter"]}

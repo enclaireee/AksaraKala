@@ -21,9 +21,9 @@ const MAP := [
 	"#........................#.rr...............,,...............rr.#........................#",
 	"#........................#.rr...............,,...............rr.#........................#",
 	"#........................#..................,,..................#........................#",
-	"#........................#..................,,..................#........................#",
+	"#........................#................B.,,..................#........................#",
 	"#.......k................#..................,,..................#........................#",
-	"#........................#..................,,........rr........#........................#",
+	"#........................#..................,,.A......rr........#........................#",
 	"#..........k.............#..................,,........rr........#........................#",
 	"#........................#..................,,..................#........................#",
 	"#........................#..................,,..................#........................#",
@@ -64,8 +64,9 @@ const SPOTS := {
 	"z": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_kuburan"}, "tile": ","},   # spawn, arrival from mt_kuburan
 	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_sawah", "spawn_id": "from_mt_reruntuhan"}, "tile": ","},   # exit to mt_sawah (west edge, side yard, the `sc:mt_ruin_sawah` pocket, 2 tiles)
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_sawah"}, "tile": ","},   # spawn, arrival from mt_sawah (through the gate)
-	"K": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pak_karto"}, "tile": "."},   # NPC Pak Karto (2.3, teaches Na)
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_ruins", "size": Vector2i(24,14), "waves": [[["res://entities/enemies/arca.tscn", Vector2i(-11,-5)], ["res://entities/enemies/arca.tscn", Vector2i(11,5)], ["res://entities/enemies/arca.tscn", Vector2i(0,-6)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,2)], ["res://entities/enemies/tuyul.tscn", Vector2i(5,-1)]]]}, "tile": ","},   # encounter mataram_ruins
+	"K": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pak_karto"}, "tile": "."},   # NPC Pak Karto (side-quest NPC since v3.1, no quest assigned yet; no longer teaches Na)
+	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "arca_base", "cond": "flag:lead_ruins"}, "tile": "."},   # inscribed base of an Arca, read in place (2.6, teaches Na; cond `flag:lead_ruins`, set by clearing `mataram_ruins`)
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_ruins", "size": Vector2i(24,14), "waves": [[["res://entities/enemies/arca.tscn", Vector2i(-11,-5)], ["res://entities/enemies/arca.tscn", Vector2i(11,5)], ["res://entities/enemies/arca.tscn", Vector2i(0,-6)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,2)], ["res://entities/enemies/tuyul.tscn", Vector2i(5,-1)]]]}, "tile": ","},   # encounter mataram_ruins (**miniboss**, 2.6: the first Arca at (-11,-5) is the elite `mt_arca_penjaga`)
 	"m": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "candi_seribu"}, "tile": "_"},   # codex spot, Candi Seribu (museum)
 	"n": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "roro_jonggrang"}, "tile": "_"},   # codex spot, Roro Jonggrang (museum)
 	"o": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "arca"}, "tile": "_"},   # codex spot, Arca (museum)
@@ -73,6 +74,7 @@ const SPOTS := {
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_secret_gong", "item_id": "longbow"}, "tile": "_"},   # chest: Longbow (secret 1, items.md Zone 2 chest)
 	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
 	"k": {"scene": "res://entities/enemies/pocong.tscn", "props": {}, "tile": "."},   # loose Pocong, roaming pack (respawns on zone reload, no unique_id)
+	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ka_chalk"}, "tile": "."},   # clue, Laras's chalked *Ka* on the courtyard wall (2.6 `clue` piece; journal note only, no quest trigger; ASSUMED id)
 }
 
 
