@@ -41,7 +41,8 @@ func _initialize() -> void:
 	b.health.take_damage(1, player)
 	check(b.phase == 4, "no phase 5")
 
-	# bramble slows him
+	# bramble slows him (no moves while the deck is off)
+	b.forced_move = "idle"
 	solo("bramble", Vector2(100, 135))
 	b._enter(ButoIjo.State.CHASE)
 	b._physics_process(DT)
@@ -51,6 +52,7 @@ func _initialize() -> void:
 	check(is_equal_approx(b.slow(), 0.4), "salt: 60%% slow (%f)" % b.slow())
 
 	# no charge from saltwater; a charge from outside works
+	b.forced_move = "charge"
 	b._enter(ButoIjo.State.CHASE)
 	player.position = Vector2(200, 135)
 	b._physics_process(DT)
@@ -73,12 +75,50 @@ func _initialize() -> void:
 	check(b.state != ButoIjo.State.STUN, "stun ends after 1.5 s")
 
 	# pound up close
+	b.forced_move = "pound"
 	solo("bramble", Vector2(900, 900))
 	b.global_position = Vector2(150, 135)
 	b._enter(ButoIjo.State.CHASE)
 	player.position = Vector2(180, 135)
 	b._physics_process(DT)
 	check(b.state == ButoIjo.State.WINDUP and b._pound, "ground pound at 56 px or closer")
+
+	# every move starts and ends in RECOVER (heavy ones leave a 2 s punish window)
+	solo("bramble", Vector2(900, 900))
+	var kit := {"pound": 30.0, "charge": 100.0, "devour": 40.0, "seed_volley": 120.0, "bramble_stomp": 60.0,
+		"hunger_leap": 120.0, "rampage": 100.0, "quake": 60.0, "famine_maw": 100.0}
+	for m: String in kit:
+		b.global_position = Vector2(100, 135)
+		player.position = Vector2(100.0 + float(kit[m]), 135)
+		b._since_ult = 5
+		b.forced_move = m
+		var before: int = int(b.moves_used.get(m, 0))
+		b._enter(ButoIjo.State.CHASE)
+		b._physics_process(DT)
+		check(int(b.moves_used.get(m, 0)) == before + 1 and b._move == m, "move %s starts (%s)" % [m, b.moves_used])
+		var ended := false
+		for i in 900:
+			b._physics_process(DT)
+			b.status._physics_process(DT)
+			if b.state == ButoIjo.State.RECOVER:
+				ended = true
+				break
+		check(ended, "move %s ends in RECOVER" % m)
+		if ended and ["pound", "charge", "devour", "hunger_leap", "rampage", "quake", "famine_maw"].has(m):
+			check(b._rec >= b.heavy_recovery, "heavy move %s leaves a punish window (%f)" % [m, b._rec])
+	check(b._since_ult == 0, "the limit break resets its counter")
+	# the deck never repeats a heavy move back to back
+	b.forced_move = ""
+	b._last_move = "pound"
+	b._deck.clear()
+	b._deck.append("pound")
+	b._deck.append("quake")
+	player.position = Vector2(130, 135)
+	b.global_position = Vector2(100, 135)
+	b._since_ult = 0
+	check(b._pick_move(30.0) != "pound", "no heavy twice in a row")
+	b._deck.clear()
+	b.forced_move = "idle"
 
 	# mud binds once, then rests
 	solo("mud", Vector2(400, 135))

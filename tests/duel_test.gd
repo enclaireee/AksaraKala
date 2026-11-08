@@ -39,7 +39,39 @@ func _initialize() -> void:
 	player.position = Vector2(200, 135)
 	for i in 600:
 		b._physics_process(DT)
-	check(b.attacks > 0, "attacks")
+	check(b.attacks > 0 and b.moves_used.size() > 0, "attacks, moves counted")
+
+	# every move runs to its end (phase 2 moves too); heavy moves leave a 2 s+ window; an unanswered parry opens him
+	b.phase = 2
+	for mv in ["cut", "lunge", "wave", "iaido", "triple_step", "parry", "river_lunge", "flood", "tsunami"]:
+		b._stop_attack()
+		b.global_position = Vector2(150, 135)
+		b.facing = 0.0
+		b.open_left = 0.0
+		b._enter(HariangBanga.State.CHASE)
+		b._begin_move(mv)
+		check(b.moves_used.get(mv, 0) >= 1, "move counted: " + mv)
+		var t := 0.0
+		while b.state != HariangBanga.State.RECOVER and t < 12.0:
+			b._physics_process(DT)
+			t += DT
+		check(b.state == HariangBanga.State.RECOVER and t < 12.0, "move ends in recovery: " + mv)
+		if mv in HariangBanga.HEAVY and mv != "parry":
+			check(b._rec >= 2.0, "punish window after " + mv)
+		if mv == "parry":
+			check(b.open_left > 0.0, "an unanswered parry leaves him open")
+	# a hit during the glow is negated and countered
+	b.global_position = Vector2(150, 135)
+	b.facing = 0.0
+	b._enter(HariangBanga.State.CHASE)
+	b._begin_move("parry")
+	b._physics_process(DT)
+	var hp_p: int = b.health.hp
+	b.hurtbox.receive(_hit(player))
+	check(b.health.hp == hp_p, "parry glow negates the hit (%d)" % (hp_p - b.health.hp))
+	b._physics_process(DT)
+	check(b.state == HariangBanga.State.RECOVER and b._rec >= 2.0, "parry counters, then recovers")
+	b.phase = 1
 
 	# guard: reset to a calm pose facing the player on his right
 	b.global_position = Vector2(100, 135)
@@ -95,6 +127,7 @@ func _initialize() -> void:
 	# yield at 15%, never 0
 	b.health.take_damage(b.health.hp - 421, player)
 	await process_frame
+	check(b.phase == 2 and b.state == HariangBanga.State.PHASE, "phase 2 at 50% with a pause")
 	check(not b.dead, "fights on above 15%")
 	b.health.take_damage(5000, player)
 	await process_frame

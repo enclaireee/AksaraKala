@@ -120,6 +120,25 @@ func _initialize() -> void:
 		b._physics_process(DT)
 	check(b._marks.any(func(m: Dictionary) -> bool: return m.kind == "debris") or root.get_child_count() != marks_before, "debris marks near the player")
 
+	# every move runs to its end; heavy moves leave a 2 s+ window; temples is the phase 2 limit break
+	player.position = Vector2(200, 135)
+	for mv in ["boulder", "stomp", "fist", "quake", "pillar_crush", "leap", "temples"]:
+		b.global_position = Vector2(100, 135)
+		b._enter(BandungBondowoso.State.CHASE)
+		b._begin_move(mv)
+		check(b.moves_used.get(mv, 0) >= 1, "move counted: " + mv)
+		var mt := 0.0
+		while b.state != BandungBondowoso.State.RECOVER and mt < 12.0:
+			b._physics_process(DT)
+			mt += DT
+		check(b.state == BandungBondowoso.State.RECOVER and mt < 12.0, "move ends in recovery: " + mv)
+		if mv in BandungBondowoso.HEAVY:
+			check(b._rec >= 2.0, "punish window after " + mv)
+	check(b.body.position == b._body0, "leap ends on the ground")
+	check(b._ult_cd > 0.0, "temples is on cooldown")
+	b.global_position = Vector2(100, 135)
+	b._enter(BandungBondowoso.State.CHASE)
+
 	# defeat
 	for pl in b.pillars.duplicate():
 		pl.expose(3.0)

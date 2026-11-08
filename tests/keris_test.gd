@@ -37,6 +37,7 @@ func _initialize() -> void:
 
 	check(k.is_in_group("boss") and k.health.max_hp == 4200 and k.boss_name_key == "BOSS_KERIS_GANDRING", "stats")
 	check(k.stakes().size() == 7 and k.lit_count() == 0, "7 unlit stakes")
+	k.forced_move = "idle"   # no moves while the stakes are tested
 	run(9.0)
 	check(not k.engaged and k.lit_count() == 0 and not all.any(func(s: CurseStake) -> bool: return s.state != CurseStake.State.UNLIT), "inert until the player is near")
 
@@ -86,7 +87,7 @@ func _initialize() -> void:
 
 	# dart telegraph, phase 2 double dart and faster stakes
 	k._enter(KerisGandring.State.CHASE)
-	k._fan_next = false
+	k.forced_move = "dart"
 	k.global_position = Vector2(300, 135)
 	player.position = Vector2(400, 135)
 	k._physics_process(DT)
@@ -94,14 +95,57 @@ func _initialize() -> void:
 	k.health.take_damage(k.health.hp - 2100, player)
 	check(k.phase == 2 and k.state == KerisGandring.State.PAUSE and k.stake_interval == 5.0, "phase 2 at 50%: pause, 5 s stakes")
 	k._enter(KerisGandring.State.CHASE)
-	k._fan_next = false
 	k.global_position = Vector2(300, 135)
 	k._physics_process(DT)
 	check(k.darts_left == 2, "phase 2: two darts in a row")
 	k._enter(KerisGandring.State.PAUSE)
+	k.forced_move = "idle"
 	k._light_t = 0.0
 	run(5.1)
 	check(all.any(func(s: CurseStake) -> bool: return s.state == CurseStake.State.MARK), "a stake marked within 5 s")
+
+	# every move starts and ends in RECOVER; the heavy ones leave a 2 s punish window; no stake lights meanwhile
+	for s in all:
+		s.state = CurseStake.State.UNLIT
+		s._paint()
+	var kit := {"dart": 100.0, "fan": 100.0, "teleport_flurry": 100.0, "orbit_blades": 60.0, "crimson_cross": 100.0,
+		"curse_mark": 100.0, "seven_swords": 100.0}
+	var heavy := ["teleport_flurry", "orbit_blades", "crimson_cross", "seven_swords"]
+	for m: String in kit:
+		k.global_position = Vector2(300, 135)
+		player.position = Vector2(300.0 + float(kit[m]), 135)
+		k._light_t = -9999.0
+		k._since_ult = 9
+		k.forced_move = m
+		var before: int = int(k.moves_used.get(m, 0))
+		k._enter(KerisGandring.State.CHASE)
+		k._physics_process(DT)
+		check(int(k.moves_used.get(m, 0)) == before + 1 and k._move == m, "move %s starts (%s)" % [m, k.moves_used])
+		var ended := false
+		for i in 1200:
+			k._physics_process(DT)
+			if k.state == KerisGandring.State.RECOVER:
+				ended = true
+				break
+		check(ended, "move %s ends in RECOVER" % m)
+		if ended and heavy.has(m):
+			check(k._rec >= k.heavy_recovery, "heavy move %s leaves a punish window (%f)" % [m, k._rec])
+		check(k.lit_count() == 0, "move %s lights no stake" % m)
+	check(k._since_ult == 0, "the limit break resets its counter")
+	check(k.phase == 2 and k.attacks >= 10, "moves landed their strikes (%d)" % k.attacks)
+	# the deck never repeats a heavy move back to back
+	k.forced_move = ""
+	k._last_move = "crimson_cross"
+	k._since_ult = 0
+	k._deck.clear()
+	k._deck.append("crimson_cross")
+	k._deck.append("dart")
+	k.global_position = Vector2(300, 135)
+	player.position = Vector2(400, 135)
+	check(k._pick_move(100.0) == "dart", "no heavy twice in a row")
+	k._deck.clear()
+	k.forced_move = "idle"
+	player.position = Vector2(900, 900)
 
 	# defeat
 	k.health.take_damage(99999, player)

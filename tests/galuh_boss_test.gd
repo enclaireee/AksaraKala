@@ -59,6 +59,23 @@ func _initialize() -> void:
 	await create_timer(0.4).timeout
 	check(root.get_children().filter(func(n: Node) -> bool: return n is BarmaWijaya).size() == 1, "broken copies freed")
 
+	# every move runs to its end and leaves a recovery window (set-pieces: >= 2 s)
+	check(b.phase() == 2 and b.moves_used.size() > 0, "phase 2 after the first glamour, moves counted")
+	for mv in ["thrust", "fan", "flurry", "decree", "mirror", "coronation"]:
+		b.global_position = Vector2(150, 135)
+		b._enter(BarmaWijaya.State.CHASE)
+		b._begin_move(mv)
+		check(b.moves_used.get(mv, 0) >= 1, "move counted: " + mv)
+		var t := 0.0
+		while b.state != BarmaWijaya.State.RECOVER and t < 12.0:
+			b._physics_process(DT)
+			t += DT
+		check(b.state == BarmaWijaya.State.RECOVER and t < 12.0, "move ends in recovery: " + mv)
+		if mv in BarmaWijaya.HEAVY:
+			check(b._rec >= 2.0, "punish window after " + mv)
+	b._enter(BarmaWijaya.State.CHASE)
+	b.global_position = Vector2(100, 135)
+
 	# no new glamour above 35%, then the second one
 	b.health.take_damage(b.health.hp - 841, player)
 	check(b.state != BarmaWijaya.State.GLAMOUR, "no glamour between marks")

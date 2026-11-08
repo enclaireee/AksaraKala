@@ -51,6 +51,18 @@ func step_to(b: Node, s: int, frames := 900) -> void:
 		b._physics_process(DT)
 
 
+## Runs one move by hand to its recovery. True if it ended in RECOVER.
+func run_move(b: FacelessCaptain, m: String) -> bool:
+	b._enter(FacelessCaptain.State.CHASE)
+	b.global_position = Vector2(150, 135)
+	b._begin_move(m, player.global_position - b.global_position)
+	for i in 900:
+		b._physics_process(DT)
+		if b.state != FacelessCaptain.State.WINDUP:
+			break
+	return b.state == FacelessCaptain.State.RECOVER
+
+
 func _faceless() -> int:
 	var n := 0
 	for c in root.get_children():
@@ -76,6 +88,33 @@ func _initialize() -> void:
 	check(b.is_in_group("boss") and b.health.max_hp == 1800 and b.phase == 1, "starts phase 1, 1800 HP")
 	step(b, 600)
 	check(b.attacks > 0 and b.engaged, "attacks")
+
+	# Deck: phase 1 has only the 3 base moves; later phases add the rest; never the same heavy twice in a row.
+	check(b._pool().size() == 3 and "sweep" in b._pool() and "lunge" in b._pool() and "volley" in b._pool(), "phase 1 pool")
+	b.phase = 2
+	check("whirlwind" in b._pool() and "chain" in b._pool() and "rally" in b._pool() and not ("edict" in b._pool()), "phase 2 pool")
+	b.phase = 3
+	check("edict" in b._pool(), "phase 3 pool has the Edict")
+	var prev := ""
+	var dup := false
+	var picked := {}
+	for i in 80:
+		var pm: String = b._pick(60.0)
+		dup = dup or (pm == prev and pm in FacelessCaptain.HEAVY)
+		picked[pm] = true
+		prev = pm
+	check(not dup and not picked.has("") and picked.size() >= 4, "deck: no heavy twice in a row, varied (%s)" % [picked.keys()])
+	b.phase = 1
+	b._deck.clear()
+
+	# Every move runs to its recovery and is counted.
+	for m in ["sweep", "lunge", "volley", "whirlwind", "chain", "rally", "edict"]:
+		var before: int = int(b.moves_used.get(m, 0))
+		check(run_move(b, m), "move %s ends in RECOVER" % m)
+		check(int(b.moves_used.get(m, 0)) == before + 1, "move %s counted" % m)
+	b._muster_next = false
+	b._enter(FacelessCaptain.State.CHASE)
+	b.global_position = Vector2(150, 135)
 
 	# Muster 1 at 66%: Burst during the wind-up breaks it.
 	b.health.take_damage(613, player)

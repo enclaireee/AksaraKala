@@ -39,7 +39,7 @@ func _initialize() -> void:
 	# phase 1: a pulse hits a player standing on the ring path, not one close inside
 	player.position = Vector2(300 + 60, 135 + 6)
 	b._enter(BataraKala.State.CHASE)
-	b._next_pulse = true
+	b._forced_move = "pulse"
 	run(0.7)
 	check(b.state == BataraKala.State.PULSE_WIND or b.state == BataraKala.State.PULSE, "pulse begins")
 	run(2.4)
@@ -48,14 +48,14 @@ func _initialize() -> void:
 	ph.invincible_time = 0.0
 	player.position = b.position + Vector2(10, -6)
 	b._enter(BataraKala.State.CHASE)
-	b._next_pulse = true
+	b._forced_move = "pulse"
 	run(3.0)
 	check(ph.hp == 1000, "standing close inside the ring is safe (hp %d)" % ph.hp)
 
 	# time-sand: 3 marks, light 18 on the player
 	player.position = b.position + Vector2(200, 0)
 	b._enter(BataraKala.State.CHASE)
-	b._next_pulse = false
+	b._forced_move = "sand"
 	run(0.7)
 	check(b.state == BataraKala.State.SAND_WIND and b._spots.size() == 3, "sand: 3 marks")
 	run(1.0)
@@ -63,8 +63,61 @@ func _initialize() -> void:
 	ph.hp = 1000
 	ph.invincible_time = 0.0
 
+	# new moves, begun directly: each counts in moves_used, ends in RECOVER, and leaves the boss in one piece
+	ph.hp = 1000
+	b._forced_move = "none"   # no random follow-up attacks while single moves are under test
+	for mv: String in ["sweep", "chime", "hands", "skip", "stop", "meteor", "beams", "ruwatan"]:
+		b.global_position = Vector2(300, 135)
+		player.position = b.position + Vector2(90, 0)
+		ph.set_invincible(100.0)   # damage is checked below; here only the flow
+		b._begin(mv)
+		var seen := false
+		for i in int(8.0 / DT):
+			b._physics_process(DT)
+			seen = seen or b.state == BataraKala.State.RECOVER
+		check(b.moves_used.get(mv, 0) == 1 and seen, "move %s: counted and reaches recovery" % mv)
+		b._enter(BataraKala.State.CHASE)
+		check(b._fx.is_empty() and b._impacts.is_empty() and b.body.visible, "move %s: cleared on enter" % mv)
+	ph.invincible_time = 0.0
+	ph.hp = 1000
+	# the deck: phase 1 offers only pulse, sand, sweep, chime; never the same heavy twice
+	b._deck.clear()
+	b._last_move = ""
+	var seen_moves := {}
+	var last := ""
+	var twice := false
+	for i in 60:
+		var m: String = b._next_move(30.0)
+		seen_moves[m] = true
+		twice = twice or (m == last and m in BataraKala.HEAVY)
+		last = m
+		b._last_move = m
+	check(not twice and seen_moves.has("pulse") and seen_moves.has("sand") and not seen_moves.has("hands") and seen_moves.has("sweep"), "deck phase 1: varied, no repeat heavy, no phase 2 moves (%s)" % [seen_moves.keys()])
+	# scythe sweep: forehand hits a player in front of him
+	player.position = b.position + Vector2(30, 0)
+	b._begin("sweep")
+	run(b.sweep_wind + 0.1)
+	check(ph.hp == 1000 - b.sweep_damage, "sweep forehand hits for %d (hp %d)" % [b.sweep_damage, ph.hp])
+	ph.hp = 1000
+	ph.invincible_time = 0.0
+	# Ruwatan Eclipse: a player in an unsafe wedge is hit for the ultimate, one in the safe wedge is not
+	for in_safe in [false, true]:
+		b.global_position = Vector2(300, 135)
+		b._begin("ruwatan")
+		var wedge: int = b._ru_safe if in_safe else (b._ru_safe + 1) % 8
+		player.position = b.global_position + Vector2.from_angle(b._ru_wedge_dir(wedge)) * 80.0 - Vector2(0, -8)
+		run(b.ruwatan_windup + 0.1)
+		var want := 1000 if in_safe else 1000 - b.ruwatan_damage
+		check(ph.hp == want, "ruwatan %s wedge: hp %d want %d" % ["safe" if in_safe else "unsafe", ph.hp, want])
+		ph.hp = 1000
+		ph.invincible_time = 0.0
+	b._forced_move = "none"
+	b._enter(BataraKala.State.CHASE)
+	check(b._next_move(100.0) != "sweep", "deck: no scythe sweep from far away")
+
 	# phase 2
 	b.health.take_damage(9300 - 6200, player)
+	b._forced_move = "none"   # no random attacks while the shield and countdown are under test
 	check(b.phase == 2 and b.state == BataraKala.State.PAUSE and b.shielded, "phase 2 at 66%: pause, shield")
 	check(b.sequence.size() == 3 and b.sequence[0] != b.sequence[1] and b.sequence[1] != b.sequence[2] and b.sequence[0] != b.sequence[2], "3 distinct glyphs")
 	check(Array(b.sequence).all(func(g: String) -> bool: return g in game.glyphs_learned), "glyphs are learned ones")
@@ -133,7 +186,7 @@ func _initialize() -> void:
 	run(DT)
 	check(absf(b.dawn - 0.5) < 0.01, "dawn = elapsed / 20 (%s)" % [b.dawn])
 	b._enter(BataraKala.State.CHASE)
-	b._next_pulse = false
+	b._forced_move = "sand"
 	b.global_position = Vector2(300, 135)
 	player.position = Vector2(500, 135)
 	run(0.7)
