@@ -212,7 +212,7 @@ func _draw_gamelan(burned: bool) -> void:
 		draw_circle(Vector2(smx, smy - 8), 3.0, Color(0.78, 0.58, 0.42))
 		draw_rect(Rect2(smx - 3, smy - 11, 7, 3), Color(0.35, 0.22, 0.15))
 		# Mallet tapping the keys
-		var tap_y := sy - 5.0 + abs(sin(_t * 5.0)) * 2.0
+		var tap_y := sy - 5.0 + absf(sin(_t * 5.0)) * 2.0
 		draw_line(Vector2(smx - 1, smy - 2), Vector2(smx - 3, tap_y), Color(0.78, 0.58, 0.42), 1.2)
 		draw_rect(Rect2(smx - 5, tap_y - 1, 3, 2), Color(0.65, 0.45, 0.25))
 	else:
