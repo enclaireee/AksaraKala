@@ -933,7 +933,7 @@ Kind `play`, 60 x 17 tiles (2 screens wide), about 3 minutes (**TUNE**). Entered
 |--------|------|-------|
 | `s` (57,8) | `Stand`, the child | enters from the gorge side |
 | `1` (46,8), `2` (33,8) | oncor stands, lit by the mothers `m` (44,6) (31,6) when you pass within 6 tiles | `oncor.tscn` with `lit` true |
-| `3` (20,8), `4` (9,8) | oncor stands you light | the two actions of the memory |
+| `3` (20,8), `4` (9,8) | oncor stands, lit when you pass toward the door | the checkpoint actions of the memory |
 | `h` (2,8) | the family door, goal | reaching it finishes |
 | `S` (60,8) | the tall shadow, starts off-screen right of `s`, speed 40 **TUNE** | `shadow.tscn`, **ASSUMED** |
 - **Stand-in.** A village child (`stand_in.tscn`, speed 70) hurrying home at sunset. Starts at the right edge `s` (57,8).

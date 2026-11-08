@@ -30,7 +30,7 @@ def role_of(what, notes="", kind=""):
         r = "patrol"
     elif re.search(r"shadow|lamp|fire", w):
         r = "threat"
-    elif re.search(r"narrat|voice|trigger|stops", w):
+    elif re.search(r"narrat|voice|trigger|stops|when you pass|lit by", w):
         return "narrate"
     elif re.search(r"goal|exit|door|gate", w):
         return "goal"
@@ -44,10 +44,13 @@ def order_of(what, ch):
     for k, v in ORDER_WORDS.items():
         if re.search(r"\b%s\b" % k, w):
             return v
-    m = re.search(r"\b\d\b", w)   # a lone digit; "120 px" is a size, not an order
+    if ch.isdigit():
+        return int(ch)
+    w_clean = re.sub(r"\b\d+\s*(?:tiles?|px|s|m|sec|seconds?|steps?)\b", "", w)
+    m = re.search(r"\b\d\b", w_clean)
     if m:
         return int(m.group())
-    return int(ch) if ch.isdigit() else -1
+    return -1
 
 
 def cells(txt):
@@ -176,9 +179,10 @@ def build(mem, warn):
                         % (cm, n_line, pos, 'script = ExtResource("5")\n' if role == "patrol" else ""))
         else:
             n_line += 1
+            order = order_of(what, ch) if role != "narrate" else -1
             body.append('%s\n[node name="Spot%d" parent="." instance=ExtResource("3")]\nposition = %s\n'
                         'action_kind = "%s"\norder = %d\nline_key = "MEM_%s_%d"\n'
-                        % (cm, n_line, pos, role, order_of(what, ch), uid, n_line))
+                        % (cm, n_line, pos, role, order, uid, n_line))
     ext = ['[ext_resource type="Script" path="res://zones/kelir/%s.gd" id="1"]' % (mid if own else "memory"),
            '[ext_resource type="TileSet" path="res://zones/tiles.tres" id="2"]',
            '[ext_resource type="PackedScene" path="res://zones/kelir/memory_spot.tscn" id="3"]',

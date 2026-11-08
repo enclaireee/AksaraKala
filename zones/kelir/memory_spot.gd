@@ -101,3 +101,8 @@ func _process(_delta: float) -> void:
 		var mem := KelirMemory.of(self)
 		var open_ := mem != null and mem.spots().all(func(s: MemorySpot) -> bool: return s == self or s.done or not s.counts())
 		_gate.region_rect = Rect2(20 if open_ else 0, 0, 20, 30)
+		if open_ and not done and not _busy and has_overlapping_bodies():
+			for b in get_overlapping_bodies():
+				if b.is_in_group("player"):
+					interact()
+					break

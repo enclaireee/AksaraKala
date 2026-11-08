@@ -20,32 +20,32 @@ tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 0, 
 [node name="Stand" type="Marker2D" parent="."]
 position = Vector2(920, 136)
 
-; interact 1 | oncor stands, lit by the mothers `m` (44,6) (31,6) when you pass within 6 tiles | `oncor.tscn` with `lit` true
+; narrate 1 | oncor stands, lit by the mothers `m` (44,6) (31,6) when you pass within 6 tiles | `oncor.tscn` with `lit` true
 [node name="Spot1" parent="." instance=ExtResource("3")]
 position = Vector2(744, 136)
-action_kind = "interact"
-order = 6
+action_kind = "narrate"
+order = -1
 line_key = "MEM_K1_MAGHRIB_1"
 
-; interact 2 | oncor stands, lit by the mothers `m` (44,6) (31,6) when you pass within 6 tiles | `oncor.tscn` with `lit` true
+; narrate 2 | oncor stands, lit by the mothers `m` (44,6) (31,6) when you pass within 6 tiles | `oncor.tscn` with `lit` true
 [node name="Spot2" parent="." instance=ExtResource("3")]
 position = Vector2(536, 136)
-action_kind = "interact"
-order = 6
+action_kind = "narrate"
+order = -1
 line_key = "MEM_K1_MAGHRIB_2"
 
-; interact 3 | oncor stands you light | the two actions of the memory
+; narrate 3 | oncor stands, lit when you pass toward the door | the checkpoint actions of the memory
 [node name="Spot3" parent="." instance=ExtResource("3")]
 position = Vector2(328, 136)
-action_kind = "interact"
-order = 3
+action_kind = "narrate"
+order = -1
 line_key = "MEM_K1_MAGHRIB_3"
 
-; interact 4 | oncor stands you light | the two actions of the memory
+; narrate 4 | oncor stands, lit when you pass toward the door | the checkpoint actions of the memory
 [node name="Spot4" parent="." instance=ExtResource("3")]
 position = Vector2(152, 136)
-action_kind = "interact"
-order = 4
+action_kind = "narrate"
+order = -1
 line_key = "MEM_K1_MAGHRIB_4"
 
 ; goal h | the family door, goal | reaching it finishes

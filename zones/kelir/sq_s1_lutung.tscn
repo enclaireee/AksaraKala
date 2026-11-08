@@ -28,21 +28,21 @@ position = Vector2(88, 152)
 [node name="Spot1" parent="." instance=ExtResource("3")]
 position = Vector2(152, 152)
 action_kind = "narrate"
-order = 1
+order = -1
 line_key = "MEM_SQ_S1_LUTUNG_1"
 
 ; narrate 2 | sweep points (9,9) (16,9) (22,9); at each the lutung stops and looks back | triggers
 [node name="Spot2" parent="." instance=ExtResource("3")]
 position = Vector2(264, 152)
 action_kind = "narrate"
-order = 2
+order = -1
 line_key = "MEM_SQ_S1_LUTUNG_2"
 
 ; narrate 3 | sweep points (9,9) (16,9) (22,9); at each the lutung stops and looks back | triggers
 [node name="Spot3" parent="." instance=ExtResource("3")]
 position = Vector2(360, 152)
 action_kind = "narrate"
-order = 3
+order = -1
 line_key = "MEM_SQ_S1_LUTUNG_3"
 
 ; goal W | the spring, clear water | the scene ends here
