@@ -45,7 +45,7 @@ Display names only; NPC ids and files are unchanged (quests.md 4, cast cuts). `K
 | NPC_IBU_NAME | Ibu | Ibu |
 | NPC_LARAS_NAME | Laras | Laras |
 | NPC_PURWA_OLD_COUPLE_NAME (new) | Pasangan tua | The old couple |
-| NPC_NINI_NAME (text changes) | Nenek tetangga | The old woman next door |
+| NPC_NINI_NAME (text changes) | Nenek Ciung | Ciung's grandmother |
 | NPC_CEPOT_NAME | Cepot | Cepot |
 | NPC_PURWA_STALL_NAME (new) | Penjaga lapak | The stall-keeper |
 | NPC_HUNTER_NAME | Si Tanpa Ngaran | The Nameless Hunter |
@@ -90,7 +90,7 @@ Display names only; NPC ids and files are unchanged (quests.md 4, cast cuts). `K
 | NPC_LARAS_WHO | Laras. Adikmu, cepat dan nekat. | Laras. Your sister. Quick and bold. |
 | NPC_IBU_WHO | Ibu. Ibumu, selalu cemas. | Ibu. Your mother. Always worried. |
 | NPC_PURWA_OLD_COUPLE_WHO | Pasangan tua. Pengasuh Ciung. | The old couple. Ciung's keepers. |
-| NPC_NINI_WHO | Nenek tetangga. Pengasuh Ciung. | The old woman next door. |
+| NPC_NINI_WHO | Nenek Ciung. Menunggu di gerbang barat. | Ciung's grandmother. Waiting by the west gate. |
 | NPC_CIUNG_WANARA_WHO | Ciung. Bocah liar sebelah rumah. | Ciung. The wild boy next door. |
 | NPC_SEMAR_WHO | Semar. Dalang desa. | Semar. The village dalang. |
 | NPC_CEPOT_WHO | Cepot. Putra Semar. Berisik. | Cepot. Semar's son. Loud. |
@@ -200,7 +200,7 @@ Two cards before the class choice and the first step. They show a normal day: no
 
 The dalang reading the children's names aloud at a ruwatan (PROLOGUE_2) is **VERIFY** (story.md Spine). "Dalang" is explained by Semar's name tag in the first talk and by this card ("the dalang reads").
 
-## 5. Prologue: A Day in Desa Purwa (MQ0)
+## 5. Prologue: The Last Ordinary Day (MQ0)
 **Lines in this section: 222** (v5 budget, ASSUMED: at most 330).
 Regional character: Ibu (want: two cups she cannot explain; turn: the Interlude; close: the epilogue). The day is calm: tag, tea, a walk with talks, the sanggar, the Kelir show. Step indices are v5's: `step:mq0=0` is step 0.1, `step:mq0=11` is 0.12. Everything the game needs later is shown first and named second. The details here are what the Act VI gap memories test, so they must not change: the stray cat is **Kunyit**; the banyan is **Ki Waringin**; the tag ends at **the well**; Laras takes **the chipped cup** (jasmine tea); Ibu says "home before **the show**"; Laras writes with **Semar's bamboo pen**, **your name first**; Semar says a written name **keeps a person in the world**.
 
@@ -448,8 +448,26 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | P1 | DLG_CIUNG_WANARA_L101 | Ayo langsung ke sanggar, Kak! Ki Semar sudah menunggu kita untuk persiapan Ruwatan. | Let's head straight to the sanggar, Kak! Ki Semar is waiting for us to get ready for the Ruwatan. |
 | P2 | DLG_CIUNG_WANARA_V22 | Aku pulang ke rumah dulu ya. Sampai ketemu nanti malam di panggung wayang! | I'm heading home first. See you tonight at the wayang stage! |
 
-### Chapter 1, step 0.4: Sanggar entrance (Cepot's warning)
-### cepot (the sanggar entrance, step 0.4; name NPC_CEPOT_NAME)
+### Chapter 1, step 0.4: The morning market and the sanggar door
+
+### purwa_stall (the market; 0.4 first half; main role in Act V 4.2). The news is earned from a witness before the hero reaches the sanggar.
+| Entry | if | do |
+|-------|----|----|
+| 1 | `step:mq0=3` (0.4) | |
+| 2 | (none) | |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| 1 | @NPC_PURWA_STALL_NAME | | |
+| 1 | DLG_PURWA_STALL_V1 | Kau murid Semar, kan? Dengar, tadi pagi ada lelaki jangkung bertopeng polos menanyai nama anak-anak. | You're Semar's apprentice, aren't you? Listen, this morning a tall man in a blank mask was asking children's names. |
+| 1 | DLG_PURWA_STALL_V2 | Aku tak bilang apa-apa. Lapakku tutup sejam lebih awal hari ini. | I told him nothing. I'm shutting my stall an hour early today. |
+| 1 | @NPC_HERO_NAME | | |
+| 1 | DLG_PURWA_STALL_H1 | Topeng polos? Ke arah mana dia? | A blank mask? Which way did he go? |
+| 1 | @NPC_PURWA_STALL_NAME | | |
+| 1 | DLG_PURWA_STALL_V3 | Ke barat. Nanti malam kau ikut ruwatan, kan? Duduklah dekat Semar. | West. You're going to the ruwatan tonight? Sit near Semar. |
+| 2 | DLG_PURWA_STALL_V4 | Cabai segar, kemiri baru. Dan jangan tanya soal lelaki bertopeng. | Fresh chilli, new candlenut. And don't ask about the masked man. |
+
+### cepot (the sanggar door, step 0.4 second half; name NPC_CEPOT_NAME). Cepot reacts to what the market already told you; he does not invent a second rumour.
 | Entry | if | do |
 |-------|----|----|
 | 1 | `step:mq0=3` (0.4) | |
@@ -457,22 +475,12 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_CEPOT_NAME | | |
-| 1 | DLG_CEPOT_V01 | Waduh, kalian dari mana saja?! Syukurlah sudah sampai! Barusan peronda desa lapor ada orang asing jangkung bertopeng putih polos berkeliaran di dekat gerbang desa, terus nanya-nanyain nama anak-anak! | There you are! Thank goodness you made it! Village scouts just reported a tall stranger in a blank white mask lurking near the outskirts, asking for children's names! |
+| 1 | DLG_CEPOT_V01 | Nah! Kalian! Dari pasar, kan? Jadi kalian sudah dengar soal orang bertopeng itu. Bapak menyuruh semua anak masuk sanggar sekarang juga. | There you are! From the market, yes? So you've heard about the masked man. Father's ordered every child into the sanggar right now. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_CEPOT_H01 | Orang asing bertopeng? Untuk apa dia menanyai nama anak-anak? | A masked stranger? What does he want with children's names? |
+| 1 | DLG_CEPOT_H01 | Kau yakin itu kabar benar? | Are you sure it's true? |
 | 1 | @NPC_CEPOT_NAME | | |
-| 1 | DLG_CEPOT_V02 | Mana kutahu! Pokoknya seram sekali! Makanya Bapak langsung menyuruh semua anak berkumpul di sanggar sekarang juga. | How should I know! It's creepy as hell! That's why Father ordered all the village kids into the sanggar right now. |
-| 1 | DLG_CEPOT_V03 | Ayo cepat masuk ke dalam, Bapak sudah menunggu kalian dari tadi! | Go on inside, quick! Father's been waiting for you both! |
-
-### purwa_stall (the market; ambient in Prologue, main role in Act V 4.2)
-| Entry | if | do |
-|-------|----|----|
-| 1 | `quest:mq0=active` | |
-
-| Entry | Key | ID | EN |
-|-------|-----|----|----|
-| 1 | @NPC_PURWA_STALL_NAME | | |
-| 1 | DLG_PURWA_STALL_V4 | Cabai segar, kemiri baru! Mau beli bumbu dapur, Nak? | Fresh chilli, new candlenut! Looking for kitchen spices, child? |
+| 1 | DLG_CEPOT_V02 | Peronda desa yang lihat sendiri. Jangkung, topeng putih polos, nanya nama anak-anak. Seram! | The village scouts saw him themselves. Tall, blank white mask, asking children's names. Creepy! |
+| 1 | DLG_CEPOT_V03 | Ayo masuk. Bapak sudah menunggu, dan aku disuruh menghitung kepala. Jangan bikin aku salah hitung. | Come in. Father's waiting, and I'm meant to count heads. Don't make me lose count. |
 
 ### Chapter 2: The Sanggar and the Ruwatan Night (0.5-0.8)
 
@@ -480,7 +488,7 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | Entry | if | do | choices |
 |-------|----|----|---------|
 | 1 | `step:mq0=4`, `!flag:mq0_d4` (0.5) | | |
-| H1 | `step:mq0=4`, `flag:mq0_d4`, `"hub": true`, `"quiet": true` (0.5, before Cepot) | | CHOICE_SEMAR_ASK_101 to `topic:ask_kala`; CHOICE_SEMAR_ASK_102 to `topic:ask_lontar`; CHOICE_SEMAR_ASK_103 (leave) |
+| H1 | `step:mq0=4`, `flag:mq0_d4`, `"hub": true`, `"quiet": true` (0.5, after Semar's first talk, before Cepot inside) | | CHOICE_SEMAR_ASK_101 to `topic:ask_kala`; CHOICE_SEMAR_ASK_102 to `topic:ask_lontar`; CHOICE_SEMAR_ASK_103 (leave) |
 | T:ask_kala | `"topic": "ask_kala"`, `"quiet": true` | | |
 | T:ask_lontar | `"topic": "ask_lontar"`, `"quiet": true` | | |
 | 2 | `step:mq0=5` (0.6, the lontar table) | | |
@@ -502,7 +510,7 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_SEMAR_NAME | | |
-| 1 | DLG_SEMAR_V30 | Hehe, murid yang tak pernah tepat waktu. Lihat: aksara, tulisan kuno kita, bukan sekadar huruf. Digambar dengan hati, ia jadi tenaga. | Hehe, the apprentice who's never on time. Look: aksara, our old script, aren't just letters. Drawn with heart, they become power. |
+| 1 | DLG_SEMAR_V30 | Hehe, murid yang tak pernah tepat waktu. Masuklah. Lihat ini: aksara, tulisan kuno kita, bukan sekadar huruf. Digambar dengan hati, ia jadi tenaga. | Hehe, the apprentice who's never on time. Come in. Look: aksara, our old script, aren't just letters. Drawn with heart, they become power. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SEMAR_H30 | Dan nama? | And names? |
 | 1 | @NPC_SEMAR_NAME | | |
@@ -515,12 +523,12 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SEMAR_H102 | Harga apa? | What price? |
 | 1 | @NPC_SEMAR_NAME | | |
-| 1 | DLG_SEMAR_V103 | Yang bisa mendengar nama, bisa dipanggil lewat namanya. Sudah, jangan pasang muka cemas. | Whoever can hear names can be called by theirs. There, don't look so worried. |
+| 1 | DLG_SEMAR_V103 | Aku belum tahu. Itu yang membuatku takut. | I don't know yet. That's what frightens me. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SEMAR_H103 | Di pasar ada orang bertopeng polos, menanyai nama anak-anak. | At the market there's a man in a blank mask asking children's names. |
 | 1 | @NPC_SEMAR_NAME | | |
 | 1 | DLG_SEMAR_V104 | Aku sudah dengar. Karena itu lampu harus menyala dan nama-nama harus dibacakan hari ini. | I've heard. That's why the lamps must be lit and the names read today. |
-| 1 | DLG_SEMAR_V32 | Laras, bawa lontarmu ke meja itu dan tulis. Tapi temui dulu anakku, Cepot. Dia berisik sejak tadi. | Laras, bring your lontar to that table and write. But meet my son Cepot first. He's been loud all morning. |
+| 1 | DLG_SEMAR_V32 | Laras, bawa lontarmu ke meja itu dan tulis. Cepot sudah menunggu dengan botol minyaknya. | Laras, take your lontar to that table and write. Cepot's waiting with the oil bottle. |
 | H1 | @NPC_SEMAR_NAME | | |
 | H1 | DLG_SEMAR_V105 | Cepot di sana, yang suaranya paling keras. Atau tanya aku dulu, hehe. | Cepot's over there, the loudest one. Or ask me first, hehe. |
 | T:ask_kala | @NPC_SEMAR_NAME | | |
@@ -550,7 +558,7 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | 5 | @NPC_HERO_NAME | | |
 | 5 | DLG_SEMAR_H2 | Hurufnya memudar dari ujung. Siapa yang melakukan ini? | The letters are fading from the edges. Who did this? |
 | 5 | @NPC_SEMAR_NAME | | |
-| 5 | DLG_SEMAR_V4 | Para tanpa rupa: orang-orang terlupa yang mengangkut nama bagi yang memegangnya. Ibumu sudah lupa Laras. Aku belum. | The faceless: forgotten folk who carry names to whoever holds them. Your mother has forgotten Laras. I haven't. |
+| 5 | DLG_SEMAR_V4 | Mereka membawa nama, Nak. Aku belum tahu dari mana asalnya, hanya apa yang mereka lakukan. | They carry names, child. I don't know where they come from, only what they do. |
 | 5 | @NPC_HERO_NAME | | |
 | 5 | DLG_SEMAR_H107 | Kenapa Ibu lupa, dan kau tidak? | Why did Ibu forget, and you didn't? |
 | 5 | @NPC_SEMAR_NAME | | |
@@ -674,8 +682,10 @@ The Act I Cepot entries (SQ-S4) follow; see section 6.
 | MEM_K0_RUWATAN_IN | Ini kelir, layar bayangan. Tetaplah di terang lampuku, Nak. Di luar terang, Kala, pemakan bayangan, menunggu. | This is the kelir, the shadow screen. Stay in my lamp's light, child. Outside it, Kala, the shadow-eater, waits. |
 | MEM_K0_RUWATAN_HINT | Tetap di cahaya | Stay in the light |
 | MEM_K0_RUWATAN_1 | Batara Kala, dewa waktu. Ia memakan apa saja yang tak dijaga dan tak diingat. | Batara Kala, the god of time. He eats whatever is left unguarded and unremembered. |
-| MEM_K0_RUWATAN_2 | Maka leluhur menulis empat kisah berbahaya sampai tamat, supaya tetap selesai: Empat Segel. | So the ancestors wrote four dangerous stories to their end, to keep them finished: the Four Seals. |
-| MEM_K0_RUWATAN_3 | Yang pertama Sangkuriang, yang ingin mengalahkan fajar dan tertipu fajar palsu. | The first is Sangkuriang, who tried to beat the dawn and was fooled by a false one. |
+| MEM_K0_RUWATAN_2 | Maka dalang bercerita sampai tamat. Cerita yang selesai tak bisa dimakan. | So the dalang tells the story to its end. A finished story can't be eaten. |
+| MEM_K0_RUWATAN_3 | Malam ini kau yang memegang wayang. Jangan biarkan bayanganmu keluar dari cahaya. | Tonight you hold the puppet. Don't let your shadow leave the light. |
+| MEM_K0_RUWATAN_4 | Empat lampu, empat sudut kelir. Selama semuanya menyala, Kala tak punya tempat berpijak. | Four lamps, four corners of the screen. While they all burn, Kala has nowhere to stand. |
+| MEM_K0_RUWATAN_5 | Kau sampai di ujung kelir. Cerita ini tamat. | You reach the far edge of the screen. This story is finished. |
 | MEM_K0_RUWATAN_OUT | Sekarang nama anak-anak desa kubacakan, agar Kala melewati pintu mereka. Ciung. Laras. Dan kau, {name}. | Now the village children's names, so Kala passes their doors. Ciung. Laras. And you, {name}. |
 | MEM_K0_RUWATAN_OUT_2 | Dengan nama terjaga, tidurlah tenang malam ini. | With the names kept, sleep easy tonight. |
 
@@ -5425,7 +5435,7 @@ Cards 1 to 6 are the six choice cards, one per Major Choice in act order (Choice
 | EPILOGUE_6 | Nama Aria Kebonan terpahat di Batu Leluhur, tersimpan di antara raja dan juru masak. Tak ada yang memaafkannya, dan tak ada yang membiarkannya hilang. | Aria Kebonan's name is carved on the Ancestors' Stone, kept among kings and cooks. Nobody forgives him, and nobody lets him vanish. |
 | EPILOGUE_6_ALT | Ruang kosong di Batu Leluhur tetap kosong. Di dekat panggung yang terbakar, seorang lelaki duduk tenang menonton abu, dan untuk pertama kalinya tak berusaha mengingat. | The blank space on the Ancestors' Stone stays blank. By the burned stage a man sits quietly watching the ashes, and for the first time isn't trying to remember. |
 | EPILOGUE_7 | Dan malam ini wayang desa memainkan lakon baru. Duduk, duduk. Ini tentang seseorang yang kau kenal, hehe. | And tonight the village wayang plays a new lakon. Sit, sit. It's about someone you know, hehe. |
-| EPILOGUE_8 | `{name} & Laras\n\n` followed by the old EPILOGUE_6 ID text, unchanged (the title card; was EPILOGUE_7) | `{name} & Laras\n\n` followed by the old EPILOGUE_6 EN text, unchanged (THE LAST AKSARA, made by fatih, Codex %d%%) |
+| EPILOGUE_8 | `{name} & Laras\n\n` followed by the old EPILOGUE_6 ID text, unchanged (the title card; was EPILOGUE_7) | `{name} & Laras\n\n` followed by the old EPILOGUE_6 EN text, unchanged (AKSARA KALA, made by fatih, Codex %d%%) |
 
 The old `EPILOGUE_1` (Laras comes home) is now the playable day itself (`epi_wake`). The old kings card (`EPILOGUE_2`) is folded into cards 1 and 3.
 
@@ -5834,7 +5844,7 @@ Ratna's reforge entry sets `flag:epi_ratna_temper`, the moment she tempers your 
 
 | Key | EN | ID |
 |-----|----|----|
-| Q_MQ0_TITLE | A Day in Desa Purwa | Sehari di Desa Purwa |
+| Q_MQ0_TITLE | The Last Ordinary Day | Hari Biasa Terakhir |
 | Q_MQ1_TITLE | The Crater Seal | Segel Kawah |
 | Q_MQG_TITLE | The Borrowed Face | Wajah Pinjaman |
 | Q_MQ2_TITLE | Blood on the Pamali | Darah di Pamali |
@@ -5849,8 +5859,8 @@ Ratna's reforge entry sets `flag:epi_ratna_temper`, the moment she tempers your 
 | Q_MQ0_S1_OBJ | Catch Laras: she dares you to a game of tag | Tangkap Laras: dia menantangmu bermain kejar-kejaran |
 | Q_MQ0_S2_OBJ | Have tea with Ibu, then hear the old couple's request | Minum teh bersama Ibu, lalu dengarkan permintaan pasangan tua di sebelah |
 | Q_MQ0_S3_OBJ | Climb the banyan ridge and fetch Ciung and his strange egg | Daki punggung beringin dan jemput Ciung beserta telurnya yang aneh |
-| Q_MQ0_S4_OBJ | Walk the morning market and ask the stall-keeper about the masked stranger | Susuri pasar pagi dan tanya penjaga lapak tentang orang asing bertopeng polos |
-| Q_MQ0_S5_OBJ | Meet Semar and Cepot at the sanggar | Temui Semar dan Cepot di sanggar |
+| Q_MQ0_S4_OBJ | Walk the morning market and ask the stall-keeper about the masked stranger, then find Cepot at the sanggar | Susuri pasar pagi dan tanya penjaga lapak soal orang bertopeng, lalu temui Cepot di sanggar |
+| Q_MQ0_S5_OBJ | Meet Semar and Cepot inside the sanggar | Temui Semar dan Cepot di dalam sanggar |
 | Q_MQ0_S6_OBJ | Write your name and Laras's at opposite ends of her lontar | Tuliskan namamu dan nama Laras di kedua ujung lontarnya |
 | Q_MQ0_S7_OBJ | Help light the four oil lamps around the wayang stage | Bantu nyalakan empat lampu minyak di sekeliling panggung wayang |
 | Q_MQ0_S8_OBJ | Play Semar's wayang ruwatan behind the lit kelir | Mainkan wayang ruwatan Semar di balik kelir yang menyala |
@@ -6112,7 +6122,7 @@ One short past-tense line per main step, key `Q_<QUEST>_S<n>_DONE`, `n` as above
 | Q_MQ0_S5_DONE | Semar said a written name keeps a person in the world, and Cepot fussed about the lamps. | Semar bilang nama yang ditulis menahan seseorang di dunia, dan Cepot ribut soal lampu. |
 | Q_MQ0_S6_DONE | Laras wrote our names at opposite ends of one lontar, with Semar's bamboo pen. | Laras menulis nama kami di kedua ujung satu lontar, dengan pena bambu Semar. |
 | Q_MQ0_S7_DONE | We lit four lamps around the stage as dusk fell. | Kami menyalakan empat lampu di sekeliling panggung saat senja turun. |
-| Q_MQ0_S8_DONE | Semar played the ruwatan: Batara Kala, the Four Seals, and the children's names read aloud. | Semar mementaskan ruwatan: Batara Kala, Empat Segel, dan nama anak-anak yang dibacakan. |
+| Q_MQ0_S8_DONE | Semar played the ruwatan: Batara Kala, and the children's names read aloud. | Semar mementaskan ruwatan: Batara Kala dan nama-nama anak yang dibacakan. |
 | Q_MQ0_S9_DONE | The shadows stepped off the screen. The Hunter took Laras, and our lontar tore. | Bayangan turun dari kelir. Si Pemburu membawa Laras, dan lontar kami robek. |
 | Q_MQ0_S10_DONE | Ibu doesn't remember Laras, yet two cups were set out. I took my lontar from the burned stage. | Ibu tak ingat Laras, tapi dua cangkir terhidang. Kuambil lontarku dari panggung yang hangus. |
 | Q_MQ0_S11_DONE | Semar still remembers Laras. He taught me Ka, and I cast it three times. | Semar masih ingat Laras. Ia mengajariku Ka, dan kurapalkan tiga kali. |

@@ -258,8 +258,8 @@ Marker form `{zone: "desa_purwa", id: ...}`. Step numbers follow [quests.md](../
 | 0.1 catch Laras | `purwa_tag_cat`, `purwa_tag_banyan`, `purwa_tag_end` | `!` (54,40), `?` (55,35), `Z` (26,14, the well) | `area_entered:purwa_tag_end`, sets `mq0_d1` |
 | 0.2 tea and old couple | `ibu`, `purwa_old_couple` | `I` (62,58), `O` (84,61) | `talked_to:ibu` sets `mq0_d2`; `talked_to:purwa_old_couple` sets `mq0_d2b` |
 | 0.3 banyan ridge and Ciung | `purwa_banyan_climb`, `ciung_wanara` | `@` (7,77), `C` (6,77) | `puzzle_solved:purwa_banyan_climb`; `talked_to:ciung_wanara` sets `mq0_d3` |
-| 0.4 sanggar entrance | `cepot` | `e` (17,27) | `talked_to:cepot`, sets `mq0_d6` |
-| 0.5 sanggar | `semar` | `M` (15,27) | `talked_to:semar`, sets `mq0_d4` |
+| 0.4 sanggar entrance | `cepot` | `e` (17,27) | `talked_to:cepot` is the second half of 0.4 (`mq0_d6` lands on step 0.5's substep) |
+| 0.5 sanggar | `semar`, `cepot` | `M` (15,27), `e` (17,27) | `talked_to:semar` sets `mq0_d4`; `talked_to:cepot` sets `mq0_d4b` |
 | 0.6 write names | `sanggar_lontar` | `i` (26,26) | `area_entered:sanggar_lontar`, sets `mq0_d5` |
 | 0.7 stage oil lamps | `purwa_stage_lamps` | `$` (73,11) | `puzzle_solved:purwa_stage_lamps`, sets `mq0_d6b` |
 | 0.8 the show | `kelir_lamp` (`k0_ruwatan`) | `q` (74,7) | `memory_done:k0_ruwatan`, sets `mq0_d7` |
@@ -286,7 +286,7 @@ Marker form `{zone: "desa_purwa", id: ...}`. Step numbers follow [quests.md](../
 Flags in this zone: `mq1_10` on the `K` kabut (set by the `naga` beat), `mq4_i5` on the `x` kabut, `mq4_9` on the `k` kabut. Hunter appearances here: the west gate (Prologue) and his empty mask `m` (Interlude).
 
 ## Flow
-Prologue: class choice -> `s` outside the sanggar -> tag with Laras round the plaza and the banyan (0.1) -> Ibu's tea `I` -> the old couple `O` -> west to Ciung's tree `C` (0.2) -> north to Semar `M` and Cepot `e`, write at `i`, east to the stall `Y` (0.3) -> the stage: lamp `q`, K0 (0.4) -> crowd `V`, the raid beat (0.5) -> next morning: Ibu, the burned stage, lontar `L` (0.6) -> Semar, Ka, dummies (0.7) -> three skirmishes `9`, `0`, `F` (0.8) -> the Hunter at the west gate, west road `W` to Tatar Sunda (0.9). Optional: plaza petilasan `P`, Nyai Rukmi `R`. The village is a clockwise loop (centre, south-west, north-west, east, north-east) with no walk repeated. The east road to Keraton Galuh stays fogged until `mq1_10`.
+Prologue: class choice -> `s` outside the sanggar -> tag with Laras round the plaza and the banyan (0.1) -> Ibu's tea `I` -> the old couple `O` (0.2) -> west to Ciung's tree `C` (0.3) -> east to the market stall `Y` and Cepot at the sanggar door `e` (0.4) -> inside to Semar `M` and Cepot, write at `i` (0.5, 0.6) -> the stage: lamp `q`, K0 (0.7, 0.8) -> crowd `V`, the raid beat (0.9) -> next morning: Ibu, the burned stage, lontar `L` (0.10) -> Semar, Ka, dummies (0.11) -> three skirmishes `9`, `0`, `F` -> the Hunter at the west gate, west road `W` to Tatar Sunda (0.12). Optional: plaza petilasan `P`, Nyai Rukmi `R`. The village is a clockwise loop (centre, south-west, north-west, east, north-east) with no walk repeated. The east road to Keraton Galuh stays fogged until `mq1_10`.
 
 Interlude: the riders drop you at `z` (4.1) -> three doorposts `a`, `d`, `f` (4.2) -> shelf and Ibu `I` (4.3) -> the dinner `B` with `N` and `H` (4.4) -> Aria `A` (optional), Semar `M`, the south gate `x` lifts (4.5), south through `X` to `sk_pantai`. The north fog `k` stays shut (it eats every glyph) until MQ4 is done; then `J` leads to Gua Kala.
 

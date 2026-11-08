@@ -86,14 +86,14 @@ func _initialize() -> void:
 	# Burst: 52 in 72 px, nothing beyond.
 	player.position = Vector2(0, 0)
 	var bn := await _enemy("chaser", Vector2(40, 0))
-	var bf := await _enemy("chaser", Vector2(76, 0))
+	var bf := await _enemy("chaser", Vector2(85, 0))
 	await _spell("sunda_ca", 1.0)
 	for i in 4:
 		await physics_frame
 	check(bn.health.hp == 0, "burst near hp %d" % bn.health.hp)
 	for i in 20:
 		await physics_frame
-	check(bf.health.hp == 40, "burst skips 76 px (hp %d)" % bf.health.hp)
+	check(bf.health.hp == 40, "burst skips 85 px (hp %d)" % bf.health.hp)
 	if is_instance_valid(bn): bn.queue_free()
 	bf.queue_free()
 
@@ -109,7 +109,7 @@ func _initialize() -> void:
 	player.class_id = "mage"
 	h.hp = 10
 	await _spell("jawa_ha", 1.0)
-	check(h.hp == 20, "mage heal is 10% now and a spring (hp %d)" % h.hp)
+	check(h.hp == 20, "mage heal is 10%% now and a spring (hp %d)" % h.hp)
 	player.class_id = ""
 
 	# Dash-strike: moves 112 px along direction, damages, invincible

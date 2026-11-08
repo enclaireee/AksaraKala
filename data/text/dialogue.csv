@@ -347,7 +347,7 @@ EPILOGUE_6,"Nama Aria Kebonan terpahat di Batu Leluhur, tersimpan di antara raja
 NPC_IBU_NAME,Ibu,Ibu
 NPC_HERO_NAME,{name},{name}
 NPC_LARAS_NAME,Laras,Laras
-NPC_NINI_NAME,Nenek tetangga,The old woman next door
+NPC_NINI_NAME,Nenek Ciung,Ciung's grandmother
 NPC_HUNTER_NAME,Si Tanpa Ngaran,The Nameless Hunter
 NPC_NAGANINGRUM_NAME,Perempuan di tepi danau,Woman by the lake
 NPC_NAGAWIRU_NAME,Nagawiru,Nagawiru
@@ -365,7 +365,7 @@ DLG_IBU_V6,Aneh. Tadi Ibu kira rumah ini terlalu sepi.,Funny. For a moment I tho
 DLG_IBU_V7,Hati-hati. Sejak semalam seisi desa gelisah.,Be careful. The whole village is jumpy since last night.
 DLG_IBU_V8,Pulanglah kalau sempat. Nasimu Ibu hangatkan.,Come home when you can. I'll keep your rice warm.
 DLG_SEMAR_V1,"Hehe, mukamu kusut seperti kucing basah. Sebelum aku bicara, ambil dulu lontar yang tertinggal di panggung wayang. Yang gosong itu.","Hehe, you look like a wet cat. Before I say anything, fetch the lontar off the wayang stage. The scorched one."
-DLG_SEMAR_V4,Para tanpa rupa: orang-orang terlupa yang mengangkut nama bagi yang memegangnya. Ibumu sudah lupa Laras. Aku belum.,The faceless: forgotten folk who carry names to whoever holds them. Your mother has forgotten Laras. I haven't.
+DLG_SEMAR_V4,"Mereka membawa nama, Nak. Aku belum tahu dari mana asalnya, hanya apa yang mereka lakukan.","They carry names, child. I don't know where they come from, only what they do."
 DLG_SEMAR_V4B,"Saat nama seseorang dirampas, dunia melupakannya. Kau masih ingat karena Laras mengukir namamu di balik lontarnya—tapi saat huruf terakhir di lontar itu pudar, Laras akan lenyap selamanya.","When a person's name is taken, the world forgets them. You only remember because she carved your name on the back of her lontar—but when its last letter fades, she will vanish forever."
 DLG_SEMAR_V5,"Laras masih memegang separuh yang bernamamu, dan ia menulis di situ. Lihat? Ka, untuk ""kakak"". Gambar tiga kali.","Laras still holds the half with your name, and she's writing on it. See? Ka, for ""kakak"". Draw it three times."
 DLG_SEMAR_V7,"Lagi. Tiga kali, sampai tanganmu tak perlu menunggu kepalamu.","Again. Three times, until your hand stops waiting for your head."
@@ -509,7 +509,7 @@ BEAT_WRITE_3,"Tak ada lagi yang ingat bagaimana namanya ditulis. Kecuali kau. Tu
 EPILOGUE_3_ALT,"Kurungan itu tetap terkunci. Dalam legenda, memang selalu begitu. Hukum Galuh berdiri tegak di sepanjang sungai, dan surat Hariang Banga dari timur pendek, tapi selalu sampai.","The cage stays shut. In the legend, it always does. Galuh's law stands upright along the river, and Hariang Banga's letters from the east are short, but they always arrive."
 EPILOGUE_4_ALT,"Sungai menyimpan keris itu. Kata para nelayan, kadang di malam hari airnya bersenandung.","The river keeps the keris. Some nights, the fishermen say, the water hums."
 EPILOGUE_5_ALT,"Tiga keluarga nelayan menyanyikan lagu laut yang pulih tiap senja, dan laut menjawab dengan nada rendah. Mbah Wiryo ikut bernyanyi, sumbang.","Three fishing families sing the restored sea song each dusk, and the sea answers in a low note. Mbah Wiryo joins in, off-key."
-EPILOGUE_7,{name} & Laras\n\nTHE LAST AKSARA\ndibuat oleh fatih\nKodeks: %d%% aksara yang terlupa telah diingat.,{name} & Laras\n\nTHE LAST AKSARA\nmade by fatih\nCodex: %d%% of the forgotten letters remembered.
+EPILOGUE_7,{name} & Laras\n\nAKSARA KALA\ndibuat oleh fatih\nKodeks: %d%% aksara yang terlupa telah diingat.,{name} & Laras\n\nAKSARA KALA\nmade by fatih\nCodex: %d%% of the forgotten letters remembered.
 DLG_SUNDA_WEAVER_H1,Gadis kecil dengan lontar. Dia lewat sini?,A little girl with a lontar. Did she come through here?
 DLG_SUNDA_WEAVER_V1,"Adikmu Laras bersembunyi di bawah bakul benangku semalam. Pagi tadi gerombolan bertopeng mendobrak pintu, dan Laras keluar sendiri agar aku tak disakiti. Gadis yang luar biasa berani!","Your sister Laras hid beneath my thread baskets last night. At dawn, masked thugs banged on the door, and Laras walked out willingly so they wouldn't harm me. Such a brave child!"
 BEAT_CRATER_SEAL_1,Sang kapten berlutut. Dengan sisa tenaganya ia menghantam batu segel yang sudah retak dengan gagang tombak.,The Captain drops to a knee. With the last of his strength he drives his spear butt into the cracked seal-stone.
@@ -638,7 +638,7 @@ NPC_ARIA_KEBONAN_NAME,Aria Kebonan,Aria Kebonan
 NPC_LARAS_WHO,"Laras. Adikmu, cepat dan nekat.",Laras. Your sister. Quick and bold.
 NPC_IBU_WHO,"Ibu. Ibumu, selalu cemas.",Ibu. Your mother. Always worried.
 NPC_PURWA_OLD_COUPLE_WHO,Pasangan tua. Pengasuh Ciung.,The old couple. Ciung's keepers.
-NPC_NINI_WHO,Nenek tetangga. Pengasuh Ciung.,The old woman next door.
+NPC_NINI_WHO,Nenek Ciung. Menunggu di gerbang barat.,Ciung's grandmother. Waiting by the west gate.
 NPC_CIUNG_WANARA_WHO,Ciung. Bocah liar sebelah rumah.,Ciung. The wild boy next door.
 NPC_SEMAR_WHO,Semar. Dalang desa.,Semar. The village dalang.
 NPC_CEPOT_WHO,Cepot. Putra Semar. Berisik.,Cepot. Semar's son. Loud.
@@ -710,10 +710,10 @@ BEAT_TAG_BANYAN_1,"Di bawah beringin tua, Laras menepuk batangnya dengan hormat 
 BEAT_TAG_BANYAN_2,"Permisi, Ki Waringin! Kami cuma numpang lewat lari pagi.","Excuse us, Ki Waringin! We're just passing through on our morning run."
 BEAT_TAG_BANYAN_3,"Ranting dan dedaunan di atas kalian berdesir lembut, menyambut suara Laras.","The branches and leaves above you rustle softly, welcoming Laras's voice."
 BEAT_TAG_BANYAN_4,"Tuh kan, pohon beringin tua ini juga senang kalau disapa dengan hormat!",See? Even this ancient banyan loves being greeted with respect!
-DLG_IBU_V20,"Ayo duduk, minum dulu. Ibu sudah seduh teh melati hangat untuk kalian berdua.","Sit, drink. Ibu has brewed warm jasmine tea for the two of you."
-DLG_IBU_L1,"Aku mau pakai cangkir yang gompal ini, Bu! Cangkir kesayanganku sejak kecil!","I want the chipped cup, Ibu! My favorite cup since I was little!"
-DLG_IBU_V21,"Jangan lupa, nanti malam ada upacara Ruwatan tolak bala di panggung wayang. Pakai baju rapi, ya. Oh iya, tolong bujuk Ciung anak tetangga sebelah—dari subuh dia memanjat pohon beringin dan nggak mau turun.","Don't forget, tonight is the Ruwatan protective ceremony at the wayang stage. Wear neat clothes. Oh, and please coax Ciung, our neighbor's boy—he's been up the banyan tree since dawn and refuses to come down."
-DLG_IBU_H20,"Tenang, Bu. Kami bakal ajak Ciung turun.","Don't worry, Ibu. We'll get Ciung down."
+DLG_IBU_V20,"Duduk, minum dulu. Teh melati, dua cangkir: satu untuk Laras, satu untukmu.","Sit, drink. Jasmine tea, two cups: one for Laras, one for you."
+DLG_IBU_L1,"Aku yang gompal! Kalau tak ada yang pakai, dia sedih.","I get the chipped one! If nobody uses it, it gets sad."
+DLG_IBU_V21,"Pulang sebelum pertunjukan, berdua. Dan tolong jemput Ciung, anak tetangga kita. Sejak subuh dia di pohon.","Home before the show, both of you. And fetch Ciung, our neighbours' boy. He's been up a tree since dawn."
+DLG_IBU_H20,"Ciung dan pohonnya. Beres, Bu.","Ciung and his tree. Leave it to me, Ibu."
 DLG_PURWA_OLD_COUPLE_V1,"Nak, tolong kami... Cucu kami, Ciung, memanjat pohon beringin barat sejak subuh dan nggak mau turun sama sekali.","Children, please help us... Our grandson Ciung climbed the west banyan tree at dawn and won't come down at all."
 DLG_PURWA_OLD_COUPLE_V2,Dia memeluk sebutir telur aneh yang ditemukannya di semak sungai. Kami cemas dia jatuh kalau terlalu lama di atas sana.,He's hugging a strange egg he found by the river bushes. We're terrified he'll fall if he stays up there.
 DLG_PURWA_OLD_COUPLE_H1,Biar kami yang membujuknya turun, Kek, Nek.,Leave it to us, Grandpa, Grandma. We'll talk him down.
@@ -724,14 +724,14 @@ DLG_CIUNG_WANARA_V20,Sebentar dulu! Telur aneh yang kutemukan di dekat sungai in
 DLG_CIUNG_WANARA_L1,"Ciung, kamu kan harus ikut upacara Ruwatan nanti malam! Jangan bikin kakek-nenekmu panik.","Ciung, you have to attend the Ruwatan ceremony tonight! Don't make your grandparents panic."
 DLG_CIUNG_WANARA_V21,"Iya, iya, aku turun sekarang! Telur ini kubawa pulang ya. Terima kasih sudah mengingatkan.","Alright, alright, I'm coming down! I'm bringing this egg home. Thanks for reminding me."
 DLG_CIUNG_WANARA_V22,Aku pulang ke rumah dulu ya. Sampai ketemu nanti malam di panggung wayang!,I'm heading home first. See you tonight at the wayang stage!
-DLG_SEMAR_V30,"Hehe, nah ini dia dua muridku! Masuklah. Cepot sudah cerita soal orang asing bertopeng itu? Firasatku tidak enak... Ada hawa kelam yang sedang mengincar desa kita.","Hehe, there you are, my apprentices! Come in. Did Cepot tell you about that masked stranger? I have an ill foreboding... A dark presence is stalking our village."
-DLG_SEMAR_H30,Orang asing itu mencari nama-nama anak desa, Ki Semar. Kenapa nama?,That stranger is asking for children's names, Ki Semar. Why names?
-DLG_SEMAR_V31,"Nama adalah ikatan jiwa terkuat di dunia. Kalau namamu dicuri atau dilupakan, keberadaanmu akan lenyap dimakan waktu. Karena itulah upacara Ruwatan malam ini sangat penting.","A name is the soul's strongest anchor in this world. If your name is stolen or forgotten, your very existence fades into time. That is why tonight's Ruwatan ceremony is so crucial."
-DLG_SEMAR_V32,"Laras, bawa daun lontarmu ke meja itu. Ukir namamu dan nama kakakmu dengan pena bambu ini sebelum upacara dimulai.","Laras, take your lontar leaf to that table. Inscribe your name and your sibling's name with this bamboo stylus before the ceremony begins."
+DLG_SEMAR_V30,"Hehe, murid yang tak pernah tepat waktu. Masuklah. Lihat ini: aksara, tulisan kuno kita, bukan sekadar huruf. Digambar dengan hati, ia jadi tenaga.","Hehe, the apprentice who's never on time. Come in. Look: aksara, our old script, aren't just letters. Drawn with heart, they become power."
+DLG_SEMAR_H30,Dan nama?,And names?
+DLG_SEMAR_V31,Nama yang ditulis menahan seseorang tetap ada di dunia. Itu sebabnya malam ini nama anak-anak dibacakan.,A written name keeps a person in the world. That's why the children's names are read tonight.
+DLG_SEMAR_V32,"Laras, bawa lontarmu ke meja itu dan tulis. Cepot sudah menunggu dengan botol minyaknya.","Laras, take your lontar to that table and write. Cepot's waiting with the oil bottle."
 DLG_SEMAR_V33,Daun lontar suci ini ada di meja dekat jendela. Tulislah nama kalian berdua dengan teliti dan penuh doa.,The sacred lontar leaves are on the table by the window. Write both your names carefully and with wholehearted prayer.
 DLG_SEMAR_V34,"Saatnya tiba. Duduklah di balik kelir layar wayang, Nak. Kita mulai Ruwatan malam ini untuk melindungi desa kita.","The time has come. Sit behind the kelir shadow screen, child. We begin tonight's Ruwatan to shield our village."
-DLG_CEPOT_P1,Ayah! Ceritakan lagi kisah ksatria yang melawan raksasa itu! Ayah dengar nggak sih?,"Father! Tell the story of the warrior fighting the giant again! Are you even listening, Father?"
-DLG_CEPOT_P2,"Huft... Kata Ayah harus belajar aksara pelindung dulu, cerita raksasanya belakangan. Membosankan!","Sigh... Father says we must learn protective aksara first, giant stories later. So boring!"
+DLG_CEPOT_P1,Ayah! Ceritakan lagi yang ada raksasanya! Ayah? Ayah dengar tidak?,Father! Tell the one with the giant again! Father? Are you even listening?
+DLG_CEPOT_P2,"Katanya aksara dulu, raksasa belakangan. Membosankan.","He says aksara first, giants later. Boring."
 BEAT_LONTAR_NAMES_1,"Laras mengukir daun lontar dengan pena bambu milik Ki Semar. Namamu terukir rapi di satu ujung, dan namanya sendiri di ujung yang lain.","Laras inscribes the lontar leaf with Ki Semar's bamboo stylus. Your name is etched neatly at one end, and her own at the other."
 BEAT_LONTAR_NAMES_2,"Nah, sekarang kita pegang sama-sama! Kakak pegang ujung yang ada namaku, dan aku pegang ujung yang ada nama Kakak.","Now, let's hold it together! You hold the end with my name, and I'll hold the end with yours."
 BEAT_LONTAR_NAMES_H1,Kenapa harus saling memegang seperti ini, Laras?,Why must we hold it like this, Laras?
@@ -746,8 +746,8 @@ MEM_K0_RUWATAN_TITLE,Wayang Ruwatan,The Ruwatan Show
 MEM_K0_RUWATAN_IN,"Ini kelir, layar bayangan. Tetaplah di terang lampuku, Nak. Di luar terang, Kala, pemakan bayangan, menunggu.","This is the kelir, the shadow screen. Stay in my lamp's light, child. Outside it, Kala, the shadow-eater, waits."
 MEM_K0_RUWATAN_HINT,Tetap di cahaya,Stay in the light
 MEM_K0_RUWATAN_1,"Batara Kala, dewa waktu. Ia memakan apa saja yang tak dijaga dan tak diingat.","Batara Kala, the god of time. He eats whatever is left unguarded and unremembered."
-MEM_K0_RUWATAN_2,"Maka leluhur menulis empat kisah berbahaya sampai tamat, supaya tetap selesai: Empat Segel.","So the ancestors wrote four dangerous stories to their end, to keep them finished: the Four Seals."
-MEM_K0_RUWATAN_3,"Yang pertama Sangkuriang, yang ingin mengalahkan fajar dan tertipu fajar palsu.","The first is Sangkuriang, who tried to beat the dawn and was fooled by a false one."
+MEM_K0_RUWATAN_2,Maka dalang bercerita sampai tamat. Cerita yang selesai tak bisa dimakan.,So the dalang tells the story to its end. A finished story can't be eaten.
+MEM_K0_RUWATAN_3,Malam ini kau yang memegang wayang. Jangan biarkan bayanganmu keluar dari cahaya.,Tonight you hold the puppet. Don't let your shadow leave the light.
 MEM_K0_RUWATAN_OUT,"Sekarang nama anak-anak desa kubacakan, agar Kala melewati pintu mereka. Ciung. Laras. Dan kau, {name}.","Now the village children's names, so Kala passes their doors. Ciung. Laras. And you, {name}."
 MEM_K0_RUWATAN_OUT_2,"Dengan nama terjaga, tidurlah tenang malam ini.","With the names kept, sleep easy tonight."
 BEAT_RAID_1,"Bayangan-bayangan turun dari kelir. Topeng kosong, tangan yang menggapai. Orang menjerit; lampu bergoyang.","The shadows step off the screen. Blank masks, reaching hands. People scream; the lamp swings."
@@ -1611,7 +1611,7 @@ DLG_CIUNG_WANARA_V101,"Entah. Tapi ada yang berdetak di dalamnya, pelan, seperti
 DLG_CIUNG_WANARA_V102,Aku tak butuh nama lain. Satu saja sudah cukup merepotkan.,I don't need another name. One is trouble enough.
 DLG_CIUNG_WANARA_H102,Kakek-nenekmu takut kau jatuh.,Your grandparents are afraid you'll fall.
 DLG_CIUNG_WANARA_V103,Mereka selalu takut. Aku tak akan jatuh.,They're always afraid. I won't fall.
-DLG_CIUNG_WANARA_L101,"Pasar dulu, Kak. Perutku bunyi dari tadi, dan katanya ada kabar aneh di sana.","Market first, Kak. My stomach's been growling, and they say there's strange news there."
+DLG_CIUNG_WANARA_L101,"Ayo mampir pasar dulu, Kak! Penjaga lapak bilang ada orang bertopeng nanya-nanya nama anak. Setelah itu baru ke sanggar.","Let's stop by the market first, Kak! The stall-keeper said a masked man was asking children's names. Sanggar after that."
 DLG_PURWA_STALL_V5,"Dia tak menawar, tak membeli. Pembeli lain menyebut nama, dan dia mengulangnya pelan, seperti mencicipi.","He didn't haggle, didn't buy. Other shoppers said names, and he repeated them softly, like tasting."
 DLG_PURWA_STALL_H101,Mengulang nama? Untuk apa?,Repeating names? What for?
 DLG_PURWA_STALL_V6,"Entah. Tapi kalau kau punya adik, simpan namanya di dalam rumah malam ini.","No idea. But if you have a little sister, keep her name indoors tonight."
@@ -1621,7 +1621,7 @@ DLG_SEMAR_H101,Laras sudah tahu itu. Dia menyapa kucing dan pohon pakai nama mer
 DLG_SEMAR_V101,"Hehe, aku tahu. Anak itu mendengar nama seperti orang lain mendengar lonceng.","Hehe, I know. That girl hears names the way other people hear bells."
 DLG_SEMAR_V102,"Itu anugerah, dan anugerah selalu punya harga. Jaga dia nanti malam.","It's a gift, and gifts always have a price. Keep an eye on her tonight."
 DLG_SEMAR_H102,Harga apa?,What price?
-DLG_SEMAR_V103,"Yang bisa mendengar nama, bisa dipanggil lewat namanya. Sudah, jangan pasang muka cemas.","Whoever can hear names can be called by theirs. There, don't look so worried."
+DLG_SEMAR_V103,Aku belum tahu. Itu yang membuatku takut.,I don't know yet. That's what frightens me.
 DLG_SEMAR_H103,"Di pasar ada orang bertopeng polos, menanyai nama anak-anak.",At the market there's a man in a blank mask asking children's names.
 DLG_SEMAR_V104,Aku sudah dengar. Karena itu lampu harus menyala dan nama-nama harus dibacakan hari ini.,I've heard. That's why the lamps must be lit and the names read today.
 DLG_SEMAR_V105,"Cepot di sana, yang suaranya paling keras. Atau tanya aku dulu, hehe.","Cepot's over there, the loudest one. Or ask me first, hehe."
@@ -1658,10 +1658,10 @@ CHOICE_SEMAR_ASK_103,Aku temui Cepot dulu.,I'll go and see Cepot.
 CHOICE_SEMAR_ASK_104,Siapa para tanpa rupa itu?,Who are the faceless?
 CHOICE_SEMAR_ASK_105,Apa kata lontar Laras?,What does Laras's lontar say?
 CHOICE_SEMAR_ASK_106,Aku kembali berlatih.,Back to practice.
-DLG_CEPOT_V01,"Waduh, kalian dari mana saja?! Syukurlah sudah sampai! Barusan peronda desa lapor ada orang asing jangkung bertopeng putih polos berkeliaran di dekat gerbang desa, terus nanya-nanyain nama anak-anak!","There you are! Thank goodness you made it! Village scouts just reported a tall stranger in a blank white mask lurking near the outskirts, asking for children's names!"
-DLG_CEPOT_H01,Orang asing bertopeng? Untuk apa dia menanyai nama anak-anak?,A masked stranger? What does he want with children's names?
-DLG_CEPOT_V02,Mana kutahu! Pokoknya seram sekali! Makanya Bapak langsung menyuruh semua anak berkumpul di sanggar sekarang juga.,How should I know! It's creepy as hell! That's why Father ordered all the village kids into the sanggar right now.
-DLG_CEPOT_V03,"Ayo cepat masuk ke dalam, Bapak sudah menunggu kalian dari tadi!","Go on inside, quick! Father's been waiting for you both!"
+DLG_CEPOT_V01,"Nah! Kalian! Dari pasar, kan? Jadi kalian sudah dengar soal orang bertopeng itu. Bapak menyuruh semua anak masuk sanggar sekarang juga.","There you are! From the market, yes? So you've heard about the masked man. Father's ordered every child into the sanggar right now."
+DLG_CEPOT_H01,Kau yakin itu kabar benar?,Are you sure it's true?
+DLG_CEPOT_V02,"Peronda desa yang lihat sendiri. Jangkung, topeng putih polos, nanya nama anak-anak. Seram!","The village scouts saw him themselves. Tall, blank white mask, asking children's names. Creepy!"
+DLG_CEPOT_V03,"Ayo masuk. Bapak sudah menunggu, dan aku disuruh menghitung kepala. Jangan bikin aku salah hitung.","Come in. Father's waiting, and I'm meant to count heads. Don't make me lose count."
 DLG_CEPOT_V101,"Ayahku belum selesai bicara denganmu, kan? Temui dia dulu, baru kita ngobrol.","My father isn't done talking to you, is he? See him first, then we'll chat."
 DLG_CEPOT_H101,Cepot. Kau berteriak lagi.,Cepot. You're shouting again.
 DLG_CEPOT_V102,"Aku tidak berteriak, aku bercerita dengan semangat. Beda, tahu.","I'm not shouting, I'm telling it with enthusiasm. There's a difference."
@@ -3116,7 +3116,7 @@ BEAT_WRITE_6,Kau tak akan gagal. Kau tahu cara memegang.,You won't fail. You kno
 EPILOGUE_1_ALT,"Di barat Pamali, Ciung Wanara memerintah Sunda dengan adil, dan suatu pagi ia menyeberangi danau menemui seorang perempuan yang telah menunggu. Di danau, Nagawiru akhirnya tidur.","West of the Pamali, Ciung Wanara rules a fair Sunda, and one morning he crosses the lake to meet a woman who has waited. In the lake, Nagawiru sleeps at last."
 EPILOGUE_2_ALT,"Lengser mengadili si pembelot dengan adil. Kini ia memperbaiki tempayan istana, dan Galuh memberinya makan.","Lengser judged the deserter fairly. He mends the palace pots now, and Galuh feeds him."
 EPILOGUE_6_ALT,"Ruang kosong di Batu Leluhur tetap kosong. Di dekat panggung yang terbakar, seorang lelaki duduk tenang menonton abu, dan untuk pertama kalinya tak berusaha mengingat.","The blank space on the Ancestors' Stone stays blank. By the burned stage a man sits quietly watching the ashes, and for the first time isn't trying to remember."
-EPILOGUE_8,"`{name} & Laras\n\n` followed by the old EPILOGUE_6 ID text, unchanged (the title card; was EPILOGUE_7)","`{name} & Laras\n\n` followed by the old EPILOGUE_6 EN text, unchanged (THE LAST AKSARA, made by fatih, Codex %d%%)"
+EPILOGUE_8,"`{name} & Laras\n\n` followed by the old EPILOGUE_6 ID text, unchanged (the title card; was EPILOGUE_7)","`{name} & Laras\n\n` followed by the old EPILOGUE_6 EN text, unchanged (AKSARA KALA, made by fatih, Codex %d%%)"
 BEAT_EPI_WAKE_H2,Kali ini aku yang menang.,This time I win.
 BEAT_EPI_WAKE_5,"Wah, percaya diri. Cepat, Ibu sudah menyeduh teh. Dua cangkir, tentu saja.","Wow, confident. Hurry, Ibu's brewed the tea. Two cups, of course."
 BEAT_EPI_WAKE_6,"Di luar jendela, panggung ruwatan sedang didirikan. Seseorang di atasnya bersenandung, sumbang.","Outside the window the ruwatan stage is going up. Someone on it is humming, off-key."
@@ -3514,5 +3514,7 @@ DLG_PURWA_OLD_COUPLE_1,"Siapa... siapa kau, anak muda? Rumah ini terasa asing, d
 DLG_PURWA_OLD_COUPLE_2,Kabut hitam menelan matahari di atas Desa Purwa! Orang-orang berjalan linglung di lorong desa tanpa tahu ke mana harus pulang!,"Black mist swallowed the sun over Desa Purwa! Folks are wandering dazedly through the village lanes, unable to remember their own homes!"
 DLG_PURWA_OLD_COUPLE_3,Terima kasih... kau menyebutkan nama kami dan kisah pernikahan kami di balai desa. Kabut di kepalaku sirna! Jangan biarkan Kala menghapus kita semua!,Bless you... you spoke our true names and remembered our wedding by the banyan tree. The fog in my head broke! Don't let Kala erase our memories!
 BEAT_LONTAR_PICK_1,"Di atas daun lontar yang robek dan hangus di tepinya, sebuah aksara terukir gemetar dengan arang: ᮊ (Ka).","On the torn palm leaf, scorched along its edge, a single glyph is shakily carved in soot: ᮊ (Ka)."
-BEAT_LONTAR_PICK_H1,"Aksara Sunda 'Ka'... Laras mengukir ini untukku sebelum dibawa pergi. Aku harus segera membawa ini ke Ki Semar!","The Sundanese glyph 'Ka'... Laras carved this for me before being taken. I must bring this to Ki Semar at once!"
+BEAT_LONTAR_PICK_H1,Aksara Sunda 'Ka'... Laras mengukir ini untukku sebelum dibawa pergi. Aku harus segera membawa ini ke Ki Semar!,The Sundanese glyph 'Ka'... Laras carved this for me before being taken. I must bring this to Ki Semar at once!
 BEAT_LONTAR_PICK_2,"Garis-garis aksara Ka itu berpendar redup di telapak tanganmu, membimbing langkahmu kembali ke sanggar Ki Semar.","The lines of the Ka glyph faintly glow in your palm, guiding your steps back to Ki Semar's sanggar."
+MEM_K0_RUWATAN_4,"Empat lampu, empat sudut kelir. Selama semuanya menyala, Kala tak punya tempat berpijak.","Four lamps, four corners of the screen. While they all burn, Kala has nowhere to stand."
+MEM_K0_RUWATAN_5,Kau sampai di ujung kelir. Cerita ini tamat.,You reach the far edge of the screen. This story is finished.

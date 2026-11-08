@@ -36,7 +36,7 @@ static func save_language(lang: String) -> void:
 
 func _ready() -> void:
 	TranslationServer.set_locale(load_language())
-	DisplayServer.window_set_title("The Last Aksara")
+	DisplayServer.window_set_title("Aksara Kala")
 	_set_cursor()
 	# the desk, the open book, the candle's light (ui.md 4.1)
 	add_child(UIFx.rect_tex("title_desk", Vector2.ZERO))
@@ -87,21 +87,21 @@ func _ready() -> void:
 	_logo_wipe.size = Vector2(0, 100)
 	_logo_wipe.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(_logo_wipe)
-	var top := UIFx.label("THE LAST", 12, UIFx.INK_HEAD, true)
-	top.add_theme_constant_override("outline_size", 0)
-	top.size = Vector2(156, 16)
-	top.position = Vector2(0, 4)
-	top.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_logo_wipe.add_child(top)
-	var title := UIFx.label("AKSARA", 30, UIFx.INK, true)
+	var title := UIFx.label("AKSARA KALA", 24, UIFx.INK, true)
 	title.add_theme_constant_override("outline_size", 0)
-	title.size = Vector2(156, 40)
-	title.position = Vector2(0, 20)
+	title.size = Vector2(156, 32)
+	title.position = Vector2(0, 10)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_logo_wipe.add_child(title)
+	var sub := UIFx.label("The Script of Time", 10, UIFx.INK_HEAD, true)
+	sub.add_theme_constant_override("outline_size", 0)
+	sub.size = Vector2(156, 16)
+	sub.position = Vector2(0, 44)
+	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_logo_wipe.add_child(sub)
 	var rule := TextureRect.new()
 	rule.texture = UIFx.tex("divider")
-	rule.position = Vector2(46, 68)
+	rule.position = Vector2(46, 66)
 	_logo_wipe.add_child(rule)
 	_sub = UIFx.label("ꦲꦏ꧀ꦱꦫ  ·  ᮃᮊ᮪ᮞᮛ", 10, UIFx.INK_DIM)   # "aksara" in Javanese and Sundanese: the one cultural nod
 	_sub.add_theme_constant_override("outline_size", 0)

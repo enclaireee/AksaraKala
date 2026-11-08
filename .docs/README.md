@@ -1,4 +1,4 @@
-# The Last Aksara (code name Budayago): Design Documentation
+# Aksara Kala (The Script of Time): Design Documentation
 
 Top-down 2D pixel-art action RPG set in the mythical folklore and landscapes of Java and Sunda. Real-time action combat combined with an authentic spellcasting mechanic: drawing Aksara Sunda and Aksara Jawa script with the mouse to unleash spells.
 

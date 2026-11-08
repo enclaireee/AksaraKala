@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Main-screen art for The Last Aksara: an open leather-bound book on a dark desk, candle, ink pot and quill.
+"""Main-screen art for Aksara Kala: an open leather-bound book on a dark desk, candle, ink pot and quill.
 Run: python3 tools/gen_title_book.py   Output: assets/art/ui/title_*.png and tools/title_book_preview.png
 Pure Python via gen_ui.Img. Light comes from the candle at the right.
 """

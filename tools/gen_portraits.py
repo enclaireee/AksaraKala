@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The Last Aksara class-select figures (96x128, 6-frame idle each).
+"""Aksara Kala class-select figures (96x128, 6-frame idle each).
 
 Outputs assets/art/portraits/class_{warrior,archer,rogue,mage}.png (each a 576x128 strip of 6 frames of 96x128)
 and tools/portraits_preview.png (all four strips at 2x on a dark ground).

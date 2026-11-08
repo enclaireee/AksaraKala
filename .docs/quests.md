@@ -82,7 +82,7 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 
 | Quest | Part | Areas | Chapters | Steps | Target Min | Region |
 |-------|------|-------|----------|-------|------------|--------|
-| MQ0 | Prologue "Sehari di Desa Purwa" | 1 | 3 | 12 | 80 | Desa Purwa |
+| MQ0 | Prologue "The Last Ordinary Day" | 1 | 3 | 12 | 80 | Desa Purwa |
 | MQ1 | Act I "Segel Kawah" | 8 | 5 | 24 | 210 | Tatar Sunda |
 | MQG | Act II "Wajah Pinjaman" | 7 | 4 | 20 | 175 | Keraton Galuh |
 | MQ2 | Act III "Darah di Pamali" | 8 | 5 | 24 | 220 | Mataram |
@@ -116,7 +116,7 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 
 ---
 
-### MQ0 Prologue: "Sehari di Desa Purwa" / "A Day in Desa Purwa" (Desa Purwa, 12 steps, ~80 min)
+### MQ0 Prologue: "Hari Biasa Terakhir" / "The Last Ordinary Day" (Desa Purwa, 12 steps, ~80 min)
 Regional character: **Ibu**. Chapters: Morning and Market, The Sanggar and the Ruwatan Night, The Morning After.
 
 | # | Objective (EN) | Objective (ID) | Completes on | Play |
@@ -125,9 +125,9 @@ Regional character: **Ibu**. Chapters: Morning and Market, The Sanggar and the R
 | 0.1 | Catch Laras: she dares you to a game of tag across Desa Purwa | Tangkap Laras: dia menantangmu bermain kejar-kejaran melintasi Desa Purwa | `area_entered:purwa_tag_end`, sets `mq0_d1` (teaches move and dodge; Laras calls a stray cat and the old banyan by their true names) | `setpiece, talk` |
 | 0.2 | Share morning tea with Ibu and hear the old couple's request | Minum teh pagi bersama Ibu dan dengarkan permintaan pasangan tua di sebelah | `talked_to:ibu`, sets `mq0_d2` (two cups set out); then `talked_to:purwa_old_couple`, sets `mq0_d2b` | `talk x2, clue, beat` |
 | 0.3 | Climb the banyan ridge and fetch Ciung Wanara and his strange egg | Daki punggung beringin dan jemput Ciung Wanara beserta telurnya yang aneh | `puzzle_solved:purwa_banyan_climb`; then `talked_to:ciung_wanara`, sets `mq0_d3` (Laras: "Ciung isn't his whole name") | `travel, puzzle, talk` |
-| 0.4 | Head to the village sanggar in the west and talk to Cepot about the village commotion | Pergi ke sanggar di barat desa dan temui Cepot yang cemas di depan pintu | `talked_to:cepot`, sets `mq0_d6` ("Cepot warns of a tall man in a blank mask asking children's names; Semar ordered everyone inside") | `travel, clue, talk` |
+| 0.4 | Walk the morning market and ask the stall-keeper about the masked stranger, then find Cepot at the sanggar door | Susuri pasar pagi dan tanya penjaga lapak soal orang bertopeng, lalu temui Cepot di depan pintu sanggar | `talked_to:purwa_stall`; then `talked_to:cepot`, sets `mq0_d6` (the stall-keeper describes a tall man in a blank mask asking children's names; Cepot hurries everyone inside) | `travel, clue, talk x2` |
 | **Ch 2** | **Sanggar dan Malam Ruwatan / The Sanggar and the Ruwatan Night** | | | |
-| 0.5 | Speak with Ki Semar inside the sanggar to prepare the protective lontar for tonight's Ruwatan | Bicara dengan Ki Semar di dalam sanggar untuk mempersiapkan lontar pelindung Ruwatan | `talked_to:semar`, sets `mq0_d4` | `travel, talk, lesson` |
+| 0.5 | Meet Semar and Cepot inside the sanggar | Temui Semar dan Cepot di dalam sanggar | `talked_to:semar`, sets `mq0_d4`; then `talked_to:cepot`, sets `mq0_d4b` (Semar: a written name keeps a person in the world; Cepot fusses over the lamps) | `travel, talk x2, lesson` |
 | 0.6 | Write your name and Laras's name at opposite ends of her palm-leaf lontar | Tuliskan namamu dan nama Laras di kedua ujung daun lontarnya | `area_entered:sanggar_lontar`, sets `mq0_d5` | `puzzle, write, beat` |
 | 0.7 | Help light the four ceremonial oil lamps around the wayang stage at dusk | Bantu nyalakan empat lampu minyak upacara di sekeliling panggung wayang saat senja | `puzzle_solved:purwa_stage_lamps`, sets `mq0_d6b` | `travel, puzzle, talk` |
 | 0.8 | Play Semar's wayang ruwatan behind the lit kelir (`K0`) | Mainkan wayang ruwatan Semar di balik kelir yang menyala (`K0`) | `memory_done:k0_ruwatan`, sets `mq0_d7` (teaches Kelir light mechanics, Batara Kala, and the Four Great Seals) | `memory, beat` |

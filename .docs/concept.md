@@ -1,14 +1,23 @@
-# Concept
+# Concept: Aksara Kala
 
-**Title:** The Last Aksara (code name Budayago)  
+**Title:** Aksara Kala (The Script of Time)  
 **Genre:** Top-down 2D action RPG featuring real-time combat, responsive movement, and classic RPG depth (connected world, character stats, equipment, checkpoints, NPCs, quests).  
 **Engine:** Godot 4.7. **Platform:** PC (macOS, Windows, Linux), with Web export planned.  
 **Setting:** The mythical lands of Sunda and Java, rooted in classical folklore, architecture, and living heritage.
 
 ---
 
-## One-Line Pitch
-Learn to write the lost aksara of Java and Sunda, wielding them as dynamic spells to unravel an ancient curse of forgetting and rescue your sister Laras.
+## Deskripsi Singkat & Pitch
+Aksara Kala (The Script of Time) adalah game RPG petualangan berbasis legenda Nusantara. Pelajari dan tulis aksara tradisional Jawa dan Sunda yang hilang, merapalkannya sebagai mantra dinamis untuk memecahkan kutukan lupa kuno dan menyelamatkan adikmu, Laras.
+
+---
+
+## Akar Budaya & Makna Judul (Bobot Budaya 25%)
+Nama **Aksara Kala** berakar langsung pada mitologi dan tradisi Nusantara:
+- ***Aksara*** adalah tulisan tradisional (Aksara Sunda dan Aksara Jawa) yang di dalam game menjadi sumber sihir dan penjaga nama. Setiap goresan yang dipelajari dan digambar pemain berfungsi memulihkan jati diri serta ingatan dunia yang terhapus oleh kutukan.
+- ***Kala*** merujuk kepada Batara Kala, figur mitologis penjaga waktu dan takdir, sekaligus secara harfiah berarti "waktu".
+
+Penjelasan ini menunjukkan judul karya memiliki akar budaya yang kokoh dan menyatu dengan inti mekanik serta narasi, bukan sekadar label estetika.
 
 ---
 

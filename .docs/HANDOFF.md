@@ -1,11 +1,11 @@
-# The Last Aksara (code name Budayago): Session Handoff
+# Aksara Kala (The Script of Time): Session Handoff
 
-Current development status and architecture reference for Budayago as of **2026-11-08**.
+Current development status and architecture reference for Aksara Kala as of **2026-11-08**.
 
 ---
 
 ## 1. Project Overview
-- **Title:** The Last Aksara (code name Budayago)
+- **Title:** Aksara Kala (The Script of Time)
 - **Genre:** Top-down 2D pixel-art action RPG set in the mythical folklore and living heritage of Java and Sunda.
 - **Engine:** Godot 4.7 (`res://project.godot`), GDScript.
 - **Platform:** macOS, Windows, Linux (Compatibility renderer, web export ready).
@@ -123,7 +123,7 @@ Current development status and architecture reference for Budayago as of **2026-
 - Follow token-efficiency protocol: read targeted line ranges, do not read full massive files unnecessarily.
 - Never commit, push, or delete files without explicit user request.
 - Run headless tests and verification scripts before concluding tasks.
-- 2026-11-08: UI retheme to parchment and ink (tools/gen_ui_rpg.py, gen_title_book.py, gen_speaker_portraits.py); fonts Almendra; game renamed The Last Aksara (visible text only, project name unchanged). See ui.md 0, 4.1, 5.
+- 2026-11-08: UI retheme to parchment and ink (tools/gen_ui_rpg.py, gen_title_book.py, gen_speaker_portraits.py); fonts Almendra; game titled Aksara Kala (The Script of Time). See ui.md 0, 4.1, 5.
 - 2026-11-08: Menu, class and portrait redesign approved. Pause menu becomes the field book with 7 tabs (new Penuntun/Controls, illustrated world map, codex list/detail) per ui.md 4.3; classes become Hulubalang / Pamanah / Pendekar / Wiku (classes.md "Identity", ids unchanged); speaker portraits move to 48x48 with expressions (ui.md 3.1); new unique busts for Ciung Wanara, Bondowoso, Dayang Sumbi, Purbasari and Nawang Wulan are remapped in ui/portraits.gd.
 - 2026-11-08: UI polish pass (untested, no Godot in the cloud box): Jersey 10/15 pixel fonts replace Crimson/Almendra (theme + overrides, sizes 10/15); dialogue box recentred with the portrait inside and the text centred; world prompt is a keycap pill; quest-updated banner shows only the quest name; dialogue focus dim (ui/fx/focus_dim.gdshader) replaces the heavy vignette feel; glyph lesson card moved to the right edge with pips; cast result text unscaled and centred over the stroke. Run the tests and eyeball every screen.
 - 2026-11-08: Story-prop pass, Prologue + Act I (untested, no Godot in the cloud box). Every clue, codex spot, angklung and quest-trigger object now has its own sprite: `tools/gen_story_props.py` -> `assets/art/story/<id>.png`, loaded by `entities/world/story_art.gd` (used by clue.gd, pickup.gd, trigger.gd); the write card shows a lontar leaf and lamp (`ui/glyph_lesson.gd`, `assets/art/ui/lontar_card.png`). NPC sheet rows 12 (masked stranger: hunter, captain seen, new `market_stranger` by the Desa Purwa stall, legend `|`) and 13 (faceless deserter). MQ1 step 1.5 sub-goals have their own markers (the arrow points at the gorge hamlet after Ga). Later acts still use the generic note icon for clues: extend `STORY` in the generator. Run `--import`, `quest_data_test`, `art_test`, `zone_build_test`, then look at the sanggar, market, hamlet and crater.

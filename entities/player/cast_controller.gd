@@ -102,7 +102,7 @@ func release() -> void:
 		_fizzle(tr("UI_FIZZLE_NEEDS") % ceili(SpellUtil.cost(player, spell)))
 	else:
 		_exit_cast_mode()
-		var perfect := r.score >= SpellUtil.PERFECT_SCORE and power >= 1.0
+		var perfect: bool = r.score >= SpellUtil.PERFECT_SCORE and power >= 1.0
 		var variant := SpellVariants.title(glyph.id, SpellUtil.class_id(player))   # the class's own spell, if it has one
 		overlay.finish(true, "%s · %s" % [glyph.latin.capitalize(), variant if variant != "" else tr(spell.title)], {
 			glyph_id = glyph.id, perfect = perfect, power = power, cost = SpellUtil.cost(player, spell),

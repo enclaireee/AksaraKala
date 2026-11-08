@@ -5,12 +5,12 @@ Q_MQ0_S1_OBJ,"Ajak Laras main kejar-kejaran dan tangkap dia di sumur tua, tak ja
 Q_MQ0_S2_OBJ,"Cari tahu apa yang dibutuhkan pasangan tua: minum teh bersama Ibu, lalu temui mereka.","Hear what the old couple need: share tea with Ibu, then visit them in the southeast."
 Q_MQ0_S1_HINT,"Kejar Laras dengan {move}, dan tekan {dodge} untuk melewati rintangan dengan cepat.","Chase Laras with {move}, and press {dodge} to dash past obstacles."
 Q_MQ0_S2_HINT,"Tekan {interact} pada Ibu, lalu pada pasangan tua di depan rumah mereka.","Press {interact} on Ibu, then on the old couple outside their house."
-Q_MQ0_S4_HINT,"Tekan {interact} di dekat Cepot di depan pintu sanggar, di sisi barat desa.","Press {interact} near Cepot in front of the sanggar, on the west side of the village."
-Q_MQ0_S5_HINT,Masuk ke sanggar dan tekan {interact} pada Ki Semar.,Enter the sanggar and press {interact} on Ki Semar.
+Q_MQ0_S4_HINT,"Tekan {interact} pada penjaga lapak di pasar, lalu pada Cepot di sanggar.","Press {interact} on the stall-keeper in the market, then on Cepot at the sanggar."
+Q_MQ0_S5_HINT,"Masuk ke sanggar, bicara dengan Ki Semar, lalu dengan Cepot.","Enter the sanggar, talk to Ki Semar, then to Cepot."
 Q_MQ0_S6_HINT,Jalan dengan {move} ke meja lontar di sanggar.,Walk with {move} to the lontar table in the sanggar.
 Q_MQ0_S3_OBJ,Cari tahu telur aneh Ciung Wanara: panjat pohon beringin besar di barat daya desa.,Find out about Ciung Wanara's strange egg: climb the great banyan in the southwest.
-Q_MQ0_S4_OBJ,Pergi ke sanggar desa di sebelah barat dan temui Cepot.,Head to the village sanggar in the west and talk to Cepot.
-Q_MQ0_S5_OBJ,Bicara dengan Ki Semar di dalam sanggar untuk mempersiapkan Ruwatan.,Speak with Ki Semar inside the sanggar to prepare for the Ruwatan.
+Q_MQ0_S4_OBJ,"Susuri pasar pagi dan tanya penjaga lapak soal orang bertopeng, lalu temui Cepot di sanggar","Walk the morning market and ask the stall-keeper about the masked stranger, then find Cepot at the sanggar"
+Q_MQ0_S5_OBJ,Temui Semar dan Cepot di dalam sanggar,Meet Semar and Cepot inside the sanggar
 Q_MQ0_S6_OBJ,Agar kalian tetap tercatat: tulis namamu dan nama Laras di lontarnya di meja sanggar.,So you both stay on record: write your name and Laras's on her lontar at the sanggar.
 Q_MQ0_S7_OBJ,Siapkan panggung wayang malam ini: nyalakan empat lampu upacaranya saat senja.,Ready the wayang stage for tonight: light its four ceremonial lamps at dusk.
 Q_MQ1_S1_OBJ,"Temukan jejak Laras: temui cucu sesepuh di teras kebun teh, cari pitanya yang jatuh.","Pick up Laras's trail: meet the elder's grandson at the tea terraces, find her ribbon."
@@ -179,11 +179,11 @@ Q_MQ0_S8_HINT,"Tekan {interact} pada lampu di belakang kelir, dan tetaplah di ca
 Q_MQ0_S1_DONE,"Aku mengejar Laras sampai ke sumur tua. Ia memanggil seekor kucing liar dengan nama aslinya, dan kucing itu datang padanya.","I chased Laras to the old well. She called a stray cat by its real name, and it came to her."
 Q_MQ0_S2_DONE,Kami minum teh melati bersama Ibu. Pasangan tua di sebelah rumah lalu memintaku menjemput Ciung.,"We drank jasmine tea with Ibu, and the old couple next door asked me to fetch Ciung."
 Q_MQ0_S3_DONE,"Aku memanjat punggung beringin, dan Ciung turun dengan telur anehnya di pelukan.","I climbed the banyan ridge, and Ciung came down holding his strange egg."
-Q_MQ0_S4_DONE,Cepot memperingatkan kami: peronda desa melihat pria jangkung bertopeng polos menanyai nama anak-anak. Semar menyuruh kami segera masuk.,Cepot warned us: village scouts spotted a tall man in a blank mask asking for children's names. Semar wants us inside at once.
-Q_MQ0_S5_DONE,Ki Semar menjelaskan bahwa upacara Ruwatan dan nama yang terukir di daun lontar akan melindungi jiwa kami dari Batara Kala.,Ki Semar explained that the Ruwatan ceremony and the names inscribed on the lontar will protect our souls from Batara Kala.
+Q_MQ0_S4_DONE,Penjaga lapak bilang seorang lelaki jangkung bertopeng polos menanyai nama anak-anak. Cepot buru-buru menyuruh kami masuk.,The stall-keeper said a tall man in a blank mask was asking children's names. Cepot hurried us inside.
+Q_MQ0_S5_DONE,"Semar bilang nama yang ditulis menahan seseorang di dunia, dan Cepot ribut soal lampu.","Semar said a written name keeps a person in the world, and Cepot fussed about the lamps."
 Q_MQ0_S6_DONE,"Laras dan aku menulis nama kami di kedua ujung satu lontar, memakai pena bambu milik Semar.","Laras and I wrote our names at opposite ends of one lontar, using Semar's bamboo pen."
 Q_MQ0_S7_DONE,Aku dan Laras menyalakan empat lampu di sekeliling panggung saat senja turun.,Laras and I lit four lamps around the stage as dusk fell.
-Q_MQ0_S8_DONE,"Aku melihat Semar memainkan ruwatan di balik kelir: Batara Kala, Empat Segel, dan nama-nama anak dibacakan keras-keras.","I watched Semar play the ruwatan behind the kelir: Batara Kala, the Four Seals, and the children's names read aloud."
+Q_MQ0_S8_DONE,Aku melihat Semar memainkan ruwatan di balik kelir: Batara Kala dan nama-nama anak dibacakan.,"I watched Semar play the ruwatan behind the kelir: Batara Kala, and the children's names read aloud."
 Q_MQ0_S9_DONE,"Bayangan melangkah keluar dari layar. Pemburu itu membawa Laras pergi, dan lontar kami sobek di tengah.","The shadows stepped off the screen. The Hunter took Laras, and our lontar tore in two."
 Q_MQ1_S1_DONE,"Kabut subuh memuntahkan para penyergap, dan aku berhasil mematahkan mereka. Di antara rumpun bambu kutemukan pita Laras, dan aku tahu dia benar-benar dibawa pergi.","The ambushers came out of the dawn mist and I broke them. Among the bamboo I found Laras's ribbon, and I knew she had truly been taken."
 Q_MQ1_S2_DONE,"Perkemahan pengintai Tanpa Rupa sudah kubersihkan. Daftar mereka penuh coretan, tapi nama Laras belum dicoret.","I cleared the Faceless scout camp. Their lists had been crossed out, but Laras's name had not."
@@ -257,7 +257,7 @@ Q_MQ5_S9_DONE,"Di petilasan terakhir Semar menjaga apinya, dan kuputar ulang nam
 Q_SQ_S1_S5_OBJ,"Kabari Ki Darsa bagaimana dongengnya berakhir, kembali ke kampung",Let Ki Darsa know how the tale ended: return to him in the kampung
 Q_SQ_S2_S5_OBJ,Kembalikan nama perempuan yang terlupa: bantu kepala desa memahatnya di nisannya,Give the forgotten woman her name back: help the village head carve it on her grave marker
 Q_MQ0_S10_OBJ,"Apa yang terjadi pada Laras? Tanya Ibu, lalu ambil separuh lontarnya di panggung yang terbakar.","What happened to Laras? Ask Ibu, then recover her half of the lontar at the burned stage."
-Q_MQ0_S11_OBJ,"Bawa sobekan lontar Laras ke Ki Semar di sanggar untuk memahami aksara Ka.","Bring Laras's torn lontar to Ki Semar at the sanggar to understand the Ka glyph."
+Q_MQ0_S11_OBJ,Bawa sobekan lontar Laras ke Ki Semar di sanggar untuk memahami aksara Ka.,Bring Laras's torn lontar to Ki Semar at the sanggar to understand the Ka glyph.
 Q_MQ0_S12_OBJ,"Usir penyerbu Tanpa Rupa dari alun-alun, lalu lihat siapa yang menunggu di gerbang barat.","Drive the Faceless raiders from the square, then see who waits at the west gate."
 Q_MQ1_S16_OBJ,Temukan sumber luapan danau: susuri tepi sungai yang terbendung dan atasi penjaga kawah di hulu.,Find the source of the lake overflow: follow the dammed river trail and defeat the crater sentries upstream.
 Q_MQ1_S17_OBJ,Selidiki sumbatan danau: periksa gelondongan kayu tebangan kuno yang menahan aliran air ke lembah.,Investigate the lake blockage: inspect the ancient felled timber damming the waters from reaching the valley.
@@ -432,9 +432,9 @@ Q_MQ0_S5_P1,"Bicara dengan Semar, dalang desa, di dalam sanggar.","Talk to Semar
 Q_MQ0_S5_P2,Bicara dengan Cepot yang berdiri di samping Semar.,"Talk to Cepot, standing beside Semar."
 Q_MQ0_S10_P1,"Tanya Ibu soal Laras di rumahmu, sebelah selatan alun-alun.","Ask Ibu about Laras at your house, south of the square."
 Q_MQ0_S10_P2,Ambil separuh lontar Laras di panggung wayang yang terbakar.,Pick up Laras's half of the lontar on the burned wayang stage.
-Q_MQ0_S11_P0,"Temui Ki Semar di dalam sanggar untuk menunjukkan sobekan lontar Laras.","Meet Ki Semar inside the sanggar to show him Laras's torn lontar."
-Q_MQ0_S11_P1,"Pelajari aksara Ka yang terukir di lontar Laras.","Learn the Ka glyph inscribed on Laras's lontar."
-Q_MQ0_S11_P2,"Rapalkan aksara Ka untuk menguji kekuatannya.","Cast the Ka glyph to test its power."
+Q_MQ0_S11_P0,Temui Ki Semar di dalam sanggar untuk menunjukkan sobekan lontar Laras.,Meet Ki Semar inside the sanggar to show him Laras's torn lontar.
+Q_MQ0_S11_P1,Pelajari aksara Ka yang terukir di lontar Laras.,Learn the Ka glyph inscribed on Laras's lontar.
+Q_MQ0_S11_P2,Rapalkan aksara Ka untuk menguji kekuatannya.,Cast the Ka glyph to test its power.
 Q_MQ0_S12_P1,Kalahkan semua penyerbu Tanpa Rupa di alun-alun.,Defeat all the Faceless raiders in the square.
 Q_MQ0_S12_P2,"Keluar lewat gerbang barat menuju Tatar Sunda, dataran tinggi.","Walk out the west gate into Tatar Sunda, the highlands."
 Q_MQ1_S1_P1,"Tanya cucu sesepuh, yang menunggu di jalan dekat tepi teras, apa yang ia lihat.","Ask the elder's grandson, waiting on the road at the terrace edge, what he saw."
@@ -582,3 +582,5 @@ Q_SQ_T4_DESC,"Pemimpin rombongan kuda lumping yang berkemah di Beringin kehilang
 Q_MQ5_DESC,"Jejak Laras berakhir di Rahang Waktu, gerbang hitam Gua Kala, tempat Ciung Wanara dan Hariang Banga sudah menahan pelataran melawan bayangan. Masuk ke sana berarti mengikuti jejak yang direbut sang raksasa waktu. Mungkinkah seorang adik dipanggil pulang dari tempat yang memakan nama?","Laras's trail ends at the Maw of Time, the black gate of Gua Kala, where Ciung Wanara and Hariang Banga are already holding the courtyard against the shadows. Going in means following the path the time giant took from her. Can a sister be called home from a place that eats names?"
 Q_SQ_K1_DESC,"Damar, anak nelayan di pantai, minta bantuan: badai semalam menghempaskan sarang penyu ke balik bukit pasir dan tiga tukik tersesat jauh dari laut. Sang pejuang setuju mencari mereka, tapi matahari makin terik. Akankah tukik-tukik kecil itu kembali ke air tepat waktu?","Damar, the fisher child on the beach, needs help: last night's storm threw a turtle nest over the dunes and three hatchlings lie stranded far from the sea. The warrior agrees to look, but the sun is climbing. Will the little turtles reach the water in time?"
 Q_SQ_K2_DESC,"Pak Raka, nelayan tua di pondok karang, kehilangan jaring demi jaring di muara sungai. Ia ingin pahlawan itu mencari tahu apa yang merobeknya sebelum nelayan lain ikut kehilangan. Apakah itu sekadar predator lapar, atau sesuatu yang lebih tua dari teluk ini?","Pak Raka, the old fisherman at the reef hut, keeps losing nets at the river mouth. He wants the warrior to find what tears them before the other fishers lose their gear too. Is it just a hungry predator, or something older than this cove?"
+Q_MQ0_S4_P1,Tanya penjaga lapak soal orang asing bertopeng polos.,Ask the stall-keeper about the stranger in the blank mask.
+Q_MQ0_S4_P2,Temui Cepot di depan pintu sanggar.,Meet Cepot at the sanggar door.

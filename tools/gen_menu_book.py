@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The Last Aksara: art for the pause/Tab menu "field book" (ui.md 4.3, 5).
+"""Aksara Kala: art for the pause/Tab menu "field book" (ui.md 4.3, 5).
 Leather cover, two parchment pages with a very faint kawung tile, spine shadow, carved (ukiran) corner pieces,
 tab ribbons, footer band, wax seals, stat icons, pips, ground disc, paper-doll outline, NEW dot, tab icons.
 Ornament is kawung and plain tooled leather only. Parang Rusak is never used (restricted court motif).

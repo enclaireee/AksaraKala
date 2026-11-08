@@ -30,16 +30,16 @@ marker = {"zone": "desa_purwa", "id": "purwa_banyan_climb"}
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ0_S4_OBJ"
-on = "talked_to:cepot"
+all = [{"on": "talked_to:purwa_stall", "set_flag": "", "objective": "Q_MQ0_S4_P1", "marker": {"zone": "desa_purwa", "id": "purwa_stall"}}, {"on": "talked_to:cepot", "set_flag": "", "objective": "Q_MQ0_S4_P2", "marker": {"zone": "desa_purwa", "id": "cepot"}}]
 set_flag = "mq0_d6"
 recap = "Q_MQ0_S4_DONE"
-marker = {"zone": "desa_purwa", "id": "cepot"}
+marker = {"zone": "desa_purwa", "id": "purwa_stall"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ0_S5_OBJ"
-on = "talked_to:semar"
-set_flag = "mq0_d4"
+all = [{"on": "talked_to:semar", "set_flag": "mq0_d4", "objective": "Q_MQ0_S5_P1", "marker": {"zone": "desa_purwa", "id": "semar"}}, {"on": "talked_to:cepot", "set_flag": "mq0_d4b", "objective": "Q_MQ0_S5_P2", "marker": {"zone": "desa_purwa", "id": "cepot"}}]
+set_flag = "mq0_d4b"
 recap = "Q_MQ0_S5_DONE"
 marker = {"zone": "desa_purwa", "id": "semar"}
 

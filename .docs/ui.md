@@ -79,11 +79,11 @@ Story beats and cinematic conversations feature automated and scripted scene dir
 
 All menus pause world processing (`process_mode = PROCESS_MODE_ALWAYS` on UI). `Esc` navigates back one level.
 
-### 4.1 Title Screen (The Last Aksara)
+### 4.1 Title Screen (Aksara Kala)
 - An open leather-bound book on a dark wooden desk, lit by a flickering candle at the right; a quill and ink pot, a rolled scroll and a wax seal lie on the desk; dust motes drift up through the candlelight. Art: `title_desk`, `title_book`, `title_candle`, `title_inkpot`, `title_scroll`, `title_seal` (`tools/gen_title_book.py`).
-- Left page: the logo "THE LAST / AKSARA" inked in with a left-to-right wipe, a divider, and the word "aksara" in Javanese and Sundanese script.
+- Left page: the logo "AKSARA KALA" inked in with a left-to-right wipe, subtitle "The Script of Time", a divider, and the word "aksara" in Javanese and Sundanese script.
 - Left page also has an ink sketch (hills, sun, river). Right page: menu entries (Continue when a save exists, New Game, Quit) in bold ink with a wax-red diamond cursor; the overwrite question replaces the menu on the same page. Below the menu the 20 Javanese hanacaraka letters appear one by one and one glows wax red at a time.
-- ID | EN language toggle on the desk, top right. The window title is set to "The Last Aksara" at runtime (the Godot project name stays `THE LAST AKSARA` so the save folder does not move).
+- ID | EN language toggle on the desk, top right. The window title is set to "Aksara Kala" at runtime, matching the Godot project name.
 
 ### 4.2 Class Selection (Elden Style)
 - **Left Column:** List of 4 classes (Hulubalang, Pamanah, Pendekar, Wiku; see classes.md "Identity") in Almendra Display 10 with wax-red lozenge selector.
