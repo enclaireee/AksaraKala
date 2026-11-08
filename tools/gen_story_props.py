@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Story props: one sprite per examinable clue, codex spot, pickup and quest-trigger object in the Prologue and Act I
-(Desa Purwa, Tatar Sunda), so no objective sits on empty floor. Output: assets/art/story/<id>.png (ids are the zone
+"""Story props: one sprite per examinable clue, codex spot, pickup and quest-trigger object (Prologue and Act I here; Acts II-VI,
+the checkpoint shrines and the shortcut gates in gen_story_props_late.py), so no objective sits on empty floor. Output: assets/art/story/<id>.png (ids are the zone
 legend's clue_id / item_id / codex_id / trigger_id; loaded by entities/world/story_art.gd) and
 assets/art/ui/lontar_card.png (the write card's leaf). Run: python3 tools/gen_story_props.py
 Sprites are drawn bottom-centre: the node origin is the object's feet.
@@ -521,6 +521,9 @@ def lontar_card():  # the write card's leaf (a lontar palm-leaf strip with cord 
 
 
 def main():
+    import gen_story_props_late as late   # Acts II-VI, shrines and gates
+    STORY.update(late.STORY)
+    NO_OUTLINE.update(late.NO_OUTLINE_LATE)
     imgs = []
     for name, fn in STORY.items():
         c = fn()
@@ -530,7 +533,7 @@ def main():
     px.save(lontar_card().im, "ui/lontar_card.png")
     print("wrote", len(imgs), "story sprites")
     # contact sheet
-    W = 8
+    W = 14
     sheet = Image.new("RGBA", (W * 72, ((len(imgs) + W - 1) // W) * 56), (70, 96, 70, 255))
     for i, (_, im) in enumerate(imgs):
         im = im if im.width <= 68 and im.height <= 52 else im.crop((0, 0, 68, 52))

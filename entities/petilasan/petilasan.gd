@@ -14,6 +14,33 @@ func _ready() -> void:
 	body_entered.connect(func(b: Node) -> void: _set_near(b, true))
 	body_exited.connect(func(b: Node) -> void: _set_near(b, false))
 	prompt.visible = false
+	if _art() != null:   # a drawn shrine replaces the placeholder polygons
+		for n in ["Base", "Stone", "Flame"]:
+			get_node(n).visible = false
+		queue_redraw()
+
+
+## Shrine sprite by region, picked from the zone scene name (tools/gen_story_props_late.py).
+func _art() -> Texture2D:
+	var zone := get_tree().current_scene.scene_file_path.get_file().get_basename()
+	var region := "sunda"
+	if zone.begins_with("kg_"):
+		region = "galuh"
+	elif zone.begins_with("mt_"):
+		region = "mataram"
+	elif zone.begins_with("sk_"):
+		region = "kidul"
+	elif zone.begins_with("tt_"):
+		region = "timur"
+	elif zone.begins_with("gk_"):
+		region = "kala"
+	return StoryArt.tex("petilasan_" + region)
+
+
+func _draw() -> void:
+	var art := _art() if is_inside_tree() else null
+	if art != null:
+		StoryArt.draw_standing(self, art, Vector2(0, 6))
 
 
 func _set_near(b: Node, on: bool) -> void:

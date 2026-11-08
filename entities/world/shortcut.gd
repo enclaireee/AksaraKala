@@ -30,6 +30,10 @@ func _ready() -> void:
 
 func _draw() -> void:
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE * block)
+	var art := StoryArt.tex("gate_" + id.trim_prefix("sc:"))   # tools/gen_story_props_late.py
+	if art != null:
+		draw_texture(art, -art.get_size() * 0.5)
+		return
 	for i in 4:   # placeholder bamboo bars
 		draw_rect(Rect2(-7 + i * 4, -8, 2, 16), Color(0.55, 0.6, 0.25))
 	draw_rect(Rect2(-8, -3, 16, 2), Color(0.4, 0.3, 0.15))
