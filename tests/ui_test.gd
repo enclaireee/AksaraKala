@@ -43,18 +43,18 @@ func run() -> void:
 
 	menu.open()
 	check(paused, "menu pauses the tree")
-	for s in menu._raise:
-		check(menu._raise[s].disabled, "level-up disabled outside petilasan")
+	for s in menu.tab(0).raise:
+		check(menu.tab(0).raise[s].disabled, "level-up disabled outside petilasan")
 	menu.close()
 	check(not paused, "menu unpauses the tree")
 
 	game.ilmu = 1000
 	var before: int = game.stats.vit
 	menu.open(true)
-	check(not menu._raise.vit.disabled, "level-up enabled at petilasan")
-	menu._raise.vit.pressed.emit()
+	check(not menu.tab(0).raise.vit.disabled, "level-up enabled at petilasan")
+	menu.tab(0).raise.vit.pressed.emit()
 	check(game.stats.vit == before, "raise needs confirm")
-	menu._confirm_yes.pressed.emit()
+	menu.tab(0).confirm_yes.pressed.emit()
 	check(game.stats.vit == before + 1, "confirm raises the stat")
 	menu.close()
 
@@ -281,7 +281,7 @@ func run() -> void:
 	game.flags["clue_unknown"] = true   # no note key: skipped
 	menu.refresh()
 	var texts := PackedStringArray()
-	for l in menu._journal.find_children("*", "Label", true, false):
+	for l in menu.tab(2).detail.find_children("*", "Label", true, false):
 		texts.append(l.text)
 	check("recap zero" in texts and "recap two" not in texts and "recap one" not in texts, "recap lists steps below current, skips empty: %s" % str(texts))
 	check("Ash by the door" in texts and texts.size() >= 2, "clue note listed from flags")

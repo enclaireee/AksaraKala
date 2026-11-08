@@ -89,13 +89,13 @@ func run() -> void:
 	var menu: GameMenu = load("res://ui/menu.tscn").instantiate()
 	root.add_child(menu)
 	await process_frame
-	for i in 4:
+	for i in 7:
 		menu._last_tab = i
 		menu.open()
 		check(menu._tabs.current_tab == i, "menu reopens on tab %d" % i)
 		await process_frame
-	check(menu._journal.get_child_count() >= 1, "journal builds")
-	check(menu._codex.get_child_count() >= 1, "codex builds")
+	check(menu.tab(2).detail.get_child_count() >= 1, "journal builds")
+	check(menu.tab(4).list.get_child_count() >= 1, "codex builds")
 	menu.close()
 	menu.queue_free()
 	game._reset()

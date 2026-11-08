@@ -188,3 +188,59 @@ UI_Q_REMEMBER,INGATAN,THEY WILL REMEMBER
 UI_JOURNAL_CHOICES,Pilihan,Choices
 UI_Q_MORE,+%d lainnya,+%d more
 UI_HINT_CONTINUE,Lanjut,Continue
+UI_BK_TAB_STATUS,Diri,Self
+UI_BK_TAB_EQUIP,Perlengkapan,Gear
+UI_BK_TAB_JOURNAL,Catatan,Journal
+UI_BK_TAB_MAP,Peta,Map
+UI_BK_TAB_CODEX,Pustaka,Codex
+UI_BK_TAB_CONTROLS,Penuntun,Controls
+UI_BK_TAB_SYSTEM,Sistem,System
+UI_BK_LEVEL,Tingkat,Level
+UI_BK_TIME,Waktu main,Play time
+UI_BK_ILMU,Ilmu,Ilmu
+UI_BK_ATTRS,Sifat,Attributes
+UI_BK_POINTS,Poin,Points
+UI_BK_DERIVED,Kekuatan,Strength
+UI_BK_STAMINA,Stamina,Stamina
+UI_BK_SAKTI,Sakti,Sakti
+UI_BK_JAMU,Jamu,Jamu
+UI_BK_GLYPHS,Aksara dikuasai,Glyphs known
+UI_BK_NO_GLYPHS,Belum ada aksara.,No glyphs yet.
+UI_BK_AT_SHRINE,Pilih sifat untuk dinaikkan.,Choose an attribute to raise.
+UI_BK_NEED_ILMU,Butuh %d Ilmu lagi.,%d more Ilmu needed.
+UI_BK_EQUIPPED,Dikenakan,Equipped
+UI_BK_GEAR_TOTALS,Total,Totals
+UI_BK_INVENTORY,Barang,Inventory
+UI_BK_NO_ITEMS,Belum ada barang.,No items yet.
+UI_BK_EMPTY_SLOT,Kosong,Empty
+UI_BK_PUSAKA,Pusaka,Pusaka
+UI_BK_WORN,Dikenakan,Worn
+UI_BK_SPEED,Kecepatan,Speed
+UI_BK_STA_REGEN,Pulih stamina,Stamina regen
+UI_BK_TRACKED,Dilacak,Tracked
+UI_BK_OBJECTIVE,Tujuan,Objective
+UI_BK_OTHER,Lainnya,Other
+UI_BK_AUDIO,Suara,Audio
+UI_BK_DISPLAY,Tampilan,Display
+UI_BK_GAME,Permainan,Game
+UI_BK_HINT_SELECT,Pilih,Select
+UI_BK_HINT_RAISE,Naikkan,Raise
+UI_BK_HINT_EQUIP,Pakai,Equip
+UI_BK_HINT_CHOOSE,Pilih,Choose
+UI_BK_HINT_SCROLL,Gulir,Scroll
+UI_BK_HINT_CONFIRM,Setuju,Confirm
+UI_BK_HINT_BACK,Kembali,Back
+UI_BK_HINT_TABS,Ganti tab,Tabs
+UI_BK_HOWTO,Cara menulis aksara,How to write an aksara
+UI_BK_HOWTO_BODY,"Tahan tombol mantra, lalu gambar aksara dengan mouse mengikuti urutan goresan. Lepas untuk merapal.","Hold the cast button, then draw the aksara with the mouse in stroke order. Release to cast."
+UI_ACT_MOVE_UP,Maju,Up
+UI_ACT_MOVE_DOWN,Mundur,Down
+UI_ACT_MOVE_LEFT,Kiri,Left
+UI_ACT_MOVE_RIGHT,Kanan,Right
+UI_ACT_ATTACK,Serang,Attack
+UI_ACT_CAST,Mantra,Cast
+UI_ACT_DODGE,Menghindar,Dodge
+UI_ACT_HEAL_JAMU,Minum jamu,Drink jamu
+UI_ACT_INTERACT,Bertindak,Interact
+UI_ACT_MENU,Buku,Book
+UI_ACT_PAUSE,Jeda,Pause

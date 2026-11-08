@@ -1,5 +1,5 @@
 extends SceneTree
-## Esc menu (ui.md 3): opens and pauses on `pause`, closes on `pause`, Q/E cycle the five tabs, the language toggle persists.
+## Esc menu (ui.md 3): opens and pauses on `pause`, closes on `pause`, Q/E cycle the seven tabs, the language toggle persists.
 
 var fails := 0
 
@@ -38,28 +38,29 @@ func run() -> void:
 	menu.TitleScript.settings_path = settings
 	await key(KEY_ESCAPE)
 	check(menu.visible and paused, "Esc opens the menu and pauses")
-	check(menu._tabs.get_tab_count() == 6, "six tabs, got %d" % menu._tabs.get_tab_count())
+	check(menu._tabs.get_tab_count() == 7, "seven tabs, got %d" % menu._tabs.get_tab_count())
 	var seen := []
-	for i in 6:
+	for i in 7:
 		seen.append(menu._tabs.current_tab)
 		await key(KEY_E)
-	check(seen == [0, 1, 2, 3, 4, 5] and menu._tabs.current_tab == 0, "E cycles all tabs: %s" % str(seen))
+	check(seen == [0, 1, 2, 3, 4, 5, 6] and menu._tabs.current_tab == 0, "E cycles all tabs: %s" % str(seen))
 	await key(KEY_Q)
-	check(menu._tabs.current_tab == 5, "Q goes back (wraps to System)")
+	check(menu._tabs.current_tab == 6, "Q goes back (wraps to System)")
 	# modal first: Esc dismisses it, the next Esc closes the menu
-	menu._ask_sys("quit")
+	var sys: MenuTab = menu.tab(6)
+	sys.ask("quit")
 	await key(KEY_ESCAPE)
-	check(menu.visible and not menu._sys_modal.visible, "first Esc dismisses the modal")
+	check(menu.visible and not sys.is_modal(), "first Esc dismisses the modal")
 	# language toggle persists and updates the TranslationServer
 	TranslationServer.set_locale("id")
-	menu._toggle_language()
+	sys.toggle_language()
 	check(TranslationServer.get_locale().begins_with("en"), "toggle switches the locale to en")
 	var cf := ConfigFile.new()
 	cf.load(settings)
 	check(cf.get_value("settings", "language", "") == "en", "language saved in settings.cfg")
-	menu._toggle_language()
+	sys.toggle_language()
 	check(TranslationServer.get_locale().begins_with("id"), "toggle back to id")
-	menu._set_volume(40.0, "Music")
+	sys.set_volume(40.0, "Music")
 	cf.load(settings)
 	check(int(cf.get_value("settings", "vol_music", -1)) == 40, "volume saved")
 	await key(KEY_ESCAPE)
@@ -72,9 +73,9 @@ func run() -> void:
 		TranslationServer.add_translation(tr_)
 	game.set_flag("remember_test_key")
 	game.set_flag("remember_no_text")
-	menu._refresh_journal(game)
+	menu.refresh()
 	var texts := []
-	for l in menu._journal.find_children("*", "Label", true, false):
+	for l in menu.tab(2).detail.find_children("*", "Label", true, false):
 		texts.append(l.text)
 	check(texts.has("UI_JOURNAL_CHOICES") or texts.has(tr("UI_JOURNAL_CHOICES")), "choices heading shown")
 	check(texts.has("Tes akan mengingat ini"), "remember sentence listed in the Journal")
