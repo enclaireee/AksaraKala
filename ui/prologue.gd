@@ -88,14 +88,15 @@ func _ready() -> void:
 	_card = Control.new()   # name and text fade and rise together between cards
 	_card.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(_card)
-	_name = UIFx.label("", 8, UIFx.INK_HEAD, true, true)
-	_name.position = Vector2(48, 177)
+	_name = UIFx.label("", 9, UIFx.INK_HEAD, true, true)
+	_name.position = Vector2(48, 176)
 	_name.size = Vector2(384, 12)
 	_card.add_child(_name)
-	_text = UIFx.label("", 8, UIFx.INK, false, true)
-	_text.position = Vector2(48, 190)
-	_text.size = Vector2(384, 58)   # room for an extras line under a card
+	_text = UIFx.label("", 12 if key_prefix == "PROLOGUE" else 10, UIFx.INK, false, true)
+	_text.position = Vector2(48, 183)
+	_text.size = Vector2(384, 62)   # room for an extras line under a card
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_text.add_theme_constant_override("line_spacing", 3)
 	_card.add_child(_text)
 	_arrow = UIFx.rect_tex("continue_arrow", Vector2(432, 242))
 	_arrow.visible = false
@@ -145,6 +146,7 @@ func advance() -> void:
 	if game.has_flag(str(variants.get(index, variants.get(str(index), "")))):
 		key += "_ALT"
 	_name.text = "NPC_SEMAR_NAME" if index >= semar_from and index <= semar_to else ""
+	_text.position.y = 191.0 if _name.text != "" else 183.0
 	var body := tr(key)
 	if "%d" in body:
 		body = body % int(game.codex_percent())

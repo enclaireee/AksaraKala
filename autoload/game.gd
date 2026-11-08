@@ -114,6 +114,8 @@ func _process(delta: float) -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST and class_id != "":
 		save_game()   # quit is a save trigger (rpg.md 11)
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_EXIT_TREE or what == NOTIFICATION_PREDELETE:
+		Input.set_custom_mouse_cursor(null)
 
 
 # --- hero name and text (ui.md 3) ---

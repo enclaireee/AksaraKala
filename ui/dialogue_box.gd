@@ -97,7 +97,7 @@ func _ready() -> void:
 	_who.add_theme_constant_override("outline_size", 3)   # it sits over the world, so it needs a strong outline
 	_text = _label(Vector2.ZERO, Vector2(BOX_W - PAD_X * 2.0, LINE_H), Color.TRANSPARENT)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_sel_bar = ColorRect.new()
 	_sel_bar.color = Color(0.62, 0.17, 0.145, 0.28)   # wax-red wash selection
 	_sel_bar.size = Vector2(BOX_W - PAD_X * 2.0, 10)
