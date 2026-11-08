@@ -9,13 +9,13 @@ const FLASK_COL := Color("009E73")
 const GOLD := Color("F3E3B8")   # prada gold highlight (ui.md 3b)
 const CREAM := Color("EADFC4")
 const OUTLINE := Color("140E0A")
-const INK := Color("2A1C12")   # text on the paper tracker card
-const INK_HEAD := Color("7A2A1E")
 const UI_DIR := "res://assets/art/ui/"
 const LAG_HOLD := 0.4   # s before the cream lag chunk drains
 const LOW_HP := 0.25
 const MAX_OBJ := 4   # objective rows shown before "+n more"
-const TRACKER_W := 140   # TUNE: tracker width, text wraps inside
+const TRACKER_W := 118   # TUNE: tracker width, text wraps inside
+const TRACKER_REST_A := 0.5   # TUNE: tracker opacity once it has sat unchanged for TRACKER_IDLE
+const TRACKER_IDLE := 5.0   # TUNE: s at full opacity after a change before it dims
 const MENU_HINT_SHOW := 25.0   # s the [Esc] hint stays before it fades
 
 var _bars := {}   # name -> [fill ColorRect, width, frame, lag ColorRect, well ColorRect]
@@ -158,14 +158,22 @@ func _ready() -> void:
 	_grp_hide.add_child(_saved)
 	_build_extras()
 	_tracker_panel = PanelContainer.new()   # minimalistic floating quest HUD under vitals
-	_tracker_panel.position = Vector2(8, 48)
+	_tracker_panel.position = Vector2(6, 58)
 	_tracker_panel.custom_minimum_size = Vector2(TRACKER_W, 0)
-	_tracker_panel.add_theme_stylebox_override("panel", UIFx.box("panel", 5.0))   # paper card: ink text stays readable on any ground
+	var sb := StyleBoxFlat.new()   # slim dark strip with a gold edge: readable on any ground, hides little of the world
+	sb.bg_color = Color(0.055, 0.043, 0.039, 0.55)
+	sb.border_color = Color("C8B38A")
+	sb.border_width_left = 1
+	sb.content_margin_left = 5.0
+	sb.content_margin_right = 4.0
+	sb.content_margin_top = 3.0
+	sb.content_margin_bottom = 3.0
+	_tracker_panel.add_theme_stylebox_override("panel", sb)
 	_tracker_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_tracker_panel.visible = false
 	_grp_hide.add_child(_tracker_panel)
 	_tracker = VBoxContainer.new()
-	_tracker.add_theme_constant_override("separation", 2)
+	_tracker.add_theme_constant_override("separation", 1)
 	_tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_tracker_panel.add_child(_tracker)
 	_menu_hint = Label.new()   # quiet [Esc] Menu prompt under Ilmu; fades after a while
@@ -232,9 +240,9 @@ func refresh_objective() -> void:
 		if st == null:
 			continue
 		var q := QuestData.by_id(id)
-		rows.append(["title", _title(id), INK_HEAD if q.kind == "main" else INK, ""])
+		rows.append(["title", _title(id), GOLD if q.kind == "main" else CREAM, ""])
 		if st.all.is_empty():
-			rows.append(["obj", g.quest_objective_text(id), INK, "bullet_now"])
+			rows.append(["obj", g.quest_objective_text(id), CREAM, "bullet_now"])
 		else:
 			var checklist: Array = g.step_checklist(id)
 			var total: int = checklist.size()
@@ -256,7 +264,7 @@ func refresh_objective() -> void:
 				active_text = g.quest_objective_text(id)
 			if total > 1:
 				active_text += " (%d/%d)" % [done_count, total]
-			rows.append(["obj", active_text, INK, "bullet_now"])
+			rows.append(["obj", active_text, CREAM, "bullet_now"])
 		break
 	var sig := str(rows)
 	if sig == _tracker_sig:
@@ -273,8 +281,13 @@ func refresh_objective() -> void:
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		l.add_theme_color_override("font_color", r[2])
+		l.add_theme_color_override("font_outline_color", OUTLINE)
+		l.add_theme_constant_override("outline_size", 1)
+		l.add_theme_font_size_override("font_size", 8)
+		l.add_theme_constant_override("line_spacing", -1)
 		if r[0] == "title":
-			l.theme_type_variation = &"Heading"
+			l.text = String(r[1]).to_upper()
+			l.add_theme_font_size_override("font_size", 7)
 			l.custom_minimum_size.x = inner
 			_tracker.add_child(l)
 		elif r[0] == "obj":
@@ -285,15 +298,16 @@ func refresh_objective() -> void:
 			ic.texture = _ui_tex(r[3])
 			ic.stretch_mode = TextureRect.STRETCH_KEEP
 			ic.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-			ic.custom_minimum_size = Vector2(7, 9)
+			ic.custom_minimum_size = Vector2(7, 8)
 			ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			row.add_child(ic)
-			l.custom_minimum_size.x = inner - 10.0
+			l.custom_minimum_size.x = inner - 11.0
 			l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			row.add_child(l)
 			_tracker.add_child(row)
 	_tracker_panel.size = Vector2(TRACKER_W, 0)   # re-fit to the new rows
 	_tracker_panel.reset_size()
+	_tracker_wake(false)
 
 
 ## Remembers a quest's step and finished sub-goal count, to tell later whether an update is news.
@@ -336,11 +350,19 @@ func _on_quest_updated(id: String) -> void:
 
 
 func _pulse_tracker() -> void:
+	_tracker_wake(true)
+
+
+## Full opacity on a change (with a gold flash when `flash`), then it settles back to a dim, unobtrusive strip.
+func _tracker_wake(flash: bool) -> void:
 	if _pulse_tw != null and _pulse_tw.is_valid():
 		_pulse_tw.kill()
 	_pulse_tw = create_tween()
-	_tracker_panel.modulate = Color(1.8, 1.6, 0.9)
-	_pulse_tw.tween_property(_tracker_panel, "modulate", Color.WHITE, 0.7)
+	_tracker_panel.modulate = Color(1.8, 1.6, 0.9) if flash else Color.WHITE
+	if flash:
+		_pulse_tw.tween_property(_tracker_panel, "modulate", Color.WHITE, 0.7)
+	_pulse_tw.tween_interval(TRACKER_IDLE)
+	_pulse_tw.tween_property(_tracker_panel, "modulate", Color(1, 1, 1, TRACKER_REST_A), 1.5)
 
 
 func _push_banner(head_key: String, body: String) -> void:
