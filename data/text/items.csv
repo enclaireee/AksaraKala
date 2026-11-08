@@ -1,21 +1,25 @@
 keys,id,en
 ITEM_GOLOK_NAME,Golok,Golok
-CLASS_ARCHER_DESC,Petarung jarak jauh yang presisi.\nBergerak lincah dan memilih posisi.,A precise ranged fighter.\nKites and picks positions.
-CLASS_ARCHER_NAME,Pemanah,Archer
+CLASS_ARCHER_DESC,"Penjaga hutan dataran tinggi.\nMenjaga jarak, membidik dengan gendewa.","Watcher of the highland forest.\nKeeps distance, aims with the gendewa."
+CLASS_ARCHER_NAME,Pamanah,Pamanah
 CLASS_ARCHER_PASSIVE,Mata Elang,Eagle Eye
 CLASS_ARCHER_PASSIVE_DESC,+15% damage di atas 120 px. Bolt menembus.,+15% damage over 120 px. Bolt pierces.
-CLASS_MAGE_DESC,"Penguasa tulisan.\nMenyihir terus-menerus, rapuh.","Master of the written word.\nCasts constantly, fragile."
-CLASS_MAGE_NAME,Penyihir,Mage
+CLASS_ARCHER_ROLE,Pemanah Hutan,Bowman
+CLASS_MAGE_DESC,"Juru tulis dari pertapaan.\nMenulis sakti di atas lontar, kuat namun rapuh.","A hermitage scribe.\nWrites power onto the lontar: strong, but fragile."
+CLASS_MAGE_NAME,Wiku,Wiku
 CLASS_MAGE_PASSIVE,Pikiran Tajam,Keen Mind
 CLASS_MAGE_PASSIVE_DESC,"Sakti terisi 1,2x lebih cepat dan menampung 120.",Sakti fills 1.2x faster and holds 120.
-CLASS_ROGUE_DESC,"Cepat dan mematikan.\nSerang lalu menghindar, tusuk dari belakang.","Fast and deadly.\nHit and run, strike from behind."
-CLASS_ROGUE_NAME,Penyelinap,Rogue
+CLASS_MAGE_ROLE,Resi Penulis,Scribe-Sage
+CLASS_ROGUE_DESC,"Pesilat dari jalan-jalan belakang.\nRendah dan cepat; elak, lalu serang dari belakang.","A silat fighter from the back roads.\nLow and fast, dodges, then strikes from behind."
+CLASS_ROGUE_NAME,Pendekar,Pendekar
 CLASS_ROGUE_PASSIVE,Langkah Ringan,Light Step
 CLASS_ROGUE_PASSIVE_DESC,Menghindar butuh 14. Damage dua kali lipat dari belakang.,Dodge costs 14. Double damage from behind.
-CLASS_WARRIOR_DESC,"Garda depan yang tak tergoyahkan.\nJarak dekat, tangguh, mantra berupa gelombang kejut.","An unbreakable frontliner.\nClose range, tanky, spells as shockwaves."
-CLASS_WARRIOR_NAME,Prajurit,Warrior
+CLASS_ROGUE_ROLE,Petarung Silat,Silat Fighter
+CLASS_WARRIOR_DESC,"Perisai desa yang berdiri di barisan depan.\nMenahan pukulan, menebas lebar dengan kelewang.","The village's shield, first in the line.\nTakes the blow, sweeps wide with the kelewang."
+CLASS_WARRIOR_NAME,Hulubalang,Hulubalang
 CLASS_WARRIOR_PASSIVE,Kulit Besi,Iron Skin
 CLASS_WARRIOR_PASSIVE_DESC,Pukulan ringan tidak membuatmu terhuyung atau terpental.,Light hits do not stagger or knock you back.
+CLASS_WARRIOR_ROLE,Garda Depan,Vanguard
 ITEM_AMULET_DESC,+10 HP maks.,+10 max HP.
 ITEM_AMULET_NAME,Amulet,Amulet
 ITEM_AXE_DESC,"Berat dan lambat, tapi pukulannya keras.",Hits hard and slow.
@@ -27,7 +31,7 @@ ITEM_BLANGKON_DESC,Penutup kepala batik siap pakai khas Jawa.,A Javanese ready-m
 ITEM_BLANGKON_LORE,Dipakai di seluruh Jawa; motif batiknya menyimpan makna.,Worn across Java; the batik pattern carries meaning.
 ITEM_BLANGKON_NAME,Blangkon,Blangkon
 ITEM_BROADSWORD_DESC,Ayunan lebar dan berat.,"A wide, heavy swing."
-ITEM_BROADSWORD_NAME,Pedang Lebar,Broadsword
+ITEM_BROADSWORD_NAME,Kelewang,Kelewang
 ITEM_CAKRA_DESC,Cakram cahaya yang dilempar.,A thrown disc of light.
 ITEM_CAKRA_LORE,Cakram Kresna dalam cerita wayang. Di sini ia melesat seperti anak panah.,Krishna's disc from the wayang tales. Here it flies like an arrow.
 ITEM_CAKRA_NAME,Cakra,Cakra
@@ -36,12 +40,12 @@ ITEM_CHAINMAIL_NAME,Baju Zirah Rantai,Chainmail
 ITEM_CROSSBOW_DESC,"Penarikan lambat, daya hancur besar.","Slow wind-up, high damage."
 ITEM_CROSSBOW_NAME,Busur Silang,Crossbow
 ITEM_DAGGER_DESC,"Cepat, jangkauan pendek.","Fast, short reach."
-ITEM_DAGGER_NAME,Belati,Dagger
+ITEM_DAGGER_NAME,Kujang,Kujang
 ITEM_FEATHER_CHARM_DESC,+8% kecepatan gerak.,+8% move speed.
 ITEM_FEATHER_CHARM_NAME,Jimat Bulu,Feather Charm
 ITEM_GOLOK_DESC,Bilah tebas mirip parang.,A machete-like chopping blade.
 ITEM_HUNTING_BOW_DESC,Busur biasa.,A plain bow.
-ITEM_HUNTING_BOW_NAME,Busur Berburu,Hunting Bow
+ITEM_HUNTING_BOW_NAME,Gendewa,Gendewa
 ITEM_IKET_SUNDA_DESC,Ikat kepala kain khas Sunda.,A Sundanese cloth head wrap.
 ITEM_IKET_SUNDA_LORE,"Diikat sendiri oleh pemakainya, tidak pernah disemat.","Tied by the wearer, never pinned."
 ITEM_IKET_SUNDA_NAME,Iket Sunda,Iket Sunda
@@ -72,7 +76,7 @@ ITEM_LEATHER_ARMOR_NAME,Zirah Kulit,Leather Armor
 ITEM_LONGBOW_DESC,"Tarikan lebih lambat, daya hancur lebih besar.","Slower draw, more damage."
 ITEM_LONGBOW_NAME,Busur Panjang,Longbow
 ITEM_OAK_STAFF_DESC,Sambaran cahaya yang lemah.,A weak bolt of light.
-ITEM_OAK_STAFF_NAME,Tongkat Ek,Oak Staff
+ITEM_OAK_STAFF_NAME,Tongkat Wiku,Tongkat Wiku
 ITEM_PADDED_TUNIC_DESC,Kain berlapis yang sederhana.,Plain padded cloth.
 ITEM_PADDED_TUNIC_NAME,Tunik Empuk,Padded Tunic
 ITEM_PANAH_PASOPATI_DESC,Anak panah yang namanya diambil dari panah Arjuna.,An arrow named after Arjuna's.

@@ -7,6 +7,8 @@ extends Control
 ## nothing; Events.dialogue_picked(index) then dialogue_finished. All text goes through tr() then Game.fmt().
 ## A line "#name" or "#name:arg" is a scene cue (quest_story_ux.md 2): not shown, emitted as Events.scene_cue(name, arg).
 ## "#wait:<seconds>" holds the box on a silent beat (max 3 s, real time) before the next line.
+## "#face:<mood>" (happy/angry/sad/neutral) swaps the speaker's portrait until the speaker changes (ui.md 3.1);
+## the same tag inside a line's text is stripped from the shown text and applies from that line on.
 
 signal speaker_changed(key: String)   # the speaker tag was set (SceneDirector auto-camera)
 
@@ -23,6 +25,8 @@ const PAD_BOT := 13.0     # room for the continue arrow and hint under the text
 const MIN_H := 40.0
 const LINE_H := 10.0      # 8 px font + line spacing
 const MAX_WAIT := 3.0   # seconds a #wait cue may hold
+const PORTRAIT := 48.0    # bust size inside the 56x56 frame_portrait (ui.md 3.1)
+const PORTRAIT_INSET := 4.0
 const NARRATION := Color("5A4430")   # Semar (Dalang): italic, pale cream (ui.md 3)
 
 var _lines := PackedStringArray()
@@ -49,6 +53,8 @@ var _who: Label   # name tag (ui.md 3)
 var _hold_until := 0   # Time.get_ticks_msec() when a #wait ends, 0 = not holding
 var _portrait_frame: TextureRect   # the speaker's face above the box's left corner (ui.md 3.1)
 var _portrait: TextureRect
+var _speaker_key := ""
+var _mood := ""   # current #face mood, "" = neutral
 var _fresh := {}   # npc ids whose tag is up for this first talk
 
 
@@ -97,7 +103,7 @@ func _ready() -> void:
 	_frame.z_index = -1
 	_portrait = TextureRect.new()
 	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_portrait.size = Vector2(32, 32)
+	_portrait.size = Vector2(PORTRAIT, PORTRAIT)
 	add_child(_portrait)
 	_portrait_frame = TextureRect.new()
 	_portrait_frame.texture = load(UI_DIR + "frame_portrait.png")
@@ -160,6 +166,7 @@ func _on_requested(speaker_key: String, lines: PackedStringArray) -> void:
 	_was_paused = get_tree().paused
 	get_tree().paused = true
 	_fresh.clear()
+	_speaker_key = ""   # a new talk starts on the neutral face
 	var g0 := get_node("/root/Game")
 	_hint.text = "" if g0.has_flag("seen_hint_continue") else "[%s] %s" % [g0.key_name("interact"), tr("UI_HINT_CONTINUE")]
 	_set_speaker(speaker_key)
@@ -193,7 +200,10 @@ func _set_speaker(key: String) -> void:
 	var prev := _speaker.text
 	_speaker.text = _t(key)
 	_plate.visible = _speaker.text != ""
-	var face := Portraits.for_key(key)
+	if key != _speaker_key:
+		_mood = ""
+	_speaker_key = key
+	var face := Portraits.for_key(key, _mood)
 	_portrait.texture = face
 	_portrait.visible = face != null
 	_portrait_frame.visible = face != null
@@ -217,6 +227,14 @@ func _set_speaker(key: String) -> void:
 	_who.text = _t(wk)   # shown on the plate row, so the body text never shifts
 
 
+## Swaps the current speaker's portrait to a mood; unknown moods show the neutral bust.
+func _set_mood(mood: String) -> void:
+	_mood = "" if mood == "neutral" else mood.strip_edges().to_lower()
+	var face := Portraits.for_key(_speaker_key, _mood)
+	if face != null:
+		_portrait.texture = face
+
+
 func _t(key: String) -> String:
 	return get_node("/root/Game").fmt(tr(key))
 
@@ -232,6 +250,9 @@ func _next() -> void:
 		var cue := ln.substr(1).get_slice(":", 0)
 		var arg := ln.substr(1).substr(cue.length() + 1) if ln.contains(":") else ""
 		get_node("/root/Events").scene_cue.emit(cue, arg)
+		if cue == "face":
+			_set_mood(arg)
+			continue
 		if cue == "wait":
 			_text.text = ""
 			_text.visible_characters = 0
@@ -246,7 +267,10 @@ func _next() -> void:
 			_sel = 0
 			_show_choices()
 		return
-	_text.text = _t(_lines[_i])
+	var parts := Portraits.strip_face(_t(_lines[_i]))
+	if parts[1] != "":
+		_set_mood(parts[1])
+	_text.text = parts[0]
 	_text.visible_characters = 0
 	_shown = 0.0
 	_layout()
@@ -280,9 +304,10 @@ func _layout() -> void:
 	_frame.size = Vector2(BOX_W, h)
 	_frame.position = Vector2(BOX_X, BOX_BOTTOM - h)
 	var fy := _frame.position.y
-	var px_off := 50.0 if _portrait.visible else 14.0   # the plate steps right of the face
-	_portrait_frame.position = Vector2(BOX_X + 6.0, fy - 32.0)
-	_portrait.position = _portrait_frame.position + Vector2(4, 4)
+	var fs := PORTRAIT + PORTRAIT_INSET * 2.0   # 56: the frame overlaps the box by 8 px
+	var px_off := 66.0 if _portrait.visible else 14.0   # the plate steps right of the face
+	_portrait_frame.position = Vector2(BOX_X + 6.0, fy - fs + 8.0)
+	_portrait.position = _portrait_frame.position + Vector2(PORTRAIT_INSET, PORTRAIT_INSET)
 	_plate.position = Vector2(BOX_X + px_off, fy - 8.0)
 	_who.position = Vector2(_plate.position.x + _plate.size.x + 6.0, fy - 7.0)
 	_text.position = Vector2(BOX_X + PAD_X, fy + top)

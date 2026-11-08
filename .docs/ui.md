@@ -54,7 +54,7 @@ Safe margins: 6 px from window borders. The central 240x140 px play space remain
 ### 3.1 Dialogue Box
 - **Dimensions & Anchor:** 424 px wide, anchored 6 px above screen bottom, auto-sizing in height (min 40 px, max 3 lines of dialogue plus choice options).
 - **Speaker Plate:** Sits on top edge of dialogue frame. First encounter with a named NPC displays their descriptor tag (`NPC_<ID>_WHO`) beside their name plate (e.g., "Cepot. Anak Semar. Riuh.").
-- **Speaker Portrait:** a 40x40 `frame_portrait` holding a 32x32 wayang-bust (`assets/art/portraits/p_<name>.png`, from `tools/gen_speaker_portraits.py`) sits over the box's top-left corner, overlapping it by 8 px; the name plate steps right of it. 22 archetype busts (unique: Semar, Cepot, Laras, the Hunter, Kala); `ui/portraits.gd` maps speaker ids to them (ASSUMED picks for minor NPCs); speakers with no entry show no face and the plate keeps its old position.
+- **Speaker Portrait (redesign 2026-11-08):** a 56x56 `frame_portrait` holding a 48x48 bust (`assets/art/portraits/p_<name>.png`, from `tools/gen_speaker_portraits.py`) sits over the box's top-left corner, overlapping it by 8 px; the name plate steps right of it (x+66). Busts are 3/4 view facing right (toward the text), one top-left light, outline on the outside only, warm hue-shifted skin ramps (shadows go red-violet, never grey), eyes with white, iris and a highlight, brows separate from lids. Indonesian headwear only (iket, blangkon, kerudung, konde, siger, kuluk); no European crowns. Spirits: Kala a red wayang giant, the faceless spirit a shaded featureless head, Semar and Cepot shaded like wayang golek. Each bust has expression variants `p_<name>_<mood>.png` for happy / angry / sad (neutral is the base file); a dialogue line tag `#face:<mood>` picks one and falls back to neutral. 22 archetype busts; `ui/portraits.gd` maps speaker ids to them (ASSUMED picks for minor NPCs); speakers with no entry show no face and the plate keeps its old position.
 - **Advancement:** Typewriter text progression, instant complete on press, `[E] Continue` blinking cursor.
 
 ### 3.2 Scene Director (`ui/scene_director.gd`)
@@ -86,24 +86,29 @@ All menus pause world processing (`process_mode = PROCESS_MODE_ALWAYS` on UI). `
 - ID | EN language toggle on the desk, top right. The window title is set to "The Last Aksara" at runtime (the Godot project name stays `THE LAST AKSARA` so the save folder does not move).
 
 ### 4.2 Class Selection (Elden Style)
-- **Left Column:** List of 4 classes (Warrior, Archer, Rogue, Mage) in Almendra Display 10 with wax-red lozenge selector.
+- **Left Column:** List of 4 classes (Hulubalang, Pamanah, Pendekar, Wiku; see classes.md "Identity") in Almendra Display 10 with wax-red lozenge selector.
 - **Center Pedestal:** 96x128 animated character sprite standing on stone pedestal in lamp light with floor mist particles. Switching classes dissolves figure into rising ink motes.
 - **Right Panel:** Framed panel detailing class title, archetype description, segmented animated stat bars (Vit, End, Str, Dex, Spi), starting weapon icon, and unique passive.
 - **Bottom:** Confirm / Back prompts.
 
-### 4.3 Pause & Tab Menu (Esc / Tab)
-460x250 panel on 62% dim background with a dedicated left rail navigation:
-- **Left Rail Tabs (Q/E or click):**
-  1. **Status:** Character stats, current level, Ingatan rank. Level-up confirmation available when at a Petilasan.
-  2. **Perlengkapan (Equipment):** 20x20 slot inventory grid for Weapon, Armor, and Accessory slots with comparison tooltips (green stat increase, red decrease).
-  3. **Catatan (Journal):**
-     - Track / Untrack button for selected quest.
-     - **Story Log:** Growing narrative paragraph summarizing completed steps (`_DONE` entries) and active objective.
-     - **Choices:** Log of all major story choices made (`remember_*`).
-     - **Clues:** Examined clues grouped by hunt with notes and unlocked memories.
-  4. **Peta (Map):** Regional map view with discovered landmarks and connections.
-  5. **Pustaka (Codex):** Cultural lore, enemy dossiers, discovered glyphs with animated stroke guides, and unlocked weaknesses.
-  6. **Sistem (Settings):** Audio master/music/SFX sliders, display resolution/fullscreen, accessibility controls, and Indonesian/English language toggle.
+### 4.3 Pause & Tab Menu (Esc / Tab): the field book (redesign 2026-11-08)
+Research: scratchpad brief summarised here; sources in ui.md 0 plus Hollow Knight journal/map, Tunic manual, Hades codex, Sea of Stars menus (mostly design practice, thin teardowns).
+
+**Frame (shared by every tab, `ui/menu/menu_book.gd`):**
+- The game dims to ~60% with a vignette. An open book fills ~464x246: a 4 px stitched leather cover edge, two parchment pages (~216 px each) and a centre spine gutter shadow. Ornament only on the outer frame: small carved (ukiran) corner pieces and a very faint kawung paper tile. Parang Rusak is never used (restricted Yogyakarta court motif).
+- **Tab ribbons** stick up from the book's top edge: icon only, except the open tab, which is taller, paper coloured and labelled. Q / E keycaps at the strip ends; click works too.
+- **Footer:** a thin leather band of context hints drawn with the keycap assets plus words; hints change per tab and per focus.
+- **Grid:** 8 px grid, sizes in multiples of 4, at most 2 type sizes per page (Almendra headings in ink red, Crimson Pro body, Jersey10 for numbers). Left page = list or figure, right page = detail.
+- **Motion:** tab change is a 140 ms page turn (slide + fade of the page contents) with a paper SFX if one exists; the wax-red diamond cursor eases 70 ms to its target and snaps to whole pixels; new text inks in. All tweens use the pause-safe process mode. TUNE.
+
+**Tabs (7):**
+1. **Diri (Status):** left page = the hero's 96x128 class figure (idle frames from `class_<id>.png`) on a painted ground disc, name, class title, level wax seal and Ilmu bar. Right page = the 5 attributes with icon, value, pips and a + right beside each when points can be spent (plus a "points to spend" seal; level-up still only at a Petilasan); a 2-column derived-stat table with icons (Max HP, Stamina, Sakti, ATK, DEF, Jamu); a row of learned glyph tiles.
+2. **Perlengkapan (Equipment):** left page = paper-doll outline with Weapon / Armor / Accessory slots around it; right page = iron-rimmed inventory grid and an item card that always shows something (the focused or equipped item) with compare arrows (verdigris up, wax red down).
+3. **Catatan (Journal):** left page = quests grouped Utama / Sampingan / Selesai with seal icons and a tracked marker (Track / Untrack on confirm). Right page = title, region, objective checklist using the bullet/check assets (no ASCII markers), story-log paragraph (`_DONE` entries), choices (`remember_*`) and clues grouped by hunt. Long pages scroll inside the page; scroll and selection survive `Game.changed`.
+4. **Peta (Map):** a hand-inked pixel world map across both pages (`assets/art/ui/map_world.png` from `tools/gen_map_art.py`): coastline hatching, mountain peaks, rivers, forest stamps, compass rose, legend strip. Undiscovered regions sit under a dithered ink wash. Discovered areas get 8x8 stamps; player and tracked-goal markers. Confirm on an area zooms to the area map: the zone re-rendered in a 4-6 colour ink-on-paper palette (not raw tile colours), framed on the page, with stamp markers (you, goal, person, shrine, chest, clue, exit) and exit labels that never overlap the frame. Back returns to the world map.
+5. **Pustaka (Codex):** left page = category ribbons Lore / Makhluk / Aksara, a progress counter (found/total) and a list of lontar-strip rows; undiscovered rows show a silhouette and "???", newly found rows a wax NEW dot (cleared once viewed). Right page = 96x96 illustration frame (enemy sprite, portrait or prop), title, type line, body, weakness line for creatures and a "Sumber" source line when present. The Aksara category shows the glyph large with an animated, replayable stroke-order guide.
+6. **Penuntun (Controls, new):** left page = every action with its keycap / mouse glyph, read live from `InputMap`; confirm on an action waits for a new key and swaps on conflict; "Kembalikan bawaan" resets. Bindings save with the settings. Right page = looping diagram of drawing an aksara with the mouse (mouse icon, dotted stroke, start dot, arrow) plus a short how-to.
+7. **Sistem (Settings):** grouped Audio (master / music / SFX segmented sliders with a numeric value), Tampilan (fullscreen, window scale x2/x3/x4, screen shake on/off), Aksesibilitas (text speed), Bahasa (ID | EN). "Simpan & Keluar" is a distinct wax-red button.
 
 ---
 

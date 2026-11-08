@@ -83,7 +83,8 @@ def make_panel_dialogue():
 
 
 def make_portrait_frame():
-    w = h = 40
+    """56x56 leather frame for the 48x48 speaker bust (ui.md 3.1), drawn at offset (4, 4)."""
+    w = h = 56
     im = Img(w, h)
     im.rect(0, 0, w - 1, h - 1, LEA_DK)
     im.rect(1, 1, w - 2, h - 2, LEA)
@@ -92,7 +93,7 @@ def make_portrait_frame():
     im.rect(w - 2, 1, w - 2, h - 2, LEA_LO)
     im.rect(1, h - 2, w - 2, h - 2, LEA_LO)
     im.rect(3, 3, w - 4, h - 4, STITCH)
-    im.rect(4, 4, w - 5, h - 5, CLEAR)    # interior stays open for the 32x32 bust
+    im.rect(4, 4, w - 5, h - 5, CLEAR)    # interior stays open for the 48x48 bust
     for x in range(4, w - 4, 3):
         im.put(x, 2, hexc("8A6A44")); im.put(x, h - 3, hexc("8A6A44"))
     for (x, y) in ((0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)):

@@ -19,10 +19,10 @@ const DODGE_AFTERIMAGE_GAP := 0.06
 ## Class tints: [smear, finisher/core accent, glow]
 const TINTS := {
 	"": [Color(1, 1, 1), Color(1, 1, 1), Color(1, 0.95, 0.8)],
-	"warrior": [Color(0.82, 0.9, 1.0), Color(1.0, 0.62, 0.3), Color(1.0, 0.7, 0.4)],       # steel and ember
-	"rogue": [Color(0.62, 0.55, 1.0), Color(0.82, 0.5, 1.0), Color(0.75, 0.6, 1.0)],       # indigo and violet
-	"archer": [Color(0.8, 1.0, 0.6), Color(0.9, 1.0, 0.7), Color(0.7, 1.0, 0.5)],
-	"mage": [Color(0.6, 0.95, 1.0), Color(0.8, 1.0, 1.0), Color(0.55, 0.9, 1.0)],
+	"warrior": [Color(1.0, 0.9, 0.78), Color(0.95, 0.42, 0.28), Color(1.0, 0.72, 0.42)],      # Hulubalang: warm steel, wax red, brass
+	"rogue": [Color(0.95, 0.92, 0.88), Color(0.86, 0.26, 0.2), Color(1.0, 0.5, 0.42)],       # Pendekar: ink-white, sabuk red
+	"archer": [Color(0.78, 1.0, 0.88), Color(0.55, 0.9, 0.74), Color(0.5, 0.86, 0.7)],       # Pamanah: verdigris
+	"mage": [Color(0.62, 0.96, 0.88), Color(0.96, 0.9, 0.74), Color(0.45, 0.88, 0.82)],      # Wiku: teal ink-light, paper cream
 }
 
 ## Test or settings override. The Game autoload may also expose `reduce_flashes` (controls.md 6).

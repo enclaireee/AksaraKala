@@ -4,6 +4,20 @@ The player is a custom hero. At the start of their journey, they choose one of f
 
 ---
 
+## Identity (redesign 2026-11-08)
+Code ids stay `warrior`, `archer`, `rogue`, `mage`; mechanics below are unchanged. Display names, art and FX colours change so the heroes read as Sundanese/Javanese, not European. Both languages show the Indonesian title; English adds a role word.
+
+| id | Title (ID / EN) | Look | Weapon (display) | Palette |
+|----|-----------------|------|------------------|---------|
+| warrior | Hulubalang / Hulubalang, Vanguard | red udeng with a front knot, bare chest with selempang, kain with wiru pleats and tumpal hem, round tameng on the back | Kelewang (the heavy sweep) | wax red, leather, brass |
+| archer | Pamanah / Pamanah, Bowman | brown iket with one front peak and a feather, dark-green kampret jacket, brown pangsi, bamboo quiver | Gendewa | verdigris, bamboo, brown |
+| rogue | Pendekar / Pendekar, Silat Fighter | dark headwrap, black pangsi, wide red sabuk, open-palm silat guard, low stance | Kujang (a plain working one, reverse grip) | ink black, wax red |
+| mage | Wiku / Wiku, Scribe-Sage | topknot with sumping, cream robe over batik kain, lontar at the hip that gives off teal ink-light | Tongkat with a ring top | paper cream, verdigris |
+
+- All four go barefoot in-world. The starting rogue weapon is a kujang, not a keris: a keris is a pusaka. ASSUMED.
+- VERIFY: Sundanese iket styles (the single front peak replaced the two-corner style, which read as horns at 96x128); Majapahit-era soldier dress on the Hulubalang; wayang costume terms on the Wiku; "Pendekar" chosen over "Jawara" (local-strongman connotation).
+- Art: `tools/gen_portraits.py` (96x128 class figures, 6-frame idle) and `tools/gen_hero_sprites.py` (in-world sprites) share the skin ramps and top-left light of the speaker portraits (ui.md 3.1).
+
 ## Shared Rules
 - Every class can draw and cast aksara spells ([spells.md](spells.md)).
 - All classes share the same 5 core stats ([rpg.md](rpg.md)) and 3 equipment slots (weapon, armor, accessory).

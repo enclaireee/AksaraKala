@@ -31,21 +31,33 @@ AW = 22              # attack canvas width (body composed on IW, pasted at an of
 IW, IH = 14, 21      # inner canvas (outline adds 1 px each side)
 Y0 = 3               # row of the first head row (headroom for hats/buns/crowns)
 
-# ---- shared colors ----
+# ---- shared colors (skin and hair ramps = the speaker portraits and tools/gen_portraits.py: sawo matang) ----
 COMMON = {
-    "s": hexc("E3A66E"), "k": hexc("F6CC9A"), "S": hexc("B87848"),
-    "h": hexc("2A1D26"), "H": hexc("4F3A4A"), "e": hexc("18122B"),
-    "m": hexc("C9D3DF"), "M": hexc("F4F8FC"), "g": hexc("F2B84B"), "G": hexc("FFE08A"),
+    "s": hexc("C4844F"), "k": hexc("E8B27E"), "S": hexc("92543A"),
+    "h": hexc("2E2432"), "H": hexc("5A4A5E"), "e": hexc("1E1218"),
+    "m": hexc("B8C0C0"), "M": hexc("F4F6F0"), "g": hexc("C9A24A"), "G": hexc("F2D27A"),
     "b": hexc("3A2A33"), "w": hexc("FFFFFF"),
 }
 
+# t/T/u torso (mid/shadow/light), a sash or belt, p/P lower cloth, c/C headcloth, q weapon wood or bamboo,
+# f fletching/string/light; extra keys per class: d shield rim, r red cord/baldric, l calf wrap, y copper,
+# x pale trim, j sash shadow, v bamboo shadow, o lontar leaf, i teal ink-light.
 CLASSES = {
-    "base": dict(t="C8A06A", T="9C7A4A", u="E2C08A", a="7A4E2A", p="5E4630", P="43321F", c="D8D2B8", C="A39E86", q="7A4E2A", f="E8E2D0"),
-    "warrior": dict(t="B8353A", T="7E2230", u="E0575A", a="F2B84B", p="3B2B4A", P="271C33", c="8A5A2B", C="5E3B1E", q="7A4E2A", f="E8E2D0"),
-    "archer": dict(t="5F9E4A", T="3A6B34", u="8DC265", a="C98A2B", p="8A6A44", P="5E4630", c="E7D27C", C="B59B48", q="7A4E2A", f="F4EFD8"),
-    "rogue": dict(t="4B446E", T="2D2847", u="8A82B8", a="D93848", p="2D2847", P="1A162E", c="1A162E", C="0E0C1C", q="6E6794", f="E8E2D0"),
-    "mage": dict(t="1E8C8F", T="12606A", u="57C7BE", a="F2B84B", p="1E8C8F", P="12606A", c="F2B84B", C="C98A2B", q="7A4E2A", f="BFF3FF"),
+    "base": dict(t="B89B6A", T="8C7350", u="E3D0A0", a="5A3A22", p="4A3324", P="33231A", c="E3D0A0", C="B89B6A", q="6E4A2A", f="E8DDB8"),
+    # Hulubalang: red udeng, bare chest + red selempang, red kain with brass tumpal hem, round tameng on the back
+    "warrior": dict(t="C4844F", T="92543A", u="E8B27E", a="2A1C12", p="7A2420", P="531816", c="B8352C", C="6B1E1A",
+                    q="6E4A2A", f="E8DDB8", d="9E2B25", r="C2402F", l="9C7B55", y="C9A24A"),
+    # Pamanah: brown iket with a front peak, dark-green kampret, verdigris stagen, brown pangsi, bamboo quiver
+    "archer": dict(t="2E5A4A", T="1D3A31", u="4E8A72", a="6FAF8F", p="4A3324", P="33231A", c="6A4A2E", C="4A3220",
+                   q="B8964E", f="E8DDB8", v="7E6430"),
+    # Pendekar: dark headwrap with a pale edge, black pangsi, wide red sabuk, plain kujang
+    "rogue": dict(t="34303A", T="231F29", u="55525E", a="B8352C", p="2E2A34", P="1D1A22", c="2E2836", C="1A1620",
+                  q="6E4A2A", f="E8DDB8", x="D9C9A0", j="6B1E1A"),
+    # Wiku: topknot + sumping, cream robe over a tan batik kain, verdigris sash, lontar with teal light, ring staff
+    "mage": dict(t="E3D0A0", T="B89B6A", u="F4E8C8", a="3F7A66", p="A88A5A", P="7E6440", c="3F7A66", C="24493D",
+                 q="6E4A2A", f="9EF2E0", r="9E2B25", o="D4AC5E", i="6FE0D0"),
 }
+LEGSTYLE = {"base": "pangsi", "warrior": "kain", "archer": "pangsi", "rogue": "pangsi", "mage": "robe"}
 
 
 def palette(cls):
@@ -107,71 +119,133 @@ BACK = [
 VIEWS = {"down": FRONT, "side": SIDE, "up": BACK}
 
 # ---- class overlays: (rows, y relative to first head row; '.' = leave). Applied on top of the base ----
+def _staff(x, top, bottom, ring="a"):
+    """Wiku staff at column x with a 3x3 ring above `top` (rest poses only; attacks draw their own staff)."""
+    rows = ["." * (x - 1) + "." + ring + "." + "." * (12 - x), "." * (x - 1) + ring + "." + ring + "." * (12 - x),
+            "." * (x - 1) + "." + ring + "." + "." * (12 - x)]
+    rows += ["." * x + "q" + "." * (13 - x) for _ in range(top, bottom)]
+    return (rows, top - 3)
+
+
 OVER = {
     "base": {
         "down": [(["...cccccccc..."], 2)],
         "side": [(["...cccccccc..."], 2)],
         "up": [(["...cccccccc..."], 2)],
     },
-    "warrior": {   # blangkon cap, broad pauldrons, kris at hip
-        "down": [([".....cccc.....", "...cccccccc...", "...CCCgCCCC..."], -1),
-                 ([".mmmttttttmmm."], 8), (["............GG", "............gG"], 11)],
-        "side": [([".....cccc.....", "...cccccccc...", "...CCCCCgCC..."], -1),
-                 (["..mmmtttt...."], 8), (["..........GG.."], 11)],
-        "up": [([".....cccc.....", "...cccccccc...", "...CCCCCCCC..."], -1),
-               ([".mmmttttttmmm."], 8), (["....gggggggg.."], 10)],
+    "warrior": {   # udeng with a front knot and a back tail, selempang, belt buckle, armbands, tameng on the back
+        "down": [(["......c.......", ".....cCc......", "...cccccccc...", "...cCccccCc...", "...CCCCCCCC..."], -2),
+                 (["..c...........", "..C..........."], 3),
+                 (["...........dd.", "..........dqqd", "............qd", ".............d"], 5),
+                 (["...rr........."], 8), ([".g...rr.....g."], 9), (["......yy......"], 10), ([".......rr....."], 11)],
+        "side": [(["........c.....", ".......cCc....", "...cccccccc...", "...cCccccCc...", "...CCCCCCCC..."], -2),
+                 (["..c...........", "..cC..........", "..C..........."], 2),
+                 ([".dd...........", "dqqd..........", "dqyd..........", "dqqd..........", ".dd..........."], 8),
+                 (["....rr........"], 8), ([".....rr......."], 9)],
+        "up": [(["...cccccccc...", "...cCccccCc...", "...CCCCCCCC..."], 0),
+               (["......cC......", "......C......."], 3),
+               (["....dddddd....", "...dqqqqqqd...", "...dqqyyqqd...", "...dqqqqqqd...", "....dddddd...."], 8)],
     },
-    "archer": {    # hair bun + iket tail, quiver on the back, leaf-green hood line
-        "down": [(["......hh......", ".....hHHh....."], -2), (["...cccccccc..."], 2), (["...........ccc"], 3),
-                 (["..qf..........", "..qf..........", "..q..........."], 7)],
-        "side": [(["....hhh.......", "...hHHhh......"], -2), (["...cccccccc..."], 2), (["..ccc........."], 3),
-                 (["..fq..........", "..fq..........", "..qq.........."], 8)],
-        "up": [(["......hh......", ".....hHHh....."], -2), (["...cccccccc..."], 2), (["...........ccc"], 3),
-               (["...qqqqqqqq..."], 8), (["...qfqfqfqf..."], 9), (["...qqqqqqqq..."], 10)],
+    "archer": {    # brown iket with a front peak and a feather, bamboo quiver on the back
+        "down": [(["........c.....", ".......cC.....", "...cccccccc...", "...cCcCcCcc...", "...CCCCCCCC..."], -2),
+                 (["............f.", "...........fq.", "...........qv.", "...........qv.", "............v."], 3)],
+        "side": [([".........c....", "........cC....", "...cccccccc...", "...cCcCcCcc...", "...CCCCCCCC..."], -2),
+                 (["..cc..........", "..c..........."], 3),
+                 ([".f............", "fq............", "qv............", ".qv...........", ".qv...........", "..qv..........", "..qv.........."], 4)],
+        "up": [(["...cccccccc...", "...cCcCcCcc...", "...CCCCCCCC..."], 0),
+               ([".....cc.......", ".....cC.......", "......c......."], 3),
+               (["..........f...", ".........fq...", ".........qv...", ".........qv...", "........qv....", "........qv....", ".......qv.....", ".......qv....."], 4)],
     },
-    "rogue": {     # mask-scarf over the lower face, long knotted tail, kujang at the back
-        "down": [(["...cccccccc..."], 2), (["...hCCCCCCh..."], 5), (["....CCCCCC...."], 6), (["..........cc.."], 3), (["..........Cc.."], 4)],
-        "side": [(["...cccccccc..."], 2), (["...hhCCCCCC.."], 5), (["..cc.........."], 3), (["..Cc.........."], 4)],
-        "up": [(["...cccccccc..."], 2), (["..cc.........."], 3), (["..Cc.........."], 4), (["..cc.........."], 5),
-               (["....mmmm......", "...mM.........", "..mM.........."], 9)],
+    "rogue": {     # dark headwrap with a pale edge and knot tails, 3 px red sabuk with a hanging end
+        "down": [(["...cccccccc...", "...cCccccCc...", "...xxxxxxxx..."], 0), (["...........cc.", "...........cC.", "............c."], 1),
+                 (["..ajaaaaaaja.."], 11), (["..a...........", "..j...........", "..a..........."], 12)],
+        "side": [(["...cccccccc...", "...cCccccCc...", "...xxxxxxxx..."], 0), (["..cc..........", ".cC...........", "..c..........."], 1),
+                 (["...aaaaaaaa..."], 11), (["..a...........", "..j...........", ".a............"], 11)],
+        "up": [(["...cccccccc...", "...cCccccCc...", "...xxxxxxxx..."], 0), (["......cc......", ".....cCCc.....", ".....c..c....."], 3),
+               (["..ajaaaaaaja.."], 11), (["...........a..", "...........j.."], 12)],
     },
-    "mage": {      # pearl crown, long hair behind, robe down to the feet
-        "down": [(["....g.gg.g....", "....gGwGGg...."], 0), (["..h...hh...h.."], 5), (["..hh......hh.."], 6),
-                 (["...tttttttt..."], 12), ([".tttutttttTttt"], 13)],
-        "side": [(["....g.gg.g....", "....gGwGGg...."], 0), (["..hh.........."], 4), (["..hhh........."], 5), (["..hhh........."], 6)],
-        "up": [(["....g.gg.g....", "....gGwGGg...."], 0), (["...hhhhhhhh..."], 7)],
+    "mage": {      # topknot with a gold pin, sumping at the ears, bare right shoulder, red cord, lontar at the hip
+        "down": [(["......hh......", ".....hHhh.....", "......g......."], -3), (["..Gg......gG.."], 4),
+                 (["........ssss.."], 8), (["......r..kss.."], 9), (["............g."], 9), ([".......r......"], 10),
+                 (["i.............", "oo............", "oo............"], 10),
+                 (["...tttttttt..."], 12), (["..tttutttttT.."], 13)],
+        "side": [(["....hh........", "...hHhh.......", "....g........."], -3), (["......gG......"], 4),
+                 (["...........i..", "..........oo..", "..........oo.."], 10)],
+        "up": [(["......hh......", ".....hHhh.....", "......g......."], -3), (["..gG......Gg.."], 4),
+               (["..ssss........"], 8), (["..ssk..r......"], 9), ([".g............"], 9), (["........r....."], 10),
+               (["...tttttttt..."], 12), (["..tttTtttttT.."], 13)],
     },
+}
+
+# items shown only when the weapon is at rest (idle, walk, dodge, hurt, death); attack frames draw their own weapon
+REST = {
+    "base": {"down": [], "side": [], "up": []},
+    "warrior": {   # kelewang hanging low at the left hand
+        "down": [(["m.............", "M.............", "m.............", "m............."], 11)],
+        "side": [(["...........y..", "............m.", "............M."], 11)],
+        "up": [([".............m", ".............M"], 11)],
+    },
+    "archer": {    # gendewa in the left hand: recurved arc, string behind the body
+        "down": [(["..q...........", ".qf...........", "q.f...........", "q.............", "q.............", "q.............",
+                   "q.............", "q.f...........", ".qf...........", "..q..........."], 6)],
+        "side": [(["............q.", ".............q", ".............q", ".............q", ".............q", "............q."], 8)],
+        "up": [(["...........q..", "............q.", ".............q", ".............q", "............q.", "...........q.."], 8)],
+    },
+    "rogue": {     # kujang tucked at the hip
+        "down": [(["...........mM.", "............m."], 12)],
+        "side": [(["..........mM..", "...........m.."], 12)],
+        "up": [(["..mM..........", "...m.........."], 12)],
+    },
+    "mage": {"down": [_staff(12, 0, 18), (["............s."], 10)], "side": [_staff(12, 0, 18), (["...........ss."], 10)],
+             "up": [_staff(1, 0, 18), ([".s............"], 10)]},
 }
 
 # ---- walk / idle leg poses: list of (left_len, right_len, spread) ----
 def legs_img(pal, view, left, right, spread=0, hem=0, cls="base"):
+    """Lower 4 rows. Everyone is barefoot: kain (warrior) = skirt to the knee over wrapped calves,
+    pangsi = loose trousers with a flared cuff, robe (mage) = tan kain to the ankle with a verdigris hem."""
     img = Image.new("RGBA", (IW, 4), (0, 0, 0, 0))
     P = pal
-    if cls == "mage":
-        # robe skirt; hem sways, feet barely show
-        rows = [" ...tttttttt...", "..tttTtttttT...", "..tttTtttttTt..", "..bb......bb.."]
-        rows = ["..tttttttttt..", "..ttTttttTtt..", "..tttttttttt..", "...bb....bb..."]
+    style = LEGSTYLE[cls]
+    if style == "robe":
+        rows = ["..pppppppppp..", "..pPpppPpppp..", "..aaaaaaaaaa..", "...ss....ss..."]
         if view == "side":
-            rows = ["...ttttttt....", "...ttTtttTt...", "...tttttttt...", "....bb..bb...."]
-        sh = hem
-        out = px.sprite(rows, P, (IW, 4))
-        return px.shift(out, sh, 0)
+            rows = ["...ppppppp....", "...pPpppPpp...", "...aaaaaaaa...", "....ss..ss...."]
+        return px.shift(px.sprite(rows, P, (IW, 4)), hem, 0)
+
+    def put(x, y, c):
+        if 0 <= x < IW and 0 <= y < 4:
+            img.putpixel((x, y), c)
+
     def draw_leg(x, length, shd):
         for y in range(length):
-            c = P["P"] if shd else P["p"]
-            if 0 <= y < 4:
-                img.putpixel((x, y), c) if 0 <= x < IW else None
-                img.putpixel((x + 1, y), c) if 0 <= x + 1 < IW else None
-        fy = min(3, length - 1) if length > 0 else 0
-        for fx in (x - 1, x, x + 1):
-            if 0 <= fx < IW and length > 0:
-                img.putpixel((fx, fy), P["b"])
+            if y == length - 1:                       # bare foot
+                for fx in (x - 1, x, x + 1):
+                    put(fx, y, P["S"] if fx == x - 1 else P["s"])
+                if view == "side":
+                    put(x + 2, y, P["s"])
+            elif style == "kain":                     # calf with a leather wrap
+                put(x, y, P["l"] if y % 2 == 0 else P["S"] if shd else P["s"])
+                put(x + 1, y, P["l"] if y % 2 == 0 else P["s"])
+            else:                                     # pangsi, flared at the cuff
+                c = P["P"] if shd else P["p"]
+                put(x, y, c)
+                put(x + 1, y, c)
+                if y == length - 2:
+                    put(x - 1, y, P["P"])
+                    put(x + 2, y, P["P"] if shd else P["p"])
     if view == "side":
         draw_leg(4 + spread, left, True)
         draw_leg(7 - spread, right, False)
     else:
         draw_leg(4, left, True)
         draw_leg(8, right, False)
+    if style == "kain":                               # skirt over the knees, brass tumpal dots on the hem
+        sk = ["..pppppppppp..", "..PgPpPgPpPg.."] if view != "side" else ["...ppppppppp..", "...PgPpPgPp..."]
+        for y, row in enumerate(sk):
+            for x, ch in enumerate(row):
+                if ch != ".":
+                    put(x + hem, y, P[ch])
     return img
 
 
@@ -185,7 +259,7 @@ def overlay(img, rows, y, pal, rel0=Y0):
                 img.putpixel((x, yy), pal[ch])
 
 
-def body(cls, view, pose=None):
+def body(cls, view, pose=None, rest=True):
     """Upper body (head+torso+hips) on an IW x IH canvas, feet area empty."""
     pal = palette(cls)
     img = Image.new("RGBA", (IW, IH), (0, 0, 0, 0))
@@ -195,13 +269,13 @@ def body(cls, view, pose=None):
         for x, ch in enumerate(row):
             if ch != ".":
                 img.putpixel((x, Y0 + y), pal[ch])
-    for rws, y in OVER[cls][view]:
+    for rws, y in OVER[cls][view] + (REST[cls][view] if rest else []):
         overlay(img, rws, y, pal)
     return img, pal
 
 
-def compose(cls, view, bob=0, lx=0, legs=(4, 4, 0), hem=0, extra=None, upper_mod=None):
-    up, pal = body(cls, view)
+def compose(cls, view, bob=0, lx=0, legs=(4, 4, 0), hem=0, extra=None, upper_mod=None, rest=True):
+    up, pal = body(cls, view, rest=rest)
     if upper_mod:
         up = upper_mod(up)
     can = Image.new("RGBA", (IW, IH), (0, 0, 0, 0))
@@ -221,8 +295,8 @@ def compose(cls, view, bob=0, lx=0, legs=(4, 4, 0), hem=0, extra=None, upper_mod
 # =====================================================================================
 ARCH = {"base": "light", "rogue": "light", "warrior": "heavy", "mage": "staff", "archer": "bow"}
 WLEN = {"base": 6, "rogue": 6, "warrior": 8, "mage": 9}      # px of weapon beyond the hand at w_l = 1.0
-SMEAR = {"warrior": hexc("FFFFFF", 235), "base": hexc("FFFFFF", 200), "archer": hexc("D4F5A0", 220),
-         "rogue": hexc("C7B8FF", 220), "mage": hexc("9EF2FF", 235)}
+SMEAR = {"warrior": hexc("FFE6C8", 235), "base": hexc("FFFFFF", 200), "archer": hexc("C8F0D8", 220),
+         "rogue": hexc("FFD8CC", 220), "mage": hexc("9EF2E0", 235)}
 
 N, W, L, L3 = (4, 4, 0), (4, 4, -2), (4, 3, -2), (4, 3, -3)
 
@@ -323,8 +397,9 @@ def draw_weapon(can, pal, cls, hx, hy, vx, vy, hit):
         pts = line_pts(bx, by, tx, ty)
         for i, (x, y) in enumerate(pts):
             put_px(can, x, y, pal["q"] if i % 3 else pal["f"])
-        for ox, oy, ch in ((0, 0, "w"), (1, 0, "f"), (-1, 0, "f"), (0, 1, "f"), (0, -1, "f")):
-            put_px(can, tx + ox, ty + oy, pal[ch])
+        for ox, oy in ((1, 0), (-1, 0), (0, 1), (0, -1)):        # ring top (verdigris), teal ink-light inside
+            put_px(can, tx + ox, ty + oy, pal["a"])
+        put_px(can, tx, ty, pal["f"])
         return
     pts = line_pts(hx, hy, tx, ty)
     n = len(pts)
@@ -395,7 +470,7 @@ def attack_frame(cls, hit, view, f):
         bob += dy if view == "down" else -dy
         lx, lean = 0, 0
     can = compose(cls, view, bob, lx, legs, hem=lx,
-                  upper_mod=(lambda u: px.shear_top(u, lean)) if lean else None)
+                  upper_mod=(lambda u: px.shear_top(u, lean)) if lean else None, rest=False)
     pal = palette(cls)
     sx0, sy0 = SHOULDER[view]
     sx = sx0 + lx + round(lean * (1 - 12 / 20.0))

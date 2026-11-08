@@ -119,3 +119,4 @@ Current development status and architecture reference for Budayago as of **2026-
 - Never commit, push, or delete files without explicit user request.
 - Run headless tests and verification scripts before concluding tasks.
 - 2026-11-08: UI retheme to parchment and ink (tools/gen_ui_rpg.py, gen_title_book.py, gen_speaker_portraits.py); fonts Almendra; game renamed The Last Aksara (visible text only, project name unchanged). See ui.md 0, 4.1, 5.
+- 2026-11-08: Menu, class and portrait redesign approved. Pause menu becomes the field book with 7 tabs (new Penuntun/Controls, illustrated world map, codex list/detail) per ui.md 4.3; classes become Hulubalang / Pamanah / Pendekar / Wiku (classes.md "Identity", ids unchanged); speaker portraits move to 48x48 with expressions (ui.md 3.1); new unique busts for Ciung Wanara, Bondowoso, Dayang Sumbi, Purbasari and Nawang Wulan are remapped in ui/portraits.gd.

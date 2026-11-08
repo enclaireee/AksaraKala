@@ -24,6 +24,7 @@ var _shown := ""
 var _info: Control
 var _name: Label
 var _desc: Label
+var _role: Label
 var _bars := {}
 var _w_icon: TextureRect
 var _w_name: Label
@@ -109,9 +110,13 @@ func _build_info() -> void:
 	add_child(_info)
 	var x := 12.0
 	_name = UIFx.label("", 10, UIFx.INK_HEAD, true, true)
-	_name.position = Vector2(x, 10)
+	_name.position = Vector2(x, 6)
 	_name.size = Vector2(152, 14)
 	_info.add_child(_name)
+	_role = UIFx.label("", 7, UIFx.INK_DIM, false, true)
+	_role.position = Vector2(x, 17)
+	_role.size = Vector2(152, 8)
+	_info.add_child(_role)
 	var d := UIFx.rect_tex("divider", Vector2(x + 44, 25))
 	d.position.x = (176 - 64) / 2.0
 	_info.add_child(d)
@@ -225,6 +230,7 @@ func _preview(c: ClassData) -> void:
 
 func _fill(c: ClassData) -> void:
 	_name.text = tr(c.title)
+	_role.text = tr(c.title.replace("_NAME", "_ROLE"))
 	_desc.text = tr(c.description)
 	for s: String in STATS:
 		_bars[s].set_value(int(c.stats.get(s, 0)))
