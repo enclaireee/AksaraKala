@@ -117,7 +117,7 @@ func _draw_bg() -> void:
 	_bg_fx.draw_rect(Rect2(0, 6, 480, 2), Color(0.75, 0.60, 0.25))
 
 
-## Foreground effects: oil lamps, warm safe light circles, Batara Kala's shadow, and guidance banner.
+## Foreground effects: oil lamps, warm safe light circles, and Batara Kala's shadow.
 func _draw_fx() -> void:
 	# 1. Warm radiant safe-zone light from lit lamps
 	for s: MemorySpot in lamps():
@@ -160,9 +160,6 @@ func _draw_fx() -> void:
 		_fx.draw_circle(gp, 6.0, Color(1.0, 0.85, 0.35, g_alpha))
 		_fx.draw_arc(gp, 10.0 + sin(_t * 3.0) * 2.0, 0.0, TAU, 16, Color(1.0, 0.95, 0.6, g_alpha * 0.8), 1.5)
 
-	# 8. Guidance HUD Banner at top of the Kelir
-	_draw_guidance_banner()
-
 
 ## Moves the Batara Kala sprite and pulses his eyes (sprite origin sits 27 px left and 40 px above `pos`).
 func _place_kala(pos: Vector2) -> void:
@@ -188,26 +185,3 @@ func _draw_lamp_stand(spot: MemorySpot, lit: bool) -> void:
 		var pulse := 0.5 + 0.5 * sin(_t * 4.0)
 		_fx.draw_arc(spot.position + Vector2(0, -6), 9.0 + pulse * 2.0, 0.0, TAU, 12, Color(1.0, 0.85, 0.4, 0.4 * pulse), 1.0)
 
-
-## Renders an atmospheric guidance banner at the top of the kelir screen.
-func _draw_guidance_banner() -> void:
-	# Banner backing
-	var bw := 340.0
-	var bh := 16.0
-	var bx := 240.0 - bw * 0.5
-	var by := 12.0
-	_fx.draw_rect(Rect2(bx, by, bw, bh), Color(0.08, 0.05, 0.04, 0.75))
-	_fx.draw_rect(Rect2(bx, by + bh - 1, bw, 1), Color(0.75, 0.60, 0.25, 0.6))
-
-	# Text hint
-	var loc := TranslationServer.get_locale()
-	var is_id := loc.begins_with("id")
-	var count := 0
-	for s: MemorySpot in lamps():
-		if s.done:
-			count += 1
-	var hint_text := "WAYANG RUWATAN: Nyalakan pelita minyak [E] sebelum bayangan Kala menelanmu! (%d/4)" % count if is_id else "RUWATAN: Light the oil lamps [E] before Kala's shadow overtakes you! (%d/4)" % count
-
-	var font := ThemeDB.fallback_font
-	if font:
-		_fx.draw_string(font, Vector2(bx + 12, by + 12), hint_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(0.96, 0.90, 0.75))
