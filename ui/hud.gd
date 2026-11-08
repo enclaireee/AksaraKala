@@ -6,9 +6,11 @@ const HP_COL := Color("D55E00")
 const ST_COL := Color("F0E442")
 const SK_COL := Color("56B4E9")
 const FLASK_COL := Color("009E73")
-const GOLD := Color("F2D488")   # prada gold highlight (ui.md 3b)
-const CREAM := Color("EDE3CC")
-const OUTLINE := Color("0E0B0A")
+const GOLD := Color("F3E3B8")   # prada gold highlight (ui.md 3b)
+const CREAM := Color("EADFC4")
+const OUTLINE := Color("140E0A")
+const INK := Color("2A1C12")   # text on the paper tracker card
+const INK_HEAD := Color("7A2A1E")
 const UI_DIR := "res://assets/art/ui/"
 const LAG_HOLD := 0.4   # s before the cream lag chunk drains
 const LOW_HP := 0.25
@@ -91,7 +93,8 @@ func _ready() -> void:
 	_flask_empty = _ui_tex("flask_empty")
 	_grp_bars = _group()
 	_grp_hide = _group()
-	_bars.hp = _bar(Vector2(6, 6), 96, 9, HP_COL, "icon_heart", _grp_bars)
+	_nine("hud_plate", Rect2(2, 2, 122, 41), [5, 5, 5, 5], _grp_bars)   # leather plaque behind the three vitals
+	_bars.hp = _bar(Vector2(6, 6), 96, 9, HP_COL, "seal_hp", _grp_bars)
 	_bars.st = _bar(Vector2(6, 22), 64, 3, ST_COL, "icon_bolt", _grp_bars)
 	_bars.sk = _bar(Vector2(6, 31), 50, 3, SK_COL, "icon_brush", _grp_bars)
 	_st_nodes = [_bars.st[2], _bars.st[4], _bars.st[5]]
@@ -146,14 +149,14 @@ func _ready() -> void:
 	_saved_icon.position = Vector2(480 - 6 - 8, 270 - 6 - 8)
 	_saved_icon.visible = false
 	_saved_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_saved_icon)
+	_grp_hide.add_child(_saved_icon)   # fades with the rest of the HUD while a dialogue is open
 	_saved = Label.new()
 	_saved.text = "UI_SAVED"
 	_saved.position = Vector2(480 - 6 - 8 - 2 - 80, 270 - 6 - 10)
 	_saved.size = Vector2(80, 10)
 	_saved.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_saved.visible = false
-	add_child(_saved)
+	_grp_hide.add_child(_saved)
 	_build_extras()
 	_tracker_panel = PanelContainer.new()   # minimalistic floating quest HUD under vitals
 	_tracker_panel.position = Vector2(8, 48)
@@ -230,9 +233,9 @@ func refresh_objective() -> void:
 		if st == null:
 			continue
 		var q := QuestData.by_id(id)
-		rows.append(["title", _title(id), GOLD if q.kind == "main" else CREAM, ""])
+		rows.append(["title", _title(id), INK_HEAD if q.kind == "main" else INK, ""])
 		if st.all.is_empty():
-			rows.append(["obj", g.quest_objective_text(id), Color.WHITE, "bullet_now"])
+			rows.append(["obj", g.quest_objective_text(id), INK, "bullet_now"])
 		else:
 			var checklist: Array = g.step_checklist(id)
 			var total: int = checklist.size()
@@ -254,7 +257,7 @@ func refresh_objective() -> void:
 				active_text = g.quest_objective_text(id)
 			if total > 1:
 				active_text += " (%d/%d)" % [done_count, total]
-			rows.append(["obj", active_text, Color.WHITE, "bullet_now"])
+			rows.append(["obj", active_text, INK, "bullet_now"])
 		break
 	var sig := str(rows)
 	if sig == _tracker_sig:
@@ -271,7 +274,6 @@ func refresh_objective() -> void:
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		l.add_theme_color_override("font_color", r[2])
-		_outlined(l)
 		if r[0] == "title":
 			l.theme_type_variation = &"Heading"
 			l.custom_minimum_size.x = inner
@@ -413,7 +415,7 @@ func _group() -> Control:
 	return c
 
 
-## Dialogue open: the tracker, flasks, weapon, Ilmu and hints fade out and the vitals dim to 40%, so nothing
+## Dialogue open: the tracker, flasks, weapon, Ilmu, hints and the vitals plaque all fade out, so nothing
 ## competes with the speech (ui.md 2). Back to full on close. 0.2 s.
 func set_focus(on: bool) -> void:
 	_dialogue_focus = on
@@ -430,7 +432,7 @@ func set_focus(on: bool) -> void:
 		_focus_tw.kill()
 	_focus_tw = create_tween().set_parallel(true)
 	_focus_tw.tween_property(_grp_hide, "modulate:a", 0.0 if on else 1.0, 0.2)
-	_focus_tw.tween_property(_grp_bars, "modulate:a", 0.4 if on else 1.0, 0.2)
+	_focus_tw.tween_property(_grp_bars, "modulate:a", 0.0 if on else 1.0, 0.2)   # the vitals leave too: nothing competes with the speech
 
 
 func _nine(tex: String, rect: Rect2, m: Array, parent: Node = null) -> NinePatchRect:
@@ -456,7 +458,7 @@ func _build_extras() -> void:
 	_toast_root.visible = false
 	add_child(_toast_root)
 	_nine("panel", Rect2(0, 0, TOAST_W, 16), [6, 6, 6, 6], _toast_root)
-	_toast_rule = _rect(Vector2(80, 15), Vector2(0, 1), Color("C9A24A"), _toast_root)   # gold rule grows from the centre
+	_toast_rule = _rect(Vector2(80, 15), Vector2(0, 1), Color("C8B38A"), _toast_root)   # gold rule grows from the centre
 	_toast = Label.new()
 	_toast.position = Vector2(4, 2)
 	_toast.size = Vector2(TOAST_W - 8, 12)
@@ -766,11 +768,14 @@ func _update_boss() -> void:
 
 
 func _bar(pos: Vector2, w: int, h: int, col: Color, icon: String, parent: Node) -> Array:
-	var ic := TextureRect.new()
+	var ic := TextureRect.new()   # a wax-seal badge on the HP bar (drawn over the bar's end), a small glyph on the thin bars
 	ic.texture = _ui_tex(icon)
-	ic.position = Vector2(pos.x, pos.y + (h + 4 - 7) / 2)
 	ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	parent.add_child(ic)
+	if icon.begins_with("seal_"):
+		ic.position = Vector2(pos.x - 1, pos.y + floorf((h + 4 - 12) / 2.0))
+	else:
+		ic.position = Vector2(pos.x, pos.y + (h + 4 - 7) / 2)
+		parent.add_child(ic)
 	var frame := _nine("bar_frame", Rect2(pos.x + 9, pos.y, w + 4, h + 4), [3, 3, 3, 3], parent)
 	var bg := ColorRect.new()   # the well: flashes red on a blocked action
 	bg.color = Color(0, 0, 0, 0.6)
@@ -786,7 +791,29 @@ func _bar(pos: Vector2, w: int, h: int, col: Color, icon: String, parent: Node) 
 	var fill := ColorRect.new()
 	fill.color = col
 	fill.size = Vector2(w, h)
+	fill.clip_contents = true
 	bg.add_child(fill)
+	if h >= 4:   # shading: a lit top row and a dark bottom row, plus ruler ticks every 12 px (ui.md 2.1)
+		var hi := ColorRect.new()
+		hi.color = Color(1, 1, 1, 0.28)
+		hi.size = Vector2(w, 1)
+		hi.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		fill.add_child(hi)
+		var lo := ColorRect.new()
+		lo.color = Color(0, 0, 0, 0.3)
+		lo.position = Vector2(0, h - 1)
+		lo.size = Vector2(w, 1)
+		lo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		fill.add_child(lo)
+		for x in range(12, w, 12):
+			var tick := ColorRect.new()
+			tick.color = Color(0, 0, 0, 0.35)
+			tick.position = Vector2(x, 0)
+			tick.size = Vector2(1, h)
+			tick.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			bg.add_child(tick)
+	if icon.begins_with("seal_"):
+		parent.add_child(ic)   # last, so the badge overlaps the bar end
 	return [fill, w, frame, lag, bg, ic]
 
 

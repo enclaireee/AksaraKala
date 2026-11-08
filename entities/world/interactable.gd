@@ -13,7 +13,7 @@ var _tween: Tween
 var _hid_far := false   # the prompt is hidden only because a nearer one is in range
 
 const KEYCAP := preload("res://assets/art/ui/keycap.png")
-const KEY_FONT := preload("res://assets/fonts/AlegreyaSans-Bold.ttf")
+const KEY_FONT := preload("res://assets/fonts/CrimsonPro.ttf")
 const RISE := 3.0
 
 
@@ -35,7 +35,7 @@ func _ready() -> void:
 	_key_lbl = Label.new()
 	_key_lbl.add_theme_font_override("font", KEY_FONT)
 	_key_lbl.add_theme_font_size_override("font_size", 6)
-	_key_lbl.add_theme_color_override("font_color", Color("0E0B0A"))
+	_key_lbl.add_theme_color_override("font_color", Color("140E0A"))
 	_key_lbl.add_theme_constant_override("outline_size", 0)
 	_key_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_key_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

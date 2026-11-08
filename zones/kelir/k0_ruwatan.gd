@@ -15,6 +15,21 @@ var _fx := Node2D.new()
 var _bg_fx := Node2D.new()
 var _t := 0.0
 var _flash := 0.0
+var _kala: Sprite2D
+var _lamp_sprites := {}
+
+
+## Sprite from assets/art/cutscene/; `feet` = bottom-centre when `feet_origin`, else top-left.
+func _sprite(parent: Node, art: String, pos: Vector2, feet_origin := true) -> Sprite2D:
+	var sp := Sprite2D.new()
+	sp.texture = load("res://assets/art/cutscene/%s.png" % art)
+	sp.centered = false
+	var w := sp.texture.get_width() / (4 if art == "lamp_stand" else 1)
+	if feet_origin:
+		sp.offset = Vector2(-w / 2.0, -sp.texture.get_height())
+	sp.position = pos.round()
+	parent.add_child(sp)
+	return sp
 
 
 func _ready() -> void:
@@ -30,6 +45,17 @@ func _ready() -> void:
 	_bg_fx.z_index = 0
 	_bg_fx.draw.connect(_draw_bg)
 	add_child(_bg_fx)
+
+	# Wayang sprites (tools/gen_cutscene_art.py): Semar and the gunungan planted in the banana log
+	for d in [["puppet_semar", Vector2(32, 160)], ["puppet_gunungan", Vector2(14, 150)]]:
+		var sp := _sprite(_bg_fx, d[0], d[1])
+		sp.modulate = Color(1, 1, 1, 0.85)
+	# Batara Kala is a sprite now; _draw_fx only moves it and draws his eyes
+	_kala = _sprite(_fx, "puppet_kala", Vector2.ZERO, false)
+	for s: MemorySpot in lamps():
+		var ls := _sprite(_fx, "lamp_stand", s.position + Vector2(0, 14))
+		ls.region_enabled = true
+		_lamp_sprites[s] = ls
 
 	# Foreground darkness and lighting effects (over stand-in)
 	_fx.z_index = 5
@@ -84,24 +110,7 @@ func _draw_bg() -> void:
 	_bg_fx.draw_rect(Rect2(0, 148, 480, 12), Color(0.28, 0.42, 0.20))
 	_bg_fx.draw_rect(Rect2(0, 160, 480, 112), Color(0.18, 0.14, 0.12))
 
-	# 3. Dalang Semar silhouette in the bottom-left corner
-	var sx := 24.0
-	var sy := 154.0
-	_bg_fx.draw_circle(Vector2(sx, sy - 14), 7.0, Color(0.12, 0.09, 0.07)) # head & kuncung
-	_bg_fx.draw_rect(Rect2(sx - 8, sy - 8, 16, 12), Color(0.12, 0.09, 0.07)) # stout body
-	_bg_fx.draw_line(Vector2(sx + 5, sy - 4), Vector2(sx + 18, sy - 18), Color(0.12, 0.09, 0.07), 2.0) # cempurit / stick
-
-	# 4. Wayang Gunungan (Tree of Life) puppet planted on the left
-	var gx := 16.0
-	var gy := 110.0
-	var gunungan := PackedVector2Array([
-		Vector2(gx, gy - 28),
-		Vector2(gx + 12, gy + 4),
-		Vector2(gx + 8, gy + 36),
-		Vector2(gx - 8, gy + 36),
-		Vector2(gx - 12, gy + 4)
-	])
-	_bg_fx.draw_colored_polygon(gunungan, Color(0.10, 0.07, 0.05, 0.75))
+	# 3. Semar and the gunungan are sprites (see _ready)
 
 	# 5. Top ornate carved beam of the wayang screen
 	_bg_fx.draw_rect(Rect2(0, 0, 480, 8), Color(0.24, 0.16, 0.10))
@@ -136,12 +145,11 @@ func _draw_fx() -> void:
 	# 5. Batara Kala's looming monstrous silhouette towering at the shadow front
 	var kala_x := edge + 22.0
 	var kala_y := 105.0 + sin(_t * 2.2) * 4.0
-	_draw_batara_kala_silhouette(Vector2(kala_x, kala_y))
+	_place_kala(Vector2(kala_x, kala_y))
 
 	# 6. Brass Lamp Stands (Blencong) with animated flames
 	for s: MemorySpot in lamps():
-		var lp := s.position + Vector2(0, -4)
-		_draw_lamp_stand(lp, s.done)
+		_draw_lamp_stand(s, s.done)
 
 	# 7. Goal beacon at Spot5 (the exit of the shadow screen)
 	var goal_spots := spots().filter(func(sp: MemorySpot) -> bool: return sp.action_kind == "goal")
@@ -156,84 +164,29 @@ func _draw_fx() -> void:
 	_draw_guidance_banner()
 
 
-## Draws Batara Kala's terrifying shadow silhouette with glowing demonic eyes.
-func _draw_batara_kala_silhouette(pos: Vector2) -> void:
-	var bx := pos.x
-	var by := pos.y
-
-	# Broad demonic shoulders & torso
-	var torso := PackedVector2Array([
-		Vector2(bx - 14, by - 12),
-		Vector2(bx + 26, by - 16),
-		Vector2(bx + 30, by + 40),
-		Vector2(bx - 8, by + 40)
-	])
-	_fx.draw_colored_polygon(torso, Color(0.03, 0.01, 0.02, 0.98))
-
-	# Massive horned demonic head
-	var head := PackedVector2Array([
-		Vector2(bx - 18, by - 26),
-		Vector2(bx + 18, by - 36),
-		Vector2(bx + 24, by - 18),
-		Vector2(bx - 4, by - 10)
-	])
-	_fx.draw_colored_polygon(head, Color(0.02, 0.01, 0.02, 0.98))
-
-	# Curving horns pointing forward
-	_fx.draw_line(Vector2(bx - 10, by - 28), Vector2(bx - 26, by - 44), Color(0.02, 0.01, 0.02), 3.5)
-	_fx.draw_line(Vector2(bx + 10, by - 30), Vector2(bx - 4, by - 50), Color(0.02, 0.01, 0.02), 3.5)
-
-	# Gaping fanged jaws
-	var jaw := PackedVector2Array([
-		Vector2(bx - 16, by - 12),
-		Vector2(bx - 24, by - 6),
-		Vector2(bx - 14, by + 4),
-		Vector2(bx - 6, by - 2)
-	])
-	_fx.draw_colored_polygon(jaw, Color(0.02, 0.01, 0.02))
-
-	# Sharp white silhouette fangs
-	_fx.draw_line(Vector2(bx - 20, by - 10), Vector2(bx - 22, by - 5), Color(0.9, 0.85, 0.8), 1.5)
-	_fx.draw_line(Vector2(bx - 16, by - 8), Vector2(bx - 18, by - 3), Color(0.9, 0.85, 0.8), 1.5)
-
-	# Piercing glowing crimson/amber eyes staring from the darkness
+## Moves the Batara Kala sprite and pulses his eyes (sprite origin sits 27 px left and 40 px above `pos`).
+func _place_kala(pos: Vector2) -> void:
+	_kala.position = (pos - Vector2(27, 40)).round()
 	var eye_pulse := 0.85 + 0.15 * sin(_t * 7.0)
-	_fx.draw_circle(Vector2(bx - 12, by - 20), 3.0, Color(1.0, 0.25, 0.1, 0.6 * eye_pulse))
-	_fx.draw_circle(Vector2(bx - 12, by - 20), 1.5, Color(1.0, 0.85, 0.3, eye_pulse))
-
-	# Long reaching clawed shadow arm stretching toward the light
-	var reach := sin(_t * 3.5) * 6.0
-	_fx.draw_line(Vector2(bx - 8, by + 8), Vector2(bx - 28 + reach, by + 4), Color(0.03, 0.01, 0.02), 3.0)
-	_fx.draw_line(Vector2(bx - 28 + reach, by + 4), Vector2(bx - 36 + reach, by - 2), Color(0.03, 0.01, 0.02), 2.0)
-	_fx.draw_line(Vector2(bx - 28 + reach, by + 4), Vector2(bx - 38 + reach, by + 5), Color(0.03, 0.01, 0.02), 2.0)
+	for e: Vector2 in [Vector2(15, 20), Vector2(21, 18)]:
+		var ep := _kala.position + e + Vector2(0.5, 0.5)
+		_fx.draw_circle(ep, 2.6, Color(1.0, 0.25, 0.1, 0.55 * eye_pulse))
+		_fx.draw_circle(ep, 1.2, Color(1.0, 0.85, 0.3, eye_pulse))
 
 
-## Draws a carved brass oil lamp stand (blencong).
-func _draw_lamp_stand(pos: Vector2, lit: bool) -> void:
-	var x := pos.x
-	var y := pos.y
-
-	# Brass pedestal and stem
-	var metal := Color(0.78, 0.62, 0.26) if lit else Color(0.38, 0.32, 0.25)
-	_fx.draw_rect(Rect2(x - 4, y + 2, 8, 3), metal) # base
-	_fx.draw_rect(Rect2(x - 1, y - 6, 2, 8), metal) # stem
-	_fx.draw_rect(Rect2(x - 5, y - 9, 10, 4), metal) # oil bowl
-
+## Brass lamp stand sprite: frame 0 unlit, 1-3 the flame. Unlit lamps also pulse a beacon ring.
+func _draw_lamp_stand(spot: MemorySpot, lit: bool) -> void:
+	var ls: Sprite2D = _lamp_sprites[spot]
+	var f := 1 + int(_t * 9.0 + spot.position.x) % 3 if lit else 0
+	ls.region_rect = Rect2(f * 14, 0, 14, 24)
 	if lit:
-		# Dancing flame
-		var flame_y := y - 11.0 + sin(_t * 14.0) * 0.8
-		var flame_x := x + cos(_t * 11.0) * 0.6
-		_fx.draw_circle(Vector2(flame_x, flame_y), 3.5, Color(1.0, 0.6, 0.1, 0.85))
-		_fx.draw_circle(Vector2(flame_x, flame_y), 2.0, Color(1.0, 0.95, 0.5, 0.95))
-		# Spark motes rising
-		for i in 2:
-			var sy := flame_y - 4.0 - float(i * 3) - fmod(_t * 8.0 + float(i * 3), 6.0)
-			_fx.draw_circle(Vector2(flame_x + sin(_t * 6.0 + float(i)) * 1.5, sy), 0.8, Color(1.0, 0.8, 0.3, 0.7))
+		var fy := spot.position.y + 14.0 - 21.0
+		for i in 2:   # spark motes rising
+			var sy := fy - 4.0 - float(i * 3) - fmod(_t * 8.0 + float(i * 3), 6.0)
+			_fx.draw_rect(Rect2(spot.position.x + roundf(sin(_t * 6.0 + float(i)) * 1.5), roundf(sy), 1, 1), Color(1.0, 0.8, 0.3, 0.8))
 	else:
-		# Unlit lamp: subtle interactive beacon pulse
 		var pulse := 0.5 + 0.5 * sin(_t * 4.0)
-		_fx.draw_circle(Vector2(x, y - 7), 2.0, UNLIT)
-		_fx.draw_arc(Vector2(x, y - 6), 9.0 + pulse * 2.0, 0.0, TAU, 12, Color(1.0, 0.85, 0.4, 0.4 * pulse), 1.0)
+		_fx.draw_arc(spot.position + Vector2(0, -6), 9.0 + pulse * 2.0, 0.0, TAU, 12, Color(1.0, 0.85, 0.4, 0.4 * pulse), 1.0)
 
 
 ## Renders an atmospheric guidance banner at the top of the kelir screen.

@@ -3,10 +3,10 @@ class_name QuestCard extends Control
 ## any quest end shows a summary card (title, rewards). Cards queue, never overlap, wait while a dialogue box is open or the
 ## tree is paused, and never block input. The HUD banner stays for updates.
 
-const GOLD := Color("C9A24A")
-const GOLD_LIGHT := Color("F2D488")
-const CREAM := Color("EDE3CC")
-const OUTLINE := Color("0E0B0A")
+const GOLD := Color("C8B38A")
+const GOLD_LIGHT := Color("F3E3B8")
+const CREAM := Color("EADFC4")
+const OUTLINE := Color("140E0A")
 const BAND := Color(0.055, 0.043, 0.039, 0.82)
 const FADE_IN := 0.5
 const HOLD_START := 3.0
@@ -32,7 +32,7 @@ func _ready() -> void:
 	modulate.a = 0.0
 	visible = false
 	var fv := FontVariation.new()
-	fv.base_font = load("res://assets/fonts/Cinzel.ttf")
+	fv.base_font = load("res://assets/fonts/Almendra-Bold.ttf")
 	fv.spacing_glyph = 2
 	_band = _rect(BAND)
 	_rule_top = _rect(GOLD)

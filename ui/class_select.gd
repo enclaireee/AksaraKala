@@ -108,21 +108,21 @@ func _build_info() -> void:
 	_info = UIFx.frame(Vector2(296, 36), Vector2(176, 180))
 	add_child(_info)
 	var x := 12.0
-	_name = UIFx.label("", 10, UIFx.GOLD_HI, true)
+	_name = UIFx.label("", 10, UIFx.INK_HEAD, true, true)
 	_name.position = Vector2(x, 10)
 	_name.size = Vector2(152, 14)
 	_info.add_child(_name)
 	var d := UIFx.rect_tex("divider", Vector2(x + 44, 25))
 	d.position.x = (176 - 64) / 2.0
 	_info.add_child(d)
-	_desc = UIFx.label("", 8, UIFx.CREAM)
+	_desc = UIFx.label("", 8, UIFx.INK, false, true)
 	_desc.position = Vector2(x, 33)
 	_desc.size = Vector2(152, 24)
 	_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_info.add_child(_desc)
 	var y := 62.0
 	for s: String in STATS:
-		var l := UIFx.label(tr("UI_STAT_" + s.to_upper()), 7, UIFx.DIM)
+		var l := UIFx.label(tr("UI_STAT_" + s.to_upper()), 7, UIFx.INK_DIM, false, true)
 		l.position = Vector2(x, y)
 		l.size = Vector2(60, 9)
 		_info.add_child(l)
@@ -132,7 +132,7 @@ func _build_info() -> void:
 		_bars[s] = bar
 		y += 10.0
 	y += 4.0
-	var w_lbl := UIFx.label(tr("UI_WEAPON"), 7, UIFx.GOLD)
+	var w_lbl := UIFx.label(tr("UI_WEAPON"), 7, UIFx.INK_HEAD, false, true)
 	w_lbl.position = Vector2(x, y)
 	_info.add_child(w_lbl)
 	var slot := UIFx.rect_tex("slot", Vector2(x, y + 10))
@@ -142,16 +142,16 @@ func _build_info() -> void:
 	_w_icon.size = Vector2(16, 16)
 	_w_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	slot.add_child(_w_icon)
-	_w_name = UIFx.label("", 8, UIFx.CREAM)
+	_w_name = UIFx.label("", 8, UIFx.INK, false, true)
 	_w_name.position = Vector2(x + 24, y + 15)
 	_w_name.size = Vector2(124, 10)
 	_info.add_child(_w_name)
 	y += 36.0
-	_p_name = UIFx.label("", 8, UIFx.GOLD_HI, true)
+	_p_name = UIFx.label("", 8, UIFx.INK_HEAD, true, true)
 	_p_name.position = Vector2(x, y)
 	_p_name.size = Vector2(152, 10)
 	_info.add_child(_p_name)
-	_p_text = UIFx.label("", 7, UIFx.CREAM)
+	_p_text = UIFx.label("", 7, UIFx.INK, false, true)
 	_p_text.position = Vector2(x, y + 11)
 	_p_text.size = Vector2(152, 30)
 	_p_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -170,13 +170,7 @@ func _build_confirm() -> void:
 	_confirm.add_child(dim)
 	_dialog = UIFx.frame(Vector2(130, 92), Vector2(220, 84))
 	_confirm.add_child(_dialog)
-	var back := ColorRect.new()   # opaque behind the 92% panel
-	back.color = UIFx.LACQUER
-	back.position = Vector2(2, 2)
-	back.size = Vector2(216, 80)
-	back.mouse_filter = MOUSE_FILTER_IGNORE
-	_dialog.add_child(back)
-	_confirm_lbl = UIFx.label("", 10, UIFx.GOLD_HI, true)
+	_confirm_lbl = UIFx.label("", 10, UIFx.INK_HEAD, true, true)
 	_confirm_lbl.position = Vector2(10, 14)
 	_confirm_lbl.size = Vector2(200, 14)
 	_confirm_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -186,11 +180,11 @@ func _build_confirm() -> void:
 	row.size = Vector2(164, 20)
 	row.add_theme_constant_override("separation", 8)
 	_dialog.add_child(row)
-	var yes := LozengeButton.new(tr("UI_YES"))
+	var yes := LozengeButton.new(tr("UI_YES"), 10, true)
 	yes.pressed.connect(_go)
 	yes.custom_minimum_size.x = 78
 	row.add_child(yes)
-	_no = LozengeButton.new(tr("UI_CANCEL"))
+	_no = LozengeButton.new(tr("UI_CANCEL"), 10, true)
 	_no.pressed.connect(_show_cards)
 	_no.custom_minimum_size.x = 78
 	row.add_child(_no)
@@ -306,9 +300,9 @@ class StatBar extends Control:
 	func _draw() -> void:
 		for i in 10:
 			var r := Rect2(i * 8, 0, 7, 7)
-			draw_rect(r, UIFx.SOGAN)
+			draw_rect(r, Color("B89F6C"))
 			var f := clampf(shown - i, 0.0, 1.0)
 			if f > 0.0:
-				draw_rect(Rect2(r.position, Vector2(7.0 * f, 7)), UIFx.GOLD)
-				draw_rect(Rect2(r.position, Vector2(7.0 * f, 1)), UIFx.GOLD_HI)
-		draw_string(UIFx.body_font(), Vector2(82, 7), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, 7, UIFx.CREAM)
+				draw_rect(Rect2(r.position, Vector2(7.0 * f, 7)), UIFx.INK_HEAD)
+				draw_rect(Rect2(r.position, Vector2(7.0 * f, 1)), Color("C9473B"))
+		draw_string(UIFx.body_font(), Vector2(82, 7), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, 7, UIFx.INK)

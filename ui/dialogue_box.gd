@@ -11,7 +11,7 @@ extends Control
 signal speaker_changed(key: String)   # the speaker tag was set (SceneDirector auto-camera)
 
 const CPS := 45.0   # TUNE: characters per second
-const OUTLINE := Color("0E0B0A")
+const OUTLINE := Color("140E0A")
 const UI_DIR := "res://assets/art/ui/"
 const BOX_X := 28.0       # frame left and width (centred in 480)
 const BOX_W := 424.0
@@ -23,7 +23,7 @@ const PAD_BOT := 13.0     # room for the continue arrow and hint under the text
 const MIN_H := 40.0
 const LINE_H := 10.0      # 8 px font + line spacing
 const MAX_WAIT := 3.0   # seconds a #wait cue may hold
-const NARRATION := Color("F2E6C4")   # Semar (Dalang): italic, pale cream (ui.md 3)
+const NARRATION := Color("5A4430")   # Semar (Dalang): italic, pale cream (ui.md 3)
 
 var _lines := PackedStringArray()
 var _i := 0
@@ -47,6 +47,8 @@ var _sel := 0
 var _list: Label
 var _who: Label   # name tag (ui.md 3)
 var _hold_until := 0   # Time.get_ticks_msec() when a #wait ends, 0 = not holding
+var _portrait_frame: TextureRect   # the speaker's face above the box's left corner (ui.md 3.1)
+var _portrait: TextureRect
 var _fresh := {}   # npc ids whose tag is up for this first talk
 
 
@@ -63,14 +65,18 @@ func _ready() -> void:
 	_speaker.position = Vector2(7, 1)
 	_speaker.size = Vector2(160, 12)
 	_speaker.add_theme_constant_override("outline_size", 0)
+	_speaker.add_theme_color_override("font_color", Color("F3E3B8"))   # on the leather plate
 	_speaker.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_plate.add_child(_speaker)
 	_who = _label(Vector2.ZERO, Vector2(260, 12), Color("D8CFB4"))   # sits on the plate row, beside the name plate
-	_who.add_theme_font_size_override("font_size", 7)
+	_who.add_theme_font_size_override("font_size", 8)
+	_who.add_theme_color_override("font_color", Color("F3E3B8"))
+	_who.add_theme_color_override("font_outline_color", Color("140E0A"))
+	_who.add_theme_constant_override("outline_size", 3)   # it sits over the world, so it needs a strong outline
 	_text = _label(Vector2.ZERO, Vector2(BOX_W - PAD_X * 2.0, LINE_H), Color.TRANSPARENT)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_sel_bar = ColorRect.new()
-	_sel_bar.color = Color(0.122, 0.165, 0.267, 0.9)   # indigo selection (ui.md 3b)
+	_sel_bar.color = Color(0.62, 0.17, 0.145, 0.28)   # wax-red wash selection
 	_sel_bar.size = Vector2(BOX_W - PAD_X * 2.0, 10)
 	_sel_bar.visible = false
 	_sel_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -85,10 +91,18 @@ func _ready() -> void:
 	_cue.texture = load(UI_DIR + "continue_arrow.png")
 	_cue.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_cue)
-	_hint = _label(Vector2.ZERO, Vector2(120, 12), Color("9C8F78"))
+	_hint = _label(Vector2.ZERO, Vector2(120, 12), Color("6B5A44"))
 	_hint.add_theme_font_size_override("font_size", 7)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_frame.z_index = -1
+	_portrait = TextureRect.new()
+	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_portrait.size = Vector2(32, 32)
+	add_child(_portrait)
+	_portrait_frame = TextureRect.new()
+	_portrait_frame.texture = load(UI_DIR + "frame_portrait.png")
+	_portrait_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_portrait_frame)
 	_layout()
 	var ev := get_node("/root/Events")
 	ev.dialogue_requested.connect(_on_requested)
@@ -179,6 +193,10 @@ func _set_speaker(key: String) -> void:
 	var prev := _speaker.text
 	_speaker.text = _t(key)
 	_plate.visible = _speaker.text != ""
+	var face := Portraits.for_key(key)
+	_portrait.texture = face
+	_portrait.visible = face != null
+	_portrait_frame.visible = face != null
 	_plate.size.x = ceilf(_speaker.get_minimum_size().x) + 14.0
 	if _open and _speaker.text != prev:
 		_pop_plate()
@@ -262,7 +280,10 @@ func _layout() -> void:
 	_frame.size = Vector2(BOX_W, h)
 	_frame.position = Vector2(BOX_X, BOX_BOTTOM - h)
 	var fy := _frame.position.y
-	_plate.position = Vector2(BOX_X + 14.0, fy - 8.0)
+	var px_off := 50.0 if _portrait.visible else 14.0   # the plate steps right of the face
+	_portrait_frame.position = Vector2(BOX_X + 6.0, fy - 32.0)
+	_portrait.position = _portrait_frame.position + Vector2(4, 4)
+	_plate.position = Vector2(BOX_X + px_off, fy - 8.0)
 	_who.position = Vector2(_plate.position.x + _plate.size.x + 6.0, fy - 7.0)
 	_text.position = Vector2(BOX_X + PAD_X, fy + top)
 	_text.size.y = th

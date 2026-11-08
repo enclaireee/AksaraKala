@@ -7,9 +7,9 @@ const REGIONS := {
 	"ts": "Tatar Sunda", "kg": "Keraton Galuh", "mt": "Mataram", "tt": "Tanah Timur",
 	"sk": "Segara Kidul", "gk": "Gua Kala", "desa_purwa": "Desa Purwa",
 }
-const GOLD := Color("C9A24A")
-const CREAM := Color("EDE3CC")
-const OUTLINE := Color("0E0B0A")
+const GOLD := Color("C8B38A")
+const CREAM := Color("EADFC4")
+const OUTLINE := Color("140E0A")
 const FADE_IN := 0.6
 const HOLD := 2.2
 const FADE_OUT := 0.8
@@ -31,12 +31,12 @@ func _ready() -> void:
 	modulate.a = 0.0
 	visible = false
 	var fv := FontVariation.new()
-	fv.base_font = load("res://assets/fonts/Cinzel.ttf")
+	fv.base_font = load("res://assets/fonts/Almendra-Bold.ttf")
 	fv.spacing_glyph = 2
 	_region = Label.new()
 	_region.add_theme_font_override("font", fv)
 	_region.add_theme_font_size_override("font_size", 16)
-	_region.add_theme_color_override("font_color", Color("F2D488"))
+	_region.add_theme_color_override("font_color", Color("F3E3B8"))
 	_region.add_theme_color_override("font_outline_color", OUTLINE)
 	_region.add_theme_constant_override("outline_size", 1)
 	_region.position = Vector2(0, Y)

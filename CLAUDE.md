@@ -1,4 +1,4 @@
-# Budayago
+# The Last Aksara (code name Budayago)
 
 Godot 4.7 top-down pixel-art action RPG (480x270, 16 px tiles). The player draws Aksara Sunda and Aksara Jawa with the mouse to cast spells. The goal is a good game. There is no competition brief to design for.
 

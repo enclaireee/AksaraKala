@@ -1,14 +1,20 @@
 class_name UIFx extends RefCounted
 ## Small shared helpers for the front-end screens (ui.md 3b): palette, fonts, frames, motes, fades.
 
-const GOLD := Color("C9A24A")
-const GOLD_HI := Color("F2D488")
-const GOLD_LO := Color("7A5A22")
-const CREAM := Color("EDE3CC")
-const DIM := Color("9C8F78")
-const LACQUER := Color("0E0B0A")
-const SOGAN := Color("3A2618")
-const VERMILLION := Color("B8432B")
+## Parchment-and-ink palette. Dark scenes: GOLD_HI headings (bright paper), CREAM body, DIM secondary.
+## Paper panels: INK, INK_HEAD, INK_DIM. GOLD/GOLD_LO are the aged-paper rule colours (the names stay for old callers).
+const GOLD := Color("C8B38A")
+const GOLD_HI := Color("F3E3B8")
+const GOLD_LO := Color("6B5636")
+const CREAM := Color("EADFC4")
+const DIM := Color("A59A82")
+const LACQUER := Color("140E0A")    # dark ink outline
+const SOGAN := Color("3A2314")      # leather
+const VERMILLION := Color("C0392B") # wax red
+const INK := Color("2A1C12")
+const INK_HEAD := Color("7A2A1E")
+const INK_DIM := Color("6B5A44")
+const PAPER := Color("E3D0A0")
 const ART := "res://assets/art/ui/"
 
 
@@ -21,17 +27,28 @@ static func tex(name: String) -> Texture2D:
 	return _cache[name]
 
 
-const FONT_BODY := "res://assets/fonts/AlegreyaSans-Regular.ttf"
-const FONT_DISPLAY := "res://assets/fonts/Cinzel.ttf"
+const FONT_BODY := "res://assets/fonts/CrimsonPro.ttf"
+const FONT_DISPLAY := "res://assets/fonts/Almendra-Bold.ttf"
 
 
-## The body face (`AlegreyaSans-Regular`).
+## The body face (`CrimsonPro`).
 static func body_font() -> Font:
 	return load(FONT_BODY)
 
 
-## The display face for headings and titles.
+static var _bold: FontVariation
+
+## Bold body face for headings and menu entries up to 16 px (Crimson Pro at weight 700): clean at small sizes.
 static func cinzel() -> Font:
+	if _bold == null:
+		_bold = FontVariation.new()
+		_bold.base_font = load(FONT_BODY)
+		_bold.variation_opentype = {2003265652: 700.0}   # the 'wght' axis
+	return _bold
+
+
+## The display face (Almendra Bold) for big titles only: it is quirky and faint below about 20 px.
+static func display() -> Font:
 	return load(FONT_DISPLAY)
 
 
@@ -40,16 +57,16 @@ static func snap(size: int, _display: bool = false) -> int:
 	return size
 
 
-## A Label in the theme's body font, or Cinzel, with the 1 px outline.
-static func label(text: String, size := 8, color := CREAM, use_cinzel := false) -> Label:
+## A Label in the theme's body font, or Almendra Bold, with the 1 px outline.
+static func label(text: String, size := 8, color := CREAM, use_cinzel := false, paper := false) -> Label:
 	var l := Label.new()
 	l.text = text
 	l.add_theme_font_size_override("font_size", size)
 	l.add_theme_color_override("font_color", color)
 	l.add_theme_color_override("font_outline_color", LACQUER)
-	l.add_theme_constant_override("outline_size", 1)
+	l.add_theme_constant_override("outline_size", 0 if paper else 1)   # paper text is plain ink, no outline
 	if use_cinzel:
-		l.add_theme_font_override("font", cinzel())
+		l.add_theme_font_override("font", display() if size >= 20 else cinzel())
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return l
 

@@ -12,8 +12,8 @@ const HOLD := 1.0
 const GUIDE_RECT := Rect2(380, 20, 80, 80)   # same corner as zones/desa_purwa.gd
 const JAWA := "res://assets/fonts/NotoSansJavanese.ttf"
 const SUNDA := "res://assets/fonts/NotoSansSundanese.ttf"
-const GOLD := Color("F2D488")
-const DIM := Color("9C8F78")
+const GOLD := Color("F3E3B8")
+const DIM := Color("A59A82")
 const CHARS := {
 	"sunda_ka": "ᮊ", "sunda_ga": "ᮌ", "sunda_nga": "ᮍ", "sunda_ca": "ᮎ",
 	"jawa_ha": "ꦲ", "jawa_na": "ꦤ", "jawa_ca": "ꦕ", "jawa_ra": "ꦫ",

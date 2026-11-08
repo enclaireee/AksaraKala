@@ -1,4 +1,4 @@
-# Budayago: Design Documentation
+# The Last Aksara (code name Budayago): Design Documentation
 
 Top-down 2D pixel-art action RPG set in the mythical folklore and landscapes of Java and Sunda. Real-time action combat combined with an authentic spellcasting mechanic: drawing Aksara Sunda and Aksara Jawa script with the mouse to unleash spells.
 
@@ -23,7 +23,7 @@ Top-down 2D pixel-art action RPG set in the mythical folklore and landscapes of 
 | [spells.md](spells.md) | Aksara drawing system, point-cloud gesture recognizer, and spell effects (8 MVP glyphs + Ombak + 3 name glyphs) |
 | [ui.md](ui.md) | In-game HUD (tracker card, banners, vitals), Esc menu with left rail, Elden-style class select, and smooth typography |
 | [items.md](items.md) | Weapons (common & mythic pusaka), armors, accessories, and consumables |
-| [assets.md](assets.md) | Visual art standards, tilesets, spritesheets, font licensing (Alegreya Sans, Cinzel, Noto Sans), and audio sources |
+| [assets.md](assets.md) | Visual art standards, tilesets, spritesheets, font licensing (Alegreya Sans, Almendra Display, Noto Sans), and audio sources |
 | [architecture.md](architecture.md) | Godot 4 project architecture, autoloads, scene composition, physics layers, and technical systems |
 | [scope.md](scope.md) | Priority tiers: P0 (must-have), P1 (should-have), P2 (stretch), and explicit cuts |
 | [schedule.md](schedule.md) | Phased roadmap and completion milestones with exit criteria |

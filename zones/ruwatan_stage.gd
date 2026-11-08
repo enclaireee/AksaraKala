@@ -1,308 +1,201 @@
 class_name RuwatanStageDecor extends Node2D
-## Visual details for the Ruwatan wayang stage in Desa Purwa:
-## - Large backlit Kelir (shadow screen) with puppet silhouettes and blencong oil lamp
-## - Gamelan ensemble (Gong Ageng, Saron, Kendang) with sitting musicians (niyaga)
-## - Sitting village children on woven mats watching the wayang
-## - During the raid (flag:mq0_d8): Nameless Hunter and shadow raiders materializing on stage
-## - After the raid (flag:beat_raid): Burned, charred stage with smoke embers and overturned instruments
+## The Ruwatan wayang stage in Desa Purwa, built from pixel sprites (tools/gen_cutscene_art.py, assets/art/cutscene/):
+## - carved kelir frame, backlit cloth, blencong lamp and wayang puppets (gunungan, Semar, Arjuna)
+## - gamelan (gong ageng, saron, kendang) with seated niyaga, and two children on mats
+## - raid (flag:mq0_d8, not beat_raid): ink bleeds over the cloth, the puppets turn to Buto, the niyaga flee, the children
+##   cower, the Nameless Hunter and two torch-bearing raiders step onto the stage
+## - after the raid (flag:beat_raid): charred frame, torn cloth, fallen instruments, embers
+## Rebuilt whenever Game state changes; _process only steps frame animation.
 
-const SCREEN_POS := Vector2(1192, 194)
+const ART := "res://assets/art/cutscene/"
+const SCREEN_POS := Vector2(1192, 194)   # centre of the cloth
 const GONG_POS := Vector2(1136, 212)
 const SARON_POS := Vector2(1248, 214)
 const MAT_LEFT := Vector2(1174, 232)
 const MAT_RIGHT := Vector2(1218, 234)
+const CLOTH := Rect2(6, 10, 80, 44)      # cloth opening inside kelir_frame.png
 
 var _t := 0.0
 var _game: Node
+var _anim: Array = []                    # [sprite, frame_w, frames, fps, phase]
+var _glow: Sprite2D
+var _lamp: Sprite2D
+var _puppets: Array = []                 # [sprite, base_pos, speed, amp]
+var _embers: Array = []
+var _state_key := -1
+var _chaos := false
+var _burned := false
+var _tex := {}
 
 
 func _ready() -> void:
 	z_index = 0
-	y_sort_enabled = true
 	_game = get_node_or_null("/root/Game")
 	if _game:
-		_game.changed.connect(queue_redraw)
-	queue_redraw()
+		_game.changed.connect(_rebuild)
+	_rebuild()
 
 
 func _process(delta: float) -> void:
 	_t += delta
-	queue_redraw()
+	for a in _anim:
+		var s: Sprite2D = a[0]
+		var f := int(_t * a[3] + a[4]) % int(a[2])
+		s.region_rect = Rect2(f * a[1], 0, a[1], s.texture.get_height())
+	for p in _puppets:
+		var s: Sprite2D = p[0]
+		var amp: float = p[3] * (3.0 if _chaos else 1.0)
+		s.position = p[1] + Vector2(sin(_t * p[2]) * amp, 0.0)
+	if _glow:
+		var fl := 0.85 + 0.15 * sin(_t * 7.3)
+		if _chaos:
+			fl = 0.5 + 0.5 * sin(_t * 19.0)
+		_glow.modulate.a = clampf(fl, 0.0, 1.0)
+	for i in _embers.size():
+		var e: Sprite2D = _embers[i]
+		e.modulate.a = 0.35 + 0.65 * absf(sin(_t * 4.0 + float(i) * 1.7))
+		e.position.y = e.get_meta("y0") - fmod(_t * 5.0 + float(i) * 3.0, 9.0)
 
 
-func _draw() -> void:
-	var raid_done := false
-	var raid_active := false
-	if _game:
-		raid_done = _game.has_flag("beat_raid")
-		raid_active = _game.has_flag("mq0_d8") and not raid_done
-
-	_draw_kelir_screen(raid_done, raid_active)
-	_draw_gamelan(raid_done)
-	_draw_audience(raid_done, raid_active)
-	if raid_active:
-		_draw_attackers()
+func _t2(name: String) -> Texture2D:
+	if not _tex.has(name):
+		_tex[name] = load(ART + name + ".png")
+	return _tex[name]
 
 
-## Draws the wayang kelir (white shadow screen) on the stage.
-func _draw_kelir_screen(burned: bool, chaos: bool) -> void:
-	var w := 76.0
-	var h := 32.0
-	var rect := Rect2(SCREEN_POS.x - w * 0.5, SCREEN_POS.y - h * 0.5, w, h)
+## Sprite whose origin is its bottom-centre (the feet), so positions read like the world props.
+func _spr(parent: Node, name: String, feet: Vector2, frames := 1, fps := 0.0, phase := 0.0, flip := false) -> Sprite2D:
+	var tex := _t2(name)
+	var s := Sprite2D.new()
+	s.texture = tex
+	s.centered = false
+	var fw := tex.get_width() / frames
+	s.offset = Vector2(-fw / 2.0, -tex.get_height())
+	s.position = feet.round()
+	s.flip_h = flip
+	if frames > 1:
+		s.region_enabled = true
+		s.region_rect = Rect2(0, 0, fw, tex.get_height())
+		if fps > 0.0:
+			_anim.append([s, fw, frames, fps, phase])
+	parent.add_child(s)
+	return s
 
-	# Teak wooden frame (posts and crossbeams)
-	var wood_col := Color(0.24, 0.16, 0.11) if not burned else Color(0.12, 0.08, 0.06)
-	var gold_col := Color(0.78, 0.62, 0.28) if not burned else Color(0.22, 0.18, 0.12)
-	# Left and right carved vertical posts
-	draw_rect(Rect2(rect.position.x - 4, rect.position.y - 6, 5, h + 10), wood_col)
-	draw_rect(Rect2(rect.end.x - 1, rect.position.y - 6, 5, h + 10), wood_col)
-	# Post finials (carved crowns)
-	draw_rect(Rect2(rect.position.x - 5, rect.position.y - 9, 7, 4), gold_col)
-	draw_rect(Rect2(rect.end.x - 2, rect.position.y - 9, 7, 4), gold_col)
-	# Top and bottom horizontal frame beams
-	draw_rect(Rect2(rect.position.x - 3, rect.position.y - 3, w + 6, 4), wood_col)
-	draw_rect(Rect2(rect.position.x - 3, rect.end.y - 1, w + 6, 4), wood_col)
 
-	if not burned:
-		# Stretched white fabric (kelir)
-		var cloth_col := Color(0.96, 0.94, 0.88)
-		draw_rect(rect, cloth_col)
+func _topleft(parent: Node, name: String, pos: Vector2) -> Sprite2D:
+	var s := Sprite2D.new()
+	s.texture = _t2(name)
+	s.centered = false
+	s.position = pos.round()
+	parent.add_child(s)
+	return s
 
-		# Warm golden backlight glow through fabric
-		var flicker := 0.85 + 0.15 * sin(_t * 7.3)
-		if chaos:
-			flicker = 0.5 + 0.5 * sin(_t * 19.0)
-		var glow_col := Color(1.0, 0.86, 0.52, 0.38 * flicker)
-		draw_circle(SCREEN_POS, 26.0, glow_col)
-		draw_circle(SCREEN_POS, 14.0, Color(1.0, 0.95, 0.75, 0.45 * flicker))
 
-		# Wayang puppet shadows on the screen:
-		# Gunungan (Kayon / Tree of Life) shadow in the center
-		var g_x := SCREEN_POS.x + sin(_t * 1.2) * 1.5
-		var g_pts := PackedVector2Array([
-			Vector2(g_x, SCREEN_POS.y - 13),
-			Vector2(g_x + 8, SCREEN_POS.y + 4),
-			Vector2(g_x + 5, SCREEN_POS.y + 13),
-			Vector2(g_x - 5, SCREEN_POS.y + 13),
-			Vector2(g_x - 8, SCREEN_POS.y + 4)
-		])
-		draw_colored_polygon(g_pts, Color(0.15, 0.10, 0.08, 0.72))
+func _rebuild() -> void:
+	var state: bool = _game != null and _game.has_flag("beat_raid")
+	var raid: bool = _game != null and _game.has_flag("mq0_d8")
+	var key := int(state) * 2 + int(raid)
+	if key == _state_key and get_child_count() > 0:
+		return   # `changed` also fires for HP and ilmu; only rebuild on a stage-state change
+	_state_key = key
+	for c in get_children():
+		c.queue_free()
+	_anim.clear()
+	_puppets.clear()
+	_embers.clear()
+	_glow = null
+	_lamp = null
+	_burned = _game != null and _game.has_flag("beat_raid")
+	_chaos = _game != null and _game.has_flag("mq0_d8") and not _burned
+	_build_screen()
+	_build_gamelan()
+	_build_audience()
+	if _chaos:
+		_build_raiders()
 
-		# Semar shadow puppet on the left
-		var s_x := SCREEN_POS.x - 20.0 + sin(_t * 2.5) * 1.0
-		var s_pts := PackedVector2Array([
-			Vector2(s_x, SCREEN_POS.y - 6),
-			Vector2(s_x + 5, SCREEN_POS.y),
-			Vector2(s_x + 6, SCREEN_POS.y + 12),
-			Vector2(s_x - 6, SCREEN_POS.y + 12),
-			Vector2(s_x - 4, SCREEN_POS.y)
-		])
-		draw_colored_polygon(s_pts, Color(0.18, 0.12, 0.10, 0.65))
 
-		# Knight / Hero shadow puppet on the right
-		var k_x := SCREEN_POS.x + 20.0 + cos(_t * 2.1) * 1.2
-		var k_pts := PackedVector2Array([
-			Vector2(k_x, SCREEN_POS.y - 8),
-			Vector2(k_x + 3, SCREEN_POS.y - 1),
-			Vector2(k_x + 4, SCREEN_POS.y + 12),
-			Vector2(k_x - 3, SCREEN_POS.y + 12),
-			Vector2(k_x - 4, SCREEN_POS.y)
-		])
-		draw_colored_polygon(k_pts, Color(0.18, 0.12, 0.10, 0.65))
-
-		# Banana trunk log (gedebog) where puppets stand
-		draw_rect(Rect2(rect.position.x - 1, rect.end.y + 2, w + 2, 5), Color(0.32, 0.48, 0.22))
-
-		# Blencong hanging oil lamp above screen
-		var lamp_y := SCREEN_POS.y - 14.0
-		draw_line(Vector2(SCREEN_POS.x, rect.position.y - 3), Vector2(SCREEN_POS.x, lamp_y), Color(0.4, 0.35, 0.25), 1.0)
-		draw_rect(Rect2(SCREEN_POS.x - 3, lamp_y, 6, 4), Color(0.78, 0.62, 0.28))
-		draw_circle(Vector2(SCREEN_POS.x, lamp_y - 2), 2.5 + 0.8 * sin(_t * 11.0), Color(1.0, 0.9, 0.4))
+func _build_screen() -> void:
+	var origin := SCREEN_POS - CLOTH.position - CLOTH.size * 0.5   # kelir_frame.png top-left in the world
+	var suffix := "_burned" if _burned else ""
+	_topleft(self, "kelir_cloth" + suffix, origin + CLOTH.position)
+	if not _burned:
+		_glow = _topleft(self, "kelir_glow", origin + CLOTH.position)
+		# Puppets live in a clipped box so none poke past the cloth
+		var clip := Control.new()
+		clip.clip_contents = true
+		clip.position = (origin + CLOTH.position).round()
+		clip.size = CLOTH.size
+		clip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(clip)
+		var floor_y := CLOTH.size.y - 1.0
+		var cx := CLOTH.size.x * 0.5
+		var cast := [["puppet_semar", cx - 24.0, 2.5, 1.0],
+			["puppet_gunungan", cx, 1.2, 1.2],
+			["puppet_buto" if _chaos else "puppet_arjuna", cx + 24.0, 2.1, 1.2]]
+		for c in cast:
+			var s := _spr(clip, c[0], Vector2(c[1], floor_y))
+			s.self_modulate = Color(1, 1, 1, 0.92)
+			_puppets.append([s, s.position, c[2], c[3]])
+		if _chaos:
+			var ink := _topleft(clip, "ink_creep", Vector2.ZERO)
+			ink.modulate.a = 0.9
+	_topleft(self, "kelir_frame" + suffix, origin)
+	if _burned:
+		for i in 7:
+			var e := _spr(self, "ember", origin + Vector2(10.0 + float(i) * 12.0, 66.0), 3, 0.0)
+			e.region_rect = Rect2((i % 3) * 3, 0, 3, 3)
+			e.set_meta("y0", e.position.y)
+			_embers.append(e)
 	else:
-		# Burned, torn cloth
-		draw_rect(rect, Color(0.20, 0.16, 0.14))
-		# Jagged tear in the center showing dark background
-		var tear := PackedVector2Array([
-			Vector2(SCREEN_POS.x - 12, SCREEN_POS.y - 14),
-			Vector2(SCREEN_POS.x + 4, SCREEN_POS.y - 2),
-			Vector2(SCREEN_POS.x - 6, SCREEN_POS.y + 8),
-			Vector2(SCREEN_POS.x + 14, SCREEN_POS.y + 14),
-			Vector2(SCREEN_POS.x - 18, SCREEN_POS.y + 14)
-		])
-		draw_colored_polygon(tear, Color(0.08, 0.06, 0.07))
-		# Charred banana trunk
-		draw_rect(Rect2(rect.position.x - 1, rect.end.y + 2, w + 2, 4), Color(0.16, 0.14, 0.12))
-		# Smoldering ember dots
-		for i in 6:
-			var ex := SCREEN_POS.x - 24.0 + float(i * 10)
-			var ey := rect.end.y + sin(_t * 4.0 + float(i)) * 2.0
-			var spark_a := 0.4 + 0.5 * sin(_t * 5.0 + float(i) * 1.8)
-			draw_circle(Vector2(ex, ey), 1.2, Color(1.0, 0.45, 0.15, spark_a))
+		_lamp = _spr(self, "blencong", Vector2(SCREEN_POS.x, origin.y + 18.0), 3, 7.0, 0.0)
 
 
-## Draws the gamelan ensemble (Gong Ageng on left, Saron on right) with sitting musicians.
-func _draw_gamelan(burned: bool) -> void:
-	# --- 1. GONG AGENG (Left side) ---
-	var gx := GONG_POS.x
-	var gy := GONG_POS.y
-
-	if not burned:
-		# Wooden arch (gayor) with dragon finials
-		draw_rect(Rect2(gx - 10, gy - 16, 3, 20), Color(0.28, 0.16, 0.10))
-		draw_rect(Rect2(gx + 8, gy - 16, 3, 20), Color(0.28, 0.16, 0.10))
-		draw_rect(Rect2(gx - 12, gy - 18, 25, 4), Color(0.35, 0.20, 0.12))
-		# Gold carvings on arch
-		draw_rect(Rect2(gx - 13, gy - 20, 4, 4), Color(0.85, 0.70, 0.25))
-		draw_rect(Rect2(gx + 10, gy - 20, 4, 4), Color(0.85, 0.70, 0.25))
-		# Hanging ropes
-		draw_line(Vector2(gx - 4, gy - 14), Vector2(gx - 4, gy - 7), Color(0.7, 0.6, 0.4), 1.0)
-		draw_line(Vector2(gx + 4, gy - 14), Vector2(gx + 4, gy - 7), Color(0.7, 0.6, 0.4), 1.0)
-		# Large bronze gong disc
-		draw_circle(Vector2(gx, gy - 5), 8.0, Color(0.55, 0.42, 0.22))
-		draw_circle(Vector2(gx, gy - 5), 6.5, Color(0.68, 0.54, 0.28))
-		# Raised center boss (pencon)
-		draw_circle(Vector2(gx, gy - 5), 2.5, Color(0.88, 0.72, 0.35))
-
-		# Kendang (barrel drum) lying horizontally nearby
-		draw_rect(Rect2(gx + 12, gy - 3, 10, 6), Color(0.42, 0.26, 0.16))
-		draw_rect(Rect2(gx + 11, gy - 4, 2, 8), Color(0.92, 0.88, 0.78))
-		draw_rect(Rect2(gx + 21, gy - 3, 2, 6), Color(0.92, 0.88, 0.78))
-
-		# Sitting Gong Musician (Niyaga)
-		var mx := gx - 2.0
-		var my := gy + 8.0
-		# Sarong / crossed legs
-		draw_rect(Rect2(mx - 6, my + 1, 12, 5), Color(0.32, 0.22, 0.45))
-		# Torso / beskap
-		draw_rect(Rect2(mx - 4, my - 6, 8, 8), Color(0.18, 0.16, 0.24))
-		# Head & Blangkon
-		draw_circle(Vector2(mx, my - 8), 3.0, Color(0.78, 0.58, 0.42))
-		draw_rect(Rect2(mx - 3, my - 11, 7, 3), Color(0.38, 0.25, 0.18))
-		# Arm holding gong mallet (taps subtly)
-		var mallet_y := my - 4.0 + sin(_t * 3.0) * 1.5
-		draw_line(Vector2(mx + 2, my - 2), Vector2(mx + 7, mallet_y), Color(0.78, 0.58, 0.42), 1.5)
-		draw_circle(Vector2(mx + 8, mallet_y), 1.8, Color(0.85, 0.3, 0.3))
-	else:
-		# Overturned, charred gong
-		draw_rect(Rect2(gx - 10, gy - 6, 18, 3), Color(0.18, 0.12, 0.08))
-		draw_circle(Vector2(gx + 2, gy - 2), 7.5, Color(0.28, 0.24, 0.20))
-		draw_circle(Vector2(gx + 2, gy - 2), 2.0, Color(0.38, 0.32, 0.26))
-
-	# --- 2. SARON / METALLOPHONE (Right side) ---
+func _build_gamelan() -> void:
 	var sx := SARON_POS.x
 	var sy := SARON_POS.y
-
-	if not burned:
-		# Wooden trough resonator (plangkan)
-		draw_rect(Rect2(sx - 9, sy - 2, 18, 6), Color(0.42, 0.22, 0.12))
-		# Bronze keys (bilah)
-		for i in 6:
-			var kx := sx - 8.0 + float(i * 2.8)
-			var kh := 5.0 - float(i) * 0.4
-			draw_rect(Rect2(kx, sy - 4, 2, kh), Color(0.85, 0.72, 0.35))
-
-		# Sitting Saron Musician
-		var smx := sx
-		var smy := sy + 8.0
-		# Crossed legs in batik sarong
-		draw_rect(Rect2(smx - 5, smy + 1, 11, 5), Color(0.48, 0.32, 0.20))
-		# Torso
-		draw_rect(Rect2(smx - 4, smy - 6, 8, 8), Color(0.22, 0.26, 0.35))
-		# Head & Blangkon
-		draw_circle(Vector2(smx, smy - 8), 3.0, Color(0.78, 0.58, 0.42))
-		draw_rect(Rect2(smx - 3, smy - 11, 7, 3), Color(0.35, 0.22, 0.15))
-		# Mallet tapping the keys
-		var tap_y := sy - 5.0 + absf(sin(_t * 5.0)) * 2.0
-		draw_line(Vector2(smx - 1, smy - 2), Vector2(smx - 3, tap_y), Color(0.78, 0.58, 0.42), 1.2)
-		draw_rect(Rect2(smx - 5, tap_y - 1, 3, 2), Color(0.65, 0.45, 0.25))
-	else:
-		# Scattered bronze keys and charred frame
-		draw_rect(Rect2(sx - 8, sy - 1, 16, 4), Color(0.18, 0.14, 0.12))
-		draw_rect(Rect2(sx - 6, sy + 3, 3, 2), Color(0.45, 0.38, 0.25))
-		draw_rect(Rect2(sx + 3, sy + 4, 3, 2), Color(0.45, 0.38, 0.25))
+	var gx := GONG_POS.x
+	var gy := GONG_POS.y
+	if _burned:
+		var g := _spr(self, "gong_ageng_burned", Vector2(gx, gy + 8.0))
+		g.rotation_degrees = 78.0
+		var s := _spr(self, "saron_burned", Vector2(sx, sy + 8.0))
+		s.rotation_degrees = -10.0
+		var k := _spr(self, "kendang_burned", Vector2(gx + 30.0, gy + 14.0))
+		k.rotation_degrees = 64.0
+		return
+	_spr(self, "gong_ageng", Vector2(gx, gy + 8.0))
+	if not _chaos:
+		_spr(self, "niyaga_gong", Vector2(gx + 1.0, gy + 20.0), 3, 1.6, 0.0)
+		_spr(self, "niyaga_saron", Vector2(sx, sy + 4.0), 3, 2.4, 1.0)
+		_spr(self, "niyaga_kendang", Vector2(gx + 38.0, gy + 16.0))
+	_spr(self, "saron", Vector2(sx, sy + 8.0))
+	_spr(self, "kendang", Vector2(gx + 28.0, gy + 16.0))
 
 
-## Draws woven sitting mats and children watching the show.
-func _draw_audience(burned: bool, chaos: bool) -> void:
-	# Mat 1 (Left of center)
-	_draw_mat_and_child(MAT_LEFT, burned, chaos, 0)
-	# Mat 2 (Right of center, next to Laras's spot)
-	_draw_mat_and_child(MAT_RIGHT, burned, chaos, 1)
-
-
-func _draw_mat_and_child(pos: Vector2, burned: bool, chaos: bool, idx: int) -> void:
-	var mat_w := 20.0
-	var mat_h := 10.0
-	var mat_col := Color(0.82, 0.74, 0.54) if not burned else Color(0.18, 0.15, 0.13)
-	draw_rect(Rect2(pos.x - mat_w * 0.5, pos.y - mat_h * 0.5, mat_w, mat_h), mat_col)
-	if not burned:
-		# Mat weave texture lines
-		draw_line(Vector2(pos.x - 8, pos.y), Vector2(pos.x + 8, pos.y), Color(0.72, 0.64, 0.44), 1.0)
-		draw_line(Vector2(pos.x, pos.y - 4), Vector2(pos.x, pos.y + 4), Color(0.72, 0.64, 0.44), 1.0)
-
-		# Village child sitting watching the wayang
-		var cx := pos.x
-		var cy := pos.y - 1.0
-		var breath := sin(_t * 2.5 + float(idx) * 1.3) * 0.5
-		if not chaos:
-			# Sitting crossed legs
-			var sarong_col := Color(0.65, 0.28, 0.25) if idx == 0 else Color(0.25, 0.55, 0.45)
-			draw_rect(Rect2(cx - 4, cy + 1, 8, 4), sarong_col)
-			# Small child torso
-			draw_rect(Rect2(cx - 3, cy - 4 + breath, 6, 6), Color(0.88, 0.82, 0.70))
-			# Head looking up at the kelir
-			draw_circle(Vector2(cx, cy - 7 + breath), 2.5, Color(0.78, 0.58, 0.42))
-			# Ikat / headband
-			draw_rect(Rect2(cx - 3, cy - 9 + breath, 6, 2), Color(0.35, 0.20, 0.15))
+func _build_audience() -> void:
+	var pairs := [[MAT_LEFT, "child_a"], [MAT_RIGHT, "child_b"]]
+	for i in pairs.size():
+		var pos: Vector2 = pairs[i][0]
+		_spr(self, "mat_burned" if _burned else "mat", pos + Vector2(0, 6))
+		if _burned:
+			continue
+		var kid := _spr(self, pairs[i][1], pos + Vector2(0, 5), 3)
+		if _chaos:
+			kid.region_rect = Rect2(28, 0, 14, kid.texture.get_height())   # huddled, hands over head
 		else:
-			# In chaos: child covering eyes / shrinking back
-			draw_rect(Rect2(cx - 4, cy + 1, 8, 4), Color(0.45, 0.20, 0.20))
-			draw_rect(Rect2(cx - 3, cy - 3, 6, 5), Color(0.70, 0.65, 0.60))
-			draw_circle(Vector2(cx, cy - 5), 2.5, Color(0.78, 0.58, 0.42))
-			# Hands over head
-			draw_circle(Vector2(cx - 2, cy - 7), 1.2, Color(0.78, 0.58, 0.42))
-			draw_circle(Vector2(cx + 2, cy - 7), 1.2, Color(0.78, 0.58, 0.42))
+			_anim.append([kid, 14, 2, 1.4, float(i) * 0.5])   # breathing: the 2 calm frames
 
 
-## During raid (flag:mq0_d8,!flag:beat_raid): draws the looming Nameless Hunter and shadows on stage.
-func _draw_attackers() -> void:
-	var hx := 1208.0  # Right behind Laras (at row 13 col 75)
-	var hy := 204.0
-
-	# Swirling shadow smoke under the Hunter
-	for i in 8:
-		var ang := _t * 3.0 + float(i) * 0.8
-		var rad := 8.0 + 4.0 * sin(_t * 4.0 + float(i))
-		draw_circle(Vector2(hx + cos(ang) * rad, hy + 12.0 + sin(ang) * 3.0), 3.0, Color(0.04, 0.03, 0.06, 0.45))
-
-	# The Nameless Hunter towering silhouette
-	# Flowing dark cloak
-	var cloak := PackedVector2Array([
-		Vector2(hx - 8, hy + 14),
-		Vector2(hx - 12, hy + 24),
-		Vector2(hx + 12, hy + 24),
-		Vector2(hx + 8, hy + 14)
-	])
-	draw_colored_polygon(cloak, Color(0.08, 0.06, 0.10))
-	# Torso
-	draw_rect(Rect2(hx - 6, hy + 4, 12, 11), Color(0.12, 0.09, 0.15))
-	# Head
-	draw_circle(Vector2(hx, hy), 4.5, Color(0.10, 0.08, 0.12))
-	# Blank white mask (the eerie featureless white mask)
-	draw_circle(Vector2(hx, hy + 0.5), 3.2, Color(0.92, 0.90, 0.86))
-	# Reaching arm toward Laras
-	draw_line(Vector2(hx, hy + 6), Vector2(hx + 6, hy + 16), Color(0.12, 0.09, 0.15), 2.0)
-
-	# Shadow raider flanker on the left
-	var r1_x := 1184.0
-	var r1_y := 214.0
-	draw_circle(Vector2(r1_x, r1_y - 6), 3.0, Color(0.05, 0.04, 0.07))
-	draw_rect(Rect2(r1_x - 4, r1_y - 3, 8, 12), Color(0.05, 0.04, 0.07))
-	draw_circle(Vector2(r1_x, r1_y - 6), 2.0, Color(0.85, 0.82, 0.78)) # mask
-
-	# Shadow raider flanker on the right
-	var r2_x := 1234.0
-	var r2_y := 214.0
-	draw_circle(Vector2(r2_x, r2_y - 6), 3.0, Color(0.05, 0.04, 0.07))
-	draw_rect(Rect2(r2_x - 4, r2_y - 3, 8, 12), Color(0.05, 0.04, 0.07))
-	draw_circle(Vector2(r2_x, r2_y - 6), 2.0, Color(0.85, 0.82, 0.78)) # mask
+## Nameless Hunter (his enemy sheet, idle row) looming behind Laras, plus two torch raiders flanking the stage.
+func _build_raiders() -> void:
+	var hunter := Sprite2D.new()
+	hunter.texture = load("res://assets/art/enemies/nameless_hunter.png")
+	hunter.centered = false
+	hunter.region_enabled = true
+	hunter.region_rect = Rect2(0, 0, 28, 44)
+	hunter.offset = Vector2(-14, -44)
+	hunter.position = Vector2(1208, 226)
+	add_child(hunter)
+	_anim.append([hunter, 28, 4, 2.0, 0.0])
+	_spr(self, "torch_raider", Vector2(1182, 228), 4, 8.0, 0.0)
+	_spr(self, "torch_raider", Vector2(1236, 228), 4, 8.0, 2.0, true)

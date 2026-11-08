@@ -1,6 +1,6 @@
 # Concept
 
-**Title:** Budayago  
+**Title:** The Last Aksara (code name Budayago)  
 **Genre:** Top-down 2D action RPG featuring real-time combat, responsive movement, and classic RPG depth (connected world, character stats, equipment, checkpoints, NPCs, quests).  
 **Engine:** Godot 4.7. **Platform:** PC (macOS, Windows, Linux), with Web export planned.  
 **Setting:** The mythical lands of Sunda and Java, rooted in classical folklore, architecture, and living heritage.

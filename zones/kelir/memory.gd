@@ -65,6 +65,11 @@ func _ready() -> void:
 	var tiles_layer := get_node_or_null("Tiles") as TileMapLayer
 	if tiles_layer and tiles_layer.tile_set and tiles_layer.tile_set.has_source(6):
 		_skin_kelir_tiles(tiles_layer)
+	if tiles_layer and memory_id not in ["k0_ruwatan", "k7_ruwatan"] and not tiles_layer.get_used_cells().is_empty():
+		var ur := tiles_layer.get_used_rect()   # K0 and K7 draw their own kelir
+		var decor := KelirDecor.new()
+		decor.setup(memory_id, Rect2(Vector2(ur.position) * 16.0, Vector2(ur.size) * 16.0), kind == "chapter")
+		add_child(decor)
 	if find_children("*", "CanvasModulate", true, false).is_empty():
 		var cm := CanvasModulate.new()
 		cm.color = COOL if kind == "chapter" else WARM

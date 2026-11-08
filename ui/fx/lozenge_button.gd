@@ -7,7 +7,11 @@ var _shim := -1.0
 var _tw: Tween
 
 
-func _init(label := "", size := 10) -> void:
+var _paper := false   # on a paper page: ink text, wax-red hover
+
+
+func _init(label := "", size := 10, paper := false) -> void:
+	_paper = paper
 	text = label
 	flat = true
 	alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -15,11 +19,11 @@ func _init(label := "", size := 10) -> void:
 	if size >= 10:
 		add_theme_font_override("font", UIFx.cinzel())
 	add_theme_font_size_override("font_size", size)
-	add_theme_color_override("font_color", UIFx.CREAM)
+	add_theme_color_override("font_color", UIFx.INK if paper else UIFx.CREAM)
 	for c in ["font_hover_color", "font_focus_color", "font_pressed_color", "font_hover_pressed_color"]:
-		add_theme_color_override(c, UIFx.GOLD_HI)
+		add_theme_color_override(c, UIFx.INK_HEAD if paper else UIFx.GOLD_HI)
 	add_theme_color_override("font_outline_color", UIFx.LACQUER)
-	add_theme_constant_override("outline_size", 1)
+	add_theme_constant_override("outline_size", 0 if paper else 1)
 	for s in ["normal", "hover", "pressed", "focus", "hover_pressed", "disabled"]:
 		add_theme_stylebox_override(s, _margin(0.0))
 
@@ -73,5 +77,5 @@ func _draw() -> void:
 		draw_texture(UIFx.tex("lozenge"), Vector2(1 + _indent, floorf((size.y - 5.0) / 2.0)))
 	if _shim >= 0.0:
 		var x := floorf(lerpf(8.0, size.x, _shim))
-		draw_rect(Rect2(x, 3, 1, size.y - 6), Color(UIFx.GOLD_HI, 0.8))
-		draw_rect(Rect2(x - 3, 3, 3, size.y - 6), Color(UIFx.GOLD_HI, 0.15))
+		draw_rect(Rect2(x, 3, 1, size.y - 6), Color(UIFx.INK_HEAD if _paper else UIFx.GOLD_HI, 0.6))
+		draw_rect(Rect2(x - 3, 3, 3, size.y - 6), Color(UIFx.INK_HEAD if _paper else UIFx.GOLD_HI, 0.12))

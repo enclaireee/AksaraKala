@@ -1,5 +1,5 @@
 extends Control
-## Death: fade to dark, "UI_FALLEN" ink-bleeds in (vermillion Cinzel), a tip line, then respawn (rpg.md 7).
+## Death: fade to dark, "UI_FALLEN" ink-bleeds in (vermillion Almendra Display), a tip line, then respawn (rpg.md 7).
 
 var _dim: ColorRect
 var _text: Label

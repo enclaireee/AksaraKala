@@ -33,13 +33,13 @@ All fonts and assets adhere to open-source or permissive licenses:
 
 | Asset | Source URL | License | Usage in Budayago | Attribution Status |
 |---|---|---|---|---|
-| **Cinzel** | https://github.com/google/fonts/tree/main/ofl/cinzel | SIL OFL 1.1 | Title screen, headings, quest cards, boss titles | Shipped (`assets/fonts/OFL_Cinzel.txt`) |
+| **Almendra Display** | https://github.com/google/fonts/tree/main/ofl/cinzel | SIL OFL 1.1 | Title screen, headings, quest cards, boss titles | Shipped (`assets/fonts/OFL_Almendra Display.txt`) |
 | **Alegreya Sans** | https://github.com/google/fonts/tree/main/ofl/alegreyasans | SIL OFL 1.1 | Body text, dialogue, HUD labels, item descriptions, menus | Shipped |
 | **Noto Sans Sundanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Sunda character rendering | Shipped |
 | **Noto Sans Javanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Jawa character rendering | Shipped |
 | **Dungeon Tileset II** | https://0x72.itch.io/dungeontileset-ii | CC0 | Prototyping reference | CC0 Public Domain |
 
-*(Note: The experimental Jersey 10/15 pixel fonts were reverted in favor of Alegreya Sans and Cinzel for smooth text rendering at all resolutions.)*
+*(Note: The experimental Jersey 10/15 pixel fonts were reverted in favor of Alegreya Sans and Almendra Display for smooth text rendering at all resolutions.)*
 
 ---
 

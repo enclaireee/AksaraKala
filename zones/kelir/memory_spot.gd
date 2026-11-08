@@ -15,7 +15,8 @@ var done := false
 var gap := {}     # {gap_id, pos, prompt_key, options, correct}, kind gap
 var wrong := 0    # wrong picks on this gap; from 2 the right option is starred
 var _busy := false
-var _rect: ColorRect
+var _gate: Sprite2D
+var _rect: Sprite2D   # the torn-cloth gap, or the goal gate
 
 
 func _ready() -> void:
@@ -25,12 +26,18 @@ func _ready() -> void:
 	body_entered.connect(func(b: Node) -> void:
 		if action_kind in ["goal", "narrate"] and b.is_in_group("player"):
 			interact())
+	if action_kind == "goal":
+		_gate = Sprite2D.new()
+		_gate.texture = load("res://assets/art/cutscene/goal_gate.png")
+		_gate.region_enabled = true
+		_gate.region_rect = Rect2(0, 0, 20, 30)
+		_gate.offset = Vector2(0, -8)
+		add_child(_gate)
 	if not gap.is_empty():
-		_rect = ColorRect.new()
-		_rect.size = GAP_SIZE
-		_rect.position = -GAP_SIZE / 2.0
-		_rect.color = GAP_GREY
-		_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_rect = Sprite2D.new()
+		_rect.texture = load("res://assets/art/cutscene/gap_tear.png")
+		_rect.region_enabled = true
+		_rect.region_rect = Rect2(0, 0, 24, 20)
 		add_child(_rect)
 		if get_node("/root/Game").has_flag("gap_" + str(gap.get("gap_id", ""))):
 			_rect.visible = false
@@ -76,7 +83,7 @@ func _ask(mem: KelirMemory) -> bool:
 		choices.append({"text": "* " + tr(k) if hint else k, "do": ["flag:" + flag] if k == correct else []})
 	await game.play(mem.speaker(), {"lines": [str(gap.get("prompt_key", ""))], "choices": choices})
 	if game.has_flag(flag):
-		_rect.visible = false   # ponytail: the gap just clears; the filled-in detail art comes with the scene art
+		_rect.visible = false
 		return true
 	wrong += 1
 	_rect.modulate = Color(1.8, 1.8, 1.8)
@@ -85,3 +92,12 @@ func _ask(mem: KelirMemory) -> bool:
 	if a and a.has_method("play_sfx"):
 		a.play_sfx("sfx_thud")
 	return false
+
+
+func _process(_delta: float) -> void:
+	if _rect and _rect.visible:   # the gap's frayed edge shimmers
+		_rect.region_rect = Rect2(24 * (int(Time.get_ticks_msec() / 350.0) % 2), 0, 24, 20)
+	if _gate:   # the gate opens once every other counting spot is done
+		var mem := KelirMemory.of(self)
+		var open_ := mem != null and mem.spots().all(func(s: MemorySpot) -> bool: return s == self or s.done or not s.counts())
+		_gate.region_rect = Rect2(20 if open_ else 0, 0, 20, 30)

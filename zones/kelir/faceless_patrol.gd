@@ -16,6 +16,10 @@ func _ready() -> void:
 	add_to_group("faceless")
 
 
+func _body_art() -> String:
+	return "faceless_shade"
+
+
 func freeze(seconds := 3.0) -> void:
 	_frozen = maxf(_frozen, seconds)
 

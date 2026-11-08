@@ -2,14 +2,14 @@ class_name GameMenu extends Control
 ## Tab menu: Status (level-up at a petilasan), Equipment, Journal, Codex (ui.md 3, rpg.md 2, 6, 7, quests.md 7.4).
 ## Q/E switch tabs; it reopens on the last tab used. ponytail: the Aksara tab waits for its own system.
 
-const GOLD := Color("F2D488")   # prada gold highlight (ui.md 3b)
+const GOLD := Color("7A2A1E")   # headings on paper: dark red ink (ui.md 0)
 const NAMES := {"vit": "UI_STAT_VIT", "end": "UI_STAT_END", "str": "UI_STAT_STR", "dex": "UI_STAT_DEX", "spi": "UI_STAT_SPI"}
 const HINTS := {"vit": "UI_HINT_VIT", "end": "UI_HINT_END", "str": "UI_HINT_STR", "dex": "UI_HINT_DEX", "spi": "UI_HINT_SPI"}
 const SLOTS := ["weapon", "armor", "accessory"]
 const CATS := ["enemy", "legend", "item", "aksara"]
-const DIM := Color("9C8F78")
-const GREEN := Color("6FCF8A")
-const RED := Color("E0644A")
+const DIM := Color("6B5A44")   # secondary ink
+const GREEN := Color("2F6B3A")
+const RED := Color("B03020")
 const TitleScript := preload("res://ui/title.gd")   # settings path and language save
 const BUSES := ["Master", "Music", "SFX"]
 const ITEM_DIR := "res://assets/art/items/"
@@ -157,14 +157,13 @@ func _build_chrome() -> void:
 	rule.size = Vector2(PANEL_SIZE.x - RAIL_W - 24.0, 1)
 	_panel.add_child(rule)
 	_frame = NinePatchRect.new()   # recessed well behind the page
-	_frame.texture = load("res://assets/art/ui/slot.png")
+	_frame.texture = load("res://assets/art/ui/inset.png")
 	_frame.patch_margin_left = 4
 	_frame.patch_margin_top = 4
 	_frame.patch_margin_right = 4
 	_frame.patch_margin_bottom = 4
 	_frame.position = Vector2(RAIL_W + 10.0, 30)
 	_frame.size = Vector2(PANEL_SIZE.x - RAIL_W - 16.0, PANEL_SIZE.y - 30 - 24)
-	_frame.modulate = Color(1, 1, 1, 0.55)
 	_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(_frame)
 	_footer = Label.new()
@@ -192,10 +191,10 @@ func _rail_sync() -> void:
 		box.content_margin_left = 6.0
 		for st in ["normal", "hover", "pressed", "focus", "hover_pressed", "disabled"]:
 			b.add_theme_stylebox_override(st, box if st == "normal" or on else UIFx.box("tab_on", 5.0))
-		var col := GOLD if on else DIM
+		var col := GOLD if on else Color(0.84, 0.78, 0.62)   # ink-red on the paper tab, pale paper on the leather ones
 		for c in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:
 			b.add_theme_color_override(c, col if c == "font_color" or on else GOLD)
-		b.add_theme_color_override("icon_normal_color", Color.WHITE if on else Color(0.6, 0.56, 0.48))
+		b.add_theme_color_override("icon_normal_color", Color(0.165, 0.11, 0.07) if on else Color(0.84, 0.78, 0.62))
 	if _title and _tabs:
 		_title.text = tr(TAB_KEYS[clampi(_tabs.current_tab, 0, TAB_KEYS.size() - 1)])
 
@@ -514,7 +513,7 @@ func _slot_button(g: Node, item: ItemData) -> Button:
 	return b
 
 
-## Tooltip: name (Cinzel), slot, bonus lines (green up / red down against the equipped item), description.
+## Tooltip: name (Almendra Display), slot, bonus lines (green up / red down against the equipped item), description.
 func _show_tip(item: ItemData, g: Node) -> void:
 	if _tip_name == null:
 		return
@@ -527,7 +526,7 @@ func _show_tip(item: ItemData, g: Node) -> void:
 		_tip_desc.text = ""
 		return
 	_tip_name.text = tr(item.title)
-	_tip_name.add_theme_color_override("font_color", GOLD if item.mythic else Color("EDE3CC"))
+	_tip_name.add_theme_color_override("font_color", GOLD if item.mythic else Color("2A1C12"))
 	_tip_slot.text = "UI_SLOT_" + item.slot.to_upper()
 	var cur: ItemData = g.equipped_item(item.slot)
 	var mine := _item_stats(item)
@@ -884,7 +883,7 @@ func _build_map() -> void:
 	v.name = "Map"
 	_tabs.add_child(v)
 	_map_view = MapView.new()
-	_map_view.custom_minimum_size = Vector2(340, 162)
+	_map_view.custom_minimum_size = Vector2(340, 138)   # leaves room for the two note lines inside the page
 	v.add_child(_map_view)
 	_map_note = Label.new()
 	_map_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

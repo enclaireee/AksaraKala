@@ -18,7 +18,7 @@ func _ready() -> void:
 	add_child(UIFx.rect_tex("vignette", Vector2.ZERO))
 	var card := UIFx.frame(Vector2(120, 75), Vector2(240, 116))
 	add_child(card)
-	var title := UIFx.label("UI_NAME_PROMPT", 10, UIFx.GOLD_HI, true)
+	var title := UIFx.label("UI_NAME_PROMPT", 10, UIFx.INK_HEAD, true, true)
 	title.position = Vector2(0, 16)
 	title.size = Vector2(240, 14)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -34,9 +34,10 @@ func _ready() -> void:
 	_edit.size = Vector2(140, 20)
 	_edit.add_theme_font_override("font", UIFx.cinzel())
 	_edit.add_theme_font_size_override("font_size", 10)
-	_edit.add_theme_color_override("font_color", UIFx.CREAM)
-	_edit.add_theme_color_override("selection_color", Color(UIFx.GOLD, 0.35))
-	_edit.add_theme_color_override("caret_color", UIFx.GOLD_HI)
+	_edit.add_theme_color_override("font_color", UIFx.INK)
+	_edit.add_theme_color_override("selection_color", Color(UIFx.INK_HEAD, 0.25))
+	_edit.add_theme_color_override("font_selected_color", UIFx.INK)
+	_edit.add_theme_color_override("caret_color", UIFx.INK_HEAD)
 	for s in ["normal", "focus"]:
 		var e := StyleBoxEmpty.new()
 		e.content_margin_left = 4.0
@@ -48,17 +49,17 @@ func _ready() -> void:
 	_rule = ColorRect.new()   # the underline: dim gold, breathing, with a bright spark that sweeps along it
 	_rule.position = Vector2(50, 65)
 	_rule.size = Vector2(140, 1)
-	_rule.color = UIFx.GOLD
+	_rule.color = Color("8A7656")
 	_rule.mouse_filter = MOUSE_FILTER_IGNORE
 	card.add_child(_rule)
 	_spark = ColorRect.new()
 	_spark.size = Vector2(14, 1)
-	_spark.color = UIFx.GOLD_HI
+	_spark.color = UIFx.INK_HEAD
 	_spark.position = Vector2(50, 65)
 	_spark.mouse_filter = MOUSE_FILTER_IGNORE
 	card.add_child(_spark)
 
-	var ok := LozengeButton.new("UI_NAME_OK")
+	var ok := LozengeButton.new("UI_NAME_OK", 10, true)
 	ok.alignment = HORIZONTAL_ALIGNMENT_CENTER
 	ok.position = Vector2(80, 80)
 	ok.size = Vector2(80, 20)

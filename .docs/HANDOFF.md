@@ -1,11 +1,11 @@
-# Budayago: Session Handoff
+# The Last Aksara (code name Budayago): Session Handoff
 
 Current development status and architecture reference for Budayago as of **2026-11-08**.
 
 ---
 
 ## 1. Project Overview
-- **Title:** Budayago
+- **Title:** The Last Aksara (code name Budayago)
 - **Genre:** Top-down 2D pixel-art action RPG set in the mythical folklore and living heritage of Java and Sunda.
 - **Engine:** Godot 4.7 (`res://project.godot`), GDScript.
 - **Platform:** macOS, Windows, Linux (Compatibility renderer, web export ready).
@@ -42,7 +42,7 @@ Current development status and architecture reference for Budayago as of **2026-
 - **Native Resolution:** 480x270 viewport, 3x window default (1440x810), `canvas_items` stretch with `integer` scaling and `keep` aspect ratio.
 - **Renderer:** Compatibility renderer for optimal 2D performance and web compatibility.
 - **Filter:** `Nearest` canvas texture filtering preserves sharp pixel art; pixel transforms and vertices snapped to whole pixels to prevent shimmering.
-- **Typography:** Smooth vector rendering (`AlegreyaSans` 7–8 px for body/dialogue/HUD, `Cinzel` 10–28 px for titles and headings). The experimental Jersey pixel font pass was reverted.
+- **Typography:** Smooth vector rendering (`Almendra` 7–8 px for body/dialogue/HUD, `Almendra Display` 10–28 px for titles and headings). The experimental Jersey pixel font pass was reverted.
 
 ### 3.2 In-Game HUD & UI ([ui.md](ui.md))
 - **HUD Layout:**
@@ -118,3 +118,4 @@ Current development status and architecture reference for Budayago as of **2026-
 - Follow token-efficiency protocol: read targeted line ranges, do not read full massive files unnecessarily.
 - Never commit, push, or delete files without explicit user request.
 - Run headless tests and verification scripts before concluding tasks.
+- 2026-11-08: UI retheme to parchment and ink (tools/gen_ui_rpg.py, gen_title_book.py, gen_speaker_portraits.py); fonts Almendra; game renamed The Last Aksara (visible text only, project name unchanged). See ui.md 0, 4.1, 5.

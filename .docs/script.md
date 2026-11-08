@@ -5425,7 +5425,7 @@ Cards 1 to 6 are the six choice cards, one per Major Choice in act order (Choice
 | EPILOGUE_6 | Nama Aria Kebonan terpahat di Batu Leluhur, tersimpan di antara raja dan juru masak. Tak ada yang memaafkannya, dan tak ada yang membiarkannya hilang. | Aria Kebonan's name is carved on the Ancestors' Stone, kept among kings and cooks. Nobody forgives him, and nobody lets him vanish. |
 | EPILOGUE_6_ALT | Ruang kosong di Batu Leluhur tetap kosong. Di dekat panggung yang terbakar, seorang lelaki duduk tenang menonton abu, dan untuk pertama kalinya tak berusaha mengingat. | The blank space on the Ancestors' Stone stays blank. By the burned stage a man sits quietly watching the ashes, and for the first time isn't trying to remember. |
 | EPILOGUE_7 | Dan malam ini wayang desa memainkan lakon baru. Duduk, duduk. Ini tentang seseorang yang kau kenal, hehe. | And tonight the village wayang plays a new lakon. Sit, sit. It's about someone you know, hehe. |
-| EPILOGUE_8 | `{name} & Laras\n\n` followed by the old EPILOGUE_6 ID text, unchanged (the title card; was EPILOGUE_7) | `{name} & Laras\n\n` followed by the old EPILOGUE_6 EN text, unchanged (BUDAYAGO, made by fatih, Codex %d%%) |
+| EPILOGUE_8 | `{name} & Laras\n\n` followed by the old EPILOGUE_6 ID text, unchanged (the title card; was EPILOGUE_7) | `{name} & Laras\n\n` followed by the old EPILOGUE_6 EN text, unchanged (THE LAST AKSARA, made by fatih, Codex %d%%) |
 
 The old `EPILOGUE_1` (Laras comes home) is now the playable day itself (`epi_wake`). The old kings card (`EPILOGUE_2`) is folded into cards 1 and 3.
 
