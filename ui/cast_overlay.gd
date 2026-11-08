@@ -165,7 +165,7 @@ func show_guide(template: PackedVector2Array, rect: Rect2) -> void:
 	var off := rect.get_center() - bb.get_center() * s
 	for i in pts.size():
 		pts[i] = (pts[i] * s + off).round()
-	var c := Color(SKY, 0.35)
+	var c := Color(SKY, 0.7)
 	_guide_line = Line2D.new()
 	_guide_line.width = 2.0
 	_guide_line.default_color = c

@@ -60,7 +60,7 @@ func _ready() -> void:
 	layer = 11
 	process_mode = Node.PROCESS_MODE_ALWAYS   # write mode runs with the tree paused
 	_guide = preload("res://ui/cast_overlay.tscn").instantiate()
-	_guide.layer = 4
+	_guide.layer = 12   # over the card panel and slot
 	add_child(_guide)
 	_panel = Control.new()
 	_panel.visible = false
