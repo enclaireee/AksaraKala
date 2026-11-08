@@ -64,6 +64,17 @@ func run() -> void:
 	var en_txt := TranslationServer.translate("UI_NEW_GAME")
 	check(id_txt != en_txt and id_txt != "UI_NEW_GAME" and en_txt != "UI_NEW_GAME", "UI_NEW_GAME differs: %s / %s" % [id_txt, en_txt])
 
+	for loc in ["id", "en"]:
+		TranslationServer.set_locale(loc)
+		var fa_ui := FileAccess.open("res://data/text/ui.csv", FileAccess.READ)
+		fa_ui.get_csv_line()
+		while not fa_ui.eof_reached():
+			var r := fa_ui.get_csv_line()
+			if r.size() >= 1 and r[0].strip_edges() != "":
+				var k := r[0].strip_edges()
+				check(TranslationServer.translate(k) != k, "ui.csv key %s is imported in %s translation" % [k, loc])
+
+
 	var Title: GDScript = load("res://ui/title.gd")
 	Title.settings_path = "user://test_settings.cfg"
 	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://test_settings.cfg"))
