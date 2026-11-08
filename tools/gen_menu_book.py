@@ -464,6 +464,8 @@ ICONS = {
              "...IIKII..", "...IIIII.."], {"I": INK, "K": IRON}),
     "dex": ([".......IHH", "......IHH.", ".....IHH..", "....IHI...", "...III....", "..III.....", ".IWI......", "IWI.......",
              "WI........", ".........."], {"I": INK, "H": PAPER_HI, "W": WAX}),
+    "time": ([".IIIIIIII.", "I........I", "I...WW...I", "I...WW...I", "I...WWW..I", "I....WWW.I", "I........I", "I........I",
+              ".IIIIIIII.", ".........."], {"I": INK, "W": WAX}),
     "spi": (["....S.....", "...SHS....", "...SHS....", "..SHHHS...", "..SHBHS...", ".SHBBBHS..", ".SHBBBHS..", "..SHBHS...",
              "...SSS....", ".........."], {"S": SAKTI_LO, "H": SAKTI_HI, "B": SAKTI}),
     # derived

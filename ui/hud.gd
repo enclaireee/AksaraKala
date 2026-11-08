@@ -93,7 +93,6 @@ func _ready() -> void:
 	_flask_empty = _ui_tex("flask_empty")
 	_grp_bars = _group()
 	_grp_hide = _group()
-	_nine("hud_plate", Rect2(2, 2, 122, 41), [5, 5, 5, 5], _grp_bars)   # leather plaque behind the three vitals
 	_bars.hp = _bar(Vector2(6, 6), 96, 9, HP_COL, "seal_hp", _grp_bars)
 	_bars.st = _bar(Vector2(6, 22), 64, 3, ST_COL, "icon_bolt", _grp_bars)
 	_bars.sk = _bar(Vector2(6, 31), 50, 3, SK_COL, "icon_brush", _grp_bars)
@@ -161,7 +160,7 @@ func _ready() -> void:
 	_tracker_panel = PanelContainer.new()   # minimalistic floating quest HUD under vitals
 	_tracker_panel.position = Vector2(8, 48)
 	_tracker_panel.custom_minimum_size = Vector2(TRACKER_W, 0)
-	_tracker_panel.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+	_tracker_panel.add_theme_stylebox_override("panel", UIFx.box("panel", 5.0))   # paper card: ink text stays readable on any ground
 	_tracker_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_tracker_panel.visible = false
 	_grp_hide.add_child(_tracker_panel)
