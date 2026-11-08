@@ -298,7 +298,7 @@ static func fan(host: EnemyBase, from: Vector2, dir: float, arc: float, count: i
 
 # --- lingering ground zones ---------------------------------------------------------------------------------
 
-class Zone extends Node2D:
+class HazardZone extends Node2D:
 	var host: EnemyBase
 	var radius := 24.0
 	var damage := 8
@@ -339,8 +339,8 @@ class Zone extends Node2D:
 				draw_rect(Rect2(Vector2.from_angle(ang) * r - Vector2(1, 1), Vector2(2, 2)), Color(1, 1, 0.8, 0.8 * fade))
 
 
-static func zone(host: EnemyBase, pos: Vector2, radius: float, amount: int, life: float, color := Color(1.0, 0.45, 0.1), warm := 0.5) -> Zone:
-	var z := Zone.new()
+static func zone(host: EnemyBase, pos: Vector2, radius: float, amount: int, life: float, color := Color(1.0, 0.45, 0.1), warm := 0.5) -> HazardZone:
+	var z := HazardZone.new()
 	z.host = host
 	z.radius = radius
 	z.damage = amount
