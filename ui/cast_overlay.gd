@@ -143,9 +143,9 @@ func finish(ok: bool, text: String, info := {}) -> void:
 	_label.pivot_offset = _label.size / 2.0
 	var perfect: bool = info.get("perfect", false)
 	var element: Color = SpellUtil.ELEMENT.get(info.get("glyph_id", ""), SKY)
-	_label.add_theme_color_override("font_color", (Color("FFE08A") if perfect else Color("F3E3B8")) if ok else Color("B8AE98"))
+	_label.add_theme_color_override("font_color", (Color("D8FFFB") if perfect else UIFx.HEAD) if ok else UIFx.DIM)
 	_sub.text = _quality_line(ok, info)
-	_sub.add_theme_color_override("font_color", Color("FFE08A") if perfect else Color(element.lightened(0.45), 0.95))
+	_sub.add_theme_color_override("font_color", UIFx.ACCENT if perfect else Color(element.lightened(0.45), 0.95))
 	_sub.reset_size()
 	_sub.modulate = Color.WHITE
 	_sub.position = Vector2(
@@ -207,7 +207,7 @@ func _sigil(info: Dictionary, element: Color, perfect: bool) -> void:
 		var sg := SpellFX.make("cast_sigil", 6, 14.0 - 3.0 * i)
 		if sg == null:
 			return
-		sg.modulate = Color("FFE08A") if (perfect and i == 1) else element
+		sg.modulate = UIFx.ACCENT if (perfect and i == 1) else element
 		sg.scale = Vector2.ONE * (0.9 + 0.7 * i + (0.3 if perfect else 0.0))
 		sg.position = (info.screen_pos as Vector2).round()
 		add_child(sg)

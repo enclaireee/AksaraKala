@@ -143,7 +143,7 @@ func _marker(p: Vector2, kind: String) -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, size), Color("120e0b"))
+	draw_rect(Rect2(Vector2.ZERO, size), Color("0C0A18"))   # night well (ui.md 0.1)
 	if _tex == null:
 		return
 	var r := _map_rect()

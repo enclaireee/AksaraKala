@@ -13,7 +13,7 @@ extends Control
 signal speaker_changed(key: String)   # the speaker tag was set (SceneDirector auto-camera)
 
 const CPS := 45.0   # TUNE: characters per second
-const OUTLINE := Color("140E0A")
+const OUTLINE := UIFx.LACQUER
 const UI_DIR := "res://assets/art/ui/"
 const BOX_X := 40.0       # frame left and width (centred in 480)
 const BOX_W := 400.0
@@ -26,8 +26,8 @@ const MIN_H := 40.0
 const LINE_H := 10.0      # Tiny5 8: 9 px line + 1 px spacing (ui.md 1)
 const FACE_W := 70.0      # 6 px inset + 56 px frame + 8 px gap: the text column starts here
 const MIN_H_FACE := 68.0  # the 56 px frame plus 6 px above and below
-const TEXT_COL := Color("EADFC4")
-const NARR_COL := Color("C9B48A")   # Semar (Dalang) narration: warm dim gold, set apart from speech
+const TEXT_COL := UIFx.TEXT
+const NARR_COL := Color("D9B48F")   # Semar (Dalang) narration: warm dim amber, set apart from speech
 const DIM_SHADER := preload("res://ui/fx/focus_dim.gdshader")
 const MAX_WAIT := 3.0   # seconds a #wait cue may hold
 const PORTRAIT := 48.0    # bust size inside the 56x56 frame_portrait (ui.md 3.1)
@@ -85,7 +85,7 @@ func _ready() -> void:
 	_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_plate.size = Vector2(60, 9)
 	add_child(_plate)
-	_speaker = UIFx.text("", "label", UIFx.ACCENT)
+	_speaker = UIFx.text("", "label", UIFx.WARM)
 	_speaker.size = Vector2(60, 9)
 	_plate.add_child(_speaker)
 	_who = UIFx.text("", "body", UIFx.DIM)   # first meeting: "Anak Semar. Riuh." beside the name
@@ -98,7 +98,7 @@ func _ready() -> void:
 	_text.add_theme_constant_override("line_spacing", 1)
 	add_child(_text)
 	_sel_bar = ColorRect.new()
-	_sel_bar.color = Color(UIFx.ACCENT, 0.14)   # soft gold wash under the chosen line
+	_sel_bar.color = Color(UIFx.ACCENT, 0.14)   # soft cyan wash under the chosen line
 	_sel_bar.size = Vector2(BOX_W - PAD_X * 2.0, LINE_H)
 	_sel_bar.visible = false
 	_sel_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE

@@ -45,6 +45,7 @@ Current development status and architecture reference for Aksara Kala as of **20
 - **Typography (UI v2, 2026-11-09, [ui.md](ui.md) 1):** four pixel-true steps only: Tiny5 8 body, Tiny5 8 tracked caps labels, Jersey 10 at 19 headings, Jersey 15 at 27 display (54 logo). All from `UIFx` (`UIFx.text(t, kind)`), never any other size.
 
 ### 3.2 In-Game HUD & UI ([ui.md](ui.md))
+- **Look (v3 "Senja", 2026-11-09, [ui.md](ui.md) 0.1, 4.1, 5):** twilight rebrand from the key-art poster. Night-indigo surfaces, banded dusk sky backdrop, cyan glyph glow for focus/magic, amber for quests/loot, rose for danger. Parchment, leather and wax are retired everywhere (the pause "book" is now a dusk star chart). All UI art: `python3 tools/gen_ui_dusk.py` (also writes `icon.svg`).
 - **HUD Layout (v2, 8 px margins, ink surface, [ui.md](ui.md) 2.1):**
   - Vitals top-left: bare bars, HP 100x6 with "hp/max" beside it, stamina 72x3, sakti 60x3.
   - **Quest Tracker (8, 36), 124 px:** caps quest name, active objective after a gold diamond, `(n/m)`.
@@ -104,6 +105,9 @@ Current development status and architecture reference for Aksara Kala as of **20
 ---
 
 ## 6. Next Steps
+000. **UI v3 "Senja" rebrand (2026-11-09, untested in Godot; spec [ui.md](ui.md) 0.1, 4.1, 4.3, 5):**
+   - DONE: `tools/gen_ui_dusk.py` regenerates every UI texture under its old file name (no layout moved): dusk panels, wells, keycaps, cyan cursor, amber arrow and Ilmu gem, theme buttons/tabs/slots, the whole `book_*` menu set (paper-era icons recoloured), vignette, pedestal, light cone; new title art (`title_sky`, `title_far`, `title_near`, `title_constellation`, `title_glyph_*`, `title_star*`, `logo`); pixel-art `icon.svg`. Code: `UIFx` palette (v2 names aliased to v3 colours) + `UIFx.sky()` / `motes_layer()`, new `ui/fx/twinkle.gd`, `MenuBook` palette, `theme.tres` colours, title screen rebuilt (logo + menu left, valley + Wiku on a cliff right, glyphs rising from the staff), class select / name entry on the dusk sky, death screen night fade, quest amber in HUD / quest card / dialogue speaker, cyan focus in `LozengeButton`, boot splash colour.
+   - NEXT: `--import`, then `i18n_test`, `ui_test`, `menu_test`, `portrait_test`, `choice_test`, `quest_card_test`, `glyph_lesson_test`, `cast_overlay_test`, `loop_test`; then eyeball at 3x: title (intro, rising glyphs, overwrite confirm, ID/EN), name entry, class select, HUD with tracker + banner + toast, dialogue with choices, all 7 menu tabs (icon contrast on the night pages, the doll silhouette, seals), glyph lesson, death. Old parchment/title-desk PNGs (`title_desk`, `title_book`, `title_candle`, ...) are no longer referenced; delete them with their generators when the v3 look is approved.
 00. **UI v2 overhaul (2026-11-09, untested in Godot: running a Godot binary was not permitted in the cloud box; spec [ui.md](ui.md) 0, 1, 2.1, 3.1, 5):**
    - DONE: Tiny5 font added (`assets/fonts/Tiny5-Regular.woff`, OFL); `UIFx` holds the type scale, colours and spacing; `theme.tres` defaults to Tiny5 8 with Heading/HeaderLarge/BossName/Caps variations on the grid sizes. New ink surface set `tools/gen_ui_ink.py` (run it last). Rebuilt: HUD (`ui/hud.gd`), dialogue box, world prompt (`entities/world/interactable.gd`), quest card, area title, cast overlay text, glyph lesson card, prologue card, class select info card + confirm, name entry, `LozengeButton` (no shimmer, heading-face entries), menu book text helpers (caps labels, Jersey 19 headings, Tiny5 body), calmer paper grain, no kawung tile. Copy fixes in `ui.csv` (no square brackets, sentence-case banner kickers, "Remembered", "Power" for derived stats).
    - NEXT: `--import` (new font + ink PNGs + ui.csv), then `ui_test`, `menu_test`, `portrait_test`, `choice_test`, `i18n_test`, `quest_card_test`, `glyph_lesson_test`, `cast_overlay_test`, `loop_test`; then capture and eyeball every screen at 3x: title, class select, name entry, prologue, HUD in a zone (tracker + banner + toast at once), a dialogue with choices, a boss, the 7 menu tabs (the tabs were only swept through the shared `MenuBook` helpers: check heading overlap and caps widths), death screen, glyph lesson. Mockups of the HUD and dialogue were checked with PIL only.
@@ -124,6 +128,7 @@ Current development status and architecture reference for Aksara Kala as of **20
 ---
 
 ## 7. Standing Operational Rules
+- 2026-11-09: UI v3 "Senja". Supersedes the colour and surface parts of the v2 and parchment rules below (type scale, grid, quiet HUD still hold). One dusk surface everywhere, no paper. Cyan `UIFx.ACCENT` = focus/selection/magic/new, amber `UIFx.WARM` = quest/loot/Ilmu, rose `UIFx.DANGER` = danger only. Full-screen screens use `UIFx.sky()`. UI art only from `tools/gen_ui_dusk.py`, run last; never hand-edit its outputs.
 - Follow token-efficiency protocol: read targeted line ranges, do not read full massive files unnecessarily.
 - Never commit, push, or delete files without explicit user request.
 - Run headless tests and verification scripts before concluding tasks.

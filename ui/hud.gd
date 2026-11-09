@@ -6,7 +6,7 @@ const HP_COL := Color("D55E00")
 const ST_COL := Color("F0E442")
 const SK_COL := Color("56B4E9")
 const FLASK_COL := Color("009E73")
-const GOLD := UIFx.ACCENT      # quest gold (ui.md 0: one accent)
+const GOLD := UIFx.WARM        # quest amber (ui.md 0.1)
 const CREAM := UIFx.CREAM
 const OUTLINE := UIFx.LACQUER
 const M := 8.0                 # screen-safe margin (ui.md 2)
@@ -38,7 +38,7 @@ var _t := 0.0
 var _saved: Label
 var _saved_icon: TextureRect
 var _saved_left := 0.0
-const DIM := Color(0.62, 0.6, 0.55)
+const DIM := UIFx.DIM
 var _tracker_panel: PanelContainer   # framed card around the tracker (ui.md 2, pixel pass)
 var _tracker: VBoxContainer   # inside the card: title, rule, then the objectives (docs/quest_system.md 3.1)
 var _grp_hide: Control   # fades out while a dialogue is open: tracker, flasks, weapon, Ilmu, hints
@@ -154,7 +154,7 @@ func _ready() -> void:
 	_tracker_panel = PanelContainer.new()   # minimalistic floating quest HUD under vitals
 	_tracker_panel.position = Vector2(M, M + 28)   # under the vitals, one 8 px gap
 	_tracker_panel.custom_minimum_size = Vector2(TRACKER_W, 0)
-	var sb := StyleBoxFlat.new()   # slim dark strip with a gold edge: readable on any ground, hides little of the world
+	var sb := StyleBoxFlat.new()   # slim night strip with an amber edge: readable on any ground, hides little of the world
 	sb.bg_color = Color(UIFx.INK_BG, 0.62)
 	sb.border_color = GOLD
 	sb.border_width_left = 1
@@ -477,7 +477,7 @@ func _build_extras() -> void:
 	add_child(_toast_root)
 	var tp := _nine("ink_panel", Rect2(0, 0, 120, 15), [4, 4, 4, 4], _toast_root)
 	tp.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_toast_rule = _rect(Vector2(2, 2), Vector2(1, 11), GOLD, _toast_root)   # gold tick on the leading edge
+	_toast_rule = _rect(Vector2(2, 2), Vector2(1, 11), GOLD, _toast_root)   # amber tick on the leading edge
 	_toast = UIFx.text("", "body", CREAM)
 	_toast.position = Vector2(8, 3)
 	_toast.size = Vector2(104, 9)
@@ -514,7 +514,7 @@ func _build_extras() -> void:
 	_diamond.add_child(dg)
 	var dh := Polygon2D.new()   # one lit facet
 	dh.polygon = PackedVector2Array([Vector2(0, -3), Vector2(2, -1), Vector2(0, 0), Vector2(-2, -1)])
-	dh.color = Color("FFECB4")
+	dh.color = Color("FFE2BC")
 	_diamond.add_child(dh)
 	_diamond.visible = false
 	add_child(_diamond)

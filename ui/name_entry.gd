@@ -13,9 +13,7 @@ var _t := 0.0
 
 func _ready() -> void:
 	Snd.music("select", 2.0)
-	var sky := UIFx.rect_tex("title_sky", Vector2.ZERO)
-	sky.modulate = Color(0.4, 0.4, 0.45)
-	add_child(sky)
+	UIFx.sky(self, 0.55)
 	add_child(UIFx.rect_tex("vignette", Vector2.ZERO))
 	var card := Panel.new()   # ink card (ui.md 0), the same surface as class select and the dialogue box
 	card.add_theme_stylebox_override("panel", UIFx.ink_box())

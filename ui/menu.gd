@@ -23,8 +23,8 @@ func _ready() -> void:
 	add_to_group("game_menu")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	visible = false
-	_dim = ColorRect.new()   # the world dims behind the book
-	_dim.color = Color(0.02, 0.016, 0.014, 0.62)
+	_dim = ColorRect.new()   # the world dims to night behind the book (ui.md 4.3 v3)
+	_dim.color = Color(0.04, 0.03, 0.09, 0.74)
 	_dim.set_anchors_preset(PRESET_FULL_RECT)
 	_dim.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(_dim)

@@ -14,6 +14,7 @@ config/name="Aksara Kala"
 run/main_scene="res://ui/title.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.0784, 0.0627, 0.149, 1)
 
 [autoload]
 

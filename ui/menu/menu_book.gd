@@ -1,7 +1,7 @@
 class_name MenuBook extends Control
-## The field-book frame shared by every menu tab (ui.md 4.3): dim + vignette, the leather cover, two parchment pages
-## with a faint kawung tile, the spine gutter, carved corners, tab ribbons with Q / E keycaps and the footer hint band.
-## Art: tools/gen_menu_book.py (assets/art/ui/book_*.png). Also holds the small style helpers the tabs share.
+## The field-book frame shared by every menu tab (ui.md 4.3, v3 dusk): the world dims to night, a dusk cover with a cyan
+## hairline, two indigo star-chart pages, a spine of cyan dots, corner glints, tab pills with Q / E keycaps and the
+## footer hint band. Art: tools/gen_ui_dusk.py (assets/art/ui/book_*.png). Also holds the style helpers the tabs share.
 
 signal ribbon_pressed(index: int)
 
@@ -14,16 +14,19 @@ const RIB_Y := 4                            # top of a closed ribbon (its foot h
 const RIB_ON_Y := 0
 const RIB_W := 20
 
-# palette (ui.md 5)
-const INK := Color("2A1C12")
-const INK_HEAD := Color("7A2A1E")
-const INK_DIM := Color("6B5A44")
-const INK_FADE := Color("8A7656")
-const PAPER := Color("E3D0A0")
-const PAPER_HI := Color("F1E4BE")
-const CREAM := Color("EADFC4")
-const WAX := Color("9E2B25")
-const VERD := Color("3F7A66")
+# palette (ui.md 0.1, 5). v2 names kept so every tab recolours with them: INK = body text, INK_HEAD = headings,
+# INK_DIM = secondary, WAX = danger / destructive, VERD = done or better.
+const INK := Color("ECE6F2")
+const INK_HEAD := Color("FFF4E6")
+const INK_DIM := Color("A99BC8")
+const INK_FADE := Color("8C83A6")
+const PAPER := Color("1A1530")
+const PAPER_HI := Color("241C40")
+const CREAM := Color("ECE6F2")
+const WAX := Color("E0566A")
+const VERD := Color("8FD9A0")
+const ACCENT := Color("7FE8E0")
+const KEY_INK := Color("141026")   # letters on the light keycap
 
 const FONT_NUM := "res://assets/fonts/Tiny5-Regular.woff"      # ui.md 1: body face, 8 / 16 only
 const FONT_ITALIC := "res://assets/fonts/Tiny5-Regular.woff"
@@ -43,7 +46,7 @@ func _init() -> void:
 ## Builds the frame for these tabs: titles are translation keys, icons are book_tab_* names.
 func build(titles: Array, icons: Array) -> void:
 	var shadow := ColorRect.new()   # soft drop shadow under the book
-	shadow.color = Color(0.03, 0.02, 0.01, 0.5)
+	shadow.color = Color(0.02, 0.01, 0.05, 0.6)
 	shadow.position = BOOK.position + Vector2(2, 3)
 	shadow.size = BOOK.size
 	shadow.mouse_filter = MOUSE_FILTER_IGNORE
@@ -75,7 +78,7 @@ func build(titles: Array, icons: Array) -> void:
 	content.mouse_filter = MOUSE_FILTER_IGNORE
 	content.set_anchors_preset(PRESET_FULL_RECT)
 	add_child(content)
-	# front: footer band, carved corners, Q / E keycaps
+	# front: footer band, corner glints, Q / E keycaps
 	add_child(nine("book_footer", FOOTER, 4, true))
 	footer_box = HBoxContainer.new()
 	footer_box.position = FOOTER.position + Vector2(0, 1)
@@ -124,11 +127,13 @@ func select(index: int) -> void:
 			b.add_theme_stylebox_override(s, st)
 		for s in ["hover", "hover_pressed"]:
 			b.add_theme_stylebox_override(s, hv)
-		var col := INK_HEAD if on else CREAM
+		var col := ACCENT if on else INK_DIM
 		for c in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:
 			b.add_theme_color_override(c, col)
-		for c in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color", "icon_hover_pressed_color"]:
-			b.add_theme_color_override(c, INK if on else Color(CREAM, 0.85))
+		for c in ["icon_normal_color", "icon_pressed_color", "icon_focus_color"]:
+			b.add_theme_color_override(c, ACCENT if on else INK_FADE)
+		for c in ["icon_hover_color", "icon_hover_pressed_color"]:
+			b.add_theme_color_override(c, ACCENT if on else INK)
 	var gap := 2
 	total += gap * (_ribbons.size() - 1)
 	var x := SPINE_X - total / 2
@@ -155,7 +160,7 @@ func _ribbon_box(name_: String, on: bool) -> StyleBoxTexture:
 	return s
 
 
-## Footer hints: [[key text or "@icon", label key], ...]. Keys draw as keycaps, labels in cream on the leather.
+## Footer hints: [[key text or "@icon", label key], ...]. Keys draw as keycaps, labels in lavender on the band.
 func set_hints(hints: Array) -> void:
 	for c in footer_box.get_children():
 		footer_box.remove_child(c)
@@ -167,7 +172,7 @@ func set_hints(hints: Array) -> void:
 			footer_box.add_child(sp)
 		for k in str(hints[i][0]).split(" "):
 			footer_box.add_child(keycap(k))
-		var l := text(tr(hints[i][1]), CREAM)
+		var l := text(tr(hints[i][1]), INK_DIM)
 		footer_box.add_child(l)
 
 
@@ -211,7 +216,7 @@ static func box(name_: String, m: int, content := -1) -> StyleBoxTexture:
 	return s
 
 
-## Body text (Tiny5 8), plain ink on paper.
+## Body text (Tiny5 8), cool cream on the night page.
 static func text(t: String, color := INK, wrap := false) -> Label:
 	var l := Label.new()
 	l.text = t
@@ -228,7 +233,7 @@ static func text(t: String, color := INK, wrap := false) -> Label:
 
 
 static func italic(t: String, color := INK_DIM, wrap := true) -> Label:
-	return text(t, color, wrap)   # the pixel face has no italic: secondary text is the dim ink colour
+	return text(t, color, wrap)   # the pixel face has no italic: secondary text is the lavender colour
 
 
 ## Small tracked caps (Tiny5 8 +1): labels, section names, menu entries.
@@ -239,7 +244,7 @@ static func bold(t: String, color := INK) -> Label:
 	return l
 
 
-## Heading in ink red (page and section titles): Jersey 10 at 19, the one heading size (ui.md 1).
+## Heading (page and section titles): Jersey 10 at 19, the one heading size (ui.md 1).
 ## `size` is kept for old callers and ignored.
 static func head(t: String, _size := 12, color := INK_HEAD) -> Label:
 	var l := text(t, color)
@@ -255,7 +260,7 @@ static func num(t: String, color := INK, size := 8) -> Label:
 	return l
 
 
-## A heading with an ink rule under it, as one 200 px wide block (16 px tall).
+## A heading with a hairline rule under it (cyan lead-in), as one 200 px wide block (16 px tall).
 static func section(t: String, width := 200) -> Control:
 	var c := Control.new()
 	c.custom_minimum_size = Vector2(width, 16)
@@ -284,7 +289,7 @@ static func keycap(k: String) -> Control:
 		l.text = k
 		l.add_theme_font_override("font", f)
 		l.add_theme_font_size_override("font_size", UIFx.BODY)
-		l.add_theme_color_override("font_color", INK)
+		l.add_theme_color_override("font_color", KEY_INK)
 		l.add_theme_constant_override("outline_size", 0)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -297,7 +302,7 @@ static func keycap(k: String) -> Control:
 	return n
 
 
-## A flat list row: no frame, a faint wax wash when focused or hovered, `sel` keeps a pale highlight.
+## A flat list row: no frame, a faint cyan wash with a cyan edge when focused or hovered, `sel` keeps a pale highlight.
 static func row_button(height := 16) -> Button:
 	var b := Button.new()
 	b.custom_minimum_size.y = height
@@ -321,7 +326,7 @@ static func set_row_selected(b: Button, on: bool) -> void:
 	b.add_theme_stylebox_override("normal", box("book_row_sel", 4, 0) if on else StyleBoxEmpty.new())
 
 
-## A small paper button with an ink rim (wax rim when focused), Crimson bold 8 ink text.
+## A small dusk button with a hairline rim (cyan rim when focused), tracked caps.
 static func small_button(t: String) -> Button:
 	var b := Button.new()
 	b.text = String(TranslationServer.translate(t)).to_upper()   # tracked caps; already-translated text passes through
@@ -332,7 +337,7 @@ static func small_button(t: String) -> Button:
 	for c in ["font_color", "font_pressed_color"]:
 		b.add_theme_color_override(c, INK)
 	for c in ["font_hover_color", "font_focus_color", "font_hover_pressed_color"]:
-		b.add_theme_color_override(c, INK_HEAD)
+		b.add_theme_color_override(c, ACCENT)
 	var n := box("book_btn", 3)
 	var h := box("book_btn_hi", 3)
 	for s: StyleBoxTexture in [n, h]:

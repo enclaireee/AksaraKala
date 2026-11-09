@@ -11,12 +11,12 @@ const NEEDED := 3   # TUNE: successful casts per lesson
 const HOLD := 1.0
 const CARD := Rect2(292, 56, 180, 160)   # right edge (8 px margin), under Ilmu and the toast row: clear of tracker, banner, dialogue
 const GUIDE_RECT := Rect2(CARD.position.x + 14.0, CARD.position.y + 32.0, 68.0, 68.0)   # the ghost glyph sits in the card's slot
-const INK_HEAD := Color("E0B35A")   # on the ink card: the accent gold (ui.md 0)
-const HINT_COL := Color("A59A82")
+const INK_HEAD := UIFx.ACCENT   # on the dusk card: the cyan glyph light (ui.md 0.1)
+const HINT_COL := UIFx.DIM
 const JAWA := "res://assets/fonts/NotoSansJavanese.ttf"
 const SUNDA := "res://assets/fonts/NotoSansSundanese.ttf"
-const GOLD := Color("F3E3B8")
-const DIM := Color("A59A82")
+const GOLD := UIFx.HEAD
+const DIM := UIFx.DIM
 const CHARS := {
 	"sunda_ka": "ᮊ", "sunda_ga": "ᮌ", "sunda_nga": "ᮍ", "sunda_ca": "ᮎ",
 	"jawa_ha": "ꦲ", "jawa_na": "ꦤ", "jawa_ca": "ꦕ", "jawa_ra": "ꦫ",

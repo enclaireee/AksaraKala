@@ -16,7 +16,7 @@ signal finished
 @export var extras := {}     # card number -> [key, cond]; while Game.check(cond) holds, tr(key) is added under card n after a blank line
 @export var next_scene := "res://ui/class_select.tscn"   # "" = back to Desa Purwa (epilogue)
 const HOLD := 1.0
-const SHADOW := Color("14110f")
+const SHADOW := Color("0E0A18")
 
 var index := 0
 var _hold := 0.0
@@ -94,7 +94,7 @@ func _ready() -> void:
 	_card = Control.new()   # name and text fade and rise together between cards
 	_card.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(_card)
-	_name = UIFx.text("", "label", UIFx.ACCENT)
+	_name = UIFx.text("", "label", UIFx.WARM)
 	_name.position = Vector2(52, 180)
 	_name.size = Vector2(376, 9)
 	_card.add_child(_name)

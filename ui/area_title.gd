@@ -1,5 +1,5 @@
 class_name AreaTitle extends Control
-## Area title card (ui.md 3b): region name in pixel display caps, a gold rule growing from the centre, the area name under it.
+## Area title card (ui.md 3b): region name in pixel display caps, a cyan rule growing from the centre, the area name under it.
 ## Shown on a region change and on the first visit of an area in a save (flag seen_area_<id>); never blocks or pauses.
 ## Region names are proper nouns (no REGION_<PREFIX> key exists), so they live here; AREA_<ID> is used when a key exists.
 
@@ -7,9 +7,9 @@ const REGIONS := {
 	"ts": "Tatar Sunda", "kg": "Keraton Galuh", "mt": "Mataram", "tt": "Tanah Timur",
 	"sk": "Segara Kidul", "gk": "Gua Kala", "desa_purwa": "Desa Purwa",
 }
-const GOLD := Color("C8B38A")
-const CREAM := Color("EADFC4")
-const OUTLINE := Color("140E0A")
+const GOLD := UIFx.ACCENT     # v3: the rule is the cyan glyph light
+const CREAM := UIFx.TEXT
+const OUTLINE := UIFx.LACQUER
 const FADE_IN := 0.6
 const HOLD := 2.2
 const FADE_OUT := 0.8
@@ -33,7 +33,7 @@ func _ready() -> void:
 	_region = Label.new()   # region name: Jersey 15 at 27 (ui.md 1 display size), line box 20 px
 	_region.add_theme_font_override("font", UIFx.display())
 	_region.add_theme_font_size_override("font_size", UIFx.DISPLAY)
-	_region.add_theme_color_override("font_color", Color("F3E3B8"))
+	_region.add_theme_color_override("font_color", UIFx.HEAD)
 	_region.add_theme_color_override("font_outline_color", OUTLINE)
 	_region.add_theme_constant_override("outline_size", 1)
 	_region.position = Vector2(0, Y)

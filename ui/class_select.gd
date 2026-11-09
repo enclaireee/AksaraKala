@@ -37,9 +37,7 @@ var _in_confirm := false
 
 func _ready() -> void:
 	Snd.music("select", 2.0)
-	var sky := UIFx.rect_tex("title_sky", Vector2.ZERO)
-	sky.modulate = Color(0.45, 0.45, 0.5)
-	add_child(sky)
+	UIFx.sky(self, 0.6, false)   # the dusk sky, dimmed: the figure and the card carry the screen
 	_stage = Control.new()   # figure, cone, pedestal, particles
 	_stage.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(_stage)

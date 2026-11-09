@@ -1,23 +1,33 @@
 extends Control
-## Title screen (rpg.md 11). Continue only with a save; New Game asks before overwriting.
-## Language toggle (ID/EN) saved in user://settings.cfg. ponytail: Settings waits for the settings screen.
+## Title screen (rpg.md 11, ui.md 4.1 v3): the logo and menu on the left; on the right a twilight valley, an aksara
+## written in stars, and the Wiku on a cliff with glyphs rising from the staff.
+## Continue only with a save; New Game asks before overwriting. Language toggle (ID/EN) saved in user://settings.cfg.
 
 var _box: VBoxContainer
 var _msg: Label
 var _confirm: VBoxContainer
 var _lang: Button
-var _glow: TextureRect
-var _candle: Sprite2D
-var _glyphs: Array[Label] = []   # the Javanese alphabet on the right page
-var _embers: CPUParticles2D
-var _logo_wipe: Control
+var _logo: TextureRect
 var _sub: Label
+var _hero: Sprite2D
+var _glyphs: Array = []   # rising glyphs: [TextureRect, age, drift]
+var _stars: TextureRect
+var _next_glyph := 0.6
 var _fade: ColorRect
 var _t := 0.0
 var _leaving := false
 
 const SETTINGS := "user://settings.cfg"
 static var settings_path := SETTINGS   # tests point this at a scratch file
+
+const MENU_W := 112.0
+const LOGO_POS := Vector2(36, 32)
+const HERO_POS := Vector2(372, 190)        # top-left of the 24 px frame: feet on the cliff flat (y 214)
+const STAFF := Vector2(384, 180)           # where the glyphs leave the staff (their bottom centre)
+const GLYPH_KEYS := ["title_glyph_ka", "title_glyph_ja", "title_glyph_la", "title_glyph_ra"]
+const GLYPH_LIFE := 6.0                    # seconds from the staff to gone
+const GLYPH_RISE := 92.0                   # px climbed over a life
+const GLYPH_EVERY := 1.7
 
 
 ## Saved choice, else the OS language ("id" -> Indonesian, anything else English).
@@ -39,107 +49,39 @@ func _ready() -> void:
 	Snd.music("title", 2.0)
 	DisplayServer.window_set_title("Aksara Kala")
 	_set_cursor()
-	# the desk, the open book, the candle's light (ui.md 4.1)
-	add_child(UIFx.rect_tex("title_desk", Vector2.ZERO))
-	var scroll := UIFx.rect_tex("title_scroll", Vector2(372, 224))
-	scroll.rotation_degrees = -4.0
-	add_child(scroll)
-	add_child(UIFx.rect_tex("title_inkpot", Vector2(6, 206)))
-	add_child(UIFx.rect_tex("title_seal", Vector2(424, 238)))
-	add_child(UIFx.rect_tex("title_book", Vector2(54, 18)))
-	_candle = Sprite2D.new()
-	_candle.texture = UIFx.tex("title_candle")
-	_candle.centered = false
-	_candle.region_enabled = true
-	_candle.region_rect = Rect2(0, 0, 14, 40)
-	_candle.position = Vector2(428, 62)
-	add_child(_candle)
-	_glow = UIFx.rect_tex("title_glow", Vector2(435 - 150, 68 - 150), Vector2(300, 300))
-	_glow.modulate = Color(1, 0.72, 0.38, 0.5)
-	add_child(_glow)
-	_embers = CPUParticles2D.new()   # dust motes drifting up through the candlelight
-	_embers.texture = UIFx.tex("ember")
-	_embers.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	_embers.position = Vector2(300, 250)
-	_embers.amount = 18
-	_embers.lifetime = 9.0
-	_embers.preprocess = 9.0
-	_embers.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
-	_embers.emission_rect_extents = Vector2(180, 4)
-	_embers.direction = Vector2.UP
-	_embers.spread = 20.0
-	_embers.gravity = Vector2(3, -1)
-	_embers.initial_velocity_min = 6.0
-	_embers.initial_velocity_max = 14.0
-	_embers.scale_amount_min = 0.5
-	_embers.scale_amount_max = 1.0
-	var ramp := Gradient.new()
-	ramp.set_color(0, Color(1, 0.85, 0.55, 0.0))
-	ramp.set_color(1, Color(1, 0.8, 0.5, 0.0))
-	ramp.add_point(0.2, Color(1, 0.9, 0.65, 0.7))
-	ramp.add_point(0.7, Color(1, 0.8, 0.5, 0.35))
-	_embers.color_ramp = ramp
-	add_child(_embers)
-	add_child(UIFx.rect_tex("vignette", Vector2.ZERO))
-	# left page: the logo, written in ink (an ink wipe reveals it)
-	_logo_wipe = Control.new()
-	_logo_wipe.clip_contents = true
-	_logo_wipe.position = Vector2(74, 50)
-	_logo_wipe.size = Vector2(0, 100)
-	_logo_wipe.mouse_filter = MOUSE_FILTER_IGNORE
-	add_child(_logo_wipe)
-	var title := UIFx.label("AKSARA KALA", 24, UIFx.INK, true)
-	title.add_theme_constant_override("outline_size", 0)
-	title.size = Vector2(156, 32)
-	title.position = Vector2(0, 10)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_logo_wipe.add_child(title)
-	var sub := UIFx.label("The Script of Time", 10, UIFx.INK_HEAD, true)
-	sub.add_theme_constant_override("outline_size", 0)
-	sub.size = Vector2(156, 16)
-	sub.position = Vector2(0, 44)
-	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_logo_wipe.add_child(sub)
-	var rule := TextureRect.new()
-	rule.texture = UIFx.tex("divider")
-	rule.position = Vector2(46, 66)
-	_logo_wipe.add_child(rule)
-	_sub = UIFx.label("ꦲꦏ꧀ꦱꦫ  ·  ᮃᮊ᮪ᮞᮛ", 10, UIFx.INK_DIM)   # "aksara" in Javanese and Sundanese: the one cultural nod
-	_sub.add_theme_constant_override("outline_size", 0)
-	_sub.position = Vector2(74, 128)
-	_sub.size = Vector2(156, 16)
+	# the scene, back to front: sky and stars, the aksara constellation, the valley, the cliff, the Wiku (ui.md 4.1)
+	add_child(UIFx.rect_tex("title_sky", Vector2.ZERO))
+	add_child(Twinkle.new())
+	_stars = UIFx.rect_tex("title_constellation", Vector2(330, 24))
+	add_child(_stars)
+	add_child(UIFx.rect_tex("title_far", Vector2.ZERO))
+	var pool := UIFx.rect_tex("title_glow", HERO_POS + Vector2(-8, -2), Vector2(40, 40))   # the staff's faint light
+	pool.modulate.a = 0.75
+	add_child(pool)
+	add_child(UIFx.rect_tex("title_near", Vector2.ZERO))
+	_hero = Sprite2D.new()   # the Wiku from behind, looking out over the valley
+	_hero.texture = load("res://assets/art/hero_mage.png")
+	_hero.hframes = 6
+	_hero.vframes = 18
+	_hero.frame_coords = Vector2i(0, 2)
+	_hero.centered = false
+	_hero.position = HERO_POS
+	_hero.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	add_child(_hero)
+	add_child(UIFx.motes_layer(Rect2(300, 200, 180, 30), 10))
+	# the logo and its line
+	_logo = UIFx.rect_tex("logo", LOGO_POS)
+	add_child(_logo)
+	_sub = UIFx.text("The script of time", "body", UIFx.TEXT)
+	_sub.size = Vector2(_logo.size.x, 10)
+	_sub.position = Vector2(LOGO_POS.x, LOGO_POS.y + _logo.size.y + 2)
 	_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_sub.modulate.a = 0.0
-	var f := FontVariation.new()
-	f.base_font = load("res://assets/fonts/NotoSansJavanese.ttf")
-	f.fallbacks = [load("res://assets/fonts/NotoSansSundanese.ttf")]
-	_sub.add_theme_font_override("font", f)
 	add_child(_sub)
-	var sketch := UIFx.rect_tex("title_sketch", Vector2(77, 156))   # a quick ink sketch under the logo
-	add_child(sketch)
-	# right page: the menu, and the whole hanacaraka written below it (the letters the game is about)
-	var rule2 := UIFx.rect_tex("divider", Vector2(296, 130))
-	add_child(rule2)
-	var jf := FontVariation.new()
-	jf.base_font = load("res://assets/fonts/NotoSansJavanese.ttf")
-	var letters := "ꦲꦤꦕꦫꦏꦢꦠꦱꦮꦭꦥꦝꦗꦪꦚꦩꦒꦧꦛꦔ"
-	for i in letters.length():
-		var g := Label.new()
-		g.text = letters[i]
-		g.add_theme_font_override("font", jf)
-		g.add_theme_font_size_override("font_size", 13)
-		g.add_theme_color_override("font_color", Color("8A7656"))
-		g.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		g.size = Vector2(28, 18)
-		g.position = Vector2(266 + (i % 5) * 29, 138 + (i / 5) * 15)
-		g.modulate.a = 0.0
-		g.mouse_filter = MOUSE_FILTER_IGNORE
-		add_child(g)
-		_glyphs.append(g)
+	# the menu: a column under the logo
 	_box = VBoxContainer.new()
-	_box.position = Vector2(262, 56)
-	_box.size = Vector2(140, 90)
-	_box.add_theme_constant_override("separation", 6)
+	_box.position = Vector2(roundf(LOGO_POS.x + (_logo.size.x - MENU_W) / 2.0), 140)
+	_box.size = Vector2(MENU_W, 60)
+	_box.add_theme_constant_override("separation", 0)
 	add_child(_box)
 	if get_node("/root/Game").has_save():
 		_btn("UI_CONTINUE", _continue)
@@ -147,44 +89,47 @@ func _ready() -> void:
 	_btn("UI_QUIT", func() -> void: get_tree().quit())
 	_lang = LozengeButton.new("", 8)
 	_lang.alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_lang.position = Vector2(410, 6)
+	_lang.position = Vector2(408, 6)
 	_lang.size = Vector2(64, 16)
 	_lang.pressed.connect(_toggle_lang)
 	add_child(_lang)
 	_lang_text()
-	_msg = UIFx.label("", 8, UIFx.INK_HEAD)
-	_msg.add_theme_constant_override("outline_size", 0)
-	_msg.position = Vector2(256, 186)
-	_msg.size = Vector2(150, 24)
+	_msg = UIFx.text("", "body", UIFx.DANGER)
+	_msg.position = Vector2(LOGO_POS.x - 10, 200)
+	_msg.size = Vector2(160, 20)
+	_msg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_msg.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_msg)
-	_confirm = VBoxContainer.new()   # the overwrite question, replaces the menu on the right page
-	_confirm.position = Vector2(258, 56)
-	_confirm.size = Vector2(150, 90)
+	_confirm = VBoxContainer.new()   # the overwrite question replaces the menu in place
+	_confirm.position = Vector2(LOGO_POS.x - 20, 136)
+	_confirm.size = Vector2(180, 60)
+	_confirm.add_theme_constant_override("separation", 2)
 	_confirm.visible = false
 	add_child(_confirm)
-	var q := UIFx.label("UI_NEW_CONFIRM", 8, UIFx.INK)
-	q.add_theme_constant_override("outline_size", 0)
+	var q := UIFx.text("UI_NEW_CONFIRM", "body", UIFx.TEXT)
 	q.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	q.custom_minimum_size.x = 150
+	q.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	q.custom_minimum_size.x = 180
 	_confirm.add_child(q)
-	var yes := LozengeButton.new("UI_YES", 10, true)
-	yes.pressed.connect(_go.bind(_to_class_select))
-	_confirm.add_child(yes)
-	var no := LozengeButton.new("UI_CANCEL", 10, true)
-	no.pressed.connect(_show_menu)
-	_confirm.add_child(no)
+	for pair in [["UI_YES", _go.bind(_to_class_select)], ["UI_CANCEL", _show_menu]]:
+		var row := CenterContainer.new()
+		var b := LozengeButton.new(pair[0], 10)
+		b.pressed.connect(pair[1])
+		row.add_child(b)
+		_confirm.add_child(row)
 	_fade = UIFx.cover(self)
-	_fade.color.a = 1.0
+	_fade.color = Color(UIFx.LACQUER, 1.0)
 	_show_menu()
-	# idle intro: fade up from black, the logo is inked in, then the subtitle and the menu
+	# intro: up from night, the logo rises in, then its line, then the menu; the glyphs start rising on their own
+	_logo.modulate.a = 0.0
+	_sub.modulate.a = 0.0
+	_box.modulate.a = 0.0
 	var tw := create_tween()
-	tw.tween_property(_fade, "color:a", 0.0, 0.5)
-	tw.tween_property(_logo_wipe, "size:x", 156.0, 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(_fade, "color:a", 0.0, 0.8).set_ease(Tween.EASE_OUT)
+	tw.tween_callback(func() -> void: UIFx.rise_in(_logo, 6.0, 0.5))
+	tw.tween_interval(0.35)
 	tw.tween_property(_sub, "modulate:a", 1.0, 0.4)
-	UIFx.rise_in(_box, 6.0, 0.4)
-	for i in _glyphs.size():   # the letters appear one by one, as if written
-		tw.parallel().tween_property(_glyphs[i], "modulate:a", 0.75, 0.3).set_delay(0.04 * i)
+	tw.tween_callback(func() -> void: UIFx.rise_in(_box, 4.0, 0.3))
 
 
 ## Custom mouse cursor, scaled to the window so it stays readable (hotspot 0,0).
@@ -198,19 +143,35 @@ func _set_cursor() -> void:
 
 func _process(delta: float) -> void:
 	_t += delta
-	_candle.region_rect = Rect2(14 * (int(_t * 7.0) % 3), 0, 14, 40)   # the flame
-	# candle flicker: a few incommensurate sines stand in for alpha noise
-	var n := 0.5 + 0.25 * sin(_t * 7.3) + 0.15 * sin(_t * 12.9 + 1.0) + 0.1 * sin(_t * 3.1)
-	_glow.modulate.a = clampf(0.32 + 0.22 * n, 0.0, 1.0)
-	if _t > 4.0 and not _glyphs.is_empty():   # one letter at a time warms to wax red, like a remembered glyph
-		var hot := int(_t * 0.5) % _glyphs.size()
-		for i in _glyphs.size():
-			var want := Color("9E2B25") if i == hot else Color("8A7656")
-			_glyphs[i].add_theme_color_override("font_color", _glyphs[i].get_theme_color("font_color").lerp(want, minf(1.0, delta * 3.0)))
+	_stars.self_modulate.a = 0.75 + 0.25 * sin(_t * 0.9)   # the constellation breathes, slower than the stars
+	_next_glyph -= delta
+	if _next_glyph <= 0.0:
+		_next_glyph = GLYPH_EVERY
+		_spawn_glyph()
+	# glyphs rise from the staff, sway, fade in then out; whole pixels only, so the art never resamples
+	for g in _glyphs.duplicate():
+		var r: TextureRect = g[0]
+		g[1] += delta
+		var k: float = g[1] / GLYPH_LIFE
+		if k >= 1.0:
+			r.queue_free()
+			_glyphs.erase(g)
+			continue
+		var base := STAFF - Vector2(r.size.x / 2.0, r.size.y)
+		r.position = (base + Vector2(sin(g[1] * 1.3 + g[2]) * 5.0 + g[2] * 6.0 * k, -GLYPH_RISE * (1.0 - pow(1.0 - k, 1.6)))).round()
+		r.modulate.a = minf(1.0, k * 6.0) * (1.0 - smoothstep(0.55, 1.0, k))
+
+
+func _spawn_glyph() -> void:
+	var r := UIFx.rect_tex(GLYPH_KEYS[randi() % GLYPH_KEYS.size()], STAFF)
+	r.modulate.a = 0.0
+	add_child(r)
+	move_child(r, _hero.get_index() + 1)   # above the scene, under the logo and the menu
+	_glyphs.append([r, 0.0, randf_range(-1.0, 1.0)])
 
 
 func _btn(text: String, cb: Callable, fade := true) -> void:
-	var b := LozengeButton.new(text, 10, true)
+	var b := LozengeButton.new(text, 10)
 	b.pressed.connect(_go.bind(cb) if fade else cb)
 	_box.add_child(b)
 
@@ -257,7 +218,7 @@ func _new() -> void:
 	if get_node("/root/Game").has_save():
 		_box.visible = false
 		_confirm.visible = true
-		_confirm.get_child(1).grab_focus()
+		_confirm.get_child(1).get_child(0).grab_focus()
 	else:
 		_to_class_select()
 

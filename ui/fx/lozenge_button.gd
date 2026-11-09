@@ -8,7 +8,7 @@ var _shim := -1.0
 var _tw: Tween
 
 
-var _paper := false   # on a paper page: ink text, wax-red hover
+var _paper := false   # v2 paper flag, kept for callers; v3 draws both the same (dusk text, cyan focus)
 
 
 func _init(label := "", size := 10, paper := false) -> void:
@@ -19,11 +19,11 @@ func _init(label := "", size := 10, paper := false) -> void:
 	custom_minimum_size.y = 18 if size >= 10 else 12
 	add_theme_font_override("font", UIFx.head_font() if size >= 10 else UIFx.body_font())
 	add_theme_font_size_override("font_size", UIFx.HEAD if size >= 10 else UIFx.BODY)
-	add_theme_color_override("font_color", UIFx.INK if paper else UIFx.CREAM)
+	add_theme_color_override("font_color", UIFx.TEXT)
 	for c in ["font_hover_color", "font_focus_color", "font_pressed_color", "font_hover_pressed_color"]:
-		add_theme_color_override(c, UIFx.INK_HEAD if paper else UIFx.GOLD_HI)
+		add_theme_color_override(c, UIFx.ACCENT)   # v3: focus is the cyan glyph glow, paper or not
 	add_theme_color_override("font_outline_color", UIFx.LACQUER)
-	add_theme_constant_override("outline_size", 0 if paper else 1)
+	add_theme_constant_override("outline_size", 1)   # v3: every surface is dark, text keeps its 1 px outline
 	for s in ["normal", "hover", "pressed", "focus", "hover_pressed", "disabled"]:
 		add_theme_stylebox_override(s, _margin(0.0))
 
@@ -71,4 +71,4 @@ func _off() -> void:
 
 func _draw() -> void:
 	if has_focus() or is_hovered():
-		draw_texture(UIFx.tex("lozenge" if _paper else "ink_cursor"), Vector2(roundf(1 + _indent), floorf((size.y - 5.0) / 2.0)))
+		draw_texture(UIFx.tex("ink_cursor"), Vector2(roundf(1 + _indent), floorf((size.y - 5.0) / 2.0)))

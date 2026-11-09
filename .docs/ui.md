@@ -1,10 +1,21 @@
 # UI: HUD and Menus
 
-Canvas 480x270, integer-scaled (`canvas_items` stretch mode, `Nearest` texture filtering). Layout follows genre standards (Hyper Light Drifter, Death's Door, Elden Ring UI conventions): vitals top-left, center clear, immersive and quiet presentation. Theme: parchment and ink, stitched leather, riveted iron, wax-red accents (retheme 2026-11; the gold wayang set is gone).
+Canvas 480x270, integer-scaled (`canvas_items` stretch mode, `Nearest` texture filtering). Layout follows genre standards (Hyper Light Drifter, Death's Door, Elden Ring UI conventions): vitals top-left, center clear, immersive and quiet presentation. Theme (v3 "Senja", 2026-11-09): twilight indigo surfaces, a banded dusk sky, cyan glyph glow, warm amber secondary (section 0.1). Older parchment / ink notes below are history where they conflict.
 
 ---
 
-## 0. Design Principles (v2, 2026-11-09)
+## 0. Design Principles
+
+### 0.1 v3 "Senja" (dusk), 2026-11-09: current
+Rebrand from the key-art poster: a twilight sky over candi ruins, the logo in blocky distressed pixel letters, cyan aksara glowing in the air. The parchment, leather, wax and candle language is retired everywhere (menus included). v2's type scale, grid and quiet-HUD rules below still hold; only surfaces, colours, the title and the menu frame change.
+1. **One surface, dusk.** Night-indigo fill `#141026` at ~90%, 1 px outline `#0A0814` with chamfered corners, 1 px inner hairline `#3A2F5C`. Focus variant: cyan hairline. Wells (slots, portrait) are a darker `#0C0A18` with a top inner shadow. All art: `tools/gen_ui_dusk.py`.
+2. **Sky backdrop.** Full-screen screens (title, menu, class select, name entry, death) sit on the banded dusk gradient (`title_sky`: indigo `#1B1433` -> violet `#3A2456` -> plum `#6B3A5E` -> rose `#B5566A` -> peach `#E8946A`), drawn as hard 1-2 px steps with ordered dither between them, never a smooth blend, plus sparse twinkling stars.
+3. **Accents.** Cyan `#7FE8E0` (halo `#3FB8C0`) = focus, selection, magic, new. Warm amber `#F2B27A` = quests, loot, Ilmu, secondary emphasis. Rose `#E0566A` = danger only (damage, low HP, destructive). Green `#8FD9A0` = done/gained. Gameplay bars keep Okabe-Ito.
+4. **Text on dusk.** Body `#ECE6F2` (cool cream), headings `#FFF4E6`, caps labels `#A99BC8` (lavender), dim `#8C83A6`; Semar's narration warm dim `#D9B48F`. 1 px outline `#0A0814` over the world.
+5. **Logo is art.** `logo.png` (two lines, Aksara / Kala): chunky 4x pixel letters, off-white `#EEE8DC`, distressed chips, aksara-style bars and dots above and below, 1 px drop shadow. Generated, original lettering.
+6. **Motion.** v2 rules. Ambient loops allowed only on full-screen backdrops: star twinkle, floating glyphs bobbing (2-3 px, 3-5 s), drifting cyan motes.
+
+### 0.2 v2 (2026-11-09): type, grid and HUD rules (surfaces and colours superseded by 0.1)
 Audit of the v1 UI found the "slop" came from a few root causes, not from any one screen: (1) the Jersey pixel fonts were drawn at 10 / 15 px while their pixel grids sit at 18.67 / 27 px, so every glyph was resampled to about half a pixel and broke up; (2) eight different font sizes (7, 8, 9, 10, 12, 13, 15, 28) with no scale; (3) four surface languages over the world at once (parchment panels with iron studs, stitched leather plates, wax seals, gold lacquer); (4) banner and toast shared one screen spot and overlapped; (5) spacing was 6 px here, 5 there, 4 elsewhere. Genre references: Hyper Light Drifter and Death's Door (bare edge-anchored vitals, nothing in the centre), Elden Ring (boss name over a long thin bottom bar, minimal frames), Sea of Stars / Octopath (one dark translucent box family for all in-world text, caps speaker label, diamond cursor).
 1. **One type scale, pixel-true.** Four steps only (section 1). A font is never drawn at any other size and text is never scaled.
 2. **Two surfaces.** *Ink* (dark lacquer at ~90%, 1 px near-black outline with chamfered corners, one warm hairline inset 1 px: `ink_panel.png`, `tools/gen_ui_ink.py`) for everything over the world: HUD cards, banner, toasts, prompts, dialogue, the prologue card, the glyph lesson, class select and name entry. *Paper* (the field book) only for full-screen menus and the title desk. No studs, stitches, leather plates or wax seals over the world.
@@ -84,11 +95,12 @@ Story beats and cinematic conversations feature automated and scripted scene dir
 
 All menus pause world processing (`process_mode = PROCESS_MODE_ALWAYS` on UI). `Esc` navigates back one level.
 
-### 4.1 Title Screen (Aksara Kala)
-- An open leather-bound book on a dark wooden desk, lit by a flickering candle at the right; a quill and ink pot, a rolled scroll and a wax seal lie on the desk; dust motes drift up through the candlelight. Art: `title_desk`, `title_book`, `title_candle`, `title_inkpot`, `title_scroll`, `title_seal` (`tools/gen_title_book.py`).
-- Left page: the logo "AKSARA KALA" inked in with a left-to-right wipe, subtitle "The Script of Time", a divider, and the word "aksara" in Javanese and Sundanese script.
-- Left page also has an ink sketch (hills, sun, river). Right page: menu entries (Continue when a save exists, New Game, Quit) in bold ink with a wax-red diamond cursor; the overwrite question replaces the menu on the same page. Below the menu the 20 Javanese hanacaraka letters appear one by one and one glows wax red at a time.
-- ID | EN language toggle on the desk, top right. The window title is set to "Aksara Kala" at runtime, matching the Godot project name.
+### 4.1 Title Screen (Aksara Kala), v3
+Same world and palette as the key-art poster, its own composition (not a copy of the poster's gate-and-path shot).
+- **Left column:** the logo (`logo.png`) at (36, 32), "The script of time" centred under it in body text, then the menu (Continue when a save exists, New Game, Quit) as heading-face entries with the cyan diamond cursor; the overwrite question replaces the menu in place. ID | EN toggle top right.
+- **Right two thirds, back to front:** the banded dusk sky with twinkling stars (`title_sky`, `Twinkle`); an aksara written in stars (`title_constellation`: Sundanese Ka thinned to a dotted line with stars on its joints, breathing slowly); layered ridges into the peach haze with a far candi on the middle hill (`title_far`); a dark outcrop on the right with palms (`title_near`). The Wiku (`hero_mage.png` back view) stands on the cliff looking out, a faint cyan pool at the staff.
+- **Motion:** aksara (`title_glyph_ka/ja/la/ra`) rise from the staff every ~1.7 s, sway and fade over 6 s, whole-pixel positions; cyan motes drift up off the cliff. Intro: up from night, logo rises in, its line, then the menu.
+- The window title is set to "Aksara Kala" at runtime, matching the Godot project name.
 
 ### 4.2 Class Selection (Elden Style)
 - **Left Column:** List of 4 classes (Hulubalang, Pamanah, Pendekar, Wiku; see classes.md "Identity") as heading-face menu entries with the gold diamond cursor.
@@ -97,6 +109,7 @@ All menus pause world processing (`process_mode = PROCESS_MODE_ALWAYS` on UI). `
 - **Bottom:** Confirm / Back prompts.
 
 ### 4.3 Pause & Tab Menu (Esc / Tab): the field book (redesign 2026-11-08)
+**v3 frame (2026-11-09) replaces the leather/parchment look below:** the world dims under the dusk sky (stars, faint motes); the "book" becomes a night star-chart: a dusk cover panel with a cyan hairline, two indigo pages (slightly lighter `#1A1530`) with a faint star speckle, a spine of three small cyan dots, tabs as dusk pills (open tab taller, cyan rim, lavender caps name). Headings `#FFF4E6`, body cool cream, labels lavender, focus cyan, the destructive button rose. Layout, tabs and behaviour unchanged.
 Research: scratchpad brief summarised here; sources in ui.md 0 plus Hollow Knight journal/map, Tunic manual, Hades codex, Sea of Stars menus (mostly design practice, thin teardowns).
 
 **Frame (shared by every tab, `ui/menu/menu_book.gd`):**
@@ -119,15 +132,13 @@ Research: scratchpad brief summarised here; sources in ui.md 0 plus Hollow Knigh
 
 ## 5. Visual Styling and Art Direction
 
-The UI is a fantasy field book: ink on parchment, stitched leather, riveted iron, wax seals. Cultural touches in the UI are deliberately tiny (the Javanese and Sundanese "aksara" line on the title page, the Ka wax seal).
-- **Palette** (generated in `tools/gen_ui_rpg.py`, constants in `ui/fx/ui_fx.gd`):
-  - Paper: `#F1E4BE` hi, `#E3D0A0` base, `#D2BC88`, `#B89F6C` burnt edge, `#8F7648`.
-  - Ink: `#2A1C12` text, `#7A2A1E` headings (ink red), `#6B5A44` secondary, `#8A7656` faded.
-  - Leather: `#7C5333` hi, `#5A3A22`, `#3A2314`, `#22140C`; stitch thread `#D8B878`.
-  - Iron: `#B4B9BE`, `#7A7F86`, `#40444A`, `#24272B`.
-  - Wax red: `#C9473B` hi, `#9E2B25`, `#5E1814`. Verdigris `#3F7A66` for "done".
-  - On dark scenes: bright paper `#F3E3B8` headings, cream `#EADFC4` body, dim `#A59A82`.
-  - Gameplay colours (Okabe-Ito HP/stamina/sakti) are unchanged for readability.
-- **Surfaces (v2):** over the world everything is the ink set from `tools/gen_ui_ink.py`: `ink_panel` (9-patch 4), `ink_panel_focus` (gold hairline), `ink_slot` (recessed well), `frame_portrait`, `keycap` (light key, dark letter), `continue_arrow`, `ink_cursor` (5 px gold diamond), `arrow_objective`, `icon_ilmu`. The paper book keeps its own set (`book_*`, `tools/gen_menu_book.py`; v2 calmed the paper grain from 14% to 3% and dropped the kawung tile under text). `panel.png`, `button_*`, `slot*`, `lozenge` remain for paper contexts only.
-- **Vitals (v2):** bare bars with a 1 px ink outline, no plaque and no badges (section 2.1).
-- Regenerate: `python3 tools/gen_ui.py` (scenery, old set), `python3 tools/gen_ui_rpg.py` (paper theme), `python3 tools/gen_menu_book.py`, `python3 tools/gen_title_book.py`, then `python3 tools/gen_ui_ink.py` LAST (it overwrites frame_portrait, keycap, continue_arrow, arrow_objective and icon_ilmu with the v2 versions).
+v3 "Senja" (section 0.1). The UI is the poster's dusk: indigo night surfaces, a banded twilight sky, cyan glyph light, warm amber for the quest. Cultural touches stay small and true: floating aksara on the title, the Javanese / Sundanese letters where the game teaches them.
+- **Palette** (constants in `ui/fx/ui_fx.gd`, art in `tools/gen_ui_dusk.py`):
+  - Night surfaces: `#0A0814` outline, `#0C0A18` well, `#141026` fill, `#1A1530` page, `#241C40` raised, `#3A2F5C` hairline.
+  - Sky: `#1B1433`, `#2A1D47`, `#3A2456`, `#52305E`, `#6B3A5E`, `#8E4763`, `#B5566A`, `#D27268`, `#E8946A`, `#F2B27A`.
+  - Text: `#FFF4E6` head, `#ECE6F2` body, `#A99BC8` label, `#8C83A6` dim.
+  - Accent: cyan `#7FE8E0` / halo `#3FB8C0` / deep `#1F6E78`; amber `#F2B27A` / `#C98A52`; rose danger `#E0566A`; green `#8FD9A0`.
+  - Gameplay colours (Okabe-Ito HP/stamina/sakti) unchanged.
+- **Surfaces:** `ink_panel`, `ink_panel_focus`, `ink_slot`, `frame_portrait`, `keycap` (lavender-white key, night letter), `continue_arrow` (cyan), `ink_cursor` (5 px cyan diamond), `arrow_objective` (amber chevron), `icon_ilmu` (amber gem); the menu set keeps its `book_*` names but is dusk; `panel`, `button_*`, `slot*`, `lozenge` are dusk too. File names are unchanged from v2 so layouts did not move.
+- **Regenerate:** `python3 tools/gen_ui_dusk.py` (writes every file above, the title scene, logo, glyph sprites, `icon.svg` and `tools/ui_dusk_preview.png`). Story props such as `lontar_card.png` (the write card's leaf) are not UI chrome and keep their own generators. It must run LAST, after any of the older generators (`gen_ui.py`, `gen_ui_rpg.py`, `gen_menu_book.py`, `gen_title_book.py`, `gen_ui_ink.py`), which are kept for history and would overwrite the dusk set.
+- **App icon:** `icon.svg`, generated as 32x32 pixel art at 4x (SVG rects, crisp edges): banded dusk sky, stars, the ridge on the horizon and Javanese Ka in the cyan glyph light. The boot splash background is the night fill `#141026`.

@@ -3,11 +3,11 @@ class_name QuestCard extends Control
 ## any quest end shows a summary card (title, rewards). Cards queue, never overlap, wait while a dialogue box is open or the
 ## tree is paused, and never block input. The HUD banner stays for updates.
 
-const GOLD := Color("C8B38A")
-const GOLD_LIGHT := Color("F3E3B8")
-const CREAM := Color("EADFC4")
-const OUTLINE := Color("140E0A")
-const BAND := Color(0.055, 0.043, 0.039, 0.82)
+const GOLD := UIFx.WARM       # quests are amber (ui.md 0.1)
+const GOLD_LIGHT := UIFx.HEAD
+const CREAM := UIFx.TEXT
+const OUTLINE := UIFx.LACQUER
+const BAND := Color(0.055, 0.043, 0.11, 0.84)   # night band
 const FADE_IN := 0.5
 const HOLD_START := 3.0
 const HOLD_DONE := 3.5
@@ -34,7 +34,7 @@ func _ready() -> void:
 	_band = _rect(BAND)
 	_rule_top = _rect(Color(GOLD, 0.6))
 	_rule_bottom = _rect(Color(GOLD, 0.6))
-	_caption = _label(UIFx.caps_font(), UIFx.BODY, UIFx.ACCENT)   # tracked caps kicker (ui.md 1)
+	_caption = _label(UIFx.caps_font(), UIFx.BODY, UIFx.WARM)   # tracked caps kicker (ui.md 1)
 	_caption.uppercase = true
 	_title = _label(UIFx.display(), UIFx.DISPLAY, GOLD_LIGHT)     # Jersey 15 at 27: the one display size
 	_body = _label(UIFx.body_font(), UIFx.BODY, CREAM)

@@ -1,20 +1,28 @@
 class_name UIFx extends RefCounted
 ## Small shared helpers for the front-end screens (ui.md 3b): palette, fonts, frames, motes, fades.
 
-## Parchment-and-ink palette. Dark scenes: GOLD_HI headings (bright paper), CREAM body, DIM secondary.
-## Paper panels: INK, INK_HEAD, INK_DIM. GOLD/GOLD_LO are the aged-paper rule colours (the names stay for old callers).
-const GOLD := Color("C8B38A")
-const GOLD_HI := Color("F3E3B8")
-const GOLD_LO := Color("6B5636")
-const CREAM := Color("EADFC4")
-const DIM := Color("A59A82")
-const LACQUER := Color("140E0A")    # dark ink outline
-const SOGAN := Color("3A2314")      # leather
-const VERMILLION := Color("C0392B") # wax red
-const INK := Color("2A1C12")
-const INK_HEAD := Color("7A2A1E")
-const INK_DIM := Color("6B5A44")
-const PAPER := Color("E3D0A0")
+## v3 "Senja" dusk palette (ui.md 0.1, 5). The v1/v2 names stay as aliases so every caller recolours with them:
+## GOLD_HI = headings, CREAM = body, GOLD = caps labels, DIM = secondary; the old paper names (INK, INK_HEAD, INK_DIM)
+## now mean the same light-on-night colours, because the paper book is gone.
+const NIGHT := Color("141026")      # surface fill
+const NIGHT_HI := Color("241C40")   # raised surface
+const HEAD := Color("FFF4E6")       # headings
+const TEXT := Color("ECE6F2")       # body, cool cream
+const WARM := Color("F2B27A")       # amber: quests, loot, Ilmu, secondary emphasis
+const WARM_LO := Color("C98A52")
+const HALO := Color("3FB8C0")       # the cyan glow's outer ring
+const GOLD := Color("A99BC8")       # old name: caps labels / rules (now lavender)
+const GOLD_HI := HEAD
+const GOLD_LO := Color("5A4E80")
+const CREAM := TEXT
+const DIM := Color("8C83A6")
+const LACQUER := Color("0A0814")    # outline under text and surfaces
+const SOGAN := NIGHT_HI
+const VERMILLION := Color("E0566A")
+const INK := TEXT
+const INK_HEAD := HEAD
+const INK_DIM := DIM
+const PAPER := Color("1A1530")
 const ART := "res://assets/art/ui/"
 
 
@@ -52,13 +60,13 @@ const GAP_S := 4
 const GAP := 8
 const GAP_L := 16
 
-# in-world "ink" surface (HUD cards, dialogue, prompts, banners): one look everywhere
-const INK_BG := Color("140E0A")      # panel fill (drawn at ~90% in the art)
-const LINE_DIM := Color("4A3A28")    # hairlines on ink
-const ACCENT := Color("E0B35A")      # focus, selection, quest gold
-const LABEL_COL := Color("B8A27A")   # caps labels on ink
-const DANGER := Color("C9473B")      # wax red: damage, low HP, destructive only
-const OK := Color("6FA37F")          # done / gained on ink
+# the dusk surface (HUD cards, dialogue, prompts, banners, menus): one look everywhere
+const INK_BG := NIGHT               # panel fill (drawn at ~90% in the art)
+const LINE_DIM := Color("3A2F5C")    # hairlines on dusk
+const ACCENT := Color("7FE8E0")      # cyan glyph glow: focus, selection, magic, new
+const LABEL_COL := Color("A99BC8")   # caps labels on dusk (lavender)
+const DANGER := Color("E0566A")      # rose: damage, low HP, destructive only
+const OK := Color("8FD9A0")          # done / gained
 
 static var _fonts := {}
 
@@ -200,7 +208,7 @@ static func rise_in(n: CanvasItem, dist := 6.0, time := 0.2) -> void:
 	tw.tween_property(n, "position:y", y, time)
 
 
-## A one-shot burst of rising ink motes over a rectangle.
+## A one-shot burst of rising cyan motes over a rectangle.
 static func burst(parent: Node, rect: Rect2, amount := 28, life := 0.5) -> CPUParticles2D:
 	var p := CPUParticles2D.new()
 	p.texture = tex("ink_mote")
@@ -217,10 +225,53 @@ static func burst(parent: Node, rect: Rect2, amount := 28, life := 0.5) -> CPUPa
 	p.gravity = Vector2(0, -30)
 	p.initial_velocity_min = 20.0
 	p.initial_velocity_max = 55.0
-	p.color = Color(1, 0.9, 0.7, 0.9)
+	p.color = Color(1, 1, 1, 0.9)
 	p.emitting = true
 	parent.add_child(p)
 	p.finished.connect(p.queue_free)
+	return p
+
+
+## The full-screen dusk backdrop (ui.md 0.1): banded sky, twinkling stars and slow cyan motes. `dim` darkens it
+## for screens where text sits on top. Returns the root so callers can add to or fade it.
+static func sky(parent: Node, dim := 1.0, motes := true) -> Control:
+	var root := Control.new()
+	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(root)
+	var bg := rect_tex("title_sky", Vector2.ZERO)
+	bg.modulate = Color(dim, dim, dim)
+	root.add_child(bg)
+	root.add_child(Twinkle.new())
+	if motes:
+		root.add_child(motes_layer(Rect2(0, 200, 480, 70), 14))
+	return root
+
+
+## Slow cyan motes drifting up out of `area` (title grass, menu backdrop).
+static func motes_layer(area: Rect2, amount := 16) -> CPUParticles2D:
+	var p := CPUParticles2D.new()
+	p.texture = tex("ink_mote")
+	p.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	p.position = area.get_center()
+	p.amount = amount
+	p.lifetime = 7.0
+	p.preprocess = 7.0
+	p.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
+	p.emission_rect_extents = area.size / 2.0
+	p.direction = Vector2.UP
+	p.spread = 18.0
+	p.gravity = Vector2(2, -2)
+	p.initial_velocity_min = 5.0
+	p.initial_velocity_max = 12.0
+	p.scale_amount_min = 0.6
+	p.scale_amount_max = 1.0
+	var ramp := Gradient.new()
+	ramp.set_color(0, Color(1, 1, 1, 0.0))
+	ramp.set_color(1, Color(1, 1, 1, 0.0))
+	ramp.add_point(0.25, Color(1, 1, 1, 0.85))
+	ramp.add_point(0.7, Color(1, 1, 1, 0.4))
+	p.color_ramp = ramp
 	return p
 
 

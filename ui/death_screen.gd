@@ -1,5 +1,5 @@
 extends Control
-## Death: fade to dark, "UI_FALLEN" ink-bleeds in (vermillion Almendra Display), a tip line, then respawn (rpg.md 7).
+## Death: fade to night, "UI_FALLEN" swells in (rose, the danger colour, display face), a tip line, then respawn (rpg.md 7).
 
 var _dim: ColorRect
 var _text: Label
@@ -9,7 +9,7 @@ var _sub: Label
 func _ready() -> void:
 	visible = false
 	_dim = ColorRect.new()
-	_dim.color = Color(0, 0, 0, 0)
+	_dim.color = Color(0.03, 0.02, 0.07, 0)
 	_dim.set_anchors_preset(PRESET_FULL_RECT)
 	_dim.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(_dim)
