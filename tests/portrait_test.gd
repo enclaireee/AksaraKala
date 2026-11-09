@@ -72,6 +72,8 @@ func run() -> void:
 	check(box._portrait.texture == angry, "#face:angry cue line swaps the face")
 	check(box._text.text == "LINE_A", "cue line not shown: '%s'" % box._text.text)
 	check(box._portrait.position - box._portrait_frame.position == Vector2(4, 4), "bust inset 4 px in the frame")
+	check(box._portrait.get_index() > box._portrait_frame.get_index(), "bust draws over the frame's filled well")
+	check(box._portrait.visible and box._portrait.texture != null, "a mapped speaker shows a face")
 	var h: float = box._frame.size.y
 	check(is_equal_approx(box._portrait_frame.position.y, box._frame.position.y + roundf((h - 56.0) / 2.0)), "frame centred in the box")
 	check(is_equal_approx(box._plate.position.x, box.BOX_X + box.FACE_W), "name plate steps right of the face")

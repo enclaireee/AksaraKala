@@ -1,6 +1,6 @@
 extends Control
 ## Title screen (rpg.md 11, ui.md 4.1 v3): the logo and menu on the left; on the right a twilight valley, an aksara
-## written in stars, and the Wiku on a cliff with glyphs rising from the staff. Settings and About open as dusk cards
+## written in stars, valley ruins, and the Wiku on a cliff by a broken gate pillar, glyphs rising from the staff. Settings and About open as dusk cards
 ## in place of the logo column; Esc closes them.
 ## Continue only with a save; New Game asks before overwriting. Language toggle (ID/EN) saved in user://settings.cfg.
 
@@ -13,6 +13,7 @@ var _sub: Label
 var _hero: Sprite2D
 var _glyphs: Array = []   # rising glyphs: [TextureRect, age, drift]
 var _stars: TextureRect
+var _rune: TextureRect   # the aksara carved in the cliff pillar; it breathes
 var _next_glyph := 0.6
 var _card: Panel                 # the open Settings / About card, or null
 var _card_from: Control          # menu entry to refocus when the card closes
@@ -67,7 +68,10 @@ func _ready() -> void:
 	var pool := UIFx.rect_tex("title_glow", HERO_POS + Vector2(-8, -2), Vector2(40, 40))   # the staff's faint light
 	pool.modulate.a = 0.75
 	add_child(pool)
-	add_child(UIFx.rect_tex("title_near", Vector2.ZERO))
+	add_child(UIFx.rect_tex("title_near", Vector2.ZERO))   # cliff, broken gate pillar, lantern, fallen column
+	_rune = UIFx.rect_tex("title_pillar_glyph", Vector2.ZERO)
+	_rune.position = Vector2(roundf(427.0 - _rune.size.x / 2.0), 158)
+	add_child(_rune)
 	_hero = Sprite2D.new()   # the Wiku from behind, looking out over the valley
 	_hero.texture = load("res://assets/art/hero_mage.png")
 	_hero.hframes = 6
@@ -155,6 +159,7 @@ func _set_cursor() -> void:
 func _process(delta: float) -> void:
 	_t += delta
 	_stars.self_modulate.a = 0.75 + 0.25 * sin(_t * 0.9)   # the constellation breathes, slower than the stars
+	_rune.self_modulate.a = 0.45 + 0.55 * pow(0.5 + 0.5 * sin(_t * 1.3), 2.0)   # the carved rune wakes and sleeps
 	_next_glyph -= delta
 	if _next_glyph <= 0.0:
 		_next_glyph = GLYPH_EVERY

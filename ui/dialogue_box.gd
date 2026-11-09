@@ -121,14 +121,15 @@ func _ready() -> void:
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(_hint)
 	_frame.z_index = -1
-	_portrait = TextureRect.new()
-	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_portrait.size = Vector2(PORTRAIT, PORTRAIT)
-	add_child(_portrait)
+	# the frame is a filled well: it must sit UNDER the bust (added first), or it hides the face
 	_portrait_frame = TextureRect.new()
 	_portrait_frame.texture = load(UI_DIR + "frame_portrait.png")
 	_portrait_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_portrait_frame)
+	_portrait = TextureRect.new()
+	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_portrait.size = Vector2(PORTRAIT, PORTRAIT)
+	add_child(_portrait)
 	_layout()
 	var ev := get_node("/root/Events")
 	ev.dialogue_requested.connect(_on_requested)
