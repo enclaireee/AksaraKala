@@ -57,6 +57,7 @@ func _refresh_prompt() -> void:
 
 func interact() -> void:
 	if from_open_side(_player_pos()):
+		Snd.play("shortcut_open")
 		get_node("/root/Game").set_flag(id)   # saves; _on_changed frees every gate with this id
 
 

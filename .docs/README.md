@@ -22,6 +22,7 @@ Top-down 2D pixel-art action RPG set in the mythical folklore and landscapes of 
 | [balance.md](balance.md) | Level targets, Ingatan rank progression, damage curves, enemy tier scaling, and boss HP numbers |
 | [spells.md](spells.md) | Aksara drawing system, point-cloud gesture recognizer, and spell effects (8 MVP glyphs + Ombak + 3 name glyphs) |
 | [ui.md](ui.md) | In-game HUD (tracker card, banners, vitals), Esc menu with left rail, Elden-style class select, and smooth typography |
+| [audio.md](audio.md) | Music map per region (explore, dark, combat, boss), towns, ambience beds, sfx and stingers, how the Audio autoload layers them, the generator (`tools/gen_audio.py`) and tuning guide |
 | [items.md](items.md) | Weapons (common & mythic pusaka), armors, accessories, and consumables |
 | [assets.md](assets.md) | Visual art standards, tilesets, spritesheets, font licensing (Alegreya Sans, Almendra Display, Noto Sans), and audio sources |
 | [architecture.md](architecture.md) | Godot 4 project architecture, autoloads, scene composition, physics layers, and technical systems |
@@ -36,6 +37,7 @@ Top-down 2D pixel-art action RPG set in the mythical folklore and landscapes of 
 - `python3 .docs/balance_model.py`: Validates class DPS, time-to-kill curves, and enemy/boss scaling.
 - `python3 .docs/pacing_model.py`: Checks runtime minutes per act and side quest pacing targets against `quests.md`.
 - `python3 .docs/know_check.py`: Verifies narrative introduction order so characters are introduced before being referenced.
+- `python3 tools/gen_audio.py [--only music/boss]`: Synthesizes every music track, ambience bed, sound effect and stinger into `assets/audio/` ([audio.md](audio.md)).
 - `python3 .docs/gen_zones.py .docs/zones/<region>.md`: Generates `zones/<area>.gd/.tscn` scenes from zone doc ASCII maps and legends.
 
 ---

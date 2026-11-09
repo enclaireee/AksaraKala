@@ -110,7 +110,8 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 - [x] Phase 6c: living towns (`zones/town_life.gd`), regional building kit (`zones/buildings.gd`), ground expansion, and fluid 4-directional attack animations with weapon arcs
 - [x] Quest & narrative UX: Scene Director camera easing, letterbox bars, choices with consequences (`remember:<key>`), and HUD quest cards
 - [ ] Culture-item icons and glyph art refinement
-- [ ] Final SFX and music pass
+- [x] First full audio pass (2026-11-09): 35 music tracks, 17 ambience beds, 92 sfx, 12 stingers, layered Audio autoload ([audio.md](audio.md)); generated, untested in Godot
+- [ ] Final SFX and music pass: listen and tune every track in the engine ([audio.md](audio.md) 7), per-enemy sounds, optional recorded instruments
 - [ ] Custom particle polish
 - Exit: the game looks, sounds, and feels consistent, responsive, and complete.
 

@@ -391,7 +391,10 @@ func _process(delta: float) -> void:
 		_next()
 	if _open and _text.visible_characters < _text.get_total_character_count():
 		_shown += delta * CPS
-		_text.visible_characters = int(_shown)
+		var vis := int(_shown)
+		if vis != _text.visible_characters and vis % 2 == 0:
+			Snd.blip(_speaker_key)   # typewriter tick, pitched per speaker (audio.md)
+		_text.visible_characters = vis
 	_cue.visible = _open and _hold_until == 0 and not _choosing and _text.visible_characters >= _text.get_total_character_count() \
 			and Time.get_ticks_msec() % 800 < 500
 	_cue.position.y = _frame.position.y + _frame.size.y - 11.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)

@@ -36,6 +36,7 @@ func interact() -> void:
 		return
 	_open = true
 	usable = false
+	Snd.play("chest_open")
 	_refresh_prompt()
 	var game := get_node("/root/Game")
 	if item_id.begins_with("ilmu:"):   # an Ilmu chest (items.md Consumables and pickups)

@@ -87,6 +87,7 @@ func begin() -> void:
 	_kill()
 	_reset()
 	_open = true
+	Snd.cast(true)
 	visible = true
 	_ring.visible = true
 	_ring.modulate.a = 1.0
@@ -107,6 +108,7 @@ func set_time_left(frac: float) -> void:
 
 
 func add_point(p: Vector2) -> void:
+	Snd.ink(110.0 + randf() * 160.0)
 	_glow.add_point(p)
 	_ink.add_point(p)
 
@@ -120,6 +122,9 @@ func finish(ok: bool, text: String, info := {}) -> void:
 	if not _open:
 		return
 	_open = false # stops the ring tracking; stays visible until the tween ends
+	Snd.cast(false)
+	if not ok:
+		Snd.play("cast_fail")
 	_kill()
 	var last: Vector2 = _ink.points[-1] if _ink.get_point_count() > 0 else get_viewport().get_mouse_position()
 	var bb := Rect2(last, Vector2.ZERO)
@@ -211,6 +216,7 @@ func cancel() -> void:
 	if _tween:
 		_tween.kill()   # not _kill(): an empty new tween logs an error
 	_open = false
+	Snd.cast(false)
 	_hide()
 
 

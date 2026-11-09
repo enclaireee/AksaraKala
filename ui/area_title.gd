@@ -87,6 +87,7 @@ func _on_zone(zone_id: String) -> void:
 
 
 func show_card(zone_id: String, region: String) -> void:
+	Snd.jingle("area_title", -8.0)
 	_region.text = String(REGIONS[region]).to_upper()
 	var key := "AREA_" + zone_id.to_upper()
 	var name_ := tr(key) if tr(key) != key else (zone_id.trim_prefix(region + "_").replace("_", " ").capitalize() if zone_id != region else "")

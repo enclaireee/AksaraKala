@@ -109,6 +109,7 @@ UI_FOOTER,[Q/E] Ganti Tab   [Panah/Mouse] Pilih   [Enter/E] Konfirmasi   [Esc] L
 UI_SYS_MASTER,Volume Utama,Master volume
 UI_SYS_MUSIC,Musik,Music
 UI_SYS_SFX,Efek suara,Sound effects
+UI_SYS_AMBIENCE,Suasana,Ambience
 UI_SYS_LANG,Bahasa,Language
 UI_SYS_FULLSCREEN,Layar penuh,Fullscreen
 UI_ON,Nyala,On

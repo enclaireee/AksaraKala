@@ -68,6 +68,7 @@ func tab(i: int) -> MenuTab:
 func open(petilasan := false) -> void:
 	at_petilasan = petilasan
 	visible = true
+	Snd.play("ui_open")
 	var pl := get_tree().get_first_node_in_group("player")
 	if pl and pl.get("cast"):
 		pl.cast.cancel()   # a paused tree never sees the cast release: slow-mo would stick
@@ -91,6 +92,8 @@ func open(petilasan := false) -> void:
 
 
 func close() -> void:
+	if visible:
+		Snd.play("ui_close")
 	visible = false
 	_set_hud(true)
 	at_petilasan = false
@@ -127,6 +130,8 @@ func _on_tab_changed(i: int) -> void:
 	_last_tab = i
 	book.select(i)
 	update_hints()
+	if visible:
+		Snd.play("ui_page")
 	var dir := signi(i - _prev_tab)
 	_prev_tab = i
 	if dir != 0 and visible:

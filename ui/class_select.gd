@@ -36,6 +36,7 @@ var _in_confirm := false
 
 
 func _ready() -> void:
+	Snd.music("select", 2.0)
 	var sky := UIFx.rect_tex("title_sky", Vector2.ZERO)
 	sky.modulate = Color(0.45, 0.45, 0.5)
 	add_child(sky)

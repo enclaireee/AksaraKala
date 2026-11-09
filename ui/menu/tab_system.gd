@@ -3,7 +3,7 @@ extends MenuTab
 ## with a confirm. The regrouped layout (Tampilan scale and shake, Aksesibilitas, "Simpan & Keluar") comes later.
 
 const TitleScript := preload("res://ui/title.gd")   # settings path and language save
-const BUSES := ["Master", "Music", "SFX"]
+const BUSES := ["Master", "Music", "SFX", "Ambience"]
 
 var action := ""   # "title" or "quit" while the confirm is open
 var lang_btn: Button

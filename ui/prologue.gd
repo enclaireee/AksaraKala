@@ -35,6 +35,7 @@ var _t := 0.0
 
 
 func _ready() -> void:
+	Snd.music("title" if key_prefix == "PROLOGUE" else "epilogue", 2.0)
 	var bg := ColorRect.new()
 	bg.color = SHADOW
 	bg.set_anchors_preset(PRESET_FULL_RECT)

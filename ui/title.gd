@@ -36,6 +36,7 @@ static func save_language(lang: String) -> void:
 
 func _ready() -> void:
 	TranslationServer.set_locale(load_language())
+	Snd.music("title", 2.0)
 	DisplayServer.window_set_title("Aksara Kala")
 	_set_cursor()
 	# the desk, the open book, the candle's light (ui.md 4.1)

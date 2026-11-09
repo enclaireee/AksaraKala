@@ -81,6 +81,8 @@ func _ready() -> void:
 	melee_hitbox.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, self, melee_hitbox.heavy, melee_hitbox.damage))
 	stamina.empty_attempt.connect(blocked.emit.bind("st"))
 	cast.blocked.connect(blocked.emit.bind("sk"))
+	blocked.connect(func(what: String) -> void: Snd.play("stamina_empty" if what == "st" else "wrong"))
+	add_child(Footsteps.new())
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -203,6 +205,7 @@ func _drink() -> void:
 		var pouches := mini(game.herb_pouches, 4)
 		health.heal(roundi((tuning.flask_base_heal + tuning.flask_pouch_heal * pouches) * health.max_hp))
 		game.flask_charges -= 1
+		Snd.play("flask")
 		_enter(State.FREE)
 		game.changed.emit()
 
@@ -243,6 +246,7 @@ func _start_dodge() -> bool:
 	_swing(false)
 	combo = 0
 	_enter(State.DODGE)
+	Snd.play("dodge", 0.0, 1.0, 0.05)
 	return true
 
 
@@ -255,6 +259,8 @@ func _start_attack() -> bool:
 	aim.rotation = aim_dir.angle()
 	_enter(State.ATTACK)
 	_set_phase(Phase.WINDUP)
+	if item.is_melee():
+		Snd.play("swing_%d" % (hit + 1), 0.0, 1.0, 0.05)
 	return true
 
 
@@ -296,6 +302,7 @@ func _shoot() -> void:
 	arrow.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, null, finisher, arrow.damage))
 	get_parent().add_child(arrow)
 	if fx: fx.on_shoot(arrow)
+	Snd.play("shoot", 0.0, 1.0, 0.05)
 
 
 func _snap_aim(dir: Vector2) -> Vector2:
@@ -321,6 +328,7 @@ func _on_hit_landed(hb: Hurtbox, attacker: Node, heavy: bool, dmg: int) -> void:
 	if _is_backstab(hb.owner):   # Light Step. ponytail: the bonus lands as a second hit, poise ignores it
 		hb.health.take_damage(roundi(dmg * (tuning.backstab_mult - 1.0)), self, true)
 	var kill := hb.health.is_dead()
+	Snd.play("hit_kill" if kill else "hit_heavy" if heavy else "hit_light", 0.0, 1.0, 0.05)
 	var stop := tuning.hitstop_kill if kill else tuning.hitstop_heavy if heavy else tuning.hitstop_light
 	for n: Node in [hb.owner, attacker]:
 		if n != null and n.has_method("hitstop"):
@@ -340,7 +348,8 @@ func _on_dodged(hitbox: Hitbox) -> void:
 	last_perfect = clock
 	stamina.refund(tuning.dodge_cost)
 	sakti.add(tuning.perfect_sakti)
-	hit_flash.flash(tuning.perfect_pause * 3.0)   # ponytail: no chime until the audio pass
+	hit_flash.flash(tuning.perfect_pause * 3.0)
+	Snd.play("perfect_dodge")
 	hitstop(tuning.perfect_pause)
 	if is_instance_valid(hitbox.source) and hitbox.source.has_method("hitstop"):   # a shot can outlive its shooter
 		hitbox.source.hitstop(tuning.perfect_pause)
@@ -350,6 +359,7 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	if health.is_dead():
 		return
 	health.set_invincible(tuning.hurt_iframes)
+	Snd.play("player_hurt", 0.0, 1.0, 0.04)
 	blink_until = clock + tuning.hurt_iframes
 	hit_flash.flash(tuning.flash_time)
 	var skin := class_id == "warrior" and not hitbox.heavy   # Iron Skin: no stagger or knockback

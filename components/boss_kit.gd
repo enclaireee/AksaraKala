@@ -150,6 +150,7 @@ static func _add(host: Node, n: Node2D, pos: Vector2) -> void:
 
 
 static func telegraph_circle(host: EnemyBase, pos: Vector2, radius: float, life: float, color := RED) -> Telegraph:
+	Snd.play("boss_telegraph", -3.0)
 	var t := Telegraph.new()
 	t.kind = "circle"
 	t.radius = radius
@@ -160,6 +161,7 @@ static func telegraph_circle(host: EnemyBase, pos: Vector2, radius: float, life:
 
 
 static func telegraph_ring(host: EnemyBase, pos: Vector2, outer: float, inner: float, life: float, color := RED) -> Telegraph:
+	Snd.play("boss_telegraph", -3.0)
 	var t := Telegraph.new()
 	t.kind = "ring"
 	t.radius = outer
@@ -171,6 +173,7 @@ static func telegraph_ring(host: EnemyBase, pos: Vector2, outer: float, inner: f
 
 
 static func telegraph_cone(host: EnemyBase, origin: Vector2, dir: float, arc: float, length: float, life: float, color := RED) -> Telegraph:
+	Snd.play("boss_telegraph", -3.0)
 	var t := Telegraph.new()
 	t.kind = "cone"
 	t.dir = dir
@@ -183,6 +186,7 @@ static func telegraph_cone(host: EnemyBase, origin: Vector2, dir: float, arc: fl
 
 
 static func telegraph_line(host: EnemyBase, from: Vector2, to: Vector2, width: float, life: float, color := RED) -> Telegraph:
+	Snd.play("boss_telegraph", -3.0)
 	var t := Telegraph.new()
 	t.kind = "line"
 	t.dir = (to - from).angle()
@@ -561,6 +565,8 @@ static func punch(host: EnemyBase, sx: float, sy: float, time := 0.25) -> void:
 
 
 static func shake(host: Node, px: float, seconds: float) -> void:
+	if px >= 3.0:
+		Snd.play("boss_slam", -3.0)
 	var tree := host.get_tree()
 	if tree == null:
 		return
@@ -575,6 +581,7 @@ static func shake(host: Node, px: float, seconds: float) -> void:
 
 ## Phase change / roar: roar pose, expanding ring, sparks, shake. Purely visual, so a boss can call it from any state.
 static func roar(host: EnemyBase, color := Color(1.0, 0.8, 0.4), radius := 80.0) -> void:
+	Snd.play("boss_roar", -2.0)
 	anim(host, "roar", 8.0, false)
 	ring_fx(host, host.global_position, radius, 0.6, color)
 	ring_fx(host, host.global_position, radius * 0.6, 0.45, Color(1, 1, 1))

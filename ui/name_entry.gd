@@ -12,6 +12,7 @@ var _t := 0.0
 
 
 func _ready() -> void:
+	Snd.music("select", 2.0)
 	var sky := UIFx.rect_tex("title_sky", Vector2.ZERO)
 	sky.modulate = Color(0.4, 0.4, 0.45)
 	add_child(sky)

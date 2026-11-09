@@ -167,6 +167,7 @@ func go_to(zone_id: String, spawn_id: String, pos := Vector2.INF) -> void:
 		push_error("Zones.go_to: no scene for zone '%s'" % zone_id)
 		return
 	_busy = true
+	Snd.play("exit")
 	var tree := get_tree()
 	var prev_player := tree.get_first_node_in_group("player") as Node2D
 	var prev_hp: int = prev_player.health.hp if prev_player and prev_player.get("health") and not prev_player.health.is_dead() else -1

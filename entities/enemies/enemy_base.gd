@@ -165,6 +165,7 @@ func _on_hurt(hitbox: Hitbox) -> void:
 		poise = _max_poise()
 		poise_immune = tuning.poise_immunity
 		release_token()
+		Snd.play("stagger", -3.0)
 		_on_stagger(t("stagger"))
 
 
