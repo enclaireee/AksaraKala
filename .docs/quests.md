@@ -520,7 +520,7 @@ Fits [architecture.md](architecture.md): data-driven resources, state in `Game`,
 
 ### 7.4 In-Game Guidance (HUD & World)
 1. **Tracker Panel (HUD top-left, 156 px):**
-   - Displays tracked quest title in Almendra Display, gold divider line, and objective checklist.
+   - Displays tracked quest title in amber tracked caps, an amber left edge, and the objective checklist (ui.md 2.1).
    - Objectives show active status (`bullet_now`, gold), completed status (`bullet_check`, dim), and open status (`bullet_open`). Multi-part or counted goals show progress `n/total`.
    - Starting a side quest automatically tracks it (`Game.pinned`), with fallback to main quest upon completion. Track/untrack toggle available in the Journal.
 2. **World Navigation:**

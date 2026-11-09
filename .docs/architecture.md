@@ -198,7 +198,7 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 - Scene Director (`ui/scene_director.gd`): handles `#cam`, `#bars`, `#shake`, and `#wait` dialogue cues, auto-framing speakers during story beats.
 - Quest cards (`ui/quest_card.gd`): cinematic title card on quest start, summary reward card on completion.
 - Menus: title screen, pause menu, Esc menu left rail (Status, Perlengkapan, Catatan/Journal, Peta, Pustaka/Codex, Sistem/Settings).
-- Typography & Theme: `ui/theme.tres` with smooth vector fonts (`Almendra` body, `Almendra Display` titles and headings). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
+- Typography & Theme: `ui/theme.tres` with pixel fonts (Tiny5 8 body, Jersey 10 at 19 headings, Jersey 15 at 27 display) and the v3 dusk palette (`UIFx`). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
 
 ## 11. Input map
 `move_up/down/left/right`, `attack`, `dodge`, `cast`, `heal_jamu`, `interact`, `menu`, `pause`. P0: two presets and a mouse-button swap; P1: free rebinding. Details and notes: [controls.md](controls.md).

@@ -205,9 +205,11 @@ func _drop() -> void:
 func _float_label() -> void:
 	var l := Label.new()
 	l.text = "+%d" % ilmu
-	l.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))   # ASSUMED warm gold
-	l.add_theme_color_override("font_outline_color", Color.BLACK)
-	l.add_theme_constant_override("outline_size", 3)
+	l.add_theme_font_override("font", UIFx.body_font())   # ui.md 1: Tiny5 8, amber like the Ilmu counter
+	l.add_theme_font_size_override("font_size", UIFx.BODY)
+	l.add_theme_color_override("font_color", UIFx.WARM)
+	l.add_theme_color_override("font_outline_color", UIFx.LACQUER)
+	l.add_theme_constant_override("outline_size", 1)
 	l.z_index = 100
 	get_parent().add_child(l)
 	l.global_position = (global_position + Vector2(-8, -20)).round()

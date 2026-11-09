@@ -328,5 +328,5 @@ class StatBar extends Control:
 			if f > 0.0:
 				var fw := roundf(6.0 * f)
 				draw_rect(Rect2(r.position, Vector2(fw, 5)), UIFx.ACCENT)
-				draw_rect(Rect2(r.position, Vector2(fw, 1)), Color("FFECB4"))
+				draw_rect(Rect2(r.position, Vector2(fw, 1)), Color("D8FFFB"))
 		draw_string(UIFx.body_font(), Vector2(74, 6), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.CREAM)

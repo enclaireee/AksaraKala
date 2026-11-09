@@ -3,8 +3,7 @@
 
 Writes the whole UI surface set under the file names the game already loads (so no layout moves), the title scene
 (sky, far ruins, split gate, ground, floating aksara), the pixel logo and tools/ui_dusk_preview.png.
-Run it LAST: the older generators (gen_ui.py, gen_ui_rpg.py, gen_menu_book.py, gen_title_book.py, gen_ui_ink.py) would
-overwrite the dusk set.
+It is the only UI art generator: the parchment-era scripts and art were removed with the v3 rebrand.
 
     python3 tools/gen_ui_dusk.py
 """
@@ -226,32 +225,6 @@ def mouse_cursor():
     return sprite(rows, {"#": EDGE, "W": rgb("ECE6F2"), "c": CYAN})
 
 
-def divider(w=64):
-    im = new(w, 5)
-    px = im.load()
-    c = w // 2
-    for x in range(4, w - 4):
-        d = abs(x - c) / (c - 4)
-        a = int(255 * (1 - d) ** 0.6)
-        if a > 20:
-            px[x, 2] = with_alpha(LABEL, a)
-    for (dx, dy) in ((0, 0), (-1, 1), (1, 1), (0, 1), (-2, 2), (2, 2), (-1, 3), (1, 3), (0, 3), (0, 4)):
-        pass
-    d = diamond(5)
-    im.alpha_composite(d, (c - 2, 0))
-    return im
-
-
-def hline(w, col, h=1):
-    im = new(w, h)
-    for x in range(w):
-        for y in range(h):
-            im.putpixel((x, y), col)
-    return im
-
-
-# ---------------------------------------------------------------- menu ("book") pieces, dusk star-chart
-
 def speckle(im, seed, density=0.012, cols=(rgb("2E2650"), rgb("3A3164"))):
     rnd = random.Random(seed)
     px = im.load()
@@ -463,10 +436,6 @@ def quest_seal(kind):
                    "#GGGGGGG#", "#GGGGGGG#", ".#######."], {"#": EDGE, "G": GREEN_LO, "g": rgb("E8FFEE")})
 
 
-def new_dot():
-    return sprite([".cc...", "cCCc..", "cCCc..", ".cc...", "......", "......"], {"C": CYAN_HI, "c": CYAN})
-
-
 def equipped():
     return sprite([".#####.", "#CCCCC#", "#CCCCc#", "#CcCcc#", "#CCcCC#", "#CCCCC#", ".#####."],
                   {"#": EDGE, "C": CYAN_DEEP, "c": CYAN_HI})
@@ -519,60 +488,145 @@ def glyph_tile():
     return im
 
 
-def track_bar(h):
-    return new(5, h, with_alpha(HAIR, 255))
+# ---------------------------------------------------------------- icons (10x10), drawn for the night pages
 
+LINE = rgb("D8D0EA")      # pale lavender line art (was ink on paper)
+LINE_LO = rgb("8C83A6")
+CREAMY = rgb("ECE6F2")
+STEEL, STEEL_HI = rgb("8C83A6"), rgb("D2CAE4")
+HEART, HEART_HI, HEART_LO = rgb("E0566A"), rgb("F5A0AA"), rgb("8E2F45")
+STAM, STAM_HI, STAM_LO = rgb("F0E442"), rgb("FBF4A0"), rgb("A89A20")
+SAK, SAK_HI, SAK_LO = rgb("56B4E9"), rgb("B4E0F8"), rgb("2A6E9A")
 
-# ---------------------------------------------------------------- recolour of paper-era icons
-
-INK_MAP = {
-    (42, 28, 18): rgb("D8D0EA"),    # ink -> pale lavender (line art on night pages)
-    (90, 68, 48): rgb("8C83A6"),    # brown ink -> dim
-    (107, 90, 68): rgb("A99BC8"),
-    (138, 118, 86): rgb("8C83A6"),
-    (14, 11, 10): EDGE,
-    (20, 14, 10): EDGE,
-    (241, 228, 190): rgb("ECE6F2"),  # paper highlights -> cool cream
-    (227, 208, 160): rgb("D2CAE4"),
-    (200, 160, 96): AMBER,          # old gold -> amber
-    (224, 179, 90): AMBER,
-    (158, 43, 37): CYAN,            # old wax accents -> cyan (markers and chrome only)
-    (94, 24, 20): CYAN_DEEP,
-    (201, 71, 59): CYAN_HI,
+ICONS = {
+    # attributes
+    "vit": ([".WW..WW...", "WHWWWWWW..", "WHWWWWWWS.", "WWWWWWWWS.", ".WWWWWWS..", "..WWWWS...", "...WWS....", "....S.....",
+             "..........", ".........."], {"W": HEART, "H": HEART_HI, "S": HEART_LO}),
+    "end": (["....LLL...", "...LHHL...", "..LHHLL...", ".LHHL.L...", ".LHL..L...", "LHL..LLL..", "LL..LHHL..", "L..LHHL...",
+             "...LHL....", "..LL......"], {"L": STAM_LO, "H": STAM_HI}),
+    "str": (["....III...", "...IKKKI..", "..IKKKKKI.", "..IKKKKKI.", "...IKKKI..", "....IKI...", "....IKI...", "....IKI...",
+             "...IIKII..", "...IIIII.."], {"I": LINE, "K": STEEL}),
+    "dex": ([".......IHH", "......IHH.", ".....IHH..", "....IHI...", "...III....", "..III.....", ".IWI......", "IWI.......",
+             "WI........", ".........."], {"I": LINE, "H": CREAMY, "W": CYAN}),
+    "spi": (["....S.....", "...SHS....", "...SHS....", "..SHHHS...", "..SHBHS...", ".SHBBBHS..", ".SHBBBHS..", "..SHBHS...",
+             "...SSS....", ".........."], {"S": SAK_LO, "H": SAK_HI, "B": SAK}),
+    # derived
+    "hp": (["..........", ".WW..WW...", "WHWWWWWW..", "WHWWWWWWS.", "WWWWWWWWS.", ".WWWWWWS..", "..WWWWS...", "...WWS....",
+            "....S.....", ".........."], {"W": HEART, "H": HEART_HI, "S": HEART_LO}),
+    "sta": (["......HYY.", ".....HYY..", "....HYYS..", "...HYYYYS.", "......YS..", ".....YS...", "....YS....", "...YS.....",
+             "..YS......", ".........."], {"Y": STAM, "H": STAM_HI, "S": STAM_LO}),
+    "sak": ([".......HB.", "......HBS.", ".....HBS..", "....HBS...", "...FFS....", "..WWF.....", ".WWW......", ".KW.......",
+             "..........", ".........."], {"B": SAK_HI, "H": rgb("E0F2FC"), "S": SAK, "F": LABEL, "W": CREAMY, "K": LINE_LO}),
+    "atk": (["........IH", ".......IHI", "......IHI.", ".....IHI..", "....IHI...", ".I.IHI....", "..IHI.....", "..KI......",
+             ".K.I......", "K........."], {"I": LINE, "H": STEEL_HI, "K": AMBER_LO}),
+    "def": (["IIIIIIIII.", "IHHHHWWWI.", "IHHHHWWWI.", "IHHHHWWWI.", "IWWWWHHHI.", ".IWWWHHI..", ".IWWWHHI..", "..IWWHI...",
+             "...III....", ".........."], {"I": LINE, "H": STEEL_HI, "W": STEEL}),
+    "jamu": (["...SSS....", "....S.....", "...III....", "..IGGGI...", ".IGHGGGI..", ".IGGGGGI..", ".IGGGGGI..", "..IGGGI...",
+              "...III....", ".........."], {"S": AMBER_LO, "I": LINE, "G": rgb("2FA38A"), "H": rgb("9FE8D0")}),
+    "ilmu": (["..IIII....", ".IHHAaI...", "IHHAAAaI..", "IAAAAAaI..", ".IAAAaI...", "..IAaI....", "...II.....", "..........",
+              "..........", ".........."], {"I": EDGE, "H": AMBER_HI, "A": AMBER, "a": AMBER_LO}),
+    "pin": (["...III....", "..IWWWI...", ".IWHWWWI..", ".IWWWWWI..", "..IWWWI...", "..IWWWI...", "...IWI....", "...IWI....",
+             "....I.....", ".........."], {"I": CYAN_DEEP, "W": CYAN, "H": CYAN_HI}),
+    "mouse": (["..IIIII...", ".IHHIHHI..", ".IHHIHHI..", ".IIIIIII..", ".IPPPPPI..", ".IPPPPPI..", ".IPPPPPI..", "..IPPPI...",
+               "...III....", ".........."], {"I": LINE_LO, "H": CYAN, "P": CREAMY}),
+    "time": (["IIIIIII...", ".IHHHI....", ".IHHHI....", "..IHI.....", "...I......", "..IWI.....", ".IWWWI....", ".IWWWI....",
+              "IIIIIII...", ".........."], {"I": LINE, "H": rgb("3A2F5C"), "W": AMBER}),
+    "updown": (["....I.....", "...III....", "..IIIII...", "....I.....", "....I.....", "....I.....", "..IIIII...", "...III....",
+                "....I.....", ".........."], {"I": LINE}),
 }
 
-KEEP_RED = {"book_ic_hp", "book_ic_vit", "book_ic_atk", "book_ic_str", "book_ic_jamu", "book_ic_sak"}
+# tab icons are white so the menu tints them (cyan on the open tab, dim on closed ones); D = fainter detail
+TABS = {
+    "status": ["...CCC....", "..C...C...", "..C...C...", "...CCC....", "..CCCCC...", ".CCCCCCC..",
+               ".C.CCC.C..", "...C.C....", "..CC.CC...", "..CC.CC..."],
+    "equip": ["........CC", ".......CCD", "......CCD.", ".C...CCD..", ".CC.CCD...", "..CCCD....",
+              "...CC.....", "..CCCC....", ".CC..CC...", "CC........"],
+    "journal": ["..CCCCCCC.", ".C.......C", ".C.CCCC..C", ".C.......C", ".C.CCCC..C", ".C.......C",
+                ".C.CCC...C", ".C.......C", "..CCCCCCC.", ".........."],
+    "map": ["..........", "CCCCCCCCCC", "C..C..C..C", "C..C.CCC.C", "C.CCC.C..C", "C..C..C.CC",
+            "C..CC.C..C", "C..C..C..C", "CCCCCCCCCC", ".........."],
+    "codex": [".CCCCCCCC.", "CDDDCDDDDC", "CDCDCDCCDC", "CDDDCDDDDC", "CDCDCDCCDC", "CDDDCDDDDC",
+              "CDCDCDDDDC", "CDDDCDDDDC", ".CCCCCCCC.", ".........."],
+    "controls": ["..CCCCCC..", ".C..C...C.", ".C..C...C.", ".CCCCCCCC.", ".C......C.", ".C......C.",
+                 ".C......C.", "..CCCCCC..", "...D..D...", ".DD.DD.D.."],
+    "system": ["....CC....", ".C.CCCC.C.", "..CCDDCC..", ".CCD..DCC.", "CCD....DCC", "CCD....DCC",
+               ".CCD..DCC.", "..CCDDCC..", ".C.CCCC.C.", "....CC...."],
+}
 
 
-def recolour(name):
-    path = OUT / (name + ".png")
-    if not path.exists():
-        return None
-    im = Image.open(path).convert("RGBA")
-    px = im.load()
-    for y in range(im.height):
-        for x in range(im.width):
-            r, g, b, a = px[x, y]
-            if a == 0:
+def icons():
+    out = {}
+    for n, (rows, pal) in ICONS.items():
+        out["book_ic_" + n] = sprite([r.ljust(10, ".")[:10] for r in rows], pal)
+    for n, rows in TABS.items():
+        out["book_tab_" + n] = sprite([r.ljust(10, ".")[:10] for r in rows],
+                                      {"C": (255, 255, 255, 255), "D": (255, 255, 255, 110)})
+    return out
+
+
+def flasks():
+    """Jamu flasks for the HUD: the Okabe-Ito green stays (gameplay colour), glass and cork move to dusk."""
+    full = sprite(["..kkk..", "..OGO..", "..OGO..", ".OGGGO.", "OGHGGGO", "OGHGGGO", "OGGGGSO", "OGGGSSO", ".OOOOO."],
+                  {"k": AMBER_LO, "O": rgb("0A3A34"), "G": rgb("009E73"), "H": rgb("5CE0B8"), "S": rgb("006E50")})
+    empty = sprite(["..kkk..", "..O.O..", "..O.O..", ".OiiiO.", "OihiiiO", "OiiiiiO", "OiiiiiO", "OiiiiiO", ".OOOOO."],
+                   {"k": rgb("6B4A3A"), "O": DIM_LO, "i": rgb("0C0A18", 200), "h": rgb("8C83A6")})
+    return full, empty
+
+
+def markers():
+    """Over an NPC's head: amber leaf with a night "!" for quests, a pale speech bubble for talk."""
+    quest = sprite([".......", ".aAAAa.", ".AhAAA.", ".AA#AA.", ".AA#AA.", ".AA#AA.", ".AAAAA.", ".aA#Aa.", "......."],
+                   {"A": AMBER, "a": AMBER_LO, "h": AMBER_HI, "#": EDGE})
+    px = quest.load()
+    for y in range(9):
+        for x in range(7):
+            if px[x, y][3]:
                 continue
-            key = (r, g, b)
-            if name in KEEP_RED and key in ((158, 43, 37), (94, 24, 20), (201, 71, 59)):
-                continue
-            if key in INK_MAP:
-                c = INK_MAP[key]
-                px[x, y] = (c[0], c[1], c[2], a)
-    return im
+            if any(0 <= x + dx < 7 and 0 <= y + dy < 9 and px[x + dx, y + dy][3] == 255
+                   for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+                px[x, y] = with_alpha(AMBER, 90)
+    talk = sprite([".OOOOO.", "OGGGGGO", "OdGdGdO", "OGGGGGO", ".OGOOO.", ".OGO...", "..O...."],
+                  {"O": EDGE, "G": rgb("E4DEF0"), "d": DIM_LO})
+    return quest, talk
 
 
-def doll():
-    im = Image.open(OUT / "book_doll.png").convert("RGBA")
-    px = im.load()
-    for y in range(im.height):
-        for x in range(im.width):
-            r, g, b, a = px[x, y]
-            if a == 0:
+def doll(w=56, h=104):
+    """Paper-doll silhouette for the equipment page: dotted lavender outline, faint fill."""
+    cx = w / 2
+
+    def inside(x, y):
+        px_, py = x + 0.5, y + 0.5
+        if math.hypot(px_ - cx, py - 12) <= 8.5:
+            return True
+        if abs(px_ - cx) <= 3 and 19 <= py <= 24:
+            return True
+        if 23 <= py <= 60 and abs(px_ - cx) <= 12 - (py - 23) * 0.09:
+            return True
+        for sgn in (-1, 1):
+            ax0, ay0, ax1, ay1 = cx + sgn * 12, 25, cx + sgn * 19, 62
+            t = max(0.0, min(1.0, ((px_ - ax0) * (ax1 - ax0) + (py - ay0) * (ay1 - ay0)) / ((ax1 - ax0) ** 2 + (ay1 - ay0) ** 2)))
+            if math.hypot(px_ - (ax0 + (ax1 - ax0) * t), py - (ay0 + (ay1 - ay0) * t)) <= 3.6 - t * 0.8:
+                return True
+        if 58 <= py <= 100:
+            for sgn in (-1, 1):
+                lx = cx + sgn * (5.5 + (py - 58) * 0.03)
+                if abs(px_ - lx) <= 4.6 - (py - 58) * 0.03:
+                    return True
+        return False
+    im = new(w, h)
+    p = im.load()
+    mask = [[inside(x, y) for x in range(w)] for y in range(h)]
+    for y in range(h):
+        for x in range(w):
+            if not mask[y][x]:
                 continue
-            px[x, y] = with_alpha(LABEL, 46) if a < 60 else with_alpha(DIM_LO, 220)
+            edge = any(not (0 <= x + dx < w and 0 <= y + dy < h and mask[y + dy][x + dx])
+                       for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+            if edge:
+                if (x + y) % 3 != 2:
+                    p[x, y] = with_alpha(LABEL, 150)
+            else:
+                p[x, y] = with_alpha(LABEL, 20)
     return im
 
 
@@ -1192,7 +1246,6 @@ def main():
     art = {}
     # world surfaces (HUD, dialogue, prompts, cards)
     art["ink_panel"] = panel(12, 12)
-    art["ink_panel_focus"] = glow_panel(12, 12)
     art["ink_slot"] = well(20, 20)
     art["frame_portrait"] = well(56, 56, HAIR)
     art["keycap"] = keycap()
@@ -1206,7 +1259,6 @@ def main():
     art["title_star"] = star()
     art["title_star_big"] = star(True)
     art["cursor"] = mouse_cursor()
-    art["divider"] = divider()
     art["vignette"] = vignette()
     art["title_glow"] = glow(64)
     art["pedestal"] = pedestal()
@@ -1222,10 +1274,6 @@ def main():
     art["tab_off"] = panel(24, 14, HAIR_LO, rgb("120E24"))
     art["slot"] = well(20, 20)
     art["slot_selected"] = glow_panel(20, 20, WELL)
-    art["inset"] = well(12, 12)
-    art["row_highlight"] = row_hi()
-    art["scroll_track"] = new(5, 12, rgb("0E0B1C"))
-    art["scroll_grab"] = panel(5, 12, CYAN_HALO, RAISED)
     art["bullet_now"] = bullet("now")
     art["bullet_open"] = bullet("open")
     art["bullet_check"] = bullet("check")
@@ -1257,22 +1305,15 @@ def main():
     art["book_seal_small"] = seal_points()
     for k in ("main", "side", "done"):
         art["book_seal_" + k] = quest_seal(k)
-    art["book_new"] = new_dot()
     art["book_equipped"] = equipped()
     art["book_up"] = updown(True)
     art["book_down"] = updown(False)
     art["book_track"] = track()
-    art["book_cursor"] = diamond(7)
     art["book_disc"] = disc()
     art["book_glyph_tile"] = glyph_tile()
-    art["book_kawung"] = new(24, 24)   # retired pattern, kept transparent for any old reference
-    # paper-era icons: recolour ink to pale lavender, gold to amber, wax accents to cyan
-    names = [p.stem for p in OUT.glob("book_ic_*.png")] + [p.stem for p in OUT.glob("book_tab_*.png")] + \
-            [p.stem for p in OUT.glob("icon_tab_*.png")]
-    for n in sorted(set(names)):
-        im = recolour(n)
-        if im is not None:
-            art[n] = im
+    art.update(icons())
+    art["flask_full"], art["flask_empty"] = flasks()
+    art["marker_quest"], art["marker_talk"] = markers()
     art["book_doll"] = doll()
     # title scene
     art["title_sky"] = sky()

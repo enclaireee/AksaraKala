@@ -43,7 +43,7 @@ func _ready() -> void:
 	_key_lbl = Label.new()
 	_key_lbl.add_theme_font_override("font", KEY_FONT)
 	_key_lbl.add_theme_font_size_override("font_size", 8)
-	_key_lbl.add_theme_color_override("font_color", Color("140E0A"))
+	_key_lbl.add_theme_color_override("font_color", Color("141026"))   # night letter on the light keycap
 	_key_lbl.add_theme_constant_override("outline_size", 0)
 	_key_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_key_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -52,7 +52,7 @@ func _ready() -> void:
 	_prompt = Label.new()
 	_prompt.add_theme_font_override("font", KEY_FONT)
 	_prompt.add_theme_font_size_override("font_size", 8)
-	_prompt.add_theme_color_override("font_color", Color("EADFC4"))
+	_prompt.add_theme_color_override("font_color", UIFx.TEXT)
 	_prompt.add_theme_constant_override("outline_size", 0)
 	_prompt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_prompt.visible = false

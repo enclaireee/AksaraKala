@@ -2,7 +2,7 @@ class_name MapView extends Control
 ## The menu's Peta tab: the current area with the hero, every quest target, NPCs, rest shrines (petilasan),
 ## chests, clues and exits. Hover a marker for its name (ui.md 3).
 
-const GOLD := Color("F3E3B8")
+const GOLD := UIFx.HEAD
 const EXIT := Color("7fd6e6")
 const NPC := Color("f1ead2")
 const REST := Color("6fe3b4")

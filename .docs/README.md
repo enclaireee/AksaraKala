@@ -24,7 +24,7 @@ Top-down 2D pixel-art action RPG set in the mythical folklore and landscapes of 
 | [ui.md](ui.md) | In-game HUD (tracker card, banners, vitals), Esc menu with left rail, Elden-style class select, and smooth typography |
 | [audio.md](audio.md) | Music map per region (explore, dark, combat, boss), towns, ambience beds, sfx and stingers, how the Audio autoload layers them, the generator (`tools/gen_audio.py`) and tuning guide |
 | [items.md](items.md) | Weapons (common & mythic pusaka), armors, accessories, and consumables |
-| [assets.md](assets.md) | Visual art standards, tilesets, spritesheets, font licensing (Alegreya Sans, Almendra Display, Noto Sans), and audio sources |
+| [assets.md](assets.md) | Visual art standards, tilesets, spritesheets, font licensing (Tiny5, Jersey 10/15, Noto Sans), and audio sources |
 | [architecture.md](architecture.md) | Godot 4 project architecture, autoloads, scene composition, physics layers, and technical systems |
 | [scope.md](scope.md) | Priority tiers: P0 (must-have), P1 (should-have), P2 (stretch), and explicit cuts |
 | [schedule.md](schedule.md) | Phased roadmap and completion milestones with exit criteria |

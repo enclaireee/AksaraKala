@@ -82,7 +82,7 @@ Displayed level is calculated as `1 + points spent`, ensuring classes with lower
 
 ## Class Selection Presentation (`ui/class_select.gd`)
 Presented after the opening prologue events:
-- **Left Column:** Class roster (Almendra Display 10) with gold lozenge navigation cursor.
+- **Left Column:** Class roster (Jersey 10 at 19) with the cyan diamond cursor.
 - **Center Pedestal:** 96x128 animated character sprite standing on a stone pedestal illuminated by lantern light with gentle floor mist. Switching classes dissolves the character into rising ink particles.
 - **Right Panel:** Detailed panel showing archetype title, narrative description, animated stat bars, starting equipment icon, and passive ability.
 - **Confirmation:** Framed confirmation prompt prevents accidental selection before saving.

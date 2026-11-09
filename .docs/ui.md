@@ -35,7 +35,7 @@ All constants live in `ui/fx/ui_fx.gd` (`UIFx.text(t, kind, colour)`); `ui/theme
 | Display | Jersey 15 | 27 (logo 54) | 15 / 20 | area and region titles, quest title cards, "Fallen", the logo |
 - Big numbers may use Tiny5 at 16. The aksara scripts keep Noto Sans Javanese / Sundanese at their own sizes.
 - Text over the world has a 1 px dark outline; text on ink or paper has none. On paper: ink `#2A1C12`, headings ink red `#7A2A1E`, secondary `#6B5A44`. On ink: cream `#EADFC4`, headings `#F3E3B8`, labels `#B8A27A`, dim `#A59A82`, accent gold `#E0B35A`; Semar's narration is warm dim gold `#C9B48A` (the pixel face has no italic).
-- Crimson Pro and Almendra are no longer used (files kept for now).
+- Crimson Pro and Almendra were removed with the v3 rebrand.
 
 ---
 
@@ -109,15 +109,14 @@ Same world and palette as the key-art poster, its own composition (not a copy of
 - **Bottom:** Confirm / Back prompts.
 
 ### 4.3 Pause & Tab Menu (Esc / Tab): the field book (redesign 2026-11-08)
-**v3 frame (2026-11-09) replaces the leather/parchment look below:** the world dims under the dusk sky (stars, faint motes); the "book" becomes a night star-chart: a dusk cover panel with a cyan hairline, two indigo pages (slightly lighter `#1A1530`) with a faint star speckle, a spine of three small cyan dots, tabs as dusk pills (open tab taller, cyan rim, lavender caps name). Headings `#FFF4E6`, body cool cream, labels lavender, focus cyan, the destructive button rose. Layout, tabs and behaviour unchanged.
 Research: scratchpad brief summarised here; sources in ui.md 0 plus Hollow Knight journal/map, Tunic manual, Hades codex, Sea of Stars menus (mostly design practice, thin teardowns).
 
 **Frame (shared by every tab, `ui/menu/menu_book.gd`):**
-- The game dims to ~60% with a vignette. An open book fills ~464x246: a 4 px stitched leather cover edge, two parchment pages (~216 px each) and a centre spine gutter shadow. Ornament only on the outer frame: small carved (ukiran) corner pieces and a very faint kawung paper tile. Parang Rusak is never used (restricted Yogyakarta court motif).
-- **Tab ribbons** stick up from the book's top edge: icon only, except the open tab, which is taller, paper coloured and labelled. Q / E keycaps at the strip ends; click works too.
-- **Footer:** a thin leather band of context hints drawn with the keycap assets plus words; hints change per tab and per focus.
-- **Grid:** 8 px grid, sizes in multiples of 4, at most 2 type sizes per page: Jersey 10 / 19 headings in ink red, Tiny5 8 body, tracked caps for labels and buttons (ui.md 1). Left page = list or figure, right page = detail.
-- **Motion:** tab change is a 140 ms page turn (slide + fade of the page contents) with a paper SFX if one exists; the wax-red diamond cursor eases 70 ms to its target and snaps to whole pixels; new text inks in. All tweens use the pause-safe process mode. TUNE.
+- **v3 dusk star chart (2026-11-09).** The world dims to night (indigo at ~74%). The "book" fills ~464x248: a dusk cover with a 1 px hairline and cyan corner glints, two indigo pages (`#1A1530`, faint star speckle, ~228 px each) and a dark spine gutter. No parchment, leather, carved corners or kawung tile. Parang Rusak is never used (restricted Yogyakarta court motif).
+- **Tabs** stick up from the top edge as dusk pills: icon only, except the open tab, which is taller, cyan-rimmed and named in cyan caps. Closed icons are dim lavender, brighter on hover. Q / E keycaps at the strip ends; click works too.
+- **Footer:** a thin night band of context hints: keycaps plus lavender words; hints change per tab and per focus.
+- **Grid:** 8 px grid, sizes in multiples of 4, at most 2 type sizes per page: Jersey 10 / 19 headings in `#FFF4E6`, Tiny5 8 body in cool cream, lavender tracked caps for labels and buttons (ui.md 1). Left page = list or figure, right page = detail.
+- **Motion:** tab change is a 140 ms page turn (slide + fade of the page contents); the cyan diamond cursor eases 70 ms to its target and snaps to whole pixels; rows highlight with a faint cyan wash and a cyan left edge. All tweens use the pause-safe process mode. TUNE.
 
 **Tabs (7):**
 1. **Diri (Status):** left page = the hero's 96x128 class figure (idle frames from `class_<id>.png`) on a painted ground disc, name, class title, level wax seal and Ilmu bar. Right page = the 5 attributes with icon, value, pips and a + right beside each when points can be spent (plus a "points to spend" seal; level-up still only at a Petilasan); a 2-column derived-stat table with icons (Max HP, Stamina, Sakti, ATK, DEF, Jamu); a row of learned glyph tiles.
@@ -139,6 +138,6 @@ v3 "Senja" (section 0.1). The UI is the poster's dusk: indigo night surfaces, a 
   - Text: `#FFF4E6` head, `#ECE6F2` body, `#A99BC8` label, `#8C83A6` dim.
   - Accent: cyan `#7FE8E0` / halo `#3FB8C0` / deep `#1F6E78`; amber `#F2B27A` / `#C98A52`; rose danger `#E0566A`; green `#8FD9A0`.
   - Gameplay colours (Okabe-Ito HP/stamina/sakti) unchanged.
-- **Surfaces:** `ink_panel`, `ink_panel_focus`, `ink_slot`, `frame_portrait`, `keycap` (lavender-white key, night letter), `continue_arrow` (cyan), `ink_cursor` (5 px cyan diamond), `arrow_objective` (amber chevron), `icon_ilmu` (amber gem); the menu set keeps its `book_*` names but is dusk; `panel`, `button_*`, `slot*`, `lozenge` are dusk too. File names are unchanged from v2 so layouts did not move.
-- **Regenerate:** `python3 tools/gen_ui_dusk.py` (writes every file above, the title scene, logo, glyph sprites, `icon.svg` and `tools/ui_dusk_preview.png`). Story props such as `lontar_card.png` (the write card's leaf) are not UI chrome and keep their own generators. It must run LAST, after any of the older generators (`gen_ui.py`, `gen_ui_rpg.py`, `gen_menu_book.py`, `gen_title_book.py`, `gen_ui_ink.py`), which are kept for history and would overwrite the dusk set.
+- **Surfaces:** `ink_panel`, `ink_slot`, `frame_portrait`, `keycap` (lavender-white key, night letter), `continue_arrow` (cyan), `ink_cursor` (5 px cyan diamond), `arrow_objective` (amber chevron), `icon_ilmu` (amber gem); the menu set keeps its `book_*` names but is dusk; `panel`, `button_*`, `slot*`, `lozenge` are dusk too. File names are unchanged from v2 so layouts did not move.
+- **Regenerate:** `python3 tools/gen_ui_dusk.py` is the one UI art generator: every file in `assets/art/ui/` (surfaces, menu set, stat and tab icons, HUD flasks, NPC quest/talk markers, cursor, title scene, logo, glyph sprites), `icon.svg` and `tools/ui_dusk_preview.png`. Story props such as `lontar_card.png` (the write card's leaf) are not UI chrome and keep their own generator. The parchment-era generators and art were deleted in v3.
 - **App icon:** `icon.svg`, generated as 32x32 pixel art at 4x (SVG rects, crisp edges): banded dusk sky, stars, the ridge on the horizon and Javanese Ka in the cyan glyph light. The boot splash background is the night fill `#141026`.
