@@ -7,7 +7,7 @@ script = ExtResource("1")
 npc_id = "batu_tulis"
 name_key = "NPC_BATU_TULIS_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq1=6"], "lines": ["DLG_BATU_TULIS_V1", "@NPC_BATU_TULIS_NAME", "DLG_BATU_TULIS_V2", "DLG_BATU_TULIS_V3", "DLG_BATU_TULIS_V4"], "do": ["learn:sunda_nga"]},
+	{"if": ["step:mq1=11"], "lines": ["DLG_BATU_TULIS_V1", "@NPC_BATU_TULIS_NAME", "DLG_BATU_TULIS_V2", "DLG_BATU_TULIS_V3", "DLG_BATU_TULIS_V4"], "do": ["learn:sunda_nga"]},
 	{"if": ["flag:mq1_5"], "lines": ["DLG_BATU_TULIS_6", "DLG_BATU_TULIS_7"], "do": []},
 	{"if": [], "lines": ["DLG_BATU_TULIS_8", "DLG_BATU_TULIS_9", "DLG_BATU_TULIS_10"], "do": []}
 ])

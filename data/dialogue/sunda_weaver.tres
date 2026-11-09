@@ -7,7 +7,7 @@ script = ExtResource("1")
 npc_id = "sunda_weaver"
 name_key = "NPC_SUNDA_WEAVER_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq1=7"], "lines": ["DLG_SUNDA_WEAVER_1", "@NPC_HERO_NAME", "DLG_SUNDA_WEAVER_H1", "@NPC_SUNDA_WEAVER_NAME", "DLG_SUNDA_WEAVER_V1", "DLG_SUNDA_WEAVER_V2"], "do": ["give:boeh_rarang"]},
+	{"if": ["step:mq1=14"], "lines": ["DLG_SUNDA_WEAVER_1", "@NPC_HERO_NAME", "DLG_SUNDA_WEAVER_H1", "@NPC_SUNDA_WEAVER_NAME", "DLG_SUNDA_WEAVER_V1", "DLG_SUNDA_WEAVER_V2"], "do": ["give:boeh_rarang"]},
 	{"if": ["flag:mq1_5"], "lines": ["DLG_SUNDA_WEAVER_8"], "do": []},
 	{"if": [], "lines": ["DLG_SUNDA_WEAVER_9", "DLG_SUNDA_WEAVER_10"], "do": []}
 ])
