@@ -85,26 +85,31 @@ func _ready() -> void:
 	_aksara.size = Vector2(200, 40)
 	_aksara.modulate.a = 0.0 if key_prefix == "PROLOGUE" else 1.0   # the epilogue: the letters are back
 	screen.add_child(_aksara)
-	add_child(UIFx.frame(Vector2(35, 171), Vector2(410, 82)))
+	var box := Panel.new()   # the same ink card as the in-game dialogue box (ui.md 3.1)
+	box.add_theme_stylebox_override("panel", UIFx.ink_box())
+	box.position = Vector2(40, 172)
+	box.size = Vector2(400, 82)
+	box.mouse_filter = MOUSE_FILTER_IGNORE
+	add_child(box)
 	_card = Control.new()   # name and text fade and rise together between cards
 	_card.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(_card)
-	_name = UIFx.label("", 9, UIFx.INK_HEAD, true, true)
-	_name.position = Vector2(48, 176)
-	_name.size = Vector2(384, 12)
+	_name = UIFx.text("", "label", UIFx.ACCENT)
+	_name.position = Vector2(52, 180)
+	_name.size = Vector2(376, 9)
 	_card.add_child(_name)
-	_text = UIFx.label("", 12 if key_prefix == "PROLOGUE" else 10, UIFx.INK, false, true)
-	_text.position = Vector2(48, 183)
-	_text.size = Vector2(384, 62)   # room for an extras line under a card
+	_text = UIFx.text("", "body", UIFx.CREAM)
+	_text.position = Vector2(52, 193)
+	_text.size = Vector2(376, 52)   # room for an extras line under a card
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_text.add_theme_constant_override("line_spacing", 3)
 	_card.add_child(_text)
-	_arrow = UIFx.rect_tex("continue_arrow", Vector2(432, 242))
+	_arrow = UIFx.rect_tex("continue_arrow", Vector2(425, 244))
 	_arrow.visible = false
 	add_child(_arrow)
-	var hint := UIFx.label("UI_HOLD_SKIP", 7, UIFx.DIM)
-	hint.position = Vector2(276, 256)
-	hint.size = Vector2(198, 10)
+	var hint := UIFx.text("UI_HOLD_SKIP", "body", UIFx.DIM)
+	hint.position = Vector2(232, 258)
+	hint.size = Vector2(240, 9)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(hint)
 	_cover = UIFx.cover(self)
@@ -147,7 +152,7 @@ func advance() -> void:
 	if game.has_flag(str(variants.get(index, variants.get(str(index), "")))):
 		key += "_ALT"
 	_name.text = "NPC_SEMAR_NAME" if index >= semar_from and index <= semar_to else ""
-	_text.position.y = 191.0 if _name.text != "" else 183.0
+	_text.position.y = 193.0 if _name.text != "" else 181.0
 	var body := tr(key)
 	if "%d" in body:
 		body = body % int(game.codex_percent())

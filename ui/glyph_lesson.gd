@@ -9,10 +9,10 @@ extends CanvasLayer
 
 const NEEDED := 3   # TUNE: successful casts per lesson
 const HOLD := 1.0
-const CARD := Rect2(292, 44, 180, 160)   # right edge, under the Ilmu plate: clear of the tracker, banner and dialogue box
+const CARD := Rect2(292, 56, 180, 160)   # right edge (8 px margin), under Ilmu and the toast row: clear of tracker, banner, dialogue
 const GUIDE_RECT := Rect2(CARD.position.x + 14.0, CARD.position.y + 32.0, 68.0, 68.0)   # the ghost glyph sits in the card's slot
-const INK_HEAD := Color("7A2A1E")
-const HINT_COL := Color("7A6A50")
+const INK_HEAD := Color("E0B35A")   # on the ink card: the accent gold (ui.md 0)
+const HINT_COL := Color("A59A82")
 const JAWA := "res://assets/fonts/NotoSansJavanese.ttf"
 const SUNDA := "res://assets/fonts/NotoSansSundanese.ttf"
 const GOLD := Color("F3E3B8")
@@ -70,17 +70,20 @@ func _ready() -> void:
 	add_child(_panel)
 	var cx := CARD.position.x
 	var cy := CARD.position.y
-	var bg := _nine("panel", CARD, 6)   # framed card (ui.md 3b)
+	var bg := _nine("ink_panel", CARD, 4)   # the in-world ink card (ui.md 0)
 	_panel.move_child(bg, 0)
-	_name = _label(Vector2(cx + 10, cy + 8), Vector2(CARD.size.x - 20, 12))
-	_name.theme_type_variation = &"Heading"
+	_name = _label(Vector2(cx + 10, cy + 8), Vector2(CARD.size.x - 20, 13))
+	_name.add_theme_font_override("font", UIFx.head_font())
+	_name.add_theme_font_size_override("font_size", UIFx.HEAD)
+	_name.add_theme_color_override("font_color", UIFx.GOLD_HI)
 	_name.autowrap_mode = TextServer.AUTOWRAP_OFF
-	var rule := TextureRect.new()
-	rule.texture = load("res://assets/art/ui/divider.png")
-	rule.position = Vector2(cx + 10, cy + 21)
+	var rule := ColorRect.new()   # one hairline under the name
+	rule.color = UIFx.LINE_DIM
+	rule.position = Vector2(cx + 10, cy + 23)
+	rule.size = Vector2(CARD.size.x - 20, 1)
 	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(rule)
-	_nine("slot", Rect2(cx + 10, cy + 28, 76, 76), 4)   # the drawing slot holding the ghost glyph
+	_nine("ink_slot", Rect2(cx + 10, cy + 28, 76, 76), 4)   # the drawing well holding the ghost glyph
 	_aksara = _label(Vector2(cx + 92, cy + 28), Vector2(78, 38))
 	_aksara.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_aksara.add_theme_font_size_override("font_size", 28)
@@ -89,7 +92,7 @@ func _ready() -> void:
 	_aksara.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	for i in NEEDED:   # one lozenge per cast: lit once done
 		var d := TextureRect.new()
-		d.texture = load("res://assets/art/ui/lozenge.png")
+		d.texture = load("res://assets/art/ui/ink_cursor.png")
 		d.position = Vector2(cx + 92 + (78 - NEEDED * 5 - (NEEDED - 1) * 6) / 2 + i * 11, cy + 72)
 		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_panel.add_child(d)
@@ -157,7 +160,7 @@ func _ready() -> void:
 	hint_w.position = Vector2(0, 220)
 	hint_w.size = Vector2(480, 12)
 	hint_w.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint_w.modulate = Color(1, 1, 1, 0.6)
+	hint_w.add_theme_color_override("font_color", DIM)   # the theme default is paper ink: invisible on this dark card
 	_card.add_child(hint_w)
 
 
@@ -179,6 +182,8 @@ func _label(pos: Vector2, sz: Vector2) -> Label:
 	l.size = sz
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	l.add_theme_color_override("font_color", UIFx.CREAM)   # body on the ink card
+	l.add_theme_constant_override("line_spacing", 1)
 	_panel.add_child(l)
 	return l
 

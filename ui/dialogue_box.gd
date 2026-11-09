@@ -17,20 +17,21 @@ const OUTLINE := Color("140E0A")
 const UI_DIR := "res://assets/art/ui/"
 const BOX_X := 40.0       # frame left and width (centred in 480)
 const BOX_W := 400.0
-const BOX_BOTTOM := 262.0 # frame bottom edge: the box grows upward from here
-const PAD_X := 18.0
-const PAD_TOP := 8.0      # TUNE: space above the text (the name plate adds PLATE_DROP)
-const PLATE_DROP := 6.0   # how far the name plate reaches into the frame
-const PAD_BOT := 13.0     # room for the continue arrow and hint under the text
-const MIN_H := 46.0
-const LINE_H := 11.0      # 10 px pixel font + line spacing
-const FACE_W := 74.0      # left gutter holding the portrait frame when a face is shown
-const MIN_H_FACE := 72.0  # a face needs the box to be at least as tall as its frame plus air
+const BOX_BOTTOM := 262.0 # frame bottom edge (8 px screen margin): the box grows upward from here
+const PAD_X := 10.0       # text inset when there is no face
+const PAD_TOP := 7.0      # frame top to the name row
+const NAME_ROW := 12.0    # name row height (9 px caps line + 3 px gap) above the text
+const PAD_BOT := 13.0     # room for the continue mark under the text
+const MIN_H := 40.0
+const LINE_H := 10.0      # Tiny5 8: 9 px line + 1 px spacing (ui.md 1)
+const FACE_W := 70.0      # 6 px inset + 56 px frame + 8 px gap: the text column starts here
+const MIN_H_FACE := 68.0  # the 56 px frame plus 6 px above and below
+const TEXT_COL := Color("EADFC4")
+const NARR_COL := Color("C9B48A")   # Semar (Dalang) narration: warm dim gold, set apart from speech
 const DIM_SHADER := preload("res://ui/fx/focus_dim.gdshader")
 const MAX_WAIT := 3.0   # seconds a #wait cue may hold
 const PORTRAIT := 48.0    # bust size inside the 56x56 frame_portrait (ui.md 3.1)
 const PORTRAIT_INSET := 4.0
-const NARRATION := Color("5A4430")   # Semar (Dalang): italic, pale cream (ui.md 3)
 
 var _lines := PackedStringArray()
 var _i := 0
@@ -79,44 +80,46 @@ func _ready() -> void:
 	_dim.material = _dim_mat
 	_dim.z_index = -2   # under the frame (z -1)
 	add_child(_dim)
-	_frame = _nine("panel_dialogue", Rect2(BOX_X, BOX_BOTTOM - MIN_H, BOX_W, MIN_H), 8)
-	_plate = _nine("button_normal", Rect2(BOX_X + 14, 0, 60, 14), 5)
-	_speaker = Label.new()
-	_speaker.theme_type_variation = &"Heading"
-	_speaker.position = Vector2(7, 1)
-	_speaker.size = Vector2(60, 12)
-	_speaker.add_theme_constant_override("outline_size", 0)
-	_speaker.add_theme_color_override("font_color", Color("F3E3B8"))   # on the leather plate
-	_speaker.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_speaker.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_frame = _nine("ink_panel", Rect2(BOX_X, BOX_BOTTOM - MIN_H, BOX_W, MIN_H), 4)
+	_plate = NinePatchRect.new()   # the name row: no art of its own, it only holds the caps name (ui.md 3.1)
+	_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_plate.size = Vector2(60, 9)
+	add_child(_plate)
+	_speaker = UIFx.text("", "label", UIFx.ACCENT)
+	_speaker.size = Vector2(60, 9)
 	_plate.add_child(_speaker)
-	_who = _label(Vector2.ZERO, Vector2(260, 12), Color("D8CFB4"))   # sits on the plate row, beside the name plate
-	_who.add_theme_font_size_override("font_size", 10)
-	_who.add_theme_color_override("font_color", Color("F3E3B8"))
-	_who.add_theme_color_override("font_outline_color", Color("140E0A"))
-	_who.add_theme_constant_override("outline_size", 3)   # it sits over the world, so it needs a strong outline
-	_text = _label(Vector2.ZERO, Vector2(BOX_W - PAD_X * 2.0, LINE_H), Color.TRANSPARENT)
+	_who = UIFx.text("", "body", UIFx.DIM)   # first meeting: "Anak Semar. Riuh." beside the name
+	_who.size = Vector2(240, 9)
+	add_child(_who)
+	_text = UIFx.text("", "body", TEXT_COL)
+	_text.size = Vector2(BOX_W - PAD_X * 2.0, LINE_H)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_text.add_theme_constant_override("line_spacing", 1)
+	add_child(_text)
 	_sel_bar = ColorRect.new()
-	_sel_bar.color = Color(0.62, 0.17, 0.145, 0.28)   # wax-red wash selection
-	_sel_bar.size = Vector2(BOX_W - PAD_X * 2.0, 10)
+	_sel_bar.color = Color(UIFx.ACCENT, 0.14)   # soft gold wash under the chosen line
+	_sel_bar.size = Vector2(BOX_W - PAD_X * 2.0, LINE_H)
 	_sel_bar.visible = false
 	_sel_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_sel_bar)
 	_lozenge = TextureRect.new()
-	_lozenge.texture = load(UI_DIR + "lozenge.png")
+	_lozenge.texture = load(UI_DIR + "ink_cursor.png")
 	_lozenge.visible = false
 	_lozenge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_lozenge)
-	_list = _label(Vector2.ZERO, Vector2(BOX_W - PAD_X * 2.0 - 12.0, 32), Color.TRANSPARENT)
+	_list = UIFx.text("", "body", TEXT_COL)
+	_list.size = Vector2(BOX_W - PAD_X * 2.0 - 10.0, 30)
+	_list.add_theme_constant_override("line_spacing", 1)
+	add_child(_list)
 	_cue = TextureRect.new()
 	_cue.texture = load(UI_DIR + "continue_arrow.png")
 	_cue.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_cue)
-	_hint = _label(Vector2.ZERO, Vector2(120, 12), Color("6B5A44"))
-	_hint.add_theme_font_size_override("font_size", 10)
+	_hint = UIFx.text("", "body", UIFx.DIM)
+	_hint.size = Vector2(120, 9)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	add_child(_hint)
 	_frame.z_index = -1
 	_portrait = TextureRect.new()
 	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -185,7 +188,7 @@ func _on_requested(speaker_key: String, lines: PackedStringArray) -> void:
 	_fresh.clear()
 	_speaker_key = ""   # a new talk starts on the neutral face
 	var g0 := get_node("/root/Game")
-	_hint.text = "" if g0.has_flag("seen_hint_continue") else "[%s] %s" % [g0.key_name("interact"), tr("UI_HINT_CONTINUE")]
+	_hint.text = "" if g0.has_flag("seen_hint_continue") else "%s  %s" % [g0.key_name("interact"), tr("UI_HINT_CONTINUE")]
 	_set_speaker(speaker_key)
 	visible = true
 	_animate_open()
@@ -244,12 +247,12 @@ func _set_speaker(key: String) -> void:
 	_portrait.texture = face
 	_portrait.visible = face != null
 	_portrait_frame.visible = face != null
-	_plate.size.x = ceilf(_speaker.get_minimum_size().x) + 14.0
-	_speaker.size.x = _plate.size.x - 14.0
+	_plate.size.x = ceilf(_speaker.get_minimum_size().x)
+	_speaker.size.x = _plate.size.x
 	if _open and _speaker.text != prev:
 		_pop_plate()
 	var narr := key.contains("DALANG") or _speaker.text.to_lower().contains("(dalang)")
-	_text.theme_type_variation = &"Italic" if narr else &""
+	_text.add_theme_color_override("font_color", NARR_COL if narr else TEXT_COL)
 	_who.text = ""
 	if not (key.begins_with("NPC_") and key.ends_with("_NAME")):
 		return
@@ -320,10 +323,10 @@ func _show_choices() -> void:
 		out.append(_t(_opts[i]))
 	_list.text = "\n".join(out)
 	_layout()
-	var lh := _list.get_line_height() + 1.0   # theme line_spacing 1
+	var lh := LINE_H
 	_sel_bar.size.y = lh
-	_sel_bar.position = Vector2(_list.position.x - 14.0, _list.position.y + _sel * lh)
-	_lozenge.position = Vector2(_sel_bar.position.x + 4.0, _sel_bar.position.y + roundf((lh - 5.0) / 2.0))
+	_sel_bar.position = Vector2(_list.position.x - 10.0, _list.position.y + _sel * lh - 1.0)
+	_lozenge.position = Vector2(_sel_bar.position.x + 2.0, _list.position.y + _sel * lh + 2.0)   # on the caps line
 	_sel_bar.visible = true
 	_lozenge.visible = true
 
@@ -333,9 +336,10 @@ func _calc_text_height(tw: float) -> float:
 		return 0.0
 	var font := _text.get_theme_font("font")
 	var font_size := _text.get_theme_font_size("font_size")
-	if font != null:
+	if font != null:   # whole lines on the 10 px pitch, so the box height is exact
 		var sz := font.get_multiline_string_size(_text.text, _text.horizontal_alignment, tw, font_size)
-		return maxf(sz.y, LINE_H)
+		var lines := maxi(1, roundi(sz.y / maxf(font.get_height(font_size), 1.0)))
+		return lines * LINE_H - 1.0
 	return maxf(_text.get_minimum_size().y, LINE_H)
 
 
@@ -348,28 +352,27 @@ func _layout() -> void:
 	_text.custom_minimum_size.x = tw
 	_text.size.x = tw
 	var th := _calc_text_height(tw)
-	var top := PAD_TOP + (PLATE_DROP if _plate.visible else 0.0)
-	var lh := _list.get_line_height() + 1.0
-	var ch := (3.0 + lh * _opts.size()) if (_choosing and not _opts.is_empty()) else 0.0
+	var top := PAD_TOP + (NAME_ROW if _plate.visible else 0.0)
+	var ch := (4.0 + LINE_H * _opts.size()) if (_choosing and not _opts.is_empty()) else 0.0
 	var h := maxf(MIN_H_FACE if has_face else MIN_H, top + th + ch + PAD_BOT)
+	h = 2.0 * ceilf(h / 2.0)
 	_frame.size = Vector2(BOX_W, h)
 	_frame.position = Vector2(BOX_X, BOX_BOTTOM - h)
 	var fy := _frame.position.y
 	var fs := PORTRAIT + PORTRAIT_INSET * 2.0   # 56
-	_portrait_frame.position = Vector2(BOX_X + 10.0, fy + roundf((h - fs) / 2.0))   # inside the box, centred on its height
+	_portrait_frame.position = Vector2(BOX_X + 6.0, fy + roundf((h - fs) / 2.0))   # inside the box, centred on its height
 	_portrait.position = _portrait_frame.position + Vector2(PORTRAIT_INSET, PORTRAIT_INSET)
-	_plate.position = Vector2(tx, fy - 7.0)
-	_who.position = Vector2(_plate.position.x + _plate.size.x + 6.0, fy - 6.0)
-	# the text block sits in the middle of the space between the plate and the footer; choices pin it to the top
-	var avail := h - top - PAD_BOT
-	var ty := fy + top + (0.0 if ch > 0.0 else roundf(maxf(avail - th, 0.0) / 2.0))
+	_plate.position = Vector2(tx, fy + PAD_TOP)
+	_who.position = Vector2(tx + _plate.size.x + 6.0, fy + PAD_TOP)
+	_who.size.x = maxf(BOX_X + BOX_W - PAD_X - _who.position.x, 0.0)
+	var ty := fy + top   # text pinned under the name: lines never jump as the box grows
 	_text.position = Vector2(tx, ty)
 	_text.size.y = th
-	_list.position = Vector2(tx + 14.0, ty + th + 3.0)
-	_list.size.x = tw - 14.0
+	_list.position = Vector2(tx + 10.0, ty + th + 4.0)
+	_list.size.x = tw - 10.0
 	_sel_bar.size.x = tw
-	_cue.position = Vector2(BOX_X + BOX_W - 20.0, fy + h - 11.0)
-	_hint.position = Vector2(BOX_X + BOX_W - 20.0 - _hint.size.x - 3.0, fy + h - 14.0)
+	_cue.position = Vector2(BOX_X + BOX_W - PAD_X - 5.0, fy + h - 10.0)
+	_hint.position = Vector2(_cue.position.x - 4.0 - _hint.size.x, fy + h - 12.0)
 
 
 func _close() -> void:
@@ -397,7 +400,7 @@ func _process(delta: float) -> void:
 		_text.visible_characters = vis
 	_cue.visible = _open and _hold_until == 0 and not _choosing and _text.visible_characters >= _text.get_total_character_count() \
 			and Time.get_ticks_msec() % 800 < 500
-	_cue.position.y = _frame.position.y + _frame.size.y - 11.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)
+	_cue.position.y = _frame.position.y + _frame.size.y - 10.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)
 	_hint.visible = _cue.visible and _hint.text != ""
 
 

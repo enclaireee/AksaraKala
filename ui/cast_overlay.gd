@@ -36,15 +36,16 @@ func _ready() -> void:
 	for i in 25:
 		_ring.add_point(Vector2.from_angle(TAU * i / 24.0) * RING_R)
 	_label = Label.new()
-	_label.theme_type_variation = &"HeaderLarge"
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_label.add_theme_font_size_override("font_size", 15)   # Jersey 15 at its native size: crisp, never scaled
+	_label.add_theme_font_override("font", UIFx.head_font())   # Jersey 10 at 19: the heading step (ui.md 1)
+	_label.add_theme_font_size_override("font_size", UIFx.HEAD)
 	_label.add_theme_color_override("font_outline_color", INK)
 	_label.add_theme_constant_override("outline_size", 4)
 	add_child(_label)
 	_sub = Label.new()
 	_sub.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_sub.add_theme_font_size_override("font_size", 10)
+	_sub.add_theme_font_override("font", UIFx.body_font())
+	_sub.add_theme_font_size_override("font_size", UIFx.BODY)
 	_sub.add_theme_color_override("font_outline_color", INK)
 	_sub.add_theme_constant_override("outline_size", 3)
 	add_child(_sub)

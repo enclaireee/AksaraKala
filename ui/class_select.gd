@@ -71,8 +71,8 @@ func _ready() -> void:
 	add_child(UIFx.rect_tex("vignette", Vector2.ZERO))
 
 	_list = VBoxContainer.new()
-	_list.position = Vector2(22, 92)
-	_list.size = Vector2(112, 80)
+	_list.position = Vector2(16, 92)
+	_list.size = Vector2(120, 80)
 	_list.add_theme_constant_override("separation", 2)
 	add_child(_list)
 	for id in ClassData.IDS:
@@ -82,9 +82,9 @@ func _ready() -> void:
 			_entry(c)
 
 	_build_info()
-	_hints = UIFx.label("", 7, UIFx.DIM)
-	_hints.position = Vector2(0, 252)
-	_hints.size = Vector2(480, 12)
+	_hints = UIFx.text("", "body", UIFx.DIM)
+	_hints.position = Vector2(0, 254)
+	_hints.size = Vector2(480, 9)
 	_hints.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(_hints)
 	_hints.text = "Enter  %s      Esc  %s" % [tr("UI_CHOOSE"), tr("UI_BACK")]
@@ -106,66 +106,82 @@ func _entry(c: ClassData) -> void:
 	cards.append(b)
 
 
+func _ink_panel(pos: Vector2, sz: Vector2) -> Panel:
+	var p := Panel.new()   # the dark-scene card (ui.md 0): same ink surface as the in-game UI
+	p.add_theme_stylebox_override("panel", UIFx.ink_box())
+	p.position = pos
+	p.size = sz
+	p.mouse_filter = MOUSE_FILTER_IGNORE
+	return p
+
+
+## Right card, on the 2 px grid: name (heading) / role (caps) / rule / description / 5 stats / weapon / passive.
 func _build_info() -> void:
-	_info = UIFx.frame(Vector2(296, 36), Vector2(176, 180))
+	_info = _ink_panel(Vector2(296, 32), Vector2(176, 214))
 	add_child(_info)
-	var x := 12.0
-	_name = UIFx.label("", 10, UIFx.INK_HEAD, true, true)
-	_name.position = Vector2(x, 6)
-	_name.size = Vector2(152, 14)
+	var x := 10.0
+	var w := 156.0
+	_name = UIFx.text("", "head", UIFx.GOLD_HI)
+	_name.position = Vector2(x, 8)
+	_name.size = Vector2(w, 13)
 	_info.add_child(_name)
-	_role = UIFx.label("", 7, UIFx.INK_DIM, false, true)
-	_role.position = Vector2(x, 17)
-	_role.size = Vector2(152, 8)
+	_role = UIFx.text("", "label", UIFx.LABEL_COL)
+	_role.position = Vector2(x, 24)
+	_role.size = Vector2(w, 9)
 	_info.add_child(_role)
-	var d := UIFx.rect_tex("divider", Vector2(x + 44, 25))
-	d.position.x = (176 - 64) / 2.0
-	_info.add_child(d)
-	_desc = UIFx.label("", 8, UIFx.INK, false, true)
-	_desc.position = Vector2(x, 33)
-	_desc.size = Vector2(152, 24)
+	var rule := ColorRect.new()
+	rule.color = UIFx.LINE_DIM
+	rule.position = Vector2(x, 37)
+	rule.size = Vector2(w, 1)
+	_info.add_child(rule)
+	_desc = UIFx.text("", "body", UIFx.CREAM)
+	_desc.position = Vector2(x, 42)
+	_desc.size = Vector2(w, 29)
 	_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_desc.add_theme_constant_override("line_spacing", 1)
 	_info.add_child(_desc)
-	var y := 62.0
+	var y := 78.0
 	for s: String in STATS:
-		var l := UIFx.label(tr("UI_STAT_" + s.to_upper()), 7, UIFx.INK_DIM, false, true)
-		l.position = Vector2(x, y)
-		l.size = Vector2(60, 9)
+		var l := UIFx.text(tr("UI_STAT_" + s.to_upper()), "body", UIFx.DIM)
+		l.position = Vector2(x, y - 1)
+		l.size = Vector2(56, 9)
 		_info.add_child(l)
 		var bar := StatBar.new()
 		bar.position = Vector2(x + 58, y + 1)
 		_info.add_child(bar)
 		_bars[s] = bar
 		y += 10.0
-	y += 4.0
-	var w_lbl := UIFx.label(tr("UI_WEAPON"), 7, UIFx.INK_HEAD, false, true)
-	w_lbl.position = Vector2(x, y)
-	_info.add_child(w_lbl)
-	var slot := UIFx.rect_tex("slot", Vector2(x, y + 10))
+	y += 6.0   # 134: weapon well with its caps label and name beside it
+	var slot := UIFx.rect_tex("ink_slot", Vector2(x, y))
 	_info.add_child(slot)
 	_w_icon = TextureRect.new()
 	_w_icon.position = Vector2(2, 2)
 	_w_icon.size = Vector2(16, 16)
 	_w_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	slot.add_child(_w_icon)
-	_w_name = UIFx.label("", 8, UIFx.INK, false, true)
-	_w_name.position = Vector2(x + 24, y + 15)
-	_w_name.size = Vector2(124, 10)
+	var w_lbl := UIFx.text(tr("UI_WEAPON"), "label", UIFx.LABEL_COL)
+	w_lbl.position = Vector2(x + 26, y + 1)
+	w_lbl.size = Vector2(w - 26, 9)
+	_info.add_child(w_lbl)
+	_w_name = UIFx.text("", "body", UIFx.CREAM)
+	_w_name.position = Vector2(x + 26, y + 11)
+	_w_name.size = Vector2(w - 26, 9)
 	_info.add_child(_w_name)
-	y += 36.0
-	_p_name = UIFx.label("", 8, UIFx.INK_HEAD, true, true)
+	y += 28.0   # 162: passive
+	_p_name = UIFx.text("", "label", UIFx.ACCENT)
 	_p_name.position = Vector2(x, y)
-	_p_name.size = Vector2(152, 10)
+	_p_name.size = Vector2(w, 9)
 	_info.add_child(_p_name)
-	_p_text = UIFx.label("", 7, UIFx.INK, false, true)
-	_p_text.position = Vector2(x, y + 11)
-	_p_text.size = Vector2(152, 30)
+	_p_text = UIFx.text("", "body", UIFx.CREAM)
+	_p_text.position = Vector2(x, y + 12)
+	_p_text.size = Vector2(w, 39)
 	_p_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_p_text.add_theme_constant_override("line_spacing", 1)
 	_info.add_child(_p_text)
 
 
 func _build_confirm() -> void:
-	_confirm = Control.new()   # dimmer plus a small framed dialog
+	_confirm = Control.new()   # dimmer plus a small ink dialog
 	_confirm.set_anchors_preset(PRESET_FULL_RECT)
 	_confirm.visible = false
 	_confirm.z_index = 10
@@ -174,25 +190,27 @@ func _build_confirm() -> void:
 	dim.color = Color(0, 0, 0, 0.55)
 	dim.set_anchors_preset(PRESET_FULL_RECT)
 	_confirm.add_child(dim)
-	_dialog = UIFx.frame(Vector2(130, 92), Vector2(220, 84))
+	_dialog = _ink_panel(Vector2(140, 100), Vector2(200, 64))
 	_confirm.add_child(_dialog)
-	_confirm_lbl = UIFx.label("", 10, UIFx.INK_HEAD, true, true)
-	_confirm_lbl.position = Vector2(10, 14)
-	_confirm_lbl.size = Vector2(200, 14)
+	_confirm_lbl = UIFx.text("", "head", UIFx.GOLD_HI)
+	_confirm_lbl.position = Vector2(8, 10)
+	_confirm_lbl.size = Vector2(184, 13)
 	_confirm_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_confirm_lbl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_dialog.add_child(_confirm_lbl)
 	var row := HBoxContainer.new()
-	row.position = Vector2(28, 44)
-	row.size = Vector2(164, 20)
+	row.position = Vector2(20, 34)
+	row.size = Vector2(160, 18)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 8)
 	_dialog.add_child(row)
-	var yes := LozengeButton.new(tr("UI_YES"), 10, true)
+	var yes := LozengeButton.new(tr("UI_YES"), 10)
 	yes.pressed.connect(_go)
-	yes.custom_minimum_size.x = 78
+	yes.custom_minimum_size.x = 76
 	row.add_child(yes)
-	_no = LozengeButton.new(tr("UI_CANCEL"), 10, true)
+	_no = LozengeButton.new(tr("UI_CANCEL"), 10)
 	_no.pressed.connect(_show_cards)
-	_no.custom_minimum_size.x = 78
+	_no.custom_minimum_size.x = 76
 	row.add_child(_no)
 
 
@@ -293,8 +311,8 @@ class StatBar extends Control:
 	var _tw: Tween
 
 	func _init() -> void:
-		custom_minimum_size = Vector2(80, 7)
-		size = Vector2(80, 7)
+		custom_minimum_size = Vector2(88, 6)
+		size = Vector2(88, 6)
 		mouse_filter = MOUSE_FILTER_IGNORE
 
 	func set_value(v: int) -> void:
@@ -305,11 +323,12 @@ class StatBar extends Control:
 		_tw.tween_method(func(x: float) -> void: shown = x; queue_redraw(), shown, float(v), 0.35)
 
 	func _draw() -> void:
-		for i in 10:
-			var r := Rect2(i * 8, 0, 7, 7)
-			draw_rect(r, Color("B89F6C"))
+		for i in 10:   # 10 pips, 6 px on a 7 px pitch: empty = hairline, filled = gold with a lit top row
+			var r := Rect2(i * 7, 1, 6, 5)
+			draw_rect(r, UIFx.LINE_DIM)
 			var f := clampf(shown - i, 0.0, 1.0)
 			if f > 0.0:
-				draw_rect(Rect2(r.position, Vector2(7.0 * f, 7)), UIFx.INK_HEAD)
-				draw_rect(Rect2(r.position, Vector2(7.0 * f, 1)), Color("C9473B"))
-		draw_string(UIFx.body_font(), Vector2(82, 7), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, 7, UIFx.INK)
+				var fw := roundf(6.0 * f)
+				draw_rect(Rect2(r.position, Vector2(fw, 5)), UIFx.ACCENT)
+				draw_rect(Rect2(r.position, Vector2(fw, 1)), Color("FFECB4"))
+		draw_string(UIFx.body_font(), Vector2(74, 6), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.CREAM)

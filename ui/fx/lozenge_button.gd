@@ -1,6 +1,7 @@
 class_name LozengeButton extends Button
-## Frameless menu entry: pixel-font text, a gold lozenge cursor on hover or focus, a slight indent and a 0.4 s
-## shimmer sweep (ui.md 3b). Hovering takes focus, so mouse, keyboard and gamepad share one cursor.
+## Frameless menu entry: a diamond cursor on hover or focus and a 3 px indent, nothing else (ui.md 4: one cursor
+## language, no shimmer). size >= 10 is a menu entry in the heading face (Jersey 10 at 19), smaller is body text.
+## Hovering takes focus, so mouse, keyboard and gamepad share one cursor.
 
 var _indent := 0.0
 var _shim := -1.0
@@ -15,10 +16,9 @@ func _init(label := "", size := 10, paper := false) -> void:
 	text = label
 	flat = true
 	alignment = HORIZONTAL_ALIGNMENT_LEFT
-	custom_minimum_size.y = 18
-	if size >= 10:
-		add_theme_font_override("font", UIFx.cinzel())
-	add_theme_font_size_override("font_size", size)
+	custom_minimum_size.y = 18 if size >= 10 else 12
+	add_theme_font_override("font", UIFx.head_font() if size >= 10 else UIFx.body_font())
+	add_theme_font_size_override("font_size", UIFx.HEAD if size >= 10 else UIFx.BODY)
 	add_theme_color_override("font_color", UIFx.INK if paper else UIFx.CREAM)
 	for c in ["font_hover_color", "font_focus_color", "font_pressed_color", "font_hover_pressed_color"]:
 		add_theme_color_override(c, UIFx.INK_HEAD if paper else UIFx.GOLD_HI)
@@ -58,9 +58,6 @@ func _on() -> void:
 		_tw.kill()
 	_tw = create_tween().set_parallel().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	_tw.tween_method(_set_indent, _indent, 3.0, 0.12)
-	_set_shim(0.0)
-	_tw.tween_method(_set_shim, 0.0, 1.0, 0.4)
-	_tw.chain().tween_callback(_set_shim.bind(-1.0))
 	queue_redraw()
 
 
@@ -74,8 +71,4 @@ func _off() -> void:
 
 func _draw() -> void:
 	if has_focus() or is_hovered():
-		draw_texture(UIFx.tex("lozenge"), Vector2(1 + _indent, floorf((size.y - 5.0) / 2.0)))
-	if _shim >= 0.0:
-		var x := floorf(lerpf(8.0, size.x, _shim))
-		draw_rect(Rect2(x, 3, 1, size.y - 6), Color(UIFx.INK_HEAD if _paper else UIFx.GOLD_HI, 0.6))
-		draw_rect(Rect2(x - 3, 3, 3, size.y - 6), Color(UIFx.INK_HEAD if _paper else UIFx.GOLD_HI, 0.12))
+		draw_texture(UIFx.tex("lozenge" if _paper else "ink_cursor"), Vector2(roundf(1 + _indent), floorf((size.y - 5.0) / 2.0)))

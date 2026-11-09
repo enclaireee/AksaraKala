@@ -42,16 +42,16 @@ Current development status and architecture reference for Aksara Kala as of **20
 - **Native Resolution:** 480x270 viewport, 3x window default (1440x810), `canvas_items` stretch with `integer` scaling and `keep` aspect ratio.
 - **Renderer:** Compatibility renderer for optimal 2D performance and web compatibility.
 - **Filter:** `Nearest` canvas texture filtering preserves sharp pixel art; pixel transforms and vertices snapped to whole pixels to prevent shimmering.
-- **Typography:** Smooth vector rendering (`Almendra` 7–8 px for body/dialogue/HUD, `Almendra Display` 10–28 px for titles and headings). The experimental Jersey pixel font pass was reverted.
+- **Typography (UI v2, 2026-11-09, [ui.md](ui.md) 1):** four pixel-true steps only: Tiny5 8 body, Tiny5 8 tracked caps labels, Jersey 10 at 19 headings, Jersey 15 at 27 display (54 logo). All from `UIFx` (`UIFx.text(t, kind)`), never any other size.
 
 ### 3.2 In-Game HUD & UI ([ui.md](ui.md))
-- **HUD Layout:**
-  - Vitals top-left: HP bar (96x9 with hp/max), stamina bar (64x3), sakti gauge (50x3, 60x3 for Mage).
-  - **Quest Tracker Card (top-left, 156 px wide):** Displays tracked quest title, gold divider, and checklist of objectives with status bullets (`bullet_now`, `bullet_check`, `bullet_open`) and counts `n/total`.
-  - **Quest Banners (top-center):** Queued notification banner for `NEW QUEST`, `QUEST UPDATED`, `QUEST COMPLETE`, and `UI_Q_REMEMBER` consequence alerts.
+- **HUD Layout (v2, 8 px margins, ink surface, [ui.md](ui.md) 2.1):**
+  - Vitals top-left: bare bars, HP 100x6 with "hp/max" beside it, stamina 72x3, sakti 60x3.
+  - **Quest Tracker (8, 36), 124 px:** caps quest name, active objective after a gold diamond, `(n/m)`.
+  - **Quest Banner (top-centre):** small one-line ink pill (15 px): gold caps kicker + quest name, both body size. **Toasts** now sit top-right under Ilmu (they used to overlap the banner).
   - **World Navigation:** Screen-edge directional arrow displaying distance in meters (1 tile = 1 m) or cross-zone destination (`-> <zone name>`). Floating gold diamond floats 46 px above on-screen targets with distance pill.
   - **Dialogue Focus:** HUD elements (tracker, flasks, weapon, Ilmu, hints) fade out over 0.2 s during dialogue.
-  - **Dialogue Box:** Auto-height (min 40 px, max 3 lines plus choices), 424 px wide, speaker name plate, first-meeting character descriptor tag (`NPC_<id>_WHO`), and typewriter effect.
+  - **Dialogue Box:** ink panel 400 px wide, auto-height on 10 px lines, caps gold speaker name inside the box with the first-meeting tag (`NPC_<id>_WHO`) beside it, portrait well at the left, typewriter effect.
   - **Esc Menu:** 460x250 panel with left rail navigation: Status, Perlengkapan (Gear), Catatan (Journal as Story Log), Peta (Map), Pustaka (Codex), and Sistem (Settings).
 
 ### 3.3 Scene Direction (`ui/scene_director.gd`)
@@ -104,6 +104,9 @@ Current development status and architecture reference for Aksara Kala as of **20
 ---
 
 ## 6. Next Steps
+00. **UI v2 overhaul (2026-11-09, untested in Godot: running a Godot binary was not permitted in the cloud box; spec [ui.md](ui.md) 0, 1, 2.1, 3.1, 5):**
+   - DONE: Tiny5 font added (`assets/fonts/Tiny5-Regular.woff`, OFL); `UIFx` holds the type scale, colours and spacing; `theme.tres` defaults to Tiny5 8 with Heading/HeaderLarge/BossName/Caps variations on the grid sizes. New ink surface set `tools/gen_ui_ink.py` (run it last). Rebuilt: HUD (`ui/hud.gd`), dialogue box, world prompt (`entities/world/interactable.gd`), quest card, area title, cast overlay text, glyph lesson card, prologue card, class select info card + confirm, name entry, `LozengeButton` (no shimmer, heading-face entries), menu book text helpers (caps labels, Jersey 19 headings, Tiny5 body), calmer paper grain, no kawung tile. Copy fixes in `ui.csv` (no square brackets, sentence-case banner kickers, "Remembered", "Power" for derived stats).
+   - NEXT: `--import` (new font + ink PNGs + ui.csv), then `ui_test`, `menu_test`, `portrait_test`, `choice_test`, `i18n_test`, `quest_card_test`, `glyph_lesson_test`, `cast_overlay_test`, `loop_test`; then capture and eyeball every screen at 3x: title, class select, name entry, prologue, HUD in a zone (tracker + banner + toast at once), a dialogue with choices, a boss, the 7 menu tabs (the tabs were only swept through the shared `MenuBook` helpers: check heading overlap and caps widths), death screen, glyph lesson. Mockups of the HUD and dialogue were checked with PIL only.
 0. **Menu / class / portrait redesign (2026-11-08, in progress; spec ui.md 4.3, 3.1, classes.md "Identity"):**
    - DONE, committed 5abcbcb: classes renamed Hulubalang / Pamanah / Pendekar / Wiku (ids unchanged) with new 96x128 figures (`tools/gen_portraits.py`), in-world sprites (`tools/gen_hero_sprites.py`), CLASS_*/_ROLE and starting-weapon text (`data/text/items.csv`), class FX tints (`entities/player/attack_fx.gd`), role line on class select. Speaker portraits now 48x48 in a 56x56 frame with happy/angry/sad variants and `#face:<mood>` (`tools/gen_speaker_portraits.py`, `ui/portraits.gd`, `ui/dialogue_box.gd`, `tests/portrait_test.gd`); 5 new unique busts (Ciung Wanara, Bondowoso, Dayang Sumbi, Purbasari, Nawang Wulan) remapped in `ui/portraits.gd`.
    - WIRED, UNTESTED (2026-11-08, written in a sandbox without Godot): `ui/menu.gd` is now the host of `menu_book.gd` + 7 tab scripts (`tab_status/equipment/journal/map/codex/controls/system.gd`); the old 914-line menu is gone. `tab_system.gd` is the old Sistem tab ported as-is; `tab_controls.gd` is a read-only placeholder (actions + keycaps from InputMap, how-to text). All `UI_BK_*`, `UI_ACT_*` keys added to `data/text/ui.csv` (re-import to regenerate `ui.*.translation`). Tests updated to the new API (`menu.tab(i)`, `tab(0).raise`, `tab(2).detail`, `tab(4).list`): `menu_test`, `ui_test`, `i18n_test`. NOT run: first thing next session is `--import`, then those 3 tests + `loop_test`, fix parse errors, then capture all 7 tabs.
@@ -124,6 +127,7 @@ Current development status and architecture reference for Aksara Kala as of **20
 - Follow token-efficiency protocol: read targeted line ranges, do not read full massive files unnecessarily.
 - Never commit, push, or delete files without explicit user request.
 - Run headless tests and verification scripts before concluding tasks.
+- 2026-11-09: UI v2. Text uses only the four `UIFx` steps (Tiny5 8 body / tracked caps label, Jersey 10 at 19 heading, Jersey 15 at 27 display); never `add_theme_font_size_override` with any other number. Anything drawn over the world uses the ink set (`ink_panel`, `ink_slot`, `ink_cursor`), paper is for the menu book and title desk only. Gold accent = focus/selection/quest, wax red = danger only. 8 px screen margin, 4 px grid.
 - 2026-11-08: UI retheme to parchment and ink (tools/gen_ui_rpg.py, gen_title_book.py, gen_speaker_portraits.py); fonts Almendra; game titled Aksara Kala (The Script of Time). See ui.md 0, 4.1, 5.
 - 2026-11-09: Audio pass. Everything sonic is generated by `python3 tools/gen_audio.py` into `assets/audio/` (commit the .ogg files; rebuild only when a recipe changes). Gameplay code plays sounds with `Snd.play("id")`, never by loading streams. New music/sfx ids need a recipe in `tools/audio/` and an entry in `gen_audio.py`; `tests/audio_test.gd` checks that every id the code can ask for exists. Untested in Godot (no Godot in the cloud box): `--import` then the audio, menu, ui and loop tests; tune by ear ([audio.md](audio.md) 7).
 - 2026-11-08: Menu, class and portrait redesign approved. Pause menu becomes the field book with 7 tabs (new Penuntun/Controls, illustrated world map, codex list/detail) per ui.md 4.3; classes become Hulubalang / Pamanah / Pendekar / Wiku (classes.md "Identity", ids unchanged); speaker portraits move to 48x48 with expressions (ui.md 3.1); new unique busts for Ciung Wanara, Bondowoso, Dayang Sumbi, Purbasari and Nawang Wulan are remapped in ui/portraits.gd.

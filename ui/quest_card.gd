@@ -31,15 +31,14 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	modulate.a = 0.0
 	visible = false
-	var fv := FontVariation.new()
-	fv.base_font = load("res://assets/fonts/Jersey15-Regular.ttf")
-	fv.spacing_glyph = 2
 	_band = _rect(BAND)
-	_rule_top = _rect(GOLD)
-	_rule_bottom = _rect(GOLD)
-	_caption = _label(fv, 10, CREAM)
-	_title = _label(fv, 20, GOLD_LIGHT)
-	_body = _label(null, 0, CREAM)
+	_rule_top = _rect(Color(GOLD, 0.6))
+	_rule_bottom = _rect(Color(GOLD, 0.6))
+	_caption = _label(UIFx.caps_font(), UIFx.BODY, UIFx.ACCENT)   # tracked caps kicker (ui.md 1)
+	_caption.uppercase = true
+	_title = _label(UIFx.display(), UIFx.DISPLAY, GOLD_LIGHT)     # Jersey 15 at 27: the one display size
+	_body = _label(UIFx.body_font(), UIFx.BODY, CREAM)
+	_body.add_theme_constant_override("line_spacing", 1)
 	_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var ev := get_node_or_null("/root/Events")
 	if ev:
@@ -183,22 +182,22 @@ func _show(card: Dictionary) -> void:
 	var lines: PackedStringArray = card.lines
 	_body.text = "\n".join(lines)
 	_body.visible = not lines.is_empty()
-	# layout: caption (12) + title (26) + body lines (11 each), centred on CENTER_Y
-	var body_h := 11.0 * lines.size() + (4.0 if not lines.is_empty() else 0.0)
-	var h := 12.0 + 26.0 + body_h + 16.0
-	var top := CENTER_Y - h / 2.0
+	# layout on the 2 px grid: 10 pad, caption 9, 4 gap, title 20, 6 gap, body lines (10 each), 10 pad
+	var body_h := 10.0 * lines.size() - 1.0 if not lines.is_empty() else 0.0
+	var h := 10.0 + 9.0 + 4.0 + 20.0 + (6.0 + body_h if body_h > 0.0 else 0.0) + 10.0
+	var top := roundf(CENTER_Y - h / 2.0)
 	_band.position = Vector2(0, top)
 	_band.size = Vector2(480, h)
 	_rule_top.position = Vector2(0, top)
 	_rule_top.size = Vector2(480, 1)
 	_rule_bottom.position = Vector2(0, top + h - 1.0)
 	_rule_bottom.size = Vector2(480, 1)
-	_caption.position = Vector2(0, top + 6.0)
-	_caption.size = Vector2(480, 12)
-	_title.position = Vector2(0, top + 18.0)
-	_title.size = Vector2(480, 26)
-	_body.position = Vector2(60, top + 46.0)
-	_body.size = Vector2(360, body_h)
+	_caption.position = Vector2(0, top + 10.0)
+	_caption.size = Vector2(480, 9)
+	_title.position = Vector2(0, top + 23.0)
+	_title.size = Vector2(480, 20)
+	_body.position = Vector2(60, top + 49.0)
+	_body.size = Vector2(360, maxf(body_h, 0.0))
 	if _tween:
 		_tween.kill()
 	visible = true

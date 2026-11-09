@@ -4,43 +4,47 @@ Canvas 480x270, integer-scaled (`canvas_items` stretch mode, `Nearest` texture f
 
 ---
 
-## 0. Design Principles (researched 2026-11)
-Sources: [diegetic interfaces](https://www.wayline.io/blog/diegetic-interfaces-game-design), [Game UI Design guide](https://madegooddesigns.com/?p=5485), [pixel-art GUI at 480x270 x4](https://forum.defold.com/t/gui-for-pixel-art-games-heres-how/77704), [Persona 5 UI study](https://itch.io/blog/533534/making-ui-come-to-life-study-of-persona-5), [Hyper Light Drifter guidance review](https://medium.com/cortes-studio/hyper-light-drifter-guidance-design-review-and-analysis-5fb69f8ed786). Evidence was thin and mostly general guidance.
-1. The HUD is read peripherally: quiet, edge-anchored, and faded when not needed (already true: dialogue focus, stamina auto-hide).
-2. Style is identity but never costs readability (Persona 5 caution): one gold-lacquer wayang language, strong silhouettes for icons.
-3. Stay on the 480x270 grid: sizes in multiples of 4 or 8, whole-pixel positions, nine-patch frames.
-4. Dialogue gives the speaker a face. Portraits are the one big addition of the redesign.
-5. Bars carry shading and rhythm (lit top row, dark bottom row, ticks) so they read as objects, not flat rectangles.
+## 0. Design Principles (v2, 2026-11-09)
+Audit of the v1 UI found the "slop" came from a few root causes, not from any one screen: (1) the Jersey pixel fonts were drawn at 10 / 15 px while their pixel grids sit at 18.67 / 27 px, so every glyph was resampled to about half a pixel and broke up; (2) eight different font sizes (7, 8, 9, 10, 12, 13, 15, 28) with no scale; (3) four surface languages over the world at once (parchment panels with iron studs, stitched leather plates, wax seals, gold lacquer); (4) banner and toast shared one screen spot and overlapped; (5) spacing was 6 px here, 5 there, 4 elsewhere. Genre references: Hyper Light Drifter and Death's Door (bare edge-anchored vitals, nothing in the centre), Elden Ring (boss name over a long thin bottom bar, minimal frames), Sea of Stars / Octopath (one dark translucent box family for all in-world text, caps speaker label, diamond cursor).
+1. **One type scale, pixel-true.** Four steps only (section 1). A font is never drawn at any other size and text is never scaled.
+2. **Two surfaces.** *Ink* (dark lacquer at ~90%, 1 px near-black outline with chamfered corners, one warm hairline inset 1 px: `ink_panel.png`, `tools/gen_ui_ink.py`) for everything over the world: HUD cards, banner, toasts, prompts, dialogue, the prologue card, the glyph lesson, class select and name entry. *Paper* (the field book) only for full-screen menus and the title desk. No studs, stitches, leather plates or wax seals over the world.
+3. **One accent.** Gold `#E0B35A` marks focus, selection, the quest and new things. Wax red `#C9473B` is reserved for danger (damage, low HP, destructive). Gameplay bar colours (Okabe-Ito) are unchanged.
+4. **One grid.** 4 px base: screen-safe margin 8, panel padding 6, gaps 2 / 4 / 8 / 16 (`UIFx.MARGIN`, `PAD`, `GAP_*`). Whole-pixel positions.
+5. **Quiet HUD.** Edge-anchored, the centre stays clear, everything fades for dialogue; one thing per screen spot (banner top centre, toasts top right under Ilmu).
+6. **Copy.** Sentence case in data; small labels are set in tracked caps by the font (`Label.uppercase`), never typed in caps. Keys are shown as keycaps or as the bare key name ("E  Continue"), never in square brackets. Verbs on buttons and prompts, one word where possible.
+7. **Motion.** 120-250 ms ease-out slides and fades; no idle shimmer or sweeps; the only loop is the blinking continue mark.
 
 ## 1. Typography and Text
-- **Latin text: smooth vector fonts (OFL, `assets/fonts/OFL_CrimsonPro.txt`, `OFL_Almendra.txt`).**
-  - `CrimsonPro` (variable font) and `CrimsonPro-Italic`: body text, dialogue, HUD, menus, 7-8 px; bold is the same file at weight 700 (`FontVariation` in `theme.tres` and `UIFx.cinzel()`), used for headings, tabs, buttons and menu entries up to 16 px. Semar's narration uses the italic in soft ink (#5A4430) on paper.
-  - `Almendra-Bold` (`UIFx.display()`): big titles only (logo, area and quest titles, "Fallen"). It is quirky and faint below about 20 px, so it is never used for small text.
-  - Text on paper is plain ink with no outline. Text on dark scenes or over the world keeps a dark outline (#140E0A).
-- **Aksara fonts:** `Noto Sans Sundanese` and `Noto Sans Javanese` (SIL OFL) for the scripts.
-- The old Alegreya Sans and Cinzel files were deleted. `Jersey10/15` remain unused (the pixel-font pass was reverted).
+All constants live in `ui/fx/ui_fx.gd` (`UIFx.text(t, kind, colour)`); `ui/theme.tres` matches them.
+| Step | Face | Size | Cap / line | Use |
+|---|---|---|---|---|
+| Body | Tiny5 (`Tiny5-Regular.woff`, OFL) | 8 | 5 / 10 (9 + 1 spacing) | all body text, dialogue, lists, numbers, hints, prompts |
+| Label | Tiny5, CAPS, +1 px tracking | 8 | 5 / 10 | small section labels, kickers ("QUEST UPDATED"), speaker names, quest name in the tracker |
+| Heading | Jersey 10 | 19 | 10 / 13 (FontVariation trims 4 top, 3 bottom) | panel and page titles, menu entries, banner quest name, boss name, class name |
+| Display | Jersey 15 | 27 (logo 54) | 15 / 20 | area and region titles, quest title cards, "Fallen", the logo |
+- Big numbers may use Tiny5 at 16. The aksara scripts keep Noto Sans Javanese / Sundanese at their own sizes.
+- Text over the world has a 1 px dark outline; text on ink or paper has none. On paper: ink `#2A1C12`, headings ink red `#7A2A1E`, secondary `#6B5A44`. On ink: cream `#EADFC4`, headings `#F3E3B8`, labels `#B8A27A`, dim `#A59A82`, accent gold `#E0B35A`; Semar's narration is warm dim gold `#C9B48A` (the pixel face has no italic).
+- Crimson Pro and Almendra are no longer used (files kept for now).
 
 ---
 
 ## 2. In-Game HUD
 
-Safe margins: 6 px from window borders. The central 240x140 px play space remains unobstructed.
+Safe margins: 8 px from window borders. The central 240x140 px play space remains unobstructed. v2 layout (2026-11-09) below; every card is the ink surface.
 
 ### 2.1 Elements
 | Element | Location | Dimensions | Description |
 |---|---|---|---|
-| **Vitals (HP)** | Top-left (6, 6) | 96x9 | Vermillion bar (#D55E00), shaded (lit top row, dark bottom row) with ruler ticks every 12 px, internal "HP/Max" text. Pulses below 25% HP. Lag-chunk drain animation. |
-| **Stamina** | Below HP, 2 px gap | 64x3 | Yellow bar (#F0E442). Hidden when full for >2 s; reveals immediately on consumption. |
-| **Sakti Gauge** | Below stamina, 2 px gap | 50x3 (Mage: 60x3) | Sky blue bar (#56B4E9). Tick mark at 15 (14 for Mage/Rogue) indicates minimum cast requirement. |
-| **Tracker Strip** | Top-left (6, 58) | 118 px wide | Slim dark strip (55% black, 1 px gold left edge), no frame art, so it hides little of the world. Quest title in 7 px gold caps (main) or cream (side), then one objective row with the `bullet_now` icon in 8 px cream with a 1 px outline. Shows only the active objective, with `n/m` for checklists. Flashes gold and goes full opacity on any change, then dims to 50% after 5 s. |
-| **Quest Banner** | Top-center, y=24 | Centered text | Queued notifications for `NEW QUEST`, `QUEST UPDATED`, `QUEST COMPLETE`, and `UI_Q_REMEMBER` consequence alerts. Item and glyph toasts queue alongside. |
-| **Flask** | Bottom-left | 6 slots, 7x9 each | Bluish green. Full = bright (`flask_full.png`), empty = dim outline (`flask_empty.png`). Locked slots hidden. |
-| **Weapon Well** | Right of Flask | 16x16 | Current equipped weapon icon in a recessed slot (`slot.png`). |
-| **Ilmu Counter** | Top-right (6 px margin) | 8 px icon + number | Lacquer plate with pale gold counter. Animates upward on pickup. Accompanied by quiet `[Esc] Menu` indicator. |
-| **Boss Bar** | Bottom-center, 18 px from bottom | 240x5 | Boss name in Almendra Display 10 above bar. 50% phase tick. When `laras_sabotage:*` flag is set, displays cracked glyph icon at bar edge indicating vulnerable state. |
-| **World Guidance** | Screen-edge / World | Variable | Screen-edge arrow with distance in meters (1 tile = 1 m). If target is in another region/zone, displays `-> <zone name>`. When target is on-screen, a floating gold diamond appears 46 px above target with distance pill. |
-| **World Prompts** | World space above interactable | 10x10 keycap + text | 10x10 pixel keycap sprite with key letter + 10 px verb. Shown only for the nearest overlapping interactable. |
-| **Save Icon** | Bottom-right | 8x8 brush | "Tersimpan / Saved" indicator displayed for 1.0 s on autosave. |
+| **Vitals** | Top-left (8, 8) | HP 100x6, stamina 72x3, sakti 60x3 (+1 px outline each), 2-3 px apart | Bare bars, no badges: ink outline, dark well, fill with a lit top row (HP also a shade row and ticks every 10 px). HP number ("86/120", body) 4 px right of the bar. Lag chunk, low-HP pulse, stamina hides when full, sakti 60 px for the Wiku's 120 gauge. |
+| **Tracker** | Top-left (8, 36) | 124 px wide | Translucent ink strip with a 1 px gold left edge. Quest name as a caps label (gold for main, sand for side), then the active objective in body text after a 5 px gold diamond, `(n/m)` for checklists. Flashes on change, dims to 50% after 5 s. |
+| **Quest Banner** | Top-centre, y 8 | auto x 15 (max 300) | Small ink pill on one line: gold caps kicker ("QUEST UPDATED") then the quest name in cream body text, both 8 px. A long "remembered" sentence wraps under the kicker on a 260 px card. Slides down, holds 3.6 s, fades. |
+| **Toasts** | Top-right, y 32 | auto width 60-220 x 15 | Ink pill with a gold tick on its leading edge, right-aligned under Ilmu; item, glyph and hint toasts queue, 3 s each, slide in from the right. Never shares the banner's spot. |
+| **Ilmu** | Top-right (8 px margin) | 8x8 gem + number | Gold cut-gem icon and a rolling gold number, no plate. "Esc  Menu" hint under it for the first 25 s. |
+| **Weapon + Flasks** | Bottom-left (8, 242) | 20x20 well + 7x9 flasks | Ink well holding the equipped weapon; flasks on its baseline 4 px to the right, 9 px pitch. |
+| **Boss Bar** | Bottom-centre, 8 px from bottom | 240x4 | Boss name in the heading face, left-aligned over the bar (Souls convention); 50% phase tick; dawn bar 2 px under it; cracked-glyph mark at the right end when `sabotage_flag` is set. |
+| **World Guidance** | Screen-edge / World | Variable | 9x9 gold chevron at the screen edge with the distance on a small ink pill; on screen, a gold diamond floats 46 px over the target. `-> <zone>` when the target is in another zone. |
+| **World Prompts** | Above the interactable | 14 px ink pill | Light 10 px keycap with the key name + one cream verb (body). Only the nearest interactable shows one. |
+| **Save Icon** | Bottom-right | 8x8 + text | "Saved" in dim body text beside the icon for 1 s. |
 
 ### 2.2 Dynamic States
 - **Dialogue Focus:** While dialogue is active, the Tracker card, Flasks, Weapon well, Ilmu counter, the vitals plaque, the Saved badge and screen hints all fade out to 0% alpha over 0.2 s.
@@ -52,10 +56,11 @@ Safe margins: 6 px from window borders. The central 240x140 px play space remain
 ## 3. Dialogue & Scene Staging
 
 ### 3.1 Dialogue Box
-- **Dimensions & Anchor:** 424 px wide, anchored 6 px above screen bottom, auto-sizing in height (min 40 px, max 3 lines of dialogue plus choice options).
-- **Speaker Plate:** Sits on top edge of dialogue frame. First encounter with a named NPC displays their descriptor tag (`NPC_<ID>_WHO`) beside their name plate (e.g., "Cepot. Anak Semar. Riuh.").
-- **Speaker Portrait (redesign 2026-11-08):** a 56x56 `frame_portrait` holding a 48x48 bust (`assets/art/portraits/p_<name>.png`, from `tools/gen_speaker_portraits.py`) sits over the box's top-left corner, overlapping it by 8 px; the name plate steps right of it (x+66). Busts are 3/4 view facing right (toward the text), one top-left light, outline on the outside only, warm hue-shifted skin ramps (shadows go red-violet, never grey), eyes with white, iris and a highlight, brows separate from lids. Indonesian headwear only (iket, blangkon, kerudung, konde, siger, kuluk); no European crowns. Spirits: Kala a red wayang giant, the faceless spirit a shaded featureless head, Semar and Cepot shaded like wayang golek. Each bust has expression variants `p_<name>_<mood>.png` for happy / angry / sad (neutral is the base file); a dialogue line tag `#face:<mood>` picks one and falls back to neutral. 22 archetype busts; `ui/portraits.gd` maps speaker ids to them (ASSUMED picks for minor NPCs); speakers with no entry show no face and the plate keeps its old position.
-- **Advancement:** Typewriter text progression, instant complete on press, `[E] Continue` blinking cursor.
+- **Box (v2, 2026-11-09):** ink panel, 400 px wide, centred, 8 px above the screen bottom; height fits the content on whole 10 px lines (min 40, 68 with a face). Text is pinned to the top so lines never jump as the box grows.
+- **Speaker:** the name is a gold caps label inside the box at the top of the text column (no plate sticking out of the frame). On a first meeting the descriptor tag (`NPC_<ID>_WHO`) follows it in dim body text on the same row. Body text cream; Semar (Dalang) narration in warm dim gold.
+- **Choices:** listed under the last line; the chosen row gets a soft gold wash and a 5 px gold diamond.
+- **Speaker Portrait (redesign 2026-11-08, v2 frame):** a 56x56 `frame_portrait` (an ink well since v2) holding a 48x48 bust (`assets/art/portraits/p_<name>.png`, from `tools/gen_speaker_portraits.py`) sits inside the box 6 px from its left edge, centred on its height; the text column starts 70 px in. Busts are 3/4 view facing right (toward the text), one top-left light, outline on the outside only, warm hue-shifted skin ramps (shadows go red-violet, never grey), eyes with white, iris and a highlight, brows separate from lids. Indonesian headwear only (iket, blangkon, kerudung, konde, siger, kuluk); no European crowns. Spirits: Kala a red wayang giant, the faceless spirit a shaded featureless head, Semar and Cepot shaded like wayang golek. Each bust has expression variants `p_<name>_<mood>.png` for happy / angry / sad (neutral is the base file); a dialogue line tag `#face:<mood>` picks one and falls back to neutral. 22 archetype busts; `ui/portraits.gd` maps speaker ids to them (ASSUMED picks for minor NPCs); speakers with no entry show no face and the plate keeps its old position.
+- **Advancement:** Typewriter text progression, instant complete on press; a blinking gold triangle bottom right, with "E  Continue" beside it until the player has used it once.
 
 ### 3.2 Scene Director (`ui/scene_director.gd`)
 Story beats and cinematic conversations feature automated and scripted scene direction without pausing gameplay logic:
@@ -86,9 +91,9 @@ All menus pause world processing (`process_mode = PROCESS_MODE_ALWAYS` on UI). `
 - ID | EN language toggle on the desk, top right. The window title is set to "Aksara Kala" at runtime, matching the Godot project name.
 
 ### 4.2 Class Selection (Elden Style)
-- **Left Column:** List of 4 classes (Hulubalang, Pamanah, Pendekar, Wiku; see classes.md "Identity") in Almendra Display 10 with wax-red lozenge selector.
+- **Left Column:** List of 4 classes (Hulubalang, Pamanah, Pendekar, Wiku; see classes.md "Identity") as heading-face menu entries with the gold diamond cursor.
 - **Center Pedestal:** 96x128 animated character sprite standing on stone pedestal in lamp light with floor mist particles. Switching classes dissolves figure into rising ink motes.
-- **Right Panel:** Framed panel detailing class title, archetype description, segmented animated stat bars (Vit, End, Str, Dex, Spi), starting weapon icon, and unique passive.
+- **Right Panel (v2):** ink card 176x214: class name (heading), role (caps label), hairline, description (body, 3 lines), 5 stats as 10 gold pips with the number, weapon well with caps label and name beside it, passive (gold caps label + body).
 - **Bottom:** Confirm / Back prompts.
 
 ### 4.3 Pause & Tab Menu (Esc / Tab): the field book (redesign 2026-11-08)
@@ -98,7 +103,7 @@ Research: scratchpad brief summarised here; sources in ui.md 0 plus Hollow Knigh
 - The game dims to ~60% with a vignette. An open book fills ~464x246: a 4 px stitched leather cover edge, two parchment pages (~216 px each) and a centre spine gutter shadow. Ornament only on the outer frame: small carved (ukiran) corner pieces and a very faint kawung paper tile. Parang Rusak is never used (restricted Yogyakarta court motif).
 - **Tab ribbons** stick up from the book's top edge: icon only, except the open tab, which is taller, paper coloured and labelled. Q / E keycaps at the strip ends; click works too.
 - **Footer:** a thin leather band of context hints drawn with the keycap assets plus words; hints change per tab and per focus.
-- **Grid:** 8 px grid, sizes in multiples of 4, at most 2 type sizes per page (Almendra headings in ink red, Crimson Pro body, Jersey10 for numbers). Left page = list or figure, right page = detail.
+- **Grid:** 8 px grid, sizes in multiples of 4, at most 2 type sizes per page: Jersey 10 / 19 headings in ink red, Tiny5 8 body, tracked caps for labels and buttons (ui.md 1). Left page = list or figure, right page = detail.
 - **Motion:** tab change is a 140 ms page turn (slide + fade of the page contents) with a paper SFX if one exists; the wax-red diamond cursor eases 70 ms to its target and snaps to whole pixels; new text inks in. All tweens use the pause-safe process mode. TUNE.
 
 **Tabs (7):**
@@ -123,6 +128,6 @@ The UI is a fantasy field book: ink on parchment, stitched leather, riveted iron
   - Wax red: `#C9473B` hi, `#9E2B25`, `#5E1814`. Verdigris `#3F7A66` for "done".
   - On dark scenes: bright paper `#F3E3B8` headings, cream `#EADFC4` body, dim `#A59A82`.
   - Gameplay colours (Okabe-Ito HP/stamina/sakti) are unchanged for readability.
-- **Surfaces:** paper panels (`panel.png` 6 px, `panel_dialogue.png` 8 px margins) with a stitched leather band and iron studs; leather buttons (`button_*`, 5 px); the open menu tab is paper, closed tabs are leather; item slots are iron-rimmed wells (`slot*.png`), selected = wax-red rim; `inset.png` is the sunken paper well of the menu; `hud_plate.png` is the dark leather plaque behind the vitals; portraits sit in `frame_portrait.png`.
-- **Vitals:** a leather plaque holds the HP bar (wax-seal heart badge, shaded fill, ticks every 12 px) and the thin stamina and sakti bars in iron frames.
-- Regenerate: `python3 tools/gen_ui.py` (scenery, old set) then `python3 tools/gen_ui_rpg.py` (the theme; run it last) and `python3 tools/gen_title_book.py` (main screen).
+- **Surfaces (v2):** over the world everything is the ink set from `tools/gen_ui_ink.py`: `ink_panel` (9-patch 4), `ink_panel_focus` (gold hairline), `ink_slot` (recessed well), `frame_portrait`, `keycap` (light key, dark letter), `continue_arrow`, `ink_cursor` (5 px gold diamond), `arrow_objective`, `icon_ilmu`. The paper book keeps its own set (`book_*`, `tools/gen_menu_book.py`; v2 calmed the paper grain from 14% to 3% and dropped the kawung tile under text). `panel.png`, `button_*`, `slot*`, `lozenge` remain for paper contexts only.
+- **Vitals (v2):** bare bars with a 1 px ink outline, no plaque and no badges (section 2.1).
+- Regenerate: `python3 tools/gen_ui.py` (scenery, old set), `python3 tools/gen_ui_rpg.py` (paper theme), `python3 tools/gen_menu_book.py`, `python3 tools/gen_title_book.py`, then `python3 tools/gen_ui_ink.py` LAST (it overwrites frame_portrait, keycap, continue_arrow, arrow_objective and icon_ilmu with the v2 versions).

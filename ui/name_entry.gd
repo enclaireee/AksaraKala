@@ -17,28 +17,30 @@ func _ready() -> void:
 	sky.modulate = Color(0.4, 0.4, 0.45)
 	add_child(sky)
 	add_child(UIFx.rect_tex("vignette", Vector2.ZERO))
-	var card := UIFx.frame(Vector2(120, 75), Vector2(240, 116))
+	var card := Panel.new()   # ink card (ui.md 0), the same surface as class select and the dialogue box
+	card.add_theme_stylebox_override("panel", UIFx.ink_box())
+	card.position = Vector2(120, 80)
+	card.size = Vector2(240, 108)
+	card.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(card)
-	var title := UIFx.label("UI_NAME_PROMPT", 10, UIFx.INK_HEAD, true, true)
+	var title := UIFx.text("UI_NAME_PROMPT", "label", UIFx.LABEL_COL)
 	title.position = Vector2(0, 16)
-	title.size = Vector2(240, 14)
+	title.size = Vector2(240, 9)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	card.add_child(title)
-	var d := UIFx.rect_tex("divider", Vector2(88, 32))
-	card.add_child(d)
 
 	_edit = LineEdit.new()
 	_edit.max_length = 12
 	_edit.text = get_node("/root/Game").DEFAULT_NAME
 	_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_edit.position = Vector2(50, 44)
-	_edit.size = Vector2(140, 20)
-	_edit.add_theme_font_override("font", UIFx.cinzel())
-	_edit.add_theme_font_size_override("font_size", 10)
-	_edit.add_theme_color_override("font_color", UIFx.INK)
-	_edit.add_theme_color_override("selection_color", Color(UIFx.INK_HEAD, 0.25))
-	_edit.add_theme_color_override("font_selected_color", UIFx.INK)
-	_edit.add_theme_color_override("caret_color", UIFx.INK_HEAD)
+	_edit.position = Vector2(50, 36)
+	_edit.size = Vector2(140, 22)
+	_edit.add_theme_font_override("font", UIFx.head_font())   # the name is the one big word on the card
+	_edit.add_theme_font_size_override("font_size", UIFx.HEAD)
+	_edit.add_theme_color_override("font_color", UIFx.GOLD_HI)
+	_edit.add_theme_color_override("selection_color", Color(UIFx.ACCENT, 0.25))
+	_edit.add_theme_color_override("font_selected_color", UIFx.GOLD_HI)
+	_edit.add_theme_color_override("caret_color", UIFx.ACCENT)
 	for s in ["normal", "focus"]:
 		var e := StyleBoxEmpty.new()
 		e.content_margin_left = 4.0
@@ -48,22 +50,23 @@ func _ready() -> void:
 	_edit.text_submitted.connect(func(_s: String) -> void: confirm())
 	card.add_child(_edit)
 	_rule = ColorRect.new()   # the underline: dim gold, breathing, with a bright spark that sweeps along it
-	_rule.position = Vector2(50, 65)
+	_rule.position = Vector2(50, 60)
 	_rule.size = Vector2(140, 1)
-	_rule.color = Color("8A7656")
+	_rule.color = UIFx.ACCENT
 	_rule.mouse_filter = MOUSE_FILTER_IGNORE
 	card.add_child(_rule)
 	_spark = ColorRect.new()
 	_spark.size = Vector2(14, 1)
-	_spark.color = UIFx.INK_HEAD
-	_spark.position = Vector2(50, 65)
+	_spark.color = UIFx.GOLD_HI
+	_spark.position = Vector2(50, 60)
+	_spark.visible = false   # ui.md 0: no idle shimmer; the caret already shows focus
 	_spark.mouse_filter = MOUSE_FILTER_IGNORE
 	card.add_child(_spark)
 
-	var ok := LozengeButton.new("UI_NAME_OK", 10, true)
+	var ok := LozengeButton.new("UI_NAME_OK", 10)
 	ok.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	ok.position = Vector2(80, 80)
-	ok.size = Vector2(80, 20)
+	ok.position = Vector2(70, 74)
+	ok.size = Vector2(100, 18)
 	ok.pressed.connect(confirm)
 	card.add_child(ok)
 	_edit.grab_focus()
@@ -76,9 +79,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_t += delta
-	_rule.modulate.a = 0.55 + 0.25 * sin(_t * 3.0)
-	var on := _edit.has_focus()
-	_spark.visible = on
+	_rule.modulate.a = 0.6 if _edit.has_focus() else 0.3
+	var on := false
 	if on:
 		var x := 50.0 + fposmod(_t * 70.0, 154.0) - 14.0
 		var l := maxf(x, 50.0)

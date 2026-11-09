@@ -25,8 +25,8 @@ const CREAM := Color("EADFC4")
 const WAX := Color("9E2B25")
 const VERD := Color("3F7A66")
 
-const FONT_NUM := "res://assets/fonts/Jersey10-Regular.ttf"
-const FONT_ITALIC := "res://assets/fonts/Jersey10-Regular.ttf"
+const FONT_NUM := "res://assets/fonts/Tiny5-Regular.woff"      # ui.md 1: body face, 8 / 16 only
+const FONT_ITALIC := "res://assets/fonts/Tiny5-Regular.woff"
 
 var content: Control           # the menu adds its TabContainer here (between the pages and the front ornaments)
 var footer_box: HBoxContainer
@@ -57,8 +57,8 @@ func build(titles: Array, icons: Array) -> void:
 		b.icon = tex("book_tab_" + icons[i])
 		b.expand_icon = false
 		b.clip_text = true
-		b.add_theme_font_override("font", UIFx.cinzel())
-		b.add_theme_font_size_override("font_size", 10)
+		b.add_theme_font_override("font", UIFx.caps_font())
+		b.add_theme_font_size_override("font_size", UIFx.BODY)
 		b.add_theme_constant_override("h_separation", 4)
 		b.add_theme_constant_override("outline_size", 0)
 		b.set_meta("title", titles[i])
@@ -100,13 +100,7 @@ func _page(name_: String, r: Rect2) -> Control:
 	var p := nine(name_, r, 8)
 	p.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
 	p.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
-	var k := TextureRect.new()   # the faint kawung paper tile
-	k.texture = tex("book_kawung")
-	k.stretch_mode = TextureRect.STRETCH_TILE
-	k.position = Vector2(6, 4)
-	k.size = r.size - Vector2(10, 8)
-	k.mouse_filter = MOUSE_FILTER_IGNORE
-	p.add_child(k)
+	# no paper pattern under the text: plain parchment reads calmer (ui.md 0, v2)
 	return p
 
 
@@ -117,11 +111,11 @@ func select(index: int) -> void:
 	for i in _ribbons.size():
 		var b := _ribbons[i]
 		var on := i == index
-		b.text = tr(b.get_meta("title")) if on else ""
+		b.text = tr(b.get_meta("title")).to_upper() if on else ""   # tracked caps label (Button has no uppercase flag)
 		b.tooltip_text = "" if on else tr(b.get_meta("title"))
 		var w := RIB_W
 		if on:
-			w = 4 * int(ceil((UIFx.cinzel().get_string_size(b.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 8).x + 30) / 4.0))
+			w = 4 * int(ceil((UIFx.caps_font().get_string_size(b.text.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x + 30) / 4.0))
 		widths.append(w)
 		total += w
 		var st := _ribbon_box("book_ribbon_on" if on else "book_ribbon_off", on)
@@ -217,13 +211,15 @@ static func box(name_: String, m: int, content := -1) -> StyleBoxTexture:
 	return s
 
 
-## Body text (Crimson Pro 8), plain ink on paper.
+## Body text (Tiny5 8), plain ink on paper.
 static func text(t: String, color := INK, wrap := false) -> Label:
 	var l := Label.new()
 	l.text = t
+	l.add_theme_font_override("font", UIFx.body_font())
+	l.add_theme_font_size_override("font_size", UIFx.BODY)
 	l.add_theme_color_override("font_color", color)
 	l.add_theme_constant_override("outline_size", 0)
-	l.add_theme_constant_override("line_spacing", 0)
+	l.add_theme_constant_override("line_spacing", 1)
 	l.mouse_filter = MOUSE_FILTER_IGNORE
 	if wrap:
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -232,31 +228,30 @@ static func text(t: String, color := INK, wrap := false) -> Label:
 
 
 static func italic(t: String, color := INK_DIM, wrap := true) -> Label:
-	var l := text(t, color, wrap)
-	l.add_theme_font_override("font", load(FONT_ITALIC))
-	return l
+	return text(t, color, wrap)   # the pixel face has no italic: secondary text is the dim ink colour
 
 
-## Crimson Pro bold 8: labels, section names, menu entries.
+## Small tracked caps (Tiny5 8 +1): labels, section names, menu entries.
 static func bold(t: String, color := INK) -> Label:
 	var l := text(t, color)
-	l.add_theme_font_override("font", UIFx.cinzel())
+	l.add_theme_font_override("font", UIFx.caps_font())
+	l.uppercase = true
 	return l
 
 
-## Almendra heading in ink red (page and section titles).
-static func head(t: String, size := 12, color := INK_HEAD) -> Label:
+## Heading in ink red (page and section titles): Jersey 10 at 19, the one heading size (ui.md 1).
+## `size` is kept for old callers and ignored.
+static func head(t: String, _size := 12, color := INK_HEAD) -> Label:
 	var l := text(t, color)
-	l.add_theme_font_override("font", UIFx.display())
-	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_font_override("font", UIFx.head_font())
+	l.add_theme_font_size_override("font_size", UIFx.HEAD)
 	return l
 
 
-## Jersey 10 for numbers (crisp pixel digits).
-static func num(t: String, color := INK, size := 10) -> Label:
+## Numbers: Tiny5 at 8, or 16 for a big figure (size >= 16).
+static func num(t: String, color := INK, size := 8) -> Label:
 	var l := text(t, color)
-	l.add_theme_font_override("font", load(FONT_NUM))
-	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_font_size_override("font_size", 16 if size >= 16 else UIFx.BODY)
 	return l
 
 
@@ -283,18 +278,18 @@ static func keycap(k: String) -> Control:
 		n.add_child(ic)
 		n.size = Vector2(12, 10)
 	else:
-		var f := UIFx.cinzel()
-		var w := f.get_string_size(k, HORIZONTAL_ALIGNMENT_LEFT, -1, 7).x
+		var f := UIFx.body_font()
+		var w := f.get_string_size(k, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
 		var l := Label.new()
 		l.text = k
 		l.add_theme_font_override("font", f)
-		l.add_theme_font_size_override("font_size", 10)
+		l.add_theme_font_size_override("font_size", UIFx.BODY)
 		l.add_theme_color_override("font_color", INK)
 		l.add_theme_constant_override("outline_size", 0)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		n.size = Vector2(maxi(10, int(ceil(w)) + 6), 10)
-		l.position = Vector2(0, -1)
+		n.size = Vector2(maxi(10, int(ceil(w)) + 5), 10)
+		l.position = Vector2(0, 0)
 		l.size = n.size
 		n.add_child(l)
 	n.custom_minimum_size = n.size
@@ -329,10 +324,10 @@ static func set_row_selected(b: Button, on: bool) -> void:
 ## A small paper button with an ink rim (wax rim when focused), Crimson bold 8 ink text.
 static func small_button(t: String) -> Button:
 	var b := Button.new()
-	b.text = t
+	b.text = String(TranslationServer.translate(t)).to_upper()   # tracked caps; already-translated text passes through
 	b.focus_mode = FOCUS_ALL
-	b.add_theme_font_override("font", UIFx.cinzel())
-	b.add_theme_font_size_override("font_size", 10)
+	b.add_theme_font_override("font", UIFx.caps_font())
+	b.add_theme_font_size_override("font_size", UIFx.BODY)
 	b.add_theme_constant_override("outline_size", 0)
 	for c in ["font_color", "font_pressed_color"]:
 		b.add_theme_color_override(c, INK)

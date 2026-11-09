@@ -81,7 +81,7 @@ def make_page(right):
     for y in range(h):
         for x in range(w):
             n = rnd.random()
-            c = PAPER if n < 0.86 else (PAPER_HI if n < 0.93 else PAPER_MID)
+            c = PAPER if n < 0.965 else (PAPER_HI if n < 0.985 else PAPER_MID)   # calm paper: ~3% grain (ui.md 0, less noise)
             im.put(x, y, c)
     # top / bottom burnt edge
     for x in range(w):
