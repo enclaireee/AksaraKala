@@ -74,7 +74,7 @@ func _ready() -> void:
 	_panel.move_child(bg, 0)
 	_name = _label(Vector2(cx + 10, cy + 8), Vector2(CARD.size.x - 20, 13))
 	_name.add_theme_font_override("font", UIFx.head_font())
-	_name.add_theme_font_size_override("font_size", UIFx.HEAD)
+	_name.add_theme_font_size_override("font_size", UIFx.HEAD_SIZE)
 	_name.add_theme_color_override("font_color", UIFx.GOLD_HI)
 	_name.autowrap_mode = TextServer.AUTOWRAP_OFF
 	var rule := ColorRect.new()   # one hairline under the name

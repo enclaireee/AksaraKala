@@ -130,6 +130,7 @@ Current development status and architecture reference for Aksara Kala as of **20
 ---
 
 ## 7. Standing Operational Rules
+- 2026-11-09: Launch intro (untested, no Godot in the cloud box). The game now boots into `ui/intro.tscn` (ui.md 4.0, ~30 s, any input skips) before the title. Art `tools/gen_intro_art.py` -> `assets/art/intro/`, score `tools/audio/intro.py` -> `music/intro.ogg` (timings shared with `ui/intro.gd` T_*). Also fixed `UIFx.HEAD` being declared twice (colour and font size, a parse error from the v3 pass): the size is now `UIFx.HEAD_SIZE`. Next: `--import`, then `intro_test`, `audio_test`, `i18n_test`, and watch it once with sound to check the sync.
 - 2026-11-09: UI v3 "Senja". Supersedes the colour and surface parts of the v2 and parchment rules below (type scale, grid, quiet HUD still hold). One dusk surface everywhere, no paper. Cyan `UIFx.ACCENT` = focus/selection/magic/new, amber `UIFx.WARM` = quest/loot/Ilmu, rose `UIFx.DANGER` = danger only. Full-screen screens use `UIFx.sky()`. UI art only from `tools/gen_ui_dusk.py`, run last; never hand-edit its outputs.
 - Follow token-efficiency protocol: read targeted line ranges, do not read full massive files unnecessarily.
 - Never commit, push, or delete files without explicit user request.

@@ -54,7 +54,7 @@ func run() -> void:
 			missing.append("amb/" + pl.amb)
 		if not has_file("sfx/step_%s_0" % pl.surface):
 			missing.append("sfx/step_%s_0" % pl.surface)
-	for id in ["title", "select", "kelir", "ruwatan", "epilogue", "boss_kala_2", "home", "town_kampung", "town_galuh", "town_mataram", "town_kidul"]:
+	for id in ["intro", "title", "select", "kelir", "ruwatan", "epilogue", "boss_kala_2", "home", "town_kampung", "town_galuh", "town_mataram", "town_kidul"]:
 		if not has_file("music/" + id):
 			missing.append("music/" + id)
 	for k: String in a.SPELL_SFX:

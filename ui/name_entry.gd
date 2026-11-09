@@ -34,7 +34,7 @@ func _ready() -> void:
 	_edit.position = Vector2(50, 36)
 	_edit.size = Vector2(140, 22)
 	_edit.add_theme_font_override("font", UIFx.head_font())   # the name is the one big word on the card
-	_edit.add_theme_font_size_override("font_size", UIFx.HEAD)
+	_edit.add_theme_font_size_override("font_size", UIFx.HEAD_SIZE)
 	_edit.add_theme_color_override("font_color", UIFx.GOLD_HI)
 	_edit.add_theme_color_override("selection_color", Color(UIFx.ACCENT, 0.25))
 	_edit.add_theme_color_override("font_selected_color", UIFx.GOLD_HI)

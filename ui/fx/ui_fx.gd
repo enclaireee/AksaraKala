@@ -47,7 +47,7 @@ const FONT_BODY := "res://assets/fonts/Tiny5-Regular.woff"
 const FONT_HEAD := "res://assets/fonts/Jersey10-Regular.ttf"
 const FONT_DISPLAY := "res://assets/fonts/Jersey15-Regular.ttf"
 const BODY := 8
-const HEAD := 19
+const HEAD_SIZE := 19   # (the colour of the same name is HEAD)
 const DISPLAY := 27
 const LOGO := 54
 const LINE := 10        # body line pitch (9 px glyph box + 1 spacing)
@@ -111,7 +111,7 @@ static func display() -> Font:
 ## Maps any old size to the nearest pixel-true step of the scale.
 static func snap(size: int, display_face: bool = false) -> int:
 	if display_face:
-		return LOGO if size >= 40 else (DISPLAY if size >= 20 else HEAD)
+		return LOGO if size >= 40 else (DISPLAY if size >= 20 else HEAD_SIZE)
 	return 16 if size >= 16 else BODY
 
 
@@ -130,7 +130,7 @@ static func text(t: String, kind := "body", color := CREAM, paper := false) -> L
 			l.add_theme_font_size_override("font_size", BODY)
 		"head":
 			l.add_theme_font_override("font", head_font())
-			l.add_theme_font_size_override("font_size", HEAD)
+			l.add_theme_font_size_override("font_size", HEAD_SIZE)
 		"display":
 			l.add_theme_font_override("font", display())
 			l.add_theme_font_size_override("font_size", DISPLAY)

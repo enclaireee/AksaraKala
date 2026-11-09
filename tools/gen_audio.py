@@ -21,6 +21,7 @@ import dsp  # noqa: E402
 import tracks as T  # noqa: E402
 import sfx as S  # noqa: E402
 import amb as A  # noqa: E402
+import intro as IN  # noqa: E402
 
 REGIONS = ["sunda", "galuh", "mataram", "timur", "kidul", "kala"]
 
@@ -32,6 +33,7 @@ for r in REGIONS:
     MUSIC["combat_" + r] = (lambda r=r: T.combat(T.THEMES[r]))
     MUSIC["boss_" + r] = (lambda r=r: T.boss(r))
 MUSIC["boss_kala_2"] = lambda: T.boss("kala", intense=True)
+MUSIC["intro"] = IN.score   # the launch intro, through-composed (tools/audio/intro.py, ui/intro.gd)
 for k, th in T.TOWNS.items():
     MUSIC[("home" if k == "home" else "town_" + k)] = (lambda th=th: T.town(th))
 for k in T.SPECIAL:

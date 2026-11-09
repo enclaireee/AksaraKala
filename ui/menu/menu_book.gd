@@ -249,7 +249,7 @@ static func bold(t: String, color := INK) -> Label:
 static func head(t: String, _size := 12, color := INK_HEAD) -> Label:
 	var l := text(t, color)
 	l.add_theme_font_override("font", UIFx.head_font())
-	l.add_theme_font_size_override("font_size", UIFx.HEAD)
+	l.add_theme_font_size_override("font_size", UIFx.HEAD_SIZE)
 	return l
 
 
