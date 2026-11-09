@@ -2,12 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-path="res://.godot/imported/Tiny5-Regular.woff-5e1a2b3c4d5e6f708192a3b4c5d6e7f8.fontdata"
+uid="uid://xuujf6d4t5e3"
+path="res://.godot/imported/Tiny5-Regular.woff-ce01f1ffdf9b923474306764f24f64a2.fontdata"
 
 [deps]
 
 source_file="res://assets/fonts/Tiny5-Regular.woff"
-dest_files=["res://.godot/imported/Tiny5-Regular.woff-5e1a2b3c4d5e6f708192a3b4c5d6e7f8.fontdata"]
+dest_files=["res://.godot/imported/Tiny5-Regular.woff-ce01f1ffdf9b923474306764f24f64a2.fontdata"]
 
 [params]
 

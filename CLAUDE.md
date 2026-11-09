@@ -27,3 +27,4 @@ If you are a subagent with a brief, do only the brief and skip the rest of this 
 ## Git
 - This folder needs its own repo. If `git rev-parse --show-toplevel` is not this folder, run `git init` here first.
 - Never commit, push, delete files or install anything unless the user asks.
+- When committing or pushing, never add Claude or any AI as a collaborator or co-author (no `Co-authored-by` trailers or collaborator tags); all commits must come solely from the user.

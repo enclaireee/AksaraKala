@@ -207,7 +207,6 @@ func _exit_tree() -> void:
 func _group(parent: Node) -> Control:
 	var c := Control.new()
 	c.set_anchors_preset(Control.PRESET_FULL_RECT)
-	c.size = Vector2(480, 270)
 	c.mouse_filter = MOUSE_FILTER_IGNORE
 	parent.add_child(c)
 	return c
