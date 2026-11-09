@@ -1,6 +1,6 @@
 extends SceneTree
 ## Launch intro (ui.md 4.0): the boot scene is the intro, its art and score exist, the timeline runs to the end
-## and hands over, a key press skips, and every narration line resolves in both languages.
+## and hands over in about ten seconds, a key press skips, and the skip hint resolves in both languages.
 
 var fails := 0
 
@@ -19,9 +19,8 @@ func _initialize() -> void:
 
 func run() -> void:
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://ui/intro.tscn", "the game boots into the intro")
-	for n in ["blencong", "flame", "kelir", "gunungan", "kala_head", "kala_eyes", "glow_warm", "glow_cyan", "glow_red",
-			"dawn_sky", "dawn_far", "dawn_haze", "dawn_mid", "dawn_peak", "hero_wiku", "beam", "ring", "shard",
-			"ink_0", "ink_1", "ink_2", "ink_3"]:
+	for n in ["storm_sky", "kala_close", "kala_close_eyes", "kala_sky", "kala_sky_eyes", "storm_far", "storm_mid",
+			"storm_peak", "hero_storm", "lightning", "glow_cyan", "glow_red", "dawn_sky", "beam", "ring"]:
 		check(ResourceLoader.exists("res://assets/art/intro/%s.png" % n), "intro art %s" % n)
 	check(ResourceLoader.exists("res://assets/audio/music/intro.ogg"), "intro score")
 
@@ -36,7 +35,8 @@ func run() -> void:
 	a.finished.connect(func() -> void: done[0] = true)
 	root.add_child(a)
 	await process_frame
-	check(a._inks.size() == 5, "five glyphs (ha na ca ra ka)")
+	check(a.T_OUT + 0.8 <= 10.5, "about ten seconds long")
+	check(a._ka.stroke.size() > 1, "the Ka has a stroke to write")
 	var t := 0.0
 	while t < a.T_OUT + 0.2:
 		a._process(0.1)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Art for the launch intro (ui/intro.gd, ui.md 4.0) -> assets/art/intro/.
 
+Ten seconds, no words: Kala's face in the storm clouds, the Wiku on the crag, Ka written in light, dawn.
 Everything is drawn procedurally at native resolution (480x270 screen, 1 art px = 1 screen px) in the v3 "Senja"
 dusk palette, with banded colour steps and ordered (Bayer) dithering instead of smooth gradients, so it sits with
 the title art. Deterministic: re-running reproduces the same files.
@@ -142,163 +143,8 @@ def save(img, name):
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# Act 0: the blencong, the bronze oil lamp of the wayang (a garuda-bird vessel hung on a chain)
-# ---------------------------------------------------------------------------------------------------------------
-
-BRONZE = [hx("2A160E"), hx("4A2E1A"), hx("7A4A26"), hx("A8693A"), hx("C98A52"), hx("F2B27A")]
-
-
-def blencong():
-    w, h = 64, 56
-    im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
-    c = BRONZE
-    # chain from the top
-    for y in range(0, 16, 3):
-        d.rectangle((31, y, 32, y + 1), fill=c[3])
-        d.point((31, y + 2), fill=c[1])
-    d.ellipse((27, 14, 36, 20), outline=c[3])
-    # the vessel: a bird body, tail fanned to the right, head and beak (the spout) to the left
-    d.polygon([(14, 34), (20, 26), (32, 22), (44, 24), (52, 28), (50, 36), (40, 42), (24, 42)], fill=c[2])
-    # tail feathers
-    for i, (tx, ty) in enumerate([(60, 18), (62, 26), (61, 34), (57, 41)]):
-        d.polygon([(44, 26 + i * 3), (tx, ty), (tx - 3, ty + 4), (46, 32 + i * 2)], fill=c[3 if i % 2 else 2])
-    # wing, swept up
-    d.polygon([(26, 28), (34, 14 + 8), (44, 18), (40, 30), (30, 34)], fill=c[3])
-    for k in range(4):
-        d.line([(30 + k * 3, 30), (34 + k * 3, 21 + k)], fill=c[4])
-    # neck and crested head to the left, the beak is the wick spout
-    d.polygon([(18, 32), (12, 24), (8, 20), (12, 16), (18, 18), (22, 26)], fill=c[2])
-    d.polygon([(12, 16), (10, 10), (15, 13), (17, 8), (19, 15)], fill=c[3])  # crest
-    d.polygon([(8, 20), (1, 23), (8, 23)], fill=c[4])                          # beak / spout
-    d.point((13, 19), fill=c[5])                                                # eye
-    # belly bowl and the drip foot
-    d.chord((18, 34, 48, 50), 0, 180, fill=c[1])
-    d.line([(20, 42), (46, 42)], fill=c[4])
-    d.polygon([(31, 50), (33, 50), (32, 55)], fill=c[2])
-    for x in range(22, 46, 4):   # chased band on the belly
-        d.point((x, 45), fill=c[4])
-        d.point((x + 2, 46), fill=c[3])
-    im = rim(im, BRONZE[5], dirs=((0, -1), (-1, 0)))
-    return outline(im, hx("120A0A"))
-
-
-def flame_sheet():
-    """4 frames, 12x22 each: the lamp flame, white core, amber body, rose tips."""
-    fw, fh = 12, 22
-    sheet = Image.new("RGBA", (fw * 4, fh), (0, 0, 0, 0))
-    cols = [ROSE, WARM_LO, WARM, hx("FFE2A8"), CREAM]
-    for f in range(4):
-        yy, xx = np.mgrid[0:fh, 0:fw]
-        lean = [0.0, 0.8, -0.4, -0.9][f]
-        tall = [1.0, 0.92, 1.06, 0.96][f]
-        t = (fh - 1 - yy) / (fh * tall)                 # 0 at the base, 1 at the tip
-        cx = fw / 2 - 0.5 + lean * t * t * 3
-        half = 4.6 * np.sin(np.clip(t, 0, 1) ** 0.55 * math.pi) * (1 - t * 0.35)
-        dist = np.abs(xx - cx) / np.maximum(half, 0.01)
-        inside = (dist < 1) & (t >= 0) & (t < 1)
-        heat = np.clip((1 - dist) * 0.9 + (1 - t) * 0.6 - 0.25, 0, 1)
-        img = banded(heat, cols)
-        a = np.array(img)
-        a[..., 3] = np.where(inside, 255, 0)
-        sheet.paste(Image.fromarray(a, "RGBA"), (f * fw, 0))
-    return sheet
-
-
-# ---------------------------------------------------------------------------------------------------------------
-# Act 1: the kelir (shadow-play screen) lit by the lamp, and the gunungan
-# ---------------------------------------------------------------------------------------------------------------
-
-def kelir():
-    yy, xx = np.mgrid[0:H, 0:W]
-    dx = (xx - 240) / 260.0
-    dy = (yy - 118) / 150.0
-    r = np.sqrt(dx * dx + dy * dy)
-    weave = (value_noise(H, W, 6, 7) - 0.5) * 0.05 + ((xx % 3 == 0) * -0.015)
-    v = np.clip(1.0 - r, 0, 1) ** 1.25 + weave
-    cloth = [hx("120B12"), hx("2A1418"), hx("4A2418"), hx("7A3E1E"), hx("A8642A"), hx("D49446"),
-             hx("EEC27C"), hx("FAE0AE"), hx("FFF0D0")]
-    im = banded(v, cloth)
-    d = ImageDraw.Draw(im)
-    # the red border along the top (the screen's sewn edge) and the dark lower hem
-    d.rectangle((0, 0, W, 9), fill=hx("4A1018"))
-    d.rectangle((0, 10, W, 11), fill=hx("8A2028"))
-    d.line([(0, 12), (W, 12)], fill=hx("2A0A10"))
-    for x in range(0, W, 8):
-        d.point((x + 3, 5), fill=hx("C98A52"))
-    # the debog: banana-trunk bed the puppets stand in
-    trunk = [hx("0E0A08"), hx("1E1A10"), hx("2E2A16"), hx("3E3A1E"), hx("2A2614")]
-    for i, y in enumerate(range(236, 270)):
-        k = abs(y - 246) / 24.0
-        col = trunk[min(4, int((1 - k) * 4.5))] if y < 262 else trunk[0]
-        d.line([(0, y), (W, y)], fill=col)
-    for x in range(0, W, 23):
-        d.line([(x, 238), (x + 6, 238)], fill=hx("4E4A26"))
-        d.point((x + 12, 250), fill=hx("0E0A08"))
-    d.line([(0, 235), (W, 235)], fill=hx("0A0806"))
-    return im
-
-
-def gunungan():
-    """The kayon / gunungan (tree-of-life puppet) as its shadow: a pointed leaf with a gate at the foot, a tree whose
-    branches curl up the middle, a flame-tongue rim, and lace holes punched through the hide (light shows through)."""
-    w, h = 80, 140
-    m = np.zeros((h, w), bool)
-    yy, xx = np.mgrid[0:h, 0:w]
-    cx = w / 2 - 0.5
-    body_h = 108
-    t = yy / body_h                                         # 0 tip .. 1 base of the leaf
-    half = 37 * np.sin(np.clip(t, 0, 1) ** 0.62 * math.pi * 0.5) ** 1.1
-    half = np.where(t > 0.86, 37 - (t - 0.86) * 60, half)  # the leaf tucks in above the gate
-    leaf = (np.abs(xx - cx) <= half) & (yy < body_h)
-    # flame-tongue serrations on the rim
-    ang = np.arctan2(yy - 70, xx - cx)
-    serr = (np.sin(ang * 22) > 0.55) & (np.abs(xx - cx) > half - 2) & (np.abs(xx - cx) <= half + 2) & (yy > 6) & (yy < 96)
-    m |= leaf | serr
-    # the gate block, with steps
-    m |= (yy >= 96) & (yy < 124) & (np.abs(xx - cx) <= 22)
-    m |= (yy >= 124) & (yy < 128) & (np.abs(xx - cx) <= 26)
-    m |= (yy >= 128) & (yy < 131) & (np.abs(xx - cx) <= 30)
-    # the stick (gapit) below
-    m |= (yy >= 131) & (np.abs(xx - cx) <= 1)
-
-    solid = np.zeros_like(m)
-    # rim band stays solid
-    inner = (np.abs(xx - cx) <= half - 3) & (yy > 5) & (yy < body_h - 6)
-    solid |= leaf & ~inner
-    # the trunk and spiralling branches (solid lines inside the lace)
-    solid |= (np.abs(xx - cx) <= 2) & (yy > 18) & (yy < 98)
-    for side in (-1, 1):
-        for k, y0 in enumerate(range(86, 22, -12)):
-            for s in np.linspace(0, 1, 60):
-                bx = cx + side * (s * (14 + k * 1.5))
-                by = y0 - s * 10 - math.sin(s * math.pi) * 4
-                rad = 1.4 - s * 0.6
-                solid |= ((xx - bx) ** 2 + (yy - by) ** 2 <= rad * rad + 0.6)
-            # the curl at each branch tip
-            ex, ey = cx + side * (14 + k * 1.5), y0 - 10
-            ring = np.abs(np.sqrt((xx - ex - side * 2) ** 2 + (yy - ey + 2) ** 2) - 2.5) < 0.8
-            solid |= ring & leaf
-    # a pair of facing birds near the crown, and the kala head over the gate (as solid shapes)
-    solid |= ((xx - cx) ** 2 / 16 + (yy - 14) ** 2 / 9 <= 1)
-    solid |= (yy >= 96) & (yy < 104) & (np.abs(xx - cx) <= 22)
-    lace = (((xx + (yy // 3) % 2 * 2) % 4 == 0) & (yy % 3 == 1))
-    hole = leaf & ~solid & lace
-    # gate doors: two arched openings
-    door = (yy >= 106) & (yy < 124) & (np.abs(np.abs(xx - cx) - 9) <= 4)
-    door &= ~((yy < 109) & (np.abs(np.abs(xx - cx) - 9) >= 3))
-    hole |= door
-    m &= ~hole
-    a = np.zeros((h, w, 4), np.uint8)
-    shadow = hx("1E0E1C")
-    a[m] = shadow
-    a[m, 3] = 238
-    a[(yy >= 131) & m] = hx("0E060C")
-    return Image.fromarray(a, "RGBA")
-
-
-# ---------------------------------------------------------------------------------------------------------------
-# Act 2: Kala, the devourer (the kala head of the temple gates: bulging eyes, upper jaw and fangs, flame hair)
+# Kala, the devourer (the kala head of the temple gates: bulging eyes, upper jaw and fangs, flame hair).
+# Not saved on its own: kala_cloud() rebuilds it out of storm cloud.
 # ---------------------------------------------------------------------------------------------------------------
 
 def kala_head():
@@ -395,36 +241,8 @@ def kala_eyes():
     return im
 
 
-def ink_edges():
-    """Four steps of ink crawling in from the frame edges, tendrils reaching for the middle."""
-    yy, xx = np.mgrid[0:H, 0:W]
-    edge = np.minimum(np.minimum(xx, W - 1 - xx) / (W / 2), np.minimum(yy, H - 1 - yy) / (H / 2))
-    n = fbm(H, W, 48, 21, 4)
-    streak = value_noise(H, W, 9, 33)
-    ang = np.arctan2(yy - H / 2, xx - W / 2)
-    tendril = (np.sin(ang * 13 + n * 6) * 0.5 + 0.5) ** 6 * 0.35
-    field = edge - (n - 0.5) * 0.28 - tendril * 0.6 - (streak - 0.5) * 0.05
-    out = []
-    for i, lvl in enumerate((0.08, 0.16, 0.27, 0.85)):
-        ink = field < lvl
-        lip = (field < lvl + 0.025) & ~ink
-        a = np.zeros((H, W, 4), np.uint8)
-        a[ink] = LACQUER
-        a[lip] = hx("3A1030")
-        out.append(save(Image.fromarray(a, "RGBA"), "ink_%d" % i))
-    return out
-
-
-def ash_shard():
-    """A tiny falling flake of a burned glyph (particle texture)."""
-    im = Image.new("RGBA", (3, 3), (0, 0, 0, 0))
-    for p in [(1, 0), (0, 1), (1, 1), (2, 1), (1, 2)]:
-        im.putpixel(p, (255, 255, 255, 255))
-    return im
-
-
 # ---------------------------------------------------------------------------------------------------------------
-# Act 3: dawn over the volcano, the Wiku on the peak
+# Dawn (after the light breaks the storm) and the shared ridge helpers
 # ---------------------------------------------------------------------------------------------------------------
 
 SKY = [hx("120C2A"), hx("1E1440"), hx("34205A"), hx("552A6A"), hx("7E3470"), hx("AE4672"), hx("D8606A"),
@@ -487,96 +305,6 @@ def layer_from_profile(y, colour, rim_col=None, fade=None):
     return Image.fromarray(a, "RGBA")
 
 
-def dawn_far():
-    y = ridge_profile(3, 196, 26, 90, peaks=[(118, 118, 78), (372, 136, 70)])
-    return layer_from_profile(y, hx("8E3E6E"), hx("D8706E"), hx("A44E72"))
-
-
-def dawn_haze():
-    y = ridge_profile(17, 206, 18, 70, peaks=[(250, 168, 60)])
-    return layer_from_profile(y, hx("6E3068"), hx("C8606E"))
-
-
-def dawn_mid():
-    y = ridge_profile(9, 222, 30, 50)
-    # a tree line: little crowns on the ridge
-    r = np.random.default_rng(2)
-    for x in range(0, W, 3):
-        if r.random() < 0.55:
-            y[x] -= r.integers(2, 7)
-    im = layer_from_profile(y, hx("4A1C4C"), hx("B04E66"))
-    d = ImageDraw.Draw(im)
-    for x in range(8, W, 37):   # palms
-        base = int(y[x])
-        d.line([(x, base), (x + 2, base - 16)], fill=hx("4A1C4C"))
-        for dx, dy in [(-6, 2), (6, 1), (-4, -2), (5, -3), (0, -4)]:
-            d.line([(x + 2, base - 16), (x + 2 + dx, base - 16 + dy + 3)], fill=hx("4A1C4C"))
-    return im
-
-
-def dawn_peak():
-    """The foreground peak, the Wiku stands on its top at (240, 206)."""
-    xs = np.arange(W)
-    n = fbm(1, W, 24, 41, 3)[0]
-    dist = np.maximum(np.abs(xs - 240) - 9, 0)
-    y = 206 + dist ** 1.3 * 0.2 + (n - 0.5) * 10 * np.clip(dist / 40, 0, 1)
-    y = y + ((xs % 5 == 0) & (dist > 0)) * 1   # broken rock edge
-    im = layer_from_profile(y, hx("1A0C22"))
-    a = np.array(im)
-    # rock strata and a warm rim where the sun catches the top
-    yy, xx = np.mgrid[0:H, 0:W]
-    top = np.round(y)[None, :]
-    strata = (((yy - top) % 9 == 0) | ((yy + xx // 7) % 13 == 0)) & (yy > top + 2) & (bayer(H, W) < 0.6)
-    a[strata] = hx("2A1430")
-    for k, col in enumerate([hx("F6A85C"), hx("C25670"), hx("6A2448")]):
-        a[(yy == top + k) & (yy < H)] = col
-    return Image.fromarray(a, "RGBA")
-
-
-def hero():
-    """The Wiku from behind, two frames (48x72 each): staff planted, and staff raised to write in the sky.
-    A dark silhouette with a warm rim from the sun ahead and a cyan rim from the staff's gem."""
-    fw, fh = 48, 72
-    sheet = Image.new("RGBA", (fw * 2, fh), (0, 0, 0, 0))
-    body = hx("120818")
-    cloth = hx("1E0E26")
-    for f in range(2):
-        im = Image.new("RGBA", (fw, fh), (0, 0, 0, 0))
-        d = ImageDraw.Draw(im)
-        cx = 24
-        # the selendang scarf streaming right in the wind
-        d.polygon([(cx + 2, 26), (cx + 22, 30), (cx + 23, 34), (cx + 19, 33), (cx + 24, 39), (cx + 14, 36), (cx + 3, 31)],
-                  fill=cloth)
-        # robe flaring to the feet
-        d.polygon([(cx - 7, 28), (cx + 7, 28), (cx + 12, 66), (cx + 6, 70), (cx - 6, 70), (cx - 12, 66)], fill=body)
-        d.polygon([(cx + 6, 40), (cx + 15, 64), (cx + 12, 66)], fill=cloth)   # robe flap in the wind
-        # shoulders, head with the iket headcloth and its knot
-        d.ellipse((cx - 10, 22, cx + 10, 34), fill=body)
-        d.ellipse((cx - 6, 10, cx + 6, 24), fill=body)
-        d.polygon([(cx - 7, 13), (cx + 7, 13), (cx + 6, 8), (cx - 6, 8)], fill=cloth)
-        d.polygon([(cx + 5, 10), (cx + 11, 6), (cx + 10, 12)], fill=cloth)
-        if f == 0:
-            # staff planted at the right side, hand on it
-            d.line([(cx + 13, 6), (cx + 13, 70)], fill=hx("2A1820"), width=2)
-            d.polygon([(cx + 8, 28), (cx + 14, 36), (cx + 12, 40), (cx + 6, 32)], fill=body)
-            gem = (cx + 13, 4)
-        else:
-            # both arms up, staff held high and tilted: the moment of writing
-            d.polygon([(cx + 6, 26), (cx + 14, 6), (cx + 17, 8), (cx + 10, 30)], fill=body)
-            d.polygon([(cx - 6, 26), (cx - 10, 10), (cx - 7, 9), (cx - 3, 26)], fill=body)
-            d.line([(cx + 6, 34), (cx + 19, -2)], fill=hx("2A1820"), width=2)
-            gem = (cx + 19, 1)
-        im = rim(im, hx("F6A85C"), dirs=((0, -1), (1, 0)))
-        im = rim(im, HALO, dirs=((-1, 0),))
-        d = ImageDraw.Draw(im)
-        gx, gy = gem
-        d.ellipse((gx - 3, gy - 2, gx + 3, gy + 4), outline=hx("C98A52"))   # the crescent head of the staff
-        d.point((gx, gy + 1), fill=CYAN)
-        d.point((gx, gy + 2), fill=CREAM)
-        sheet.paste(im, (f * fw, 0))
-    return sheet
-
-
 def beam():
     """A vertical shaft of glyph light, cyan to white core, thinning to nothing at the top."""
     w, h = 40, 270
@@ -597,24 +325,258 @@ def ring():
     return im
 
 
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# The storm: Kala's face in the clouds, the volcanoes, the crag and the Wiku
 # ---------------------------------------------------------------------------------------------------------------
 
-def main():
-    out = {
-        "blencong": blencong(), "flame": flame_sheet(), "kelir": kelir(), "gunungan": gunungan(),
-        "kala_head": kala_head(), "kala_eyes": kala_eyes(),
-        "glow_warm": alpha_glow(160, hx("F2B27A"), 6, 210, 1.7),
-        "glow_cyan": alpha_glow(96, hx("7FE8E0"), 5, 200, 1.5),
-        "glow_red": alpha_glow((360, 240), hx("B02040"), 6, 230, 1.1),
-        "dawn_sky": dawn_sky(), "dawn_far": dawn_far(), "dawn_haze": dawn_haze(), "dawn_mid": dawn_mid(), "dawn_peak": dawn_peak(),
-        "hero_wiku": hero(), "beam": beam(), "ring": ring(), "shard": ash_shard(),
-    }
-    for k, im in out.items():
-        save(im, k)
-    inks = ink_edges()
-    storyboard(out, inks)
+STORM = [hx("0A0612"), hx("120A1E"), hx("1C0E2A"), hx("2A1234"), hx("3C1638"), hx("561C3A"), hx("76223C"),
+         hx("9A2E40"), hx("C44448"), hx("E8704E")]
+KALA_CLOUD = [hx("080310"), hx("120616"), hx("1E0A1E"), hx("2E0E26"), hx("44142E"), hx("601A34"), hx("82243A"),
+              hx("AA3242"), hx("D64A4C")]
+VOLCANO = (446, 158)        # the erupting cone behind the hero
+HERO_FEET = (372, 206)      # top of the crag; ui/intro.gd HERO_POS puts the sprite's feet here
+CLOSE = (2.8, (-180, -152))  # kala_head scale and origin for the close-up: the eyes centred at (240, 120)
+CLOSE_LOOK = dict(soft=1, cell=6, power=2.2, lift=0.0)   # crisper and darker than the sky version
+SKY_KALA = (1.15, (27, -6))  # ... and for the wide shot: the face looming over the left of the sky
 
 
+def storm_sky():
+    """Bruised storm clouds, darkest at the top, burning red towards the horizon and the erupting volcano."""
+    yy, xx = np.mgrid[0:H, 0:W]
+    c = fbm(H * 2, W, 44, 71, 5)[::2]               # sampled every other row: the clouds stretch out wide
+    fine = fbm(H, W, 8, 73, 2)
+    v = 0.06 + (yy / H) ** 1.5 * 0.5 + (c - 0.5) * 0.7 + (fine - 0.5) * 0.08
+    d = np.sqrt(((xx - VOLCANO[0]) / 1.5) ** 2 + (yy - VOLCANO[1] - 40) ** 2)
+    v += np.clip(1 - d / 210, 0, 1) ** 2 * 0.55       # the eruption lights the cloud from below
+    d2 = np.sqrt(((xx - 200) / 2.2) ** 2 + (yy - 210) ** 2)
+    v += np.clip(1 - d2 / 160, 0, 1) ** 2 * 0.25
+    im = banded(np.clip(v, 0, 1), STORM)
+    # the ash column over the crater, leaning with the wind
+    a = np.array(im)
+    col = np.abs(xx - (VOLCANO[0] + (VOLCANO[1] - yy) * 0.35)) < (8 + (VOLCANO[1] - yy) * 0.28 + (c - 0.5) * 30)
+    col &= (yy < VOLCANO[1]) & (bayer(H, W) < 0.5 + (yy / VOLCANO[1]) * 0.5)
+    a[col] = hx("1C0A1C")
+    return Image.fromarray(a, "RGBA")
+
+
+def _kala_maps(scale):
+    """kala_head as two float maps (shade 0..1, alpha 0..1), scaled up smooth so its shapes stay clean curves."""
+    a = np.array(kala_head()).astype(np.float32)
+    lum = (0.3 * a[..., 0] + 0.59 * a[..., 1] + 0.11 * a[..., 2]) / 255.0
+    shade = np.clip(lum / 0.2, 0, 1) ** 0.8
+    size = (round(300 * scale), round(190 * scale))
+    up = lambda m: np.array(Image.fromarray(m.astype(np.float32), "F").resize(size, Image.BICUBIC))
+    return up(shade), up(a[..., 3] / 255.0)
+
+
+def _place(m, origin, canvas):
+    """Paste float map `m` at `origin` on a zero canvas (w, h), clipped."""
+    w, h = canvas
+    out = np.zeros((h, w), np.float32)
+    ox, oy = origin
+    x0, y0 = max(0, ox), max(0, oy)
+    x1, y1 = min(w, ox + m.shape[1]), min(h, oy + m.shape[0])
+    if x1 > x0 and y1 > y0:
+        out[y0:y1, x0:x1] = m[y0 - oy:y1 - oy, x0 - ox:x1 - ox]
+    return out
+
+
+def blur(m, r):
+    """Box blur, applied twice (close to a gaussian), radius r px."""
+    k = 2 * r + 1
+    for _ in range(2):
+        for ax in (0, 1):
+            p = np.pad(m, [(r, r) if a == ax else (0, 0) for a in (0, 1)], mode="edge")
+            c = np.cumsum(p, axis=ax, dtype=np.float64)
+            c = np.insert(c, 0, 0, axis=ax)
+            m = (np.take(c, range(k, c.shape[ax]), axis=ax) - np.take(c, range(0, c.shape[ax] - k), axis=ax)) / k
+    return m.astype(np.float32)
+
+
+def kala_cloud(scale, origin, seed=90, soft=2, fray=0.9, cell=9, power=1.5, lift=0.25):
+    """Kala's face made of storm cloud: the temple-gate kala head, huge, filled with churning cloud and frayed
+    into wisps at its edges, lit red from below. `soft` rounds the shapes into billows, `fray` tears the edge."""
+    shade, alpha = _kala_maps(scale)
+    S, A = _place(shade, origin, (W, H)), _place(alpha, origin, (W, H))
+    S, A = blur(S, soft), blur(A, soft + 1)
+    n = fbm(H, W, max(6, int(cell * scale)), seed, 4)
+    fine = fbm(H, W, 3, seed + 5, 2)
+    v = np.clip(S, 0, 1) ** power * 0.95 + (n - 0.5) * 0.38 + (fine - 0.5) * 0.1
+    yy = np.arange(H)[:, None]
+    v += np.clip((yy - H * 0.55) / H, 0, 1) * lift     # brighter low down, over the fire
+    im = np.array(banded(np.clip(v, 0, 1), KALA_CLOUD))
+    edge = A + (n - 0.5) * fray
+    solid = edge > 0.5
+    fringe = (edge > 0.25) & ~solid & (bayer(H, W) < (edge - 0.25) / 0.25)   # dithered wisps fading out
+    im[..., 3] = np.where(solid, 255, np.where(fringe, 140, 0)).astype(np.uint8)
+    out = Image.fromarray(im, "RGBA")
+    out = rim(out, hx("B03A48"), dirs=((0, 1),))      # lit from the fire below
+    return rim(out, hx("3A1430"), dirs=((0, -1),))
+
+
+EYE_COLS = [hx("F2B27A"), hx("FFE2A8"), ROSE, hx("2A0610"), CREAM]
+
+
+def kala_cloud_eyes(scale, origin):
+    """kala_eyes at the same scale and origin as kala_cloud, with a red glow baked around each eye."""
+    e = kala_eyes().resize((round(300 * scale), round(190 * scale)), Image.BICUBIC)
+    canvas = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    r = round(42 * scale)
+    for s in (-1, 1):
+        cx, cy = origin[0] + (150 + s * 46) * scale, origin[1] + 97 * scale
+        g = alpha_glow(r * 2, hx("E0566A"), 5, 170, 1.4)
+        canvas.alpha_composite(g, (int(cx - r), int(cy - r)))
+    a = np.array(e).astype(int)
+    keep = a[..., 3] > 127
+    pal = np.array([c[:3] for c in EYE_COLS])
+    d = ((a[..., None, :3] - pal[None, None]) ** 2).sum(-1)
+    snap = pal[d.argmin(-1)].astype(np.uint8)
+    eyes = np.zeros(a.shape, np.uint8)
+    eyes[..., :3] = snap
+    eyes[..., 3] = keep * 255
+    canvas.alpha_composite(Image.fromarray(eyes, "RGBA"), (int(origin[0]), int(origin[1])))
+    return canvas
+
+
+def storm_far():
+    """Two volcanoes on the horizon; the right one erupts behind the hero, lava running down its flanks."""
+    y = ridge_profile(23, 204, 22, 80, peaks=[(110, 162, 80), (VOLCANO[0], VOLCANO[1], 92)])
+    im = layer_from_profile(y, hx("2C1030"), hx("C44448"), hx("3C1436"))
+    a = np.array(im)
+    r = np.random.default_rng(8)
+    for k in range(7):   # lava rivulets wandering down from the crater
+        x, yy = VOLCANO[0] + r.integers(-5, 6), VOLCANO[1] + 2
+        side = -1 if k % 2 else 1
+        while yy < 210:
+            if 0 <= x < W and yy >= y[int(x)]:
+                a[yy, x] = hx("E8704E") if yy < VOLCANO[1] + 18 else hx("C44448")
+            yy += 1
+            if r.random() < 0.5:
+                x += side * (1 if r.random() < 0.8 else -1)
+    d = ImageDraw.Draw(im := Image.fromarray(a, "RGBA"))
+    d.rectangle((VOLCANO[0] - 6, VOLCANO[1] - 1, VOLCANO[0] + 6, VOLCANO[1] + 1), fill=hx("FFC27A"))
+    return im
+
+
+def storm_mid():
+    y = ridge_profile(31, 230, 22, 46)
+    r = np.random.default_rng(4)
+    for x in range(0, W, 3):
+        if r.random() < 0.5:
+            y[x] -= r.integers(2, 6)
+    im = layer_from_profile(y, hx("1A0A1E"), hx("76223C"))
+    d = ImageDraw.Draw(im)
+    for x in range(14, 330, 41):   # palms bent by the wind
+        base = int(y[x])
+        d.line([(x, base), (x + 4, base - 15)], fill=hx("1A0A1E"))
+        for dx, dy in [(5, 3), (7, 1), (6, -2), (3, -3), (-3, 1)]:
+            d.line([(x + 4, base - 15), (x + 4 + dx, base - 15 + dy + 2)], fill=hx("1A0A1E"))
+    return im
+
+
+def storm_peak():
+    """The crag the Wiku stands on: a spire on the right with a cliff dropping away to the left."""
+    xs = np.arange(W).astype(float)
+    n = fbm(1, W, 18, 43, 3)[0]
+    fx = HERO_FEET[0]
+    left = np.maximum(fx - 12 - xs, 0)
+    right = np.maximum(xs - fx - 14, 0)
+    y = HERO_FEET[1] + left ** 1.35 * 0.55 + right ** 1.1 * 0.22 + (n - 0.5) * 8 * np.clip((left + right) / 30, 0, 1)
+    y = y + ((xs.astype(int) % 4 == 0) & ((left + right) > 0)) * 1
+    im = layer_from_profile(y, hx("0E0612"))
+    a = np.array(im)
+    yy, xx = np.mgrid[0:H, 0:W]
+    top = np.round(y)[None, :]
+    cracks = (((yy + xx // 3) % 11 == 0) | ((yy - xx // 5) % 17 == 0)) & (yy > top + 2) & (bayer(H, W) < 0.5)
+    a[cracks] = hx("1C0C20")
+    lit = xx > fx - 30   # the eruption behind rims the crag on its right and top
+    for k, col in enumerate([hx("F6A85C"), hx("C44448"), hx("5A1A34")]):
+        a[(yy == top + k) & lit] = col
+        a[(yy == top + k) & ~lit & (k > 0)] = hx("3A1230")
+    return Image.fromarray(a, "RGBA")
+
+
+def hero_storm():
+    """The Wiku on the crag, seen from behind and side-on, facing left into the wind towards Kala.
+    Three 64x96 frames: two with the cloak and scarf cracking in the wind, staff planted; one with the staff
+    thrust up at the sky to write. Feet at (32, 95)."""
+    fw, fh = 64, 96
+    sheet = Image.new("RGBA", (fw * 3, fh), (0, 0, 0, 0))
+    body, cloth = hx("100614"), hx("1C0A20")
+    for f in range(3):
+        im = Image.new("RGBA", (fw, fh), (0, 0, 0, 0))
+        d = ImageDraw.Draw(im)
+        cx = 30
+        ph = (0.0, 1.0, 0.5)[f]
+        # the cloak streaming right from the shoulders, its hem rippling
+        hem = []
+        for k in range(9):
+            t = k / 8
+            hem.append((cx + 4 + t * 30, 70 - t * 26 + math.sin(t * 7 + ph * 3.1) * 4))
+        top = [(cx + 6 + t * 26, 28 + t * 6 + math.sin(t * 5 + ph * 3.1) * 2) for t in (0.3, 0.6, 0.85)]
+        d.polygon([(cx - 4, 30), (cx + 6, 27)] + top + hem[::-1] + [(cx - 2, 74)], fill=cloth)
+        # selendang scarf: two long ribbons snapping in the wind
+        for off, ln in ((0, 30), (5, 22)):
+            pts = [(cx + 4 + i * ln / 6, 30 + off - i * 1.6 + math.sin(i * 1.3 + ph * 4 + off) * 2.2) for i in range(7)]
+            d.line(pts, fill=cloth, width=3 if off == 0 else 2)
+        # robe flaring to the feet, pushed right by the wind
+        d.polygon([(cx - 7, 30), (cx + 7, 30), (cx + 15, 90), (cx + 18 + ph * 2, 95), (cx - 9, 95), (cx - 10, 88)], fill=body)
+        # shoulders, head, iket headcloth with its knot tails flying
+        d.ellipse((cx - 10, 24, cx + 10, 38), fill=body)
+        d.ellipse((cx - 7, 9, cx + 6, 25), fill=body)
+        d.polygon([(cx - 8, 13), (cx + 7, 13), (cx + 6, 7), (cx - 7, 7)], fill=cloth)
+        d.polygon([(cx + 5, 10), (cx + 15, 6 + ph * 2), (cx + 13, 12), (cx + 18, 13 - ph), (cx + 7, 15)], fill=cloth)
+        if f < 2:
+            # staff planted ahead of him, the left hand on it
+            d.line([(cx - 13, 4), (cx - 13, 95)], fill=hx("26141E"), width=2)
+            d.polygon([(cx - 6, 32), (cx - 14, 44), (cx - 11, 46), (cx - 3, 36)], fill=body)
+            gem = (cx - 13, 2)
+        else:
+            # the staff thrust up and forward at the sky, both arms behind it
+            d.polygon([(cx - 4, 30), (cx - 18, 10), (cx - 14, 8), (cx + 2, 30)], fill=body)
+            d.polygon([(cx + 4, 30), (cx - 12, 16), (cx - 9, 13), (cx + 8, 30)], fill=body)
+            d.line([(cx - 4, 40), (cx - 24, 4)], fill=hx("26141E"), width=2)
+            gem = (cx - 25, 2)
+        im = rim(im, hx("F6A85C"), dirs=((1, 0), (0, -1)))   # the eruption behind and to the right
+        im = rim(im, hx("6A2448"), dirs=((-1, 0),))
+        d = ImageDraw.Draw(im)
+        gx, gy = gem
+        d.ellipse((gx - 3, gy - 2, gx + 3, gy + 4), outline=hx("C98A52"))   # the crescent head of the staff
+        d.point((gx, gy + 1), fill=CYAN)
+        d.point((gx, gy + 2), fill=CREAM)
+        sheet.paste(im, (f * fw, 0))
+    return sheet
+
+
+HERO_GEM_UP = (30 - 25, 3)   # the gem in the raised frame, relative to the frame's top-left (ui/intro.gd GEM_UP)
+
+
+def lightning():
+    """Two forked bolts side by side (hframes 2), 120x200 each: white core, violet halo."""
+    fw, fh = 120, 200
+    sheet = Image.new("RGBA", (fw * 2, fh), (0, 0, 0, 0))
+    for f in range(2):
+        r = np.random.default_rng(300 + f)
+        im = Image.new("RGBA", (fw, fh), (0, 0, 0, 0))
+        d = ImageDraw.Draw(im)
+
+        def bolt(x, y, length, width, depth):
+            pts = [(x, y)]
+            while y < length:
+                x += int(r.integers(-9, 10))
+                y += int(r.integers(6, 14))
+                pts.append((x, min(y, fh - 1)))
+                if depth < 2 and r.random() < 0.16:
+                    bolt(x, y, y + int(r.integers(30, 70)), max(1, width - 1), depth + 1)
+            d.line(pts, fill=hx("6A4AAA", 110), width=width + 4)
+            d.line(pts, fill=hx("C8B8FF"), width=width + 1)
+            d.line(pts, fill=CREAM, width=max(1, width - 1))
+
+        bolt(fw // 2 + (-14 if f else 10), 0, fh - 4, 2, 0)
+        sheet.paste(im, (f * fw, 0))
+    return sheet
 def _template(glyph):
     """First recogniser template of data/glyphs/<glyph>.tres as a list of points."""
     import re
@@ -635,73 +597,70 @@ def _draw_glyph(img, glyph, centre, box, colour, width=2):
     d.line(q, fill=(255, 255, 255, 220), width=max(1, width - 1))
 
 
-def storyboard(a, inks):
-    """tools/intro_preview.png: six key frames of the intro, staged the way ui/intro.gd places things."""
+
+
+def _dim(img, k):
+    a = np.array(img).astype(float)
+    a[..., :3] *= np.array(k)
+    return Image.fromarray(a.astype(np.uint8), "RGBA")
+
+
+def storyboard(a):
+    """tools/intro_preview.png: four key frames, staged the way ui/intro.gd places things."""
     frames = []
-    lamp, spout = (208, 58), (211, 79)
-    flame = a["flame"].crop((0, 0, 12, 22))
-    # 1: the lamp catches in the dark
-    f = Image.new("RGBA", (W, H), LACQUER)
-    f.alpha_composite(a["glow_warm"], (spout[0] + 14 - 80, spout[1] - 80))
-    f.alpha_composite(a["blencong"], lamp)
-    f.alpha_composite(flame, (spout[0] - 6, spout[1] - 21))
+    hero_at = (HERO_FEET[0] - 30, HERO_FEET[1] - 95)
+    frame = lambda i: a["hero_storm"].crop((i * 64, 0, i * 64 + 64, 96))
+    # 1: lightning shows the face in the clouds
+    f = _dim(a["storm_sky"], (0.3, 0.3, 0.35))
+    f.alpha_composite(a["kala_close"])
+    f.alpha_composite(a["lightning"].crop((0, 0, 120, 200)), (330, 0))
     frames.append(f)
-    # 2: the gunungan on the kelir, the lamp hauled up over it
-    f = a["kelir"].copy()
-    g = a["glow_warm"].copy()
-    g.putalpha(g.getchannel("A").point(lambda v: int(v * 0.45)))
-    f.alpha_composite(g, (spout[0] + 14 - 80, spout[1] - 46 - 80))
-    f.alpha_composite(a["gunungan"], (200, 100))
-    f.alpha_composite(a["blencong"], (lamp[0], lamp[1] - 46))
-    f.alpha_composite(flame, (spout[0] - 6, spout[1] - 46 - 21))
+    # 2: the eyes open
+    f = _dim(a["storm_sky"], (0.3, 0.3, 0.35))
+    f.alpha_composite(_dim(a["kala_close"], (0.55, 0.5, 0.55)))
+    f.alpha_composite(a["kala_close_eyes"])
     frames.append(f)
-    # 3: ha na ca ra ka over the darkened screen
-    k = np.array(a["kelir"]).astype(float)
-    k[..., :3] *= np.array([0.22, 0.2, 0.42])
-    f = Image.fromarray(k.astype(np.uint8), "RGBA")
-    for i, gl in enumerate(["jawa_ha", "jawa_na", "jawa_ca", "jawa_ra", "jawa_ka"]):
-        c = (80 + i * 80, 112)
-        gw = a["glow_cyan"].copy()
-        gw.putalpha(gw.getchannel("A").point(lambda v: int(v * 0.7)))
-        f.alpha_composite(gw, (c[0] - 48, c[1] - 48))
-        _draw_glyph(f, gl, c, (60, 44), CYAN)
+    # 3: the Wiku writes Ka at the face in the sky
+    wide = a["storm_sky"].copy()
+    wide.alpha_composite(a["kala_sky"])
+    wide.alpha_composite(a["kala_sky_eyes"])
+    for k in ("storm_far", "storm_mid", "storm_peak"):
+        wide.alpha_composite(a[k])
+    f = wide.copy()
+    gem = (hero_at[0] + HERO_GEM_UP[0], hero_at[1] + HERO_GEM_UP[1])
+    f.alpha_composite(a["glow_cyan"], (gem[0] - 48, gem[1] - 48))
+    f.alpha_composite(frame(2), hero_at)
+    _draw_glyph(f, "sunda_ka", (196, 96), (130, 110), CYAN, 3)
     frames.append(f)
-    # 4: Kala wakes
-    k = np.array(a["kelir"]).astype(float)
-    k[..., :3] *= np.array([0.6, 0.12, 0.2])
-    f = Image.fromarray(k.astype(np.uint8), "RGBA")
-    f.alpha_composite(a["glow_red"], (60, 42))
-    f.alpha_composite(a["kala_head"], (90, 62))
-    f.alpha_composite(a["kala_eyes"], (90, 62))
-    for i, gl in enumerate(["jawa_ha", "jawa_na", "jawa_ca", "jawa_ra", "jawa_ka"]):
-        _draw_glyph(f, gl, (80 + i * 80, 50), (60, 44), ROSE)
-    f.alpha_composite(inks[1])
-    frames.append(f)
-    # 5: dawn, the Wiku writes Ka
-    dawn = a["dawn_sky"].copy()
-    for k2 in ("dawn_far", "dawn_haze", "dawn_mid", "dawn_peak"):
-        dawn.alpha_composite(a[k2])
-    f = dawn.copy()
-    f.alpha_composite(a["glow_cyan"], (259 - 48, 137 - 48))
-    f.alpha_composite(a["hero_wiku"].crop((48, 0, 96, 72)), (216, 136))
-    _draw_glyph(f, "sunda_ka", (240, 68), (120, 104), CYAN, 3)
-    frames.append(f)
-    # 6: the light and the logo
-    f = dawn.copy()
-    arr = np.array(f).astype(float)
-    arr[..., :3] *= np.array([0.55, 0.5, 0.65])
-    f = Image.fromarray(arr.astype(np.uint8), "RGBA")
-    f.alpha_composite(a["beam"].crop((0, 0, 40, 137)).resize((56, 137), Image.NEAREST), (259 - 28, 0))
-    f.alpha_composite(a["hero_wiku"].crop((48, 0, 96, 72)), (216, 136))
-    rg = a["ring"].resize((260, 260), Image.NEAREST)
-    f.alpha_composite(rg, (259 - 130, 137 - 130))
+    # 4: the light breaks the storm; dawn and the logo
+    f = a["dawn_sky"].copy()
+    for k in ("storm_far", "storm_mid", "storm_peak"):
+        f.alpha_composite(_dim(a[k], (0.8, 0.7, 0.9)))
+    f.alpha_composite(a["beam"].crop((0, 0, 40, gem[1])).resize((56, gem[1]), Image.NEAREST), (gem[0] - 28, 0))
+    f.alpha_composite(frame(2), hero_at)
     logo = Image.open(os.path.join(ROOT, "assets", "art", "ui", "logo.png")).convert("RGBA")
-    f.alpha_composite(logo, (240 - logo.width // 2, 96 - logo.height // 2))
+    f.alpha_composite(logo, (240 - logo.width // 2, 70 - logo.height // 2))
     frames.append(f)
-    sheet = Image.new("RGBA", (W * 2 + 4, H * 3 + 8), (0, 0, 0, 255))
+    sheet = Image.new("RGBA", (W * 2 + 4, H * 2 + 4), (0, 0, 0, 255))
     for i, fr in enumerate(frames):
         sheet.paste(fr, ((i % 2) * (W + 4), (i // 2) * (H + 4)))
     sheet.save(os.path.join(ROOT, "tools", "intro_preview.png"))
+
+
+def main():
+    out = {
+        "storm_sky": storm_sky(),
+        "kala_close": kala_cloud(*CLOSE, **CLOSE_LOOK), "kala_close_eyes": kala_cloud_eyes(*CLOSE),
+        "kala_sky": kala_cloud(*SKY_KALA, seed=95, soft=3, fray=1.5, cell=12), "kala_sky_eyes": kala_cloud_eyes(*SKY_KALA),
+        "storm_far": storm_far(), "storm_mid": storm_mid(), "storm_peak": storm_peak(),
+        "hero_storm": hero_storm(), "lightning": lightning(),
+        "glow_cyan": alpha_glow(96, hx("7FE8E0"), 5, 200, 1.5),
+        "glow_red": alpha_glow((360, 240), hx("B02040"), 6, 230, 1.1),
+        "dawn_sky": dawn_sky(), "beam": beam(), "ring": ring(),
+    }
+    for k, im in out.items():
+        save(im, k)
+    storyboard(out)
 
 
 if __name__ == "__main__":
