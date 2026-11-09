@@ -2,8 +2,7 @@ extends MenuTab
 ## Sistem (Settings), ui.md 4.3 tab 7. Ported from the old menu: volumes, fullscreen, language, resume / title / quit
 ## with a confirm. The regrouped layout (Tampilan scale and shake, Aksesibilitas, "Simpan & Keluar") comes later.
 
-const TitleScript := preload("res://ui/title.gd")   # settings path and language save
-const BUSES := ["Master", "Music", "SFX", "Ambience"]
+const BUSES := GameSettings.BUSES
 
 var action := ""   # "title" or "quit" while the confirm is open
 var lang_btn: Button
@@ -76,7 +75,7 @@ func _button(box: Control, cb: Callable) -> Button:
 
 
 func refresh() -> void:
-	lang_btn.text = "%s: %s" % [tr("UI_SYS_LANG"), "Bahasa Indonesia" if TranslationServer.get_locale().begins_with("id") else "English"]
+	lang_btn.text = "%s: %s" % [tr("UI_SYS_LANG"), GameSettings.language_name()]
 	full_btn.text = "%s: %s" % [tr("UI_SYS_FULLSCREEN"), tr("UI_ON") if is_fullscreen() else tr("UI_OFF")]
 
 
@@ -129,52 +128,35 @@ func _do() -> void:
 
 
 func is_fullscreen() -> bool:
-	return DisplayServer.window_get_mode() in [DisplayServer.WINDOW_MODE_FULLSCREEN, DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN]
+	return GameSettings.is_fullscreen()
 
 
 func load_setting(key: String, default: Variant) -> Variant:
-	var cf := ConfigFile.new()
-	cf.load(TitleScript.settings_path)
-	return cf.get_value("settings", key, default)
+	return GameSettings.load_value(key, default)
 
 
 func save_setting(key: String, v: Variant) -> void:
-	var cf := ConfigFile.new()
-	cf.load(TitleScript.settings_path)   # keep the other settings
-	cf.set_value("settings", key, v)
-	cf.save(TitleScript.settings_path)
+	GameSettings.save_value(key, v)
 
 
 ## Volumes from user://settings.cfg; the Music and SFX buses are created on first use.
 func apply_settings() -> void:
-	for b in BUSES:
-		apply_volume(b, float(load_setting("vol_" + b.to_lower(), 100)))
+	GameSettings.apply_volumes()
 
 
 func apply_volume(bus: String, pct: float) -> void:
-	var i := AudioServer.get_bus_index(bus)
-	if i < 0:
-		AudioServer.add_bus()
-		i = AudioServer.bus_count - 1
-		AudioServer.set_bus_name(i, bus)
-		AudioServer.set_bus_send(i, "Master")
-	AudioServer.set_bus_volume_db(i, linear_to_db(pct / 100.0))
+	GameSettings.apply_volume(bus, pct)
 
 
 func set_volume(v: float, bus: String) -> void:
-	apply_volume(bus, v)
-	save_setting("vol_" + bus.to_lower(), int(v))
+	GameSettings.set_volume(bus, v)
 
 
 func toggle_language() -> void:
-	var lang := "en" if TranslationServer.get_locale().begins_with("id") else "id"
-	TranslationServer.set_locale(lang)
-	TitleScript.save_language(lang)
+	GameSettings.toggle_language()
 	game.changed.emit()
 
 
 func toggle_fullscreen() -> void:
-	var on := not is_fullscreen()
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if on else DisplayServer.WINDOW_MODE_WINDOWED)
-	save_setting("fullscreen", on)
+	GameSettings.set_fullscreen(not is_fullscreen())
 	refresh()

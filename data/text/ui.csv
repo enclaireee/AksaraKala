@@ -249,3 +249,8 @@ UI_CAST_PERFECT,Sempurna,Perfect
 UI_CAST_GOOD,Bersih,Clean
 UI_CAST_SMUDGED,Kabur,Smudged
 UI_CAST_SAKTI,sakti,sakti
+UI_SETTINGS,Pengaturan,Settings
+UI_ABOUT,Tentang,About
+UI_ABOUT_MADE_BY,Dibuat oleh,Made by
+UI_ABOUT_MADE_FOR,Dibuat untuk,Made for
+UI_ABOUT_BUILT_WITH,Dibangun dengan,Built with

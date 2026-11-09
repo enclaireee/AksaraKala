@@ -1,6 +1,7 @@
 extends Control
 ## Title screen (rpg.md 11, ui.md 4.1 v3): the logo and menu on the left; on the right a twilight valley, an aksara
-## written in stars, and the Wiku on a cliff with glyphs rising from the staff.
+## written in stars, and the Wiku on a cliff with glyphs rising from the staff. Settings and About open as dusk cards
+## in place of the logo column; Esc closes them.
 ## Continue only with a save; New Game asks before overwriting. Language toggle (ID/EN) saved in user://settings.cfg.
 
 var _box: VBoxContainer
@@ -13,6 +14,10 @@ var _hero: Sprite2D
 var _glyphs: Array = []   # rising glyphs: [TextureRect, age, drift]
 var _stars: TextureRect
 var _next_glyph := 0.6
+var _card: Panel                 # the open Settings / About card, or null
+var _card_from: Control          # menu entry to refocus when the card closes
+var _full_btn: Button
+var _lang_btn: Button
 var _fade: ColorRect
 var _t := 0.0
 var _leaving := false
@@ -28,6 +33,9 @@ const GLYPH_KEYS := ["title_glyph_ka", "title_glyph_ja", "title_glyph_la", "titl
 const GLYPH_LIFE := 6.0                    # seconds from the staff to gone
 const GLYPH_RISE := 92.0                   # px climbed over a life
 const GLYPH_EVERY := 1.7
+const CARD := Rect2(20, 22, 240, 226)   # Settings / About card: covers the logo column
+const INDENT := 11.0                     # rows line up with LozengeButton text (its cursor gutter)
+const CREDITS := ["Muhammad Fatih Zamzami", "Muhammad Nafis Yusa'", "Fahmi Milan Amyar"]
 
 
 ## Saved choice, else the OS language ("id" -> Indonesian, anything else English).
@@ -46,6 +54,7 @@ static func save_language(lang: String) -> void:
 
 func _ready() -> void:
 	TranslationServer.set_locale(load_language())
+	GameSettings.apply_display()
 	Snd.music("title", 2.0)
 	DisplayServer.window_set_title("Aksara Kala")
 	_set_cursor()
@@ -86,6 +95,8 @@ func _ready() -> void:
 	if get_node("/root/Game").has_save():
 		_btn("UI_CONTINUE", _continue)
 	_btn("UI_NEW_GAME", _new, false)
+	_btn("UI_SETTINGS", _open_card.bind("settings"), false)
+	_btn("UI_ABOUT", _open_card.bind("about"), false)
 	_btn("UI_QUIT", func() -> void: get_tree().quit())
 	_lang = LozengeButton.new("", 8)
 	_lang.alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -95,7 +106,7 @@ func _ready() -> void:
 	add_child(_lang)
 	_lang_text()
 	_msg = UIFx.text("", "body", UIFx.DANGER)
-	_msg.position = Vector2(LOGO_POS.x - 10, 200)
+	_msg.position = Vector2(LOGO_POS.x - 10, 234)
 	_msg.size = Vector2(160, 20)
 	_msg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_msg.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -195,10 +206,9 @@ func _lang_text() -> void:
 
 
 func _toggle_lang() -> void:
-	var lang := "en" if TranslationServer.get_locale().begins_with("id") else "id"
-	TranslationServer.set_locale(lang)
-	save_language(lang)
+	GameSettings.toggle_language()
 	_lang_text()
+	_card_text()
 
 
 func _show_menu() -> void:
@@ -225,3 +235,159 @@ func _new() -> void:
 
 func _to_class_select() -> void:
 	get_tree().change_scene_to_file("res://ui/name_entry.tscn")
+
+
+# ---------------------------------------------------------------- Settings and About cards
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("ui_cancel"):
+		return
+	if _card:
+		_close_card()
+		get_viewport().set_input_as_handled()
+	elif _confirm.visible:
+		_show_menu()
+		get_viewport().set_input_as_handled()
+
+
+func _open_card(which: String) -> void:
+	if _card or _leaving:
+		return
+	_card_from = get_viewport().gui_get_focus_owner()
+	_msg.text = ""
+	_box.visible = false
+	_card = Panel.new()
+	_card.add_theme_stylebox_override("panel", UIFx.ink_box())
+	_card.position = CARD.position
+	_card.size = Vector2(CARD.size.x, 176.0 if which == "settings" else CARD.size.y)   # Settings is shorter
+	add_child(_card)
+	move_child(_card, _fade.get_index())   # under the fade cover
+	var v := VBoxContainer.new()
+	v.position = Vector2(10, 8)
+	v.size = _card.size - Vector2(20, 16)
+	v.add_theme_constant_override("separation", 2)
+	_card.add_child(v)
+	v.add_child(UIFx.text("UI_SETTINGS" if which == "settings" else "UI_ABOUT", "head", UIFx.HEAD))
+	var rule := ColorRect.new()
+	rule.color = UIFx.LINE_DIM
+	rule.custom_minimum_size = Vector2(v.size.x, 1)
+	rule.mouse_filter = MOUSE_FILTER_IGNORE
+	v.add_child(rule)
+	if which == "settings":
+		_build_settings(v)
+	else:
+		_build_about(v)
+	var fill := Control.new()   # Back sits at the foot of the card
+	fill.size_flags_vertical = SIZE_EXPAND_FILL
+	fill.mouse_filter = MOUSE_FILTER_IGNORE
+	v.add_child(fill)
+	var back := LozengeButton.new("UI_BACK", 8)
+	back.pressed.connect(_close_card)
+	v.add_child(back)
+	_card_text()
+	var tw := create_tween().set_parallel()
+	tw.tween_property(_logo, "modulate:a", 0.0, 0.15)
+	tw.tween_property(_sub, "modulate:a", 0.0, 0.15)
+	UIFx.rise_in(_card, 4.0, 0.2)
+	var first: Control = back
+	if which == "settings":
+		first = _card.find_children("*", "HSlider", true, false)[0]
+	first.grab_focus()
+
+
+func _close_card() -> void:
+	if not _card:
+		return
+	_card.queue_free()
+	_card = null
+	_full_btn = null
+	_lang_btn = null
+	var tw := create_tween().set_parallel()
+	tw.tween_property(_logo, "modulate:a", 1.0, 0.2)
+	tw.tween_property(_sub, "modulate:a", 1.0, 0.2)
+	_box.visible = true
+	UIFx.rise_in(_box, 4.0, 0.2)
+	if is_instance_valid(_card_from) and _card_from.is_visible_in_tree():
+		_card_from.grab_focus()
+	else:
+		_box.get_child(0).grab_focus()
+
+
+## A caps section label, indented to the button text, with a little air above it.
+func _section(v: VBoxContainer, key: String) -> void:
+	var gap := Control.new()
+	gap.custom_minimum_size.y = 4
+	v.add_child(gap)
+	v.add_child(_row(UIFx.text(key, "label", UIFx.LABEL_COL)))
+
+
+## Wraps a control in a row indented to the LozengeButton text column.
+func _row(c: Control) -> HBoxContainer:
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 0)
+	var pad := Control.new()
+	pad.custom_minimum_size.x = INDENT
+	h.add_child(pad)
+	h.add_child(c)
+	return h
+
+
+func _build_settings(v: VBoxContainer) -> void:
+	_section(v, "UI_BK_AUDIO")
+	for bus in GameSettings.BUSES:
+		var name_lbl := UIFx.text("UI_SYS_" + bus.to_upper(), "body", UIFx.TEXT)
+		name_lbl.custom_minimum_size.x = 88
+		var row := _row(name_lbl)
+		row.custom_minimum_size.y = 12
+		var sl := HSlider.new()
+		sl.name = bus
+		sl.min_value = 0
+		sl.max_value = 100
+		sl.step = 5
+		sl.value = GameSettings.volume(bus)
+		sl.custom_minimum_size = Vector2(96, 10)
+		sl.size_flags_vertical = SIZE_SHRINK_CENTER
+		row.add_child(sl)
+		var val := UIFx.text(str(int(sl.value)), "body", UIFx.DIM)
+		val.custom_minimum_size.x = 24
+		val.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		row.add_child(val)
+		sl.value_changed.connect(func(x: float) -> void:
+			GameSettings.set_volume(bus, x)
+			val.text = str(int(x)))
+		# the slider has no cursor of its own: its name lights up cyan while it has focus
+		sl.focus_entered.connect(func() -> void: name_lbl.add_theme_color_override("font_color", UIFx.ACCENT))
+		sl.focus_exited.connect(func() -> void: name_lbl.add_theme_color_override("font_color", UIFx.TEXT))
+		sl.mouse_entered.connect(func() -> void: sl.grab_focus())
+		v.add_child(row)
+	_section(v, "UI_BK_DISPLAY")
+	_full_btn = LozengeButton.new("", 8)
+	_full_btn.pressed.connect(func() -> void:
+		GameSettings.set_fullscreen(not GameSettings.is_fullscreen())
+		_card_text())
+	v.add_child(_full_btn)
+	_lang_btn = LozengeButton.new("", 8)
+	_lang_btn.pressed.connect(_toggle_lang)
+	v.add_child(_lang_btn)
+
+
+func _build_about(v: VBoxContainer) -> void:
+	v.add_child(_row(UIFx.text("Aksara Kala  ·  The script of time", "body", UIFx.DIM)))
+	_section(v, "UI_ABOUT_MADE_BY")
+	for n in CREDITS:
+		v.add_child(_row(UIFx.text(n, "body", UIFx.TEXT)))
+	_section(v, "UI_ABOUT_MADE_FOR")
+	v.add_child(_row(UIFx.text("BUDAYA GO! 2026", "body", UIFx.WARM)))
+	v.add_child(_row(UIFx.text("Kompetisi Inovasi Digital Budaya Indonesia", "body", UIFx.TEXT)))
+	v.add_child(_row(UIFx.text("Kementerian Kebudayaan Republik Indonesia", "body", UIFx.DIM)))
+	_section(v, "UI_ABOUT_BUILT_WITH")
+	v.add_child(_row(UIFx.text("Godot Engine", "body", UIFx.TEXT)))
+	v.add_child(_row(UIFx.text("Tiny5, Jersey 10 / 15, Noto Sans (SIL OFL)", "body", UIFx.DIM)))
+
+
+## Texts built from more than one key (they do not retranslate on their own).
+func _card_text() -> void:
+	if _full_btn:
+		_full_btn.text = "%s: %s" % [tr("UI_SYS_FULLSCREEN"), tr("UI_ON") if GameSettings.is_fullscreen() else tr("UI_OFF")]
+	if _lang_btn:
+		_lang_btn.text = "%s: %s" % [tr("UI_SYS_LANG"), GameSettings.language_name()]
