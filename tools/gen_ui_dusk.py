@@ -638,6 +638,161 @@ def bayer(x, y):
     return (BAYER4[y % 4][x % 4] + 0.5) / 16.0
 
 
+def silhouette_profile(w, seed, base, amp, roughness):
+    rnd = random.Random(seed)
+    pts = []
+    y = base
+    for x in range(w):
+        y += rnd.uniform(-roughness, roughness)
+        pts.append(y)
+    # smooth
+    out = []
+    for x in range(w):
+        a = pts[max(0, x - 3):x + 4]
+        out.append(sum(a) / len(a))
+    return out
+
+
+def candi_shape(px, cx, base_y, s, col, cap, w, h):
+    """A small stepped temple silhouette; every tier's top row catches the light."""
+    tiers = [(7, 4), (6, 4), (5, 3), (4, 3), (3, 3), (2, 2), (1, 3)]
+    y = base_y
+    for half, th in tiers:
+        hw = int(half * s)
+        t = max(1, int(th * s))
+        for yy in range(y - t, y):
+            for xx in range(cx - hw, cx + hw + 1):
+                if 0 <= xx < w and 0 <= yy < h:
+                    px[xx, yy] = col
+        for xx in range(cx - hw, cx + hw + 1):
+            if 0 <= xx < w and 0 <= y - t < h:
+                px[xx, y - t] = cap
+        y -= t
+    for k in (1, 2):
+        px[cx, y - k] = cap
+
+
+def broken_candi_mask(w, h, base_y, cx, tiers, break_line, seed, door=True):
+    """A stepped temple whose upper tiers have fallen: tiers drawn bottom up, then everything above a jagged
+    diagonal break is cut away. Returns a 1-bit mask the size of the canvas."""
+    rnd = random.Random(seed)
+    m = Image.new("1", (w, h), 0)
+    d = ImageDraw.Draw(m)
+    y = base_y
+    for half, th in tiers:
+        d.rectangle([cx - half, y - th, cx + half, y - 1], fill=1)
+        y -= th
+    px = m.load()
+    (x0, y0), (x1, y1) = break_line
+    for x in range(w):
+        if x0 == x1:
+            continue
+        t = (x - x0) / (x1 - x0)
+        cut = y0 + (y1 - y0) * t + rnd.choice((0, 0, 1, 2, -1))
+        for yy in range(0, max(0, min(h, int(cut)))):
+            px[x, yy] = 0
+    if door:   # a dark doorway at the foot
+        d.rectangle([cx - 2, base_y - 9, cx + 2, base_y - 1], fill=0)
+        d.rectangle([cx - 1, base_y - 10, cx + 1, base_y - 10], fill=0)
+    return m
+
+
+def valley_ruins(w, h, ground_y):
+    """Mid-ground ruins on the second ridge, in the haze: a temple whose top has fallen, a broken colonnade that
+    still carries one lintel, and scattered blocks. Darker than the ridge, lit only along their upper edges."""
+    base, lit, dark, line = rgb("5A2B4E"), rgb("E08A80"), rgb("4A2442"), rgb("3A1C38")
+    im = new(w, h)
+    gy = ground_y(224)
+    m = broken_candi_mask(w, h, gy, 224, [(30, 9), (26, 9), (22, 9), (18, 8), (14, 7), (10, 7), (6, 6), (3, 5)],
+                          ((192, gy - 52), (256, gy - 24)), 3)
+    md = ImageDraw.Draw(m)
+    for (x, ht) in ((270, 36), (282, 33), (296, 20), (308, 27), (320, 10)):   # colonnade, broken to different heights
+        g = ground_y(x + 2)
+        md.rectangle([x, g - ht, x + 4, g], fill=1)
+        md.rectangle([x - 1, g - 2, x + 5, g], fill=1)                    # base course
+        md.point([x + (4 if ht % 2 else 0), g - ht - 1], fill=1)         # a jagged tooth on the break
+    g = ground_y(276)
+    md.rectangle([267, g - 40, 289, g - 36], fill=1)                      # the one surviving lintel
+    for (x, wd, ht) in ((250, 8, 4), (300, 9, 3), (186, 7, 3), (258, 4, 3), (330, 6, 3)):   # fallen blocks
+        g = ground_y(x)
+        md.rectangle([x, g - ht, x + wd, g], fill=1)
+    im.alpha_composite(shade_mask(m, base, lit, dark, line, lit_dir=(0, -1), seed=4))
+    return im
+
+
+def far(w=480, h=270):
+    """Layered ridges receding into the peach haze, a far candi on the middle hill (ui.md 4.1). Each layer is a
+    flat colour with an ordered-dither mist band at its foot, never a smooth blend."""
+    im = new(w, h)
+    px = im.load()
+    layers = [
+        # top line function, fill, lit crest, mist colour
+        (lambda x: 160 + 10 * math.sin(x / 61.0 + 0.6) + 5 * math.sin(x / 23.0) - 16 * math.exp(-((x - 270) / 30.0) ** 2),
+         rgb("A85A6C"), rgb("C77474"), rgb("D27268")),
+        (lambda x: 178 + 10 * math.sin(x / 47.0 + 2.0) + 5 * math.sin(x / 17.0 + 1.0),
+         rgb("82425F"), rgb("9E5268"), rgb("B5566A")),
+        (lambda x: 202 + 9 * math.sin(x / 39.0 + 4.0) + 4 * math.sin(x / 11.0),
+         rgb("4E2C52"), rgb("6B3A5E"), rgb("8E4763")),
+        (lambda x: 232 + 7 * math.sin(x / 29.0 + 1.3) + 3 * math.sin(x / 9.0 + 2.0),
+         rgb("2A1D3E"), rgb("3E2850"), rgb("52305E")),
+    ]
+    tops = []
+    for i, (f, fill, crest, mist) in enumerate(layers):
+        top = [int(round(f(x))) for x in range(w)]
+        tops.append(top)
+        for x in range(w):
+            for y in range(max(0, top[x]), h):
+                px[x, y] = fill
+            if 0 <= top[x] < h:
+                px[x, top[x]] = crest
+        if i == 1:   # ruins stand on the second ridge; the next ridge and its mist hide their feet
+            r_top = top
+            im.alpha_composite(valley_ruins(w, h, lambda x: r_top[max(0, min(w - 1, x))] + 3))
+            px = im.load()
+        if i == 0:   # the far candi sits on the high hill of the back ridge
+            peak = min(range(240, 360), key=lambda x: top[x])
+            candi_shape(px, peak, top[peak] + 2, 1.3, rgb("8E4E66"), rgb("D88A80"), w, h)
+        # mist at the foot of this layer, under where the next layer starts
+        if i + 1 < len(layers):
+            nxt = [int(round(layers[i + 1][0](x))) for x in range(w)]
+            for x in range(w):
+                for y in range(nxt[x] - 8, nxt[x]):
+                    if 0 <= y < h and px[x, y][3]:
+                        t = (y - (nxt[x] - 8)) / 8.0
+                        if t * 0.9 > bayer(x, y):
+                            px[x, y] = mist
+    return im
+
+
+def shade_mask(mask, base, lit, dark, outline, lit_dir=(1, -1), noise=None, seed=0):
+    """Colours a 1-bit mask: outline on the silhouette edge, `lit` on edges facing lit_dir, `dark` on the opposite
+    edges, `base` inside with an optional sparse dither of `noise`. Returns an RGBA image."""
+    rnd = random.Random(seed)
+    w, h = mask.size
+    m = mask.load()
+    im = new(w, h)
+    px = im.load()
+
+    def inside(x, y):
+        return 0 <= x < w and 0 <= y < h and m[x, y]
+    lx, ly = lit_dir
+    for y in range(h):
+        for x in range(w):
+            if not m[x, y]:
+                continue
+            if not (inside(x + 1, y) and inside(x - 1, y) and inside(x, y + 1) and inside(x, y - 1)):
+                px[x, y] = outline
+            elif not inside(x + lx, y + ly) or not inside(x + 2 * lx, y + 2 * ly):
+                px[x, y] = lit
+            elif not inside(x - 2 * lx, y - 2 * ly):
+                px[x, y] = dark
+            else:
+                px[x, y] = base
+                if noise and rnd.random() < 0.08:
+                    px[x, y] = noise
+    return im
+
+
 def constellation(seed=4):
     """An aksara written in stars (Sundanese Ka): the glyph is thinned to a 1 px skeleton, drawn as a faint dotted
     line, with stars on its ends, joints and along the strokes."""
@@ -1138,7 +1293,7 @@ def main():
     art["book_doll"] = doll()
     # title scene
     art["title_sky"] = TS.sky()
-    art["title_far"] = TS.far()
+    art["title_far"] = far()   # the layered ridges, a far candi and the ruined temple + colonnade on the second ridge
     art["title_near"] = TS.near()
     art["title_constellation"] = constellation()
     art["title_pillar_glyph"] = pillar_glyph()
