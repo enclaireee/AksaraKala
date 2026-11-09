@@ -1,6 +1,7 @@
 extends Control
-## Title screen (rpg.md 11, ui.md 4.1 v3): the logo and menu on the left; on the right a twilight valley, an aksara
-## written in stars, valley ruins, and the Wiku on a cliff by a broken gate pillar, glyphs rising from the staff. Settings and About open as dusk cards
+## Title screen (rpg.md 11, ui.md 4.1 v4): the logo and menu on the left; a dusk valley under volcanoes, temples ruined on
+## the mountains and in the misty valley, broken pillars along the foreground, an aksara written in stars, and the Wiku
+## on a grassy cliff under a great tree, glyphs rising from the staff. Settings and About open as dusk cards
 ## in place of the logo column; Esc closes them.
 ## Continue only with a save; New Game asks before overwriting. Language toggle (ID/EN) saved in user://settings.cfg.
 
@@ -13,7 +14,7 @@ var _sub: Label
 var _hero: Sprite2D
 var _glyphs: Array = []   # rising glyphs: [TextureRect, age, drift]
 var _stars: TextureRect
-var _rune: TextureRect   # the aksara carved in the cliff pillar; it breathes
+var _rune: TextureRect   # the aksara carved in the broken pillar in the foreground; it breathes
 var _next_glyph := 0.6
 var _card: Panel                 # the open Settings / About card, or null
 var _card_from: Control          # menu entry to refocus when the card closes
@@ -30,6 +31,7 @@ const MENU_W := 112.0
 const LOGO_POS := Vector2(36, 32)
 const HERO_POS := Vector2(372, 190)        # top-left of the 24 px frame: feet on the cliff flat (y 214)
 const STAFF := Vector2(384, 180)           # where the glyphs leave the staff (their bottom centre)
+const RUNE_POS := Vector2(244, 218)        # title_pillar_glyph on the foreground pillar (tools/title_scene.py PILLAR_GLYPH_AT)
 const GLYPH_KEYS := ["title_glyph_ka", "title_glyph_ja", "title_glyph_la", "title_glyph_ra"]
 const GLYPH_LIFE := 6.0                    # seconds from the staff to gone
 const GLYPH_RISE := 92.0                   # px climbed over a life
@@ -68,9 +70,9 @@ func _ready() -> void:
 	var pool := UIFx.rect_tex("title_glow", HERO_POS + Vector2(-8, -2), Vector2(40, 40))   # the staff's faint light
 	pool.modulate.a = 0.75
 	add_child(pool)
-	add_child(UIFx.rect_tex("title_near", Vector2.ZERO))   # cliff, broken gate pillar, lantern, fallen column
+	add_child(UIFx.rect_tex("title_near", Vector2.ZERO))   # cliff and tree, foreground pillars, lantern, fallen column
 	_rune = UIFx.rect_tex("title_pillar_glyph", Vector2.ZERO)
-	_rune.position = Vector2(roundf(427.0 - _rune.size.x / 2.0), 158)
+	_rune.position = RUNE_POS
 	add_child(_rune)
 	_hero = Sprite2D.new()   # the Wiku from behind, looking out over the valley
 	_hero.texture = load("res://assets/art/hero_mage.png")

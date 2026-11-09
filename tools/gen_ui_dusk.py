@@ -13,6 +13,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+import title_scene as TS   # the title's sky, mountains and ruins (tools/title_scene.py)
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "art" / "ui"
 FONTS = ROOT / "assets" / "fonts"
@@ -636,156 +638,6 @@ def bayer(x, y):
     return (BAYER4[y % 4][x % 4] + 0.5) / 16.0
 
 
-def sky(w=480, h=270, horizon=206, seed=11):
-    """Banded twilight: hard colour steps with a 4 px ordered-dither seam between each pair."""
-    im = new(w, h)
-    px = im.load()
-    n = len(SKY) - 1
-    for y in range(h):
-        t = min(1.0, max(0.0, y / horizon)) ** 1.35 * n
-        i = int(t)
-        f = t - i
-        for x in range(w):
-            if i >= n:
-                px[x, y] = SKY[n]
-                continue
-            # most of a band is flat; the last 30 % dithers into the next colour
-            g = max(0.0, (f - 0.7) / 0.3)
-            px[x, y] = SKY[i + 1] if g > bayer(x, y) else SKY[i]
-    rnd = random.Random(seed)
-    for _ in range(150):   # dim fixed stars (the bright twinkling ones are sprites in the game)
-        x, y = rnd.randrange(w), int(rnd.random() ** 1.7 * horizon * 0.62)
-        base = px[x, y]
-        px[x, y] = mix(base, rgb("F4EEFF"), rnd.choice((0.35, 0.5, 0.75)))
-    return im
-
-
-def silhouette_profile(w, seed, base, amp, roughness):
-    rnd = random.Random(seed)
-    pts = []
-    y = base
-    for x in range(w):
-        y += rnd.uniform(-roughness, roughness)
-        pts.append(y)
-    # smooth
-    out = []
-    for x in range(w):
-        a = pts[max(0, x - 3):x + 4]
-        out.append(sum(a) / len(a))
-    return out
-
-
-def candi_shape(px, cx, base_y, s, col, cap, w, h):
-    """A small stepped temple silhouette; every tier's top row catches the light."""
-    tiers = [(7, 4), (6, 4), (5, 3), (4, 3), (3, 3), (2, 2), (1, 3)]
-    y = base_y
-    for half, th in tiers:
-        hw = int(half * s)
-        t = max(1, int(th * s))
-        for yy in range(y - t, y):
-            for xx in range(cx - hw, cx + hw + 1):
-                if 0 <= xx < w and 0 <= yy < h:
-                    px[xx, yy] = col
-        for xx in range(cx - hw, cx + hw + 1):
-            if 0 <= xx < w and 0 <= y - t < h:
-                px[xx, y - t] = cap
-        y -= t
-    for k in (1, 2):
-        px[cx, y - k] = cap
-
-
-def broken_candi_mask(w, h, base_y, cx, tiers, break_line, seed, door=True):
-    """A stepped temple whose upper tiers have fallen: tiers drawn bottom up, then everything above a jagged
-    diagonal break is cut away. Returns a 1-bit mask the size of the canvas."""
-    rnd = random.Random(seed)
-    m = Image.new("1", (w, h), 0)
-    d = ImageDraw.Draw(m)
-    y = base_y
-    for half, th in tiers:
-        d.rectangle([cx - half, y - th, cx + half, y - 1], fill=1)
-        y -= th
-    px = m.load()
-    (x0, y0), (x1, y1) = break_line
-    for x in range(w):
-        if x0 == x1:
-            continue
-        t = (x - x0) / (x1 - x0)
-        cut = y0 + (y1 - y0) * t + rnd.choice((0, 0, 1, 2, -1))
-        for yy in range(0, max(0, min(h, int(cut)))):
-            px[x, yy] = 0
-    if door:   # a dark doorway at the foot
-        d.rectangle([cx - 2, base_y - 9, cx + 2, base_y - 1], fill=0)
-        d.rectangle([cx - 1, base_y - 10, cx + 1, base_y - 10], fill=0)
-    return m
-
-
-def valley_ruins(w, h, ground_y):
-    """Mid-ground ruins on the second ridge, in the haze: a temple whose top has fallen, a broken colonnade that
-    still carries one lintel, and scattered blocks. Darker than the ridge, lit only along their upper edges."""
-    base, lit, dark, line = rgb("5A2B4E"), rgb("E08A80"), rgb("4A2442"), rgb("3A1C38")
-    im = new(w, h)
-    gy = ground_y(224)
-    m = broken_candi_mask(w, h, gy, 224, [(30, 9), (26, 9), (22, 9), (18, 8), (14, 7), (10, 7), (6, 6), (3, 5)],
-                          ((192, gy - 52), (256, gy - 24)), 3)
-    md = ImageDraw.Draw(m)
-    for (x, ht) in ((270, 36), (282, 33), (296, 20), (308, 27), (320, 10)):   # colonnade, broken to different heights
-        g = ground_y(x + 2)
-        md.rectangle([x, g - ht, x + 4, g], fill=1)
-        md.rectangle([x - 1, g - 2, x + 5, g], fill=1)                    # base course
-        md.point([x + (4 if ht % 2 else 0), g - ht - 1], fill=1)         # a jagged tooth on the break
-    g = ground_y(276)
-    md.rectangle([267, g - 40, 289, g - 36], fill=1)                      # the one surviving lintel
-    for (x, wd, ht) in ((250, 8, 4), (300, 9, 3), (186, 7, 3), (258, 4, 3), (330, 6, 3)):   # fallen blocks
-        g = ground_y(x)
-        md.rectangle([x, g - ht, x + wd, g], fill=1)
-    im.alpha_composite(shade_mask(m, base, lit, dark, line, lit_dir=(0, -1), seed=4))
-    return im
-
-
-def far(w=480, h=270):
-    """Layered ridges receding into the peach haze, a far candi on the middle hill (ui.md 4.1). Each layer is a
-    flat colour with an ordered-dither mist band at its foot, never a smooth blend."""
-    im = new(w, h)
-    px = im.load()
-    layers = [
-        # top line function, fill, lit crest, mist colour
-        (lambda x: 160 + 10 * math.sin(x / 61.0 + 0.6) + 5 * math.sin(x / 23.0) - 16 * math.exp(-((x - 270) / 30.0) ** 2),
-         rgb("A85A6C"), rgb("C77474"), rgb("D27268")),
-        (lambda x: 178 + 10 * math.sin(x / 47.0 + 2.0) + 5 * math.sin(x / 17.0 + 1.0),
-         rgb("82425F"), rgb("9E5268"), rgb("B5566A")),
-        (lambda x: 202 + 9 * math.sin(x / 39.0 + 4.0) + 4 * math.sin(x / 11.0),
-         rgb("4E2C52"), rgb("6B3A5E"), rgb("8E4763")),
-        (lambda x: 232 + 7 * math.sin(x / 29.0 + 1.3) + 3 * math.sin(x / 9.0 + 2.0),
-         rgb("2A1D3E"), rgb("3E2850"), rgb("52305E")),
-    ]
-    tops = []
-    for i, (f, fill, crest, mist) in enumerate(layers):
-        top = [int(round(f(x))) for x in range(w)]
-        tops.append(top)
-        for x in range(w):
-            for y in range(max(0, top[x]), h):
-                px[x, y] = fill
-            if 0 <= top[x] < h:
-                px[x, top[x]] = crest
-        if i == 1:   # ruins stand on the second ridge; the next ridge and its mist hide their feet
-            r_top = top
-            im.alpha_composite(valley_ruins(w, h, lambda x: r_top[max(0, min(w - 1, x))] + 3))
-            px = im.load()
-        if i == 0:   # the far candi sits on the high hill of the back ridge
-            peak = min(range(240, 360), key=lambda x: top[x])
-            candi_shape(px, peak, top[peak] + 2, 1.3, rgb("8E4E66"), rgb("D88A80"), w, h)
-        # mist at the foot of this layer, under where the next layer starts
-        if i + 1 < len(layers):
-            nxt = [int(round(layers[i + 1][0](x))) for x in range(w)]
-            for x in range(w):
-                for y in range(nxt[x] - 8, nxt[x]):
-                    if 0 <= y < h and px[x, y][3]:
-                        t = (y - (nxt[x] - 8)) / 8.0
-                        if t * 0.9 > bayer(x, y):
-                            px[x, y] = mist
-    return im
-
-
 def constellation(seed=4):
     """An aksara written in stars (Sundanese Ka): the glyph is thinned to a 1 px skeleton, drawn as a faint dotted
     line, with stars on its ends, joints and along the strokes."""
@@ -842,98 +694,8 @@ def constellation(seed=4):
     return im
 
 
-def shade_mask(mask, base, lit, dark, outline, lit_dir=(1, -1), noise=None, seed=0):
-    """Colours a 1-bit mask: outline on the silhouette edge, `lit` on edges facing lit_dir, `dark` on the opposite
-    edges, `base` inside with an optional sparse dither of `noise`. Returns an RGBA image."""
-    rnd = random.Random(seed)
-    w, h = mask.size
-    m = mask.load()
-    im = new(w, h)
-    px = im.load()
-
-    def inside(x, y):
-        return 0 <= x < w and 0 <= y < h and m[x, y]
-    lx, ly = lit_dir
-    for y in range(h):
-        for x in range(w):
-            if not m[x, y]:
-                continue
-            if not (inside(x + 1, y) and inside(x - 1, y) and inside(x, y + 1) and inside(x, y - 1)):
-                px[x, y] = outline
-            elif not inside(x + lx, y + ly) or not inside(x + 2 * lx, y + 2 * ly):
-                px[x, y] = lit
-            elif not inside(x - 2 * lx, y - 2 * ly):
-                px[x, y] = dark
-            else:
-                px[x, y] = base
-                if noise and rnd.random() < 0.08:
-                    px[x, y] = noise
-    return im
-
-
-def cliff_ruins(w, h, top, seed=6):
-    """On the cliff behind the Wiku: a tall weathered pillar of the old gate, broken at the top, with carved bands,
-    cracks, moss, a fallen lintel and a stone lantern. The carved aksara on its face is a separate sprite
-    (`title_pillar_glyph`) so the game can make it breathe."""
-    rnd = random.Random(seed)
-    im = new(w, h)
-    m = Image.new("1", (w, h), 0)
-    d = ImageDraw.Draw(m)
-    px0, px1, ptop = 414, 440, 104
-    d.rectangle([px0 - 3, top - 8, px1 + 3, top], fill=1)            # plinth
-    d.rectangle([px0, ptop, px1, top - 8], fill=1)                    # shaft
-    d.rectangle([px0 - 2, ptop + 22, px1 + 2, ptop + 26], fill=1)     # carved collar
-    mp = m.load()
-    for x in range(px0 - 3, px1 + 4):   # broken top: a jagged diagonal, higher on the left
-        cut = ptop + (x - px0) * 0.55 + rnd.choice((0, 1, 2, 3))
-        for y in range(0, int(cut)):
-            mp[x, y] = 0
-    for (x, y) in ((px1 + 1, ptop + 40), (px1, ptop + 41), (px0 - 1, ptop + 70)):   # chips out of the edge
-        mp[x, y] = 0
-    d.rectangle([382, top - 7, 406, top], fill=1)                     # fallen lintel, half sunk in the grass
-    d.rectangle([380, top - 5, 383, top], fill=1)
-    pil = shade_mask(m, rgb("4A3A54"), rgb("C77878"), rgb("2C2238"), rgb("170F22"), lit_dir=(-1, -1),
-                     noise=rgb("54445E"), seed=seed)
-    pp = pil.load()
-    for y in range(ptop + 30, top - 10, 9):   # block courses with staggered joints
-        for x in range(px0 + 2, px1 - 1):
-            if pp[x, y][3]:
-                pp[x, y] = rgb("34283F")
-        jx = px0 + (8 if (y // 9) % 2 else 16)
-        for k in range(1, 9):
-            if pp[jx, y - k][3]:
-                pp[jx, y - k] = rgb("34283F")
-    cx = px0 + 9   # a crack running down from the break
-    for y in range(ptop + 14, ptop + 64):
-        cx += rnd.choice((-1, 0, 0, 1))
-        cx = max(px0 + 3, min(px1 - 3, cx))
-        if pp[cx, y][3]:
-            pp[cx, y] = rgb("1C1428")
-    for _ in range(90):   # moss and creepers on the plinth and the lower shaft
-        x = rnd.randrange(px0 - 3, px1 + 4)
-        y = top - int(rnd.random() ** 1.8 * 40)
-        if pp[x, y][3] and pp[x, y] != rgb("170F22"):
-            pp[x, y] = rnd.choice((rgb("3E4A3A"), rgb("4C5A40"), rgb("5E6B46")))
-    for k in range(26):   # a vine hanging from the collar
-        x = px1 - 2 + int(math.sin(k / 4.0) * 1.5)
-        y = ptop + 27 + k
-        if pp[x, y][3]:
-            pp[x, y] = rgb("4C5A40")
-    im.alpha_composite(pil)
-    # stone lantern by the cliff edge, unlit for centuries: only the cyan glyph light touches it
-    dd = ImageDraw.Draw(im)
-    lx, ly = 352, top
-    for r_ in [(lx - 5, ly - 3, lx + 5, ly), (lx - 2, ly - 12, lx + 2, ly - 3), (lx - 6, ly - 15, lx + 6, ly - 12),
-               (lx - 4, ly - 22, lx + 4, ly - 15), (lx - 7, ly - 25, lx + 7, ly - 22), (lx - 3, ly - 28, lx + 3, ly - 25)]:
-        dd.rectangle(r_, fill=rgb("3A3048"), outline=rgb("170F22"))
-        dd.line([r_[0] + 1, r_[1] + 1, r_[2] - 1, r_[1] + 1], fill=rgb("8E5A6E"))
-    dd.rectangle([lx - 2, ly - 20, lx + 2, ly - 17], fill=rgb("140E22"))
-    dd.point([lx - 1, ly - 19], fill=CYAN_HALO)
-    return im
-
-
 def pillar_glyph():
-    """Sundanese A carved into the cliff pillar: dim cyan, the title makes it pulse."""
+    """Sundanese A carved into the broken pillar in the foreground: dim cyan, the title makes it pulse."""
     f = ImageFont.truetype(str(FONTS / "NotoSansSundanese.ttf"), 16)
     tmp = Image.new("L", (40, 40), 0)
     ImageDraw.Draw(tmp).text((6, 4), "\u1B83", font=f, fill=255)
@@ -951,114 +713,6 @@ def pillar_glyph():
             if p[x, y][3] == 0 and any(0 <= x + dx < im.width and 0 <= y + dy < im.height and p[x + dx, y + dy][3] == 255
                                        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
                 p[x, y] = with_alpha(CYAN_HALO, 110)
-    return im
-
-
-def near(w=480, h=270, seed=5):
-    """The foreground outcrop on the right: dark stone lit along its crest by the horizon, grass on top, a palm and a
-    small tree. The Wiku stands on the flat at x 352-420, feet at y 214."""
-    im = new(w, h)
-    m = Image.new("1", (w, h), 0)
-    md = ImageDraw.Draw(m)
-    top = 214
-    poly = [(296, h), (304, 252), (314, 240), (322, 236), (330, 224), (342, top + 1), (352, top), (420, top),
-            (432, top - 3), (446, top - 6), (462, top - 8), (480, top - 9), (480, h)]
-    md.polygon(poly, fill=1)
-    rock = shade_mask(m, rgb("231A33"), rgb("6B4A66"), rgb("170F22"), rgb("120C1C"), lit_dir=(-1, -1),
-                      noise=rgb("2A2040"), seed=seed)
-    rp = rock.load()
-    rnd = random.Random(seed)
-    for x in range(w):   # warm rim and grass along the crest
-        for y in range(h):
-            if rp[x, y][3]:
-                rp[x, y] = rgb("D27268") if x < 352 else rgb("8E8A58")
-                if y + 1 < h:
-                    rp[x, y + 1] = rgb("6B4A66") if x < 352 else rgb("4C5A40")
-                break
-    for _ in range(70):   # tufts on the crest
-        x = rnd.randrange(340, 480)
-        for y in range(h):
-            if rp[x, y][3]:
-                for k in range(1, rnd.choice((2, 3, 3, 4)) + 1):
-                    if y - k >= 0:
-                        rp[x, y - k] = rnd.choice((rgb("4C5A40"), rgb("5E6B46"), rgb("3E4A3A")))
-                break
-    for _ in range(40):   # strata cracks in the face
-        x, y = rnd.randrange(300, 480), rnd.randrange(top + 6, h)
-        if rp[x, y][3] and rp[x, y] not in (rgb("120C1C"),):
-            for k in range(rnd.randint(3, 8)):
-                if x + k < w and rp[x + k, y][3]:
-                    rp[x + k, y] = rgb("170F22")
-    im.alpha_composite(rock)
-    d = ImageDraw.Draw(im)
-
-    def palm(x, y, s, seed_):
-        trunk, frond, frond_lo = rgb("1C1528"), rgb("1E182C"), rgb("181224")
-        n = int(70 * s)
-        for i in range(n):
-            xx = x - int(math.sin(i / 30.0) * 7 * s)
-            for q in range(3 if i < n * 0.6 else 2):
-                d.point([xx + q, y - i], fill=trunk)
-        tx, ty = x - int(math.sin(n / 30.0) * 7 * s), y - n
-        r_ = random.Random(seed_)
-        for ang in (-170, -142, -116, -88, -60, -32, -6, 22):
-            a = math.radians(ang + r_.uniform(-6, 6))
-            L = r_.uniform(20, 27) * s
-            for k in range(int(L)):
-                t = k / L
-                fx = tx + 1 + math.cos(a) * k
-                fy = ty + math.sin(a) * k + (t ** 2) * 14 * s
-                for q in range(2 if t < 0.7 else 1):
-                    d.point([int(fx), int(fy) + q], fill=frond)
-                if k % 2 == 0 and 0.2 < t < 0.95:
-                    for q in range(1, int(4 * (1 - t)) + 2):
-                        d.point([int(fx) + (1 if math.cos(a) > 0 else -1) * (q // 3), int(fy) + 1 + q], fill=frond_lo)
-
-    palm(452, top - 6, 1.05, 2)
-    palm(470, top - 8, 0.8, 5)
-    im.alpha_composite(cliff_ruins(w, h, top))
-    d = ImageDraw.Draw(im)
-    # a low shrub at the cliff's left shoulder
-    for (cx, cy, r) in ((334, 222, 6), (340, 218, 5), (328, 226, 4)):
-        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=rgb("1E2A2A"))
-        d.arc([cx - r, cy - r, cx + r, cy + r], 200, 290, fill=rgb("8E4763"))
-    # bottom left foreground: a broken stump and a fallen column with its drum joints, dark against the valley
-    fm = Image.new("1", (w, h), 0)
-    fd = ImageDraw.Draw(fm)
-    fd.rectangle([2, 214, 20, 270], fill=1)                     # stump
-    fd.rectangle([0, 210, 23, 216], fill=1)                     # its capital
-    fd.polygon([(20, 252), (104, 238), (106, 250), (20, 264)], fill=1)   # fallen shaft, lying toward the valley
-    fp = fm.load()
-    rnd2 = random.Random(9)
-    for x in range(0, 26):   # the stump's top broke off unevenly
-        for y in range(205, 210 + rnd2.choice((0, 1, 2, 3))):
-            if 0 <= x < w:
-                fp[x, y] = 0
-    for y in range(236, 252):   # the shaft's far end is jagged
-        x = 104 + rnd2.choice((-3, -2, -1, 0, 1))
-        for xx in range(x, 110):
-            fp[xx, y] = 0
-    fall = shade_mask(fm, rgb("1C1530"), rgb("8E4763"), rgb("120C1C"), rgb("0A0814"), lit_dir=(0, -1), seed=2)
-    fq = fall.load()
-    for k in range(34, 104, 14):   # drum joints across the shaft
-        y0 = 252 - int((k - 20) * 14 / 84)
-        for t in range(0, 12):
-            x, y = k + int(t * 0.15), y0 + t
-            if 0 <= x < w and y < h and fq[x, y][3] and fq[x, y] != rgb("0A0814"):
-                fq[x, y] = rgb("0F0A18")
-    for y in range(218, 270, 9):   # courses on the stump
-        for x in range(4, 19):
-            if fq[x, y][3]:
-                fq[x, y] = rgb("0F0A18")
-    im.alpha_composite(fall)
-    # foreground grass on the left, darkest, so the menu column has quiet ground under it
-    for x in range(0, 300):
-        gy = 258 + int(3 * math.sin(x / 13.0) + 2 * math.sin(x / 5.0 + 1))
-        for y in range(gy, h):
-            im.putpixel((x, y), rgb("140E22"))
-        if rnd.random() < 0.35:
-            for k in range(1, rnd.randint(2, 6)):
-                im.putpixel((x, gy - k), rgb("140E22"))
     return im
 
 
@@ -1398,8 +1052,7 @@ def compose_title(art, hero):
     if hero is not None:
         im.alpha_composite(art["title_glow"].resize((40, 40), Image.NEAREST), (364, 188))
     im.alpha_composite(art["title_near"])
-    pg = art["title_pillar_glyph"]
-    im.alpha_composite(pg, (427 - pg.width // 2, 158))
+    im.alpha_composite(art["title_pillar_glyph"], TS.PILLAR_GLYPH_AT)
     if hero is not None:
         im.alpha_composite(hero, (372, 190))
     for key, pos in (("title_glyph_ka", (382, 152)), ("title_glyph_ja", (400, 112)), ("title_glyph_la", (370, 84))):
@@ -1484,9 +1137,9 @@ def main():
     art["marker_quest"], art["marker_talk"] = markers()
     art["book_doll"] = doll()
     # title scene
-    art["title_sky"] = sky()
-    art["title_far"] = far()
-    art["title_near"] = near()
+    art["title_sky"] = TS.sky()
+    art["title_far"] = TS.far()
+    art["title_near"] = TS.near()
     art["title_constellation"] = constellation()
     art["title_pillar_glyph"] = pillar_glyph()
     for k in GLYPHS:
