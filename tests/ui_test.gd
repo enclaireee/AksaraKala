@@ -247,6 +247,8 @@ func run() -> void:
 	tr_en.add_message("T_RECAP_0", "recap zero")
 	tr_en.add_message("T_RECAP_1", "recap one")
 	tr_en.add_message("T_RECAP_2", "recap two")
+	tr_en.add_message("T_RECAP_S2_OBJ", "Do step two")
+	tr_en.add_message("T_RECAP_S2_HINT", "Step two hint with {attack}")
 	TranslationServer.add_translation(tr_en)
 	ev.dialogue_requested.emit("NPC_MUTE_NAME", PackedStringArray(["hi"]))
 	check(box._who.text == "" and not game.has_flag("seen_name_mute"), "no tag without a WHO key")
@@ -275,16 +277,25 @@ func run() -> void:
 	for i in 3:
 		rq2.steps[i].set("recap", "" if i == 1 else "T_RECAP_%d" % i)
 	rq2.steps[0].set("recap", "T_RECAP_0")
+	rq2.steps[2].objective = "T_RECAP_S2_OBJ"
+	hud._toasts.clear()
 	game.start_quest("t_recap")
 	game.quests.t_recap.step = 2
 	game.flags["clue_ash"] = true
 	game.flags["clue_unknown"] = true   # no note key: skipped
+	check(hud._toasts.is_empty(), "HUD toasts do not receive quest step hints")
 	menu.refresh()
 	var texts := PackedStringArray()
 	for l in menu.tab(2).detail.find_children("*", "Label", true, false):
 		texts.append(l.text)
 	check("recap zero" in texts and "recap two" not in texts and "recap one" not in texts, "recap lists steps below current, skips empty: %s" % str(texts))
 	check("Ash by the door" in texts and texts.size() >= 2, "clue note listed from flags")
+	var found_hint := false
+	for t in texts:
+		if t.contains("Step two hint"):
+			found_hint = true
+			break
+	check(found_hint, "step hint shown on tab_journal menu detail: %s" % str(texts))
 
 	var sh: LontarShimmer = player.get_node("LontarShimmer")
 	var clue := Node2D.new()

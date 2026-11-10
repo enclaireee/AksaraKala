@@ -185,7 +185,6 @@ func _ready() -> void:
 	ev.quest_started.connect(func(id: String) -> void:
 		_snap(id)
 		_push_banner("UI_Q_NEW", _title(id))
-		_show_step_hint(id)
 		refresh_arrow())
 	ev.quest_updated.connect(func(id: String) -> void:
 		_on_quest_updated(id)
@@ -307,23 +306,6 @@ func _snap(id: String) -> void:
 	_sub_seen[id] = [int(q.get("step", 0)), bits]
 
 
-## Shows step-specific control hints via toasts when newly activated.
-func _show_step_hint(id: String) -> void:
-	if id == "mq0":
-		return   # Prologue tutorial is taught in the story prologue scene by Ki Semar, no top-right panels
-	var g := get_node("/root/Game")
-	var st: QuestStep = g.current_step(id)
-	if st == null:
-		return
-	var key := st.objective.replace("_OBJ", "_HINT")
-	if tr(key) != key:
-		var keys := {}
-		for a in ["interact", "cast", "attack", "dodge", "menu"]:
-			keys[a] = g.key_name(a)
-		keys.move = "%s%s%s%s" % [g.key_name("move_up"), g.key_name("move_left"), g.key_name("move_down"), g.key_name("move_right")]
-		_push_toast(tr(key).format(keys))
-
-
 ## A new step or a finished sub-goal: banner with the objective now in force, and a gold pulse on the tracker.
 ## A counted step ticking up (2/3) only pulses.
 func _on_quest_updated(id: String) -> void:
@@ -334,8 +316,6 @@ func _on_quest_updated(id: String) -> void:
 		var t: String = get_node("/root/Game").quest_objective_text(id)
 		if t != "":
 			_push_banner("UI_Q_UPDATED", _title(id))   # just the quest name; the tracker card holds the detail
-		if now[0] != seen[0]:
-			_show_step_hint(id)
 	_pulse_tracker()
 
 
