@@ -418,7 +418,7 @@ def pouch(kind, size=64):
     pal = {"bramble": (hexc("2F6A28"), hexc("63A850")), "bamboo": (hexc("A8B848"), hexc("D8E888")),
            "salt": (hexc("B8D8F0"), hexc("FFFFFF")), "mud": (hexc("4E3418"), hexc("7A5530"))}[kind]
     im = Image.new("RGBA", (size, size), T)
-    rnd = random.Random(hash(kind) & 0xFFFF)
+    rnd = random.Random(sum(map(ord, kind)) * 977)
     for y in range(size):
         for x in range(size):
             r = math.hypot(x - size / 2 + .5, y - size / 2 + .5) / (size / 2)
@@ -462,8 +462,198 @@ def arena_post(hung):
     return c.done()
 
 
+# ----------------------------------------------------------------------------------------------- villagers, boss shots
+def emote(kind):
+    """Speech bubble 11x10 (tail at bottom): 0 dots, 1 !, 2 ?, 3 heart, 4 note."""
+    c = C(11, 10)
+    ink, paper = hexc("17122A"), hexc("F6F1E4")
+    c.rect(1, 0, 9, 6, ink); c.rect(0, 1, 10, 5, ink)
+    c.rect(1, 1, 9, 5, paper); c.rect(1, 1, 9, 1, hexc("FFFFFF"))
+    c.rect(4, 7, 6, 8, ink)
+    c.set(5, 7, paper)
+    if kind == 0:
+        for x in (3, 5, 7):
+            c.rect(x, 4, x, 4, ink)
+    elif kind == 1:
+        c.rect(5, 2, 5, 4, hexc("E8A820"))
+    elif kind == 2:
+        for (x, y) in ((4, 2), (5, 2), (6, 3), (5, 4), (5, 5)):
+            c.set(x, y, hexc("3FA8B8"))
+        c.set(4, 3, hexc("3FA8B8"))
+    elif kind == 3:
+        for (x, y) in ((3, 2), (4, 2), (6, 2), (7, 2), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (4, 4), (5, 4), (6, 4), (5, 5)):
+            c.set(x, y, hexc("D8384A"))
+    else:
+        for (x, y) in ((6, 2), (6, 3), (6, 4), (5, 4), (4, 5), (5, 5)):
+            c.set(x, y, hexc("4A62C0"))
+        c.set(7, 2, hexc("4A62C0"))
+    return c.done()
+
+
+def boss_blade():
+    """White blade/shard 24x10 pointing right; the engine tints it with the shot colour."""
+    c = C(24, 10)
+    c.poly([(23, 5), (7, 0.5), (2, 5), (7, 9.5)], hexc("C8C8D0"))
+    c.poly([(21, 5), (8, 2.5), (5, 5), (8, 7.5)], hexc("FFFFFF"))
+    c.rect(2, 4, 7, 5, hexc("9898A8"))
+    return c.done()
+
+
+def boss_log():
+    c = C(32, 12)
+    c.rect(1, 1, 30, 10, hexc("7A5030")); c.rect(1, 1, 30, 3, hexc("A87444")); c.rect(1, 9, 30, 10, hexc("4E3220"))
+    for x in (6, 14, 22):
+        c.rect(x, 2, x, 9, hexc("5A3A22"))
+    c.ell(2, 5.5, 2.5, 4.5, hexc("C8A070")); c.ell(29, 5.5, 2.5, 4.5, hexc("C8A070"))
+    c.set(2, 5, hexc("7A5030")); c.set(29, 5, hexc("7A5030"))
+    return c.done()
+
+
+def boss_skull():
+    c = C(14, 14)
+    c.ell(7, 6, 6, 5.5, hexc("E8E0D0")); c.rect(4, 9, 9, 12, hexc("E8E0D0"))
+    c.rect(3, 5, 5, 7, hexc("17122A")); c.rect(8, 5, 10, 7, hexc("17122A"))
+    c.set(7, 8, hexc("17122A")); c.rect(5, 12, 5, 12, hexc("17122A")); c.rect(7, 12, 7, 12, hexc("17122A")); c.rect(9, 12, 9, 12, hexc("17122A"))
+    c.set(4, 6, hexc("FF5A3A")); c.set(9, 6, hexc("FF5A3A"))
+    return c.done()
+
+
+def boss_orb(f):
+    c = C(16, 16)
+    r = (6.5, 7.2, 6.8)[f]
+    c.ell(8, 8, r + 0.8, r + 0.8, hexc("FFFFFF", 90))
+    c.ell(8, 8, r, r, hexc("E8E8E8")); c.ell(8, 8, r - 2.2, r - 2.2, hexc("FFFFFF"))
+    c.set(8 + (f - 1) * 3, 2, hexc("FFFFFF")); c.set(3, 11 - f, hexc("FFFFFF", 170))
+    return c.done()
+
+
+# ----------------------------------------------------------------------------------------------- kelir set pieces
+CLOTH_C, CLOTH_D = hexc("D8C8A0"), hexc("9A8A60")
+
+
+def prop_cloth(done):
+    """K2: the cloth you spread. 0 folded, 1 spread out with a border."""
+    c = C(22, 20)
+    c.rect(2, 17, 19, 18, hexc("141020", 120))
+    if not done:
+        c.rect(5, 11, 16, 17, CLOTH_C); c.rect(5, 11, 16, 12, hexc("F0E2BC")); c.rect(5, 15, 16, 17, CLOTH_D)
+        c.rect(5, 13, 16, 13, hexc("B8A478"))
+    else:
+        c.poly([(1, 17), (20, 17), (17, 9), (4, 9)], CLOTH_C)
+        c.poly([(3, 16), (18, 16), (16, 11), (5, 11)], hexc("F0E2BC"))
+        for x in range(4, 18, 3):
+            c.set(x, 14, hexc("B83A3A")); c.set(x + 1, 13, hexc("2A5C9A"))
+        c.rect(1, 17, 20, 17, CLOTH_D)
+    return c.done()
+
+
+def prop_lesung(done):
+    """K2 and K3: the rice mortar and pestle. 1 = the pestle struck, a puff of dust."""
+    c = C(22, 22)
+    c.rect(2, 19, 19, 20, hexc("141020", 120))
+    c.poly([(3, 9), (18, 9), (16, 19), (5, 19)], hexc("8A6038")); c.rect(3, 9, 18, 10, hexc("B88850"))
+    c.rect(5, 10, 16, 11, hexc("2A1A10")); c.rect(5, 12, 5, 18, hexc("A87444"))
+    pe = 2 if done else 0
+    c.rect(10, 0 + pe, 11, 11, hexc("C8A070")); c.rect(9, 0 + pe, 12, 2 + pe, hexc("E0C090"))
+    if done:
+        for (x, y) in ((4, 8), (17, 8), (2, 6), (19, 6), (7, 5)):
+            c.set(x, y, hexc("F0E8D0", 200))
+    return c.done()
+
+
+def prop_pouch(done):
+    """K4: a tied pouch; thrown, its seeds spill."""
+    c = C(18, 18)
+    c.rect(2, 15, 15, 16, hexc("141020", 120))
+    if not done:
+        c.poly([(4, 15), (13, 15), (14, 9), (9, 5), (3, 9)], hexc("A86038")); c.rect(7, 4, 10, 6, hexc("5A3A22"))
+        c.rect(5, 10, 11, 10, hexc("7A4222")); c.rect(8, 3, 9, 4, hexc("E8C070"))
+    else:
+        c.poly([(3, 14), (9, 14), (8, 11), (4, 11)], hexc("A86038"))
+        for (x, y) in ((10, 13), (12, 12), (14, 14), (11, 15), (9, 11), (13, 10), (15, 12)):
+            c.set(x, y, hexc("7FBF48")); c.set(x + 1, y, hexc("3E7A2E"))
+    return c.done()
+
+
+def prop_slab(done):
+    """K7 and the Laras chapters: a stone slab that takes a glyph. 1 = the glyph glows."""
+    c = C(20, 24)
+    c.rect(2, 21, 17, 22, hexc("141020", 120))
+    c.poly([(3, 21), (16, 21), (15, 4), (10, 1), (5, 4)], hexc("7E7890")); c.rect(5, 4, 5, 20, hexc("A8A2BC")); c.rect(14, 6, 15, 20, hexc("56506A"))
+    col = hexc("7FE8E0") if done else hexc("3A3A52")
+    if done:   # the glow sits behind the glyph
+        for r, a in ((9, 26), (6, 44)):
+            c.ell(10, 10, r, r + 1, hexc("7FE8E0", a))
+    for (x, y) in ((8, 7), (9, 7), (10, 7), (11, 7), (11, 8), (10, 9), (9, 10), (8, 11), (9, 12), (10, 12), (11, 12)):
+        c.set(x, y, col)
+    return c.done()
+
+
+def prop_basket(done):
+    """SQ-G1: the basket on the ground, then hung on its hook."""
+    c = C(20, 24)
+    c.rect(2, 21, 17, 22, hexc("141020", 120))
+    if not done:
+        c.poly([(3, 20), (16, 20), (14, 12), (5, 12)], hexc("C8A058")); c.rect(5, 12, 14, 13, hexc("E8C878"))
+        for y in (15, 18):
+            c.rect(4, y, 15, y, hexc("8A6A38"))
+        c.rect(4, 5, 5, 12, hexc("8A6A38")); c.rect(14, 5, 15, 12, hexc("8A6A38")); c.rect(4, 4, 15, 5, hexc("8A6A38"))
+    else:
+        c.rect(9, 0, 10, 6, hexc("6A4529"))
+        c.poly([(4, 17), (15, 17), (14, 10), (5, 10)], hexc("C8A058")); c.rect(5, 10, 14, 11, hexc("E8C878"))
+        c.rect(5, 6, 14, 6, hexc("8A6A38")); c.rect(5, 6, 5, 10, hexc("8A6A38")); c.rect(14, 6, 14, 10, hexc("8A6A38"))
+        c.rect(7, 2, 12, 3, hexc("6A4529"))
+    return c.done()
+
+
+def prop_beans(done):
+    """SQ-M3: a sack of green beans, then the beans scattered."""
+    c = C(22, 18)
+    c.rect(2, 15, 19, 16, hexc("141020", 120))
+    if not done:
+        c.poly([(5, 15), (15, 15), (16, 8), (10, 4), (4, 8)], hexc("C8B078")); c.rect(8, 3, 11, 5, hexc("8A7040")); c.rect(5, 10, 15, 10, hexc("A89058"))
+    else:
+        c.poly([(2, 14), (7, 14), (7, 12), (3, 12)], hexc("C8B078"))
+        for (x, y) in ((9, 13), (11, 11), (13, 14), (15, 12), (17, 14), (19, 11), (12, 15), (16, 10)):
+            c.set(x, y, hexc("6FC048")); c.set(x + 1, y, hexc("3E8A2E"))
+    return c.done()
+
+
+def prop_water(done):
+    """SQ-T1: a still pool; struck, it rings."""
+    c = C(26, 16)
+    c.ell(13, 9, 12, 5, hexc("1E4E8A")); c.ell(13, 8, 11, 4, hexc("3E78C0"))
+    c.ell(13, 8, 6, 2.5, hexc("5C98E0")) if not done else None
+    if done:
+        for r, a in ((3, 255), (6, 200), (9, 140)):
+            for deg in range(0, 360, 12):
+                x, y = 13 + math.cos(math.radians(deg)) * r, 8 + math.sin(math.radians(deg)) * r * 0.42
+                c.set(x, y, hexc("DCEEFF", a))
+    return c.done()
+
+
+def prop_stone(done):
+    """Generic ritual stone (SQ memories with a mark): 1 = lit rune."""
+    c = C(18, 18)
+    c.rect(2, 15, 15, 16, hexc("141020", 120))
+    c.poly([(3, 15), (14, 15), (13, 6), (8, 3), (4, 6)], hexc("8A8498")); c.rect(4, 6, 4, 14, hexc("B0AAC4"))
+    c.rect(8, 7, 8, 12, hexc("F2B27A") if done else hexc("4A4458")); c.rect(6, 9, 10, 9, hexc("F2B27A") if done else hexc("4A4458"))
+    return c.done()
+
+
+PROPS = {"cloth": prop_cloth, "lesung": prop_lesung, "pouch": prop_pouch, "slab": prop_slab, "basket": prop_basket,
+         "beans": prop_beans, "water": prop_water, "stone": prop_stone}
+
+
 # ----------------------------------------------------------------------------------------------- main
 def main():
+    for n, f in PROPS.items():
+        out(strip([f(False), f(True)]), "cutscene/prop_%s.png" % n)
+    out(strip([emote(i) for i in range(5)]), "ambient/emotes.png")
+    out(boss_blade(), "fx/boss_blade.png")
+    out(boss_log(), "fx/boss_log.png")
+    out(boss_skull(), "fx/boss_skull.png")
+    out(strip([boss_orb(i) for i in range(3)]), "fx/boss_orb.png")
     out(screen(), "cutscene/k0_screen.png")
     out(strip([kala(i) for i in range(3)]), "cutscene/k0_kala.png")
     out(strip([tide(i) for i in range(4)]), "cutscene/shadow_tide.png")

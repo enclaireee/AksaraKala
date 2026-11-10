@@ -33,18 +33,30 @@ def patch(name, kv, after=None):
     _write(p, rows)
 
 
+def _find(lines, key):
+    pat = re.compile(r"^\|( [^|]*\|)? %s \|" % re.escape(key))
+    for n, l in enumerate(lines):
+        if pat.match(l):
+            return n
+    return None
+
+
 def script(kv, after=None):
-    """Same for the markdown table rows `| KEY | ID | EN |` in .docs/script.md (new keys after `after`'s row)."""
+    """Same for the markdown table rows `| [n |] KEY | ID | EN |` in .docs/script.md (new keys after `after`'s row,
+    copying its leading column)."""
     p = os.path.join(ROOT, ".docs/script.md")
     lines = open(p, encoding="utf-8").read().split("\n")
     for k, (i, e) in kv.items():
-        row = "| %s | %s | %s |" % (k, i, e)
-        found = [n for n, l in enumerate(lines) if l.startswith("| %s |" % k)]
-        if found:
-            lines[found[0]] = row
+        n = _find(lines, k)
+        if n is not None:
+            cells = [c.strip() for c in lines[n].strip().strip("|").split("|")]
+            pre = cells[:-3]
+            lines[n] = "| " + " | ".join(pre + [k, i, e]) + " |"
         elif after:
-            a = [n for n, l in enumerate(lines) if l.startswith("| %s |" % after)]
-            if a:
-                lines.insert(a[0] + 1, row)
+            a = _find(lines, after)
+            if a is not None:
+                cells = [c.strip() for c in lines[a].strip().strip("|").split("|")]
+                pre = cells[:-3]
+                lines.insert(a + 1, "| " + " | ".join(pre + [k, i, e]) + " |")
                 after = k
     open(p, "w", encoding="utf-8").write("\n".join(lines))

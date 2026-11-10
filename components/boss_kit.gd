@@ -249,24 +249,31 @@ class Shot extends Node2D:
 		for i in _trail.size():
 			var f := float(i + 1) / (_trail.size() + 1)
 			draw_circle(to_local(_trail[i]), radius * f * 0.8, Color(color, 0.35 * f))
+		var k := radius / 5.0   # the sprites are authored for a 5 px shot
 		match style:
 			"blade", "shard":
 				draw_set_transform(Vector2.ZERO, a)
-				draw_colored_polygon(PackedVector2Array([Vector2(radius * 1.6, 0), Vector2(-radius, -radius * 0.55), Vector2(-radius * 0.5, 0), Vector2(-radius, radius * 0.55)]), color)
-				draw_colored_polygon(PackedVector2Array([Vector2(radius * 1.1, 0), Vector2(-radius * 0.4, -radius * 0.25), Vector2(-radius * 0.4, radius * 0.25)]), Color(1, 1, 1, 0.8))
+				var tb := _tex("boss_blade")
+				draw_texture_rect(tb, Rect2(-tb.get_size() * k * 0.5, tb.get_size() * k), false, color)
 			"log":
 				draw_set_transform(Vector2.ZERO, _t * 9.0)
-				draw_rect(Rect2(-radius, -radius * 0.4, radius * 2.0, radius * 0.8), Color(0.5, 0.33, 0.15))
-				draw_rect(Rect2(-radius, -radius * 0.4, radius * 2.0, radius * 0.25), Color(0.65, 0.45, 0.22))
+				var tl := _tex("boss_log")
+				draw_texture_rect(tl, Rect2(-tl.get_size() * k * 0.5, tl.get_size() * k), false)
 			"skull":
-				draw_circle(Vector2.ZERO, radius, color)
-				draw_rect(Rect2(-radius * 0.5, -radius * 0.3, radius * 0.3, radius * 0.3), Color.BLACK)
-				draw_rect(Rect2(radius * 0.2, -radius * 0.3, radius * 0.3, radius * 0.3), Color.BLACK)
+				var ts := _tex("boss_skull")
+				draw_texture_rect(ts, Rect2(-ts.get_size() * k * 0.5, ts.get_size() * k), false, Color(1, 1, 1).lerp(color, 0.25))
 			_:
-				var pulse := 1.0 + 0.15 * sin(_t * 24.0)
-				draw_circle(Vector2.ZERO, radius * 1.4 * pulse, Color(color, 0.3))
-				draw_circle(Vector2.ZERO, radius * pulse, color)
-				draw_circle(Vector2.ZERO, radius * 0.5, Color(1, 1, 1, 0.9))
+				var to := _tex("boss_orb")
+				var fr := int(_t * 12.0) % 3
+				var pulse := 1.0 + 0.1 * sin(_t * 24.0)
+				draw_texture_rect_region(to, Rect2(-Vector2(8, 8) * k * pulse, Vector2(16, 16) * k * pulse), Rect2(fr * 16, 0, 16, 16), color)
+
+	static var _texes := {}
+
+	static func _tex(n: String) -> Texture2D:   # fx/boss_<n>.png, loaded once
+		if not _texes.has(n):
+			_texes[n] = load("res://assets/art/fx/%s.png" % n)
+		return _texes[n]
 
 
 ## Fires one projectile from `from` toward angle `dir`.

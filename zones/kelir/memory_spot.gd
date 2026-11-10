@@ -6,6 +6,12 @@ class_name MemorySpot extends Interactable
 
 const GAP_SIZE := Vector2(24, 24)   # TUNE
 const GAP_GREY := Color("8A8580")
+## What you act on, per memory (the default is a blencong stand): tools/gen_revamp_art.py prop_<name>.png. Spots of one
+## memory take the names in turn. Laras chapters (lc1..lc6) share "slab".
+const SET_PIECES := {
+	"k2_dayang_sumbi": ["cloth", "lesung"], "k3_lesung": ["lesung"], "k4_timun_mas": ["pouch"], "k7_ruwatan": ["slab"],
+	"lc": ["slab"], "sq_g1_kabayan": ["basket"], "sq_m3_tuyul": ["beans"], "sq_t1_klething": ["water"],
+}
 
 @export_enum("interact", "goal", "narrate", "gap") var action_kind := "interact"
 @export var order := -1        # -1 = any order
@@ -58,23 +64,32 @@ func _make_prop() -> void:
 	var id: String = mem.memory_id if mem != null and mem.memory_id != "" else str(get_node("/root/Zones").memory_id)
 	if id == "k0_ruwatan":
 		return
-	_prop_kind = {"k1_maghrib": "oncor", "k5_forge": "stake"}.get(id, "lamp")
+	var named: Array = SET_PIECES.get(id, SET_PIECES.get(id.rstrip("0123456789"), []))
+	if named.is_empty():
+		_prop_kind = {"k1_maghrib": "oncor", "k5_forge": "stake"}.get(id, "lamp")
+	else:
+		_prop_kind = "piece:" + str(named[get_index() % named.size()])
 	_prop = Sprite2D.new()
 	_prop.centered = false
-	match _prop_kind:
-		"oncor":
-			_prop.texture = load("res://assets/art/props/oncor.png")
-			_prop.hframes = 4
-			_prop.offset = Vector2(-8, -25)
-		"stake":
-			_prop.texture = load("res://assets/art/props/curse_stake.png")
-			_prop.hframes = 3
-			_prop.offset = Vector2(-6, -15)
-			_prop.frame = 2
-		_:
-			_prop.texture = load("res://assets/art/cutscene/lamp_stand.png")
-			_prop.hframes = 4
-			_prop.offset = Vector2(-7, -10)
+	if _prop_kind.begins_with("piece:"):   # a set piece from tools/gen_revamp_art.py: 2 frames, undone / done
+		_prop.texture = load("res://assets/art/cutscene/prop_%s.png" % _prop_kind.trim_prefix("piece:"))
+		_prop.hframes = 2
+		_prop.offset = Vector2(-_prop.texture.get_width() / 4.0, -_prop.texture.get_height() + 4.0)
+	else:
+		match _prop_kind:
+			"oncor":
+				_prop.texture = load("res://assets/art/props/oncor.png")
+				_prop.hframes = 4
+				_prop.offset = Vector2(-8, -25)
+			"stake":
+				_prop.texture = load("res://assets/art/props/curse_stake.png")
+				_prop.hframes = 3
+				_prop.offset = Vector2(-6, -15)
+				_prop.frame = 2
+			_:
+				_prop.texture = load("res://assets/art/cutscene/lamp_stand.png")
+				_prop.hframes = 4
+				_prop.offset = Vector2(-7, -10)
 	_prop.z_index = 1
 	add_child(_prop)
 	_ring = Sprite2D.new()
@@ -92,6 +107,8 @@ func _animate_prop() -> void:
 			_prop.frame = (1 + int(_t * 9.0 + position.x) % 3) if lit else 0
 		"stake":
 			_prop.frame = 0 if lit else 2
+	if _prop_kind.begins_with("piece:"):
+		_prop.frame = 1 if lit else 0
 	_ring.visible = not lit and usable
 	if _ring.visible:
 		_ring.frame = int(_t * 6.0) % 4

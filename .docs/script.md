@@ -380,6 +380,8 @@ The old well stands a few steps from the banyan; the catch happens there, becaus
 | 4 | DLG_IBU_H113 | Aku akan membawanya pulang, Bu. Aku janji. | I'll bring her home, Ibu. I promise. |
 | 4 | @NPC_IBU_NAME | | |
 | 4 | DLG_IBU_V113 | Membawa siapa pulang? Sudahlah. Panggung wayang masih berasap, siapa tahu ada yang tertinggal di sana. | Bring who home? Never mind. The wayang stage is still smoking, something may be left there. |
+| 4 | DLG_IBU_T1 | Sebelum kau pergi: petilasan tua di desa ini mengingat siapa saja yang singgah. Duduklah di sana, dan lelahmu ikut diingat pulih. | Before you go: the old petilasan in this village remembers whoever stops there. Sit by it, and your tiredness is remembered away. |
+| 4 | DLG_IBU_T2 | Dan bawa kendi jamu ini. Minum saat kau terluka. Kuisi lagi tiap kali kau beristirahat. | And take this jamu flask. Drink when you are hurt. I refill it each time you rest. |
 | 6 | DLG_IBU_V7 | Hati-hati. Sejak semalam seisi desa gelisah. | Be careful. The whole village is jumpy since last night. |
 | 7 | DLG_IBU_V8 | Pulanglah kalau sempat. Nasimu Ibu hangatkan. | Come home when you can. I'll keep your rice warm. |
 
@@ -573,6 +575,7 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | 5 | DLG_SEMAR_H109 | Aku akan menggambarnya sampai tanganku hafal. | I'll draw it until my hand knows it. |
 | 5 | @NPC_SEMAR_NAME | | |
 | 5 | DLG_SEMAR_V118 | Itu muridku. Tiga kali, di depan boneka latihan itu. | That's my apprentice. Three times, on those practice dummies. |
+| 5 | DLG_SEMAR_T1 | Tahan tombolnya, gambar dengan mouse-mu, lalu lepaskan. Garis yang pelan dan mantap lebih berharga daripada yang tergesa. | Hold the button, draw with your mouse, then let go. A slow, steady line is worth more than a hurried one. |
 | H2 | @NPC_SEMAR_NAME | | |
 | H2 | DLG_SEMAR_V7 | Lagi. Tiga kali, sampai tanganmu tak perlu menunggu kepalamu. | Again. Three times, until your hand stops waiting for your head. |
 | T:ask_faceless | @NPC_SEMAR_NAME | | |
@@ -635,6 +638,8 @@ The Act I Cepot entries (SQ-S4) follow; see section 6.
 | P1 | @NPC_CEPOT_NAME | | |
 | P1 | DLG_CEPOT_V104 | Hati-hati. Aku pemberani, hanya dengan syarat. Tak boleh ada raksasa dalam dua puluh langkah. | Careful. I'm brave, only on conditions. No giants within twenty paces. |
 | P1 | DLG_CEPOT_V105 | Sana, tulis di lontar Laras. Aku jaga lampunya, dari jauh, dengan penuh perhatian. | Go on, write on Laras's lontar. I'll watch the lamps, from a distance, very attentively. |
+| P1 | DLG_CEPOT_T1 | Sebelum menulis, panaskan tanganmu, Kak. Boneka jerami di halaman itu kuikat sejak subuh. Pukul, tahan tombolnya, dan tiga ayunan jadi satu kombo. | Before you write, warm up your hands, Kak. I tied those straw dummies in the yard at dawn. Strike, hold the button, and three swings make one combo. |
+| P1 | DLG_CEPOT_T2 | Awas napasmu. Tiap ayunan memakan stamina, si bar kuning di bawah nyawamu. | Mind your breath. Every swing costs stamina, that yellow bar under your health. |
 
 ### Beat `lontar_names` (if `!flag:beat_lontar_names`, `flag:mq0_d5`; do `flag:beat_lontar_names`). Area `sanggar_lontar` sets `mq0_d5` (0.6, after the write card). The plant for the tear.
 | Key | ID | EN |
@@ -955,7 +960,7 @@ Banner sentences:
 | 1 | DLG_SUNDA_ELDER_H2 | Ke mana mereka? | Where did they go? |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
 | 1 | `#wait:1` (cue line) | | |
-| 1 | DLG_SUNDA_ELDER_V3 | Mereka menuju hilir ke ngarai sungai. Berhati-hatilah, Nak! Saat matahari terbenam (maghrib), makhluk Sandekala berkeliaran memangsa siapa saja yang masih di luar! | They headed downstream to the river gorge. Beware, child! When dusk falls at maghrib, the shadow spirits of Sandekala snatch anyone caught outside! |
+| 1 | DLG_SUNDA_ELDER_V3 | Mereka menuju hilir ke ngarai sungai. Berhati-hatilah, Nak! Saat maghrib, Sandekala, hantu bayangan penjaga senja, menyambar siapa saja yang masih di luar! | They headed downstream to the river gorge. Beware, child! When dusk falls at maghrib, Sandekala, the shadow spirit of twilight, snatches anyone caught outside! |
 | 1 | DLG_SUNDA_ELDER_V20 | Bawa Ga: angkat, dan cahaya jadi dinding. | Take Ga: raise it, and the light becomes a wall. |
 | 1 | DLG_SUNDA_ELDER_V12 | Gambar Ga dengan satu goresan tak putus. Jangan ragu di tikungan. | Draw Ga in one unbroken stroke. Don't hesitate at the turn. |
 | 1 | @NPC_HERO_NAME | | |
@@ -1322,7 +1327,7 @@ Choices for the Weaver hub:
 ### Hunt K2: Sangkuriang (1.17, 1.23, 1.24)
 | Key | ID | EN |
 |-----|----|----|
-| HUNT_K2_TITLE | Sangkuriang | Sangkuriang |
+| HUNT_K2_TITLE | Perahu di Danau | The Boat on the Lake |
 
 ### Clues K2 (step 1.17; `loom` is in the Weaver's house; `boat_ribs` is on the crater rim and starts `k2_dayang_sumbi`)
 | Key | ID | EN |
@@ -1537,7 +1542,7 @@ Her one action: say a true name. Generic lines for every chapter first (`LC_HINT
 ### Beat `naga` (if `!flag:beat_naga`, `quest:mq1=done`; do `flag:beat_naga`, `flag:mq1_10`, `codex:nagawiru`, `codex:sangkuriang`, `lakon:sangkuriang`, `start:mqg`). Step 1.24, Choice 1. Nagawiru is first named here (his name tag shows on his first line)
 | Key | ID | EN |
 |-----|----|----|
-| BEAT_NAGA_1 | Fajar palsu padam. Sangkuriang duduk di antara perahunya yang tak pernah jadi dan tertidur. Rantai mengendur, dan seekor naga besar bangkit dari lumpur, sisiknya kusam seperti perunggu tua. | The false dawn fades. Sangkuriang sits down among his never-finished boats and sleeps. The chains slacken, and a great naga rises from the mud, scales dull as old bronze. |
+| BEAT_NAGA_1 | Fajar palsu padam. Sangkuriang, si pembuat perahu dalam legenda, duduk di antara perahunya yang tak pernah jadi dan tertidur. Rantai mengendur, dan seekor naga besar bangkit dari lumpur, sisiknya kusam seperti perunggu tua. | The false dawn fades. Sangkuriang, the boat-builder of legend, sits down among his never-finished boats and sleeps. The chains slacken, and a great naga rises from the mud, scales dull as old bronze. |
 | @NPC_CIUNG_WANARA_NAME | | |
 | BEAT_NAGA_2 | Kau mengikutiku sampai sini? Berani atau bodoh, aku belum tahu. | You followed me all the way here? Brave or stupid, I haven't decided. |
 | @NPC_NAGAWIRU_NAME | | |
@@ -1893,9 +1898,9 @@ Topic entries of the A2-1 hub. T1 and T1b are both `"topic": "ciung_mother"`: T1
 | 1 | @NPC_LENGSER_NAME | | |
 | 1 | DLG_LENGSER_V205 | Senyum itu mahal di sini. Raja menghitung siapa yang tersenyum padanya, dan siapa yang tersenyum saat ia lewat. | Smiles are costly here. The king counts who smiles at him, and who smiles when he passes. |
 | 1 | DLG_LENGSER_V206 | Pergilah, Nak. Lututku akan bilang kapan aku harus berhenti bicara. Sekarang waktunya. | Go, child. My knees will tell me when to stop talking. That time is now. |
-| 2 | DLG_LENGSER_V5 | Prajurit pembelot Ranga itu kau bebaskan? Bagus, ampunan adalah tanda calon pemimpin besar. Hati-hati, kebaikan bisa menular! | You spared the deserter Ranga? Good. Mercy is the hallmark of a true leader. Careful now, kindness can be catching! |
+| 2 | DLG_LENGSER_V5 | Prajurit pembelot itu kau bebaskan? Bagus, ampunan adalah tanda calon pemimpin besar. Hati-hati, kebaikan bisa menular! | You spared the deserter? Good. Mercy is the hallmark of a true leader. Careful now, kindness can be catching! |
 | 2 | DLG_LENGSER_V207 | Aku tidak menyalahkanmu. Aku pernah membiarkan seorang ratu pergi, dan Galuh masih berdiri. | I don't blame you. I once let a queen go, and Galuh still stands. |
-| 3 | DLG_LENGSER_V6 | Ranga sudah disembunyikan di lumbung padi dengan perut kenyang. Dewan adat Galuh akan mendengarkan kesaksiannya nanti. | Ranga is tucked away safely in the rice granary with a full stomach. Galuh's elder council will hear his testimony in due time. |
+| 3 | DLG_LENGSER_V6 | Prajurit itu sudah disembunyikan di lumbung padi dengan perut kenyang. Dewan adat Galuh akan mendengarkan kesaksiannya nanti. | The deserter is tucked away safely in the rice granary with a full stomach. Galuh's elder council will hear his testimony in due time. |
 | 3 | DLG_LENGSER_V208 | Ia menggambar denah di lantai sel dengan arang. Orang yang lupa nama masih ingat lorong. | He drew a plan on the cell floor in charcoal. A man who forgot his name still remembers corridors. |
 | 4 | DLG_LENGSER_V209 | Kau datang lagi, Nak. Duduklah, kalau lututmu sekuat lututku, yaitu tidak. Mau bertanya apa? | You're back, child. Sit, if your knees are as strong as mine, which is to say not at all. What would you ask? |
 | T1 | DLG_LENGSER_V210 | Rahasia itu? Di malam raja yang sah pergi bertapa, kuambil ratunya dari sini sebelum tengah malam. | The secret? The night the true king left to be a hermit, I took his queen out of here before midnight. |
@@ -2484,7 +2489,7 @@ Regional characters: Ki Sumarto (want: a stage no army will burn; turn: his son 
 | 2 | DLG_MATARAM_DALANG_V225 | Dalang yang memilih satu tepi kehilangan separuh ceritanya, dan separuh penontonnya. Pergilah, dan bawakan aku kabar dari kuburan. | A dalang who picks one bank loses half his story, and half his audience. Go, and bring me news from the graveyard. |
 | 3 | DLG_MATARAM_DALANG_V226 | Duduklah, Nak. Kelirku sudah dijahit lagi. Mau bertanya apa, selagi aku punya cukup minyak untuk dua lampu? | Sit, child. My screen is sewn up again. What would you ask, while I have enough oil for two lamps? |
 | 4 | DLG_MATARAM_DALANG_V4 | Sungai Pamali ini sungai pantangan. Menurut petuah leluhur, jika darah tumpah ke air Pamali, kutukan kuno akan menenggelamkan kedua kerajaan! | This Pamali River is a forbidden boundary. Ancestral lore warns that if brother's blood spills into Pamali's currents, an ancient curse will drown both realms! |
-| T1 | DLG_MATARAM_DALANG_V227 | Sapto lahir di balik kelir ini. Tidurnya di antara wayang, bangunnya di antara gamelan. | Sapto was born behind this screen. He slept among puppets and woke among gamelan. |
+| T1 | DLG_MATARAM_DALANG_V227 | Sapto, cucuku, lahir di balik kelir ini. Tidurnya di antara wayang, bangunnya di antara gamelan. | Sapto, my grandson, was born behind this screen. He slept among puppets and woke among gamelan. |
 | T1 | DLG_MATARAM_DALANG_V228 | Waktu seorang perekrut datang, dia tak minta izin. Dia cuma meninggalkan wayang Bima di bangku dan pergi. | When a recruiter came he didn't ask leave. He just left the Bima puppet on the bench and went. |
 | T1 | DLG_MATARAM_DALANG_V229 | Kalau kau bertemu dia di timur, bilang lampu di rumah masih menyala. Itu saja. Jangan bilang aku yang menyuruh. | If you meet him in the east, say the lamp at home is still lit. That's all. Don't say I sent you. |
 | T2 | DLG_MATARAM_DALANG_V6 | Pangeran Hariang Banga bukanlah orang lalim. Dia mengira Ciung Wanara adalah pemberontak yang menghina ibunya. Kesalahpahaman inilah yang mengasah pedang perang. | Prince Hariang Banga is no tyrant. He truly believes Ciung Wanara is a rebel who disgraced his royal mother. This tragic lie is what sharpens the blades of war. |
@@ -5292,6 +5297,11 @@ VERIFY: the Murwakala lakon as the ruwatan story, and the details of Kala's birt
 | MEM_K7_RUWATAN_IN (changed) | Pertunjukan malam itu lagi, Nak, tapi kali ini kau dalangnya. Bacakan nama-nama: Sunda, Jawa, dan Ombak untuk penutupnya. | That night's show again, child, but this time you're the dalang. Read the names: Sunda, Jawa, and Ombak to close. |
 | MEM_K7_RUWATAN_HINT (changed) | Sunda, Jawa, Ombak | Sunda, Jawa, Ombak |
 | MEM_K7_RUWATAN_1 | Kau membacakan nama-nama anak desa. Tiap nama satu huruf, dan bayangan Kala menunduk. | You read the village children's names. One letter for each name, and Kala's shadow bows. |
+| MEM_K7_RUWATAN_2 | Sunda, Jawa, Sunda, Jawa. Iramanya seperti lesung dan oncor sekaligus. | Sunda, Jawa, Sunda, Jawa. The rhythm is lesung and oncor together. |
+| MEM_K7_RUWATAN_3 | Nama terakhir kau tutup dengan Ombak, dan bayangan Kala melunak seperti lilin dekat api. | You close the last name with Ombak, and on the kelir Kala's shadow softens like wax near a flame. |
+| MEM_K7_RUWATAN_4 | Gamelan menahan napas. Hanya ada lesung, dan suaramu. | The gamelan holds its breath. Only the mortar, and your voice. |
+| MEM_K7_RUWATAN_5 | Di luar kelir, seorang anak tertidur, aman di bawah namanya. | Outside the screen, a child sleeps, safe beneath their name. |
+| MEM_K7_RUWATAN_6 | Lampu terakhir bergoyang, lalu berdiri tegak. Ruwatan selesai. | The last lamp sways, then stands tall. The ruwatan is done. |
 | MEM_K7_RUWATAN_2 (changed) | Sunda, Jawa, Sunda, Jawa. Iramanya seperti lesung dan oncor sekaligus. | Sunda, Jawa, Sunda, Jawa. The rhythm is lesung and oncor together. |
 | MEM_K7_RUWATAN_3 (changed) | Nama terakhir kau tutup dengan Ombak, dan bayangan Kala melunak seperti lilin dekat api. | You close the last name with Ombak, and on the kelir Kala's shadow softens like wax near a flame. |
 | MEM_K7_RUWATAN_OUT | Begitulah ruwatan fajar, Nak: bergantian, sabar, dan dengan nama. | That is the dawn ruwatan, child: in turn, patient, and with names. |

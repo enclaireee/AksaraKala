@@ -21,6 +21,7 @@ const EMOTES := [
 ]
 
 var variant := 0
+var _emote_tex: Texture2D
 var life: Node2D
 var home := Vector2.ZERO
 var radius := 36.0
@@ -264,14 +265,10 @@ func _draw() -> void:
 		var col := int(_t * (9.0 if child else 6.0)) % 4 if _moving else int(_t * 1.5) % 2
 		draw_texture_rect_region(_sheet, Rect2(-8, -23, 16, 24), Rect2(col * 16, row * 24, 16, 24))
 	if _emote >= 0:
-		_draw_emote(Vector2(-4, top - 9), EMOTES[_emote])
+		_draw_emote(Vector2(-4, top - 11), _emote)
 
 
-func _draw_emote(at: Vector2, pix: Array) -> void:
-	var dark := Color(0.09, 0.07, 0.16, 0.95)
-	draw_rect(Rect2(at, Vector2(9, 7)), dark)
-	draw_rect(Rect2(at + Vector2(1, 1), Vector2(7, 5)), Color(0.96, 0.95, 0.9))
-	draw_rect(Rect2(at + Vector2(3, 7), Vector2(2, 1)), dark)
-	var col := Color(0.8, 0.2, 0.25) if _emote == 3 else dark
-	for pt: Array in pix:
-		draw_rect(Rect2(at + Vector2(1 + pt[0], 1 + pt[1]), Vector2(1, 1)), col)
+func _draw_emote(at: Vector2, kind: int) -> void:
+	if _emote_tex == null:
+		_emote_tex = load("res://assets/art/ambient/emotes.png")   # 5 bubbles of 11x10: dots, !, ?, heart, note
+	draw_texture_rect_region(_emote_tex, Rect2(at + Vector2(-1, 0), Vector2(11, 10)), Rect2(kind * 11, 0, 11, 10))
