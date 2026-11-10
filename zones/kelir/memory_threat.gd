@@ -36,7 +36,10 @@ func active() -> bool:
 func _physics_process(delta: float) -> void:
 	if _curve == null or not active():
 		return
-	_t += speed * delta
+	var m := KelirMemory.of(self)
+	if m and not m.acting():   # the curtain-up, a spoken line and a fail fade all hold the world still
+		return
+	_t += speed * (0.75 if m and m.fail_count() >= 3 else 1.0) * delta
 	var length := _curve.get_baked_length()
 	var d := fposmod(_t, 2.0 * length)
 	global_position = _xf * _curve.sample_baked(2.0 * length - d if d > length else d)

@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://entities/world/kabut.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/fx/kabut.png" id="fog_png"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(16, 16)
@@ -15,10 +16,8 @@ shape = SubResource("1")
 
 [node name="Fog" type="Node2D" parent="."]
 
-[node name="Haze" type="Polygon2D" parent="Fog"]
-color = Color(0.85, 0.87, 0.9, 0.55)
-polygon = PackedVector2Array(-9, -8, -4, -10, 3, -9, 9, -7, 10, 0, 8, 8, 1, 10, -6, 9, -10, 3)
-
-[node name="Core" type="Polygon2D" parent="Fog"]
-color = Color(0.95, 0.96, 1, 0.5)
-polygon = PackedVector2Array(-5, -4, 0, -6, 5, -3, 6, 2, 2, 6, -3, 5, -6, 1)
+[node name="Haze" type="Sprite2D" parent="Fog"]
+texture = ExtResource("fog_png")
+texture_repeat = 2
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)

@@ -30,7 +30,7 @@ func _fire() -> void:
 		shot.damage = attack_hitbox.damage
 		get_parent().add_child(shot)
 		shot.global_position = aim.global_position
-		(shot.get_node("Glow") as Polygon2D).color = Color(0.2, 0.9, 0.85)
+		(shot.get_node("Glow") as Sprite2D).modulate = Color(0.45, 1.0, 0.95)   # a teal wisp
 		wisps.append(shot)
 
 

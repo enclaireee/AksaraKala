@@ -19,7 +19,8 @@ func _ready() -> void:
 	r.size = Vector2.ONE * 16.0 * block
 	$Shape.shape = r
 	var fog: Node2D = $Fog
-	fog.scale = Vector2.ONE * block
+	var haze := fog.get_node("Haze") as Sprite2D   # the fog texture tiles over the whole block, 8 px past each edge
+	haze.region_rect = Rect2(0, 0, 16.0 * block + 16.0, 16.0 * block + 16.0)
 	_pulse = create_tween().set_loops()
 	_pulse.tween_property(fog, "modulate:a", 0.55, 1.2).set_trans(Tween.TRANS_SINE)   # TUNE
 	_pulse.tween_property(fog, "modulate:a", 1.0, 1.2).set_trans(Tween.TRANS_SINE)

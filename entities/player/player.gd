@@ -10,6 +10,7 @@ enum Phase { WINDUP, ACTIVE, RECOVERY }
 
 const PRIORITY := ["dodge", "cast", "attack"]   # combat.md 2.6
 const ARROW := preload("res://entities/player/arrow.tscn")
+const POINTER_FRAME := {"light": 0, "heavy": 1, "ranged": 2, "staff": 3}
 const SNAP_PAD := 6.0                           # ASSUMED: enemy body radius added to reach for soft snap
 
 @export var tuning: CombatTuning = preload("res://data/combat_tuning.tres")
@@ -22,6 +23,7 @@ const SNAP_PAD := 6.0                           # ASSUMED: enemy body radius add
 @onready var sprite: Sprite2D = get_node_or_null("Sprite")
 @onready var shadow: Sprite2D = get_node_or_null("Shadow")
 @onready var aim: Node2D = $Aim
+@onready var _pointer: Sprite2D = $Aim/Pointer   # facing marker, one frame per weapon archetype (tools/gen_revamp_art.py)
 @onready var melee_hitbox: Hitbox = $Aim/MeleeHitbox
 @onready var melee_shape: CollisionPolygon2D = $Aim/MeleeHitbox/Shape
 @onready var slash: Polygon2D = $Aim/MeleeHitbox/Slash
@@ -137,6 +139,7 @@ func _physics_process(delta: float) -> void:
 		if to_mouse.length() > 1.0:
 			aim_dir = to_mouse.normalized()
 		aim.rotation = aim_dir.angle()
+		_pointer.frame = POINTER_FRAME.get(item.archetype, 0)
 
 	match state:
 		State.FREE: _free()

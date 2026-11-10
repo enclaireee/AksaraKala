@@ -11,11 +11,13 @@ var far_after := 120.0
 var _travelled := 0.0
 var _spent := false
 var _trail: Sprite2D   # 2-frame streak behind the shaft (combat.md 2.3b); visual only
+var _glow: Sprite2D    # spirit shot and thrown rock: a multi-frame sprite named Glow, flipped through as it flies
 
 
 func _ready() -> void:
 	super._ready()
 	rotation = direction.angle()
+	_glow = get_node_or_null("Glow") as Sprite2D
 	var trail_tex := "res://assets/art/fx/arrow_trail.png"
 	if ResourceLoader.exists(trail_tex):
 		_trail = Sprite2D.new()
@@ -42,6 +44,8 @@ func _physics_process(delta: float) -> void:
 	_travelled += speed * delta
 	if _trail:
 		_trail.frame = int(_travelled / 6.0) % 2
+	if _glow and _glow.hframes > 1:
+		_glow.frame = int(_travelled / 5.0) % _glow.hframes
 	if far_damage > 0 and _travelled > far_after:
 		damage = far_damage
 	if _travelled >= max_range:

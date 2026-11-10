@@ -1,24 +1,42 @@
 class_name MapView extends Control
-## The menu's Peta tab: the current area with the hero, every quest target, NPCs, rest shrines (petilasan),
-## chests, clues and exits. Hover a marker for its name (ui.md 3).
+## The menu's Peta tab. Two views of the same field book page (.docs/revamp_plan.md 4):
+## WORLD  the illustrated map of the six regions and the village (assets/art/ui/map_world.png, tools/gen_map_art.py),
+##        regions you have not visited yet are fogged, you and your goal are pins on it.
+## AREA   the running area painted from its tile grid (MapRender.painted) with sprite markers for the hero, every quest
+##        target, NPCs, rest shrines (petilasan), chests, clues and exits. Hover a marker for its name.
+## Click the DUNIA / AREA pill (or press accept) to switch.
 
 const GOLD := UIFx.HEAD
-const EXIT := Color("7fd6e6")
-const NPC := Color("f1ead2")
-const REST := Color("6fe3b4")
-const CHEST := Color("e0a040")
-const CLUE := Color("c9a0e8")
 const LEGEND_H := 14.0
+const ICON := 11
+const ICON_TEX := "res://assets/art/ui/map_icons.png"
+const WORLD_TEX := "res://assets/art/ui/map_world.png"
+const FOG_TEX := "res://assets/art/ui/map_fog_%s.png"
+const IDX := {"you": 0, "goal": 1, "npc": 2, "rest": 3, "chest": 4, "clue": 5, "exit": 6, "boss": 7}
+const REGION_PREFIX := {"ts_": "tatar_sunda", "kg_": "keraton_galuh", "mt_": "mataram", "tt_": "tanah_timur",
+		"sk_": "segara_kidul", "gk_": "gua_kala"}
 
-var _tex: ImageTexture
-var _tex_size := Vector2.ZERO
+var mode := "world"
+var _tex: ImageTexture      # the painted area
+var _tiles := Vector2.ZERO  # area size in tiles
 var _hero := Vector2.ZERO
 var _feats: Array = []   # [{pos (tiles), kind, name}]
 var _pulse := 0.0
+var _world: Texture2D
+var _icons: Texture2D
+var _fogs := {}
+var _seen := {}            # region -> true once visited
+var _region := ""          # the running area's region
+var _goal_region := ""
+var _goal_name := ""
+var _zone_name := Callable()
+var _pill := [Rect2(), Rect2()]
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	_icons = load(ICON_TEX)
+	_world = load(WORLD_TEX)
 
 
 func _process(d: float) -> void:
@@ -27,20 +45,49 @@ func _process(d: float) -> void:
 		queue_redraw()
 
 
+static func region_of(zone_id: String) -> String:
+	if zone_id == "" or zone_id == "desa_purwa" or zone_id == "hub":
+		return "desa_purwa"
+	for p: String in REGION_PREFIX:
+		if zone_id.begins_with(p):
+			return REGION_PREFIX[p]
+	return ""
+
+
+func toggle() -> void:
+	mode = "area" if mode == "world" else "world"
+	queue_redraw()
+
+
 ## Rebuilds from the running zone. `name_of` maps a zone id to its display name.
 func refresh(name_of: Callable) -> void:
+	_zone_name = name_of
 	_tex = null
 	_feats.clear()
+	var g := get_node("/root/Game")
+	var zones := get_node("/root/Zones")
+	_region = region_of(zones.current_zone)
+	_seen = {"desa_purwa": true}
+	if _region != "":
+		_seen[_region] = true
+	for f: String in g.flags:
+		if f.begins_with("seen_zone:"):
+			var r := region_of(f.trim_prefix("seen_zone:"))
+			if r != "":
+				_seen[r] = true
+	var m: Dictionary = g.objective_marker()
+	_goal_region = region_of(str(m.get("zone", ""))) if not m.is_empty() else ""
+	_goal_name = ""
 	var z := get_tree().current_scene
-	var img := MapRender.image(z)
+	var img := MapRender.painted(z)
 	if img == null:
+		queue_redraw()
 		return
 	_tex = ImageTexture.create_from_image(img)
-	_tex_size = Vector2(img.get_size())
+	_tiles = Vector2(img.get_size()) / float(MapRender.PAINT)
 	var pl := get_tree().get_first_node_in_group("player")
 	if pl:
 		_hero = MapRender.to_tile(pl.global_position)
-	var g := get_node("/root/Game")
 	var goals := _goal_nodes(z, g)
 	for n in z.find_children("*", "Node2D", true, false):
 		if not n.visible or n == pl:
@@ -68,6 +115,7 @@ func refresh(name_of: Callable) -> void:
 			_feats.append({"pos": MapRender.to_tile(n.global_position), "kind": kind, "name": label, "node": n})
 	for goal in goals:   # quest targets last so they draw on top
 		_feats.append({"pos": MapRender.to_tile(goal.node.global_position), "kind": "goal", "name": goal.name})
+		_goal_name = goal.name
 	queue_redraw()
 
 
@@ -98,87 +146,179 @@ func _npc_name(id: String) -> String:
 	return tr(k) if tr(k) != k else id.replace("_", " ").capitalize()
 
 
-func _map_rect() -> Rect2:
+func _fog(rid: String) -> Texture2D:
+	if not _fogs.has(rid):
+		var path := FOG_TEX % rid
+		_fogs[rid] = load(path) if ResourceLoader.exists(path) else null
+	return _fogs[rid]
+
+
+func _world_rect() -> Rect2:
+	var s := Vector2(432, 184)
+	return Rect2(((size - s) / 2.0).floor(), s)
+
+
+func _area_rect() -> Rect2:
 	var area := Vector2(size.x, size.y - LEGEND_H)
-	var sc := minf(area.x / maxf(_tex_size.x, 1.0), area.y / maxf(_tex_size.y, 1.0))
-	return Rect2((area - _tex_size * sc) / 2.0, _tex_size * sc)
+	var sc := minf(area.x / maxf(_tiles.x, 1.0), area.y / maxf(_tiles.y, 1.0))
+	return Rect2(((area - _tiles * sc) / 2.0).floor(), _tiles * sc)
 
 
 func _to_screen(tile: Vector2) -> Vector2:
-	var r := _map_rect()
-	return r.position + tile * (r.size.x / _tex_size.x)
+	var r := _area_rect()
+	return (r.position + tile * (r.size.x / maxf(_tiles.x, 1.0))).round()
 
 
 func _gui_input(e: InputEvent) -> void:
+	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+		for i in 2:
+			if _pill[i].has_point(e.position):
+				mode = "world" if i == 0 else "area"
+				queue_redraw()
+				accept_event()
+				return
 	if e is InputEventMouseMotion:
 		var best := ""
-		var bd := 7.0
-		for f in _feats:
-			var d: float = _to_screen(f.pos).distance_to(e.position)
-			if d < bd:
-				bd = d
-				best = f.name
+		if mode == "area":
+			var bd := 7.0
+			for f in _feats:
+				var d: float = _to_screen(f.pos).distance_to(e.position)
+				if d < bd:
+					bd = d
+					best = f.name
+		else:
+			var wr := _world_rect()
+			var bd := 22.0
+			for rid: String in MapRegions.REGIONS:
+				var d: float = (wr.position + MapRegions.REGIONS[rid].pos).distance_to(e.position)
+				if d < bd:
+					bd = d
+					best = _region_label(rid)
 		tooltip_text = best
 
 
-func _marker(p: Vector2, kind: String) -> void:
-	match kind:
-		"exit":
-			draw_rect(Rect2(p - Vector2(2, 2), Vector2(4, 4)), EXIT)
-		"npc":
-			draw_circle(p, 2.0, Color.BLACK)
-			draw_circle(p, 1.3, NPC)
-		"rest":
-			draw_colored_polygon(PackedVector2Array([p + Vector2(0, -3.5), p + Vector2(3, 2.5), p + Vector2(-3, 2.5)]), Color.BLACK)
-			draw_colored_polygon(PackedVector2Array([p + Vector2(0, -2.3), p + Vector2(2, 1.8), p + Vector2(-2, 1.8)]), REST)
-		"chest":
-			draw_rect(Rect2(p - Vector2(2.5, 2), Vector2(5, 4)), Color.BLACK)
-			draw_rect(Rect2(p - Vector2(1.7, 1.2), Vector2(3.4, 2.4)), CHEST)
-		"clue":
-			draw_string(get_theme_default_font(), p + Vector2(-2, 3), "?", HORIZONTAL_ALIGNMENT_LEFT, -1, 7, CLUE)
-		"goal":
-			var r := 4.0 + sin(_pulse * 4.0) * 0.8
-			draw_colored_polygon(PackedVector2Array([p + Vector2(0, -r - 1), p + Vector2(r + 1, 0), p + Vector2(0, r + 1), p + Vector2(-r - 1, 0)]), Color.BLACK)
-			draw_colored_polygon(PackedVector2Array([p + Vector2(0, -r), p + Vector2(r, 0), p + Vector2(0, r), p + Vector2(-r, 0)]), GOLD)
+func _region_label(rid: String) -> String:
+	return tr("UI_ZONE_" + rid.to_upper()) if _seen.get(rid, false) else tr("UI_MAP_UNKNOWN")
+
+
+## Marker sprite centred on `p` (the icons are 11 px cells, drawn 9 px wide).
+func _icon(kind: String, p: Vector2, lift := 0.0) -> void:
+	if _icons == null or not IDX.has(kind):
+		return
+	draw_texture_rect_region(_icons, Rect2((p - Vector2(5, 5) + Vector2(0, lift)).round(), Vector2(ICON, ICON)),
+			Rect2(IDX[kind] * ICON, 0, ICON, ICON))
+
+
+func _label(text: String, p: Vector2, color: Color, centered := true) -> void:
+	var font := UIFx.caps_font()
+	var w := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
+	var at := Vector2(roundf(p.x - (w / 2.0 if centered else 0.0)), roundf(p.y))
+	draw_string_outline(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, 3, UIFx.LACQUER)
+	draw_string(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, color)
 
 
 func _draw() -> void:
 	draw_rect(Rect2(Vector2.ZERO, size), Color("0C0A18"))   # night well (ui.md 0.1)
-	if _tex == null:
-		return
-	var r := _map_rect()
+	if mode == "world" and _world != null:
+		_draw_world()
+	elif _tex != null:
+		_draw_area()
+	else:
+		mode = "world"
+		if _world != null:
+			_draw_world()
+	_draw_pill()
+	_legend()
+
+
+func _draw_world() -> void:
+	var wr := _world_rect()
+	draw_texture(_world, wr.position)
+	for rid: String in MapRegions.REGIONS:
+		if not _seen.get(rid, false):
+			var f := _fog(rid)
+			if f != null:
+				draw_texture(f, wr.position)
+	for rid: String in MapRegions.REGIONS:
+		var p: Vector2 = wr.position + MapRegions.REGIONS[rid].pos
+		var here := rid == _region
+		var col := UIFx.ACCENT if here else (UIFx.HEAD if _seen.get(rid, false) else UIFx.DIM)
+		_label(_region_label(rid) if _seen.get(rid, false) else "???", p, col)
+	if _region != "" and MapRegions.REGIONS.has(_region):
+		var hp: Vector2 = wr.position + MapRegions.REGIONS[_region].pos + Vector2(0, 12)
+		_icon("you", hp, sin(_pulse * 3.0) * 1.2)
+	if _goal_region != "" and MapRegions.REGIONS.has(_goal_region):
+		var gp: Vector2 = wr.position + MapRegions.REGIONS[_goal_region].pos + Vector2(12 if _goal_region == _region else 0, -12)
+		var halo := 7.0 + sin(_pulse * 4.0) * 1.5
+		draw_arc(gp, halo, 0.0, TAU, 16, Color(UIFx.WARM, 0.55), 1.0)
+		_icon("goal", gp, sin(_pulse * 4.0) * 1.0)
+
+
+func _draw_area() -> void:
+	var r := _area_rect()
 	draw_texture_rect(_tex, r, false)
-	draw_rect(Rect2(r.position - Vector2.ONE, r.size + Vector2(2, 2)), GOLD, false, 1.0)
-	var font := get_theme_default_font()
+	draw_rect(Rect2(r.position - Vector2.ONE, r.size + Vector2(2, 2)), UIFx.LINE_DIM, false, 1.0)
+	var font := UIFx.body_font()
 	var seen := {}
 	for kind in ["exit", "chest", "clue", "rest", "npc", "goal"]:
 		for f in _feats:
 			if f.kind != kind:
 				continue
 			var p := _to_screen(f.pos)
-			_marker(p, kind)
+			if kind == "goal":
+				var halo := 6.0 + sin(_pulse * 4.0) * 1.2
+				draw_arc(p, halo, 0.0, TAU, 14, Color(UIFx.WARM, 0.6), 1.0)
+			_icon(kind, p, sin(_pulse * 4.0) * 1.0 if kind == "goal" else 0.0)
 			if kind == "exit" and not seen.has(f.name):   # one label per destination
 				seen[f.name] = true
-				var tp := p + Vector2(4, 3)
-				var lw := font.get_string_size(f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, 7).x
+				var tp := p + Vector2(7, 4)
+				var lw := font.get_string_size(f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
 				if tp.x + lw > size.x - 2:   # near the right edge: label sits left of the marker
-					tp.x = p.x - 4 - lw
-				draw_string(font, tp, f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, 7, EXIT)
+					tp.x = p.x - 7 - lw
+				_label(f.name, tp, UIFx.ACCENT, false)
 	var h := _to_screen(_hero)
-	draw_circle(h, 3.5, Color.BLACK)
-	draw_circle(h, 2.5, Color.WHITE)
-	_legend(font)
+	_icon("you", h, sin(_pulse * 3.0) * 1.0)
 
 
-func _legend(font: Font) -> void:
-	var y := size.y - LEGEND_H / 2.0 + 1
-	var x := 4.0
-	for it in [["you", "UI_LEG_YOU"], ["goal", "UI_LEG_GOAL"], ["npc", "UI_LEG_NPC"], ["rest", "UI_LEG_REST"],
-			["chest", "UI_LEG_CHEST"], ["clue", "UI_LEG_CLUE"], ["exit", "UI_LEG_EXIT"]]:
-		if it[0] == "you":
-			draw_circle(Vector2(x + 3, y), 2.5, Color.WHITE)
-		else:
-			_marker(Vector2(x + 3, y), it[0])
+## DUNIA | AREA switch, top left, an ink pill with the active half lit.
+func _draw_pill() -> void:
+	var names := [tr("UI_MAP_WORLD"), tr("UI_MAP_AREA")]
+	var font := UIFx.caps_font()
+	var x := 6.0
+	var rect := Rect2(x, 6, 0, 13)
+	var widths := []
+	for n: String in names:
+		widths.append(font.get_string_size(n.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x + 10.0)
+	rect.size.x = widths[0] + widths[1] + 3.0
+	draw_style_box(UIFx.ink_box(1), rect)
+	var cx := x + 2.0
+	for i in 2:
+		var seg := Rect2(cx, 8, widths[i], 9)
+		_pill[i] = Rect2(seg.position - Vector2(1, 2), seg.size + Vector2(2, 4))
+		var on := (mode == "world") == (i == 0)
+		if on:
+			draw_rect(seg, Color(UIFx.ACCENT, 0.22))
+			draw_rect(Rect2(seg.position.x, seg.end.y - 1, seg.size.x, 1), UIFx.ACCENT)
+		draw_string(font, Vector2(seg.position.x + 5, seg.position.y + 8), names[i].to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.HEAD if on else UIFx.DIM)
+		cx += widths[i] + 3.0
+
+
+func _legend() -> void:
+	var items := [["you", "UI_LEG_YOU"], ["goal", "UI_LEG_GOAL"]]
+	if mode == "area":
+		items += [["npc", "UI_LEG_NPC"], ["rest", "UI_LEG_REST"], ["chest", "UI_LEG_CHEST"], ["clue", "UI_LEG_CLUE"], ["exit", "UI_LEG_EXIT"]]
+	var font := UIFx.body_font()
+	var total := 6.0
+	var texts := []
+	for it in items:
 		var t: String = tr(it[1])
-		draw_string(font, Vector2(x + 9, y + 3), t, HORIZONTAL_ALIGNMENT_LEFT, -1, 7, Color(1, 1, 1, 0.8))
-		x += 16.0 + font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, 7).x
+		texts.append(t)
+		total += 16.0 + font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
+	var bar := Rect2(4, size.y - 16, total, 14)
+	draw_style_box(UIFx.ink_box(1), bar)
+	var x := bar.position.x + 6.0
+	var y := bar.position.y + 7.0
+	for i in items.size():
+		_icon(items[i][0], Vector2(x + 5, y))
+		draw_string(font, Vector2(x + 14, y + 4), texts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.TEXT)
+		x += 16.0 + font.get_string_size(texts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x

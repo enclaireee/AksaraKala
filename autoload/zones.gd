@@ -5,7 +5,6 @@ extends Node
 var start_zone := "res://zones/desa_purwa.tscn"   # var so loop_test can start in the hub
 const FADE := 0.25   # TUNE: seconds each way
 const ZONES := {
-	"prologue_tutorial": "res://zones/prologue_tutorial.tscn",
 	"hub": "res://zones/hub.tscn",
 	"desa_purwa": "res://zones/desa_purwa.tscn",
 	"ts_kebun": "res://zones/ts_kebun.tscn",
@@ -150,10 +149,7 @@ func _on_quest_completed(id: String) -> void:
 
 ## After class choice. Game.new_game() has already saved.
 func start_new_game() -> void:
-	if not get_node("/root/Game").has_flag("prologue_tutorial_done"):
-		go_to("res://zones/prologue_tutorial.tscn", "")
-	else:
-		respawn()
+	respawn()   # always Desa Purwa: the prologue teaches its verbs in the story (.docs/tutorial.md)
 
 
 ## Title screen Continue. Game.load_game() has already run.

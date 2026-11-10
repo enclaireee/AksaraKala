@@ -4,10 +4,9 @@ class_name Pillar extends Node2D
 
 signal broken(pillar: Pillar)
 
-const STONE := Color(0.55, 0.52, 0.48)
 const EXPOSED := Color(1.0, 0.85, 0.4)
 
-@onready var body: Polygon2D = $Body
+@onready var body: Sprite2D = $Body
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var health: Health = $Health
 @onready var hit_flash: HitFlash = $HitFlash
@@ -28,14 +27,14 @@ func is_exposed() -> bool:
 
 func expose(seconds: float) -> void:
 	exposed_left = seconds
-	body.color = EXPOSED
+	body.modulate = EXPOSED
 
 
 func tick(delta: float) -> void:
 	if exposed_left > 0.0:
 		exposed_left -= delta
 		if exposed_left <= 0.0:
-			body.color = STONE
+			body.modulate = Color.WHITE
 
 
 func _on_hurt(_hitbox: Hitbox) -> void:

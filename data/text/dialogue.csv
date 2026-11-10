@@ -743,11 +743,11 @@ DLG_PURWA_STALL_H1,Topeng polos? Ke arah mana dia?,A blank mask? Which way did h
 DLG_PURWA_STALL_V3,"Ke barat. Nanti malam kau ikut ruwatan, kan? Duduklah dekat Semar.",West. You're going to the ruwatan tonight? Sit near Semar.
 DLG_PURWA_STALL_V4,"Cabai segar, kemiri baru. Dan jangan tanya soal lelaki bertopeng.","Fresh chilli, new candlenut. And don't ask about the masked man."
 MEM_K0_RUWATAN_TITLE,Wayang Ruwatan,The Ruwatan Show
-MEM_K0_RUWATAN_IN,"Ini kelir, layar bayangan. Tetaplah di terang lampuku, Nak. Di luar terang, Kala, pemakan bayangan, menunggu.","This is the kelir, the shadow screen. Stay in my lamp's light, child. Outside it, Kala, the shadow-eater, waits."
-MEM_K0_RUWATAN_HINT,Tetap di cahaya,Stay in the light
-MEM_K0_RUWATAN_1,"Batara Kala, dewa waktu. Ia memakan apa saja yang tak dijaga dan tak diingat.","Batara Kala, the god of time. He eats whatever is left unguarded and unremembered."
-MEM_K0_RUWATAN_2,Maka dalang bercerita sampai tamat. Cerita yang selesai tak bisa dimakan.,So the dalang tells the story to its end. A finished story can't be eaten.
-MEM_K0_RUWATAN_3,Malam ini kau yang memegang wayang. Jangan biarkan bayanganmu keluar dari cahaya.,Tonight you hold the puppet. Don't let your shadow leave the light.
+MEM_K0_RUWATAN_IN,"Ini kelir, Nak, layar tempat bayangan hidup. Malam ini kau jadi wayang di tanganku.","This is the kelir, child, the screen where shadows live. Tonight you are the puppet in my hands."
+MEM_K0_RUWATAN_HINT,"Jalan ke kanan, tekan {key} di lampu yang padam","Walk right, press {key} at a dark lamp"
+MEM_K0_RUWATAN_1,Lampu ini kunamai Ingatan. Apa yang diceritakan tak bisa dimakan Kala.,I call this lamp Memory. What is told cannot be eaten by Kala.
+MEM_K0_RUWATAN_2,"Lampu ini Nama. Selama namamu disebut, kau tetap ada di dunia.","This lamp is Name. As long as your name is spoken, you remain in the world."
+MEM_K0_RUWATAN_3,Lampu ini Tamat. Cerita yang sudah selesai tak bisa dimakan.,This lamp is Ending. A story that is finished cannot be eaten.
 MEM_K0_RUWATAN_OUT,"Sekarang nama anak-anak desa kubacakan, agar Kala melewati pintu mereka. Ciung. Laras. Dan kau, {name}.","Now the village children's names, so Kala passes their doors. Ciung. Laras. And you, {name}."
 MEM_K0_RUWATAN_OUT_2,"Dengan nama terjaga, tidurlah tenang malam ini.","With the names kept, sleep easy tonight."
 BEAT_RAID_1,"Bayangan-bayangan turun dari kelir. Topeng kosong, tangan yang menggapai. Orang menjerit; lampu bergoyang.","The shadows step off the screen. Blank masks, reaching hands. People scream; the lamp swings."
@@ -787,6 +787,8 @@ MEM_K1_MAGHRIB_HINT,Nyalakan oncor,Light the oncor
 MEM_K1_MAGHRIB_1,"Pulang, Nak! Matahari hampir tenggelam!","Home, child! The sun is nearly down!"
 MEM_K1_MAGHRIB_2,Sesuatu yang tinggi mengikuti di belakangmu. Ia tak bisa melewati tanah yang terang.,Something tall follows behind you. It cannot cross lit ground.
 MEM_K1_MAGHRIB_3,Oncor terakhir menyala. Bayangan itu mundur.,The last oncor catches. The shadow draws back.
+MEM_K1_MAGHRIB_4,"Dari jauh, kentongan berbunyi. Rumah-rumah menutup pintu satu per satu.","Far off, a slit-drum sounds. The houses close their doors one by one."
+MEM_K1_MAGHRIB_5,"Pintu rumah terbuka. Ibunya memeluknya, dan lampu menyala di jendela.","The house door opens. Her mother holds her, and a lamp glows in the window."
 MEM_K1_MAGHRIB_OUT,"Begitulah ceritanya: terang menjaga anak-anak. Nyalakan empat oncor, dan Sandekala tak bisa lewat.","So the tale goes: light keeps the children. Light the four oncor, and Sandekala cannot pass."
 HINT_SANDEKALA,Nyalakan oncor,Light the oncor
 BEAT_SANDEKALA_AFTER_1,"Sosok tinggi itu lenyap bersama bayangannya. Di pasir ngarai, anak-anak ditemukan tertidur, utuh.","The tall shape is gone with its shadow. On the gorge sand the children are found asleep, whole."
@@ -864,6 +866,8 @@ MEM_K_II_IN,"Ingatan Uwa Lengser, Nak: satu malam, lima belas tahun lalu, di lor
 MEM_K_II_1,Lengser muda membawa baki teh ke kamar raja. Pintunya setengah terbuka.,Young Lengser carries a tea tray to the king's chamber. The door stands ajar.
 MEM_K_II_2,"Di dalam, seorang lelaki berdiri di depan cermin, mencoba wajah sang raja seperti mencoba baju.","Inside, a man stands before a mirror, trying on the king's face like a coat."
 MEM_K_II_3,"Lengser menjatuhkan baki. Lelaki itu menoleh dengan wajah raja, dan tersenyum.","Lengser drops the tray. The man turns, wearing the king's face, and smiles."
+MEM_K_II_4,Lengser memungut nampan itu dengan tangan gemetar. Ia tak berkata apa-apa.,Lengser picks up the tray with shaking hands. He says nothing.
+MEM_K_II_5,"Sejak malam itu, ia melayani raja palsu dengan mata tertunduk.","From that night on, he served the false king with lowered eyes."
 MEM_K_II_OUT,"Lengser memegang rahasia itu sejak malam itu, Nak. Sekarang kau ikut memegangnya.","Lengser has held that secret since that night, child. Now you hold it too."
 CLUE_HUNTER_MASK_2_1,"Pecahan topeng kedua di kaki takhta. Dingin, kali ini.","A second mask fragment at the foot of the throne. Cold, this time."
 CLUE_HUNTER_MASK_2_2,Seperti wajah yang dipinjam terlalu lama.,Like a face borrowed too long.
@@ -913,6 +917,7 @@ MEM_K3_LESUNG_HINT,Ikuti irama,Keep the beat
 MEM_K3_LESUNG_1,"Tuk, tuk, tuk. Para dayang menumbuk padi di bawah bulan.","Tuk, tuk, tuk. The women pound rice beneath the moon."
 MEM_K3_LESUNG_2,"Di kejauhan batu-batu berderet naik ke langit. Satu candi lagi, dan sumpah itu terpenuhi.","Far off, stones climb in rows. One more temple and the oath is kept."
 MEM_K3_LESUNG_3,"Ayam-ayam terkecoh dan berkokok. Sang pangeran kurang satu candi, dan kurang satu malam.","The roosters are fooled and crow. The prince falls one temple short, and a night short."
+MEM_K3_LESUNG_4,"Tuk, tuk, tuk. Irama itu tak boleh putus, Nak. Kalau berhenti, batu-batu terus naik.","Tuk, tuk, tuk. The beat must not break, child. If it stops, the stones keep climbing."
 MEM_K3_LESUNG_OUT,"Irama itu menghentikan batu-batu, Nak. Gambar Ca mengikuti ketukannya, dan tiang-tiang terbuka.","That beat stops the stones, child. Draw Ca to its count, and the pillars lay themselves open."
 HINT_BANDUNG,Ikuti irama,Keep the beat
 LC_3_TITLE,Ruang Baca,The Reading Room
@@ -929,6 +934,7 @@ MEM_K_III_IN,"Lakon Ki Sumarto malam ini, Nak, dan aku menonton bersamamu: dua s
 MEM_K_III_1,"Dua saudara berebut satu tanah. Yang sulung ke timur, yang bungsu ke barat, masing-masing membawa pasukan.","Two brothers quarrel over one land. The elder goes east, the younger west, each with an army."
 MEM_K_III_2,"Si bungsu berdiri di tengah sungai. Dari seberang, kakaknya mengangkat tombak.",The younger stands mid-river. From the far bank his brother raises a spear.
 MEM_K_III_3,Si bungsu meletakkan senjatanya di air dan melangkah mundur. Tanah di antara mereka merekah.,The younger lays his weapon in the water and steps back. The land between them splits.
+MEM_K_III_4,"Sungai mengalir di antara mereka, tenang, seakan perang tak pernah ada.","The river flows between them, calm, as if no war had ever been."
 MEM_K_III_OUT,"Itu pamali, Nak: saudara tak boleh saling menyerang. Sungai ini dinamai dari larangan itu.","That is pamali, child: brothers must not strike each other. This river is named for that rule."
 CLUE_HARIANG_LETTERS_1,"Surat bertumpuk di meja kemah, semua untuk ""Ibu"", semua tak terkirim.","Letters pile on the camp table, all addressed to ""Mother"", none sent."
 CLUE_HARIANG_LETTERS_2,Ia menulis tiap malam kepada ibu yang dikurung. Aku tahu rasanya.,He writes every night to a caged mother. I know how that feels.
@@ -961,6 +967,8 @@ MEM_K4_TIMUN_MAS_HINT,Lempar saat dekat,Throw when close
 MEM_K4_TIMUN_MAS_1,Biji timun menjadi semak berduri. Sang raksasa merobek jalannya.,The seeds become brambles. The giant tears his way through.
 MEM_K4_TIMUN_MAS_2,Jarum menjadi rimbun bambu. Garam menjadi laut. Ia terus mendekat.,The needles become a bamboo thicket. The salt becomes a sea. He keeps coming.
 MEM_K4_TIMUN_MAS_3,"Terasi menjadi lumpur. Sang raksasa terperosok, dan gadis itu berlari ke arah fajar.","The terasi becomes mud. The giant sinks, and the girl runs toward the dawn."
+MEM_K4_TIMUN_MAS_4,"Napas Timun Mas habis, tapi fajar sudah dekat. Satu kantong lagi.","Timun Mas is out of breath, but dawn is near. One pouch more."
+MEM_K4_TIMUN_MAS_5,"Sang raksasa tenggelam dalam lumpur, dan matahari naik di atas ladang.","The giant sinks in the mud, and the sun rises over the fields."
 MEM_K4_TIMUN_MAS_OUT,"Pancing dia lewat ladang kantongmu, Nak. Jangan melempar sembarangan: lempar saat dia dekat.","Lure him through your pouch fields, child. Don't throw wildly: throw when he's close."
 HINT_BUTO_IJO,Pancing lewat kantong,Lure through pouches
 BEAT_BUTO_AFTER_1,"Buto Ijo roboh. Di matanya, merah kutukan seperti tanda di tiang pintu perlahan padam.","Buto Ijo goes down. In his eyes the red of the curse, like the marks on the doorposts, slowly fades."
@@ -989,6 +997,10 @@ MEM_K5_FORGE_HINT,Padamkan tanda kutuk,Douse the curse marks
 MEM_K5_FORGE_1,Seorang pemuda datang meminta keris itu sebelum selesai. Sang empu menolak: sedikit lagi.,A young man comes for the keris before it is finished. The smith refuses: a little longer.
 MEM_K5_FORGE_2,Pemuda itu merebutnya. Sang empu mengucap kutuk yang lebih terasa daripada terdengar. Lampu bengkel meredup.,The young man snatches it. The smith speaks a curse you feel more than hear. The forge light dims.
 MEM_K5_FORGE_3,Tanda merah menyebar di lantai bengkel. Padamkan sebelum bertemu satu sama lain.,Red marks spread across the forge floor. Douse them before they join.
+MEM_K5_FORGE_4,Tanda kedua menyala dekat tungku. Panasnya membuat bayanganmu menggeliat.,A second mark flares near the furnace. Its heat makes your shadow squirm.
+MEM_K5_FORGE_5,"Palu sang empu masih tergantung, berhenti di tengah ayunan.","The smith's hammer still hangs, stopped mid-swing."
+MEM_K5_FORGE_6,"Tanda-tanda itu mencari satu sama lain. Cepat, sebelum bertemu.","The marks are reaching for each other. Quick, before they meet."
+MEM_K5_FORGE_7,"Tanda terakhir padam. Lantai bengkel dingin, dan kerisnya diam.","The last mark goes out. The forge floor cools, and the keris is still."
 MEM_K5_FORGE_OUT,"Begitulah kutuk itu lahir, Nak. Padamkan tandanya sebelum menyatu, dan kerisnya tenang.","That is how the curse was born, child. Douse the marks before they join, and the keris quiets."
 HINT_KERIS,Padamkan tanda kutuk,Douse the curse marks
 CLUE_HUNTER_MASK_4_1,Pecahan topeng terakhir di ambang candi. Yang paling hangat.,The last mask fragment on the shrine threshold. The warmest one.
@@ -1010,6 +1022,7 @@ MEM_K6_SERVANT_1,"Aria kecil menyapu balairung, dan sang raja menyebut namanya d
 MEM_K6_SERVANT_2,"Aria dewasa menatap cermin, dan wajah raja menatap balik.","Grown Aria stares into the mirror, and the king's face stares back."
 MEM_K6_SERVANT_3,Aria menyerahkan namanya pada bayangan di sudut. Tak ada yang menyebutnya lagi.,Aria gives his name to the shadow in the corner. Nobody says it again.
 MEM_K6_SERVANT_4,"Bertahun-tahun topeng itu berjalan tanpa nama, sampai seorang gadis berbisik ""Aria"".","For years the mask walks without a name, until a girl whispers ""Aria""."
+MEM_K6_SERVANT_5,"Topeng itu menunggu di ujung lorong, dan kau tahu namanya sekarang.","The mask waits at the end of the corridor, and now you know its name."
 MEM_K6_SERVANT_OUT,"Begitulah dia, Nak. Bukan hantu. Seorang pelayan yang ingin dipanggil namanya.","That is him, child. Not a ghost. A servant who wanted to be called by his name."
 BEAT_ECLIPSE_HOME_1,"Gerhana menggantung di atas Desa Purwa. Tak ada bayangan, dan tak ada yang menyapa sesama dengan nama.","The Eclipse hangs over Desa Purwa. No shadows, and nobody greets a neighbour by name."
 BEAT_ECLIPSE_HOME_2,"Di belakang desa, kabut di mulut gua memakan setiap huruf yang kau lempar kepadanya.","Behind the village, the fog at the cave mouth eats every glyph you throw at it."
@@ -1072,6 +1085,7 @@ MEM_K9_QUEEN_SOUTH_IN,"Satu penuturan di antara banyak, Nak. Ki Sumarto mencerit
 MEM_K9_QUEEN_SOUTH_1,"Konon seorang putri disingkirkan dari istananya, berjalan ke laut, dan menjadi ratunya.","They say a princess was cast out of her palace, walked into the sea, and became its queen."
 MEM_K9_QUEEN_SOUTH_2,Orang pesisir menghormatinya dan menjauhi warna hijau. Mereka tak takut; mereka tahu tata krama.,The coast folk honour her and keep off green. They aren't afraid; they know manners.
 MEM_K9_QUEEN_SOUTH_3,"Ada yang bilang ia bukan putri, melainkan laut itu sendiri. Tak ada yang bisa memastikan.","Some say she was never a princess, only the sea itself. Nobody can be sure."
+MEM_K9_QUEEN_SOUTH_4,"Ombak datang dan pergi, seolah menjawab. Tak ada yang bisa memastikan.","The waves come and go, as if answering. No one can be sure."
 MEM_K9_QUEEN_SOUTH_OUT,"Percaya atau tidak, Nak, hormatilah. Laut tak butuh pembela, hanya tata krama.","Believe it or not, child, be respectful. The sea needs no defender, only manners."
 LC_5_TITLE,Suara di Atas Air,The Voice on the Water
 LC5_1,"Gelap sekali di sini. Tapi ada yang memanggil namaku dari air, pelan.","It's so dark here. But something is calling my name from the water, softly."
@@ -1156,6 +1170,9 @@ MEM_K7_RUWATAN_HINT,"Sunda, Jawa, Ombak","Sunda, Jawa, Ombak"
 MEM_K7_RUWATAN_1,"Kau membacakan nama-nama anak desa. Tiap nama satu huruf, dan bayangan Kala menunduk.","You read the village children's names. One letter for each name, and Kala's shadow bows."
 MEM_K7_RUWATAN_2,"Sunda, Jawa, Sunda, Jawa. Iramanya seperti lesung dan oncor sekaligus.","Sunda, Jawa, Sunda, Jawa. The rhythm is lesung and oncor together."
 MEM_K7_RUWATAN_3,"Nama terakhir kau tutup dengan Ombak, dan bayangan Kala melunak seperti lilin dekat api.","You close the last name with Ombak, and on the kelir Kala's shadow softens like wax near a flame."
+MEM_K7_RUWATAN_4,"Gamelan menahan napas. Hanya ada lesung, dan suaramu.","The gamelan holds its breath. Only the mortar, and your voice."
+MEM_K7_RUWATAN_5,"Di luar kelir, seorang anak tertidur, aman di bawah namanya.","Outside the screen, a child sleeps, safe beneath their name."
+MEM_K7_RUWATAN_6,"Lampu terakhir bergoyang, lalu berdiri tegak. Ruwatan selesai.","The last lamp sways, then stands tall. The ruwatan is done."
 MEM_K7_RUWATAN_OUT,"Begitulah ruwatan fajar, Nak: bergantian, sabar, dan dengan nama.","That is the dawn ruwatan, child: in turn, patient, and with names."
 HINT_BATARA_KALA,"Sunda, Jawa, Ombak","Sunda, Jawa, Ombak"
 DLG_DESERTER_MOUTH_V2,Dulu aku punya nama. Batu itu yang menyimpannya.,I had a name once. That stone keeps it.
@@ -1204,6 +1221,7 @@ MEM_SQ_S1_LUTUNG_HINT,Bersihkan jalannya,Clear the way
 MEM_SQ_S1_LUTUNG_1,"Gadis itu berjalan perlahan. Lutung berlari di depan, mengusir kabut dari semak.","The girl walks slowly. The langur runs ahead, shooing mist from the bushes."
 MEM_SQ_S1_LUTUNG_2,"Di mata air, ia menepi. Ia hanya ingin gadis itu sampai dengan selamat.","At the spring, he steps aside. All he wants is for her to arrive safely."
 MEM_SQ_S1_LUTUNG_3,"Gadis itu mandi. Kulitnya berseri, dan lutung menunduk, bahagia.","The girl bathes. Her skin glows, and the langur bows his head, glad."
+MEM_SQ_S1_LUTUNG_4,"Kabut menipis di depan. Sang lutung menoleh, memastikan ia mengikuti.",The mist thins ahead. The langur glances back to make sure she follows.
 MEM_SQ_S1_LUTUNG_OUT,Begitulah ceritanya: ia tak pernah meminta imbalan. Ia hanya membantu.,So the tale goes: he never asked for anything. He only helped.
 DLG_KEPALA_DESA_V20,"Rumpun itu senyap. Namanya sudah terukir di batu, supaya yang tidur di sana tahu ia dikenang.","The grove is quiet. Her name is cut into the stone, so the one who sleeps there knows she is remembered."
 DLG_KEPALA_DESA_V21,Terimalah golok dan kantong ramuan ini. Kau pantas membawanya.,Take this golok and herb pouch. You've earned them.
@@ -1269,6 +1287,8 @@ MEM_SQ_G2_SERVANT_HINT,"Sapu, dan dengarkan","Sweep, and listen"
 MEM_SQ_G2_SERVANT_1,"Pagi: ""Hei, kau!"" Siang: ""Kau, sini!"" Sore: ""Pelayan!""","Morning: ""Hey, you!"" Noon: ""You, here!"" Evening: ""Servant!"""
 MEM_SQ_G2_SERVANT_2,"Namanya hanya ada di sehelai daftar, ditulis dengan dua huruf: Ca dan Nga.","His name exists only on a roll, written with two letters: Ca and Nga."
 MEM_SQ_G2_SERVANT_3,"Suatu malam daftar itu dikikis. Ia tetap menyapu, tapi lorong itu tak lagi mengingatnya.","One night the roll is scraped. He keeps sweeping, but the hall no longer remembers him."
+MEM_SQ_G2_SERVANT_4,Sapunya bergerak makin pelan. Ia menunggu seseorang memanggil namanya.,His broom slows. He is waiting for someone to call his name.
+MEM_SQ_G2_SERVANT_5,"Di gulungan itu, dua huruf memudar: Ca, lalu Nga.","On the roll, two letters fade: Ca, then Nga."
 MEM_SQ_G2_SERVANT_OUT,Begitulah ceritanya: namanya tertulis dengan Ca dan Nga. Tulislah kembali.,So the tale goes: his name is written with Ca and Nga. Write it back.
 DLG_RIRIWA_ROLL_V20,"Tinta bekasnya masih ada. Dua huruf, Ca dan Nga.","The ink's trace is still there. Two letters, Ca and Nga."
 DLG_RIRIWA_ROLL_V21,Tulislah nama itu kembali di daftar.,Write the name back on the roll.
@@ -1322,6 +1342,7 @@ MEM_SQ_M2_CHILD_HINT,Ikuti suara itu,Follow the voice
 MEM_SQ_M2_CHILD_1,"Di rumah, tak ada yang menoleh. Di bukit, ada suara yang memanggil namanya pelan-pelan.","At home, nobody turns. On the hill, a voice calls his name, softly."
 MEM_SQ_M2_CHILD_2,"Anak itu naik. Di bawah, orang tuanya memukul panci dan memanggil: pulang, pulang.","The boy climbs. Below, his parents bang a pot and call: come home, come home."
 MEM_SQ_M2_CHILD_3,"Bunyi panci sampai ke bukit. Anak itu menoleh, lalu turun.","The pot's clang reaches the hill. The boy turns, and comes down."
+MEM_SQ_M2_CHILD_4,"Pot itu berdentang lagi, lebih dekat. Anak itu menoleh.","The pot clangs again, nearer. The boy looks back."
 MEM_SQ_M2_CHILD_OUT,"Begitulah ceritanya: panggil dengan lembut, pukul panci, dan yang tersesat akan menemukan jalan pulang.","So the tale goes: call gently, bang a pot, and the lost one finds the way home."
 DLG_M3_SMITH_V20,Pemimpin tuyul itu menghitung kacang sampai pagi? Aku tak percaya.,The tuyul's leader counted beans till morning? I can't believe it.
 DLG_M3_SMITH_V21,"Koinku kembali. Ambil tombak dari bengkelku, kau pantas memegangnya.","My coins are back. Take a spear from my forge, you've earned it."
@@ -1562,6 +1583,12 @@ BEAT_TAG_CAT_H2,"Kucing tidak bicara, Laras.","Cats don't talk, Laras."
 BEAT_TAG_CAT_5,Bicara kok. Kau saja yang jarang mendengarkan.,They do. You just don't listen much.
 BEAT_TAG_CAT_6,"Kunyit mengibaskan ekornya dan berlari ke arah beringin, seolah menunjukkan jalan.","Kunyit flicks his tail and trots toward the banyan, as if showing the way."
 BEAT_TAG_CAT_7,"Ayo, sumur! Dan jangan lupa menyapa beringin tua di jalan.","Come on, the well! And don't forget to greet the old banyan on the way."
+BEAT_TAG_CAT_8,"Kejar aku! Kalau kakimu terjebak, menghindar saja, dan jangan sampai napasmu habis.","Catch me! If you get boxed in, dodge out of it, and don't run out of breath."
+DLG_CEPOT_T1,"Sebelum menulis, panaskan tanganmu, Kak. Boneka jerami di halaman itu kuikat sejak subuh. Pukul, tahan tombolnya, dan tiga ayunan jadi satu kombo.","Before you write, warm up your hands, Kak. I tied those straw dummies in the yard at dawn. Strike, hold the button, and three swings make one combo."
+DLG_CEPOT_T2,"Awas napasmu. Tiap ayunan memakan stamina, si bar kuning di bawah nyawamu.","Mind your breath. Every swing costs stamina, that yellow bar under your health."
+DLG_IBU_T1,"Sebelum kau pergi: petilasan tua di desa ini mengingat siapa saja yang singgah. Duduklah di sana, dan lelahmu ikut diingat pulih.","Before you go: the old petilasan in this village remembers whoever stops there. Sit by it, and your tiredness is remembered away."
+DLG_IBU_T2,Dan bawa kendi jamu ini. Minum saat kau terluka. Kuisi lagi tiap kali kau beristirahat.,And take this jamu flask. Drink when you are hurt. I refill it each time you rest.
+DLG_SEMAR_T1,"Tahan tombolnya, gambar dengan mouse-mu, lalu lepaskan. Garis yang pelan dan mantap lebih berharga daripada yang tergesa.","Hold the button, draw with your mouse, then let go. A slow, steady line is worth more than a hurried one."
 BEAT_TAG_BANYAN_H1,Ki Waringin? Sejak kapan pohon punya nama?,Ki Waringin? Since when does a tree have a name?
 BEAT_TAG_BANYAN_5,"Sejak ada yang pertama kali menyapanya. Nama itu hadiah, Kak. Kalau dipanggil, kau ada.","Since someone first greeted him. A name is a gift, Kak. If you're called, you exist."
 BEAT_TAG_BANYAN_H2,Dan kalau tak ada yang memanggil?,And if nobody calls?
@@ -3517,24 +3544,8 @@ BEAT_LONTAR_PICK_1,"Di atas daun lontar yang robek dan hangus di tepinya, sebuah
 BEAT_LONTAR_PICK_H1,Aksara Sunda 'Ka'... Laras mengukir ini untukku sebelum dibawa pergi. Aku harus segera membawa ini ke Ki Semar!,The Sundanese glyph 'Ka'... Laras carved this for me before being taken. I must bring this to Ki Semar at once!
 BEAT_LONTAR_PICK_2,"Garis-garis aksara Ka itu berpendar redup di telapak tanganmu, membimbing langkahmu kembali ke sanggar Ki Semar.","The lines of the Ka glyph faintly glow in your palm, guiding your steps back to Ki Semar's sanggar."
 MEM_K0_RUWATAN_4,"Empat lampu, empat sudut kelir. Selama semuanya menyala, Kala tak punya tempat berpijak.","Four lamps, four corners of the screen. While they all burn, Kala has nowhere to stand."
-MEM_K0_RUWATAN_5,Kau sampai di ujung kelir. Cerita ini tamat.,You reach the far edge of the screen. This story is finished.
-TUT_SEMAR_INTRO_1,"Hehe, bangunlah, muridku. Pagi ini sejuk sekali di pelataran Sanggar.","Hehe, awaken, my apprentice. A fine, cool morning in the Sanggar courtyard."
-TUT_SEMAR_INTRO_2,"Malam nanti adalah festival Ruwatan. Sebelum kau keluar bermain, mari kita pastikan ilmumu tidak berkarat.","Tonight is the Ruwatan festival. Before you head out, let us make sure your martial skills haven't grown rusty."
-TUT_CHOICE_PRACTICE,Mulai latihan dasar (Gerak & Bertarung),Begin basic training (Movement & Combat)
-TUT_CHOICE_SKIP,Aku sudah siap, langsung temui Laras,I'm already prepared, go meet Laras
-TUT_SEMAR_DODGE_1,"Pertama, periksa kelenturan kakimu. Cobalah bergerak dan lakukan gerak menghindar!","First, test your footing. Move around and perform a dodge roll!"
-TUT_SEMAR_DODGE_2,"Bagus! Tubuhmu tetap gesit. Menghindar membuatmu kebal sesaat dari serangan musuh.","Good! Nimble as ever. Dodging makes you briefly invulnerable to enemy strikes."
-TUT_SEMAR_DODGE_3,"Namun perhatikan napasmu—setiap gerak menghindar menghabiskan stamina (kuning). Jangan sampai kehabisan napas di tengah bahaya!","Mind your breath, though—each dodge consumes stamina (yellow bar). Don't let yourself get winded in danger!"
-TUT_SEMAR_ATTACK_1,"Sekarang, cabut senjatamu. Hantam boneka jerami itu dengan rangkaian 3 serangan kombo!","Now, draw your weapon. Strike that straw dummy with a 3-hit combo!"
-TUT_SEMAR_ATTACK_2,"Pukulan yang mantap! Ayunan ketiga dari kombomu selalu menghasilkan hantaman terkuat dan dapat membuat lawan terhuyung.","Solid strikes! The third swing of your combo always delivers the heaviest impact and can stagger foes."
-TUT_SEMAR_JAMU_1,"Dalam pertarungan nyata, luka tak terhindarkan. Ibumu selalu membekalimu kendi Jamu herbal hangat.","In real combat, taking wounds is inevitable. Your mother always packs a flask of warm herbal Jamu for you."
-TUT_SEMAR_JAMU_2,"Minumlah seteguk Jamu untuk memulihkan tenagamu.","Take a sip of Jamu to restore your vitality."
-TUT_SEMAR_JAMU_3,"Hangat dan berkhasiat. Kendi Jamumu akan terisi penuh kembali setiap kali kau beristirahat di Petilasan.","Warm and restorative. Your Jamu flasks will fully refill whenever you rest at a Petilasan shrine."
-TUT_CEPOT_DONE_1,"Wah, hebat sekali, Kak! Gerakanmu makin lincah dan mantap!","Whoa, amazing, Kak! Your moves are sharper and more nimble than ever!"
-TUT_SEMAR_DONE_1,"Hehe, dasar-dasarmu sudah kokoh, anakku. Nanti malam saat Ruwatan, barulah aku bukakan rahasia Aksara kuno untukmu.","Hehe, your foundation is solid, my child. Tonight during the Ruwatan, I shall reveal the secret of our ancient Aksara."
-TUT_SEMAR_DONE_2,"Sekarang pergilah ke alun-alun desa. Adikmu Laras sudah mencarimu sejak tadi!","Now go to the village square. Your little sister Laras has been looking for you all morning!"
-TUT_SEMAR_SKIP_CONFIRM,"Hehe, percaya diri sekali. Pergilah temui Laras di alun-alun desa, jangan sampai terlambat!","Hehe, confident as ever! Go meet Laras at the village square, don't be late!"
-TUT_SEMAR_REMIND_DODGE,"Lakukan gerak menghindar dengan tombol menghindar!","Perform a dodge roll with the dodge button!"
-TUT_SEMAR_REMIND_ATTACK,"Hantam boneka jerami itu dengan kombo 3 pukulan!","Strike that straw dummy with a 3-hit combo!"
-TUT_SEMAR_REMIND_JAMU,"Minumlah Jamu hangat dari kendimu!","Take a sip of warm Jamu from your flask!"
-TUT_SEMAR_REMIND_DONE,"Gerbang sudah terbuka, temuilah Laras di alun-alun!","The gate is open, go meet Laras at the village square!"
+MEM_K0_RUWATAN_5,"Kau sampai di ujung kelir, dan lihat, Kala mundur. Empat lampu seperti empat segel penjaga negeri ini. Bila satu padam, ia melangkah maju.","You reach the edge of the screen, and see, Kala falls back. Four lamps, like the four seals that guard this land. If one goes dark, he steps forward."
+MEM_K0_RUWATAN_IN_2,"Dari kanan, Kala merayap. Dewa waktu itu memakan apa saja yang tak dijaga. Selama kau di dalam cahaya, ia tak bisa menyentuhmu.","From the right, Kala creeps in. The god of time eats whatever is left unguarded. Stay inside the light and he cannot touch you."
+MEM_K0_RUWATAN_HINT_2,Tetap di dalam cahaya dan nyalakan lampu berikutnya,Stay inside the light and light the next lamp
+MEM_K0_RUWATAN_HINT_3,Semua lampu menyala. Jalan ke ujung kelir,Every lamp is burning. Walk to the edge of the screen
+MEM_SQ_M3_TUYUL_5,"Sebutir kacang lagi, dan makhluk kecil itu mulai menghitung dari awal.","One more bean, and the little creature starts counting from the beginning."

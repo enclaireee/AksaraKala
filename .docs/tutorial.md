@@ -10,6 +10,15 @@ The prologue only explained itself through `Q_MQ0_Sn_HINT` toasts: one line of t
 starts. That covered movement and `interact`, but nothing taught the 3-hit combo, stamina, the flask, the petilasan, the
 perfect dodge, or the cast controls. The first real fight (step 0.12) arrived with the player knowing none of it.
 
+### 1b. Follow-up (2026-11-10): the ladder had no rungs
+
+The first fix was a separate Semar practice room in front of the story, which taught dodge, attack and jamu a second time. The ladder
+itself never ran: no dialogue entry ran `lesson:<id>` and the six `UI_TUT_*` texts did not exist, so a lesson card could never appear
+(and the hurt lessons showed a raw key). Now: the practice room is deleted and `Zones.start_new_game()` always lands in Desa Purwa; the
+lessons are offered by the characters (Laras beat `tag_cat` with `BEAT_TAG_CAT_8`, Cepot after Semar with `DLG_CEPOT_T1/T2`, Ibu with
+`DLG_IBU_T1/T2`, Semar's Ka entry with `DLG_SEMAR_T1`); `when` is a window of flags (`flag:mq0_d4,!flag:mq0_d7` and so on) so a card does
+not vanish the moment the talk that offered it ends the step. `tests/tutorial_test.gd` and `tools/quest_audit.py` (Q8) guard both holes.
+
 ## 2. Principles
 
 1. **One verb per moment.** A lesson teaches a single input. Two at once is a manual, not a game.

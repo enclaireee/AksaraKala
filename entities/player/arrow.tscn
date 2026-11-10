@@ -1,6 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://entities/player/arrow.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/fx/arrow.png" id="arrow_png"]
 
 [sub_resource type="RectangleShape2D" id="shape"]
 size = Vector2(6, 2)
@@ -14,6 +15,5 @@ script = ExtResource("1")
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource("shape")
 
-[node name="Line" type="Polygon2D" parent="."]
-color = Color(0.95, 0.9, 0.75, 1)
-polygon = PackedVector2Array(-3, -1, 3, -1, 3, 0, -3, 0)
+[node name="Line" type="Sprite2D" parent="."]
+texture = ExtResource("arrow_png")

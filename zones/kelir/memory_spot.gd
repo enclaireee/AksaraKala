@@ -9,7 +9,8 @@ const GAP_GREY := Color("8A8580")
 
 @export_enum("interact", "goal", "narrate", "gap") var action_kind := "interact"
 @export var order := -1        # -1 = any order
-@export var line_key := ""     # played when done, e.g. MEM_<ID>_3
+@export var line_key := ""     # played when done, e.g. MEM_<ID>_3 (a Laras chapter falls back to LC<n>_<i>)
+var line_keys := PackedStringArray()   # extra lines KelirMemory hands out (the chapters)
 
 var done := false
 var gap := {}     # {gap_id, pos, prompt_key, options, correct}, kind gap
@@ -17,6 +18,10 @@ var wrong := 0    # wrong picks on this gap; from 2 the right option is starred
 var _busy := false
 var _gate: Sprite2D
 var _rect: Sprite2D   # the torn-cloth gap, or the goal gate
+var _prop: Sprite2D   # what you act on: a blencong stand (default), an oncor (K1) or a curse stake (K5); K0 draws its own
+var _prop_kind := ""
+var _ring: Sprite2D   # the pulsing hint ring over a spot that still wants you
+var _t := 0.0
 
 
 func _ready() -> void:
@@ -26,6 +31,8 @@ func _ready() -> void:
 	body_entered.connect(func(b: Node) -> void:
 		if action_kind in ["goal", "narrate"] and b.is_in_group("player"):
 			interact())
+	if action_kind == "interact":
+		_make_prop()
 	if action_kind == "goal":
 		_gate = Sprite2D.new()
 		_gate.texture = load("res://assets/art/cutscene/goal_gate.png")
@@ -43,6 +50,51 @@ func _ready() -> void:
 			_rect.visible = false
 			done = true
 			usable = false
+
+
+## The thing you act on, so a spot reads as a place and not an invisible dot.
+func _make_prop() -> void:
+	var mem := KelirMemory.of(self)
+	var id: String = mem.memory_id if mem != null and mem.memory_id != "" else str(get_node("/root/Zones").memory_id)
+	if id == "k0_ruwatan":
+		return
+	_prop_kind = {"k1_maghrib": "oncor", "k5_forge": "stake"}.get(id, "lamp")
+	_prop = Sprite2D.new()
+	_prop.centered = false
+	match _prop_kind:
+		"oncor":
+			_prop.texture = load("res://assets/art/props/oncor.png")
+			_prop.hframes = 4
+			_prop.offset = Vector2(-8, -25)
+		"stake":
+			_prop.texture = load("res://assets/art/props/curse_stake.png")
+			_prop.hframes = 3
+			_prop.offset = Vector2(-6, -15)
+			_prop.frame = 2
+		_:
+			_prop.texture = load("res://assets/art/cutscene/lamp_stand.png")
+			_prop.hframes = 4
+			_prop.offset = Vector2(-7, -10)
+	_prop.z_index = 1
+	add_child(_prop)
+	_ring = Sprite2D.new()
+	_ring.texture = load("res://assets/art/cutscene/lamp_hint.png")
+	_ring.hframes = 4
+	_ring.offset = Vector2(0, -6)
+	_ring.z_index = 2
+	add_child(_ring)
+
+
+func _animate_prop() -> void:
+	var lit := done
+	match _prop_kind:
+		"oncor", "lamp":
+			_prop.frame = (1 + int(_t * 9.0 + position.x) % 3) if lit else 0
+		"stake":
+			_prop.frame = 0 if lit else 2
+	_ring.visible = not lit and usable
+	if _ring.visible:
+		_ring.frame = int(_t * 6.0) % 4
 
 
 ## Counts toward finishing the memory.
@@ -65,8 +117,13 @@ func interact() -> void:
 	done = true
 	usable = false
 	_prompt.visible = false
-	if line_key != "" and tr(line_key) != line_key:   # generated keys with no text yet stay silent
-		await mem.say(PackedStringArray([line_key]))
+	var ks := PackedStringArray()
+	var rk := mem.resolve(line_key)   # generated keys with no text stay silent
+	if rk != "":
+		ks.append(rk)
+	ks.append_array(line_keys)
+	if not ks.is_empty():
+		await mem.say(ks)
 	if counts():
 		mem.spot_done(self)
 
@@ -94,7 +151,10 @@ func _ask(mem: KelirMemory) -> bool:
 	return false
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_t += delta
+	if _prop != null:
+		_animate_prop()
 	if _rect and _rect.visible:   # the gap's frayed edge shimmers
 		_rect.region_rect = Rect2(24 * (int(Time.get_ticks_msec() / 350.0) % 2), 0, 24, 20)
 	if _gate:   # the gate opens once every other counting spot is done

@@ -1,6 +1,7 @@
 [gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/fx/aim_pointer.png" id="aim_pointer"]
 [ext_resource type="Script" path="res://components/health.gd" id="2"]
 [ext_resource type="Script" path="res://components/stamina.gd" id="3"]
 [ext_resource type="Script" path="res://components/hurtbox.gd" id="4"]
@@ -62,8 +63,10 @@ shape = SubResource("body_shape")
 [node name="Aim" type="Node2D" parent="."]
 position = Vector2(0, -6)
 
-[node name="Pointer" type="Polygon2D" parent="Aim"]
-polygon = PackedVector2Array(9, -2, 12, 0, 9, 2)
+[node name="Pointer" type="Sprite2D" parent="Aim"]
+texture = ExtResource("aim_pointer")
+position = Vector2(7, 0)
+hframes = 4
 
 [node name="MeleeHitbox" type="Area2D" parent="Aim"]
 collision_layer = 8

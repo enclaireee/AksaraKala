@@ -29,15 +29,15 @@ const LESSONS := {
 		"steps": [{"event": "dodged", "n": 1}],
 	},
 	"attack": {
-		"text": "UI_TUT_ATTACK", "key": "attack", "when": "step:mq0=4", "on": "talk",
+		"text": "UI_TUT_ATTACK", "key": "attack", "when": "flag:mq0_d4,!flag:mq0_d7", "on": "talk",
 		"steps": [{"event": "struck", "n": 3}],
 	},
 	"rest": {
-		"text": "UI_TUT_REST", "key": "interact", "when": "step:mq0=9", "on": "talk",
+		"text": "UI_TUT_REST", "key": "interact", "when": "flag:mq0_4,!flag:mq0_7", "on": "talk",
 		"steps": [{"event": "rest", "n": 1}],
 	},
 	"cast": {
-		"text": "UI_TUT_CAST", "key": "cast", "when": "step:mq0=10", "on": "talk",
+		"text": "UI_TUT_CAST", "key": "cast", "when": "glyph:sunda_ka,!flag:mq0_7", "on": "talk",
 		"steps": [{"event": "cast", "n": 1}],
 	},
 	"flask": {

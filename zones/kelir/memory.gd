@@ -31,6 +31,13 @@ var _stand: Node2D
 var _busy := false       # a fail fade is running
 var _done := false
 var _name_cd := 0.0
+static var instant := false   # tests: no curtain-up card, no frozen intro (the opening lines still play)
+var stage: KelirStage     # curtain-up card, objective pill, meter and flash (kelir_stage.gd)
+var _intro := not instant   # the curtain-up card and Semar's opening lines are running: nobody moves
+var _talk := 0            # open say() calls: the world waits while a line is on screen
+var _fails := 0
+var _chapter_in := PackedStringArray()    # kind chapter: the LC<n>_<i> lines, opening / closing
+var _chapter_out := PackedStringArray()
 
 
 ## The memory a node belongs to, or null.
@@ -78,6 +85,10 @@ func _ready() -> void:
 	if ui == null:
 		ui = load(UI_SCENE).instantiate()
 		add_child(ui)
+	stage = KelirStage.new()
+	add_child(stage)
+	if kind == "chapter":
+		_spread_chapter_lines()
 	var hud := ui.get_node_or_null("HUD")
 	if hud:   # it reads the hero's hp/stamina/sakti, which a stand-in does not have
 		hud.visible = false
@@ -112,8 +123,28 @@ func _skin_kelir_tiles(tl: TileMapLayer) -> void:
 		tl.set_cell(cell, 6, Vector2i(col, row))
 
 
+## Curtain-up: title card, Semar's opening lines, then one objective pill that says what to do.
 func _start() -> void:
+	_intro = not instant
+	var tk := resolve("LC_%s_TITLE" % memory_id.trim_prefix("lc") if kind == "chapter" else "MEM_%s_TITLE" % _tid().to_upper())
+	if not instant:
+		await stage.curtain_up(tr(tk) if tk != "" else "", tr("UI_KELIR_SUB_" + kind.to_upper()))
 	await say(_keys("IN"))
+	_intro = false
+	show_objective()
+
+
+## What to do, in one line with its key: the memory's own HINT, else the line for its kind.
+func show_objective() -> void:
+	var hk := "MEM_%s_HINT" % _tid().to_upper()
+	var action := "move_right" if kind == "walk" else "interact"
+	var text := tr(hk) if tr(hk) != hk else tr("UI_KELIR_OBJ_" + kind.to_upper())
+	stage.objective(text, action)
+
+
+## True while the player may act and the world may press on: not in the curtain-up, a line, a fail fade or the end.
+func acting() -> bool:
+	return not (_intro or _busy or _done or _talk > 0)
 
 
 ## Speaker of every memory line: Semar the dalang, Laras in her chapters.
@@ -124,12 +155,54 @@ func speaker() -> String:
 ## Plays these line keys in the dialogue box; returns when it closed. No keys, no box.
 func say(keys: PackedStringArray) -> void:
 	if not keys.is_empty():
+		_talk += 1
 		await get_node("/root/Game").play(speaker(), {"lines": keys})
+		_talk -= 1
+
+
+## The text id of this memory: the id, or gap_<letter> for a gap memory.
+func _tid() -> String:
+	return memory_id if kind != "gap" or memory_id.begins_with("gap_") else "gap_" + memory_id
+
+
+## `k` when it has text, else `k` without its MEM_ prefix (the Laras chapters are written LC<n>_<i>), else "".
+func resolve(k: String) -> String:
+	if k == "":
+		return ""
+	if tr(k) != k:
+		return k
+	var short := k.trim_prefix("MEM_")
+	return short if short != k and tr(short) != short else ""
+
+
+## Laras chapters: LC<n>_1 opens, the last two (three in the long ones) close, the lines between are handed out to the
+## chapter's spots in order, so nothing she wrote is lost and nothing plays twice.
+func _spread_chapter_lines() -> void:
+	var n := memory_id.trim_prefix("lc")
+	var ks := PackedStringArray()
+	for i in range(1, 40):
+		var k := resolve("LC%s_%d" % [n, i])
+		if k == "":
+			break
+		ks.append(k)
+	if ks.size() < 4:
+		return
+	var n_out := 3 if ks.size() >= 9 else 2
+	_chapter_in = ks.slice(0, 1)
+	_chapter_out = ks.slice(ks.size() - n_out)
+	var mid := ks.slice(1, ks.size() - n_out)
+	var sp := spots().filter(func(s: MemorySpot) -> bool: return s.action_kind != "gap")
+	sp.sort_custom(func(a: Node, b: Node) -> bool: return String(a.name).naturalnocasecmp_to(String(b.name)) < 0)
+	for i in sp.size():
+		sp[i].line_key = ""
+		sp[i].line_keys = mid.slice(i * mid.size() / sp.size(), (i + 1) * mid.size() / sp.size())
 
 
 ## MEM_<ID>_<part> and _<part>_2, those that exist. A gap memory's text id is gap_<letter> (script.md).
 func _keys(part: String) -> PackedStringArray:
-	var tid := memory_id if kind != "gap" or memory_id.begins_with("gap_") else "gap_" + memory_id
+	if kind == "chapter" and not _chapter_in.is_empty():
+		return _chapter_in if part == "IN" else _chapter_out
+	var tid := _tid()
 	var out := PackedStringArray()
 	for k in ["MEM_%s_%s" % [tid.to_upper(), part], "MEM_%s_%s_2" % [tid.to_upper(), part]]:
 		if tr(k) != k:
@@ -141,7 +214,7 @@ func _physics_process(delta: float) -> void:
 	if stand_in == null:
 		return
 	_name_cd = maxf(0.0, _name_cd - delta)
-	stand_in.velocity = Vector2.ZERO if _busy or _done else \
+	stand_in.velocity = Vector2.ZERO if _busy or _done or _intro or _talk > 0 else \
 			Input.get_vector("move_left", "move_right", "move_up", "move_down") * SPEED
 	stand_in.move_and_slide()
 	var sp := stand_in.get_node_or_null("Sprite") as Sprite2D
@@ -190,14 +263,22 @@ func spot_done(_spot: MemorySpot) -> void:
 
 ## Touched by a threat or seen by a Faceless: fade, back to the last checkpoint, fade in. No counter, no loss.
 func fail() -> void:
-	if _busy or _done:
+	if _busy or _done or _intro:
 		return
 	_busy = true
+	_fails += 1
 	var zones := get_node("/root/Zones")
 	await zones.fade_to(1.0)
 	reset()
 	await zones.fade_to(0.0)
 	_busy = false
+	if _fails == 3:   # the third time the pill comes back; threats slow down (MemoryThreat reads fail_count())
+		show_objective()
+
+
+## How many times this memory was failed (3+ makes threats gentler, architecture.md 9b).
+func fail_count() -> int:
+	return _fails
 
 
 ## The stand-in back at the last checkpoint (else Stand), threats back at their start.
@@ -218,6 +299,10 @@ func finish() -> void:
 	if _done:
 		return
 	_done = true
+	stage.clear_objective()
+	stage.hide_meter()
+	stage.flash(0.55, 0.9)   # the closing tableau: the whole cloth glows
+	await get_tree().create_timer(0.9).timeout
 	var ev := get_node("/root/Events")
 	if kind == "chapter" and not ev.write_requested.get_connections().is_empty():   # no write card listening: skip, never hang
 		ev.write_requested.emit(memory_id, PackedStringArray([LARAS_KA]))

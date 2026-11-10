@@ -261,6 +261,7 @@ Regional character: Ibu (want: two cups she cannot explain; turn: the Interlude;
 | BEAT_TAG_CAT_6 | Kunyit mengibaskan ekornya dan berlari ke arah beringin, seolah menunjukkan jalan. | Kunyit flicks his tail and trots toward the banyan, as if showing the way. |
 | @NPC_LARAS_NAME | | |
 | BEAT_TAG_CAT_7 | Ayo, sumur! Dan jangan lupa menyapa beringin tua di jalan. | Come on, the well! And don't forget to greet the old banyan on the way. |
+| BEAT_TAG_CAT_8 | Kejar aku! Kalau kakimu terjebak, menghindar saja, dan jangan sampai napasmu habis. | Catch me! If you get boxed in, dodge out of it, and don't run out of breath. |
 
 ### Beat `tag_banyan` (if `!flag:beat_tag_banyan`, `flag:tag_banyan`, `step:mq0=0`; do `flag:beat_tag_banyan`). Area `purwa_tag_banyan` sets `tag_banyan` (ASSUMED).
 | Key | ID | EN |
@@ -679,13 +680,16 @@ The Act I Cepot entries (SQ-S4) follow; see section 6.
 | Key | ID | EN |
 |-----|----|----|
 | MEM_K0_RUWATAN_TITLE | Wayang Ruwatan | The Ruwatan Show |
-| MEM_K0_RUWATAN_IN | Ini kelir, layar bayangan. Tetaplah di terang lampuku, Nak. Di luar terang, Kala, pemakan bayangan, menunggu. | This is the kelir, the shadow screen. Stay in my lamp's light, child. Outside it, Kala, the shadow-eater, waits. |
-| MEM_K0_RUWATAN_HINT | Tetap di cahaya | Stay in the light |
-| MEM_K0_RUWATAN_1 | Batara Kala, dewa waktu. Ia memakan apa saja yang tak dijaga dan tak diingat. | Batara Kala, the god of time. He eats whatever is left unguarded and unremembered. |
-| MEM_K0_RUWATAN_2 | Maka dalang bercerita sampai tamat. Cerita yang selesai tak bisa dimakan. | So the dalang tells the story to its end. A finished story can't be eaten. |
-| MEM_K0_RUWATAN_3 | Malam ini kau yang memegang wayang. Jangan biarkan bayanganmu keluar dari cahaya. | Tonight you hold the puppet. Don't let your shadow leave the light. |
+| MEM_K0_RUWATAN_IN | Ini kelir, Nak, layar tempat bayangan hidup. Malam ini kau jadi wayang di tanganku. | This is the kelir, child, the screen where shadows live. Tonight you are the puppet in my hands. |
+| MEM_K0_RUWATAN_HINT | Jalan ke kanan, tekan {key} di lampu yang padam | Walk right, press {key} at a dark lamp |
+| MEM_K0_RUWATAN_IN_2 | Dari kanan, Kala merayap. Dewa waktu itu memakan apa saja yang tak dijaga. Selama kau di dalam cahaya, ia tak bisa menyentuhmu. | From the right, Kala creeps in. The god of time eats whatever is left unguarded. Stay inside the light and he cannot touch you. |
+| MEM_K0_RUWATAN_HINT_2 | Tetap di dalam cahaya dan nyalakan lampu berikutnya | Stay inside the light and light the next lamp |
+| MEM_K0_RUWATAN_HINT_3 | Semua lampu menyala. Jalan ke ujung kelir | Every lamp is burning. Walk to the edge of the screen |
+| MEM_K0_RUWATAN_1 | Lampu ini kunamai Ingatan. Apa yang diceritakan tak bisa dimakan Kala. | I call this lamp Memory. What is told cannot be eaten by Kala. |
+| MEM_K0_RUWATAN_2 | Lampu ini Nama. Selama namamu disebut, kau tetap ada di dunia. | This lamp is Name. As long as your name is spoken, you remain in the world. |
+| MEM_K0_RUWATAN_3 | Lampu ini Tamat. Cerita yang sudah selesai tak bisa dimakan. | This lamp is Ending. A story that is finished cannot be eaten. |
 | MEM_K0_RUWATAN_4 | Empat lampu, empat sudut kelir. Selama semuanya menyala, Kala tak punya tempat berpijak. | Four lamps, four corners of the screen. While they all burn, Kala has nowhere to stand. |
-| MEM_K0_RUWATAN_5 | Kau sampai di ujung kelir. Cerita ini tamat. | You reach the far edge of the screen. This story is finished. |
+| MEM_K0_RUWATAN_5 | Kau sampai di ujung kelir, dan lihat, Kala mundur. Empat lampu seperti empat segel penjaga negeri ini. Bila satu padam, ia melangkah maju. | You reach the edge of the screen, and see, Kala falls back. Four lamps, like the four seals that guard this land. If one goes dark, he steps forward. |
 | MEM_K0_RUWATAN_OUT | Sekarang nama anak-anak desa kubacakan, agar Kala melewati pintu mereka. Ciung. Laras. Dan kau, {name}. | Now the village children's names, so Kala passes their doors. Ciung. Laras. And you, {name}. |
 | MEM_K0_RUWATAN_OUT_2 | Dengan nama terjaga, tidurlah tenang malam ini. | With the names kept, sleep easy tonight. |
 
@@ -1093,6 +1097,8 @@ VERIFY: Sandekala as a dusk spirit that takes children who stay out at maghrib.
 | MEM_K1_MAGHRIB_1 | Pulang, Nak! Matahari hampir tenggelam! | Home, child! The sun is nearly down! |
 | MEM_K1_MAGHRIB_2 | Sesuatu yang tinggi mengikuti di belakangmu. Ia tak bisa melewati tanah yang terang. | Something tall follows behind you. It cannot cross lit ground. |
 | MEM_K1_MAGHRIB_3 | Oncor terakhir menyala. Bayangan itu mundur. | The last oncor catches. The shadow draws back. |
+| MEM_K1_MAGHRIB_4 | Dari jauh, kentongan berbunyi. Rumah-rumah menutup pintu satu per satu. | Far off, a slit-drum sounds. The houses close their doors one by one. |
+| MEM_K1_MAGHRIB_5 | Pintu rumah terbuka. Ibunya memeluknya, dan lampu menyala di jendela. | The house door opens. Her mother holds her, and a lamp glows in the window. |
 | MEM_K1_MAGHRIB_OUT | Begitulah ceritanya: terang menjaga anak-anak. Nyalakan empat oncor, dan Sandekala tak bisa lewat. | So the tale goes: light keeps the children. Light the four oncor, and Sandekala cannot pass. |
 
 | Key | ID | EN |
@@ -2201,6 +2207,8 @@ Ranga drove Laras from the Kaputren to the cell yard, put down the reins when th
 | MEM_K_II_1 | Lengser muda membawa baki teh ke kamar raja. Pintunya setengah terbuka. | Young Lengser carries a tea tray to the king's chamber. The door stands ajar. |
 | MEM_K_II_2 | Di dalam, seorang lelaki berdiri di depan cermin, mencoba wajah sang raja seperti mencoba baju. | Inside, a man stands before a mirror, trying on the king's face like a coat. |
 | MEM_K_II_3 | Lengser menjatuhkan baki. Lelaki itu menoleh dengan wajah raja, dan tersenyum. | Lengser drops the tray. The man turns, wearing the king's face, and smiles. |
+| MEM_K_II_4 | Lengser memungut nampan itu dengan tangan gemetar. Ia tak berkata apa-apa. | Lengser picks up the tray with shaking hands. He says nothing. |
+| MEM_K_II_5 | Sejak malam itu, ia melayani raja palsu dengan mata tertunduk. | From that night on, he served the false king with lowered eyes. |
 | MEM_K_II_OUT | Lengser memegang rahasia itu sejak malam itu, Nak. Sekarang kau ikut memegangnya. | Lengser has held that secret since that night, child. Now you hold it too. |
 
 ### Clue `hunter_mask_2` and memory `h2` (step g.18; H2, kind walk; Aria wears the king's face). Fragment count follows quests.md v5: crater first, throne second, graves third, shrine fourth
@@ -2871,6 +2879,7 @@ VERIFY: Roro Jonggrang's women pounding rice to fake the dawn.
 | MEM_K3_LESUNG_1 | Tuk, tuk, tuk. Para dayang menumbuk padi di bawah bulan. | Tuk, tuk, tuk. The women pound rice beneath the moon. |
 | MEM_K3_LESUNG_2 | Di kejauhan batu-batu berderet naik ke langit. Satu candi lagi, dan sumpah itu terpenuhi. | Far off, stones climb in rows. One more temple and the oath is kept. |
 | MEM_K3_LESUNG_3 | Ayam-ayam terkecoh dan berkokok. Sang pangeran kurang satu candi, dan kurang satu malam. | The roosters are fooled and crow. The prince falls one temple short, and a night short. |
+| MEM_K3_LESUNG_4 | Tuk, tuk, tuk. Irama itu tak boleh putus, Nak. Kalau berhenti, batu-batu terus naik. | Tuk, tuk, tuk. The beat must not break, child. If it stops, the stones keep climbing. |
 | MEM_K3_LESUNG_OUT | Irama itu menghentikan batu-batu, Nak. Gambar Ca mengikuti ketukannya, dan tiang-tiang terbuka. | That beat stops the stones, child. Draw Ca to its count, and the pillars lay themselves open. |
 | HINT_BANDUNG | Ikuti irama | Keep the beat |
 
@@ -3011,6 +3020,7 @@ VERIFY: Roro Jonggrang's women pounding rice to fake the dawn.
 | MEM_K_III_1 | Dua saudara berebut satu tanah. Yang sulung ke timur, yang bungsu ke barat, masing-masing membawa pasukan. | Two brothers quarrel over one land. The elder goes east, the younger west, each with an army. |
 | MEM_K_III_2 | Si bungsu berdiri di tengah sungai. Dari seberang, kakaknya mengangkat tombak. | The younger stands mid-river. From the far bank his brother raises a spear. |
 | MEM_K_III_3 | Si bungsu meletakkan senjatanya di air dan melangkah mundur. Tanah di antara mereka merekah. | The younger lays his weapon in the water and steps back. The land between them splits. |
+| MEM_K_III_4 | Sungai mengalir di antara mereka, tenang, seakan perang tak pernah ada. | The river flows between them, calm, as if no war had ever been. |
 | MEM_K_III_OUT | Itu pamali, Nak: saudara tak boleh saling menyerang. Sungai ini dinamai dari larangan itu. | That is pamali, child: brothers must not strike each other. This river is named for that rule. |
 
 VERIFY: pamali as a rule among brothers, and the river named for it (codex `pamali`); the lesung women's false-dawn beat.
@@ -3446,6 +3456,8 @@ The three clues are spilled around Mbok Srini's hut (3.5). The memory is not ope
 | MEM_K4_TIMUN_MAS_1 | Biji timun menjadi semak berduri. Sang raksasa merobek jalannya. | The seeds become brambles. The giant tears his way through. |
 | MEM_K4_TIMUN_MAS_2 | Jarum menjadi rimbun bambu. Garam menjadi laut. Ia terus mendekat. | The needles become a bamboo thicket. The salt becomes a sea. He keeps coming. |
 | MEM_K4_TIMUN_MAS_3 | Terasi menjadi lumpur. Sang raksasa terperosok, dan gadis itu berlari ke arah fajar. | The terasi becomes mud. The giant sinks, and the girl runs toward the dawn. |
+| MEM_K4_TIMUN_MAS_4 | Napas Timun Mas habis, tapi fajar sudah dekat. Satu kantong lagi. | Timun Mas is out of breath, but dawn is near. One pouch more. |
+| MEM_K4_TIMUN_MAS_5 | Sang raksasa tenggelam dalam lumpur, dan matahari naik di atas ladang. | The giant sinks in the mud, and the sun rises over the fields. |
 | MEM_K4_TIMUN_MAS_OUT | Pancing dia lewat ladang kantongmu, Nak. Jangan melempar sembarangan: lempar saat dia dekat. | Lure him through your pouch fields, child. Don't throw wildly: throw when he's close. |
 | HINT_BUTO_IJO | Pancing lewat kantong | Lure through pouches |
 
@@ -3547,6 +3559,10 @@ The two practice marks Wirasana's stakes hold set `flag:clue_practice_marks` (no
 | MEM_K5_FORGE_1 | Seorang pemuda datang meminta keris itu sebelum selesai. Sang empu menolak: sedikit lagi. | A young man comes for the keris before it is finished. The smith refuses: a little longer. |
 | MEM_K5_FORGE_2 | Pemuda itu merebutnya. Sang empu mengucap kutuk yang lebih terasa daripada terdengar. Lampu bengkel meredup. | The young man snatches it. The smith speaks a curse you feel more than hear. The forge light dims. |
 | MEM_K5_FORGE_3 | Tanda merah menyebar di lantai bengkel. Padamkan sebelum bertemu satu sama lain. | Red marks spread across the forge floor. Douse them before they join. |
+| MEM_K5_FORGE_4 | Tanda kedua menyala dekat tungku. Panasnya membuat bayanganmu menggeliat. | A second mark flares near the furnace. Its heat makes your shadow squirm. |
+| MEM_K5_FORGE_5 | Palu sang empu masih tergantung, berhenti di tengah ayunan. | The smith's hammer still hangs, stopped mid-swing. |
+| MEM_K5_FORGE_6 | Tanda-tanda itu mencari satu sama lain. Cepat, sebelum bertemu. | The marks are reaching for each other. Quick, before they meet. |
+| MEM_K5_FORGE_7 | Tanda terakhir padam. Lantai bengkel dingin, dan kerisnya diam. | The last mark goes out. The forge floor cools, and the keris is still. |
 | MEM_K5_FORGE_OUT | Begitulah kutuk itu lahir, Nak. Padamkan tandanya sebelum menyatu, dan kerisnya tenang. | That is how the curse was born, child. Douse the marks before they join, and the keris quiets. |
 | HINT_KERIS | Padamkan tanda kutuk | Douse the curse marks |
 
@@ -3739,6 +3755,7 @@ On completion (`memory_done:lc4`): `flag:mq3_lc`, `flag:laras_key_sand_tunnel` (
 | MEM_K6_SERVANT_2 | Aria dewasa menatap cermin, dan wajah raja menatap balik. | Grown Aria stares into the mirror, and the king's face stares back. |
 | MEM_K6_SERVANT_3 | Aria menyerahkan namanya pada bayangan di sudut. Tak ada yang menyebutnya lagi. | Aria gives his name to the shadow in the corner. Nobody says it again. |
 | MEM_K6_SERVANT_4 | Bertahun-tahun topeng itu berjalan tanpa nama, sampai seorang gadis berbisik "Aria". | For years the mask walks without a name, until a girl whispers "Aria". |
+| MEM_K6_SERVANT_5 | Topeng itu menunggu di ujung lorong, dan kau tahu namanya sekarang. | The mask waits at the end of the corridor, and now you know its name. |
 | MEM_K6_SERVANT_OUT | Begitulah dia, Nak. Bukan hantu. Seorang pelayan yang ingin dipanggil namanya. | That is him, child. Not a ghost. A servant who wanted to be called by his name. |
 
 ### Beat `hunter_shrine` (if `!flag:beat_hunter_shrine`, `flag:mq3_h6`; do `flag:beat_hunter_shrine`, `restore`)
@@ -4434,6 +4451,7 @@ On completion (`memory_done:lc5`): `flag:mq4_lc`, `flag:laras_key_tidal_gate` (l
 | MEM_K9_QUEEN_SOUTH_1 | Konon seorang putri disingkirkan dari istananya, berjalan ke laut, dan menjadi ratunya. | They say a princess was cast out of her palace, walked into the sea, and became its queen. |
 | MEM_K9_QUEEN_SOUTH_2 | Orang pesisir menghormatinya dan menjauhi warna hijau. Mereka tak takut; mereka tahu tata krama. | The coast folk honour her and keep off green. They aren't afraid; they know manners. |
 | MEM_K9_QUEEN_SOUTH_3 | Ada yang bilang ia bukan putri, melainkan laut itu sendiri. Tak ada yang bisa memastikan. | Some say she was never a princess, only the sea itself. Nobody can be sure. |
+| MEM_K9_QUEEN_SOUTH_4 | Ombak datang dan pergi, seolah menjawab. Tak ada yang bisa memastikan. | The waves come and go, as if answering. No one can be sure. |
 | MEM_K9_QUEEN_SOUTH_OUT | Percaya atau tidak, Nak, hormatilah. Laut tak butuh pembela, hanya tata krama. | Believe it or not, child, be respectful. The sea needs no defender, only manners. |
 
 VERIFY: Nyi Roro Kidul retellings (a cast-out princess, the sea itself); told as belief, never as fact, never fought.
@@ -6514,6 +6532,7 @@ VERIFY: the juru pantun role and the kecapi, the cure by bathing, the names Purb
 | MEM_SQ_S1_LUTUNG_1 | Gadis itu berjalan perlahan. Lutung berlari di depan, mengusir kabut dari semak. | The girl walks slowly. The langur runs ahead, shooing mist from the bushes. |
 | MEM_SQ_S1_LUTUNG_2 | Di mata air, ia menepi. Ia hanya ingin gadis itu sampai dengan selamat. | At the spring, he steps aside. All he wants is for her to arrive safely. |
 | MEM_SQ_S1_LUTUNG_3 | Gadis itu mandi. Kulitnya berseri, dan lutung menunduk, bahagia. | The girl bathes. Her skin glows, and the langur bows his head, glad. |
+| MEM_SQ_S1_LUTUNG_4 | Kabut menipis di depan. Sang lutung menoleh, memastikan ia mengikuti. | The mist thins ahead. The langur glances back to make sure she follows. |
 | MEM_SQ_S1_LUTUNG_OUT | Begitulah ceritanya: ia tak pernah meminta imbalan. Ia hanya membantu. | So the tale goes: he never asked for anything. He only helped. |
 
 ### SQ-S2 "Tangis di Rumpun Bambu" / "Crying in the Bamboo" (Kuntilanak two-way hunt, L)
@@ -6800,6 +6819,8 @@ VERIFY: ririwa as a Sundanese ghost term, and its description here.
 | MEM_SQ_G2_SERVANT_1 | Pagi: "Hei, kau!" Siang: "Kau, sini!" Sore: "Pelayan!" | Morning: "Hey, you!" Noon: "You, here!" Evening: "Servant!" |
 | MEM_SQ_G2_SERVANT_2 | Namanya hanya ada di sehelai daftar, ditulis dengan dua huruf: Ca dan Nga. | His name exists only on a roll, written with two letters: Ca and Nga. |
 | MEM_SQ_G2_SERVANT_3 | Suatu malam daftar itu dikikis. Ia tetap menyapu, tapi lorong itu tak lagi mengingatnya. | One night the roll is scraped. He keeps sweeping, but the hall no longer remembers him. |
+| MEM_SQ_G2_SERVANT_4 | Sapunya bergerak makin pelan. Ia menunggu seseorang memanggil namanya. | His broom slows. He is waiting for someone to call his name. |
+| MEM_SQ_G2_SERVANT_5 | Di gulungan itu, dua huruf memudar: Ca, lalu Nga. | On the roll, two letters fade: Ca, then Nga. |
 | MEM_SQ_G2_SERVANT_OUT | Begitulah ceritanya: namanya tertulis dengan Ca dan Nga. Tulislah kembali. | So the tale goes: his name is written with Ca and Nga. Write it back. |
 
 #### ririwa_roll (kaputren hall, a shelf with the roll; write card; name NPC_RIRIWA_ROLL_NAME; peaceful `alt`, step 3)
@@ -6949,6 +6970,7 @@ VERIFY: Wewe Gombel as a spirit who takes neglected children, not to harm them (
 | MEM_SQ_M2_CHILD_1 | Di rumah, tak ada yang menoleh. Di bukit, ada suara yang memanggil namanya pelan-pelan. | At home, nobody turns. On the hill, a voice calls his name, softly. |
 | MEM_SQ_M2_CHILD_2 | Anak itu naik. Di bawah, orang tuanya memukul panci dan memanggil: pulang, pulang. | The boy climbs. Below, his parents bang a pot and call: come home, come home. |
 | MEM_SQ_M2_CHILD_3 | Bunyi panci sampai ke bukit. Anak itu menoleh, lalu turun. | The pot's clang reaches the hill. The boy turns, and comes down. |
+| MEM_SQ_M2_CHILD_4 | Pot itu berdentang lagi, lebih dekat. Anak itu menoleh. | The pot clangs again, nearer. The boy looks back. |
 | MEM_SQ_M2_CHILD_OUT | Begitulah ceritanya: panggil dengan lembut, pukul panci, dan yang tersesat akan menemukan jalan pulang. | So the tale goes: call gently, bang a pot, and the lost one finds the way home. |
 
 VERIFY: calling kindly and banging pots as a folk practice.

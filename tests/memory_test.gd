@@ -21,6 +21,7 @@ func check(ok: bool, msg: String) -> void:
 
 
 func _initialize() -> void:
+	KelirMemory.instant = true
 	await process_frame
 	var g: Node = root.get_node("Game")
 	g.save_path = "user://memory_test.json"

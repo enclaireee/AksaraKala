@@ -5,27 +5,29 @@ class_name Oncor extends Node2D
 
 signal lit_up
 
-const OFF := Color(0.35, 0.3, 0.25)
-const ON := Color(1.0, 0.8, 0.3)
-
 var lit := false
 
-@onready var flame: Polygon2D = $Flame
+@onready var flame: Sprite2D = $Flame   # props/oncor.png: frame 0 cold, 1-3 burning
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var health: Health = $Health
 
 
 func _ready() -> void:
 	add_to_group("oncor")
-	flame.color = OFF
+	flame.frame = 0
 	hurtbox.hurt.connect(func(_h: Hitbox) -> void:
 		health.hp = health.max_hp   # the torch is never destroyed
 		light())
+
+
+func _process(_delta: float) -> void:
+	if lit:
+		flame.frame = 1 + int(Time.get_ticks_msec() / 110.0) % 3
 
 
 func light() -> void:
 	if lit:
 		return
 	lit = true
-	flame.color = ON
+	flame.frame = 1
 	lit_up.emit()

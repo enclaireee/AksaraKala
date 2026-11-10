@@ -13,12 +13,15 @@ func check(ok: bool, msg: String) -> void:
 
 
 func _initialize() -> void:
+	KelirMemory.instant = true
 	await process_frame
 	root.get_node("Game")._reset()
 	root.get_node("Zones").memory_id = "k0_ruwatan"
 	var m: Node = load("res://zones/kelir/k0_ruwatan.tscn").instantiate()
 	root.add_child(m)
 	await close_box(m)
+	m._intro = false   # the curtain-up card (2.7 s) is covered by its own check in kelir_stage_test
+	m._talk = 0
 	await run(m)
 	m.queue_free()
 	root.get_node("Zones").memory_id = ""

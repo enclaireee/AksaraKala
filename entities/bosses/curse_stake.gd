@@ -4,9 +4,6 @@ class_name CurseStake extends Node2D
 
 enum State { UNLIT, MARK, LIT }
 
-const UNLIT_COLOR := Color(0.35, 0.3, 0.3)
-const MARK_COLOR := Color(0.8, 0.45, 0.4)
-const LIT_COLOR := Color(1.0, 0.15, 0.1)
 
 @export var stake_id := 1
 @export var practice := false
@@ -17,13 +14,16 @@ const LIT_COLOR := Color(1.0, 0.15, 0.1)
 
 var state := State.UNLIT
 var _left := 0.0
-var _body: Polygon2D
+var _body: Sprite2D   # props/curse_stake.png: 0 unlit, 1 marked, 2 lit
 
 
 func _ready() -> void:
 	add_to_group("curse_stake")
-	_body = Polygon2D.new()
-	_body.polygon = PackedVector2Array([-3, -18, 3, -18, 4, 0, -4, 0])
+	_body = Sprite2D.new()
+	_body.texture = load("res://assets/art/props/curse_stake.png")
+	_body.hframes = 3
+	_body.centered = false
+	_body.offset = Vector2(-6, -23)
 	add_child(_body)
 	if practice:
 		state = State.LIT
@@ -78,4 +78,4 @@ func _on_cast(glyph_id: String, _score: float) -> void:
 
 
 func _paint() -> void:
-	_body.color = [UNLIT_COLOR, MARK_COLOR, LIT_COLOR][state]
+	_body.frame = state

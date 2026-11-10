@@ -108,6 +108,9 @@ func _ready() -> void:
 	if cam and cam.has_method("set_bounds"):
 		cam.set_bounds(map_rect())
 	get_node("/root/Zones").current_zone = zone_id
+	var gm := get_node_or_null("/root/Game")
+	if gm and zone_id != "":
+		gm.flags["seen_zone:" + zone_id] = true   # quietly (no `changed`): the world map fogs the regions you have not walked yet
 	_entered.call_deferred()   # after the scene change finishes, so its listeners are connected
 
 

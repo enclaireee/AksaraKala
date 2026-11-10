@@ -4,18 +4,25 @@ class_name ArenaPost extends Interactable
 @export var post_id := "east"
 
 var hung := false
+var _spr: Sprite2D
 
 
 func _ready() -> void:
 	super()
 	hung = get_node("/root/Game").has_flag("post:" + post_id)
 	usable = not hung
+	_sync_sprite()
 
 
-func _draw() -> void:
-	draw_rect(Rect2(-1, -22, 2, 22), Color(0.4, 0.28, 0.15))
-	if hung:
-		draw_rect(Rect2(1, -22, 9, 7), Color(0.8, 0.15, 0.15))   # ASSUMED red cloth (VERIFY: red or boeh rarang)
+func _sync_sprite() -> void:
+	if _spr == null:
+		_spr = Sprite2D.new()
+		_spr.texture = load("res://assets/art/props/arena_post.png")   # 2 frames: bare, boeh rarang hung
+		_spr.hframes = 2
+		_spr.centered = false
+		_spr.offset = Vector2(-1, -25)
+		add_child(_spr)
+	_spr.frame = 1 if hung else 0
 
 
 func interact() -> void:
@@ -26,4 +33,4 @@ func interact() -> void:
 	usable = false
 	_refresh_prompt()
 	game.set_flag("post:" + post_id, false)   # stays hung for the rest of the fight; the cloth is kept
-	queue_redraw()
+	_sync_sprite()

@@ -1,6 +1,6 @@
 extends MenuTab
-## Peta (Map), ui.md 4.3 tab 4. Ported unchanged from the old menu (ui/map_view.gd draws the current zone) and laid
-## across both pages; the hand-inked world map of ui.md 4.3 replaces it next.
+## Peta (Map), ui.md 4.3 tab 4: the illustrated world map and the painted area map across both pages (ui/map_view.gd).
+## Accept (Enter / Space) flips between them, as does clicking the pill.
 
 var _view: MapView
 var _note: Label
@@ -34,3 +34,10 @@ func refresh() -> void:
 		if m.get("zone", z) != z:
 			line += "  (" + zone_name(str(m.zone)) + ")"
 	_note.text = line
+
+
+func handle_input(e: InputEvent) -> bool:
+	if e.is_action_pressed("ui_accept") and _view != null and _view.is_visible_in_tree():
+		_view.toggle()
+		return true
+	return false
