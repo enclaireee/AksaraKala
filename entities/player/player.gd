@@ -52,6 +52,7 @@ var debug_status := 0
 
 # Derived from Game by apply_from_game() (rpg.md 2, classes.md)
 var game: Node             # the Game autoload (get_node, so tests can compile this script early)
+var _ev: Node              # Events: the tutorial listens for my inputs (docs/tutorial.md 4)
 var item: ItemData         # equipped weapon; the dagger when none is equipped
 var class_id := ""
 var dmg_mult := 1.0        # Str for melee, Dex for ranged and staff
@@ -71,6 +72,7 @@ const BERKAH_USED := "berkah_pesisir_used"   # flag: the one use per save
 func _ready() -> void:
 	add_to_group("player")
 	game = get_node("/root/Game")
+	_ev = get_node("/root/Events")
 	_regen_base = stamina.regen
 	apply_from_game()
 	game.changed.connect(apply_from_game)
@@ -208,6 +210,7 @@ func _drink() -> void:
 		Snd.play("flask")
 		_enter(State.FREE)
 		game.changed.emit()
+		_ev.player_drank.emit()
 
 
 func _hurt() -> void:
@@ -247,6 +250,7 @@ func _start_dodge() -> bool:
 	combo = 0
 	_enter(State.DODGE)
 	Snd.play("dodge", 0.0, 1.0, 0.05)
+	_ev.player_dodged.emit()
 	return true
 
 
@@ -322,6 +326,7 @@ func _snap_aim(dir: Vector2) -> Vector2:
 
 func _on_hit_landed(hb: Hurtbox, attacker: Node, heavy: bool, dmg: int) -> void:
 	sakti.add(item.sakti_per_hit)   # weapon hits (balance.md 4); spells do not refill sakti
+	_ev.player_struck.emit(hit)
 	if item.self_damage > 0:   # Mpu Gandring's curse: costs HP, never kills
 		health.hp = maxi(1, health.hp - item.self_damage)
 		health.changed.emit(health.hp, health.max_hp)
@@ -351,6 +356,7 @@ func _on_dodged(hitbox: Hitbox) -> void:
 	hit_flash.flash(tuning.perfect_pause * 3.0)
 	Snd.play("perfect_dodge")
 	hitstop(tuning.perfect_pause)
+	_ev.perfect_dodge.emit()
 	if is_instance_valid(hitbox.source) and hitbox.source.has_method("hitstop"):   # a shot can outlive its shooter
 		hitbox.source.hitstop(tuning.perfect_pause)
 
@@ -379,6 +385,7 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	camera.shake(tuning.shake_player_hit.x, tuning.shake_player_hit.y)
 	vignette.modulate.a = 1.0
 	create_tween().tween_property(vignette, "modulate:a", 0.0, 0.4)
+	_ev.player_hurt.emit(health.hp / maxf(1.0, health.max_hp))
 
 
 func _zone_id() -> String:

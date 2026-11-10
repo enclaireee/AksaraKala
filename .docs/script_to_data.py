@@ -9,7 +9,7 @@ SCRIPT = (ROOT / ".docs/script.md").read_text(encoding="utf-8")
 CSVS = {n: ROOT / f"data/text/{n}.csv" for n in ("dialogue", "quests", "codex")}
 BEATS = ROOT / "data/dialogue/beats.tres"
 KEY = re.compile(r"^[A-Z][A-Z0-9_]*$")
-report = {"unreadable": [], "skipped": [], "conflict": []}
+report = {"unreadable": [], "skipped": [], "conflict": [], "kept_csv": []}
 
 
 def cells(line):
@@ -115,6 +115,15 @@ def fmt(row):
     o = io.StringIO(); csv.writer(o, lineterminator="").writerow(row); return o.getvalue()
 
 files = {n: parse_csv(p) for n, p in CSVS.items()}
+
+# The shipped CSV wins for any key the doc and the CSV both have. A content pass that edited the CSV directly
+# (the 2026-11-08 pass) is what the game ships, so a generator run must never revert it; `text_sync.py` pulls
+# those rows back into script.md. The doc still owns brand-new keys, and rows it does not have stay as they are.
+csv_text = {r[0]: (r[2], r[3]) for _, (_, recs) in files.items() for r in recs}
+for k, v in list(texts.items()):
+    if k in csv_text and csv_text[k] != v:
+        texts[k] = csv_text[k]
+        report["kept_csv"].append(k)
 where = {r[0]: n for n, (_, recs) in files.items() for r in recs}
 other = {}
 for p in (ROOT / "data/text").glob("*.csv"):
@@ -220,7 +229,7 @@ for n, p in CSVS.items():
     h, recs = files[n]
     p.write_text("\n".join([h] + [r[1] for r in recs]) + "\n", encoding="utf-8")
 
-print(f"keys added {len(added)}, updated {len(updated)}, deleted {len(deleted)}, still-referenced {len(still)}; beats written {len(new)}, extras kept {len(extras)}")
+print(f"keys added {len(added)}, updated {len(updated)}, deleted {len(deleted)}, still-referenced {len(still)}, csv-kept {len(report['kept_csv'])}; beats written {len(new)}, extras kept {len(extras)}")
 for s in sorted(still): print("still referenced:", s)
 for k, v in report.items():
     for x in v: print(f"{k}: {x}")

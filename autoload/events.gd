@@ -46,3 +46,11 @@ signal consequence_noted(key: String)
 # write mode (ui/glyph_lesson): the player draws these glyphs in order
 signal write_requested(seq_id: String, glyphs: PackedStringArray)
 signal name_written(seq_id: String)
+
+# tutorial cues (docs/tutorial.md 4): the player's own inputs, listened to by ui/tutorial.gd
+signal lesson_offered(id: String)               # a dialogue or beat ran `lesson:<id>`
+signal player_struck(combo: int)                # a blow of mine landed (combo index; ranged cycles too)
+signal player_dodged                            # any dodge started
+signal perfect_dodge                            # a dodge through a blow
+signal player_drank                             # a jamu charge was spent
+signal player_hurt(hp_ratio: float)             # after a hit lands: hp / max hp

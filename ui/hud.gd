@@ -154,14 +154,7 @@ func _ready() -> void:
 	_tracker_panel = PanelContainer.new()   # minimalistic floating quest HUD under vitals
 	_tracker_panel.position = Vector2(M, M + 28)   # under the vitals, one 8 px gap
 	_tracker_panel.custom_minimum_size = Vector2(TRACKER_W, 0)
-	var sb := StyleBoxFlat.new()   # slim night strip with an amber edge: readable on any ground, hides little of the world
-	sb.bg_color = Color(UIFx.INK_BG, 0.62)
-	sb.border_color = GOLD
-	sb.border_width_left = 1
-	sb.content_margin_left = 6.0
-	sb.content_margin_right = 6.0
-	sb.content_margin_top = 4.0
-	sb.content_margin_bottom = 5.0
+	var sb := StyleBoxEmpty.new()   # transparent background: no background panel box, clean text HUD
 	_tracker_panel.add_theme_stylebox_override("panel", sb)
 	_tracker_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_tracker_panel.visible = false
@@ -316,6 +309,8 @@ func _snap(id: String) -> void:
 
 ## Shows step-specific control hints via toasts when newly activated.
 func _show_step_hint(id: String) -> void:
+	if id == "mq0":
+		return   # Prologue tutorial is taught in the story prologue scene by Ki Semar, no top-right panels
 	var g := get_node("/root/Game")
 	var st: QuestStep = g.current_step(id)
 	if st == null:

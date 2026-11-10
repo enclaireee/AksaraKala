@@ -674,6 +674,8 @@ func run(action: String) -> void:
 			_emit("consequence_noted", arg)
 		"topic":   # topic:<key>, a hub choice's action; play() handles it (script.md 2, topic hubs)
 			pass
+		"lesson":   # lesson:<id>, a tutorial cue (docs/tutorial.md 4); ui/tutorial.gd listens
+			_emit("lesson_offered", arg)
 		_:
 			push_warning("dialogue: unknown action '%s'" % action)
 

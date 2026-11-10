@@ -716,9 +716,9 @@ DLG_IBU_V21,"Pulang sebelum pertunjukan, berdua. Dan tolong jemput Ciung, anak t
 DLG_IBU_H20,"Ciung dan pohonnya. Beres, Bu.","Ciung and his tree. Leave it to me, Ibu."
 DLG_PURWA_OLD_COUPLE_V1,"Nak, tolong kami... Cucu kami, Ciung, memanjat pohon beringin barat sejak subuh dan nggak mau turun sama sekali.","Children, please help us... Our grandson Ciung climbed the west banyan tree at dawn and won't come down at all."
 DLG_PURWA_OLD_COUPLE_V2,Dia memeluk sebutir telur aneh yang ditemukannya di semak sungai. Kami cemas dia jatuh kalau terlalu lama di atas sana.,He's hugging a strange egg he found by the river bushes. We're terrified he'll fall if he stays up there.
-DLG_PURWA_OLD_COUPLE_H1,Biar kami yang membujuknya turun, Kek, Nek.,Leave it to us, Grandpa, Grandma. We'll talk him down.
+DLG_PURWA_OLD_COUPLE_H1,"Biar kami yang membujuknya turun, Kek, Nek.","Leave it to us, Grandpa, Grandma. We'll talk him down."
 DLG_PURWA_OLD_COUPLE_V3,"Terima kasih banyak, Nak. Pohonnya ada di ujung barat desa, lewat pinggir kolam.","Thank you so much, children. The tree is at the far west of the village, past the pond."
-DLG_PURWA_OLD_COUPLE_V4,Ciung itu anak baik, cuma kadang terlalu berani dan keras kepala.,Ciung is a good boy at heart, just a bit too reckless and stubborn.
+DLG_PURWA_OLD_COUPLE_V4,"Ciung itu anak baik, cuma kadang terlalu berani dan keras kepala.","Ciung is a good boy at heart, just a bit too reckless and stubborn."
 DLG_CIUNG_WANARA_H10,"Ciung! Ayo turun, kakek-nenekmu cemas mencarimu!","Ciung! Come down, your grandparents are worried sick looking for you!"
 DLG_CIUNG_WANARA_V20,Sebentar dulu! Telur aneh yang kutemukan di dekat sungai ini hangat terus kalau kupegang. Aneh banget!,Hold on! This strange egg I found by the river stays warm whenever I hold it. It's so weird!
 DLG_CIUNG_WANARA_L1,"Ciung, kamu kan harus ikut upacara Ruwatan nanti malam! Jangan bikin kakek-nenekmu panik.","Ciung, you have to attend the Ruwatan ceremony tonight! Don't make your grandparents panic."
@@ -734,7 +734,7 @@ DLG_CEPOT_P1,Ayah! Ceritakan lagi yang ada raksasanya! Ayah? Ayah dengar tidak?,
 DLG_CEPOT_P2,"Katanya aksara dulu, raksasa belakangan. Membosankan.","He says aksara first, giants later. Boring."
 BEAT_LONTAR_NAMES_1,"Laras mengukir daun lontar dengan pena bambu milik Ki Semar. Namamu terukir rapi di satu ujung, dan namanya sendiri di ujung yang lain.","Laras inscribes the lontar leaf with Ki Semar's bamboo stylus. Your name is etched neatly at one end, and her own at the other."
 BEAT_LONTAR_NAMES_2,"Nah, sekarang kita pegang sama-sama! Kakak pegang ujung yang ada namaku, dan aku pegang ujung yang ada nama Kakak.","Now, let's hold it together! You hold the end with my name, and I'll hold the end with yours."
-BEAT_LONTAR_NAMES_H1,Kenapa harus saling memegang seperti ini, Laras?,Why must we hold it like this, Laras?
+BEAT_LONTAR_NAMES_H1,"Kenapa harus saling memegang seperti ini, Laras?","Why must we hold it like this, Laras?"
 BEAT_LONTAR_NAMES_3,Biar kita nggak akan pernah saling melupakan! Satu daun lontar mengikat dua nama kita selamanya.,So we can never forget each other! One sacred lontar binding our two names forever.
 BEAT_LONTAR_NAMES_4,"Hehe, bagus sekali. Nama kalian sudah terikat erat. Sekarang, bantu Cepot menyalakan empat lampu minyak di sekeliling panggung wayang.","Hehe, wonderful. Your names are firmly bound. Now, go help Cepot light the four oil lamps around the wayang stage."
 DLG_PURWA_STALL_V1,"Kau murid Semar, kan? Dengar, tadi pagi ada lelaki jangkung bertopeng polos menanyai nama anak-anak.","You're Semar's apprentice, aren't you? Listen, this morning a tall man in a blank mask was asking children's names."
@@ -3518,3 +3518,23 @@ BEAT_LONTAR_PICK_H1,Aksara Sunda 'Ka'... Laras mengukir ini untukku sebelum diba
 BEAT_LONTAR_PICK_2,"Garis-garis aksara Ka itu berpendar redup di telapak tanganmu, membimbing langkahmu kembali ke sanggar Ki Semar.","The lines of the Ka glyph faintly glow in your palm, guiding your steps back to Ki Semar's sanggar."
 MEM_K0_RUWATAN_4,"Empat lampu, empat sudut kelir. Selama semuanya menyala, Kala tak punya tempat berpijak.","Four lamps, four corners of the screen. While they all burn, Kala has nowhere to stand."
 MEM_K0_RUWATAN_5,Kau sampai di ujung kelir. Cerita ini tamat.,You reach the far edge of the screen. This story is finished.
+TUT_SEMAR_INTRO_1,"Hehe, bangunlah, muridku. Pagi ini sejuk sekali di pelataran Sanggar.","Hehe, awaken, my apprentice. A fine, cool morning in the Sanggar courtyard."
+TUT_SEMAR_INTRO_2,"Malam nanti adalah festival Ruwatan. Sebelum kau keluar bermain, mari kita pastikan ilmumu tidak berkarat.","Tonight is the Ruwatan festival. Before you head out, let us make sure your martial skills haven't grown rusty."
+TUT_CHOICE_PRACTICE,Mulai latihan dasar (Gerak & Bertarung),Begin basic training (Movement & Combat)
+TUT_CHOICE_SKIP,Aku sudah siap, langsung temui Laras,I'm already prepared, go meet Laras
+TUT_SEMAR_DODGE_1,"Pertama, periksa kelenturan kakimu. Cobalah bergerak dan lakukan gerak menghindar!","First, test your footing. Move around and perform a dodge roll!"
+TUT_SEMAR_DODGE_2,"Bagus! Tubuhmu tetap gesit. Menghindar membuatmu kebal sesaat dari serangan musuh.","Good! Nimble as ever. Dodging makes you briefly invulnerable to enemy strikes."
+TUT_SEMAR_DODGE_3,"Namun perhatikan napasmu—setiap gerak menghindar menghabiskan stamina (kuning). Jangan sampai kehabisan napas di tengah bahaya!","Mind your breath, though—each dodge consumes stamina (yellow bar). Don't let yourself get winded in danger!"
+TUT_SEMAR_ATTACK_1,"Sekarang, cabut senjatamu. Hantam boneka jerami itu dengan rangkaian 3 serangan kombo!","Now, draw your weapon. Strike that straw dummy with a 3-hit combo!"
+TUT_SEMAR_ATTACK_2,"Pukulan yang mantap! Ayunan ketiga dari kombomu selalu menghasilkan hantaman terkuat dan dapat membuat lawan terhuyung.","Solid strikes! The third swing of your combo always delivers the heaviest impact and can stagger foes."
+TUT_SEMAR_JAMU_1,"Dalam pertarungan nyata, luka tak terhindarkan. Ibumu selalu membekalimu kendi Jamu herbal hangat.","In real combat, taking wounds is inevitable. Your mother always packs a flask of warm herbal Jamu for you."
+TUT_SEMAR_JAMU_2,"Minumlah seteguk Jamu untuk memulihkan tenagamu.","Take a sip of Jamu to restore your vitality."
+TUT_SEMAR_JAMU_3,"Hangat dan berkhasiat. Kendi Jamumu akan terisi penuh kembali setiap kali kau beristirahat di Petilasan.","Warm and restorative. Your Jamu flasks will fully refill whenever you rest at a Petilasan shrine."
+TUT_CEPOT_DONE_1,"Wah, hebat sekali, Kak! Gerakanmu makin lincah dan mantap!","Whoa, amazing, Kak! Your moves are sharper and more nimble than ever!"
+TUT_SEMAR_DONE_1,"Hehe, dasar-dasarmu sudah kokoh, anakku. Nanti malam saat Ruwatan, barulah aku bukakan rahasia Aksara kuno untukmu.","Hehe, your foundation is solid, my child. Tonight during the Ruwatan, I shall reveal the secret of our ancient Aksara."
+TUT_SEMAR_DONE_2,"Sekarang pergilah ke alun-alun desa. Adikmu Laras sudah mencarimu sejak tadi!","Now go to the village square. Your little sister Laras has been looking for you all morning!"
+TUT_SEMAR_SKIP_CONFIRM,"Hehe, percaya diri sekali. Pergilah temui Laras di alun-alun desa, jangan sampai terlambat!","Hehe, confident as ever! Go meet Laras at the village square, don't be late!"
+TUT_SEMAR_REMIND_DODGE,"Lakukan gerak menghindar dengan tombol menghindar!","Perform a dodge roll with the dodge button!"
+TUT_SEMAR_REMIND_ATTACK,"Hantam boneka jerami itu dengan kombo 3 pukulan!","Strike that straw dummy with a 3-hit combo!"
+TUT_SEMAR_REMIND_JAMU,"Minumlah Jamu hangat dari kendimu!","Take a sip of warm Jamu from your flask!"
+TUT_SEMAR_REMIND_DONE,"Gerbang sudah terbuka, temuilah Laras di alun-alun!","The gate is open, go meet Laras at the village square!"

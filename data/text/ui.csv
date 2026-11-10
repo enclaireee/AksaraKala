@@ -255,3 +255,8 @@ UI_ABOUT_MADE_BY,Dibuat oleh,Made by
 UI_ABOUT_MADE_FOR,Dibuat untuk,Made for
 UI_ABOUT_BUILT_WITH,Dibangun dengan,Built with
 INTRO_SKIP,Tekan tombol apa saja untuk melewati,Press any key to skip
+UI_TUT_PROMPT_DODGE,"{move} Bergerak  |  {dodge} Menghindar (Dodge)","{move} Move  |  {dodge} Dodge roll"
+UI_TUT_PROMPT_ATTACK,"{attack} Serang boneka jerami ({got}/3)","{attack} Strike straw dummy ({got}/3)"
+UI_TUT_PROMPT_JAMU,"{heal_jamu} Minum Jamu untuk memulihkan tenaga","{heal_jamu} Drink Jamu to heal"
+UI_TUT_PROMPT_EXIT,Berjalan ke gerbang di kanan menuju Desa Purwa,Walk to the gate on the right toward Desa Purwa
+UI_TUT_TITLE_STAGE,Pelataran Sanggar Ki Semar,Ki Semar's Sanggar Courtyard
