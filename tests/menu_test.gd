@@ -65,6 +65,11 @@ func run() -> void:
 	check(int(cf.get_value("settings", "vol_music", -1)) == 40, "volume saved")
 	await key(KEY_ESCAPE)
 	check(not menu.visible and not paused, "Esc closes the menu and unpauses")
+	# M opens the Map tab directly, pressing M again closes it
+	await key(KEY_M)
+	check(menu.visible and paused and menu._tabs.current_tab == 3, "M opens the menu directly to the Map tab")
+	await key(KEY_M)
+	check(not menu.visible and not paused, "M on Map tab closes the menu and unpauses")
 	# Choices section: a set remember_ flag with a translation is listed; without one it is skipped.
 	for loc in ["id", "en"]:
 		var tr_: Translation = Translation.new()

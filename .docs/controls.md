@@ -22,10 +22,11 @@ Every input, what it does in each situation, and the options around it. Combat t
 | Healing flask | Q | Right Shift | Tap | `heal_jamu` |
 | Interact | E | Enter | Tap | `interact` |
 | Menu | Tab | Backspace | Tap | `menu` |
+| Map | M | M | Tap | `map` |
 | Pause / back / cancel cast | Esc | Esc | Tap | `pause` |
 
 - Arrow keys also move in the Default preset, so menus and one-handed testing work without setup.
-- No weapon-swap key: weapons are swapped in the menu, instantly ([items.md](items.md)). No map key: the journal in the menu holds the objective, and the soft marker shows it on screen ([quests.md](quests.md)).
+- No weapon-swap key: weapons are swapped in the menu, instantly ([items.md](items.md)). Map key M opens directly to the map tab.
 - No sprint and no block. Dodge is the only defensive button.
 
 ## 3. What each input does in each state

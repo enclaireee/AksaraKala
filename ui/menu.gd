@@ -7,6 +7,7 @@ const TAB_SCRIPTS := [
 	preload("res://ui/menu/tab_status.gd"), preload("res://ui/menu/tab_equipment.gd"), preload("res://ui/menu/tab_journal.gd"),
 	preload("res://ui/menu/tab_map.gd"), preload("res://ui/menu/tab_codex.gd"), preload("res://ui/menu/tab_controls.gd"),
 	preload("res://ui/menu/tab_system.gd")]
+const TAB_MAP := 3
 const TURN_TIME := 0.14   # TUNE: page turn
 
 var at_petilasan := false
@@ -65,7 +66,7 @@ func tab(i: int) -> MenuTab:
 	return tabs[i]
 
 
-func open(petilasan := false) -> void:
+func open(petilasan := false, target_tab := -1) -> void:
 	at_petilasan = petilasan
 	visible = true
 	Snd.play("ui_open")
@@ -77,6 +78,8 @@ func open(petilasan := false) -> void:
 	for t in tabs:
 		t.cancel()
 	refresh()
+	if target_tab >= 0:
+		_last_tab = clampi(target_tab, 0, tabs.size() - 1)
 	_prev_tab = _last_tab
 	_tabs.current_tab = _last_tab
 	book.select(_last_tab)
@@ -159,6 +162,16 @@ func _input(e: InputEvent) -> void:
 	var lesson := get_node_or_null("../GlyphLesson")
 	if (box and box.is_open()) or (lesson and lesson.writing != ""):
 		return   # the box and the write card own pause and input while they are open
+	var is_map: bool = e.is_action_pressed("map") or (e is InputEventKey and e.pressed and not e.echo and (e.physical_keycode == KEY_M or e.keycode == KEY_M))
+	if is_map and not _modal_open():
+		if visible and _tabs.current_tab == TAB_MAP:
+			close()
+		elif visible:
+			_switch(TAB_MAP)
+		else:
+			open(false, TAB_MAP)
+		get_viewport().set_input_as_handled()
+		return
 	if (e.is_action_pressed("menu") and not _modal_open()) or (e.is_action_pressed("pause") and not visible):
 		if visible:
 			close()

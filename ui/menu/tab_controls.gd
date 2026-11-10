@@ -2,7 +2,7 @@ extends MenuTab
 ## Penuntun (Controls), ui.md 4.3 tab 6. Placeholder: lists every action with its bound keys, read live from the
 ## InputMap, and a short how-to on the right. Rebinding and the looping drawing diagram come next.
 
-const ACTIONS := ["move_up", "move_down", "move_left", "move_right", "attack", "cast", "dodge", "heal_jamu", "interact", "menu", "pause"]
+const ACTIONS := ["move_up", "move_down", "move_left", "move_right", "attack", "cast", "dodge", "heal_jamu", "interact", "menu", "map", "pause"]
 
 var _list: VBoxContainer
 

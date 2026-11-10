@@ -203,7 +203,7 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 - Typography & Theme: `ui/theme.tres` with pixel fonts (Tiny5 8 body, Jersey 10 at 19 headings, Jersey 15 at 27 display) and the v3 dusk palette (`UIFx`). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
 
 ## 11. Input map
-`move_up/down/left/right`, `attack`, `dodge`, `cast`, `heal_jamu`, `interact`, `menu`, `pause`. P0: two presets and a mouse-button swap; P1: free rebinding. Details and notes: [controls.md](controls.md).
+`move_up/down/left/right`, `attack`, `dodge`, `cast`, `heal_jamu`, `interact`, `menu`, `map`, `pause`. P0: two presets and a mouse-button swap; P1: free rebinding. Details and notes: [controls.md](controls.md).
 
 ## 12. Testing
 - `Recognizer` unit test: a headless GDScript (run with `godot --headless -s tests/recognizer_test.gd`) that feeds recorded templates (with noise) and asserts the right glyph is returned and a wrong one is never returned above the threshold.
