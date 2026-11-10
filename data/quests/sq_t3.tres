@@ -17,7 +17,7 @@ marker = {"zone": "mt_candi", "id": "batu_bintang"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
-objective = "Q_SQ_T3_S3_OBJ"
+objective = "Q_SQ_T3_S4_OBJ"
 on = "talked_to:timur_empu"
 marker = {"zone": "tt_beringin", "id": "timur_empu"}
 

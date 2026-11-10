@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="QuestData" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
 [ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
@@ -16,6 +16,12 @@ objective = "Q_SQ_S3_S2_OBJ"
 on = "talked_to:angklung_leader"
 marker = {"zone": "ts_kampung", "id": "angklung_leader"}
 
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_S3_S3_OBJ"
+on = "talked_to:angklung_leader"
+marker = {"zone": "ts_kampung", "id": "angklung_leader"}
+
 [resource]
 script = ExtResource("1")
 id = "sq_s3"
@@ -24,5 +30,5 @@ type = "errand"
 zone = "tatar_sunda"
 size = "M"
 giver = "angklung_leader"
-steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2")])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3")])
 rewards = {"flask_shard": 1, "codex": ["angklung"]}

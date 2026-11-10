@@ -22,7 +22,12 @@ func _ready() -> void:
 
 ## Shrine sprite by region, picked from the zone scene name (tools/gen_story_props_late.py).
 func _art() -> Texture2D:
-	var zone := get_tree().current_scene.scene_file_path.get_file().get_basename()
+	var path := ""
+	if get_tree() and get_tree().current_scene:
+		path = get_tree().current_scene.scene_file_path
+	elif owner:
+		path = owner.scene_file_path
+	var zone := path.get_file().get_basename()
 	var region := "sunda"
 	if zone.begins_with("kg_"):
 		region = "galuh"

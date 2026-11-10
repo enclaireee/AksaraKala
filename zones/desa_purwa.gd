@@ -90,11 +90,11 @@ const MAP := [
 ]
 
 const SPOTS := {
-	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kebun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Tatar Sunda
+	"W": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_tatar_sunda", "target_zone": "ts_kebun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Tatar Sunda
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kebun"}, "tile": ","},   # spawn, arrival from Tatar Sunda
 	"v": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_alun"}, "tile": ","},   # spawn, arrival from Keraton Galuh
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_10"}, "tile": ","},   # kabut, Galuh gate (one per tile)
-	"E": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_alun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Keraton Galuh
+	"E": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_mataram", "target_zone": "kg_alun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Keraton Galuh
 	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ibu"}, "tile": "_"},   # NPC Ibu, the hero's mother (MQ0 0.2 tea and 0.10, Interlude 4.4, epilogue cups)
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid", "cond": "step:mq0=11", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]]]}, "tile": ","},   # encounter purwa_raid, the plaza fight, 3 Faceless (MQ0 0.12, last of three skirmishes; `area_cleared:purwa_raid` sets `mq0_7`; v5 step index 11)
 	"9": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid_a", "cond": "step:mq0=11", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter purwa_raid_a, west road skirmish, 2 Faceless (MQ0 0.12, first)
@@ -109,13 +109,13 @@ const SPOTS := {
 	"$": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_stage_lamps", "size": Vector2i(3,3)}, "tile": "_"},   # trigger, lighting the four ceremonial stage oil lamps at dusk (MQ0 0.7 `puzzle_solved:purwa_stage_lamps`)
 	"S": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sanggar_enter", "size": Vector2i(16,9)}, "tile": "_"},   # trigger, sanggar entered (shows draw tutorial)
 	"i": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sanggar_lontar", "size": Vector2i(3,3)}, "tile": "_"},   # trigger, the lontar table in the sanggar (MQ0 0.6 `area_entered:sanggar_lontar`; the write card for the hero's and Laras's names)
-	"J": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_pelataran", "spawn_id": "from_desa_purwa"}, "tile": "."},   # exit to Gua Kala (P0 entry, the Act VI gate)
+	"J": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_gua_kala", "target_zone": "gk_pelataran", "spawn_id": "from_desa_purwa"}, "tile": "."},   # exit to Gua Kala (P0 entry, the Act VI gate)
 	"k": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_9"}, "tile": "."},   # kabut, Gua Kala gate (one per tile), lifts when MQ4 is done (flag `mq4_9`, set by step 4.22)
 	"%": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_north_fog", "size": Vector2i(4,3)}, "tile": "."},   # trigger, test the impenetrable fog at the northern cave mouth (Interlude 4.1 `area_entered:purwa_north_fog`)
 	"j": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_pelataran"}, "tile": "."},   # spawn, arrival from Gua Kala's courtyard
 	"u": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gua_kala"}, "tile": "."},   # spawn, arrival home after Batara Kala (`kala_exit`)
 	"L": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "laras_lontar", "cond": "flag:mq0_4"}, "tile": "_"},   # pickup, Laras's lontar on the burned stage (MQ0 0.10, the deed before Ka; the `clue` piece)
-	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_pantai", "spawn_id": "from_desa_purwa"}, "tile": "."},   # exit to Segara Kidul `sk_pantai` (south edge, 2 tiles)
+	"X": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_pantai", "target_zone": "sk_pantai", "spawn_id": "from_desa_purwa"}, "tile": "."},   # exit to Segara Kidul `sk_pantai` (south edge, 2 tiles)
 	"x": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_i5"}, "tile": "."},   # kabut, south gate to the coast, lifts on the Semar talk (flag `mq4_i5`, step 4.7; one per tile)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_pantai"}, "tile": "."},   # spawn, arrival from `sk_pantai`
 	"z": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_riders"}, "tile": ","},   # spawn, the riders drop you here (Interlude 4.1, target of the `goto` after Act IV)

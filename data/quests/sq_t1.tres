@@ -18,7 +18,7 @@ marker = {"zone": "tt_beringin", "id": "sodo_lanang"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
-objective = "Q_SQ_T1_S3_OBJ"
+objective = "Q_SQ_T1_S5_OBJ"
 on = "talked_to:klething_kuning"
 marker = {"zone": "tt_kali", "id": "klething_kuning"}
 
