@@ -250,9 +250,9 @@ func _place_shadow() -> void:
 
 func _draw_eyes() -> void:
 	var pose := int(_kala.region_rect.position.x / 96.0)
-	var hx := (0, 5, 12)[pose]
+	var hx: int = [0, 4, 9][pose]   # tools/gen_revamp_art.py KALA_HX / KALA_EYE: one round raksasa eye in profile
 	var pulse := 0.6 + 0.4 * sin(_t * 7.0)
-	for e: Vector2 in [Vector2(22 + hx, 31), Vector2(36 + hx, 29)]:
+	for e: Vector2 in [Vector2(27 + hx, 27)]:
 		var ep := _kala.position + e + Vector2(0.5, 0.5)
 		_eyes.draw_circle(ep, 4.2, Color(1.0, 0.25, 0.1, 0.22 * pulse))
 		_eyes.draw_circle(ep, 2.4, Color(1.0, 0.45, 0.15, 0.35 * pulse))
