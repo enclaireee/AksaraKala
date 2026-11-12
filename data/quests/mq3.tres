@@ -158,7 +158,7 @@ marker = {"zone": "tt_candi", "id": "keris_gandring"}
 [sub_resource type="Resource" id="s20"]
 script = ExtResource("2")
 objective = "Q_MQ3_S20_OBJ"
-alt = {"item_picked:keris_gandring": "reforge", "item_picked:batu_kali": "sink"}
+alt = {"item_picked:keris_mpu_gandring": "reforge", "item_picked:batu_kali": "sink"}
 recap = "Q_MQ3_S20_DONE"
 marker = {"zone": "tt_candi", "id": "beat_keris"}
 

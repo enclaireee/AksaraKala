@@ -910,7 +910,7 @@ Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,G,,,,,,,,,,,,,
 Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,C
 #_________,,____________________________________________________________________,________#
 #_________,,________________________________________1___________________________#___I____#
-#____rr___,,________________________________________K_________F___________3_____#________#
+#____rr___,,________________________________________K_R_______F___________3_____#________#
 #____rr___,,____________________________________________________________________#______r_#
 #_________,,______________________________________________________rr____________##########
 #_________,,____________________________rr________________________rr_____________________#
@@ -948,6 +948,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `G` | trigger, beat `pasir_sight` staging (3.15: Candi Gandring across the sand; ASSUMED, no quest effect) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_pasir_sight", size:Vector2i(10,4)}` | path | 1 |
 | `I` | clue, Laras's lontar fragment in the alcove (3.17, opens chapter `lc4`; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"lc4_lontar", memory_id:"lc4", cond:"flag:mq3_6"}` | floor | 1 |
 | `K` | clue, Ranga's old shield mark / Lengser's note on the desert boundary stone (SQ-C3 fragment 2) | `res://entities/world/clue.tscn` | `{clue_id:"c3_road_mark", cond:"flag:mq3_6"}` | floor | 1 |
+| `R` | NPC Ranga, the freed Faceless Deserter, at his old boundary stone (SQ-C3 fragment 2 line `c3_b`; if `choice_freed`) | `res://entities/npc/npc.tscn` | `{npc_id:"faceless_deserter", cond:"flag:mq3_6,flag:choice_freed"}` | floor | 1 |
 | `1` | stone waymarker 1 of 3 in the ash-gale, touch in order to see the next (3.15; sets `flag:waymarker_1`) | `res://entities/npc/npc.tscn` | `{npc_id:"waymarker_1"}` | floor | 1 |
 | `2` | stone waymarker 2 of 3 in the ash-gale, touch in order to see the next (3.15; sets `flag:waymarker_2`) | `res://entities/npc/npc.tscn` | `{npc_id:"waymarker_2"}` | floor | 1 |
 | `3` | stone waymarker 3 of 3 in the ash-gale, touch in order to see the next (3.15; sets `flag:waymarker_3`) | `res://entities/npc/npc.tscn` | `{npc_id:"waymarker_3"}` | floor | 1 |

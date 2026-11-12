@@ -28,6 +28,7 @@ var _demo_cls_btn: Button
 var _demo_act_lbl: Label
 var _demo_note: Label
 var _demo_list: VBoxContainer
+var _about_scroll: ScrollContainer   # the About body: taller than the card, so it scrolls
 var _t := 0.0
 var _leaving := false
 
@@ -46,6 +47,11 @@ const GLYPH_EVERY := 1.7
 const CARD := Rect2(20, 22, 240, 226)   # Settings / About card: covers the logo column
 const INDENT := 11.0                     # rows line up with LozengeButton text (its cursor gutter)
 const CREDITS := ["Muhammad Fatih Zamzami", "Muhammad Nafis Yusa'", "Fahmi Milan Amyar"]
+## CC BY 4.0 credit for the downloaded set-piece music (tools/audio/sources/music.json `credits`; ui.md About card).
+const MUSIC_BY := "Kevin MacLeod (incompetech.com), CC BY 4.0"
+const MUSIC := ["Night Vigil", "Morning", "Evening", "Heroic Age", "Tafi Maradi (no voice)", "River Fire", "Rynos Theme",
+		"Crusade", "Mountain Emperor", "Curse of the Scarab", "Hitman", "Mystic Force", "Unlight", "Tempting Secrets"]
+const ABOUT_STEP := 18.0   # px one Up/Down press scrolls the About body
 
 
 ## Saved choice, else the OS language ("id" -> Indonesian, anything else English).
@@ -259,6 +265,12 @@ func _to_class_select() -> void:
 
 # ---------------------------------------------------------------- Settings and About cards
 
+func _input(event: InputEvent) -> void:
+	if _about_scroll and (event.is_action_pressed("ui_up", true) or event.is_action_pressed("ui_down", true)):
+		_about_scroll.scroll_vertical += int(ABOUT_STEP * (-1.0 if event.is_action("ui_up") else 1.0))
+		get_viewport().set_input_as_handled()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("ui_cancel"):
 		return
@@ -299,11 +311,21 @@ func _open_card(which: String) -> void:
 	elif which == "demo":
 		_build_demo(v)
 	else:
-		_build_about(v)
-	var fill := Control.new()   # Back sits at the foot of the card
-	fill.size_flags_vertical = SIZE_EXPAND_FILL
-	fill.mouse_filter = MOUSE_FILTER_IGNORE
-	v.add_child(fill)
+		_about_scroll = ScrollContainer.new()
+		_about_scroll.size_flags_vertical = SIZE_EXPAND_FILL
+		_about_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		var body := VBoxContainer.new()
+		body.add_theme_constant_override("separation", 2)
+		body.custom_minimum_size.x = v.size.x - 6   # room for the 4 px scroll bar
+		body.size = Vector2(v.size.x - 6, 0)
+		_about_scroll.add_child(body)
+		v.add_child(_about_scroll)
+		_build_about(body)
+	if not _about_scroll:   # the About scroll already fills down to Back
+		var fill := Control.new()   # Back sits at the foot of the card
+		fill.size_flags_vertical = SIZE_EXPAND_FILL
+		fill.mouse_filter = MOUSE_FILTER_IGNORE
+		v.add_child(fill)
 	var back := LozengeButton.new("UI_BACK", 8)
 	back.pressed.connect(_close_card)
 	v.add_child(back)
@@ -331,6 +353,7 @@ func _close_card() -> void:
 	_demo_act_lbl = null
 	_demo_note = null
 	_demo_list = null
+	_about_scroll = null
 	var tw := create_tween().set_parallel()
 	tw.tween_property(_logo, "modulate:a", 1.0, 0.2)
 	tw.tween_property(_sub, "modulate:a", 1.0, 0.2)
@@ -412,6 +435,12 @@ func _build_about(v: VBoxContainer) -> void:
 	_section(v, "UI_ABOUT_BUILT_WITH")
 	v.add_child(_row(UIFx.text("Godot Engine", "body", UIFx.TEXT)))
 	v.add_child(_row(UIFx.text("Tiny5, Jersey 10 / 15, Noto Sans (SIL OFL)", "body", UIFx.DIM)))
+	_section(v, "UI_ABOUT_MUSIC")
+	v.add_child(_row(UIFx.text(MUSIC_BY, "body", UIFx.TEXT)))
+	var tracks := UIFx.text(", ".join(MUSIC), "body", UIFx.DIM)
+	tracks.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	tracks.custom_minimum_size.x = v.custom_minimum_size.x - INDENT
+	v.add_child(_row(tracks))
 
 
 ## Texts built from more than one key (they do not retranslate on their own).

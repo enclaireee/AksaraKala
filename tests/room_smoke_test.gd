@@ -70,8 +70,10 @@ func _initialize() -> void:
 		p.cast._unhandled_input(e)
 	p.cast.release()
 	check(p.sakti.value == 35.0, "drawing Ka did not spend 15 sakti (left %s)" % p.sakti.value)
+	var hit := [0]
+	target.health.damaged.connect(func(amount: int, _src: Node) -> void: hit[0] += amount)
 	await frames(60)
-	check(is_instance_valid(target) and target.health.hp < target.health.max_hp, "the Bolt never hit the chaser")
+	check(hit[0] > 0, "the Bolt never hit the chaser")   # a Perfect Bolt can kill it outright, so count damage, not hp left
 	quit(1 if fails > 0 else 0)
 
 

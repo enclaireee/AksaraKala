@@ -20,7 +20,7 @@ func _initialize() -> void:
 	_run(10)
 	check(c.state == Chaser.State.IDLE, "idle out of range")
 	player.position = Vector2(100, 0)
-	_run(10)
+	_run(2)   # notice, then one step: move_and_slide uses the real frame delta here, so more steps reach the wind-up
 	check(c.state == Chaser.State.CHASE, "chase at 100 px")
 	check(c.global_position.x > 0.0, "moved closer")
 

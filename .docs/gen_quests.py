@@ -28,7 +28,7 @@ FLAG = re.compile(r"`([a-z][A-Za-z0-9_]*)`")
 # key: (quest, step) -> dict(on=..., all=..., alt=..., marker=(zone,id), set_flag=...)
 # The three choice steps carry no signal of their own; their talk/item is the trigger.
 OVERRIDES = {
-    ("mq3", 20): {"on": "", "alt": {"item_picked:keris_gandring": "reforge", "item_picked:batu_kali": "sink"},
+    ("mq3", 20): {"on": "", "alt": {"item_picked:keris_mpu_gandring": "reforge", "item_picked:batu_kali": "sink"},
                   "marker": ("tt_candi", "beat_keris")},
     ("mq4", 19): {"on": "talked_to:cliff_altar", "set_flag": "mq4_offering",
                   "marker": ("sk_tebing", "cliff_altar")},

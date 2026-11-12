@@ -22,7 +22,7 @@ const MAP := [
 	"Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,C",
 	"#_________,,____________________________________________________________________,________#",
 	"#_________,,________________________________________1___________________________#___I____#",
-	"#____rr___,,________________________________________K_________F___________3_____#________#",
+	"#____rr___,,________________________________________K_R_______F___________3_____#________#",
 	"#____rr___,,____________________________________________________________________#______r_#",
 	"#_________,,______________________________________________________rr____________##########",
 	"#_________,,____________________________rr________________________rr_____________________#",
@@ -58,6 +58,7 @@ const SPOTS := {
 	"G": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_pasir_sight", "size": Vector2i(10,4)}, "tile": ","},   # trigger, beat `pasir_sight` staging (3.15: Candi Gandring across the sand; ASSUMED, no quest effect)
 	"I": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lc4_lontar", "memory_id": "lc4", "cond": "flag:mq3_6"}, "tile": "_"},   # clue, Laras's lontar fragment in the alcove (3.17, opens chapter `lc4`; ASSUMED id)
 	"K": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c3_road_mark", "cond": "flag:mq3_6"}, "tile": "_"},   # clue, Ranga's old shield mark / Lengser's note on the desert boundary stone (SQ-C3 fragment 2)
+	"R": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "faceless_deserter", "cond": "flag:mq3_6,flag:choice_freed"}, "tile": "_"},   # NPC Ranga, the freed Faceless Deserter, at his old boundary stone (SQ-C3 fragment 2 line `c3_b`; if `choice_freed`)
 	"1": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "waymarker_1"}, "tile": "_"},   # stone waymarker 1 of 3 in the ash-gale, touch in order to see the next (3.15; sets `flag:waymarker_1`)
 	"2": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "waymarker_2"}, "tile": "_"},   # stone waymarker 2 of 3 in the ash-gale, touch in order to see the next (3.15; sets `flag:waymarker_2`)
 	"3": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "waymarker_3"}, "tile": "_"},   # stone waymarker 3 of 3 in the ash-gale, touch in order to see the next (3.15; sets `flag:waymarker_3`)

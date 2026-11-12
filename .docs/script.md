@@ -960,7 +960,7 @@ Banner sentences:
 | 1 | DLG_SUNDA_ELDER_H2 | Ke mana mereka pergi? | Where did they go? |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
 | 1 | `#wait:1` (cue line) | | |
-| 1 | DLG_SUNDA_ELDER_V3 | Hilir, ke ngarai sungai, lewat gerbang selatan. Hati-hati: saat maghrib, Sandekala menyambar siapa pun yang masih di luar. | Downstream, to the river gorge, through the south gate. Take care: at maghrib Sandekala snatches anyone still outside. |
+| 1 | DLG_SUNDA_ELDER_V3 | Hilir, ke ngarai sungai, lewat gerbang selatan. Hati-hati: saat maghrib, Sandekala, roh senja, menyambar siapa pun yang masih di luar. | Downstream, to the river gorge, through the south gate. Take care: at maghrib Sandekala, the dusk spirit, snatches anyone still outside. |
 | 1 | DLG_SUNDA_ELDER_V20 | Sebelum pergi, bawa Ga. Angkat, dan cahaya jadi dinding. | Before you go, take Ga. Raise it, and light becomes a wall. |
 | 1 | DLG_SUNDA_ELDER_V12 | Gambar dengan satu goresan tak putus. Jangan ragu di tikungan. | Draw it in one unbroken stroke. Don't hesitate at the turn. |
 | 1 | @NPC_HERO_NAME | | |
@@ -972,7 +972,7 @@ Banner sentences:
 | 1c | DLG_SUNDA_ELDER_V23 | Kau menyembunyikan tawanan itu dari kampung. Aku tak akan tanya di mana. Semoga kau benar. | You hid the prisoner from the kampung. I won't ask where. I hope you were right. |
 | 2 | DLG_SUNDA_ELDER_V4 | Gerbang selatan di sana, Nak. Ikuti tangis seorang ibu ke dusun di ngarai. | The south gate is over there, child. Follow a mother's cries to the hamlet in the gorge. |
 | H | @NPC_SUNDA_ELDER_NAME | | |
-| H | DLG_SUNDA_ELDER_V6 | Batu Tulis ada di atas tebing setapak. Teras sawah Penenun persis di baliknya. | The Batu Tulis stands above the rocky trail. The Weaver's terraces lie just beyond it. |
+| H | DLG_SUNDA_ELDER_V6 | Batu Tulis ada di atas tebing setapak. Penenun, yang paham kain kuno, menggarap teras sawah persis di baliknya. | The Batu Tulis stands above the rocky trail. The Weaver, who knows the old cloth, works the terraces just beyond it. |
 | T:ask_kampung | @NPC_SUNDA_ELDER_NAME | | |
 | T:ask_kampung | DLG_SUNDA_ELDER_V14 | Kampung kecil: tiga puluh rumah, satu balai, satu sumur tua. Dulu aku hafal nama setiap anak. | A small kampung: thirty houses, one hall, one old well. I used to know every child's name. |
 | T:ask_kampung | @NPC_HERO_NAME | | |
@@ -1892,7 +1892,7 @@ Topic entries of the A2-1 hub. T1 and T1b are both `"topic": "ciung_mother"`: T1
 | 1 | DLG_LENGSER_H201 | Adikku pernah di salah satunya? | Was my sister in one of them? |
 | 1 | @NPC_LENGSER_NAME | | |
 | 1 | DLG_LENGSER_V203 | Seorang gadis kecil membawa lontar lewat pasar tiga malam lalu. Kaputren menampungnya dulu. Para dayang yang bercerita. | A small girl with a lontar came through the market three nights ago. The Kaputren kept her first. The attendants told me. |
-| 1 | DLG_LENGSER_V204 | Pelataran dalam kubukakan. Di tamannya ada petilasan tua, nyalakan dan istirahatlah. Lalu temui Nyai Sekar di Balai Pustaka. Jangan tersenyum. | I'll open the inner courtyard. There's an old petilasan in its garden, light it and rest. Then find Nyai Sekar at the Balai Pustaka. Don't smile. |
+| 1 | DLG_LENGSER_V204 | Pelataran dalam kubukakan. Di tamannya ada petilasan tua, nyalakan dan istirahatlah. Lalu temui Nyai Sekar, juru arsip istana, di Balai Pustaka. Jangan tersenyum. | I'll open the inner courtyard. There's an old petilasan in its garden, light it and rest. Then find Nyai Sekar, the palace archivist, at the Balai Pustaka. Don't smile. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_LENGSER_H202 | Kenapa jangan tersenyum? | Why not smile? |
 | 1 | @NPC_LENGSER_NAME | | |
@@ -3077,7 +3077,7 @@ Choice 3, shown under the last line:
 | Key | ID | EN | do |
 |-----|----|----|----|
 | CHOICE_TRUCE_1 | Beri mereka sel yang terang di pelataran, dan ampuni prajurit timur. | Give them a lit cell in the courtyard, and pardon the eastern soldiers. | `flag:choice_mercy` |
-| CHOICE_TRUCE_2 | Biarkan hukum Galuh berjalan, dan perkuat jaga di tepi sungai. | Let Galuh's law run its course, and fortify the river watch. | `flag:choice_judgment` |
+| CHOICE_TRUCE_2 | Biarkan hukum Galuh berjalan, dan perkuat jaga di tepi sungai. | Let Galuh's law run its course, and fortify the river watch. | `flag:choice_judgment`, `give:sabuk_galuh` |
 
 Nagawiru speaks from the water and Ciung Wanara stands on the west bank. Pangrenyep stays caged. Choice 3 replaces v4's "Choice 2"; `choice_judgment` replaces `choice_silent`.
 
@@ -3707,7 +3707,7 @@ On completion (`memory_done:lc4`): `flag:mq3_lc`, `flag:laras_key_sand_tunnel` (
 
 | Key | ID | EN | do |
 |-----|----|----|----|
-| CHOICE_KERIS_1 | Bawa ke sang empu untuk ditempa ulang. | Take it to the empu to reforge. | `flag:choice_reforge`, `give:keris_gandring` |
+| CHOICE_KERIS_1 | Bawa ke sang empu untuk ditempa ulang. | Take it to the empu to reforge. | `flag:choice_reforge`, `give:keris_mpu_gandring` |
 | CHOICE_KERIS_2 | Serahkan pada sungai. | Give it to the river. | `flag:choice_sink`, `give:batu_kali` |
 
 ### Beat `keris_reforge` (if `!flag:beat_keris_reforge`, `flag:choice_reforge`, `flag:beat_keris`; do `flag:beat_keris_reforge`). Choice 4, Reforge: Keris Mpu Gandring is yours; Ratna tempers your blade in the epilogue

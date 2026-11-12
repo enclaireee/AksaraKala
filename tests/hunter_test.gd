@@ -71,6 +71,7 @@ func _initialize() -> void:
 	fp.sakti.max_value = 100.0
 	var b := (load("res://entities/bosses/nameless_hunter.tscn") as PackedScene).instantiate() as NamelessHunter
 	b.position = Vector2(150, 135)
+	b.forced_move = "step"   # the move deck is shuffled; pin the shadow-step before the live ready frame can pick another
 	root.add_child(b)
 	await process_frame
 	b.set_physics_process(false)
@@ -126,7 +127,6 @@ func _initialize() -> void:
 	b.health.take_damage(1801, player)
 	check(b.phase == 2, "phase 2 at 50%")
 	step_to(b, NamelessHunter.State.CHASE)
-	b._seq = 0
 	b.attacks = 0
 	step_to(b, NamelessHunter.State.FORGET, 2000)
 	check(b.state == NamelessHunter.State.FORGET and b.attacks == 2, "two steps, then Forget (attacks %d)" % b.attacks)

@@ -193,9 +193,11 @@ func _initialize() -> void:
 	ds.direction = Vector2.RIGHT
 	root.add_child(ds)
 	var ds_dmg: int = ds.damage
+	var taken := [0]
+	ar.health.damaged.connect(func(amount: int, _src: Node) -> void: taken[0] += amount)   # x3 can overkill 78 hp
 	for i in 15:
 		await physics_frame
-	check(ar.health.hp == 78 - 3 * ds_dmg and kinds == ["arca"], "dash-strike does x3 (hp %d)" % ar.health.hp)
+	check(taken[0] == 3 * ds_dmg and kinds == ["arca"], "dash-strike does x3 (took %d, want %d)" % [taken[0], 3 * ds_dmg])
 	ar.free()
 	kinds.clear()
 	ar = await _spawn("arca", Vector2(-960, 0))

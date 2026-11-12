@@ -114,7 +114,8 @@ func run() -> void:
 	rally.data = SpellData.for_glyph("jawa_ca")
 	current_scene.add_child(rally)
 	game.add_ilmu(1)
-	check(is_equal_approx(p.atk_speed, a0 * 1.35), "rally lost to a recompute (%f, want %f)" % [p.atk_speed, a0 * 1.35])
+	var boost: float = rally.ATK.get(p.class_id, 1.35)   # each class rallies differently
+	check(is_equal_approx(p.atk_speed, a0 * boost), "rally lost to a recompute (%f, want %f)" % [p.atk_speed, a0 * boost])
 	rally.queue_free()
 	await frames(1)
 	game.add_ilmu(1)

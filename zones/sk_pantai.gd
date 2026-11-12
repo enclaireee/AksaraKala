@@ -28,7 +28,7 @@ const MAP := [
 	"#......___A________________.,,........................######",
 	"#......_______H____________.,,.............................#",
 	"#......_________________s__.,,.............................#",
-	"#......__________B_________.,,.............................#",
+	"#......__________B______R__.,,.............................#",
 	"#......____________________.,,........k.......L............#",
 	"#...........................,,.......p....T...l............#",
 	"#..............................D...........................#",
@@ -66,6 +66,7 @@ const SPOTS := {
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_nelayan"}, "tile": ","},   # spawn, arrival from sk_nelayan
 	"k": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "k2_fisher"}, "tile": "."},   # NPC river-mouth fisher (SQ-K2)
 	"s": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c3_shore_net", "memory_id": "sq_c3_ranga"}, "tile": "_"},   # clue, Ranga's carved driftwood token in the shore net (SQ-C3)
+	"R": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "faceless_deserter", "cond": "flag:mq4_4,flag:choice_freed"}, "tile": "_"},   # NPC Ranga, the freed Faceless Deserter, by the shore net (SQ-C3 fragment 3 line `c3_c`; if `choice_freed`)
 	"p": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cepot", "cond": "!step:mq4=7"}, "tile": "."},   # NPC Cepot on the coast (SQ-C4 part 3)
 	"l": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "c4_lamp", "cond": "quest:sq_c4_3=active"}, "tile": "."},   # the ward-lamp on the turtle beach; light it with Cepot to start the night defense (SQ-C4 part 3 step 2; sets `flag:c4_lamp`)
 	"e": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cepot", "cond": "step:mq4=7"}, "tile": "."},   # NPC Cepot at the south gate with a bundle from Ibu (4.8; SQ-C4 part 3 hook)

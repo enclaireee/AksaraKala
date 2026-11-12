@@ -31,6 +31,7 @@ Top-down 2D pixel-art action RPG set in the mythical folklore and landscapes of 
 | [scope.md](scope.md) | Priority tiers: P0 (must-have), P1 (should-have), P2 (stretch), and explicit cuts |
 | [schedule.md](schedule.md) | Phased roadmap and completion milestones with exit criteria |
 | [HANDOFF.md](HANDOFF.md) | Session handoff notes, active progress status, verified cultural findings, and next development steps |
+| [verification.md](verification.md) | Handoff for an agent that confirms each phase against its exit criteria, asking the user for manual checks |
 
 ---
 

@@ -552,6 +552,132 @@ Q_MQ0_S9_HINT,"Jangan berhenti melawan semuanya. Tekan {dodge} untuk lolos dari 
 Q_MQ0_S10_HINT,"Ibu ada di rumah. Sobekan lontarmu jatuh di panggung, di alun-alun.","Ibu is at home. Your half of the lontar fell on the stage, in the square."
 Q_MQ0_S11_HINT,"Temui Ki Semar di sanggar, lalu gambar Ka pelan-pelan dan lepaskan ke orang-orangan jerami.","See Ki Semar at the sanggar, then draw Ka slowly and loose it at the straw dummies."
 Q_MQ0_S12_HINT,"Pakai Ka selain {attack}, dan tekan {dodge} saat mereka mengangkat tangan. Ibu menunggu di gerbang barat.","Use Ka as well as {attack}, and press {dodge} when they raise a hand. Ibu is waiting at the west gate."
+Q_MQ1_S1_HINT,Mulai dari cucu sesepuh di kebun teh. Setelah itu rumpun bambu di dekatnya.,Start with the elder's grandson in the tea fields. The bamboo grove is next.
+Q_MQ1_S2_HINT,Kemah itu dijaga. Lawan satu per satu dan tekan {dodge} sebelum mereka mengayun.,The camp is guarded. Take them one at a time and press {dodge} before they swing.
+Q_MQ1_S3_HINT,"Petilasan ada di teras teh. Nyalakan dengan {interact}, lalu cari Cepot.","The shrine is on the tea terrace. Light it with {interact}, then look for Cepot."
+Q_MQ1_S4_HINT,"Jangan dikepung di tempat terbuka. Mundur, lalu hadapi mereka sedikit demi sedikit.",Don't get surrounded in the open. Back off and take them a few at a time.
+Q_MQ1_S5_HINT,Sesepuh ada di kampung. Pintu keluar selatan baru berguna setelah aksara itu kaupelajari.,The elder is in the kampung. The south gate only matters once you've learned the glyph.
+Q_MQ1_S6_HINT,Ceu Imas ada di dekat sungai. Sandal itu tergeletak di tepinya.,Ceu Imas is by the river. The sandal lies on its bank.
+Q_MQ1_S7_HINT,Ikuti jalan dusun sampai oncor yang padam. Jejak kaki ada tak jauh dari sana.,Follow the hamlet path to the dead oncor. The prints are not far beyond.
+Q_MQ1_S8_HINT,"Dekati tiap oncor dan tekan {interact}. Bayangan datang bersama kabut, jadi jaga jarak dan {dodge}.","Walk up to each oncor and press {interact}. The shades come with the mist, so keep your distance and {dodge}."
+Q_MQ1_S9_HINT,Dekati lontar itu dan tekan {interact}. Bukalah peta dengan {menu} kalau kehilangan arah.,Walk up to the lontar and press {interact}. Open the map with {menu} if you lose your way.
+Q_MQ1_S10_HINT,"Ia tak datang sendirian. Bersihkan yang mengganggu, tekan {dodge} saat ia menerjang, dan serang sesudahnya.","He won't come alone. Clear what gets in the way, press {dodge} when he lunges, and strike after."
+Q_MQ1_S11_HINT,"Bersihkan rumpun dulu, baru batu. Batu nama ditekan dengan {interact}, mulai dari yang paling timur.","Clear the grove first, then the stones. Press each name-stone with {interact}, starting from the east."
+Q_MQ1_S12_HINT,Batu Tulis ada di rumpun itu juga. Dekati ukirannya dan tekan {interact}.,The Batu Tulis is in the same grove. Walk up to the carvings and press {interact}.
+Q_MQ1_S13_HINT,Naiki teras sawah sampai ke bibirnya. Titik penanda di peta menunjukkan tempatnya.,Climb the rice terraces to the lip. The map marker shows the spot.
+Q_MQ1_S14_HINT,Hadapi penjarah dan roh itu bergantian. Tekan {dodge} kalau mereka serentak menyerang.,Fight the looters and spirits in turns. Press {dodge} when they all attack at once.
+Q_MQ1_S15_HINT,"Roda pintu air ada di bagian atas teras. Putar keduanya dengan {interact}, lalu temui sang Penenun.","The sluice wheels are on the upper terraces. Turn both with {interact}, then see the Weaver."
+Q_MQ1_S16_HINT,Susuri sungai yang terbendung ke hulu. Para penjaga berdiri di jalan menuju danau.,Follow the dammed river upstream. The sentries stand on the road to the lake.
+Q_MQ1_S17_HINT,Pohon-pohon itu ada di lereng timur danau. Dekati batangnya dan tekan {interact}.,The trees are on the lake's east slope. Walk up to the trunks and press {interact}.
+Q_MQ1_S18_HINT,"Bersihkan tepi danau, lalu periksa mainan yang tertinggal dengan {interact}.","Clear the lake shore, then check the toy left behind with {interact}."
+Q_MQ1_S19_HINT,Perempuan itu ada di tepi danau. Bicaralah dengan {interact}.,The woman is by the lake. Talk to her with {interact}.
+Q_MQ1_S20_HINT,"Tanjakan kawah dijaga. Bersihkan jalannya, lalu nyalakan petilasan di atas dengan {interact}.","The crater road is guarded. Clear the way, then light the upper shrine with {interact}."
+Q_MQ1_S21_HINT,Tetap di petilasan atas dan tekan {interact} pada lontarnya.,Stay at the upper shrine and press {interact} on the lontar.
+Q_MQ1_S22_HINT,Kapten itu berdiri di bibir kawah. Pecahan topeng ada di seberang bibir itu.,The Captain stands on the crater rim. The mask fragment lies across the rim.
+Q_MQ1_S23_HINT,Ikuti lontar ke dekat rangka perahu di kawah. Tekan {interact} untuk memulai.,Follow the lontar to the boat's ribs in the crater. Press {interact} to begin.
+Q_MQ1_S24_HINT,"Gantungkan Boeh Rarang di tiang timur dengan {interact}. Lalu bersiaplah, dan tekan {dodge} saat ia mengamuk.","Hang the Boeh Rarang on the east post with {interact}. Then get ready, and press {dodge} when he rages."
+Q_MQG_S1_HINT,Penjual ayam dan Ciung Wanara ada di alun-alun Galuh. Bicaralah dengan keduanya.,The rooster seller and Ciung Wanara are in Galuh's square. Talk to both.
+Q_MQG_S2_HINT,"Cari informan di Pasar Kuta, lalu periksa gudang untuk membaca manifesnya.","Find the informant in Pasar Kuta, then check the storehouse to read the manifest."
+Q_MQG_S3_HINT,Para pengatur pertandingan ada di gudang pasar. Tekan {dodge} dan serang bergantian.,The tourney riggers are in the market storehouse. Press {dodge} and trade blows.
+Q_MQG_S4_HINT,"Pertandingannya di alun-alun. Menangkan keduanya; tekan {dodge} untuk menghindar, {attack} untuk membalas.","The bouts are in the square. Win both; press {dodge} to avoid, {attack} to strike back."
+Q_MQG_S5_HINT,Uwa Lengser ada di alun-alun. Petilasan ada di taman dalam istana.,Uwa Lengser is in the square. The petilasan is in the palace's inner garden.
+Q_MQG_S6_HINT,"Para penjaga ada di Balai Pustaka. Kalahkan mereka, lalu bicaralah dengan Nyai Sekar.","The guards are in the Balai Pustaka. Defeat them, then talk to Nyai Sekar."
+Q_MQG_S7_HINT,"Putar ketiga cermin arsip dengan {interact}, lalu periksa lontarnya.","Turn the three archive mirrors with {interact}, then examine the lontar."
+Q_MQG_S8_HINT,Mata-mata ada di pelataran Kaputren. Kalahkan mereka satu per satu.,The spies are in the Kaputren courtyard. Defeat them one by one.
+Q_MQG_S9_HINT,"Geser ketiga sekat di kamar tamu dengan {interact}, lalu periksa tusuk konde Laras.","Move the three screens in the guest chamber with {interact}, then examine Laras's hairpin."
+Q_MQG_S10_HINT,Berdirilah di balik tirai dan dengarkan. Setelah itu ambil lorong ke halaman sel.,Stand behind the curtain and listen. Then take the passage to the cell yard.
+Q_MQG_S11_HINT,Kejar kereta tahanan lewat tangga penjara. Kalahkan penjaga yang menghadang.,Chase the prisoner wagon up the prison stairs. Defeat the guards in your way.
+Q_MQG_S12_HINT,Kereta Laras lewat di jalan timur. Kalahkan pengawal Tanpa Rupa untuk menghentikannya.,Laras's wagon is on the east road. Defeat the Faceless escort to stop it.
+Q_MQG_S13_HINT,"Kembali ke sel Laras. Kalahkan penjaga, lalu baca pesan di dinding dengan {interact}.","Go back to Laras's cell. Defeat the guards, then read the wall message with {interact}."
+Q_MQG_S14_HINT,Dekati dinding sel Laras dan tekan {interact} untuk menjalani ingatannya.,Walk up to the wall in Laras's cell and press {interact} to live her memory.
+Q_MQG_S15_HINT,"Ia bersembunyi di dekat penjara. Bicaralah dengan {interact}, lalu pilih dengan hati-hati.","He is hiding near the prison. Talk to him with {interact}, then choose with care."
+Q_MQG_S16_HINT,"Lewati kisi arsip yang dibuka Laras, lalu naik ke galeri atas keraton.",Go through the archive grate Laras opened and climb to the keraton's upper gallery.
+Q_MQG_S17_HINT,Periksa potret istana dengan {interact}. Ingatan Uwa Lengser menyusul.,Examine the court portrait with {interact}. Uwa Lengser's memory follows.
+Q_MQG_S18_HINT,Pecahan topeng ada di belakang singgasana. Ambil dengan {interact}.,The mask fragment is behind the throne. Take it with {interact}.
+Q_MQG_S19_HINT,"Ciung Wanara ikut bertarung. Habiskan penjaga dulu, baru hadapi sang juara.","Ciung Wanara fights beside you. Finish the guards first, then face the champion."
+Q_MQG_S20_HINT,Raja palsu ada di singgasana agung. Tekan {dodge} saat ia menyerang dan serang saat ia terbuka.,The false king is on the high throne. Press {dodge} when he attacks and strike when he's open.
+Q_MQ2_S1_HINT,Kedua perekrut berdiri di gerbang Mataram. Bicaralah dengan masing-masing.,Both recruiters stand at the gates of Mataram. Talk to each of them.
+Q_MQ2_S2_HINT,"Kalahkan penjaga gerbang, lalu nyalakan petilasan di sawah dengan {interact}.","Defeat the gate guards, then light the petilasan in the rice fields with {interact}."
+Q_MQ2_S3_HINT,Panggung wayang ada di pasar. Tekan {dodge} agar tak terkepung penjarah.,The wayang stage is in the market. Press {dodge} so the looters don't surround you.
+Q_MQ2_S4_HINT,"Ki Sumarto ada di pasar, dekat panggung wayang. Bicaralah dengannya.","Ki Sumarto is in the market, near the wayang stage. Talk to him."
+Q_MQ2_S5_HINT,Jalan di sawah itu dijaga prajurit. Singkirkan mereka agar keluarga bisa lewat.,Soldiers hold the paddy road. Clear them so the families can pass.
+Q_MQ2_S6_HINT,"Kalahkan penjaga di reruntuhan, lalu baca dasar arca dengan {interact}.","Defeat the guards at the ruins, then read the statue's base with {interact}."
+Q_MQ2_S7_HINT,"Kalahkan Tanpa Rupa di pekuburan, lalu cari nama Sapto yang hilang.","Defeat the Faceless in the graveyard, then look for Sapto's missing name."
+Q_MQ2_S8_HINT,Dekati titik penanda di pekuburan dan tekan {interact} untuk masuk ke ingatan.,Walk to the marker in the graveyard and press {interact} to enter the memory.
+Q_MQ2_S9_HINT,Penyerang ada di halaman lesung. Tekan {dodge} agar tak terkepung.,The attackers are in the lesung yard. Press {dodge} so they don't surround you.
+Q_MQ2_S10_HINT,Nyai Gendhis ada di dekat lesung. Bicaralah dengannya.,Nyai Gendhis is near the lesung. Talk to her.
+Q_MQ2_S11_HINT,Bertahanlah di kuil kaki bukit sepanjang malam. Jangan jauh dari kuil.,Hold the foothill shrine through the night. Don't stray far from it.
+Q_MQ2_S12_HINT,Nyalakan keempat anglo sesuai urutan nyanyian juru kunci. Dengarkan baik-baik.,Light the four braziers in the order of the juru kunci's chant. Listen closely.
+Q_MQ2_S13_HINT,Penjaga ada di antara tiang-tiang ladang kering. Pakai tiang sebagai pelindung.,The guards are among the pillars of the dry fields. Use the pillars as cover.
+Q_MQ2_S14_HINT,"Kalahkan penjaga candi, lalu rebut kemah musuh di sebelahnya.","Defeat the temple guards, then take the enemy camp next to it."
+Q_MQ2_S15_HINT,"Periksa ketiganya dengan {interact}: puing, lesung, dan lontar bertanda Ka.","Examine all three with {interact}: the rubble, the lesung and the lontar marked Ka."
+Q_MQ2_S16_HINT,"Ambil carikan lontar di petilasan dengan {interact}, lalu masuki ingatannya.","Take the lontar fragment at the petilasan with {interact}, then enter its memory."
+Q_MQ2_S17_HINT,Penjaga ada di aula ruang bawah tanah. Hadapi mereka sedikit demi sedikit.,The guards are in the crypt hall. Take them a few at a time.
+Q_MQ2_S18_HINT,Dekati lesung itu dan tekan {interact} untuk masuk ke ingatannya.,Walk up to the lesung and press {interact} to enter its memory.
+Q_MQ2_S19_HINT,Tekan {dodge} saat ia menyerang dan balas saat ia terbuka. Sabar lebih baik daripada terburu-buru.,Press {dodge} when he attacks and strike back when he's open. Patience beats haste.
+Q_MQ2_S20_HINT,Ikuti jalan pintas candi ke barat. Penanda di peta menunjukkan arahnya; buka dengan {menu}.,Take the temple shortcut west. The map marker shows the way; open it with {menu}.
+Q_MQ2_S21_HINT,"Batu Pamali ada di tempat ini. Dekati dan tulis nama itu berurutan: Na, lalu Ga.","The Pamali stone is here. Walk up to it and write the name in order: Na, then Ga."
+Q_MQ2_S22_HINT,Ki Sumarto ada di Pamali. Bicaralah dengannya untuk masuk ke ingatan wayangnya.,Ki Sumarto is at the Pamali. Talk to him to enter the memory of his wayang.
+Q_MQ2_S23_HINT,Surat-surat itu ada di kemah timur. Periksa dengan {interact}.,The letters are in the east camp. Examine them with {interact}.
+Q_MQ2_S24_HINT,Ia menunggu di tepi Pamali. Tekan {dodge} saat ia menerjang dan serang sesudahnya.,He waits at the ford. Press {dodge} when he lunges and attack after.
+Q_MQ3_S1_HINT,Ratna ada di jalan para pandai. Petilasan di sabana untuk beristirahat.,Ratna is on the smiths' street. The petilasan on the savanna is where you rest.
+Q_MQ3_S2_HINT,Tetap bergerak dengan {move} dan tekan {dodge} saat ia menyerbu dari rumput.,Keep moving with {move} and press {dodge} when he charges out of the grass.
+Q_MQ3_S3_HINT,Ikuti tanda merah ke mulut desa. Mpu Wirasana menunggu di bengkel tempanya.,Follow the red marks to the village mouth. Mpu Wirasana waits at his forge.
+Q_MQ3_S4_HINT,"Ulangi aksara Ha dua kali, seperti yang ditunjukkan Mpu Wirasana.","Repeat the glyph Ha twice, the way Mpu Wirasana showed you."
+Q_MQ3_S5_HINT,Mbok Srini ada di gubuknya yang hancur. Periksa barang yang jatuh dengan {interact}.,Mbok Srini is at her smashed hut. Examine what fell with {interact}.
+Q_MQ3_S6_HINT,Tebar bijinya di penanda dasar sungai. Lalu tekan {dodge} saat ia menerjang dari semak.,Scatter the seeds at the riverbed marker. Then press {dodge} when he charges through the briars.
+Q_MQ3_S7_HINT,"Letakkan ketiga kantong di akar beringin dengan {interact}, sambil terus menghindar.","Set the three pouches at the banyan roots with {interact}, and keep dodging."
+Q_MQ3_S8_HINT,Batu pipih ada di rongga beringin. Sentuh dengan {interact}.,The flat stone is in the banyan's hollow. Touch it with {interact}.
+Q_MQ3_S9_HINT,Berdirilah di medan kantong yang muncul tiap fase. Medan itu hanya melukai dia.,Fight from the pouch fields that rise each phase. They hurt only him.
+Q_MQ3_S10_HINT,Keris hantu dan roh api muncul dari tonggak merah. Hadapi mereka sedikit demi sedikit.,Ghost keris and fire spirits rise from the red stakes. Take them a few at a time.
+Q_MQ3_S11_HINT,Tetaplah dekat bengkel dan bantu Mpu Wirasana serta Ratna menahan keris terbang.,Stay near the forge and help Mpu Wirasana and Ratna hold off the flying keris.
+Q_MQ3_S12_HINT,Periksa sarung keris dan catatan tempa di ruang simpan Wirasana dengan {interact}.,Examine the scabbard and forge records in Wirasana's vault with {interact}.
+Q_MQ3_S13_HINT,Batu paron ada di sudut ruang simpan. Sentuh dengan {interact}.,The anvil stone is in the vault corner. Touch it with {interact}.
+Q_MQ3_S14_HINT,Ikuti jejak abu di sepanjang pantai. Kalahkan apa pun yang menghalangi.,Follow the ash trail along the coast. Defeat whatever blocks it.
+Q_MQ3_S15_HINT,Sentuh ketiga penanda batu secara berurutan dengan {interact}. Awasi yang berkeliaran.,Touch the three stone waymarkers in order with {interact}. Watch for what roams.
+Q_MQ3_S16_HINT,"Nyalakan petilasan di ceruk pasir, lalu bicara dengan Hariang Banga di api unggun.","Light the petilasan in the sand alcove, then talk to Hariang Banga by the fire."
+Q_MQ3_S17_HINT,Serpihan lontar ada di ceruk pasir. Tekan {interact} untuk menjalani kenangannya.,The lontar strip is in the sand alcove. Press {interact} to live its memory.
+Q_MQ3_S18_HINT,Masuk lewat terowongan angin Laras. Buka peta dengan {menu} kalau kehilangan arah.,Enter through Laras's wind tunnel. Open the map with {menu} if you lose your way.
+Q_MQ3_S19_HINT,Tujuh tonggak merah mengelilingi pelataran. Tekan {dodge} saat bilahnya melesat.,Seven red stakes ring the court. Press {dodge} when the blade darts.
+Q_MQ3_S20_HINT,Mpu Wirasana ada di dekatmu. Bicaralah dengannya sebelum memilih.,Mpu Wirasana is nearby. Talk to him before you choose.
+Q_MQ3_S21_HINT,Pecahan terakhir ada di tempat keris terbaring. Pintu kuil menunggu setelahnya.,The last fragment is where the keris lay. The shrine door waits after that.
+Q_MQ3_S22_HINT,Tekan {dodge} saat ia menyerang dan balas saat ia terbuka. Setelah itu ucapkan namanya.,Press {dodge} when he attacks and strike back when he's open. Then speak his name.
+Q_MQ4_S1_HINT,Pulanglah ke Desa Purwa. Kabut di utara bisa dicoba setelah tiba di sana.,Head home to Desa Purwa. You can test the fog to the north once you're there.
+Q_MQ4_S2_HINT,Tanyakan pada pasangan tua dan penjaga lapak. Bicara dengan {interact}.,Ask the old couple and the stallkeeper. Talk with {interact}.
+Q_MQ4_S3_HINT,Dekati tiap ambang pintu dan tulis nama penghuninya. Ada tiga rumah.,Walk up to each doorpost and write its resident's name. There are three houses.
+Q_MQ4_S4_HINT,"Periksa rak Laras dengan {interact}, lalu temui Ibu.","Check Laras's shelf with {interact}, then see Ibu."
+Q_MQ4_S5_HINT,Ciung Wanara dan Hariang Banga ada di meja Ibu. Bicaralah dengan keduanya.,Ciung Wanara and Hariang Banga are at Ibu's table. Talk to both.
+Q_MQ4_S6_HINT,Aria Kebonan ada di tepi desa. Ikuti penanda di peta; buka dengan {menu}.,Aria Kebonan is at the edge of the village. Follow the map marker; open it with {menu}.
+Q_MQ4_S7_HINT,Semar ada di gerbang desa. Bicaralah dengan {interact}.,Semar is at the village gate. Talk to him with {interact}.
+Q_MQ4_S8_HINT,"Keluar lewat gerbang selatan ke pantai, lalu cari Cepot.","Go out the south gate to the beach, then look for Cepot."
+Q_MQ4_S9_HINT,"Nyalakan petilasan di pantai dengan {interact}, lalu jalan terus ke Kampung Nelayan.","Light the shrine on the beach with {interact}, then keep walking to Kampung Nelayan."
+Q_MQ4_S10_HINT,Mbah Wiryo dan Sari ada di dermaga. Bicaralah dengan keduanya.,Mbah Wiryo and Sari are on the jetty. Talk to both.
+Q_MQ4_S11_HINT,Tiap bait dipegang satu keluarga. Bicaralah dengan tiga keluarga di pantai.,Each verse is held by one family. Talk to three families along the shore.
+Q_MQ4_S12_HINT,Datangi Mbah Wiryo saat senja. Ia menunggu di garis pasang.,Go to Mbah Wiryo at dusk. He waits at the tide line.
+Q_MQ4_S13_HINT,Sari ikut denganmu di hutan bakau. Nyalakan ketiga suar dengan {interact}.,Sari comes with you in the mangrove. Light the three beacons with {interact}.
+Q_MQ4_S14_HINT,Lampor ada di karang yang surut. Hadapi mereka sedikit demi sedikit.,The Lampor are on the low-tide reef. Take them a few at a time.
+Q_MQ4_S15_HINT,Bersihkan jalan ke Gua Karang. Tekan {dodge} kalau terkepung.,Clear the path to Gua Karang. Press {dodge} if you're surrounded.
+Q_MQ4_S16_HINT,Dekati lonceng yang tenggelam dan bunyikan tiga dengan {interact}.,Walk up to the sunken bells and ring three with {interact}.
+Q_MQ4_S17_HINT,Penjaga arus datang bergelombang. Tekan {dodge} dan serang di sela-selanya.,The current's guardians come in waves. Press {dodge} and strike between them.
+Q_MQ4_S18_HINT,Naiki tebing sambil bersihkan jalannya. Nyalakan petilasan dan dengarkan sang ratu.,"Climb the cliff, clearing the way. Light the shrine and hear the queen."
+Q_MQ4_S19_HINT,"Altar tebing ada di atas. Tulis nama Laras di kartu, lalu bicara di altar.","The cliff altar is above. Write Laras's name on the card, then speak at the altar."
+Q_MQ4_S20_HINT,Petilasan ada di jalan batu kuno. Nyalakan dengan {interact}.,The shrine is on the ancient causeway. Light it with {interact}.
+Q_MQ4_S21_HINT,Gelombang datang tiga kali di paviliun. Bertahan dengan {dodge} dan {attack}.,Three waves come at the pavilion. Hold out with {dodge} and {attack}.
+Q_MQ4_S22_HINT,Altar Laut ada di keraton. Dekati dan tekan {interact}.,The Sea Altar is in the keraton. Walk up and press {interact}.
+Q_MQ5_S1_HINT,Ciung dan Hariang bertarung di sisimu. Bertahan bersama dan tekan {dodge} saat terkepung.,Ciung and Hariang fight at your side. Stay together and press {dodge} if surrounded.
+Q_MQ5_S2_HINT,"Batu para leluhur ada di pelataran. Bicaralah dengan {interact}, lalu pilih.","The Ancestors' Stone is in the courtyard. Talk to it with {interact}, then choose."
+Q_MQ5_S3_HINT,"Gambar Ombak di tabir gerhana, lalu terobos mulut gua sambil melawan yang menghadang.","Draw Ombak at the Eclipse veil, then push through the cave mouth against what blocks it."
+Q_MQ5_S4_HINT,Huruf La melayang di jalan timur. Sentuh dengan {interact}.,The letter La drifts on the east road. Touch it with {interact}.
+Q_MQ5_S5_HINT,Bersihkan kedua aula Pasir Waktu. Tekan {dodge} dan jangan berlama-lama.,Clear both halls of the Hourglass Sands. Press {dodge} and don't linger.
+Q_MQ5_S6_HINT,Turun ke Hutan Lupa. Jawab ketiga pohon yang berbisik dengan nama yang benar.,Go down into Hutan Lupa. Answer the three whispering trees with the right names.
+Q_MQ5_S7_HINT,"Kalahkan penjaga di Jurang Lupa, lalu sentuh huruf Ra dengan {interact}.","Defeat the guards in the Abyss of Forgetting, then touch the letter Ra with {interact}."
+Q_MQ5_S8_HINT,Seberangi Jembatan Bayangan. Gema yang menghadang bisa dikalahkan satu per satu.,Cross the Shadow Bridge. The echoes in your way can be beaten one at a time.
+Q_MQ5_S9_HINT,"Nyalakan petilasan terakhir dengan {interact}, lalu sentuh huruf Sa.","Light the last petilasan with {interact}, then touch the letter Sa."
+Q_MQ5_S10_HINT,Batu kisah Semar ada di jurang. Dekati dan tekan {interact}.,Semar's story stone is in the abyss. Walk up and press {interact}.
+Q_MQ5_S11_HINT,Duduklah di tempat dalang di belakang kelir Semar dengan {interact}.,Sit in the dalang's seat behind Semar's kelir with {interact}.
+Q_MQ5_S12_HINT,Serpihan lontar Laras ada di jurang. Tekan {interact} untuk menjalani kenangannya.,Laras's lontar fragment is in the abyss. Press {interact} to relive its memory.
+Q_MQ5_S13_HINT,"Tiap perisai punya urutan: Sunda, Jawa, Ombak. Tekan {dodge} di sela-selanya.","Each shield takes the order Sunda, Jawa, Ombak. Press {dodge} in between."
+Q_MQ5_S14_HINT,"Tulis nama Laras di kartu lontar berurutan: La, Ra, Sa.","Write Laras's name on the lontar card in order: La, Ra, Sa."
 Q_MQ0_DESC,"Laras membangunkanmu subuh-subuh untuk satu permainan lagi sebelum ruwatan malam ini, sementara seisi Desa Purwa menyiapkan panggung. Tapi di pasar ada orang asing bertopeng polos yang menanyai nama anak-anak.","Laras drags you out of bed at dawn for one more game before tonight's ruwatan, while all of Desa Purwa readies the stage. But a stranger in a blank mask is in the market, asking for the children's names."
 Q_MQ4_DESC,"Semar menyuruhmu pulang ke Desa Purwa dulu, sebelum gua di belakang desa. Di sana Ibu menunggu, dan di selatan laut masih menyebut nama Laras.","Semar sends you home to Desa Purwa before the cave behind the village. Ibu is waiting there, and to the south the sea still says Laras's name."
 Q_SQ_D1_DESC,Semar ingin kelirnya hidup lagi dengan cerita-cerita yang kau kumpulkan. Ceritakan kembali lakon yang sudah kau temukan.,Semar wants the screen alive again with the tales you collect. Retell the lakon you have found.

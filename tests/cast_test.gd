@@ -45,9 +45,12 @@ func _initialize() -> void:
 	release_cast()
 	check(Engine.time_scale == 1.0, "success left slow-mo on")
 	check(p.sakti.value == 35.0, "Bolt cost %s, not 15" % (50.0 - p.sakti.value))
-	check(world.get_child_count() == before + 1, "no spell was spawned")
-	var bolt: Node = world.get_child(world.get_child_count() - 1)
-	check(bolt.get("direction") == Vector2.UP and bolt.get("power") == 1.0, "spell got direction %s power %s" % [bolt.get("direction"), bolt.get("power")])
+	var bolt: Node = null
+	for k in world.get_children():   # the cast also leaves an FX sprite in the world
+		if "direction" in k and "power" in k:
+			bolt = k
+	check(bolt != null, "no spell was spawned")
+	check(bolt != null and bolt.get("direction") == Vector2.UP and is_equal_approx(bolt.get("power"), SpellUtil.PERFECT_BONUS) and bolt.get("perfect"), "spell got direction %s power %s" % [bolt.get("direction"), bolt.get("power")])
 	bolt.queue_free()
 
 	# Fizzle: nothing learned matches. No cost, lockout.

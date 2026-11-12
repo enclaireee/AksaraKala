@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Make data/text/{dialogue,quests,codex}.csv and data/dialogue/beats.tres match .docs/script.md. Rerunnable.
 NPC and camp-talk .tres files are NOT written here. Run from anywhere."""
-import csv, io, json, re, subprocess
+import csv, io, json, re, subprocess, sys
 from pathlib import Path
+DROP = "--drop" in sys.argv   # without it, dropped rows are only listed (deleting rows is the user's call)
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = (ROOT / ".docs/script.md").read_text(encoding="utf-8")
 CSVS = {n: ROOT / f"data/text/{n}.csv" for n in ("dialogue", "quests", "codex")}
 BEATS = ROOT / "data/dialogue/beats.tres"
 KEY = re.compile(r"^[A-Z][A-Z0-9_]*$")
-report = {"unreadable": [], "skipped": [], "conflict": [], "kept_csv": []}
+report = {"unreadable": [], "skipped": [], "conflict": [], "kept_csv": [], "kept_beat": [], "would_delete": []}
 
 
 def cells(line):
@@ -163,8 +164,10 @@ def drop_pass():
             refs = referenced(k)
             if refs:
                 still.append(f"{k} ({refs[0]})")
-            else:
+            elif DROP:
                 recs.remove(r); deleted.append(k)
+            else:
+                report["would_delete"].append(k)
 
 # ---- beats.tres ----
 def build_beats():
@@ -207,10 +210,24 @@ pre, body = text.split("entries = Array[Dictionary]([\n", 1)
 body = body.rsplit("\n])", 1)[0]
 old = json.loads("[" + body + "]")
 new = build_beats()
-ids = {b for b, _ in new} | {"offering"}
-new_lines = {tuple(e["lines"]) for _, e in new}
+ids = {b for b, _ in new} | {re.match(r"flag:beat_(\w+)", e["do"][0]).group(1) for _, e in new} | {"offering"}
 anchor_after, anchor = {}, None
 extras = []
+# The shipped beat wins, like the CSV: the cutscene pass added `#cam`/`#shake` cues and tuned beats in beats.tres
+# directly, so a beat that already ships is kept as is and only listed when the doc reads differently.
+shipped = {}
+for e in old:
+    m = re.match(r"flag:beat_(\w+)", (e.get("do") or [""])[0])
+    if m:
+        shipped.setdefault(m.group(1), []).append(e)   # variants share an id (aria redeem/release): match in order
+for i, (b, e) in enumerate(new):
+    f = re.match(r"flag:beat_(\w+)", e["do"][0]).group(1)   # the beat's flag, not its heading (aria_redeem -> aria)
+    if shipped.get(f):
+        s0 = shipped[f].pop(0)
+        if s0 != e and {**s0, "lines": [x for x in s0.get("lines", []) if not x.startswith("#")]} != e:
+            report["kept_beat"].append(b)
+        new[i] = (b, s0)
+new_lines = {tuple(e["lines"]) for _, e in new}
 for e in old:
     m = re.match(r"flag:beat_(\w+)", (e.get("do") or [""])[0])
     if m and m.group(1) in ids:

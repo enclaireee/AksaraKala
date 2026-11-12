@@ -97,11 +97,11 @@ Expands the game to **~21.5 h main story (138 steps, 1,285 min modeled, 49 areas
 
 ## Phase 5: Remaining regions
 Build each region from its area graph in `zones/<region>.md` ([mataram](zones/mataram.md), [tanah_timur](zones/tanah_timur.md), [segara_kidul](zones/segara_kidul.md), [gua_kala](zones/gua_kala.md)): first add tile maps per area (AGENTS.md 5), then build.
-- [x] Mataram zone and boss (built 2026-11-05, not yet playtested)
-- [x] Tanah Timur zone, miniboss and boss (built 2026-11-05, not yet playtested)
-- [x] Gua Kala and the final boss (built 2026-11-05, not yet playtested)
-- [x] Segara Kidul (main path, P0 since story v3.1: 4 areas, the Trial of the Waves, Ombak; built in Phase 4c, not yet playtested)
-- [x] All gear as data, drops and chests (all 32 items wired to chests, starters, choices and quest rewards)
+- [x] Mataram zone and boss (built 2026-11-05, played 2026-11-12)
+- [x] Tanah Timur zone, miniboss and boss (built 2026-11-05, played 2026-11-12)
+- [x] Gua Kala and the final boss (built 2026-11-05, played 2026-11-12)
+- [x] Segara Kidul (main path, P0 since story v3.1: 4 areas, the Trial of the Waves, Ombak; built in Phase 4c, played 2026-11-12)
+- [x] All gear as data, drops and chests (all 32 items wired to chests, starters, choices and quest rewards; 32/32 since the 2026-11-12 fixes, `tests/item_source_test.gd`)
 - Exit: the game can be played start to finish with placeholder or pack art.
 
 ## Phase 6: Art, audio and presentation pass
@@ -111,7 +111,7 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 - [x] Phase 6d: Revamp pass (2026-11-10) — Kelir v2 shadow-puppet presentation (`zones/kelir/kelir_stage.gd`, K0 wayang raksasa sprites), quiet in-story tutorial ladder (`ui/tutorial.gd`, `data/lessons.gd`), illustrated world map art (`tools/gen_map_art.py`, `assets/art/ui/map_world.png`, `map_fog_*.png`, `map_icons.png`), painted area maps, direct `M` key map toggle, revamp pixel-art sprite pass (`tools/gen_revamp_art.py`), and quest audit validation (`tools/quest_audit.py` 0 problems)
 - [x] Quest & narrative UX: Scene Director camera easing, letterbox bars, choices with consequences (`remember:<key>`), and HUD quest cards
 - [ ] Culture-item icons and glyph art refinement
-- [x] First full audio pass (2026-11-09): 35 music tracks, 17 ambience beds, 92 sfx, 12 stingers, layered Audio autoload ([audio.md](audio.md)); generated, untested in Godot
+- [x] First full audio pass (2026-11-09): 35 music tracks, 17 ambience beds, 92 sfx, 12 stingers, layered Audio autoload ([audio.md](audio.md)); played in game 2026-11-12, verification.md §5
 - [ ] Final SFX and music pass: listen and tune every track in the engine ([audio.md](audio.md) 7), per-enemy sounds, optional recorded instruments
 - [ ] Custom particle polish
 - Exit: the game looks, sounds, and feels consistent, responsive, and complete.
@@ -122,7 +122,7 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 - [ ] Full text review and dialogue balance pass
 - [ ] Combat and balance tuning: verify [balance.md](balance.md) metrics across all classes
 - [ ] Accessibility options and assist mode testing
-- [ ] Full end-to-end playtests
+- [x] Full end-to-end playtests (2026-11-12: every region, final boss, ending and a fresh-eyes run, verification.md §5)
 - Exit: someone unfamiliar with the game can finish it smoothly without assistance.
 
 ## Phase 8: Release
