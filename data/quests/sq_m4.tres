@@ -18,7 +18,7 @@ marker = {"zone": "mt_reruntuhan", "id": "gong_ageng"}
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_SQ_M4_S3_OBJ"
-on = "talked_to:mataram_dalang"
+all = [{"on": "talked_to:gong_frame", "set_flag": "", "objective": "Q_SQ_M4_S3_P1"}, {"on": "talked_to:mataram_dalang", "set_flag": "", "objective": "Q_SQ_M4_S3_P2"}]
 marker = {"zone": "mt_pasar", "id": "mataram_dalang"}
 
 [resource]

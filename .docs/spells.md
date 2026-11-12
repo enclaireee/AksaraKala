@@ -68,10 +68,10 @@ Notes:
 - The Boss 1 "light" mechanic reuses Ca (Burst), cast next to the boeh rarang banner: no extra glyph (**ASSUMED**, see [quests.md](quests.md) MQ1).
 
 ### Choice effects on spells (Story v5, flags in `Game.flags`)
-Two of the six Major Choices ([story.md](story.md) "Six Major Choices") change a spell. Both are **TUNE** and not built yet.
-- **Choice 1, `choice_tell_ciung`:** Sunda `Ca` (Burst) radius `+10%` (64 px to about 70 px), Naganingrum's blessing on your lontar.
-- **Choice 5, `choice_offer_memory`:** *Ombak* costs 3 less Sakti (35 to 32) and deals `+20%` poise damage to Eclipse enemies in Act VI. `choice_offer_song` gives the Berkah Pesisir blessing instead ([items.md](items.md)).
-- **Choice 6, `choice_release_aria`:** Keteguhan Sunyi, `+15%` stamina and Sakti recovery in the Batara Kala fight, so every spell is easier to chain there.
+Major Choices ([story.md](story.md) "Six Major Choices") modify spell performance directly via `spells/spell_util.gd` (verified in `tests/choice_effects_test.gd`):
+- **Choice 1, `choice_tell_ciung`:** Sunda `Ca` (Burst) radius `+10%` (radius x1.10), representing Naganingrum's blessing on your lontar.
+- **Choice 5, `choice_offer_memory`:** *Ombak* costs 3 less Sakti (35 to 32) and deals `+20%` poise damage to Eclipse enemies in Act VI (`OFFER_MEMORY_OMBAK_POISE := 1.20`). Alternatively, `choice_offer_song` gives the Berkah Pesisir ward shield instead ([items.md](items.md)).
+- **Choice 6, `choice_release_aria`:** Grants Keteguhan Sunyi (`+15%` stamina and Sakti recovery in `gk_ruang_kala`), making spells easier to chain during the Batara Kala battle.
 
 Spell numbers live in `data/spells/<glyph_id>.tres` (`SpellData`: `cost`, `power`, `duration`, `radius`, `scene`); glyph templates in `data/glyphs/<glyph_id>.tres`. The write-only name glyphs `sunda_la`, `sunda_ra` and `sunda_sa` have a glyph file but no spell file.
 

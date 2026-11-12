@@ -1,89 +1,77 @@
-# Tutorial: teaching the prologue
+# Tutorial: Teaching the Prologue
 
-How the game teaches its own verbs. The prologue (MQ0) is the classroom: it is calm, it has four characters who
-already want things from you, and every verb it teaches is needed again in the raid and in Act I. [controls.md](controls.md)
-is the reference; this document is the *teaching order*.
+How the game organically teaches its core verbs through narrative moments. The Prologue (`MQ0`) is the classroom: calm, purposeful, with four central characters who introduce each action in context. Every verb taught here is essential for the night raid and subsequent journeys through the regions.
 
-## 1. Why this exists (2026-11-10)
+Related: [controls.md](controls.md) (input reference), [combat.md](combat.md) (combat timing), [quests.md](quests.md) (`MQ0` steps).
 
-The prologue only explained itself through `Q_MQ0_Sn_HINT` toasts: one line of text at the top of the screen when a step
-starts. That covered movement and `interact`, but nothing taught the 3-hit combo, stamina, the flask, the petilasan, the
-perfect dodge, or the cast controls. The first real fight (step 0.12) arrived with the player knowing none of it.
+---
 
-### 1b. Follow-up (2026-11-10): the ladder had no rungs
+## 1. Principles
 
-The first fix was a separate Semar practice room in front of the story, which taught dodge, attack and jamu a second time. The ladder
-itself never ran: no dialogue entry ran `lesson:<id>` and the six `UI_TUT_*` texts did not exist, so a lesson card could never appear
-(and the hurt lessons showed a raw key). Now: the practice room is deleted and `Zones.start_new_game()` always lands in Desa Purwa; the
-lessons are offered by the characters (Laras beat `tag_cat` with `BEAT_TAG_CAT_8`, Cepot after Semar with `DLG_CEPOT_T1/T2`, Ibu with
-`DLG_IBU_T1/T2`, Semar's Ka entry with `DLG_SEMAR_T1`); `when` is a window of flags (`flag:mq0_d4,!flag:mq0_d7` and so on) so a card does
-not vanish the moment the talk that offered it ends the step. `tests/tutorial_test.gd` and `tools/quest_audit.py` (Q8) guard both holes.
+1. **One Verb per Moment:** A lesson teaches a single input. Teaching two verbs at once feels like a manual rather than a game.
+2. **Motivated by Story:** Every lesson is grounded in character interaction:
+   - Laras challenges you to tag -> teaches movement and dodging.
+   - Cepot shows off at the sanggar -> teaches attacks and combo chaining.
+   - Ibu sets out tea and packs your bag -> teaches Petilasan resting and jamu healing.
+   - Semar interprets the broken lontar -> teaches drawing and casting aksara.
+3. **Learn by Doing:** A lesson completes when the player performs the specified input (`Events.player_struck`, `spell_cast`, `petilasan_activated`, etc.). There is no passive "OK" button.
+4. **Never Block:** Gameplay is never paused or frozen. A lesson waits quietly until the player performs the action.
+5. **Quiet Visual Voice:** Lessons appear as a single ink pill at the bottom of the screen (`Y = 224`), using the same `UIFx` typography as interact prompts and HUD elements.
+6. **Persistence:** Completing a lesson sets `tut_<id>` in `Game.flags`, ensuring returning players or completed lessons never repeat.
 
-## 2. Principles
+---
 
-1. **One verb per moment.** A lesson teaches a single input. Two at once is a manual, not a game.
-2. **The story says why first.** Every lesson is motivated by the character in front of you: Laras races you, Cepot is
-   showing off, Ibu is packing your bag, Semar hands you a glyph. The card names the buttons; the dialogue names the reason.
-3. **Learn by doing, not by reading.** A lesson ends when the player performs the input (`Events.player_struck`,
-   `spell_cast`, `petilasan_activated`…). There is no "OK" button.
-4. **Never block.** No pause, no dimming, no failed state. A lesson that is not finished simply stays quiet and waits.
-5. **Say it once.** Finishing a lesson sets `tut_<id>`, which is saved with the rest of `Game.flags`. Returning players
-   never see a card they already know, and a lesson only shows while its `when` condition holds.
-6. **Quiet voice.** The card is one ink pill at the bottom of the screen in `UIFx` type, the same vocabulary as the
-   interact prompt and the HUD toast. It hides during dialogue, the menu, a write card and death.
+## 2. The In-Story Ladder
 
-## 3. The ladder
+| # | Lesson | Step & Timing | Motivator | Completion Trigger | Core Concept Taught |
+|---|---|---|---|---|---|
+| 1 | `dodge` | Step 0.1 (Village tag) | Laras (`beat:tag_cat`) | First successful dodge roll | WASD movement, `dodge` (Space) to slip past obstacles, stamina cost. |
+| 2 | `attack` | Step 0.5 (Sanggar) | Cepot (`DLG_CEPOT_T1/T2`) | 3 landed attacks | `attack` (LMB), holding LMB for the 3-hit combo, stamina management. |
+| 3 | `rest` | Step 0.10 (Morning) | Ibu (`DLG_IBU_T1/T2`) | `petilasan_activated` | `interact` (E) at a Petilasan: checkpointing, saving, stat upgrades. |
+| 4 | `cast` | Step 0.11 (Sanggar) | Semar (`DLG_SEMAR_T1`) | First `spell_cast` | Hold `cast` (RMB) to slow time, draw aksara with mouse, release to cast. |
+| 5 | `flask` | First time player HP drops | Ibu's Jamu line (0.10+) | First jamu drink | `heal_jamu` (Q), drinking a flask charge to restore HP. |
+| 6 | `perfect` | First hurt after flask | Combat situation | First perfect dodge | Timing a roll into an incoming blow refunds stamina and generates sakti. |
 
-| # | Lesson | When (step) | Told by | Completes on | Teaches |
-|---|--------|-------------|---------|--------------|---------|
-| 1 | `dodge` | 0.1 tag | Laras (beat `tag_cat`) | first dodge | WASD to run, `dodge` to slip past obstacles, stamina cost |
-| 2 | `attack` | 0.5 sanggar | Cepot | 3 landed blows | `attack`, holding for the 3-hit combo, stamina |
-| 3 | `rest` | 0.10 morning | Ibu | `petilasan_activated` | `interact` at a petilasan: save, respawn point, one stat |
-| 4 | `cast` | 0.11 sanggar | Semar | first `spell_cast` | hold `cast`, draw the glyph, release; the sakti gate |
-| 5 | `flask` | first time hurt | Ibu's jamu line (0.10) | first drink | `heal_jamu`, three charges, only when hurt |
-| 6 | `perfect` | first hurt after the flask | — (combat) | first perfect dodge | rolling *into* a blow refunds stamina and fills sakti |
+*Note:* Step 0.6 (writing names on the lontar leaf) and Step 0.8 (`K0` wayang ruwatan) are self-teaching cinematic sequences managed by `ui/glyph_lesson.gd` and `zones/kelir/k0_ruwatan.gd`.
 
-Order is fixed by the story: dodge before the raid, attack before the Ka lesson uses the same dummies, rest before the
-first fight after the raid, cast when the glyph exists, flask and perfect dodge at the first real danger.
+---
 
-Steps 0.6 (write card) and 0.8 (Kelir memory) already teach themselves (`ui/glyph_lesson.gd`, the memory's own hint).
+## 3. Lesson Triggers & Data (`data/lessons.gd`)
 
-## 4. How a lesson is offered
+Lessons are defined as data entries in `data/lessons.gd`:
 
-* **`on: "talk"` / `"beat"`** — the NPC entry or beat runs the dialogue action `lesson:<id>` (an entry `do` in
-  `data/dialogue/<npc>.tres`, or a `; do` in the beat heading in [script.md](script.md)). `Game.run` emits
-  `Events.lesson_offered`, and `ui/tutorial.gd` picks it up when `when` holds.
-* **`on: "hurt"`** — auto: `ui/tutorial.gd` offers it from `Events.player_hurt` when HP is under `hp_below`
-  (`flask` also needs a charge left). `perfect` waits for `!flag:tut_flask`, so the two never stack.
+```gdscript
+const LESSONS := {
+    "dodge": {
+        "text": "UI_TUT_DODGE",
+        "key": "dodge",
+        "when": "step:mq0=0",
+        "on": "talk",
+        "steps": [{"event": "dodged", "n": 1}],
+    },
+    ...
+}
+```
 
-## 5. The card (`ui/tutorial.gd`)
+### Trigger Types (`on`)
+- **`on: "talk"` or `"beat"`:** An NPC dialogue entry or story beat executes the dialogue action `lesson:<id>` (e.g. `do: ["lesson:attack"]`). `Game` emits `Events.lesson_offered`, and `ui/tutorial.gd` displays the card if its `when` condition holds.
+- **`on: "hurt"`:** Automatically triggered from `Events.player_hurt` when player HP is below `hp_below`. `flask` triggers if a charge is available; `perfect` triggers once `tut_flask` is already completed, preventing overlapping cards.
 
-Bottom centre, `Y = 224`, a 15 px `ink_panel` pill: a `keycap` with the action's key, then one body line from
-`data/text/ui.csv`, then `n/m` in the same parenthesis style as the quest tracker when a lesson needs more than one hit.
-It fades in over 0.16 s, and on completion it holds 0.55 s and fades out. It is `mouse_filter = ignore`.
+### Condition Gating (`when`)
+Lessons use flag windows (e.g., `when: "flag:mq0_d4,!flag:mq0_d7"`) so that a lesson card remains active across dialogue transitions until the required action is performed.
 
-`UIFx` only: body 8, no other sizes, no new art. Text must fit one line (about 44 characters).
+---
 
-## 6. Data (`data/lessons.gd`)
+## 4. UI Presentation (`ui/tutorial.gd`)
 
-| Field | Meaning |
-|-------|---------|
-| `text` | `ui.csv` key; `{attack}`, `{dodge}`, `{move}`, `{cast}`, `{interact}`, `{heal_jamu}` are filled with the live keys |
-| `key` | InputMap action whose keycap sits at the left (`""` for no keycap) |
-| `when` | `Game.check` condition the lesson lives in; `""` = anywhere |
-| `on` | `"talk"` / `"beat"` / `"hurt"` (section 4) |
-| `steps` | `[{event, n}]`; event is `struck`, `dodged`, `perfect`, `cast`, `rest` or `drink` |
-| `hp_below` | auto lessons: only offer under this HP fraction |
-| `needs_flask` | auto lessons: only offer with a charge left |
-| `ttl` | seconds before the pill goes quiet again (the lesson stays unfinished and returns on the next `hurt`) |
+- **Placement:** Bottom-center (`Y = 224`), 15 px height ink panel pill.
+- **Layout:** Displays an input keycap showing the live action binding, followed by localized body text (`data/text/ui.csv`), and a counter `(n/m)` for multi-hit lessons (such as the 3-hit combo).
+- **Behavior:** Fades in over 0.16 s. On completion, holds for 0.55 s and fades out. Completely ignores mouse clicks (`mouse_filter = Control.MOUSE_FILTER_IGNORE`).
+- **Suppression:** The pill automatically hides during dialogue, menu screens, write cards, and player death.
 
-Adding a lesson: add a row to `LESSONS`, its `UI_TUT_*` key to `data/text/ui.csv` (id and en), a `lesson:<id>` in the
-entry that motivates it, and a line to this document's ladder.
+---
 
-## 7. Verification
+## 5. Verification & Testing
 
-* `$GODOT --headless --path . --import`
-* `$GODOT --headless --path . -s tests/tutorial_test.gd` — data keys resolve, `when` gates, the three strikes finish
-  `attack`, a finished lesson never returns, dialogue hides the pill.
-* `$GODOT --headless --path . -s tests/i18n_test.gd` and `key_ref_test.gd` — every key still has id and en.
-* Play: New Game → tag (`dodge`), sanggar (`attack`), morning (`rest`, `flask`), Ka (`cast`), the raid (`perfect`).
+- `$GODOT --headless --path . -s tests/tutorial_test.gd` — Verifies that all lesson keys resolve, `when` gates function, multi-strike counts complete lessons, completed lessons never repeat, and dialogue hides active pills.
+- `python3 tools/quest_audit.py` — Confirms tutorial dialogue actions and text key presence across both languages.

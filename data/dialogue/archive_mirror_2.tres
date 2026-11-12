@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "archive_mirror_2"
+name_key = ""
+entries = Array[Dictionary]([
+	{"if": ["step:mqg=6", "flag:archive_mirror_1", "!flag:archive_mirror_2"], "lines": [], "do": ["flag:archive_mirror_2"]},
+	{"if": ["step:mqg=6", "!flag:archive_mirror_1"], "lines": ["DLG_ARCHIVE_MIRROR_HINT"], "do": [], "quiet": true},
+	{"if": [], "lines": [], "do": [], "quiet": true}
+])

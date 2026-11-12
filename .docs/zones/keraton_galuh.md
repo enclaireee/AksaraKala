@@ -99,7 +99,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,_________E_F____
 #.bbbb..........~...........,,,-.[[[[[.....r.........bbbbbbbbbb..[[[[[[.-,,,..[[[[[[[......................bbbb...........[[[[.-,,,..[[[[[[......[[[[#
 #.bbbb.c....................,,,-.[[[[[............bb.bbbb..bbbb..[[[[[[.-,,,-.[[[[[[[......................bbbb...........[[[[.-,,,..[[[[[[.bb...[[[[#
 #.bbbb......................,,,-.[[[[[............bb.bbbb..bbbb..[[[[[[.-,,,-.[[[[[[[....r........bbbb.....bbbb..u........[[[[.-,,,-.[[[[[[.bb.r.[[[[#
-#................bb.........,,,.............z.....bb.bbbbbb.bb...........,,,..............r......rbbbb.....bbbb....u......[[[[.-,,,-.[[[[[[.bb...[[[[#
+#................bb.........,,,...................bb.bbbbbb.bb...........,,,..............r......rbbbb.....bbbb....u......[[[[.-,,,-.[[[[[[.bb...[[[[#
 #................bb.........,,,...................bb.bbbbbb.bb...........,,,...............................bb.............[[[[..,,,-.[[[[[[.bb...[[[[#
 #...........................,,,.....................r....................,,,.......r.......................bb.....u.......[[[[..,,,-.[[[[[[..........#
 #.[[[[[[[[[..[[[[[[[[.......,,,...........................[[[[[[[[[......,,,...............[[[[[[[[[[[....................[[[[.-,,,..................#
@@ -137,7 +137,6 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,_________E_F____
 | `a` | clue, a basket Kabayan left half-woven; pulls you into the Kabayan tale (SQ-G1 clue 2, `memory_id` `sq_g1_kabayan`; needs the decree first) | `res://entities/world/clue.tscn` | `{clue_id:"g1_basket", memory_id:"sq_g1_kabayan", cond:"flag:clue_g1_decree"}` | grass | 1 |
 | `m` | clue, the rooster's feathers at the seller's stall (SQ-C1 clue 1; unlock `mqg_a1`) | `res://entities/world/clue.tscn` | `{clue_id:"c1_feathers", cond:"flag:mqg_a1"}` | grass | 1 |
 | `o` | clue, the river basket where children play; pulls you into the basket memory (SQ-C1 clue 2, `memory_id` `sq_c1_basket`; needs the feathers first) | `res://entities/world/clue.tscn` | `{clue_id:"c1_basket", memory_id:"sq_c1_basket", cond:"flag:clue_c1_feathers"}` | grass | 1 |
-| `z` | trigger, puzzle `puzzle_c1_rooster` (SQ-C1 step 4: follow the feather trail to the rooster's hiding place; sets `flag:puzzle_c1_rooster`, which also fires `area_entered:c1_rooster_found`, **ASSUMED** alias; cond: the basket memory is done; no gate) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_c1_rooster", size:Vector2i(6,4), cond:"flag:memory_sq_c1_basket"}` | grass | 1 |
 | `p` | NPC townsperson in the tournament crowd (dressing, same props on all 6 tiles) | `res://entities/npc/npc.tscn` | `{npc_id:"galuh_crowd"}` | grass | 6 |
 
 ### Rooms
@@ -306,11 +305,11 @@ X,,,,,_______________________________________________#######
 | `S` | exit to kg_kaputren (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_kaputren", spawn_id:"from_kg_penjara"}` | floor | 2 |
 | `s` | spawn, arrival from kg_kaputren | `res://entities/world/spawn.tscn` | `{id:"from_kg_kaputren"}` | floor | 1 |
 | `P` | encounter penjara_stairs (MQG g.11, sets `mqg_4a`) | `res://entities/world/encounter.tscn` | `{area_id:"penjara_stairs", size:Vector2i(12,8), cond:"flag:mqg_kp3,!flag:mqg_4a", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | floor | 1 |
-| `G` | encounter galuh_cells (MQG g.13, the guards of the cells, sets `mqg_5`) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_cells", size:Vector2i(22,10), cond:"flag:mqg_4b,!flag:mqg_5", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-8,-3)], [res://entities/enemies/faceless.tscn, Vector2i(-2,3)], [res://entities/enemies/faceless.tscn, Vector2i(5,-3)]], [[res://entities/enemies/faceless.tscn, Vector2i(-6,3)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(8,2)]]]}` | floor | 1 |
+| `G` | encounter galuh_cells (MQG g.13, the guards of the cells, sets `mqg_cells`) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_cells", size:Vector2i(22,10), cond:"flag:mqg_4b,!flag:mqg_cells", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-8,-3)], [res://entities/enemies/faceless.tscn, Vector2i(-2,3)], [res://entities/enemies/faceless.tscn, Vector2i(5,-3)]], [[res://entities/enemies/faceless.tscn, Vector2i(-6,3)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(8,2)]]]}` | floor | 1 |
 | `W` | encounter galuh_escort, the wagon escort in the cell yard; two waves (MQG g.12 `fight`, sets `mqg_4b`), the near miss | `res://entities/world/encounter.tscn` | `{area_id:"galuh_escort", size:Vector2i(16,10), cond:"flag:mqg_4a,!flag:mqg_4b", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-5,-2)], [res://entities/enemies/faceless.tscn, Vector2i(0,3)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)]], [[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(6,2)]]]}` | floor | 1 |
 | `D` | NPC the Faceless deserter Ranga, in a cell (MQG g.15 `talked_to:faceless_deserter`, sets `mqg_6`; **Choice 2**, `choice_freed` / `choice_handed`; he is nameless until he gives his name) | `res://entities/npc/npc.tscn` | `{npc_id:"faceless_deserter", cond:"flag:mqg_lc"}` | floor | 1 |
 | `g` | codex spot, the iron cage of the legend (VERIFY) | `res://entities/world/pickup.tscn` | `{codex_id:"pamali_cage"}` | floor | 1 |
-| `m` | clue, Laras's scratched words on the wall: "The thousand temples. Don't stop." (MQG g.13; appears once the cells are clear (`mqg_5`); pulls you into LC2, `memory_id` `lc2`; id `laras_wall` is the old codex id, now a clue id) | `res://entities/world/clue.tscn` | `{clue_id:"laras_wall", memory_id:"lc2", cond:"flag:mqg_5"}` | floor | 1 |
+| `m` | clue, Laras's scratched words on the wall: "The thousand temples. Don't stop." (MQG g.13; appears once the cells are clear (`mqg_cells`); reading it is required and sets `mqg_5`; pulls you into LC2, `memory_id` `lc2`; id `laras_wall` is the old codex id, now a clue id) | `res://entities/world/clue.tscn` | `{clue_id:"laras_wall", memory_id:"lc2", cond:"flag:mqg_cells"}` | floor | 1 |
 | `B` | pickup, the splintered wagon-floor board with Laras's message (item `laras_board`, needed in the Interlude 4.3; appears once the wagon has gone) | `res://entities/world/pickup.tscn` | `{item_id:"laras_board", cond:"flag:mqg_4b"}` | floor | 1 |
 | `V` | the wagon, a scripted prop in the yard (the `setpiece` of g.12): rolls east through the yard gate as the last guard falls, leaving the board | `res://entities/npc/npc.tscn` | `{npc_id:"galuh_wagon", cond:"flag:mqg_kp3,!flag:mqg_4b"}` | floor | 1 |
 | `R` | clue, the wagon ruts on the cell stairs (MQG g.11; journal note only; id `wagon_ruts` **ASSUMED**, not in quests.md; hunt `k_ii`) | `res://entities/world/clue.tscn` | `{clue_id:"wagon_ruts", cond:"flag:mqg_kp3"}` | floor | 1 |
@@ -461,7 +460,7 @@ Scale: 1
 #................bb.........,,,....[[[[[[.[[[[[[[[[.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.......................,,,.''.[[[[[[[..bb...........#
 #................bb....'''.-,,,....[[[[[[.[[[[[[[[[.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................bb...,,,.''.[[[[[[[..bb...........#
 #..................r...'''.-,,,....[[[[[[.[[[[[[[[[.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.....bbbbbbbbbb...bb...,,,.''.[[[[[[[..bb...........#
-#..........................-,,,....[[[[[[.[[[[[[[[[.....,,{{{,{{{,{{{,,,,,,,,,,,,,{{{,{{{,{{{,,,,.....bbbbbbbbbb...bbbb.,,,....[[[[[[[..bb...........#
+#.....................x....-,,,....[[[[[[.[[[[[[[[[.....,,{{{,{{{,{{{,,,,,,,,,,,,,{{{,{{{,{{{,,,,.....bbbbbbbbbb...bbbb.,,,....[[[[[[[..bb...........#
 #....................[[[[[.-,,,...........[[[[[[[[[.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.bb.bbrbb..bbbbbb.bbbb.,,,....[[[[[[[..bb...........#
 #[[[[...........z....[[[[[..,,,-..........[[[[[[[[[.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.bb.bb.bb..bbbbbb......,,,-.[[[[.......bb.......[[[[#
 #[[[[................[[[[[..,,,-........................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.bbbb..................,,,-.[[[[.......bb.bbbb..[[[[#
@@ -470,7 +469,7 @@ Scale: 1
 #[[[[................[[[[[.-,,,-.[[[[[[[....bb...........................,,,......................bb............bbbbbb..,,,-.[[[[................[[[[#
 #[[[[................[[[[[.-,,,-.[[[[[[[....bb...........................,,,-.[[[[[.............bbbbbb..........bbbbbb..,,,-.[[[[........bb..bb..[[[[#
 #[[[[................[[[[[.-,,,-.[[[[[[[.........[[[[[[.........[[[[[[[.-,,,-.[[[[[.............bbbbbb..........bbbbbb..,,,-.[[[[........bb..bb..[[[[#
-#[[[[............bb.........,,,-.[[[[[[[.........[[[[[[.........[[[[[[[.-,,,-.[[[[[...[[[[[[[[..................bbbbbb..,,,-.[[[[............bb..[[[[#
+#[[[[............bb....y....,,,-.[[[[[[[.........[[[[[[.........[[[[[[[.-,,,-.[[[[[...[[[[[[[[..................bbbbbb..,,,-.[[[[............bb..[[[[#
 #[[[[............bb.bb......,,,..[[[[[[[.........[[[[[[.........[[[[[[[.-,,,..[[[[[...[[[[[[[[[[[[[[[[[[....k...........,,,-.................bb..[[[[#
 #[[[[........bb..bb.bb...bb.,,,..[[[[[[[.........[[[[[[.........[[[[[[[..,,,..[[[[[...[[[[[[[[[[[[[[[[[[................,,,-.................bb......#
 #[[[[........bb..bb.bbbb.bb.,,,-.[[[[[[[.........[[[[[[.........[[[[[[[..,,,-.[[[[[...[[[[[[[[[[[[[[[[[[.......d........,,,-.................bb......#
@@ -504,8 +503,10 @@ Scale: 1
 | `k` | NPC Si Kabayan, resting by the market banyan (SQ-G1) | `res://entities/npc/npc.tscn` | `{npc_id:"kabayan", cond:"flag:mqg_a1"}` | grass | 1 |
 | `d` | clue g1_debt_ledger, the official's tax ledger (SQ-G1) | `res://entities/world/clue.tscn` | `{clue_id:"g1_debt_ledger", cond:"flag:mqg_a1"}` | grass | 1 |
 | `a` | clue g1_palm_sack, Kabayan's sack; pulls into sq_g1_kabayan (SQ-G1) | `res://entities/world/clue.tscn` | `{clue_id:"g1_palm_sack", memory_id:"sq_g1_kabayan", cond:"flag:mqg_a1"}` | grass | 1 |
-| `z` | trigger c1_rooster_found, market rooftop perch (SQ-C1) | `res://entities/world/trigger.tscn` | `{trigger_id:"c1_rooster_found", size:Vector2i(4,4)}` | grass | 1 |
+| `z` | prop, handful of grain on the west roof 1 (SQ-C1 step 4 press-each x3) | `res://entities/npc/npc.tscn` | `{npc_id:"grain_roof_1", cond:"quest:sq_c1=active"}` | grass | 1 |
 | `c` | chest galuh_chest_pasar (55 Ilmu) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_pasar", item_id:"ilmu:55"}` | grass | 1 |
+| `x` | prop, handful of grain on the east roof 2 (SQ-C1 step 4) | `res://entities/npc/npc.tscn` | `{npc_id:"grain_roof_2", cond:"quest:sq_c1=active"}` | grass | 1 |
+| `y` | prop, handful of grain on the east roof 3 (SQ-C1 step 4) | `res://entities/npc/npc.tscn` | `{npc_id:"grain_roof_3", cond:"quest:sq_c1=active"}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents |
@@ -514,7 +515,7 @@ Scale: 1
 | market square | (56,22)-(96,45) | The square with the market hall `[` (68,26)-(81,32), the landmark seen straight down the north lane (74..76,1..21); 16 stalls `{` (3 tiles each) in rows | informant `I` (65,33) |
 | market streets | west street (11,32)-(55,34), east street (97,32)-(148,34), cross lanes at x 28-30, 73-75, 120-122 and y 10-12, 56-58 | Rows of stalls `{` along the west and east streets (7 more), houses `[` with fences on the other frontages | exit `N` (74,0) (75,0), spawn `n` (74,1), exit `E` (149,33) (149,34), spawn `e` (148,33) |
 | market banyan | (112,46)-(117,49) `b`, aisle (104,44)-(119,53) | Kabayan resting under the banyan (SQ-G1) | Kabayan `k` (108,50), ledger `d` (111,52), sack `a` (108,53) |
-| rooftop perch | (16,42) | Trigger `z` (16,42), south of the west street | `c1_rooster_found` |
+| rooftop perch | (16,42), (22,40), (23,49) | Three handfuls of grain laid across the roofs `z` `x` `y` | `grain_roof_1`-`3` |
 | chest corner | (123,6) beside a `b` block (126,4)-(129,7) | Chest | `c` (123,6) |
 | houses | 22 `[` lots along the lanes, 6-10 wide, 4-7 deep, each with a fence run `-`, about half with a `'` garden; back-row rooftops along the border | Dressing houses (not enterable) | none |
 
@@ -531,7 +532,7 @@ Scale: 1
 #.................#______________________#.................#
 #.................#______________________#.................#
 #...bbb...........#___________________c__#..........bbb....#
-#...bbb...........#______________________#..........bbb....#
+#...bbb...........#______Q_______R_______#..........bbb....#
 #...bbb...........#______________________#..........bbb....#
 #.................#______________________#.................#
 #.................#_____Y____P____L______#.................#
@@ -573,9 +574,11 @@ W,,,,,,,,,,,,,,,,,,_______________________.................#
 | `n` | spawn, arrival from kg_keraton | `res://entities/world/spawn.tscn` | `{id:"from_kg_keraton"}` | floor | 1 |
 | `G` | encounter pustaka_guards, archive guards (MQG g.6, `area_cleared:pustaka_guards`) | `res://entities/world/encounter.tscn` | `{area_id:"pustaka_guards", size:Vector2i(14,8), cond:"flag:mqg_4,!flag:mqg_ar1", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(3,0)]]]}` | floor | 1 |
 | `Y` | NPC Nyai Sekar, royal archivist (MQG g.6 `talked_to:nyai_sekar`, sets `mqg_ar1`; hub; her closing lines after the grate, g.16) | `res://entities/npc/npc.tscn` | `{npc_id:"nyai_sekar", cond:"flag:mqg_4"}` | floor | 1 |
-| `P` | trigger pustaka_cipher, mirror-lamp cipher (MQG g.7 `puzzle_solved:pustaka_cipher`; sets `flag:puzzle_pustaka_cipher`) | `res://entities/world/trigger.tscn` | `{trigger_id:"pustaka_cipher", size:Vector2i(4,4), cond:"flag:mqg_ar1"}` | floor | 1 |
-| `L` | clue scraped_genealogy, King Nagawiru's scraped lontar (MQG g.7, `clue_examined:scraped_genealogy`, sets `mqg_ar2`) | `res://entities/world/clue.tscn` | `{clue_id:"scraped_genealogy", cond:"flag:puzzle_pustaka_cipher"}` | floor | 1 |
+| `P` | prop, archive mirror 1 (MQG g.7, turn the mirrors in order 1-2-3; wrong order shows a hint) | `res://entities/npc/npc.tscn` | `{npc_id:"archive_mirror_1", cond:"flag:mqg_ar1"}` | floor | 1 |
+| `L` | clue scraped_genealogy, King Nagawiru's scraped lontar, readable once the third mirror throws its light (MQG g.7, `clue_examined:scraped_genealogy`, sets `mqg_ar2`) | `res://entities/world/clue.tscn` | `{clue_id:"scraped_genealogy", cond:"flag:archive_mirror_3"}` | floor | 1 |
 | `c` | chest galuh_chest_pustaka (55 Ilmu) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_pustaka", item_id:"ilmu:55"}` | floor | 1 |
+| `Q` | prop, archive mirror 2 (MQG g.7, in order) | `res://entities/npc/npc.tscn` | `{npc_id:"archive_mirror_2", cond:"flag:mqg_ar1"}` | floor | 1 |
+| `R` | prop, archive mirror 3 (MQG g.7, in order) | `res://entities/npc/npc.tscn` | `{npc_id:"archive_mirror_3", cond:"flag:mqg_ar1"}` | floor | 1 |
 
 ## Area 7: kg_kaputren
 
@@ -596,7 +599,7 @@ W,,,,,,,,,,,,,,,,,,_______________________.................#
 #.......c....________________________________..............#
 #............________________________________..............#
 #............________________________________..............#
-#............__H__T__________________________..............#
+#............__H__T___A___B__________________..............#
 #............____________________Q___________..............#
 #............________________________________..............#
 #............___________________________V____..............#
@@ -629,8 +632,8 @@ W,,,,,,,,,,,,,,,,,,_______________________.................#
 | `E` | exit to kg_penjara (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_penjara", spawn_id:"from_kg_kaputren"}` | path | 2 |
 | `e` | spawn, arrival from kg_penjara | `res://entities/world/spawn.tscn` | `{id:"from_kg_penjara"}` | path | 1 |
 | `K` | encounter kaputren_courtyard (MQG g.8, `area_cleared:kaputren_courtyard`, sets `mqg_kp1`; the champion is the miniboss) | `res://entities/world/encounter.tscn` | `{area_id:"kaputren_courtyard", size:Vector2i(15,9), cond:"flag:mqg_ar2,!flag:mqg_kp1", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,0)], [res://entities/enemies/faceless_champion.tscn, Vector2i(0,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,0)]]]}` | floor | 1 |
-| `T` | trigger kaputren_screens, guest chamber screen puzzle (MQG g.9 `puzzle_solved:kaputren_screens`; sets `flag:puzzle_kaputren_screens`) | `res://entities/world/trigger.tscn` | `{trigger_id:"kaputren_screens", size:Vector2i(4,4), cond:"flag:mqg_kp1"}` | floor | 1 |
-| `H` | clue laras_hairpin, Laras's hairpin in the guest chamber (MQG g.9, `clue_examined:laras_hairpin`, sets `mqg_kp2`) | `res://entities/world/clue.tscn` | `{clue_id:"laras_hairpin", cond:"flag:puzzle_kaputren_screens"}` | floor | 1 |
+| `T` | prop, guest chamber screen 1 (MQG g.9 press-each x3) | `res://entities/npc/npc.tscn` | `{npc_id:"kaputren_screen_1", cond:"flag:mqg_kp1"}` | floor | 1 |
+| `H` | clue laras_hairpin, Laras's hairpin behind the screens (MQG g.9, `clue_examined:laras_hairpin`, sets `mqg_kp2`) | `res://entities/world/clue.tscn` | `{clue_id:"laras_hairpin", cond:"flag:kaputren_screen_1,flag:kaputren_screen_2,flag:kaputren_screen_3"}` | floor | 1 |
 | `V` | trigger kaputren_eavesdrop, overhear Hariang Banga (MQG g.10 `area_entered:kaputren_eavesdrop`, sets `mqg_kp3`) | `res://entities/world/trigger.tscn` | `{trigger_id:"kaputren_eavesdrop", size:Vector2i(5,4), cond:"flag:mqg_kp2"}` | floor | 1 |
 | `M` | NPC g2_maid, old palace maid of the Kaputren (SQ-G2 giver, quests.md section 5; unlock `mqg_kp1`; replaces the v4d `kaputren_maid`) | `res://entities/npc/npc.tscn` | `{npc_id:"g2_maid", cond:"flag:mqg_kp1"}` | grass | 1 |
 | `F` | clue g2_broom, worn-down broom in the Kaputren (SQ-G2) | `res://entities/world/clue.tscn` | `{clue_id:"g2_broom", cond:"flag:mqg_kp1"}` | floor | 1 |
@@ -640,6 +643,8 @@ W,,,,,,,,,,,,,,,,,,_______________________.................#
 | `Q` | clue, a covered mirror in the courtyard (MQG g.8; journal note only; id `kaputren_mirror` **ASSUMED**, not in quests.md; hunt `k_ii`) | `res://entities/world/clue.tscn` | `{clue_id:"kaputren_mirror", cond:"flag:mqg_ar2"}` | floor | 1 |
 | `U` | elite ririwa (SQ-G2 fight branch, the miniboss): `unique_id`, elite stats (HP 312, Dmg 16, Ilmu 56, bestiary, **TUNE**), a plain spot inert until `mqg_kp1`, not an encounter; moved here from `kg_keraton` so SQ-G2 lives in one area; `ririwa.tscn` is new (a Pocong-class Charger, **ASSUMED**) | `res://entities/enemies/ririwa.tscn` | `{unique_id:"ririwa", cond:"flag:mqg_kp1"}` | floor | 1 |
 | `s` | clue c2_signet, Queen Pangrenyep's signet ring on the table (SQ-C2) | `res://entities/world/clue.tscn` | `{clue_id:"c2_signet", cond:"flag:c2_reply"}` | floor | 1 |
+| `A` | prop, guest chamber screen 2 (MQG g.9) | `res://entities/npc/npc.tscn` | `{npc_id:"kaputren_screen_2", cond:"flag:mqg_kp1"}` | floor | 1 |
+| `B` | prop, guest chamber screen 3 (MQG g.9) | `res://entities/npc/npc.tscn` | `{npc_id:"kaputren_screen_3", cond:"flag:mqg_kp1"}` | floor | 1 |
 
 ## Piece placement per step (Story v5)
 Every piece in the `Play` column of [quests.md](../quests.md) MQG g.1-g.20 has a place. Conds are the v5 flags (see the intro). The champion is `faceless_champion.tscn` (**ASSUMED**), wave 2 of `galuh_bout_2`, the elite of `kaputren_courtyard` and of `keraton_throne_approach`.
@@ -658,7 +663,7 @@ Every piece in the `Play` column of [quests.md](../quests.md) MQG g.1-g.20 has a
 | g.10 | `travel, talk, beat, fight` | kg_kaputren: eavesdrop `V` (`mqg_kp3`); beat `kaputren_overhear`; the exit `E` to the prison opens |
 | g.11 | `travel, clue, fight x2` | kg_penjara: stairs `P` (`mqg_4a`), ruts `R` |
 | g.12 | `setpiece, fight, beat` | `galuh_escort` `W`, wagon `V` (`mqg_4b`); board `B`; beat `galuh_escort` |
-| g.13 | `fight x2, clue, talk` | `galuh_cells` `G` (`mqg_5`), wall message `m` |
+| g.13 | `fight x2, clue, talk` | `galuh_cells` `G` (`mqg_cells`), wall message `m` (required, `mqg_5`) |
 | g.14 | `chapter, puzzle` | `m` pulls you into `lc2` (`mqg_lc`; `laras_sabotage_glamour_seal`, `laras_key_archive_grate`) |
 | g.15 | `talk, beat, clue, fight` | deserter Ranga `D` (32,7) (`mqg_6`, **Choice 2**; beats `ranga_freed` / `ranga_handed`) |
 | g.16 | `travel, puzzle, fight` | kg_pustaka grate `N` (needs `laras_key:archive_grate`; beat `grate_open`), then kg_keraton west exit `Z`, trigger `J` (`mqg_6b`) |
@@ -680,13 +685,13 @@ Marker form `{zone: "<area id>", id: ...}`. The marker id equals the spot's own 
 | g.4 the bouts | `galuh_bout_1`, `galuh_bout_2` | `kg_alun` | `E`, `F` | `area_cleared:galuh_bout_1`, sets `mqg_1`; `area_cleared:galuh_bout_2`, sets `mqg_2`; beat `galuh_bout` |
 | g.5 Lengser, the garden | `lengser`, `galuh_1` | `kg_alun`, `kg_keraton` | `L`, `P` | `talked_to:lengser`, sets `mqg_3`; `petilasan_activated:galuh_1`, sets `mqg_4` |
 | g.6 the archive | `pustaka_guards`, `nyai_sekar` | `kg_pustaka` | `G`, `Y` | `area_cleared:pustaka_guards`; `talked_to:nyai_sekar`, sets `mqg_ar1` |
-| g.7 the cipher | `pustaka_cipher`, `scraped_genealogy` | `kg_pustaka` | `P`, `L` | `puzzle_solved:pustaka_cipher`; `clue_examined:scraped_genealogy`, sets `mqg_ar2` |
+| g.7 the mirrors | `archive_mirror_1`-`3`, `scraped_genealogy` | `kg_pustaka` | `P` `Q` `R`, `L` | `talked_to:archive_mirror_1`-`3` in order; `clue_examined:scraped_genealogy`, sets `mqg_ar2` |
 | g.8 the colonnade | `kaputren_courtyard`, `kaputren_mirror` | `kg_kaputren` | `K`, `Q` | `area_cleared:kaputren_courtyard`, sets `mqg_kp1` (the mirror is a journal note) |
-| g.9 the guest chamber | `kaputren_screens`, `laras_hairpin` | `kg_kaputren` | `T`, `H` | `puzzle_solved:kaputren_screens`; `clue_examined:laras_hairpin`, sets `mqg_kp2` |
+| g.9 the guest chamber | `kaputren_screen_1`-`3`, `laras_hairpin` | `kg_kaputren` | `T` `A` `B`, `H` | `talked_to:kaputren_screen_1`-`3`; `clue_examined:laras_hairpin`, sets `mqg_kp2` |
 | g.10 the eavesdrop | `kaputren_eavesdrop` | `kg_kaputren` | `V` | `area_entered:kaputren_eavesdrop`, sets `mqg_kp3` |
 | g.11 the stairs | `penjara_stairs`, `wagon_ruts` | `kg_penjara` | `P`, `R` | `area_cleared:penjara_stairs`, sets `mqg_4a` |
 | g.12 the wagon | `galuh_escort` | `kg_penjara` | `W`, `V` | `area_cleared:galuh_escort`, sets `mqg_4b`; the board `B` appears |
-| g.13 the cells | `galuh_cells`, `laras_wall` | `kg_penjara` | `G`, `m` | `area_cleared:galuh_cells`, sets `mqg_5` |
+| g.13 the cells | `galuh_cells`, `laras_wall` | `kg_penjara` | `G`, `m` | `area_cleared:galuh_cells` (`mqg_cells`); `clue_examined:laras_wall`, sets `mqg_5` |
 | g.14 LC2 | `laras_wall` | `kg_penjara` -> `zones/kelir/lc2.tscn` | `m` | `memory_done:lc2`, sets `mqg_lc`, `laras_sabotage:glamour_seal`, `laras_key:archive_grate` |
 | g.15 Ranga, Choice 2 | `faceless_deserter` | `kg_penjara` | `D` | `talked_to:faceless_deserter`, sets `mqg_6`; `choice_freed` / `choice_handed` |
 | g.16 the grate | `keraton_upper_gallery` | `kg_keraton` | `J` | `area_entered:keraton_upper_gallery`, sets `mqg_6b` (lifts `W`) |
@@ -701,7 +706,7 @@ Marker form `{zone: "<area id>", id: ...}`. The marker id equals the spot's own 
 | MQ2 2.24 the duel | `hariang_banga`, `sapto` | `kg_pamali` | `B`, `s`, `c` | `boss_defeated:hariang_banga`, sets `mq2_9`; beat `truce` presents **Choice 3** (`choice_mercy` / `choice_judgment`), `start:mq3` |
 | SQ-G1 | `kabayan`, `g1_debt_ledger`, `g1_palm_sack`, `galuh_official` | `kg_pasar`, `kg_alun` | `k`, `d`, `a`; `k`, `f` (alun) | unlock `mqg_a1`; the alun spots `k f d a` are the v4d placement, kept alongside the pasar ones (**open**, see Doc conflicts) |
 | SQ-G2 | `g2_maid`, `g2_broom`, `g2_roll`, `ririwa_name`, `ririwa` | `kg_kaputren` | `M`, `F`, `G`, `I`, `U` | unlock `mqg_kp1`; peaceful `name_written:ririwa_name` or fight `enemy_killed:ririwa`; report back to `g2_maid` |
-| SQ-C1 | `ciung_wanara`, `c1_feathers`, `c1_basket`, `c1_rooster_found` | `kg_alun` | `C`, `m`, `o`, `z` | unlock `mqg_a1`; the `z` also exists in kg_pasar (`c1_rooster_found`) |
+| SQ-C1 | `ciung_wanara`, `c1_feathers`, `c1_basket`, `grain_roof_1`-`3` | `kg_alun`, `kg_pasar` | `C`, `m`, `o`; pasar `z` `x` `y` | unlock `mqg_a1`; step 4 is the three grain props in kg_pasar |
 | SQ-C2 | `galuh_queen` | `kg_keraton` | `q` | `talked_to:galuh_queen`, sets `c2_reply`; unlock `quest:mq2=done` |
 | MQ2 camp talk | `camp_mataram` | `kg_pamali` | `H` | `hariang_banga` entry, cond `flag:beat_truce`, `!flag:mq3_1`; `quiet`; never completes a step |
 | Codex | `galuh`, `pamali_cage`, `pamali` | `kg_alun`, `kg_penjara`, `kg_pamali` | `g` | `codex:<id>` |

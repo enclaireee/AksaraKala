@@ -7,7 +7,7 @@ script = ExtResource("1")
 npc_id = "kepala_desa"
 name_key = "NPC_KEPALA_DESA_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:sq_s2=4"], "lines": ["DLG_KEPALA_DESA_V20", "DLG_KEPALA_DESA_V21"], "do": []},
+	{"if": ["step:sq_s2=4"], "lines": ["DLG_KEPALA_DESA_V20", "DLG_KEPALA_DESA_V21"], "do": ["write:s2_grave:sunda_ka,sunda_ga"]},
 	{"if": ["quest:sq_s2=active"], "lines": ["DLG_KEPALA_DESA_V22"], "do": []},
 	{"if": ["quest:sq_s2=available", "flag:mq1_3"], "lines": ["DLG_KEPALA_DESA_V23", "DLG_KEPALA_DESA_V24", "DLG_KEPALA_DESA_V25"], "do": ["start:sq_s2"]},
 	{"if": [], "lines": ["DLG_KEPALA_DESA_V26"], "do": []}

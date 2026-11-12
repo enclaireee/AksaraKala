@@ -23,6 +23,10 @@ var _target: Node2D
 var _off := Vector2.ZERO
 var _shake_amp := 0.0
 var _shake_left := 0.0
+var _standins := {}   # id -> Sprite2D shown beside the hero for this beat
+var _wide := {}       # id -> far boss / set piece the camera may travel to this beat
+const STANDIN_AS := {"hunter": "nameless_hunter", "wiryo": "kidul_jurukunci"}   # speaker id -> npc id whose sheet row it wears
+const STANDIN_SPOTS := [Vector2(28, 0), Vector2(-28, 0), Vector2(0, -28), Vector2(44, -20), Vector2(-44, -20)]
 
 
 func _ready() -> void:
@@ -36,10 +40,15 @@ func _ready() -> void:
 	var ev := get_node("/root/Events")
 	ev.scene_cue.connect(_on_cue)
 	ev.dialogue_finished.connect(_on_dialogue_finished)
-	ev.zone_entered.connect(func(_z: String) -> void: release_camera(true))
+	ev.zone_entered.connect(func(_z: String) -> void:
+		release_camera(true)
+		_drop_cast())
 	var box := get_tree().get_first_node_in_group("dialogue_box")
 	if box != null and box.has_signal("speaker_changed"):
 		box.speaker_changed.connect(focus_speaker)
+	ev.dialogue_requested.connect(_stage)
+	if OS.has_environment("BEAT_AUDIT"):   # cutscene audit (tests/cutscene_test.gd)
+		ev.dialogue_requested.connect(_audit_talk)
 
 
 func _bar(y: float) -> ColorRect:
@@ -50,6 +59,98 @@ func _bar(y: float) -> ColorRect:
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_layer.add_child(r)
 	return r
+
+
+## Off-screen voices the audit accepts: "<id>|<first line key prefix>". Laras speaks through the lontar (LC*, BEAT_LARAS_*),
+## Semar narrates the Kelir memories (MEM_*).
+## Semar calls up the stair in wards_down; the Queen of the South is "a voice without a face" (kidul_trial).
+const AUDIT_VOICES := ["laras|LC", "laras|BEAT_LARAS_", "semar|MEM_", "semar|BEAT_WARDS_DOWN", "ratu_kidul|BEAT_KIDUL_TRIAL"]
+
+
+## BEAT_AUDIT=1: when a talk opens, prints every speaker and #cam target in it that is not in the scene within
+## MAX_SPEAKER_DIST of the hero: BEATAUDIT|zone|beat/talk|first line key|speaker/cam|id|absent/far N.
+func _audit_talk(who: String, lines: PackedStringArray) -> void:
+	var first := ""
+	for l in lines:
+		if not l.begins_with("@") and not l.begins_with("#"):
+			first = l
+			break
+	var seen := {}
+	for c in _cast(who, lines):
+		var kind: String = c[0]
+		var id: String = c[1]
+		if seen.has(kind + id) or _wide.has(id) or AUDIT_VOICES.any(func(v: String) -> bool: return v.get_slice("|", 0) == id and first.begins_with(v.get_slice("|", 1))):
+			continue
+		seen[kind + id] = true
+		var n := find_node_by_id(id)
+		var pl := get_tree().get_first_node_in_group("player") as Node2D
+		var d := -1.0 if n == null or pl == null else n.global_position.distance_to(pl.global_position)
+		if n == null and id == "semar":   # Semar off stage is a voice
+			continue
+		if n == null or d > MAX_SPEAKER_DIST:
+			var z = get_node("/root/Zones").get("current_zone") if get_node_or_null("/root/Zones") != null else ""
+			print("BEATAUDIT|%s|%s|%s|%s|%s|%s" % [z, "beat" if _beat else "talk", first, kind, id, "absent" if n == null else "far %d" % int(d)])
+
+
+## Ids a beat line names: [kind, id] for each `@NPC_<ID>_NAME` speaker and `#cam:<id>` target (hero excluded).
+func _cast(who: String, lines: PackedStringArray) -> Array:
+	var out := []
+	for l in PackedStringArray(["@" + who]) + lines:
+		if l.begins_with("@NPC_") and l.ends_with("_NAME") and l != "@NPC_HERO_NAME":
+			out.append(["speaker", l.trim_prefix("@NPC_").trim_suffix("_NAME").to_lower()])
+		elif l.begins_with("#cam:") and l != "#cam:hero":
+			out.append(["cam", l.trim_prefix("#cam:").to_lower()])
+	return out
+
+
+## A beat names someone who is not in frame: an NPC who is absent or far gets a stand-in sprite beside the hero until the
+## beat ends; a far boss or set piece is let through so the camera travels to it. Semar, when absent, stays a voice.
+## ponytail: fixed offsets around the hero, no wall check. Place the NPC in the zone doc if a stand-in lands badly.
+func _stage(who: String, lines: PackedStringArray) -> void:
+	var pl := get_tree().get_first_node_in_group("player") as Node2D if is_inside_tree() else null
+	if not _beat or pl == null:
+		return
+	for c in _cast(who, lines):
+		var id: String = c[1]
+		if id == "semar" or (_standins.has(id) and is_instance_valid(_standins[id])) or _wide.has(id):
+			continue
+		var n := find_node_by_id(id)
+		if n != null and n.global_position.distance_to(pl.global_position) <= MAX_SPEAKER_DIST:
+			continue
+		if n != null and not n is Npc:
+			_wide[id] = n
+			continue
+		var probe := Npc.new()
+		probe.npc_id = STANDIN_AS.get(id, n.npc_id if n != null else id)
+		var row := probe._row()
+		probe.free()
+		var sp := Sprite2D.new()
+		sp.name = id
+		sp.texture = Npc.SHEET
+		sp.region_enabled = true
+		sp.region_rect = Rect2(0, row * 24, 16, 24)
+		sp.offset = Vector2(0, -12)
+		pl.get_parent().add_child(sp)
+		sp.global_position = pl.global_position + STANDIN_SPOTS[_standins.size() % STANDIN_SPOTS.size()]
+		_standins[id] = sp
+	# the box announced the opening speaker before this ran: aim the camera again now the cast is on stage
+	var opener := who
+	for l in lines:
+		if not l.begins_with("#"):
+			if l.begins_with("@"):
+				opener = l.trim_prefix("@")
+			break
+	if opener != "":
+		focus_speaker(opener)
+
+
+## Frees the stand-ins and forgets the far targets (beat over, or the zone changed under a running beat).
+func _drop_cast() -> void:
+	for sp in _standins.values():
+		if is_instance_valid(sp):
+			sp.free()
+	_standins.clear()
+	_wide.clear()
 
 
 ## A beat starts: bars slide in.
@@ -63,6 +164,7 @@ func end_beat() -> void:
 	_beat = false
 	set_bars(false)
 	release_camera()
+	_drop_cast()
 
 
 func bars_on() -> bool:
@@ -89,7 +191,7 @@ func focus_speaker(name_key: String) -> void:
 	if name_key.begins_with("NPC_") and name_key.ends_with("_NAME"):
 		var n := find_node_by_id(name_key.trim_prefix("NPC_").trim_suffix("_NAME").to_lower())
 		var pl := get_tree().get_first_node_in_group("player") as Node2D if is_inside_tree() else null
-		if n != null and (pl == null or n.global_position.distance_to(pl.global_position) <= MAX_SPEAKER_DIST):
+		if n != null and (pl == null or _wide.values().has(n) or n.global_position.distance_to(pl.global_position) <= MAX_SPEAKER_DIST):
 			_target = n
 			return
 	_target = null
@@ -110,9 +212,12 @@ func find_node_by_id(id: String) -> Node2D:
 			continue
 		if "cond" in n and str(n.cond) != "" and game != null and not game.check(str(n.cond)):
 			continue
-		var exact := id in [n.get("npc_id"), n.get("id"), n.get("trigger_id"), n.get("area_id"), n.get("clue_id"), n.get("memory_id"), n.name]
-		var prefix := not exact and str(n.get("npc_id")).begins_with(id + "_")
-		var contains_id := not exact and not prefix and (id.length() >= 4 and id in str(n.get("npc_id")))
+		var dd = n.get("data")   # an NPC whose dialogue speaks under another name key (kidul_jurukunci is NPC_WIRYO_NAME)
+		var exact: bool = id in [n.get("npc_id"), n.get("id"), n.get("trigger_id"), n.get("area_id"), n.get("clue_id"), n.get("memory_id"), n.get("unique_id"), n.name] \
+				or (dd is DialogueData and dd.name_key == "NPC_%s_NAME" % id.to_upper()) \
+				or (n.get("unique_id") != null and n.scene_file_path.get_file().get_basename() == id)   # a boss placed by scene file only
+		var prefix: bool = not exact and str(n.get("npc_id")).begins_with(id + "_")
+		var contains_id: bool = not exact and not prefix and (id.length() >= 4 and id in str(n.get("npc_id")))
 		if not exact and not prefix and not contains_id:
 			continue
 		var rank := 0 if exact else (1 if prefix else 2)
@@ -169,7 +274,9 @@ func _process(delta: float) -> void:
 		return
 	var want := Vector2.ZERO
 	if _target != null:
-		want = (_target.global_position - cam.global_position).limit_length(MAX_PAN)
+		want = _target.global_position - cam.global_position
+		if not _wide.values().has(_target):
+			want = want.limit_length(MAX_PAN)
 	_off = _off.lerp(want, 1.0 - exp(-FOLLOW * delta))
 	if _target == null and _off.length() < 0.5:
 		_off = Vector2.ZERO

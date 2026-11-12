@@ -13,7 +13,7 @@ const MAP := [
 	"#.......c....________________________________..............#",
 	"#............________________________________..............#",
 	"#............________________________________..............#",
-	"#............__H__T__________________________..............#",
+	"#............__H__T___A___B__________________..............#",
 	"#............____________________Q___________..............#",
 	"#............________________________________..............#",
 	"#............___________________________V____..............#",
@@ -44,8 +44,8 @@ const SPOTS := {
 	"E": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_penjara", "spawn_id": "from_kg_kaputren"}, "tile": ","},   # exit to kg_penjara (east edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_penjara"}, "tile": ","},   # spawn, arrival from kg_penjara
 	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kaputren_courtyard", "size": Vector2i(15,9), "cond": "flag:mqg_ar2,!flag:mqg_kp1", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,0)], ["res://entities/enemies/faceless_champion.tscn", Vector2i(0,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,0)]]]}, "tile": "_"},   # encounter kaputren_courtyard (MQG g.8, `area_cleared:kaputren_courtyard`, sets `mqg_kp1`; the champion is the miniboss)
-	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kaputren_screens", "size": Vector2i(4,4), "cond": "flag:mqg_kp1"}, "tile": "_"},   # trigger kaputren_screens, guest chamber screen puzzle (MQG g.9 `puzzle_solved:kaputren_screens`; sets `flag:puzzle_kaputren_screens`)
-	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "laras_hairpin", "cond": "flag:puzzle_kaputren_screens"}, "tile": "_"},   # clue laras_hairpin, Laras's hairpin in the guest chamber (MQG g.9, `clue_examined:laras_hairpin`, sets `mqg_kp2`)
+	"T": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kaputren_screen_1", "cond": "flag:mqg_kp1"}, "tile": "_"},   # prop, guest chamber screen 1 (MQG g.9 press-each x3)
+	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "laras_hairpin", "cond": "flag:kaputren_screen_1,flag:kaputren_screen_2,flag:kaputren_screen_3"}, "tile": "_"},   # clue laras_hairpin, Laras's hairpin behind the screens (MQG g.9, `clue_examined:laras_hairpin`, sets `mqg_kp2`)
 	"V": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kaputren_eavesdrop", "size": Vector2i(5,4), "cond": "flag:mqg_kp2"}, "tile": "_"},   # trigger kaputren_eavesdrop, overhear Hariang Banga (MQG g.10 `area_entered:kaputren_eavesdrop`, sets `mqg_kp3`)
 	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "g2_maid", "cond": "flag:mqg_kp1"}, "tile": "."},   # NPC g2_maid, old palace maid of the Kaputren (SQ-G2 giver, quests.md section 5; unlock `mqg_kp1`; replaces the v4d `kaputren_maid`)
 	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g2_broom", "cond": "flag:mqg_kp1"}, "tile": "_"},   # clue g2_broom, worn-down broom in the Kaputren (SQ-G2)
@@ -55,6 +55,8 @@ const SPOTS := {
 	"Q": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "kaputren_mirror", "cond": "flag:mqg_ar2"}, "tile": "_"},   # clue, a covered mirror in the courtyard (MQG g.8; journal note only; id `kaputren_mirror` **ASSUMED**, not in quests.md; hunt `k_ii`)
 	"U": {"scene": "res://entities/enemies/ririwa.tscn", "props": {"unique_id": "ririwa", "cond": "flag:mqg_kp1"}, "tile": "_"},   # elite ririwa (SQ-G2 fight branch, the miniboss): `unique_id`, elite stats (HP 312, Dmg 16, Ilmu 56, bestiary, **TUNE**), a plain spot inert until `mqg_kp1`, not an encounter; moved here from `kg_keraton` so SQ-G2 lives in one area; `ririwa.tscn` is new (a Pocong-class Charger, **ASSUMED**)
 	"s": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c2_signet", "cond": "flag:c2_reply"}, "tile": "_"},   # clue c2_signet, Queen Pangrenyep's signet ring on the table (SQ-C2)
+	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kaputren_screen_2", "cond": "flag:mqg_kp1"}, "tile": "_"},   # prop, guest chamber screen 2 (MQG g.9)
+	"B": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kaputren_screen_3", "cond": "flag:mqg_kp1"}, "tile": "_"},   # prop, guest chamber screen 3 (MQG g.9)
 }
 
 

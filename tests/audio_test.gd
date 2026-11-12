@@ -18,7 +18,10 @@ func _initialize() -> void:
 
 
 func has_file(rel: String) -> bool:
-	return FileAccess.file_exists("res://assets/audio/" + rel + ".ogg") or ResourceLoader.exists("res://assets/audio/" + rel + ".ogg")
+	for ext: String in [".wav", ".ogg"]:
+		if FileAccess.file_exists("res://assets/audio/" + rel + ext) or ResourceLoader.exists("res://assets/audio/" + rel + ext):
+			return true
+	return false
 
 
 func run() -> void:
@@ -52,8 +55,8 @@ func run() -> void:
 				missing.append("music/" + pl[key])
 		if pl.amb != "" and not has_file("amb/" + pl.amb):
 			missing.append("amb/" + pl.amb)
-		if not has_file("sfx/step_%s_0" % pl.surface):
-			missing.append("sfx/step_%s_0" % pl.surface)
+		if not has_file("sfx/step_" + pl.surface):
+			missing.append("sfx/step_" + pl.surface)
 	for id in ["intro", "title", "select", "kelir", "ruwatan", "epilogue", "boss_kala_2", "home", "town_kampung", "town_galuh", "town_mataram", "town_kidul"]:
 		if not has_file("music/" + id):
 			missing.append("music/" + id)
@@ -65,12 +68,15 @@ func run() -> void:
 			missing.append("jingle/" + j)
 	for id in ["swing_1", "swing_2", "swing_3", "hit_light", "hit_heavy", "hit_kill", "player_hurt", "dodge", "perfect_dodge", "shoot", "flask",
 			"stamina_empty", "wrong", "stagger", "enemy_death", "player_death", "cast_begin", "ink", "cast_fail", "cast_ok_low", "cast_ok_mid",
-			"cast_ok_high", "cast_perfect", "chest_open", "pickup", "exit", "petilasan", "lontar", "thud", "shortcut_open", "puzzle_solve",
+			"cast_ok_high", "cast_perfect", "chest_open", "pickup", "exit", "petilasan", "lontar", "shortcut_open", "puzzle_solve",
 			"memory_in", "memory_out", "save", "boss_roar", "boss_slam", "boss_telegraph", "boss_phase", "boss_death", "ui_move", "ui_confirm",
-			"ui_back", "ui_open", "ui_close", "ui_page", "ui_slider", "ui_choice", "ui_start", "blip_0", "blip_5"]:
+			"ui_back", "ui_open", "ui_close", "ui_page", "ui_slider", "ui_choice", "ui_start", "blip", "arrow_hit", "enemy_telegraph", "kabut", "pickup_rare"]:
 		if not has_file("sfx/" + id):
 			missing.append("sfx/" + id)
 	check(missing.is_empty(), "all referenced audio files exist (missing: %s)" % ", ".join(missing))
+
+	check(a.stream("sfx/hit_light") is AudioStreamRandomizer, "a sound with variation files is a randomizer")
+	check(a.stream("sfx/ink", true) != null and a.stream("music/explore_sunda", true) != null, "looped wav and ogg streams load")
 
 	# --- layering ---
 	a._on_zone("ts_kebun")

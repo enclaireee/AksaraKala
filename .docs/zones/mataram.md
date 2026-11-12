@@ -169,7 +169,7 @@ Marker form `{zone: "<area id>", id: ...}` (the area in the Area column; `QuestD
 | 2.9 Lead 3 (The Lesung Yard): help Nyai Gendhis clear the haunted mill yard | `travel, fight, talk, puzzle, beat` | `mataram_lesung_yard` (Q) | `mt_wetan` (lesung yard) | `area_cleared:mataram_lesung_yard`, sets `mq2_4` |
 | 2.10 learn the dawn rhythm and Jawa Ca from Nyai Gendhis | `talk, lesson, fight x2` | `lesung_women` (Q) | `mt_wetan` (lesung yard) | `glyph_learned:jawa_ca` (Q); sets `mq2_5` |
 | 2.11 break the spirit-builder siege on the foothill shrine | `travel, clue, fight x2, miniboss` | `shrine_chisel` (**ASSUMED**), `mataram_batu_2`, `mataram_batu` (Q) | `mt_wetan` | `area_cleared:mataram_batu` (Q); sets `mq2_5b` |
-| 2.12 align the foothill shrine braziers and receive Jawa Ra | `puzzle, talk, lesson` | `puzzle_wetan_lamps` (Q), `juru_kunci` (Q) | `mt_wetan` (hut yard and hut) | `puzzle_solved:puzzle_wetan_lamps`; then `glyph_learned:jawa_ra` (Q), sets `mq2_6` (opens `K2`) |
+| 2.12 align the foothill shrine braziers and receive Jawa Ra | `puzzle, talk, lesson` | `shrine_brazier_1`-`_4` (props, in chant order) (Q), `juru_kunci` (Q) | `mt_wetan` (hut yard and hut) | `puzzle_solved:puzzle_wetan_lamps`; then `glyph_learned:jawa_ra` (Q), sets `mq2_6` (opens `K2`) |
 | 2.13 fight across the plain of rising stones (`mt_tegal`) | `travel, clue, fight x2, setpiece` | `pillar_prints` (**ASSUMED**), `mataram_tegal_pillars` (Q) | `mt_tegal` | `area_cleared:mataram_tegal_pillars`, sets `mq2_6b` |
 | 2.14 breach the outer temple gate of `mt_candi` and storm the Faceless reading-camp | `fight, talk, fight, miniboss, beat` | `mataram_candi` (Q), `hauler`, `mataram_camp_gate`, `mataram_camp_captain`, `mataram_camp` (Q) | `mt_candi` (front yard, temple court) | `area_cleared:mataram_candi`; then `area_cleared:mataram_camp` (Q), sets `mq2_7` (Beat `camp`) |
 | 2.15 K3 clues | `clue x3, talk` | `rubble`, `lesung_mid`, `ka_strip` (Q) | `mt_candi` (front yard east side, petilasan court, the court) | `all`: `clue_examined:rubble`, `clue_examined:lesung_mid`, `clue_examined:ka_strip`; sets `mq2_h1` |
@@ -425,7 +425,7 @@ Scale: 1
 #..............[[[[[[......r..,,,.[[[[[[b[[[[[[.bb.bbb....,,,.[[[[[[bbb[[[[[[.........b.,,,..............[[[[[[...bb...#
 #..############[[[[[[......r..,,,.[[[[[[b[[[[[[.bb.bbb....,,,.[[[[[[bbb[[[[[[...........,,,..############[[[[[[...bb...#
 #..#__________#...............,,,..[[[[[[[[[.......bbb..r.,,,..[[[[[[[[[................,,,..#__________#..............#
-#..#__________#...[[[[[[[[....,,,..[[[[[[[[[............r.,,,..[[[[[[[[[...[[[[[[[..b...,,,..#__________#.r.[[[[[[[[[..#
+#..#_______g__#...[[[[[[[[....,,,..[[[[[[[[[............r.,,,..[[[[[[[[[...[[[[[[[..b...,,,..#__________#.r.[[[[[[[[[..#
 #..#____D_____#...[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[...[[[[[[[......,,,..#___B__M___#.r.[[[[[[[[[..#
 #..#__________#.b.[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[.r.[[[[[[[..bbb.,,,..#___F__H___#...[[[[[[[[[..#
 #..#__________#.b.[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[.r.[[[[[[[..bbb.,,,..#__________#...[[[[[[[[[..#
@@ -513,6 +513,7 @@ Scale: 1
 | `F` | clue, tiny ash footprints in the smithy hearth (SQ-M3 clue 1 of 2) | `res://entities/world/clue.tscn` | `{clue_id:"m3_footprints", cond:"quest:sq_m3=active"}` | floor | 1 |
 | `H` | clue, half-counted green beans spilled by the stall (SQ-M3 clue 2 of 2; opens memory `sq_m3_tuyul`) | `res://entities/world/clue.tscn` | `{clue_id:"m3_beans", memory_id:"sq_m3_tuyul", cond:"quest:sq_m3=active"}` | floor | 1 |
 | `I` | clue, dropped wooden toy on the lane (SQ-M2 clue; opens memory `sq_m2_child`) | `res://entities/world/clue.tscn` | `{clue_id:"m2_toy", memory_id:"sq_m2_child", cond:"quest:sq_m2=active"}` | grass | 1 |
+| `g` | empty gong frame in Ki Sumarto's pavilion; hang the gong ageng here (SQ-M4 step 3; sets `flag:gong_frame`) | `res://entities/npc/npc.tscn` | `{npc_id:"gong_frame"}` | floor | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -736,10 +737,10 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 #...................####,#####..............,,...........................................#
 #.......................,...................LQ...........................................#
 #.......................,...................,,...........................................#
-Xe,,,,,,,,,,,,,,,,,,,,,,C,,,,,,,,,,,,,,,,,,,,,...........................................#
+Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,...........................................#
 X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,...........................................#
 #.............,,.........................................................................#
-#.............,,..................B.............................................##########
+#.............,,....2..4..1..3....B.............................................##########
 #.............,,..............................................,,,,,,,,,,,,,,,,,,,,,,J,,,tT
 #.............,,..............................................,,,,,,,,,,,,,,,,,,,,,,J,,,,T
 #.............,,....k...........................................................##########
@@ -771,7 +772,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................................
 | `Y` | exit to mt_kuburan (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"mt_kuburan", spawn_id:"from_mt_wetan"}` | path | 2 |
 | `y` | spawn, arrival from mt_kuburan | `res://entities/world/spawn.tscn` | `{id:"from_mt_kuburan"}` | path | 1 |
 | `D` | exit, the drop to mt_tegal (south cliff ledge, 2 tiles, one way, no spawn back) | `res://entities/world/exit.tscn` | `{target_zone:"mt_tegal", spawn_id:"from_mt_wetan"}` | path | 2 |
-| `T` | exit to tt_kulon (east edge, not built yet, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_kulon", spawn_id:"from_mt_wetan"}` | path | 2 |
+| `T` | exit to tt_kulon (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_kulon", spawn_id:"from_mt_wetan"}` | path | 2 |
 | `t` | spawn, arrival from tt_kulon | `res://entities/world/spawn.tscn` | `{id:"from_tt_kulon"}` | path | 1 |
 | `J` | kabut K3, east gate to Tanah Timur (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq2_9"}` | path | 2 |
 | `M` | NPC juru kunci the juru kunci (2.12, teaches Ra after `mataram_batu`) | `res://entities/npc/npc.tscn` | `{npc_id:"juru_kunci"}` | floor | 1 |
@@ -783,10 +784,13 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................................
 | `L` | trigger, beat `lengser_word` staging (plays when `flag:choice_handed`, `flag:mq2_6`, `zone:mt_wetan`; one line, in the stairs corridor below K2) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_lengser_word", size:Vector2i(2,3)}` | path | 1 |
 | `A` | NPC Nyai Gendhis and the lesung women of the foothill hamlet (2.9-2.10, teaches Ca once `mataram_lesung_yard` is cleared) | `res://entities/npc/npc.tscn` | `{npc_id:"lesung_women"}` | grass | 1 |
 | `B` | encounter mataram_batu_2 (2.11, fight 1 on the junction field) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_batu_2", size:Vector2i(18,9), waves:[[[res://entities/enemies/tuyul.tscn, Vector2i(-5,-1)], [res://entities/enemies/tuyul.tscn, Vector2i(0,3)], [res://entities/enemies/tuyul.tscn, Vector2i(5,0)]]]}` | grass | 1 |
-| `C` | trigger, puzzle `puzzle_wetan_lamps` (2.12: align the foothill shrine braziers; sets `flag:puzzle_wetan_lamps`) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_wetan_lamps", size:Vector2i(4,4)}` | path | 1 |
 | `G` | encounter mataram_lesung_yard (2.9 Lead 3: clear the haunted mill yard for Nyai Gendhis) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_lesung_yard", size:Vector2i(14,8), waves:[[[res://entities/enemies/pocong.tscn, Vector2i(-3,0)], [res://entities/enemies/tuyul.tscn, Vector2i(3,-2)], [res://entities/enemies/tuyul.tscn, Vector2i(3,2)]]]}` | grass | 1 |
 | `H` | clue, the foothill shrine steps, fresh chisel work and cold hand-prints (2.11; journal note only; id `shrine_chisel` **ASSUMED**, not in quests.md; hunt `k3`) | `res://entities/world/clue.tscn` | `{clue_id:"shrine_chisel", cond:"flag:mq2_5"}` | grass | 1 |
 | `Q` | trigger, beat `ranga_word` staging (Choice 2, freed: Ranga scouts in Act III, `SQ-C3`; plays when `flag:choice_freed`, `flag:mq2_6`, `zone:mt_wetan`; same spot as `lengser_word`, one tile east; trigger id `beat_ranga_word` **ASSUMED**) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_ranga_word", size:Vector2i(2,3)}` | path | 1 |
+| `1` | shrine brazier 1 of 4 (2.12, lit in the order of the juru kunci's chant; sets `flag:shrine_brazier_1`) | `res://entities/npc/npc.tscn` | `{npc_id:"shrine_brazier_1"}` | grass | 1 |
+| `2` | shrine brazier 2 of 4 (2.12, lit in the order of the juru kunci's chant; sets `flag:shrine_brazier_2`) | `res://entities/npc/npc.tscn` | `{npc_id:"shrine_brazier_2"}` | grass | 1 |
+| `3` | shrine brazier 3 of 4 (2.12, lit in the order of the juru kunci's chant; sets `flag:shrine_brazier_3`) | `res://entities/npc/npc.tscn` | `{npc_id:"shrine_brazier_3"}` | grass | 1 |
+| `4` | shrine brazier 4 of 4 (2.12, lit in the order of the juru kunci's chant; sets `flag:shrine_brazier_4`) | `res://entities/npc/npc.tscn` | `{npc_id:"shrine_brazier_4"}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -841,9 +845,9 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 #............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
 #............################,,,#################........................................#
 #............................M,,..................,,.....................................#
-#............................,,,H.................,,.....................................#
+#............................,,,H..R..............,,.....................................#
 #............................,P,.L................,,.....................................#
-Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.D................,,.....................................#
+Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.D..N.............,,.....................................#
 Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,.....................................#
 #.............................,,,,,,,,,,K,,,,,,,,,,,..................rr.................#
 #.............................,,,,,,,,,,,,,,,,,,,,,,..................rr.................#
@@ -894,6 +898,8 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | `J` | encounter mataram_camp_captain (**miniboss**, 2.14: the camp captain; cond `flag:mq2_6`) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp_captain", cond:"flag:mq2_6", size:Vector2i(12,10), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(0,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)]]]}` | path | 1 |
 | `K` | encounter candi_crypt_hall (2.17 descend through Laras's unlocked crypt to the central temple sanctum; cond `step:mq2=16`, so the front-yard fight cannot start it through the overlapping rect) | `res://entities/world/encounter.tscn` | `{area_id:"candi_crypt_hall", cond:"step:mq2=16", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/arca_penjaga.tscn, Vector2i(3,0)]]]}` | path | 1 |
 | `L` | clue, stitched syllable scrap / Lengser's note at the camp stake (SQ-C3 fragment 1) | `res://entities/world/clue.tscn` | `{clue_id:"c3_camp_scrap", cond:"flag:mq2_7"}` | grass | 1 |
+| `R` | NPC Ranga, the freed Faceless Deserter, at the camp stake (SQ-C3 giver if `choice_freed`) | `res://entities/npc/npc.tscn` | `{npc_id:"faceless_deserter", cond:"flag:mq2_7,flag:choice_freed"}` | grass | 1 |
+| `N` | NPC Uwa Lengser with his notes on the camp (SQ-C3 giver if `choice_handed`) | `res://entities/npc/npc.tscn` | `{npc_id:"lengser", cond:"flag:mq2_7,flag:choice_handed"}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -933,7 +939,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 #.......................,...........#___________#..........#
 #.......................,...........#___L_M_q___#..........#
 #.......................,...........#_____T_____#..........#
-#.......................,...........#___________#..........#
+#.......................,...........#___b_______#..........#
 #....................H..,...........#___________#..........#
 #.......................,...........######,######..........#
 #.......................,.................,.........#......#
@@ -964,7 +970,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,=,,,,,,Y
 | `X` | exit to mt_sawah (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"mt_sawah", spawn_id:"from_mt_tegal"}` | path | 2 |
 | `e` | spawn, arrival from mt_sawah | `res://entities/world/spawn.tscn` | `{id:"from_mt_sawah"}` | path | 1 |
 | `l` | spawn, landing of the drop from mt_wetan (no exit back) | `res://entities/world/spawn.tscn` | `{id:"from_mt_wetan"}` | path | 1 |
-| `Y` | exit to tt_sabana (east edge, pocket, not built yet, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_sabana", spawn_id:"from_mt_tegal"}` | path | 2 |
+| `Y` | exit to tt_sabana (east edge, pocket, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_sabana", spawn_id:"from_mt_tegal"}` | path | 2 |
 | `y` | spawn, arrival from tt_sabana (in the pocket on the open side of `=`) | `res://entities/world/spawn.tscn` | `{id:"from_tt_sabana"}` | path | 1 |
 | `=` | shortcut gate, boulder-blocked back road (opens from the east pocket, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:mt_tt", open_side:"e"}` | path | 2 |
 | `T` | trigger, tuyul hideout entered (SQ-M3) | `res://entities/world/trigger.tscn` | `{trigger_id:"tuyul_hideout", size:Vector2i(11,6)}` | floor | 1 |
@@ -977,6 +983,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,=,,,,,,Y
 | `E` | encounter mataram_tegal_pillars (2.13 fight across the plain of rising stones) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_tegal_pillars", size:Vector2i(15,9), waves:[[[res://entities/enemies/arca_penjaga.tscn, Vector2i(-4,0)], [res://entities/enemies/genderuwo.tscn, Vector2i(4,0)]]]}` | path | 1 |
 | `s` | pickup, batu bintang (SQ-T3 fallen meteorite fragment) | `res://entities/world/pickup.tscn` | `{item_id:"batu_bintang"}` | grass | 1 |
 | `H` | clue, scuffed prints around a fallen pillar on the plain of rising stones (2.13; journal note only; id `pillar_prints` **ASSUMED**, not in quests.md; hunt `k3`) | `res://entities/world/clue.tscn` | `{clue_id:"pillar_prints", cond:"flag:mq2_6"}` | grass | 1 |
+| `b` | bean trap, the half-counted mung beans you set down in the tuyul hideout (SQ-M3 step 2; sets `flag:bean_trap`) | `res://entities/npc/npc.tscn` | `{npc_id:"bean_trap"}` | floor | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -1274,7 +1281,7 @@ Interlock rules:
 18. `arca_base` is an inscribed object with an `npc.tscn` scene (like `batu_tulis` in Tatar Sunda), `npc_id` `arca_base`, cond `flag:lead_ruins`, at (47,21) in the courtyard, 3 tiles east of the central path. Pak Karto stays at `K` (40,8) in the outer yard as a side-quest NPC with no quest yet.
 19. Ki Sumarto stays at his house in `mt_pasar` (one NPC spot, `D`). Sapto is placed in `kg_pamali` for the `truce` beat, not here.
 20. Glyph sources open as soon as their lead is cleared: Ha (`mataram_dalang`, `lead_pasar`), Na (`arca_base`, `lead_ruins`), Ca (`lesung_women`, `lead_kuburan`). the juru kunci's entry needs `area_cleared:mataram_batu` (deed first, Pacing 4).
-21. Beat spots are trigger nodes (`beat_hunter_war` `H` in `mt_kuburan`, `beat_lengser_word` `L` in `mt_wetan`, `beat_camp` `T` in `mt_candi`). They only stage the beat. The listener plays it from `beats.tres`; each beat's `if` also carries a `zone:` part (`zone:` is not built yet, quests.md 7.1).
+21. Beat spots are trigger nodes (`beat_hunter_war` `H` in `mt_kuburan`, `beat_lengser_word` `L` in `mt_wetan`, `beat_camp` `T` in `mt_candi`). They only stage the beat. The listener plays it from `beats.tres`; each beat's `if` also carries a `zone:` part (quests.md 7.1).
 22. `hunter_war` moved from the graveyard-optional placement to `flag:lead_kuburan`.
 23. `lengser_word` is staged in the stairs corridor of `mt_wetan`, just below `K2`, so it plays after the juru kunci and before the camp.
 24. The camp encounter `mataram_camp` is counted as an encounter and in the kill counts (it was built but not listed before).

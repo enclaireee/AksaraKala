@@ -24,8 +24,9 @@ marker = {"zone": "kg_alun", "id": "sq_c1_basket"}
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_SQ_C1_S4_OBJ"
-on = "area_entered:c1_rooster_found"
-marker = {"zone": "kg_pasar", "id": "c1_rooster_found"}
+all = [{"on": "talked_to:grain_roof_1", "set_flag": "", "objective": "Q_SQ_C1_S4_P1", "marker": {"zone": "kg_pasar", "id": "grain_roof_1"}}, {"on": "talked_to:grain_roof_2", "set_flag": "", "objective": "Q_SQ_C1_S4_P2", "marker": {"zone": "kg_pasar", "id": "grain_roof_2"}}, {"on": "talked_to:grain_roof_3", "set_flag": "", "objective": "Q_SQ_C1_S4_P3", "marker": {"zone": "kg_pasar", "id": "grain_roof_3"}}]
+set_flag = "c1_rooster_found"
+marker = {"zone": "kg_pasar", "id": "grain_roof_1"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")

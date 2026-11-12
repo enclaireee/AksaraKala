@@ -135,6 +135,60 @@ The story plays like a full-scale narrative RPG (inspired by *The Witcher 3*, *B
 5. **The fight is taught through play (Rule 13):** Every boss's core mechanic is learned organically before the fight—sometimes through a **Kelir memory** (`K1`, `K2`, `K3`, `K5`, `K7`), sometimes through **multi-zone survival encounters** (Buto Ijo's pouches across Tanah Timur), **palace faction sabotage** (Laras's `LC2` signet wax against Barma Wijaya), or **combat sparring** (Jawa `Na` guard-break before Hariang Banga).
 6. **Story so far & Grouped Clues (Rule 14):** Every completed main step adds a 1–2 line past-tense recap (`Q_<QUEST>_S<n>_DONE`) to the Journal's **"Story so far"** tab, and clues are grouped by investigation/arc.
 
+### Voice & Continuity Bible (v6, ASSUMED)
+Every line of quest text and dialogue follows this. It sits on top of the rules above; where they differ, this wins. The step-by-step flow it serves is [quests.md](quests.md) §9.
+
+**How the game should sound**
+1. **Indonesian is written first.** Spoken, everyday Indonesian (*nggak*, *kok*, *sih*, *dulu*, *Bu*, *Kang*, *Mbok*, *Nduk*, *Le*) the way people in a village or a court actually talk, never textbook or translated-sounding. Sunda regions colour it with a few Sundanese words (*teh*, *mah*, *atuh*, *Kang*, *Nyai*), Jawa regions with a few Javanese ones (*to*, *lho*, *Mbah*, *Nduk*, *monggo*). One or two per conversation, never a wall of dialect.
+2. **English is then written fresh**, saying the same thing the way a native speaker would. It is not a word-for-word translation. Honorifics and culture words stay (Ibu, Kang, Mbah, lontar, kelir); everything else is plain English. No "Greetings, traveller", no "It is said that".
+3. **Warm and grounded.** People talk about rice, rain, feet, debts, children and tea. Feeling comes through things and habits (the second cup, the ribbon, a lamp that needs oil), not through a character naming their feeling. One image per speech, then stop.
+4. **Short.** One line is one thought, at most ~100 English characters. A main-path talk is 4–8 lines; a beat at most 10. If a line explains history, a system or a legend, it moves behind an optional "Ask about..." topic or into the Codex.
+5. **Each talk does three jobs in order:** react to what just happened, give one human moment, and hand over the next thing to do with its reason. The last line always makes the next objective obvious without quoting it.
+6. **The hero speaks.** `{name}` gets short, dry, sincere lines (one in three or four), so talks are conversations, not briefings. The hero never narrates lore.
+7. **Humour belongs to the punakawan and the children** (Cepot above all, Kabayan in Galuh). Never in a grief scene, never from a boss.
+8. **Bosses and spirits speak little and plainly.** They are sad or bound, not evil; they never taunt. Batara Kala and Nyi Roro Kidul are spoken of with respect and never joke or threaten.
+
+**Quest text**
+- **Title:** 2–4 words, a thing or a place from the quest, not a summary.
+- **Objective (`_OBJ`):** one imperative sentence that names exactly what the hands do and where ("Light the four stage lamps", "Raise the three name-stones in the order of the sun"). The verb must be true: *talk, find, read, light, turn, raise, hang, write, cast, defeat, reach, follow*. Never "solve the puzzle", never a verb the game does not perform.
+- **Hint (`_HINT`):** one sentence a friend would say if you were stuck, naming the place or the trick. No coordinates.
+- **Recap (`_DONE`):** past tense, first person, 1–2 sentences in the hero's diary voice: what I did, and the one thing I learned or felt. Read in order, the recaps tell the whole game. A recap never contradicts another, and never names something the player has not met.
+- **Description (`_DESC`):** who asked, and why it matters to them, in two sentences.
+
+**Voices**
+| Who | Sounds like | Never |
+|---|---|---|
+| `{name}` | Dry, careful, kind. Asks short questions. Jokes only with Laras and Cepot | Speeches, lore |
+| Laras | Quick, teasing, hears more than she says. Calls you *Kak*. Her notes are short and practical with one joke | Helpless or solemn |
+| Ibu | Practical love: food, weather, "have you eaten". After the raid she trails off mid-sentence and does not know why | Explaining her sadness |
+| Semar | Slow, plain, a little funny. Answers a question with a smaller question. Calls you *Le* / *Nduk* by pronoun | Riddles for their own sake, grand prophecy |
+| Cepot | Loud, bragging, scared, loyal. Talks about food and his own bravery. Runs toward trouble while complaining | Wise summaries |
+| Ciung Wanara | Blunt, short, proud. Says "we" late and it matters. Softer around birds and children | Courtly speech before Act III |
+| Hariang Banga | Formal, exact, tired. Apologises once and means it | Villain lines |
+| Naganingrum | Quiet, watchful, speaks of water and waiting | Self-pity |
+| Uwa Lengser | Fussy old courtier, whispers, counts things, loves gossip | Bravery speeches |
+| Nyai Sekar | Dry scholar, precise, pleased by a good question | Mysticism |
+| Barma Wijaya | Charming in public, every sentence is a small gift. In private his sentences break off | Cackling |
+| Ranga | Halting. Loses words, finds one, holds it | Fluent explanation |
+| Ki Sumarto | A performer: warm with a crowd, hollow when he mentions his son | Lecturing about wayang |
+| Nyai Gendhis | Stubborn, working-woman humour, speaks for the group | Meekness |
+| Mpu Wirasana / Ratna | He: few words, measures everything. She: quick, argues with him out of love | Forge mysticism |
+| Mbok Srini | Fierce, tired mother; bargains with everyone including giants | Fairy-tale diction |
+| Mbah Wiryo / Sari | He: gentle, talks to the sea as to a neighbour. She: brisk, practical, twelve going on forty | Fear-mongering about the sea |
+
+**Continuity (things every writer keeps the same)**
+- **Ciung is the old couple's foster grandson** everywhere (never "the neighbours' boy").
+- **The second cup.** Ibu sets out two cups from the morning after the raid; it is mentioned again at 0.12, 4.1–4.4 and the Epilogue, and nowhere is it explained.
+- **Laras's trail** is one object per act: ribbon (I), hairpin and wall message (II), the `Ka` strip (III), the sight of her at the altar (IV). Each new one is compared with the last by the hero in one line.
+- **The morning game.** The cat Si Belang, the well and the banyan root from 0.1 are named again in the Interlude and are the three details of gap memory `La`.
+- **Lamp oil.** Bought for Ibu at 0.4, used on the stage lamps at 0.7; whenever lamps are lit later (1.8, 2.12, 4.13) one line remembers that night.
+- **Mask fragment** is the only name for what the Hunter leaves behind; one per act, always after a boss.
+- **Glyph names** are only the real ones (Sunda `Ca Ga Ka La Nga Ra Sa`, Jawa `Ca Ha Ka Na Ra`). *Ombak* is the spell of Jawa `Ka`.
+- **Every act ends by saying why you go on** (who sends you, and what of Laras's points there). Every act begins by picking up that exact thread in its first talk.
+- **Side quests** are offered by the person named in [quests.md](quests.md) §9.9 on that step, and each leaves one flag-gated line later. A side quest's recap mentions the main-path person who sent you.
+- **Choices are remembered aloud.** The first talk of the next act, and each companion's petilasan line, has a variant per choice outcome.
+- **A recap or line never promises a thing the game does not do.** If the text needs an action that is not built, change the text.
+
 ### Runtime Table & Content Model (v5, TUNE)
 Measured and enforced by `python3 .docs/pacing_model.py`:
 

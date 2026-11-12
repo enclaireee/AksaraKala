@@ -30,7 +30,7 @@ const MAP := [
 	"#_______#####_____________________________________________________#########______________#",
 	"#_______#####_________________#########_____________rr____________#########______________#",
 	"#_______#####_________________#########_____________rr____________#########______________#",
-	"#_______#####_________________#########___________________________#########______________#",
+	"#_______#####_________O_______#########___________________________#########______________#",
 	"#_____________________________#########___________________________#########______________#",
 	"#_____________________V_______#########__________________________________________________#",
 	"#________________________________________________________________________________________#",
@@ -47,11 +47,12 @@ const SPOTS := {
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_lupa"}, "tile": "_"},   # spawn, arrival from gk_lupa (inside the pocket)
 	"+": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:gk_lorong", "open_side": "n"}, "tile": "_"},   # shortcut gate sc:gk_lorong, sand-choked arch (opens from the north pocket, 2 tiles)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "kala_2"}, "tile": "_"},   # petilasan 2
-	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_mulut", "size": Vector2i(20,11), "cond": "flag:mq5_choice6,!flag:mq5_1b", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(8,0)]]]}, "tile": "_"},   # encounter kala_mulut (5.3 `area_cleared:kala_mulut`, sets `mq5_1b`)
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_mulut", "size": Vector2i(20,11), "cond": "flag:mq5_choice6,flag:ombak_barrier,!flag:mq5_1b", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(8,0)]]]}, "tile": "_"},   # encounter kala_mulut (5.3 `area_cleared:kala_mulut`, sets `mq5_1b`)
 	"A": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_mulut_2", "size": Vector2i(18,9), "cond": "flag:mq5_choice6", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,2)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(4,0)]]]}, "tile": "_"},   # encounter kala_mulut_2 (5.3, second fight, east road)
 	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "letter_la", "memory_id": "la", "cond": "flag:mq5_1b"}, "tile": "_"},   # clue, a faded floating letter *La* (5.4; opens gap memory `la`; cond `flag:mq5_1b`; ASSUMED id)
 	"C": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kala_chest_0", "item_id": "ilmu:300"}, "tile": "_"},   # chest: 300 Ilmu (north nook, rule 7 optional find, ASSUMED)
 	"V": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "eclipse_veil", "cond": "flag:mq5_choice6"}, "tile": "_"},   # clue, the Eclipse veil across the cave mouth; the player draws *Ombak* to part it (5.3 `clue` piece; journal note only; id `eclipse_veil`, hunt `kala`; ASSUMED position by the arrival from `gk_pelataran`)
+	"O": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ombak_barrier"}, "tile": "_"},   # the Eclipse barrier across the cave mouth; cast Ombak (Jawa Ka) at it (5.3; `flag:ombak_barrier` is set by the cast)
 }
 
 

@@ -25,10 +25,10 @@ const MAP := [
 	"#___________________rr________________rr___________________#",
 	"#___________________rr________________rr___________________#",
 	"#__________________________________________________________#",
-	"#_____________________________T____________________________#",
 	"#__________________________________________________________#",
+	"#_________________________1_______3________________________#",
 	"#______________rr__________________________rr______________#",
-	"#______________rr__________________________rr______________#",
+	"#______________rr_____________2____________rr______________#",
 	"#__________________________________________________________#",
 	"#__________________________________________________________#",
 	"#__________________________________________________________#",
@@ -44,9 +44,11 @@ const SPOTS := {
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_lupa", "spawn_id": "from_gk_hutan"}, "tile": "_"},   # exit to gk_lupa (south edge, 2 tiles)
 	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_lupa"}, "tile": "_"},   # spawn, arrival from gk_lupa
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "kala_hutan_echoes", "size": Vector2i(15,9), "cond": "flag:mq5_1c,!flag:mq5_1cb", "waves": [[["res://entities/enemies/kuntilanak.tscn", Vector2i(-4,0)], ["res://entities/enemies/kemamang.tscn", Vector2i(4,-2)], ["res://entities/enemies/kemamang.tscn", Vector2i(4,2)]]]}, "tile": "_"},   # encounter kala_hutan_echoes (5.6 `area_cleared:kala_hutan_echoes`)
-	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "hutan_name_chimes", "size": Vector2i(4,4), "cond": "flag:mq5_1c"}, "tile": "_"},   # trigger, whispering name-chimes puzzle (5.6 `puzzle_solved:hutan_name_chimes`, sets `mq5_1cb`)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kala_chest_hutan", "item_id": "ilmu:55"}, "tile": "_"},   # chest: 55 Ilmu
 	"N": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "name_trees", "cond": "flag:mq5_1c"}, "tile": "_"},   # clue, the whispering stone name-trees (5.6; journal note only; id `name_trees`, hunt `kala`; ASSUMED position)
+	"1": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "whisper_tree_1", "cond": "flag:mq5_1c"}, "tile": "_"},   # whispering name-tree 1 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_1`)
+	"2": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "whisper_tree_2", "cond": "flag:mq5_1c"}, "tile": "_"},   # whispering name-tree 2 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_2`)
+	"3": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "whisper_tree_3", "cond": "flag:mq5_1c"}, "tile": "_"},   # whispering name-tree 3 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_3`)
 }
 
 

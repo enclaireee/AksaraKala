@@ -13,7 +13,7 @@ const MAP := [
 	"#.......................,...........#___________#..........#",
 	"#.......................,...........#___L_M_q___#..........#",
 	"#.......................,...........#_____T_____#..........#",
-	"#.......................,...........#___________#..........#",
+	"#.......................,...........#___b_______#..........#",
 	"#....................H..,...........#___________#..........#",
 	"#.......................,...........######,######..........#",
 	"#.......................,.................,.........#......#",
@@ -42,7 +42,7 @@ const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_sawah", "spawn_id": "from_mt_tegal"}, "tile": ","},   # exit to mt_sawah (west edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_sawah"}, "tile": ","},   # spawn, arrival from mt_sawah
 	"l": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_wetan"}, "tile": ","},   # spawn, landing of the drop from mt_wetan (no exit back)
-	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_sabana", "spawn_id": "from_mt_tegal"}, "tile": ","},   # exit to tt_sabana (east edge, pocket, not built yet, 2 tiles)
+	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_sabana", "spawn_id": "from_mt_tegal"}, "tile": ","},   # exit to tt_sabana (east edge, pocket, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_sabana"}, "tile": ","},   # spawn, arrival from tt_sabana (in the pocket on the open side of `=`)
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:mt_tt", "open_side": "e"}, "tile": ","},   # shortcut gate, boulder-blocked back road (opens from the east pocket, 2 tiles)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "tuyul_hideout", "size": Vector2i(11,6)}, "tile": "_"},   # trigger, tuyul hideout entered (SQ-M3)
@@ -55,6 +55,7 @@ const SPOTS := {
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_tegal_pillars", "size": Vector2i(15,9), "waves": [[["res://entities/enemies/arca_penjaga.tscn", Vector2i(-4,0)], ["res://entities/enemies/genderuwo.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter mataram_tegal_pillars (2.13 fight across the plain of rising stones)
 	"s": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "batu_bintang"}, "tile": "."},   # pickup, batu bintang (SQ-T3 fallen meteorite fragment)
 	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "pillar_prints", "cond": "flag:mq2_6"}, "tile": "."},   # clue, scuffed prints around a fallen pillar on the plain of rising stones (2.13; journal note only; id `pillar_prints` **ASSUMED**, not in quests.md; hunt `k3`)
+	"b": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "bean_trap"}, "tile": "_"},   # bean trap, the half-counted mung beans you set down in the tuyul hideout (SQ-M3 step 2; sets `flag:bean_trap`)
 }
 
 

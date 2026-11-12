@@ -1,5 +1,6 @@
 """Instruments: each returns a mono float array (note + natural ring-out)."""
 import numpy as np
+import sampler as S
 from dsp import (SR, RNG, n_of, tt, noise, exp_env, adsr, fade, lowpass, highpass, bandpass, peak, phase_of, sine,
                  lfo, softclip)
 
@@ -55,16 +56,6 @@ def peking(f, dur=0.25, vel=0.8, beat=0.9, **_):
     return fade(y * 0.42, 0.001, 0.03)
 
 
-def gender(f, dur=0.8, vel=0.8, **_):
-    """Metallophone with tube resonators: softer attack, sustained, gently pulsing."""
-    n = n_of(max(dur, 0.5) + 2.8)
-    t = np.arange(n) / SR
-    y = _partials(f, n, [(1, 1.0), (2.0, 0.38), (3.01, 0.17), (4.1, 0.08)], vel, 3.0, beat=0.6)
-    y *= 1 + 0.12 * np.sin(2 * np.pi * 5.7 * t)
-    y *= 1 - np.exp(-t / 0.004)
-    return fade(y * 0.5, 0.002, 0.1)
-
-
 def bonang(f, dur=0.4, vel=0.8, **_):
     n = n_of(max(dur, 0.3) + 1.3)
     y = _partials(f, n, [(1, 1.0), (2.37, 0.55), (4.09, 0.3), (6.5, 0.14)], vel, 1.1, beat=1.1)
@@ -99,6 +90,8 @@ def gong(f=58.0, dur=6.0, vel=0.9, **_):
         y += a * (0.5 + 0.5 * vel) ** (1 + 0.3 * i) * s * dec * bloom
     m = n_of(0.4)
     y[:m] += lowpass(noise(0.4), 400, 1)[:m] * np.exp(-t[:m] / 0.05) * 0.4
+    shim = highpass(S.resample(S.hit("gong_hit_f"), float(np.clip(f / 58.0, 0.7, 1.5)), n), 500, 1)   # real metal on top
+    y[:len(shim)] += shim * 0.5 * vel
     return fade(y * 0.34, 0.002, 0.2)
 
 
@@ -125,126 +118,9 @@ def kecer(vel=0.8, **_):
 # drums
 # ---------------------------------------------------------------------------------------------------------------
 
-def _drum(f0, f1, sweep_t, dec, body_noise=0.25, vel=0.8, n_sec=None, nlp=900):
-    n = n_of(n_sec or dec * 2.2)
-    t = np.arange(n) / SR
-    fr = f1 + (f0 - f1) * np.exp(-t / sweep_t)
-    y = np.sin(phase_of(fr)) * np.exp(-6.9 * t / dec)
-    y += 0.25 * np.sin(phase_of(fr * 2.3)) * np.exp(-6.9 * t / (dec * 0.4))
-    nz = lowpass(noise(n / SR), nlp, 1) * np.exp(-t / 0.012) * body_noise
-    return fade((y + nz) * (0.4 + 0.6 * vel), 0.0008, 0.03)
-
-
-def kendang(kind="dung", vel=0.8, **_):
-    if kind == "dung":   # open low
-        return _drum(190, 112, 0.05, 0.32, 0.35, vel)
-    if kind == "tung":   # open mid
-        return _drum(300, 205, 0.04, 0.22, 0.3, vel)
-    if kind == "ket":    # muted
-        return _drum(250, 180, 0.02, 0.07, 0.5, vel)
-    if kind == "tak":    # slap
-        n = n_of(0.16)
-        t = np.arange(n) / SR
-        y = bandpass(noise(0.16), 1700, 5200, 2) * np.exp(-t / 0.035) * 0.8
-        y += np.sin(phase_of(np.full(n, 520.0))) * np.exp(-t / 0.03) * 0.45
-        return fade(y * (0.3 + 0.7 * vel), 0.0004, 0.02)
-    if kind == "de":     # high open
-        return _drum(420, 320, 0.03, 0.15, 0.3, vel)
-    raise ValueError(kind)
-
-
-def bedug(vel=0.9, f=64.0, dec=0.9, **_):
-    """Big war/temple drum."""
-    n = n_of(dec * 1.6)
-    t = np.arange(n) / SR
-    fr = f * (1 + 1.1 * np.exp(-t / 0.045))
-    y = np.sin(phase_of(fr)) * np.exp(-6.9 * t / dec)
-    y += 0.5 * np.sin(phase_of(fr * 1.58)) * np.exp(-6.9 * t / (dec * 0.35))
-    y += lowpass(noise(n / SR), 500, 1) * np.exp(-t / 0.02) * 0.6
-    y += 0.2 * highpass(noise(n / SR), 2000, 1) * np.exp(-t / 0.01)
-    return fade(softclip(y * (0.7 + 0.5 * vel), 1.3) * 0.75, 0.0008, 0.05)
-
-
-def ketipung(vel=0.8, **_):
-    return _drum(330, 240, 0.03, 0.16, 0.25, vel)
-
-
 # ---------------------------------------------------------------------------------------------------------------
 # winds, strings, pads
 # ---------------------------------------------------------------------------------------------------------------
-
-def suling(f, dur=1.0, vel=0.7, vib=1.0, breath=1.0, scoop=1.0, **_):
-    """Bamboo flute: near-sine with a little 2nd/3rd, breath, late vibrato, upward scoop."""
-    n = n_of(dur + 0.25)
-    t = np.arange(n) / SR
-    vdepth = vib * 0.0035 * np.clip((t - 0.18) / 0.35, 0, 1)
-    fr = f * (1 + vdepth * np.sin(2 * np.pi * 5.3 * t)) * (1 - 0.012 * scoop * np.exp(-t / 0.06))
-    ph = phase_of(fr)
-    y = np.sin(ph) + (0.18 + 0.4 * vel * vel) * np.sin(2 * ph) + 0.07 * vel * np.sin(3 * ph)
-    env = adsr(n, 0.06, 0.1, 0.86, 0.16)
-    env *= 1 + 0.06 * np.sin(2 * np.pi * 4.4 * t + 1)
-    nz = bandpass(noise(n / SR), max(300, f * 1.3), min(f * 7, 12000), 1)
-    nz *= (0.07 + 0.08 * vel) * breath * (0.6 + 0.4 * np.exp(-t / 0.12))
-    y = (y + nz) * env
-    return fade(y * 0.42 * (0.45 + 0.55 * vel), 0.004, 0.06)
-
-
-def rebab(f, dur=1.0, vel=0.7, vib=1.0, **_):
-    """Two-string bowed fiddle: slow attack, nasal formants, vibrato."""
-    n = n_of(dur + 0.2)
-    t = np.arange(n) / SR
-    fr = f * (1 + vib * 0.006 * np.clip((t - 0.1) / 0.3, 0, 1) * np.sin(2 * np.pi * 5.0 * t))
-    ph = phase_of(fr)
-    y = np.zeros(n)
-    for h in range(1, 18):
-        if f * h > 9000:
-            break
-        form = 1 + 1.6 * np.exp(-0.5 * (np.log2(f * h / 1250) / 0.45) ** 2) + 0.9 * np.exp(-0.5 * (np.log2(f * h / 2500) / 0.4) ** 2)
-        y += np.sin(h * ph) / h ** 0.85 * form
-    bow = bandpass(noise(n / SR), 1500, 6000, 1) * 0.05
-    env = adsr(n, 0.09, 0.15, 0.85, 0.18)
-    return fade((y * 0.2 + bow) * env * (0.4 + 0.6 * vel), 0.01, 0.08)
-
-
-def tarompet(f, dur=0.8, vel=0.8, vib=1.0, **_):
-    """Sundanese double-reed: reedy, nasal, assertive. Great for combat lines."""
-    n = n_of(dur + 0.15)
-    t = np.arange(n) / SR
-    fr = f * (1 + vib * 0.004 * np.clip((t - 0.15) / 0.3, 0, 1) * np.sin(2 * np.pi * 5.6 * t)) * (1 - 0.02 * np.exp(-t / 0.05))
-    ph = phase_of(fr)
-    y = np.zeros(n)
-    for h in range(1, 24):
-        if f * h > 10000:
-            break
-        form = 1 + 2.2 * np.exp(-0.5 * (np.log2(f * h / 1100) / 0.5) ** 2) + 1.4 * np.exp(-0.5 * (np.log2(f * h / 2300) / 0.4) ** 2)
-        y += np.sin(h * ph + 0.3 * h) / h ** 0.7 * form
-    env = adsr(n, 0.03, 0.08, 0.88, 0.1)
-    y = softclip(y * 0.25, 1.4) * env
-    return fade(y * 0.5 * (0.5 + 0.5 * vel), 0.003, 0.05)
-
-
-def kacapi(f, dur=1.0, vel=0.8, pluck=0.3, **_):
-    """Sundanese zither: bright plucked string with inharmonic overtones."""
-    n = n_of(max(dur, 0.4) + 1.6)
-    t = np.arange(n) / SR
-    y = np.zeros(n)
-    B = 0.00025
-    for h in range(1, 20):
-        fr = f * h * np.sqrt(1 + B * h * h)
-        if fr > SR * 0.45:
-            break
-        a = np.sin(np.pi * h * pluck) / h ** 1.15
-        dec = np.exp(-6.9 * t / (2.2 / (1 + 0.7 * (h - 1))))
-        y += a * dec * np.sin(2 * np.pi * fr * t + h)
-    c = _click(2, 0.3 * vel, 3000)
-    y[: len(c)] += c
-    y *= 0.8 + 0.5 * vel
-    return fade(y * 0.55, 0.0008, 0.1)
-
-
-def harp(f, dur=1.0, vel=0.8, **_):
-    return kacapi(f, dur, vel, pluck=0.18)
-
 
 def angklung(f, dur=0.8, vel=0.8, shake=True, **_):
     """Bamboo rattle: octave tube pair, rapid shaken taps."""
@@ -266,7 +142,10 @@ def angklung(f, dur=0.8, vel=0.8, shake=True, **_):
 
 
 def pad(f, dur=4.0, vel=0.6, kind="strings", att=0.9, rel=1.3, bright=0.5, **_):
-    """Sustained pad. kind: strings | choir | drone."""
+    """Sustained pad. kind: strings (recorded sections) | choir | drone (synthesised)."""
+    if kind == "strings":
+        sec = "strings_vc" if f < 185 else ("strings_vla" if f < 370 else "strings_vln")
+        return S.note(S.bank(sec), f, dur, vel, 0.15, att=att * 0.6, rel=rel)
     n = n_of(dur + rel)
     t = np.arange(n) / SR
     voices = [-9, -3, 3, 9] if kind != "drone" else [-5, 5]
@@ -290,22 +169,6 @@ def pad(f, dur=4.0, vel=0.6, kind="strings", att=0.9, rel=1.3, bright=0.5, **_):
         y += 0.08 * bandpass(noise(n / SR), 600, 3500, 1)
     env = adsr(n, att, 0.3, 0.9, rel)
     return fade(y * env * 0.12 * (0.4 + 0.6 * vel), 0.01, 0.1)
-
-
-def bass(f, dur=0.6, vel=0.8, kind="pluck", **_):
-    """Low voice: pluck (rounded, short) or bow (sustained cello-like)."""
-    n = n_of(dur + 0.3)
-    t = np.arange(n) / SR
-    ph = phase_of(np.full(n, f))
-    if kind == "bow":
-        fr = f * (1 + 0.004 * np.clip((t - 0.2) / 0.3, 0, 1) * np.sin(2 * np.pi * 4.8 * t))
-        ph = phase_of(fr)
-        y = sum(np.sin(h * ph) / h ** 1.1 * (1 + 1.2 * np.exp(-0.5 * (np.log2(f * h / 600) / 0.5) ** 2)) for h in range(1, 16) if f * h < 6000)
-        y = y * adsr(n, 0.12, 0.2, 0.85, 0.2)
-        return fade(y * 0.22 * (0.4 + 0.6 * vel), 0.01, 0.08)
-    y = np.sin(ph) + 0.5 * np.sin(2 * ph) * np.exp(-t / 0.25) + 0.25 * np.sin(3 * ph) * np.exp(-t / 0.12)
-    y = y * np.exp(-6.9 * t / max(dur * 1.4, 0.2))
-    return fade(y * 0.55 * (0.4 + 0.6 * vel), 0.002, 0.06)
 
 
 def sub_boom(f=40.0, dur=2.0, vel=1.0, **_):
@@ -341,3 +204,78 @@ def riser(dur=4.0, f0=200.0, f1=2400.0, vel=0.8):
 
 def reverse(x):
     return fade(x[::-1].copy(), 0.01, 0.002)
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# recorded instruments (sampler.py). Gains match the levels of the synth voices they replaced.
+# ---------------------------------------------------------------------------------------------------------------
+
+def gender(f, dur=0.8, vel=0.8, **_):
+    """Vibraphone, soft mallets: the nearest recorded relative of the gender's tube-resonated bars."""
+    return S.note(S.bank("vibes", False), f, max(dur, 0.5), vel, 0.6, ring=2.8)
+
+
+_KENDANG = {"dung": ("Tumba_HitN_v3", 1.0), "tung": ("Conga_HitN_v2", 1.0), "ket": ("Conga_HitFM_v2", 0.6),
+            "tak": ("Quinto_HitFM1_v2", 0.8), "de": ("Quinto_HitN_v2", 1.0), "ketipung": ("Quinto_HitN_v2", 1.0)}
+
+
+def kendang(kind="dung", vel=0.8, **_):
+    """Hand drums (conga family) standing in for the kendang; two round-robin takes per stroke. Table: stem, level."""
+    stem, lvl = _KENDANG[kind]
+    x = S.hit("%s_rr%d_Sum" % (stem, RNG.integers(1, 3)))
+    y = S.resample(x, (1.18 if kind == "ketipung" else 1.0) * RNG.uniform(0.985, 1.015), n_of(0.7))
+    return fade(y * lvl * (0.4 + 0.6 * vel), 0.0005, 0.05)
+
+
+def ketipung(vel=0.8, **_):
+    return kendang("ketipung", vel)
+
+
+def bedug(vel=0.9, f=64.0, dec=0.9, **_):
+    """Big war/temple drum: a large mallet drum over an orchestral bass drum."""
+    n = n_of(dec * 1.6)
+    r = float(np.sqrt(f / 64.0))
+    y = S.resample(S.hit("EthnicLargeMallet_hit_ff_1" if vel >= 1.0 else "EthnicLargeMallet_hit_f_1"), r, n)
+    b = S.resample(S.hit("bassdrum_hit_f"), r, n)
+    k = min(len(y), len(b))
+    y = y[:k] + b[:k] * 0.6
+    y *= np.exp(-3.0 * np.arange(len(y)) / n)
+    return fade(y * 0.75 * (0.7 + 0.5 * vel), 0.0005, 0.05)
+
+
+def suling(f, dur=1.0, vel=0.7, **_):
+    """Recorder, with the concert flute taking over above its range."""
+    rec = S.bank("recorder")
+    pool = rec + [s for s in S.bank("flute") if s[0] > rec[-1][0] * 1.05]
+    return S.note(pool, f, dur, vel, 0.28, att=0.03, rel=0.18)
+
+
+def rebab(f, dur=1.0, vel=0.7, **_):
+    """Solo violin, vibrato."""
+    return S.note(S.bank("violin"), f, dur, vel, 0.24, att=0.06, rel=0.2)
+
+
+def tarompet(f, dur=0.8, vel=0.8, **_):
+    """Oboe: the double reed of the orchestra for the tarompet's lines."""
+    return S.note(S.bank("oboe"), f, dur, vel, 0.22, att=0.02, rel=0.12)
+
+
+def kacapi(f, dur=1.0, vel=0.8, **_):
+    """Plucked zither (dan tranh)."""
+    return S.note(S.bank("zither", False), f, max(dur, 0.4), vel, 0.9, ring=1.6)
+
+
+def harp(f, dur=1.0, vel=0.8, **_):
+    return S.note(S.bank("harp", False), f, max(dur, 0.4), vel, 0.65, ring=2.0)
+
+
+def strings(f, dur=1.0, vel=0.7, **_):
+    """String section playing a line (pad() holds chords)."""
+    return pad(f, dur, vel, "strings", att=0.12, rel=0.35)
+
+
+def bass(f, dur=0.6, vel=0.8, kind="pluck", **_):
+    """Contrabass: pizzicato or bowed."""
+    if kind == "bow":
+        return S.note(S.bank("bass_arco"), f, dur, vel, 0.17, att=0.08, rel=0.25)
+    return S.note(S.bank("bass_pizz", False), f, dur, vel, 0.75, ring=0.5)

@@ -7,7 +7,7 @@ const MAP := [
 	"#..............[[[[[[......r..,,,.[[[[[[b[[[[[[.bb.bbb....,,,.[[[[[[bbb[[[[[[.........b.,,,..............[[[[[[...bb...#",
 	"#..############[[[[[[......r..,,,.[[[[[[b[[[[[[.bb.bbb....,,,.[[[[[[bbb[[[[[[...........,,,..############[[[[[[...bb...#",
 	"#..#__________#...............,,,..[[[[[[[[[.......bbb..r.,,,..[[[[[[[[[................,,,..#__________#..............#",
-	"#..#__________#...[[[[[[[[....,,,..[[[[[[[[[............r.,,,..[[[[[[[[[...[[[[[[[..b...,,,..#__________#.r.[[[[[[[[[..#",
+	"#..#_______g__#...[[[[[[[[....,,,..[[[[[[[[[............r.,,,..[[[[[[[[[...[[[[[[[..b...,,,..#__________#.r.[[[[[[[[[..#",
 	"#..#____D_____#...[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[...[[[[[[[......,,,..#___B__M___#.r.[[[[[[[[[..#",
 	"#..#__________#.b.[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[.r.[[[[[[[..bbb.,,,..#___F__H___#...[[[[[[[[[..#",
 	"#..#__________#.b.[[[[[[[[....,,,..[[[[[[[[[...[[[[[[[[...,,,..[[[[[[[[[.r.[[[[[[[..bbb.,,,..#__________#...[[[[[[[[[..#",
@@ -93,6 +93,7 @@ const SPOTS := {
 	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "m3_footprints", "cond": "quest:sq_m3=active"}, "tile": "_"},   # clue, tiny ash footprints in the smithy hearth (SQ-M3 clue 1 of 2)
 	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "m3_beans", "memory_id": "sq_m3_tuyul", "cond": "quest:sq_m3=active"}, "tile": "_"},   # clue, half-counted green beans spilled by the stall (SQ-M3 clue 2 of 2; opens memory `sq_m3_tuyul`)
 	"I": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "m2_toy", "memory_id": "sq_m2_child", "cond": "quest:sq_m2=active"}, "tile": "."},   # clue, dropped wooden toy on the lane (SQ-M2 clue; opens memory `sq_m2_child`)
+	"g": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "gong_frame"}, "tile": "_"},   # empty gong frame in Ki Sumarto's pavilion; hang the gong ageng here (SQ-M4 step 3; sets `flag:gong_frame`)
 }
 
 

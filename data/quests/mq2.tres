@@ -94,10 +94,10 @@ marker = {"zone": "mt_wetan", "id": "shrine_chisel"}
 [sub_resource type="Resource" id="s12"]
 script = ExtResource("2")
 objective = "Q_MQ2_S12_OBJ"
-all = [{"on": "puzzle_solved:puzzle_wetan_lamps", "set_flag": "", "objective": "Q_MQ2_S12_P1"}, {"on": "glyph_learned:jawa_ra", "set_flag": "mq2_6", "objective": "Q_MQ2_S12_P2"}]
+all = [{"on": "talked_to:shrine_brazier_1", "set_flag": "", "objective": "Q_MQ2_S12_B1"}, {"on": "talked_to:shrine_brazier_2", "set_flag": "", "objective": "Q_MQ2_S12_B2"}, {"on": "talked_to:shrine_brazier_3", "set_flag": "", "objective": "Q_MQ2_S12_B3"}, {"on": "talked_to:shrine_brazier_4", "set_flag": "", "objective": "Q_MQ2_S12_B4"}, {"on": "glyph_learned:jawa_ra", "set_flag": "mq2_6", "objective": "Q_MQ2_S12_P2"}]
 set_flag = "mq2_6"
+marker = {"zone": "mt_wetan", "id": "shrine_brazier_1"}
 recap = "Q_MQ2_S12_DONE"
-marker = {"zone": "mt_wetan", "id": "puzzle_wetan_lamps"}
 
 [sub_resource type="Resource" id="s13"]
 script = ExtResource("2")
@@ -194,6 +194,7 @@ on = "boss_defeated:hariang_banga"
 set_flag = "mq2_9"
 recap = "Q_MQ2_S24_DONE"
 marker = {"zone": "kg_pamali", "id": "hariang_banga"}
+
 [resource]
 script = ExtResource("1")
 id = "mq2"

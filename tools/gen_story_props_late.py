@@ -1232,3 +1232,420 @@ STORY = {k: v for k, v in dict(globals()).items()
                        "glow_letter", "lamp_post"}}
 NO_OUTLINE_LATE = {"eclipse_veil", "kala_exit", "bridge_echo", "lc5_cavern"}
 NO_OUTLINE_LATE |= {k for k in STORY if k.startswith("gate_")}   # gates fill their whole tile
+
+
+# ------------------------------------------------------------------------------------------------ interactable puzzle props
+# Each _p_* draws one prop; on=False is the unused look (<id>.png), on=True the used look (<id>_on.png). Underscore names
+# stay out of the STORY comprehension above; they are registered below. Feet at bottom centre.
+GLOW = K("FFE06650")
+GLOW2 = K("FFE06630")
+
+
+def _shadow(c, x0, x1, y):
+    c.ell(x0, y - 2, x1, y, K("1B142660"))
+
+
+def _flame2(c, x, y, h=5):
+    c.poly([(x - 2, y), (x, y - h), (x + 2, y)], FLAME)
+    c.poly([(x - 1, y), (x, y - h + 2), (x + 1, y)], FLAME_L)
+
+
+def _p_cat(on):
+    c = C(22, 20); ORG, BLK = K("E08A3A"), K("2A1D26")
+    _shadow(c, 3, 18, 19)
+    if not on:  # sitting
+        c.ell(5, 9, 15, 18, WHITE); c.ell(5, 9, 10, 15, ORG); c.ell(11, 12, 15, 17, BLK)
+        c.ell(6, 2, 14, 10, WHITE); c.rect(6, 2, 8, 4, ORG); c.rect(12, 2, 14, 4, BLK)
+        c.poly([(6, 4), (6, 0), (9, 3)], ORG); c.poly([(14, 4), (14, 0), (11, 3)], BLK)
+        c.pt(8, 6, INK); c.pt(12, 6, INK); c.pt(10, 8, CLOTH_L)
+        c.line(15, 17, 19, 16, ORG); c.line(16, 18, 19, 18, BLK)
+    else:  # standing, tail up
+        c.rect(4, 8, 15, 13, WHITE); c.rect(4, 8, 9, 10, ORG); c.rect(11, 9, 15, 11, BLK)
+        for x in (4, 7, 12, 15):
+            c.rect(x, 14, x, 18, WHITE)
+        c.ell(0, 5, 7, 11, WHITE); c.rect(0, 5, 2, 7, ORG)
+        c.poly([(0, 6), (1, 2), (3, 5)], ORG); c.poly([(5, 6), (6, 2), (7, 6)], BLK)
+        c.pt(2, 8, INK); c.pt(5, 8, INK)
+        c.line(16, 9, 18, 2, ORG); c.line(17, 9, 19, 2, BLK); c.pt(18, 1, WHITE)
+    return c
+
+
+def _p_well(on):
+    c = C(26, 28)
+    _shadow(c, 1, 24, 27)
+    post(c, 3, 3, 18); post(c, 21, 3, 18); c.rect(2, 2, 23, 4, WOOD_D)
+    c.rect(2, 16, 23, 25, STONE); c.rect(2, 16, 23, 17, STONE_L); c.rect(21, 17, 23, 25, STONE_D)
+    for y in (20, 23):
+        c.rect(3, y, 22, y, STONE_D)
+    c.rect(5, 18, 20, 19, K("1B1426")); c.rect(12, 5, 12, 12 if on else 15, SAND_D)
+    by = 2 if on else 0   # bucket raised under the beam when used
+    if on:
+        c.rect(9, 5, 15, 5, WOOD_D)
+        c.rect(10, 6, 14, 10, WOOD); c.rect(10, 6, 14, 6, WOOD_L); c.rect(10, 9, 14, 9, WOOD_D)
+        c.pt(7, 7, WHITE); c.pt(6, 8, GOLD_L); c.pt(8, 9, WHITE); c.pt(18, 6, WHITE); c.pt(19, 7, GOLD_L)
+    else:
+        c.rect(10, 13, 14, 17, WOOD); c.rect(10, 13, 14, 13, WOOD_L); c.rect(10, 16, 14, 16, WOOD_D)
+    return c
+
+
+def _p_root(on):
+    c = C(30, 28)
+    c.rect(2, 3, 27, 26, K("3A2A1E")); c.rect(2, 3, 3, 26, K("5C432B"))
+    c.ell(6, 5, 23, 26, VOID); c.ell(9, 9, 20, 26, K("0E0A18"))
+    for x in (1, 26):
+        c.rect(x, 18, x + 2, 26, LEAF_D)
+    c.line(3, 6, 8, 12, WOOD_D); c.line(26, 6, 21, 12, WOOD_D)
+    c.rect(4, 25, 25, 26, MUD_D)
+    if on:  # child's chalk mark: a small sun-and-stick figure
+        c.ell(11, 15, 14, 18, WHITE); c.line(12, 18, 12, 22, WHITE); c.line(10, 20, 14, 20, WHITE)
+        c.line(12, 22, 10, 25, WHITE); c.line(12, 22, 14, 25, WHITE)
+        c.line(17, 14, 20, 17, WHITE); c.line(20, 14, 17, 17, WHITE)
+    return c
+
+
+def _p_stage_lamp(on):
+    c = C(16, 32)
+    if on:
+        c.ell(0, 0, 15, 15, GLOW2); c.ell(3, 3, 12, 12, GLOW)
+    _shadow(c, 3, 12, 31)
+    c.rect(7, 12, 8, 30, BAMBOO); c.rect(7, 12, 7, 30, K("D2D87A")); c.rect(8, 13, 8, 30, BAMBOO_D)
+    for y in (18, 24):
+        c.rect(6, y, 9, y, BAMBOO_D)
+    c.poly([(2, 10), (13, 10), (11, 14), (4, 14)], BRONZE); c.rect(2, 10, 13, 10, GOLD)
+    c.rect(12, 9, 14, 10, BRONZE_D)  # blencong spout
+    if on:
+        _flame2(c, 13, 9, 5)
+    else:
+        c.pt(13, 8, ASH_D)
+    return c
+
+
+def _p_oncor(on):
+    c = C(14, 32)
+    if on:
+        c.ell(0, 0, 13, 13, GLOW2); c.ell(2, 2, 11, 11, GLOW)
+    _shadow(c, 2, 11, 31)
+    c.rect(6, 12, 7, 30, WOOD); c.rect(6, 12, 6, 30, WOOD_L)
+    c.rect(3, 6, 10, 16, BAMBOO); c.rect(3, 6, 4, 16, K("D2D87A")); c.rect(9, 7, 10, 16, BAMBOO_D)
+    c.rect(2, 5, 11, 6, BAMBOO_D); c.rect(2, 16, 11, 17, BAMBOO_D)
+    if on:
+        c.rect(5, 8, 8, 13, FLAME_L); _flame2(c, 6, 5, 4)
+    else:
+        c.rect(5, 8, 8, 13, K("2A1D26")); c.pt(6, 4, ASH_D)
+    return c
+
+
+def _p_batu(on, v):
+    c = C(26, 28)
+    _shadow(c, 1, 24, 27)
+    sx, sy = (6, 17) if v == 1 else ((12, 8) if v == 2 else (17, 17))  # dawn low-left, noon top, dusk low-right
+    if on:  # standing upright
+        stone_slab(c, 6, 2, 19, 25)
+        cx, cy = 6 + sx * 0 + {1: 3, 2: 6, 3: 9}[v], {1: 17, 2: 8, 3: 17}[v] - 0
+        cy = {1: 17, 2: 7, 3: 17}[v]
+    else:   # fallen on its side
+        stone_slab(c, 1, 14, 24, 25)
+        cx, cy = {1: 6, 2: 12, 3: 19}[v], {1: 22, 2: 17, 3: 22}[v]
+        c.rect(0, 22, 2, 25, STONE_D); c.pt(25, 24, STONE_D)
+    c.ell(cx - 2, cy - 2, cx + 2, cy + 2, STONE_D)
+    for dx, dy in ((0, -4), (0, 4), (-4, 0), (4, 0)):
+        c.pt(cx + dx, cy + dy, STONE_D)
+    if on:
+        c.pt(cx, cy, GOLD_L)
+    return c
+
+
+def _p_sluice(on, stone=False):
+    c = C(28, 28)
+    _shadow(c, 1, 26, 27)
+    pc, pd = (STONE, STONE_D) if stone else (WOOD, WOOD_D)
+    c.rect(2, 4, 5, 25, pc); c.rect(22, 4, 25, 25, pc); c.rect(2, 4, 5, 4, STONE_L if stone else WOOD_L)
+    c.rect(2, 3, 25, 5, pd)
+    if not on:
+        c.rect(6, 6, 21, 24, WOOD if not stone else STONE_L)
+        for x in (9, 13, 17):
+            c.rect(x, 6, x, 24, WOOD_D)
+    else:
+        c.rect(6, 6, 21, 11, WOOD); c.rect(6, 6, 21, 6, WOOD_L)  # gate lifted, water runs below
+        c.rect(6, 12, 21, 25, WATER); c.rect(8, 14, 10, 24, WATER_L); c.rect(15, 13, 17, 23, WATER_L)
+        c.pt(12, 25, WHITE); c.pt(19, 24, WHITE)
+    cx, cy = 13, 4
+    c.ell(8, -1 + 0, 18, 9, IRON_D if stone else WOOD_D); c.ell(10, 1, 16, 7, pc)
+    if on:
+        c.line(8, 4, 18, 4, IRON); c.line(13, -1, 13, 9, IRON)
+    else:
+        c.line(9, 0, 17, 8, IRON); c.line(17, 0, 9, 8, IRON)
+    return c
+
+
+def _p_rarang(on):
+    c = C(18, 34)
+    _shadow(c, 3, 14, 33)
+    c.rect(7, 3, 10, 32, WOOD); c.rect(7, 3, 8, 32, WOOD_L); c.rect(10, 4, 10, 32, WOOD_D)
+    c.rect(5, 2, 12, 3, WOOD_D); c.rect(5, 31, 12, 32, STONE)
+    if on:
+        c.poly([(3, 5), (14, 5), (15, 26), (12, 23), (9, 28), (6, 23), (2, 26)], K("1B1426"))
+        c.rect(3, 5, 14, 6, VOID_L); c.line(8, 7, 8, 22, VOID_L); c.line(11, 7, 12, 20, VOID_L)
+    return c
+
+
+def _p_mirror(on):
+    c = C(22, 28)
+    _shadow(c, 3, 18, 27)
+    c.line(11, 17, 5, 26, WOOD_D); c.line(11, 17, 17, 26, WOOD_D); c.rect(10, 15, 11, 24, WOOD)
+    if not on:
+        c.ell(5, 3, 17, 17, BRONZE_D); c.ell(7, 5, 15, 15, BRONZE)
+        c.pt(9, 7, GOLD)
+    else:
+        c.poly([(15, 9), (21, 2), (22, 6), (17, 12)], K("FFF3C890")); c.poly([(15, 9), (19, 5), (20, 7)], WHITE)
+        c.ell(6, 4, 15, 17, BRONZE_D); c.ell(8, 5, 14, 15, GOLD); c.pt(9, 7, WHITE); c.pt(10, 8, GOLD_L)
+    return c
+
+
+def _p_screen(on):
+    c = C(36, 30)
+    _shadow(c, 1, 34, 29)
+    def panel(x0, x1):
+        c.rect(x0, 3, x1, 27, WOOD); c.rect(x0, 3, x1, 3, WOOD_L); c.rect(x0, 3, x0, 27, WOOD_L)
+        c.rect(x1, 3, x1, 27, WOOD_D)
+        mx = (x0 + x1) // 2
+        c.poly([(mx, 9), (x1 - 1, 15), (mx, 21), (x0 + 1, 15)], WOOD_D)
+        c.pt(mx, 15, GOLD)
+    if not on:
+        for x0 in (1, 12, 23):
+            panel(x0, x0 + 11)
+    else:  # folded to the left: three narrow slats, gap right
+        for x0 in (1, 5, 9):
+            c.rect(x0, 3, x0 + 4, 27, WOOD if x0 != 5 else WOOD_L)
+            c.rect(x0, 3, x0, 27, WOOD_D); c.rect(x0 + 4, 3, x0 + 4, 27, WOOD_D)
+        c.rect(1, 3, 13, 3, WOOD_L); c.pt(6, 15, GOLD)
+        c.rect(16, 27, 33, 28, K("1B142640"))
+    return c
+
+
+def _p_angklung_frame(on, v):
+    c = C(22, 28)
+    _shadow(c, 2, 19, 27)
+    post(c, 3, 4, 26); post(c, 17, 4, 26); c.rect(2, 3, 19, 5, WOOD_D); c.rect(2, 3, 19, 3, WOOD)
+    c.rect(10, 6, 11, 7, IRON_D)  # hook
+    if on:
+        h = {1: 8, 2: 12, 3: 16}[v]
+        c.line(10, 8, 10, 9, SAND_D)
+        c.rect(8, 9, 13, 9 + h, BAMBOO); c.rect(8, 9, 9, 9 + h, K("D2D87A")); c.rect(13, 10, 13, 9 + h, BAMBOO_D)
+        for y in range(11, 9 + h, 4):
+            c.rect(8, y, 13, y, BAMBOO_D)
+    return c
+
+
+def _p_grain_roof(on):
+    c = C(28, 18)
+    c.poly([(1, 14), (5, 4), (22, 4), (26, 14)], SAND_D)
+    c.poly([(4, 13), (7, 6), (20, 6), (23, 13)], SAND)
+    for x in range(5, 25, 3):
+        c.line(x, 5, x - 2, 13, SAND_D)
+    c.rect(1, 14, 26, 16, WOOD_D); c.rect(1, 14, 26, 14, WOOD)
+    if on:
+        for x, y in ((8, 8), (11, 10), (14, 7), (16, 11), (19, 9), (12, 12), (9, 12), (18, 6)):
+            c.pt(x, y, GOLD_L); c.pt(x + 1, y, GOLD)
+    return c
+
+
+def _p_brazier(on):
+    c = C(20, 26)
+    if on:
+        c.ell(0, 2, 19, 18, GLOW2); c.ell(3, 5, 16, 15, GLOW)
+    _shadow(c, 2, 17, 25)
+    for x in (4, 14):
+        c.rect(x, 17, x + 1, 24, STONE_D)
+    c.rect(3, 15, 16, 17, STONE_D)
+    c.poly([(2, 10), (17, 10), (14, 16), (5, 16)], STONE); c.rect(2, 10, 17, 10, STONE_L); c.rect(14, 11, 16, 15, STONE_D)
+    if on:
+        c.ell(4, 8, 15, 11, FLAME); _flame2(c, 9, 10, 7); _flame2(c, 5, 10, 4); _flame2(c, 14, 10, 4)
+    else:
+        c.ell(4, 8, 15, 11, ASH_D); c.pt(8, 9, ASH); c.pt(12, 9, ASH)
+    return c
+
+
+def _p_curse_stake(on):
+    c = C(20, 32)
+    if not on:
+        c.ell(0, 3, 19, 30, K("3B2A5540")); c.ell(4, 8, 15, 28, K("3B2A5560"))
+        _shadow(c, 3, 16, 31)
+        c.poly([(7, 6), (12, 6), (13, 29), (6, 29)], K("1B1426")); c.rect(7, 6, 7, 29, K("3B2A55"))
+        c.poly([(7, 6), (9, 2), (12, 6)], K("1B1426"))
+        c.poly([(12, 9), (18, 12), (17, 16), (12, 14)], RED); c.rect(12, 9, 17, 10, K("D8585E")); c.pt(15, 17, RED_D)
+    else:
+        c.ell(2, 24, 17, 30, ASH_D); c.ell(4, 25, 15, 29, ASH)
+        c.poly([(7, 21), (12, 21), (13, 29), (6, 29)], K("2A2630")); c.pt(8, 21, FLAME); c.pt(11, 22, FLAME)
+        c.pt(4, 27, ASH_D); c.pt(16, 26, ASH_D)
+    return c
+
+
+def _p_seed_marker(on):
+    c = C(26, 16)
+    c.ell(1, 8, 24, 15, SAND_D)
+    c.ell(4, 2, 21, 14, STONE_D); c.ell(4, 1, 20, 12, STONE); c.ell(6, 2, 14, 6, STONE_L)
+    c.rect(12, 4, 13, 10, STONE_D); c.rect(9, 7, 16, 8, STONE_D)
+    if on:
+        for x, y in ((2, 11), (5, 14), (9, 13), (14, 14), (18, 13), (22, 11), (21, 14), (1, 14)):
+            c.ell(x, y, x + 1, y + 1, K("E8E2A8")); c.pt(x, y, WHITE)
+    return c
+
+
+def _p_banyan_nook(on):
+    c = C(28, 26)
+    c.rect(1, 3, 26, 24, K("3A2A1E")); c.rect(1, 3, 2, 24, K("5C432B"))
+    c.ell(5, 6, 22, 24, VOID); c.line(4, 4, 9, 10, WOOD_D); c.line(23, 4, 18, 10, WOOD_D)
+    for x in (0, 25):
+        c.rect(x, 17, x + 2, 24, LEAF_D)
+    c.rect(4, 23, 23, 24, MUD_D)
+    if on:
+        c.ell(9, 16, 18, 24, K("C9A86A")); c.rect(11, 14, 16, 17, K("C9A86A")); c.rect(11, 14, 16, 14, SAND)
+        c.rect(11, 17, 16, 17, RED); c.pt(13, 20, K("8A7032"))
+    return c
+
+
+def _p_waymarker(on):
+    c = C(20, 30)
+    if on:
+        c.ell(0, 4, 19, 24, K("C9B8E830"))
+    _shadow(c, 2, 17, 29)
+    c.poly([(4, 28), (4, 8), (8, 3), (13, 3), (16, 8), (16, 28)], STONE)
+    c.rect(5, 6, 6, 27, STONE_L); c.rect(14, 8, 16, 27, STONE_D)
+    c.line(6, 10, 9, 10, STONE_D); c.pt(13, 14, STONE_D)
+    if on:
+        for y in (12, 16, 20):
+            c.line(7, y, 13, y, FADE)
+        c.pt(10, 8, WHITE)
+        c.line(10, 12, 10, 22, WHITE)
+    else:
+        for y in (12, 16, 20):
+            c.line(7, y, 13, y, STONE_D)
+    return c
+
+
+def _p_beacon(on):
+    c = C(20, 44)
+    if on:
+        c.ell(0, 0, 19, 18, GLOW2); c.ell(3, 3, 16, 15, GLOW)
+    c.ell(0, 34, 19, 43, WATER); c.ell(3, 36, 16, 42, WATER_L)
+    c.rect(9, 12, 10, 40, WOOD); c.rect(9, 12, 9, 40, WOOD_L); c.rect(10, 14, 10, 40, WOOD_D)
+    c.rect(5, 12, 14, 13, WOOD_D)
+    c.rect(5, 5, 14, 6, WOOD_D); c.rect(5, 6, 6, 12, BRONZE); c.rect(13, 6, 14, 12, BRONZE_D)
+    c.rect(7, 7, 12, 11, FLAME_L if on else K("3A3436"))
+    if on:
+        _flame2(c, 9, 7, 5)
+    c.rect(7, 40, 12, 41, WATER_L)
+    return c
+
+
+def _p_ombak(on):
+    c = C(72, 36)
+    def wall(x0, x1):
+        c.ell(x0, 4, x1, 34, K("1B142690"))
+        c.ell(x0 + 3, 8, x1 - 3, 33, K("2A3F6AC0"))
+        c.ell(x0 + 6, 12, x1 - 6, 31, K("0E0A18E0"))
+        for x in range(x0 + 6, x1 - 4, 8):
+            c.pt(x, 11, WATER_L); c.pt(x + 3, 15, FADE)
+    if not on:
+        wall(1, 70)
+    else:  # parted: gap in the middle
+        wall(0, 28); wall(43, 71)
+        c.rect(30, 28, 41, 33, K("2A5478A0"))
+    return c
+
+
+def _p_whisper(on):
+    c = C(28, 34)
+    _shadow(c, 5, 22, 33)
+    c.rect(12, 14, 15, 32, K("D8D2C0")); c.rect(12, 14, 12, 32, WHITE); c.rect(15, 15, 15, 32, BONE_D)
+    c.poly([(6, 18), (12, 14), (13, 18)], K("D8D2C0")); c.poly([(22, 18), (15, 14), (14, 18)], K("D8D2C0"))
+    c.ell(4, 2, 23, 15, K("B8B096")); c.ell(6, 3, 21, 12, K("D8D2C0"))
+    for i, x in enumerate((7, 12, 17, 21)):
+        if on:   # still, straight
+            c.rect(x, 12, x, 22 + i % 2 * 2, CLOTH_L)
+        else:    # fluttering sideways
+            c.line(x, 12, x + 4, 18 + i % 2 * 2, CLOTH_L); c.pt(x + 5, 19 + i % 2 * 2, WHITE)
+    if on:
+        c.ell(11, 5, 16, 10, K("FFF3C860")); c.pt(13, 7, WHITE); c.pt(14, 7, GOLD_L)
+    return c
+
+
+def _p_bean_trap(on):
+    c = C(20, 14)
+    _shadow(c, 2, 17, 13)
+    c.ell(2, 4, 17, 13, K("8A4A2E")); c.ell(3, 3, 16, 8, K("5C2E1E"))
+    c.rect(3, 6, 16, 6, K("A8643E"))
+    if on:
+        for x, y in ((5, 3), (8, 2), (11, 3), (14, 3), (7, 4), (12, 4)):
+            c.ell(x, y, x + 2, y + 1, K("78B24A")); c.pt(x, y, K("A8D870"))
+        c.poly([(10, 0), (14, 0), (12, 4)], K("DDF4FF")); c.pt(11, 1, WHITE)
+    return c
+
+
+def _p_gong(on):
+    c = C(34, 34)
+    _shadow(c, 2, 31, 33)
+    post(c, 4, 4, 31); post(c, 28, 4, 31); c.rect(3, 3, 31, 5, WOOD_D); c.rect(3, 3, 31, 3, WOOD_L)
+    c.rect(2, 31, 8, 32, WOOD_D); c.rect(24, 31, 30, 32, WOOD_D)
+    c.line(17, 6, 17, 8, SAND_D)
+    if on:
+        c.ell(9, 8, 25, 26, BRONZE); c.ell(11, 10, 23, 24, BRONZE_D); c.ell(14, 14, 20, 20, GOLD); c.pt(15, 15, GOLD_L)
+    else:
+        c.rect(15, 6, 16, 9, IRON_D)
+    return c
+
+
+def _p_jetty(on):
+    c = C(26, 30)
+    c.ell(0, 20, 25, 29, WATER); c.ell(3, 22, 22, 28, WATER_L)
+    if on:
+        for r in (11, 8):
+            c.d.ellipse([13 - r, 25 - r // 3 - 1, 13 + r, 25 + r // 3 + 1], outline=WHITE)
+    c.rect(10, 3, 15, 26, WOOD); c.rect(10, 3, 11, 26, WOOD_L); c.rect(14, 4, 15, 26, WOOD_D)
+    c.rect(9, 2, 16, 4, WOOD_D)
+    for y in (9, 12):
+        c.rect(9, y, 16, y, SAND)
+    c.rect(9, 25, 16, 26, WATER_L)
+    return c
+
+
+def _p_ciung(on):
+    c = C(24, 14)
+    _shadow(c, 2, 21, 13)
+    c.ell(4, 3, 19, 12, BAMBOO_D); c.ell(5, 4, 18, 10, K("1B1426"))  # open mouth
+    c.rect(3, 3, 20, 5, BAMBOO); c.rect(3, 3, 20, 3, K("D2D87A"))
+    for x in (6, 10, 14, 18):
+        c.line(x, 6, x - 1, 12, BAMBOO_D)
+    c.line(18, 7, 23, 11, RED); c.line(19, 6, 23, 9, GOLD); c.line(17, 9, 22, 12, WHITE)
+    return c
+
+
+def _late_reg():
+    d = {}
+    def add(i, fn, *a, off=True, **k):
+        d[i] = (lambda: fn(False, *a, **k))
+        if off:
+            d[i + "_on"] = (lambda: fn(True, *a, **k))
+    add("purwa_cat", _p_cat); add("purwa_well", _p_well); add("purwa_root", _p_root)
+    for v in range(1, 5): add(f"stage_lamp_{v}", _p_stage_lamp)
+    for v in range(1, 4): add(f"leuwi_oncor_{v}", _p_oncor)
+    for v in range(1, 4): add(f"batu_stone_{v}", _p_batu, v)
+    for v in range(1, 3): add(f"sluice_wheel_{v}", _p_sluice)
+    add("rarang_post", _p_rarang)
+    for v in range(1, 4):
+        add(f"archive_mirror_{v}", _p_mirror); add(f"kaputren_screen_{v}", _p_screen)
+        add(f"angklung_frame_{v}", _p_angklung_frame, v); add(f"grain_roof_{v}", _p_grain_roof)
+        add(f"banyan_root_{v}", _p_banyan_nook); add(f"waymarker_{v}", _p_waymarker)
+        add(f"tidal_beacon_{v}", _p_beacon); add(f"whisper_tree_{v}", _p_whisper)
+    for v in range(1, 5): add(f"shrine_brazier_{v}", _p_brazier)
+    for v in range(1, 3): add(f"curse_stake_{v}", _p_curse_stake)
+    add("seed_marker", _p_seed_marker); add("ombak_barrier", _p_ombak); add("bean_trap", _p_bean_trap)
+    add("gong_frame", _p_gong); add("jetty_post", _p_jetty); add("channel_wheel", _p_sluice, stone=True)
+    add("ciung_basket", _p_ciung, off=False)
+    return d
+
+
+NEW_PROPS = _late_reg()
+STORY.update(NEW_PROPS)
+NO_OUTLINE_LATE |= {"ombak_barrier", "ombak_barrier_on"}

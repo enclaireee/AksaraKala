@@ -30,6 +30,6 @@ type = "errand"
 zone = "mataram"
 size = "S"
 giver = "cepot"
-requires = Array[String](["c4_1", "mq2_a1"])
+requires = Array[String](["mq2_a1"])
 steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3")])
 rewards = {}

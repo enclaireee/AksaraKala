@@ -1,0 +1,197 @@
+{
+ "urls": {
+  "music_src/Night_Vigil.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Night%20Vigil.mp3",
+  "music_src/Morning.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Morning.mp3",
+  "music_src/Heroic_Age.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Heroic%20Age.mp3",
+  "music_src/Tafi_Maradi_no_voice.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Tafi%20Maradi%20no%20voice.mp3",
+  "music_src/River_Fire.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/River%20Fire.mp3",
+  "music_src/Rynos_Theme.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Rynos%20Theme.mp3",
+  "music_src/Crusade.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Crusade.mp3",
+  "music_src/Mountain_Emperor.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Mountain%20Emperor.mp3",
+  "music_src/Curse_of_the_Scarab.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Curse%20of%20the%20Scarab.mp3",
+  "music_src/Hitman.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Hitman.mp3",
+  "music_src/Mystic_Force.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Mystic%20Force.mp3",
+  "music_src/Unlight.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Unlight.mp3",
+  "music_src/Tempting_Secrets.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Tempting%20Secrets.mp3",
+  "music_src/Evening.mp3": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Evening.mp3"
+ },
+ "credits": {
+  "music/title": "Night Vigil - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/home": "Morning - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/town_kampung": "Evening - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/town_galuh": "Heroic Age - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/town_mataram": "Tafi Maradi (no voice) - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/town_kidul": "River Fire - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/boss_sunda": "Rynos Theme - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/boss_galuh": "Crusade - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/boss_mataram": "Mountain Emperor - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/boss_timur": "Curse of the Scarab - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/boss_kidul": "Hitman - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/boss_kala": "Mystic Force - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/boss_kala_2": "Unlight - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0",
+  "music/epilogue": "Tempting Secrets - Kevin MacLeod - https://incompetech.com/music/royalty-free/music.html - CC BY 4.0"
+ },
+ "sounds": {
+  "music/title": {
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/Night_Vigil.mp3",
+     "start": 40,
+     "dur": 102,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/home": {
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/Morning.mp3",
+     "start": 4,
+     "dur": 124,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/town_kampung": {
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/Evening.mp3",
+     "start": 4,
+     "dur": 103.8,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/town_galuh": {
+   "loop": 3,
+   "layers": [
+    {
+     "src": "music_src/Heroic_Age.mp3",
+     "start": 1.0,
+     "dur": 88.6,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/town_mataram": {
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/Tafi_Maradi_no_voice.mp3",
+     "start": 0,
+     "dur": 103.3,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/town_kidul": {
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/River_Fire.mp3",
+     "start": 20,
+     "dur": 110.7,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/boss_sunda": {
+   "lufs": -16,
+   "loop": 3,
+   "layers": [
+    {
+     "src": "music_src/Rynos_Theme.mp3",
+     "start": 1,
+     "dur": 109.9,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/boss_galuh": {
+   "lufs": -16,
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/Crusade.mp3",
+     "start": 3,
+     "dur": 109.2,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/boss_mataram": {
+   "lufs": -16,
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/Mountain_Emperor.mp3",
+     "start": 2,
+     "dur": 106,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/boss_timur": {
+   "lufs": -16,
+   "loop": 3,
+   "layers": [
+    {
+     "src": "music_src/Curse_of_the_Scarab.mp3",
+     "start": 3,
+     "dur": 100.2,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/boss_kidul": {
+   "lufs": -16,
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/Hitman.mp3",
+     "start": 2,
+     "dur": 111.4,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/boss_kala": {
+   "lufs": -16,
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/Mystic_Force.mp3",
+     "start": 2,
+     "dur": 109.8,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/boss_kala_2": {
+   "lufs": -16,
+   "loop": 3,
+   "layers": [
+    {
+     "src": "music_src/Unlight.mp3",
+     "start": 2,
+     "dur": 109.4,
+     "fadeout": 0
+    }
+   ]
+  },
+  "music/epilogue": {
+   "loop": 4,
+   "layers": [
+    {
+     "src": "music_src/Tempting_Secrets.mp3",
+     "start": 6,
+     "dur": 110,
+     "fadeout": 0
+    }
+   ]
+  }
+ }
+}

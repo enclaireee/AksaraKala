@@ -28,7 +28,7 @@ const ROUTE := [
 	"go:mt_wetan", "do:mataram_lesung_yard", "q:mq2=active:9", "do:lesung_women", "q:mq2=active:10",
 	# 2.11 break the siege on the shrine, 2.12 align the braziers and take Ra
 	"do:mataram_batu", "q:mq2=active:11",
-	"do:puzzle_wetan_lamps", "do:juru_kunci", "q:mq2=active:12",
+	"do:shrine_brazier_1", "do:shrine_brazier_2", "do:shrine_brazier_3", "do:shrine_brazier_4", "do:juru_kunci", "q:mq2=active:12",
 	# 2.13 the plain of rising stones
 	"go:mt_tegal", "do:mataram_tegal_pillars", "q:mq2=active:13",
 	# 2.14 the temple gate and the camp (the turn)
@@ -80,7 +80,7 @@ func _initialize() -> void:
 	game.flags["mq0_done"] = true
 	game.quests["mq1"] = {"state": "done", "step": 0, "count": 0, "resolution": ""}
 	game.quests["mqg"] = {"state": "done", "step": 0, "count": 0, "resolution": ""}
-	for f in ["mq1_10", "mqg_7", "beat_hunter_raid", "beat_laras_1", "beat_naga", "beat_galuh_bout", "beat_laras_2", "beat_cage"]:
+	for f in ["mq1_10", "mqg_7", "beat_hunter_raid", "beat_laras_1", "beat_naga", "beat_galuh_bout", "beat_laras_2", "beat_cage", "beat_confession", "beat_escape"]:
 		game.flags[f] = true
 	game.run("start:mq2")   # the beat_cage beat does this in play
 	events.dialogue_requested.connect(_on_dialogue)
@@ -101,6 +101,7 @@ func _initialize() -> void:
 			"beat": ok = check(game.has_flag("beat_" + kv[1]), "beat %s did not play" % kv[1])
 			"flag": ok = check(game.has_flag(kv[1]), "flag %s not set" % kv[1])
 			"write": ok = await _write(kv[1])
+			"cast": events.spell_cast.emit(kv[1], 1.0)   # a drawn glyph (cast_controller emits the glyph id)
 			"see": ok = check(_exit_to(kv[1]) != null and _reachable(_cells_of(_exit_to(kv[1]))), "%s: exit to %s not reachable" % [zone.zone_id, kv[1]])
 		if not ok:
 			printerr("  stopped at '%s' in %s" % [a, zone.zone_id])
@@ -201,6 +202,8 @@ func _go(area: String) -> bool:
 
 func _target(id: String) -> Node:
 	for n in zone.entities.find_children("*", "", true, false):
+		if n is CanvasItem and not n.visible:
+			continue   # a cond-hidden twin (e.g. Cepot at the south gate and on the beach)
 		for k in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.get("clue_id"), n.get("memory_id")]:
 			if (k is String or k is StringName) and String(k) == id and not n.is_queued_for_deletion():
 				return n

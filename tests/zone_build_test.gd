@@ -10,7 +10,7 @@ const PENDING := []
 ## Shortcuts opened only from a pending area: id -> that area.
 const PENDING_OPENERS := {}
 ## Placed NPCs with no dialogue file: dressing with no lines in script.md (no Talk prompt).
-const NO_TALK := ["villager", "laras_crowd", "laras_tag", "stray_cat", "faceless_captain_seen",
+const NO_TALK := ["villager", "laras_crowd", "laras_tag", "stray_cat", "faceless_captain_seen", "market_stranger",
 	"galuh_crowd", "nelayan_jala", "wirasana_daughter"]
 const INTERNAL_GATES := {"sc:ts_leuwi": "s"}
 
@@ -87,7 +87,7 @@ func _initialize() -> void:
 	gates.sort()
 	check(f == ["mq1_3", "mq1_3", "mq1_5", "mq1_5", "mq1_7", "mq1_7", "sluice_2", "sluice_2"], "tatar_sunda kabut flags %s" % [f])
 	check(p == ["sunda_1", "sunda_2"], "tatar_sunda petilasans %s" % [p])
-	check(enc == 13, "tatar_sunda has %d encounters, want 13" % enc)
+	check(enc == 15, "tatar_sunda has %d encounters, want 15 (with s4_boars and leuwi_mist)" % enc)
 	check(loose == 24, "tatar_sunda has %d placed enemies, want 24 (the legend counts of tatar_sunda.md)" % loose)
 	check(gates == ["sc:ts_leuwi", "sc:ts_leuwi", "sc:ts_pagar", "sc:ts_pagar", "sc:ts_sk", "sc:ts_sk", "sc:ts_tangga", "sc:ts_tangga"], "shortcut gates %s" % [gates])
 
@@ -247,7 +247,7 @@ func _initialize() -> void:
 	p.sort()
 	check(f == ["mq4_offering", "mq4_offering", "mq4_offering", "mq4_offering", "mq4_9", "mq4_9"], "segara_kidul kabut flags %s" % [f])
 	check(p == ["kidul_1", "kidul_2", "kidul_3"], "segara_kidul petilasans %s" % [p])
-	check(enc == 13, "segara_kidul has %d encounters, want 13" % enc)
+	check(enc == 14, "segara_kidul has %d encounters, want 14 (with c4_lamp_night)" % enc)
 	check(gates == ["sc:sk_gerbang", "sc:sk_gerbang"], "segara_kidul shortcut gates %s" % [gates])
 	check(of(built.get("sk_karang"), "bajul_putih_tua.tscn").size() == 1, "sk_karang wants Bajul Putih Tua")
 	undirected = {}

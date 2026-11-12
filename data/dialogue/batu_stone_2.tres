@@ -7,6 +7,7 @@ script = ExtResource("1")
 npc_id = "batu_stone_2"
 name_key = ""
 entries = Array[Dictionary]([
-	{"if": ["flag:batu_1", "!flag:batu_2"], "lines": [], "do": ["flag:batu_2"]},
-	{"if": [], "lines": [], "do": []}
+	{"if": ["step:mq1=10", "flag:batu_stone_1", "!flag:batu_stone_2"], "lines": [], "do": ["flag:batu_stone_2", "flag:batu_2"]},
+	{"if": ["step:mq1=10", "!flag:batu_stone_1"], "lines": ["DLG_BATU_STONE_HINT"], "do": [], "quiet": true},
+	{"if": [], "lines": [], "do": [], "quiet": true}
 ])

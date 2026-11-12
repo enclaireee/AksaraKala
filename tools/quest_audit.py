@@ -13,6 +13,8 @@ Checks
   Q8  every dialogue line key and `lesson:` id resolves (key in dialogue.csv or a "@"/"#" cue; lesson in lessons.gd)
   Q9  every memory_done:<id> has a scene (zones/kelir/<id>.tscn) or a gap data file
   Q10 every memory scene has TITLE and an id text, and every MEM_*_HINT with {key}-less text is fine
+  Q11 no step or `all` part completes on `puzzle_solved:*`, and a walk-in trigger id is only used under
+      `area_entered:` (a witness step: arrive, see, overhear). A puzzle is props you press (talked_to) or write.
 """
 import csv
 import glob
@@ -79,12 +81,17 @@ for pat in ("zones/*.gd", "zones/kelir/*.tscn", "zones/kelir/*.gd", "zones/*.tsc
         z = os.path.basename(f)[:-3] if rel.startswith("zones/") and f.endswith(".gd") else None
         for t in re.findall(r'"([A-Za-z0-9_:\-\.]+)"', open(f, encoding="utf-8").read()):
             tokens.setdefault(t, set()).add(z or rel)
+        for t in re.findall(r'"write:([A-Za-z0-9_]+):', open(f, encoding="utf-8").read()):   # write:<seq>:... -> name_written:<seq>
+            tokens.setdefault(t, set()).add(z or rel)
         for t in re.findall(r'(?:npc_id|clue_id|trigger_id|area_id|item_id|memory_id|id|kind|stake_id|chest_id) = "?([A-Za-z0-9_]+)', open(f, encoding="utf-8").read()):
             tokens.setdefault(t, set()).add(z or rel)
 ITEMS = {os.path.basename(f)[:-5] for f in glob.glob(os.path.join(ROOT, "data/items/*.tres"))}
 GLYPHS = {os.path.basename(f)[:-5] for f in glob.glob(os.path.join(ROOT, "data/glyphs/*.tres"))}
 ENEMIES = {os.path.basename(f)[:-5] for f in glob.glob(os.path.join(ROOT, "data/enemies/*.tres"))}
 NPCS = {os.path.basename(f)[:-5] for f in glob.glob(os.path.join(ROOT, "data/dialogue/*.tres"))}
+TRIGGERS = set()   # walk-in trigger ids placed in any zone
+for f in glob.glob(os.path.join(ROOT, "zones/*.gd")):
+    TRIGGERS |= set(re.findall(r'"trigger_id": "([A-Za-z0-9_]+)"', open(f, encoding="utf-8").read()))
 
 DOCS = "".join(open(f, encoding="utf-8").read() for f in glob.glob(os.path.join(ROOT, ".docs/zones/*.md")))
 
@@ -121,6 +128,8 @@ for qid, q in quests.items():
             if sig not in SIGNALS:
                 bad("Q3", "%s step %d: unknown signal '%s'" % (qid, i + 1, o))
                 continue
+            if sig == "puzzle_solved" or (sig != "area_entered" and arg in TRIGGERS):
+                bad("Q11", "%s step %d: '%s' completes on a walk-in trigger; use props (talked_to) or area_entered for a witness step" % (qid, i + 1, o))
             if arg == "":
                 continue
             if arg.endswith("*"):   # a prefix match (Game.matches): some token starts with it

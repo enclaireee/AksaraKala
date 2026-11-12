@@ -28,6 +28,7 @@ func _ready() -> void:
 		add_child(_trail)
 	body_entered.connect(func(b: Node2D) -> void: if not b is CharacterBody2D: queue_free())   # walls only; enemy bodies share layer 3
 	hit_landed.connect(func(_h: Hurtbox) -> void:
+		Snd.play("arrow_hit", 0.0, 1.0, 0.05)
 		if not pierce:
 			_spent = true   # queue_free alone still lets other overlaps queued this frame land
 			queue_free())

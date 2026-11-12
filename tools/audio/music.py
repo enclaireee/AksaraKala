@@ -255,8 +255,8 @@ def tension_hits(mix, th, gain=0.8, every=4, octave=-3):
         mix.add(I.sub_boom(th.f(1, octave, 38.0), 2.4, 0.8), bar * BEATS * spb, gain * 0.6, 0, 0.0, 0.0)
 
 
-def eq(st, hi_db=8.0, lo_cut=35.0, lo_db=-3.0):
-    """Gentle tilt: lift 2-8 kHz air (the synthesis is dark), trim sub rumble and the 40-110 Hz bloom."""
+def eq(st, hi_db=3.0, lo_cut=35.0, lo_db=-3.0):
+    """Gentle tilt: lift 2-8 kHz air, trim sub rumble and the 40-110 Hz bloom."""
     from dsp import spectral_filter, db
     def curve(f):
         hi = 1 + (db(hi_db) - 1) * np.clip((np.log2(np.maximum(f, 1) / 1800.0)) / 1.6, 0, 1)
@@ -266,6 +266,6 @@ def eq(st, hi_db=8.0, lo_cut=35.0, lo_db=-3.0):
     return np.stack([spectral_filter(st[:, 0], curve), spectral_filter(st[:, 1], curve)], axis=1)
 
 
-def finish(mix, th, rt=(1.4, 3.4), wet=1.0, rms=-19.0, seed=3, hi_db=8.0):
+def finish(mix, th, rt=(1.4, 3.4), wet=1.0, rms=-19.0, seed=3, hi_db=3.0):
     st = mix.render(loop=True, rt=rt, wet=wet, seed=seed)
     return master(eq(st, hi_db), rms)

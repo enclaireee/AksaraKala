@@ -178,7 +178,8 @@ func _initialize() -> void:
 	var s11: QuestStep = mq0.steps[10]
 	check(s11.all.size() >= 3 and s11.all[0].get("on") == "talked_to:semar", "mq0 step 10 asks to consult Semar first")
 	var s12: QuestStep = mq0.steps[11]
-	check(s12.all.size() == 2, "mq0 step 11 has raid and west gate sub-goals")
+	check(s12.all.size() == 3, "mq0 step 11 has raid, west gate and Ibu-at-the-gate sub-goals")
+	check(s12.all[2].get("on") == "talked_to:ibu", "s12 sub 2 is Ibu at the west gate (quests.md 9.2 0.12)")
 	check(s12.all[0].get("marker", {}).get("id") == "purwa_raid", "s12 sub 0 points to raid")
 	check(s12.all[1].get("marker", {}).get("id") == "exit_tatar_sunda", "s12 sub 1 points to exit_tatar_sunda")
 	check(s12.marker.get("id") == "exit_tatar_sunda", "s12 step marker points to exit_tatar_sunda")

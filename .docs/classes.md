@@ -23,7 +23,7 @@ Code ids stay `warrior`, `archer`, `rogue`, `mage`; mechanics below are unchange
 - All classes share the same 5 core stats ([rpg.md](rpg.md)) and 3 equipment slots (weapon, armor, accessory).
 - Classes differ in starting stat allocation, starting weapon, one distinctive passive, and spell affinity modifiers.
 - Visuals: Dedicated class sprites with custom headgear, attire, and starting weapons.
-- Class selection occurs in the Prologue (`MQ0` Step 0.2) in the Desa Purwa Sanggar.
+- Class selection occurs when starting a New Game (Title -> Elden-style Class Select pedestal -> Name Entry -> Desa Purwa).
 
 ---
 
@@ -81,7 +81,7 @@ Displayed level is calculated as `1 + points spent`, ensuring classes with lower
 ---
 
 ## Class Selection Presentation (`ui/class_select.gd`)
-Presented after the opening prologue events:
+Presented when starting a New Game from the title screen:
 - **Left Column:** Class roster (Jersey 10 at 19) with the cyan diamond cursor.
 - **Center Pedestal:** 96x128 animated character sprite standing on a stone pedestal illuminated by lantern light with gentle floor mist. Switching classes dissolves the character into rising ink particles.
 - **Right Panel:** Detailed panel showing archetype title, narrative description, animated stat bars, starting equipment icon, and passive ability.

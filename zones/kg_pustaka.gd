@@ -7,7 +7,7 @@ const MAP := [
 	"#.................#______________________#.................#",
 	"#.................#______________________#.................#",
 	"#...bbb...........#___________________c__#..........bbb....#",
-	"#...bbb...........#______________________#..........bbb....#",
+	"#...bbb...........#______Q_______R_______#..........bbb....#",
 	"#...bbb...........#______________________#..........bbb....#",
 	"#.................#______________________#.................#",
 	"#.................#_____Y____P____L______#.................#",
@@ -47,9 +47,11 @@ const SPOTS := {
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_keraton"}, "tile": "_"},   # spawn, arrival from kg_keraton
 	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "pustaka_guards", "size": Vector2i(14,8), "cond": "flag:mqg_4,!flag:mqg_ar1", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(3,0)]]]}, "tile": "_"},   # encounter pustaka_guards, archive guards (MQG g.6, `area_cleared:pustaka_guards`)
 	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nyai_sekar", "cond": "flag:mqg_4"}, "tile": "_"},   # NPC Nyai Sekar, royal archivist (MQG g.6 `talked_to:nyai_sekar`, sets `mqg_ar1`; hub; her closing lines after the grate, g.16)
-	"P": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "pustaka_cipher", "size": Vector2i(4,4), "cond": "flag:mqg_ar1"}, "tile": "_"},   # trigger pustaka_cipher, mirror-lamp cipher (MQG g.7 `puzzle_solved:pustaka_cipher`; sets `flag:puzzle_pustaka_cipher`)
-	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "scraped_genealogy", "cond": "flag:puzzle_pustaka_cipher"}, "tile": "_"},   # clue scraped_genealogy, King Nagawiru's scraped lontar (MQG g.7, `clue_examined:scraped_genealogy`, sets `mqg_ar2`)
+	"P": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "archive_mirror_1", "cond": "flag:mqg_ar1"}, "tile": "_"},   # prop, archive mirror 1 (MQG g.7, turn the mirrors in order 1-2-3; wrong order shows a hint)
+	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "scraped_genealogy", "cond": "flag:archive_mirror_3"}, "tile": "_"},   # clue scraped_genealogy, King Nagawiru's scraped lontar, readable once the third mirror throws its light (MQG g.7, `clue_examined:scraped_genealogy`, sets `mqg_ar2`)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "galuh_chest_pustaka", "item_id": "ilmu:55"}, "tile": "_"},   # chest galuh_chest_pustaka (55 Ilmu)
+	"Q": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "archive_mirror_2", "cond": "flag:mqg_ar1"}, "tile": "_"},   # prop, archive mirror 2 (MQG g.7, in order)
+	"R": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "archive_mirror_3", "cond": "flag:mqg_ar1"}, "tile": "_"},   # prop, archive mirror 3 (MQG g.7, in order)
 }
 
 

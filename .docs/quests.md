@@ -588,3 +588,114 @@ Headless test scripts verify integrity without opening the Godot editor:
 | Coast Juru Kunci | Mbah Wiryo | `kidul_jurukunci` | Segara Kidul (`sk_pantai` / `sk_nelayan`), Epilogue |
 | Young Diver | Sari | `kidul_sari` | Segara Kidul (`sk_nelayan` / `sk_bakau`, **NEW in v5**) |
 | Codex Keeper | Nyai Rukmi | `nyai_rukmi` | Desa Purwa (`SQ-D2`) |
+
+---
+
+## 9. Quest flow v6: old → new (APPROVED 2026-11-11; overrides §4–§6 where they differ)
+Story, characters, reveals, bosses and the six choices do not change. What changes is what the player's hands do, who asks for it, and why. **Step numbers stay the same in every quest** (so `step:<q>=<n>` conditions, saves and play tests keep working); a filler step is given a real job instead of being deleted. Only steps that change are listed; every other step keeps its event and gets new text only. Prop convention: a puzzle prop is an `npc.tscn` whose `npc_id` is also the flag it sets; art is `assets/art/story/<npc_id>.png` and `<npc_id>_on.png` once the flag is set.
+
+Build pieces used (all exist in the engine today): **press-each** (N props, counted step), **in-order** (a prop answers only when the one before it is done), **write card** (`name_written`), **clue + memory**, **encounter**, **witness** (walk-in trigger, allowed only for "arrive / see / overhear"), **cast** (`spell_cast` counted).
+
+### 9.1 Threads that run through every act
+| Thread | Where it shows |
+|---|---|
+| **Laras's trail** | Each act opens with something of hers you already carry and closes with one new thing: ribbon (I) → hairpin + wall message (II) → Ka strip (III) → sight of her at the altar (IV). All of them go on her shelf in the Interlude (4.4), and three come back as the gap memories in Act VI. |
+| **The morning game** | The three things Laras names in 0.1 (the cat, the well, the banyan) are the three details you must restore in gap memory `La` (5.4). |
+| **Lamp oil** | Ibu sends you to buy oil (0.4); you light the stage lamps with it (0.7); lighting lamps by hand is then how every dusk-spirit is handled (1.8, 2.12, 4.13). |
+| **Mask fragments** | One per act, always found after a boss, always followed by a Hunter memory; text now says "mask fragment" everywhere (1.22 said "seal stone"). |
+| **Companions** | Ciung, Cepot, Hariang Banga and Ranga each get one line at every petilasan that reacts to the last choice or finished side quest. |
+| **Side quests** | Each is offered by a main-path character on a main-path step (column "Hook"), and each leaves one later callback line. |
+
+### 9.2 Prologue (MQ0)
+| # | Old | New | Piece |
+|---|---|---|---|
+| 0.1 | "Catch Laras": run to one invisible square | Laras runs ahead and calls three places by name (the cat **Si Belang**, the well, the banyan root). Touch all three before she does | press-each x3 |
+| 0.2 | Tea, then old couple | Same, but the couple's request is the reason for 0.3: their grandson Ciung will not come down from the banyan. Ibu's lines fixed so he is their grandson everywhere | talk x2 |
+| 0.3 | "Climbing puzzle" = walk-in square; Ciung stays in the tree | Talk to Ciung under the tree (he refuses: he is guarding an egg), find his fallen basket, bring it back; he climbs down and walks with you | talk, clue, talk |
+| 0.4 | Ask about the masked stranger | Ibu's errand: buy lamp oil for tonight. The stall-keeper mentions the masked man while pouring it. Then Cepot | talk x2 |
+| 0.6 | "Write your names" = walk-in square, Laras absent | Laras is there holding the leaf. You trace **La**, the first letter of her name, on the real write card; she writes yours | write card |
+| 0.7 | "Light four lamps" = one square | Four lamps around the stage, lit one by one with the oil; Cepot comments on each | press-each x4 |
+| 0.9 | "Fight through the crowd" (no fight) | "Push through the crowd to Laras" (it is a run, and the text says so) | witness |
+| 0.12 | Clear raid, leave | Same, plus Ibu at the west gate gives the reason to go and the second cup line | fight, talk |
+
+### 9.3 Act I Tatar Sunda (MQ1)
+| # | Old | New | Piece |
+|---|---|---|---|
+| 1.3 | Cepot talk has no Act I entry | Cepot is at the petilasan with a real conversation; he offers SQ-S4 here | talk |
+| 1.8 | "Relight the outer lanterns" = one square | Three bamboo lanterns around the hamlet, each lit by hand while the mist spawns shades. This is the Sandekala fight in small | press-each x3 + encounter |
+| 1.11 | "Align the stones" = square that ignores the stones | The three name-stones are raised in the order their carvings give (dawn, noon, dusk); a wrong stone sinks them back | in-order x3 |
+| 1.15 | Step is in the paddies, wheels are at the lake | Two sluice wheels moved to the upper paddies; turn both, the water drops, the Weaver can reach you | press-each x2 |
+| 1.22 | Recap says "seal stone" | First mask fragment, then H1 | text |
+| 1.24 | Boeh Rarang never used | Before the fight you hang the cloth on the eastern post Laras marked in LC1, then face Sangkuriang | prop + boss |
+
+### 9.4 Act II Keraton Galuh (MQG)
+| # | Old | New | Piece |
+|---|---|---|---|
+| g.3 | Text flips between "storehouse" and "cockfight arena" | One place: the market storehouse where the bouts are rigged | text |
+| g.4 | "Win the cockfight bouts" (you fight soldiers) | You fight the king's two champions in the ring. The second one's helmet falls: no face. First proof the court is the Hunter's | encounter x2 |
+| g.5 | Lengser's first meeting can never play; mentions "Aksara Ja" (not a glyph) | Intro gate fixed; the Ja line removed | gate, text |
+| g.7 | "Mirror-lamp cipher" = one square | Nyai Sekar's lamp and three mirrors: turn them in the order of the shelf marks until light falls on the scraped lontar | in-order x3 |
+| g.9 | "Screens puzzle" = one square | Three folding screens to slide aside in the guest chamber; behind the last, Laras's hairpin | press-each x3 |
+| g.13 | Wall message optional | Reading the wall is required to finish the step | clue |
+| g.15 | **Choice 2 never offered** (condition points at step 7, Ranga appears at 14) | Fixed; Ranga's scene plays right after LC2, which is why you now know what he did for her | gate |
+
+### 9.5 Act III Mataram (MQ2)
+| # | Old | New | Piece |
+|---|---|---|---|
+| 2.1 | Two recruiters | Same, and Cepot is in the queue, signed up with both. SQ-C4 part 2 starts here whether or not you did part 1 | talk x2 |
+| 2.4 | "Map three leads" with no reason | Ki Sumarto names them and each is his: the statue that still holds a letter, the graveyard where his son Sapto's name was taken, the lesung women who hear builders at night | talk |
+| 2.5 | "Escort families" (nobody to escort) | "Clear the paddy road so the families can cross"; they thank you on the far side | encounter |
+| 2.12 | "Align braziers" = one square | Four shrine braziers lit in the order of the juru kunci's chant | in-order x4 |
+| 2.20 | Walk to the river | On the way, word from Ranga (freed) or Lengser (handed): the first pay-off of Choice 2 | witness + beat |
+| 2.24 | "Halt the duel" | "Duel Hariang Banga at the ford" (you fight him; the truce is the scene after) | text |
+
+### 9.6 Act IV Tanah Timur (MQ3)
+| # | Old | New | Piece |
+|---|---|---|---|
+| 3.4 | "Learn Aksara Ta" (not a glyph); two walk-in squares | Mpu Wirasana shows how **Ha** puts out a curse stake; cast it on the two practice stakes | cast x2 |
+| 3.5 | Mbok Srini's daughter lost in one line, home in another | One version, taken from `story.md` | text |
+| 3.6 | "Test the seed pouch" = a fight | Scatter the seeds at the riverbed marker, then survive the charge they slow | prop + encounter |
+| 3.7 | "Consecrate the pouches" = a fight | Set the needle, salt and terasi pouches at three banyan roots while he circles | press-each x3 + encounter |
+| 3.15 | "Waymarkers" = one square | Three stone waymarkers, each touched in the gale to see the next | in-order x3 |
+| 3.16 | Hariang Banga talk optional | Required: he reacts to Choice 3 (lancers if mercy) | talk |
+
+### 9.7 Interlude and Act V (MQ4)
+| # | Old | New | Piece |
+|---|---|---|---|
+| 4.5 | "Sit at the table" = square | Speak to each brother at the table; the mood follows Choice 3 | talk x2 |
+| 4.8 | Walk south | Cepot is waiting at the south gate with a bundle from Ibu; SQ-C4 part 3 hook | talk + witness |
+| 4.11 | Finishes after the first verse | All three verses needed; each family gives theirs after a small favour | clue x3 |
+| 4.13 | "Relight beacons" = one square | Three tidal beacons in the mangrove, lit with Sari as the water rises | press-each x3 |
+| 4.19 | Unclear what you do | Call her name on the write card (La), then the offering choice | write, choice |
+
+### 9.8 Act VI Gua Kala (MQ5)
+| # | Old | New | Piece |
+|---|---|---|---|
+| 5.3 | "Part the barrier with Ombak" (nothing to cast at) | Cast Ombak at the barrier, then fight in | cast + encounter |
+| 5.6 | "Name chimes" = square | Three whispering trees; each goes quiet when you answer it with the name of someone you helped (the grandson, Sapto, Ratna) | press-each x3 |
+| 5.11 | "Chant the hymn" | "Take the dalang's seat and practise the Ruwatan" (it is a memory, and the text says so) | text |
+| 5.13 | "Perform the Ruwatan" | "Calm Batara Kala" (it is the fight) | text |
+
+### 9.9 Side quests
+| Quest | Hook (main step, who) | What changes | Callback |
+|---|---|---|---|
+| SQ-S1 Lutung | 1.5, kampung elder | "Restore the water puzzle" dropped; cleanse the spring guardians | Purbasari's fruit at the Interlude table |
+| SQ-S2 Kuntilanak | 1.5, Kepala Desa | Carving the name is a real write card | The grave has flowers in the Epilogue |
+| SQ-S3 Angklung | 1.1, grandson | 3 tubes (was counted as 5); hang them low to high on the frame | Angklung heard in the kampung afterwards |
+| SQ-S4 Cepot 1 | 1.3, Cepot | Text matches the boar fight | Cepot brags about it in 2.1 |
+| SQ-G1 Kabayan | g.2, market informant | Text only | Kabayan heckles the unmasked king's guards |
+| SQ-G2 Ririwa | g.9, old maid | Already real | Lengser adds the name to the palace roll |
+| SQ-C1 Rooster | g.1, Ciung | "Perch puzzle" becomes three handfuls of grain laid across the roofs | The rooster crows at the Pamali truce |
+| SQ-M1 Jaka Tarub | 2.5, a refugee | Text only | Nawang Wulan's line at the sea (4.10) |
+| SQ-M2 Wewe | 2.4, Ki Sumarto | Text only | The boy is at the wayang stage |
+| SQ-M3 Tuyul | 2.3, the smith after the defence | The bean trap is a thing you set down | Cheaper smith prices line |
+| SQ-M4 Gamelan | 2.4, Ki Sumarto | Carry the gong back and hang it | Gong sounds in K-III |
+| SQ-C2 Letters | 2.24, Hariang Banga | Text only | Read on Ibu's table (already there) |
+| SQ-C3 Ranga | g.15 | Now reachable on both choices (Lengser's notes if handed) | Act VI gate |
+| SQ-C4 Cepot 2, 3 | 2.1 and 4.8 | No longer needs SQ-S4 | Cepot at the Act VI gate |
+| SQ-T1 Ande-Ande | 3.5, Mbok Srini | Striking the river is a thing you do at the jetty | Ferry runs in the Epilogue |
+| SQ-T2 Banaspati | 3.1, Ratna | Opening the channel is a wheel you turn | Fireflies line if Choice 4 = sink |
+| SQ-T3 Pamor | 3.3, Mpu Wirasana | Text matches defend-then-return | Ratna names the blade |
+| SQ-T4 Kuda Kepang | 3.3, troupe at the forge road | Text only | Troupe dances in the Epilogue |
+| SQ-K1 Hatchlings | 4.9, fisher's child | Text only | Turtles on the beach in C4 part 3 |
+| SQ-K2 Bajul Putih | 4.10, Mbah Wiryo | Text only | Mbah Wiryo's line at the cliff |

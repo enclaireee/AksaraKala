@@ -296,6 +296,7 @@ func _back() -> void:
 func _unhandled_input(e: InputEvent) -> void:
 	if e.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
+		Snd.play("ui_back")
 		if _in_confirm:
 			_show_cards()
 		else:

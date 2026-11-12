@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "shrine_brazier_3"
+name_key = ""
+entries = Array[Dictionary]([
+	{"if": ["step:mq2=11", "flag:shrine_brazier_2", "!flag:shrine_brazier_3"], "lines": ["DLG_SHRINE_BRAZIER_3_1"], "do": ["flag:shrine_brazier_3"]},
+	{"if": ["step:mq2=11", "!flag:shrine_brazier_3"], "lines": ["DLG_SHRINE_BRAZIER_3_CLUE"], "do": [], "quiet": true},
+	{"if": [], "lines": [], "do": [], "quiet": true}
+])

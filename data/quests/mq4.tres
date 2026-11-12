@@ -38,10 +38,10 @@ marker = {"zone": "desa_purwa", "id": "shelf_ribbon"}
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQ4_S5_OBJ"
-on = "area_entered:purwa_table"
+all = [{"on": "talked_to:ciung_wanara", "set_flag": "", "objective": "Q_MQ4_S5_P1"}, {"on": "talked_to:hariang_banga", "set_flag": "", "objective": "Q_MQ4_S5_P2"}]
 set_flag = "mq4_i3"
+marker = {"zone": "desa_purwa", "id": "ciung_wanara"}
 recap = "Q_MQ4_S5_DONE"
-marker = {"zone": "desa_purwa", "id": "purwa_table"}
 
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
@@ -62,10 +62,10 @@ marker = {"zone": "desa_purwa", "id": "semar"}
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ4_S8_OBJ"
-on = "zone_entered:sk_pantai"
+all = [{"on": "zone_entered:sk_pantai", "set_flag": "", "objective": "Q_MQ4_S8_P1", "marker": {"zone": "desa_purwa", "id": "exit_pantai"}}, {"on": "talked_to:cepot", "set_flag": "", "objective": "Q_MQ4_S8_P2", "marker": {"zone": "sk_pantai", "id": "cepot"}}]
 set_flag = "mq4_i6"
-recap = "Q_MQ4_S8_DONE"
 marker = {"zone": "desa_purwa", "id": "exit_pantai"}
+recap = "Q_MQ4_S8_DONE"
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
@@ -86,7 +86,7 @@ marker = {"zone": "sk_nelayan", "id": "kidul_jurukunci"}
 [sub_resource type="Resource" id="s11"]
 script = ExtResource("2")
 objective = "Q_MQ4_S11_OBJ"
-all = [{"on": "clue_examined:song_1", "set_flag": "mq4_h1", "objective": "Q_MQ4_S11_P1"}]
+all = [{"on": "clue_examined:song_1", "set_flag": "", "objective": "Q_MQ4_S11_P1"}, {"on": "clue_examined:song_2", "set_flag": "", "objective": "Q_MQ4_S11_P2"}, {"on": "clue_examined:song_3", "set_flag": "mq4_h1", "objective": "Q_MQ4_S11_P3"}]
 set_flag = "mq4_h1"
 recap = "Q_MQ4_S11_DONE"
 marker = {"zone": "sk_pantai", "id": "song_1"}
@@ -102,10 +102,10 @@ marker = {"zone": "sk_pantai", "id": "k8_wiryo_wife"}
 [sub_resource type="Resource" id="s13"]
 script = ExtResource("2")
 objective = "Q_MQ4_S13_OBJ"
-on = "puzzle_solved:bakau_beacons"
+all = [{"on": "talked_to:tidal_beacon_1", "set_flag": "", "objective": "Q_MQ4_S13_P1"}, {"on": "talked_to:tidal_beacon_2", "set_flag": "", "objective": "Q_MQ4_S13_P2"}, {"on": "talked_to:tidal_beacon_3", "set_flag": "", "objective": "Q_MQ4_S13_P3"}]
 set_flag = "mq4_5a"
+marker = {"zone": "sk_bakau", "id": "tidal_beacon_1"}
 recap = "Q_MQ4_S13_DONE"
-marker = {"zone": "sk_bakau", "id": "kidul_sari"}
 
 [sub_resource type="Resource" id="s14"]
 script = ExtResource("2")
@@ -150,7 +150,7 @@ marker = {"zone": "sk_tebing", "id": "kidul_tebing_1"}
 [sub_resource type="Resource" id="s19"]
 script = ExtResource("2")
 objective = "Q_MQ4_S19_OBJ"
-on = "talked_to:cliff_altar"
+all = [{"on": "name_written:call_laras", "set_flag": "called_laras", "objective": "Q_MQ4_S19_P1"}, {"on": "talked_to:cliff_altar", "set_flag": "mq4_offering", "objective": "Q_MQ4_S19_P2"}]
 set_flag = "mq4_offering"
 recap = "Q_MQ4_S19_DONE"
 marker = {"zone": "sk_tebing", "id": "cliff_altar"}
@@ -178,6 +178,7 @@ on = "glyph_learned:jawa_ka"
 set_flag = "mq4_9"
 recap = "Q_MQ4_S22_DONE"
 marker = {"zone": "sk_keraton", "id": "kidul_altar"}
+
 [resource]
 script = ExtResource("1")
 id = "mq4"

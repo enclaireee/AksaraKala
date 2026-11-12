@@ -1,0 +1,298 @@
+{
+ "urls": {
+  "amb_src/village.mp3": "https://cdn.freesound.org/previews/359/359129_458180-hq.mp3",
+  "amb_src/village2.mp3": "https://cdn.freesound.org/previews/634/634875_9034501-hq.mp3",
+  "amb_src/market.mp3": "https://cdn.freesound.org/previews/329/329640_3488711-hq.mp3",
+  "amb_src/river.mp3": "https://cdn.freesound.org/previews/582/582306_520316-hq.mp3",
+  "amb_src/sea.mp3": "https://cdn.freesound.org/previews/757/757931_7037-hq.mp3",
+  "amb_src/cave1.mp3": "https://cdn.freesound.org/previews/740/740041_13151007-hq.mp3",
+  "amb_src/cave2.mp3": "https://cdn.freesound.org/previews/468/468310_7037-hq.mp3",
+  "amb_src/mud.mp3": "https://cdn.freesound.org/previews/415/415608_2409224-hq.mp3",
+  "amb_src/fumarole.mp3": "https://cdn.freesound.org/previews/262/262671_945420-hq.mp3",
+  "amb_src/wind_low.mp3": "https://cdn.freesound.org/previews/815/815100_2247456-hq.mp3",
+  "amb_src/desert.mp3": "https://cdn.freesound.org/previews/825/825860_13973196-hq.mp3",
+  "amb_src/swamp.mp3": "https://cdn.freesound.org/previews/853/853181_4726019-hq.mp3",
+  "amb_src/dunewind.mp3": "https://cdn.freesound.org/previews/869/869173_1648170-hq.mp3",
+  "amb_src/alienwind.mp3": "https://cdn.freesound.org/previews/172/172178_1163166-hq.mp3",
+  "amb_src/ubud_night.mp3": "https://cdn.freesound.org/previews/681/681586_1435070-hq.mp3",
+  "amb_src/fountain.mp3": "https://cdn.freesound.org/previews/460/460559_1287465-hq.mp3",
+  "amb_src/dungeon.mp3": "https://cdn.freesound.org/previews/516/516566_2247456-hq.mp3",
+  "amb_src/drips.mp3": "https://cdn.freesound.org/previews/136/136692_2289019-hq.mp3",
+  "amb_src/fire.mp3": "https://cdn.freesound.org/previews/595/595451_12605858-hq.mp3",
+  "amb_src/forge.mp3": "https://cdn.freesound.org/previews/640/640197_11519060-hq.mp3",
+  "amb_src/forge2.mp3": "https://cdn.freesound.org/previews/834/834099_18150609-hq.mp3",
+  "amb_src/fire2.mp3": "https://cdn.freesound.org/previews/182/182368_1857065-hq.mp3",
+  "amb_src/cave3.mp3": "https://cdn.freesound.org/previews/636/636108_11705708-hq.mp3",
+  "amb_src/forest_day.mp3": "https://cdn.freesound.org/previews/253/253291_2409224-hq.mp3",
+  "amb_src/forest_night.mp3": "https://cdn.freesound.org/previews/253/253301_2409224-hq.mp3"
+ },
+ "sounds": {
+  "amb/forest_day": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/forest_day.mp3",
+     "start": 70,
+     "dur": 80,
+     "fadeout": 0
+    }
+   ]
+  },
+  "amb/forest_night": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/forest_night.mp3",
+     "start": 30,
+     "dur": 80,
+     "fadeout": 0
+    }
+   ]
+  },
+  "amb/village": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/village.mp3",
+     "start": 0,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": -3
+    },
+    {
+     "src": "amb_src/village2.mp3",
+     "start": 50,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": 6
+    }
+   ]
+  },
+  "amb/market": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/market.mp3",
+     "start": 30,
+     "dur": 80,
+     "fadeout": 0
+    }
+   ]
+  },
+  "amb/river": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/river.mp3",
+     "start": 5,
+     "dur": 90,
+     "fadeout": 0
+    }
+   ]
+  },
+  "amb/sea": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/sea.mp3",
+     "start": 30,
+     "dur": 80,
+     "fadeout": 0
+    }
+   ]
+  },
+  "amb/cave": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/cave3.mp3",
+     "start": 20,
+     "dur": 80,
+     "fadeout": 0
+    }
+   ]
+  },
+  "amb/crater": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/mud.mp3",
+     "start": 40,
+     "dur": 80,
+     "fadeout": 0
+    },
+    {
+     "src": "amb_src/wind_low.mp3",
+     "start": 30,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": -6,
+     "lp": 900
+    }
+   ]
+  },
+  "amb/desert": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/desert.mp3",
+     "start": 40,
+     "dur": 80,
+     "fadeout": 0
+    }
+   ]
+  },
+  "amb/swamp": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/swamp.mp3",
+     "start": 190,
+     "dur": 80,
+     "fadeout": 0
+    }
+   ]
+  },
+  "amb/ruins": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/wind_low.mp3",
+     "start": 100,
+     "dur": 80,
+     "fadeout": 0,
+     "hp": 120,
+     "lp": 3500
+    },
+    {
+     "src": "amb_src/forest_day.mp3",
+     "start": 70,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": -20,
+     "lp": 6000
+    }
+   ]
+  },
+  "amb/graveyard": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/wind_low.mp3",
+     "start": 90,
+     "dur": 80,
+     "fadeout": 0,
+     "lp": 1200
+    },
+    {
+     "src": "amb_src/ubud_night.mp3",
+     "start": 5,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": 6
+    }
+   ]
+  },
+  "amb/kala": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/cave2.mp3",
+     "start": 200,
+     "dur": 48,
+     "fadeout": 0,
+     "pitch": 0.6,
+     "lp": 1500
+    },
+    {
+     "src": "amb_src/alienwind.mp3",
+     "start": 60,
+     "dur": 40,
+     "fadeout": 0,
+     "pitch": 0.5,
+     "lp": 800,
+     "gain": -3
+    }
+   ]
+  },
+  "amb/palace": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/fountain.mp3",
+     "start": 5,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": -3,
+     "lp": 6000
+    },
+    {
+     "src": "amb_src/cave2.mp3",
+     "start": 100,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": -6,
+     "lp": 3000
+    }
+   ]
+  },
+  "amb/prison": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/dungeon.mp3",
+     "start": 20,
+     "dur": 80,
+     "fadeout": 0
+    },
+    {
+     "src": "amb_src/cave1.mp3",
+     "start": 250,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": 12
+    }
+   ]
+  },
+  "amb/kelir": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/fire2.mp3",
+     "start": 185,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": -3,
+     "lp": 3500
+    },
+    {
+     "src": "amb_src/ubud_night.mp3",
+     "start": 5,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": 3
+    }
+   ]
+  },
+  "amb/forge": {
+   "loop": 4.0,
+   "layers": [
+    {
+     "src": "amb_src/forge2.mp3",
+     "start": 0,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": 0
+    },
+    {
+     "src": "amb_src/fire2.mp3",
+     "start": 100,
+     "dur": 80,
+     "fadeout": 0,
+     "gain": -6,
+     "lp": 5000
+    }
+   ]
+  }
+ }
+}

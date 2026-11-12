@@ -8,3 +8,6 @@
 # OS / tooling
 .DS_Store
 __pycache__/
+
+# Audio source cache (tools/build_audio.py re-downloads it)
+/tools/audio/raw/

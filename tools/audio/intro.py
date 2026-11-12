@@ -6,7 +6,7 @@ ASSUMED: original composition in gamelan idiom.
 """
 import numpy as np
 import inst as I
-import sfx as S
+import sampler as S
 from dsp import Mix, master, SR, n_of, noise, lowpass, bandpass, fade
 from theory import freq
 from music import eq
@@ -67,7 +67,7 @@ def score():
     t = c["eyes"]
     m.add(I.bedug(1.0, 50.0, 1.2), t, 1.0, 0, 0.2, 0.5)
     m.add(I.sub_boom(36.0, 2.5, 1.0), t, 0.9)
-    m.add(S.boss_roar(), t + 0.05, 0.6, 0, 0.3, 0.4)
+    m.add(S.sfx("boss_roar"), t + 0.05, 0.6, 0, 0.3, 0.4)
     for deg, o, g in [(1, -1, 0.6), (2, -1, 0.55), (5, -1, 0.4)]:
         m.add(I.pad(f(deg, o), 1.3, 0.8, "strings", att=0.05, rel=0.3, bright=0.3), t, g, 0, 0.2, 0.4)
     for tb in (t + 0.6, t + 0.85):
@@ -100,10 +100,10 @@ def score():
 
     # --- 2: the staff goes up, Ka is written: riser, accelerating roll, choir swelling ---
     m.add(I.kecer(0.9), c["raise"], 0.5, 0.2, 0.3)
-    m.add(S.cast_begin(), c["raise"], 0.5, 0.3, 0.3)
+    m.add(S.sfx("cast_begin"), c["raise"], 0.5, 0.3, 0.3)
     t = c["ka"]
     span = c["impact"] - t
-    m.add(S.ink_scratch(span), t, 0.12, 0, 0.2)
+    m.add(np.resize(S.sfx("ink"), n_of(span)), t, 0.12, 0, 0.2)
     m.add(I.riser(span, 200.0, 4000.0, 0.9), t, 0.55, 0, 0.2)
     for deg, g in [(1, 0.8), (5, 0.6), (1, 0.4)]:
         m.add(I.pad(f(deg, 0 if g > 0.5 else 1), span, 0.8, "choir", att=span * 0.9, rel=0.1), t, g, 0, 0.2, 0.6)
@@ -125,12 +125,12 @@ def score():
         m.add(I.pad(f(deg, o), 3.0, 0.85, kind, att=0.05, rel=1.5, bright=0.8), t, g, 0, 0.2, 0.7)
     m.add(I.bell(f(1, 2), 3.5, 0.8), t, 0.4, 0, 0.4, 0.8)
     for beat, deg, dur in [(0.6, 1, 0.35), (0.95, 3, 0.35), (1.3, 5, 0.8), (2.2, 6, 0.35), (2.55, 5, 1.0)]:
-        m.add(I.suling(f(deg, 1), dur + 0.2, 0.8, vib=1.2), t + beat, 0.6, -0.15, 0.4, 0.7)
-        m.add(I.rebab(f(deg, 0), dur + 0.2, 0.6, vib=1.2), t + beat, 0.35, 0.2, 0.3, 0.5)
+        m.add(I.suling(f(deg, 1), dur + 0.2, 0.8), t + beat, 0.6, -0.15, 0.4, 0.7)
+        m.add(I.rebab(f(deg, 0), dur + 0.2, 0.6), t + beat, 0.35, 0.2, 0.3, 0.5)
     m.add(I.kempul(f(5, -1), 1.0, 0.7), t + 1.3, 0.5, -0.1, 0.3, 0.4)
 
     st = m.render(loop=False, rt=(1.6, 4.4), wet=1.0, seed=7)
-    st = eq(st, 7.0)
+    st = eq(st, 3.0)
     # one long fade at the very end so a stream that outlives the scene never clicks
     n = len(st)
     k = n_of(2.5)

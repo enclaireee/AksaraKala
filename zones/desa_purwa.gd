@@ -11,9 +11,9 @@ const MAP := [
 	"#[[[...................r................................r.......bb..#############.bbr...............................bb........,,,....bbbbbb......[[[[#",
 	"#[[[..........r........................................bbbbbbbb.bb..#_____q_____#.bb....[[[[[[[[[.....................bbbb....,,,....bbbbbb......[[[[#",
 	"#[[[...............................................bb..bbbbbbbb.....#______G____#.......[[[[[[[[[...r.................bbbb....,,,....bbbbbb..bb..[[[[#",
-	"#[[[............[[[[[[[[[.........................rbb....bbbbbb..bb.#___________#.[[[[[[[[[[[[[[[............r......bb..bbbb..,,,....bbbbbb..bb..[[[[#",
+	"#[[[............[[[[[[[[[.........................rbb....bbbbbb..bb.#_!_______=_#.[[[[[[[[[[[[[[[............r......bb..bbbb..,,,....bbbbbb..bb..[[[[#",
 	"#[[[............[[[[[[[[[.....r................bbbbbb..bbbbbbbb..bb.#_p_____p_p_#.[[[[[[[[[[[[[[[...................bb..bbbb..,,,....bbbb..rbbbb.[[[[#",
-	"#[[[............[[[[[[[[[................r.....bbbbbb..bbbbbbbbbbbb.#____$T_____#.[[[[[[[[[[[[[[[...................bbbbbbbb..,,,....bbbb...bbbb.[[[[#",
+	"#[[[............[[[[[[[[[................r.....bbbbbb..bbbbbbbbbbbb.#____$T__(__#.[[[[[[[[[[[[[[[...................bbbbbbbb..,,,....bbbb...bbbb.[[[[#",
 	"#[[[.......r....[[[[[[[[[........................bbbbbb..bbbbbbbbbb.#___p____L__#.[[[[[[[[[[[[[[[...bbbb............bbbbbbbb..,,,...........bb...[[[[#",
 	"#[[[..........................r................r.bbbbbb.............#_p___V____p#...................bbbb......................,,,...........bb...[[[[#",
 	"#............------..----...........................................#####__######.---..------..--.............................,,,................[[[[#",
@@ -28,7 +28,7 @@ const MAP := [
 	"#........bb.#___D__D__D__D___#...[[[[[[[[[[...,,,.....[[[[[[[[[[..,,,A,,,,,,,,,,,,,............[[[[[.-,,,..bb........[[[[[[[..,,,-.[[[[..bbbb.....[[[#",
 	"#........bb.#________________#...[[[[[[[[[[...,,,.................,,,,,,,,,,,,,o4,,........bb..[[[[[.-,,,.bb.bbbb....[[[[[[[.-,,,-.[[[[........bb.[[[#",
 	"#[[[[..bb...#_______S________#...[[[[[[[[[[...,,,.......bb........,,,^,,,,,,,,,,,,,........bb..[[[[[.-,,,.bb.bbbb....[[[[[[[.-,,,..............bb.[[[#",
-	"#[[[[..bb...#_____________i__#................,,,-.[[[[.bbbb......,,,,,,,,0,,,,,>,,......bb.bb.[[[[[.-,,,....................-,,,........bbbb..bb.[[[#",
+	"#[[[[..bb...#____________)i__#................,,,-.[[[[.bbbb......,,,,,,,,0,,,,,>,,......bb.bb.[[[[[.-,,,....................-,,,........bbbb..bb.[[[#",
 	"#[[[[.r.....#__M_e___________#................,,,-.[[[[...bb......,,,,,,,,,,,,,,,,,......bb.bb.[[[[[..,,,-.[[[[[.............-,,,........bbbb..bb....#",
 	"#[[[[.......#________________#.........bbbb...,,,..[[[[..bbbbbb...,,,,,,,,,,,,,,,,,.........bb.[[[[[..,,,..[[[[[..bb.........-,,,........bb..bbbbbb..#",
 	"#[[[[.......#________________#.........bbbb...,,,..[[[[..bbbbbb...,,,,,,,,,,,,,,,,,.........bb.[[[[[.-,,,..[[[[[..bb...[[[[[.-,,,-.......bb..bbbbbb..#",
@@ -39,10 +39,10 @@ const MAP := [
 	"#[[[[..............,,,..l........bb......r....,,,..........bb.,,,,,,,,,,,,,,,,,,,,,,,,,,.....[[[[[[[[.,,,-..........bb.[[[[[.-,,,-.[[[[..............#",
 	"#[[[[...........Q..,,,...........bb...........,,,......?...bb.,,{{{,{{{,,,,,,,{{{,{{{,,,.....[[[[[[[[.,,,-.........rbb.[[[[[..,,,-.[[[[..............#",
 	"#..................,,,........................,,,.............,,,,,,,,,,,,,,,,,,,,,,,,,,..''.[[[[[[[[.,,,...........bb.[[[[[..,,,..[[[[..............#",
-	"#..................,,,.......,,,,,,,,,,,,.....,,,...../.bb....,,,,,,,,,,,,P,,,,,|,,Y,,,,..''.[[[[[[[[.,,,...bbbb....bb.[[[[[.-,,,..[[[[..............#",
+	"#..................,,,.......,,,,,,,,,,,,.....,,,...../.bb....,,,,,,,,,,,,P,,,,,|,,Y,],,..''.[[[[[[[[.,,,...bbbb....bb.[[[[[.-,,,..[[[[..............#",
 	"#..................,,,..bb...,,,,,,,,,,,,.....,,,.......bb....,,,,,,,,,,,,,,,,,,,,,,,,,,..''.[[[[[[[[.,,,.bbbbbb..............,,,-.[[[[..............#",
-	"#............r.....,,,..bb...,,,,,,,,,,,,.....,,,............Z,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,.bb..................,,,....................#",
-	"#..h..n............,,,.......,,,,,,,,,,,,.....,,,.....!..c....,,,,,,,,,,,,F,,,,,,,,,,U,,..----..-----.,,,.....................,,,....................#",
+	"#....}.......r.....,,,..bb...,,,,,,,,,,,,.....,,,............Z,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,.bb..................,,,....................#",
+	"#..h..n............,,,.......,,,,,,,,,,,,.....,,,........c....,,,,,,,,,,,,F,,,,,,,,,,U,,..----..-----.,,,.....................,,,....................#",
 	"#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,###########",
 	"Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,vKE",
 	"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE",
@@ -95,7 +95,7 @@ const SPOTS := {
 	"v": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_alun"}, "tile": ","},   # spawn, arrival from Keraton Galuh
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_10"}, "tile": ","},   # kabut, Galuh gate (one per tile)
 	"E": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_mataram", "target_zone": "kg_alun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Keraton Galuh
-	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ibu"}, "tile": "_"},   # NPC Ibu, the hero's mother (MQ0 0.2 tea and 0.10, Interlude 4.4, epilogue cups)
+	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ibu", "cond": "!step:mq0=11"}, "tile": "_"},   # NPC Ibu, the hero's mother (MQ0 0.2 tea and 0.10, Interlude 4.4, epilogue cups); at the west gate `}` during 0.12
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid", "cond": "step:mq0=11", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]]]}, "tile": ","},   # encounter purwa_raid, the plaza fight, 3 Faceless (MQ0 0.12, last of three skirmishes; `area_cleared:purwa_raid` sets `mq0_7`; v5 step index 11)
 	"9": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid_a", "cond": "step:mq0=11", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter purwa_raid_a, west road skirmish, 2 Faceless (MQ0 0.12, first)
 	"0": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid_b", "cond": "step:mq0=11", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter purwa_raid_b, stage road skirmish, 2 Faceless (MQ0 0.12, second)
@@ -106,7 +106,7 @@ const SPOTS := {
 	"R": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nyai_rukmi"}, "tile": "_"},   # NPC Nyai Rukmi, codex keeper (SQ-D2)
 	"D": {"scene": "res://entities/enemies/dummy.tscn", "props": {}, "tile": "_"},   # training dummy (same props on all 4 tiles)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "wayang_stage", "size": Vector2i(11,5)}, "tile": "_"},   # trigger, wayang stage (MQ0 0.10 `area_entered:wayang_stage`)
-	"$": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_stage_lamps", "size": Vector2i(3,3)}, "tile": "_"},   # trigger, lighting the four ceremonial stage oil lamps at dusk (MQ0 0.7 `puzzle_solved:purwa_stage_lamps`)
+	"$": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "stage_lamp_1"}, "tile": "_"},   # prop, stage oil lamp 1 (MQ0 0.7 press-each x4, `talked_to:stage_lamp_1`; Cepot comments on each)
 	"S": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sanggar_enter", "size": Vector2i(16,9)}, "tile": "_"},   # trigger, sanggar entered (shows draw tutorial)
 	"i": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sanggar_lontar", "size": Vector2i(3,3)}, "tile": "_"},   # trigger, the lontar table in the sanggar (MQ0 0.6 `area_entered:sanggar_lontar`; the write card for the hero's and Laras's names)
 	"J": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_gua_kala", "target_zone": "gk_pelataran", "spawn_id": "from_desa_purwa"}, "tile": "."},   # exit to Gua Kala (P0 entry, the Act VI gate)
@@ -125,10 +125,10 @@ const SPOTS := {
 	"n": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nini_balangantrang", "cond": "flag:mq0_7,!flag:beat_hunter_raid"}, "tile": "."},   # NPC Nini Balangantrang at the west gate, speaks in the `hunter_raid` beat (display name "the old woman"; no talk of her own)
 	"m": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "hunter_mask", "cond": "quest:mq3=done"}, "tile": "_"},   # codex spot, the Hunter's empty mask in the hearth (Interlude, id ASSUMED; hidden until MQ3 is done so the codex cannot spoil him)
 	"l": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "laras_tag", "cond": "!flag:mq0_d1", "route": [Vector2i(16,16), Vector2i(26,17), Vector2i(34,14), Vector2i(31,11), Vector2i(26,14)]}, "tile": "."},   # NPC Laras, the tag partner; runs the route, then waits at the last stop (MQ0 0.1; `npc_id` ASSUMED, the route is read by the NPC script)
-	"Z": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_tag_end", "size": Vector2i(3,3)}, "tile": "."},   # trigger, tag game ends at the old well, a few steps south of the banyan (MQ0 0.1 `area_entered:purwa_tag_end`, sets `mq0_d1`; plays beat `tag_end`; the well is dressing at this trigger, **ASSUMED**, no separate tile)
-	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "stray_cat", "cond": "!flag:mq0_d1"}, "tile": "."},   # NPC the stray cat; Laras calls it by its "real name" and it comes (MQ0 0.1 beat, no talk; the old banyan beside it shivers)
+	"Z": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purwa_well"}, "tile": "."},   # prop, the old well, a few steps south of the banyan (MQ0 0.1 press-each x3, `talked_to:purwa_well`)
+	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purwa_cat", "cond": "!flag:mq0_d1"}, "tile": "."},   # prop, the stray cat Si Belang, one of the three places Laras calls in the tag game (MQ0 0.1 press-each x3, `talked_to:purwa_cat`; also sets `tag_cat` for the beat)
 	"O": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purwa_old_couple"}, "tile": "."},   # NPC the old couple outside their door (house_c); the lead-in talk before Ciung (MQ0 0.2, Interlude 4.2)
-	"@": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_banyan_climb", "size": Vector2i(3,3)}, "tile": "."},   # trigger, climb the banyan ridge to Ciung Wanara (MQ0 0.3 `puzzle_solved:purwa_banyan_climb`)
+	"@": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ciung_basket", "cond": "flag:ciung_asked"}, "tile": "."},   # clue, Ciung's fallen basket under the banyan (MQ0 0.3; appears after Ciung refuses to come down, `ciung_asked`; `clue_examined:ciung_basket`)
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "!flag:mq0_d4"}, "tile": "."},   # NPC Ciung Wanara up the big tree with his egg (MQ0 0.3, `talked_to:ciung_wanara` sets `mq0_d3`; he stays up the tree until the Semar talk, `mq0_d4`, step 0.5, since he walks with you in the v5 script)
 	"8": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "banyan"}, "tile": "."},   # codex spot, the old banyan shrine on the road to the tree (MQ0 0.3 `travel` find; id ASSUMED)
 	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purwa_stall"}, "tile": "."},   # NPC the stall-keeper at the market stall (MQ0 0.4, which now comes before the sanggar, sets `mq0_d6`; and Interlude 4.2 `talked_to:purwa_stall`; asks children's names, "a tall man in a blank mask")
@@ -154,8 +154,7 @@ const SPOTS := {
 	"5": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_daughter", "cond": "flag:mq5_4"}, "tile": "."},   # NPC Ratna, Mpu Wirasana's daughter (epilogue; `timur_daughter`, quests.md section 8; Choice 4 talk)
 	"6": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_jurukunci", "cond": "flag:mq5_4"}, "tile": "."},   # NPC Mbah Wiryo at the pond (epilogue)
 	"7": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "faceless_deserter", "cond": "flag:mq5_4,!flag:choice_handed"}, "tile": "."},   # NPC the Faceless Deserter, if freed (epilogue; Choice 2 is exclusive, so `!flag:choice_handed` means freed; his entries also need `choice_freed`)
-	"!": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_tag_cat", "size": Vector2i(3,3), "cond": "!flag:mq0_d1"}, "tile": "."},   # trigger, tag beat at the cat (MQ0 0.1, area `purwa_tag_cat` sets `tag_cat`, **ASSUMED**; plays beat `tag_cat` while `step:mq0=0`)
-	"?": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "purwa_tag_banyan", "size": Vector2i(3,3), "cond": "!flag:mq0_d1"}, "tile": "."},   # trigger, tag beat at the old banyan (MQ0 0.1, area `purwa_tag_banyan` sets `tag_banyan`, **ASSUMED**; plays beat `tag_banyan` while `step:mq0=0`)
+	"?": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purwa_root"}, "tile": "."},   # prop, the old banyan's root (MQ0 0.1 press-each x3, `talked_to:purwa_root`; also sets `tag_banyan` for the beat)
 	"/": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "epi_banyan", "size": Vector2i(3,3), "cond": "flag:beat_epi_wake,flag:choice_offer_memory"}, "tile": "."},   # trigger, the old banyan blur (epilogue beat `epi_banyan`, area `epi_banyan`, **ASSUMED**; only after Choice 5, Offer Memory)
 	"*": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga", "cond": "flag:mq5_4"}, "tile": "."},   # NPC Hariang Banga in the village (epilogue, Choice 3 talk; the table seat `H` is the Interlude one)
 	"<": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mq5_4"}, "tile": "."},   # NPC Ciung Wanara in the village (epilogue, Choices 1 and 3, hub; the tree spot `C` and the table seat `N` are earlier ones)
@@ -164,6 +163,12 @@ const SPOTS := {
 	";": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_sari", "cond": "flag:mq5_4"}, "tile": "."},   # NPC Sari, the singer from Segara Kidul (epilogue, Choice 5 talk)
 	":": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_empu", "cond": "flag:mq5_4,flag:choice_reforge"}, "tile": "."},   # NPC Mpu Wirasana (epilogue, Choice 4 reforge talk)
 	"^": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "aria_kebonan", "cond": "flag:mq5_4"}, "tile": "."},   # NPC Aria Kebonan at the ashes of the burned stage (epilogue, Choice 6; the Interlude spot `A` ends at `mq4_9`)
+	"!": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "stage_lamp_2"}, "tile": "_"},   # prop, stage oil lamp 2 (MQ0 0.7)
+	"=": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "stage_lamp_3"}, "tile": "_"},   # prop, stage oil lamp 3 (MQ0 0.7)
+	"(": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "stage_lamp_4"}, "tile": "_"},   # prop, stage oil lamp 4 (MQ0 0.7)
+	")": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "laras", "cond": "step:mq0=5"}, "tile": "_"},   # NPC Laras at the lontar table, holding the leaf (MQ0 0.6: her entry opens the write card `write:laras_la:sunda_la`, `name_written:laras_la`)
+	"]": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "purwa_oil_seller", "cond": "flag:mq0_d3"}, "tile": "."},   # NPC the oil seller beside the stall (MQ0 0.4, Ibu's errand: lamp oil; mentions the masked man while pouring it, `talked_to:purwa_oil_seller`)
+	"}": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ibu", "cond": "flag:mq0_7,!quest:mq0=done"}, "tile": "."},   # NPC Ibu at the west gate after the raid (MQ0 0.12 part 3, `talked_to:ibu`: the reason to go and the second cup)
 }
 
 

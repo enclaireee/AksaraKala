@@ -17,7 +17,7 @@ const MAP := [
 	"####.s.......#################,,############################",
 	"####.........#################,,############################",
 	"####.........####tttttttttttttttttttttttttttttttttttt#######",
-	"####....J....####tt#######ttStttttotttttttttttttttttt#######",
+	"####....J....####tt#######atttctttotttttttttttttttttt#######",
 	"Xe,,.........,,V,tt#_____#tttttttttttttttttttttttt3tt#######",
 	"X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######",
 	"####.......r.####tt#_____#ttttttttttttttttttttttttttt#######",
@@ -46,7 +46,6 @@ const SPOTS := {
 	"J": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_clearing", "size": Vector2i(9,10), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(2,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(2,3)]]]}, "tile": ","},   # encounter sunda_clearing
 	"V": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sawah_flood_vista", "size": Vector2i(4,4)}, "tile": ","},   # trigger, flooded valley vista as Sangkuriang's curse rises (MQ1 1.13 `area_entered:sawah_flood_vista`)
 	"M": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_terraces", "size": Vector2i(24,11), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(6,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-4)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,2)], ["res://entities/enemies/faceless.tscn", Vector2i(-3,-3)]], [["res://entities/enemies/jurig_leuweung_elite.tscn", Vector2i(0,0)], ["res://entities/enemies/faceless.tscn", Vector2i(-6,0)]]]}, "tile": "t"},   # encounter sunda_terraces; wave 2 is the elite Jurig, the `miniboss` piece (MQ1 1.14)
-	"S": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sawah_sluices", "size": Vector2i(4,4)}, "tile": "t"},   # trigger, open the two upper sluice wheels to drain the flooded paddy road (MQ1 1.15 `puzzle_solved:sawah_sluices`)
 	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sunda_weaver"}, "tile": "_"},   # NPC weaver, hid Laras and gives the Boeh Rarang (MQ1 1.15 `talked_to:sunda_weaver`)
 	"3": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_3"}, "tile": "t"},   # angklung 3
 	"j": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "t"},   # loose faceless (terrace), roaming pack (respawns on zone reload, no unique_id)
@@ -54,6 +53,8 @@ const SPOTS := {
 	"l": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "loom"}, "tile": "_"},   # clue, the Weaver's loom (K2 clue 3)
 	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "empty_coops"}, "tile": "t"},   # clue, the empty rooster coops on the terrace farmstead (K2 clue 2)
 	"s": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_chest_sawah", "item_id": "short_sword"}, "tile": "."},   # chest: Short Sword (secret, sawah's optional find, behind clearing rocks)
+	"a": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_1"}, "tile": "t"},   # puzzle, upper sluice wheel 1, west (MQ1 1.15 press-each x2; sets `sluice_wheel_1`, `sluice_1`)
+	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_2"}, "tile": "t"},   # puzzle, upper sluice wheel 2, east (MQ1 1.15; sets `sluice_wheel_2`, `sluice_2`, which drains the ts_situ flood `F`)
 }
 
 

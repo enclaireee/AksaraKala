@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "whisper_tree_2"
+name_key = ""
+entries = Array[Dictionary]([
+	{"if": ["step:mq5=5", "!flag:whisper_tree_2"], "lines": ["DLG_WHISPER_TREE_2_1"], "do": ["flag:whisper_tree_2"]},
+	{"if": [], "lines": [], "do": [], "quiet": true}
+])

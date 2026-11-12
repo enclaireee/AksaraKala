@@ -22,7 +22,7 @@ Sizes: screens are 30 x 17 tiles. All seven maps are 60 x 34 tiles (2x2). Spawn 
 | `sk_tebing` | 2x2, 60x34 | Tall black cliffs, a switchback stair, a sea cave, wind and gulls, a small shrine with a lamp above the drop | The cliff path (MQ4 4.18), the cliff shrine with the K9 memory (4.18) and the cliff altar for Choice 5 (4.19), the drop onto the keraton (kabut-gated until Choice 5). Holds the Segara Kidul end of `sc:ts_sk` | Spawns `from_sk_karang` (S), `from_ts_situ` (the shortcut door, W). Encounters `kidul_tebing_1`, `kidul_tebing_2`. Petilasan `kidul_3` (cliff shrine beside the drop, after the last fight, no fight between it and the drop). Chest `kidul_chest_3` (sea cave, narrow ledge). Shortcut gate `sc:ts_sk` (opens from here). Drop `D1` at the cliff edge (east side). Clue `shrine_tale` (K9) and the cliff altar `cliff_altar` at the shrine (`lc5_lontar` is retired: LC5 opens in `sk_gua`). Quest markers `kidul_tebing_2` (step 4.18), `kidul_3` (step 4.18), `cliff_altar` (4.19) |
 | `sk_keraton` | 2x2, 60x34 | Outer court of green-glass stone over the sea (the sea pavilion court), then a calm inner pendopo (open hall). Waves lap at the walls | The Trial of the Waves (4.21: three setpiece waves with two sign clues between them), the Sea Altar (4.22), the rest at `kidul_2` (4.20), codex, the exit to Gua Kala | Spawns `from_sk_karang` (N), `from_sk_tebing` (drop landing, NE), `from_sk_pantai` (W), `from_gk_mulut` (S). Trial `kidul_trial` (outer court centre, 3 waves). Petilasan `kidul_2` (inner pendopo, right before the kabut). Sea Altar `kidul_altar` (pendopo, Ombak and Kain Hijau). Codex spot `kidul_keraton_codex` (pendopo, Nyi Roro Kidul as belief). Shortcut gate `sc:sk_gerbang` (opens from here). Kabut `mq4_9` (= `quest:mq4=done`) to `gk_mulut`. No fight in the pendopo. Semar `M` at `kidul_2` (cond `step:mq4=19`). Clues `trial_sign_1`, `trial_sign_2` (4.21). Quest markers `kidul_2` (4.20), `kidul_trial` (4.21), `kidul_altar` (4.22) |
 | `sk_nelayan` | 5x4, 150x68 (Scale 1) | Kampung Nelayan: a stilt-house fishing village with drying racks, net yards and a cove path toward the mangrove | Arrival into the village (4.9, beat `song_hook`), Mbah Wiryo and Sari (4.10), SQ-K2 giver, SQ-C3 fragment 3 | Spawns `from_sk_pantai` (W), `from_sk_bakau` (E). Mbah Wiryo `J` (before `mq4_4`), Sari `S` (until `mq4_h2`) and `s` (after the trial), fisher `k2_fisher`, clue `c3_shore_net`, chest `kidul_chest_nelayan`. Quest markers `kidul_jurukunci` (4.10), `kidul_sari` (4.10) |
-| `sk_bakau` | 2x2, 60x34 | Hutan Bakau, a flooded mangrove with boardwalks and tidal beacons | The three tidal beacons with Sari (4.13), SQ-K2 clue, a chest | Spawns `from_sk_nelayan` (W), `from_sk_karang` (E). Puzzle trigger `bakau_beacons`, encounter `bakau_pack`, Sari `S` (step 4.13), clue `k2_scale`, chest `kidul_chest_bakau`. Quest markers `bakau_beacons` (4.13), `kidul_sari` |
+| `sk_bakau` | 2x2, 60x34 | Hutan Bakau, a flooded mangrove with boardwalks and tidal beacons | The three tidal beacons with Sari (4.13), SQ-K2 clue, a chest | Spawns `from_sk_nelayan` (W), `from_sk_karang` (E). Puzzle trigger `tidal_beacon_1`-`_3` (props), encounter `bakau_pack`, Sari `S` (step 4.13), clue `k2_scale`, chest `kidul_chest_bakau`. Quest markers `tidal_beacon_1`-`_3` (props) (4.13), `kidul_sari` |
 | `sk_gua` | 2x2, 60x34 | Gua Karang: an echoing sea cavern with bronze bells and abyssal pools | The sunken-shrine approach (4.15), LC5 (4.16), Trial II, the Abyssal Current (4.17) | Spawns `from_sk_karang` (W), `from_sk_tebing` (N). Clue `gua_bell_marks` `G` (4.15), encounter `gua_karang_approach` `E`, clue `lc5_cavern` `L` (opens `lc5`), encounter `kidul_gua_trial` `F` (cond `flag:laras_key_tidal_gate`), Sari `S` at the mouth (step 4.17). Quest markers `gua_karang_approach`, `lc5_cavern`, `kidul_gua_trial` |
 
 ## Region graph
@@ -130,7 +130,7 @@ Marker form `{zone: "segara_kidul", id: ...}`. Ids from quests.md are marked (Q)
 | 4.10 Meet Mbah Wiryo and Sari | `talk, travel, fight, talk` | `kidul_jurukunci` (Q, `J` in `sk_nelayan` until `mq4_4`), `kidul_pantai_3`, `kidul_sari` (`S` in `sk_nelayan`) | `sk_nelayan`, `sk_pantai` | `talked_to:kidul_jurukunci`, sets `mq4_4`; then `talked_to:kidul_sari`, sets `mq4_4b` |
 | 4.11 K8 clues: three verses of the sea song | `travel, clue x2, fight, clue, beat` | `song_1`, `song_2`, `song_3` (Q; `song_3` has `memory_id: k8_wiryo_wife`), `kidul_pantai_2` | `sk_pantai` (net yard, then the shore) | `all`: `clue_examined:song_1`, `song_2`, `song_3`; sets `mq4_h1` (beat `song_whole`) |
 | 4.12 K8 memory | `memory, puzzle, beat, talk` | `k8_wiryo_wife`, Mbah Wiryo `J` (`flag:mq4_4`) | `zones/kelir/k8_wiryo_wife.tscn`, `sk_pantai` | `memory_done:k8_wiryo_wife`, sets `mq4_h2` (beat `wiryo_dusk`) |
-| 4.13 The mangrove beacons with Sari | `travel, talk, puzzle, fight x2` | `kidul_sari` (`S`, cond `step:mq4=12`), `bakau_beacons`, `bakau_pack` | `sk_bakau` | `puzzle_solved:bakau_beacons`, sets `mq4_5a` (beat `beacons_lit`) |
+| 4.13 The mangrove beacons with Sari | `travel, talk, puzzle, fight x2` | `kidul_sari` (`S`, cond `step:mq4=12`), `tidal_beacon_1`-`_3` (props), `bakau_pack` | `sk_bakau` | three `talked_to:tidal_beacon_N`, sets `mq4_5a` (beat `beacons_lit`) |
 | 4.14 Sacred Trial I, the Torch-Lines | `setpiece, clue, fight x2, miniboss` | `kidul_karang_3`, `reef_thread`, `puzzle_kidul_tide`, `kidul_karang_4`, `kidul_karang_2` | `sk_karang` | `area_cleared:kidul_karang_2`, sets `mq4_5b` (beat `trial_torch`) |
 | 4.15 The sea cavern approach | `travel, fight, clue, fight, beat` | `gua_bell_marks`, `gua_karang_approach` | `sk_gua` | `area_cleared:gua_karang_approach`, sets `mq4_6a` (beat `gua_approach`) |
 | 4.16 LC5: the sunken bells | `chapter, puzzle, beat` | `lc5_cavern` (`memory_id: lc5`) | `sk_gua` and `zones/kelir/lc5.tscn` | `memory_done:lc5`, sets `mq4_lc`, `laras_key:tidal_gate` (`flag:laras_key_tidal_gate` opens `kidul_gua_trial`) |
@@ -446,7 +446,7 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY
 ############################NN##############################
 #...........................n,.............................#
 #......rrrrrr...............,,...................rr........#
-#......r....r...............,,...................rr........#
+#......r....r...............,,e..................rr........#
 #......r..c.r...............,,.............................#
 #......r....................,,.........1...................#
 #......rrrrrr...............,,.............................#
@@ -470,7 +470,7 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 #......_______H____________.,,.............................#
 #......_________________s__.,,.............................#
 #......__________B_________.,,.............................#
-#......____________________.,,........k....................#
+#......____________________.,,........k.......L............#
 #...........................,,.......p....T...l............#
 #..............................D...........................#
 #.....~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.....#
@@ -503,14 +503,16 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `c` | chest: 380 Ilmu (behind driftwood) | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_1", item_id:"ilmu:380"}` | grass | 1 |
 | `A` | clue, the first forgotten verse, with the net-mending family at the west end of the net yard (4.11 K8, 1 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"song_1"}` | floor | 1 |
 | `B` | clue, the second verse, with the family drying the sea-offering baskets (4.11 K8, 2 of 3) | `res://entities/world/clue.tscn` | `{clue_id:"song_2"}` | floor | 1 |
-| `D` | clue, the third verse, with Mbah Wiryo's own family on the shore rock where he calls his wife's name at dusk (4.11 K8, 3 of 3; opens memory `k8_wiryo_wife`) | `res://entities/world/clue.tscn` | `{clue_id:"song_3", memory_id:"k8_wiryo_wife"}` | grass | 1 |
+| `D` | clue, the third verse, with Mbah Wiryo's own family on the shore rock where he calls his wife's name at dusk (4.11 K8, 3 of 3; opens memory `k8_wiryo_wife`) | `res://entities/world/clue.tscn` | `{clue_id:"song_3", cond:"flag:clue_song_1,flag:clue_song_2", memory_id:"k8_wiryo_wife"}` | grass | 1 |
 | `H` | NPC net mender (arrival slice, flavor: the village is mending nets for the sea offering but nobody remembers the songs; unnamed) | `res://entities/npc/npc.tscn` | `{npc_id:"nelayan_jala"}` | floor | 1 |
 | `W` | exit to sk_nelayan (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_nelayan", spawn_id:"from_sk_pantai"}` | path | 2 |
 | `w` | spawn, arrival from sk_nelayan | `res://entities/world/spawn.tscn` | `{id:"from_sk_nelayan"}` | path | 1 |
 | `k` | NPC river-mouth fisher (SQ-K2) | `res://entities/npc/npc.tscn` | `{npc_id:"k2_fisher"}` | grass | 1 |
 | `s` | clue, Ranga's carved driftwood token in the shore net (SQ-C3) | `res://entities/world/clue.tscn` | `{clue_id:"c3_shore_net", memory_id:"sq_c3_ranga"}` | floor | 1 |
-| `p` | NPC Cepot on the coast (SQ-C4 part 3) | `res://entities/npc/npc.tscn` | `{npc_id:"cepot"}` | grass | 1 |
-| `l` | trigger, hold the ward-lamp through the wave (SQ-C4 part 3) | `res://entities/world/trigger.tscn` | `{trigger_id:"c4_lamp", size:Vector2i(7,5)}` | grass | 1 |
+| `p` | NPC Cepot on the coast (SQ-C4 part 3) | `res://entities/npc/npc.tscn` | `{npc_id:"cepot", cond:"!step:mq4=7"}` | grass | 1 |
+| `l` | the ward-lamp on the turtle beach; light it with Cepot to start the night defense (SQ-C4 part 3 step 2; sets `flag:c4_lamp`) | `res://entities/npc/npc.tscn` | `{npc_id:"c4_lamp", cond:"quest:sq_c4_3=active"}` | grass | 1 |
+| `e` | NPC Cepot at the south gate with a bundle from Ibu (4.8; SQ-C4 part 3 hook) | `res://entities/npc/npc.tscn` | `{npc_id:"cepot", cond:"step:mq4=7"}` | grass | 1 |
+| `L` | encounter c4_lamp_night, two waves at the ward-lamp (SQ-C4 part 3 step 2, `area_cleared:c4_lamp_night`) | `res://entities/world/encounter.tscn` | `{area_id:"c4_lamp_night", size:Vector2i(14,7), cond:"flag:c4_lamp,step:sq_c4_3=1", waves:[[[res://entities/enemies/lampor.tscn, Vector2i(-4,0)], [res://entities/enemies/ula_segara.tscn, Vector2i(4,0)]], [[res://entities/enemies/ula_segara.tscn, Vector2i(-4,-1)], [res://entities/enemies/ula_segara.tscn, Vector2i(4,-1)]]]}` | grass | 1 |
 
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -759,7 +761,7 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Hutan Bakau, flooded coastal mangrove forest and river mouth with tidal beacons and boardwalks.
-- Purpose: MQ4 4.13 (`bakau_beacons`, `bakau_pack`), SQ-K2 clue (`k2_scale`), and chest `kidul_chest_bakau`. Links to `sk_nelayan` and `sk_karang`.
+- Purpose: MQ4 4.13 (`tidal_beacon_1`-`_3` (props), `bakau_pack`), SQ-K2 clue (`k2_scale`), and chest `kidul_chest_bakau`. Links to `sk_nelayan` and `sk_karang`.
 
 ### Map
 ```
@@ -772,11 +774,11 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #....................r....r................................#
 #....................rrrrrr................................#
 #..........................................................#
-#..............rr..........................rr..............#
-#..............rr..........................rr..............#
+#..............rr.............2............rr..............#
+#..............rr.......1..................rr..............#
 #..........................................................#
-#...........................T..............................#
-#.........................S................................#
+#..........................................................#
+#.........................S......3.........................#
 #..........................................................#
 #..........................................................#
 Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY
@@ -807,10 +809,12 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `Y` | exit to sk_karang (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_karang", spawn_id:"from_sk_bakau"}` | path | 2 |
 | `y` | spawn, arrival from sk_karang | `res://entities/world/spawn.tscn` | `{id:"from_sk_karang"}` | path | 1 |
 | `S` | NPC Sari, in the mangrove with you (4.13 entry 3, `"quiet": true`) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_sari", cond:"step:mq4=12"}` | grass | 1 |
-| `T` | trigger, tidal beacons puzzle (4.13 `puzzle_solved:bakau_beacons`) | `res://entities/world/trigger.tscn` | `{trigger_id:"bakau_beacons", size:Vector2i(4,4)}` | grass | 1 |
 | `E` | encounter bakau_pack | `res://entities/world/encounter.tscn` | `{area_id:"bakau_pack", size:Vector2i(14,8), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(-3,0)], [res://entities/enemies/ula_segara.tscn, Vector2i(3,0)]]]}` | path | 1 |
 | `K` | clue, white scale in torn net (SQ-K2) | `res://entities/world/clue.tscn` | `{clue_id:"k2_scale", memory_id:"sq_k2_fisher"}` | grass | 1 |
 | `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_bakau", item_id:"ilmu:55"}` | grass | 1 |
+| `1` | tidal beacon 1 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_1`) | `res://entities/npc/npc.tscn` | `{npc_id:"tidal_beacon_1"}` | grass | 1 |
+| `2` | tidal beacon 2 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_2`) | `res://entities/npc/npc.tscn` | `{npc_id:"tidal_beacon_2"}` | grass | 1 |
+| `3` | tidal beacon 3 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_3`) | `res://entities/npc/npc.tscn` | `{npc_id:"tidal_beacon_3"}` | grass | 1 |
 
 ## Area 7: sk_gua
 

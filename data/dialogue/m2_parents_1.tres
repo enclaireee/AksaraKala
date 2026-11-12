@@ -8,6 +8,6 @@ npc_id = "m2_parents_1"
 name_key = "NPC_M2_PARENTS_NAME"
 entries = Array[Dictionary]([
 	{"if": ["quest:sq_m2=done"], "lines": ["DLG_M2_PARENTS_V42"], "do": []},
-	{"if": ["quest:sq_m2=active"], "lines": ["DLG_M2_PARENTS_V30", "@NPC_HERO_NAME", "DLG_M2_PARENTS_H30", "@NPC_M2_PARENTS_NAME", "DLG_M2_PARENTS_V31"], "do": ["flag:sq_m2_pots"]},
+	{"if": ["quest:sq_m2=active"], "lines": ["DLG_M2_PARENTS_V30", "@NPC_HERO_NAME", "DLG_M2_PARENTS_H30", "@NPC_M2_PARENTS_NAME", "DLG_M2_PARENTS_V31"], "do": ["flag:sq_m2_pots", "flag:wewe_parents_called"]},
 	{"if": [], "lines": ["DLG_M2_PARENTS_V32"], "do": []}
 ])

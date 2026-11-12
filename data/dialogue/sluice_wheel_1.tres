@@ -7,6 +7,6 @@ script = ExtResource("1")
 npc_id = "sluice_wheel_1"
 name_key = ""
 entries = Array[Dictionary]([
-	{"if": ["!flag:sluice_1"], "lines": [], "do": ["flag:sluice_1"]},
-	{"if": [], "lines": [], "do": []}
+	{"if": ["step:mq1=14", "!flag:sluice_wheel_1"], "lines": [], "do": ["flag:sluice_wheel_1", "flag:sluice_1"]},
+	{"if": [], "lines": [], "do": [], "quiet": true}
 ])

@@ -7,6 +7,8 @@ script = ExtResource("1")
 npc_id = "ibu"
 name_key = "NPC_IBU_NAME"
 entries = Array[Dictionary]([
+	{"if": ["step:mq0=11", "flag:mq0_7"], "lines": ["DLG_IBU_GATE_1", "DLG_IBU_GATE_2"], "do": []},
+	{"if": ["step:mq0=11"], "lines": ["DLG_IBU_V7"], "do": [], "quiet": true},
 	{"if": ["step:mq0=1", "!flag:mq0_d2"], "lines": ["DLG_IBU_V20", "@NPC_LARAS_NAME", "DLG_IBU_L1", "@NPC_IBU_NAME", "DLG_IBU_V101", "@NPC_HERO_NAME", "DLG_IBU_H101", "@NPC_LARAS_NAME", "DLG_IBU_L101", "@NPC_IBU_NAME", "DLG_IBU_V102", "@NPC_HERO_NAME", "DLG_IBU_H102", "@NPC_IBU_NAME", "DLG_IBU_V21", "@NPC_HERO_NAME", "DLG_IBU_H20", "@NPC_IBU_NAME", "DLG_IBU_V103"], "do": []},
 	{"if": ["flag:mq0_d2", "!flag:mq0_d8"], "lines": ["DLG_IBU_V104"], "do": [], "hub": true, "quiet": true, "choices": [{"text": "CHOICE_IBU_ASK_101", "do": ["topic:ask_ruwatan"]}, {"text": "CHOICE_IBU_ASK_102", "do": ["topic:ask_cups"]}, {"text": "CHOICE_IBU_ASK_103", "do": []}]},
 	{"topic": "ask_ruwatan", "lines": ["DLG_IBU_V105", "DLG_IBU_V106", "@NPC_HERO_NAME", "DLG_IBU_H103", "@NPC_IBU_NAME", "DLG_IBU_V107"], "do": [], "quiet": true},

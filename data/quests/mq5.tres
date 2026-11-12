@@ -22,10 +22,10 @@ marker = {"zone": "gk_pelataran", "id": "memorial_stone"}
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ5_S3_OBJ"
-on = "area_cleared:kala_mulut"
+all = [{"on": "spell_cast:jawa_ka", "set_flag": "ombak_barrier", "objective": "Q_MQ5_S3_P1"}, {"on": "area_cleared:kala_mulut", "set_flag": "mq5_1b", "objective": "Q_MQ5_S3_P2"}]
 set_flag = "mq5_1b"
+marker = {"zone": "gk_mulut", "id": "ombak_barrier"}
 recap = "Q_MQ5_S3_DONE"
-marker = {"zone": "gk_mulut", "id": "eclipse_veil"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
@@ -46,10 +46,10 @@ marker = {"zone": "gk_pasir", "id": "ward_inscription"}
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ5_S6_OBJ"
-all = [{"on": "area_cleared:kala_hutan_echoes", "set_flag": "", "objective": "Q_MQ5_S6_P1"}, {"on": "puzzle_solved:hutan_name_chimes", "set_flag": "mq5_1cb", "objective": "Q_MQ5_S6_P2"}]
+all = [{"on": "area_cleared:kala_hutan_echoes", "set_flag": "", "objective": "Q_MQ5_S6_P1"}, {"on": "talked_to:whisper_tree_1", "set_flag": "", "objective": "Q_MQ5_S6_W1"}, {"on": "talked_to:whisper_tree_2", "set_flag": "", "objective": "Q_MQ5_S6_W2"}, {"on": "talked_to:whisper_tree_3", "set_flag": "", "objective": "Q_MQ5_S6_W3"}]
 set_flag = "mq5_1cb"
+marker = {"zone": "gk_hutan", "id": "whisper_tree_1"}
 recap = "Q_MQ5_S6_DONE"
-marker = {"zone": "gk_hutan", "id": "name_trees"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
@@ -114,6 +114,7 @@ on = "name_written:laras"
 set_flag = "mq5_4"
 recap = "Q_MQ5_S14_DONE"
 marker = {"zone": "gk_ruang_kala", "id": "batara_kala"}
+
 [resource]
 script = ExtResource("1")
 id = "mq5"

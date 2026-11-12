@@ -62,7 +62,7 @@ const MAP := [
 	"#.bbbb..........~...........,,,-.[[[[[.....r.........bbbbbbbbbb..[[[[[[.-,,,..[[[[[[[......................bbbb...........[[[[.-,,,..[[[[[[......[[[[#",
 	"#.bbbb.c....................,,,-.[[[[[............bb.bbbb..bbbb..[[[[[[.-,,,-.[[[[[[[......................bbbb...........[[[[.-,,,..[[[[[[.bb...[[[[#",
 	"#.bbbb......................,,,-.[[[[[............bb.bbbb..bbbb..[[[[[[.-,,,-.[[[[[[[....r........bbbb.....bbbb..u........[[[[.-,,,-.[[[[[[.bb.r.[[[[#",
-	"#................bb.........,,,.............z.....bb.bbbbbb.bb...........,,,..............r......rbbbb.....bbbb....u......[[[[.-,,,-.[[[[[[.bb...[[[[#",
+	"#................bb.........,,,...................bb.bbbbbb.bb...........,,,..............r......rbbbb.....bbbb....u......[[[[.-,,,-.[[[[[[.bb...[[[[#",
 	"#................bb.........,,,...................bb.bbbbbb.bb...........,,,...............................bb.............[[[[..,,,-.[[[[[[.bb...[[[[#",
 	"#...........................,,,.....................r....................,,,.......r.......................bb.....u.......[[[[..,,,-.[[[[[[..........#",
 	"#.[[[[[[[[[..[[[[[[[[.......,,,...........................[[[[[[[[[......,,,...............[[[[[[[[[[[....................[[[[.-,,,..................#",
@@ -98,7 +98,6 @@ const SPOTS := {
 	"a": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g1_basket", "memory_id": "sq_g1_kabayan", "cond": "flag:clue_g1_decree"}, "tile": "."},   # clue, a basket Kabayan left half-woven; pulls you into the Kabayan tale (SQ-G1 clue 2, `memory_id` `sq_g1_kabayan`; needs the decree first)
 	"m": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c1_feathers", "cond": "flag:mqg_a1"}, "tile": "."},   # clue, the rooster's feathers at the seller's stall (SQ-C1 clue 1; unlock `mqg_a1`)
 	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c1_basket", "memory_id": "sq_c1_basket", "cond": "flag:clue_c1_feathers"}, "tile": "."},   # clue, the river basket where children play; pulls you into the basket memory (SQ-C1 clue 2, `memory_id` `sq_c1_basket`; needs the feathers first)
-	"z": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "puzzle_c1_rooster", "size": Vector2i(6,4), "cond": "flag:memory_sq_c1_basket"}, "tile": "."},   # trigger, puzzle `puzzle_c1_rooster` (SQ-C1 step 4: follow the feather trail to the rooster's hiding place; sets `flag:puzzle_c1_rooster`, which also fires `area_entered:c1_rooster_found`, **ASSUMED** alias; cond: the basket memory is done; no gate)
 	"p": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "galuh_crowd"}, "tile": "."},   # NPC townsperson in the tournament crowd (dressing, same props on all 6 tiles)
 }
 

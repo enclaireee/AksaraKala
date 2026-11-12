@@ -16,7 +16,7 @@ const MAP := [
 	"#...................................~~........,......#####################################",
 	"#...rr..............................~~........C..........................................#",
 	"#...rr..............................~~..B.....,..........................................#",
-	"#.............................................,..........................................#",
+	"#...................n.........................,..........................................#",
 	"#.............................................,..........................................#",
 	"#,,,,,,,,,,,,,,,,,,,D,,,,,,,,,,,,,,,,,,,u,,,,,,,,,,,,,,,,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,yY",
 	"#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,I,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
@@ -53,10 +53,11 @@ const SPOTS := {
 	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "seeds"}, "tile": "."},   # clue, cucumber seeds spilled on the path (3.5, K4 clue 1 of 3; journal note only)
 	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "needle_case"}, "tile": "."},   # clue, a needle case on the riverbed rocks (3.5, K4 clue 2 of 3; journal note only)
 	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "salt_terasi"}, "tile": ","},   # clue, a salt jar and a pot of terasi at the hut door (3.5, K4 clue 3 of 3; journal note only, the memory now opens from `banyan_altar`)
-	"D": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "buto_ambush_2", "size": Vector2i(16,9), "waves": [[["res://entities/bosses/buto_ijo.tscn", Vector2i(0,-4)], ["res://entities/enemies/kemamang.tscn", Vector2i(-4,0)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,0)], ["res://entities/enemies/kemamang.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter buto_ambush_2 (3.6 Stalking Ambush #2: test the bramble-seed pouch across the dry riverbed)
+	"D": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "buto_ambush_2", "cond": "flag:seed_marker", "size": Vector2i(16,9), "waves": [[["res://entities/bosses/buto_ijo.tscn", Vector2i(0,-4)], ["res://entities/enemies/kemamang.tscn", Vector2i(-4,0)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,0)], ["res://entities/enemies/kemamang.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter buto_ambush_2 (3.6 Stalking Ambush #2: test the bramble-seed pouch across the dry riverbed)
 	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "t1_claw_marks", "cond": "quest:sq_t1=active"}, "tile": "."},   # clue, giant claw marks on the broken ferry jetty (SQ-T1 clue 1 of 2)
 	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "t1_sodo", "memory_id": "sq_t1_klething", "cond": "quest:sq_t1=active"}, "tile": "."},   # clue, the sodo lanang palm rib in Klething Kuning's bundle (SQ-T1 clue 2 of 2; opens memory `sq_t1_klething`)
-	"I": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "t1_crossing_dry", "size": Vector2i(4,4)}, "tile": ","},   # trigger, strike the river with the sodo lanang to dry the crossing (SQ-T1 peaceful end; fires `area_entered:t1_crossing_dry`)
+	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "jetty_post"}, "tile": ","},   # jetty post at the broken ferry; strike the river here with the sodo lanang (SQ-T1 step 2 peaceful end; sets `flag:jetty_post`)
+	"n": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "seed_marker"}, "tile": "."},   # seed marker on the dry riverbed; scatter the bramble seeds, which starts `buto_ambush_2` (3.6; sets `flag:seed_marker`)
 }
 
 

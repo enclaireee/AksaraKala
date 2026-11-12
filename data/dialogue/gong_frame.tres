@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "gong_frame"
+name_key = ""
+entries = Array[Dictionary]([
+	{"if": ["step:sq_m4=2", "item:gong_ageng", "!flag:gong_frame"], "lines": ["DLG_GONG_FRAME_1"], "do": ["flag:gong_frame"]},
+	{"if": [], "lines": [], "do": [], "quiet": true}
+])

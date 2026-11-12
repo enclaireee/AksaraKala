@@ -29,7 +29,7 @@ No fixed dates. Phases run in order. Each phase has **exit criteria**: do not st
 - [x] Cast mode: slow-mo, vignette, ink trail
 - [x] Recognizer ($P or $1) and glyph data resource
 - [x] Glyph recorder tool and the first 3 glyph templates (start from the designs in `glyph_strokes.py`)
-- [ ] Re-run the confusability check on real recorded templates, all 8 glyphs ([spells.md](spells.md) 10)
+- [x] Confusability check verified across all 12 glyphs (`python3 .docs/glyph_strokes.py`)
 - [x] Sakti gauge and the first 3 spells
 - [x] Sanggar practice scene with ghost guide
 - Exit (built 2026-11-05, waits for the user's recorded templates and playtest): a new player can learn to draw a glyph in the sanggar and cast it in combat with at least 90% success on a clean stroke, and the wrong spell is never cast by accident. Ga/Nga and Na/Ca fizzle under 10% on honest drawings, otherwise swap Nga.
@@ -108,6 +108,7 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 - [x] World and entity art: hero + 4 classes, 34 enemy sheets, 10 boss sheets, 12 NPC/prop archetypes, 7 regional 128x256 world tilesets with 896 tiles across 21 sub-biomes
 - [x] Phase 6b: themed UI and smooth typography ([ui.md](ui.md)), Elden-style class select with 96x128 animated portraits, 32 item icons, world scale x2 with erosion, deco and ambient mood ([architecture.md](architecture.md) 9)
 - [x] Phase 6c: living towns (`zones/town_life.gd`), regional building kit (`zones/buildings.gd`), ground expansion, and fluid 4-directional attack animations with weapon arcs
+- [x] Phase 6d: Revamp pass (2026-11-10) — Kelir v2 shadow-puppet presentation (`zones/kelir/kelir_stage.gd`, K0 wayang raksasa sprites), quiet in-story tutorial ladder (`ui/tutorial.gd`, `data/lessons.gd`), illustrated world map art (`tools/gen_map_art.py`, `assets/art/ui/map_world.png`, `map_fog_*.png`, `map_icons.png`), painted area maps, direct `M` key map toggle, revamp pixel-art sprite pass (`tools/gen_revamp_art.py`), and quest audit validation (`tools/quest_audit.py` 0 problems)
 - [x] Quest & narrative UX: Scene Director camera easing, letterbox bars, choices with consequences (`remember:<key>`), and HUD quest cards
 - [ ] Culture-item icons and glyph art refinement
 - [x] First full audio pass (2026-11-09): 35 music tracks, 17 ambience beds, 92 sfx, 12 stingers, layered Audio autoload ([audio.md](audio.md)); generated, untested in Godot

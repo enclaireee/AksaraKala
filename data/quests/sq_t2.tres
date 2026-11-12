@@ -18,7 +18,7 @@ marker = {"zone": "tt_pesisir", "id": "burn_trail"}
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_SQ_T2_S3_OBJ"
-on = "enemy_killed:banaspati_elite"
+all = [{"on": "talked_to:channel_wheel", "set_flag": "", "objective": "Q_SQ_T2_S3_P1"}, {"on": "enemy_killed:banaspati_elite", "set_flag": "", "objective": "Q_SQ_T2_S3_P2"}]
 marker = {"zone": "tt_pesisir", "id": "banaspati_elite"}
 
 [sub_resource type="Resource" id="s4"]

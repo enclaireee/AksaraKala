@@ -37,6 +37,7 @@ func _on_changed() -> void:
 	get_node("/root/Game").changed.disconnect(_on_changed)
 	$Shape.set_deferred("disabled", true)
 	_pulse.kill()
+	Snd.play("kabut")
 	var tw := create_tween()
 	tw.tween_property($Fog, "modulate:a", 0.0, FADE)
 	tw.tween_callback(queue_free)

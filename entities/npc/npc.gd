@@ -39,6 +39,7 @@ func _ready() -> void:
 		s.connect(func(_a: Variant = null) -> void: _recompute())
 	var game := get_node("/root/Game")
 	game.changed.connect(_apply_cond)
+	game.changed.connect(queue_redraw)   # a prop swaps to its <id>_on art when flag <id> is set
 	_apply_cond()
 	_recompute()
 
@@ -120,13 +121,13 @@ func _row() -> int:
 		return 5
 	if npc_id == "laras" or npc_id.begins_with("laras_"):
 		return 6
-	if npc_id in ["lutung_kasarung", "stray_cat"]:
+	if npc_id in ["lutung_kasarung", "stray_cat", "purwa_cat"]:
 		return 8
-	if "lamp" in npc_id:
+	if "lamp" in npc_id or npc_id.begins_with("leuwi_oncor_"):
 		return 11
-	if npc_id.begins_with("door_") or npc_id.begins_with("sluice_") or npc_id in ["galuh_wagon", "purwa_stall"]:
+	if npc_id.begins_with("door_") or npc_id.begins_with("sluice_") or npc_id in ["galuh_wagon", "purwa_stall", "purwa_well", "rarang_post"] or npc_id.begins_with("angklung_frame_") or npc_id.begins_with("kaputren_screen_") or npc_id.begins_with("archive_mirror_"):
 		return 10
-	if "stone" in npc_id or "altar" in npc_id or npc_id.begins_with("batu_") or npc_id in ["arca_base", "beats", "ririwa_name"]:
+	if "stone" in npc_id or "altar" in npc_id or npc_id.begins_with("batu_") or npc_id in ["arca_base", "beats", "ririwa_name", "purwa_root"] or npc_id.begins_with("grain_roof_"):
 		return 9
 	if npc_id in ["ciung_wanara", "purbasari", "nawang_wulan", "klething_kuning", "naganingrum", "galuh_queen"]:
 		return 3
@@ -142,7 +143,11 @@ func _row() -> int:
 func _draw() -> void:
 	draw_rect(Rect2(-5, -1, 10, 3), Color(0.09, 0.07, 0.16, 0.42))
 	var top := -20
-	if SHEET:
+	var art := _art()
+	if art:   # story prop (assets/art/story/<npc_id>.png), feet on y 1 over the shadow
+		StoryArt.draw_standing(self, art, Vector2(0, 1))
+		top = 1 - art.get_height()
+	elif SHEET:
 		var col := int(_t * 3.5) % 4
 		var row := _row()
 		var fb := frame_bounds(row)
@@ -167,6 +172,15 @@ func _draw() -> void:
 			draw_texture(tex, Vector2(-tex.get_width() * 0.5, top - 3 - tex.get_height()))
 		else:
 			_draw_dot(Vector2(-3, top - 3 - 5))
+
+
+## assets/art/story/<npc_id>_on.png once flag <npc_id> is set (a lit lamp, a turned wheel), else <npc_id>.png, else null.
+func _art() -> Texture2D:
+	if npc_id != "" and get_node("/root/Game").has_flag(npc_id):
+		var lit := StoryArt.tex(npc_id + "_on")
+		if lit:
+			return lit
+	return StoryArt.tex(npc_id)
 
 
 ## Fallback quest marker: a 7x9 gold lontar leaf with a dark "!" and a 1 px outline.

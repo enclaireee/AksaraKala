@@ -13,13 +13,13 @@ const MAP := [
 	"######################,,,,,,w,,,,,,,,,w,,,,,,,##############",
 	"######################,,,,,,,w,,,,,,,,,,w,,,,,##############",
 	"######################,,########,,##########################",
-	"##################....,,O...####,,##########################",
+	"##################.a..,,O...####,,##########################",
 	"##################.bb.,,.2bb####,,##########################",
 	"##################.bb.h,..bb####,,##########################",
 	"##################....,,M...####==##########################",
-	"##################~~..,,....####,,##########################",
+	"##################~~..,,.E..####,,##########################",
 	"##################~~1.,,..c.####,,##########################",
-	"##################~~..,,....####,,##########################",
+	"##################~~..,,...d####,,##########################",
 	"######################,3########,,##########################",
 	"############r.....................r#########################",
 	"############...........j...........#########################",
@@ -51,11 +51,14 @@ const SPOTS := {
 	"h": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sunda_hamlet", "size": Vector2i(10,7)}, "tile": ","},   # trigger, the gorge-side hamlet entered at dusk (MQ1 1.5 `area_entered:sunda_hamlet`, plays `hamlet_hook`)
 	"1": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "sandal"}, "tile": "."},   # clue, the boy's sandal at the river's edge (MQ1 1.6 K1 clue 1)
 	"2": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "oncor"}, "tile": "."},   # clue, a row of oncor nobody lit (MQ1 1.7 K1 clue 2)
-	"O": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "leuwi_outer_oncor", "size": Vector2i(4,4)}, "tile": "."},   # trigger, relight the outer hamlet bamboo lanterns (MQ1 1.8 `puzzle_solved:leuwi_outer_oncor`)
+	"O": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "leuwi_oncor_1"}, "tile": "."},   # prop, outer hamlet oncor lantern 1 (MQ1 1.8 press-each x3 while the mist spawns shades)
 	"3": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "gorge_prints", "memory_id": "k1_maghrib"}, "tile": ","},   # clue, Laras's and Ciung's prints going down into the gorge; the last K1 clue, pulls you into K1 (MQ1 1.7/1.9)
 	"c": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "maghrib"}, "tile": "."},   # codex spot, the maghrib oncor custom (the `travel` find and the area's optional find; id ASSUMED)
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": ","},   # loose faceless, roaming pack in the passage (respawns on zone reload, no unique_id); two pairs, the `travel` piece's two skirmishes
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:ts_leuwi", "open_side": "s"}, "tile": ","},   # shortcut gate, the gorge tunnel (opens from the sande room, 2 tiles); the way back after the boss (Pacing 5)
+	"a": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "leuwi_oncor_2"}, "tile": "."},   # prop, outer hamlet oncor lantern 2 (MQ1 1.8)
+	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "leuwi_oncor_3"}, "tile": "."},   # prop, outer hamlet oncor lantern 3 (MQ1 1.8)
+	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "leuwi_mist", "cond": "step:mq1=7", "size": Vector2i(10, 7), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(-3, 0)], ["res://entities/enemies/jurig_leuweung.tscn", Vector2i(2, 1)]]]}, "tile": "."},   # encounter leuwi_mist, shades out of the dusk mist while you light the lanterns (MQ1 1.8, the Sandekala fight in small)
 }
 
 

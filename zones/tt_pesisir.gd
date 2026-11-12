@@ -12,7 +12,7 @@ const MAP := [
 	"#.......rr..................,,..........rr.................#",
 	"#.............B.............,,.............................#",
 	"#...........................,,.............................#",
-	"#...........................,,.............................#",
+	"#...........................,,..................w..........#",
 	"#...........................,,.............................#",
 	"#.............rr............,,....................q....#####",
 	"#.............rr............,,.........................@.C.D",
@@ -43,7 +43,7 @@ const SPOTS := {
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_sabana"}, "tile": ","},   # spawn, arrival from tt_sabana
 	"l": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_beringin"}, "tile": ","},   # spawn, landing of the drop from tt_beringin (no exit back)
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq4_9"}, "tile": ","},   # kabut K3, south edge (one per tile; opens on `quest:mq4=done`)
-	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_tt_pesisir"}, "tile": ","},   # exit to sk_karang (south edge, not built yet, 2 tiles)
+	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_tt_pesisir"}, "tile": ","},   # exit to sk_karang (south edge, 2 tiles)
 	"g": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
 	"q": {"scene": "res://entities/enemies/banaspati_elite.tscn", "props": {"unique_id": "banaspati_elite"}, "tile": "."},   # elite Banaspati (SQ-T2, at the spring in the east dunes, `unique_id` `banaspati_elite`, elite stats HP x4, Ilmu x4, **TUNE**; inert until step 4)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "burn_trail", "size": Vector2i(6,6)}, "tile": "."},   # trigger, burn trail reached (SQ-T2)
@@ -55,6 +55,7 @@ const SPOTS := {
 	"@": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq3_h4"}, "tile": "."},   # kabut K4, the coast road to `tt_pasir` (one per tile; lifts on `mq3_h4`, step 3.12)
 	"C": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": "."},   # spawn, arrival from tt_pasir (inside the east pocket)
 	"D": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pasir", "spawn_id": "from_tt_pesisir"}, "tile": ","},   # exit to tt_pasir (east edge, east pocket behind K4, 2 tiles)
+	"w": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "channel_wheel"}, "tile": "."},   # channel wheel at the spring; turn it to flood the burn channel (SQ-T2 step 3; sets `flag:channel_wheel`)
 }
 
 

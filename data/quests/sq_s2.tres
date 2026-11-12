@@ -30,7 +30,7 @@ marker = {"zone": "ts_leuweung", "id": "kuntilanak_elite"}
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_SQ_S2_S5_OBJ"
-on = "talked_to:kepala_desa"
+on = "name_written:s2_grave"
 marker = {"zone": "ts_kampung", "id": "kepala_desa"}
 
 [resource]

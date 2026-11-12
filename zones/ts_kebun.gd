@@ -30,7 +30,7 @@ const MAP := [
 	"####..........,,....ttttttttttttttttttttttttttttttttt......#",
 	"&!,=,,,,,,,,,,,,....ttttttttttttttttttttttttttttttttt..bbb.#",
 	"&,,=,,,,,,,,,,,,....ttttttttttttttttttttttttttttttttt..bbb.#",
-	"####................tttttttttt2tttttttttttrtttttttttt..bbb.#",
+	"####................ttttttttttttttttttttttrtttttttttt..bbb.#",
 	"#...................ttttttttttttttttttttttttttttttttt..bbb.#",
 	"#...................ttttttttttttttttttttttttttttttttt......#",
 	"#...................ttttttttttttttttttttttttttttttttt......#",
@@ -52,7 +52,6 @@ const SPOTS := {
 	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "laras_ribbon_spot"}, "tile": "."},   # clue, where Laras dropped her ribbon in the ambush (MQ1 1.1 `clue_examined:laras_ribbon_spot`)
 	"M": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_kebun_camp", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": "."},   # encounter sunda_kebun_camp, Faceless scout camp on the upper slopes (MQ1 1.2 `area_cleared:sunda_kebun_camp`)
 	"1": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_1"}, "tile": "."},   # angklung 1
-	"2": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_2"}, "tile": "t"},   # angklung 2
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_edge", "size": Vector2i(22,10), "waves": [[["res://entities/enemies/kuntilanak.tscn", Vector2i(-10,0)], ["res://entities/enemies/faceless.tscn", Vector2i(-5,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-5,2)]]]}, "tile": ","},   # encounter sunda_edge
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
 	"v": {"scene": "res://entities/enemies/faceless_archer.tscn", "props": {}, "tile": "."},   # loose faceless archer, roaming pack (respawns on zone reload, no unique_id)

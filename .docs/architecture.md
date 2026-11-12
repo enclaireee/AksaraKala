@@ -56,7 +56,7 @@ res://
 | `Game` | Run state: class, stats, Ilmu, glyphs learned, equipment, healing flask (charges, Flask Shards, Herb Pouches), last petilasan, story flags, quest state, codex unlocks. Advances quest steps on `Events` signals. Autosave and load, one slot (JSON in `user://`, [rpg.md](rpg.md) 11) |
 | `Events` | Global signals, decouples systems. Signals as built in `autoload/events.gd`: `enemy_killed(enemy, ilmu)`, `player_died`, `rested(petilasan)`, `talked_to(npc_id)`, `item_picked(item_id)`, `boss_defeated(boss_id)`, `area_cleared(area_id)`, `area_entered(trigger_id)`, `zone_entered(zone_id)`, `petilasan_activated(id)`, `glyph_learned(id)`, `spell_cast(glyph_id, score)`, `class_chosen(class_id)`, `weakness_triggered(kind)`, `clue_examined(clue_id)`, `memory_started(memory_id)`, `memory_done(memory_id)`, `puzzle_solved(puzzle_id)`, `trial_completed(trial_id)`, `quest_started/updated/completed(id)`, `dialogue_requested(speaker_key, lines)`, `dialogue_choices(keys)`, `dialogue_picked(index)`, `dialogue_finished`, `write_requested(seq_id, glyphs)`, `name_written(seq_id)`. Quest steps match `"<signal>:<arg>"` for the signals in `Game.QUEST_SIGNALS` (`talked_to`, `item_picked`, `boss_defeated`, `area_cleared`, `area_entered`, `zone_entered`, `petilasan_activated`, `glyph_learned`, `class_chosen`, `weakness_triggered`, `name_written`, `clue_examined`, `memory_done`, `puzzle_solved`, `trial_completed`); for `enemy_killed` the arg is the enemy's `kind` ([quests.md](quests.md) 7.2). Story v5 events: `puzzle_solved:<id>` and `trial_completed:<id>` (sluice wheels, mangrove beacons, sea trials), `area_cleared:buto_ambush_<n>`, `memory_done:lc<n>` |
 | `Zones` | Zone loading (`go_to`, `respawn`, `next_zone`), fade transitions, spawn points, the `ZONES`, `ADJ`, `SHORTCUTS` and `DROPS` tables, Kelir memories (`enter_memory`, `exit_memory`, `memory_path`). Killed minibosses/bosses and opened gates live in `Game` so they are saved |
-| `Audio` | Layered music (base + synced combat + boss), ambience beds, sfx pool of 14, stingers that duck the mix, buses Master > Music / SFX / Ambience, low-pass while paused or casting. Reacts to `Events` and to scene cues `#music:` `#sfx:` `#amb:` `#jingle:`. Gameplay scripts use the static `Snd.play(id)` (`components/snd.gd`). Full design and ids: [audio.md](audio.md) |
+| `Audio` | Layered music (base + synced combat + boss), ambience beds, sfx pool of 16 with per-sound variations, stingers that duck the mix, equal-power fades, buses Master (limiter) > Music / SFX / Ambience, low-pass while paused or casting. Assets are recordings and sampled-instrument renders built by `tools/build_audio.py` and `tools/gen_music.py`. Reacts to `Events` and to scene cues `#music:` `#sfx:` `#amb:` `#jingle:`. Gameplay scripts use the static `Snd.play(id)` (`components/snd.gd`). Full design and ids: [audio.md](audio.md) |
 
 **Flags (Story v5).** `Game.flags` is a dictionary of `name -> true`, read with `Game.has_flag(name)` and set with `Game.set_flag(name)` (the dialogue action `flag:<name>`; conditions `flag:`, `glyph:`, `item:`, `quest:<id>=<state>`, `step:<id>=<n>`, `zone:<area>`, joined with commas, `!` negates). Flag families: `choice_*` (the six Major Choices: `choice_tell_ciung` / `choice_keep_secret`, `choice_freed` / `choice_handed`, `choice_mercy` / `choice_judgment`, `choice_reforge` / `choice_sink`, `choice_offer_memory` / `choice_offer_song`, `choice_redeem_aria` / `choice_release_aria`), `clue_<id>`, `memory_<id>`, `puzzle_<id>`, `post:<id>`, `lakon:<id>`, `seen_name_<npc>`, and the cross-time Laras flags. `Game.LARAS_FLAGS` sets them when `LC1`-`LC6` finish: `laras_key:crater_post`, `archive_grate`, `candi_crypt`, `sand_tunnel`, `tidal_gate` and `laras_sabotage:crater_seal`, `glamour_seal`, `bondowoso_pillar`, `keris_seventh_stake`, `kala_eclipse`. Each is stored in both spellings (`laras_key:x` and `laras_key_x`) and `has_flag` accepts either. Boss and gate scripts read them, e.g. `batara_kala.gd` checks `choice_redeem_aria` and `player.gd` checks `choice_release_aria`.
 
@@ -186,7 +186,7 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 
 **Name tag data.** `Game.flag("seen_name_<npc_id>")` set the first time `dialogue_box` opens for a named NPC; the tag text key is `NPC_<id>_WHO` and is looked up with `tr()`, shown only if the key resolves. No new autoload. [ui.md](ui.md) 3.
 
-**Dialogue hubs and choices (Story v5).** `Game.play(name_key, entry)` already runs `choices` (each with a `do` list) through `Events.dialogue_choices` and `dialogue_picked`; the Major Choices use it. The `"Ask about..."` hub (an entry with `"hub": true`, or choices ending in `topic:<key>`, [quests.md](quests.md) 7.1) is not built yet: it loops `play` on the picked `"quiet": true` sub-entry until the player picks Leave, and `npc.gd` must not count a quiet entry as the talk (it already skips quiet entries for `talked_to`). Lines per entry: talks 8-12, beats 8-10; the dialogue box shows 3 lines at a time, so a long talk is several pages ([ui.md](ui.md) 3).
+**Dialogue hubs and choices (Story v5).** `Game.play(name_key, entry)` handles `choices` (each with a `do` list) through `Events.dialogue_choices` and `dialogue_picked`; the Major Choices use it. The `"Ask about..."` hub (an entry with `"hub": true`, or choices with action `topic:<key>`, [quests.md](quests.md) 7.1) loops `play` on the picked sub-entry until the player chooses to exit, while `npc.gd` ignores quiet entries for `talked_to` progression. Lines per entry: talks 8-12, beats 8-10; the dialogue box displays 3 lines at a time with typewriter effect ([ui.md](ui.md) 3).
 
 **Journal data.** "Story so far" reads `QuestData` steps whose index is below the current step, using a new optional step field `recap: String` (key `Q_<QUEST>_S<n>_DONE`, 1 line); clues read from `flag:clue_*` and `CLUE_<ID>_NOTE`. Both are read-only views over `Game`.
 
@@ -194,23 +194,30 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 
 ## 10. UI & Presentation
 - `CanvasLayer` HUD: vitals (HP, stamina, sakti), weapon well, flask slots, Ilmu counter, boss bar.
-- Quest Tracker card (`ui/hud.gd`): tracked quest title, checklist of sub-objectives with bullet markers (`bullet_now`, `bullet_check`, `bullet_open`), and hints.
+- Quest Tracker card (`ui/hud.gd`): tracked quest title, checklist of sub-objectives with bullet markers (`bullet_now`, `bullet_check`, `bullet_open`). Step hints are kept inside the Journal menu only, maintaining a quiet, clean HUD.
 - Directional arrow with meter distance / zone destination, plus floating in-world diamond over targets.
-- Dialogue box: auto-height, typewriter text, speaker plate, first-meeting "who" descriptors (`NPC_<id>_WHO`).
+- Dialogue box: auto-height, typewriter text, speaker well with 48x48 portrait, first-meeting "who" descriptors (`NPC_<id>_WHO`).
 - Scene Director (`ui/scene_director.gd`): handles `#cam`, `#bars`, `#shake`, and `#wait` dialogue cues, auto-framing speakers during story beats.
 - Quest cards (`ui/quest_card.gd`): cinematic title card on quest start, summary reward card on completion.
-- Menus: title screen, pause menu, Esc menu left rail (Status, Perlengkapan, Catatan/Journal, Peta, Pustaka/Codex, Sistem/Settings).
+- Field Book Menu (`ui/menu.gd`, `ui/menu/menu_book.gd`): 7 tabs (Diri/Status, Perlengkapan/Equipment, Catatan/Journal, Peta/Map, Pustaka/Codex, Penuntun/Controls, Sistem/Settings).
+- Peta / Map System: Illustrated world map with fog of war (`tools/gen_map_art.py`, `map_world.png`, `map_fog_*.png`) and dynamic painted area map (`MapRender.painted()`). Toggled instantly via the `M` key or menu Tab 4.
+- Launch Intro (`ui/intro.tscn`): 10 s wordless cinematic storm-and-dawn sequence.
 - Typography & Theme: `ui/theme.tres` with pixel fonts (Tiny5 8 body, Jersey 10 at 19 headings, Jersey 15 at 27 display) and the v3 dusk palette (`UIFx`). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
 
 ## 11. Input map
-`move_up/down/left/right`, `attack`, `dodge`, `cast`, `heal_jamu`, `interact`, `menu`, `map`, `pause`. P0: two presets and a mouse-button swap; P1: free rebinding. Details and notes: [controls.md](controls.md).
+`move_up/down/left/right`, `attack`, `dodge`, `cast`, `heal_jamu`, `interact`, `menu`, `map` (`M`), `pause` (`Esc`). P0: two presets (Default, Left-handed) and a mouse-button swap; P1: free rebinding. Details and notes: [controls.md](controls.md).
 
-## 12. Testing
-- `Recognizer` unit test: a headless GDScript (run with `godot --headless -s tests/recognizer_test.gd`) that feeds recorded templates (with noise) and asserts the right glyph is returned and a wrong one is never returned above the threshold.
-- Quest data check: a headless script that validates every `QuestData` (flags, markers, items, keys present in both languages). See [quests.md](quests.md) section 7.8.
-- Save round-trip: a headless script that fills `Game` with sample state, saves, loads into a fresh `Game`, and asserts the two `to_dict()` results are equal. Also loads a save with a missing field and a broken file to check the default merge and the `save.bak` fallback.
-- Playtest checklists per phase in [schedule.md](schedule.md).
-- No big test framework unless it is needed later.
+## 12. Testing & Verification
+- **Automated Design Verification:**
+  - `python3 tools/quest_audit.py`: Validates all 30 quests, 90 dialogue resources, 4,755 text keys, step alignments, and exit markers.
+  - `python3 .docs/know_check.py`: Verifies proper narrative introduction order (37 names checked, 0 fails).
+  - `python3 .docs/pacing_model.py`: Validates runtime minutes and gameplay-to-reading ratios across all 138 steps.
+  - `python3 .docs/glyph_strokes.py`: Simulates point-cloud gesture confusability and thresholds across all 9 glyphs.
+  - `python3 .docs/balance_model.py`: Checks damage curves, time-to-kill, and enemy/boss scaling.
+- **Headless GDScript Test Suite:**
+  - Run via `$GODOT --headless --path . -s tests/<name>.gd`
+  - Core suites: `tutorial_test.gd`, `menu_test.gd`, `k0_test.gd`, `memory_test.gd`, `clue_test.gd`, `choice_effects_test.gd`, `ui_test.gd`, `save_test.gd`, `recognizer_test.gd`, `combat_test.gd`, `audio_test.gd`, `loop_test.gd`.
+- Save round-trip: headless script fills `Game` with sample state, saves, loads into a fresh `Game`, and asserts equality; also tests missing fields and `save.bak` fallback.
 
 ## 13. Build and export
 - Export presets for Windows and macOS (user's machine is a Mac), Web if Compatibility renderer is used.

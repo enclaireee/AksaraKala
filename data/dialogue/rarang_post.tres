@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "rarang_post"
+name_key = ""
+entries = Array[Dictionary]([
+	{"if": ["step:mq1=23", "item:boeh_rarang", "!flag:rarang_post"], "lines": ["DLG_RARANG_POST_1"], "do": ["flag:rarang_post", "flag:post:east"]},
+	{"if": ["step:mq1=23", "!flag:rarang_post"], "lines": ["DLG_RARANG_POST_HINT"], "do": [], "quiet": true},
+	{"if": [], "lines": [], "do": [], "quiet": true}
+])

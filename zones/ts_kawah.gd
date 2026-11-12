@@ -18,7 +18,7 @@ const MAP := [
 	"########......................##############################",
 	"########.G....................##############################",
 	"########...................Y..##############################",
-	"########......................,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX",
+	"########...................q..,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX",
 	"########...S...B.C.........Z..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
 	"########...................P..##############################",
 	"########......................##############################",
@@ -41,7 +41,7 @@ const MAP := [
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kawah_jalan", "spawn_id": "from_ts_kawah"}, "tile": ","},   # exit to ts_kawah_jalan (east edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kawah_jalan"}, "tile": ","},   # spawn, arrival from ts_kawah_jalan
-	"B": {"scene": "res://entities/bosses/sangkuriang.tscn", "props": {"cond": "flag:mq1_8"}, "tile": ","},   # boss Sangkuriang (MQ1 1.24), awakened after the Captain smashes the cracked seal-stone
+	"B": {"scene": "res://entities/bosses/sangkuriang.tscn", "props": {"cond": "flag:mq1_8,flag:rarang_post"}, "tile": ","},   # boss Sangkuriang (MQ1 1.24), wakes once the cloth hangs on the eastern post (`rarang_post`)
 	"C": {"scene": "res://entities/bosses/faceless_captain.tscn", "props": {}, "tile": ","},   # boss Faceless captain (MQ1 1.22)
 	"Z": {"scene": "res://entities/bosses/arena_post.tscn", "props": {"post_id": "east"}, "tile": ","},   # arena post, east post (hang boeh rarang)
 	"P": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "crater_post", "size": Vector2i(3,3), "cond": "flag:laras_key_crater_post"}, "tile": ","},   # trigger, Laras's marked eastern post (MQ1 1.21/1.24 `crater_post`, gated by `laras_key:crater_post`)
@@ -53,6 +53,7 @@ const SPOTS := {
 	"K": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hunter_mask_1", "memory_id": "h1", "cond": "flag:beat_crater_seal"}, "tile": ","},   # clue, the Hunter's mask fragment on the far rim; pulls you into H1 (MQ1 1.22; appears after the `crater_seal` beat, when the Hunter has left)
 	"R": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "boat_ribs", "memory_id": "k2_dayang_sumbi", "cond": "flag:mq1_h7"}, "tile": ","},   # clue, the ribs of the half-built boat; pulls you into K2 (MQ1 1.23)
 	"n": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "crater_seal"}, "tile": ","},   # codex spot, the cracked Crater Seal (the arena's optional find; id ASSUMED)
+	"q": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "rarang_post"}, "tile": ","},   # prop, the eastern post Laras marked in LC1: hang the boeh rarang (MQ1 1.24; needs the cloth, sets `rarang_post` and `post:east`)
 }
 
 

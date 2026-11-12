@@ -26,9 +26,9 @@ const MAP := [
 	"#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
 	"#............################,,,#################........................................#",
 	"#............................M,,..................,,.....................................#",
-	"#............................,,,H.................,,.....................................#",
+	"#............................,,,H..R..............,,.....................................#",
 	"#............................,P,.L................,,.....................................#",
-	"Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.D................,,.....................................#",
+	"Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.D..N.............,,.....................................#",
 	"Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,.....................................#",
 	"#.............................,,,,,,,,,,K,,,,,,,,,,,..................rr.................#",
 	"#.............................,,,,,,,,,,,,,,,,,,,,,,..................rr.................#",
@@ -77,6 +77,8 @@ const SPOTS := {
 	"J": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_camp_captain", "cond": "flag:mq2_6", "size": Vector2i(12,10), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(0,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,2)]]]}, "tile": ","},   # encounter mataram_camp_captain (**miniboss**, 2.14: the camp captain; cond `flag:mq2_6`)
 	"K": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "candi_crypt_hall", "cond": "step:mq2=16", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/arca_penjaga.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter candi_crypt_hall (2.17 descend through Laras's unlocked crypt to the central temple sanctum; cond `step:mq2=16`, so the front-yard fight cannot start it through the overlapping rect)
 	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c3_camp_scrap", "cond": "flag:mq2_7"}, "tile": "."},   # clue, stitched syllable scrap / Lengser's note at the camp stake (SQ-C3 fragment 1)
+	"R": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "faceless_deserter", "cond": "flag:mq2_7,flag:choice_freed"}, "tile": "."},   # NPC Ranga, the freed Faceless Deserter, at the camp stake (SQ-C3 giver if `choice_freed`)
+	"N": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lengser", "cond": "flag:mq2_7,flag:choice_handed"}, "tile": "."},   # NPC Uwa Lengser with his notes on the camp (SQ-C3 giver if `choice_handed`)
 }
 
 

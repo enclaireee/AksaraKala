@@ -85,7 +85,8 @@ Rules behind the table:
 - Resting at a petilasan is blocked while an enemy is chasing the player ("Enemies are near").
 
 ### 4.7 Menu, pause and dialogue
-- Tab opens the menu on the last tab used. Q and E switch tabs inside it, mouse works everywhere.
+- Tab opens the menu on the last tab used. Q and E switch tabs inside it; mouse works everywhere.
+- M opens or toggles directly to the Peta (Map) tab, closing it if already open.
 - Esc closes the open menu, or opens pause if none is open. While drawing, Esc only cancels the cast.
 - Dialogue: E, Enter or left mouse advances. Pressing it during the typewriter shows the whole line first. No skip-all button for story scenes in P0.
 - The game pauses when the window loses focus.

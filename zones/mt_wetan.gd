@@ -14,10 +14,10 @@ const MAP := [
 	"#...................####,#####..............,,...........................................#",
 	"#.......................,...................LQ...........................................#",
 	"#.......................,...................,,...........................................#",
-	"Xe,,,,,,,,,,,,,,,,,,,,,,C,,,,,,,,,,,,,,,,,,,,,...........................................#",
+	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,...........................................#",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,...........................................#",
 	"#.............,,.........................................................................#",
-	"#.............,,..................B.............................................##########",
+	"#.............,,....2..4..1..3....B.............................................##########",
 	"#.............,,..............................................,,,,,,,,,,,,,,,,,,,,,,J,,,tT",
 	"#.............,,..............................................,,,,,,,,,,,,,,,,,,,,,,J,,,,T",
 	"#.............,,....k...........................................................##########",
@@ -47,7 +47,7 @@ const SPOTS := {
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_kuburan", "spawn_id": "from_mt_wetan"}, "tile": ","},   # exit to mt_kuburan (south edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_kuburan"}, "tile": ","},   # spawn, arrival from mt_kuburan
 	"D": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_tegal", "spawn_id": "from_mt_wetan"}, "tile": ","},   # exit, the drop to mt_tegal (south cliff ledge, 2 tiles, one way, no spawn back)
-	"T": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_kulon", "spawn_id": "from_mt_wetan"}, "tile": ","},   # exit to tt_kulon (east edge, not built yet, 2 tiles)
+	"T": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_kulon", "spawn_id": "from_mt_wetan"}, "tile": ","},   # exit to tt_kulon (east edge, 2 tiles)
 	"t": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_kulon"}, "tile": ","},   # spawn, arrival from tt_kulon
 	"J": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq2_9"}, "tile": ","},   # kabut K3, east gate to Tanah Timur (one per tile)
 	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "juru_kunci"}, "tile": "_"},   # NPC juru kunci the juru kunci (2.12, teaches Ra after `mataram_batu`)
@@ -59,10 +59,13 @@ const SPOTS := {
 	"L": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_lengser_word", "size": Vector2i(2,3)}, "tile": ","},   # trigger, beat `lengser_word` staging (plays when `flag:choice_handed`, `flag:mq2_6`, `zone:mt_wetan`; one line, in the stairs corridor below K2)
 	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lesung_women"}, "tile": "."},   # NPC Nyai Gendhis and the lesung women of the foothill hamlet (2.9-2.10, teaches Ca once `mataram_lesung_yard` is cleared)
 	"B": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_batu_2", "size": Vector2i(18,9), "waves": [[["res://entities/enemies/tuyul.tscn", Vector2i(-5,-1)], ["res://entities/enemies/tuyul.tscn", Vector2i(0,3)], ["res://entities/enemies/tuyul.tscn", Vector2i(5,0)]]]}, "tile": "."},   # encounter mataram_batu_2 (2.11, fight 1 on the junction field)
-	"C": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "puzzle_wetan_lamps", "size": Vector2i(4,4)}, "tile": ","},   # trigger, puzzle `puzzle_wetan_lamps` (2.12: align the foothill shrine braziers; sets `flag:puzzle_wetan_lamps`)
 	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_lesung_yard", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/pocong.tscn", Vector2i(-3,0)], ["res://entities/enemies/tuyul.tscn", Vector2i(3,-2)], ["res://entities/enemies/tuyul.tscn", Vector2i(3,2)]]]}, "tile": "."},   # encounter mataram_lesung_yard (2.9 Lead 3: clear the haunted mill yard for Nyai Gendhis)
 	"H": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "shrine_chisel", "cond": "flag:mq2_5"}, "tile": "."},   # clue, the foothill shrine steps, fresh chisel work and cold hand-prints (2.11; journal note only; id `shrine_chisel` **ASSUMED**, not in quests.md; hunt `k3`)
 	"Q": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_ranga_word", "size": Vector2i(2,3)}, "tile": ","},   # trigger, beat `ranga_word` staging (Choice 2, freed: Ranga scouts in Act III, `SQ-C3`; plays when `flag:choice_freed`, `flag:mq2_6`, `zone:mt_wetan`; same spot as `lengser_word`, one tile east; trigger id `beat_ranga_word` **ASSUMED**)
+	"1": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "shrine_brazier_1"}, "tile": "."},   # shrine brazier 1 of 4 (2.12, lit in the order of the juru kunci's chant; sets `flag:shrine_brazier_1`)
+	"2": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "shrine_brazier_2"}, "tile": "."},   # shrine brazier 2 of 4 (2.12, lit in the order of the juru kunci's chant; sets `flag:shrine_brazier_2`)
+	"3": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "shrine_brazier_3"}, "tile": "."},   # shrine brazier 3 of 4 (2.12, lit in the order of the juru kunci's chant; sets `flag:shrine_brazier_3`)
+	"4": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "shrine_brazier_4"}, "tile": "."},   # shrine brazier 4 of 4 (2.12, lit in the order of the juru kunci's chant; sets `flag:shrine_brazier_4`)
 }
 
 

@@ -20,7 +20,7 @@ const MAP := [
 	"#######.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#.......#",
 	"#######.,,....................,,...................#########",
 	"#######.,,....................Z,.T......r...r..............#",
-	"#######.,,5...................,,..........x................#",
+	"#######.,,....................,,..........x................#",
 	"#######.,,....................,,........r...r...........####",
 	"#######.,,....................,,,,,,,,,,,,,,,,,,,,,,,,,,=,;$",
 	"#######.,,....................,,,,,,,,,,,,,,,,,,,,,,,,,,=,,$",
@@ -33,7 +33,7 @@ const MAP := [
 	"#######.,,....................FF...........................#",
 	"#######.,,....................,,..............y............#",
 	"#######.,,....................,,...........................#",
-	"#######.,,............a.......,,......c....................#",
+	"#######.,,....................,,...........................#",
 	"#######.@,....................e,...........................#",
 	"########%%####################XX############################",
 ]
@@ -55,7 +55,6 @@ const SPOTS := {
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mq1_9"}, "tile": "."},   # NPC Ciung Wanara by the lake after Sangkuriang (MQ1 camp talk `camp_sunda`: optional, 2-4 lines, `quiet`, `do`: `flag:camp_sunda`; his anger and the mother he does not know, who is the woman `D` two tiles away; entry cond `flag:mq1_9`, `zone:ts_situ`, so it never replays later, **ASSUMED**)
 	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "dayang_sumbi", "cond": "quest:mq1=done"}, "tile": "."},   # NPC Dayang Sumbi, idle talk at the lake after MQ1 (SQ-S5 is retired)
 	"x": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "tangkuban_perahu"}, "tile": "."},   # codex spot, ruin on the lake shore
-	"5": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_5"}, "tile": "."},   # angklung 5
 	"k": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_kujang", "item_id": "kujang"}, "tile": "."},   # chest: Kujang (secret 1)
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
 	"v": {"scene": "res://entities/enemies/faceless_archer.tscn", "props": {}, "tile": "."},   # loose faceless archer, roaming pack (respawns on zone reload, no unique_id)
@@ -63,9 +62,7 @@ const SPOTS := {
 	"1": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "felled_trees"}, "tile": "."},   # clue, the hillside of freshly felled trees (MQ1 1.17 K2 clue 1)
 	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "empty_coops"}, "tile": "."},   # clue, empty rooster coops along the flooded shore (MQ1 1.17 K2 clue 2)
 	"l": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "loom"}, "tile": "."},   # clue, the abandoned loom along the flooded shore (MQ1 1.17 K2 clue 3)
-	"a": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_1"}, "tile": "."},   # puzzle, sluice wheel 1, west (sets `sluice_1`)
-	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_2"}, "tile": "."},   # puzzle, sluice wheel 2, east (entry needs `flag:sluice_1`, sets `sluice_2`)
-	"F": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "sluice_2"}, "tile": ","},   # kabut, the flooded shore path, the dam's overnight flood (one per tile; drains when wheel 2 turns; same scene as the fog, flood art)
+	"F": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "sluice_2"}, "tile": ","},   # kabut, the flooded shore path, the dam's overnight flood (one per tile; drains when the second upper sluice wheel in ts_sawah turns, `sluice_2`; same scene as the fog, flood art)
 	"T": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "faceless_toy", "cond": "flag:mq1_6b"}, "tile": "."},   # clue, the carved toy a fallen Faceless dropped (the Captain clue, MQ1 1.18; appears when the shore is clear)
 	"R": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sunda_lakeroad", "size": Vector2i(4,4), "cond": "flag:mq1_6"}, "tile": ","},   # trigger, the lake road below the first guards, plays `lake_hook` (MQ1 1.16, `area_entered:sunda_lakeroad`; the beat also fires on `zone:ts_situ` with `flag:mq1_6`, so this trigger only places it; no step waits on it; id and spot ASSUMED)
 }

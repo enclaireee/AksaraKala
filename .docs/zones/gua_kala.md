@@ -17,7 +17,7 @@ Areas: 4. Critical path: `gk_mulut` -> `gk_pasir` -> (drop) `gk_lupa` -> `gk_rua
 | `gk_pasir` | 3x3, 90x51 | The sand halls. Giant hourglass shapes in the walls, thin sand streams that only look pretty, rocky floors and pillars | The long way in, two fights, a secret | Spawns `from_gk_mulut` (W). Encounters `kala_pasir_1`, `kala_pasir_2`. Time-ward puzzles `puzzle_pasir_ward_w`, `puzzle_pasir_ward_e`, clue `ward_inscription`, beat spot `beat_wards_down` (5.2). Chest `kala_chest_1` (hidden sand cave, gap between pillars). Drop `D1` (high gallery, sand-slide) onto `gk_lupa`. Quest marker none |
 | `gk_lupa` | 2x3, 60x51 | The hall of faded letters. Aksara float like dim motes: Sunda, Jawa, forgotten scripts. Shelves of stone tablets | Rest before the boss, codex, the shortcut, the boss door | Spawns `from_gk_pasir` (drop landing, N), `from_gk_ruang_kala` (S door). Encounters `kala_lupa_1` (fight) and `kala_lupa` (**miniboss**) (5.3). Gap memory letter `letter_ra` (5.3). Chest `kala_chest_2` (behind tablets). Petilasan `kala_1` (south end, 10 tiles from the door, no fight between). NPC `semar` at `kala_1`. Codex spot `kala_aksara_pudar`. Shortcut gate `sc:gk_lorong` (opens from here). Quest markers `kala_1`, `kala_boss` (door) |
 | `gk_pelataran` | 2x2, 60x34 | Pelataran Waktu, the black-stone forecourt with ancestral pillars | First area of Act VI (5.1-5.2), the allies, the memorial stone, the siege | Spawns `from_gk_mulut` (N), `from_gk_pasir` (E). Encounter `kala_pelataran_siege`. NPCs `ciung_wanara`, `hariang_banga`, `faceless_deserter`, `naganingrum`, `cepot`, `memorial_stone`, `deserter_stone`. Petilasan `kala_0` |
-| `gk_hutan` | 2x2, 60x34 | Hutan Lupa, a petrified forest of name-trees and stone chimes | 5.6: fight, name-chimes puzzle, chest | Spawns `from_gk_pasir` (W), `from_gk_lupa` (S). Encounter `kala_hutan_echoes`, puzzle `hutan_name_chimes`, clue `name_trees`, chest `kala_chest_hutan` |
+| `gk_hutan` | 2x2, 60x34 | Hutan Lupa, a petrified forest of name-trees and stone chimes | 5.6: fight, name-chimes puzzle, chest | Spawns `from_gk_pasir` (W), `from_gk_lupa` (S). Encounter `kala_hutan_echoes`, puzzle `whisper_tree_1`-`_3` (props), clue `name_trees`, chest `kala_chest_hutan` |
 | `gk_jembatan` | 2x2, 60x34 | Jembatan Bayang, the causeway over the chasm of eaten time | 5.8: the echoes of fallen legends | Spawns `from_gk_lupa` (W). Encounter `kala_jembatan_echoes`, clue `bridge_echo`, chest `kala_chest_jembatan` |
 | `gk_ruang_kala` | 2x2, 60x34 | A round chamber. A clock face on the floor, the great hourglass overhead. Four quadrants, each with a motif of an earlier region (phase 3 uses them all) | Boss arena, Batara Kala | Spawn `from_gk_lupa`. Boss `batara_kala` (marker `kala_boss`). After the fight a lit door leads to the epilogue (`kala_exit`, **ASSUMED**). No other enemies |
 
@@ -103,7 +103,7 @@ Marker form `{zone: "gua_kala", id: ...}`. Ids from quests.md are marked (Q). Ev
 | 5.3 part the Eclipse, fight into the mouth | `travel, clue, fight x2, miniboss` | `eclipse_veil`, `kala_mulut` (Q), `kala_mulut_2` | `gk_mulut` (`V`, `E`, `A`) | `area_cleared:kala_mulut`, sets `mq5_1b` |
 | 5.4 Gap Memory `La` | `memory, puzzle, fight, beat` | `letter_la` (`memory_id: la`, cond `flag:mq5_1b`) | `gk_mulut` (east road `B`) and `zones/kelir/gap.tscn` (`gap_la`) | `memory_done:la`, sets `mq5_la`; beat `la_back` |
 | 5.5 the time-wards | `travel, clue, fight x2, puzzle, beat` | `ward_inscription`, `kala_pasir_1`, `kala_pasir_2`, `puzzle_pasir_ward_w`, `puzzle_pasir_ward_e`, `beat_wards_down` | `gk_pasir` | `area_cleared:kala_pasir_1`; then `area_cleared:kala_pasir_2`, sets `mq5_1c` |
-| 5.6 the name-trees | `travel, clue, fight, puzzle` | `name_trees`, `kala_hutan_echoes`, `hutan_name_chimes` | `gk_hutan` (`N`, `E`, `T`) | `area_cleared:kala_hutan_echoes`; then `puzzle_solved:hutan_name_chimes`, sets `mq5_1cb` |
+| 5.6 the name-trees | `travel, clue, fight, puzzle` | `name_trees`, `kala_hutan_echoes`, `whisper_tree_1`-`_3` (props) | `gk_hutan` (`N`, `E`, `T`) | `area_cleared:kala_hutan_echoes`; then `puzzle_solved:hutan_name_chimes`, sets `mq5_1cb` |
 | 5.7 the Abyss, Gap Memory `Ra` | `fight, miniboss, memory, puzzle, beat` | `kala_lupa_1`, `kala_lupa` (Q, miniboss), `letter_ra` (`memory_id: ra`, cond `flag:mq5_1d`) | `gk_lupa` and `zones/kelir/gap.tscn` (`gap_ra`) | `area_cleared:kala_lupa`, sets `mq5_1d`; then `memory_done:ra`, sets `mq5_ra`; beat `ra_back` |
 | 5.8 the Shadow Bridge | `travel, clue, setpiece, miniboss` | `bridge_echo`, `kala_jembatan_echoes` | `gk_jembatan` (`B`, `E`) | `area_cleared:kala_jembatan_echoes`, sets `mq5_1e`; beat `bridge` (`step:mq5=7`) |
 | 5.9 the last petilasan, Gap Memory `Sa` | `talk, memory, puzzle, beat` | `kala_1` (Q), `semar_kala`, `letter_sa` (`memory_id: sa`, cond `flag:mq5_2`) | `gk_lupa` (south) and `zones/kelir/gap.tscn` (`gap_sa`) | `petilasan_activated:kala_1`, sets `mq5_2`; then `memory_done:sa`, sets `mq5_sa`; beat `sa_back` |
@@ -442,7 +442,7 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 #_______#####_____________________________________________________#########______________#
 #_______#####_________________#########_____________rr____________#########______________#
 #_______#####_________________#########_____________rr____________#########______________#
-#_______#####_________________#########___________________________#########______________#
+#_______#####_________O_______#########___________________________#########______________#
 #_____________________________#########___________________________#########______________#
 #_____________________V_______#########__________________________________________________#
 #________________________________________________________________________________________#
@@ -461,11 +461,12 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 | `n` | spawn, arrival from gk_lupa (inside the pocket) | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
 | `+` | shortcut gate sc:gk_lorong, sand-choked arch (opens from the north pocket, 2 tiles) | `res://entities/world/shortcut.tscn` | `{id:"sc:gk_lorong", open_side:"n"}` | floor | 2 |
 | `P` | petilasan 2 | `res://entities/petilasan/petilasan.tscn` | `{id:"kala_2"}` | floor | 1 |
-| `E` | encounter kala_mulut (5.3 `area_cleared:kala_mulut`, sets `mq5_1b`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut", size:Vector2i(20,11), cond:"flag:mq5_choice6,!flag:mq5_1b", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,3)], [res://entities/enemies/kuntilanak.tscn, Vector2i(8,0)]]]}` | floor | 1 |
+| `E` | encounter kala_mulut (5.3 `area_cleared:kala_mulut`, sets `mq5_1b`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut", size:Vector2i(20,11), cond:"flag:mq5_choice6,flag:ombak_barrier,!flag:mq5_1b", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,3)], [res://entities/enemies/kuntilanak.tscn, Vector2i(8,0)]]]}` | floor | 1 |
 | `A` | encounter kala_mulut_2 (5.3, second fight, east road) | `res://entities/world/encounter.tscn` | `{area_id:"kala_mulut_2", size:Vector2i(18,9), cond:"flag:mq5_choice6", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)], [res://entities/enemies/kuntilanak.tscn, Vector2i(4,0)]]]}` | floor | 1 |
 | `B` | clue, a faded floating letter *La* (5.4; opens gap memory `la`; cond `flag:mq5_1b`; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"letter_la", memory_id:"la", cond:"flag:mq5_1b"}` | floor | 1 |
 | `C` | chest: 300 Ilmu (north nook, rule 7 optional find, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_0", item_id:"ilmu:300"}` | floor | 1 |
 | `V` | clue, the Eclipse veil across the cave mouth; the player draws *Ombak* to part it (5.3 `clue` piece; journal note only; id `eclipse_veil`, hunt `kala`; ASSUMED position by the arrival from `gk_pelataran`) | `res://entities/world/clue.tscn` | `{clue_id:"eclipse_veil", cond:"flag:mq5_choice6"}` | floor | 1 |
+| `O` | the Eclipse barrier across the cave mouth; cast Ombak (Jawa Ka) at it (5.3; `flag:ombak_barrier` is set by the cast) | `res://entities/npc/npc.tscn` | `{npc_id:"ombak_barrier"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -795,7 +796,7 @@ K__________________________________________________________Y
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Hutan Lupa (The Forgotten Woods), petrified underground forest of whispering name-trees and hanging stone chimes.
-- Purpose: MQ5 5.6 (`kala_hutan_echoes`, `hutan_name_chimes`), and chest `kala_chest_hutan`. Links to `gk_pasir` and `gk_lupa`.
+- Purpose: MQ5 5.6 (`kala_hutan_echoes`, `whisper_tree_1`-`_3` (props)), and chest `kala_chest_hutan`. Links to `gk_pasir` and `gk_lupa`.
 
 ### Map
 ```
@@ -822,10 +823,10 @@ W__________________________________________________________#
 #___________________rr________________rr___________________#
 #___________________rr________________rr___________________#
 #__________________________________________________________#
-#_____________________________T____________________________#
 #__________________________________________________________#
+#_________________________1_______3________________________#
 #______________rr__________________________rr______________#
-#______________rr__________________________rr______________#
+#______________rr_____________2____________rr______________#
 #__________________________________________________________#
 #__________________________________________________________#
 #__________________________________________________________#
@@ -843,9 +844,11 @@ W__________________________________________________________#
 | `S` | exit to gk_lupa (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_hutan"}` | floor | 2 |
 | `s` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
 | `E` | encounter kala_hutan_echoes (5.6 `area_cleared:kala_hutan_echoes`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_hutan_echoes", size:Vector2i(15,9), cond:"flag:mq5_1c,!flag:mq5_1cb", waves:[[[res://entities/enemies/kuntilanak.tscn, Vector2i(-4,0)], [res://entities/enemies/kemamang.tscn, Vector2i(4,-2)], [res://entities/enemies/kemamang.tscn, Vector2i(4,2)]]]}` | floor | 1 |
-| `T` | trigger, whispering name-chimes puzzle (5.6 `puzzle_solved:hutan_name_chimes`, sets `mq5_1cb`) | `res://entities/world/trigger.tscn` | `{trigger_id:"hutan_name_chimes", size:Vector2i(4,4), cond:"flag:mq5_1c"}` | floor | 1 |
 | `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_hutan", item_id:"ilmu:55"}` | floor | 1 |
 | `N` | clue, the whispering stone name-trees (5.6; journal note only; id `name_trees`, hunt `kala`; ASSUMED position) | `res://entities/world/clue.tscn` | `{clue_id:"name_trees", cond:"flag:mq5_1c"}` | floor | 1 |
+| `1` | whispering name-tree 1 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_1`) | `res://entities/npc/npc.tscn` | `{npc_id:"whisper_tree_1", cond:"flag:mq5_1c"}` | floor | 1 |
+| `2` | whispering name-tree 2 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_2`) | `res://entities/npc/npc.tscn` | `{npc_id:"whisper_tree_2", cond:"flag:mq5_1c"}` | floor | 1 |
+| `3` | whispering name-tree 3 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_3`) | `res://entities/npc/npc.tscn` | `{npc_id:"whisper_tree_3", cond:"flag:mq5_1c"}` | floor | 1 |
 
 ## Area 7: gk_jembatan
 

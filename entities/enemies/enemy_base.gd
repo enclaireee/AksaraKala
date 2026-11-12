@@ -108,6 +108,7 @@ func request_token() -> bool:
 		return false
 	add_to_group(POOLS[int(ranged)])
 	has_token = true
+	Snd.play("enemy_telegraph", 0.0, 1.0, 0.06)   # the token is the commit to attack
 	return true
 
 

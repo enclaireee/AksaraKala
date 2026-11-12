@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "tidal_beacon_2"
+name_key = ""
+entries = Array[Dictionary]([
+	{"if": ["step:mq4=12", "!flag:tidal_beacon_2"], "lines": ["DLG_TIDAL_BEACON_2_1"], "do": ["flag:tidal_beacon_2"]},
+	{"if": [], "lines": [], "do": [], "quiet": true}
+])

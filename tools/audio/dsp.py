@@ -5,7 +5,7 @@ Filters are zero-phase FFT filters (fine for offline rendering).
 """
 import numpy as np
 
-SR = 32000
+SR = 44100
 RNG = np.random.default_rng(7)
 
 
@@ -227,14 +227,3 @@ def master_mono(x, peak_db=-3.0):
     x = x - x.mean()
     p = np.max(np.abs(x)) + 1e-9
     return x * db(peak_db) / p
-
-
-def write_ogg(path, st, q=2.0):
-    """Encode via ffmpeg (libvorbis). st: float array (n,) or (n,2) in -1..1."""
-    import subprocess
-    st = np.atleast_2d(st.T).T if st.ndim == 1 else st
-    ch = st.shape[1]
-    pcm = (np.clip(st, -1, 1) * 32767).astype("<i2").tobytes()
-    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "s16le", "-ar", str(SR), "-ac", str(ch), "-i", "-",
-           "-c:a", "libvorbis", "-q:a", str(q), str(path)]
-    subprocess.run(cmd, input=pcm, check=True)

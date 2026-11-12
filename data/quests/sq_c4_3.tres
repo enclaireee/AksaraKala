@@ -12,7 +12,7 @@ marker = {"zone": "sk_pantai", "id": "cepot"}
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_C4_3_S2_OBJ"
-on = "trial_completed:c4_lamp"
+all = [{"on": "talked_to:c4_lamp", "set_flag": "", "objective": "Q_SQ_C4_3_S2_P1"}, {"on": "area_cleared:c4_lamp_night", "set_flag": "", "objective": "Q_SQ_C4_3_S2_P2"}]
 marker = {"zone": "sk_pantai", "id": "c4_lamp"}
 
 [sub_resource type="Resource" id="s3"]

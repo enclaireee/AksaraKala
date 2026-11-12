@@ -219,11 +219,11 @@ Regional character: Ibu (want: two cups she cannot explain; turn: the Interlude;
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_LARAS_NAME | | |
-| 1 | DLG_LARAS_V1 | Kak! Bangun! Ruwatan malam ini, dan aku mau pamer larinya jago. Tangkap aku kalau bisa! | Kak! Wake up! The ruwatan is tonight, and I want to show off how fast I run. Catch me if you can! |
+| 1 | DLG_LARAS_V1 | Kak! Bangun! Nanti malam ruwatan, seharian pasti disuruh-suruh. Main dulu sekali! | Kak! Get up! The ruwatan's tonight and we'll be running errands all day. One game first! |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_LARAS_H1 | Laras, ini masih subuh. | Laras, it's barely dawn. |
 | 1 | @NPC_LARAS_NAME | | |
-| 1 | DLG_LARAS_V2 | Takut kalah, ya? Satu, dua... sampai sumur, Kak! Yang kalah cuci piring! | Scared to lose? One, two... to the well, Kak! Loser washes the dishes! |
+| 1 | DLG_LARAS_V2 | Si Belang, sumur tua, akar beringin. Yang duluan sentuh tiga-tiganya menang. Yang kalah cuci piring! | Si Belang, the old well, the banyan root. First to touch all three wins. Loser washes the dishes! |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_LARAS_H101 | Kau curang. Kau sudah lari sebelum selesai menghitung. | You cheat. You started running before you finished counting. |
 | 1 | @NPC_LARAS_NAME | | |
@@ -237,76 +237,76 @@ Regional character: Ibu (want: two cups she cannot explain; turn: the Interlude;
 | 1 | DLG_LARAS_H103 | Dari mana kau tahu semua jalan pintas? | How do you know every shortcut? |
 | 1 | @NPC_LARAS_NAME | | |
 | 1 | DLG_LARAS_V104 | Kucing-kucing yang cerita. Mulai dari alun-alun, lewat beringin tua, lalu sumur. Kejar aku. | The cats told me. Start at the plaza, past the old banyan, then the well. Chase me. |
-| 2 | DLG_LARAS_V3 | Lambat banget larinya! Ayo, sumurnya di sana, Kak! | So slow! Come on, the well is right there, Kak! |
-| 3 | DLG_LARAS_V4 | Kena aku! Hehe. Ibu sudah menyeduh teh melati hangat, cepat pulang sebelum dingin! | You got me! Hehe. Ibu brewed warm jasmine tea, let's head home before it gets cold! |
-| 4 | DLG_LARAS_V5 | Kak, kalau nanti malam aku hilang di keramaian pasar festival, cari saja suara yang paling berisik. Itu pasti aku! | Kak, if I get lost in the festival crowd tonight, just follow the loudest voice. That's definitely me! |
+| 2 | DLG_LARAS_V3 | Belum selesai, Kak! Kucing, sumur, akar. Jangan sampai aku duluan! | Not done yet, Kak! Cat, well, root. Don't let me get there first! |
+| 3 | DLG_LARAS_V4 | Iya, iya, Kakak menang. Ayo pulang, teh Ibu keburu dingin. | Fine, fine, you won. Come on, Ibu's tea is going cold. |
+| 4 | DLG_LARAS_V5 | Kak, kalau nanti malam aku hilang di keramaian, cari saja suara yang paling berisik. Itu aku. | Kak, if you lose me in the crowd tonight, just follow the loudest voice. That's me. |
 
 ### Beat `tag_cat` (if `!flag:beat_tag_cat`, `flag:tag_cat`, `step:mq0=0`; do `flag:beat_tag_cat`). Area `purwa_tag_cat` sets `tag_cat` (ASSUMED). The gift is shown, then named.
 | Key | ID | EN |
 |-----|----|----|
-| BEAT_TAG_CAT_1 | Seekor kucing jingga duduk di atas tembok dan menatap kalian. Laras berhenti mendadak. | An orange stray sits on a wall and watches you both. Laras skids to a stop. |
+| BEAT_TAG_CAT_1 | Kucing belang itu duduk di pagar, menonton kalian berdua. Laras berhenti mendadak. | The striped stray sits on a wall, watching you both. Laras skids to a stop. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_CAT_2 | Namamu bukan Meong biasa, kan? Warnamu kuning kayak kunyit... Kunyit! Sini, Kunyit! | Your name isn't just Puss, is it? You're yellow as turmeric... Kunyit! Here, Kunyit! |
+| BEAT_TAG_CAT_2 | Semua orang manggil dia Pus. Padahal namanya Si Belang. Iya kan, Belang? | Everyone just calls him Puss. But his name's Si Belang. Isn't it, Belang? |
 | @ | | |
-| BEAT_TAG_CAT_3 | Kucing itu melompat turun dan menggosokkan kepalanya ke kaki Laras, seakan senang dipanggil dengan namanya. | The cat hops down and rubs its head on Laras's ankle, purring as if delighted to hear its name. |
+| BEAT_TAG_CAT_3 | Kucing itu melompat turun dan menggosokkan kepalanya ke mata kaki Laras. | The cat hops down and rubs his head against Laras's ankle. |
 | @NPC_HERO_NAME | | |
-| BEAT_TAG_CAT_H1 | Kau tahu namanya dari mana? | How did you know its name? |
+| BEAT_TAG_CAT_H1 | Tahu dari mana namanya? | How do you know that's his name? |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_CAT_4 | Kelihatan dari matanya kok! Di desa kita, semua makhluk punya nama rahasianya sendiri, Kak. | You can see it in his eyes! In our village, every living thing has its own secret name, Kak. |
+| BEAT_TAG_CAT_4 | Dia nengok kalau kupanggil begitu. Dipanggil Pus, dia pura-pura tuli. | He looks up when I say it. Call him Puss and he plays deaf. |
 | @NPC_HERO_NAME | | |
-| BEAT_TAG_CAT_H2 | Kucing tidak bicara, Laras. | Cats don't talk, Laras. |
+| BEAT_TAG_CAT_H2 | Kucing nggak bisa ngomong, Laras. | Cats don't talk, Laras. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_CAT_5 | Bicara kok. Kau saja yang jarang mendengarkan. | They do. You just don't listen much. |
+| BEAT_TAG_CAT_5 | Bisa. Kakak saja yang jarang dengar. | They do. You just don't listen much. |
 | @ | | |
-| BEAT_TAG_CAT_6 | Kunyit mengibaskan ekornya dan berlari ke arah beringin, seolah menunjukkan jalan. | Kunyit flicks his tail and trots toward the banyan, as if showing the way. |
+| BEAT_TAG_CAT_6 | Si Belang mengibaskan ekor dan berlari kecil ke arah beringin. | Si Belang flicks his tail and trots off toward the banyan. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_CAT_7 | Ayo, sumur! Dan jangan lupa menyapa beringin tua di jalan. | Come on, the well! And don't forget to greet the old banyan on the way. |
-| BEAT_TAG_CAT_8 | Kejar aku! Kalau kakimu terjebak, menghindar saja, dan jangan sampai napasmu habis. | Catch me! If you get boxed in, dodge out of it, and don't run out of breath. |
+| BEAT_TAG_CAT_7 | Sudah, sudah, dia mau tidur lagi. Ayo lanjut! | All right, he wants his nap back. Come on, keep going! |
+| BEAT_TAG_CAT_8 | Kalau kepepet, mengelak saja, Kak. Asal jangan sampai kehabisan napas! | If you get boxed in, dodge, Kak. Just don't run out of breath! |
 
 ### Beat `tag_banyan` (if `!flag:beat_tag_banyan`, `flag:tag_banyan`, `step:mq0=0`; do `flag:beat_tag_banyan`). Area `purwa_tag_banyan` sets `tag_banyan` (ASSUMED).
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_TAG_BANYAN_1 | Di bawah beringin tua, Laras menepuk batangnya dengan hormat seperti menyapa kakek sesepuh. | Under the old banyan Laras pats the trunk respectfully like she's greeting a village elder. |
+| BEAT_TAG_BANYAN_1 | Di akar beringin tua, Laras menepuk batangnya seperti menyapa orang tua. | At the old banyan's root, Laras pats the trunk the way you'd greet an elder. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_BANYAN_2 | Permisi, Ki Waringin! Kami cuma numpang lewat lari pagi. | Excuse us, Ki Waringin! We're just passing through on our morning run. |
+| BEAT_TAG_BANYAN_2 | Permisi, Ki Waringin! Numpang lewat, lagi main. | Excuse us, Ki Waringin! Just passing through, mid-game. |
 | @ | | |
-| BEAT_TAG_BANYAN_3 | Ranting dan dedaunan di atas kalian berdesir lembut, menyambut suara Laras. | The branches and leaves above you rustle softly, welcoming Laras's voice. |
+| BEAT_TAG_BANYAN_3 | Daun-daun di atas kalian berdesir, padahal tak ada angin. | The leaves overhead rustle, though there is no wind. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_BANYAN_4 | Tuh kan, pohon beringin tua ini juga senang kalau disapa dengan hormat! | See? Even this ancient banyan loves being greeted with respect! |
+| BEAT_TAG_BANYAN_4 | Tuh, dia jawab. | See? He answered. |
 | @NPC_HERO_NAME | | |
 | BEAT_TAG_BANYAN_H1 | Ki Waringin? Sejak kapan pohon punya nama? | Ki Waringin? Since when does a tree have a name? |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_BANYAN_5 | Sejak ada yang pertama kali menyapanya. Nama itu hadiah, Kak. Kalau dipanggil, kau ada. | Since someone first greeted him. A name is a gift, Kak. If you're called, you exist. |
+| BEAT_TAG_BANYAN_5 | Sejak ada yang pertama menyapa dia. Kalau dipanggil, berarti ada, Kak. | Since the first time somebody greeted him. If you're called, you exist, Kak. |
 | @NPC_HERO_NAME | | |
-| BEAT_TAG_BANYAN_H2 | Dan kalau tak ada yang memanggil? | And if nobody calls? |
+| BEAT_TAG_BANYAN_H2 | Kalau nggak ada yang manggil? | And if nobody calls? |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_BANYAN_6 | Maka dia sendirian. Makanya aku lewat sini tiap hari. | Then he's alone. That's why I come by every day. |
+| BEAT_TAG_BANYAN_6 | Ya sendirian. Makanya aku mampir tiap hari. | Then he's alone. That's why I come by every day. |
 | @ | | |
 | BEAT_TAG_BANYAN_7 | Untuk sesaat, kau merasa daun-daun itu ikut mendengarkan. | For a moment you feel the leaves listening too. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_BANYAN_8 | Sudah, sumur menunggu. Yang kalah cuci piring, ingat? | Enough, the well is waiting. Loser washes the dishes, remember? |
+| BEAT_TAG_BANYAN_8 | Sudah, ayo! Yang kalah cuci piring, ingat? | Enough, come on! Loser washes the dishes, remember? |
 
 ### Beat `tag_end` (if `!flag:beat_tag_end`, `flag:mq0_d1`; do `flag:beat_tag_end`). Area `purwa_tag_end` sets `mq0_d1`; the `laras_tag` spot then leaves, so the catch is a beat. New in v5 (0.1)
 The old well stands a few steps from the banyan; the catch happens there, because the gap memory `la` asks "where did you catch Laras" and the answer is the well.
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_TAG_END_1 | Laras berhenti di tepi sumur, terengah dan tertawa. Tanganmu menyentuh bahunya setengah langkah sebelum ia sampai ke ember. | Laras stops at the well, panting and laughing. Your hand taps her shoulder half a step before she reaches the bucket. |
+| BEAT_TAG_END_1 | Laras menjatuhkan diri di rumput, terengah-engah sambil tertawa. Tiga dari tiga, dan kau lebih dulu di semuanya. | Laras drops onto the grass, panting and laughing. Three out of three, and you got to every one first. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_END_2 | Kena aku! Kau lebih cepat dari yang kukira, Kak. | You got me! You're faster than I thought, Kak. |
+| BEAT_TAG_END_2 | Kakak menang! Lebih cepat dari yang kukira. | You win! You're faster than I thought. |
 | @NPC_HERO_NAME | | |
-| BEAT_TAG_END_H1 | Kau melambat sengaja. | You slowed down on purpose. |
+| BEAT_TAG_END_H1 | Kamu sengaja pelan. | You slowed down on purpose. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_END_3 | Sedikit. Yang kalah cuci piring, dan aku tak suka piring. | A little. The loser washes dishes, and I don't like dishes. |
+| BEAT_TAG_END_3 | Enak saja! ...Sedikit. Habis, aku harus menyapa semuanya dulu. | Did not! ...A little. I had to stop and say hello to everybody. |
 | @ | | |
 | BEAT_TAG_END_4 | Dari rumah di ujung lorong, aroma melati menyebar. Seseorang sedang menyeduh teh. | From the house at the end of the lane, the smell of jasmine drifts over. Someone is brewing tea. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_END_5 | Teh melati Ibu. Cepat, sebelum dingin dan sebelum Ibu mulai memberi kita tugas. | Ibu's jasmine tea. Quick, before it goes cold and before Ibu starts handing out chores. |
+| BEAT_TAG_END_5 | Teh melati Ibu. Cepat, sebelum dingin, dan sebelum Ibu mulai bagi-bagi tugas. | Ibu's jasmine tea. Quick, before it goes cold, and before she starts handing out chores. |
 | @NPC_HERO_NAME | | |
 | BEAT_TAG_END_H2 | Terlambat. Ibu selalu sudah punya tugas. | Too late. Ibu always has a chore ready. |
 | @NPC_LARAS_NAME | | |
-| BEAT_TAG_END_6 | Ayo ke rumah dulu. Ibu pasti sudah menunggu di meja. | Home first. Ibu will be waiting at the table. |
+| BEAT_TAG_END_6 | Pulang dulu. Piringnya nanti saja, ya? | Home first. The dishes can wait, right? |
 
 ### ibu (name NPC_IBU_NAME). Entry order for the whole game (the Interlude and epilogue lines are in sections 10 and 11). Entries 2, 3 and 5 to 7 keep their numbers; `H` is the prologue-day hub
 | Entry | if | do | choices |
@@ -331,7 +331,7 @@ The old well stands a few steps from the banyan; the catch happens there, becaus
 | 1 | @NPC_IBU_NAME | | |
 | 1 | DLG_IBU_V101 | Cangkir itu sudah retak sejak kau kecil. Ibu bilang buang saja, kau bilang nanti dia sedih. | That cup's been chipped since you were small. I said throw it out, you said it would be sad. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_IBU_H101 | Dia betul-betul sayang cangkir gompal itu. | She truly loves that chipped cup. |
+| 1 | DLG_IBU_H101 | Dia lebih sayang cangkir itu daripada aku. | She loves that cup more than she loves me. |
 | 1 | @NPC_LARAS_NAME | | |
 | 1 | DLG_IBU_L101 | Teh lebih enak kalau cangkirnya senang. | Tea tastes better when the cup is happy. |
 | 1 | @NPC_IBU_NAME | | |
@@ -339,11 +339,11 @@ The old well stands a few steps from the banyan; the catch happens there, becaus
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_IBU_H102 | Laras tak akan sanggup tidak lari-lari. | Laras can't not run about. |
 | 1 | @NPC_IBU_NAME | | |
-| 1 | DLG_IBU_V21 | Pulang sebelum pertunjukan, berdua. Dan tolong jemput Ciung, anak tetangga kita. Sejak subuh dia di pohon. | Home before the show, both of you. And fetch Ciung, our neighbours' boy. He's been up a tree since dawn. |
+| 1 | DLG_IBU_V21 | Pulang sebelum pertunjukan, berdua. Dan tolong tengok Ciung, cucu angkat Kakek-Nenek sebelah. Sejak subuh dia di atas pohon. | Home before the show, both of you. And look in on Ciung, next door's foster grandson. He's been up a tree since dawn. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_IBU_H20 | Ciung dan pohonnya. Beres, Bu. | Ciung and his tree. Leave it to me, Ibu. |
 | 1 | @NPC_IBU_NAME | | |
-| 1 | DLG_IBU_V103 | Kakek-neneknya di rumah sebelah. Mampirlah dulu, mereka sudah menunggumu sejak tadi. | His grandparents are next door. Stop by first, they've been waiting for you. |
+| 1 | DLG_IBU_V103 | Kakek-neneknya menunggumu dari tadi, mampirlah. Habis itu ambilkan minyak lampu pesanan Ibu di pasar, buat panggung. | His grandparents have been waiting for you, so stop by. After that, pick up my lamp oil at the market. It's for the stage. |
 | H | @NPC_IBU_NAME | | |
 | H | DLG_IBU_V104 | Masih di sini? Ibu punya waktu sebentar kalau kau mau bertanya. | Still here? I've a moment if you want to ask me something. |
 | T:ask_ruwatan | @NPC_IBU_NAME | | |
@@ -371,7 +371,7 @@ The old well stands a few steps from the banyan; the catch happens there, becaus
 | 4 | @NPC_HERO_NAME | | |
 | 4 | DLG_IBU_H2 | Lalu kenapa ada dua cangkir di meja? | Then why are there two cups on the table? |
 | 4 | @NPC_IBU_NAME | | |
-| 4 | DLG_IBU_V4 | Dua... Satunya gompal, entah kenapa Ibu simpan. Sudahlah. Semar, sang dalang, semalaman di sanggar, tanyalah dia. | Two... One is chipped, and I couldn't say why I kept it. Never mind. Semar, the dalang, was up all night at the sanggar. Ask him. |
+| 4 | DLG_IBU_V4 | Dua... Yang satu gompal, entah kenapa Ibu simpan. Sudahlah. Tanya Ki Semar, dia semalaman di sanggar. | Two... One's chipped, and I couldn't tell you why I keep it. Never mind. Ask Ki Semar, he was at the sanggar all night. |
 | 4 | @NPC_HERO_NAME | | |
 | 4 | DLG_IBU_H112 | Bu, matamu basah. | Ibu, your eyes are wet. |
 | 4 | @NPC_IBU_NAME | | |
@@ -404,23 +404,23 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_PURWA_OLD_COUPLE_NAME | | |
-| 1 | DLG_PURWA_OLD_COUPLE_V1 | Nak, tolong kami... Cucu kami, Ciung, memanjat pohon beringin barat sejak subuh dan nggak mau turun sama sekali. | Children, please help us... Our grandson Ciung climbed the west banyan tree at dawn and won't come down at all. |
-| 1 | DLG_PURWA_OLD_COUPLE_V2 | Dia memeluk sebutir telur aneh yang ditemukannya di semak sungai. Kami cemas dia jatuh kalau terlalu lama di atas sana. | He's hugging a strange egg he found by the river bushes. We're terrified he'll fall if he stays up there. |
+| 1 | DLG_PURWA_OLD_COUPLE_V1 | Nak, tolong kami. Ciung, cucu kami, naik ke beringin barat sejak subuh dan nggak mau turun. | Children, help us. Our grandson Ciung went up the west banyan at dawn and won't come down. |
+| 1 | DLG_PURWA_OLD_COUPLE_V2 | Dia memeluk telur aneh dari semak di tepi sungai. Kami takut dia jatuh. | He's hugging a strange egg from the bushes by the river. We're afraid he'll fall. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_PURWA_OLD_COUPLE_H101 | Dari mana telur itu? | Where did the egg come from? |
 | 1 | @NPC_PURWA_OLD_COUPLE_NAME | | |
-| 1 | DLG_PURWA_OLD_COUPLE_V5 | Kami tak tahu. Ia pulang dari ladang membawanya, hangat seperti baru ditinggalkan. | We don't know. He came home from the fields with it, warm as if just left. |
-| 1 | DLG_PURWA_OLD_COUPLE_V6 | Kami sudah tua dan lutut kami tak sanggup memanjat. Kau lebih muda. | We're old and our knees won't climb. You're younger. |
+| 1 | DLG_PURWA_OLD_COUPLE_V5 | Kami tak tahu. Dia pulang dari sungai membawanya, masih hangat seperti baru ditinggal. | We don't know. He came back from the river with it, still warm, as if only just left. |
+| 1 | DLG_PURWA_OLD_COUPLE_V6 | Lutut kami sudah tak sanggup memanjat, Nak. Kau masih muda. | Our knees are past climbing, child. Yours aren't. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_PURWA_OLD_COUPLE_H102 | Apa yang ditakutkan Ciung? | What is Ciung afraid of? |
 | 1 | @NPC_PURWA_OLD_COUPLE_NAME | | |
-| 1 | DLG_PURWA_OLD_COUPLE_V7 | Ditinggal. Anak yang ditemukan di sungai selalu takut ditinggal. | Being left. A child found in a river is always afraid of being left. |
+| 1 | DLG_PURWA_OLD_COUPLE_V7 | Ditinggal. Kami memungutnya dari sungai waktu bayi, Nak. Anak begitu selalu takut ditinggal. | Being left. We took him out of the river as a baby, child. A boy like that is always afraid of being left. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_PURWA_OLD_COUPLE_H1 | Biar kami yang membujuknya turun, Kek, Nek. | Leave it to us, Grandpa, Grandma. We'll talk him down. |
+| 1 | DLG_PURWA_OLD_COUPLE_H1 | Biar kami yang bujuk, Kek, Nek. | We'll talk him down, Kek, Nek. |
 | 1 | @NPC_PURWA_OLD_COUPLE_NAME | | |
-| 1 | DLG_PURWA_OLD_COUPLE_V3 | Terima kasih banyak, Nak. Pohonnya ada di ujung barat desa, lewat pinggir kolam. | Thank you so much, children. The tree is at the far west of the village, past the pond. |
+| 1 | DLG_PURWA_OLD_COUPLE_V3 | Terima kasih, Nak. Pohonnya di ujung barat desa, lewat kolam. Pasti ada barangnya yang jatuh lagi, selalu begitu. | Thank you, children. The tree's at the west end of the village, past the pond. He'll have dropped something again, he always does. |
 | 1b | DLG_PURWA_OLD_COUPLE_V8 | Sudah minum teh di rumah ibumu? Mampirlah lagi nanti. | Have you had tea at your mother's yet? Come back after. |
-| 2 | DLG_PURWA_OLD_COUPLE_V4 | Ciung itu anak baik, cuma kadang terlalu berani dan keras kepala. | Ciung is a good boy at heart, just a bit too reckless and stubborn. |
+| 2 | DLG_PURWA_OLD_COUPLE_V4 | Ciung itu anak baik. Cuma keras kepalanya seperti batu kali. | Ciung's a good boy. Just stubborn as a river stone. |
 
 ### ciung_wanara, prologue entries (put first in the file; the Act I camp entries follow, then the Act II to VI entries unchanged, section 7)
 | Entry | if | do |
@@ -431,25 +431,25 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | P1 | @NPC_HERO_NAME | | |
-| P1 | DLG_CIUNG_WANARA_H10 | Ciung! Ayo turun, kakek-nenekmu cemas mencarimu! | Ciung! Come down, your grandparents are worried sick looking for you! |
+| P1 | DLG_CIUNG_WANARA_H10 | Ciung! Keranjangmu ketemu. Turun, kakek-nenekmu cemas. | Ciung! Found your basket. Come down, your grandparents are worried. |
 | P1 | @NPC_CIUNG_WANARA_NAME | | |
-| P1 | DLG_CIUNG_WANARA_V20 | Sebentar dulu! Telur aneh yang kutemukan di dekat sungai ini hangat terus kalau kupegang. Aneh banget! | Hold on! This strange egg I found by the river stays warm whenever I hold it. It's so weird! |
+| P1 | DLG_CIUNG_WANARA_V20 | Sebentar. Telur ini kutemukan di sungai. Tiap kupegang, dia hangat. | Wait. I found this egg by the river. Every time I hold it, it's warm. |
 | P1 | @NPC_HERO_NAME | | |
 | P1 | DLG_CIUNG_WANARA_H101 | Telur apa itu? Burung? | What kind of egg is it? A bird's? |
 | P1 | @NPC_CIUNG_WANARA_NAME | | |
 | P1 | DLG_CIUNG_WANARA_V101 | Entah. Tapi ada yang berdetak di dalamnya, pelan, seperti menunggu aku bicara. | No idea. But something ticks inside, slow, like it's waiting for me to speak. |
 | P1 | @NPC_LARAS_NAME | | |
-| P1 | DLG_CIUNG_WANARA_L1 | Ciung, kamu kan harus ikut upacara Ruwatan nanti malam! Jangan bikin kakek-nenekmu panik. | Ciung, you have to attend the Ruwatan ceremony tonight! Don't make your grandparents panic. |
+| P1 | DLG_CIUNG_WANARA_L1 | Nanti malam namamu dibacakan di ruwatan, Ciung. Masa mau dengar dari atas pohon? | They're reading your name at the ruwatan tonight, Ciung. You want to hear it from up a tree? |
 | P1 | @NPC_CIUNG_WANARA_NAME | | |
-| P1 | DLG_CIUNG_WANARA_V102 | Aku tak butuh nama lain. Satu saja sudah cukup merepotkan. | I don't need another name. One is trouble enough. |
+| P1 | DLG_CIUNG_WANARA_V102 | Aku nggak butuh nama lagi. Satu saja sudah repot. | I don't need another name. One is trouble enough. |
 | P1 | @NPC_HERO_NAME | | |
 | P1 | DLG_CIUNG_WANARA_H102 | Kakek-nenekmu takut kau jatuh. | Your grandparents are afraid you'll fall. |
 | P1 | @NPC_CIUNG_WANARA_NAME | | |
 | P1 | DLG_CIUNG_WANARA_V103 | Mereka selalu takut. Aku tak akan jatuh. | They're always afraid. I won't fall. |
-| P1 | DLG_CIUNG_WANARA_V21 | Iya, iya, aku turun sekarang! Telur ini kubawa pulang ya. Terima kasih sudah mengingatkan. | Alright, alright, I'm coming down! I'm bringing this egg home. Thanks for reminding me. |
+| P1 | DLG_CIUNG_WANARA_V21 | Iya, iya, aku turun. Telurnya ikut, di keranjang. ...Makasih keranjangnya. | Fine, fine, I'm coming down. The egg comes too, in the basket. ...Thanks for the basket. |
 | P1 | @NPC_LARAS_NAME | | |
-| P1 | DLG_CIUNG_WANARA_L101 | Ayo mampir pasar dulu, Kak! Penjaga lapak bilang ada orang bertopeng nanya-nanya nama anak. Setelah itu baru ke sanggar. | Let's stop by the market first, Kak! The stall-keeper said a masked man was asking children's names. Sanggar after that. |
-| P2 | DLG_CIUNG_WANARA_V22 | Aku pulang ke rumah dulu ya. Sampai ketemu nanti malam di panggung wayang! | I'm heading home first. See you tonight at the wayang stage! |
+| P1 | DLG_CIUNG_WANARA_L101 | Kak, minyak Ibu! Ke pasar dulu, baru ke sanggar. | Kak, Ibu's oil! Market first, then the sanggar. |
+| P2 | DLG_CIUNG_WANARA_V22 | Aku pulang dulu. Sampai nanti malam di panggung. | I'm going home first. See you at the stage tonight. |
 
 ### Chapter 1, step 0.4: The morning market and the sanggar door
 
@@ -462,12 +462,12 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_PURWA_STALL_NAME | | |
-| 1 | DLG_PURWA_STALL_V1 | Kau murid Semar, kan? Dengar, tadi pagi ada lelaki jangkung bertopeng polos menanyai nama anak-anak. | You're Semar's apprentice, aren't you? Listen, this morning a tall man in a blank mask was asking children's names. |
-| 1 | DLG_PURWA_STALL_V2 | Aku tak bilang apa-apa. Lapakku tutup sejam lebih awal hari ini. | I told him nothing. I'm shutting my stall an hour early today. |
+| 1 | DLG_PURWA_STALL_V1 | Minyak lampu pesanan ibumu, ini. Dengar, tadi pagi ada lelaki jangkung bertopeng polos menanyai nama anak-anak. | Your mother's lamp oil, here. Listen, this morning a tall man in a blank mask was asking for the children's names. |
+| 1 | DLG_PURWA_STALL_V2 | Aku tak bilang apa-apa. Hari ini lapakku tutup sejam lebih awal. | I told him nothing. I'm shutting the stall an hour early today. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_PURWA_STALL_H1 | Topeng polos? Ke arah mana dia? | A blank mask? Which way did he go? |
 | 1 | @NPC_PURWA_STALL_NAME | | |
-| 1 | DLG_PURWA_STALL_V3 | Ke barat. Nanti malam kau ikut ruwatan, kan? Duduklah dekat Semar. | West. You're going to the ruwatan tonight? Sit near Semar. |
+| 1 | DLG_PURWA_STALL_V3 | Ke barat. Bawa adikmu ke sanggar, dan nanti malam duduklah dekat Semar. | West. Take your sister to the sanggar, and sit near Semar tonight. |
 | 2 | DLG_PURWA_STALL_V4 | Cabai segar, kemiri baru. Dan jangan tanya soal lelaki bertopeng. | Fresh chilli, new candlenut. And don't ask about the masked man. |
 
 ### cepot (the sanggar door, step 0.4 second half; name NPC_CEPOT_NAME). Cepot reacts to what the market already told you; he does not invent a second rumour.
@@ -478,12 +478,12 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_CEPOT_NAME | | |
-| 1 | DLG_CEPOT_V01 | Nah! Kalian! Dari pasar, kan? Jadi kalian sudah dengar soal orang bertopeng itu. Bapak menyuruh semua anak masuk sanggar sekarang juga. | There you are! From the market, yes? So you've heard about the masked man. Father's ordered every child into the sanggar right now. |
+| 1 | DLG_CEPOT_V01 | Nah, ini dia! Dari pasar, kan? Berarti sudah dengar soal si topeng. Kata Bapak, semua anak masuk sanggar sekarang. | There you are! From the market, right? Then you've heard about the mask. Father wants every child in the sanggar, now. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_CEPOT_H01 | Kau yakin itu kabar benar? | Are you sure it's true? |
 | 1 | @NPC_CEPOT_NAME | | |
-| 1 | DLG_CEPOT_V02 | Peronda desa yang lihat sendiri. Jangkung, topeng putih polos, nanya nama anak-anak. Seram! | The village scouts saw him themselves. Tall, blank white mask, asking children's names. Creepy! |
-| 1 | DLG_CEPOT_V03 | Ayo masuk. Bapak sudah menunggu, dan aku disuruh menghitung kepala. Jangan bikin aku salah hitung. | Come in. Father's waiting, and I'm meant to count heads. Don't make me lose count. |
+| 1 | DLG_CEPOT_V02 | Peronda sendiri yang lihat. Jangkung, topeng putih polos, nanya nama anak-anak. Serem! | The night watch saw him themselves. Tall, blank white mask, asking children's names. Creepy! |
+| 1 | DLG_CEPOT_V03 | Masuk, masuk. Aku disuruh menghitung kepala, jangan bikin hitunganku buyar. | In, in. I'm supposed to be counting heads, so don't make me lose count. |
 
 ### Chapter 2: The Sanggar and the Ruwatan Night (0.5-0.8)
 
@@ -513,7 +513,7 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_SEMAR_NAME | | |
-| 1 | DLG_SEMAR_V30 | Hehe, murid yang tak pernah tepat waktu. Masuklah. Lihat ini: aksara, tulisan kuno kita, bukan sekadar huruf. Digambar dengan hati, ia jadi tenaga. | Hehe, the apprentice who's never on time. Come in. Look: aksara, our old script, aren't just letters. Drawn with heart, they become power. |
+| 1 | DLG_SEMAR_V30 | Hehe, murid yang tak pernah tepat waktu. Masuk. Aksara itu bukan sekadar huruf. Ditulis sungguh-sungguh, ia bekerja. | Hehe, the apprentice who's never on time. Come in. Aksara aren't just letters. Written in earnest, they do things. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SEMAR_H30 | Dan nama? | And names? |
 | 1 | @NPC_SEMAR_NAME | | |
@@ -531,7 +531,7 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | 1 | DLG_SEMAR_H103 | Di pasar ada orang bertopeng polos, menanyai nama anak-anak. | At the market there's a man in a blank mask asking children's names. |
 | 1 | @NPC_SEMAR_NAME | | |
 | 1 | DLG_SEMAR_V104 | Aku sudah dengar. Karena itu lampu harus menyala dan nama-nama harus dibacakan hari ini. | I've heard. That's why the lamps must be lit and the names read today. |
-| 1 | DLG_SEMAR_V32 | Laras, bawa lontarmu ke meja itu dan tulis. Cepot sudah menunggu dengan botol minyaknya. | Laras, take your lontar to that table and write. Cepot's waiting with the oil bottle. |
+| 1 | DLG_SEMAR_V32 | Laras, bawa lontarmu ke meja. Kakakmu menyusul setelah Cepot selesai ribut soal minyak. | Laras, take your lontar to the table. Your kakak will follow once Cepot's done fussing over the oil. |
 | H1 | @NPC_SEMAR_NAME | | |
 | H1 | DLG_SEMAR_V105 | Cepot di sana, yang suaranya paling keras. Atau tanya aku dulu, hehe. | Cepot's over there, the loudest one. Or ask me first, hehe. |
 | T:ask_kala | @NPC_SEMAR_NAME | | |
@@ -548,15 +548,15 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | T:ask_lontar | DLG_SEMAR_H105 | Tapi daun bisa lapuk. | But leaves rot. |
 | T:ask_lontar | @NPC_SEMAR_NAME | | |
 | T:ask_lontar | DLG_SEMAR_V111 | Semua yang kita tulis bisa hilang. Itu sebabnya kita menulisnya dengan sungguh-sungguh. | Everything we write can be lost. That's why we write it with care. |
-| 2 | DLG_SEMAR_V33 | Daun lontar suci ini ada di meja dekat jendela. Tulislah nama kalian berdua dengan teliti dan penuh doa. | The sacred lontar leaves are on the table by the window. Write both your names carefully and with wholehearted prayer. |
-| 2b | DLG_SEMAR_V112 | Empat lampu minyak di sekeliling panggung. Nyalakan sebelum senja habis, dan jangan tumpahkan minyaknya. | Four oil lamps around the stage. Light them before dusk is gone, and don't spill the oil. |
+| 2 | DLG_SEMAR_V33 | Laras sudah menunggu dengan lontarnya. Tulis pelan-pelan; huruf yang buru-buru gampang lupa pada pemiliknya. | Laras is waiting with her lontar. Write slowly; a letter written in a hurry forgets whose it is. |
+| 2b | DLG_SEMAR_V112 | Empat lampu minyak di sekeliling panggung. Nyalakan sebelum senja habis, pakai minyak ibumu. | Four oil lamps around the stage. Light them before dusk is gone, with your mother's oil. |
 | 2b | @NPC_HERO_NAME | | |
 | 2b | DLG_SEMAR_H106 | Siapa yang memegang obornya? | Who holds the torch? |
 | 2b | @NPC_SEMAR_NAME | | |
 | 2b | DLG_SEMAR_V113 | Kau. Cepot boleh membawa botolnya, hehe. Api bukan temannya. | You. Cepot may carry the bottle, hehe. Fire isn't his friend. |
-| 3 | DLG_SEMAR_V34 | Saatnya tiba. Duduklah di balik kelir layar wayang, Nak. Kita mulai Ruwatan malam ini untuk melindungi desa kita. | The time has come. Sit behind the kelir shadow screen, child. We begin tonight's Ruwatan to shield our village. |
+| 3 | DLG_SEMAR_V34 | Sudah waktunya. Duduk di belakang kelir, di dekat lampuku. Ruwatan kita mulai. | It's time. Sit behind the kelir, by my lamp. We'll begin the ruwatan. |
 | 3 | DLG_SEMAR_V114 | Tetap di cahaya lampuku. Laras dan Ciung duduk di barisan depan, jadi tak usah cemas. | Stay in my lamp's light. Laras and Ciung sit in the front row, so don't worry. |
-| 4 | DLG_SEMAR_V1 | Hehe, mukamu kusut seperti kucing basah. Sebelum aku bicara, ambil dulu lontar yang tertinggal di panggung wayang. Yang gosong itu. | Hehe, you look like a wet cat. Before I say anything, fetch the lontar off the wayang stage. The scorched one. |
+| 4 | DLG_SEMAR_V1 | Hehe, mukamu seperti kucing kehujanan. Sebelum aku bicara, ambil dulu sobekan lontarmu di panggung. Yang gosong. | Hehe, you look like a wet cat. Before I say a word, fetch your half of the lontar from the stage. The scorched one. |
 | 4 | DLG_SEMAR_V115 | Tapi tengoklah Ibumu dulu. Ia akan menjawab dengan sakit, tapi kau perlu mendengarnya. | But see your mother first. Her answer will hurt, but you need to hear it. |
 | 5 | @NPC_HERO_NAME | | |
 | 5 | DLG_SEMAR_H2 | Hurufnya memudar dari ujung. Siapa yang melakukan ini? | The letters are fading from the edges. Who did this? |
@@ -594,7 +594,7 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | T:ask_halflontar | DLG_SEMAR_V124 | Belum. Tapi kau bisa membacanya, dan itu cukup untuk mengikutinya. | Not yet. But you can read it, and that's enough to follow her. |
 | 7 | DLG_SEMAR_V8 | Dengar itu? Mereka kembali mencari sesuatu. Alun-alun, cepat! | Hear that? They came back for something. The plaza, go! |
 | 8 | DLG_SEMAR_V9 | Mereka lari ke barat, ke gerbang. Pergilah, dan simpan lontarnya dekat jantung. | They ran west, to the gate. Go, and keep the lontar close to your heart. |
-| 10 | DLG_SEMAR_V10 | Laut selatan. Orang pesisir bilang laut tak pernah lupa. Semoga mereka benar, hehe. | The south sea. The coast folk say the sea never forgets. I hope they're right, hehe. |
+| 10 | DLG_SEMAR_V10 | Laut selatan. Orang pesisir bilang laut tak pernah lupa. Semoga benar, hehe. | The south sea. The coast folk say it never forgets. Let's hope they're right, hehe. |
 | 11 | DLG_SEMAR_V14 | Gua itu lewat kabut di belakang desa. Aku sampai duluan, hehe. | The cave is through the fog behind the village. I'll get there first, hehe. |
 | 12 | DLG_SEMAR_V15 | Ssst, pertunjukannya mulai. Tebak lakon siapa. | Shh, the show's starting. Guess whose lakon it is. |
 | 13 | DLG_SEMAR_V16 | Setiap kisah dimulai dari orang yang mengingatnya. | Every story starts with someone who remembers it. |
@@ -637,7 +637,7 @@ The Act I Cepot entries (SQ-S4) follow; see section 6.
 | P1 | DLG_CEPOT_H103 | Pengecut. | Coward. |
 | P1 | @NPC_CEPOT_NAME | | |
 | P1 | DLG_CEPOT_V104 | Hati-hati. Aku pemberani, hanya dengan syarat. Tak boleh ada raksasa dalam dua puluh langkah. | Careful. I'm brave, only on conditions. No giants within twenty paces. |
-| P1 | DLG_CEPOT_V105 | Sana, tulis di lontar Laras. Aku jaga lampunya, dari jauh, dengan penuh perhatian. | Go on, write on Laras's lontar. I'll watch the lamps, from a distance, very attentively. |
+| P1 | DLG_CEPOT_V105 | Sana, Laras sudah nunggu dengan lontarnya. Lampu biar kujaga dari jauh, dengan sangat waspada. | Go on, Laras is waiting with her lontar. I'll guard the lamps from a distance, very alertly. |
 | P1 | DLG_CEPOT_T1 | Sebelum menulis, panaskan tanganmu, Kak. Boneka jerami di halaman itu kuikat sejak subuh. Pukul, tahan tombolnya, dan tiga ayunan jadi satu kombo. | Before you write, warm up your hands, Kak. I tied those straw dummies in the yard at dawn. Strike, hold the button, and three swings make one combo. |
 | P1 | DLG_CEPOT_T2 | Awas napasmu. Tiap ayunan memakan stamina, si bar kuning di bawah nyawamu. | Mind your breath. Every swing costs stamina, that yellow bar under your health. |
 
@@ -645,21 +645,21 @@ The Act I Cepot entries (SQ-S4) follow; see section 6.
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_LONTAR_NAMES_1 | Laras mengukir daun lontar dengan pena bambu milik Ki Semar. Namamu terukir rapi di satu ujung, dan namanya sendiri di ujung yang lain. | Laras inscribes the lontar leaf with Ki Semar's bamboo stylus. Your name is etched neatly at one end, and her own at the other. |
+| BEAT_LONTAR_NAMES_1 | Kau menggores La di satu ujung lontar. Di ujung lainnya Laras menulis namamu, lidahnya sedikit terjulur. | You scratch La into one end of the lontar. At the other end Laras writes your name, the tip of her tongue poking out. |
 | @NPC_LARAS_NAME | | |
-| BEAT_LONTAR_NAMES_2 | Nah, sekarang kita pegang sama-sama! Kakak pegang ujung yang ada namaku, dan aku pegang ujung yang ada nama Kakak. | Now, let's hold it together! You hold the end with my name, and I'll hold the end with yours. |
+| BEAT_LONTAR_NAMES_2 | Sekarang pegang sama-sama. Kakak pegang ujung namaku, aku pegang ujung nama Kakak. | Now we both hold it. You take the end with my name, I take the end with yours. |
 | @NPC_HERO_NAME | | |
-| BEAT_LONTAR_NAMES_H1 | Kenapa harus saling memegang seperti ini, Laras? | Why must we hold it like this, Laras? |
+| BEAT_LONTAR_NAMES_H1 | Kenapa harus begitu? | Why like that? |
 | @NPC_LARAS_NAME | | |
-| BEAT_LONTAR_NAMES_3 | Biar kita nggak akan pernah saling melupakan! Satu daun lontar mengikat dua nama kita selamanya. | So we can never forget each other! One sacred lontar binding our two names forever. |
+| BEAT_LONTAR_NAMES_3 | Biar nggak bisa saling lupa. Satu lontar, dua nama. | So we can't forget each other. One lontar, two names. |
 | @NPC_HERO_NAME | | |
-| BEAT_LONTAR_NAMES_H2 | Kita tak akan lupa, Laras. Kau menulisnya terlalu serius. | We won't forget, Laras. You're writing it far too seriously. |
+| BEAT_LONTAR_NAMES_H2 | Kita nggak bakal lupa, Laras. Serius amat. | We're not going to forget, Laras. You're taking this very seriously. |
 | @NPC_LARAS_NAME | | |
-| BEAT_LONTAR_NAMES_5 | Mungkin. Tapi kata Semar yang tertulis menahan orang di dunia, jadi kutulis dua kali. | Maybe. But Semar says what's written keeps a person in the world, so I wrote it twice. |
+| BEAT_LONTAR_NAMES_5 | Kata Ki Semar, yang ditulis menahan orangnya di dunia. Jadi nama Kakak kutebalkan dua kali. | Ki Semar says what's written keeps a person in the world. So I went over yours twice. |
 | @ | | |
 | BEAT_LONTAR_NAMES_6 | Kau memegang ujung yang bernama Laras. Daunnya hangat, seperti baru dilepas dari tangannya. | You hold the end that says Laras. The leaf is warm, as if it just left her hand. |
 | @NPC_SEMAR_NAME | | |
-| BEAT_LONTAR_NAMES_4 | Hehe, bagus sekali. Nama kalian sudah terikat erat. Sekarang, bantu Cepot menyalakan empat lampu minyak di sekeliling panggung wayang. | Hehe, wonderful. Your names are firmly bound. Now, go help Cepot light the four oil lamps around the wayang stage. |
+| BEAT_LONTAR_NAMES_4 | Hehe, bagus. Sekarang bantu Cepot: empat lampu di sekeliling panggung, sebelum senja habis. | Hehe, good. Now help Cepot: four lamps around the stage, before dusk is gone. |
 
 ### Beat `lamps_lit` (if `!flag:beat_lamps_lit`, `flag:mq0_d6b`; do `flag:beat_lamps_lit`). Step 0.7 ends when `puzzle_solved:purwa_stage_lamps` sets `mq0_d6b`. New in v5
 | Key | ID | EN |
@@ -787,26 +787,26 @@ Regional character: Dewi Naganingrum (want: a son she held for one night; turn: 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_SUNDA_GRANDSON_NAME | | |
-| 1 | DLG_SUNDA_GRANDSON_V1 | Hei, pelan-pelan jalannya! Jangan injak bibit teh segar, nanti kakek bisa mengamuk seharian! Dengar para pemetik bernyanyi? Mereka menyanyi supaya ladang tak sepi. | Hey, watch where you step! Don't crush the fresh tea seedlings, or grandpa will yell all day! Hear the pickers singing? It keeps the fields lively. |
-| 1 | DLG_SUNDA_GRANDSON_V2 | Aku lagi latihan main angklung bambu ini. Satu tabung bambu cuma punya satu nada. Kalau dimainkan sendirian bunyinya hambar, tapi kalau digoyang bersama-sama jadi lagu merdu! | I'm practicing on this bamboo angklung. Each bamboo tube only holds a single note. Play it alone and it's hollow, but shake them together in harmony and it sings! |
+| 1 | DLG_SUNDA_GRANDSON_V1 | Hei, pelan-pelan! Jangan injak bibit tehnya, nanti Kakek ngomel seharian. | Hey, easy! Don't crush the tea seedlings, or Grandpa will grumble all day. |
+| 1 | DLG_SUNDA_GRANDSON_V2 | Aku latihan angklung. Satu tabung cuma satu nada. Sendirian hambar, bareng-bareng baru jadi lagu. | I'm practising angklung. One tube, one note. Alone it's hollow, together it's a song. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_SUNDA_GRANDSON_H10 | Kau sendirian di kebun teh sepagi ini? Di mana yang lain? | You're out here in the tea fields alone this early? Where is everyone else? |
+| 1 | DLG_SUNDA_GRANDSON_H10 | Kau sendirian di kebun sepagi ini? | You're out in the tea alone this early? |
 | 1 | @NPC_SUNDA_GRANDSON_NAME | | |
-| 1 | DLG_SUNDA_GRANDSON_V10 | Kakek menyuruhku mengusir burung pipit pemakan pucuk. Burungnya sih tak peduli, mereka cuma kabur kalau mendengar nadaku yang sumbang! | Grandpa told me to scare off the sparrows eating the fresh tea shoots. Birds don't care about me, they only scatter when I hit a sour note! |
+| 1 | DLG_SUNDA_GRANDSON_V10 | Disuruh Kakek mengusir pipit. Burungnya cuma kabur kalau nadaku sumbang. | Grandpa sent me to scare off the sparrows. They only scatter when I hit a sour note. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_SUNDA_GRANDSON_H1 | Kau lihat adikku, Laras? Gadis kecil membawa gulungan daun lontar? | Did you see my sister, Laras? A little girl clutching a dry palm lontar scroll? |
+| 1 | DLG_SUNDA_GRANDSON_H1 | Kau lihat adikku, Laras? Anak kecil, bawa gulungan lontar. | Did you see my sister, Laras? A little girl with a lontar scroll. |
 | 1 | @NPC_SUNDA_GRANDSON_NAME | | |
 | 1 | `#wait:1` (cue line, no key) | | |
-| 1 | DLG_SUNDA_GRANDSON_V11 | Sejak subuh tadi ada gerombolan orang bertopeng polos tanpa wajah mondar-mandir. Mereka tak menyentuh tanaman teh, tapi terus bertanya mencari nama orang! | Since dawn, strange folk wearing blank, faceless masks have been prowling around. They didn't touch the tea plants, but kept interrogating people about names! |
+| 1 | DLG_SUNDA_GRANDSON_V11 | Adikmu? Maaf, Kak, aku tak ingat. Tapi sejak subuh ada orang bertopeng polos mondar-mandir, menanyakan nama orang. | Your sister? Sorry, Kak, I don't remember her. But since dawn there've been blank-masked men prowling around, asking for names. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_SUNDA_GRANDSON_H11 | Ke mana gerombolan bertopeng itu pergi sekarang? | Where did those masked prowlers head next? |
+| 1 | DLG_SUNDA_GRANDSON_H11 | Ke mana mereka tadi? | Where did they go? |
 | 1 | @NPC_SUNDA_GRANDSON_NAME | | |
-| 1 | DLG_SUNDA_GRANDSON_V12 | Mereka bergerak ke rumpun bambu di ujung timur! Anehnya, mereka sengaja menjauhi kampung utama seperti menghindari sesuatu. | They moved toward the bamboo thicket at the eastern edge! Strangely, they avoided the main village entirely, like they were dodging something. |
-| 1 | DLG_SUNDA_GRANDSON_V3 | Temui kakekku, Sesepuh Kampung di rumah panggung utara lewat petilasan. Beliau tahu semua jalan rahasia dan kisah lama lembah ini. | Go talk to my grandfather, the Village Elder, at the stilt house north past the petilasan shrine. He knows every secret path and old legend in this valley. |
+| 1 | DLG_SUNDA_GRANDSON_V12 | Ke rumpun bambu di ujung timur. Mereka sengaja menjauhi kampung, seperti takut sesuatu. | Toward the bamboo at the east edge. They kept clear of the kampung, like they were afraid of something. |
+| 1 | DLG_SUNDA_GRANDSON_V3 | Kakekku di kampung tahu semua jalan di lembah ini. Temui dia setelah urusan di bambu itu selesai. | My grandfather in the kampung knows every road in this valley. See him once you're done with that bamboo. |
 | 2 | DLG_SUNDA_GRANDSON_V20 | Kakek bilang kau melepas orang bertopeng itu. Aku bingung harus marah atau lega. | Grandfather says you let the masked man go. I can't tell if I should be angry or relieved. |
 | 3 | DLG_SUNDA_GRANDSON_V21 | Kudengar kau membuat orang bertopeng itu bicara. Kakek tak mau cerita isinya. | I heard you made the masked man talk. Grandfather won't say what he said. |
 | 4 | DLG_SUNDA_GRANDSON_V22 | Orang bertopeng itu kau sembunyikan? Tetangga berbisik-bisik. Aku tutup mulut. | You hid the masked man? The neighbours are whispering. I'll keep quiet. |
-| 5 | DLG_SUNDA_GRANDSON_V4 | Nanti kuajari satu nada angklung kalau kau kembali selamat! Jangan sampai diculik babi hutan! | I'll teach you an angklung chord if you come back alive! Don't let the wild boars cart you off! |
+| 5 | DLG_SUNDA_GRANDSON_V4 | Kalau lewat kampung, tengok pemimpin angklung kami. Tabung-tabungnya hilang, dan ia murung sekali. | If you pass the kampung, look in on our angklung leader. His tubes are missing and he's miserable. |
 
 `DLG_SUNDA_GRANDSON_V3` keeps its v4 key and changes text (it now points to the elder and the road).
 
@@ -866,9 +866,9 @@ His Ga hint (`DLG_CEPOT_15`) plays only after Ga is learned, as the data already
 | (offer) | @NPC_CEPOT_NAME | | |
 | (offer) | DLG_CEPOT_V112 | Jangan terharu dulu. Aku datang mengawasi, ingat? Bukan membantu. | Don't get sentimental. I came to supervise, remember? Not to help. |
 | (offer) | DLG_CEPOT_V113 | Kampungnya di utara dari sini. Katanya sedang ribut, jadi aku menunggu di sini, dengan setia. | The kampung is north of here. They say there's trouble, so I'm waiting here, loyally. |
-| (offer) | DLG_CEPOT_12 | Aku mau buktikan bahwa aku ini pemberani. | I want to prove that I am brave. |
-| (offer) | DLG_CEPOT_13 | Ada babi hutan yang berkeliaran di kebun teh. | Wild boars roam the tea terraces. |
-| (offer) | DLG_CEPOT_14 | Kalahkan tiga, dan aku mengawasi dari sini. Setuju? | Defeat three, and I supervise from here. Deal? |
+| (offer) | DLG_CEPOT_12 | Ayah bilang kau mencari seorang adik. Maaf, Kak, aku tak ingat ada anak bernama Laras. | Father says you're looking for a little sister. Sorry, Kak, I don't remember any Laras. |
+| (offer) | DLG_CEPOT_13 | Tapi bekalku ingat aku! Dia tersangkut di kebun, dikepung babi hutan. | But my pack remembers me! It's stuck in the garden, penned in by wild boars. |
+| (offer) | DLG_CEPOT_14 | Usir tiga ekor saja, ya? Aku mengawasi dari sini. Dari jauh. Dengan sangat waspada. | Chase off three, will you? I'll supervise from here. From far away. Very alertly. |
 | H | DLG_CEPOT_9 | Gelangnya cocok! Tapi jangan lupa siapa yang mengawasi. | The bangle suits you! Don't forget who supervised. |
 | T:ask_father | @NPC_CEPOT_NAME | | |
 | T:ask_father | DLG_CEPOT_V114 | Ayahku? Dalang desa, tapi di rumah lebih sering diam daripada bicara. | My father? The village dalang, but at home he's quiet more than he talks. |
@@ -951,28 +951,28 @@ Banner sentences:
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_ELDER_H1 | Adikku, Laras. Kecil, membawa lontar. Abah lihat? | My sister, Laras. Small, carrying a lontar. Did you see her? |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
-| 1 | DLG_SUNDA_ELDER_V2 | Kemarin subuh aku melihat adikmu Laras! Dia berlari kencang dari rumpun bambu bersama anak liar berbaju compang-camping yang memeluk sebutir telur emas—Ciung Wanara! | Yesterday at dawn I saw your sister Laras! She was sprinting from the bamboo grove beside a wild, scruffy boy clutching a golden egg—Ciung Wanara! |
+| 1 | DLG_SUNDA_ELDER_V2 | Kemarin subuh. Dia lari dari rumpun bambu bersama anak liar yang memeluk sebutir telur emas. | Yesterday at dawn. She ran out of the bamboo beside a wild boy hugging a golden egg. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_SUNDA_ELDER_H11 | Bocah liar itu, Abah kenal? | The wild boy, do you know him? |
+| 1 | DLG_SUNDA_ELDER_H11 | Anak liar itu, Abah kenal? | That wild boy, do you know him? |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
-| 1 | DLG_SUNDA_ELDER_V11 | Tidak. Wajahnya mengingatkanku pada seseorang, tapi aku tak sanggup menyebut siapa. | No. His face reminds me of someone, but I can't bring myself to say who. |
+| 1 | DLG_SUNDA_ELDER_V11 | Tidak. Wajahnya mirip seseorang, tapi aku tak sanggup menyebut siapa. | No. His face is like someone's, but I can't bring myself to say whose. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_SUNDA_ELDER_H2 | Ke mana mereka? | Where did they go? |
+| 1 | DLG_SUNDA_ELDER_H2 | Ke mana mereka pergi? | Where did they go? |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
 | 1 | `#wait:1` (cue line) | | |
-| 1 | DLG_SUNDA_ELDER_V3 | Mereka menuju hilir ke ngarai sungai. Berhati-hatilah, Nak! Saat maghrib, Sandekala, hantu bayangan penjaga senja, menyambar siapa saja yang masih di luar! | They headed downstream to the river gorge. Beware, child! When dusk falls at maghrib, Sandekala, the shadow spirit of twilight, snatches anyone caught outside! |
-| 1 | DLG_SUNDA_ELDER_V20 | Bawa Ga: angkat, dan cahaya jadi dinding. | Take Ga: raise it, and the light becomes a wall. |
-| 1 | DLG_SUNDA_ELDER_V12 | Gambar Ga dengan satu goresan tak putus. Jangan ragu di tikungan. | Draw Ga in one unbroken stroke. Don't hesitate at the turn. |
+| 1 | DLG_SUNDA_ELDER_V3 | Hilir, ke ngarai sungai, lewat gerbang selatan. Hati-hati: saat maghrib, Sandekala menyambar siapa pun yang masih di luar. | Downstream, to the river gorge, through the south gate. Take care: at maghrib Sandekala snatches anyone still outside. |
+| 1 | DLG_SUNDA_ELDER_V20 | Sebelum pergi, bawa Ga. Angkat, dan cahaya jadi dinding. | Before you go, take Ga. Raise it, and light becomes a wall. |
+| 1 | DLG_SUNDA_ELDER_V12 | Gambar dengan satu goresan tak putus. Jangan ragu di tikungan. | Draw it in one unbroken stroke. Don't hesitate at the turn. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_SUNDA_ELDER_H12 | Aku akan mencobanya. | I'll try it. |
+| 1 | DLG_SUNDA_ELDER_H12 | Aku coba. | I'll try. |
 | 1 | @NPC_SUNDA_ELDER_NAME | | |
-| 1 | DLG_SUNDA_ELDER_V13 | Cobalah di jalan ke ngarai, bukan di kebun lobak kami. | Try it on the road to the gorge, not in our radish patch. |
+| 1 | DLG_SUNDA_ELDER_V13 | Cobalah di jalan, bukan di kebun lobak kami. | Try it on the road, not in our radish patch. |
 | 1a | DLG_SUNDA_ELDER_V21 | Kau melepas anak bertopeng itu. Kampung akan menggerutu, tapi aku melihat caramu menatapnya. | You let that masked boy go. The kampung will grumble, but I saw how you looked at him. |
 | 1b | DLG_SUNDA_ELDER_V22 | Kau memaksa tawanan itu bicara. Keras, tapi malam ini kampung tidur lebih tenang. | You made the prisoner talk. Harsh, but the kampung will sleep easier tonight. |
-| 1c | DLG_SUNDA_ELDER_V23 | Kau menyembunyikan tawanan itu dari kampung. Aku tak akan bertanya di mana. Semoga kau benar. | You hid the prisoner from the kampung. I won't ask where. I hope you were right. |
-| 2 | DLG_SUNDA_ELDER_V4 | Kalian harus menjaga obor bambu—oncor—tetap menyala di sepanjang jalan desa. Sandekala sangat takut pada nyala api oncor! | You must keep the pitch-soaked bamboo torches—the oncor—burning along the hamlet path. Sandekala shadows dread the light of the oncor! |
+| 1c | DLG_SUNDA_ELDER_V23 | Kau menyembunyikan tawanan itu dari kampung. Aku tak akan tanya di mana. Semoga kau benar. | You hid the prisoner from the kampung. I won't ask where. I hope you were right. |
+| 2 | DLG_SUNDA_ELDER_V4 | Gerbang selatan di sana, Nak. Ikuti tangis seorang ibu ke dusun di ngarai. | The south gate is over there, child. Follow a mother's cries to the hamlet in the gorge. |
 | H | @NPC_SUNDA_ELDER_NAME | | |
-| H | DLG_SUNDA_ELDER_V6 | Batu Tulis kuno berukir aksara sunda buhun terletak di atas tebing setapak. Teras sawah penenun ada persis di baliknya. | The ancient Batu Tulis inscribed with old Sundanese script stands atop the rocky trail. The weaver's terraces lie just beyond it. |
+| H | DLG_SUNDA_ELDER_V6 | Batu Tulis ada di atas tebing setapak. Teras sawah Penenun persis di baliknya. | The Batu Tulis stands above the rocky trail. The Weaver's terraces lie just beyond it. |
 | T:ask_kampung | @NPC_SUNDA_ELDER_NAME | | |
 | T:ask_kampung | DLG_SUNDA_ELDER_V14 | Kampung kecil: tiga puluh rumah, satu balai, satu sumur tua. Dulu aku hafal nama setiap anak. | A small kampung: thirty houses, one hall, one old well. I used to know every child's name. |
 | T:ask_kampung | @NPC_HERO_NAME | | |
@@ -1036,28 +1036,28 @@ VERIFY: Sandekala as a dusk spirit that takes children who stay out at maghrib.
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_LEUWI_MOTHER_H1 | Bu, aku mencari gadis kecil dan bocah liar. Anak Ibu juga hilang? | Ma'am, I'm looking for a little girl and a wild boy. Is your child missing too? |
 | 1 | @NPC_SUNDA_MOTHER_NAME | | |
-| 1 | DLG_LEUWI_MOTHER_V1 | Anakku cuma mau mengambil perahu mainannya di tepian air... lalu langit berubah merah jingga dan bayangan hitam bertangan panjang muncul dari kabut! | My boy only wanted to retrieve his toy boat by the water... then the sky turned blood orange and spindly dusk shadows crawled out of the fog! |
-| 1 | DLG_LEUWI_MOTHER_V2 | Terima kasih hyang widhi, kau membawanya pulang dengan selamat! Ini, bawalah simpanan minyak damar kami untuk menyalakan oncor di jalan gelap. | Praise the heavens, you brought him back unharmed! Here, take our stock of resin pitch to keep the oncor torches blazing through the dark. |
+| 1 | DLG_LEUWI_MOTHER_V1 | Anakku cuma mau mengambil perahu mainannya di tepi air. Lalu langit jadi jingga, dan bayangan berlengan panjang keluar dari kabut. | My boy only went to fetch his toy boat at the water's edge. Then the sky turned orange and long-armed shadows crawled out of the mist. |
+| 1 | DLG_LEUWI_MOTHER_V2 | Aku ingin turun mencarinya, tapi kakiku tak mau melewati bayangan itu. | I want to go down and look, but my feet won't cross those shadows. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_LEUWI_MOTHER_H2 | Kenapa tak berani? | Why not? |
+| 1 | DLG_LEUWI_MOTHER_H2 | Kenapa tak berani? | Why can't you? |
 | 1 | @NPC_SUNDA_MOTHER_NAME | | |
-| 1 | DLG_LEUWI_MOTHER_V3 | Orang tua bilang itu ulah Sandekala. Sebelum ini tak pernah ada anak hilang di dusun kami. | The old folk say it's Sandekala. Before this no child ever went missing in our hamlet. |
+| 1 | DLG_LEUWI_MOTHER_V3 | Orang tua bilang itu ulah Sandekala. Sebelum ini tak pernah ada anak hilang di dusun kami. | The old folk say it's Sandekala. Before this, no child ever went missing in our hamlet. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_LEUWI_MOTHER_H3 | Ada yang melihat gadis kecil membawa lontar? | Did anyone see a little girl carrying a lontar? |
 | 1 | @NPC_SUNDA_MOTHER_NAME | | |
-| 1 | DLG_LEUWI_MOTHER_V4 | Ada. Dia dan bocah liar itu turun ke ngarai tadi sore, mengejar anak-anak. Kuteriaki, mereka tak menoleh. | Yes. She and the wild boy went down into the gorge this afternoon, chasing the children. I shouted, they didn't turn. |
+| 1 | DLG_LEUWI_MOTHER_V4 | Ada. Dia dan bocah liar itu turun ke ngarai sore tadi, mengejar anak-anak. Kuteriaki, mereka tak menoleh. | Yes. She and the wild boy went down into the gorge this afternoon, after the children. I shouted, they didn't turn. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_LEUWI_MOTHER_H4 | Mengejar anak-anak. Itu seperti Laras. | Chasing the children. That's just like Laras. |
 | 1 | @NPC_SUNDA_MOTHER_NAME | | |
-| 1 | DLG_LEUWI_MOTHER_V5 | Kalau kau turun, periksa tepi sungai dulu. Sandal Asep ada di sana, kata tetangga. Bawalah pulang kalau kau lihat. | If you go down, check the riverbank first. Asep's sandal is there, a neighbour says. Bring it home if you see it. |
+| 1 | DLG_LEUWI_MOTHER_V5 | Kalau kau turun, lihat tepi sungai dulu. Kata tetangga, sandal Asep ada di sana. Bawa pulang kalau ketemu. | If you go down, look at the riverbank first. A neighbour says Asep's sandal is there. Bring it home if you find it. |
 | 2 | @NPC_SUNDA_MOTHER_NAME | | |
 | 2 | DLG_LEUWI_MOTHER_V6 | Waktu kecil, ibuku menyalakan oncor sambil bernyanyi. Aku lupa lagunya, tapi tanganku ingat cara memegang sumbu. | When I was little my mother lit the oncor singing. I forgot the song, but my hands remember how to hold the wick. |
 | 2 | @NPC_HERO_NAME | | |
-| 2 | DLG_LEUWI_MOTHER_H5 | Lagunya akan kembali kalau oncornya menyala. | The song will come back once the oncor are lit. |
+| 2 | DLG_LEUWI_MOTHER_H5 | Lagunya akan kembali kalau oncornya menyala. | The song will come back now the oncor are lit. |
 | 2 | @NPC_SUNDA_MOTHER_NAME | | |
-| 2 | DLG_LEUWI_MOTHER_V7 | Semoga. Pergilah ke jejak di tepi sungai. Lontarmu akan menunjukkan sisanya. | I hope so. Go to the tracks at the river. Your lontar will show you the rest. |
-| 3 | DLG_LEUWI_MOTHER_V8 | Oncor di dusun akan kujaga tetap menyala. Yang di ngarai, kau yang urus. | I'll keep the hamlet's oncor burning. The ones in the gorge are yours. |
-| 4 | DLG_LEUWI_MOTHER_V9 | Asep tidur nyenyak dan masih menggenggam sandalnya. Terima kasih, Nak. | Asep sleeps soundly and still holds his sandal. Thank you, child. |
+| 2 | DLG_LEUWI_MOTHER_V7 | Semoga. Lontarmu bergetar, kan? Biarkan ia menunjukkan sisanya. | I hope so. Your lontar is stirring, isn't it? Let it show you the rest. |
+| 3 | DLG_LEUWI_MOTHER_V8 | Oncor dusun kujaga tetap menyala. Anak-anak itu kuserahkan padamu. | I'll keep the hamlet's oncor burning. The children I leave to you. |
+| 4 | DLG_LEUWI_MOTHER_V9 | Asep tidur nyenyak, sandalnya masih digenggam. Terima kasih, Nak. | Asep sleeps soundly, still holding his sandal. Thank you, child. |
 | 5 | DLG_LEUWI_MOTHER_V10 | Oncor kami menyala tiap sore sekarang. Mampirlah kalau lewat. | Our oncor burn every evening now. Stop by if you pass. |
 
 ### Clues K1 (step 1.6 `sandal`, 1.7 `oncor` and `gorge_prints`; objects in the dusun and the gorge; `gorge_prints` starts `k1_maghrib`)
@@ -1175,7 +1175,7 @@ Stand them up east to west, the way the sun goes. Out of order, a stone shows it
 |-------|-----|----|----|
 | 1 | DLG_BATU_TULIS_V1 | Wajah seorang raja terpahat di batu ini, digores habis dalam-dalam. Debunya masih putih. | A king's face is carved into this stone, scraped out deep. The dust is still white. |
 | 1 | @NPC_BATU_TULIS_NAME | | |
-| 1 | DLG_BATU_TULIS_V2 | Di bawahnya, goresan kasar tangan kecil: "Mereka butuh aku membaca." | Under it, rough scratches from a small hand: "They need me to read." |
+| 1 | DLG_BATU_TULIS_V2 | Di bawahnya, goresan kasar tangan kecil: "Mereka butuh aku membaca." | Beneath it, rough scratches from a small hand: "They need me to read." |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_BATU_TULIS_H101 | Laras. Kau menggores ini sambil dikawal? | Laras. You scratched this with guards around you? |
 | 1 | @NPC_BATU_TULIS_NAME | | |
@@ -1184,7 +1184,7 @@ Stand them up east to west, the way the sun goes. Out of order, a stone shows it
 | 1 | DLG_BATU_TULIS_H102 | Siapa yang menggores habis wajah raja ini? | Who scraped this king's face away? |
 | 1 | @NPC_BATU_TULIS_NAME | | |
 | 1 | DLG_BATU_TULIS_V102 | Pahatnya bukan pahat pengrajin. Bekasnya lebar dan marah, seperti orang menghapus kenangan yang menyakitkan. | The chisel wasn't a craftsman's. The marks are wide and angry, like someone erasing a painful memory. |
-| 1 | DLG_BATU_TULIS_V3 | Di atasnya aksara lama masih bertahan: Ga, lalu Nga, Ga dengan kotak terbuka. Tanganmu membacanya sebelum kau mengerti. Nga mengikat. | Above it the old letters hold: Ga, then Nga, Ga with its box open. Your hand reads it before you understand. Nga binds. |
+| 1 | DLG_BATU_TULIS_V3 | Di atasnya aksara lama masih bertahan: Ga, lalu Nga, yaitu Ga tanpa kotak. Tanganmu membacanya sebelum kau mengerti. | Above it the old letters hold: Ga, then Nga, which is Ga without its box. Your hand reads it before you understand. |
 | 1 | DLG_BATU_TULIS_V4 | Jejak sepatu kain turun ke teras sawah. | Cloth-shoe prints lead down to the rice terraces. |
 
 (`NPC_BATU_TULIS_NAME` is the existing name key of `batu_tulis.tres`.)
@@ -1225,11 +1225,11 @@ Stand them up east to west, the way the sun goes. Out of order, a stone shows it
 | 0a | DLG_SUNDA_WEAVER_V10 | Kau yang membersihkan terasku dari mereka? Bagus. Tapi jalan ke rumahku masih terendam. | You cleared my terraces of them? Good. But the road to my house is still under water. |
 | 0a | DLG_SUNDA_WEAVER_V11 | Dua roda pintu air ada di hulu. Putar yang barat dulu, baru yang timur. | Two sluice wheels stand upstream. Turn the west one first, then the east. |
 | 0b | DLG_SUNDA_WEAVER_V12 | Barat dulu, lalu timur. Airnya harus mengalir berurutan. | West first, then east. The water has to go in order. |
-| 1 | DLG_SUNDA_WEAVER_1 | Kau yang mengusir para penyamun dari petak sawah dan teras jemuranku? Duduklah dulu, minum air kelapa ini. Aku tahu siapa yang kaucari. | You cleared those brigands off my rice paddies and drying racks? Sit down, drink this fresh coconut water. I know who you're searching for. |
+| 1 | DLG_SUNDA_WEAVER_1 | Kau yang mengusir penyamun dari sawah dan jemuranku? Duduklah, minum air kelapa ini. Aku tahu siapa yang kaucari. | You cleared those brigands off my paddies and drying racks? Sit, drink this coconut water. I know who you're looking for. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_WEAVER_H1 | Gadis kecil dengan lontar. Dia lewat sini? | A little girl with a lontar. Did she come through here? |
 | 1 | @NPC_SUNDA_WEAVER_NAME | | |
-| 1 | DLG_SUNDA_WEAVER_V1 | Adikmu Laras bersembunyi di bawah bakul benangku semalam. Pagi tadi gerombolan bertopeng mendobrak pintu, dan Laras keluar sendiri agar aku tak disakiti. Gadis yang luar biasa berani! | Your sister Laras hid beneath my thread baskets last night. At dawn, masked thugs banged on the door, and Laras walked out willingly so they wouldn't harm me. Such a brave child! |
+| 1 | DLG_SUNDA_WEAVER_V1 | Laras bersembunyi di bawah bakul benangku semalam. Pagi tadi gerombolan bertopeng mendobrak pintu, dan ia keluar sendiri supaya aku tak disakiti. | Laras hid under my thread baskets last night. At dawn the masked men broke the door, and she walked out herself so I wouldn't be hurt. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_WEAVER_H101 | Dia keluar sendiri? Laras tak pernah menyerah semudah itu. | She walked out herself? Laras never gives up that easily. |
 | 1 | @NPC_SUNDA_WEAVER_NAME | | |
@@ -1238,7 +1238,7 @@ Stand them up east to west, the way the sun goes. Out of order, a stone shows it
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_WEAVER_H102 | Apa yang dia katakan sebelum pergi? | What did she say before she went? |
 | 1 | @NPC_SUNDA_WEAVER_NAME | | |
-| 1 | DLG_SUNDA_WEAVER_V2 | Penunggang kuda bertopeng itu membawa Laras ke kawah belerang. Bawalah kain Boeh Rarang ini! Gantung di tiang timur dan serukan Aksara Ca untuk membutakan amarahnya! | The masked captain dragged Laras toward the sulfur crater. Take this sacred Boeh Rarang cloth! Fasten it to the eastern pillar and invoke Aksara Ca to blind his wrath! |
+| 1 | DLG_SUNDA_WEAVER_V2 | Kapten bertopeng membawanya ke kawah. Bawa kain Boeh Rarang ini, gantung di tiang timur. Ia menunggu fajar, kain ini memberinya fajar palsu. | The masked captain took her to the crater. Hang this Boeh Rarang cloth on the east post. It'll give the giant a false dawn. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SUNDA_WEAVER_H103 | Siapa yang mengajarkan Ca? | Who teaches Ca? |
 | 1 | @NPC_SUNDA_WEAVER_NAME | | |
@@ -1254,7 +1254,7 @@ Stand them up east to west, the way the sun goes. Out of order, a stone shows it
 | T:ask_laras | @NPC_SUNDA_WEAVER_NAME | | |
 | T:ask_laras | DLG_SUNDA_WEAVER_V16 | Anak itu bertanya hal yang tak ditanyakan anak lain: bagaimana kalau semua orang lupa namaku? | That child asked what other children don't: what if everyone forgets my name? |
 | T:ask_laras | DLG_SUNDA_WEAVER_V17 | Kujawab, tulis di kain, kain tak pandai lupa. Dia menyulam huruf kecil di pinggir keranjang. Ka. | I said, write it on cloth, cloth isn't good at forgetting. She stitched a small letter on a basket's edge. Ka. |
-| (keep) | DLG_SUNDA_WEAVER_8 | Berhati-hatilah melangkah di lereng terjal. Benang tenun boleh saja putus, tapi tekad di dadamu pantang kendur! | Tread carefully upon the rugged cliffs. Loom threads may snap, but your inner resolve must never fray! |
+| (keep) | DLG_SUNDA_WEAVER_8 | Hati-hati di lereng terjal. Benang boleh putus, tekad jangan. | Mind the steep slopes. Threads may snap, resolve must not. |
 
 Choices for the Weaver hub:
 | Key | ID | EN | do |
@@ -1365,10 +1365,10 @@ Choices for the Weaver hub:
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_NAGANINGRUM_H1 | Ibu Ratu... anak muda yang membawa ayam aduan dan adikku Laras, apakah mereka melintasi danau ini? | Queen Mother... the wild youth carrying the fighting rooster and my sister Laras, did they pass by this lake? |
+| 1 | DLG_NAGANINGRUM_H1 | Permisi, Bu. Aku mencari adikku, dan seorang bocah liar dengan sebutir telur. Ibu lihat mereka lewat sini? | Excuse me, ma'am. I'm looking for my sister, and a wild boy with an egg. Did you see them pass? |
 | 1 | @NPC_NAGANINGRUM_NAME | | |
 | 1 | DLG_NAGANINGRUM_V101 | Bertaut seperti ayahnya, dan baik seperti seseorang yang ingin sekali kuingat. | Scowling like his father, and kind like someone I badly want to remember. |
-| 1 | DLG_NAGANINGRUM_V2 | Aku mengenali sorot matanya yang tajam... Lima belas tahun lalu, bayi lelakiku dirampas para pengkhianat istana dan dihanyutkan ke sungai dalam peti kayu. | I recognized that fierce gleam in his eyes... Fifteen years ago, my infant son was stolen by palace traitors and cast adrift upon the river in a wooden chest. |
+| 1 | DLG_NAGANINGRUM_V2 | Aku mengenali sorot matanya. Lima belas tahun lalu bayi lelakiku dirampas pengkhianat istana dan dihanyutkan ke sungai dalam peti kayu. | I knew that look in his eyes. Fifteen years ago my baby son was taken by palace traitors and sent down the river in a wooden chest. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_NAGANINGRUM_H101 | Anda... ibunya? | You are... his mother? |
 | 1 | @NPC_NAGANINGRUM_NAME | | |
@@ -1377,12 +1377,12 @@ Choices for the Weaver hub:
 | 1 | DLG_NAGANINGRUM_H102 | Kenapa belum? | Why not yet? |
 | 1 | @NPC_NAGANINGRUM_NAME | | |
 | 1 | DLG_NAGANINGRUM_V103 | Raja palsu menyebar kabar bahwa aku membuang putraku. Kalau ia percaya, ia akan membenciku. Aku belum sanggup. | The false king spread word that I threw my son away. If he believes it, he'll hate me. I can't bear that yet. |
-| 1 | DLG_NAGANINGRUM_V3 | Bocah itu adalah Ciung Wanara, putra kandungku sang pewaris sejati Galuh! Pelajarilah Aksara Ca—aksara tebasan kilat yang dapat memutus ikatan sihir terkuat sekalipun! | That boy is Ciung Wanara, my own flesh and blood, the rightful heir of Galuh! Learn Aksara Ca—the lightning strike rune that severs even the darkest magical bonds! |
+| 1 | DLG_NAGANINGRUM_V3 | Bocah itu Ciung Wanara, putraku, pewaris Galuh. Terimalah aksara Ca, tebasan kilat yang memutus ikatan sihir. | That boy is Ciung Wanara, my son, heir of Galuh. Take the Ca glyph, a lightning stroke that cuts magic bonds. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_NAGANINGRUM_H103 | Pewaris apa? | An heir to what? |
 | 1 | @NPC_NAGANINGRUM_NAME | | |
 | 1 | DLG_NAGANINGRUM_V104 | Takhta Galuh, kerajaan di timur. Seorang raja palsu duduk di sana memakai wajah suamiku. | The throne of Galuh, the kingdom to the east. A false king sits there wearing my husband's face. |
-| 1 | DLG_NAGANINGRUM_V4 | Kapten bertopeng membawanya ke puncak kawah Tangkuban Parahu! Naiklah cepat, anak muda, lindungi kedua saudaramu! | The masked captain dragged them up to the crater rim of Tangkuban Parahu! Climb swiftly, young warrior, and protect your kin! |
+| 1 | DLG_NAGANINGRUM_V4 | Kapten bertopeng membawa mereka ke bibir kawah. Naiklah cepat, dan jaga mereka berdua. | The masked captain took them to the crater rim. Climb quickly, and keep the two of them safe. |
 | N1 | @NPC_NAGANINGRUM_NAME | | |
 | N1 | DLG_NAGANINGRUM_V105 | Ia datang pagi tadi, berdiri di tepi air lama sekali. Aku tak berani menoleh. | He came this morning and stood at the water's edge a long time. I didn't dare turn. |
 | N1 | DLG_NAGANINGRUM_V106 | Lalu ia memanggilku Ibu, pelan, seperti mencoba kata asing. Tak ada kata yang lebih lama kutunggu. | Then he called me Ibu, softly, like trying a foreign word. No word I've waited for longer. |
@@ -1398,7 +1398,7 @@ Choices for the Weaver hub:
 | N2 | @NPC_NAGANINGRUM_NAME | | |
 | N2 | DLG_NAGANINGRUM_V110 | Aku akan menunggu di tepi air, dengan dua cangkir. | I'll wait at the water's edge, with two cups. |
 | H | @NPC_NAGANINGRUM_NAME | | |
-| H | DLG_NAGANINGRUM_V5 | Ke kawah. Pergilah, kumohon. | The crater. Go, please. |
+| H | DLG_NAGANINGRUM_V5 | Pergilah, Nak. Jalanmu masih panjang. | Go on, child. Your road is still long. |
 | T:ask_night | @NPC_NAGANINGRUM_NAME | | |
 | T:ask_night | DLG_NAGANINGRUM_V111 | Hujan deras, sungai naik. Kutimang ia sampai fajar dan kuhitung napasnya, satu, dua, seperti menghitung batu di tangan. | Hard rain, the river rising. I rocked him till dawn and counted his breaths, one, two, like counting stones in my hand. |
 | T:ask_night | DLG_NAGANINGRUM_V112 | Fajar datang, dan seorang abdi tua mengambilnya dari tanganku. Kuserahkan sendiri, supaya ia hidup. | Dawn came, and an old servant took him from my hands. I gave him up myself, so he'd live. |
@@ -1413,7 +1413,7 @@ Choices for the Weaver hub:
 | T:ask_lake | DLG_NAGANINGRUM_H107 | Namanya apa? | What was the name? |
 | T:ask_lake | @NPC_NAGANINGRUM_NAME | | |
 | T:ask_lake | DLG_NAGANINGRUM_V116 | Itu kusimpan. Satu hal yang masih milikku. | I keep that. The one thing still mine. |
-| 3 | DLG_NAGANINGRUM_V6 | Airnya tenang hari ini. Pergilah, aku tak ke mana-mana. | The water's quiet today. Go on, I'm not going anywhere. |
+| 3 | DLG_NAGANINGRUM_V6 | Hari ini tenang. Pergilah, aku tak ke mana-mana. | It's quiet today. Go on, I'm not going anywhere. |
 
 Choices for the Naganingrum hubs:
 | Key | ID | EN | do |
@@ -1554,7 +1554,7 @@ Her one action: say a true name. Generic lines for every chapter first (`LC_HINT
 | @NPC_NAGANINGRUM_NAME | | |
 | BEAT_NAGA_5 | Nak...? | Child...? |
 | @NPC_CIUNG_WANARA_NAME | | |
-| BEAT_NAGA_6 | Hati-hati, Bu, licin di sini. Nah, kau. Galuh. Ikut? Gerbang timur desamu jalan pintasnya. | Careful, ma'am, it's slippery here. Now you. Galuh. Coming? Your village's east gate is the short way. |
+| BEAT_NAGA_6 | Hati-hati, Bu, licin. Dan kau: Laras ada di Galuh. Lewat gerbang timur desamu, itu jalan terpendek. | Careful, ma'am, it's slippery. And you: Laras is in Galuh. Through your village's east gate, that's the shortest road. |
 | @ | | |
 | BEAT_NAGA_7 | Ia memegang siku perempuan itu tanpa tahu siapa dia, dan perempuan itu menahan napas, seolah tangan itu bisa pecah. | He holds the woman's elbow without knowing who she is, and she holds her breath as if the hand might shatter. |
 | BEAT_NAGA_8 | Lalu Ciung berbalik ke jalan timur. Naganingrum menatapmu, memohon dan takut sekaligus, dan tidak berkata apa-apa. | Then Ciung turns to the east road. Naganingrum looks at you, pleading and afraid at once, and says nothing. |
@@ -1584,7 +1584,7 @@ Effects of Choice 1 (code, not text): **Tell Ciung:** Ciung reconciles with Naga
 | @ | | |
 | BEAT_NAGA_TELL_5 | Ciung tidak memeluknya. Tapi ia berlutut dan menaruh dahi di punggung tangan perempuan itu, sebentar, sangat sebentar. | Ciung doesn't embrace her. But he kneels and rests his forehead on the back of her hand, briefly, very briefly. |
 | @NPC_NAGANINGRUM_NAME | | |
-| BEAT_NAGA_TELL_6 | Penulis, dekatkan lontarmu. Kuberkati dia. Dan para penjaga danau akan menyusul kalian ke Galuh. | Writer, hold your lontar close. I bless it. And the lake-wardens will follow you to Galuh. |
+| BEAT_NAGA_TELL_6 | Penulis, dekatkan lontarmu. Kuberkati dia, supaya jalan ke Galuh lurus bagi kalian. | Writer, hold your lontar close. I bless it, so the road to Galuh runs straight for you both. |
 | @NPC_CIUNG_WANARA_NAME | | |
 | BEAT_NAGA_TELL_7 | Aku akan kembali, Bu. Setelah Galuh. | I'll come back, Ibu. After Galuh. |
 
@@ -1684,19 +1684,19 @@ Hub topic shape (quests.md 7.1 item 2), shown once here and used by every hub be
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_GALUH_SELLER_NAME | | |
-| 1 | DLG_GALUH_SELLER_V1 | Jago merah, jago hitam, jago putih! Hari sayembara raja: semua orang jadi kaya atau miskin dalam sehari. Aku cuma jual, tak pernah bertaruh. | Red cocks, black cocks, white cocks! Tournament day: everyone gets rich or poor by nightfall. I only sell, I never bet. |
-| 1 | DLG_GALUH_SELLER_V2 | Lihat kerumunan itu. Raja mengundang semua orang, karena raja suka dipandang. | Look at that crowd. The king invites everyone, because the king likes being looked at. |
+| 1 | DLG_GALUH_SELLER_V1 | Jago merah, jago hitam, jago putih! Hari sayembara, semua orang kaya atau miskin sebelum magrib. Aku cuma jual, tak pernah taruhan. | Red cocks, black cocks, white cocks! Tourney day, everyone's rich or broke by dusk. I only sell, I never bet. |
+| 1 | DLG_GALUH_SELLER_V2 | Lihat kerumunan itu. Raja mengundang semua orang, karena raja suka dipandang. | Look at that crowd. The king invites everyone, because the king likes being watched. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_GALUH_SELLER_H1 | Aku mencari temanku, Ciung. Anak ayam jantan di bahunya. | I'm looking for my friend Ciung. A young rooster on his shoulder. |
+| 1 | DLG_GALUH_SELLER_H1 | Aku cari temanku, Ciung. Ada anak ayam jantan di bahunya. | I'm looking for my friend Ciung. He has a young rooster on his shoulder. |
 | 1 | @NPC_GALUH_SELLER_NAME | | |
-| 1 | DLG_GALUH_SELLER_V3 | Pemuda galak itu? Di gerbang alun-alun, sedang berdebat dengan penjaga. | The scowling one? At the plaza gate, arguing with a guard. |
+| 1 | DLG_GALUH_SELLER_V3 | Si galak itu? Di gerbang timur arena, lagi debat sama penjaga. Cepat, sebelum dia ditangkap. | The scowler? At the ring's east gate, arguing with a guard. Hurry, before they haul him off. |
 | 1 | DLG_GALUH_SELLER_V5 | Hati-hati, Nak. Hari ini penjaga raja menghitung tiap kepala di gerbang, dan yang terlalu banyak bertanya mereka catat. | Careful, child. Today the king's guards count every head at the gate, and they note down the ones who ask too much. |
 | 1 | DLG_GALUH_SELLER_V6 | Ayam-ayam itu bertarung di balik tembok, jauh dari mataku. Aku menjual anaknya, bukan menontonnya. | Those birds fight behind the wall, far from my eyes. I sell their chicks, I don't watch them. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_GALUH_SELLER_H2 | Itu pilihan yang bagus. Aku pun tak mau melihatnya. | A good choice. I don't want to see it either. |
 | 1 | @NPC_GALUH_SELLER_NAME | | |
 | 1 | DLG_GALUH_SELLER_V7 | Pemuda galak itu di gerbang timur lingkaran. Kalau mau kabar tentang apa yang masuk kota, tanya di Pasar Kuta, selatan sini. | Your scowler is at the ring's east gate. If you want word of what comes into the city, ask at Pasar Kuta, south of here. |
-| 2 | DLG_GALUH_SELLER_V4 | Jago terbaik hari ini bukan daganganku. Itu milik pemuda galak itu. | The best bird today isn't mine. It belongs to that scowling young man. |
+| 2 | DLG_GALUH_SELLER_V4 | Jago terbaik hari ini bukan daganganku, tapi milik si galak itu. Temui dia di gerbang timur. | The best bird today isn't mine. It's the scowler's. Find him at the east gate. |
 
 ### ciung_wanara (kg_alun; name NPC_CIUNG_WANARA_NAME). Entry order for Acts II and III only; the prologue entries P1-P2 (section 5), the Act I camp talk (section 6), the Interlude and the Act VI entries come from the other fragments, in the order "later act first". Entries A3-1 and A2-1 to A2-7 go together in this order, after the Interlude entries and before the Act I and prologue entries
 | Entry | if | do |
@@ -1718,12 +1718,12 @@ Hub choices of A2-1 (topics are the entries T1-T4 below): CHOICE_CIUNG_ASK_1 to 
 | A3-1 | DLG_CIUNG_WANARA_V1 | Katanya putra sang permaisuri yang kita kurung sedang mengumpulkan pasukan. Saudaraku, rupanya. | They say the caged queen's son is raising an army. My brother, apparently. |
 | A3-1 | DLG_CIUNG_WANARA_V260 | Galuh tenang sejak raja palsu dikurung. Terlalu tenang, kalau kau tanya aku. Orang lupa cara berebut, lalu ingat lagi. | Galuh is calm since the false king was caged. Too calm, if you ask me. People forget how to quarrel, then remember. |
 | A3-1 | DLG_CIUNG_WANARA_V261 | Jalanmu ke timur, lewat sungai. Jangan jadi yang pertama menarik pedang di sana. | Your road goes east, over the river. Don't be the first to draw a sword there. |
-| A2-1 | DLG_CIUNG_WANARA_V8 | Kupikir singgasana itu akan terasa seperti pulang. Nyatanya seperti baju kakak: kebesaran, dan bukan milikku. | I thought the throne would feel like coming home. It feels like a big brother's coat: too large, and not mine. |
+| A2-1 | DLG_CIUNG_WANARA_V8 | Kupikir singgasana itu terasa seperti pulang. Nyatanya seperti baju kakak: kebesaran, bukan milikku. | I thought the throne would feel like coming home. It feels like a big brother's coat: too large, not mine. |
 | A2-1 | @NPC_HERO_NAME | | |
 | A2-1 | DLG_CIUNG_WANARA_H3 | Lalu kenapa kau mau? | Then why take it? |
 | A2-1 | @NPC_CIUNG_WANARA_NAME | | |
 | A2-1 | DLG_CIUNG_WANARA_V262 | Aku belum mau. Tapi ada yang dicuri dariku, dan pencurinya duduk di sana sambil tersenyum. | I don't want it yet. But something was stolen from me, and the thief sits there smiling. |
-| A2-1 | DLG_CIUNG_WANARA_V263 | Tanyalah apa saja, Penulis. Di taman ini kita aman, lampunya menyala. | Ask me anything, writer. We're safe in this garden, the lamps are lit. |
+| A2-1 | DLG_CIUNG_WANARA_V263 | Di taman ini kita aman, lampunya menyala. Tanyalah apa saja, atau pergilah ke Balai Pustaka. Aku jaga di sini. | We're safe in this garden, the lamps are lit. Ask me anything, or go to the Balai Pustaka. I'll hold here. |
 | T1 | DLG_CIUNG_WANARA_V264 | Perempuan di tepi danau itu. Kau tahu sesuatu, dan kau tak bilang. Atau memang tak ada yang perlu dibilang. | The woman by the lake. You know something and you won't say. Or there's nothing to say. |
 | T1 | DLG_CIUNG_WANARA_V265 | Aku tak minta dikasihani. Aku cuma ingin tahu kenapa lututku lemas tiap dia menatapku. | I'm not asking for pity. I just want to know why my knees go weak when she looks at me. |
 | T1 | DLG_CIUNG_WANARA_V266 | Kalau waktunya tiba, bilang saja. Tidak, jangan sekarang. Aku belum siap. | When the time comes, just tell me. No, not now. I'm not ready. |
@@ -1737,7 +1737,7 @@ Hub choices of A2-1 (topics are the entries T1-T4 below): CHOICE_CIUNG_ASK_1 to 
 | T3 | DLG_CIUNG_WANARA_V274 | Takhta. Aku sudah bilang, seperti baju kakak. Tapi baju tetap harus ada yang memakainya. | The throne. I said, like a big brother's coat. But somebody has to wear a coat. |
 | T3 | DLG_CIUNG_WANARA_V275 | Raja palsu itu memakai wajah orang lain. Aku hanya mau memakai wajahku sendiri, apa pun yang tersisa. | The false king wears someone else's face. I only want to wear my own, whatever is left of it. |
 | T3 | DLG_CIUNG_WANARA_V276 | Dan kalau Galuh tak mau aku? Maka aku pulang ke Desa Purwa dan makan teh Ibumu lagi. | And if Galuh doesn't want me? Then I go home to Desa Purwa and drink your mother's tea again. |
-| A2-2 | DLG_CIUNG_WANARA_V4 | Satu babak lagi. Mereka di panggung kehormatan mulai gelisah. | One more bout. They're getting nervous up on the dais. |
+| A2-2 | DLG_CIUNG_WANARA_V4 | Satu babak lagi. Orang-orang di panggung kehormatan mulai gelisah. | One more bout. The people on the dais are getting nervous. |
 | A2-2 | DLG_CIUNG_WANARA_V277 | Ayamku sehat, dan aku tak mau melihat apa yang terjadi di gelanggang. Kau cukup kalahkan yang curang. | My bird is fine, and I don't want to see what happens in the ring. You just beat the cheats. |
 | A2-3 | DLG_CIUNG_WANARA_V278 | Dua babak, lalu raja menemui kita. Para pengatur taruhannya sudah kau bereskan, jadi arenanya bersih. | Two bouts, then the king has to see us. You dealt with his riggers, so the ring is clean. |
 | A2-4 | DLG_CIUNG_WANARA_V279 | Pasar Kuta di selatan. Cari yang mau bicara dan daftar angkutan. Aku menunggu di sini. | Pasar Kuta is south. Find someone who'll talk, and the freight list. I'll wait here. |
@@ -1745,13 +1745,13 @@ Hub choices of A2-1 (topics are the entries T1-T4 below): CHOICE_CIUNG_ASK_1 to 
 | A2-6 | @NPC_CIUNG_WANARA_NAME | | |
 | A2-6 | DLG_CIUNG_WANARA_V281 | Kau datang juga. Aku bilang jangan menyusul, tapi sekarang aku punya dua pasang mata di kota ini. | You came after all. I said don't follow, but now I have two pairs of eyes in this city. |
 | A2-6 | @NPC_HERO_NAME | | |
-| A2-6 | DLG_CIUNG_WANARA_H1 | Lewat mana kita masuk? Gerbang istana dijaga ketat. | How do we get in? The palace gate is watched. |
+| A2-6 | DLG_CIUNG_WANARA_H1 | Ciung. Gerbang istana dijaga ketat. Lewat mana kita masuk? | Ciung. The palace gate is watched tight. How do we get in? |
 | A2-6 | @NPC_CIUNG_WANARA_NAME | | |
-| A2-6 | DLG_CIUNG_WANARA_V3 | Lewat sayembara raja. Ayamku bertarung di gelanggang, kau hajar siapa pun yang curang. | Through the king's tournament. My rooster fights in the ring, you thrash whoever cheats. |
+| A2-6 | DLG_CIUNG_WANARA_V3 | Lewat sayembara raja. Ayamku bertarung di gelanggang, kau hajar siapa pun yang curang. | Through the king's tourney. My rooster fights in the ring, you thrash whoever cheats. |
 | A2-6 | @NPC_HERO_NAME | | |
 | A2-6 | DLG_CIUNG_WANARA_H2 | Aku tak menyentuh ayam. Dan aku tak bertaruh. | I don't touch roosters. And I don't bet. |
 | A2-6 | @NPC_CIUNG_WANARA_NAME | | |
-| A2-6 | DLG_CIUNG_WANARA_V7 | Siapa yang menyuruh? Ayam itu urusanku. Menangkan dua babak, dan raja terpaksa menemui kita. | Who asked you to? The bird's my business. Win two bouts and the king has to see us. |
+| A2-6 | DLG_CIUNG_WANARA_V7 | Ayam itu urusanku, kau cukup tangani pencurangnya. Menangkan dua babak, raja terpaksa menemui kita. Tapi cari kabar dulu di Pasar Kuta. | The bird's my business, you just handle the cheats. Win two bouts and the king has to meet us. But get news at Pasar Kuta first. |
 | A2-6 | DLG_CIUNG_WANARA_V282 | Tapi ada yang janggal. Tawanan dari desa-desa dibawa lewat kota ini, dan tak seorang pun melihatnya. | But something is off. Captives from the villages are brought through this city, and nobody sees it. |
 | A2-6 | @NPC_HERO_NAME | | |
 | A2-6 | DLG_CIUNG_WANARA_H201 | Lewat gerbang? Di depan semua orang? | Through the gate? In front of everyone? |
@@ -1759,7 +1759,7 @@ Hub choices of A2-1 (topics are the entries T1-T4 below): CHOICE_CIUNG_ASK_1 to 
 | A2-6 | DLG_CIUNG_WANARA_V283 | Lewat Pasar Kuta, pasar luar di selatan alun-alun. Gudang-gudangnya melayani istana. Cari yang mau bicara dan lihat daftar angkutannya. | Through Pasar Kuta, the outer market south of the square. Its storehouses serve the palace. Find someone who talks and see the freight list. |
 | A2-6 | DLG_CIUNG_WANARA_V284 | Dan awasi orang-orang yang mengatur taruhan sayembara. Kudengar mereka bekerja untuk raja, bukan untuk arena. | And watch the men who rig the tournament odds. I hear they work for the king, not the ring. |
 | A2-6 | DLG_CIUNG_WANARA_V285 | Aku tunggu di gerbang timur lingkaran. Pergilah ke selatan dulu. | I'll wait at the ring's east gate. Go south first. |
-| A2-7 | DLG_CIUNG_WANARA_V5 | Istana ini bau dupa tua dan dusta. | This palace smells of old incense and lies. |
+| A2-7 | DLG_CIUNG_WANARA_V5 | Istana ini bau dupa tua dan dusta. Jangan lengah. | This palace smells of old incense and lies. Stay sharp. |
 | A2-8 | DLG_CIUNG_WANARA_V6 | Galuh akan punya raja yang adil. Suatu hari. | Galuh will have a fair king. Someday. |
 
 | Key | ID | EN | do |
@@ -1854,7 +1854,7 @@ Topic entries of the A2-1 hub. T1 and T1b are both `"topic": "ciung_mother"`: T1
 ### Beat `galuh_bout` (if `!flag:beat_galuh_bout`, `flag:mqg_2`; do `flag:beat_galuh_bout`, `codex:ciung_wanara`). Lengser's hint stays unnamed: Ciung must not learn who the queen was. The rooster stays off-screen
 | Key | ID | EN |
 |-----|----|----|
-| BEAT_GALUH_BOUT_1 | Sorak membahana dari gelanggang di balik tembok. Ayam Ciung Wanara menang. Kau tak melihatnya, hanya mendengar. Tugasmu cuma menghajar yang curang. | A roar goes up from the ring behind the wall. Ciung Wanara's rooster has won. You didn't see it, only heard it. Your job was the cheats. |
+| BEAT_GALUH_BOUT_1 | Sorak membahana dari gelanggang di balik tembok: ayam Ciung Wanara menang. Kau tak melihatnya. Kau sibuk dengan prajurit Tanpa Rupa yang menyelinap. | A roar goes up from the ring behind the wall: Ciung Wanara's rooster has won. You didn't see it. You were busy with the Faceless soldiers. |
 | BEAT_GALUH_BOUT_4 | Dua babak selesai, dan tak satu pun taruhan dicurangi. Di panggung kehormatan, raja bertepuk dengan jeda yang terlambat setengah napas. | Two bouts done, and not one wager rigged. On the dais the king claps, half a breath too late. |
 | @NPC_CIUNG_WANARA_NAME | | |
 | BEAT_GALUH_BOUT_5 | Mereka bilang pemenang boleh menghadap. Kau lihat wajah raja dari dekat? Tidak berkedip, seperti patung. | They say the winner may petition. Did you see the king's face up close? Not a blink, like a statue. |
@@ -1865,7 +1865,7 @@ Topic entries of the A2-1 hub. T1 and T1b are both `"topic": "ciung_mother"`: T1
 | @NPC_HERO_NAME | | |
 | BEAT_GALUH_BOUT_H1 | Mungkin bukan hantu. Mungkin dia melihat seseorang yang dulu dia sayangi. | Maybe not a ghost. Maybe he saw someone he once loved. |
 | @NPC_CIUNG_WANARA_NAME | | |
-| BEAT_GALUH_BOUT_6 | Aku tak suka ditatap seperti itu. Tapi pergilah, dengar apa katanya. Aku jaga alun-alun. | I don't like being looked at like that. But go and hear him out. I'll hold the square. |
+| BEAT_GALUH_BOUT_6 | Aku tak suka ditatap begitu. Tapi pergilah, dengar apa katanya. Aku jaga alun-alun. | I don't like being looked at like that. But go and hear him out. I'll hold the square. |
 
 ### lengser (kg_alun, cond `flag:mqg_2`; name NPC_LENGSER_NAME). Step g.5 `talked_to`, sets `mqg_3`; the hub is entry 4
 | Entry | if | do | choices |
@@ -1882,17 +1882,17 @@ Topic entries of the A2-1 hub. T1 and T1b are both `"topic": "ciung_mother"`: T1
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_LENGSER_V1 | Ssst! Jangan menoleh ke sini, pura-pura saja sedang memandang tiang ukir! Aku Uwa Lengser, penasihat setia istana sejak mendiang baginda raja yang sah masih muda. | Psst! Don't look over here, pretend you're admiring the carved pillars! I am Uwa Lengser, faithful court advisor since the late true king was a bachelor. |
+| 1 | DLG_LENGSER_V1 | Ssst! Jangan menoleh, pura-pura saja kau kagum pada tiang ukir itu. Aku Uwa Lengser, penasihat istana sejak raja yang sah masih muda. | Psst! Don't turn round, just admire the carved pillars. I'm Uwa Lengser, court advisor since the true king was a young man. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_LENGSER_H1 | Orang-orang yang diculik, Uwa. Dibawa ke mana? | The taken, Uwa. Where are they kept? |
+| 1 | DLG_LENGSER_H1 | Orang-orang yang diculik, Uwa. Dibawa ke mana? | The people taken, Uwa. Where are they kept? |
 | 1 | @NPC_LENGSER_NAME | | |
-| 1 | DLG_LENGSER_V201 | Lewat gerbang sel, malam hari, di bawah segel raja. Tak seorang pun keluar lagi. Tapi sebelum sel, ada tiga tempat yang harus kau lihat. | In through the cell gate at night, under the king's seal. No one comes out again. But before the cells, there are three places you must see. |
-| 1 | DLG_LENGSER_V202 | Balai Pustaka, tempat naskah kerajaan. Kaputren, tempat para perempuan istana. Dan halaman penjara. Ketiganya menyimpan separuh jawaban. | The Balai Pustaka, where the royal manuscripts are. The Kaputren, where the palace women live. And the prison yard. Each holds half an answer. |
+| 1 | DLG_LENGSER_V201 | Lewat gerbang sel, malam hari, di bawah segel raja. Tak ada yang keluar lagi. Tapi sebelum sel, ada tiga tempat yang harus kau lihat. | Through the cell gate at night, under the king's seal. No one comes out. But before the cells, there are three places you must see. |
+| 1 | DLG_LENGSER_V202 | Balai Pustaka, tempat naskah. Kaputren, tempat perempuan istana. Dan halaman penjara. Masing-masing menyimpan separuh jawaban. | The Balai Pustaka, where the manuscripts are. The Kaputren, where the palace women live. And the prison yard. Each holds half an answer. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_LENGSER_H201 | Adikku pernah di salah satunya? | Was my sister in one of them? |
 | 1 | @NPC_LENGSER_NAME | | |
-| 1 | DLG_LENGSER_V203 | Seorang gadis kecil dengan lontar dibawa lewat pasar tiga malam lalu. Kaputren menampungnya dulu. Dayang-dayang yang bercerita. | A small girl with a lontar was brought through the market three nights ago. The Kaputren took her first. The attendants told me. |
-| 1 | DLG_LENGSER_V204 | Pelataran dalam kubukakan; di tamannya ada petilasan tua, istirahatlah di sana. Lalu cari Nyai Sekar, juru arsip, di Balai Pustaka. Jangan tersenyum. | I'll open the inner courtyard; its garden has an old petilasan, rest there. Then find Nyai Sekar, the archivist, at the Balai Pustaka. Don't smile. |
+| 1 | DLG_LENGSER_V203 | Seorang gadis kecil membawa lontar lewat pasar tiga malam lalu. Kaputren menampungnya dulu. Para dayang yang bercerita. | A small girl with a lontar came through the market three nights ago. The Kaputren kept her first. The attendants told me. |
+| 1 | DLG_LENGSER_V204 | Pelataran dalam kubukakan. Di tamannya ada petilasan tua, nyalakan dan istirahatlah. Lalu temui Nyai Sekar di Balai Pustaka. Jangan tersenyum. | I'll open the inner courtyard. There's an old petilasan in its garden, light it and rest. Then find Nyai Sekar at the Balai Pustaka. Don't smile. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_LENGSER_H202 | Kenapa jangan tersenyum? | Why not smile? |
 | 1 | @NPC_LENGSER_NAME | | |
@@ -1912,8 +1912,8 @@ Topic entries of the A2-1 hub. T1 and T1b are both `"topic": "ciung_mother"`: T1
 | T3 | DLG_LENGSER_V216 | Rajanya? Aku melayaninya lima belas tahun dan tak pernah melihatnya makan, minum, atau menguap. | The king? I served him fifteen years and never saw him eat, drink or yawn. |
 | T3 | DLG_LENGSER_V217 | Dia menyuruh semua cermin ditutup. Dia bilang cahaya merusak lukisan. Tak ada lukisan di dekat cermin itu. | He ordered every mirror covered. He said light spoils the paintings. There are no paintings near those mirrors. |
 | T3 | DLG_LENGSER_V218 | Kau pikir aku sudah gila. Aku hanya terlalu lama memperhatikan. | You think I've gone mad. I've only paid attention too long. |
-| 5 | DLG_LENGSER_V7 | Langkah pelan-pelan. Para prajurit jaga di gerbang dalam memang lamban berpikir, tapi tombak mereka tetap saja tajam menusuk! | Step quietly. The inner gate sentries may be dull-witted, but their iron halberds are still plenty sharp! |
-| 6 | DLG_LENGSER_V8 | Takhta telah kembali ke pewaris sejati. Keraton Galuh akhirnya bernapas lega, dan lutut tua Uwa Lengser bisa beristirahat dari pura-pura membungkuk! | The throne has returned to its true heir. Keraton Galuh breathes free at last, and old Lengser's creaky knees can rest from endless bowing! |
+| 5 | DLG_LENGSER_V7 | Pelan-pelan. Prajurit gerbang dalam memang lamban berpikir, tapi tombaknya tetap tajam. | Step quietly. The inner gate sentries are slow thinkers, but their halberds are still sharp. |
+| 6 | DLG_LENGSER_V8 | Takhta kembali ke pewaris sejati. Galuh akhirnya bernapas lega, dan lutut tuaku bisa berhenti membungkuk. | The throne is back with its true heir. Galuh can finally breathe, and my old knees can stop bowing. |
 
 | Key | ID | EN | do |
 |-----|----|----|----|
@@ -2109,11 +2109,11 @@ Ranga drove Laras from the Kaputren to the cell yard, put down the reins when th
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_FACELESS_DESERTER_NAME | | |
-| 1 | DLG_FACELESS_DESERTER_V1 | Kumohon, jangan bunuh aku! Aku bersumpah mengabdi sebagai prajurit kehormatan Galuh, bukan algojo yang menculik anak-anak desa untuk pemujaan kabut! | Please, don't execute me! I swore an oath to serve as Galuh's royal guard, not a butcher kidnapping village children for a dark mist cult! |
+| 1 | DLG_FACELESS_DESERTER_V1 | Jangan, kumohon! Aku prajurit Galuh, bukan penculik anak. Aku membuang lencanaku lalu lari. | Don't, please! I was a Galuh guard, not a child-snatcher. I tore off my badge and ran. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_FACELESS_DESERTER_H1 | Katakan padaku di mana mereka menyembunyikan kunci gerbang ruang takhta, dan kau bisa pergi lewat saluran air bawah tanah. | Tell me where they hid the throne room gate key, and you can slip away through the old water canal. |
+| 1 | DLG_FACELESS_DESERTER_H1 | Gadis kecil di kereta itu. Apa yang kau lihat? | The little girl in the wagon. What did you see? |
 | 1 | @NPC_FACELESS_DESERTER_NAME | | |
-| 1 | DLG_FACELESS_DESERTER_V2 | Aku membuang lencanaku dan kabur, tapi jalan keluar ditutup rapat oleh kapten bertopeng. Kalau tertangkap, kepalaku dipenggal di alun-alun! | I tore off my royal badge and fled, but the exits are sealed by masked captains. If they catch me, my head goes on a spike in the square! |
+| 1 | DLG_FACELESS_DESERTER_V2 | Ia bersenandung sepanjang jalan, dan tanganku ikut mengetuk iramanya. Sejak itu aku tak tega mengangkat tombak. | She hummed the whole way, and my hand tapped along. After that I couldn't lift my spear. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_FACELESS_DESERTER_H201 | Suku kata apa? Dia pasti pernah bertanya namamu. | Which syllable? She must have asked your name. |
 | 1 | @NPC_FACELESS_DESERTER_NAME | | |
@@ -2126,7 +2126,7 @@ Ranga drove Laras from the Kaputren to the cell yard, put down the reins when th
 | 1 | DLG_FACELESS_DESERTER_H203 | Adikku, dia baik-baik saja? | My sister, is she all right? |
 | 1 | @NPC_RANGA_NAME | | |
 | 1 | DLG_FACELESS_DESERTER_V203 | Dia menulis di lantai pedati dan bernyanyi kecil. Dia tidak takut. Itu yang membuat kami takut. | She wrote on the wagon floor and sang quietly. She wasn't afraid. That's what scared us. |
-| 1 | DLG_FACELESS_DESERTER_V3 | Kuncinya disimpan di meja perwira barat! Ambil jalan setapak di balik tembok bata merah. Terima kasih atas belas kasihmu! | The bronze key is locked in the western officer's desk! Take the narrow path behind the red brick wall. Thank you for your mercy! |
+| 1 | DLG_FACELESS_DESERTER_V3 | Namaku Ranga. Aku ingat dari senandungnya. Kapten bertopeng menutup semua jalan, jadi kau yang memutuskan nasibku. | My name is Ranga. I remembered it from her humming. The masked captains sealed every road, so you decide what becomes of me. |
 | 2 | @NPC_RANGA_NAME | | |
 | 2 | DLG_FACELESS_DESERTER_V4 | Aku pergi saat penjaga lengah. Terima kasih. | I'll go when the guards look away. Thank you. |
 | 3 | @NPC_RANGA_NAME | | |
@@ -2332,7 +2332,7 @@ Ranga drove Laras from the Kaputren to the cell yard, put down the reins when th
 | @NPC_HARIANG_BANGA_NAME | | |
 | BEAT_ESCAPE_7 | Janji dari orang yang mengurungnya. Aku akan menimbangnya di tepi sungai, bukan di sini. | A promise from the people who caged her. I'll weigh it at the river, not here. |
 | @NPC_CIUNG_WANARA_NAME | | |
-| BEAT_ESCAPE_3 | Biarkan. Dia saudaraku, aku tak mau mengejarnya. Galuh harus kujaga. Kau cari adikmu, ke timur, ke arah dia lari. | Let him go. He's my brother, I won't chase him. I have to hold Galuh. You go find your sister, east, the way he ran. |
+| BEAT_ESCAPE_3 | Biarkan dia. Dia saudaraku, dan Galuh harus kujaga. Tulisan adikmu di dinding sel menyebut seribu candi: itu Mataram, ke timur. Pergilah. | Let him go. He's my brother, and I have to hold Galuh. Your sister's wall says the thousand temples: that's Mataram, east. Go. |
 | @NPC_HERO_NAME | | |
 | BEAT_ESCAPE_H2 | Lengser, kau ikut menjaga Galuh? | Lengser, you'll help him hold Galuh? |
 | @NPC_LENGSER_NAME | | |
@@ -2480,13 +2480,13 @@ Regional characters: Ki Sumarto (want: a stage no army will burn; turn: his son 
 | 2 | @NPC_HERO_NAME | | |
 | 2 | DLG_MATARAM_DALANG_H2 | Gadis kecil dengan lontar. Anda lihat dia? | A little girl with a lontar. Did you see her? |
 | 2 | @NPC_MATARAM_DALANG_NAME | | |
-| 2 | DLG_MATARAM_DALANG_V222 | Digiring lewat pasar ini lima malam lalu, ke arah Candi Seribu, seribu candi yang sedang didirikan para pengangkut batu. Aku melihatnya dari balik kelir. | Marched through this market five nights ago toward Candi Seribu, the Thousand Temples the haulers are raising. I saw it from behind my screen. |
-| 2 | DLG_MATARAM_DALANG_V223 | Tiga jejak bisa kau ikuti. Reruntuhan di barat laut, tempat Arca-arca bangun sendiri. Kuburan, tempat para tanpa rupa mengais nama prajurit. | Three trails you can follow. The ruins to the northwest, where the Arca wake on their own. The graveyard, where the faceless rake names off soldiers. |
-| 2 | DLG_MATARAM_DALANG_V224 | Ketiga pelataran lesung di kaki bukit, tempat para perempuan berhenti menumbuk. Tempuh semuanya. Urutannya terserah kakimu. | The third is the lesung yard at the foot of the hill, where the women stopped pounding. Walk them all. The order is up to your feet. |
+| 2 | DLG_MATARAM_DALANG_V222 | Dia digiring lewat pasar ini lima malam lalu, ke arah Candi Seribu. Aku melihatnya dari balik kelir. | She was marched through this market five nights ago, toward Candi Seribu. I saw it from behind my screen. |
+| 2 | DLG_MATARAM_DALANG_V223 | Ada tiga jejak. Arca di reruntuhan barat laut. Kuburan, tempat Tanpa Rupa mengais nama, termasuk nama putraku, Sapto. | There are three trails. The statue in the northwest ruins. The graveyard, where the Faceless rake off names, my son Sapto's among them. |
+| 2 | DLG_MATARAM_DALANG_V224 | Yang ketiga halaman lesung di kaki bukit, tempat para perempuan berhenti menumbuk. Urutannya terserah kakimu. | The third is the lesung yard at the foot of the hill, where the women stopped pounding. The order is up to your feet. |
 | 2 | @NPC_HERO_NAME | | |
 | 2 | DLG_MATARAM_DALANG_H202 | Kenapa Anda memainkan lakon untuk kedua tepi? | Why do you play for both banks? |
 | 2 | @NPC_MATARAM_DALANG_NAME | | |
-| 2 | DLG_MATARAM_DALANG_V225 | Dalang yang memilih satu tepi kehilangan separuh ceritanya, dan separuh penontonnya. Pergilah, dan bawakan aku kabar dari kuburan. | A dalang who picks one bank loses half his story, and half his audience. Go, and bring me news from the graveyard. |
+| 2 | DLG_MATARAM_DALANG_V225 | Dalang yang memilih satu tepi kehilangan separuh ceritanya. Pergilah, dan bawakan aku kabar dari kuburan. | A dalang who picks one bank loses half his story. Go, and bring me word from the graveyard. |
 | 3 | DLG_MATARAM_DALANG_V226 | Duduklah, Nak. Kelirku sudah dijahit lagi. Mau bertanya apa, selagi aku punya cukup minyak untuk dua lampu? | Sit, child. My screen is sewn up again. What would you ask, while I have enough oil for two lamps? |
 | 4 | DLG_MATARAM_DALANG_V4 | Sungai Pamali ini sungai pantangan. Menurut petuah leluhur, jika darah tumpah ke air Pamali, kutukan kuno akan menenggelamkan kedua kerajaan! | This Pamali River is a forbidden boundary. Ancestral lore warns that if brother's blood spills into Pamali's currents, an ancient curse will drown both realms! |
 | T1 | DLG_MATARAM_DALANG_V227 | Sapto, cucuku, lahir di balik kelir ini. Tidurnya di antara wayang, bangunnya di antara gamelan. | Sapto, my grandson, was born behind this screen. He slept among puppets and woke among gamelan. |
@@ -2512,7 +2512,7 @@ Regional characters: Ki Sumarto (want: a stage no army will burn; turn: his son 
 | @ | | |
 | BEAT_FAMILIES_SAFE_1 | Jalan sawah berakhir di sebuah lumbung kering. Keluarga-keluarga pasar berdiri lama, tanah masih menetes dari kaki dan keranjang mereka. | The paddy road ends at a dry granary. The market families stand a long while, mud still dripping from their feet and baskets. |
 | @NPC_PASAR_REFUGEE_NAME | | |
-| BEAT_FAMILIES_SAFE_2 | Lapakku di pasar hancur diinjak dua pasukan. Anakku selamat, itu cukup. Terima kasih sudah memegangi tali rakit. | My stall in the market was trampled by two armies. My child is safe, that's enough. Thank you for holding the raft rope. |
+| BEAT_FAMILIES_SAFE_2 | Lapakku di pasar hancur diinjak dua pasukan. Anakku selamat, itu cukup. Terima kasih sudah membuka jalan sawah. | My stall in the market was trampled by two armies. My child is safe, that's enough. Thank you for clearing the paddy road. |
 | @NPC_HERO_NAME | | |
 | BEAT_FAMILIES_SAFE_H1 | Kalian lewat jalan ke candi tadi? Seorang gadis kecil dengan lontar? | Did you pass the temple road? A little girl with a lontar? |
 | @NPC_PASAR_REFUGEE_NAME | | |
@@ -3182,7 +3182,7 @@ Hub shape (shown once here): an entry with `"hub": true, "quiet": true` shows it
 | 1 | @NPC_TIMUR_DAUGHTER_NAME | | |
 | 1 | DLG_TIMUR_DAUGHTER_V2 | Pembuat keris, ya. Mpu Wirasana, di bengkel ujung jalan. Ayah bilang tiap bilah ingat untuk apa ia ditempa. | A keris maker, yes. Mpu Wirasana, at the forge down the road. Father says every blade remembers what it was made for. |
 | 1 | DLG_TIMUR_DAUGHTER_V20 | Aku Ratna, muridnya. Satu-satunya yang berani bilang lipatannya miring, jadi Ayah menganggapku kurang ajar. | I'm Ratna, his apprentice. The only one who dares say a fold is crooked, so Father thinks I'm cheeky. |
-| 1 | DLG_TIMUR_DAUGHTER_V3 | Tapi tanda merah di pintu-pintu itu baru muncul pagi ini, dan Ayah tak suka. | But those red marks on the doors appeared this morning, and Father doesn't like them. |
+| 1 | DLG_TIMUR_DAUGHTER_V3 | Tanda merah di pintu-pintu itu muncul pagi ini, dan Ayah tak suka. Bawa paku penangkal api ini, lalu istirahatlah di petilasan sabana. | Those red marks on the doors appeared this morning, and Father hates them. Take these fire-ward nails, then rest at the savanna petilasan. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_TIMUR_DAUGHTER_H20 | Muncul bersamaan dengan apa lagi? | What else turned up with them? |
 | 1 | @NPC_TIMUR_DAUGHTER_NAME | | |
@@ -3285,16 +3285,16 @@ Runtime order is the row order above: the SQ-T3 entries come before the main-pat
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_TIMUR_EMPU_V8 | Kau berhasil membawa bilah keris itu kembali tanpa kehilangan jiwamu! Kini perapianku akan menyucikan karat darahnya menjadi pusaka pelindung nusantara. | You retrieved the cursed keris without losing your soul to its wrath! Now my furnace will cleanse its bloodstains, forging it into a sacred guardian blade. |
+| 1 | DLG_TIMUR_EMPU_V8 | Kau membawa bilah itu kembali tanpa kehilangan jiwamu. Perapianku akan menyucikannya jadi pusaka penjaga. | You brought the blade back without losing your soul. My furnace will cleanse it into a guardian blade. |
 | 1 | DLG_TIMUR_EMPU_V20 | Ratna menempa bagian pertamanya. Lipatannya miring, katanya. Ia benar, dan itu membuatku lega. | Ratna forged the first part. Her fold is crooked, she says. She's right, and that relieves me. |
 | 2 | DLG_TIMUR_EMPU_V9 | Sungai yang menyimpannya. Mungkin itu lebih baik. | The river has it. Maybe that's kinder. |
 | 2 | DLG_TIMUR_EMPU_V21 | Tujuh nama di tonggak sudah padam. Aku bisa tidur, dan itu pertama kalinya dalam satu generasi. | The seven names on the stakes have gone out. I can sleep, the first time in a generation. |
 | 3 | @NPC_TIMUR_EMPU_NAME | | |
-| 3 | DLG_TIMUR_EMPU_V1 | Keris terkutuk itu... Keris Mpu Gandring. Tujuh turunan keluarga pandai besiku menanggung dosanya sejak kakek buyutku dikhianati sebelum bilahnya sempurna. | That accursed blade... the Keris of Mpu Gandring. Seven generations my family of smiths has borne its sin, ever since my ancestor was betrayed before the blade was finished. |
+| 3 | DLG_TIMUR_EMPU_V1 | Keris Mpu Gandring. Tujuh turunan keluargaku menanggung dosanya, sejak leluhurku dikhianati sebelum bilahnya selesai. | The Keris of Mpu Gandring. Seven generations of my family have carried its sin, since my ancestor was betrayed before it was finished. |
 | 3 | @NPC_HERO_NAME | | |
 | 3 | DLG_TIMUR_EMPU_H1 | Aku mencari pemburu bertopeng, dan keris yang katanya bangun lagi. | I'm after a masked hunter, and a keris they say has woken. |
 | 3 | @NPC_TIMUR_EMPU_NAME | | |
-| 3 | DLG_TIMUR_EMPU_V2 | Keris yang ditempa dalam dendam menuntut darah tujuh keturunan raja. Bilah itu tak bisa dihancurkan dengan godam biasa, hawa amarahnya merasuki siapa pun yang menyentuh gagangnya! | A keris forged in vengeance demands the blood of seven generations of kings. It cannot be shattered with a common hammer; its malice poisons anyone who grips its hilt! |
+| 3 | DLG_TIMUR_EMPU_V2 | Bilah yang ditempa dalam dendam menagih darah tujuh keturunan raja. Tanda-tanda merah itu tagihannya. | A blade forged in vengeance demands the blood of seven generations of kings. Those red marks are its bill. |
 | 3 | @NPC_HERO_NAME | | |
 | 3 | DLG_TIMUR_EMPU_H20 | Keris Mpu Gandring? Yang di dongeng itu? | Mpu Gandring's keris? The one in the tale? |
 | 3 | @NPC_TIMUR_EMPU_NAME | | |
@@ -3303,7 +3303,7 @@ Runtime order is the row order above: the SQ-T3 entries come before the main-pat
 | 3 | @NPC_HERO_NAME | | |
 | 3 | DLG_TIMUR_EMPU_H21 | Bagaimana menghentikannya? | How do I stop it? |
 | 3 | @NPC_TIMUR_EMPU_NAME | | |
-| 3 | DLG_TIMUR_EMPU_V3 | Bawalah Aksara Ta—aksara penempa api batin. Ta dapat meredam hawa panas kutukan dan melucuti zirah sihir sebelum kau menancapkan pasak penenang! | Wield Aksara Ta—the rune of inner forge-fire. Ta can temper the burning curse and strip away magical wards before you drive in the stabilizing pin! |
+| 3 | DLG_TIMUR_EMPU_V3 | Ha, aksara penyembuh, bisa memadamkan tanda kutukan. Lemparkan Ha dua kali di sini, biar kulihat tanganmu. | Ha, the healing aksara, can put out a curse mark. Cast Ha twice here, and let me see your hands. |
 | 3 | DLG_TIMUR_EMPU_V24 | Dan hati-hati pada raksasa di sabana itu. Ia korban pertamanya, bukan musuhmu. | And take care with the giant on the savanna. He's its first victim, not your enemy. |
 | 4 | @NPC_TIMUR_EMPU_NAME | | |
 | 4 | DLG_TIMUR_EMPU_V25 | Tonggak di halamanku meniru tanda keris itu. Berdirilah di dalam garisnya. | The stakes in my yard copy that keris's mark. Stand inside its line. |
@@ -3317,7 +3317,7 @@ Runtime order is the row order above: the SQ-T3 entries come before the main-pat
 | 4 | DLG_TIMUR_EMPU_H23 | Dan kalau tanda padam, tapi hutangnya belum lunas? | And if the mark goes out but the debt isn't paid? |
 | 4 | @NPC_TIMUR_EMPU_NAME | | |
 | 4 | DLG_TIMUR_EMPU_V29 | Itu sebabnya ada tujuh. Padamkan dua dulu. Lalu temui Mbok Srini, janda di tepi sungai; putrinya dikejar sesuatu yang lebih nyata. | That's why there are seven. Put out two first. Then see Mbok Srini, the widow by the river; her girl is chased by something more urgent. |
-| 5 | DLG_TIMUR_EMPU_V6 | Mbok Srini tinggal di pondok tepi rawa di hilir. Pergilah temui dia, wanita tua itu memegang rahasia untuk menundukkan raksasa Buto Ijo. | Mbok Srini lives in the stilt cottage by the downstream swamp. Seek her out; that old woman holds the ancient secret to humbling the giant Buto Ijo. |
+| 5 | DLG_TIMUR_EMPU_V6 | Lemparkan Ha dua kali, lalu temui Mbok Srini di pondok tepi rawa, hilir sungai. Ia tahu cara menundukkan Buto Ijo. | Cast Ha twice, then find Mbok Srini at her cottage by the swamp downriver. She knows how to humble Buto Ijo. |
 | 6 | @NPC_TIMUR_EMPU_NAME | | |
 | 6 | DLG_TIMUR_EMPU_V30 | Aku tak bisa meninggalkan tungku. Kalau padam, bilah-bilah di rak ikut bangun. | I can't leave the furnace. If it dies, the blades on the rack wake too. |
 | 6 | DLG_TIMUR_EMPU_V31 | Seratus tahun aku menempa bilah untuk melindungi, dan kutukan menjadikannya hantu. Lucu, bukan? | A lifetime I forged blades to protect, and the curse made them ghosts. Funny, isn't it? |
@@ -3377,7 +3377,7 @@ VERIFY: the Mpu Gandring tale (an unfinished keris, an impatient owner, the smit
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_MBOK_SRINI_NAME | | |
-| 1 | DLG_MBOK_SRINI_V1 | Dengarkan baik-baik khasiat keempat bungkusan itu, Nak: | Listen closely to the sacred properties of the four pouches, child: |
+| 1 | DLG_MBOK_SRINI_V1 | Pondokku diinjaknya semalam, Nak. Timun Mas lari, dan aku tak tahu ke mana. | He trampled my hut last night, child. Timun Mas ran, and I don't know where. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_MBOK_SRINI_H1 | Sejak kapan, Mbok? | Since when, Mbok? |
 | 1 | @NPC_MBOK_SRINI_NAME | | |
@@ -3386,14 +3386,14 @@ VERIFY: the Mpu Gandring tale (an unfinished keris, an impatient owner, the smit
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_MBOK_SRINI_H20 | Dan kau mau membatalkannya. | And you want to cancel it. |
 | 1 | @NPC_MBOK_SRINI_NAME | | |
-| 1 | DLG_MBOK_SRINI_2 | Dulu aku memohon anak, dan raksasa itu memberiku biji mentimun emas ajaib. Dari mentimun itulah bayiku lahir! Tapi raksasa itu berjanji akan memangsa putriku saat usianya tujuh belas tahun! | Years ago I wept for a child, and that green ogre gifted me a magical golden cucumber seed. From that fruit my baby was born! But he swore to devour her upon her seventeenth birthday! |
+| 1 | DLG_MBOK_SRINI_2 | Dulu aku memohon anak. Raksasa itu memberiku sebiji mentimun emas, dan dari buahnya lahir bayiku. Ia berjanji menagihnya di usia tujuh belas. | I once begged for a child. The ogre gave me a golden cucumber seed, and from its fruit my baby was born. He swore to collect her at seventeen. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_MBOK_SRINI_H2 | Seperti dongeng. | Like the tale. |
 | 1 | @NPC_MBOK_SRINI_NAME | | |
-| 1 | DLG_MBOK_SRINI_V2 | Bungkusan pertama berisi BIJI MENTIMUN—lemparkan ke tanah, maka akan tumbuh sulur-sulur berduri lebat yang melilit dan memperlambat langkah sang raksasa! | The first pouch contains CUCUMBER SEEDS—cast them onto the earth, and thick thorny vines will erupt to entangle and slow the giant's strides! |
+| 1 | DLG_MBOK_SRINI_V2 | Ada empat bungkusan dari dapurku. Periksa yang tercecer di jalan, lalu tebar bijinya di tanda dasar sungai: durinya menahan kakinya. | Four pouches from my kitchen. Look over what she dropped on the road, then scatter the seeds at the riverbed marker: the briars slow his feet. |
 | 1 | DLG_MBOK_SRINI_V22 | Lihat dulu barang-barang Timun Mas yang tercecer di dasar sungai. Mereka akan bilang apa yang harus kaulakukan. | Look first at Timun Mas's things spilled in the riverbed. They'll tell you what to do. |
 | 2 | @NPC_MBOK_SRINI_NAME | | |
-| 2 | DLG_MBOK_SRINI_V4 | Bungkusan ketiga berisi GARAM DAPUR—taburkan ke tanah, maka daratan akan mencair menjadi lautan ombak luas bergolak yang menenggelamkan pijakannya! | The third pouch carries COARSE SALT—hurl it upon the ground, and the soil will melt into a vast raging sea to swallow his footing! |
+| 2 | DLG_MBOK_SRINI_V4 | Biji di dasar sungai; jarum, garam, terasi di akar beringin. Jangan tertukar, Nak. | Seeds at the riverbed; needles, salt and terasi at the banyan roots. Don't mix them up, child. |
 | 3 | DLG_MBOK_SRINI_5 (keep) | Buto Ijo sudah kalah! Timun Mas aman. Terima kasih, Nak. | Buto Ijo is beaten! Timun Mas is safe. Thank you, child. |
 | 3 | DLG_MBOK_SRINI_6 (keep) | Dalam kisahnya, Timun Mas lolos berkat empat kantong itu. | In the tale, Timun Mas escapes thanks to those four pouches. |
 | H | @NPC_MBOK_SRINI_NAME | | |
@@ -3470,9 +3470,9 @@ The three clues are spilled around Mbok Srini's hut (3.5). The memory is not ope
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_AMBUSH_3_1 | Akar gantung beringin bergoyang tanpa angin. Buto Ijo muncul dari bawah tanah, tepat saat jarum terakhir dilipat. | The banyan's hanging roots sway without wind. Buto Ijo bursts from under the ground just as the last needle is folded. |
+| BEAT_AMBUSH_3_1 | Akar gantung beringin bergoyang tanpa angin. Buto Ijo muncul dari bawah tanah, tepat saat kantong terakhir terselip. | The banyan's hanging roots sway without wind. Buto Ijo bursts from under the ground just as the last pouch settles. |
 | @NPC_TIMUR_EMPU_NAME | | |
-| BEAT_AMBUSH_3_2 | Lipatan sebelas! Jarum ini sekarang tahu cara menjadi bambu yang benar! | Eleven folds! These needles now know how to become proper bamboo! |
+| BEAT_AMBUSH_3_2 | Lipatan sebelas! Jarum itu kini ingat caranya jadi bambu! | Eleven folds! Those needles remember how to be bamboo! |
 | @ | | |
 | BEAT_AMBUSH_3_3 | Rimbun bambu naik seperti pagar tombak. Raksasa itu tersangkut, meraung, lalu sebuah keris kecil melayang dari bahunya dan jatuh ke tanah, berdenting. | A bamboo thicket rises like a fence of spears. The giant catches, roars, then a small keris floats from his shoulder and clatters to the ground. |
 | @NPC_TIMUR_DAUGHTER_NAME | | |
@@ -3493,7 +3493,7 @@ The three clues are spilled around Mbok Srini's hut (3.5). The memory is not ope
 | @NPC_MBOK_SRINI_NAME | | |
 | BEAT_BUTO_AFTER_4 | Utangku, Nak. Ia tak menagihnya. Ia hanya... lupa. Aku akan membayarnya dengan cara lain. | My debt, child. He isn't collecting. He just... forgot. I'll pay it another way. |
 | @NPC_HERO_NAME | | |
-| BEAT_BUTO_AFTER_H1 | Kutukan yang sama. Seseorang membuat yang besar jadi buas. Aku harus belajar mematahkannya, di tempat Mpu Wirasana. | The same curse. Someone made a big thing wild. I need to learn to break it, at Mpu Wirasana's. |
+| BEAT_BUTO_AFTER_H1 | Kutukan yang sama. Seseorang membuat yang besar jadi buas. Ha memadamkan satu tanda, dan aku akan butuh lagi. | The same curse. Someone made a big thing wild. Ha put out one mark, and I'll need it again. |
 | BEAT_BUTO_AFTER_H2 | Ladang ini tadi kering. Sekarang ada tonggak merah muncul dari tanah, satu demi satu. | This field was dry a moment ago. Now red stakes are coming up out of the ground, one by one. |
 | @ | | |
 | BEAT_BUTO_AFTER_5 | Dari ujung ladang, hawa panas bergetar. Sesuatu yang lebih tua dari raksasa itu baru saja membuka matanya. | From the far end of the field the heat shimmers. Something older than the giant has just opened its eyes. |
@@ -3578,7 +3578,7 @@ VERIFY: the Mpu Gandring tale (an unfinished keris and the smith's curse) as tol
 ### Clue `ash_trail` (step 3.14; the Hunter's cold ash trail on the coast of `tt_pesisir`; journal note only)
 | Key | ID | EN |
 |-----|----|----|
-| CLUE_ASH_TRAIL_1 | Jejak abu di pasir, hitam seperti api yang padam. Si Pemburu lewat sini. | Ash on the sand, black as a burnt-out fire. The Hunter came this way. |
+| CLUE_ASH_TRAIL_1 | Abu dingin di pasir, lurus menyusuri pantai ke timur. Si Pemburu lewat sini. | Cold ash on the sand, running straight east along the coast. The Hunter came this way. |
 | CLUE_ASH_TRAIL_2 | Jejaknya lurus, tak berbelok untuk apa pun. Ia tak punya tempat lain untuk dituju. | The trail runs straight, bending for nothing. He has nowhere else to go. |
 | CLUE_ASH_TRAIL_NOTE | Jejak abu si Pemburu menyusuri pesisir. | The Hunter's ash trail along the coast. |
 
@@ -3615,11 +3615,11 @@ Topic entries (`if` = `topic:<key>`, `"quiet": true`) follow the hub shape shown
 | Key | ID | EN |
 |-----|----|----|
 | @NPC_HARIANG_BANGA_NAME | | |
-| DLG_HARIANG_BANGA_V1 | Turunkan senjatamu! Aku Pangeran Hariang Banga dari Sunda. Aku berbaris bukan karena haus darah, tapi demi kehormatan takhta dan keselamatan rakyatku! | Lower your weapon! I am Prince Hariang Banga of Sunda. I march not out of bloodlust, but to uphold the honor of the throne and protect my people! |
+| DLG_HARIANG_BANGA_V1 | Kau melewati badai itu juga. Duduklah. Aku di sini menghangatkan tangan sambil memikirkan ibuku di sel Galuh. | You came through that gale too. Sit. I'm warming my hands here and thinking of my mother in her cell at Galuh. |
 | @NPC_HERO_NAME | | |
-| DLG_HARIANG_BANGA_H1 | Kenapa kau membantuku? | Why help me? |
+| DLG_HARIANG_BANGA_H1 | Kau masih ikut sampai ujung jejak ini? | Are you still coming to the end of this trail? |
 | @NPC_HARIANG_BANGA_NAME | | |
-| DLG_HARIANG_BANGA_V2 | Apa katamu? Pemuda liar yang memelihara ayam aduan itu... Ciung Wanara... adalah saudaraku seayah dari permaisuri Naganingrum yang difitnah?! | What are you saying? That wild youth with the fighting rooster... Ciung Wanara... is my own true half-brother from Queen Naganingrum, exiled on false slanders?! |
+| DLG_HARIANG_BANGA_V2 | Sampai ujung. Tapi lihat dulu ceruk di belakangku: ada lontar yang hurufnya bergerak sendiri. Kurasa itu milikmu. | To the end. But look in the alcove behind me first: a lontar strip with moving letters. I think it's yours. |
 | @NPC_HARIANG_BANGA_NAME | | |
 | DLG_HARIANG_BANGA_V306 | Aku berjaga dulu. Tanya apa saja, selagi api masih kecil. | I'll take the first watch. Ask anything, while the fire's still small. |
 
@@ -3790,7 +3790,7 @@ The Hunter boss's cond is `flag:mq3_h6`. He says nothing here.
 | @ | | |
 | BEAT_HUNTER_NAME_6 | Ia luntur seperti tinta kena hujan. Ikatan lontarnya pecah, nama-nama terbang pulang, kecuali namanya. Di kandang Galuh, seorang tua mendapat wajahnya kembali. | He runs like ink in rain. His bundle bursts and the names fly home, all but hers. In Galuh's cage, an old man gets his face back. |
 | @NPC_HARIANG_BANGA_NAME | | |
-| BEAT_HUNTER_NAME_4 | Naik. Kuda kami membawamu pulang sebelum kabut menutup jalan. Gua Kala ada di belakang desamu. | Up. Our horses carry you home before the fog closes the road. Kala's cave is behind your village. |
+| BEAT_HUNTER_NAME_4 | Naik! Gerhana sudah di atas desamu, dan gua Kala ada di belakangnya. Kuda kami membawamu pulang sebelum kabut menutup jalan. | Up! The Eclipse is already over your village, and Kala's cave lies behind it. Our horses will get you home before the fog closes the road. |
 | @NPC_HERO_NAME | | |
 | BEAT_HUNTER_NAME_H2 | Tadi dia menulis sesuatu di pasir sebelum hilang. Aku tak melihat apa. | She was writing something in the sand before she went. I didn't see what. |
 | @NPC_HARIANG_BANGA_NAME | | |
@@ -3806,29 +3806,29 @@ Regional character: Ibu (want: two cups she cannot explain; turn: the shelf; clo
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_ECLIPSE_HOME_1 | Gerhana menggantung di atas Desa Purwa. Tak ada bayangan, dan tak ada yang menyapa sesama dengan nama. | The Eclipse hangs over Desa Purwa. No shadows, and nobody greets a neighbour by name. |
-| BEAT_ECLIPSE_HOME_3 | Pasukan berkuda Hariang Banga menurunkanmu di jalan di depan rumahmu, lalu berbalik tanpa bersuara, kudanya gelisah. | Hariang Banga's riders set you down on the road before your house, then turn away without a word, their horses uneasy. |
+| BEAT_ECLIPSE_HOME_1 | Gerhana menggantung di atas Desa Purwa. Tak ada bayangan, dan tak ada yang menyapa tetangga dengan namanya. | The Eclipse hangs over Desa Purwa. No shadows, and nobody greets a neighbour by name. |
+| BEAT_ECLIPSE_HOME_3 | Pasukan Hariang Banga menurunkanmu di jalan depan rumah, lalu berbalik diam-diam. Kuda mereka gelisah. | Hariang Banga's riders set you down on the road before your house and turn away in silence. Their horses are restless. |
 | @NPC_HARIANG_BANGA_NAME | | |
-| BEAT_ECLIPSE_HOME_4 | Aku akan datang bila ibumu mengundang. Ciung juga. Tapi lihat dulu gua di belakang desamu. | I'll come if your mother invites me. Ciung too. But look first at the cave behind your village. |
+| BEAT_ECLIPSE_HOME_4 | Aku datang kalau ibumu mengundang. Ciung juga. Tapi lihat dulu gua di belakang desamu. | I'll come if your mother invites me. Ciung too. But look first at the cave behind your village. |
 | @ | | |
-| BEAT_ECLIPSE_HOME_2 | Di belakang desa, kabut di mulut gua memakan setiap huruf yang kau lempar kepadanya. | Behind the village, the fog at the cave mouth eats every glyph you throw at it. |
+| BEAT_ECLIPSE_HOME_2 | Di belakang desa, kabut di mulut gua menelan setiap aksara yang kau lemparkan. | Behind the village, the fog at the cave mouth swallows every glyph you throw. |
 | @NPC_HERO_NAME | | |
-| BEAT_ECLIPSE_HOME_H1 | Rumah. Tapi aku mendengar langkahku sendiri terlalu keras. | Home. But I hear my own footsteps too loudly. |
+| BEAT_ECLIPSE_HOME_H1 | Rumah. Tapi langkahku sendiri terdengar terlalu keras. | Home. But my own footsteps sound too loud. |
 | @ | | |
-| BEAT_ECLIPSE_HOME_5 | Di jendela-jendela, lampu menyala, tapi tak seorang pun berdiri di depannya. | In the windows lamps burn, but nobody stands before them. |
-| BEAT_ECLIPSE_HOME_6 | Kau berjalan ke utara, ke arah kabut, karena sesuatu harus diuji dulu sebelum kau bisa percaya padanya. | You walk north toward the fog, because something has to be tested before you can believe it. |
+| BEAT_ECLIPSE_HOME_5 | Lampu menyala di jendela-jendela, tapi tak ada yang berdiri di baliknya. | Lamps burn in the windows, but nobody stands behind them. |
+| BEAT_ECLIPSE_HOME_6 | Kau berjalan ke utara, ke arah kabut. Sesuatu harus dicoba dulu sebelum bisa dipercaya. | You walk north toward the fog. Some things have to be tested before you can believe them. |
 
 ### Beat `north_fog` (if `!flag:beat_north_fog`, `flag:mq4_i0`; do `flag:beat_north_fog`). 4.1, area `purwa_north_fog` sets `mq4_i0`
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_NORTH_FOG_1 | Kau menggambar Ka di udara. Kabut menelannya sebelum garisnya selesai, tanpa suara, tanpa cahaya. | You draw Ka in the air. The fog swallows it before the stroke is done, without a sound, without light. |
-| BEAT_NORTH_FOG_2 | Kau mencoba Ga, lalu Na. Kabut menelan semuanya seperti mulut yang sudah lama lapar. | You try Ga, then Na. The fog swallows them all like a mouth long hungry. |
+| BEAT_NORTH_FOG_1 | Kau menggambar Ka di udara. Kabut menelannya sebelum garisnya selesai, tanpa suara dan tanpa cahaya. | You draw Ka in the air. The fog swallows it before the stroke is done, without sound or light. |
+| BEAT_NORTH_FOG_2 | Kau coba Ga, lalu Na. Kabut menelan semuanya, seperti mulut yang sudah lama lapar. | You try Ga, then Na. The fog swallows them all, like a mouth long hungry. |
 | @NPC_HERO_NAME | | |
-| BEAT_NORTH_FOG_H1 | Bukan kabut. Ini mulut. Dan ia belum mau makan aku. | Not fog. A mouth. And it doesn't want to eat me yet. |
+| BEAT_NORTH_FOG_H1 | Ini bukan kabut. Ini mulut. Dan ia belum mau memakanku. | This isn't fog. It's a mouth. And it doesn't want me yet. |
 | @ | | |
-| BEAT_NORTH_FOG_3 | Dari kedalaman kabut, sesuatu yang besar bernapas. Tarikan, lalu hembusan, sangat pelan, seperti orang yang tidur. | From deep in the fog, something huge breathes. In, then out, very slowly, like a sleeper. |
-| BEAT_NORTH_FOG_4 | Di desa, seseorang memanggil nama anaknya dan lupa di tengah kata. Kau berbalik. Ada yang harus dikerjakan di sini sebelum ke mana pun. | In the village, someone calls a child's name and forgets mid-word. You turn. There's work here before anywhere else. |
+| BEAT_NORTH_FOG_3 | Dari dalam kabut, sesuatu yang besar bernapas. Masuk, keluar, pelan seperti orang tidur. | Deep in the fog, something huge breathes. In, out, slow as a sleeper. |
+| BEAT_NORTH_FOG_4 | Di desa, seseorang memanggil nama anaknya dan berhenti di tengah kata. Kau berbalik. Ada yang harus dikerjakan di sini dulu. | In the village, someone calls a child's name and stops mid-word. You turn back. There is work to do here first. |
 
 ### purwa_old_couple, the Interlude entry (4.2; new first entry in the NPC's file; keys V20+ so the prologue keys stay free)
 | Entry | if | do |
@@ -3838,17 +3838,17 @@ Regional character: Ibu (want: two cups she cannot explain; turn: the shelf; clo
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | I1 | @NPC_PURWA_OLD_COUPLE_NAME | | |
-| I1 | DLG_PURWA_OLD_COUPLE_V20 | Nak, kau tahu kami? Kami menyiapkan mangkuk ketiga tiap malam, dan tak ingat untuk siapa. | Child, do you know us? We set out a third bowl each night, and can't remember for whom. |
+| I1 | DLG_PURWA_OLD_COUPLE_V20 | Nak, kau kenal kami? Tiap malam kami taruh mangkuk ketiga di meja, dan kami tak ingat untuk siapa. | Child, do you know us? Every night we set a third bowl out, and we can't remember for whom. |
 | I1 | @NPC_HERO_NAME | | |
 | I1 | DLG_PURWA_OLD_COUPLE_H20 | Untuk cucu kalian. Ciung. | For your grandson. Ciung. |
 | I1 | @NPC_PURWA_OLD_COUPLE_NAME | | |
-| I1 | DLG_PURWA_OLD_COUPLE_V21 | Ciung. Ciung... bunyinya seperti burung. Lucu, ya? Seperti mengunyah batu kecil yang manis. | Ciung. Ciung... it sounds like a bird. Funny, isn't it? Like chewing a small sweet stone. |
-| I1 | DLG_PURWA_OLD_COUPLE_V22 | Kata Semar, nama yang tak ditulis akan hilang. Kami tak punya lontar. Kami hanya punya mangkuk. | Semar says a name not written will vanish. We have no lontar. We only have a bowl. |
+| I1 | DLG_PURWA_OLD_COUPLE_V21 | Ciung. Bunyinya seperti burung. Lucu, ya? Seperti mengunyah gula batu kecil. | Ciung. It sounds like a bird. Funny, isn't it? Like chewing a little sugar crystal. |
+| I1 | DLG_PURWA_OLD_COUPLE_V22 | Kata Semar, nama yang tak ditulis akan hilang. Kami tak punya lontar. Kami cuma punya mangkuk. | Semar says a name that isn't written will vanish. We have no lontar. We only have a bowl. |
 | I1 | @NPC_HERO_NAME | | |
-| I1 | DLG_PURWA_OLD_COUPLE_H21 | Dia hidup. Dia akan datang makan malam ini, bersama kakaknya. | He's alive. He'll come to dinner tonight, with his brother. |
+| I1 | DLG_PURWA_OLD_COUPLE_H21 | Dia hidup, Nek. Dia akan pulang. | He's alive, Nek. He'll come home. |
 | I1 | @NPC_PURWA_OLD_COUPLE_NAME | | |
-| I1 | DLG_PURWA_OLD_COUPLE_V23 | Kakak? Kami punya satu cucu saja... atau dua? Sudah, sudah. Tanyalah penjaga lapak, ia juga bingung. | A brother? We only had one grandson... or two? Never mind. Ask the stall-keeper, she's lost too. |
-| I1 | DLG_PURWA_OLD_COUPLE_V24 | Dan kalau kau punya tinta, tolong tuliskan nama di pintu rumah-rumah yang paling sunyi. | And if you have ink, please write a name on the doors of the quietest houses. |
+| I1 | DLG_PURWA_OLD_COUPLE_V23 | Kakak? Cucu kami cuma satu... atau dua? Sudahlah. Tanya saja pemilik warung, ia juga bingung. | A brother? We only had one grandson... or two? Never mind. Ask the stallkeeper, she's as lost as we are. |
+| I1 | DLG_PURWA_OLD_COUPLE_V24 | Kalau kau bawa tinta, tolong tuliskan nama di pintu rumah-rumah yang paling sunyi. | If you have ink, please write names on the doors of the quietest houses. |
 
 ### purwa_stall, the Interlude entry (4.2; second step trigger; keys V20+)
 | Entry | if | do |
@@ -3858,16 +3858,16 @@ Regional character: Ibu (want: two cups she cannot explain; turn: the shelf; clo
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | I1 | @NPC_PURWA_STALL_NAME | | |
-| I1 | DLG_PURWA_STALL_V20 | Aku jual cabai, tapi pagi ini tak ingat harganya. Aku bahkan tak ingat nama anakku. | I sell chilli, but this morning I couldn't remember the price. I can't even remember my child's name. |
+| I1 | DLG_PURWA_STALL_V20 | Aku jual cabai, tapi pagi ini lupa harganya. Nama anakku sendiri juga lupa. | I sell chilli, and this morning I forgot the price. I forgot my own child's name too. |
 | I1 | @NPC_HERO_NAME | | |
 | I1 | DLG_PURWA_STALL_H20 | Lelaki bertopeng polos itu datang lagi? | The man in the blank mask came again? |
 | I1 | @NPC_PURWA_STALL_NAME | | |
-| I1 | DLG_PURWA_STALL_V21 | Tidak. Sekarang bukan ia yang datang. Sekarang kami yang pelan-pelan berhenti datang pada diri sendiri. | No. It's not him coming now. Now it's us slowly ceasing to come to ourselves. |
-| I1 | DLG_PURWA_STALL_V22 | Ada tiga rumah yang paling parah: keluarga Eman, keluarga Karsih, keluarga Dulah. Tiang pintu mereka kosong. | Three houses are worst: the Eman family, the Karsih family, the Dulah family. Their doorposts are blank. |
+| I1 | DLG_PURWA_STALL_V21 | Bukan, bukan dia yang datang sekarang. Kami sendiri yang pelan-pelan berhenti pulang ke diri kami. | No, it isn't him coming now. It's us, slowly forgetting the way home to ourselves. |
+| I1 | DLG_PURWA_STALL_V22 | Tiga rumah paling parah: keluarga Eman, Karsih, dan Dulah. Tiang pintu mereka kosong semua. | Three houses are worst: Eman's, Karsih's and Dulah's. Their doorposts are all blank. |
 | I1 | @NPC_HERO_NAME | | |
 | I1 | DLG_PURWA_STALL_H21 | Aku kenal mereka semua. Aku akan menuliskannya. | I know them all. I'll write them. |
 | I1 | @NPC_PURWA_STALL_NAME | | |
-| I1 | DLG_PURWA_STALL_V23 | Kalau kau tahu nama mereka, kau lebih kaya dari semua pedagang di pasar ini. Cepatlah. | If you know their names, you're richer than every trader in this market. Hurry. |
+| I1 | DLG_PURWA_STALL_V23 | Kalau kau masih ingat nama mereka, tolong tuliskan. Cepat, sebelum gelap. | If you still remember their names, please write them. Quick, before dark. |
 
 ### door_a, door_b, door_c (three houses; name NPC_DOOR_NEIGHBOUR_NAME; v4 text kept). Step 4.3: a write card each
 Each entry 1 runs the write card (glyph ids **ASSUMED**: door_a `sunda_ka,sunda_ga`, door_b `sunda_nga,sunda_ca`, door_c `jawa_ha,jawa_na`). The hero knows his neighbours; they have lost their own names. The Eclipse is in the air, but the doorposts take ink. The cond moves from `step:mq4=1` (v4, and the desa_purwa.md legend) to `step:mq4=2`.
@@ -3893,7 +3893,7 @@ Each entry 1 runs the write card (glyph ids **ASSUMED**: door_a `sunda_ka,sunda_
 | DLG_DOOR_B_H1 | Keluarga Karsih. Kau selalu menjemur ikan asin paling wangi di desa. | The Karsih family. You dry the best-smelling salt fish in the village. |
 | @NPC_DOOR_NEIGHBOUR_NAME | | |
 | DLG_DOOR_B_V2 | Karsih! Ikan asinku! Tuliskan, tolong, sebelum lupa lagi. | Karsih! My salt fish! Write it, please, before I forget again. |
-| DLG_DOOR_B_V3 | Karsih. Rasanya seperti pulang ke tubuh sendiri. | Karsih. It feels like coming back into my own body. |
+| DLG_DOOR_B_V3 | Karsih. Ya. Rasanya seperti pulang ke rumah sendiri. | Karsih. Yes. It feels like coming home. |
 | @NPC_DOOR_NEIGHBOUR_NAME | | |
 | DLG_DOOR_C_V1 | Anak-anakku bertanya siapa kami. Aku tak bisa menjawab. | My children ask who we are. I can't answer. |
 | @NPC_HERO_NAME | | |
@@ -3927,10 +3927,10 @@ Each entry 1 runs the write card (glyph ids **ASSUMED**: door_a `sunda_ka,sunda_
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 2 | @NPC_HERO_NAME | | |
-| 2 | DLG_IBU_H5 | Bu, lihat. Pita, sebuah papan, dan selembar lontar. Semuanya milik seseorang. | Ibu, look. A ribbon, a board, a strip of lontar. They all belong to someone. |
+| 2 | DLG_IBU_H5 | Bu, lihat. Ada pita, papan, dan secarik lontar. Semuanya milik seseorang. | Ibu, look. A ribbon, a board, a scrap of lontar. They all belong to someone. |
 | 2 | @NPC_IBU_NAME | | |
 | 2 | DLG_IBU_V12 | Pita ini... Ibu pernah mengikatnya di rambut seseorang. | This ribbon... I once tied it in someone's hair. |
-| 2 | DLG_IBU_V13 | Papan ini tertulis: "Jangan buang cangkirku yang gompal." Ibu tidak membuangnya, kan? | This board says: "Don't throw out my chipped cup." I never threw it out, did I? |
+| 2 | DLG_IBU_V13 | Papan ini bertuliskan: "Jangan buang cangkirku yang gompal." Ibu tak pernah membuangnya, kan? | This board says: "Don't throw out my chipped cup." I never did, did I? |
 | 2 | @NPC_HERO_NAME | | |
 | 2 | DLG_IBU_H6 | Tidak, Bu. Ibu tidak pernah membuangnya. | No, Ibu. You never did. |
 | 2 | @NPC_IBU_NAME | | |
@@ -3942,13 +3942,13 @@ Each entry 1 runs the write card (glyph ids **ASSUMED**: door_a `sunda_ka,sunda_
 | 2 | DLG_IBU_V303 | Kalau begitu biar tubuhku yang menang. Cangkir kedua kutata lurus, dan kuberi teh yang hangat. | Then let my body win. I'll set the second cup straight, and pour it warm. |
 | 2 | DLG_IBU_V304 | Dua anak dari seberang sungai makan malam di sini nanti. Kau yang harus menceritakan siapa mereka. | Two boys from across the river eat here tonight. You'll have to tell me who they are. |
 | 3 | @NPC_HERO_NAME | | |
-| 3 | DLG_IBU_H3 | Ibu menangis. | Ibu, you're crying. |
+| 3 | DLG_IBU_H3 | Ibu, kenapa menangis? | Ibu, you're crying. |
 | 3 | @NPC_IBU_NAME | | |
-| 3 | DLG_IBU_V10 | Masa? Asap dapur, mungkin. Tiap pagi begini, Nak, dan Ibu tak tahu kenapa. | Am I? Kitchen smoke, maybe. Every morning like this, child, and I don't know why. |
+| 3 | DLG_IBU_V10 | Ibu menangis? Mungkin asap dapur. Tiap pagi begini, Nak, dan Ibu tak tahu kenapa. | Am I crying? Kitchen smoke, maybe. Every morning like this, Nak, and I don't know why. |
 | 3 | @NPC_HERO_NAME | | |
-| 3 | DLG_IBU_H4 | Aku tahu kenapa. Akan kuceritakan setelah dia pulang. | I know why. I'll tell you once she's home. |
+| 3 | DLG_IBU_H4 | Aku tahu kenapa, Bu. Nanti kuceritakan setelah dia pulang. | I know why, Ibu. I'll tell you once she's home. |
 | 3 | @NPC_IBU_NAME | | |
-| 3 | DLG_IBU_V11 | Siapa pun dia, bawa pulang. Bawa sesuatu yang pernah ia sentuh, Ibu ingin melihatnya. | Whoever she is, bring her home. Bring something she touched, I'd like to see it. |
+| 3 | DLG_IBU_V11 | Siapa pun dia, bawa pulang. Bawakan sesuatu yang pernah ia sentuh. Ibu ingin lihat. | Whoever she is, bring her home. Bring something she touched. I'd like to see it. |
 | 3 | DLG_IBU_V305 | Rak di kamar belakang itu kosong, tapi Ibu selalu mengelapnya. Lihatlah, siapa tahu ada yang tertinggal. | The shelf in the back room is empty, but I always dust it. Take a look, maybe something was left. |
 | H | @NPC_IBU_NAME | | |
 | H | DLG_IBU_V306 | Duduklah dulu, Nak. Ibu mau teh, kamu mau cerita. Atau sebaliknya. | Sit a while, child. I want tea, you want to talk. Or the other way round. |
@@ -3969,19 +3969,19 @@ Each entry 1 runs the write card (glyph ids **ASSUMED**: door_a `sunda_ka,sunda_
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_IBU_CUPS_1 | Ibu menuang teh ke cangkir yang gompal, lalu menunggu seseorang duduk. Tak ada yang duduk. Ia tersenyum juga. | Ibu pours tea into the chipped cup, then waits for someone to sit. Nobody sits. She smiles anyway. |
-| BEAT_IBU_CUPS_2 | Ia meluruskan cangkir kedua sampai gagangnya menghadap kursi kosong, persis, seperti dulu, tanpa tahu mengapa. | She straightens the second cup until its handle faces the empty chair, exactly, as before, without knowing why. |
+| BEAT_IBU_CUPS_1 | Ibu menuang teh ke cangkir yang gompal, lalu menunggu seseorang duduk. Tak ada yang duduk. Ia tetap tersenyum. | Ibu pours tea into the chipped cup and waits for someone to sit. Nobody does. She smiles anyway. |
+| BEAT_IBU_CUPS_2 | Ia memutar cangkir kedua sampai gagangnya menghadap kursi kosong. Tepat seperti dulu, tanpa tahu kenapa. | She turns the second cup until its handle faces the empty chair. Exactly as before, without knowing why. |
 | @NPC_HERO_NAME | | |
 | BEAT_IBU_CUPS_H1 | Dia akan duduk di situ lagi, Bu. Aku janji. | She'll sit there again, Ibu. I promise. |
 | @ | | |
-| BEAT_IBU_CUPS_3 | Di luar, dua derap kuda berhenti di depan pagar. Ibu mengangkat kepala, dan untuk sekejap, ia terlihat seperti sedang mengingat sesuatu. | Outside, two sets of hooves stop at the gate. Ibu lifts her head, and for a moment she looks like she's remembering something. |
+| BEAT_IBU_CUPS_3 | Di luar, dua derap kuda berhenti di pagar. Ibu mengangkat kepala, dan sekejap ia seperti sedang mengingat. | Outside, two sets of hooves stop at the gate. Ibu lifts her head, and for a moment she looks like she's remembering. |
 
 ### Beat `table_dishes` (if `!flag:beat_table_dishes`, `flag:mq4_i3`; do `flag:beat_table_dishes`; listed before `quiet_house` and `quiet_house_judgment`). 4.5, the playable dinner: pass dishes, choose a seat (flavour only)
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_TABLE_DISHES_1 | Ibu menghidangkan nasi dan sambal. Ciung Wanara dan Hariang Banga masing-masing menunggu yang lain duduk dulu. | Ibu serves rice and sambal. Ciung Wanara and Hariang Banga each wait for the other to sit first. |
-| BEAT_TABLE_DISHES_2 | Dua kursi tersisa: satu di samping Ciung, satu di samping Hariang. | Two seats are left: one beside Ciung, one beside Hariang. |
+| BEAT_TABLE_DISHES_1 | Ibu menghidangkan nasi dan sambal. Ciung dan Hariang masing-masing menunggu yang lain duduk lebih dulu. | Ibu serves rice and sambal. Ciung and Hariang each wait for the other to sit first. |
+| BEAT_TABLE_DISHES_2 | Tinggal dua kursi: satu di samping Ciung, satu di samping Hariang. | Two seats are left: one beside Ciung, one beside Hariang. |
 | CHOICE_SEAT_1 | Duduk di samping Ciung. | Sit beside Ciung. |
 | CHOICE_SEAT_2 | Duduk di samping Hariang. | Sit beside Hariang. |
 
@@ -3990,34 +3990,34 @@ Choices: CHOICE_SEAT_1 does `flag:seat_ciung`, CHOICE_SEAT_2 does `flag:seat_har
 ### Beat `quiet_house` (if `!flag:beat_quiet_house`, `flag:beat_table_dishes`, `flag:choice_mercy`; do `flag:beat_quiet_house`). Choice 3, Mercy: the warm dinner
 | Key | ID | EN |
 |-----|----|----|
-| BEAT_QUIET_HOUSE_1 | Di meja ibumu, dua cangkir dan dua pemuda yang menolak duduk di kursi yang sama. Ciung Wanara dari tepi barat, Hariang Banga dari timur, bertemu sebagai saudara untuk pertama kali. | At your mother's table, two cups and two young men who refuse the same chair. Ciung Wanara from the west bank, Hariang Banga from the east, meeting as brothers for the first time. |
+| BEAT_QUIET_HOUSE_1 | Di meja ibumu, dua cangkir dan dua pemuda yang tak mau duduk sekursi. Ciung dari barat, Hariang dari timur: saudara, baru bertemu. | At your mother's table, two cups and two young men who won't share a chair. Ciung from the west, Hariang from the east: brothers, newly met. |
 | @NPC_CIUNG_WANARA_NAME | | |
 | BEAT_QUIET_HOUSE_2 | Kandangnya sekarang punya lampu. Kecil. Dia tak minta lebih. | The cage has a lamp now. A small one. He doesn't ask for more. |
 | @NPC_HARIANG_BANGA_NAME | | |
 | BEAT_QUIET_HOUSE_3 | Terima kasih. | Thank you. |
 | @ | | |
-| BEAT_QUIET_HOUSE_5 | Ibu menaruh dua sendok nasi di piring masing-masing tanpa bertanya. Ciung tertawa, pertama kali dalam seminggu, dan Hariang ikut tersenyum karena tak tahu harus apa lagi. | Ibu puts two scoops of rice on each plate without asking. Ciung laughs, the first time in a week, and Hariang smiles because he doesn't know what else to do. |
+| BEAT_QUIET_HOUSE_5 | Ibu menyendok nasi dua kali ke tiap piring tanpa bertanya. Ciung tertawa, pertama kali seminggu ini. Hariang ikut tersenyum. | Ibu puts two scoops of rice on each plate without asking. Ciung laughs, the first time in a week. Hariang smiles too. |
 | @NPC_CIUNG_WANARA_NAME | | |
-| BEAT_QUIET_HOUSE_6 | Sambalnya pedas sekali. Kalian punya ibu yang berbahaya. | The sambal is very hot. You have a dangerous mother. |
+| BEAT_QUIET_HOUSE_6 | Sambalnya pedas sekali. Ibu kalian berbahaya. | The sambal is fiery. Your mother is dangerous. |
 | @NPC_HERO_NAME | | |
-| BEAT_QUIET_HOUSE_H1 | Dia bukan ibuku saja malam ini. Dia ibu semua orang di meja ini. | She isn't only my mother tonight. She's everyone's at this table. |
+| BEAT_QUIET_HOUSE_H1 | Malam ini dia bukan cuma ibuku. Dia ibu semua orang di meja ini. | Tonight she isn't only my mother. She's everyone's at this table. |
 | @ | | |
-| BEAT_QUIET_HOUSE_4 | Di perapian, topeng kosong tergeletak di antara bara. Tak ada yang menyentuhnya. | In the hearth, an empty mask lies among the embers. Nobody touches it. |
+| BEAT_QUIET_HOUSE_4 | Di perapian, topeng kosong tergeletak di antara bara. Tak ada yang menyentuhnya. | In the hearth an empty mask lies among the embers. Nobody touches it. |
 
 ### Beat `quiet_house_judgment` (if `!flag:beat_quiet_house`, `flag:beat_table_dishes`, `flag:choice_judgment`; do `flag:beat_quiet_house`). Choice 3, Judgment: the same table, strained (replaces v4 `quiet_house_silent`)
 | Key | ID | EN |
 |-----|----|----|
-| BEAT_QUIET_HOUSE_1 | Di meja ibumu, dua cangkir dan dua pemuda yang menolak duduk di kursi yang sama. Ciung Wanara dari tepi barat, Hariang Banga dari timur, bertemu sebagai saudara untuk pertama kali. | At your mother's table, two cups and two young men who refuse the same chair. Ciung Wanara from the west bank, Hariang Banga from the east, meeting as brothers for the first time. |
-| BEAT_QUIET_HOUSE_J2 | Ciung menatap api, bukan kau. Kandang di Galuh dijaga ketat, dan tak seorang pun menyebutkannya. | Ciung watches the fire, not you. The cage in Galuh is strictly guarded, and nobody mentions it. |
+| BEAT_QUIET_HOUSE_1 | Di meja ibumu, dua cangkir dan dua pemuda yang tak mau duduk sekursi. Ciung dari barat, Hariang dari timur: saudara, baru bertemu. | At your mother's table, two cups and two young men who won't share a chair. Ciung from the west, Hariang from the east: brothers, newly met. |
+| BEAT_QUIET_HOUSE_J2 | Ciung menatap api, bukan kau. Kandang di Galuh dijaga ketat, dan tak ada yang menyebutnya. | Ciung watches the fire, not you. The cage in Galuh is tightly guarded, and nobody mentions it. |
 | @NPC_HARIANG_BANGA_NAME | | |
-| BEAT_QUIET_HOUSE_J3 | Hukum itu adil, kata mereka. Aku belum menemukan kata untuk membantahnya. Aku tak mau. | The law is just, they say. I haven't found a word to argue. I don't want to. |
+| BEAT_QUIET_HOUSE_J3 | Hukum itu adil, kata mereka. Aku belum menemukan kata untuk membantahnya. Aku juga tak mau. | The law is just, they say. I haven't found a word to argue with it. I don't want to. |
 | @NPC_CIUNG_WANARA_NAME | | |
-| BEAT_QUIET_HOUSE_J4 | Itu bukan tuduhan, Kak. Itu pagar sungai. Pagar tak menyakiti, hanya menahan. | That isn't an accusation, brother. That's the river's fence. A fence doesn't hurt, it only holds. |
+| BEAT_QUIET_HOUSE_J4 | Itu bukan tuduhan, Kak. Itu pagar sungai. Pagar tak melukai, hanya menahan. | That isn't an accusation, brother. It's a river fence. A fence doesn't hurt, it only holds. |
 | @ | | |
-| BEAT_QUIET_HOUSE_J5 | Ibu menaruh dua sendok nasi di piring masing-masing tanpa bertanya. Mereka makan, rapi, tanpa bicara. Sendok berdenting terlalu keras. | Ibu puts two scoops of rice on each plate without asking. They eat, neatly, without speaking. The spoons clink too loudly. |
+| BEAT_QUIET_HOUSE_J5 | Ibu menyendokkan nasi dua kali ke piring masing-masing. Mereka makan rapi tanpa bicara. Sendok berdenting terlalu keras. | Ibu puts two scoops of rice on each plate. They eat neatly, without a word. The spoons clink too loudly. |
 | @NPC_HERO_NAME | | |
-| BEAT_QUIET_HOUSE_JH1 | Aku memilih pagar itu. Dan malam ini aku mendengar bunyi pagar itu di meja ibuku. | I chose that fence. And tonight I hear the fence at my mother's table. |
-| BEAT_QUIET_HOUSE_4 | Di perapian, topeng kosong tergeletak di antara bara. Tak ada yang menyentuhnya. | In the hearth, an empty mask lies among the embers. Nobody touches it. |
+| BEAT_QUIET_HOUSE_JH1 | Aku memilih pagar itu. Dan malam ini aku mendengarnya di meja ibuku. | I chose that fence. And tonight I hear it at my mother's table. |
+| BEAT_QUIET_HOUSE_4 | Di perapian, topeng kosong tergeletak di antara bara. Tak ada yang menyentuhnya. | In the hearth an empty mask lies among the embers. Nobody touches it. |
 
 ### aria_kebonan (by the burned stage; name NPC_ARIA_KEBONAN_NAME; step 4.6 `talked_to:aria_kebonan`, sets `mq4_i4`; since v5 a step, no longer optional; keys V301+)
 | Entry | if | do |
@@ -4028,7 +4028,7 @@ Choices: CHOICE_SEAT_1 does `flag:seat_ciung`, CHOICE_SEAT_2 does `flag:seat_har
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_ARIA_KEBONAN_NAME | | |
-| 1 | DLG_ARIA_KEBONAN_V1 | Kabut besi dingin... mahkota duri yang meremukkan keningku... Siapa... siapa aku sebenarnya? Berapa ratus tahun aku memburu bayangan tanpa wajah? | Freezing iron fog... a crown of thorns crushing my brow... Who... who was I? How many centuries have I hunted in darkness as a faceless shade? |
+| 1 | DLG_ARIA_KEBONAN_V1 | Dingin sekali... Kenapa aku ada di sini? Aku tak ingat namaku. Sudah lama. | It's so cold... Why am I here? I don't remember my name. Not for a long while. |
 | 1 | DLG_ARIA_KEBONAN_V301 | Kala tak lapar pada orang. Ia lapar pada nama. Mulutnya terbuka sambil tidur, dan tiap nama yang hilang jatuh ke dalamnya. | Kala isn't hungry for people. It's hungry for names. Its mouth hangs open as it sleeps, and every lost name falls in. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_ARIA_KEBONAN_H301 | Nama Laras ada di sana? | Is Laras's name in there? |
@@ -4039,13 +4039,13 @@ Choices: CHOICE_SEAT_1 does `flag:seat_ciung`, CHOICE_SEAT_2 does `flag:seat_har
 | 1 | DLG_ARIA_KEBONAN_H302 | Kau membantuku, setelah semua yang terjadi? | You're helping me, after everything? |
 | 1 | @NPC_ARIA_KEBONAN_NAME | | |
 | 1 | DLG_ARIA_KEBONAN_V304 | Aku tak membantu. Aku membuang apa yang tersisa. Seorang pelayan mengembalikan barang yang bukan miliknya. | I'm not helping. I'm discarding what's left. A servant returning something that isn't his. |
-| 1 | DLG_ARIA_KEBONAN_V2 | Kala merenggut nama asliku, menghapus wajahku, dan menjadikanku bejana kosong pembawa petaka. Jangan biarkan nasibmu berakhir seperti diriku! | Kala devoured my true name, erased my human face, and hollowed me into an empty vessel of ruin. Do not let your fate end like mine! |
+| 1 | DLG_ARIA_KEBONAN_V2 | Kala mengambil namaku, lalu wajahku. Yang tertinggal hanya bayangan yang berjalan. Jangan sampai kau begitu. | Kala took my name, then my face. What's left is only a shadow that walks. Don't end up like that. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_ARIA_KEBONAN_H1 | Namamu adalah Pangeran Arya Kebonan, putra ksatria yang setia! Dengarkan gema lontar ini, ingatlah siapa dirimu! | Your name is Prince Arya Kebonan, a noble knight of honor! Listen to the resonance of this lontar, remember who you truly are! |
+| 1 | DLG_ARIA_KEBONAN_H1 | Namamu Arya Kebonan. Dengarkan lontar ini, dan ingat. | Your name is Arya Kebonan. Listen to this lontar, and remember. |
 | 1 | @NPC_ARIA_KEBONAN_NAME | | |
-| 1 | DLG_ARIA_KEBONAN_V3 | Air mata... aku bisa merasakan hangatnya air mata lagi. Patahkan belenggu Kala, bebaskan dunia dari kutukan lupa! | Tears... I can feel the warmth of my own tears again. Break Kala's eternal chains, deliver this world from the curse of forgetting! |
+| 1 | DLG_ARIA_KEBONAN_V3 | Arya... ya. Hangat. Aku menangis, rupanya. Pergilah, sebelum aku lupa lagi. | Arya... yes. It's warm. I'm crying, it seems. Go, before I forget again. |
 | 1 | DLG_ARIA_KEBONAN_V305 | Setelah itu, lupakan aku. Jangan tulis namaku di batu mana pun. Biarkan aku jadi bunyi. Sekarang temui Semar. | After that, forget me. Don't write my name on any stone. Let me be a sound. Now go to Semar. |
-| 2 | DLG_ARIA_KEBONAN_V4 | Biarkan namaku tertulis kembali di lontarmu. Aku akan menahan bayangan waktu agar kau bisa melangkah ke sarang Kala! | Let my name be re-inscribed upon your lontar. I will hold back the shadow tides so you can reach the heart of Kala's lair! |
+| 2 | DLG_ARIA_KEBONAN_V4 | Namaku sudah kembali di lontarmu. Aku akan menahan bayangan di sini. Jalanmu terus saja. | My name is back on your lontar. I'll hold the shadows here. You keep going. |
 
 ### cepot, the Interlude entry (the sanggar, step 4.7; shared NPC, keys V301+; `"quiet": true`)
 | Entry | if | do |
@@ -4075,11 +4075,11 @@ Choices: CHOICE_SEAT_1 does `flag:seat_ciung`, CHOICE_SEAT_2 does `flag:seat_har
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 9 | @NPC_SEMAR_NAME | | |
-| 9 | DLG_SEMAR_V35 | Kau heran kenapa aku masih ingat, hehe. Aku bukan dari desa ini, Nak. | You wonder why I still remember, hehe. I'm not from this village, child. |
+| 9 | DLG_SEMAR_V35 | Kau heran kenapa aku masih ingat, hehe. Aku bukan orang desa ini, Nak. | You wonder why I still remember, hehe. I'm not from this village, Nak. |
 | 9 | @NPC_HERO_NAME | | |
-| 9 | DLG_SEMAR_H35 | Lalu kau siapa sebenarnya? | Then who are you, really? |
+| 9 | DLG_SEMAR_H35 | Lalu kau ini siapa? | Then who are you? |
 | 9 | @NPC_SEMAR_NAME | | |
-| 9 | DLG_SEMAR_V36 | Dalam kisah wayang, aku dewa yang memilih hidup sebagai abdi. Dewa sulit dibuat lupa, dan aku keras kepala. | In the wayang tales, I'm a god who chose to live as a servant. Gods are hard to make forget, and I'm stubborn. |
+| 9 | DLG_SEMAR_V36 | Dalam kisah wayang, aku dewa yang memilih jadi abdi. Dewa susah dibuat lupa, dan aku keras kepala. | In the wayang tales, I'm a god who chose to be a servant. Gods are hard to make forget, and I'm stubborn. |
 | 9 | DLG_SEMAR_V301 | Sumpahku sederhana: aku tak boleh pergi dari mereka yang kulayani. Kala ingin aku pergi. Aku tak pergi. | My vow is simple: I may not leave those I serve. Kala wants me gone. I'm not going. |
 | 9 | @NPC_HERO_NAME | | |
 | 9 | DLG_SEMAR_H301 | Tapi kau tak bisa menyelamatkan Laras dari dalam sana. | But you can't save Laras from in there. |
@@ -4090,7 +4090,7 @@ Choices: CHOICE_SEAT_1 does `flag:seat_ciung`, CHOICE_SEAT_2 does `flag:seat_har
 | 9 | DLG_SEMAR_H302 | Kau ikut? | Are you coming? |
 | 9 | @NPC_SEMAR_NAME | | |
 | 9 | DLG_SEMAR_V304 | Aku sampai di sana duluan, hehe. Gerbang selatan akan terbuka. Pergilah sebelum ibumu menyuruhmu makan lagi. | I'll get there first, hehe. The south gate will open. Go before your mother tells you to eat again. |
-| 9 | DLG_SEMAR_V37 | Ada yang lebih tua dari Kala: laut. Laut tak pernah lupa. Pergilah ke selatan. | Something is older than Kala: the sea. The sea does not forget. Go south. |
+| 9 | DLG_SEMAR_V37 | Ada yang lebih tua dari Kala: laut, dan laut tak lupa. Pergilah ke selatan, lewat gerbang desa. | Something is older than Kala: the sea, and the sea doesn't forget. Go south, through the village gate. |
 | H | @NPC_SEMAR_NAME | | |
 | H | DLG_SEMAR_V305 | Hehe, tanyalah. Aku punya jawaban, atau cerita yang mirip jawaban. | Hehe, ask. I have answers, or stories that look like answers. |
 | T1 | @NPC_SEMAR_NAME | | |
@@ -4119,13 +4119,13 @@ VERIFY: Semar as a god who chose to live as a servant (Batara Ismaya in Javanese
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_SOUTH_GATE_1 | Gerbang selatan terbuka, dan kabut surut seperti seseorang yang mundur dengan sopan. Di baliknya, pasir hitam dan laut yang hijau. | The south gate opens, and the fog withdraws like someone stepping back politely. Beyond it, black sand and a green sea. |
-| BEAT_SOUTH_GATE_2 | Angin asin menampar wajahmu. Tak ada gerhana di sini, atau gerhananya lebih jauh, atau laut tak mengizinkannya. | Salt wind slaps your face. No eclipse here, or it's farther off, or the sea doesn't allow it. |
+| BEAT_SOUTH_GATE_1 | Gerbang selatan terbuka, dan kabut surut seperti orang yang mundur dengan sopan. Di baliknya, pasir hitam dan laut hijau. | The south gate opens and the fog withdraws like someone stepping back politely. Beyond it, black sand and a green sea. |
+| BEAT_SOUTH_GATE_2 | Angin asin menampar wajahmu. Tak ada gerhana di sini, atau ia lebih jauh, atau laut tak mengizinkannya. | Salt wind slaps your face. No eclipse here, or it's farther off, or the sea won't allow it. |
 | @NPC_HERO_NAME | | |
-| BEAT_SOUTH_GATE_H1 | Aku bisa mendengar ombak menyebut sesuatu. Hampir seperti namaku. | I can hear the surf saying something. Almost like my name. |
+| BEAT_SOUTH_GATE_H1 | Ombak menyebut sesuatu. Hampir seperti namaku. | The surf is saying something. Almost like my name. |
 | @ | | |
-| BEAT_SOUTH_GATE_3 | Di cakrawala selatan, cahaya hijau samar menyala di atas air: keraton laut, jauh sekali. Jangan menunjuknya. | On the southern horizon, a faint green glow burns over the water: the sea pavilion, very far. Don't point at it. |
-| BEAT_SOUTH_GATE_4 | Di pantai, sekelompok nelayan duduk menambal jala dan tak bicara sepatah pun. | On the shore, a group of fishers sit mending nets and say not a word. |
+| BEAT_SOUTH_GATE_3 | Di cakrawala selatan, cahaya hijau samar menyala di atas air: keraton laut, jauh sekali. Jangan ditunjuk. | On the southern horizon a faint green glow burns over the water: the sea court, very far. Don't point at it. |
+| BEAT_SOUTH_GATE_4 | Di pantai, sekelompok nelayan duduk menambal jala dan tak bicara sepatah pun. | On the shore, a group of fishers sit mending nets and say nothing. |
 
 ### Act V "Laut Tak Pernah Lupa" (4.9-4.22). Regional characters: Mbah Wiryo (want: the sea to say Sumi's name; turn: the sea answers; close: a louder answer) and Sari (want: the beacons lit so boats find home; turn: she remembers the second verse; close: she sings it)
 
@@ -4135,13 +4135,13 @@ VERIFY: Semar as a god who chose to live as a servant (Batara Ismaya in Javanese
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_SONG_HOOK_1 | Di Kampung Nelayan, rumah-rumah panggung berdiri di atas air surut, dan para nelayan menambal jala untuk sedekah laut. Mereka mulai bernyanyi, lalu hanya bergumam. Kata-katanya hilang. | In Kampung Nelayan, stilt houses stand over the ebbed water, and the fishers mend nets for the sea offering. They begin to sing, then only hum. The words are gone. |
-| BEAT_SONG_HOOK_3 | Seorang nenek berhenti di tengah baris, memandang tangannya sendiri, lalu mengambil jarum lagi seolah tak terjadi apa-apa. | An old woman stops mid-line, looks at her own hands, then picks up her needle again as if nothing happened. |
-| BEAT_SONG_HOOK_4 | Di rak jemur, ikan asin bergantung dalam barisan rapi. Tak ada yang berani tertawa terlalu keras. | On the drying racks, salt fish hang in neat rows. Nobody dares laugh too loudly. |
+| BEAT_SONG_HOOK_1 | Di Kampung Nelayan, rumah panggung berdiri di atas air surut. Nelayan menambal jala untuk sedekah laut, mulai bernyanyi, lalu hanya bergumam. | In Kampung Nelayan, stilt houses stand over the ebbed water. Fishers mend nets for the sea offering, start to sing, then only hum. |
+| BEAT_SONG_HOOK_3 | Seorang nenek berhenti di tengah baris, menatap tangannya, lalu mengambil jarum lagi seolah tak ada apa-apa. | An old woman stops mid-line, looks at her hands, then picks her needle up again as if nothing happened. |
+| BEAT_SONG_HOOK_4 | Ikan asin tergantung rapi di rak jemur. Tak ada yang berani tertawa keras. | Salt fish hang in neat rows on the drying racks. Nobody dares laugh loudly. |
 | @NPC_HERO_NAME | | |
-| BEAT_SONG_HOOK_H1 | Lagu itu hilang? Dari siapa aku bisa mendapatkannya? | The song is lost? Who can I get it from? |
+| BEAT_SONG_HOOK_H1 | Lagunya hilang? Siapa yang masih menyimpannya? | The song is lost? Who still has it? |
 | @ | | |
-| BEAT_SONG_HOOK_2 | Di ujung dermaga, seorang lelaki tua berdiri menghadap laut, dan seorang gadis muda menggulung tali dengan terlalu keras. | At the end of the jetty an old man stands facing the sea, and a young girl coils a rope far too hard. |
+| BEAT_SONG_HOOK_2 | Di ujung dermaga, seorang lelaki tua menghadap laut, dan seorang gadis menggulung tali terlalu keras. | At the end of the jetty an old man faces the sea, and a young girl coils a rope far too hard. |
 
 VERIFY: the sea offering (sedekah laut, labuhan) and how the village keeps it; the song is the game's.
 
@@ -4180,14 +4180,14 @@ VERIFY: the sea offering (sedekah laut, labuhan) and how the village keeps it; t
 The hub (entry H) sits before entry 6 so the player can still ask; entry 6 is the plain nudge once the hub is left.
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_WIRYO_V6 | Sore tadi kubisikkan lagi nama almarhumah istriku ke deburan ombak, dan ombak membalas lembut. Lautan mengingat ketulusan orang yang tabah. | At dusk I whispered my late wife's name to the surf once more, and the tide murmured softly in return. The sea remembers the steadfast of heart. |
+| 1 | DLG_WIRYO_V6 | Senja tadi kubisikkan nama istriku ke ombak. Ia menjawab, pelan. Laut ingat orang yang sabar. | At dusk I whispered my wife's name to the surf. It answered, softly. The sea remembers the patient. |
 | 3 | @NPC_WIRYO_NAME | | |
-| 3 | DLG_WIRYO_V1 | Berhenti persis di batas buih ombak pasang, Nak! Laut Kidul punya tata krama sakral, dan sang ombak menguji siapa saja yang berani mendekat. | Halt right at the high-tide foam line, child! The Southern Sea observes sacred protocols, and the roaring breakers test all who approach. |
+| 3 | DLG_WIRYO_V1 | Pelan, Nak. Berhenti di batas buih. Laut di sini ada aturannya, dan ia suka melihat siapa yang mendekat. | Easy, child. Stop at the foam line. The sea has manners here, and it likes to see who comes. |
 | 3 | @NPC_HERO_NAME | | |
-| 3 | DLG_WIRYO_H1 | Aku mencari suara adikku. Orang di desaku bilang laut tak pernah lupa. | I'm looking for my sister's voice. They say in my village the sea never forgets. |
+| 3 | DLG_WIRYO_H1 | Aku mencari suara adikku. Di desaku orang bilang laut tak pernah lupa. | I'm looking for my sister's voice. Back home they say the sea never forgets. |
 | 3 | @NPC_WIRYO_NAME | | |
-| 3 | DLG_WIRYO_V2 | Empat puluh tahun aku menambang garam di pantai karang ini. Laut tak pernah mengembalikan apa yang diambilnya, tapi ombak tak pernah lupa nama yang dibisikkan ke air. | For forty winters I have harvested salt upon these rocky bluffs. The sea never returns what it claims, yet the tides never forget a name whispered into the brine. |
-| 3 | DLG_WIRYO_V3 | Penguasa samudra ini adalah Kanjeng Ratu Kidul. Pantangan mutlak bagi siapa pun memakai pakaian hijau gadung di tepi pantainya, karena hijau adalah warna kebesaran sang Ratu! | The sovereign of these infinite waters is Kanjeng Ratu Kidul. It is strict taboo to wear emerald green garments along her shores, for green is the Queen's royal color! |
+| 3 | DLG_WIRYO_V2 | Empat puluh tahun aku mengambil garam di karang ini. Laut tak mengembalikan apa yang ia ambil, tapi nama yang dibisikkan ke air tak pernah ia lupa. | Forty years I've raked salt on this shore. The sea won't give back what it takes, but a name whispered to it, it keeps. |
+| 3 | DLG_WIRYO_V3 | Ini wilayah Kanjeng Ratu Kidul. Jangan pakai hijau di pantai ini, itu warnanya. Dan sekarang, bantu kampung ini mengingat lagunya. | This is Kanjeng Ratu Kidul's water. Don't wear green on this shore, it's her colour. Now help the village remember its song. |
 | 3 | DLG_WIRYO_V301 | Orang tua kami menyebutnya tiga ujian suci: obor di karang, arus di gua, dan ombak di keraton. Yang lulus ketiganya, laut menyebut namanya. | Our elders call them the three sacred trials: the torches on the reef, the current in the cave, and the waves at the pavilion. Whoever passes all three, the sea says their name. |
 | 3 | @NPC_HERO_NAME | | |
 | 3 | DLG_WIRYO_H301 | Tapi tak seorang pun di sini bernyanyi. | But nobody here is singing at all. |
@@ -4213,7 +4213,7 @@ The hub (entry H) sits before entry 6 so the player can still ask; entry 6 is th
 | T3 | DLG_WIRYO_V313 | Ujian pertama di karang: barisan obor Lampor yang berjalan di air surut. Padamkan, jangan kejar. | The first trial is on the reef: the Lampor torch-lines walking on low-tide water. Put them out, don't chase them. |
 | T3 | DLG_WIRYO_V314 | Kedua di gua karang, tempat arus palung menguji siapa yang ingin lewat. Ketiga di keraton, tempat ombak menjawab. | The second in the sea cave, where the abyssal current tests who wants to pass. The third at the pavilion, where the waves answer. |
 | T3 | DLG_WIRYO_V315 | Tak seorang pun menang atas ujian ini. Kau hanya lulus, atau tidak. | Nobody wins these trials. You only pass, or you don't. |
-| 6 | DLG_WIRYO_V4 | Jika kau hendak menyeberangi palung karang menuju kuil bawah laut, kita harus melarung Sedekah Laut—rakit sesaji kembang tujuh rupa dan tumpeng kuning untuk memohon izin. | If you seek to cross the coral trench to the sunken temple, we must release the Sedekah Laut—a raft of seven-scented petals and yellow rice to ask safe passage. |
+| 6 | DLG_WIRYO_V4 | Kumpulkan tiga bait itu dulu. Satu dari tiap keluarga. Baru laut mau mendengarkan kita. | Gather the three verses first. One from each family. Then the sea will listen. |
 
 | Key | ID | EN | do |
 |-----|----|----|----|
@@ -4285,7 +4285,7 @@ VERIFY: the green taboo on the southern coast; the juru kunci's role; Nyi Roro K
 | T3 | @NPC_KIDUL_SARI_NAME | | |
 | T3 | DLG_KIDUL_SARI_V23 | Waktu aku kecil, ayahku melaut di malam sedekah laut, dan suar pasang padam karena badai. | When I was small, my father went to sea on sedekah laut night, and the tidal beacons went out in a storm. |
 | T3 | DLG_KIDUL_SARI_V24 | Seluruh kampung menyalakan obor di dermaga sambil bernyanyi, dan ia pulang lewat suara itu. Itu alasanku. | The whole village lit torches on the jetty and sang, and he came home by that sound. That's my reason. |
-| 6 | DLG_KIDUL_SARI_2 (keep) | Aku tak peduli seberapa ganas arus bawah laut! Ambil dayung cadanganku ini, kita dayung perahu menembus kabut karang bersama-sama! | I don't care how treacherous the rip currents rage! Take my spare oar—we will row through the reef fog and bring the lost souls home together! |
+| 6 | DLG_KIDUL_SARI_2 (keep) | Jangan melamun, Kak. Tali dan suar sudah siap. Kita mulai dari bakau, sebelum air naik. | No daydreaming, Kak. Rope and beacons are ready. We start in the mangrove, before the water rises. |
 
 | Key | ID | EN | do |
 |-----|----|----|----|
@@ -4313,16 +4313,16 @@ The three verses are the sea-song (the game's). `song_3` opens the memory.
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_SONG_WHOLE_1 | Kau mengucapkan ketiga bait itu pelan-pelan di dermaga: pasang, perahu pulang, nama dalam air. Seorang nelayan berhenti menambal jala. | You say the three verses slowly on the jetty: the tide, the boats coming home, the name in the water. A fisher stops mending his net. |
-| BEAT_SONG_WHOLE_2 | Lalu nenek yang menangis mengangkat suaranya, dan seluruh dermaga ikut, tersendat, salah nada, tapi bernyanyi. | Then the old woman who wept lifts her voice, and the whole jetty joins, stumbling, off-key, but singing. |
+| BEAT_SONG_WHOLE_1 | Kau mengucapkan tiga bait itu pelan-pelan di dermaga: pasang, perahu pulang, nama dalam air. Seorang nelayan berhenti menambal jala. | You say the three verses slowly on the jetty: the tide, boats coming home, the name in the water. A fisher stops mending his net. |
+| BEAT_SONG_WHOLE_2 | Lalu nenek yang tadi menangis mengangkat suara, dan seluruh dermaga ikut. Sumbang, tersendat, tapi bernyanyi. | Then the old woman who wept lifts her voice, and the whole jetty joins. Off-key, stumbling, but singing. |
 | @NPC_KIDUL_SARI_NAME | | |
-| BEAT_SONG_WHOLE_3 | Itu salah di bait dua! Biarkan. Itu salah yang paling benar kudengar seumur hidupku. | That's wrong in verse two! Leave it. It's the rightest wrong I've heard in my life. |
+| BEAT_SONG_WHOLE_3 | Bait dua itu salah! Biarkan. Itu salah yang paling benar yang pernah kudengar. | Verse two is wrong! Leave it. It's the rightest wrong I've ever heard. |
 | @NPC_WIRYO_NAME | | |
-| BEAT_SONG_WHOLE_4 | Bait ketiga bukan lagu, Nak. Itu petunjuk memanggil. Aku akan menunjukkan dengan cara yang benar saat senja. | The third verse isn't a song, child. It's instructions for calling. I'll show you properly at dusk. |
+| BEAT_SONG_WHOLE_4 | Bait ketiga bukan lagu, Nak. Itu cara memanggil. Nanti kutunjukkan yang benar, saat senja. | The third verse isn't a song, child. It's how you call. I'll show you properly at dusk. |
 | @NPC_HERO_NAME | | |
-| BEAT_SONG_WHOLE_H1 | Aku mau lihat. Aku butuh tahu bagaimana memanggil sebuah nama ke laut. | I want to see. I need to know how to call a name to the sea. |
+| BEAT_SONG_WHOLE_H1 | Aku mau lihat. Aku perlu tahu cara memanggil sebuah nama ke laut. | I want to see. I need to know how to call a name to the sea. |
 | @ | | |
-| BEAT_SONG_WHOLE_5 | Di batu pantai, tempat Mbah Wiryo selalu berdiri, jejak kaki tua tertanam dalam di pasir. Lontarmu menghangat. | On the shore rock where Mbah Wiryo always stands, old footprints are pressed deep in the sand. Your lontar warms. |
+| BEAT_SONG_WHOLE_5 | Di batu pantai tempat Mbah Wiryo selalu berdiri, jejak kaki tua tertanam dalam di pasir. Lontarmu menghangat. | On the shore rock where Mbah Wiryo always stands, old footprints are pressed deep in the sand. Your lontar warms. |
 
 ### Memory `k8_wiryo_wife` (walk; K8, step 4.12; kelir figure: Sumi, Mbah Wiryo's wife; no death shown, the screen fades to light)
 | Key | ID | EN |
@@ -4338,19 +4338,19 @@ The three verses are the sea-song (the game's). `song_3` opens the memory.
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_WIRYO_DUSK_1 | Senja jingga turun ke pantai, seperti dalam ingatan. Mbah Wiryo berdiri di garis pasang, tangannya terjuntai di sisi tubuh. | An orange dusk settles over the shore, as in the memory. Mbah Wiryo stands at the tide line, hands hanging at his sides. |
+| BEAT_WIRYO_DUSK_1 | Senja jingga turun di pantai, seperti dalam ingatan tadi. Mbah Wiryo berdiri di garis pasang, tangan terkulai. | Orange dusk settles on the shore, as in the memory. Mbah Wiryo stands at the tide line, hands hanging. |
 | @NPC_WIRYO_NAME | | |
 | BEAT_WIRYO_DUSK_2 | Sumi. | Sumi. |
 | @ | | |
-| BEAT_WIRYO_DUSK_3 | Ombak naik, putih di tepinya, dan membisikkan sesuatu yang bukan suara siapa pun: Sumi. Bunyinya sama, empat puluh tahun tanpa ganti. | A wave climbs, white at its edge, and whispers something that is no one's voice: Sumi. The same sound, forty years unchanged. |
+| BEAT_WIRYO_DUSK_3 | Ombak naik, putih di tepinya, dan membisikkan sesuatu yang bukan suara siapa pun: Sumi. Bunyinya sama, empat puluh tahun tak berubah. | A wave climbs, white at its edge, and whispers something no one's voice: Sumi. The same sound, forty years unchanged. |
 | @NPC_WIRYO_NAME | | |
-| BEAT_WIRYO_DUSK_4 | Kau melihatnya, ya? Tadi, dalam ingatan itu. Ia tersenyum. Aku tak pernah melihat bagian itu. | You saw her, didn't you? Just now, in that memory. She smiled. I never got to see that part. |
+| BEAT_WIRYO_DUSK_4 | Kau melihatnya, kan? Tadi, dalam ingatan itu. Ia tersenyum. Aku tak pernah melihat bagian itu. | You saw her, didn't you? Just now, in the memory. She smiled. I never saw that part. |
 | @NPC_HERO_NAME | | |
 | BEAT_WIRYO_DUSK_H1 | Ia tersenyum, Mbah. Ia mengajarimu, dan ia tersenyum. | She smiled, Mbah. She taught you, and she smiled. |
 | @NPC_WIRYO_NAME | | |
-| BEAT_WIRYO_DUSK_5 | Terima kasih. Itu cukup untuk empat puluh tahun lagi. Sekarang panggillah namanya sendiri, Nak. Namanya, bukan lagu. | Thank you. That's enough for forty more years. Now call hers, child. Her name, not the song. |
+| BEAT_WIRYO_DUSK_5 | Terima kasih. Itu cukup untuk empat puluh tahun lagi. Sekarang panggil namanya sendiri, Nak. Namanya, bukan lagunya. | Thank you. That's enough for forty more years. Now call hers, child. Her name, not the song. |
 | @ | | |
-| BEAT_WIRYO_DUSK_6 | Kau belum siap. Belum. Tapi kau sudah tahu cara berdiri di garis pasang. Sari menunggumu di dermaga, dengan tali dan suar. | You aren't ready. Not yet. But you know how to stand at the tide line. Sari waits on the jetty, with rope and beacons. |
+| BEAT_WIRYO_DUSK_6 | Kau belum siap, tapi kau sudah tahu cara berdiri di garis pasang. Sari menunggu di dermaga, dengan tali dan suar. | You're not ready yet. But you know how to stand at the tide line. Sari waits on the jetty with rope and beacons. |
 
 ### Chapter 4: The Mangrove and the Sea Cavern (4.13-4.16)
 
@@ -4358,17 +4358,17 @@ The three verses are the sea-song (the game's). `song_3` opens the memory.
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_BEACONS_LIT_1 | Suar ketiga menyala, dan ketiga cahaya pasang-surut berdenyut serempak, menyusuri air gelap di antara akar-akar bakau. | The third beacon catches, and all three tidal lights pulse together, running down the dark water between the mangrove roots. |
+| BEAT_BEACONS_LIT_1 | Suar ketiga menyala, dan ketiga cahaya berdenyut serempak menyusuri air gelap di antara akar bakau. | The third beacon catches, and all three lights pulse together down the dark water between the mangrove roots. |
 | @NPC_KIDUL_SARI_NAME | | |
-| BEAT_BEACONS_LIT_2 | Aku bisa melihat jalan pulang dari sini. Persis seperti waktu kecil. | I can see the way home from here. Exactly like when I was small. |
+| BEAT_BEACONS_LIT_2 | Aku bisa lihat jalan pulang dari sini. Persis seperti waktu kecil. | I can see the way home from here. Just like when I was small. |
 | @ | | |
-| BEAT_BEACONS_LIT_3 | Ia menarik napas panjang, dan tanpa sadar mulai bersenandung. Nada bait kedua, lalu kata-katanya, satu per satu, naik seperti gelembung. | She takes a long breath and, without noticing, begins to hum. The tune of the second verse, then the words, one by one, rising like bubbles. |
+| BEAT_BEACONS_LIT_3 | Ia menarik napas panjang dan tanpa sadar mulai bersenandung. Nada bait kedua, lalu kata-katanya, naik seperti gelembung. | She takes a long breath and, without noticing, hums. The tune of the second verse, then its words, rising like bubbles. |
 | @NPC_KIDUL_SARI_NAME | | |
-| BEAT_BEACONS_LIT_4 | "Perahu pulang, jala penuh..." Aku ingat! Nenek, aku ingat! | "Boats come home, nets full..." I remember! Grandmother, I remember! |
+| BEAT_BEACONS_LIT_4 | "Perahu pulang, jala penuh..." Aku ingat! Nek, aku ingat! | "Boats come home, nets full..." I remember! Nek, I remember! |
 | @NPC_HERO_NAME | | |
 | BEAT_BEACONS_LIT_H1 | Kau menyanyikannya tanpa salah. | You sang it without a mistake. |
 | @NPC_KIDUL_SARI_NAME | | |
-| BEAT_BEACONS_LIT_5 | Satu kata salah, tapi nenekku selalu begitu. Ayo, Karang menunggu, dan ia tak sesabar suar. | One wrong word, but my grandmother always did too. Come on, the reef is waiting, and it's less patient than a beacon. |
+| BEAT_BEACONS_LIT_5 | Satu kata salah, tapi nenekku juga selalu begitu. Ayo, karang menunggu, dan ia tak sesabar suar. | One word wrong, but my grandmother always did that too. Come on, the reef is waiting, and it's less patient than a beacon. |
 
 ### Clue `reef_thread` (step 4.14; a thread tied to a rock on the sandbar of `sk_karang`: Laras's trail; journal note only)
 | Key | ID | EN |
@@ -4381,13 +4381,13 @@ The three verses are the sea-song (the game's). `song_3` opens the memory.
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_TRIAL_TORCH_1 | Di karang surut, barisan Lampor berjalan seperti prosesi obor yang lupa tujuannya. Satu demi satu kau memadamkannya, tanpa mengejar. | On the low-tide reef the Lampor walk like a torch procession that forgot its destination. One by one you put them out, without chasing. |
-| BEAT_TRIAL_TORCH_2 | Yang terakhir padam, dan karang menjadi sunyi seperti halaman kitab yang selesai dibaca. | The last goes out, and the reef falls quiet like a page of a book that's been read. |
+| BEAT_TRIAL_TORCH_1 | Di karang surut, barisan Lampor berjalan seperti prosesi obor yang lupa tujuan. Satu per satu kau padamkan, tanpa mengejar. | On the low-tide reef the Lampor walk like a torch procession that forgot where it was going. One by one you put them out, without chasing. |
+| BEAT_TRIAL_TORCH_2 | Yang terakhir padam, dan karang sunyi seperti halaman kitab yang selesai dibaca. | The last goes out, and the reef falls quiet like a finished page. |
 | @NPC_HERO_NAME | | |
-| BEAT_TRIAL_TORCH_H1 | Itu yang pertama. Aku tak melawan mereka. Aku hanya mengingatkan mereka bahwa waktunya habis. | That's the first. I didn't fight them. I only reminded them their time was up. |
+| BEAT_TRIAL_TORCH_H1 | Itu yang pertama. Aku tak melawan mereka. Aku cuma mengingatkan bahwa waktunya habis. | That's the first. I didn't fight them. I only reminded them their time was up. |
 | @ | | |
-| BEAT_TRIAL_TORCH_3 | Di batu pipih di ujung karang, sebuah tanda obor terukir menyala hijau samar, lalu padam. Kau tak menunjuknya. | On a flat stone at the reef's end, a torch-mark carved there glows faintly green, then fades. You don't point at it. |
-| BEAT_TRIAL_TORCH_4 | Dari timur, ombak membawa suara lonceng perunggu, jauh dan dalam. Gua Karang memanggil. | From the east, the surf carries the sound of a bronze bell, far and deep. The Gua Karang calls. |
+| BEAT_TRIAL_TORCH_3 | Di batu pipih di ujung karang, tanda obor menyala hijau samar, lalu padam. Kau tak menunjuknya. | On a flat stone at the reef's end, a torch mark glows faint green, then fades. You don't point at it. |
+| BEAT_TRIAL_TORCH_4 | Dari timur, ombak membawa bunyi lonceng perunggu, jauh dan dalam. Gua Karang memanggil. | From the east, the surf carries a bronze bell, far and deep. Gua Karang is calling. |
 
 ### Clue `gua_bell_marks` (step 4.15; green stains and bronze marks on the cave wall of `sk_gua`; ASSUMED id; journal note only)
 | Key | ID | EN |
@@ -4400,13 +4400,13 @@ The three verses are the sea-song (the game's). `song_3` opens the memory.
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_GUA_APPROACH_1 | Gua itu bergema seperti mangkuk raksasa. Setiap langkahmu kembali padamu dua kali, sedikit berubah. | The cave echoes like a giant bowl. Every step comes back to you twice, slightly changed. |
-| BEAT_GUA_APPROACH_2 | Di ujung lorong, air hitam setinggi dada berdiri seperti dinding, tenang, tak bergerak. Arus palung menjaganya. | At the corridor's end, black water stands chest-high like a wall, calm, motionless. The abyssal current guards it. |
+| BEAT_GUA_APPROACH_1 | Gua itu bergema seperti mangkuk raksasa. Tiap langkah kembali padamu dua kali, sedikit berubah. | The cave echoes like a giant bowl. Each step comes back to you twice, slightly changed. |
+| BEAT_GUA_APPROACH_2 | Di ujung lorong, air hitam setinggi dada berdiri seperti dinding, tenang dan tak bergerak. Arus palung menjaganya. | At the corridor's end, black water stands chest-high like a wall, calm and still. The abyssal current guards it. |
 | @NPC_HERO_NAME | | |
-| BEAT_GUA_APPROACH_H1 | Aku tak bisa melewatinya. Seharusnya ada cara membukanya dari dalam, bukan dari sini. | I can't pass it. There should be a way to open it from inside, not from here. |
+| BEAT_GUA_APPROACH_H1 | Aku tak bisa lewat. Pasti ada cara membukanya dari dalam, bukan dari sini. | I can't get through. There must be a way to open it from inside, not from here. |
 | @ | | |
-| BEAT_GUA_APPROACH_3 | Lontar di sabukmu menghangat dan berdenyut ke arah air. Sesuatu di seberang sana sedang menulis. | The lontar at your belt warms and pulses toward the water. Something on the other side is writing. |
-| BEAT_GUA_APPROACH_4 | Dari kedalaman, lonceng pertama berbunyi sekali, sangat pelan, lalu berhenti. Seperti seseorang mencoba. | From the depths, the first bell rings once, very softly, then stops. Like someone trying. |
+| BEAT_GUA_APPROACH_3 | Lontar di sabukmu menghangat dan berdenyut ke arah air. Di seberang, seseorang sedang menulis. | The lontar at your belt warms and pulses toward the water. Someone on the other side is writing. |
+| BEAT_GUA_APPROACH_4 | Dari kedalaman, lonceng pertama berbunyi sekali, sangat pelan, lalu berhenti. Seperti orang yang sedang mencoba. | From the depths the first bell rings once, very softly, then stops. Like someone trying. |
 
 ### Clue `lc5_cavern` (step 4.16; the sunken bronze bells; opens chapter `lc5`; the zone doc's id, the old `lc5_lontar` at the cliff shrine is retired)
 | Key | ID | EN |
@@ -4436,13 +4436,13 @@ On completion (`memory_done:lc5`): `flag:mq4_lc`, `flag:laras_key_tidal_gate` (l
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_TRIAL_CURRENT_1 | Gerbang air terbuka karena Laras, dan arus palung menyeretmu dengan lembut, seperti tangan yang menimbang sebuah barang. | The water gate is open because of Laras, and the abyssal current drags you gently, like a hand weighing an object. |
-| BEAT_TRIAL_CURRENT_2 | Penjaga palung menerjang dari gelap: yang bertaring, yang bersisik putih, yang bersinar. Kau bertahan tanpa mengejar kemenangan. | The cavern guardians lunge from the dark: the fanged, the white-scaled, the glowing. You hold your ground without chasing victory. |
+| BEAT_TRIAL_CURRENT_1 | Gerbang air terbuka karena Laras, dan arus palung menyeretmu pelan, seperti tangan yang menimbang barang. | The water gate is open because of Laras, and the current drags you gently, like a hand weighing something. |
+| BEAT_TRIAL_CURRENT_2 | Penjaga palung menerjang dari gelap: yang bertaring, yang bersisik putih, yang bersinar. Kau bertahan tanpa mengejar menang. | The cavern guardians lunge from the dark: the fanged, the white-scaled, the glowing. You hold your ground without chasing a win. |
 | @NPC_HERO_NAME | | |
-| BEAT_TRIAL_CURRENT_H1 | Nenek Sari benar. Arus ini tak mau dikalahkan. Ia hanya ingin tahu apakah kau akan pergi. | Sari's grandmother was right. This current doesn't want to be beaten. It only wants to know whether you'll leave. |
+| BEAT_TRIAL_CURRENT_H1 | Nenek Sari benar. Arus ini tak mau dikalahkan. Ia cuma ingin tahu apakah kau akan pergi. | Sari's grandmother was right. This current doesn't want to be beaten. It only wants to know if you'll leave. |
 | @ | | |
-| BEAT_TRIAL_CURRENT_3 | Arus mereda. Di dinding gua, tanda kedua terukir menyala hijau samar: gelombang di bawah gelombang. Lalu padam. | The current eases. On the cave wall a second mark glows faintly green: a wave beneath a wave. Then it fades. |
-| BEAT_TRIAL_CURRENT_4 | Tali di pinggangmu menarik tiga kali, pelan: Sari, di luar. Jalan ke atas terbuka. | The rope at your waist tugs three times, softly: Sari, outside. The way up is open. |
+| BEAT_TRIAL_CURRENT_3 | Arus mereda. Di dinding gua, tanda kedua menyala hijau samar: gelombang di bawah gelombang. Lalu padam. | The current eases. On the cave wall a second mark glows faint green: a wave beneath a wave. Then it fades. |
+| BEAT_TRIAL_CURRENT_4 | Tali di pinggangmu tertarik tiga kali, pelan: Sari, di luar. Jalan ke atas terbuka. | The rope at your waist tugs three times, softly: Sari, outside. The way up is open. |
 
 ### Clue `shrine_tale` and memory `k9_queen_south` (step 4.18; K9, walk; the carved tale at the cliff shrine `kidul_3`; one retelling among several, told as belief, no fight, no appearance)
 | Key | ID | EN |
@@ -4465,13 +4465,13 @@ VERIFY: Nyi Roro Kidul retellings (a cast-out princess, the sea itself); told as
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_K9_AFTER_1 | Angin tebing meniup api lampu di kuil, tapi apinya tak padam. Ia hanya miring, seperti membungkuk. | The cliff wind blows on the shrine lamp, but the flame doesn't die. It only leans, as if bowing. |
-| BEAT_K9_AFTER_2 | Di bawah, laut sangat tenang, terlalu tenang, seperti pendengar yang menahan napas. | Below, the sea is very calm, too calm, like a listener holding its breath. |
+| BEAT_K9_AFTER_1 | Angin tebing meniup api lampu kuil, tapi apinya tak padam. Ia hanya miring, seperti membungkuk. | The cliff wind blows on the shrine lamp, but the flame doesn't die. It only leans, as if bowing. |
+| BEAT_K9_AFTER_2 | Di bawah, laut tenang sekali, seperti pendengar yang menahan napas. | Below, the sea is very calm, like a listener holding its breath. |
 | @NPC_HERO_NAME | | |
-| BEAT_K9_AFTER_H1 | Satu kisah di antara banyak. Tapi malam ini aku merasa ia mendengarkan semuanya. | One tale among many. But tonight I feel she's listening to all of them. |
+| BEAT_K9_AFTER_H1 | Satu kisah di antara banyak. Tapi malam ini rasanya ia mendengarkan semuanya. | One tale among many. But tonight it feels like she's listening to all of them. |
 | @ | | |
-| BEAT_K9_AFTER_3 | Di batu persembahan di ujung tebing, bekas-bekas lilin dan bunga layu berderet. Tak seorang pun pernah meminta apa pun yang besar di sini. | On the offering stone at the cliff's end, candle stubs and wilted flowers lie in rows. Nobody ever asked for anything large here. |
-| BEAT_K9_AFTER_4 | Kau tahu apa yang akan kau tanyakan. Kau berjalan ke altar dan memanggil satu nama, pelan, ke arah air. | You know what you'll ask. You walk to the altar and call one name, softly, toward the water. |
+| BEAT_K9_AFTER_3 | Di batu persembahan di ujung tebing berderet sisa lilin dan bunga layu. Tak ada yang pernah meminta hal besar di sini. | On the offering stone at the cliff's end lie candle stubs and wilted flowers. Nobody ever asked for anything large here. |
+| BEAT_K9_AFTER_4 | Kau tahu apa yang akan kau minta. Kau berjalan ke altar dan memanggil satu nama, pelan, ke arah air. | You know what you'll ask. You walk to the altar and call one name, softly, toward the water. |
 
 ### cliff_altar (the altar at the cliff shrine `kidul_3`; name NPC_CLIFF_ALTAR_NAME; step 4.19; Choice 5; keys V1+; keep `CHOICE_OFFER_MEMORY` and `CHOICE_OFFER_SONG` as the key names the data already uses)
 | Entry | if | do |
@@ -4494,7 +4494,7 @@ VERIFY: Nyi Roro Kidul retellings (a cast-out princess, the sea itself); told as
 | 1 | DLG_CLIFF_ALTAR_V4 | Yang satu hilang darimu selamanya. Yang lain hilang dari desa itu. Tak ada yang gratis di antara dua pilihan ini. | One is lost to you forever. The other is lost to that village. Nothing is free between these two. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_CLIFF_ALTAR_H3 | Beringin itu. Ingatanku tentang pohon beringin, yang kupanjat sebelum aku tahu arti kehilangan. Atau lagunya. | That banyan. My memory of the banyan tree, the one I climbed before I knew what losing meant. Or the song. |
-| 2 | DLG_CLIFF_ALTAR_2 | Ombak di bawah tebing menjawab dengan tenang. Jalan menuju keraton laut telah terbuka. | The waves below the cliff answer calmly. The way to the sea court stands open. |
+| 2 | DLG_CLIFF_ALTAR_2 | Ombak di bawah tebing menjawab pelan. Jalan ke keraton laut sudah terbuka. | The waves below the cliff answer softly. The way to the sea court is open. |
 
 | Key | ID | EN | do |
 |-----|----|----|----|
@@ -4505,25 +4505,25 @@ VERIFY: Nyi Roro Kidul retellings (a cast-out princess, the sea itself); told as
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_OFFERING_MEMORY_1 | Kau memikirkan beringin itu: dahan rendah, kulit kasar, bau getah, suara Laras tertawa di bawah. Kau menyerahkannya ke angin, sepotong demi sepotong. | You think of the banyan: the low branch, the rough bark, the smell of sap, Laras laughing below. You hand it to the wind, piece by piece. |
-| BEAT_OFFERING_MEMORY_2 | Ombak di bawah menyerapnya tanpa suara. Tebing bergetar pelan, seperti pintu yang digeser. | The waves below take it in without a sound. The cliff shakes softly, like a door sliding. |
+| BEAT_OFFERING_MEMORY_1 | Kau memikirkan beringin itu: dahan rendah, kulit kasar, bau getah, Laras tertawa di bawah. Kau serahkan ke angin, sepotong demi sepotong. | You think of the banyan: the low branch, the rough bark, the smell of sap, Laras laughing below. You hand it to the wind, piece by piece. |
+| BEAT_OFFERING_MEMORY_2 | Ombak di bawah menyerapnya tanpa suara. Tebing bergetar pelan, seperti pintu yang digeser. | The waves below take it in without a sound. The cliff trembles softly, like a door sliding. |
 | @NPC_HERO_NAME | | |
-| BEAT_OFFERING_MEMORY_H1 | Aku ingat pohonnya. Tapi bukan lagi apa yang kami bicarakan di bawahnya. Satu detail hilang, dan aku tahu ia hilang. | I remember the tree. But not what we talked about under it. One detail is gone, and I know it's gone. |
+| BEAT_OFFERING_MEMORY_H1 | Aku ingat pohonnya. Tapi bukan lagi apa yang kami bicarakan di bawahnya. Satu hal hilang, dan aku tahu ia hilang. | I remember the tree. But not what we talked about under it. One thing is gone, and I know it's gone. |
 | @ | | |
-| BEAT_OFFERING_MEMORY_3 | Di cakrawala selatan, jalan batu kuno naik dari air, mulus, bergaris lumut, menuju cahaya hijau. | On the southern horizon an ancient stone causeway rises from the water, smooth, mossy, toward the green light. |
-| BEAT_OFFERING_MEMORY_4 | Ombak akan terasa lebih ringan di tanganmu. Itu harganya, dan itu hadiahnya. | Ombak will feel lighter in your hand. That is the price, and that is the gift. |
+| BEAT_OFFERING_MEMORY_3 | Di cakrawala selatan, jalan batu kuno naik dari air, mulus dan berlumut, menuju cahaya hijau. | On the southern horizon an ancient stone causeway rises from the water, smooth and mossy, toward the green light. |
+| BEAT_OFFERING_MEMORY_4 | Ombak akan terasa lebih ringan di tanganmu. Itu harganya, dan itu hadiahnya. | Ombak will feel lighter in your hand. That is the price, and the gift. |
 
 ### Beat `offering_song` (if `!flag:beat_offering`, `flag:choice_offer_song`; do `flag:beat_offering`). Choice 5, Offer Song: Berkah Pesisir (one auto-revive shield in Act VI); the coastal villagers sing at the epilogue ruwatan
 | Key | ID | EN |
 |-----|----|----|
 | @ | | |
-| BEAT_OFFERING_SONG_1 | Kau mengucapkan tiga bait itu ke arah laut, pelan, tanpa menunjuk. Pasang, perahu pulang, nama dalam air. | You say the three verses toward the sea, softly, without pointing. The tide, boats coming home, a name in the water. |
-| BEAT_OFFERING_SONG_2 | Ombak di bawah tebing berhenti sejenak, lalu menjawab dengan nada yang sama, utuh, dari ujung ke ujung. | The waves beneath the cliff pause, then answer in the same tune, whole, from end to end. |
-| BEAT_OFFERING_SONG_3 | Jauh di pantai, di Kampung Nelayan, seseorang berhenti menambal jala dan mulai bernyanyi lebih keras dari sebelumnya, karena laut sekarang yang menyimpannya. | Far away on the shore, in Kampung Nelayan, someone stops mending a net and begins to sing louder than before, because the sea is holding it now. |
+| BEAT_OFFERING_SONG_1 | Kau ucapkan tiga bait itu ke arah laut, pelan, tanpa menunjuk. Pasang, perahu pulang, nama dalam air. | You say the three verses toward the sea, softly, without pointing. The tide, boats coming home, a name in the water. |
+| BEAT_OFFERING_SONG_2 | Ombak di bawah tebing berhenti sejenak, lalu menjawab dengan nada yang sama, utuh dari ujung ke ujung. | The waves below the cliff pause, then answer in the same tune, whole from end to end. |
+| BEAT_OFFERING_SONG_3 | Jauh di Kampung Nelayan, seseorang berhenti menambal jala dan bernyanyi lebih keras dari tadi, karena kini laut yang menyimpannya. | Far off in Kampung Nelayan, someone stops mending a net and sings louder than before, because the sea is keeping it now. |
 | @NPC_HERO_NAME | | |
-| BEAT_OFFERING_SONG_H1 | Lagunya tidak hilang. Hanya dipinjamkan, dan laut akan mengembalikannya kapan pun mereka butuh. | The song isn't lost. Only lent, and the sea will give it back whenever they need it. |
+| BEAT_OFFERING_SONG_H1 | Lagunya tidak hilang. Cuma dipinjamkan, dan laut akan mengembalikannya kapan pun mereka perlu. | The song isn't lost. Only lent, and the sea will give it back whenever they need it. |
 | @ | | |
-| BEAT_OFFERING_SONG_4 | Sesuatu hangat menyelimuti bahumu seperti kain basah: berkah pesisir, ringan, tak terlihat. Jalan batu kuno naik dari air menuju cahaya hijau. | Something warm settles over your shoulders like a damp cloth: the coast's blessing, light, unseen. An ancient stone causeway rises from the water toward the green light. |
+| BEAT_OFFERING_SONG_4 | Sesuatu yang hangat menyelimuti bahumu seperti kain basah: berkah pesisir. Jalan batu kuno naik dari air menuju cahaya hijau. | Something warm settles on your shoulders like a damp cloth: the coast's blessing. A stone causeway rises from the water toward the green light. |
 
 ### Chapter 6: The Trial of the Waves (4.20-4.22)
 
@@ -4566,15 +4566,15 @@ VERIFY: Nyi Roro Kidul retellings (a cast-out princess, the sea itself); told as
 ### Beat `kidul_trial` (if `!flag:beat_kidul_trial`, `flag:mq4_8`; do `flag:beat_kidul_trial`). 4.21, Sacred Trial III: the Waves. Nyi Roro Kidul speaks once, from afar
 | Key | ID | EN |
 |-----|----|----|
-| BEAT_KIDUL_TRIAL_1 | Ombak ketiga surut, dan air di paviliun berhenti bergerak. Tak ada yang naik dari laut. Hanya hijau, jauh sekali, di seberang batas pasang. | The third wave ebbs, and the water in the pavilion stills. Nothing climbs out of the sea. Only green, very far, beyond the tide line. |
-| BEAT_KIDUL_TRIAL_3 | Ketiga ujian telah lewat: obor, arus, ombak. Tiga tanda hijau di dinding paviliun menyala bersamaan, lalu menjadi satu. | All three trials are passed: the torches, the current, the waves. The three green marks on the pavilion wall light together, then become one. |
+| BEAT_KIDUL_TRIAL_1 | Ombak ketiga surut, dan air di paviliun berhenti bergerak. Tak ada yang naik dari laut. Hanya hijau, jauh, di seberang batas pasang. | The third wave ebbs and the pavilion water goes still. Nothing climbs out of the sea. Only green, far off, beyond the tide line. |
+| BEAT_KIDUL_TRIAL_3 | Tiga ujian lewat: obor, arus, ombak. Tiga tanda hijau di dinding paviliun menyala bersamaan, lalu menjadi satu. | Three trials passed: torches, current, waves. The three green marks on the pavilion wall light together, then become one. |
 | @NPC_RATU_KIDUL_NAME | | |
-| BEAT_KIDUL_TRIAL_2 | Kau tidak melawanku. Ambil aksara Ombak, sang gelombang, dan kainku. Laut mengingat apa yang diberikan kepadanya. | You did not fight me. Take the letter Ombak, the wave, and my cloth. The sea remembers what is given to it. |
+| BEAT_KIDUL_TRIAL_2 | Kau tidak melawanku. Ambillah aksara Ombak dan kainku. Laut mengingat apa yang diberikan kepadanya. | You did not fight me. Take the letter Ombak and my cloth. The sea remembers what is given to it. |
 | @ | | |
-| BEAT_KIDUL_TRIAL_4 | Suara itu jauh, tenang, tanpa wajah. Kau tak menjawab dan tak menoleh. Beberapa kebaikan harus diterima dalam diam. | The voice is far, calm, without a face. You neither answer nor turn. Some kindnesses must be received in silence. |
-| BEAT_KIDUL_TRIAL_5 | Di dalam kepalamu, satu nama muncul, tak diminta: Laras. Laut menyebutnya dengan suara yang tak punya pemilik. | In your head one name rises, unasked: Laras. The sea says it in a voice that has no owner. |
+| BEAT_KIDUL_TRIAL_4 | Suara itu jauh, tenang, tanpa wajah. Kau tak menjawab dan tak menoleh. Sebagian kebaikan harus diterima dalam diam. | The voice is far and calm, without a face. You neither answer nor turn. Some kindnesses are received in silence. |
+| BEAT_KIDUL_TRIAL_5 | Di kepalamu satu nama muncul tanpa diminta: Laras. Laut menyebutnya dengan suara yang tak bertuan. | One name rises in your head, unasked: Laras. The sea says it in a voice with no owner. |
 | @ | | |
-| BEAT_KIDUL_TRIAL_6 | Hijau itu surut seperti napas dihembuskan. Kau membungkuk. Tak ada yang melihat. | The green recedes like a breath let go. You bow. Nobody sees. |
+| BEAT_KIDUL_TRIAL_6 | Hijau itu surut seperti napas yang dihembuskan. Kau membungkuk. Tak ada yang melihat. | The green recedes like a breath let go. You bow. Nobody sees. |
 
 Told as belief; she is never fought or touched. VERIFY the tradition of her trial as portrayed.
 
@@ -4586,9 +4586,9 @@ Told as belief; she is never fought or touched. VERIFY the tradition of her tria
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_KIDUL_ALTAR_V1 | Di altar paviliun, sehelai kain hijau terlipat, basah oleh ombak yang tak ada. | On the pavilion altar, a green cloth lies folded, wet from a wave that isn't there. |
+| 1 | DLG_KIDUL_ALTAR_V1 | Di altar paviliun ada kain hijau terlipat, basah oleh ombak yang tak terlihat. | On the pavilion altar a green cloth lies folded, wet from a wave you can't see. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_KIDUL_ALTAR_H1 | Satu goresan, naik dan turun. Ombak. | One stroke, rising and falling. Ombak. |
+| 1 | DLG_KIDUL_ALTAR_H1 | Satu goresan, naik lalu turun. Ombak. | One stroke, up and then down. Ombak. |
 | 1 | @ | | |
 | 1 | DLG_KIDUL_ALTAR_V3 | Garis itu tak punya awal dan akhir, hanya arah. Tanganmu belajar menulisnya seperti bernapas. | The line has no beginning or end, only direction. Your hand learns to write it like breathing. |
 | 1 | @NPC_HERO_NAME | | |
@@ -4601,14 +4601,14 @@ Told as belief; she is never fought or touched. VERIFY the tradition of her tria
 | @NPC_SEMAR_NAME | | |
 | BEAT_KIDUL_1 | Ombak. Satu-satunya huruf yang tak bisa dimakan Gerhana, karena laut menulisnya setiap saat. | Ombak. The one letter the Eclipse can't eat, because the sea writes it every moment. |
 | @NPC_HERO_NAME | | |
-| BEAT_KIDUL_H1 | Kau bilang laut tak pernah lupa. Kau tahu dari awal? | You said the sea never forgets. Did you know all along? |
+| BEAT_KIDUL_H1 | Kau bilang laut tak pernah lupa. Kau sudah tahu dari awal? | You said the sea never forgets. Did you know from the start? |
 | @NPC_SEMAR_NAME | | |
-| BEAT_KIDUL_2 | Setengahnya tahu, setengahnya berharap. Pintu gua terbuka dari paviliun ini, dan perisai gerhana Kala retak. Pergilah. | Half knew, half hoped. The cave opens from this pavilion, and Kala's eclipse shield cracks. Go. |
+| BEAT_KIDUL_2 | Setengah tahu, setengah berharap. Dari paviliun ini gua di belakang desamu bisa dibuka, dan perisai gerhana Kala retak. Pergilah. | Half knew, half hoped. From this pavilion the cave behind your village can be opened, and Kala's eclipse shield cracks. Go. |
 | @NPC_HERO_NAME | | |
-| BEAT_KIDUL_H2 | Laras masih menyebut namaku di air itu. Kuharap ia mendengar aku menjawab. | Laras still says my name in that water. I hope she hears me answer. |
+| BEAT_KIDUL_H2 | Laras masih menyebut namaku di air itu. Semoga ia dengar aku menjawab. | Laras still says my name in that water. I hope she hears me answer. |
 | @NPC_SEMAR_NAME | | |
-| BEAT_KIDUL_3 | Ia mendengar. Laut tak membawa suara, tapi ia membawa nama, dan nama lebih tahan lama. | She hears. The sea carries no voices, but it carries names, and names last longer. |
-| BEAT_KIDUL_4 | Jangan lupa pamit pada Mbah Wiryo. Orang tua itu pantas mendengar terima kasih, walau ia akan pura-pura tak butuh. | Don't forget to say goodbye to Mbah Wiryo. The old man deserves a thank-you, though he'll pretend he doesn't need one. |
+| BEAT_KIDUL_3 | Ia dengar. Laut tak membawa suara, tapi membawa nama, dan nama lebih awet. | She hears. The sea carries no voices, but it carries names, and names last longer. |
+| BEAT_KIDUL_4 | Jangan lupa pamit pada Mbah Wiryo. Orang tua itu pantas mendengar terima kasih, walau ia pura-pura tak butuh. | Don't forget to say goodbye to Mbah Wiryo. He deserves a thank-you, though he'll pretend he doesn't need one. |
 
 ### Camp talk `camp_kidul` (kidul_jurukunci entry 2 above; cond `flag:mq4_8`, `zone:sk_pantai`, `!flag:mq5_1`, `"quiet": true`; do `flag:camp_kidul`). Two variants after Choice 5, listed first
 | Entry | if | do |
@@ -4665,7 +4665,7 @@ No `laras_key` flag is set in Act VI; the only Laras flag is `laras_sabotage_kal
 |-----|----|----|
 | @ | | |
 | BEAT_PELATARAN_1 | Pelataran Waktu terbentang di depan gua: lantai batu hitam, tiang-tiang leluhur, dan langit Gerhana yang tak bergerak. | The Courtyard of Time spreads before the cave: black stone floor, ancestor pillars, and a stalled Eclipse sky. |
-| BEAT_PELATARAN_2 | Dua panji berdiri berdampingan di tengahnya, satu dari tiap tepi Pamali. Di bawahnya dua pasukan menahan gelombang bayangan, bahu ke bahu. | Two banners stand side by side in the middle, one from each bank of the Pamali. Beneath them two armies hold a tide of shadow, shoulder to shoulder. |
+| BEAT_PELATARAN_2 | Dua panji berdiri berdampingan, satu dari tiap tepi Pamali. Di bawahnya dua pasukan menahan ombak bayangan, bahu ke bahu. | Two banners stand side by side, one from each bank of the Pamali. Beneath them two armies hold back a tide of shadow, shoulder to shoulder. |
 | @NPC_CIUNG_WANARA_NAME | | |
 | BEAT_PELATARAN_3 | Kau terlambat, Penulis. Syukurlah. Kami baru saja belajar berbaris bersama. | You're late, writer. Good. We only just learned to march together. |
 | @NPC_HARIANG_BANGA_NAME | | |
@@ -4677,7 +4677,7 @@ No `laras_key` flag is set in Act VI; the only Laras flag is `laras_sabotage_kal
 | @NPC_HARIANG_BANGA_NAME | | |
 | BEAT_PELATARAN_6 | Maka sebut namamu keras-keras. Kami sudah mulai. Ciung bernyanyi sumbang. | So say your name loud. We started an hour ago. Ciung sings off-key. |
 | @NPC_CIUNG_WANARA_NAME | | |
-| BEAT_PELATARAN_7 | Aku tidak sumbang. Awas gelombang, Penulis! Bersihkan halaman ini, lalu temui kami di batu leluhur. | I'm not off-key. Mind the tide, writer! Clear this yard, then meet us at the ancestors' stone. |
+| BEAT_PELATARAN_7 | Aku tidak fals! Awas gelombangnya, penulis. Bersihkan pelataran, lalu temui kami di Batu Leluhur. | I'm not off-key! Mind the tide, writer. Clear the yard, then meet us at the Ancestors' Stone. |
 
 Allies who fight beside you are placed by flags (the NPC spots of `gk_pelataran` carry the conds below), so this one beat serves every save.
 
@@ -4986,7 +4986,7 @@ Entry 1 is the talk of step 5.2; its choices end the step. `write:aria_kebonan:j
 | BEAT_ARIA_REDEEM_4 | Dari mulut gua, sesuatu menoleh. Tirai Gerhana bergetar, seakan Kala merasa satu nama diambil kembali dari mulutnya. | From the cave mouth something turns. The Eclipse veil shivers, as if Kala felt one name taken back from his mouth. |
 | BEAT_ARIA_REDEEM_5 | Sekejap, sosok tinggi tanpa topeng berdiri di samping batu, lalu hilang. | For a heartbeat a tall figure with no mask stands beside the stone, then is gone. |
 | @NPC_HARIANG_BANGA_NAME | | |
-| BEAT_ARIA_REDEEM_6 | Tirai di mulut gua tak mempan oleh huruf biasa. Kau punya Ombak. Pakailah. | The veil at the cave mouth won't take ordinary letters. You have Ombak. Use it. |
+| BEAT_ARIA_REDEEM_6 | Tirai di mulut gua tak menerima huruf biasa. Gambar Ombak padanya. | The veil at the cave mouth ignores ordinary letters. Draw Ombak at it. |
 
 ### Beat `aria_release` (if `!flag:beat_aria`, `flag:choice_release_aria`, `flag:mq5_choice6`; do `flag:beat_aria`). Choice 6, release. The Keteguhan Sunyi passive is in effect from here; the Phase 3 note is in `kala_p3_release`
 | Key | ID | EN |
@@ -5003,7 +5003,7 @@ Entry 1 is the talk of step 5.2; its choices end the step. `write:aria_kebonan:j
 | @ | | |
 | BEAT_ARIA_RELEASE_5 | Napasmu melambat. Tanganmu mantap, dan aksara terasa ringan di ujung jari, seakan sunyi ikut menulis bersamamu. | Your breath slows. Your hand steadies, and the letters feel light at your fingertips, as if the quiet writes with you. |
 | @NPC_HARIANG_BANGA_NAME | | |
-| BEAT_ARIA_RELEASE_6 | Tirai di mulut gua tak mempan oleh huruf biasa. Kau punya Ombak. Pakailah. | The veil at the cave mouth won't take ordinary letters. You have Ombak. Use it. |
+| BEAT_ARIA_RELEASE_6 | Tirai di mulut gua tak menerima huruf biasa. Gambar Ombak padanya. | The veil at the cave mouth ignores ordinary letters. Draw Ombak at it. |
 
 ### Clue `eclipse_veil` (step 5.3; at the veil across the cave mouth in `gk_mulut`; hunt `kala`; the player draws *Ombak* to part it)
 | Key | ID | EN |
@@ -5139,7 +5139,7 @@ Correct answers: `GAP_RA_CUP_3` (the chipped one), `GAP_RA_TEA_2` (jasmine), `GA
 | @NPC_HERO_NAME | | |
 | BEAT_BRIDGE_H1 | Gema. Bukan mereka sendiri. | Echoes. Not the real ones. |
 | @ | | |
-| BEAT_BRIDGE_4 | Gema itu tak bicara. Mereka hanya meniru apa yang dulu mereka lakukan, sedikit lebih lambat, seperti kenangan yang kehabisan tenaga. | The echoes don't speak. They only copy what they did before, a little slower, like memories running out of strength. |
+| BEAT_BRIDGE_4 | Mereka tak bicara. Mereka hanya mengulang apa yang dulu mereka lakukan, sedikit lebih lambat. | They don't speak. They only repeat what they once did, a little slower. |
 | @NPC_HERO_NAME | | |
 | BEAT_BRIDGE_H2 | Kalau kuhadapi seperti dulu, mereka jatuh seperti dulu. | If I face them as I did, they'll fall as they did. |
 | @ | | |
@@ -5163,15 +5163,15 @@ Correct answers: `GAP_RA_CUP_3` (the chipped one), `GAP_RA_TEA_2` (jasmine), `GA
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | 1 | @NPC_SEMAR_NAME | | |
-| 1 | DLG_SEMAR_KALA_V1 | Hehehe... tenang, cucu-cucuku. Batara Kala bukanlah iblis yang harus dibunuh dengan tombak dendam. Siapa yang sanggup membunuh Waktu yang terus berjalan? | Hehehe... be calm, my children. Batara Kala is no mere demon to be butchered with a vengeful spear. For who among mortals can murder Time itself? |
+| 1 | DLG_SEMAR_KALA_V1 | Hehe, tenang, Nak. Kala bukan iblis yang bisa ditombak. Siapa yang sanggup membunuh Waktu? | Hehe, easy, child. Kala is no demon to be speared. Who could kill Time itself? |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_SEMAR_KALA_H1 | Ki Semar! Jika waktu tak bisa dibunuh, bagaimana kita menghentikan Batara Kala yang menelan ingatan dunia? | Ki Semar! If Time cannot be slain, how do we halt Batara Kala before he devours all history and memory? |
+| 1 | DLG_SEMAR_KALA_H1 | Ki Semar, kalau Waktu tak bisa dibunuh, bagaimana menghentikannya? | Ki Semar, if Time can't be killed, how do we stop him? |
 | 1 | @NPC_SEMAR_NAME | | |
-| 1 | DLG_SEMAR_KALA_V2 | Dengan upacara RUWATAN, anakku! Ruwatan adalah pagelaran wayang penyucian jiwa. Batara Kala lapar karena manusia melupakan asal-usul dan nama leluhur mereka. | Through the sacred rite of RUWATAN, my child! The Ruwatan is the holy wayang cleansing ceremony. Kala hungers because mortals forget their roots and true names. |
+| 1 | DLG_SEMAR_KALA_V2 | Dengan ruwatan. Kala lapar karena orang lupa akar dan nama mereka. | With a ruwatan. Kala is hungry because people forget their roots and their names. |
 | 1 | @NPC_HERO_NAME | | |
-| 1 | DLG_SEMAR_KALA_H2 | Laras memegang lontar berukir aksara murni, dan aku membawa cerita perjalanan kita melintasi seluruh nusantara! | Laras holds the sacred lontar inscribed with pristine aksara, and I bear the memories of our journey across all realms! |
+| 1 | DLG_SEMAR_KALA_H2 | Laras memegang lontarnya, dan aku membawa semua yang kita lalui. | Laras holds her lontar, and I carry everything we went through. |
 | 1 | @NPC_SEMAR_NAME | | |
-| 1 | DLG_SEMAR_KALA_V3 | Tepat sekali! Bentangkan kelir putih, bunyikan gamelan perunggu, dan lantunkan kidung ruwatan! Kenangan dan kasih sayanglah yang akan mengenyangkan rasa lapar sang Waktu! | Precisely so! Stretch forth the white kelir screen, strike the bronze gamelan chimes, and chant the sacred verses! True memory and love shall satiate the hunger of Time! |
+| 1 | DLG_SEMAR_KALA_V3 | Tiga hal dulu: dengar kisahnya di batu kisahku, duduk di kelir, lalu baca lontar adikmu. | Three things first: hear his tale at my story stone, sit at the kelir, then read your sister's lontar. |
 | 1 | @NPC_HERO_NAME | | |
 | 1 | DLG_SEMAR_KALA_H401 | Di gerbang, dua raja itu berdiri satu barisan. Kau yang mengaturnya? | At the gate, the two kings stand in one line. Did you arrange that? |
 | 1 | @NPC_SEMAR_NAME | | |
@@ -5202,7 +5202,7 @@ Correct answers: `GAP_RA_CUP_3` (the chipped one), `GAP_RA_TEA_2` (jasmine), `GA
 | 4 | @NPC_SEMAR_NAME | | |
 | 4 | DLG_SEMAR_KALA_V411 | Masih ada waktu untuk satu pertanyaan, hehe. Fajar bisa menunggu sebentar. | There's still time for a question, hehe. Dawn can wait a little. |
 | 5 | @NPC_SEMAR_NAME | | |
-| 5 | DLG_SEMAR_KALA_V4 | Pentas agung telah dimulai! Mainkan lakonmu dengan hati yang teguh! | The great performance has commenced! Play out your sacred lakon with an unwavering heart! |
+| 5 | DLG_SEMAR_KALA_V4 | Pertunjukannya sudah mulai. Mainkan dengan hati mantap. | The show has begun. Play it with a steady heart. |
 | 6 | @NPC_SEMAR_NAME | | |
 | 6 | DLG_SEMAR_KALA_V412 | Huruf Sa ada dekat apiku. Rebutlah dulu, lalu kita bicara lagi, hehe. | The letter Sa is near my fire. Win it back first, then we'll talk again, hehe. |
 | ST1 | @NPC_SEMAR_NAME | | |
@@ -5363,7 +5363,7 @@ LC6_10 to LC6_12 are the `lc6_p2` segment; LC6_13 to LC6_15 and `LC6_H4` are the
 | @NPC_HERO_NAME | | |
 | BEAT_KALA_WAKE_H2 | Aku datang. Bertahanlah. | I'm coming. Hold on. |
 | @ | | |
-| BEAT_KALA_WAKE_5 | Kau mengingat ruwatan Semar: Sunda, lalu Jawa, lalu Ombak, sabar dan dengan nama. | You remember Semar's ruwatan: Sunda, then Jawa, then Ombak, patient and with names. |
+| BEAT_KALA_WAKE_5 | Kau ingat urutan Semar: Sunda, lalu Jawa, lalu Ombak, pelan, seperti menyebut nama anak. | You remember Semar's order: Sunda, then Jawa, then Ombak, slowly, like saying a child's name. |
 | BEAT_KALA_WAKE_6 | Perisai Gerhana menyala di sekeliling Kala. Fajar belum tiba. | The Eclipse shield flares around Kala. Dawn has not come. |
 
 ### Beat `kala_p2` (if `!flag:beat_kala_p2`, `flag:kala_p2`; do `flag:beat_kala_p2`). Phase 2; then the Laras segment `lc6_p2` plays. `flag:laras_sabotage_kala_eclipse` is what makes the shield crack
@@ -5419,9 +5419,9 @@ LC6_10 to LC6_12 are the `lc6_p2` segment; LC6_13 to LC6_15 and `LC6_H4` are the
 | @ | | |
 | BEAT_WRITE_1 | Kala berhenti. Laparnya surut seperti ombak, dan ia berbalik ke dalam gelap, tenang, tidak mati. | Kala stops. The hunger goes out of him like a tide, and he turns back into the dark, calm, not dead. |
 | BEAT_WRITE_4 | Di tempat bayangan itu menyusut, sebuah tangan kecil menggapai, lalu berhenti, tak tahu siapa yang hendak digapainya. | Where the shadow shrinks a small hand reaches out, then stops, not knowing whom it reaches for. |
-| BEAT_WRITE_2 | Separuh lontarmu tergeletak di batu. Kosong. | Your half of the lontar lies on the stone. It's blank. |
+| BEAT_WRITE_2 | Lontarmu terbuka di atas batu. Halamannya kosong. | Your lontar lies open on the stone. The page is blank. |
 | @NPC_SEMAR_NAME | | |
-| BEAT_WRITE_3 | Tak ada lagi yang ingat bagaimana namanya ditulis. Kecuali kau. Tuliskanlah, Nak. | Nobody else remembers how her name goes. Except you. Write it, child. |
+| BEAT_WRITE_3 | Hanya kau dan aku yang masih ingat namanya. Tulislah, Nak. | Only you and I still remember her name. Write it, child. |
 | @NPC_HERO_NAME | | |
 | BEAT_WRITE_H1 | La, Ra, Sa. Tiga huruf. | La, Ra, Sa. Three letters. |
 | @NPC_SEMAR_NAME | | |
@@ -5436,7 +5436,7 @@ These NPCs stand in a scene for a beat or a later act. Each gets one line so a t
 
 | Key | ID | EN |
 |-----|----|----|
-| DLG_HARIANG_BANGA_V4 | Sarungkan pedang kalian! Beritahu seluruh laskar: Hariang Banga dan Ciung Wanara berdiri bersama sebagai saudara satu darah! | Sheathe your blades! Announce to all regiments: Hariang Banga and Ciung Wanara stand united as brothers of one blood! |
+| DLG_HARIANG_BANGA_V4 | Sarungkan pedang kalian. Katakan pada seluruh pasukan: Ciung dan aku duduk di meja yang sama. | Sheathe your blades. Tell every regiment: Ciung and I sit at the same table. |
 | DLG_HARIANG_BANGA_V5 | Jangan sekarang. Ada ibu yang harus kubebaskan. | Not now. I have a mother to free. |
 | DLG_NAMELESS_HUNTER_V1 | Bukan kau. Belum. | Not you. Not yet. |
 | DLG_NINI_V1 | Ciung-ku lari ke barat semalam. Susul dia, Nak, sebelum para topeng itu. | My Ciung ran west in the night. Find him, child, before the masks do. |
@@ -5463,7 +5463,7 @@ Cards 1 to 6 are the six choice cards, one per Major Choice in act order (Choice
 | EPILOGUE_6 | Nama Aria Kebonan terpahat di Batu Leluhur, tersimpan di antara raja dan juru masak. Tak ada yang memaafkannya, dan tak ada yang membiarkannya hilang. | Aria Kebonan's name is carved on the Ancestors' Stone, kept among kings and cooks. Nobody forgives him, and nobody lets him vanish. |
 | EPILOGUE_6_ALT | Ruang kosong di Batu Leluhur tetap kosong. Di dekat panggung yang terbakar, seorang lelaki duduk tenang menonton abu, dan untuk pertama kalinya tak berusaha mengingat. | The blank space on the Ancestors' Stone stays blank. By the burned stage a man sits quietly watching the ashes, and for the first time isn't trying to remember. |
 | EPILOGUE_7 | {name} & Laras\n\nAKSARA KALA\ndibuat oleh fatih\nKodeks: %d%% aksara yang terlupa telah diingat. | {name} & Laras\n\nAKSARA KALA\nmade by fatih\nCodex: %d%% of the forgotten letters remembered. |
-| EPILOGUE_8 | `{name} & Laras\n\n` followed by the old EPILOGUE_6 ID text, unchanged (the title card; was EPILOGUE_7) | `{name} & Laras\n\n` followed by the old EPILOGUE_6 EN text, unchanged (AKSARA KALA, made by fatih, Codex %d%%) |
+| EPILOGUE_8 | Pagi itu Ibu menuang teh ke dua cangkir. Dua-duanya diminum. | That morning Ibu poured tea into two cups. Both were drunk. |
 
 The old `EPILOGUE_1` (Laras comes home) is now the playable day itself (`epi_wake`). The old kings card (`EPILOGUE_2`) is folded into cards 1 and 3.
 
@@ -5877,410 +5877,410 @@ Ratna's reforge entry sets `flag:epi_ratna_temper`, the moment she tempers your 
 | Q_MQG_TITLE | The Borrowed Face | Wajah Pinjaman |
 | Q_MQ2_TITLE | Blood on the Pamali | Darah di Pamali |
 | Q_MQ3_TITLE | The Seven-Generation Blade | Bilah Tujuh Turunan |
-| Q_MQ4_TITLE | The Sea Never Forgets | Laut Tak Pernah Lupa |
+| Q_MQ4_TITLE | The Quiet House | Rumah yang Sunyi |
 | Q_MQ5_TITLE | Into the Maw of Time | Ke Rahang Sang Waktu |
 
 - `Q_<ID>_S<n>_OBJ`: the Objective columns of [quests.md](quests.md) 4, `n` 1-based in table order (0.1 is S1, g.1 is S1), shortened to a HUD line where needed; the 138 main steps, then the side quests:
 
 | Key | EN | ID |
 |-----|----|----|
-| Q_MQ0_S1_OBJ | Chase Laras in a game of tag and catch her at the old well, just south of the great banyan tree. | Ajak Laras main kejar-kejaran dan tangkap dia di sumur tua, tak jauh di selatan pohon beringin besar. |
-| Q_MQ0_S2_OBJ | Hear what the old couple need: share tea with Ibu, then visit them in the southeast. | Cari tahu apa yang dibutuhkan pasangan tua: minum teh bersama Ibu, lalu temui mereka. |
-| Q_MQ0_S3_OBJ | Find out about Ciung Wanara's strange egg: climb the great banyan in the southwest. | Cari tahu telur aneh Ciung Wanara: panjat pohon beringin besar di barat daya desa. |
-| Q_MQ0_S4_OBJ | Walk the morning market and ask the stall-keeper about the masked stranger, then find Cepot at the sanggar | Susuri pasar pagi dan tanya penjaga lapak soal orang bertopeng, lalu temui Cepot di sanggar |
-| Q_MQ0_S5_OBJ | Meet Semar and Cepot inside the sanggar | Temui Semar dan Cepot di dalam sanggar |
-| Q_MQ0_S6_OBJ | So you both stay on record: write your name and Laras's on her lontar at the sanggar. | Agar kalian tetap tercatat: tulis namamu dan nama Laras di lontarnya di meja sanggar. |
-| Q_MQ0_S7_OBJ | Ready the wayang stage for tonight: light its four ceremonial lamps at dusk. | Siapkan panggung wayang malam ini: nyalakan empat lampu upacaranya saat senja. |
-| Q_MQ0_S8_OBJ | Relive Semar's ruwatan, a protective ritual: examine the lamp behind the lit kelir. | Hidupkan kembali ruwatan Semar, ritual penolak bala: periksa lampu di belakang kelir yang menyala. |
-| Q_MQ0_S9_OBJ | Reach Laras through the panicked crowd at the kelir while shadow figures attack. | Capai Laras menembus kerumunan panik di depan kelir, selagi bayangan-bayangan menyerang. |
-| Q_MQ0_S10_OBJ | What happened to Laras? Ask Ibu, then recover her half of the lontar at the burned stage. | Apa yang terjadi pada Laras? Tanya Ibu, lalu ambil separuh lontarnya di panggung yang terbakar. |
-| Q_MQ0_S11_OBJ | Bring Laras's torn lontar to Ki Semar at the sanggar to understand the Ka glyph. | Bawa sobekan lontar Laras ke Ki Semar di sanggar untuk memahami aksara Ka. |
-| Q_MQ0_S12_OBJ | Drive the Faceless raiders from the square, then see who waits at the west gate. | Usir penyerbu Tanpa Rupa dari alun-alun, lalu lihat siapa yang menunggu di gerbang barat. |
-| Q_MQ1_S1_OBJ | Pick up Laras's trail: meet the elder's grandson at the tea terraces, find her ribbon. | Temukan jejak Laras: temui cucu sesepuh di teras kebun teh, cari pitanya yang jatuh. |
-| Q_MQ1_S2_OBJ | Learn where Laras's trail leads: follow the snapped bamboo, clear the Faceless scout camp. | Cari tahu ke mana jejak Laras menuju: ikuti bambu patah dan bersihkan kemah pengintai Tanpa Rupa. |
-| Q_MQ1_S3_OBJ | Recover your strength at the old shrine on the terraces, then find Cepot waiting nearby. | Pulihkan tenaga: beristirahat di petilasan di teras kebun teh, lalu temui Cepot di dekatnya. |
-| Q_MQ1_S4_OBJ | Keep the hill kampung safe: defend it from Faceless raiders and charging wild boars. | Selamatkan kampung di bukit: lindungi dari serbuan Tanpa Rupa dan babi hutan yang menerjang. |
-| Q_MQ1_S5_OBJ | Find out what the elder saw of Laras and learn Ga, then follow a mother's cries south. | Cari tahu apa yang sesepuh lihat soal Laras dan pelajari aksara Ga, lalu ikuti tangis ibu ke selatan. |
-| Q_MQ1_S6_OBJ | Help Ceu Imas save her lost boy: learn what he looks like, then search the river gorge at twilight. | Bantu Ceu Imas menyelamatkan anaknya: tanyakan ciri-ciri si anak, lalu cari jejaknya di ngarai sungai saat senja. |
-| Q_MQ1_S7_OBJ | Find out why the oncor torches went dark: inspect the dead bamboo lanterns and track the Sandekala prints into the gorge. | Cari tahu penyebab padamnya obor oncor: periksa lentera bambu yang mati dan telusuri jejak kaki Sandekala ke arah ngarai. |
-| Q_MQ1_S8_OBJ | Hold back the dusk mist: relight the four bamboo oncor lanterns along the hamlet perimeter before twilight. | Halau kabut senja Sandekala: nyalakan kembali empat lentera oncor bambu di perbatasan luar dusun sebelum maghrib. |
-| Q_MQ1_S9_OBJ | Unveil the hidden memory of the lontar: relive the steps of a child hurrying home before the evening call. | Buka kenangan tersembunyi lontar: telusuri jejak anak kecil yang bergegas pulang sebelum maghrib tiba. |
-| Q_MQ1_S10_OBJ | Rescue the hamlet from Sandekala: vanquish the dusk shadow spirit while keeping all four oncor torches blazing. | Selamatkan dusun dari ancaman Sandekala: kalahkan roh bayangan senja sambil menjaga keempat obor oncor tetap berkobar. |
-| Q_MQ1_S11_OBJ | Press on after Laras: climb past the gorge, clear the spirits, raise three name-stones. | Terus kejar Laras: daki hutan di balik ngarai, usir roh, tegakkan tiga batu nama. |
-| Q_MQ1_S12_OBJ | Decipher the ancient Batu Tulis: read the weathered carvings in the bamboo grove to learn the sacred Nga glyph. | Pecahkan misteri prasasti Batu Tulis: baca ukiran aksara kuno di tengah rumpun bambu untuk mempelajari aksara Nga. |
-| Q_MQ1_S13_OBJ | Investigate the valley flooding: inspect the submerged rice paddies by the sabotaged wooden dam. | Cari tahu sumber banjir lembah: periksa sawah tergenang di dekat bendungan kayu yang sengaja ditutup. |
-| Q_MQ1_S14_OBJ | Reclaim the Weaver's terraces: defeat the masked looters and restless spirits occupying the field ridges. | Rebut kembali sawah milik sang Penenun: kalahkan penjarah bertopeng dan roh liar yang mengacaukan pematang. |
-| Q_MQ1_S15_OBJ | Drain the flooded road to reach the Weaver: turn both upper sluice wheels, then talk. | Keringkan jalan banjir agar sampai ke Penenun: putar dua roda sluis atas, lalu bicara dengannya. |
-| Q_MQ1_S16_OBJ | Find the source of the lake overflow: follow the dammed river trail and defeat the crater sentries upstream. | Temukan sumber luapan danau: susuri tepi sungai yang terbendung dan atasi penjaga kawah di hulu. |
-| Q_MQ1_S17_OBJ | Investigate the lake blockage: inspect the ancient felled timber damming the waters from reaching the valley. | Selidiki sumbatan danau: periksa gelondongan kayu tebangan kuno yang menahan aliran air ke lembah. |
-| Q_MQ1_S18_OBJ | Clear the lake shore from enemy control: defeat the Faceless vanguard guarding the secluded water camp. | Bebaskan tepi danau dari cengkeraman musuh: kalahkan laskar Tanpa Rupa yang menjaga kemah rahasia di tepi air. |
-| Q_MQ1_S19_OBJ | Learn the exiled Queen's secret: speak with Dewi Naganingrum by the water to master the sacred Ca glyph. | Dengarkan rahasia sang Ratu Buangan: bicara dengan Dewi Naganingrum di tepi danau untuk mempelajari aksara Ca. |
-| Q_MQ1_S20_OBJ | Reach the crater's upper shrine: fight up the volcano road and rest at the road's far end. | Capai petilasan atas kawah: lawan jalan menanjak gunung dan beristirahat di ujung jalan. |
-| Q_MQ1_S21_OBJ | Hear what Laras read here: listen to her voice by the upper shrine. | Dengarkan apa yang Laras baca di sini: periksa suaranya di dekat petilasan atas. |
-| Q_MQ1_S22_OBJ | Confront the Faceless Captain at the crater rim and inspect the broken seal stone of the giant boat. | Hadapi Kapten Tanpa Rupa di bibir kawah dan periksa pecahan prasasti segel perahu raksasa. |
-| Q_MQ1_S23_OBJ | Examine the ribs of Sangkuriang's boat: inspect the timbers to locate the weak points in the crater's wrath. | Selidiki kerangka perahu Sangkuriang: periksa lunas kayunya untuk mengetahui titik lemah amukan api kawah. |
-| Q_MQ1_S24_OBJ | Calm the awakened fury of Sangkuriang: unfurl the Boeh Rarang cloth and defeat his raging avatar at the rim. | Tenangkan amarah Sangkuriang yang terbangun: bentangkan kain Boeh Rarang dan kalahkan wujud amuknya di kawah. |
-| Q_MQG_S1_OBJ | Find a way into Galuh: meet the rooster seller at the west gate and learn about the royal tourney. | Cari jalan menyusup ke Galuh: temui penjual ayam jago di gerbang barat dan dengarkan kabar sayembara istana. |
-| Q_MQG_S2_OBJ | Gather intel at Kuta Market: question the market informant and aid citizens extorted by corrupt palace guards. | Kumpulkan kabar dari Pasar Kuta: tanyakan informasi pada pedagang dan bantu warga yang diperas prajurit istana. |
-| Q_MQG_S3_OBJ | Clean up the cockfighting arena: defeat the crooked thugs rigging the royal tournament matches. | Bersihkan arena aduan: kalahkan para pencurang sayembara yang menyebarkan racun di gelanggang ayam. |
-| Q_MQG_S4_OBJ | Earn palace entry: win both rounds of the cockfighting tournament in the square alongside Ciung Wanara. | Raih izin masuk keraton: menangkan kedua babak sayembara adu ayam di alun-alun bersama Ciung Wanara. |
-| Q_MQG_S5_OBJ | Infiltrate the royal court: meet Uwa Lengser behind the pavilion and learn the disguise secrets of Aksara Ja. | Menyusup ke dalam istana: temui Uwa Lengser di balik paviliun dan pelajari rahasia aksara samaran Ja. |
-| Q_MQG_S6_OBJ | Uncover proof of Ciung's birthright: sneak into the palace archives and retrieve the hidden lineage scroll. | Cari bukti asal-usul Ciung Wanara: susup ke Balai Pustaka istana dan temukan gulungan silsilah yang disembunyikan. |
-| Q_MQG_S7_OBJ | Unlock the secret archives: solve the palace shadow lamp riddle to retrieve the royal seal. | Buka lemari arsip rahasia: pecahkan teka-teki layar lampu istana untuk mengambil stempel kerajaan. |
-| Q_MQG_S8_OBJ | Infiltrate the inner Kaputren: bypass the vigilant sentries and clear Tamperan's court spies from the courtyard. | Tembus keputren istana: lewati pengawal istana yang waspada dan bersihkan halaman dalam dari mata-mata Tamperan. |
-| Q_MQG_S9_OBJ | Find where Laras was held: solve the screen puzzle, search the Kaputren guest chamber. | Cari tempat Laras ditahan: pecahkan teka-teki layar, geledah kamar tamu Kaputren. |
-| Q_MQG_S10_OBJ | Overhear Prince Hariang Banga's plans, then open the passage to the cell yard. | Curi dengar rencana Pangeran Hariang Banga, lalu buka lorong ke halaman sel. |
-| Q_MQG_S11_OBJ | Reach the cells before the prisoner wagon leaves: fight down the stairs. | Capai sel sebelum kereta tahanan berangkat: bertempurlah menuruni tangga. |
-| Q_MQG_S12_OBJ | Stop Laras being carried off: halt the Faceless escort as her wagon speeds east. | Cegah Laras dibawa pergi: hentikan pengawal Tanpa Rupa selagi keretanya melaju ke timur. |
-| Q_MQG_S13_OBJ | Find what Laras left behind: beat the cell guards, then read her message on the wall. | Cari tahu apa yang Laras tinggalkan: kalahkan penjaga sel, baca pesannya di dinding. |
-| Q_MQG_S14_OBJ | See what Laras saw: play as her in the memory of the guest chamber and the wagon. | Lihat apa yang Laras lihat: mainkan ingatannya tentang kamar tamu dan kereta. |
-| Q_MQG_S15_OBJ | Confront Deserter Ranga in hiding: decide whether to show him mercy or turn him over to the court tribunal. | Temui Deserter Ranga yang bersembunyi: putuskan apakah akan memaafkannya atau menyerahkannya ke mahkamah istana. |
-| Q_MQG_S16_OBJ | Reach the palace's upper gallery unseen: use the archive grate Laras unlocked. | Naik ke galeri atas istana tanpa terlihat: pakai jeruji arsip Balai Pustaka yang dibuka Laras. |
-| Q_MQG_S17_OBJ | Learn who was erased: examine the scraped court portrait, then live Uwa Lengser's memory. | Cari tahu siapa yang dihapus: periksa potret istana yang dikerik, lalu jalani ingatan Uwa Lengser. |
-| Q_MQG_S18_OBJ | Learn what the second mask fragment shows: take it behind the throne and watch its memory. | Cari tahu apa yang ditunjukkan pecahan topeng kedua: ambil di belakang singgasana, saksikan ingatannya. |
-| Q_MQG_S19_OBJ | With Ciung Wanara and Lengser's old guards, break into the throne room and defeat the guards and the champion. | Bersama Ciung Wanara dan pengawal lama Lengser, terobos ruang takhta dan kalahkan para penjaga serta sang juara. |
-| Q_MQG_S20_OBJ | Expose Barma Wijaya's tyranny: confront the false king on the high throne and restore Galuh to its rightful heir. | Bongkar kejahatan Barma Wijaya: hadapi sang raja palsu di singgasana agung dan kembalikan takhta kepada pewaris sah. |
-| Q_MQ2_S1_OBJ | Investigate tensions at the Mataram border: listen to the rival recruiters debating at the village gate. | Selidiki ketegangan di perbatasan Mataram: dengarkan perdebatan kedua perekrut laskar di gerbang desa. |
-| Q_MQ2_S2_OBJ | Cross the Pamali border: breach the looters' barricade at the horseshoe gate and secure a safe petilasan. | Tembus perbatasan Sungai Pamali: kalahkan blokade penjarah di gerbang tapal kuda, lalu cari petilasan aman. |
-| Q_MQ2_S3_OBJ | Save the wayang screen: protect Ki Sumarto's stage from marauding soldiers on the western riverbank. | Selamatkan layar kelir wayang: lindungi panggung Ki Sumarto dari amukan prajurit penjarah di tepi barat. |
-| Q_MQ2_S4_OBJ | Learn Aksara Ha the healer: speak with Ki Sumarto and gather intel on Hariang Banga's troop movements. | Pelajari Aksara Ha sang penyembuh: bicaralah dengan Ki Sumarto dan cari tahu pergerakan pasukan Hariang Banga. |
-| Q_MQ2_S5_OBJ | Get the market families to safety: escort them across the flooded paddies. | Bawa warga pasar ke tempat aman: kawal mereka melintasi sawah yang tergenang. |
-| Q_MQ2_S6_OBJ | Check the first lead: beat the awakened Arca at the ruins and read the letter Na. | Periksa jejak pertama: kalahkan Arca yang bangkit di reruntuhan, baca aksara Na. |
-| Q_MQ2_S7_OBJ | Follow the second lead: stop soldiers harvesting the fallen's names in the old graveyard. | Telusuri jejak kedua: hentikan prajurit Tanpa Rupa yang memanen nama gugur di kuburan tua. |
-| Q_MQ2_S8_OBJ | Learn what the mask fragment remembers: take it from the graves, watch its memory. | Cari tahu apa yang diingat pecahan topeng: ambil di makam, saksikan ingatan Si Tanpa Ngaran. |
-| Q_MQ2_S9_OBJ | Aid Nyai Gendhis at the palm sugar works: clear armed troublemakers off the mortar terrace. | Bantu Nyai Gendhis di pabrik gula kelapa: bersihkan pelataran lesung dari pengacau bersenjata. |
-| Q_MQ2_S10_OBJ | Learn the Gejog Lesung tradition: have Nyai Gendhis teach the rhythmic pestle cadence that mimics dawn. | Pelajari tradisi Gejog Lesung: minta Nyai Gendhis mengajarkan irama tumbukan penipu fajar pemecah kutukan. |
-| Q_MQ2_S11_OBJ | Open the road to the temple: break the spirit builders' siege of the foothill shrine. | Buka jalan ke candi: patahkan kepungan roh pembangun di kuil kaki bukit. |
-| Q_MQ2_S12_OBJ | Learn Ra from the juru kunci, keeper of the sacred hill: first align the braziers at his hut. | Pelajari aksara Jawa Ra dari juru kunci: selaraskan dulu tungku api di pondoknya. |
-| Q_MQ2_S13_OBJ | Clear the temple road: cross the rising stones, shatter the spirit pillars, beat the guards. | Bersihkan jalan candi: lewati dataran batu yang tumbuh, hancurkan pilar roh, kalahkan penjaga. |
-| Q_MQ2_S14_OBJ | Look for Laras in Candi Seribu: breach the outer gate, then storm the faceless camp. | Cari Laras di dalam Candi Seribu: tembus gerbang luar, lalu serbu kemah Tanpa Rupa. |
-| Q_MQ2_S15_OBJ | Search the temple court for signs of Laras: rubble, the stopped lesung, her Ka lontar strip. | Cari tanda Laras di halaman candi: puing berpahat, lesung yang berhenti, helai lontar Ka. |
-| Q_MQ2_S16_OBJ | Learn what Laras read: examine her lontar fragment at the shrine, then relive her memory. | Cari tahu apa yang Laras baca: periksa pecahan lontarnya di petilasan, lalu mainkan ingatannya. |
-| Q_MQ2_S17_OBJ | Follow Laras deeper: descend the crypt she unbarred to the temple's central sanctum. | Susul Laras lebih dalam: turun lewat ruang bawah tanah yang ia buka menuju ruang suci utama candi. |
-| Q_MQ2_S18_OBJ | Hear the sanctum's memory: follow the lesung rhythm and relive the women pounding rice. | Dengarkan ingatan ruang suci: ikuti irama lesung dan lihat para dayang menumbuk padi. |
-| Q_MQ2_S19_OBJ | Halt the construction of the demon causeway: defeat the avatar of Bandung Bondowoso using the dawn Gejog Lesung. | Hentikan pembangunan candi raksasa: kalahkan bayangan Bandung Bondowoso dengan irama Gejog Lesung fajar buatan. |
-| Q_MQ2_S20_OBJ | Get back to the border: take the temple shortcut west and reach the Pamali river. | Kembali ke perbatasan: ambil jalan pintas candi ke barat dan capai Sungai Pamali. |
-| Q_MQ2_S21_OBJ | Let Nagawiru rest: clear the riverbank fight, then write his name on the Pamali stone. | Biarkan Nagawiru beristirahat: selesaikan pertarungan di tepi sungai, tulis namanya di Batu Pamali. |
-| Q_MQ2_S22_OBJ | Hear the tale of two brothers who split the land: watch Ki Sumarto's wayang kulit. | Dengarkan kisah dua saudara yang membagi tanah: saksikan wayang kulit Ki Sumarto. |
-| Q_MQ2_S23_OBJ | Learn what Hariang Banga never sent: read his unsent letters to his mother. | Cari tahu apa yang tak Hariang Banga kirim: baca surat untuk ibunya di kemah timur. |
-| Q_MQ2_S24_OBJ | Prevent brother from slaying brother: halt the duel between Ciung Wanara and Hariang Banga on the Pamali bridge. | Cegah pertumpahan darah saudara: hentikan duel Ciung Wanara dan Hariang Banga di atas jembatan Pamali. |
-| Q_MQ3_S1_OBJ | Enter the forge quarter of Tanah Timur: meet Ratna at the street entrance and ask about the scorch fires. | Masuki kawasan pandai besi Tanah Timur: temui Ratna di mulut jalan bengkel dan tanyakan hawa panas yang membakar lembah. |
-| Q_MQ3_S2_OBJ | Hold back the rampaging Buto Ijo: repel his opening assault before he crushes the ancestral weapons forge. | Tahan amukan raksasa Buto Ijo: pukul mundur serbuan pertamanya sebelum ia menghancurkan bengkel senjata pusaka. |
-| Q_MQ3_S3_OBJ | Track the curse of Keris Mpu Gandring: follow the ember marks on the boundary stakes toward the grand forge. | Telusuri kutukan Keris Mpu Gandring: ikuti tanda bara merah di tiang-tiang pancang menuju perapian agung. |
-| Q_MQ3_S4_OBJ | Master Aksara Ta the forge-glyph: practice quenching the burning curse on the training stakes in the yard. | Kuasai Aksara Ta penempa batin: latih pemadaman hawa panas kutukan pada dua tiang latihan di halaman bengkel. |
-| Q_MQ3_S5_OBJ | Help Mbok Srini save her daughter: search her marsh cottage and hear the true origins of Timun Mas. | Bantu Mbok Srini menyelamatkan putrinya: periksa gubuk tepi rawa dan dengarkan kisah asal-usul Timun Mas. |
-| Q_MQ3_S6_OBJ | Test the Cucumber Seeds pouch: cast the first charm to sprout thorny briars that ensnare Buto Ijo's strides. | Uji khasiat Biji Mentimun: lemparkan bungkusan pertama untuk menumbuhkan sulur duri yang mengikat kaki Buto Ijo. |
-| Q_MQ3_S7_OBJ | Collect the remaining three charmed pouches: sanctify the needles, salt, and terasi paste at the ancient banyan. | Kumpulkan tiga bungkusan pusaka lainnya: sucikan bungkusan jarum, garam, dan terasi di pohon beringin tua. |
-| Q_MQ3_S8_OBJ | What does the banyan stone remember? Live through the Timun Mas memory it opened | Apa yang diingat batu beringin? Jalani kenangan Timun Mas yang dibukanya |
-| Q_MQ3_S9_OBJ | Subdue Buto Ijo once and for all: lure the giant into the boiling mud chasm using the pungent terasi pouch. | Tundukkan Buto Ijo selamanya: pancing sang raksasa ke ngarai lumpur mendidih menggunakan bungkusan terasi udang. |
-| Q_MQ3_S10_OBJ | Free the farmland of the curse: douse the red stakes the keris lit in the dry Ladang | Bebaskan ladang dari kutukan: padamkan pancang merah yang dinyalakan keris di Ladang kering |
-| Q_MQ3_S11_OBJ | Protect the forge quarter: help Mpu Wirasana and Ratna hold off the flying Keris Hantu | Lindungi kawasan tempa: bantu Mpu Wirasana dan Ratna menahan Keris Hantu yang melayang |
-| Q_MQ3_S12_OBJ | What broke this blade? Examine the broken scabbard and forge records in Wirasana's vault | Apa yang mematahkan bilah ini? Periksa sarung patah dan catatan tempa di gudang Wirasana |
-| Q_MQ3_S13_OBJ | Hear the apprentice's side: touch the old anvil stone in the vault corner to share his memory | Dengarkan sisi si murid: sentuh batu landasan tua di sudut gudang untuk menjalani kenangannya |
-| Q_MQ3_S14_OBJ | Track the Hunter: follow his ash trail down the Pesisir coast with Hariang Banga's scouts | Lacak sang Pemburu: ikuti jejak abunya di Pesisir bersama pengintai Hariang Banga |
-| Q_MQ3_S15_OBJ | Reach the east through the ash-gale: follow the old stone waymarkers across the Sea of Sand | Capai timur lewat badai abu: ikuti penanda batu kuno menyeberangi Lautan Pasir |
-| Q_MQ3_S16_OBJ | Regain your strength: rest at the sand-alcove petilasan, then see Hariang Banga by the fire | Kumpulkan tenaga: istirahat di petilasan ceruk pasir, lalu temui Hariang Banga di api unggun gurun |
-| Q_MQ3_S17_OBJ | What did Laras leave here? Examine her lontar fragment in the sand alcove and live her memory | Apa yang ditinggalkan Laras di sini? Periksa serpihan lontarnya di ceruk pasir dan jalani kenangannya |
-| Q_MQ3_S18_OBJ | Get inside Candi Gandring, the Eastern Temple: use Laras's wind tunnel to breach the sanctum | Masuki Candi Gandring, Candi Timur: gunakan terowongan angin Laras untuk menembus bilik dalam |
-| Q_MQ3_S19_OBJ | Sanctify the Keris of Mpu Gandring: use the binding stakes and Aksara Ta to extinguish the blade's ancestral bloodlust. | Sucikan Keris Mpu Gandring: gunakan pasak penenang dan Aksara Ta untuk memadamkan dendam tujuh keturunan bilah itu. |
-| Q_MQ3_S20_OBJ | What becomes of the blade? Decide with Mpu Wirasana: reforge it, or give it to the river | Apa nasib bilah ini? Putuskan bersama Mpu Wirasana: tempa ulang, atau serahkan ke sungai |
-| Q_MQ3_S21_OBJ | Complete the mask: find the last fragment where the keris lay, then join it at the shrine door | Lengkapi topeng: cari serpihan terakhir di tempat keris terbaring, lalu satukan di pintu kuil |
-| Q_MQ3_S22_OBJ | Liberate the Faceless Hunter: defeat his shadow vessel and carve his true name, Aria Kebonan, onto his mask. | Bebaskan Sang Pemburu Tanpa Rupa: kalahkan wujud bayangannya dan ukirkan kembali nama aslinya, Aria Kebonan. |
-| Q_MQ4_S1_OBJ | Return to Desa Purwa under the Eclipse: investigate the impenetrable void fog sealing the northern cave mouth. | Kembali ke Desa Purwa di bawah Gerhana: uji kabut pekat yang menyelimuti mulut gua utara. |
-| Q_MQ4_S2_OBJ | Speak with the bewildered villagers in the square and discover why their memories are fading. | Temui warga desa yang kebingungan di alun-alun dan cari tahu mengapa ingatan mereka mulai memudar. |
-| Q_MQ4_S3_OBJ | Anchor the villagers' memories: write the family names upon their doorposts so the fog cannot erase their identities. | Pancangkan ingatan warga desa: tuliskan nama-nama keluarga di tiang pintu rumah mereka agar tak ditelan kabut. |
-| Q_MQ4_S4_OBJ | What do Laras's keepsakes mean to Ibu? Set the ribbon, wagon board and Ka strip on her shelf | Apa arti kenang-kenangan Laras bagi Ibu? Taruh pita, papan gerobak, dan lembar Ka di rak Ibu |
-| Q_MQ4_S5_OBJ | Sit at Ibu's dinner table: unite the two brother-kings, Ciung Wanara and Hariang Banga, in newfound peace. | Duduk bersama di meja makan Ibu: satukan kedua saudara raja, Ciung Wanara dan Hariang Banga, dalam kedamaian. |
-| Q_MQ4_S6_OBJ | Who took Laras's name? Ask Aria Kebonan at the burned wayang stage north of the plaza | Siapa yang mengambil nama Laras? Tanyai Aria Kebonan di panggung wayang hangus utara alun-alun |
-| Q_MQ4_S7_OBJ | Seek the key to breach Gua Kala: consult Ki Semar about the ocean's sacred Ombak blessing from the Southern Queen. | Cari jalan menembus Gua Kala: tanyai Ki Semar tentang berkat samudra Ombak dari sang penguasa Laut Selatan. |
-| Q_MQ4_S8_OBJ | Head for Segara Kidul, the Southern Sea: walk south through the opened village gate | Menuju Segara Kidul, Laut Selatan: berjalan ke selatan lewat gerbang desa yang terbuka |
-| Q_MQ4_S9_OBJ | Reach the shore: rest at the black-sand petilasan, then enter Kampung Nelayan | Capai pantai: istirahat di petilasan pasir hitam, lalu masuki Kampung Nelayan |
-| Q_MQ4_S10_OBJ | Meet coastal juru kunci Mbah Wiryo and diver Sari to learn the sacred Sedekah Laut sea-song. | Temui Mbah Wiryo sang juru kunci pesisir dan penyelam Sari untuk mempelajari kidung sakral Sedekah Laut. |
-| Q_MQ4_S11_OBJ | Reassemble the three forgotten verses of the ocean hymn with the coastal fishermen of Segara Kidul. | Satukan kembali tiga bait kidung laut yang terlupa bersama para nelayan pantai di Segara Kidul. |
-| Q_MQ4_S12_OBJ | How did Mbah Wiryo learn to call names to the sea? Live his wife's memory on the shore rock | Bagaimana Mbah Wiryo memanggil nama ke laut? Jalani kenangan istrinya di batu pantai saat senja |
-| Q_MQ4_S13_OBJ | Light the way through the flooded mangrove: relight the three tidal beacons with Sari | Terangi jalan lewat bakau yang banjir: nyalakan lagi tiga suar pasang bersama Sari |
-| Q_MQ4_S14_OBJ | Sacred Trial I, the Torch-Lines: cross the reef and put out the Lampor lamp spirits to pass | Cobaan Suci I, Garis Obor: seberangi karang dan padamkan Lampor, roh lampu, untuk lewat |
-| Q_MQ4_S15_OBJ | Find the sunken shrine: descend into the echoing Gua Karang and clear the approach | Temukan kuil yang tenggelam: turuni Gua Karang yang bergema dan bersihkan jalan ke sana |
-| Q_MQ4_S16_OBJ | What did Laras find here? Examine the three sunken bronze bells to live her memory | Apa yang ditemukan Laras di sini? Periksa tiga lonceng perunggu tenggelam dan jalani kenangannya |
-| Q_MQ4_S17_OBJ | Sacred Trial II, the Abyssal Current: pass the guardians through the tidal gate Laras opened | Cobaan Suci II, Arus Jurang: lewati penjaga gua lewat gerbang pasang yang dibuka Laras |
-| Q_MQ4_S18_OBJ | Who is the Queen of the South? Climb the storm cliffs, rest at the shrine, and hear her tale | Siapa Ratu Selatan? Daki tebing badai, istirahat di kuil tebing, dan dengarkan kisahnya |
-| Q_MQ4_S19_OBJ | Release the Sedekah Laut offering raft at the Reef Altar and call Laras's name across the crashing breakers. | Larung rakit sesaji Sedekah Laut di Altar Karang dan panggil nama Laras menembus deburan ombak pasang. |
-| Q_MQ4_S20_OBJ | Reach the Sea Palace: walk the ancient sea causeway, then rest at the petilasan there | Capai Istana Laut: jalani jalan laut kuno, lalu istirahat di petilasan di sana |
-| Q_MQ4_S21_OBJ | Sacred Trial III, the Waves: hold out against three waves in the Sea Palace's outer court | Cobaan Suci III, Ombak: bertahan dari tiga gelombang di halaman luar Istana Laut |
-| Q_MQ4_S22_OBJ | Receive the wave blessing of Kanjeng Ratu Kidul: master the sacred Ombak glyph to part the void curtain of Gua Kala. | Terima berkah ombak Kanjeng Ratu Kidul: kuasai aksara Ombak untuk membelah tirai kegelapan Gua Kala. |
-| Q_MQ5_S1_OBJ | Defend the Platform of Time outside Gua Kala alongside Ciung Wanara, Hariang Banga, and your loyal allies. | Pertahankan Pelataran Waktu di depan Gua Kala bersama Ciung Wanara, Hariang Banga, dan para sekutu nusantara. |
-| Q_MQ5_S2_OBJ | Settle Aria Kebonan's name before the cave: decide at the Ancestors' Stone (Batu Leluhur) | Tentukan nasib nama Aria Kebonan sebelum masuk gua, di Batu Leluhur |
-| Q_MQ5_S3_OBJ | Part the eternal Eclipse curtain: trace the sacred Ombak glyph to breach the threshold into Batara Kala's domain. | Belah tirai Gerhana abadi: goreskan aksara suci Ombak untuk membuka gerbang menuju sarang Batara Kala. |
-| Q_MQ5_S4_OBJ | Reclaim the first letter of Laras's name (La) within the restored memory of the morning tag game. | Rebut kembali aksara pertama nama Laras (La) dalam ingatan permainan kejar-kejaran pagi hari. |
-| Q_MQ5_S5_OBJ | Break the time-wards: cross the Hourglass Sands and shatter the two wards, west and east | Patahkan penjaga waktu: seberangi Pasir Jam Pasir dan hancurkan dua penjaga, barat dan timur |
-| Q_MQ5_S6_OBJ | Stop the stolen names whispering: descend into Hutan Lupa and silence the name-trees | Hentikan bisikan nama curian: turuni Hutan Lupa dan bungkam pohon-pohon nama |
-| Q_MQ5_S7_OBJ | Reclaim the second letter of Laras's name (Ra) within the memory of the two warm tea cups on Ibu's porch. | Rebut kembali aksara kedua nama Laras (Ra) dalam ingatan dua cangkir teh hangat di teras rumah Ibu. |
-| Q_MQ5_S8_OBJ | Face your past: cross the Shadow Bridge and defeat the echoes of the legends you faced | Hadapi masa lalumu: seberangi Jembatan Bayangan dan kalahkan gema legenda yang pernah kau lawan |
-| Q_MQ5_S9_OBJ | Reclaim the third letter of Laras's name (Sa) within the memory of the sacred name-binding at Ki Semar's sanggar. | Rebut kembali aksara ketiga nama Laras (Sa) dalam ingatan ikatan nama di atas lontar sanggar Ki Semar. |
-| Q_MQ5_S10_OBJ | How do you soothe Kala? Examine Semar's tale stone in the Abyss to hear Murwakala | Bagaimana menenangkan Kala? Periksa batu kisah Semar di Jurang untuk mendengar Murwakala |
-| Q_MQ5_S11_OBJ | Learn the sacred rites of Ruwatan: take your place behind Ki Semar's wayang screen and chant the hymn of Murwakala. | Pelajari tata cara meruwat Batara Kala: ambil tempat di balik kelir wayang Ki Semar dan lantunkan kidung suci Murwakala. |
-| Q_MQ5_S12_OBJ | What did Laras leave in the Abyss? Find her lontar fragment and relive her memory | Apa yang Laras tinggalkan di Jurang? Temukan serpihan lontarnya dan jalani kenangannya |
-| Q_MQ5_S13_OBJ | Soothe the eternal hunger of Time: perform the Ruwatan of Dawn alongside Laras to grant Batara Kala peaceful rest. | Tenangkan rasa lapar sang Waktu: lakukan Ruwatan Fajar bersama Laras untuk melepaskan Batara Kala dalam kedamaian. |
-| Q_MQ5_S14_OBJ | Bring Laras home into the morning sun: write her full name (La - Ra - Sa) upon the reunited sacred lontar. | Bawa Laras pulang ke cahaya mentari: tuliskan nama lengkapnya (La - Ra - Sa) pada lontar pusaka yang telah bersatu. |
+| Q_MQ0_S1_OBJ | Win Laras's game: touch Si Belang, the old well and the banyan root before she does. | Menangkan permainan Laras: sentuh Si Belang, sumur tua, dan akar beringin lebih dulu darinya. |
+| Q_MQ0_S2_OBJ | Go home for tea with Ibu, then ask the old couple next door what they need. | Pulang minum teh dengan Ibu, lalu tanya pasangan tua di rumah sebelah apa yang mereka perlukan. |
+| Q_MQ0_S3_OBJ | Talk Ciung down from the banyan at the west end of the village: find the basket he dropped, then speak to him. | Bujuk Ciung turun dari beringin di barat desa: temukan keranjangnya yang jatuh, lalu bicara dengannya. |
+| Q_MQ0_S4_OBJ | Pick up Ibu's lamp oil at the market stall, then meet Cepot at the sanggar door. | Ambil minyak lampu pesanan Ibu di lapak pasar, lalu temui Cepot di pintu sanggar. |
+| Q_MQ0_S5_OBJ | Talk to Ki Semar inside the sanggar, then to Cepot. | Bicara dengan Ki Semar di dalam sanggar, lalu dengan Cepot. |
+| Q_MQ0_S6_OBJ | Write the La glyph, the first letter of Laras's name, on the lontar she is holding. | Tulis aksara La, huruf pertama nama Laras, di lontar yang ia pegang. |
+| Q_MQ0_S7_OBJ | Light the four oil lamps around the wayang stage before dusk is gone. | Nyalakan empat lampu minyak di sekeliling panggung wayang sebelum senja habis. |
+| Q_MQ0_S8_OBJ | Watch the ruwatan from behind the kelir: sit down by Ki Semar's lamp. | Tonton ruwatan dari balik kelir: duduk di dekat lampu Ki Semar. |
+| Q_MQ0_S9_OBJ | Push through the panicking crowd and reach Laras in front of the kelir. | Terobos kerumunan yang panik dan capai Laras di depan kelir. |
+| Q_MQ0_S10_OBJ | Ask Ibu about Laras, then find your torn half of the lontar on the burned stage. | Tanya Ibu soal Laras, lalu cari sobekan lontarmu di panggung yang terbakar. |
+| Q_MQ0_S11_OBJ | Take the torn lontar to Ki Semar at the sanggar and learn the glyph Laras wrote. | Bawa sobekan lontar ke Ki Semar di sanggar dan pelajari aksara yang ditulis Laras. |
+| Q_MQ0_S12_OBJ | Drive the Faceless from the square, say goodbye to Ibu at the west gate, then set out for Tatar Sunda. | Usir Tanpa Rupa dari alun-alun, pamit pada Ibu di gerbang barat, lalu berangkat ke Tatar Sunda. |
+| Q_MQ1_S1_OBJ | Find Laras's trail in the tea fields: ask the elder's grandson, then search the bamboo. | Cari jejak Laras di kebun teh: tanya cucu sesepuh, lalu periksa rumpun bambu. |
+| Q_MQ1_S2_OBJ | Clear the Faceless scout camp in the tea garden. | Bersihkan kemah pengintai Tanpa Rupa di kebun teh. |
+| Q_MQ1_S3_OBJ | Light the old shrine on the tea terrace, then talk to Cepot. | Nyalakan petilasan di teras teh, lalu bicara dengan Cepot. |
+| Q_MQ1_S4_OBJ | Drive the Faceless and the wild boars out of the kampung. | Usir Tanpa Rupa dan babi hutan yang menyerbu kampung. |
+| Q_MQ1_S5_OBJ | See the kampung elder and learn Ga, then leave by the south gate. | Temui sesepuh kampung dan pelajari aksara Ga, lalu keluar lewat gerbang selatan. |
+| Q_MQ1_S6_OBJ | Ask Ceu Imas what happened to her boy, then check the sandal by the river. | Tanya Ceu Imas apa yang terjadi pada anaknya, lalu periksa sandal di tepi sungai. |
+| Q_MQ1_S7_OBJ | Check the dead oncor along the hamlet path, then the prints leading down into the gorge. | Periksa oncor yang padam di jalan dusun, lalu jejak kaki yang menurun ke ngarai. |
+| Q_MQ1_S8_OBJ | Light the three oncor at the hamlet's edge and drive the shades out of the dusk mist. | Nyalakan ketiga oncor di tepi dusun dan halau bayangan dari kabut senja. |
+| Q_MQ1_S9_OBJ | Follow the lontar into a child's maghrib. | Ikuti lontar ke dalam maghrib seorang anak. |
+| Q_MQ1_S10_OBJ | Defeat Sandekala in the gorge and bring the children home. | Kalahkan Sandekala di ngarai dan bawa anak-anak pulang. |
+| Q_MQ1_S11_OBJ | Drive off the spirits in the Batu Tulis grove, then press the three name-stones from east to west. | Usir roh di rumpun Batu Tulis, lalu tekan ketiga batu nama dari timur ke barat. |
+| Q_MQ1_S12_OBJ | Read the carvings on the Batu Tulis and learn the Nga glyph. | Baca ukiran di Batu Tulis dan pelajari aksara Nga. |
+| Q_MQ1_S13_OBJ | Climb to the terrace lip and look at the flood drowning the valley. | Naiki bibir teras dan lihat banjir yang menenggelamkan lembah. |
+| Q_MQ1_S14_OBJ | Drive the masked looters and restless spirits off the Weaver's terraces. | Usir penjarah bertopeng dan roh liar dari teras sawah Penenun. |
+| Q_MQ1_S15_OBJ | Turn both upper sluice wheels, then talk to the Weaver. | Putar kedua roda pintu air atas, lalu bicara dengan Penenun. |
+| Q_MQ1_S16_OBJ | Follow the dammed river upstream and defeat the sentries on the road to the lake. | Susuri sungai yang terbendung ke hulu dan kalahkan penjaga di jalan menuju danau. |
+| Q_MQ1_S17_OBJ | Check the freshly felled trees on the lake's east slope. | Periksa pohon-pohon yang baru ditebang di lereng timur danau. |
+| Q_MQ1_S18_OBJ | Defeat the Faceless and Kuntilanak on the lake shore, then check the toy one left behind. | Kalahkan Tanpa Rupa dan Kuntilanak di tepi danau, lalu periksa mainan yang mereka tinggalkan. |
+| Q_MQ1_S19_OBJ | Talk to the woman by the lake and learn the Ca glyph. | Bicara dengan perempuan di tepi danau dan pelajari aksara Ca. |
+| Q_MQ1_S20_OBJ | Climb the crater road, defeat what blocks it, then light the upper shrine. | Daki jalan kawah dan kalahkan penghadangnya, lalu nyalakan petilasan atas. |
+| Q_MQ1_S21_OBJ | Listen to the lontar's memory at the upper shrine: Laras at the crater. | Dengarkan kenangan lontar di petilasan atas: Laras di kawah. |
+| Q_MQ1_S22_OBJ | Defeat the Faceless Captain on the crater rim and check the mask fragment across the rim. | Kalahkan Kapten Tanpa Rupa di bibir kawah dan periksa pecahan topeng di seberang. |
+| Q_MQ1_S23_OBJ | Follow the lontar to Dayang Sumbi's night, by the ribs of Sangkuriang's boat. | Ikuti lontar ke malam Dayang Sumbi di kerangka perahu Sangkuriang. |
+| Q_MQ1_S24_OBJ | Hang the Boeh Rarang on the east post, then defeat the raging Sangkuriang. | Gantungkan Boeh Rarang di tiang timur, lalu kalahkan Sangkuriang yang mengamuk. |
+| Q_MQG_S1_OBJ | Find a way into Galuh: talk to the rooster seller and Ciung Wanara at the ring. | Cari jalan masuk ke Galuh: bicaralah dengan penjual ayam jago dan Ciung Wanara di arena. |
+| Q_MQG_S2_OBJ | Learn what moves through Pasar Kuta: talk to the informant and read the manifest in the storehouse. | Cari tahu apa yang lewat di Pasar Kuta: bicaralah dengan informan dan periksa manifes di gudang. |
+| Q_MQG_S3_OBJ | Defeat the tourney riggers in the market storehouse. | Kalahkan para pencurang sayembara di gudang pasar. |
+| Q_MQG_S4_OBJ | Win both bouts of the tourney in the square to earn a pass into the palace. | Menangkan dua babak sayembara di alun-alun untuk mendapat izin masuk keraton. |
+| Q_MQG_S5_OBJ | Get inside the palace: talk to Uwa Lengser and light the petilasan in the inner garden. | Masuk ke istana: bicaralah dengan Uwa Lengser dan nyalakan petilasan di taman dalam. |
+| Q_MQG_S6_OBJ | Enter the Balai Pustaka: defeat the archive guards and talk to Nyai Sekar. | Masuk Balai Pustaka: kalahkan penjaga arsip dan temui Nyai Sekar. |
+| Q_MQG_S7_OBJ | Bring back the scraped lineage: turn the three archive mirrors and examine the lontar. | Pulihkan silsilah yang dikerik: putar tiga cermin arsip dan periksa lontarnya. |
+| Q_MQG_S8_OBJ | Get into the Kaputren: defeat Tamperan's spies in its courtyard. | Masuk ke Kaputren: kalahkan mata-mata Tamperan di halamannya. |
+| Q_MQG_S9_OBJ | Look for Laras's trail in the guest chamber: move the three screens and examine her hairpin. | Cari jejak Laras di kamar tamu: geser tiga layar dan periksa jepit rambutnya. |
+| Q_MQG_S10_OBJ | Listen in on Prince Hariang Banga from behind the curtain, then take the passage to the cell yard. | Dengarkan percakapan Pangeran Hariang Banga dari balik tirai, lalu ikuti lorong ke halaman sel. |
+| Q_MQG_S11_OBJ | Chase the prisoner wagon: defeat the guards on the prison stairs. | Kejar kereta tahanan: kalahkan penjaga di tangga penjara. |
+| Q_MQG_S12_OBJ | Stop Laras's wagon: defeat the Faceless escort on the east road. | Hentikan kereta Laras: kalahkan pengawal Tanpa Rupa di jalan timur. |
+| Q_MQG_S13_OBJ | Go back to Laras's cell: defeat the guards and read her message on the wall. | Kembali ke sel Laras: kalahkan para penjaga dan baca pesannya di dinding. |
+| Q_MQG_S14_OBJ | Follow Laras's memory of the guest chamber and the wagon. | Ikuti ingatan Laras tentang kamar tamu dan kereta. |
+| Q_MQG_S15_OBJ | Talk to the hiding Faceless deserter, then decide his fate. | Bicaralah dengan pembelot Tanpa Rupa yang bersembunyi, lalu putuskan nasibnya. |
+| Q_MQG_S16_OBJ | Go through the archive grate Laras opened and climb to the upper gallery. | Masuk lewat jeruji arsip yang dibuka Laras dan naiklah ke galeri atas. |
+| Q_MQG_S17_OBJ | Examine the scraped court portrait, then live Uwa Lengser's memory. | Periksa potret istana yang dikerik, lalu jalani ingatan Uwa Lengser. |
+| Q_MQG_S18_OBJ | Take the second mask fragment behind the throne and watch its memory. | Ambil pecahan topeng kedua di belakang singgasana dan saksikan ingatannya. |
+| Q_MQG_S19_OBJ | Break into the throne room with Ciung Wanara: defeat the guards and the champion. | Dobrak ruang takhta bersama Ciung Wanara: kalahkan para penjaga dan sang juara. |
+| Q_MQG_S20_OBJ | Face the false king, Barma Wijaya, on the high throne and defeat him. | Hadapi raja palsu, Barma Wijaya, di singgasana agung dan kalahkan dia. |
+| Q_MQ2_S1_OBJ | Talk to both recruiters at the gates of Mataram. | Bicara dengan kedua perekrut di gerbang Mataram. |
+| Q_MQ2_S2_OBJ | Defeat the gate guards and light the petilasan in the rice fields. | Kalahkan penjaga gerbang dan nyalakan petilasan di sawah. |
+| Q_MQ2_S3_OBJ | Defeat the tuyul and looters who storm the wayang stage in the market. | Kalahkan Tuyul dan penjarah yang menyerbu panggung wayang di pasar. |
+| Q_MQ2_S4_OBJ | Talk to Ki Sumarto and learn the glyph Ha from him. | Bicara dengan Ki Sumarto, lalu pelajari aksara Ha darinya. |
+| Q_MQ2_S5_OBJ | Clear the soldiers off the paddy road so the families can cross. | Bersihkan jalan sawah dari prajurit agar keluarga bisa lewat. |
+| Q_MQ2_S6_OBJ | Defeat the guards at the ruins, then read the statue's base to learn Na. | Kalahkan penjaga reruntuhan, lalu baca dasar arca untuk belajar aksara Na. |
+| Q_MQ2_S7_OBJ | Defeat the Faceless in the graveyard and look for Sapto's missing name. | Kalahkan Tanpa Rupa di kuburan dan cari nama Sapto yang hilang. |
+| Q_MQ2_S8_OBJ | Enter the Hunter's memory and take the third mask fragment. | Masuki ingatan Sang Pemburu dan ambil pecahan topeng ketiga. |
+| Q_MQ2_S9_OBJ | Defeat the attackers in the lesung yard. | Kalahkan para penyerang di halaman lesung. |
+| Q_MQ2_S10_OBJ | Talk to Nyai Gendhis and learn the glyph Ca. | Bicara dengan Nyai Gendhis dan pelajari aksara Ca. |
+| Q_MQ2_S11_OBJ | Hold the foothill shrine against the night siege. | Pertahankan kuil kaki bukit dari kepungan malam. |
+| Q_MQ2_S12_OBJ | Light the shrine's four braziers in the order of the juru kunci's chant, then learn Ra. | Nyalakan empat pedupaan kuil sesuai urutan kidung juru kunci, lalu pelajari Ra. |
+| Q_MQ2_S13_OBJ | Defeat the guards among the pillars of the dry fields. | Kalahkan penjaga di antara pilar-pilar tegalan. |
+| Q_MQ2_S14_OBJ | Defeat the temple guards and take the enemy camp beside it. | Kalahkan penjaga candi dan rebut kemah musuh di sebelahnya. |
+| Q_MQ2_S15_OBJ | Examine three clues: the rubble, the lesung and the lontar strip marked Ka. | Periksa tiga petunjuk: puing, lesung, dan carikan lontar bertanda Ka. |
+| Q_MQ2_S16_OBJ | Take Laras's lontar fragment at the petilasan, then enter her memory. | Ambil carikan lontar Laras di petilasan, lalu masuki ingatannya. |
+| Q_MQ2_S17_OBJ | Defeat the guards in the temple crypt hall. | Kalahkan penjaga di aula ruang bawah tanah candi. |
+| Q_MQ2_S18_OBJ | Enter the memory held in the lesung. | Masuki ingatan di lesung yang pernah ditumbuk Nyai Gendhis. |
+| Q_MQ2_S19_OBJ | Defeat Bandung Bondowoso. | Kalahkan Bandung Bondowoso. |
+| Q_MQ2_S20_OBJ | Take the temple shortcut west to the Pamali. | Lewati jalan pintas candi ke barat, menuju Pamali. |
+| Q_MQ2_S21_OBJ | Write Nagawiru's name on the Pamali stone: Na, then Ga. | Tulis nama Nagawiru di batu Pamali: Na lalu Ga. |
+| Q_MQ2_S22_OBJ | Enter the memory of Ki Sumarto's wayang about two brothers who split the land. | Masuki ingatan wayang Ki Sumarto tentang dua saudara yang membelah tanah. |
+| Q_MQ2_S23_OBJ | Examine Hariang Banga's unsent letters in the east camp. | Periksa surat-surat Hariang Banga yang tak terkirim di kemah timur. |
+| Q_MQ2_S24_OBJ | Defeat Hariang Banga at the ford. | Kalahkan Hariang Banga di tepi Pamali. |
+| Q_MQ3_S1_OBJ | Meet Ratna on the smiths' street, then light the petilasan on the savanna and rest. | Temui Ratna di jalan para pandai besi, lalu nyalakan petilasan di sabana dan beristirahat. |
+| Q_MQ3_S2_OBJ | Hold your ground against the green giant charging out of the grass, and drive him back. | Bertahanlah dari raksasa hijau yang menerjang keluar dari rumput, dan pukul ia mundur. |
+| Q_MQ3_S3_OBJ | Follow the red marks to the village mouth, then speak with Mpu Wirasana at his forge. | Ikuti tanda merah ke mulut desa, lalu temui Mpu Wirasana di bengkelnya. |
+| Q_MQ3_S4_OBJ | Cast the aksara Ha twice, as Mpu Wirasana showed you. | Lemparkan aksara Ha dua kali, seperti yang diajarkan Mpu Wirasana. |
+| Q_MQ3_S5_OBJ | Find Mbok Srini at her smashed hut, then examine what her daughter dropped on the run: seeds, a needle case, salt and terasi. | Temui Mbok Srini di pondoknya yang hancur, lalu periksa apa yang ditinggalkan putrinya di jalan pelarian: biji, kotak jarum, garam, dan terasi. |
+| Q_MQ3_S6_OBJ | Scatter the cucumber seeds at the riverbed marker, then survive the charge the briars slow. | Tebar biji mentimun di tanda dasar sungai, lalu bertahanlah dari terjangan raksasa yang diperlambat duri. |
+| Q_MQ3_S7_OBJ | Set the needle, salt and terasi pouches at three banyan roots while Buto Ijo circles, then hold him off. | Taruh kantong jarum, garam, dan terasi di tiga akar beringin sementara Buto Ijo mengitari, lalu tahan dia. |
+| Q_MQ3_S8_OBJ | Touch the flat stone in the banyan's hollow and live the memory it holds. | Sentuh batu datar di rongga beringin dan jalani kenangan yang ia simpan. |
+| Q_MQ3_S9_OBJ | Defeat Buto Ijo in the eastern field: every phase raises pouch fields that hurt only him. | Kalahkan Buto Ijo di ladang timur: tiap tahap memunculkan petak bungkusan yang hanya melukai dia. |
+| Q_MQ3_S10_OBJ | Free the dry field: defeat the ghost keris and fire spirits that rise from the red stakes. | Bebaskan ladang kering: kalahkan hantu keris dan roh api yang bangkit dari tonggak merah. |
+| Q_MQ3_S11_OBJ | Defend the forge quarter: help Mpu Wirasana and Ratna hold off the flying ghost keris. | Pertahankan kampung tempa: bantu Mpu Wirasana dan Ratna menahan keris-keris hantu yang beterbangan. |
+| Q_MQ3_S12_OBJ | Examine the broken scabbard and the forge records in Wirasana's vault. | Periksa sarung keris yang patah dan catatan tempa di gudang Wirasana. |
+| Q_MQ3_S13_OBJ | Touch the old anvil stone in the vault corner and live the apprentice's memory. | Sentuh batu landasan tua di sudut gudang dan jalani kenangan si murid. |
+| Q_MQ3_S14_OBJ | Follow the Hunter's ash trail along the coast, and defeat whatever bars it. | Ikuti jejak abu sang Pemburu menyusuri pesisir, dan kalahkan yang menghadang. |
+| Q_MQ3_S15_OBJ | Cross the Sea of Sand: defeat what roams it, then touch the three stone waymarkers in order. | Seberangi Lautan Pasir: kalahkan yang menghadang, lalu sentuh tiga penanda batu secara berurutan. |
+| Q_MQ3_S16_OBJ | Light the petilasan in the sand alcove and rest, then talk to Hariang Banga by the fire. | Nyalakan petilasan di ceruk pasir dan beristirahat, lalu bicara dengan Hariang Banga di api unggun. |
+| Q_MQ3_S17_OBJ | Examine Laras's lontar strip in the sand alcove and live its memory. | Periksa serpihan lontar Laras di ceruk pasir dan jalani kenangannya. |
+| Q_MQ3_S18_OBJ | Enter Candi Gandring through Laras's wind tunnel and reach the inner sanctum. | Masuki Candi Gandring lewat terowongan angin Laras, dan capai bilik dalamnya. |
+| Q_MQ3_S19_OBJ | Defeat the awakened Keris of Mpu Gandring in the shrine court, ringed by seven red stakes. | Kalahkan Keris Mpu Gandring yang bangkit di pelataran candi, dikepung tujuh tonggak merah. |
+| Q_MQ3_S20_OBJ | Decide the blade's fate with Mpu Wirasana: reforge it, or give it to the river. | Putuskan nasib bilah itu bersama Mpu Wirasana: tempa ulang, atau serahkan pada sungai. |
+| Q_MQ3_S21_OBJ | Take the last mask fragment where the keris lay, then join the mask at the shrine door. | Ambil pecahan topeng terakhir di tempat keris terbaring, lalu satukan topeng itu di pintu kuil. |
+| Q_MQ3_S22_OBJ | Defeat the Faceless Hunter, then give him back his true name: Aria Kebonan. | Kalahkan sang Pemburu Tanpa Rupa, lalu kembalikan namanya: Aria Kebonan. |
+| Q_MQ4_S1_OBJ | Go home to Desa Purwa and test the fog to the north. | Pulang ke Desa Purwa dan uji kabut di utara. |
+| Q_MQ4_S2_OBJ | Ask the old couple and the stallkeeper who in the village has started forgetting names. | Tanyai pasangan tua dan pedagang warung: siapa di desa yang mulai lupa nama? |
+| Q_MQ4_S3_OBJ | Write the residents' names on three doorposts. | Tulis nama penghuni di tiga tiang pintu. |
+| Q_MQ4_S4_OBJ | Check Laras's shelf, then see Ibu. | Periksa rak Laras, lalu temui Ibu. |
+| Q_MQ4_S5_OBJ | Talk to Ciung Wanara and Hariang Banga at Ibu's table. | Bicaralah dengan Ciung Wanara dan Hariang Banga di meja Ibu. |
+| Q_MQ4_S6_OBJ | Meet Aria Kebonan at the edge of the village. | Temui Aria Kebonan di tepi desa. |
+| Q_MQ4_S7_OBJ | Meet Semar at the village gate. | Temui Semar di gerbang desa. |
+| Q_MQ4_S8_OBJ | Go through the south gate to the beach, then meet Cepot. | Lewati gerbang selatan ke pantai, lalu temui Cepot. |
+| Q_MQ4_S9_OBJ | Light the shrine on the beach, then walk into Kampung Nelayan. | Nyalakan petilasan di pantai, lalu masuk ke Kampung Nelayan. |
+| Q_MQ4_S10_OBJ | Talk to Mbah Wiryo and Sari on the jetty. | Bicara dengan Mbah Wiryo dan Sari di dermaga. |
+| Q_MQ4_S11_OBJ | Gather the three verses of the song from three families. | Kumpulkan tiga bait lagu dari tiga keluarga. |
+| Q_MQ4_S12_OBJ | Follow Mbah Wiryo to the tide line at dusk. | Ikuti Mbah Wiryo ke garis pasang saat senja. |
+| Q_MQ4_S13_OBJ | Light three tidal beacons with Sari in the mangrove. | Nyalakan tiga suar pasang bersama Sari di hutan bakau. |
+| Q_MQ4_S14_OBJ | Put out the Lampor on the low-tide reef. | Padamkan para Lampor di karang surut. |
+| Q_MQ4_S15_OBJ | Clear the path to Gua Karang. | Bersihkan jalan menuju Gua Karang. |
+| Q_MQ4_S16_OBJ | Play Laras's memory and ring three sunken bells. | Mainkan ingatan Laras dan bunyikan tiga lonceng tenggelam. |
+| Q_MQ4_S17_OBJ | Hold out against the current's guardians in the abyssal cave. | Bertahanlah melawan penjaga arus di gua palung. |
+| Q_MQ4_S18_OBJ | Climb the cliff: clear the way, light the shrine and hear the queen's story. | Naik ke tebing: bersihkan jalannya, nyalakan petilasan, dan dengarkan kisah sang ratu. |
+| Q_MQ4_S19_OBJ | Write Laras's name on the card, then speak at the cliff altar. | Tulis nama Laras di kartu, lalu bicara di altar tebing. |
+| Q_MQ4_S20_OBJ | Light the shrine on the ancient causeway. | Nyalakan petilasan di jalan batu kuno. |
+| Q_MQ4_S21_OBJ | Withstand the three waves in the pavilion. | Bertahanlah melewati tiga gelombang di paviliun. |
+| Q_MQ4_S22_OBJ | Take the glyph Ombak at the Sea Altar. | Terima aksara Ombak di Altar Laut. |
+| Q_MQ5_S1_OBJ | Enter the Courtyard of Time and defeat the shadows rushing it, side by side with Ciung and Hariang. | Masuk ke Pelataran Waktu dan kalahkan bayangan yang menyerbu bersama Ciung dan Hariang. |
+| Q_MQ5_S2_OBJ | Speak to the Ancestors' Stone and decide: carve Aria Kebonan's name, or leave its space blank. | Bicara pada Batu Leluhur dan putuskan: ukir nama Aria Kebonan, atau biarkan ruangnya kosong. |
+| Q_MQ5_S3_OBJ | Draw Ombak at the Eclipse veil, then fight your way through the cave mouth. | Gambar Ombak pada tirai Gerhana, lalu tembus mulut gua. |
+| Q_MQ5_S4_OBJ | Touch the letter La drifting on the east road, then win the tag game once more. | Sentuh huruf La yang melayang di jalan timur, lalu menangkan permainan kejar-kejaran itu lagi. |
+| Q_MQ5_S5_OBJ | Clear both halls of the Hourglass Sands to break the time-wards. | Kalahkan musuh di dua aula Pasir Jam untuk mematahkan penangkal waktu. |
+| Q_MQ5_S6_OBJ | Go down into Hutan Lupa, defeat what lurks there, and answer the three whispering trees with the right names. | Turun ke Hutan Lupa, kalahkan penjaganya, dan jawab bisikan tiga pohon dengan nama yang benar. |
+| Q_MQ5_S7_OBJ | Defeat the guards in the Abyss of Forgetting, then touch the letter Ra and relive the memory of two cups. | Kalahkan penjaga di Jurang Lupa, lalu sentuh huruf Ra dan jalani kenangan dua cangkir. |
+| Q_MQ5_S8_OBJ | Cross the Shadow Bridge and defeat the echoes of the legends you once fought. | Seberangi Jembatan Bayang dan kalahkan gema legenda yang pernah kau lawan. |
+| Q_MQ5_S9_OBJ | Light the last petilasan, then touch the letter Sa and relive the memory of writing names. | Nyalakan petilasan terakhir, lalu sentuh huruf Sa dan jalani kenangan menulis nama. |
+| Q_MQ5_S10_OBJ | Listen to Semar tell the tale of Murwakala at his story stone. | Dengarkan Semar menuturkan kisah Murwakala di batu kisahnya. |
+| Q_MQ5_S11_OBJ | Sit in the dalang's seat behind Semar's kelir and practise the order: Sunda, Jawa, Ombak. | Duduk di tempat dalang di balik kelir Semar dan latih urutan Sunda, Jawa, Ombak. |
+| Q_MQ5_S12_OBJ | Examine Laras's lontar fragment in the Abyss and relive its memory. | Periksa serpihan lontar Laras di Jurang dan jalani kenangannya. |
+| Q_MQ5_S13_OBJ | Defeat Batara Kala. Cast Sunda, Jawa, Ombak at each of his shields while Laras cracks them from within. | Kalahkan Batara Kala. Ucapkan Sunda, Jawa, Ombak pada tiap perisainya sementara Laras meretakkannya dari dalam. |
+| Q_MQ5_S14_OBJ | Write Laras's name on the lontar card: La, Ra, Sa. | Tulis nama Laras pada kartu lontar: La, Ra, Sa. |
 | Q_SQ_S1_TITLE | Lutung Kasarung | Lutung Kasarung |
-| Q_SQ_S1_S1_OBJ | What is the tale of the girl and the langur? Ask Ki Darsa, the kampung storyteller | Apa kisah gadis dan lutung itu? Tanyai Ki Darsa, pendongeng kampung |
-| Q_SQ_S1_S2_OBJ | Where do the langur's offerings lead? Search the forest for the hidden spring and clear its guards | Ke mana persembahan lutung menuntun? Telusuri hutan ke mata air tersembunyi dan usir penjaganya |
-| Q_SQ_S1_S3_OBJ | What does the lutung remember? Follow its memory as it leads the girl to the spring | Apa yang diingat lutung? Ikuti kenangannya yang menuntun si gadis ke mata air |
-| Q_SQ_S1_S4_OBJ | Hear what Purbasari has to say at the spring, now that its guardians are gone | Dengar kata Purbasari di mata air, kini penjaganya sudah tiada |
-| Q_SQ_S1_S5_OBJ | Let Ki Darsa know how the tale ended: return to him in the kampung | Kabari Ki Darsa bagaimana dongengnya berakhir, kembali ke kampung |
+| Q_SQ_S1_S1_OBJ | Hear the tale of the girl and the langur from Ki Darsa in the kampung. | Dengarkan kisah gadis dan lutung dari Ki Darsa di kampung. |
+| Q_SQ_S1_S2_OBJ | Check the offerings and the hidden spring in the forest, then drive off the spirits guarding it. | Periksa sesaji dan mata air tersembunyi di hutan, lalu usir roh-roh penjaganya. |
+| Q_SQ_S1_S3_OBJ | Follow the langur's memory as he leads the girl to the spring. | Ikuti kenangan lutung saat ia menuntun si gadis ke mata air. |
+| Q_SQ_S1_S4_OBJ | Talk to Purbasari at the spring. | Bicara dengan Purbasari di mata air. |
+| Q_SQ_S1_S5_OBJ | Return to Ki Darsa and tell him how the tale ended. | Kembali ke Ki Darsa dan ceritakan akhir kisahnya. |
 | Q_SQ_S2_TITLE | Crying in the Bamboo | Tangis di Rumpun Bambu |
-| Q_SQ_S2_S1_OBJ | Who is crying in the bamboo? Ask the village head in the kampung | Siapa yang menangis di rumpun bambu? Tanyai kepala desa di kampung |
-| Q_SQ_S2_S2_OBJ | Find the source of the crying: examine the cempaka tree over the grave, then the torn white cloth | Cari sumber tangisan: periksa pohon cempaka di atas makam tak bertanda, lalu kain putih sobek |
-| Q_SQ_S2_S3_OBJ | Who walks the grove at night? Follow the memory of an old grandmother | Siapa yang berjalan di rumpun bambu tengah malam? Ikuti kenangan seorang nenek tua |
-| Q_SQ_S2_S4_OBJ | Put the crying to rest: defeat the elite Kuntilanak in the grove, fighting from safe ground | Tenangkan tangisan itu: kalahkan Kuntilanak elit di rumpun, bertarung dari tanah aman |
-| Q_SQ_S2_S5_OBJ | Give the forgotten woman her name back: help the village head carve it on her grave marker | Kembalikan nama perempuan yang terlupa: bantu kepala desa memahatnya di nisannya |
+| Q_SQ_S2_S1_OBJ | Ask the village head who is weeping in the bamboo grove. | Tanya kepala desa siapa yang menangis di rumpun bambu. |
+| Q_SQ_S2_S2_OBJ | Find where the weeping comes from: find the cempaka tree over the grave, then check the white cloth on the bamboo. | Cari asal tangisan: temukan pohon cempaka di atas makam, lalu periksa kain putih di bambu. |
+| Q_SQ_S2_S3_OBJ | Follow the memory of an old grandmother who walked the grove at midnight. | Ikuti kenangan seorang nenek yang berjalan di rumpun itu pada tengah malam. |
+| Q_SQ_S2_S4_OBJ | Defeat the strong Kuntilanak in the grove, and fight from safe ground. | Kalahkan Kuntilanak kuat di rumpun, dan bertarunglah dari tanah yang aman. |
+| Q_SQ_S2_S5_OBJ | Write two glyphs on the woman's grave marker with the village head. | Tulis dua aksara di nisan perempuan itu bersama kepala desa. |
 | Q_SQ_S3_TITLE | The Lost Angklung Notes | Nada Angklung yang Hilang |
-| Q_SQ_S3_S1_OBJ | Recover the angklung's lost notes: gather 3 tuned bamboo tubes from garden, village and terraces | Pulihkan nada angklung yang hilang: kumpulkan 3 tabung bambu setel dari kebun, desa, dan sawah |
-| Q_SQ_S3_S2_OBJ | Make the angklung play again: arrange the tubes into the pentatonic scale, then see the leader | Bunyikan angklung lagi: susun tabung ke tangga nada pentatonik di balai desa, lalu temui ketuanya |
-| Q_SQ_S3_S3_OBJ | Play the harmony with the villagers | Mainkan harmoninya bersama warga |
+| Q_SQ_S3_S1_OBJ | Gather the 3 angklung tubes scattered over the garden, the kampung and the terraces. | Kumpulkan 3 tabung angklung yang tercecer di kebun, kampung, dan sawah. |
+| Q_SQ_S3_S2_OBJ | Hang the three tubes on the angklung frames in the kampung, from low note to high. | Gantung ketiga tabung pada rangka angklung di kampung, dari nada rendah ke tinggi. |
+| Q_SQ_S3_S3_OBJ | Go to the angklung leader and hear the notes. | Temui pemimpin angklung dan dengarkan nadanya. |
 | Q_SQ_S4_TITLE | Brave Cepot | Cepot yang Pemberani |
-| Q_SQ_S4_S1_OBJ | Why is Cepot's pack stuck? Defeat the wild boars in the garden that trapped it | Mengapa bekal Cepot tertahan? Kalahkan babi hutan di kebun yang menjebaknya |
-| Q_SQ_S4_S2_OBJ | Free Cepot's pack from the last three boars with the Ga Ward spell, then speak with Cepot | Bebaskan bekal Cepot dari tiga babi terakhir dengan mantra Ga Ward, lalu temui Cepot |
-| Q_SQ_S4_S3_OBJ | Report back to Cepot | Lapor kembali kepada Cepot |
+| Q_SQ_S4_S1_OBJ | Drive off the three wild boars penning in Cepot's pack in the garden. | Usir tiga babi hutan yang mengepung bekal Cepot di kebun. |
+| Q_SQ_S4_S2_OBJ | Bring Cepot's pack back to him. | Antarkan bekal Cepot kembali kepadanya. |
+| Q_SQ_S4_S3_OBJ | Talk to Cepot, his pack is free. | Temui Cepot, bekalnya sudah bebas. |
 | Q_SQ_G1_TITLE | The Wit of Si Kabayan | Akal Si Kabayan |
-| Q_SQ_G1_S1_OBJ | Hear Si Kabayan's trouble with the official: find him under the banyan in Pasar Kuta | Apa masalah Si Kabayan dengan pejabat? Temui dia di bawah beringin Pasar Kuta |
-| Q_SQ_G1_S2_OBJ | Find answers to the official's riddles: examine the tax ledger and Kabayan's palm-sugar sack | Cari jawaban teka-teki pejabat: periksa buku pajak dan karung gula aren Kabayan |
-| Q_SQ_G1_S3_OBJ | See how the tale goes: follow Kabayan's memory and hang the basket as the story says | Lihat bagaimana kisahnya berjalan: ikuti kenangan Kabayan dan gantung bakul seperti dalam cerita |
-| Q_SQ_G1_S4_OBJ | See the official undone: return to Si Kabayan under the market banyan | Saksikan pejabat itu kalah: kembali ke Si Kabayan di bawah beringin pasar |
+| Q_SQ_G1_S1_OBJ | Talk to Si Kabayan under the Pasar Kuta banyan and hear his trouble with the official. | Temui Si Kabayan di bawah beringin Pasar Kuta dan dengarkan urusannya dengan pejabat. |
+| Q_SQ_G1_S2_OBJ | Find material for the official's riddles: examine the tax ledger and the palm-sugar sack. | Cari bahan untuk teka-teki pejabat: periksa buku pajak dan karung gula aren. |
+| Q_SQ_G1_S3_OBJ | Live Kabayan's memory of the hanging basket. | Jalani ingatan Kabayan tentang bakul yang digantung. |
+| Q_SQ_G1_S4_OBJ | Go back to Si Kabayan under the banyan and watch the official lose. | Kembali ke Si Kabayan di bawah beringin dan lihat pejabat itu kalah. |
 | Q_SQ_G2_TITLE | The Sweeping Ghost | Ririwa Penyapu |
-| Q_SQ_G2_S1_OBJ | What troubles the old palace maid? Talk to her in the Kaputren | Apa yang meresahkan dayang tua istana? Temui dia di Kaputren |
-| Q_SQ_G2_S2_OBJ | What happened to a servant? Examine the worn-down broom and scraped servants' roll in the Kaputren | Apa yang menimpa seorang abdi? Periksa sapu aus dan daftar abdi yang terkikis di Kaputren |
-| Q_SQ_G2_S3_OBJ | What was the servant's last day like? Sweep as he did and listen | Seperti apa hari terakhir sang abdi? Menyapulah seperti dia dan dengarkan |
-| Q_SQ_G2_S4_OBJ | Restore the servant's name: write it back on the roll at the write stone in the Kaputren | Pulihkan nama sang abdi: tulis kembali di daftar pada batu tulis di Kaputren |
-| Q_SQ_G2_S4_OBJ_FIGHT | Face the sweeping ghost in the hall | Hadapi hantu penyapu di lorong |
-| Q_SQ_G2_S5_OBJ | Tell the old palace maid in the Kaputren what you did for the servant | Kabari dayang tua istana di Kaputren tentang apa yang kau lakukan untuk sang abdi |
-| Q_SQ_M1_TITLE | Under the Last of the Rice | Di Bawah Sisa Padi |
-| Q_SQ_M1_S1_OBJ | Why has Nawang Wulan's rice pot stopped filling? Find her in the rice paddies | Mengapa periuk Nawang Wulan tak lagi penuh? Temui dia di sawah |
-| Q_SQ_M1_S2_OBJ | Where did the rice go? Check the lifted pot lid and the empty rice store in the lumbung | Ke mana perginya beras? Periksa tutup periuk dan lumbung kosong di sawah |
-| Q_SQ_M1_S3_OBJ | Find what was taken from Nawang Wulan: search the lumbung for her shawl under the last of the rice | Cari yang diambil dari Nawang Wulan: telusuri lumbung sampai menemukan selendangnya di bawah sisa padi |
-| Q_SQ_M1_S4_OBJ | Get Nawang Wulan home: defeat the spirit thieves at the spring, then return her shawl | Antar Nawang Wulan pulang: kalahkan pencuri roh di mata air, lalu kembalikan selendangnya |
-| Q_SQ_M2_TITLE | The Child Nobody Called | Anak yang Tak Dipanggil |
-| Q_SQ_M2_S1_OBJ | Who is the missing child? Ask the worried neighbour at the Mataram village market | Siapa anak yang hilang? Temui tetangga yang cemas di pasar desa Mataram |
-| Q_SQ_M2_S2_OBJ | Where did the child go? Climb the bare hill by the graveyard and look for a dropped wooden toy | Ke mana anak itu pergi? Daki bukit gundul dekat makam, cari mainan kayunya di jalan |
-| Q_SQ_M2_S3_OBJ | Why did the parents stop calling their child home? Question them on the hill | Mengapa orang tua berhenti memanggil anaknya pulang? Tanyai mereka di bukit |
-| Q_SQ_M2_S4_OBJ | Bring the neighbour the news at the Mataram market: the child has come home | Kabari tetangga di pasar Mataram bahwa sang anak sudah pulang |
-| Q_SQ_M2_S4_OBJ_FIGHT | Defeat the spirit on the hill | Kalahkan roh di bukit |
-| Q_SQ_M2_S5_OBJ | Bring the boy home | Antar anak itu pulang |
-| Q_SQ_M3_TITLE | Coins That Count Themselves | Koin yang Berhitung Sendiri |
-| Q_SQ_M3_S1_OBJ | Where do the blacksmith's coins go? Find the pande besi at his stall in the Mataram market | Ke mana koin si pandai besi menghilang? Temui dia di lapaknya di pasar Mataram |
-| Q_SQ_M3_S2_OBJ | Who takes the coins? Examine the tiny footprints and half-counted beans in the tuyul hideout | Siapa yang mengambil koin? Periksa jejak kecil dan kacang hijau di sarang tuyul di tegalan |
-| Q_SQ_M3_S3_OBJ | Confront the thief: find the tuyul leader in its hideout, beside the pile of stolen coins | Hadapi si pencuri: temukan pemimpin tuyul di sarangnya, di samping tumpukan koin curian |
-| Q_SQ_M3_S4_OBJ | Tell the blacksmith what became of the tuyul, back at his stall in the Mataram market | Ceritakan nasib tuyul itu kepada si pandai besi di lapaknya di pasar Mataram |
-| Q_SQ_M3_S4_OBJ_FIGHT | Defeat the tuyul leader | Kalahkan pemimpin tuyul |
-| Q_SQ_M3_S5_OBJ | Tell the blacksmith | Kabari pande besi |
-| Q_SQ_M4_TITLE | The Silent Gamelan | Gamelan yang Bisu |
-| Q_SQ_M4_S1_OBJ | Why has the market gamelan fallen silent? Ask Ki Sumarto, the dalang | Mengapa gamelan pasar membisu? Tanyai Ki Sumarto, sang dalang |
-| Q_SQ_M4_S2_OBJ | Find the stolen gong ageng in a sealed nook of the Mataram ruins, past the guarding statues | Cari gong ageng yang dicuri di ceruk tersegel reruntuhan Mataram, waspadai arca penjaganya |
-| Q_SQ_M4_S3_OBJ | Give the gamelan its voice back: hang the gong at Ki Sumarto's pavilion in the market | Kembalikan suara gamelan: gantung gong di balai gamelan pasar Ki Sumarto |
+| Q_SQ_G2_S1_OBJ | Talk to the old maid in the Kaputren and ask what troubles her. | Temui dayang tua di Kaputren dan tanyakan apa yang meresahkannya. |
+| Q_SQ_G2_S2_OBJ | Find out what happened to the servant: examine the worn broom and the scraped servants' roll. | Cari tahu nasib sang abdi: periksa sapu aus dan gulungan abdi yang dikerik. |
+| Q_SQ_G2_S3_OBJ | Live the servant's last day in a memory, sweeping as he did. | Jalani ingatan hari terakhir sang abdi, menyapu seperti dia. |
+| Q_SQ_G2_S4_OBJ | Write the servant's name back on the write stone in the Kaputren. | Tulis lagi nama sang abdi di batu tulis Kaputren. |
+| Q_SQ_G2_S4_OBJ_FIGHT | Defeat the sweeping ghost in the hall. | Kalahkan hantu penyapu di lorong. |
+| Q_SQ_G2_S5_OBJ | Go back to the old maid in the Kaputren and tell her what you did for the servant. | Kembali ke dayang tua di Kaputren dan ceritakan apa yang kau lakukan untuk sang abdi. |
+| Q_SQ_M1_TITLE | The Shawl in the Granary | Selendang di Lumbung |
+| Q_SQ_M1_S1_OBJ | Talk to Nawang Wulan in the rice fields. | Bicara dengan Nawang Wulan di sawah. |
+| Q_SQ_M1_S2_OBJ | Enter the granary where her shawl is kept. | Masuki lumbung padi tempat selendangnya disimpan. |
+| Q_SQ_M1_S3_OBJ | Pick up Nawang Wulan's shawl in the granary. | Ambil selendang Nawang Wulan di lumbung. |
+| Q_SQ_M1_S4_OBJ | Bring the shawl back to Nawang Wulan. | Kembalikan selendang itu pada Nawang Wulan. |
+| Q_SQ_M2_TITLE | The Boy Wewe Took | Anak yang Dibawa Wewe |
+| Q_SQ_M2_S1_OBJ | Talk to the worried neighbour in the market. | Bicara dengan tetangga yang cemas di pasar. |
+| Q_SQ_M2_S2_OBJ | Go up to the graveyard hill where Wewe was seen. | Datangi bukit kuburan tempat Wewe terlihat. |
+| Q_SQ_M2_S3_OBJ | Talk to the boy's parents, or defeat Wewe's guardian. | Bicara dengan orang tua anak itu, atau kalahkan penjaga Wewe. |
+| Q_SQ_M2_S4_OBJ | Go back to the neighbour and share the news. | Kembali ke tetangga dan sampaikan kabarnya. |
+| Q_SQ_M2_S4_OBJ_FIGHT | Go back to the neighbour and share the news. | Kembali ke tetangga dan sampaikan kabarnya. |
+| Q_SQ_M2_S5_OBJ | See the boy home to his parents. | Antar anak itu pulang ke orang tuanya. |
+| Q_SQ_M3_TITLE | Mung Beans for the Tuyul | Kacang Hijau untuk Tuyul |
+| Q_SQ_M3_S1_OBJ | Talk to the smith in the market. | Bicara dengan Pande Besi di pasar. |
+| Q_SQ_M3_S2_OBJ | Find the tuyul hideout in the dry fields and set the mung beans down. | Cari sarang tuyul di tegalan dan letakkan kacang hijau di sana. |
+| Q_SQ_M3_S3_OBJ | Talk to the tuyul leader, or defeat it. | Bicara dengan pemimpin tuyul, atau kalahkan dia. |
+| Q_SQ_M3_S4_OBJ | Return to the smith and tell him how it went. | Kembali ke Pande Besi dan ceritakan hasilnya. |
+| Q_SQ_M3_S4_OBJ_FIGHT | Return to the smith and tell him how it went. | Kembali ke Pande Besi dan ceritakan hasilnya. |
+| Q_SQ_M3_S5_OBJ | Return to the smith and tell him how it went. | Kembali ke Pande Besi dan ceritakan hasilnya. |
+| Q_SQ_M4_TITLE | The Missing Gong | Gong yang Hilang |
+| Q_SQ_M4_S1_OBJ | Talk to Ki Sumarto in the market. | Bicara dengan Ki Sumarto di pasar. |
+| Q_SQ_M4_S2_OBJ | Take the gong ageng from the sealed nook in the ruins. | Ambil gong ageng dari ceruk tersegel di reruntuhan. |
+| Q_SQ_M4_S3_OBJ | Hang the gong on its frame, then tell Ki Sumarto. | Gantung gong pada kerangkanya, lalu beri tahu Ki Sumarto. |
 | Q_SQ_T1_TITLE | Ande-Ande Lumut | Ande-Ande Lumut |
-| Q_SQ_T1_S1_OBJ | Why must Klething Kuning cross the river? Find her at the cut ferry on the River (Kali) | Mengapa Klething Kuning harus menyeberang? Temui dia di penyeberangan putus di Kali |
-| Q_SQ_T1_S2_OBJ | Find a way to part the river: look for the sodo lanang, a broom rib, in the Banyan Grove (Beringin) | Cari cara membelah sungai: temukan sodo lanang, tulang sapu, di Hutan Beringin |
-| Q_SQ_T1_S3_OBJ | Tell Klething Kuning what you learned about the river and the sodo lanang, at the cut ferry | Ceritakan pada Klething Kuning apa yang kau pelajari tentang sungai dan sodo lanang di penyeberangan |
-| Q_SQ_T1_S4_OBJ | Strike the river with the sodo lanang | Pukul sungai dengan sodo lanang |
-| Q_SQ_T1_S4_OBJ_FIGHT | Defeat the giant crab | Kalahkan kepiting raksasa |
-| Q_SQ_T1_S5_OBJ | Speak with Klething Kuning | Bicara dengan Klething Kuning |
+| Q_SQ_T1_S1_OBJ | Find Klething Kuning at the broken ferry on the River and hear why she must cross. | Temui Klething Kuning di tambangan yang putus di Kali dan dengarkan kenapa ia harus menyeberang. |
+| Q_SQ_T1_S2_OBJ | Look for the sodo lanang in the Banyan Grove. | Cari sodo lanang di Hutan Beringin. |
+| Q_SQ_T1_S3_OBJ | Go back to Klething Kuning at the ferry. | Kembali ke Klething Kuning di tambangan. |
+| Q_SQ_T1_S4_OBJ | Strike the river with the sodo lanang at the broken jetty. | Pukulkan sodo lanang ke sungai di dermaga putus. |
+| Q_SQ_T1_S4_OBJ_FIGHT | Defeat the giant crab Yuyu Kangkang. | Kalahkan kepiting raksasa Yuyu Kangkang. |
+| Q_SQ_T1_S5_OBJ | Speak with Klething Kuning at the ferry. | Bicara dengan Klething Kuning di tambangan. |
 | Q_SQ_T2_TITLE | Fire With No Wind | Api Tanpa Angin |
-| Q_SQ_T2_S1_OBJ | Why do the grass fires return each night? Ask the herder on the Savanna | Mengapa kebakaran rumput kembali tiap malam? Tanyai penggembala di Savana |
-| Q_SQ_T2_S2_OBJ | Trace where the fires start: follow the scorched grass to a campfire no one lit, in Pesisir | Lacak asal api: ikuti rumput hangus ke api unggun tak bertuan di bukit pasir Pesisir |
-| Q_SQ_T2_S3_OBJ | Put out the source: defeat the elite Banaspati at the spring in the eastern dunes of Pesisir | Padamkan sumbernya: kalahkan Banaspati elit di mata air bukit pasir timur Pesisir |
-| Q_SQ_T2_S4_OBJ | Ease the herder's mind: tell him on the Savanna that the fire spirit is beaten | Tenangkan penggembala: kabari dia di Savana bahwa roh api telah kalah |
-| Q_SQ_T2_S5_OBJ | Report to the herder | Lapor kepada penggembala |
+| Q_SQ_T2_S1_OBJ | Ask the herder on the Savanna why his grass burns every night. | Tanyai penggembala di Sabana kenapa rumputnya terbakar tiap malam. |
+| Q_SQ_T2_S2_OBJ | Follow the scorched grass to a campfire no one lit, in the dunes of Pesisir. | Ikuti rumput hangus ke api unggun tak bertuan di bukit pasir Pesisir. |
+| Q_SQ_T2_S3_OBJ | Put out the source at the spring in the eastern dunes: turn the channel wheel, then defeat the elite Banaspati. | Padamkan sumbernya di mata air bukit pasir timur: putar roda saluran, lalu kalahkan Banaspati elit. |
+| Q_SQ_T2_S4_OBJ | Tell the herder on the Savanna that the fire is out. | Kabari penggembala di Sabana bahwa apinya sudah padam. |
+| Q_SQ_T2_S5_OBJ | Tell the herder the fire is out. | Kabari penggembala bahwa apinya sudah padam. |
 | Q_SQ_T3_TITLE | Pamor from the Sky | Pamor dari Langit |
-| Q_SQ_T3_S1_OBJ | What do Mpu Wirasana and Ratna need? Visit their forge in the Banyan Grove | Apa yang dibutuhkan Mpu Wirasana dan Ratna? Temui mereka di tempa Hutan Beringin |
-| Q_SQ_T3_S2_OBJ | Find the fallen star-stone in the east yard of Candi Seribu in Mataram | Cari batu bintang yang jatuh di halaman timur Candi Seribu, Mataram |
-| Q_SQ_T3_S3_OBJ | Secure the star's crater against the stone guardians, then return to Mpu Wirasana's forge | Amankan kawah bintang dari penjaga batu, lalu kembali ke tempa Mpu Wirasana |
-| Q_SQ_T3_S4_OBJ | Bring the star-stone back and fold the pamor steel | Bawa batu bintang pulang dan lipat baja pamor |
+| Q_SQ_T3_S1_OBJ | Ask Mpu Wirasana what he needs, at his forge in the Banyan Grove. | Tanyai Mpu Wirasana apa yang ia butuhkan, di bengkelnya di Hutan Beringin. |
+| Q_SQ_T3_S2_OBJ | Take the star-stone from the east yard of Candi Seribu in Mataram. | Ambil batu bintang di halaman timur Candi Seribu, Mataram. |
+| Q_SQ_T3_S3_OBJ | Return to Mpu Wirasana's forge with the star-stone. | Kembali ke bengkel Mpu Wirasana dengan batu bintang itu. |
+| Q_SQ_T3_S4_OBJ | Bring the star-stone back to Mpu Wirasana in the Banyan Grove. | Bawa batu bintang itu kembali ke Mpu Wirasana di Hutan Beringin. |
 | Q_SQ_T4_TITLE | The Lost Kuda Kepang | Kuda Kepang yang Hilang |
-| Q_SQ_T4_S1_OBJ | Take on the troupe's errand: speak with the kuda lumping leader at the Banyan Grove camp | Terima urusan rombongan: temui pemimpin kuda lumping di kemah Hutan Beringin |
-| Q_SQ_T4_S2_OBJ | Recover the three kuda kepang horses the storm blew off: search the savanna, river and shore | Temukan tiga kuda kepang anyaman yang diterbangkan badai: cari di savana, sungai, dan pantai |
-| Q_SQ_K1_TITLE | Hatchlings Home to the Sea | Tukik Pulang ke Laut |
-| Q_SQ_K1_S1_OBJ | Where did the storm strand the hatchlings? Ask Damar on the beach | Di mana badai mendamparkan tukik? Tanyai Damar di pantai |
-| Q_SQ_K1_S2_OBJ | Save the stranded hatchlings: search the dunes and mangrove edge and pick each one up | Selamatkan tukik yang terdampar: cari di bukit pasir dan tepi bakau, ambil satu per satu |
-| Q_SQ_K1_S3_OBJ | Give the hatchlings back to the sea: carry them to the surf release spot and let the tide take them | Kembalikan tukik ke laut: bawa ke titik lepas di ombak dan biarkan pasang membawanya |
-| Q_SQ_K2_TITLE | The Torn Nets | Jaring yang Robek |
-| Q_SQ_K2_S1_OBJ | Who tore the nets at the river mouth? Ask Pak Raka, the old fisherman at the reef hut | Siapa yang merobek jaring di muara? Tanyai Pak Raka, nelayan tua di gubuk karang |
-| Q_SQ_K2_S2_OBJ | Trace what tore the nets: follow them to the river-mouth cove, where the guardian's trail begins | Telusuri apa yang merobek jaring: ikuti ke teluk muara di karang, tempat jejak penjaga bermula |
-| Q_SQ_K2_S3_OBJ | Calm the lagoon: defeat Bajul Putih Tua, the elite white crocodile guarding it | Tenangkan laguna: kalahkan Bajul Putih Tua, buaya putih elit penjaganya |
-| Q_SQ_K2_S4_OBJ | Tell Pak Raka at the reef hut that the lagoon is quiet again | Kabari Pak Raka di gubuk karang bahwa laguna kembali tenang |
-| Q_SQ_K2_S5_OBJ | Report to the fisher | Lapor kepada nelayan |
+| Q_SQ_T4_S1_OBJ | Speak with the kuda lumping leader at the Banyan Grove camp and hear the errand. | Temui pemimpin kuda lumping di kemah Hutan Beringin dan dengarkan urusannya. |
+| Q_SQ_T4_S2_OBJ | Pick up the three kuda kepang the storm blew off: one on the savanna, one by the river, one on the shore. | Ambil tiga kuda kepang yang diterbangkan badai: satu di sabana, satu di sungai, satu di pantai. |
+| Q_SQ_K1_TITLE | Hatchlings Home | Tukik Pulang ke Laut |
+| Q_SQ_K1_S1_OBJ | Talk to Damar on the beach. | Bicara dengan Damar di pantai. |
+| Q_SQ_K1_S2_OBJ | Pick up three lost hatchlings. | Pungut tiga tukik yang tersesat. |
+| Q_SQ_K1_S3_OBJ | Carry the hatchlings to the surf. | Bawa tukik ke ombak. |
+| Q_SQ_K2_TITLE | The Torn Net | Jaring yang Robek |
+| Q_SQ_K2_S1_OBJ | Talk to Pak Raka. | Bicara dengan Pak Raka. |
+| Q_SQ_K2_S2_OBJ | Walk into the crocodile cove. | Masuk ke teluk bajul. |
+| Q_SQ_K2_S3_OBJ | Defeat the old white crocodile. | Kalahkan Bajul Putih Tua. |
+| Q_SQ_K2_S4_OBJ | Go back to Pak Raka. | Kembali ke Pak Raka. |
+| Q_SQ_K2_S5_OBJ | Report to Pak Raka. | Lapor kepada Pak Raka. |
 | Q_SQ_C1_TITLE | Ciung's Rooster | Ayam Jago Ciung |
-| Q_SQ_C1_S1_OBJ | Where is Ciung Wanara's rooster? Ask him at the east gate of the arena | Ke mana ayam jago Ciung Wanara? Tanyai dia di gerbang timur arena |
-| Q_SQ_C1_S2_OBJ | Trace the rooster: check the feathers at the seller's stall, then the old basket by the pond | Telusuri jejak ayam jago: cek bulunya di lapak penjual, lalu bakul sungai di tepi kolam |
-| Q_SQ_C1_S3_OBJ | What does the basket remember? Follow its memory on the river and keep the egg safe | Apa yang diingat bakul itu? Ikuti kenangannya di sungai dan jaga telurnya tetap aman |
-| Q_SQ_C1_S4_OBJ | Bring the rooster home: coax it down from its perch on the Pasar Kuta market rooftop | Bawa ayam jago pulang: bujuk dia turun dari atap pasar Pasar Kuta |
-| Q_SQ_C1_S5_OBJ | Ask about the basket's charm: talk with Ciung Wanara and Uwa Lengser in the town square | Tanyakan daya bakul itu: bicaralah dengan Ciung Wanara dan Uwa Lengser di alun-alun kota |
-| Q_SQ_C2_TITLE | Letters Across the Pamali | Surat di Seberang Pamali |
-| Q_SQ_C2_S1_OBJ | Why are Hariang Banga's letters unsent? Ask him at the Pamali ford | Mengapa surat Hariang Banga tak terkirim? Tanyai dia di penyeberangan Pamali |
-| Q_SQ_C2_S2_OBJ | Reach the queen: deliver the letters to her in her cage at the Keraton Galuh palace | Sampaikan surat itu: antar ke ratu di kurungannya di keraton Galuh |
-| Q_SQ_C2_S3_OBJ | Look for an answer: examine the queen's signet ring on the table in the Kaputren | Cari jawaban: periksa cincin stempel ratu di meja di Kaputren |
-| Q_SQ_C2_S4_OBJ | Bring the queen's reply to Hariang Banga at Ibu's table in Desa Purwa and read it there | Antar balasan ratu ke Hariang Banga di meja Ibu di Desa Purwa, lalu baca suratnya |
+| Q_SQ_C1_S1_OBJ | Talk to Ciung Wanara at the ring's east gate and ask about his rooster. | Temui Ciung Wanara di gerbang timur arena dan tanyakan ayam jagonya. |
+| Q_SQ_C1_S2_OBJ | Trace the rooster: examine its feathers and the river basket in the square. | Telusuri jejak ayam jago: periksa bulunya dan bakul sungai di alun-alun. |
+| Q_SQ_C1_S3_OBJ | Live the basket's memory on the river and keep the egg safe. | Jalani ingatan bakul itu di sungai dan jaga telurnya tetap aman. |
+| Q_SQ_C1_S4_OBJ | Coax the rooster down from the market roofs: lay grain on three roofs. | Bujuk ayam jago turun dari atap pasar: taburkan beras di tiga atap. |
+| Q_SQ_C1_S5_OBJ | Ask Uwa Lengser and Ciung Wanara in the square about the basket's charm. | Tanyakan daya bakul itu kepada Uwa Lengser dan Ciung Wanara di alun-alun. |
+| Q_SQ_C2_TITLE | The Last Letters | Surat-Surat Terakhir |
+| Q_SQ_C2_S1_OBJ | Talk to Hariang Banga at the Pamali and take his letters. | Bicara dengan Hariang Banga di Pamali dan ambil surat-suratnya. |
+| Q_SQ_C2_S2_OBJ | Carry the letters to the queen in the keraton and talk to her. | Bawa surat itu ke ratu di keraton dan bicara dengannya. |
+| Q_SQ_C2_S3_OBJ | Examine the royal seal in the kaputren. | Periksa cap kerajaan di kaputren. |
+| Q_SQ_C2_S4_OBJ | Read the queen's reply beside Ibu's table and talk to Hariang Banga. | Bacakan balasan ratu di meja Ibu dan bicara dengan Hariang Banga. |
 | Q_SQ_C3_TITLE | The Deserter's Name | Nama si Pembelot |
-| Q_SQ_C3_S1_OBJ | Who was the deserter? Examine the stitched cloth scrap at the camp stake in Candi Seribu | Siapa si pembelot? Periksa serpihan kain jahitan di pancang kemah Candi Seribu |
-| Q_SQ_C3_S2_OBJ | Follow his trail: examine the old shield mark on the boundary stone of the sand plain in Tanah Timur | Ikuti jejaknya: periksa tanda perisai tua di batu batas dataran pasir Tanah Timur |
-| Q_SQ_C3_S3_OBJ | What became of him? Examine the driftwood token in the shore net and relive his memory | Apa yang terjadi padanya? Periksa token kayu apung di jaring pantai dan jalani kenangannya |
-| Q_SQ_C3_S4_OBJ | Give the deserter back his true name: write it on the write stone at Pelataran Waktu | Kembalikan nama sejati si pembelot: tulis di batu tulis di Pelataran Waktu |
+| Q_SQ_C3_S1_OBJ | Examine the cloth scrap in the temple camp. | Periksa carikan kain di kemah candi. |
+| Q_SQ_C3_S2_OBJ | Examine the shield mark on the Tanah Timur road. | Periksa tanda perisai di jalan Tanah Timur. |
+| Q_SQ_C3_S3_OBJ | Examine the net on the shore and enter the memory it holds. | Periksa jala di pantai dan masuki ingatan yang tertinggal. |
+| Q_SQ_C3_S4_OBJ | Write the deserter's name on the stone: Ra, then Nga. | Tulis nama si pembelot di batu: Ra lalu Nga. |
 | Q_SQ_C4_TITLE | Brave Cepot | Cepot Si Pemberani |
-| Q_SQ_C4_2_TITLE | Brave Cepot: Border Escape | Cepot Si Pemberani: Pelarian |
-| Q_SQ_C4_2_S1_OBJ | What do the muster rolls say of Cepot? Examine both at the border market by the Gapura gate | Apa kata daftar pasukan tentang Cepot? Periksa keduanya di pasar perbatasan dekat gerbang Gapura |
-| Q_SQ_C4_2_S2_OBJ | Get Cepot out unseen: solve the distraction puzzle in the border market | Bawa Cepot keluar tanpa ketahuan: pecahkan teka-teki pengalih perhatian di pasar perbatasan |
-| Q_SQ_C4_2_S3_OBJ | Hear Cepot out: find him at the border market | Dengarkan penjelasan Cepot: temui dia di pasar perbatasan |
-| Q_SQ_C4_3_TITLE | Brave Cepot: Night Watch | Cepot Si Pemberani: Jaga Malam |
-| Q_SQ_C4_3_S1_OBJ | Why did Cepot follow you? Talk to him on the Segara Kidul beach | Mengapa Cepot mengikutimu? Bicaralah dengannya di pantai Segara Kidul |
-| Q_SQ_C4_3_S2_OBJ | Hold the line: guard the ward lamp with Cepot through two night waves on the beach | Pertahankan garis: jaga lampu penangkal bersama Cepot melewati dua gelombang malam di pantai |
-| Q_SQ_C4_3_S3_OBJ | Hear how Cepot's story ends: return to him on the beach | Dengar bagaimana kisah Cepot berakhir: temui dia lagi di pantai |
-| Q_SQ_D1_TITLE | Tales for the Kelir | Lakon untuk Kelir |
-| Q_SQ_D1_S1_OBJ | Finish the tales and legends you have gathered, then see Semar the dalang in the sanggar | Selesaikan dongeng dan legenda yang kau kumpulkan, lalu temui Semar di sanggar Desa Purwa |
-| Q_SQ_D2_TITLE | Nyai Rukmi's Records | Catatan Nyai Rukmi |
-| Q_SQ_D2_S1_OBJ | Fill Nyai Rukmi's codex with the legends you have met: see the keeper of Desa Purwa's records | Isi kodeks Nyai Rukmi dengan legenda yang kau temui: temui juru catatan Desa Purwa itu |
+| Q_SQ_C4_2_TITLE | Cepot on the Run | Cepot Kabur |
+| Q_SQ_C4_2_S1_OBJ | Check the two muster rolls in the market. | Periksa dua gulungan daftar jaga di pasar. |
+| Q_SQ_C4_2_S2_OBJ | Walk into the empty market stalls. | Masuk ke lapak pasar yang sepi. |
+| Q_SQ_C4_2_S3_OBJ | Go back to Cepot. | Kembali ke Cepot. |
+| Q_SQ_C4_3_TITLE | Cepot's Night Watch | Cepot Jaga Malam |
+| Q_SQ_C4_3_S1_OBJ | Talk to Cepot on the beach. | Bicara dengan Cepot di pantai. |
+| Q_SQ_C4_3_S2_OBJ | Light the ward lamp and hold out the night. | Nyalakan lampu penjaga dan tahan malamnya. |
+| Q_SQ_C4_3_S3_OBJ | Go back to Cepot. | Kembali ke Cepot. |
+| Q_SQ_D1_TITLE | Tales for the Screen | Lakon untuk Kelir |
+| Q_SQ_D1_S1_OBJ | Tell your lakon to Semar. | Ceritakan lakonmu kepada Semar. |
+| Q_SQ_D2_TITLE | Nyai Rukmi's Notes | Catatan Nyai Rukmi |
+| Q_SQ_D2_S1_OBJ | Bring your notes to Nyai Rukmi. | Bawa catatanmu kepada Nyai Rukmi. |
 
 ### Recap lines ("Story so far", ui.md 3, quests.md 7.4)
 One short past-tense line per main step, key `Q_<QUEST>_S<n>_DONE`, `n` as above. They are read in the journal in order, so each only uses names the player has met by then (Pacing 10).
 
 | Key | EN | ID |
 |-----|----|----|
-| Q_MQ0_S1_DONE | I chased Laras to the old well. She called a stray cat by its real name, and it came to her. | Aku mengejar Laras sampai ke sumur tua. Ia memanggil seekor kucing liar dengan nama aslinya, dan kucing itu datang padanya. |
-| Q_MQ0_S2_DONE | We drank jasmine tea with Ibu, and the old couple next door asked me to fetch Ciung. | Kami minum teh melati bersama Ibu. Pasangan tua di sebelah rumah lalu memintaku menjemput Ciung. |
-| Q_MQ0_S3_DONE | I climbed the banyan ridge, and Ciung came down holding his strange egg. | Aku memanjat punggung beringin, dan Ciung turun dengan telur anehnya di pelukan. |
-| Q_MQ0_S4_DONE | The stall-keeper said a tall man in a blank mask was asking children's names. Cepot hurried us inside. | Penjaga lapak bilang seorang lelaki jangkung bertopeng polos menanyai nama anak-anak. Cepot buru-buru menyuruh kami masuk. |
-| Q_MQ0_S5_DONE | Semar said a written name keeps a person in the world, and Cepot fussed about the lamps. | Semar bilang nama yang ditulis menahan seseorang di dunia, dan Cepot ribut soal lampu. |
-| Q_MQ0_S6_DONE | Laras and I wrote our names at opposite ends of one lontar, using Semar's bamboo pen. | Laras dan aku menulis nama kami di kedua ujung satu lontar, memakai pena bambu milik Semar. |
-| Q_MQ0_S7_DONE | Laras and I lit four lamps around the stage as dusk fell. | Aku dan Laras menyalakan empat lampu di sekeliling panggung saat senja turun. |
-| Q_MQ0_S8_DONE | I watched Semar play the ruwatan behind the kelir: Batara Kala, and the children's names read aloud. | Aku melihat Semar memainkan ruwatan di balik kelir: Batara Kala dan nama-nama anak dibacakan. |
-| Q_MQ0_S9_DONE | The shadows stepped off the screen. The Hunter took Laras, and our lontar tore in two. | Bayangan melangkah keluar dari layar. Pemburu itu membawa Laras pergi, dan lontar kami sobek di tengah. |
-| Q_MQ0_S10_DONE | Ibu doesn't remember Laras, yet two cups were still set out on the table. I took my lontar from the burned stage. | Ibu tak ingat Laras, tapi dua cangkir teh masih tersaji di meja. Aku mengambil lontarku dari panggung yang terbakar. |
-| Q_MQ0_S11_DONE | Semar still remembers Laras. He taught me the Ka glyph, and I cast it three times. | Semar masih ingat Laras. Ia mengajarkan aksara Ka padaku, dan aku merapalkannya tiga kali. |
-| Q_MQ0_S12_DONE | I drove the Faceless from the square. The Hunter stood at the west gate; Ciung had run west, and the masks followed him. | Aku menghalau Tanpa Rupa dari alun-alun. Sang Pemburu berdiri di gerbang barat; Ciung sudah lari ke barat, dan topeng-topeng itu mengejarnya. |
-| Q_MQ1_S1_DONE | The ambushers came out of the dawn mist and I broke them. Among the bamboo I found Laras's ribbon, and I knew she had truly been taken. | Kabut subuh memuntahkan para penyergap, dan aku berhasil mematahkan mereka. Di antara rumpun bambu kutemukan pita Laras, dan aku tahu dia benar-benar dibawa pergi. |
-| Q_MQ1_S2_DONE | I cleared the Faceless scout camp. Their lists had been crossed out, but Laras's name had not. | Perkemahan pengintai Tanpa Rupa sudah kubersihkan. Daftar mereka penuh coretan, tapi nama Laras belum dicoret. |
-| Q_MQ1_S3_DONE | At the old shrine Cepot found me. He cannot remember Laras, and he believes his father, not me. | Di petilasan Cepot menemukanku. Ia tidak ingat Laras, dan ia lebih percaya pada ayahnya daripada padaku. |
-| Q_MQ1_S4_DONE | I broke the raid on the kampung, the masks and the boars alike. The village can sleep tonight. | Serbuan ke kampung sudah kupatahkan, topeng dan babi hutan sama-sama tumbang. Malam ini desa bisa tidur. |
-| Q_MQ1_S5_DONE | The kampung elder saw Laras running with a wild boy. He taught me the Ga glyph, and I wrote it in the dirt until my hand knew it. | Sesepuh kampung melihat Laras berlari bersama seorang anak liar. Ia mengajariku aksara Ga, dan kutuliskan di tanah sampai tanganku hafal. |
+| Q_MQ0_S1_DONE | I won, barely. Laras greeted the cat, the well and the banyan by name, as if they were all neighbours. | Aku menang tipis. Laras menyapa kucing, sumur, dan beringin dengan nama mereka, seolah semuanya tetangga. |
+| Q_MQ0_S2_DONE | Jasmine tea, two cups, the chipped one for Laras. The old couple next door asked me to talk Ciung, their foster grandson, down from the banyan. | Teh melati, dua cangkir, dan yang gompal punya Laras. Kakek dan nenek di sebelah minta aku membujuk Ciung, cucu angkat mereka, turun dari beringin. |
+| Q_MQ0_S3_DONE | I found his basket, and Ciung came down hugging a warm egg he'd found by the river. Laras reminded me about Ibu's oil. | Keranjangnya ketemu, dan Ciung turun sambil memeluk telur hangat yang ia temukan di sungai. Laras mengingatkanku soal minyak pesanan Ibu. |
+| Q_MQ0_S4_DONE | The stall-keeper gave me the oil and bad news: a tall man in a blank mask was asking children's names. Cepot herded us into the sanggar. | Penjaga lapak memberiku minyak dan kabar buruk: lelaki jangkung bertopeng polos menanyai nama anak-anak. Cepot menggiring kami masuk sanggar. |
+| Q_MQ0_S5_DONE | Semar says a written name keeps its owner in the world; that's why the children's names are read tonight. Cepot will hold the oil, just not the fire. | Kata Semar, nama yang ditulis menahan orangnya di dunia; karena itu nama anak-anak dibacakan malam ini. Cepot mau memegang minyak, asal bukan apinya. |
+| Q_MQ0_S6_DONE | I wrote La for Laras and she wrote my name, one at each end of the same lontar. So we can't forget each other, she said. | Aku menulis La untuk Laras dan dia menulis namaku, masing-masing di satu ujung lontar yang sama. Katanya biar kami tak bisa saling lupa. |
+| Q_MQ0_S7_DONE | Four lamps burning on Ibu's oil. The village came with their mats, and Ciung sat in front hugging his egg. | Empat lampu menyala dengan minyak pesanan Ibu. Warga datang membawa tikar, dan Ciung duduk di depan memeluk telurnya. |
+| Q_MQ0_S8_DONE | From behind the kelir I watched Semar play Batara Kala and read the children's names, one by one. | Dari balik kelir aku melihat Semar memainkan Batara Kala dan membacakan nama anak-anak satu per satu. |
+| Q_MQ0_S9_DONE | The shadows stepped off the kelir. They came for Ciung, but the Hunter took Laras, and our lontar tore in two. | Bayangan turun dari kelir. Mereka mencari Ciung, tapi Pemburu itu membawa Laras, dan lontar kami sobek jadi dua. |
+| Q_MQ0_S10_DONE | Ibu doesn't remember Laras, yet there were still two cups on the table. On my half of the lontar is a glyph that wasn't there last night. | Ibu tak ingat Laras, tapi di meja tetap ada dua cangkir. Di sobekan lontarku muncul satu aksara yang semalam belum ada. |
+| Q_MQ0_S11_DONE | Semar still remembers Laras, because he wrote her down. She is writing Ka, for "kakak", on the half she carries, and now my hand knows that glyph. | Semar masih ingat Laras karena ia menuliskannya. Laras menulis Ka, untuk "kakak", di separuh lontar yang ia bawa, dan sekarang tanganku hafal aksara itu. |
+| Q_MQ0_S12_DONE | The Faceless fell back west, the way Ciung ran and Laras was taken. Ibu doesn't know who the second cup is for, but she promised to keep setting it out. | Tanpa Rupa mundur ke barat, ke arah Ciung lari dan Laras dibawa. Ibu tak tahu cangkir kedua itu untuk siapa, tapi berjanji tetap menyiapkannya. |
+| Q_MQ1_S1_DONE | The ambushers came out of the dawn mist and I broke them one by one. In the bamboo I found Laras's ribbon, and I knew she had truly been taken. | Para penyergap keluar dari kabut subuh, dan kupatahkan satu per satu. Di rumpun bambu kutemukan pita Laras, dan aku tahu ia benar-benar dibawa pergi. |
+| Q_MQ1_S2_DONE | I cleared the scout camp. Their lists were crossed out nearly to the last name, but Laras's was not. | Kemah pengintai itu sudah kubersihkan. Daftar nama mereka penuh coretan, tapi nama Laras belum dicoret. |
+| Q_MQ1_S3_DONE | Cepot found me at the old shrine. He does not remember Laras, and he trusts his father over me. | Di petilasan Cepot menemukanku. Ia tak ingat Laras, dan ia lebih percaya ayahnya daripada aku. |
+| Q_MQ1_S4_DONE | I broke the raid on the kampung, masks and boars alike. The kampung can sleep tonight. | Serbuan ke kampung kupatahkan, topeng dan babi hutan sama-sama. Malam ini kampung bisa tidur. |
+| Q_MQ1_S5_DONE | The elder saw Laras running with a wild boy who clutched an egg. He taught me the Ga glyph, and I wrote it in the dirt until my hand knew it. | Sesepuh melihat Laras berlari bersama seorang anak liar yang memeluk telur. Ia mengajariku aksara Ga, dan kutulis di tanah sampai tanganku hafal. |
 | Q_MQ1_S6_DONE | Ceu Imas lost her son Asep at maghrib. I found his sandal by the river and wished I had come sooner. | Ceu Imas kehilangan putranya, Asep, saat maghrib. Sandal Asep kutemukan di tepi sungai, dan aku menyesal tidak datang lebih cepat. |
-| Q_MQ1_S7_DONE | The lanterns had been left cold, and the prints of Laras, Ciung and the children ran down into the gorge. Ciung is with her. I have to believe that. | Oncor itu dibiarkan dingin, dan jejak Laras, Ciung, serta anak-anak itu menuruni ngarai. Ciung bersama Laras. Aku harus mempercayai itu. |
-| Q_MQ1_S8_DONE | I relit the hamlet's outer lanterns, and the dusk mist stopped at their light like a tide at a wall. | Lentera luar dusun kunyalakan kembali, dan kabut senja berhenti di cahayanya seperti air yang berhenti di tepi tanggul. |
-| Q_MQ1_S9_DONE | The lontar pulled me into a child's maghrib, where I learned how to light the oncor against the dark. | Lontar menarikku ke maghrib seorang anak, tempat aku belajar menyalakan oncor melawan gelap. |
-| Q_MQ1_S10_DONE | I beat Sandekala in the gorge, and the dusk let the children go. There, Laras's and Ciung's tracks split in two. | Sandekala kukalahkan di ngarai, dan senja melepaskan anak-anak itu. Di sanalah jejak Laras dan Ciung terbelah dua. |
-| Q_MQ1_S11_DONE | I stood three name-stones in a line, east to west, and cleared the grove around them. | Tiga batu nama kutegakkan berjajar dari timur ke barat, dan rumpun di sekelilingnya kubersihkan. |
-| Q_MQ1_S12_DONE | On the defaced Batu Tulis Laras had scratched: 'They need me to read.' From the same stone I learned the Nga glyph. | Pada Batu Tulis yang rusak, Laras menggores: 'Mereka butuh aku untuk membaca.' Dari batu yang sama aku belajar aksara Nga. |
-| Q_MQ1_S13_DONE | From the rice terraces I saw half the valley drowned by a dam built overnight. Only a power that is not human could have done it. | Dari teras sawah kulihat separuh lembah tenggelam oleh bendungan yang berdiri dalam semalam. Hanya kekuatan yang bukan manusia yang bisa melakukannya. |
-| Q_MQ1_S14_DONE | I drove the faceless and the forest spirits off the Weaver's terraces, and the water on the paddies grew still again. | Tanpa Rupa dan roh hutan kuusir dari sawah Sang Penenun, dan air di teras kembali tenang. |
-| Q_MQ1_S15_DONE | I opened the sluices and the road rose out of the water. The Weaver had hidden Laras for a night, and she gave me the boeh rarang cloth. | Pintu air kubuka dan jalan itu muncul dari genangan. Sang Penenun pernah menyembunyikan Laras semalam, lalu memberiku kain boeh rarang. |
-| Q_MQ1_S16_DONE | I followed the dammed river to a rising lake, and in it sat a half-built boat. | Aku menyusuri sungai yang terbendung sampai ke danau yang terus naik, dan di dalamnya ada perahu setengah jadi. |
-| Q_MQ1_S17_DONE | A dammed river, empty coops, felled trees. Someone is building a boat on this lake, and it is not for fishing. | Sungai terbendung, kandang ayam kosong, pohon tumbang. Seseorang sedang membangun perahu di danau ini, dan bukan untuk mencari ikan. |
-| Q_MQ1_S18_DONE | One of the fallen Faceless dropped a carved toy with a name on it. They were people once. | Salah satu Tanpa Rupa yang tumbang menjatuhkan mainan terukir dengan sebuah nama. Mereka pernah menjadi manusia. |
-| Q_MQ1_S19_DONE | The woman at the lake knew Ciung's face. She asked me to keep her secret, and I promised. Then she taught me the Ca glyph. | Perempuan di tepi danau mengenal wajah Ciung. Ia memintaku menyimpan rahasianya, dan aku berjanji. Lalu ia mengajariku aksara Ca. |
-| Q_MQ1_S20_DONE | I fought my way up the crater road. A tall shape on the ridge watched me, and waited. | Aku menempuh jalan kawah dengan bertarung. Sosok tinggi di punggung bukit mengawasiku, lalu menunggu. |
-| Q_MQ1_S21_DONE | At the crater Laras was made to read. She read slowly on purpose, and I heard her voice again. | Di kawah, Laras dipaksa membaca. Ia membaca pelan-pelan dengan sengaja, dan aku kembali mendengar suaranya. |
-| Q_MQ1_S22_DONE | I beat the Faceless Captain, but he cracked the seal first. I found a second mask fragment. | Kapten Tanpa Rupa kukalahkan, tapi ia lebih dulu meretakkan segel. Aku menemukan pecahan topeng kedua. |
-| Q_MQ1_S23_DONE | The lontar pulled me into Dayang Sumbi's night: white cloth, a rice-pounding mortar, and a false dawn. | Lontar menarikku ke malam Dayang Sumbi: kain putih, lesung, dan fajar palsu. |
-| Q_MQ1_S24_DONE | A false dawn ended Sangkuriang again. Ciung and Nagawiru are free, and I have chosen what to tell Ciung. | Fajar palsu itu mengakhiri Sangkuriang untuk kedua kalinya. Ciung dan Nagawiru sudah bebas, dan aku telah memilih apa yang akan kukatakan pada Ciung. |
-| Q_MQG_S1_DONE | In the tournament crowd of Galuh I met a rooster seller who loves a crowd, and Ciung and I agreed to slip inside together. | Di tengah keramaian sayembara Galuh aku bertemu penjual ayam jago yang suka berada di tengah orang banyak. Ciung dan aku sepakat menyusup bersama. |
-| Q_MQG_S2_DONE | At Pasar Kuta an informant spoke of wagons sealed with the king's wax, and the freight list called their cargo new servants. | Di Pasar Kuta seorang informan bercerita tentang kereta bersegel lilin raja, dan daftar muatannya menyebut isinya sebagai abdi baru. |
-| Q_MQG_S3_DONE | I broke the tournament riggers hiding in the storehouse. Their purses bore the same seal as the wagons. | Aku mengalahkan para pencurang sayembara di gudang itu. Kantong mereka bersegel sama dengan kereta-kereta tadi. |
-| Q_MQG_S4_DONE | I won both bouts, and Ciung's rooster won behind the wall. | Aku memenangkan kedua babak, dan ayam jago Ciung menang di balik tembok. |
-| Q_MQG_S5_DONE | Uwa Lengser opened the inner palace for me. He saw a queen's eyes in Ciung. | Uwa Lengser membukakan pintu istana dalam untukku. Ia melihat mata seorang ratu pada diri Ciung. |
-| Q_MQG_S6_DONE | In the Balai Pustaka, Nyai Sekar told me she had scraped the king's lineage off thirty rolls and kept the shavings. | Di Balai Pustaka, Nyai Sekar mengaku mengerik silsilah raja dari tiga puluh gulungan dan menyimpan serutannya. |
-| Q_MQG_S7_DONE | The mirror light brought the scraped lineage back into view. The missing name was Nagawiru. | Cahaya cermin memunculkan kembali silsilah yang terkikis. Nama yang hilang adalah Nagawiru. |
-| Q_MQG_S8_DONE | I crossed the colonnade into the Kaputren. A mirror stood covered there too. | Aku melintasi serambi bertiang menuju Kaputren. Di sana pun ada cermin yang tertutup kain. |
+| Q_MQ1_S7_DONE | The oncor had been left cold, and the prints of Laras, Ciung and the children led down into the gorge. Ciung is with Laras. I have to believe that. | Oncor itu dibiarkan dingin, dan jejak Laras, Ciung, serta anak-anak itu menurun ke ngarai. Ciung bersama Laras. Aku harus mempercayainya. |
+| Q_MQ1_S8_DONE | I lit the three oncor at the hamlet's edge, and the dusk mist stopped at their light like water at a dike. | Ketiga oncor di tepi dusun kunyalakan, dan kabut senja berhenti di garis cahayanya seperti air di tepi tanggul. |
+| Q_MQ1_S9_DONE | The lontar pulled me into a child's maghrib, and there I learned to light an oncor against the dark. | Lontar menarikku ke maghrib seorang anak, dan di sana aku belajar menyalakan oncor melawan gelap. |
+| Q_MQ1_S10_DONE | I beat Sandekala in the gorge, and the dusk let the children go. In the mud, Laras's and Ciung's tracks parted. | Sandekala kukalahkan di ngarai, dan senja melepaskan anak-anak. Di lumpur itu jejak Laras dan Ciung terbelah dua. |
+| Q_MQ1_S11_DONE | I drove the spirits from the grove, then pressed the three name-stones from east to west, along the sun's road. | Roh-roh di rumpun kuusir, lalu kutekan tiga batu nama dari timur ke barat, mengikuti jalan matahari. |
+| Q_MQ1_S12_DONE | On the defaced Batu Tulis Laras had scratched: "They need me to read." From the same stone I learned the Nga glyph. | Di Batu Tulis yang dirusak, Laras menggores: "Mereka butuh aku membaca." Dari batu yang sama kupelajari aksara Nga. |
+| Q_MQ1_S13_DONE | From the terrace lip I saw half the valley drowned by a dam that had risen overnight. No human hands built it. | Dari bibir teras kulihat separuh lembah tenggelam oleh bendungan yang berdiri dalam semalam. Bukan tangan manusia yang membuatnya. |
+| Q_MQ1_S14_DONE | I drove the Faceless and the forest spirits off the Weaver's paddies, and the water on the terraces grew calm. | Tanpa Rupa dan roh hutan kuusir dari sawah Penenun, dan air di teras kembali tenang. |
+| Q_MQ1_S15_DONE | I turned both wheels and the road rose out of the water. The Weaver had hidden Laras for a night, and she gave me the Boeh Rarang cloth. | Kuputar kedua roda dan jalan itu muncul dari genangan. Penenun pernah menyembunyikan Laras semalam, lalu memberiku kain Boeh Rarang. |
+| Q_MQ1_S16_DONE | I followed the dammed river to a rising lake, and in it stood a half-built boat. | Kususuri sungai yang terbendung sampai ke danau yang terus naik, dan di tengahnya berdiri perahu setengah jadi. |
+| Q_MQ1_S17_DONE | A dammed river, empty coops, felled trees. Someone is building a boat on this lake, and not to fish. | Sungai terbendung, kandang ayam kosong, pohon tumbang. Seseorang sedang membangun perahu di danau ini, dan bukan untuk mencari ikan. |
+| Q_MQ1_S18_DONE | A fallen Faceless dropped a carved toy with a child's name on it. They were people once. | Salah satu Tanpa Rupa yang tumbang menjatuhkan mainan terukir bernama seorang anak. Mereka pernah menjadi manusia. |
+| Q_MQ1_S19_DONE | The woman by the lake knew Ciung by the look in his eyes, and she taught me the Ca glyph. Now I carry her secret. | Perempuan di tepi danau mengenali Ciung dari sorot matanya, lalu mengajariku aksara Ca. Aku membawa rahasianya sekarang. |
+| Q_MQ1_S20_DONE | I fought my way up the crater road. A tall shape on the ridge watched me, and waited. | Kutempuh jalan kawah sambil bertarung. Sosok jangkung di punggung bukit mengawasiku, lalu menunggu. |
+| Q_MQ1_S21_DONE | At the crater Laras was made to read. She read slowly on purpose, and I heard her voice again. | Di kawah Laras dipaksa membaca. Ia membaca pelan-pelan dengan sengaja, dan aku kembali mendengar suaranya. |
+| Q_MQ1_S22_DONE | I beat the Faceless Captain, but he cracked the seal first. On the crater rim I found the first mask fragment. | Kapten Tanpa Rupa kukalahkan, tapi ia lebih dulu meretakkan segel. Di bibir kawah kutemukan pecahan topeng yang pertama. |
+| Q_MQ1_S23_DONE | The lontar pulled me into Dayang Sumbi's night: white cloth, a rice mortar, and a false dawn. | Lontar menarikku ke malam Dayang Sumbi: kain putih, lesung, dan fajar palsu. |
+| Q_MQ1_S24_DONE | A false dawn ended Sangkuriang a second time. Ciung and Nagawiru are free, and Laras is in Galuh, so that is where I must go. | Fajar palsu mengakhiri Sangkuriang untuk kedua kalinya. Ciung dan Nagawiru bebas, dan Laras ada di Galuh, jadi ke sanalah aku harus pergi. |
+| Q_MQG_S1_DONE | In the tourney crowd I met a talkative rooster seller, then Ciung. We agreed to get in through the tourney. | Di tengah keramaian sayembara aku bertemu penjual ayam jago yang cerewet, lalu Ciung. Kami sepakat menyusup lewat sayembara. |
+| Q_MQG_S2_DONE | At Pasar Kuta an informant told me of wagons sealed with the king's wax. The storehouse manifest called the cargo new servants. | Di Pasar Kuta seorang informan bicara soal kereta bersegel lilin raja. Manifes di gudang menyebut muatannya abdi baru. |
+| Q_MQG_S3_DONE | I beat the riggers in the storehouse. Their purses bore the same seal as the wagons. | Aku mengalahkan para pencurang di gudang. Kantong mereka bersegel sama dengan kereta tadi. |
+| Q_MQG_S4_DONE | I won both bouts, and Ciung's rooster won behind the wall. The palace door opened for us. | Aku menang di kedua babak, dan ayam Ciung menang di balik tembok. Pintu keraton terbuka untuk kami. |
+| Q_MQG_S5_DONE | Uwa Lengser opened the way into the inner palace, and saw a queen's eyes in Ciung. I lit the petilasan in the garden. | Uwa Lengser membukakan jalan ke istana dalam, dan melihat mata seorang ratu pada Ciung. Petilasan di taman kunyalakan. |
+| Q_MQG_S6_DONE | In the Balai Pustaka, Nyai Sekar told me she scraped the king's lineage off thirty rolls and kept the shavings. | Di Balai Pustaka, Nyai Sekar mengaku telah mengerik silsilah raja dari tiga puluh gulungan dan menyimpan serutannya. |
+| Q_MQG_S7_DONE | Three mirrors threw light on the lontar, and the scraped lineage came back. The missing name was Nagawiru. | Tiga cermin memantulkan cahaya ke lontar, dan silsilah yang terkikis muncul lagi. Nama yang hilang adalah Nagawiru. |
+| Q_MQG_S8_DONE | I beat Tamperan's spies and crossed the colonnade into the Kaputren. A mirror stood covered there too. | Aku mengalahkan mata-mata Tamperan dan melintasi serambi bertiang ke Kaputren. Di sana pun ada cermin tertutup kain. |
 | Q_MQG_S9_DONE | In the guest chamber I found Laras's hairpin and her Ka scratched like steps. | Di kamar tamu aku menemukan jepit rambut Laras dan huruf Ka-nya yang tergores seperti anak tangga. |
-| Q_MQG_S10_DONE | I overheard a prince and the queen's attendants: a wagon waited in the prison yard to leave at dawn. | Aku mencuri dengar pangeran dan dayang-dayang ratu: sebuah kereta menunggu di halaman penjara untuk berangkat saat fajar. |
-| Q_MQG_S11_DONE | I fought down the cell stairs after the wagon, following its wheel ruts and a scrap of jasmine-scented cloth. | Aku menuruni tangga sel sambil mengikuti bekas roda kereta dan selembar kain beraroma melati. |
-| Q_MQG_S12_DONE | I was too late. Laras's wagon escaped east, but she threw me a strip of lontar marked Ka. | Aku terlambat. Kereta Laras lolos ke timur, tapi ia sempat melemparkan selarik lontar bertanda Ka untukku. |
-| Q_MQG_S13_DONE | On the cell wall Laras had written: "The thousand temples. Don't stop." | Di dinding sel, Laras menulis: "Seribu candi. Jangan berhenti." |
-| Q_MQG_S14_DONE | I lived through Laras's hours: she marked the king's wax, freed the archive grate, and left Ibu a message about the cup. | Aku menjalani jam-jam Laras: ia menandai lilin segel raja, membebaskan jeruji arsip, dan meninggalkan pesan untuk Ibu tentang cangkir itu. |
-| Q_MQG_S15_DONE | The deserter remembered his name, Ranga, from humming along with Laras. I decided what became of him. | Sang pembelot akhirnya ingat namanya, Ranga, dari senandung yang dulu ia ikuti bersama Laras. Aku sendiri yang memutuskan nasibnya. |
-| Q_MQG_S16_DONE | Laras's grate led me through the archive wall and up into the palace's upper gallery. | Jeruji Laras membawaku menembus dinding arsip dan naik ke galeri atas istana. |
-| Q_MQG_S17_DONE | The king's portrait had been scraped bare. Lengser's memory showed a man trying on the king's face. | Potret raja sudah dikerik hingga polos. Ingatan Lengser memperlihatkan seorang lelaki yang mencoba wajah sang raja. |
-| Q_MQG_S18_DONE | A second mask fragment lay by the throne. Aria borrowed the king's face, and the price was his name. | Pecahan topeng kedua tergeletak di dekat singgasana. Aria meminjam wajah raja, dan harganya adalah namanya. |
-| Q_MQG_S19_DONE | Lengser's old guard and Ciung gathered to breach the throne room. | Pengawal lama Lengser dan Ciung berkumpul untuk menjebol ruang takhta. |
-| Q_MQG_S20_DONE | I unmasked Barma Wijaya. He confessed he gave his old name to Kala, and that name is the Hunter. | Aku membuka kedok Barma Wijaya. Ia mengaku telah menyerahkan nama lamanya kepada Kala, dan nama itu kini adalah sang Pemburu. |
-| Q_MQ2_S1_DONE | At the border market I heard two recruiters tell the same war from opposite banks, and overnight stones grew in the fields beyond the gate. | Di pasar perbatasan aku mendengar dua perekrut menceritakan perang yang sama dari dua tepi sungai. Semalam, batu-batu tumbuh di sawah di luar gerbang. |
-| Q_MQ2_S2_DONE | I broke the looters' blockade at the border gate and rested at the rice-field petilasan before pressing on. | Aku mematahkan blokade penjarah di gerbang dan beristirahat di petilasan sawah sebelum melanjutkan. |
-| Q_MQ2_S3_DONE | I held a dalang's puppet stage against looters and Tuyul until the show could go on. | Aku menjaga panggung wayang seorang dalang dari penjarah dan Tuyul sampai pertunjukannya selesai. |
-| Q_MQ2_S4_DONE | Ki Sumarto taught me Ha and named three trails that might lead me to Laras: the ruins, the graveyard and the lesung yard. | Ki Sumarto mengajariku Ha dan menyebut tiga jejak yang mungkin membawaku ke Laras: reruntuhan, kuburan, dan pelataran lesung. |
-| Q_MQ2_S5_DONE | I led the market families across the flooded paddies, and their children had seen Laras's Ka mark. | Aku mengawal keluarga-keluarga pasar melewati sawah yang tergenang. Anak-anak mereka pernah melihat tulisan Ka milik Laras. |
-| Q_MQ2_S6_DONE | In the ruins I beat the awakened Arca and read the letter Na off a statue base. | Di reruntuhan aku mengalahkan Arca yang bangkit dan membaca aksara Na dari alas patung. |
-| Q_MQ2_S7_DONE | At the graves I watched faceless harvesters take names from the dead, and understood that two armies make twice the forgetting. | Di kuburan aku melihat para Tanpa Rupa memanen nama dari yang gugur, dan mengerti bahwa dua pasukan membuat dua kali lupa. |
-| Q_MQ2_S8_DONE | A third mask fragment showed me what the Nameless Hunter paid to lose his name. | Pecahan topeng ketiga memperlihatkan apa yang dibayar Si Tanpa Ngaran untuk kehilangan namanya. |
-| Q_MQ2_S9_DONE | With Nyai Gendhis I cleared the lesung yard, and the pestles went back to the women's hands. | Bersama Nyai Gendhis aku membersihkan pelataran lesung. Alu-alu penumbuk kembali ke tangan para perempuan. |
-| Q_MQ2_S10_DONE | Nyai Gendhis taught me the false-dawn pounding rhythm and the letter Ca, and I began counting its beats. | Nyai Gendhis mengajariku irama tumbuk fajar palsu dan aksara Ca, dan aku mulai menghitung ketukannya. |
-| Q_MQ2_S11_DONE | I broke the night builders' siege of the foothill shrine, and the road to the temple opened a little. | Aku mematahkan kepungan para pembangun malam di kuil kaki bukit, dan jalan ke candi terbuka sedikit. |
-| Q_MQ2_S12_DONE | I lined up the shrine braziers, and the juru kunci gave me Ra and opened the temple stairs. | Aku menyelaraskan tungku kuil, dan juru kunci memberiku aksara Ra serta membukakan tangga candi. |
-| Q_MQ2_S13_DONE | I shattered the pillars on the plain of rising stones, and the road to the temple began to open. | Aku menghancurkan pilar-pilar di dataran batu yang tumbuh, dan jalan ke candi mulai terbuka. |
-| Q_MQ2_S14_DONE | The Candi Seribu camp turned out to be a reading room, and Laras had already been taken east. | Perkemahan di Candi Seribu ternyata ruang baca. Laras sudah dibawa ke timur, dan aku terlambat. |
-| Q_MQ2_S15_DONE | Rubble, a lesung left mid-rhythm, and Laras's Ka strip all pointed to one old tale. | Puing, lesung yang ditinggalkan, dan helai Ka Laras: semuanya menunjuk ke satu kisah lama. |
-| Q_MQ2_S16_DONE | Through Laras's memory I learned she read slowly, unbarred a crypt door, and hid the builder's chisel. | Lewat ingatan Laras, aku tahu ia membuka pintu ruang bawah tanah dan menyembunyikan pahat si pembangun. |
-| Q_MQ2_S17_DONE | The crypt door Laras had opened led me down into the heart of the temple. | Pintu ruang bawah tanah yang dibuka Laras membawaku turun ke jantung candi. |
-| Q_MQ2_S18_DONE | The lontar pulled me into the memory of the princess's women, and I learned their pounding beat. | Lontar menarikku ke ingatan para dayang sang putri, dan aku belajar irama lesung mereka. |
-| Q_MQ2_S19_DONE | With the lesung beat and the letter Ca, the night Bandung Bondowoso had built finally ended. | Dengan irama lesung dan aksara Ca, malam buatan Bandung Bondowoso akhirnya berakhir. |
-| Q_MQ2_S20_DONE | The temple shortcut brought me back to the Pamali, where both armies were still waiting. | Jalan pintas candi membawaku kembali ke Pamali, dan dua pasukan masih menunggu di sana. |
-| Q_MQ2_S21_DONE | On the Pamali stone I wrote Nagawiru's name, the first name I had ever written for someone else. | Di Batu Pamali aku menuliskan nama Nagawiru, nama pertama yang kutulis untuk orang lain. |
-| Q_MQ2_S22_DONE | Ki Sumarto played two brothers who split the land, and I began to understand what pamali means. | Ki Sumarto memainkan dua saudara yang membagi tanah, dan aku mulai mengerti arti pamali. |
-| Q_MQ2_S23_DONE | I read Hariang Banga's unsent letters to his mother, and felt how heavy a word can be when it never arrives. | Aku membaca surat-surat Hariang Banga yang belum terkirim untuk ibunya, dan merasakan betapa berat kata yang tak sampai. |
-| Q_MQ2_S24_DONE | I fought Hariang Banga at the ford. The river truce held, and I answered Ciung about the caged. | Aku melawan Hariang Banga di penyeberangan. Gencatan senjata di sungai bertahan, dan aku menjawab Ciung soal para terkurung. |
-| Q_MQ3_S1_DONE | On the smiths' street I met Ratna, the empu's apprentice who folds keris. She gave me three fire-ward nails and sent me to rest, but her eyes could not hide her fear. | Di jalan para pandai besi aku bertemu Ratna, murid empu yang menempa keris. Ia memberiku tiga paku penangkal api dan menyuruhku beristirahat, tapi matanya tak bisa menyembunyikan rasa takut. |
-| Q_MQ3_S2_DONE | Buto Ijo, a green giant from the old tales, charged out of the grass at me. The nails drove him back, and his eyes burned the red of the curse. | Buto Ijo, raksasa hijau dari dongeng, menerjang keluar dari rumput ke arahku. Paku-pakuku memukulnya mundur, dan matanya merah seperti kutukan itu sendiri. |
-| Q_MQ3_S3_DONE | The red marks led me to Mpu Wirasana. He told me his family has tended, for centuries, a blade made to swallow its owner. | Tanda-tanda merah itu menuntunku ke Mpu Wirasana. Katanya, keluarganya sudah berabad-abad menjaga bilah yang dibuat untuk menelan pemiliknya. |
-| Q_MQ3_S4_DONE | In the forge yard I doused two practice stakes with the healing aksara Ha. A curse mark is a debt, and Ha helped me pay it down bit by bit. | Di halaman bengkel aku memadamkan dua tonggak latihan bersama aksara Ha, si penyembuh. Tanda kutukan adalah utang, dan Ha membantuku melunasinya sedikit demi sedikit. |
-| Q_MQ3_S5_DONE | Mbok Srini lost her daughter Timun Mas to the giant. I found the seeds, the needle case, the salt and the terasi her daughter left on the run. | Mbok Srini kehilangan putrinya, Timun Mas, karena raksasa itu. Aku menemukan biji, kotak jarum, garam, dan terasi yang tertinggal di jalan pelarian Timun Mas. |
-| Q_MQ3_S6_DONE | On the dry riverbed the seed pouch burst into thorns and held Buto Ijo for ten breaths. I had not expected it to work at all. | Di dasar sungai yang kering, kantong biji itu meledak menjadi semak berduri dan menahan Buto Ijo selama sepuluh tarikan napas. Aku sendiri tak menyangka itu berhasil. |
-| Q_MQ3_S7_DONE | At the old banyan I blessed the pouches while the giant came a third time. It felt as if he had been driven into our path on purpose. | Di beringin tua aku menyucikan kantong-kantong itu, sementara raksasa itu datang untuk ketiga kalinya. Rasanya ia sengaja dibawa ke jalan kami. |
+| Q_MQG_S10_DONE | From behind a curtain I heard a prince and the queen's attendants: a wagon waited in the prison yard to leave at dawn. | Dari balik tirai aku mendengar pangeran dan dayang ratu: sebuah kereta menunggu di halaman penjara, berangkat saat fajar. |
+| Q_MQG_S11_DONE | I fought down the cell stairs, following wheel ruts and a scrap of jasmine-scented cloth. | Aku bertempur menuruni tangga sel, mengikuti bekas roda dan secarik kain beraroma melati. |
+| Q_MQG_S12_DONE | I was too late. Laras's wagon got away east, but she threw me a strip of lontar marked Ka. | Aku terlambat. Kereta Laras lolos ke timur, tapi ia sempat melemparkan selarik lontar bertanda Ka. |
+| Q_MQG_S13_DONE | On the cell wall Laras had written: "The thousand temples. Don't stop." | Di dinding sel Laras menulis: "Seribu candi. Jangan berhenti." |
+| Q_MQG_S14_DONE | I lived Laras's hours: she marked the king's wax, opened the archive grate, and left a message for Ibu about the cup. | Aku menjalani jam-jam Laras: ia menandai lilin segel raja, membuka jeruji arsip, dan menitipkan pesan untuk Ibu soal cangkir itu. |
+| Q_MQG_S15_DONE | The deserter remembered his name, Ranga, from humming along with Laras. I decided what became of him. | Si pembelot ingat namanya, Ranga, dari senandung yang dulu ia ikuti bersama Laras. Aku sendiri yang memutuskan nasibnya. |
+| Q_MQG_S16_DONE | Laras's grate took me through the archive wall and up to the palace's upper gallery. | Jeruji Laras membawaku menembus dinding arsip, naik ke galeri atas istana. |
+| Q_MQG_S17_DONE | The king's portrait was scraped bare. Lengser's memory showed a man trying on the king's face. | Potret raja dikerik sampai polos. Ingatan Lengser menunjukkan seorang lelaki mencoba wajah sang raja. |
+| Q_MQG_S18_DONE | A second mask fragment lay by the throne. Aria borrowed the king's face, and the price was his own name. | Pecahan topeng kedua tergeletak dekat singgasana. Aria meminjam wajah raja, dan harganya namanya sendiri. |
+| Q_MQG_S19_DONE | Lengser's old guard and Ciung stood with me. We broke the throne room and beat the champion. | Pengawal lama Lengser dan Ciung menyertaiku. Kami menjebol ruang takhta dan mengalahkan sang juara. |
+| Q_MQG_S20_DONE | Barma Wijaya fell, and he confessed he gave his old name to Kala. That name is the Hunter's now. Laras's trail runs east, to Mataram. | Barma Wijaya jatuh, dan ia mengaku telah menyerahkan nama lamanya kepada Kala. Nama itu kini milik sang Pemburu. Jejak Laras terus ke timur, ke Mataram. |
+| Q_MQ2_S1_DONE | Two recruiters, two banners, and both swore to protect Mataram. I began to suspect that many promises could not all be honest. | Dua perekrut, dua panji, dan keduanya berjanji melindungi Mataram. Aku mulai curiga janji sebanyak itu tak mungkin sama-sama tulus. |
+| Q_MQ2_S2_DONE | The gate guards fell back, and the petilasan in the fields lit under my hand. Its glow was warm, like the lamp Ibu leaves in the window. | Penjaga gerbang mundur, dan petilasan di sawah menyala di tanganku. Cahayanya hangat, seperti lampu yang Ibu tinggalkan di jendela. |
+| Q_MQ2_S3_DONE | I drove the tuyul and looters off Ki Sumarto's stage. His white screen survived, and he promised to point me the way. | Tuyul dan penjarah kuusir dari panggung Ki Sumarto. Layar putihnya selamat, dan dia berjanji menunjukkan jalan padaku. |
+| Q_MQ2_S4_DONE | Ki Sumarto taught me the glyph Ha. He named three leads: the statue in the ruins, the graveyard where his son's name was lost, and the lesung women. | Ki Sumarto mengajariku aksara Ha. Dia menyebut tiga jejak: arca di reruntuhan, kuburan tempat nama putranya hilang, dan para perempuan lesung. |
+| Q_MQ2_S5_DONE | I cleared the paddy road, and the families crossed with children on their hips. Nobody asked who I was, and that was enough. | Kubersihkan jalan sawah, dan keluarga-keluarga itu menyeberang sambil menggendong anak. Tak seorang pun bertanya siapa aku, dan itu cukup. |
+| Q_MQ2_S6_DONE | At the base of the statue, the glyph Na surfaced on my lontar. The ruin's guards had no idea what they were guarding. | Di dasar arca, aksara Na muncul di lontarku. Penjaga reruntuhan itu tak tahu apa yang mereka jaga. |
+| Q_MQ2_S7_DONE | The Faceless crowded between the nameless gravestones. My own name felt thin afterwards, and Sapto's I had not yet found. | Tanpa Rupa berkerumun di antara nisan tanpa nama. Namaku sendiri terasa rapuh sesudahnya, dan nama Sapto belum kutemukan. |
+| Q_MQ2_S8_DONE | The third mask fragment showed the Hunter standing before a closed door, looking for something he could not name. | Pecahan topeng ketiga menunjukkan Sang Pemburu berdiri di depan pintu yang tertutup, mencari sesuatu yang tak bisa ia sebut. |
+| Q_MQ2_S9_DONE | I beat the attackers back from the lesung yard. Nyai Gendhis brushed ash off her pestle, grumbling, and somehow that steadied me. | Para penyerang kupukul mundur dari halaman lesung. Nyai Gendhis menyapu abu dari alu sambil bersungut, dan itu menenangkan. |
+| Q_MQ2_S10_DONE | Nyai Gendhis pounded out a rhythm, and the glyph Ca flowed into my lontar with its beat. | Nyai Gendhis menumbuk irama, dan aksara Ca mengalir ke lontarku mengikuti ketukannya. |
+| Q_MQ2_S11_DONE | We held the foothill shrine all night. Dawn came with aching arms and ringing ears. | Kami bertahan semalaman di kuil kaki bukit. Fajar datang dengan lengan pegal dan telinga berdenging. |
+| Q_MQ2_S12_DONE | Mountain, river, rice, ancestors: four braziers lit in order. The juru kunci handed me the glyph Ra like the key to his own house. | Gunung, sungai, padi, leluhur: empat pedupaan menyala berurutan. Juru kunci menyerahkan aksara Ra seperti menyerahkan kunci rumahnya. |
+| Q_MQ2_S13_DONE | The pillars of the dry fields toppled once the last guard fell. From the rubble, the road to the temple finally showed. | Pilar-pilar tegalan runtuh setelah penjaga terakhir jatuh. Dari atas puing, jalan ke candi akhirnya terlihat. |
+| Q_MQ2_S14_DONE | The temple guards fell back, and I took the camp beside it. It was a reading room, not barracks, and Laras had been taken east. | Penjaga candi mundur, dan kemah di sebelahnya kurebut. Isinya ruang baca, bukan barak, dan Laras ternyata dibawa ke timur. |
+| Q_MQ2_S15_DONE | The rubble, the lesung, and the lontar strip marked Ka all pointed the same way, and one of them carried Laras's handwriting. | Puing, lesung, dan carikan lontar bertanda Ka: ketiganya menunjuk ke arah yang sama, dan tulisan Laras ada di salah satunya. |
+| Q_MQ2_S16_DONE | I found Laras's fragment at the petilasan. In her memory she wrote with her tongue poking out, exactly as she used to. | Carikan Laras kutemukan di petilasan. Dalam ingatannya dia menulis dengan lidah terjulur, persis seperti dulu. |
+| Q_MQ2_S17_DONE | The guards in the crypt hall went down one by one, and the door at the end of the hall swung slowly open. | Penjaga di aula bawah tanah candi tumbang satu per satu, dan pintu di ujung aula terbuka perlahan. |
+| Q_MQ2_S18_DONE | The lesung held an old rhythm. Its memory explained why Nyai Gendhis never stopped pounding. | Di dalam lesung tersimpan irama lama. Ingatan itu menjelaskan mengapa Nyai Gendhis tak pernah berhenti menumbuk. |
+| Q_MQ2_S19_DONE | Bandung Bondowoso went down after a long fight. The temple stopped shaking, and I realised I had been holding my breath. | Bandung Bondowoso rebah setelah pertarungan panjang. Candi itu berhenti bergetar, dan aku baru sadar napasku tertahan. |
+| Q_MQ2_S20_DONE | The temple shortcut took me west to the banks of the Pamali. The river was calm, which only made me uneasy. | Jalan pintas candi membawaku ke barat, ke tepi Pamali. Sungainya tenang, dan itu justru membuatku gelisah. |
+| Q_MQ2_S21_DONE | I wrote Na, then Ga on the Pamali stone. Nagawiru's name flared for a moment, then the stone opened. | Kutulis Na lalu Ga di batu Pamali. Nama Nagawiru menyala sebentar, lalu batu itu terbuka. |
+| Q_MQ2_S22_DONE | Ki Sumarto's wayang told of two brothers who split the land. Only then did I see why both riverbanks feared each other. | Wayang Ki Sumarto bercerita tentang dua saudara yang membelah tanah. Aku baru mengerti mengapa kedua tepi sungai saling takut. |
+| Q_MQ2_S23_DONE | In the east camp I found Hariang Banga's letters, never sent. A prince who had failed to make peace, and I began to pity him. | Di kemah timur kutemukan surat-surat Hariang Banga yang tak pernah terkirim. Seorang pangeran yang gagal berdamai, dan aku mulai kasihan padanya. |
+| Q_MQ2_S24_DONE | I beat Hariang Banga at the ford. His sword fell, and for the first time he was willing to listen. | Hariang Banga kukalahkan di tepi Pamali. Pedangnya jatuh, dan untuk pertama kalinya dia mau mendengar. |
+| Q_MQ3_S1_DONE | On the smiths' street I met Ratna, the empu's daughter. She gave me fire-ward nails and sent me to rest at the petilasan, but her eyes could not hide her fear. | Di jalan para pandai besi aku bertemu Ratna, putri sang empu. Ia membekaliku paku penangkal api dan menyuruhku istirahat di petilasan, tapi matanya tak bisa menyembunyikan takut. |
+| Q_MQ3_S2_DONE | A green giant out of the old tales charged from the grass. Ratna's nails flared and he backed off, as if pulled on a rope. His eyes were red, the same red as the marks on the doors. | Raksasa hijau dari dongeng menerjang dari rumput. Paku Ratna menyala dan ia mundur, seperti ditarik tali. Matanya merah, semerah tanda di pintu-pintu itu. |
+| Q_MQ3_S3_DONE | The red marks led me to Mpu Wirasana. He said seven generations of his family have tended a blade made to swallow its owner. | Tanda-tanda merah menuntunku ke Mpu Wirasana. Katanya, tujuh turunan keluarganya menjaga bilah yang ditempa untuk menelan pemiliknya. |
+| Q_MQ3_S4_DONE | I cast Ha twice with Mpu Wirasana watching. A curse mark is a kind of debt, he said, and Ha pays it down bit by bit. | Dua kali kulempar Ha dengan Mpu Wirasana mengawasi. Tanda kutukan itu semacam utang, katanya, dan Ha membayarnya sedikit demi sedikit. |
+| Q_MQ3_S5_DONE | The giant tore Timun Mas away from Mbok Srini's hut. Along her daughter's flight I found seeds, a needle case, salt and terasi: four pouches from her kitchen. | Raksasa itu merenggut Timun Mas dari pondok Mbok Srini. Di jalan pelarian anaknya kutemukan biji, kotak jarum, garam, dan terasi: empat bungkusan dari dapurnya. |
+| Q_MQ3_S6_DONE | On the dry riverbed I scattered the seeds, and the briars held Buto Ijo for ten breaths. I had not expected it to work at all. | Di dasar sungai yang kering kutebar biji itu, dan semak berduri menahan Buto Ijo selama sepuluh tarikan napas. Aku sendiri tak menyangka itu berhasil. |
+| Q_MQ3_S7_DONE | At the old banyan I tucked the three pouches between the roots while the giant came a third time. It felt as if he had been driven into our path on purpose. | Di beringin tua kuselipkan ketiga kantong di sela akar, sementara raksasa itu datang untuk ketiga kalinya. Rasanya ia sengaja digiring ke jalan kami. |
 | Q_MQ3_S8_DONE | The banyan stone pulled me into Timun Mas's flight from the giant, the tale of the four pouches. I ran with her the whole way. | Batu beringin itu menarikku masuk ke pelarian Timun Mas dari raksasa, kisah tentang empat kantong itu. Aku ikut berlari bersamanya. |
-| Q_MQ3_S9_DONE | I led Buto Ijo through the four pouch fields and beat him. Mbok Srini held her muddy daughter close, and for a moment I forgot the curse. | Aku menuntun Buto Ijo melewati keempat medan kantong dan akhirnya mengalahkannya. Mbok Srini memeluk putrinya yang berlumpur, dan untuk sesaat aku lupa pada kutukan. |
-| Q_MQ3_S10_DONE | Red stakes rose across the dry fields, each with a name charring on it. I put them out one by one, and each name went quiet. | Patok-patok merah bermunculan di ladang kering, masing-masing dengan sebuah nama yang terbakar di atasnya. Aku memadamkannya satu per satu, dan setiap nama ikut sunyi. |
-| Q_MQ3_S11_DONE | Twenty-three ghost keris flew at the forge. Wirasana, Ratna and I held the quarter until it was safe. | Dua puluh tiga keris hantu terbang ke arah bengkel. Aku, Wirasana, dan Ratna bertahan sampai kampung tempa aman. |
+| Q_MQ3_S9_DONE | I drove Buto Ijo through all four pouch fields until he went down. Mbok Srini held her muddy daughter close, and for a moment I forgot the curse. | Kugiring Buto Ijo melewati keempat petak bungkusan sampai ia roboh. Mbok Srini memeluk putrinya yang berlumpur, dan sejenak aku lupa pada kutukan. |
+| Q_MQ3_S10_DONE | Red stakes rose across the dry field, each with a name charring on it. I beat down what rose from them, and the field was only dry again. | Tonggak merah bermunculan di ladang kering, masing-masing dengan nama yang hangus di atasnya. Kukalahkan yang bangkit darinya, dan ladang itu kering lagi, hanya kering. |
+| Q_MQ3_S11_DONE | Twenty-three ghost keris flew at the forge. Wirasana, Ratna and I held the quarter until it was safe. | Dua puluh tiga keris hantu terbang ke bengkel. Aku, Wirasana, dan Ratna bertahan sampai kampung tempa aman. |
 | Q_MQ3_S12_DONE | In the vault I found the broken scabbard and the ledger of seven generations of smiths. The last name in it was Wirasana's. | Di ruang simpan aku menemukan sarung keris yang patah dan buku catatan tujuh generasi empu. Nama terakhir di sana milik Wirasana. |
-| Q_MQ3_S13_DONE | At the old anvil I became the apprentice who saw the curse born, and learned how to douse it. | Di landasan tua aku menjadi murid yang melihat kutukan itu lahir, dan belajar cara meredamnya. |
-| Q_MQ3_S14_DONE | With Hariang Banga's scouts I followed the Hunter's ash trail down the coast. It runs straight, as if he never once hesitated. | Bersama pengintai Hariang Banga aku mengikuti jejak abu Pemburu menyusuri pesisir. Jejaknya lurus, seolah ia tak pernah ragu. |
-| Q_MQ3_S15_DONE | I crossed the Sea of Sand by the old waymarkers. One of them leaned, on purpose, as if to show me the way. | Aku menyeberangi Lautan Pasir dengan bantuan patok-patok kuno. Salah satunya sengaja bersandar, seolah ingin menunjukkan jalan. |
-| Q_MQ3_S16_DONE | By the desert fire I heard Hariang Banga speak of Ciung, his mother, and a man with nothing left but weariness. | Di api gurun aku mendengar Hariang Banga bercerita tentang Ciung, ibunya, dan seorang lelaki yang hanya tersisa lelah. |
+| Q_MQ3_S13_DONE | At the old anvil I became the apprentice who saw the curse born, and learned how to douse it. The Hunter's ash trail leads east. | Di landasan tua aku menjadi murid yang melihat kutukan itu lahir, dan belajar cara meredamnya. Jejak abu sang Pemburu mengarah ke timur. |
+| Q_MQ3_S14_DONE | The Hunter's ash trail ran down the coast, straight, as if he never once hesitated. I beat down whatever stood on it. | Jejak abu sang Pemburu menyusuri pesisir, lurus, seolah ia tak pernah ragu. Yang menghadang di sana kukalahkan satu per satu. |
+| Q_MQ3_S15_DONE | I crossed the Sea of Sand by three stone waymarkers. One of them leaned, on purpose, as if to show me the way. | Kuseberangi Lautan Pasir lewat tiga penanda batu. Salah satunya condong, seolah sengaja menunjukkan jalan. |
+| Q_MQ3_S16_DONE | By the desert fire Hariang Banga spoke of Ciung, of his mother, and of a man with nothing left but weariness. Then he pointed to the alcove behind him, where a strip of lontar waited. | Di api gurun Hariang Banga bercerita tentang Ciung, tentang ibunya, dan tentang seorang lelaki yang tinggal lelah. Lalu ia menunjuk ceruk di belakangnya, tempat selembar lontar menunggu. |
 | Q_MQ3_S17_DONE | In her memory Laras tried to draw my face in the sand and could not get it right. She opened a wind tunnel and wrote the aksara Ka on the seventh stake, and my chest went tight. | Dalam kenangannya, Laras mencoba menggambar wajahku di pasir dan tak berhasil. Ia membuka terowongan angin dan menulis aksara Ka di tonggak ketujuh, dan dadaku terasa sesak. |
 | Q_MQ3_S18_DONE | Her tunnel brought me in behind the shrine. Across the court I saw Laras reading, and the seventh stake would not light. | Terowongannya membawaku ke belakang candi. Di seberang halaman aku melihat Laras sedang membaca, dan patok ketujuh tak mau menyala. |
 | Q_MQ3_S19_DONE | I laid the awakened keris to rest. Seven stakes went out, and the last one was the slowest. | Keris yang bangkit itu kutidurkan. Tujuh patok padam satu per satu, dan yang terakhir paling lambat. |
 | Q_MQ3_S20_DONE | I chose the blade's fate, between Wirasana's forge and the river. The weight of that choice still sits in my hands. | Aku memilih nasib bilah itu, antara bengkel Wirasana atau sungai. Beratnya pilihan itu masih terasa di tanganku. |
 | Q_MQ3_S21_DONE | The last fragment showed me the raid through the Hunter's eyes, and the fragments came together into one mask. | Pecahan terakhir membuatku melihat serbuan itu lewat mata sang Pemburu, dan pecahan-pecahan itu akhirnya menyatu menjadi satu topeng. |
-| Q_MQ3_S22_DONE | I faced the Hunter and gave him back his name, Aria Kebonan. Then the Eclipse took Laras in the middle of a word. | Aku menghadapi Pemburu itu dan mengembalikan namanya: Aria Kebonan. Lalu Gerhana merenggut Laras di tengah kalimatnya. |
-| Q_MQ4_S1_DONE | Hariang Banga's riders set me down in Desa Purwa under the Eclipse. The fog at the cave mouth swallowed every glyph I threw. | Pasukan Hariang Banga menurunkanku di Desa Purwa saat Gerhana. Kabut di mulut gua menelan setiap aksara yang kulempar. |
-| Q_MQ4_S2_DONE | I heard the old couple and the stall-keeper forgetting their own families. They named three houses as the worst. | Aku mendengar pasangan tua dan penjaga lapak mulai lupa pada keluarga mereka sendiri. Mereka menyebut tiga rumah yang paling parah. |
-| Q_MQ4_S3_DONE | I wrote three families' names on their doorposts, and the houses remembered. | Aku menulis nama tiga keluarga di tiang pintu mereka, dan rumah-rumah itu kembali mengingat. |
-| Q_MQ4_S4_DONE | I brought Ibu Laras's ribbon, the wagon board and the Ka strip. She set the second tea cup straight. | Aku membawa Ibu pita, papan gerobak, dan helai aksara Ka milik Laras. Ibu meluruskan cangkir teh kedua di meja. |
-| Q_MQ4_S5_DONE | I ate at Mother's table beside Ciung and Hariang, as if we were brothers. | Aku duduk makan bersama Ciung dan Hariang di meja Ibu, seperti dua saudara. |
-| Q_MQ4_S6_DONE | Aria Kebonan told me Kala eats names, and Laras's is split in three. He asked me to forget him. | Aria Kebonan memberitahuku bahwa Kala memakan nama, dan nama Laras terbelah tiga. Ia memintaku melupakannya saja. |
-| Q_MQ4_S7_DONE | Semar admitted he is a god who chose to serve, and sent me south to the sea. | Semar mengaku padaku bahwa ia dewa yang memilih menjadi abdi, lalu mengirimku ke selatan, ke laut. |
-| Q_MQ4_S8_DONE | The south gate opened, and I saw black sand and a green sea. | Gerbang selatan terbuka, dan aku melihat pasir hitam serta laut yang hijau. |
-| Q_MQ4_S9_DONE | On the black-sand shore I rested at the petilasan, while Kampung Nelayan mended its nets in silence. | Di pantai pasir hitam aku beristirahat di petilasan, sementara Kampung Nelayan diam-diam menambal jala. |
-| Q_MQ4_S10_DONE | Mbah Wiryo taught me the sea's manners and its three sacred trials. Sari, the diver, offered to guide me. | Mbah Wiryo mengajariku adat laut dan tiga ujian suci. Sari si penyelam menawarkan diri jadi pemanduku. |
-| Q_MQ4_S11_DONE | I gathered three verses of the sea song from three families. | Aku mengumpulkan tiga bait lagu laut dari tiga keluarga. |
-| Q_MQ4_S12_DONE | The lontar showed Wiryo's wife teaching him to call a name into the water, and I watched it all. | Lontar itu menunjukkan istri Wiryo mengajarinya memanggil sebuah nama ke dalam air, dan aku ikut menyimaknya. |
-| Q_MQ4_S13_DONE | With Sari I lit the three tidal beacons. She remembered the second verse. | Bersama Sari aku menyalakan tiga suar pasang-surut. Ia mengingat bait kedua lagu itu. |
-| Q_MQ4_S14_DONE | I passed the first sacred trial by putting out the Lampor on the reef. | Aku lulus ujian suci pertama dengan memadamkan Lampor di karang. |
-| Q_MQ4_S15_DONE | In the Gua Karang a wall of black water barred my way, and a bell rang once. | Di Gua Karang, dinding air hitam menghadang jalanku, dan sebuah lonceng berdentang sekali. |
-| Q_MQ4_S16_DONE | Laras rang three sunken bells and the sea answered. The water gate sank. | Laras membunyikan tiga lonceng yang tenggelam, dan laut menjawabnya. Gerbang air itu surut ke dasar. |
-| Q_MQ4_S17_DONE | I passed the second sacred trial, the abyssal current, without chasing victory. | Aku lulus ujian suci kedua, arus palung, tanpa mengejar kemenangan. |
-| Q_MQ4_S18_DONE | At the cliff shrine I heard the Queen of the South told as one tale among many. | Di kuil tebing aku mendengar kisah Ratu Laut Selatan, diceritakan sebagai salah satu dari banyak kisah. |
-| Q_MQ4_S19_DONE | I called Laras's name to the sea and made my offering. The causeway opened. | Aku memanggil nama Laras ke laut dan memberi persembahanku. Jalan menuju laut pun terbuka. |
-| Q_MQ4_S20_DONE | I walked the ancient sea causeway to the Sea Palace and rested. | Aku menyusuri jalan batu kuno ke Keraton Laut, lalu beristirahat sejenak. |
-| Q_MQ4_S21_DONE | I passed the third sacred trial, the Waves, and the queen spoke once from far away. | Aku lulus ujian suci ketiga, Ombak, dan sang ratu berbicara sekali dari kejauhan. |
-| Q_MQ4_S22_DONE | I wrote Ombak at the Sea Altar and received the Kain Hijau. The cave is open now. | Aku menulis Ombak di Altar Laut dan menerima Kain Hijau. Gua itu kini terbuka. |
-| Q_MQ5_S1_DONE | At the Courtyard of Time I stood with Ciung and Hariang, and together we broke the first tide of shadows. | Di Pelataran Waktu aku berdiri bersama Ciung dan Hariang, dan kami mematahkan gelombang bayangan pertama. |
-| Q_MQ5_S2_DONE | At the ancestors' stone I chose what would become of Aria Kebonan's name, and I still feel the weight of it. | Di Batu Leluhur aku memilih nasib nama Aria Kebonan, dan beratnya masih kurasakan sampai sekarang. |
-| Q_MQ5_S3_DONE | I parted the Eclipse veil with Ombak and fought my way into the cave mouth, with no turning back. | Tirai Gerhana kubelah dengan Ombak dan kutembus mulut gua, tak ada jalan kembali. |
-| Q_MQ5_S4_DONE | I replayed the tag game and won back La, the first letter of my sister's name. | Kuputar ulang permainan kejar-kejaran itu dan merebut kembali La, aksara pertama nama adikku. |
-| Q_MQ5_S5_DONE | I shattered two time-wards on the Hourglass Sands, and the sand under my boots felt heavier afterwards. | Di Pasir Jam kuhancurkan dua penangkal waktu, dan pasir di bawah kakiku terasa lebih berat sesudahnya. |
-| Q_MQ5_S6_DONE | In Hutan Lupa I silenced the trees that whisper stolen names, and in their murmur I heard my own name. | Di Hutan Lupa kubungkam pohon-pohon yang membisikkan nama curian, dan dalam gumamannya kudengar namaku sendiri. |
-| Q_MQ5_S7_DONE | In the Abyss of Forgetting I replayed the two cups and won back Ra, the second letter of her name. | Di Jurang Kelupaan kuputar ulang dua cangkir dan merebut kembali Ra, aksara kedua namanya. |
-| Q_MQ5_S8_DONE | On the Shadow Bridge I beat the echoes of the legends I once faced, and I took no pleasure in meeting them again. | Di Jembatan Bayang kukalahkan gema legenda yang dulu pernah kuhadapi, dan tak senang rasanya bertemu mereka lagi. |
-| Q_MQ5_S9_DONE | At the last petilasan Semar kept his fire burning, and I replayed the written names until I won back Sa. | Di petilasan terakhir Semar menjaga apinya, dan kuputar ulang nama-nama tertulis sampai kurebut kembali Sa. |
-| Q_MQ5_S10_DONE | Semar told me the tale of Murwakala, and from it I learned that Kala is hungry, not wicked. | Semar menceritakan kisah Murwakala, dan dari situ aku tahu Kala lapar, bukan jahat. |
-| Q_MQ5_S11_DONE | I sat in the dalang's seat before Semar's kelir and read out the names: Sunda, Jawa and Ombak. | Kududuki tempat dalang di kelir Semar dan kubacakan nama-namanya: Sunda, Jawa, dan Ombak. |
-| Q_MQ5_S12_DONE | Laras had forgotten me in that dark, yet her hand still wrote Ka, and that small letter began cracking Kala's shadow. | Laras di dasar gelap itu melupakanku, tapi tangannya masih menulis Ka, dan dari situ ia mulai meretakkan bayangan Kala. |
-| Q_MQ5_S13_DONE | I calmed Batara Kala with the Dawn Ruwatan, and from inside his shadow Laras cracked his shield. | Kutenangkan Batara Kala dengan Ruwatan Fajar, dan dari dalam bayangannya Laras memecahkan perisai itu. |
-| Q_MQ5_S14_DONE | I wrote La-Ra-Sa in my lontar, and at last my sister came home. | Kutuliskan La-Ra-Sa di lontarku, dan akhirnya adikku pulang. |
+| Q_MQ3_S22_DONE | I beat the Hunter and gave him back his name, Aria Kebonan. Then the Eclipse took Laras in the middle of a word, and Hariang Banga's riders carried me home to Desa Purwa, to Ibu and the fog behind the village. | Kukalahkan sang Pemburu dan kukembalikan namanya, Aria Kebonan. Lalu Gerhana merenggut Laras di tengah kalimatnya, dan pasukan Hariang Banga membawaku pulang ke Desa Purwa, ke Ibu dan kabut di belakang desa. |
+| Q_MQ4_S1_DONE | I came home, and the village felt far too quiet. In the north, the fog swallowed every glyph I threw at it. | Aku pulang, dan desa terasa terlalu sunyi. Di utara, kabut menelan setiap aksara yang kulempar. |
+| Q_MQ4_S2_DONE | The old couple could not recall their own grandson's name, and the stallkeeper named the three quietest houses. | Kakek dan Nenek tak ingat nama cucu mereka sendiri, dan pemilik warung menyebut tiga rumah yang paling sunyi. |
+| Q_MQ4_S3_DONE | I wrote Eman's, Karsih's and Dulah's names on their doors. Each time a name was finished, the house felt lived in again. | Kutulis nama Eman, Karsih, dan Dulah di pintu mereka. Tiap kali tulisannya jadi, rumah itu terasa ditinggali lagi. |
+| Q_MQ4_S4_DONE | On Laras's shelf I found her ribbon, a board and a scrap of lontar she left. Ibu was still pouring tea into the chipped cup. | Di rak Laras kutemukan pita, papan, dan secarik lontar yang ia tinggalkan. Ibu masih menuang teh ke cangkir yang gompal. |
+| Q_MQ4_S5_DONE | At Ibu's table the two brothers sat far apart. I listened to both, and Ibu put rice on each plate without asking. | Di meja Ibu, dua saudara duduk berjauhan. Kudengarkan keduanya, dan Ibu menaruh nasi di piring masing-masing tanpa bertanya. |
+| Q_MQ4_S6_DONE | Aria Kebonan told me what Kala eats. I listened to the end, and could not settle afterwards. | Aria Kebonan bercerita apa yang dimakan Kala. Aku mendengarkan sampai habis, dan tak bisa tenang sesudahnya. |
+| Q_MQ4_S7_DONE | Semar said the northern fog cannot be crossed, and that Laras may be reached through the sea to the south. | Semar bilang kabut di utara tak bisa ditembus, dan Laras mungkin dipanggil lewat laut di selatan. |
+| Q_MQ4_S8_DONE | The south gate opened onto black sand, and Cepot was already waiting with a bundle from Ibu. | Gerbang selatan terbuka ke pasir hitam, dan Cepot sudah menunggu dengan bekal dari Ibu. |
+| Q_MQ4_S9_DONE | I lit the shrine on the beach. In Kampung Nelayan people mended nets and hummed, their words gone. | Petilasan di pantai kunyalakan. Di Kampung Nelayan orang menambal jala sambil bergumam, kehilangan kata-kata. |
+| Q_MQ4_S10_DONE | Mbah Wiryo and Sari told me the song must be whole first: three verses, each kept by one family. | Mbah Wiryo dan Sari bilang laguku harus utuh dulu: tiga bait, masing-masing dipegang satu keluarga. |
+| Q_MQ4_S11_DONE | Three families gave me three verses, each after a small favour. I learned them all on the jetty. | Tiga keluarga memberiku tiga bait, masing-masing sesudah kubantu sedikit. Kuhafalkan semuanya di dermaga. |
+| Q_MQ4_S12_DONE | At the tide line I watched Mbah Wiryo call his wife's name, Sumi. Forty years, and the wave still answers the same. | Di garis pasang, aku melihat Mbah Wiryo memanggil nama istrinya, Sumi. Empat puluh tahun, dan bunyi ombak itu sama. |
+| Q_MQ4_S13_DONE | Sari and I lit three beacons among the mangrove roots. She remembered her grandmother's verse, with one word wrong. | Sari dan aku menyalakan tiga suar di antara akar bakau. Ia ingat bait neneknya, dengan satu kata yang salah. |
+| Q_MQ4_S14_DONE | On the reef I put out the Lampor one by one without chasing. That was the first of three trials. | Di karang, kupadamkan para Lampor satu per satu tanpa mengejar. Itu ujian pertama dari tiga. |
+| Q_MQ4_S15_DONE | I cleared the way into Gua Karang. At the end, black water stood like a wall. | Lorong Gua Karang kubersihkan. Di ujungnya, air hitam berdiri seperti dinding. |
+| Q_MQ4_S16_DONE | In the memory, Laras rang three sunken bells, and the water gate opened because of her. | Dalam ingatan, Laras membunyikan tiga lonceng yang tenggelam, dan gerbang air terbuka karenanya. |
+| Q_MQ4_S17_DONE | The abyssal current tested me and I held on without chasing a win. It only wanted to know whether I would leave. | Arus palung mengujiku, dan aku bertahan tanpa mengejar menang. Ia hanya ingin tahu apakah aku akan pergi. |
+| Q_MQ4_S18_DONE | On the cliff I lit the shrine and watched the southern queen's story. The wind bent the flame but did not put it out. | Di tebing kunyalakan petilasan dan kulihat kisah sang ratu selatan. Angin menunduk apinya, tapi tak memadamkannya. |
+| Q_MQ4_S19_DONE | I wrote La on the card and called Laras toward the sea. Then I chose my offering at the cliff altar. | Kutulis La di kartu dan memanggil Laras ke arah laut. Lalu kupilih persembahanku di altar tebing. |
+| Q_MQ4_S20_DONE | On the stone causeway rising from the sea I lit a shrine. The green light at its end drew closer. | Di jalan batu yang naik dari laut, kunyalakan petilasan. Cahaya hijau di ujungnya makin dekat. |
+| Q_MQ4_S21_DONE | Three waves came and ebbed, and I did not fight them. The third trial was done. | Tiga gelombang datang dan surut, dan aku tak melawan mereka. Ujian ketiga selesai. |
+| Q_MQ4_S22_DONE | At the Sea Altar I received Ombak and the Green Cloth. Behind the cave at the village's back, Laras still says my name. | Di Altar Laut kuterima Ombak dan Kain Hijau. Di balik gua di belakang desa, Laras masih menyebut namaku. |
+| Q_MQ5_S1_DONE | In the Courtyard of Time I stood between Ciung and Hariang, and together we held back the first tide of shadows. | Di Pelataran Waktu aku berdiri di antara Ciung dan Hariang, dan kami menahan gelombang bayangan pertama. |
+| Q_MQ5_S2_DONE | At the Ancestors' Stone I decided what would become of Aria Kebonan's name. My hand still feels heavy. | Di Batu Leluhur aku memutuskan nasib nama Aria Kebonan. Tanganku masih terasa berat. |
+| Q_MQ5_S3_DONE | Only Ombak would part the veil. I fought through the cave mouth, and the way back closed behind me. | Hanya Ombak yang mau membelah tirai itu. Aku menembus mulut gua, dan jalan pulang tertutup di belakangku. |
+| Q_MQ5_S4_DONE | I played tag with Laras one more time and won. La, the first letter of her name, came back to my lontar. | Aku main kejar-kejaran dengan Laras sekali lagi dan menang. La, huruf pertama namanya, kembali ke lontarku. |
+| Q_MQ5_S5_DONE | Two time-wards broke on the Hourglass Sands, and the sand under my boots felt heavier afterwards. | Dua penangkal waktu pecah di Pasir Jam, dan pasir di bawah kakiku terasa lebih berat sesudahnya. |
+| Q_MQ5_S6_DONE | Hutan Lupa swallows names, so I answered each whisper with a name I knew. The trees fell quiet one by one. | Hutan Lupa menelan nama-nama, jadi kubalas tiap bisikan dengan nama yang kukenal. Pohon-pohon itu diam satu per satu. |
+| Q_MQ5_S7_DONE | On Ibu's porch two cups of tea still steamed. I poured the chipped one for Laras, and Ra came back to me. | Di teras Ibu, dua cangkir teh masih mengepul. Aku menuangkan yang gompal untuk Laras, dan Ra kembali padaku. |
+| Q_MQ5_S8_DONE | On the Shadow Bridge I beat the echoes of the old legends, and there was no joy in meeting them again. | Di Jembatan Bayang kukalahkan gema-gema lama, dan tak ada yang menyenangkan dari bertemu mereka lagi. |
+| Q_MQ5_S9_DONE | Semar kept his fire at the last petilasan. I remembered the sanggar and the written names, and Sa joined La and Ra. | Semar menjaga api di petilasan terakhir. Kuingat sanggar dan nama-nama tertulis, dan Sa menyusul La dan Ra. |
+| Q_MQ5_S10_DONE | Semar told me how Kala was born. Now I know he is hungry, not wicked. | Semar menuturkan kisah lahirnya Kala. Sekarang aku tahu dia lapar, bukan jahat. |
+| Q_MQ5_S11_DONE | I sat in the dalang's seat and practised Sunda, Jawa and Ombak, slowly, the way you say a child's name. | Aku duduk di tempat dalang dan berlatih menyebut Sunda, Jawa, dan Ombak, pelan, seperti menyebut nama anak. |
+| Q_MQ5_S12_DONE | Down in that dark Laras didn't know me, but her hand still wrote Ka. From that one small letter she began to crack Kala's shadow. | Laras di dasar gelap itu tak mengenaliku, tapi tangannya masih menulis Ka. Dari huruf kecil itu ia mulai meretakkan bayangan Kala. |
+| Q_MQ5_S13_DONE | I fought Batara Kala with Semar's ruwatan in my hands, and from inside his shadow Laras cracked his shields. Kala turned back, calm, not dead. | Aku bertarung melawan Batara Kala dengan ruwatan Semar di tanganku, dan dari dalam bayangannya Laras memecahkan perisainya. Kala mundur, tenang, tidak mati. |
+| Q_MQ5_S14_DONE | I wrote La, Ra, Sa on my lontar, and my sister came home. | Kutulis La, Ra, Sa di lontarku, dan adikku pulang. |
 
 ## 13. Codex (`codex.csv` and `data/codex/<id>.tres`)
 **Entries: 53 codex rows.** Not part of the dialogue budget.
@@ -6466,8 +6466,8 @@ Card: giver Ki Darsa and Purbasari (zone docs place Ki Darsa on the kampung plaz
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_KI_DARSA_V20 | Kulit gadis itu pulih. Ia sendiri tertawa, lama sekali. | The girl's skin is healed. She laughed, for a long time. |
-| 1 | DLG_KI_DARSA_V21 | Si lutung hitam itu sebenarnya makhluk surgawi yang menyamar. Wajah pinjaman, Nak. Begitu kisahnya. | The black langur was a heavenly being in disguise. A borrowed face, child. So the tale goes. |
+| 1 | DLG_KI_DARSA_V20 | Kulit gadis itu pulih. Ia tertawa, lama sekali. | The girl's skin is healed. She laughed, for a long time. |
+| 1 | DLG_KI_DARSA_V21 | Lutung hitam itu sebenarnya makhluk surgawi yang menyamar. Wajah pinjaman, Nak. Begitu kisahnya. | The black langur was a heavenly being in disguise. A borrowed face, child. So the tale goes. |
 | 1 | DLG_KI_DARSA_V30 | Duduklah. Mau dengar sisi cerita yang tak masuk pantunku? | Sit down. Want to hear the sides of the tale that never made it into my pantun? |
 | topic lutung | DLG_KI_DARSA_V31 | Dalam kisahnya ia Guruminda, dewa muda yang dihukum turun ke bumi dalam rupa lutung. | In the tale he is Guruminda, a young god sent down to earth in a langur's shape. |
 | topic lutung | DLG_KI_DARSA_V32 | Hukuman itu ujian. Ia harus dilihat dari perbuatannya, bukan dari bulunya. | The punishment was a test. He had to be seen by his deeds, not by his fur. |
@@ -6486,14 +6486,14 @@ Card: giver Ki Darsa and Purbasari (zone docs place Ki Darsa on the kampung plaz
 | topic pantun | DLG_KI_DARSA_V39 | Kudengar ada murid dalang yang berani mengubah akhir kisah. Semoga itu kau. | I hear a dalang's apprentice has been daring to change endings. I hope it's you. |
 | 2 | DLG_KI_DARSA_V28 | Sosok-sosok pucat itu menjaga mata air, tapi mereka tak jahat. Mereka lupa untuk siapa mereka berjaga. | The pale figures guard the spring, but they aren't wicked. They forgot who they guard it for. |
 | 2 | DLG_KI_DARSA_V29 | Bersihkan mereka, dan alirkan lagi airnya. Gadis itu menunggu di sana. | Clear them, and let the water run again. The girl waits there. |
-| 3 | DLG_KI_DARSA_V23 | Sumber air itu tersembunyi. Dan jangan lupa persembahannya di depan pintu. | The spring is hidden. And don't forget the offerings at her door. |
-| 4 | DLG_KI_DARSA_V24 | Salam, Nak. Aku Ki Darsa, juru pantun. Kubawa kecapiku dari desa ke desa, menyanyikan kisah lama. | Greetings, child. I'm Ki Darsa, a juru pantun. I carry my kecapi from village to village, singing old tales. |
-| 4 | DLG_KI_DARSA_V25 | Di tepi hutan ada gadis berkulit belang. Seekor lutung hitam menolak pergi dari sisinya. Ia tak mengusirnya. | At the forest's edge lives a girl with spotted skin. A black langur won't leave her side. She doesn't chase him off. |
+| 3 | DLG_KI_DARSA_V23 | Mata air itu tersembunyi. Jangan lupa sesaji di depan pintunya. | The spring is hidden. And don't forget the offerings at her door. |
+| 4 | DLG_KI_DARSA_V24 | Salam, Nak. Aku Ki Darsa, juru pantun. Kubawa kecapiku dari desa ke desa untuk menyanyikan kisah lama. | Greetings, child. I'm Ki Darsa, a pantun singer. I carry my kecapi from village to village, singing old tales. |
+| 4 | DLG_KI_DARSA_V25 | Di tepi hutan ada gadis berkulit belang, dan seekor lutung hitam yang menolak pergi dari sisinya. Ia tak pernah mengusirnya. | At the forest's edge lives a girl with spotted skin, and a black langur who won't leave her side. She never drives him off. |
 | 4 | @NPC_HERO_NAME | | |
 | 4 | DLG_KI_DARSA_H20 | Katanya ia dikutuk? | They say she's cursed? |
 | 4 | @NPC_KI_DARSA_NAME | | |
 | 4 | DLG_KI_DARSA_V40 | Orang bilang begitu. Tapi lutung itu menaruh buah di depan pintunya tiap pagi, dan tak pernah mengetuk. | So people say. But that langur leaves fruit at her door every morning, and never knocks. |
-| 4 | DLG_KI_DARSA_V26 | Lihat persembahan di depan pintunya, lalu cari sumber air yang tersembunyi. | See the offerings at her door, then find the hidden spring. |
+| 4 | DLG_KI_DARSA_V26 | Lihat sesaji di depan pintunya, lalu cari mata air yang tersembunyi. | Look at the offerings at her door, then find the hidden spring. |
 | 5 | DLG_KI_DARSA_V27 | Kisah lama itu masih ada. Aku hanya menyanyikannya. | The old tales are still here. I only sing them. |
 
 | Key | ID | EN |
@@ -6559,18 +6559,18 @@ Card: giver `kepala_desa` in `ts_kampung`. Steps 0 talk, 1 `clue_examined:s2_gra
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_KEPALA_DESA_V20 | Rumpun itu senyap. Namanya sudah terukir di batu, supaya yang tidur di sana tahu ia dikenang. | The grove is quiet. Her name is cut into the stone, so the one who sleeps there knows she is remembered. |
-| 1 | DLG_KEPALA_DESA_V21 | Terimalah golok dan kantong ramuan ini. Kau pantas membawanya. | Take this golok and herb pouch. You've earned them. |
+| 1 | DLG_KEPALA_DESA_V20 | Rumpun itu sudah senyap. Nisannya masih kosong, dan hanya kau yang bisa menulis. | The grove is quiet now. Her marker is still blank, and only you can write. |
+| 1 | DLG_KEPALA_DESA_V21 | Tuliskan dua aksara di sana, supaya yang tidur di situ tahu ia dikenang. Terimalah golok dan kantong ramuan ini. | Write two glyphs on it, so the one who sleeps there knows she is remembered. Take this golok and herb pouch. |
 | 2 | DLG_KEPALA_DESA_V27 | Nenekku bilang perempuan itu dikubur tanpa nisan, karena tak seorang pun mau mengaku keluarganya. Namanya Ganga. | My grandmother said the woman was buried without a marker, because nobody would claim her. Her name was Ganga. |
 | 2 | @NPC_HERO_NAME | | |
 | 2 | DLG_KEPALA_DESA_H21 | Dua bunyi, Ga dan Nga. Aku bisa menuliskannya. | Two sounds, Ga and Nga. I can write it. |
 | 2 | @NPC_KEPALA_DESA_NAME | | |
 | 2 | DLG_KEPALA_DESA_V28 | Ukirlah di batu penanda itu. Aku yang memegang lampunya. | Carve it on the marker stone. I'll hold the lamp. |
 | 3 | DLG_KEPALA_DESA_V29 | Ia menangis karena tak ada yang memanggil namanya. Berdirilah di tanah terang, seperti nenek dalam ingatan itu. | She cries because nobody calls her name. Stand on lit ground, like the grandmother in that memory. |
-| 4 | DLG_KEPALA_DESA_V22 | Wangi kembang di kuburan tanpa nama. Kain putih di bambu. Itu petunjukku. | The flower scent at a grave with no name. A white cloth on the bamboo. Those are my clues. |
-| 5 | DLG_KEPALA_DESA_V23 | Di rumpun bambu itu ada tangis bayi tiap malam. Padahal tak ada rumah di sana. | In the bamboo grove a baby cries every night. And no house stands there. |
-| 5 | DLG_KEPALA_DESA_V24 | Aku tak berani mendekat. Kau? | I don't dare go near. Will you? |
-| 5 | DLG_KEPALA_DESA_V25 | Cium wangi kembang di kuburan tanpa nama, dan periksa kain putih di bambu. | Smell the flower scent at the unmarked grave, and check the white cloth on the bamboo. |
+| 4 | DLG_KEPALA_DESA_V22 | Wangi cempaka di makam tanpa nama. Kain putih di bambu. Hanya itu petunjukku. | Cempaka scent over a nameless grave. A white cloth on the bamboo. Those are all my clues. |
+| 5 | DLG_KEPALA_DESA_V23 | Di rumpun bambu ada perempuan menangis tiap malam. Padahal tak ada rumah di sana. | In the bamboo grove a woman weeps every night. And no house stands there. |
+| 5 | DLG_KEPALA_DESA_V24 | Aku tak berani mendekat. Kau berani? | I don't dare go near. Will you? |
+| 5 | DLG_KEPALA_DESA_V25 | Cari pohon cempaka di atas makam tanpa nisan, lalu periksa kain putih yang tersangkut di bambu. | Find the cempaka tree over the unmarked grave, then check the white cloth snagged on the bamboo. |
 | 6 | DLG_KEPALA_DESA_V26 | Desa ini tenang. Biarlah begitu. | The village is calm. Let it stay that way. |
 
 #### Clues S2 (hunt `HUNT_SQ_S2_TITLE`; `s2_grave` and `s2_cloth`)
@@ -6723,15 +6723,15 @@ Card (v5): Si Kabayan rests under a banyan in `kg_pasar` (was the alun-alun). Un
 | 2 | @NPC_KABAYAN_NAME | | |
 | 2 | DLG_KABAYAN_V20 | Aku menang, kan? Sekarang... aku tidur lagi. | I won, didn't I? Now... back to sleep. |
 | 2 | DLG_KABAYAN_V38 | Ceritaku sudah masuk lakon desamu, Nak. Sana, kembali ke urusanmu. | My tale is in your village's lakon now, child. Go on, back to your business. |
-| 3 | DLG_KABAYAN_V21 | Buku piutang pejabat dan karung gula arenku. Sudah kau lihat? Belum? Jangan berisik. | The official's ledger and my palm-sugar sack. Have you looked? Not yet? Don't be loud. |
+| 3 | DLG_KABAYAN_V21 | Buku piutang pejabat dan karung gula arenku. Sudah kau periksa? Belum? Pelan-pelan, aku mau tidur. | The official's ledger and my palm-sugar sack. Have you examined them? Not yet? Quietly, I'm trying to sleep. |
 | 4 | DLG_KABAYAN_V22 | Ssst. Aku sedang tidur. Aku Si Kabayan. | Shh. I'm sleeping. I'm Si Kabayan. |
 | 4 | DLG_KABAYAN_V23 | Pejabat itu berteriak bahwa aku melanggar maklumatnya. Aku bahkan belum bangun. | That official shouts that I broke his decree. I haven't even woken up. |
 | 4 | @NPC_HERO_NAME | | |
 | 4 | DLG_KABAYAN_H20 | Dan kau mau aku membantu? | And you want my help? |
 | 4 | @NPC_KABAYAN_NAME | | |
-| 4 | DLG_KABAYAN_V39 | Aku mau kau yang bekerja, aku yang menang. Begitu adat kami. | I want you to do the work and me to win. That's our custom. |
-| 4 | DLG_KABAYAN_V24 | Lihat buku piutang di lapak itu, dan karung gula arenku. Tiga teka-teki, satu pejabat. | Look at the ledger on that stall, and my palm-sugar sack. Three riddles, one official. |
-| 5 | DLG_KABAYAN_V25 | Zzz. Pergilah, aku sedang bermimpi bagus. | Zzz. Go away, I'm having a good dream. |
+| 4 | DLG_KABAYAN_V39 | Aku mau kau yang bekerja, aku yang menang. Begitu adat kami. | I want you to do the work and me to win. That's how we do it. |
+| 4 | DLG_KABAYAN_V24 | Periksa buku piutang di lapak itu, dan karung gula arenku. Tiga teka-teki, satu pejabat. | Examine the ledger on that stall, and my palm-sugar sack. Three riddles, one official. |
+| 5 | DLG_KABAYAN_V25 | Zzz. Pergilah, aku sedang mimpi bagus. | Zzz. Go away, I'm having a good dream. |
 
 | Key | ID | EN |
 |-----|----|----|
@@ -6797,15 +6797,15 @@ Card: giver an old palace maid (`g2_maid`) in `kg_kaputren`; unlock `mqg_kp1` (*
 | 1 | DLG_KAPUTREN_MAID_V29 | Daftar pelayan itu kini lengkap lagi. Ada yang menyapanya tiap pagi. Itu sudah cukup. | The servants' roll is whole again. Someone greets him every morning. That's enough. |
 | 2 | DLG_KAPUTREN_MAID_V22 | Lorongnya tenang. Daftar itu masih tergores. | The hall is calm. The roll is still scraped. |
 | 2 | DLG_KAPUTREN_MAID_V23 | Aku tak ingin membahasnya. | I don't want to talk about it. |
-| 3 | DLG_KAPUTREN_MAID_V30 | Kau sudah dengar kisahnya. Tulislah namanya di daftar, atau hadapi ia di lorong. Aku tak akan menghalangi. | You've heard his story. Write his name on the roll, or face him in the hall. I won't stop you. |
-| 4 | DLG_KAPUTREN_MAID_V24 | Sapu dan daftar. Jika kau periksa keduanya, kau mungkin paham. | The broom and the roll. If you check both, you may understand. |
-| 5 | DLG_KAPUTREN_MAID_V25 | Tiap malam ada yang menyapu lorong perempuan ini. Pagi harinya gagang sapunya aus. | Every night someone sweeps this women's hall. By morning the broom is worn to the handle. |
-| 5 | DLG_KAPUTREN_MAID_V26 | Aku tak pernah melihat siapa. Aku hanya mendengar sapuannya. | I've never seen who. I only hear the sweeping. |
+| 3 | DLG_KAPUTREN_MAID_V30 | Kau sudah dengar kisahnya. Tulis namanya di gulungan, atau hadapi dia di lorong. Aku tak akan menghalangi. | You've heard his story. Write his name on the roll, or face him in the hall. I won't stop you. |
+| 4 | DLG_KAPUTREN_MAID_V24 | Sapu dan gulungan. Periksa keduanya, dan kau akan paham. | The broom and the roll. Examine both and you'll understand. |
+| 5 | DLG_KAPUTREN_MAID_V25 | Tiap malam ada yang menyapu lorong perempuan ini. Paginya, gagang sapunya aus. | Every night someone sweeps this women's hall. By morning the broom is worn to the handle. |
+| 5 | DLG_KAPUTREN_MAID_V26 | Aku tak pernah melihat siapa. Aku cuma mendengar sapuannya. | I've never seen who. I only hear the sweeping. |
 | 5 | @NPC_HERO_NAME | | |
 | 5 | DLG_KAPUTREN_MAID_H20 | Sudah berapa lama? | How long has it been? |
 | 5 | @NPC_KAPUTREN_MAID_NAME | | |
-| 5 | DLG_KAPUTREN_MAID_V31 | Sejak sebelum aku masuk istana, dan aku sudah tua. Lihat sapu yang aus itu, dan daftar para pelayan di rak. | Since before I came to the palace, and I'm old. See the worn broom, and the servants' roll on the shelf. |
-| 6 | DLG_KAPUTREN_MAID_V28 | Kaputren ini selalu sepi. Aku sudah terbiasa. | The kaputren is always quiet. I'm used to it. |
+| 5 | DLG_KAPUTREN_MAID_V31 | Sejak sebelum aku masuk istana, dan aku sudah tua. Periksa sapu aus itu dan gulungan abdi di rak. | Since before I came to the palace, and I'm old. Examine the worn broom and the servants' roll on the shelf. |
+| 6 | DLG_KAPUTREN_MAID_V28 | Kaputren ini selalu sepi. Aku sudah terbiasa. | The Kaputren is always quiet. I'm used to it. |
 
 #### Clues G2 (hunt `HUNT_SQ_G2_TITLE`; `g2_broom` and `g2_roll`)
 | Key | ID | EN |
@@ -6842,8 +6842,8 @@ VERIFY: ririwa as a Sundanese ghost term, and its description here.
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_RIRIWA_ROLL_V20 | Tinta bekasnya masih ada. Dua huruf, Ca dan Nga. | The ink's trace is still there. Two letters, Ca and Nga. |
-| 1 | DLG_RIRIWA_ROLL_V21 | Tulislah nama itu kembali di daftar. | Write the name back on the roll. |
+| 1 | DLG_RIRIWA_ROLL_V20 | Bekas tintanya masih ada. Dua huruf, Ca dan Nga. | The ink's trace is still there. Two letters, Ca and Nga. |
+| 1 | DLG_RIRIWA_ROLL_V21 | Tulis nama itu kembali di gulungan. | Write the name back on the roll. |
 | 2 | DLG_RIRIWA_ROLL_V22 | Namanya Canga. Sapu itu berhenti. | His name is Canga. The sweeping stops. |
 | 3 | DLG_RIRIWA_ROLL_V23 | Sebuah daftar pelayan, rapi dan tenang. | A servants' roll, neat and quiet. |
 
@@ -6921,10 +6921,10 @@ Card: giver `m2_neighbour` in `mt_pasar`; unlock `mq2_2`. Steps 0 talk, 1 `clue_
 | 1 | DLG_M2_NEIGHBOUR_V22 | Terimalah jimat ini. Yang pantas dibawa orang yang mau mendengarkan. | Take this jimat. It suits someone who stops to listen. |
 | 2 | DLG_M2_NEIGHBOUR_V23 | Anak itu pulang. Ibunya diam saja. | The boy is home. His mother says nothing. |
 | 2 | DLG_M2_NEIGHBOUR_V24 | Terimalah jimat ini. Aku tak tahu harus bilang apa lagi. | Take this jimat. I don't know what else to say. |
-| 3 | DLG_M2_NEIGHBOUR_V25 | Mainannya di jalan bukit. Orang tuanya di rumah, tanyalah mereka. | His toy's on the hill path. His parents are at home, ask them. |
-| 4 | DLG_M2_NEIGHBOUR_V26 | Anak tetanggaku hilang. Ibunya baru sadar petang tadi, padahal ia pergi sejak pagi. | My neighbour's boy is gone. His mother only noticed this evening, though he left in the morning. |
+| 3 | DLG_M2_NEIGHBOUR_V25 | Mainannya di jalan bukit, dekat kuburan. Orang tuanya di lapak, tanyalah mereka. | His toy's on the hill path by the graveyard. His parents are at the stall, ask them. |
+| 4 | DLG_M2_NEIGHBOUR_V26 | Anak tetanggaku hilang sejak pagi. Ibunya baru sadar petang tadi. | My neighbour's boy has been gone since morning. His mother only noticed tonight. |
 | 4 | DLG_M2_NEIGHBOUR_V27 | Tak ada yang memanggilnya. Itu saja yang bisa kukatakan. | Nobody called him. That's all I can say. |
-| 4 | DLG_M2_NEIGHBOUR_V28 | Lihat mainannya di jalan bukit, dan bicaralah pada orang tuanya. | See his toy on the hill path, and speak to his parents. |
+| 4 | DLG_M2_NEIGHBOUR_V28 | Lihat mainannya di jalan bukit, lalu bicaralah pada orang tuanya. | See his toy on the hill path, then talk to his parents. |
 | 5 | DLG_M2_NEIGHBOUR_V29 | Pasar ramai, tapi anak-anak butuh dipandang. | The market's lively, but children need to be looked at. |
 
 #### m2_parents_1 (the boy's parents, at their stall; name NPC_M2_PARENTS_NAME; step 1 talk, `talked_to:m2_parents_1`, and the step 4 turn-in)
@@ -6942,7 +6942,7 @@ Card: giver `m2_neighbour` in `mt_pasar`; unlock `mq2_2`. Steps 0 talk, 1 `clue_
 | 2 | @NPC_HERO_NAME | | |
 | 2 | DLG_M2_PARENTS_H30 | Kapan terakhir kalian memanggilnya? | When did you last call his name? |
 | 2 | @NPC_M2_PARENTS_NAME | | |
-| 2 | DLG_M2_PARENTS_V31 | Tak ada yang memanggilnya. Kami... tak sempat. Cari mainannya di jalan bukit. | Nobody called him. We... never had time. Look for his toy on the hill path. |
+| 2 | DLG_M2_PARENTS_V31 | Tak ada yang memanggilnya. Kami... tak sempat. Kami akan ke bukit, memukul panci dan memanggilnya. | Nobody called him. We... never had time. We'll go to the hill, bang a pot and call him. |
 | 3 | DLG_M2_PARENTS_V32 | Hari ini banyak pembeli. Tapi hati kami sepi. | Plenty of buyers today. But our hearts are quiet. |
 
 #### wewe_parents_2 (the hill; peaceful `alt`, step 3; the same parents; name NPC_M2_PARENTS_NAME)
@@ -7139,7 +7139,7 @@ Card: giver `t2_herder` in `tt_kulon` (zone docs: `tt_sabana`); unlock `mq3_1`. 
 | 1 | DLG_T2_HERDER_V20 | Apinya padam. Rumput akan tumbuh lagi. | The fire is out. The grass will grow back. |
 | 1 | DLG_T2_HERDER_V21 | Domba-dombaku mulai merumput lagi. Ambil kantong ramuan ini. | My sheep are grazing again. Take this herb pouch. |
 | 2 | DLG_T2_HERDER_V27 | Air mengalir menahannya, kata kisah itu. Buka saluran di oasis pesisir, lalu hadapi ia di sana. | Running water holds it back, the tale says. Open the channel at the coastal oasis, then face it there. |
-| 3 | DLG_T2_HERDER_V22 | Jejak hangus dan api unggun yang tak ada yang menyalakannya. Itu petunjuknya. | The burnt trail and the campfire nobody lit. Those are your clues. |
+| 3 | DLG_T2_HERDER_V22 | Ikuti rumput hangus ke bukit pasir di selatan, lalu padamkan apinya di sumber. | Follow the scorched grass to the dunes in the south, and put the fire out at its source. |
 | 4 | DLG_T2_HERDER_V23 | Rumputku terbakar membentuk garis, padahal tak ada angin. | My grass burns in a line, and there's no wind. |
 | 4 | DLG_T2_HERDER_V24 | Aku tak berani mendekat malam hari. Dombaku pun tak mau. | I don't dare go near at night. My sheep won't either. |
 | 4 | DLG_T2_HERDER_V25 | Lihat jejak hangusnya, dan api unggun yang tak seorang pun nyalakan. | Look at the burnt trail, and the campfire nobody lit. |
@@ -7285,12 +7285,12 @@ Card: giver `k2_fisher` (card says `sk_nelayan`; zone docs place him at the rive
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_K2_FISHER_V20 | Ia mundur ke laut dalam. Jaring kami tak robek lagi. | It drew back into the deep. Our nets aren't torn any more. |
+| 1 | DLG_K2_FISHER_V20 | Bajul itu sudah tumbang. Jaring kami tak robek lagi. | The crocodile is down. Our nets aren't torn any more. |
 | 1 | DLG_K2_FISHER_V21 | Kami menebar jaring lagi. Hasil pertama kami taruh di pasir untuknya. | We cast again. The first catch we leave on the sand for it. |
 | 2 | DLG_K2_FISHER_V26 | Air akan surut dulu sebelum ia menerjang. Ingat itu. Dan jangan lupa, ia penjaga, bukan musuh. | The water draws back before it charges. Remember that. And don't forget, it's a keeper, not an enemy. |
-| 3 | DLG_K2_FISHER_V22 | Sisik putih dan Mbah Wiryo. Dua-duanya akan menjawab. | The white scale and Mbah Wiryo. Both will answer you. |
+| 3 | DLG_K2_FISHER_V22 | Temui Pak Raka di karang tenggara. Ia kenal sisik putih itu. | Find Pak Raka on the south-east reef. He knows that white scale. |
 | 4 | DLG_K2_FISHER_V23 | Jaring kami robek dari dalam, tiap malam. Tak ada yang berani menebar di muara. | Our nets are torn from the inside, every night. Nobody dares cast at the river mouth. |
-| 4 | DLG_K2_FISHER_V24 | Lihat sisik putih yang tersangkut di jaring. Lalu tanyakan pada juru kunci pantai. | See the white scale caught in the net. Then ask the juru kunci of the shore. |
+| 4 | DLG_K2_FISHER_V24 | Ada sisik putih tersangkut di jaring. Pak Raka di karang tahu itu milik siapa. | A white scale got caught in the net. Pak Raka on the reef knows whose it is. |
 | 5 | DLG_K2_FISHER_V25 | Muara ini indah, kalau sedang tenang. | The river mouth is lovely when it's calm. |
 
 #### kidul_jurukunci, one-line entry (Mbah Wiryo; shared NPC, V500+; cond `step:sq_k2=1`, `"quiet": true`; do `flag:sq_k2_wiryo`; completes `talked_to:kidul_jurukunci`)
@@ -7343,15 +7343,15 @@ Card: giver Ciung Wanara in `kg_alun`; unlock `mqg_a1`. Steps 0 talk, 1 `clue_ex
 | c1_token | DLG_CIUNG_WANARA_V506 | Aku marah sebentar. Lalu sadar: orang pertama yang menyayangiku adalah pelayan tua, bukan raja. | I was angry for a moment. Then I saw: the first person who loved me was an old servant, not a king. |
 | c1_token | DLG_CIUNG_WANARA_V507 | Ayamku mengikutimu tanpa dipaksa. Mungkin ia lebih tahu siapa yang pantas dipercaya. | My rooster followed you without being forced. Maybe he knows better who deserves trust. |
 | c1_token | DLG_CIUNG_WANARA_V508 | Terima kasih, kawan. Masih ada pintu istana yang harus kita buka. | Thank you, friend. There are still palace doors we have to open. |
-| c1_wait | DLG_CIUNG_WANARA_V34 | Aku tak bisa meninggalkan perannya. Tolong cari dia. | I can't leave my part. Please find him. |
-| c1_wait | DLG_CIUNG_WANARA_V503 | Bulunya di pasar, keranjang tua di kaputren. Dan kalau kau menemukan sesuatu yang aneh di keranjang itu, bawa pada Uwa Lengser. | His feathers in the market, an old basket in the kaputren. And if you find anything odd in that basket, take it to Uwa Lengser. |
-| c1_hook | DLG_CIUNG_WANARA_V32 | Bertenggernya kosong. Ia kabur sebelum turnamen. | His perch is empty. He ran off before the tournament. |
+| c1_wait | DLG_CIUNG_WANARA_V34 | Aku tak bisa meninggalkan gerbang ini. Tolong cari dia. | I can't leave this gate. Please find him. |
+| c1_wait | DLG_CIUNG_WANARA_V503 | Bulunya di lapak, keranjang tua di tepi kolam. Kalau kau temukan sesuatu yang aneh di keranjang itu, bawa ke Uwa Lengser. | His feathers at the stall, an old basket on the pond shore. If you find anything odd in that basket, take it to Uwa Lengser. |
+| c1_hook | DLG_CIUNG_WANARA_V32 | Tempat bertenggernya kosong. Ia kabur sebelum sayembara. | His perch is empty. He ran off before the tourney. |
 | c1_hook | @NPC_HERO_NAME | | |
 | c1_hook | DLG_CIUNG_WANARA_H500 | Kau yakin ia kabur, bukan dicuri? | Are you sure he ran, and wasn't stolen? |
 | c1_hook | @NPC_CIUNG_WANARA_NAME | | |
 | c1_hook | DLG_CIUNG_WANARA_V500 | Ayam itu tak mau dicuri. Ia mematuk tangan yang salah. | That bird won't be stolen. He pecks the wrong hand. |
-| c1_hook | DLG_CIUNG_WANARA_V501 | Ia benci keramaian. Cari bulunya di pasar, dan keranjang sungai tua di kaputren. | He hates crowds. Look for his feathers in the market, and the old river basket in the kaputren. |
-| c1_hook | DLG_CIUNG_WANARA_V502 | Jangan bawa ia dekat gelanggang. Aku cuma mau dia pulang. | Don't take him near the ring. I only want him home. |
+| c1_hook | DLG_CIUNG_WANARA_V501 | Ia benci keramaian. Cari bulunya di lapak penjual ayam, dan keranjang sungai tua di tepi kolam alun-alun. | He hates crowds. Check for his feathers at the seller's stall, and the old river basket on the pond shore in the square. |
+| c1_hook | DLG_CIUNG_WANARA_V502 | Jangan bawa dia dekat gelanggang. Aku cuma mau dia pulang. | Don't take him near the ring. I just want him home. |
 
 #### lengser, C1 entry (Uwa Lengser; name NPC_LENGSER_NAME; shared NPC, V500+; cond `step:sq_c1=4`, `!flag:c1_token`; `"quiet": true`; do `flag:c1_token`)
 | Key | ID | EN |
@@ -7382,7 +7382,7 @@ Card: giver Ciung Wanara in `kg_alun`; unlock `mqg_a1`. Steps 0 talk, 1 `clue_ex
 | CLUE_C1_FEATHERS_1 | Bulu panjang berkilat, hitam dengan ujung emas, tersangkut di lapak penjual ayam. Ada jejak kaki kecil menuju gang belakang. | Long glossy feathers, black with gold tips, snagged at the rooster seller's stall. Small footprints lead into the back lane. |
 | CLUE_C1_FEATHERS_2 | Si penjual bilang burung itu lewat dengan angkuh, tanpa membeli apa-apa. | The seller says the bird strutted past, buying nothing. |
 | CLUE_C1_FEATHERS_NOTE | Bulu hitam-emas di pasar. | Black and gold feathers in the market. |
-| CLUE_C1_BASKET_1 | Sebuah keranjang rotan tua teronggok di gudang kaputren, tepinya lapuk oleh air sungai. | An old rattan basket sits in a kaputren storeroom, its rim rotted by river water. |
+| CLUE_C1_BASKET_1 | Keranjang rotan tua di tepi sungai alun-alun, tempat anak-anak biasa bermain. Tepinya lapuk oleh air. | An old rattan basket at the riverside of the alun-alun, where children play. Its rim is rotted by the water. |
 | CLUE_C1_BASKET_2 | Sebuah bandul kayu kecil terikat di tepinya dengan simpul tua. Seseorang memahatnya dengan sayang. | A small wooden charm is tied to its rim with an old knot. Someone carved it with care. |
 | CLUE_C1_BASKET_NOTE | Keranjang sungai tua dengan bandul kayu. | An old river basket with a wooden charm. |
 
@@ -7413,7 +7413,7 @@ Card: giver Hariang Banga at `kg_pamali`; unlock `quest:mq2=done`. Steps 0 talk,
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | c2_deliver | DLG_HARIANG_BANGA_V10 | Ibu membalas? Aku belum berani membaca. | Mother replied? I haven't dared read it. |
-| c2_deliver | DLG_HARIANG_BANGA_V514 | Simpan di tasku. Aku akan membukanya di meja yang ada orang lain, supaya aku tak menangis sendirian. | Put it in my bag. I'll open it at a table with other people, so I don't weep alone. |
+| c2_deliver | DLG_HARIANG_BANGA_V514 | Simpan di tasku. Akan kubuka di meja yang ada orang lain, supaya aku tak menangis sendirian. | Put it in my bag. I'll open it at a table with other people, so I don't weep alone. |
 | c2_deliver | @NPC_HERO_NAME | | |
 | c2_deliver | DLG_HARIANG_BANGA_H504 | Meja siapa? | Whose table? |
 | c2_deliver | @NPC_HARIANG_BANGA_NAME | | |
@@ -7455,7 +7455,7 @@ Card: giver Hariang Banga at `kg_pamali`; unlock `quest:mq2=done`. Steps 0 talk,
 | 2 | DLG_GALUH_QUEEN_V28 | Penjaga tanpa wajah berjaga di sana. Ambilkan, dan bawa hati-hati. | Faceless guards watch there. Fetch it, and carry it carefully. |
 | 3 | DLG_GALUH_QUEEN_V29 | Cincinnya. Masih hangat dari kamar itu. | The ring. Still warm from that room. |
 | 3 | DLG_GALUH_QUEEN_V30 | Lihat capnya. Tak seorang pun menyentuh surat ini selain aku dan anakku. | See the seal. Nobody touches this letter but me and my son. |
-| 3 | DLG_GALUH_QUEEN_V31 | Bawa ke Hariang Banga di timur. Katakan ibunya masih menulis dengan tangannya sendiri. | Take it to Hariang Banga in the east. Tell him his mother still writes with her own hand. |
+| 3 | DLG_GALUH_QUEEN_V31 | Bawa ini ke Hariang Banga. Katakan ibunya masih menulis dengan tangannya sendiri. | Take this to Hariang Banga. Tell him his mother still writes with her own hand. |
 | 4 | DLG_GALUH_QUEEN_V24 | Waktu terasa panjang di kandang ini. | Time feels long in this cage. |
 
 #### Clues C2 (hunt `HUNT_SQ_C2_TITLE`; `c2_signet` ASSUMED, in `kg_kaputren`; `c2_reply_letter`, on Ibu's table, cond `flag:c2_reply`)
@@ -7484,7 +7484,7 @@ Card: giver Ranga (if `choice_freed`) or Uwa Lengser's notes (if `choice_handed`
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
 | c3_a | DLG_DESERTER_V20 | Aku berjalan di pinggir kemah. Kalau kau tahu nama yang cocok untukku, ucapkan. | I walk at the camp's edge. If you know a name that fits me, say it. |
-| c3_a | DLG_FACELESS_DESERTER_V500 | Ada secarik kain di tali jemuran dekat tangga candi. Kutemukan jariku menjahit satu bunyi di sana. | There's a scrap of cloth on a washing line by the temple stairs. I found my fingers stitching one sound on it. |
+| c3_a | DLG_FACELESS_DESERTER_V500 | Ada secarik kain di tali jemuran dekat tonggak kemah di Candi Seribu. Jariku menjahit satu bunyi di sana. | A scrap of cloth hangs on the washing line by the camp stake at Candi Seribu. My fingers stitched one sound on it. |
 | c3_a | @NPC_HERO_NAME | | |
 | c3_a | DLG_FACELESS_DESERTER_H500 | Kenapa kau menjahitnya? | Why did you stitch it? |
 | c3_a | @NPC_FACELESS_DESERTER_NAME | | |
@@ -7545,8 +7545,8 @@ Card: giver Ranga (if `choice_freed`) or Uwa Lengser's notes (if `choice_handed`
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| 1 | DLG_DESERTER_STONE_V20 | Sebuah batu pipih di halaman gerbang. Tiga petunjuk menunjuk dua bunyi: Ra dan Nga. | A flat stone in the gate courtyard. Three clues point to two sounds: Ra and Nga. |
-| 1 | DLG_DESERTER_STONE_V21 | Tulislah, supaya ia mendengar. | Write it, so he can hear. |
+| 1 | DLG_DESERTER_STONE_V20 | Batu pipih di pelataran mulut gua. Tiga petunjuk menunjuk dua bunyi: Ra dan Nga. | A flat stone in the cave-mouth courtyard. Three clues, two sounds: Ra and Nga. |
+| 1 | DLG_DESERTER_STONE_V21 | Tulis Ra, lalu Nga. Supaya ia mendengar. | Write Ra, then Nga. So he can hear. |
 | 2 | DLG_DESERTER_STONE_V22 | Ranga. Ia berdiri di sampingmu, dan akhirnya mendengar namanya. | Ranga. He stands beside you, and at last he hears his name. |
 | 2 | @NPC_FACELESS_DESERTER_NAME | | |
 | 2 | DLG_FACELESS_DESERTER_V505 | Ra. Nga. Ranga. Tukang gerabah dari tepi sungai, bukan topeng. | Ra. Nga. Ranga. A potter from the riverbank, not a mask. |
@@ -7570,20 +7570,20 @@ Part 2 (`sq_c4_2`, Act III, `mt_gapura`): steps 0 `clue_examined:c4_roll_a` and 
 
 | Entry | Key | ID | EN |
 |-------|-----|----|----|
-| c4_2_hook | DLG_CEPOT_V20 | Aku daftar jadi prajurit di dua sisi sekaligus! Pasar sungai ini hebat. | I signed up as a soldier on both sides at once! This river market is great. |
-| c4_2_hook | DLG_CEPOT_V21 | Eh, kata mereka itu masalah. Lihat daftarnya, lalu bantu aku keluar sebelum ada yang sadar. | Er, they say that's a problem. See the rolls, then help me out before anyone notices. |
+| c4_2_hook | DLG_CEPOT_V20 | Aku daftar jadi prajurit di dua sisi sekaligus! Pasar ini murah hati. | I signed up as a soldier on both sides at once! This market is generous. |
+| c4_2_hook | DLG_CEPOT_V21 | Eh, ternyata itu dilarang. Lihat dua gulungan daftar jaganya, lalu cari jalan lewat lapak yang sepi. | Er, turns out that's not allowed. Look at the two muster rolls, then find a way out through the empty stalls. |
 | c4_2_hook | @NPC_HERO_NAME | | |
 | c4_2_hook | DLG_CEPOT_H510 | Kau tidak membaca syaratnya? | You didn't read the terms? |
 | c4_2_hook | @NPC_CEPOT_NAME | | |
 | c4_2_hook | DLG_CEPOT_V510 | Syaratnya panjang, Nak. Gajinya pendek. Aku menilai dari bagian yang gampang. | The terms were long, child. The pay was short. I judged by the easy part. |
-| c4_2_wait | DLG_CEPOT_V22 | Jangan berisik. Mereka masih mencari-cari. | Don't be loud. They're still looking around. |
+| c4_2_wait | DLG_CEPOT_V22 | Jangan berisik. Daftar jaga dulu, lalu lapak yang sepi. Aku sembunyi di sini. | Keep it down. The rolls first, then the empty stalls. I'm hiding right here. |
 | c4_2_done | DLG_CEPOT_V23 | Aku selamat! Aku memang pemberani. Sedikit. | I'm safe! I'm brave, you know. A little. |
 | c4_2_done | DLG_CEPOT_V511 | Jangan ceritakan ke Bapak. Kalau ia tanya, aku cuma tersasar ke pasar. | Don't tell Bapak. If he asks, I only got lost in a market. |
-| c4_3_hook | DLG_CEPOT_V24 | Aku mengikutimu sampai ke pantai! Tapi lautnya besar sekali. Aku takut. | I followed you all the way to the beach! But the sea is so big. I'm scared. |
-| c4_3_hook | DLG_CEPOT_V25 | Tukik-tukik itu butuh cahaya. Pegang lenteranya dengan aku, ya? | The hatchlings need light. Hold the lamp with me, will you? |
-| c4_3_wait | DLG_CEPOT_V26 | Sedikit lagi. Jangan lepaskan lenteranya. | Nearly there. Don't let go of the lamp. |
-| c4_3_done | DLG_CEPOT_V27 | Ombaknya lewat, dan aku masih di sini. Nanti kuceritakan ke semua orang! | The wave passed, and I'm still here. I'll tell everyone! |
-| c4_3_done | DLG_CEPOT_V512 | Bapak bilang berani itu bukan tak takut, tapi tetap berdiri sambil takut. Aku berdiri. Sedikit gemetar. | Bapak says brave isn't having no fear, but standing while afraid. I stood. A little shaky. |
+| c4_3_hook | DLG_CEPOT_V24 | Aku ikut sampai pantai! Tapi lautnya besar sekali. Aku takut. | I followed you all the way to the beach! But the sea is so big. I'm scared. |
+| c4_3_hook | DLG_CEPOT_V25 | Lentera penjaga ini harus menyala semalaman. Nyalakan bareng aku, lalu kita tahan ombak malamnya. | This ward lamp has to burn all night. Light it with me, then we hold off the night waves. |
+| c4_3_wait | DLG_CEPOT_V26 | Sedikit lagi. Jangan lepas lenteranya. | Nearly there. Don't let go of the lamp. |
+| c4_3_done | DLG_CEPOT_V27 | Ombaknya lewat, dan aku masih di sini. Nanti kuceritakan ke semua orang! | The wave passed and I'm still here. I'll tell everyone! |
+| c4_3_done | DLG_CEPOT_V512 | Kata Bapak, berani itu bukan tak takut, tapi tetap berdiri sambil takut. Aku berdiri. Agak gemetar. | Bapak says brave isn't having no fear, it's standing while afraid. I stood. A bit shaky. |
 
 #### Clues C4 (part 2; hunt `HUNT_SQ_C4_TITLE`) and the lamp hint
 | Key | ID | EN |

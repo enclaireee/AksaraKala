@@ -8,12 +8,12 @@ const KALA_ROUTE := [
 	"go:gk_pelataran", "beat:pelataran", "do:kala_pelataran_siege", "q:mq5=active:1",
 	"pick:0", "do:memorial_stone", "q:mq5=active:2", "beat:aria",
 	# 5.3 the cave mouth and petilasan kala_2, 5.4 gap memory La
-	"go:gk_mulut", "do:kala_2", "do:kala_mulut", "q:mq5=active:3",
+	"go:gk_mulut", "do:kala_2", "do:ombak_barrier", "q:mq5=active:2", "cast:jawa_ka", "do:kala_mulut", "q:mq5=active:3",
 	"do:letter_la", "q:mq5=active:4", "beat:la_back",
 	# 5.5 the two time-sand wards in gk_pasir
 	"go:gk_pasir", "do:kala_pasir_1", "do:kala_pasir_2", "q:mq5=active:5", "beat:wards_down", "chest:kala_chest_1",
 	# 5.6 the whispering name-trees in gk_hutan
-	"go:gk_hutan", "do:kala_hutan_echoes", "do:hutan_name_chimes", "q:mq5=active:6", "chest:kala_chest_hutan",
+	"go:gk_hutan", "do:kala_hutan_echoes", "do:whisper_tree_1", "do:whisper_tree_2", "do:whisper_tree_3", "q:mq5=active:6", "chest:kala_chest_hutan",
 	# 5.7 the Hall of Forgotten Names and gap memory Ra, plus shortcut sc:gk_lorong
 	"go:gk_lupa", "do:kala_lupa_1", "do:kala_lupa", "do:letter_ra", "q:mq5=active:7", "beat:ra_back", "chest:kala_chest_2", "do:batara_kala", "do:ruwatan",
 	"go:gk_mulut", "do:sc:gk_lorong", "go:gk_lupa",
@@ -36,7 +36,7 @@ func _initialize() -> void:
 	events = root.get_node("Events")
 	game.save_path = "user://test_kala_play.json"
 	for f in ["mq0_done", "mq1_10", "mqg_7", "mq2_9", "mq3_7", "mq3_h6", "choice_sink",
-			"beat_escape", "beat_keris_sink",
+			"beat_confession", "beat_escape", "beat_keris_sink",
 			"beat_hunter_raid", "beat_laras_1", "beat_naga", "beat_galuh_bout", "beat_laras_2", "beat_cage", "beat_hunter_war",
 			"beat_laras_3", "beat_ford", "beat_truce", "beat_laras_4", "beat_keris", "beat_hunter_shrine"]:
 		game.flags[f] = true
@@ -58,7 +58,7 @@ func _initialize() -> void:
 	ok = ok and _expect("mq3=done") and check(game.has_flag("beat_hunter_name"), "hunter_name beat did not play") and _expect("mq4=active")
 	# ponytail: Act V is walked by kidul_play_test; here MQ4 is finished by fiat, lifting the gate (kabut mq4_9, quests.md 4.22). The kidul beat starts MQ5.
 	if ok:
-		for f in ["mq4_2", "mq4_4", "mq4_8", "mq4_9", "beat_eclipse_home", "beat_laras_kidul"]:
+		for f in ["mq4_2", "mq4_4", "mq4_8", "mq4_9", "beat_eclipse_home", "beat_laras_kidul", "beat_kidul_trial"]:
 			game.flags[f] = true
 		game.quests["mq4"] = {"state": "done", "step": 22, "count": 0, "resolution": ""}
 		game.changed.emit()
@@ -77,6 +77,7 @@ func _initialize() -> void:
 			"beat": ok = check(game.has_flag("beat_" + kv[1]), "beat %s did not play" % kv[1])
 			"write": ok = await _write(kv[1])
 			"go": ok = await _go(kv[1])
+			"cast": events.spell_cast.emit(kv[1], 1.0)
 			"do": ok = await _do(kv[1])
 			"q": ok = _expect(kv[1])
 			"chest": ok = await _chest(kv[1])

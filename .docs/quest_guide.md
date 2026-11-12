@@ -9,196 +9,223 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Main | Region: Desa Purwa
 - Starts: automatically as the story advances
 
-> Laras, your little sister, wants one more game of tag before the wayang night begins in Desa Purwa. Between Ibu's morning tea and the village's preparations, it feels like an ordinary day. Who is the stranger asking the children's names in the market, and why does he want them?
+> Laras drags you out of bed at dawn for one more game before tonight's ruwatan, while all of Desa Purwa readies the stage. But a stranger in a blank mask is in the market, asking for the children's names.
 
-1. Chase Laras in a game of tag and catch her at the old well, just south of the great banyan tree.  
+1. Win Laras's game: touch Si Belang, the old well and the banyan root before she does.  
    *Where: Desa Purwa*
-   - Tip: Chase Laras with WASD, and press Space to dash past obstacles.
-2. Share morning tea with Ibu at home, then hear the old couple's request at their house in the southeast.  
+   - [ ] Touch Si Belang, Laras's favourite stray.
+   - [ ] Touch the old well.
+   - [ ] Touch the old banyan's root.
+   - Tip: All three are close to the square. Run with WASD, and press Space when something is in your way.
+2. Go home for tea with Ibu, then ask the old couple next door what they need.  
    *Where: Desa Purwa*
-   - [ ] Talk to Ibu over tea at home.
-   - [ ] Talk to the old couple outside their house in the southeast.
-   - Tip: Press E on Ibu, then on the old couple outside their house.
-3. Climb the great banyan tree in the southwest to reach Ciung Wanara and his strange egg.  
+   - [ ] Have tea with Ibu at home.
+   - [ ] Talk to the old couple outside their house.
+   - Tip: Ibu is at home, south of the square. The old couple sit outside their house to the southeast.
+3. Talk Ciung down from the banyan at the west end of the village: find the basket he dropped, then speak to him.  
    *Where: Desa Purwa*
-   - [ ] Solve the climbing puzzle along the banyan's ridge.
-   - [ ] Talk to Ciung Wanara, perched up in the tree.
-   - Tip: Climb with WASD, then press E near Ciung Wanara.
-4. Head straight to the sanggar with Laras and speak with Cepot at the entrance about the commotion in the village.  
+   - [ ] Find Ciung's basket under the banyan.
+   - [ ] Talk to Ciung, up in the tree.
+   - Tip: Ciung won't come down without his basket. Look among the roots under the tree.
+4. Pick up Ibu's lamp oil at the market stall, then meet Cepot at the sanggar door.  
    *Where: Desa Purwa*
-   - Tip: Press E near Cepot outside the sanggar doors, on the west side of the village.
-5. Enter the sanggar and speak with Ki Semar to prepare the sacred lontar before tonight's Ruwatan.  
+   - [ ] Collect the lamp oil at the market stall.
+   - [ ] Meet Cepot at the sanggar door.
+   - Tip: The oil stall is in the morning market. Ki Semar's sanggar is on the west side of the village.
+5. Talk to Ki Semar inside the sanggar, then to Cepot.  
    *Where: Desa Purwa*
-   - [ ] Talk to Semar, the village dalang, inside the sanggar.
-   - Tip: Enter the sanggar and press E on Semar.
-6. Write your name and Laras's at opposite ends of her palm-leaf lontar on the sanggar table, so you both stay recorded.  
+   - [ ] Talk to Ki Semar, the village dalang.
+   - [ ] Talk to Cepot.
+   - Tip: Ki Semar sits inside the sanggar. Cepot is the loud one next to him.
+6. Write the La glyph, the first letter of Laras's name, on the lontar she is holding.  
    *Where: Desa Purwa*
-   - Tip: Walk with WASD to the lontar table in the sanggar.
-7. Light the four ceremonial oil lamps around the wayang stage, the shadow-puppet stage north of the square, at dusk.  
+   - Tip: Laras is waiting in the sanggar. Talk to her, then trace La the way she shows you.
+7. Light the four oil lamps around the wayang stage before dusk is gone.  
    *Where: Desa Purwa*
-   - Tip: Press E on each oil lamp.
-8. Examine the lamp behind the lit kelir, the puppet screen, to relive Semar's ruwatan, a protective ritual.  
+   - [ ] Light the first stage lamp.
+   - [ ] Light the second stage lamp.
+   - [ ] Light the third stage lamp.
+   - [ ] Light the fourth stage lamp.
+   - Tip: Four lamps ring the stage in the square. Walk up to each one and press E.
+8. Watch the ruwatan from behind the kelir: sit down by Ki Semar's lamp.  
    *Where: Desa Purwa*
-   - Tip: Press E on the lamp behind the kelir, and stay in its light.
-9. Push through the panicked crowd in front of the kelir to reach Laras. Shadow figures are attacking.  
+   - Tip: Press E on the lamp behind the kelir, then follow the play to its end.
+9. Push through the panicking crowd and reach Laras in front of the kelir.  
    *Where: Desa Purwa*
-   - Tip: Press Left Mouse to strike the shadows, and Space to slip past them.
-10. Wake at home, ask Ibu about Laras, then recover her half of the lontar from the burned stage north of the square.  
+   - Tip: Don't stop to fight them all. Press Space to slip past the shadows, Left Mouse if you're cornered.
+10. Ask Ibu about Laras, then find your torn half of the lontar on the burned stage.  
    *Where: Desa Purwa*
-   - [ ] Talk to Ibu in your house south of the square.
-   - [ ] Pick up Laras's half of the lontar on the burned wayang stage.
-   - Tip: Press E on Ibu, then walk to the burned stage and press E on the lontar.
-11. Bring the torn lontar to Semar in the sanggar, learn the Ka glyph, a Sundanese letter, and cast it.  
+   - [ ] Ask Ibu about Laras at home.
+   - [ ] Pick up the torn lontar on the burned stage.
+   - Tip: Ibu is at home. Your half of the lontar fell on the stage, in the square.
+11. Take the torn lontar to Ki Semar at the sanggar and learn the glyph Laras wrote.  
    *Where: Desa Purwa*
-   - [ ] Trace the Ka glyph over the guide to learn it.
-   - [ ] Cast the Ka glyph you just learned.
-   - Tip: Hold Right Mouse, trace Ka over the guide, then release.
-12. Drive off the Faceless raiders in the square, then look toward the west gate, where someone waits.  
+   - [ ] Show Ki Semar the torn lontar.
+   - [ ] Learn the Ka glyph.
+   - [ ] Cast Ka at the straw dummies.
+   - Tip: See Ki Semar at the sanggar, then draw Ka slowly and loose it at the straw dummies.
+12. Drive the Faceless from the square, say goodbye to Ibu at the west gate, then set out for Tatar Sunda.  
    *Where: Desa Purwa*
-   - [ ] Defeat all the Faceless raiders in the square.
-   - [ ] Walk out the west gate into Tatar Sunda, the highlands.
-   - Tip: Strike with Left Mouse, and avoid their blows with Space.
+   - [ ] Defeat the Faceless in the square.
+   - [ ] Leave by the west gate for Tatar Sunda.
+   - [ ] Say goodbye to Ibu at the west gate.
+   - Tip: Use Ka as well as Left Mouse, and press Space when they raise a hand. Ibu is waiting at the west gate.
 
 ## The Crater Seal
 
 - Type: Main | Region: Tatar Sunda
 - Starts: talk to Beats
 
-> Your little sister Laras has been taken, and the only trace left is her ribbon on the hillside tea terraces. Follow her trail across the Sunda highlands, from the kampung to the gorge and up to the crater where something very old is stirring. Who took her, and why do they need her?
+> Your sister Laras was taken by the Nameless Hunter, and only you and Semar still remember her. Follow her trail from the tea terraces through the kampung and the gorge, up to the crater where something huge is waiting for dawn.
 
-1. Reach the hillside tea terraces at dawn, meet the elder's grandson, and find the ribbon Laras dropped in the ambush.  
+1. Find Laras's trail in the tea fields: ask the elder's grandson, then search the bamboo.  
    *Where: Tea Gardens*
-   - [ ] Talk to the elder's grandson, waiting on the road at the terrace edge.
-   - [ ] Defeat the Faceless ambushers at the eastern edge of the tea field.
+   - [ ] Ask the elder's grandson at the terrace edge what he saw.
+   - [ ] Defeat the Faceless ambushers at the east edge of the tea field.
    - [ ] Search the bamboo where Laras dropped her ribbon.
-2. Follow the snapped bamboo up the slopes and clear the Faceless scout camp that marked Laras's trail.  
+2. Clear the Faceless scout camp in the tea garden.  
    *Where: Tea Gardens*
-3. Rest at the petilasan (old shrine) on the tea terraces, then find Cepot waiting nearby.  
+3. Light the old shrine on the tea terrace, then talk to Cepot.  
    *Where: Tea Gardens*
-   - [ ] Light the old shrine in the western rest area at the tea terrace edge.
-   - [ ] Speak with Cepot, sitting beside the old shrine.
-4. Defend the hill kampung from the Faceless raiders and the wild boars charging through its fields.  
+   - [ ] Light the old shrine at the rest spot on the terrace's west side.
+   - [ ] Talk to Cepot, sitting beside the shrine.
+4. Drive the Faceless and the wild boars out of the kampung.  
    *Where: Sunda Hamlet*
-5. Ask the kampung elder what he saw of Laras and learn the Ga glyph, then follow a mother's cries south to the gorge.  
+5. See the kampung elder and learn Ga, then leave by the south gate.  
    *Where: Sunda Hamlet*
-   - [ ] Learn the Ga glyph from the kampung elder in his garden.
-   - [ ] Leave by the south gate and follow the mother's cries to the gorge hamlet.
-6. Speak with the mother at the gorge hamlet, whose son is missing, then search the riverbank at dusk.  
+   - [ ] Ask the kampung elder in his garden what he saw, and learn the Ga glyph.
+   - [ ] Leave by the south gate and follow a mother's cries to the hamlet in the gorge.
+6. Ask Ceu Imas what happened to her boy, then check the sandal by the river.  
    *Where: River Pool*
-   - [ ] Talk to Ceu Imas, who calls her son's name between the huts.
-   - [ ] Examine the small sandal lying at the river's edge.
-7. Examine the unlit oncor (bamboo lanterns) and the footprints heading down into the gorge.  
+   - [ ] Ask Ceu Imas, calling her son's name between the huts, what happened.
+   - [ ] Check the small sandal at the river's edge.
+7. Check the dead oncor along the hamlet path, then the prints leading down into the gorge.  
    *Where: River Pool*
-   - [ ] Examine the row of unlit oncor lanterns along the hamlet path.
-   - [ ] Examine the footprints of Laras and Ciung heading down into the gorge.
-8. Relight the outer bamboo lanterns of the hamlet to push back the creeping dusk mist.  
+   - [ ] Check the row of dead oncor along the hamlet path.
+   - [ ] Check the prints of Laras and Ciung heading down into the gorge.
+8. Light the three oncor at the hamlet's edge and drive the shades out of the dusk mist.  
    *Where: River Pool*
-9. Relive the memory stirred by the lontar (palm-leaf manuscript): a child hurrying home at maghrib, the sunset prayer.  
+   - [ ] Light the first oncor at the hamlet's edge.
+   - [ ] Light the second oncor.
+   - [ ] Light the third oncor.
+   - [ ] Drive off the shades that come out of the dusk mist.
+9. Follow the lontar into a child's maghrib.  
    *Where: River Pool*
-10. Defeat Sandekala, the dusk spirit of the gorge, while keeping its four oncor (bamboo lanterns) lit.  
+10. Defeat Sandekala in the gorge and bring the children home.  
    *Where: River Pool*
-11. Climb into the deep forest beyond the gorge, clear the spirit ambush, and stand up the three ancient name-stones.  
+11. Drive off the spirits in the Batu Tulis grove, then press the three name-stones from east to west.  
    *Where: The Leuweung Forest*
-   - [ ] Defeat the spirits ambushing you among the stones in the grove.
-   - [ ] Stand the three fallen name-stones in the grove, in their proper order.
-12. Read the worn Batu Tulis (an ancient inscribed stone) in the grove and learn the Nga glyph from its carving.  
+   - [ ] Defeat the spirits that attack you among the grove's stones.
+   - [ ] Press the east name-stone.
+   - [ ] Press the middle name-stone.
+   - [ ] Press the west name-stone.
+12. Read the carvings on the Batu Tulis and learn the Nga glyph.  
    *Where: The Leuweung Forest*
-13. Go down to the rice paddies (sawah), where a new dam has begun flooding the valley.  
+13. Climb to the terrace lip and look at the flood drowning the valley.  
    *Where: Rice Terraces*
-14. Drive the Faceless and forest spirits off the Penenun's (the Weaver's) rice terraces at the valley's edge.  
+14. Drive the masked looters and restless spirits off the Weaver's terraces.  
    *Where: Rice Terraces*
-15. Turn the two upper sluice wheels (water gates) to drain the flooded road, then speak with the Weaver.  
+15. Turn both upper sluice wheels, then talk to the Weaver.  
    *Where: Rice Terraces*
-   - [ ] Turn both upper sluice wheels to let the flood water out.
-   - [ ] Talk to the Weaver in the house at the terraces' west end.
-16. Follow the dammed river road toward the rising lake, beating the Faceless guards along the way.  
+   - [ ] Turn the west upper sluice wheel.
+   - [ ] Turn the east upper sluice wheel.
+   - [ ] Talk to the Weaver at her house, at the terraces' west end.
+16. Follow the dammed river upstream and defeat the sentries on the road to the lake.  
    *Where: The Lake*
-17. Find out why the lake is rising: examine the freshly felled trees on the hillside east of the lake.  
+17. Check the freshly felled trees on the lake's east slope.  
    *Where: The Lake*
-   - [ ] Examine the freshly felled trees on the hillside east of the lake.
-18. Clear the lake shore of Faceless and Kuntilanak, then examine what one of the fallen dropped.  
+   - [ ] Check the freshly felled trees on the lake's east slope.
+18. Defeat the Faceless and Kuntilanak on the lake shore, then check the toy one left behind.  
    *Where: The Lake*
    - [ ] Defeat every Faceless and Kuntilanak on the lake shore.
-   - [ ] Examine the carved toy a fallen Faceless left on the shore.
-19. Speak with the woman waiting by the lake to learn the Ca glyph.  
+   - [ ] Check the carved toy a fallen Faceless dropped.
+19. Talk to the woman by the lake and learn the Ca glyph.  
    *Where: The Lake*
-20. Fight up the volcano's crater road and rest at the upper petilasan (old shrine) at the road's far end.  
+20. Climb the crater road, defeat what blocks it, then light the upper shrine.  
    *Where: Crater Road*
-   - [ ] Defeat the spirits, boars and Faceless on the crater floor below.
-   - [ ] Light the upper old shrine at the far end of the road.
-21. Listen to Laras's voice by the upper shrine, where her slow reading still echoes.  
+   - [ ] Defeat the spirits, boars and Faceless on the road up to the crater.
+   - [ ] Light the upper shrine at the end of the crater road.
+21. Listen to the lontar's memory at the upper shrine: Laras at the crater.  
    *Where: Crater Road*
-22. Defeat the Faceless Captain on the crater rim, then examine the mask fragment on the far side.  
+22. Defeat the Faceless Captain on the crater rim and check the mask fragment across the rim.  
    *Where: The Crater*
    - [ ] Defeat the Faceless Captain guarding the crater rim.
-   - [ ] Examine the mask fragment on the far crater rim.
-23. Examine the ribs of the half-built boat to relive the night of Dayang Sumbi, a princess of old legend.  
+   - [ ] Check the mask fragment on the far crater rim.
+23. Follow the lontar to Dayang Sumbi's night, by the ribs of Sangkuriang's boat.  
    *Where: The Crater*
-24. Defeat Sangkuriang, who woke when the seal-stone cracked, then decide what to tell Ciung.  
+24. Hang the Boeh Rarang on the east post, then defeat the raging Sangkuriang.  
    *Where: The Crater*
+   - [ ] Hang the Boeh Rarang on the east post Laras marked.
+   - [ ] Defeat Sangkuriang with the false dawn.
 
 ## The Borrowed Face
 
 - Type: Main | Region: Keraton Galuh
 - Starts: talk to Beats
 
-> Laras was carried off by the Faceless, and the hero must get inside Keraton Galuh to find her. The only way in runs through a rigged tournament and a crowd that sees nothing it should. Who is wearing whose face in this city, and where is Laras being kept?
+> The Faceless carried Laras into the Galuh palace, and only the royal tourney will get me through the gate. The king there wears a borrowed face, and my sister's trail runs behind it.
 
-1. Find the rooster seller at the tournament ring's west gate, then plan a sneak-in with Ciung Wanara.  
+1. Find a way into Galuh: talk to the rooster seller and Ciung Wanara at the ring.  
    *Where: Galuh Town Square*
-   - [ ] Find the rooster seller at the ring's west gate.
-   - [ ] Find Ciung Wanara at the ring's east gate.
-2. Scout Pasar Kuta, the outer market south of the square. Talk to the market informant, then read the wagon manifest.  
+   - [ ] Talk to the rooster seller at the ring's west gate.
+   - [ ] Talk to Ciung Wanara at the ring's east gate.
+2. Learn what moves through Pasar Kuta: talk to the informant and read the manifest in the storehouse.  
    *Where: Galuh Market*
-   - [ ] Talk to the market informant in Pasar Kuta's square.
+   - [ ] Talk to the informant in the middle of Pasar Kuta.
    - [ ] Examine the wagon manifest in the stone storehouse on the market's west side.
-3. Expose and defeat the tournament riggers hiding in the Pasar Kuta storehouse.  
+3. Defeat the tourney riggers in the market storehouse.  
    *Where: Galuh Market*
-4. Win both tournament bouts in the square's ring to earn an audience inside the palace walls.  
+4. Win both bouts of the tourney in the square to earn a pass into the palace.  
    *Where: Galuh Town Square*
-   - [ ] Defeat the masked Faceless soldiers in the ring's first round.
-   - [ ] Defeat the Faceless champion and his soldiers in the ring's second round.
-5. Speak with Uwa Lengser, the old palace servant, then light the petilasan (a rest shrine) in the inner garden.  
+   - [ ] Defeat the Faceless soldiers in the first bout.
+   - [ ] Defeat the Faceless champion and his soldiers in the second bout.
+5. Get inside the palace: talk to Uwa Lengser and light the petilasan in the inner garden.  
    *Where: Galuh Town Square*
-   - [ ] Find Uwa Lengser at the east edge of the tournament ring.
+   - [ ] Talk to Uwa Lengser at the east edge of the ring.
    - [ ] Light the petilasan in the palace's inner garden.
-6. Sneak into the Balai Pustaka, the royal archive east of Pasar Kuta, and meet archivist Nyai Sekar.  
+6. Enter the Balai Pustaka: defeat the archive guards and talk to Nyai Sekar.  
    *Where: Palace Archive*
-   - [ ] Defeat all the archive guards inside the Balai Pustaka.
-   - [ ] Find Nyai Sekar, the royal archivist, inside the archive.
-7. Solve the mirror-lamp puzzle in the archive, then examine the scraped royal family record.  
+   - [ ] Defeat all the archive guards in the Balai Pustaka.
+   - [ ] Talk to Nyai Sekar, the palace archivist.
+7. Bring back the scraped lineage: turn the three archive mirrors and examine the lontar.  
    *Where: Palace Archive*
-   - [ ] Solve the mirror-lamp puzzle in the Balai Pustaka archive.
-   - [ ] Examine the scraped family record, a lontar (palm-leaf manuscript), nearby.
-8. Clear the guarded courtyard of the Kaputren, the royal women's quarters south of the archive.  
+   - [ ] Turn the first mirror.
+   - [ ] Turn the second mirror.
+   - [ ] Turn the third mirror.
+   - [ ] Examine the scraped lineage lontar.
+8. Get into the Kaputren: defeat Tamperan's spies in its courtyard.  
    *Where: Women's Quarters*
-9. Solve the screen puzzle, then search the Kaputren guest chamber where Laras was held.  
+9. Look for Laras's trail in the guest chamber: move the three screens and examine her hairpin.  
    *Where: Women's Quarters*
-   - [ ] Solve the puzzle on the screens in the guest chamber.
-   - [ ] Examine Laras's hairpin in the guest chamber.
-10. Overhear Prince Hariang Banga and the queen's attendants in the Kaputren, then open the passage to the cell yard.  
+   - [ ] Move the first screen.
+   - [ ] Move the second screen.
+   - [ ] Move the third screen.
+   - [ ] Examine Laras's hairpin.
+10. Listen in on Prince Hariang Banga from behind the curtain, then take the passage to the cell yard.  
    *Where: Women's Quarters*
-11. Fight down the stairs to the cells before the prisoner wagon leaves.  
+11. Chase the prisoner wagon: defeat the guards on the prison stairs.  
    *Where: Palace Prison*
-12. Stop the Faceless escort in the cell yard as Laras's wagon speeds away east.  
+12. Stop Laras's wagon: defeat the Faceless escort on the east road.  
    *Where: Palace Prison*
-13. Defeat the guards of the inner cells, then read the message Laras scratched on the stone wall.  
+13. Go back to Laras's cell: defeat the guards and read her message on the wall.  
    *Where: Palace Prison*
-14. Play as Laras in her memory of the guest chamber and the wagon.  
+   - [ ] Defeat the cell guards.
+   - [ ] Read Laras's message on the cell wall.
+14. Follow Laras's memory of the guest chamber and the wagon.  
    *Where: Palace Prison*
-15. Confront the deserter in a cell, the guard who watched Laras, and decide his fate.  
+15. Talk to the hiding Faceless deserter, then decide his fate.  
    *Where: Palace Prison*
-16. Use the archive grate in the Balai Pustaka that Laras unlocked to reach the palace's upper gallery.  
+16. Go through the archive grate Laras opened and climb to the upper gallery.  
    *Where: Galuh Palace*
-17. Examine the scraped court portrait in the portrait gallery, then live through Uwa Lengser's memory.  
+17. Examine the scraped court portrait, then live Uwa Lengser's memory.  
    *Where: Galuh Palace*
-   - [ ] Examine the scraped court portrait in the portrait gallery.
-   - [ ] Live through the memory the portrait stirs in Uwa Lengser.
-18. Take the second mask fragment behind the throne, then watch the memory it shows.  
+   - [ ] Examine the scraped court portrait in the gallery.
+   - [ ] Live Uwa Lengser's memory the portrait stirs.
+18. Take the second mask fragment behind the throne and watch its memory.  
    *Where: Galuh Palace*
-19. With Ciung Wanara and Lengser's old guards, break into the throne room and defeat the guards and the champion.  
+19. Break into the throne room with Ciung Wanara: defeat the guards and the champion.  
    *Where: Galuh Palace*
-20. Confront the king in the throne room and defeat him.  
+20. Face the false king, Barma Wijaya, on the high throne and defeat him.  
    *Where: Galuh Palace*
 
 ## Blood on the Pamali
@@ -206,68 +233,71 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Main | Region: Mataram
 - Starts: talk to Beats
 
-> Laras is still missing, and her trail crosses the Pamali into Mataram, where recruiters on both banks are raising armies for a war nobody can explain. Can I find her before the river runs red?
+> Mataram is squeezed between two armies that both claim to defend it, and Laras was carried east along their road. You have to cross both, gather the clues, and stop the war before her trail goes cold.
 
-1. Cross into Mataram and hear both recruiters at the border market, just past the gate.  
+1. Talk to both recruiters at the gates of Mataram.  
    *Where: Mataram Gate*
-   - [ ] Find the west-bank recruiter at the north stall of the border market.
-   - [ ] Find the east-bank recruiter at the south stall and compare their stories.
-2. Break the looters' blockade at the border gate, then light the rest shrine in the rice fields to recover.  
+   - [ ] Talk to the first recruiter.
+   - [ ] Talk to the second recruiter.
+2. Defeat the gate guards and light the petilasan in the rice fields.  
    *Where: Mataram Gate*
-   - [ ] Defeat every looter guarding the border gate.
-   - [ ] Light the petilasan (a rest shrine) among the rice paddies beyond the gate.
-3. Defend Ki Sumarto's shadow-puppet stage in the Mataram market from looters and Tuyul so the show can go on.  
+   - [ ] Defeat the guards at the gate.
+   - [ ] Light the petilasan in the rice fields.
+3. Defeat the tuyul and looters who storm the wayang stage in the market.  
    *Where: Mataram Market*
-4. Speak with the dalang Ki Sumarto about his son, learn the Jawa letter Ha, and hear the three trails that may lead to Laras.  
+4. Talk to Ki Sumarto and learn the glyph Ha from him.  
    *Where: Mataram Market*
-5. Escort the displaced market families across the flooded paddies until they reach safe ground.  
+5. Clear the soldiers off the paddy road so the families can cross.  
    *Where: Mataram Rice Fields*
-6. Follow the first lead to the ruins, defeat the awakened Arca (stone statues), and read the letter Na from a statue base.  
+6. Defeat the guards at the ruins, then read the statue's base to learn Na.  
    *Where: The Ruins*
-   - [ ] Defeat the awakened Arca guardians in the ruins courtyard.
-   - [ ] Read the Jawa letter Na from the inscribed statue base in the courtyard.
-7. Follow the second lead to the old graveyard and drive out the faceless soldiers who are harvesting the names of the fallen.  
+   - [ ] Defeat the guards at the ruins.
+   - [ ] Read the statue's base and learn Na.
+7. Defeat the Faceless in the graveyard and look for Sapto's missing name.  
    *Where: Graveyard*
-8. Pick up the third mask fragment among the graves and watch the memory of the Nameless Hunter it holds.  
+8. Enter the Hunter's memory and take the third mask fragment.  
    *Where: Graveyard*
-9. Follow the third lead to the haunted lesung yard (a wooden rice mortar) in the foothill hamlet and help Nyai Gendhis clear it.  
+9. Defeat the attackers in the lesung yard.  
    *Where: East Quarter*
-10. Learn the dawn pounding rhythm and the Jawa letter Ca from Nyai Gendhis, who leads the rice-pounding women.  
+10. Talk to Nyai Gendhis and learn the glyph Ca.  
    *Where: East Quarter*
-11. Break the spirit builders' siege of the foothill shrine, which blocks the road to the temple, by defeating every spirit on its steps.  
+11. Hold the foothill shrine against the night siege.  
    *Where: East Quarter*
-12. Line up the shrine braziers at the juru kunci's hut (keeper of the sacred hill), then learn the Jawa letter Ra from him.  
+12. Light the shrine's four braziers in the order of the juru kunci's chant, then learn Ra.  
    *Where: East Quarter*
-   - [ ] Solve the brazier puzzle at the juru kunci's hut in the foothills.
-   - [ ] Learn the Jawa letter Ra from the juru kunci once the braziers are lit.
-13. Cross the plain of rising stones, shatter the spirit pillars blocking the temple road, and defeat their guards.  
+   - [ ] Light the brazier of the verse of the mountain.
+   - [ ] Light the brazier of the verse of the river.
+   - [ ] Light the brazier of the verse of the rice.
+   - [ ] Light the brazier of the verse of the ancestors.
+   - [ ] Talk to the juru kunci and learn Ra.
+13. Defeat the guards among the pillars of the dry fields.  
    *Where: Dry Fields*
-14. Breach the outer gate of Candi Seribu (the Thousand Temples), then storm the faceless camp inside to look for Laras.  
+14. Defeat the temple guards and take the enemy camp beside it.  
    *Where: The Temple*
-   - [ ] Defeat the spirits and Arca statues guarding the temple's outer gate.
-   - [ ] Beat the camp guards and captain, then hold the court until the seal cracks.
-15. Examine three clues in the temple court: the chiselled rubble, the stopped lesung, and Laras's Ka strip of lontar (palm-leaf manuscript).  
+   - [ ] Defeat the temple guards.
+   - [ ] Take the enemy camp.
+15. Examine three clues: the rubble, the lesung and the lontar strip marked Ka.  
    *Where: The Temple*
-   - [ ] Examine the chiselled rubble on the east side of the front yard.
-   - [ ] Examine the lesung that stopped mid-rhythm in the temple court.
-   - [ ] Examine Laras's Ka strip in the camp you have cleared.
-16. Examine Laras's lontar fragment at the petilasan (a rest shrine) by the temple, then relive her memory in the reading room.  
+   - [ ] Examine the rubble.
+   - [ ] Examine the lesung.
+   - [ ] Examine the lontar strip marked Ka.
+16. Take Laras's lontar fragment at the petilasan, then enter her memory.  
    *Where: The Temple*
-17. Descend through the crypt Laras unbarred to reach the temple's central sanctum (the inner shrine).  
+17. Defeat the guards in the temple crypt hall.  
    *Where: The Temple*
-18. Follow the lesung's rhythm and relive the princess's women pounding rice in the sanctum.  
+18. Enter the memory held in the lesung.  
    *Where: The Temple*
-19. Defeat Bandung Bondowoso in the temple arena with the lesung rhythm and the letter Ca, ending the night he has raised.  
+19. Defeat Bandung Bondowoso.  
    *Where: The Temple*
-20. Take the temple shortcut back west to the border and reach the Pamali river, the frontier with Galuh.  
+20. Take the temple shortcut west to the Pamali.  
    *Where: Forbidden Grounds*
-21. Clear the riverbank fight, then write Nagawiru's name on the Pamali stone so he can finally rest.  
+21. Write Nagawiru's name on the Pamali stone: Na, then Ga.  
    *Where: Forbidden Grounds*
-22. Watch Ki Sumarto's shadow-puppet (wayang kulit) show at the river camp, the tale of two brothers who split the land.  
+22. Enter the memory of Ki Sumarto's wayang about two brothers who split the land.  
    *Where: Forbidden Grounds*
-23. Read Hariang Banga's unsent letters to his mother, found in the eastern camp across the river.  
+23. Examine Hariang Banga's unsent letters in the east camp.  
    *Where: Forbidden Grounds*
-24. Duel Hariang Banga at the Pamali ford, then witness the river truce and make the choice that follows.  
+24. Defeat Hariang Banga at the ford.  
    *Where: Forbidden Grounds*
 
 ## The Seven-Generation Blade
@@ -275,182 +305,207 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Main | Region: Tanah Timur
 - Starts: talk to Beats
 
-> Ratna, an apprentice smith in Tanah Timur, fears a keris forged by her master's family that has begun to wake and mark villagers with red curses. You need to understand it before more villages are marked, while the trail to Laras still runs cold. What is this blade, and who is it waiting for?
+> Ratna, the empu's daughter and apprentice in Tanah Timur, is afraid of her family's old keris, which has begun to wake and mark doorposts in red. Before another village is marked, you must learn what the blade is and who woke it, because the Hunter's trail, and Laras's, runs east.
 
-1. Arrive in Tanah Timur. Meet Ratna on the smiths' street in Kulon, the western edge, then rest at the rest shrine (petilasan) on the Savanna.  
+1. Meet Ratna on the smiths' street, then light the petilasan on the savanna and rest.  
    *Where: Western Edge*
-   - [ ] Find Ratna at the smiths' street in Kulon, the western edge.
-   - [ ] Light the rest shrine (petilasan) on the Savanna to rest.
-2. Survive the rampage of Buto Ijo, a green giant charging across the western savanna, and drive him back with the fire-ward nails.  
+   - [ ] Find Ratna on the smiths' street in Kulon.
+   - [ ] Light the petilasan on the savanna and rest there.
+2. Hold your ground against the green giant charging out of the grass, and drive him back.  
    *Where: Western Edge*
-3. Follow the red curse marks on the village doorposts to Mpu Wirasana's forge in Beringin, the Banyan Grove.  
+3. Follow the red marks to the village mouth, then speak with Mpu Wirasana at his forge.  
    *Where: Banyan Grove*
-   - [ ] Walk to the village mouth, where red marks scar the doorposts.
-   - [ ] Speak with Mpu Wirasana, the old smith, at his forge under the banyan.
-4. Draw aksara onto the two practice stakes in the forge yard, so you can douse the real curse marks later.  
+   - [ ] Follow the red marks to the village mouth, where the doorposts are scarred.
+   - [ ] Speak with Mpu Wirasana at his forge under the banyan.
+4. Cast the aksara Ha twice, as Mpu Wirasana showed you.  
    *Where: Banyan Grove*
-5. Find Mbok Srini at her smashed hut by the River (Kali) and examine her daughter's leavings: seeds, needles, salt and terasi (shrimp paste).  
+5. Find Mbok Srini at her smashed hut, then examine what her daughter dropped on the run: seeds, a needle case, salt and terasi.  
    *Where: The River*
    - [ ] Find Mbok Srini at her smashed hut in the Kali riverbed.
    - [ ] Examine the cucumber seeds spilled along the path.
-   - [ ] Examine the needle case among the riverbed rocks.
-   - [ ] Examine the salt jar and terasi at the hut door.
-6. Survive Buto Ijo's ambush on the dry riverbed and test the bramble-seed pouch against him.  
+   - [ ] Examine the needle case among the river stones.
+   - [ ] Examine the salt and terasi at the hut door.
+6. Scatter the cucumber seeds at the riverbed marker, then survive the charge the briars slow.  
    *Where: The River*
-7. Clear the third ambush, then bless the three pouches on the handprinted stone in the old banyan so they hold.  
+   - [ ] Scatter the seeds at the riverbed marker.
+   - [ ] Survive the charge the briars slow.
+7. Set the needle, salt and terasi pouches at three banyan roots while Buto Ijo circles, then hold him off.  
    *Where: Banyan Grove*
-8. Live through the Timun Mas memory (a folk tale of flight from a giant) that the banyan stone opened.  
+   - [ ] Set the needle pouch at a banyan root.
+   - [ ] Set the salt pouch at a banyan root.
+   - [ ] Set the terasi pouch at a banyan root.
+   - [ ] Hold off Buto Ijo until he backs away.
+8. Touch the flat stone in the banyan's hollow and live the memory it holds.  
    *Where: Banyan Grove*
-9. Lure Buto Ijo into his bone-strewn lair in the dry field and defeat him with the four pouch fields.  
+9. Defeat Buto Ijo in the eastern field: every phase raises pouch fields that hurt only him.  
    *Where: Farm Fields*
-10. Return to the dry Ladang (farm fields) and douse the red curse stakes the keris lit, one by one.  
+10. Free the dry field: defeat the ghost keris and fire spirits that rise from the red stakes.  
    *Where: Farm Fields*
-11. Help Mpu Wirasana and Ratna defend the forge quarter from the flying Keris Hantu (ghost keris).  
+11. Defend the forge quarter: help Mpu Wirasana and Ratna hold off the flying ghost keris.  
    *Where: Banyan Grove*
-12. Examine the broken scabbard and the forge records in the vault inside Wirasana's forge.  
+12. Examine the broken scabbard and the forge records in Wirasana's vault.  
    *Where: Banyan Grove*
    - [ ] Examine the broken scabbard in the forge vault.
-   - [ ] Read Wirasana's forge records inside the forge, on the seven generations.
-13. Touch the old anvil stone in the corner of the vault to live through the apprentice's memory.  
+   - [ ] Read Wirasana's forge records of the seven generations.
+13. Touch the old anvil stone in the vault corner and live the apprentice's memory.  
    *Where: Banyan Grove*
-14. Follow the Hunter's ash trail down the volcanic coast (Pesisir) with Hariang Banga's scouts, and clear the enemies along it.  
+14. Follow the Hunter's ash trail along the coast, and defeat whatever bars it.  
    *Where: The Coast*
-15. Cross the Sea of Sand, following the old stone waymarkers to guide you through the ash-gale.  
+15. Cross the Sea of Sand: defeat what roams it, then touch the three stone waymarkers in order.  
    *Where: The Sands*
-   - [ ] Clear the enemies roaming the Sea of Sand.
-   - [ ] Solve the ancient stone waymarker puzzle on the sand.
-16. Rest at the sand-alcove petilasan (rest shrine), then speak with Hariang Banga by the desert fire.  
+   - [ ] Defeat the cursed soldiers roaming the Sea of Sand.
+   - [ ] Touch the first stone waymarker.
+   - [ ] Touch the second stone waymarker.
+   - [ ] Touch the third stone waymarker.
+16. Light the petilasan in the sand alcove and rest, then talk to Hariang Banga by the fire.  
    *Where: The Sands*
-17. Examine the fragment of Laras's lontar (palm-leaf book) in the sand alcove and live through her memory.  
+   - [ ] Light the sand-alcove petilasan and rest.
+   - [ ] Talk to Hariang Banga by the fire.
+17. Examine Laras's lontar strip in the sand alcove and live its memory.  
    *Where: The Sands*
-18. Use Laras's wind tunnel to breach the inner sanctum of Candi Gandring, the Eastern Temple.  
+18. Enter Candi Gandring through Laras's wind tunnel and reach the inner sanctum.  
    *Where: Eastern Temple*
-19. Defeat the awakened Keris Gandring in the temple court, then lay it to rest with Laras's seventh stake.  
+19. Defeat the awakened Keris of Mpu Gandring in the shrine court, ringed by seven red stakes.  
    *Where: Eastern Temple*
-20. Decide the blade's fate with Mpu Wirasana: reforge it in his forge, or give it to the river.  
+20. Decide the blade's fate with Mpu Wirasana: reforge it, or give it to the river.  
    *Where: Eastern Temple*
-21. Find the last mask fragment where the keris lay, then join the full mask at the shrine door.  
+21. Take the last mask fragment where the keris lay, then join the mask at the shrine door.  
    *Where: Eastern Temple*
-   - [ ] Live through the memory held by the mask fragment where the keris lay.
-   - [ ] Live through the memory of the joined mask at the shrine door.
-22. Defeat the Nameless Hunter in the court of Candi Gandring. This is the fight you have been waiting for.  
+   - [ ] Examine the mask fragment where the keris lay and live its memory.
+   - [ ] Examine the joined mask at the shrine door and live its memory.
+22. Defeat the Faceless Hunter, then give him back his true name: Aria Kebonan.  
    *Where: Eastern Temple*
 
-## The Sea Never Forgets
+## The Quiet House
 
 - Type: Main | Region: Segara Kidul
 - Starts: talk to Beats
 
-> The Eclipse has settled over Desa Purwa, and its people are forgetting their own families. Old folk say the Southern Sea never gives back what it takes. Will it return Laras to you?
+> Semar sends you home to Desa Purwa before the cave behind the village. Ibu is waiting there, and to the south the sea still says Laras's name.
 
-1. Return to Desa Purwa under the Eclipse, then test the fog at the cave mouth north of the village.  
+1. Go home to Desa Purwa and test the fog to the north.  
    *Where: Desa Purwa*
-   - [ ] Enter Desa Purwa, your home village.
-   - [ ] Walk north up the lane to the fog at the cave mouth.
-2. Ask the old couple and the stall-keeper what they have begun to forget.  
+   - [ ] Walk into Desa Purwa.
+   - [ ] Walk up to the fog north of the village.
+2. Ask the old couple and the stallkeeper who in the village has started forgetting names.  
    *Where: Desa Purwa*
-   - [ ] Talk to the old couple at the house east of Ibu's house.
-   - [ ] Talk to the stall-keeper at the market stall on the plaza.
-3. Write each family's name on the doorposts of three houses in Desa Purwa, so the homes remember them.  
+   - [ ] Talk to the old couple.
+   - [ ] Talk to the stallkeeper.
+3. Write the residents' names on three doorposts.  
    *Where: Desa Purwa*
-   - [ ] Write the name on the doorpost of the house in the west yard.
-   - [ ] Write the name on the doorpost of the old couple's house.
-   - [ ] Write the name on the doorpost outside the pustaka (village archive), the codex keeper's house.
-4. Set Laras's ribbon, wagon board and Ka strip on Ibu's shelf, then talk to Ibu about what they mean.  
+   - [ ] Write Ka and Ga on Eman's door.
+   - [ ] Write Nga and Ca on Karsih's door.
+   - [ ] Write Ha and Na on Dulah's door.
+4. Check Laras's shelf, then see Ibu.  
    *Where: Desa Purwa*
-   - [ ] Put Laras's ribbon on the shelf in Ibu's house.
-   - [ ] Put Laras's wagon board on the shelf in Ibu's house.
-   - [ ] Put Laras's Ka strip on the shelf in Ibu's house.
-   - [ ] Talk to Ibu in her house, by the shelf.
-5. Sit at your mother's dinner table with Ciung Wanara and Hariang Banga, the two brother-kings.  
+   - [ ] Look at the ribbon on the shelf.
+   - [ ] Look at the board on the shelf.
+   - [ ] Look at the strip on the shelf.
+   - [ ] Talk to Ibu.
+5. Talk to Ciung Wanara and Hariang Banga at Ibu's table.  
    *Where: Desa Purwa*
-6. Find Aria Kebonan at the burned wayang stage north of the plaza, and ask what took Laras's name.  
+   - [ ] Talk to Ciung Wanara.
+   - [ ] Talk to Hariang Banga.
+6. Meet Aria Kebonan at the edge of the village.  
    *Where: Desa Purwa*
-7. Talk to Semar, the village dalang, in the sanggar, to learn the way to the southern sea.  
+7. Meet Semar at the village gate.  
    *Where: Desa Purwa*
-8. Walk south through the opened village gate toward Segara Kidul, the Southern Sea.  
+8. Go through the south gate to the beach, then meet Cepot.  
+   *Where: Desa Purwa*
+   - [ ] Walk onto the beach through the south gate.
+   - [ ] Talk to Cepot.
+9. Light the shrine on the beach, then walk into Kampung Nelayan.  
    *Where: South Beach*
-9. Arrive on the shore. Rest at the black-sand petilasan (rest shrine), then enter Kampung Nelayan (fishing village).  
-   *Where: South Beach*
-   - [ ] Light the black-sand petilasan (rest shrine) on the beach.
-   - [ ] Enter Kampung Nelayan, the fishing village beyond the beach.
-10. Meet Mbah Wiryo, the coast's old keeper, and the young diver Sari, who know the forgotten sea song.  
+   - [ ] Light the shrine on the beach.
+   - [ ] Walk into Kampung Nelayan.
+10. Talk to Mbah Wiryo and Sari on the jetty.  
    *Where: Fishing Village*
-   - [ ] Talk to Mbah Wiryo, the village's old keeper, in Kampung Nelayan.
-   - [ ] Talk to Sari, the young diver, in Kampung Nelayan.
-11. Help three fishing families recall the three verses of the sea song, the song that makes the sea listen.  
+   - [ ] Talk to Mbah Wiryo.
+   - [ ] Talk to Sari.
+11. Gather the three verses of the song from three families.  
    *Where: South Beach*
-   - [ ] Examine the first verse with the net-mending family, west end of the net yard.
-12. Live through the memory of Mbah Wiryo's wife on the shore rock at dusk, where she taught him to call names to the sea.  
+   - [ ] Hear the verse from the net-mending family.
+   - [ ] Hear the verse from the fish-drying family.
+   - [ ] Hear the verse from Mbah Wiryo's family on the shore rock.
+12. Follow Mbah Wiryo to the tide line at dusk.  
    *Where: South Beach*
-13. Relight the three tidal beacons (lamp posts) in the flooded mangrove with Sari.  
+13. Light three tidal beacons with Sari in the mangrove.  
    *Where: Mangroves*
-14. Sacred Trial I, the Torch-Lines: cross the reef and put out the Lampor, the lamp spirits, to pass.  
+   - [ ] Light the first tidal beacon.
+   - [ ] Light the second tidal beacon.
+   - [ ] Light the third tidal beacon.
+14. Put out the Lampor on the low-tide reef.  
    *Where: Coral Cliffs*
-15. Descend into the echoing Gua Karang, the sea cave, and clear the approach to the sunken shrine.  
+15. Clear the path to Gua Karang.  
    *Where: Sea Cave*
-16. Examine the three sunken bronze bells in the cavern to live through Laras's memory.  
+16. Play Laras's memory and ring three sunken bells.  
    *Where: Sea Cave*
-17. Sacred Trial II, the Abyssal Current: pass the cavern guardians through the tidal gate Laras opened.  
+17. Hold out against the current's guardians in the abyssal cave.  
    *Where: Sea Cave*
-18. Climb the storm cliffs, rest at the cliff shrine, and hear the tale of the Queen of the South.  
+18. Climb the cliff: clear the way, light the shrine and hear the queen's story.  
    *Where: Sea Cliff*
-   - [ ] Clear the enemies on the second cliff path.
-   - [ ] Light the petilasan (rest shrine) at the cliff shrine above the drop.
-   - [ ] Examine the shrine's carved tale, then live through the memory.
-19. Call Laras's name out to the sea at the Cliff Altar, and choose the offering you will give.  
+   - [ ] Clear the path up the cliff.
+   - [ ] Light the shrine on the cliff.
+   - [ ] Play the southern queen's memory.
+19. Write Laras's name on the card, then speak at the cliff altar.  
    *Where: Sea Cliff*
-20. Walk the ancient sea causeway to the Sea Palace, then rest at the petilasan (rest shrine) there.  
+   - [ ] Write La on the card to call Laras.
+   - [ ] Speak at the cliff altar and choose your offering.
+20. Light the shrine on the ancient causeway.  
    *Where: Coral Cliffs*
-21. Sacred Trial III, the Waves: survive three waves in the Sea Palace's outer court.  
+21. Withstand the three waves in the pavilion.  
    *Where: Sea Palace*
-22. Write and learn the Javanese glyph Ka, the Ombak (wave letter), at the Sea Altar, then receive the Kain Hijau (green cloth).  
+22. Take the glyph Ombak at the Sea Altar.  
    *Where: Sea Palace*
 
 ## Into the Maw of Time
 
-- Type: Main | Region: gua_kala
+- Type: Main | Region: Gua Kala
 - Starts: talk to Beats
 
-> Laras's trail ends at the Maw of Time, the black gate of Gua Kala, where Ciung Wanara and Hariang Banga are already holding the courtyard against the shadows. Going in means following the path the time giant took from her. Can a sister be called home from a place that eats names?
+> Laras's trail ends at Gua Kala, where Ciung and Hariang hold the courtyard against the shadow tide. Semar waits inside, and you are the only one left who remembers how to write her name.
 
-1. Reach the Courtyard of Time, the black-stone forecourt before Gua Kala, and hold it with Ciung Wanara and Hariang Banga.  
+1. Enter the Courtyard of Time and defeat the shadows rushing it, side by side with Ciung and Hariang.  
    *Where: The Courtyard*
-   - [ ] Step through the gate into the Courtyard of Time, Gua Kala's forecourt.
-   - [ ] Defeat the shadows rushing the courtyard with your allies.
-2. Go to the Ancestors' Stone (Batu Leluhur) in the courtyard and decide what becomes of Aria Kebonan's name before you enter the cave.  
+   - [ ] Enter the Courtyard of Time, Gua Kala's forecourt.
+   - [ ] Defeat the shadows rushing the courtyard.
+2. Speak to the Ancestors' Stone and decide: carve Aria Kebonan's name, or leave its space blank.  
    *Where: The Courtyard*
-3. Draw the Ombak glyph to part the Eclipse veil over Gua Kala's mouth, then fight your way inside.  
+3. Draw Ombak at the Eclipse veil, then fight your way through the cave mouth.  
    *Where: Cave Mouth*
-4. Find the faded floating letter La on the cave's east road and relive the memory it holds of Laras.  
+   - [ ] Draw Ombak at the Eclipse veil.
+   - [ ] Defeat the guards in the cave mouth.
+4. Touch the letter La drifting on the east road, then win the tag game once more.  
    *Where: Cave Mouth*
-5. Cross the Hourglass Sands and shatter the two time-wards, one in the west and one in the east.  
+5. Clear both halls of the Hourglass Sands to break the time-wards.  
    *Where: Sands of Time*
-   - [ ] Clear the enemies in the first sand hall of the Hourglass Sands.
-   - [ ] Clear the enemies in the second sand hall, beyond the first.
-6. Descend into Hutan Lupa, the Forest of Forgetting, and silence the name-trees that whisper stolen names.  
+   - [ ] Clear the first sand hall.
+   - [ ] Clear the second sand hall, beyond it.
+6. Go down into Hutan Lupa, defeat what lurks there, and answer the three whispering trees with the right names.  
    *Where: Clockwork Wood*
-   - [ ] Clear the enemies hiding among the stone name-trees.
-   - [ ] Solve the whispering name-chimes puzzle deeper in the forest.
-7. Clear the Abyss of Forgetting, then relive the memory of the two cups to win back the letter Ra.  
+   - [ ] Defeat the enemies hiding among the stone trees.
+   - [ ] Answer the first tree with Asep's name.
+   - [ ] Answer the second tree with Sapto's name.
+   - [ ] Answer the third tree with Ratna's name.
+7. Defeat the guards in the Abyss of Forgetting, then touch the letter Ra and relive the memory of two cups.  
    *Where: Valley of Forgetting*
-   - [ ] Defeat the Prajurit, the soldier miniboss in the Abyss of Forgetting.
-   - [ ] Examine the faded floating letter Ra and relive its memory.
-8. Cross the Shadow Bridge and defeat the echoes of the legends you faced before.  
+   - [ ] Defeat the cursed soldiers in the Abyss of Forgetting.
+   - [ ] Touch the drifting letter Ra and relive its memory.
+8. Cross the Shadow Bridge and defeat the echoes of the legends you once fought.  
    *Where: Hourglass Bridge*
-9. Rest at the last petilasan (rest shrine), speak with Semar, then find the letter Sa in the Abyss.  
+9. Light the last petilasan, then touch the letter Sa and relive the memory of writing names.  
    *Where: Valley of Forgetting*
-   - [ ] Light the last petilasan (rest shrine) in the Abyss of Forgetting.
-   - [ ] Find the letter Sa drifting in the Abyss and relive its memory.
-10. Examine Semar's tale stone in the Abyss to hear Murwakala, the tale that soothes Kala.  
+   - [ ] Light the last petilasan.
+   - [ ] Touch the letter Sa drifting by Semar's fire and relive its memory.
+10. Listen to Semar tell the tale of Murwakala at his story stone.  
    *Where: Valley of Forgetting*
-11. Take the dalang's place at Semar's puppet screen (kelir) and practise the ruwatan cleansing with the Sunda, Jawa and Ombak glyphs.  
+11. Sit in the dalang's seat behind Semar's kelir and practise the order: Sunda, Jawa, Ombak.  
    *Where: Valley of Forgetting*
-12. Find the fragment of Laras's lontar (palm-leaf book) in the Abyss and relive her memory.  
+12. Examine Laras's lontar fragment in the Abyss and relive its memory.  
    *Where: Valley of Forgetting*
-13. Calm Batara Kala, the time giant, with the Dawn Ruwatan; Laras is trapped inside his shadow.  
+13. Defeat Batara Kala. Cast Sunda, Jawa, Ombak at each of his shields while Laras cracks them from within.  
    *Where: Kala's Chamber*
-14. Write Laras's full name, La - Ra - Sa, on your lontar (palm-leaf book) and call her home.  
+14. Write Laras's name on the lontar card: La, Ra, Sa.  
    *Where: Kala's Chamber*
 
 ## Ciung's Rooster
@@ -458,105 +513,110 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Keraton Galuh
 - Starts: talk to Ciung Wanara
 
-> Ciung Wanara's rooster has gone missing, and the bird matters more to him than he lets on. Feathers and an old river basket are the only trail, and the rooster is perched somewhere in the market. Why does the hunt lead back to a basket on the river?
+> Ciung Wanara's rooster is gone, and it means more to him than he admits. All he has to go on is feathers and an old river basket.
 
-1. Talk to Ciung Wanara at the east gate of the arena about his missing rooster.  
+1. Talk to Ciung Wanara at the ring's east gate and ask about his rooster.  
    *Where: Galuh Town Square*
-2. Find the rooster's feathers at the seller's stall, then the old river basket by the pond.  
+2. Trace the rooster: examine its feathers and the river basket in the square.  
    *Where: Galuh Town Square*
-   - [ ] Examine the rooster's feathers at the seller's stall by the west gate.
-   - [ ] Examine the old river basket on the pond shore in the square.
-3. Follow the memory of the basket on the river and keep the egg safe.  
+   - [ ] Examine the rooster's feathers in the square.
+   - [ ] Examine the old river basket on the pond shore.
+3. Live the basket's memory on the river and keep the egg safe.  
    *Where: Galuh Town Square*
-4. Coax the rooster down from its perch on the Pasar Kuta market rooftop.  
+4. Coax the rooster down from the market roofs: lay grain on three roofs.  
    *Where: Galuh Market*
-5. Talk with Ciung Wanara and Uwa Lengser in the town square about the basket's charm.  
+   - [ ] Lay grain on the first roof.
+   - [ ] Lay grain on the second roof.
+   - [ ] Lay grain on the third roof.
+5. Ask Uwa Lengser and Ciung Wanara in the square about the basket's charm.  
    *Where: Galuh Town Square*
-   - [ ] Find Uwa Lengser, the old royal chamberlain, in the town square.
-   - [ ] Return to Ciung Wanara at the arena's east gate.
+   - [ ] Talk to Uwa Lengser in the square.
+   - [ ] Go back to Ciung Wanara at the ring's east gate.
 
-## Letters Across the Pamali
+## The Last Letters
 
 - Type: Side | Region: Keraton Galuh
 - Starts: talk to Hariang Banga
 
-> Hariang Banga wants his letters to reach his mother, the queen, and the hero is the only one who can carry them across the Pamali. He has never sent them, and he will not say why. What will the queen write back, and what does a prince keep from his own mother?
+> Hariang Banga wrote letters to his mother, the queen, and never dared send them. Now you carry them to her and bring back her reply.
 
-1. Talk to Hariang Banga at the Pamali ford about his unsent letters.  
+1. Talk to Hariang Banga at the Pamali and take his letters.  
    *Where: Forbidden Grounds*
-2. Deliver the letters to the queen in her cage at the Keraton Galuh palace.  
+2. Carry the letters to the queen in the keraton and talk to her.  
    *Where: Galuh Palace*
-3. Examine the queen's signet ring on the table in the Kaputren.  
+3. Examine the royal seal in the kaputren.  
    *Where: Women's Quarters*
-4. Bring the queen's reply to Hariang Banga at Ibu's table in Desa Purwa, then read the letter there.  
+4. Read the queen's reply beside Ibu's table and talk to Hariang Banga.  
    *Where: Desa Purwa*
-   - [ ] Find Hariang Banga at Ibu's table in Desa Purwa.
-   - [ ] Examine the queen's reply beside the second cup on the table.
+   - [ ] Talk to Hariang Banga.
+   - [ ] Examine the reply letter beside the second cup.
 
 ## The Deserter's Name
 
-- Type: Side | Region: gua_kala
-- Starts: talk to The deserter
+- Type: Side | Region: Gua Kala
+- Starts: talk to Uwa Lengser
 
-> The deserter from the cells has never had his true name written down, which makes him easy to forget. Clues to who he was are scattered across Candi Seribu, the sands of Tanah Timur and the Segara Kidul shore. What was his name before it was taken, and who will write it back?
+> A Faceless deserter has forgotten his own name and asks you to help him remember it. Each small trace leads you on, and at the end you are the one who must write it.
 
-1. Examine the stitched cloth scrap at the camp stake in Candi Seribu.  
+1. Examine the cloth scrap in the temple camp.  
    *Where: The Temple*
-2. Examine the old shield mark on the boundary stone of the sand plain in Tanah Timur.  
+2. Examine the shield mark on the Tanah Timur road.  
    *Where: The Sands*
-3. Examine the carved driftwood token in the shore net on the beach, then relive his memory.  
+3. Examine the net on the shore and enter the memory it holds.  
    *Where: South Beach*
-4. Write the deserter's true name on the write stone at Pelataran Waktu.  
+4. Write the deserter's name on the stone: Ra, then Nga.  
    *Where: The Courtyard*
 
-## Brave Cepot: Border Escape
+## Cepot on the Run
 
 - Type: Side | Region: Mataram
 - Starts: talk to Cepot
 
-> Cepot, Semar's loud son, was signed up by two recruiters at once, one from Galuh and one from Mataram. He has to leave the border market before someone notices. Which army really claims him, and can the hero get him out in one piece?
+> Cepot says Semar sent him to check the troops in Mataram's market. Really he wants to know who left their posts, and he wants company.
 
-1. Examine both muster rolls at the border market by the Gapura gate.  
+1. Check the two muster rolls in the market.  
    *Where: Mataram Gate*
-   - [ ] Examine the north muster roll bearing Cepot's name.
-   - [ ] Examine the south muster roll bearing Cepot's name.
-2. Solve the distraction puzzle to sneak Cepot out of the border market.  
+   - [ ] Check the north muster roll.
+   - [ ] Check the south muster roll.
+2. Walk into the empty market stalls.  
    *Where: Mataram Gate*
-3. Find Cepot at the border market and hear him out.  
+3. Go back to Cepot.  
    *Where: Mataram Gate*
 
-## Brave Cepot: Night Watch
+## Cepot's Night Watch
 
 - Type: Side | Region: Segara Kidul
 - Starts: talk to Cepot
 
-> Cepot followed the hero all the way to the Segara Kidul shore, though he is terrified of the sea. The turtle beach needs a ward lamp held through the night, and he has agreed to try. Can a frightened boy stand a night of waves?
+> Cepot carries a bundle from Ibu and a small ward lamp. He wants to light it on the beach, and refuses to wait alone.
 
-1. Talk to Cepot on the Segara Kidul beach and hear why he followed you.  
+1. Talk to Cepot on the beach.  
    *Where: South Beach*
-2. Hold the ward lamp with Cepot through two night waves on the beach.  
+2. Light the ward lamp and hold out the night.  
    *Where: South Beach*
-3. Return to Cepot on the beach and hear how his story ends.  
+   - [ ] Light the ward lamp.
+   - [ ] Hold off the two night waves.
+3. Go back to Cepot.  
    *Where: South Beach*
 
-## Tales for the Kelir
+## Tales for the Screen
 
 - Type: Side | Region: Desa Purwa
 - Starts: talk to Semar
 
-> Semar, the village dalang, wants the tales you have heard on the road told again on the kelir, the puppet screen. Each retelling adds a lakon, a play, to the village's stock. Which story will you bring him next?
+> Semar wants the screen alive again with the tales you collect. Retell the lakon you have found.
 
-1. Finish the folk tales and legends you have gathered, then talk to Semar, the village dalang, in the Desa Purwa sanggar.  
+1. Tell your lakon to Semar.  
    *Where: Desa Purwa*
 
-## Nyai Rukmi's Records
+## Nyai Rukmi's Notes
 
 - Type: Side | Region: Desa Purwa
 - Starts: talk to Nyai Rukmi
 
-> Nyai Rukmi keeps the village records, and she wants every legend you meet on the road written into them. The more you remember, the thicker her book grows and the more stories are saved from fading. What tale will you bring her first?
+> Nyai Rukmi copies the tales you find into her lontar. Bring her your notes.
 
-1. Talk to Nyai Rukmi, keeper of the village records in Desa Purwa, to fill her codex with the legends you have met.  
+1. Bring your notes to Nyai Rukmi.  
    *Where: Desa Purwa*
 
 ## The Wit of Si Kabayan
@@ -564,17 +624,17 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Keraton Galuh
 - Starts: talk to Si Kabayan
 
-> Si Kabayan wants a pompous official's decree lifted, and the official's own ledger may be the way to do it. He knows every stall in Pasar Kuta, and his help could ease the hero's search. Who is the bigger fool here, the man who sleeps or the man who wrote the rule?
+> Si Kabayan wants a haughty official's decree withdrawn, and the official's own tax ledger may be the way. He knows every stall in Pasar Kuta, and that helps my search.
 
-1. Talk to Si Kabayan, resting under the banyan tree in Pasar Kuta.  
+1. Talk to Si Kabayan under the Pasar Kuta banyan and hear his trouble with the official.  
    *Where: Galuh Market*
-2. Help Si Kabayan answer the official's riddles by examining the tax ledger and his palm-sugar sack.  
+2. Find material for the official's riddles: examine the tax ledger and the palm-sugar sack.  
    *Where: Galuh Market*
-   - [ ] Examine the official's tax ledger on the stall beside the market banyan.
-   - [ ] Examine Kabayan's palm-sugar sack beneath the market banyan.
-3. Follow Kabayan's tale in his memory, and hang the basket as the story says.  
+   - [ ] Examine the tax ledger on the stall by the banyan.
+   - [ ] Examine Kabayan's palm-sugar sack under the banyan.
+3. Live Kabayan's memory of the hanging basket.  
    *Where: Galuh Market*
-4. Return to Si Kabayan under the market banyan and watch the official's public defeat.  
+4. Go back to Si Kabayan under the banyan and watch the official lose.  
    *Where: Galuh Market*
 
 ## The Sweeping Ghost
@@ -582,134 +642,138 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Keraton Galuh
 - Starts: talk to G2 Maid
 
-> The old maid of the Kaputren wants a forgotten servant's name put back on the roll, and she asks the hero to help. A worn-down broom still sweeps the Kaputren as though its owner never finished. Whose name was taken, and who took it?
+> The old maid in the Kaputren wants a forgotten servant's name written back on his roll. A worn broom still sweeps the Kaputren, as if its owner were never done.
 
-1. Talk to the old palace maid in the Kaputren.  
+1. Talk to the old maid in the Kaputren and ask what troubles her.  
    *Where: Women's Quarters*
-2. Examine the worn-down broom and the scraped servants' roll in the Kaputren.  
+2. Find out what happened to the servant: examine the worn broom and the scraped servants' roll.  
    *Where: Women's Quarters*
-   - [ ] Examine the worn-down broom standing in the Kaputren.
+   - [ ] Examine the worn broom in the Kaputren.
    - [ ] Examine the scraped servants' roll in the Kaputren.
-3. Follow the memory of the servant's last day: sweep as he did and listen.  
+3. Live the servant's last day in a memory, sweeping as he did.  
    *Where: Women's Quarters*
-4. Write the servant's stolen name back on the roll at the write stone in the Kaputren.  
+4. Write the servant's name back on the write stone in the Kaputren.  
    *Where: Women's Quarters*
-5. Report back to the old palace maid in the Kaputren.  
+5. Go back to the old maid in the Kaputren and tell her what you did for the servant.  
    *Where: Women's Quarters*
 
-## Hatchlings Home to the Sea
+## Hatchlings Home
 
 - Type: Side | Region: Segara Kidul
 - Starts: talk to The fisher's child
 
-> Damar, the fisher child on the beach, needs help: last night's storm threw a turtle nest over the dunes and three hatchlings lie stranded far from the sea. The warrior agrees to look, but the sun is climbing. Will the little turtles reach the water in time?
+> Damar, a fisher's child, found lost hatchlings on the sand. He is too scared to carry them to the surf alone.
 
-1. Talk to Damar on the beach to learn where the storm left the stranded hatchlings.  
+1. Talk to Damar on the beach.  
    *Where: South Beach*
-2. Search the dunes and the mangrove edge for the stranded hatchlings and pick each one up.  
+2. Pick up three lost hatchlings.  
    *Where: South Beach*
-3. Carry the hatchlings to the surf release spot on the beach and let the tide take them.  
+3. Carry the hatchlings to the surf.  
    *Where: South Beach*
-4. Go back to Damar on the beach and tell him the hatchlings are safe in the sea.  
+4. Go back to Damar.  
    *Where: South Beach*
 
-## The Torn Nets
+## The Torn Net
 
 - Type: Side | Region: Segara Kidul
 - Starts: talk to The river-mouth fisher
 
-> Pak Raka, the old fisherman at the reef hut, keeps losing nets at the river mouth. He wants the warrior to find what tears them before the other fishers lose their gear too. Is it just a hungry predator, or something older than this cove?
+> Pak Raka lost his net in the cove where an old white crocodile lives. He asks for help, but not for revenge.
 
-1. Talk to Pak Raka, the old fisherman at the reef hut, about the nets torn at the river mouth.  
+1. Talk to Pak Raka.  
    *Where: Coral Cliffs*
-2. Follow the torn nets to the river-mouth cove on the reef, where the guardian's trail begins.  
+2. Walk into the crocodile cove.  
    *Where: Coral Cliffs*
-3. Defeat Bajul Putih Tua, the elite white crocodile guarding the river-mouth lagoon.  
+3. Defeat the old white crocodile.  
    *Where: Coral Cliffs*
-4. Return to Pak Raka at the reef hut and tell him the lagoon is quiet again.  
+4. Go back to Pak Raka.  
    *Where: Coral Cliffs*
 
-## Under the Last of the Rice
+## The Shawl in the Granary
 
 - Type: Side | Region: Mataram
 - Starts: talk to Nawang Wulan
 
-> Nawang Wulan has lost her woven shawl, and since someone lifted her rice pot's lid, the rice no longer fills it. The lumbung in the paddies stands empty, and no one saw who did it. Who took the shawl, and what is left of her pot's magic?
+> Nawang Wulan, a stranger in the Mataram paddies, has lost her shawl and cannot go home. Unless it returns to her, she stays stuck between two worlds.
 
-1. Find Nawang Wulan in the rice paddies; her rice pot has stopped filling and she asks for help.  
+1. Talk to Nawang Wulan in the rice fields.  
    *Where: Mataram Rice Fields*
-2. Enter the lumbung (rice barn) in the paddies and check the lifted pot lid and the empty rice store.  
+2. Enter the granary where her shawl is kept.  
    *Where: Mataram Rice Fields*
-3. Search the lumbung until you find Nawang Wulan's shawl under the last of the rice.  
+3. Pick up Nawang Wulan's shawl in the granary.  
    *Where: Mataram Rice Fields*
-4. Defeat the spirit thieves around the spring, then return the shawl so Nawang Wulan can go home.  
+4. Bring the shawl back to Nawang Wulan.  
    *Where: Mataram Rice Fields*
 
-## The Child Nobody Called
+## The Boy Wewe Took
 
 - Type: Side | Region: Mataram
 - Starts: talk to A worried neighbour
 
-> A neighbour at the Mataram market is worried: a child has been missing for two days while her parents were too busy selling. People say Wewe Gombel, the hill spirit, takes neglected children, though no one is sure she means harm. Where is the child now?
+> A neighbour in the market is frantic: a boy has gone missing in the graveyard hills. His parents only want him home.
 
-1. Find the worried neighbour at the Mataram village market; she knows something about the missing child.  
+1. Talk to the worried neighbour in the market.  
    *Where: Mataram Market*
-2. Climb the bare hill beside the graveyard and find the child's dropped wooden toy on the path.  
+2. Go up to the graveyard hill where Wewe was seen.  
    *Where: Graveyard*
-3. On the hill, question the child's parents about why they stopped calling their child home.  
+3. Talk to the boy's parents, or defeat Wewe's guardian.  
    *Where: Graveyard*
-4. Return to the neighbour in the Mataram market and tell her the child has come home.  
+4. Go back to the neighbour and share the news.  
    *Where: Mataram Market*
 
-## Coins That Count Themselves
+## Mung Beans for the Tuyul
 
 - Type: Side | Region: Mataram
 - Starts: talk to The blacksmith
 
-> The blacksmith (pande besi) at the Mataram market keeps losing coins from his stall. He suspects tuyul, small spirits that steal money, but no one has ever seen the thief. If it is a tuyul, where is its den, and what will you do about it?
+> The smith loses coins every night and is sure a tuyul is to blame. Left alone, the market traders will start accusing each other.
 
-1. Find the blacksmith (pande besi) at his stall in the Mataram market, where his coins keep vanishing.  
+1. Talk to the smith in the market.  
    *Where: Mataram Market*
-2. Enter the tuyul hideout in the dry fields (tegalan) and examine the tiny footprints and half-counted green beans.  
+2. Find the tuyul hideout in the dry fields and set the mung beans down.  
    *Where: Dry Fields*
-3. Find the tuyul leader in its hideout, beside the little pile of stolen coins.  
+   - [ ] Find the tuyul hideout.
+   - [ ] Set the mung beans down in the hideout.
+3. Talk to the tuyul leader, or defeat it.  
    *Where: Dry Fields*
-4. Return to the blacksmith's stall in the Mataram market and tell him what became of the tuyul.  
+4. Return to the smith and tell him how it went.  
    *Where: Mataram Market*
 
-## The Silent Gamelan
+## The Missing Gong
 
 - Type: Side | Region: Mataram
 - Starts: talk to Ki Sumarto
 
-> The gamelan in the Mataram market has lost its gong ageng (the great gong), the voice that closes each tune and brings the village home. The dalang Ki Sumarto asks for your help, because without it the puppet shows feel empty. Where has the gong been hidden?
+> Ki Sumarto cannot stage his wayang because the gong ageng is missing from his gamelan frame. Without it, no performance of his is ever truly finished.
 
-1. Ask Ki Sumarto, the dalang, why the market gamelan has fallen silent.  
+1. Talk to Ki Sumarto in the market.  
    *Where: Mataram Market*
-2. Find the stolen gong ageng in a sealed nook of the Mataram ruins, and watch for the statues guarding it.  
+2. Take the gong ageng from the sealed nook in the ruins.  
    *Where: The Ruins*
-3. Return to Ki Sumarto at the gamelan pavilion in the market and hang the gong back in place.  
+3. Hang the gong on its frame, then tell Ki Sumarto.  
    *Where: Mataram Market*
+   - [ ] Hang the gong on the empty frame.
+   - [ ] Tell Ki Sumarto.
 
 ## Lutung Kasarung
 
 - Type: Side | Region: Tatar Sunda
 - Starts: talk to Ki Darsa
 
-> Ki Darsa, the village storyteller, wants the old tale of the girl and the langur told truly to its end. The story seems to be living again in the forest, with fruit offerings and a spring guarded by spirits. What did the langur really see, and why is the spring still dark?
+> Ki Darsa, the kampung's pantun singer, wants the old tale of the girl and the langur told to its end. It seems to live again in the forest, with its offerings and a spring held by spirits.
 
-1. Ask Ki Darsa, the storyteller in the kampung, about the tale of the girl and the langur.  
+1. Hear the tale of the girl and the langur from Ki Darsa in the kampung.  
    *Where: Sunda Hamlet*
-2. Search the forest for the langur's fruit offerings and the hidden spring, then clear the guards there.  
+2. Check the offerings and the hidden spring in the forest, then drive off the spirits guarding it.  
    *Where: The Leuweung Forest*
-   - [ ] Examine the langur's fruit offerings in the forest grove.
-   - [ ] Examine the hidden spring, where the water is dark with huddled spirits.
-   - [ ] Clear the enemies gathered around the spring in the forest.
-3. Follow the lutung's memory, which leads the girl through the forest to the spring.  
+   - [ ] Check the langur's fruit offerings in the forest.
+   - [ ] Check the hidden spring, dark with huddled spirits.
+   - [ ] Drive off the spirits gathered around the spring.
+3. Follow the langur's memory as he leads the girl to the spring.  
    *Where: The Leuweung Forest*
-4. Speak with Purbasari at the spring, now that its guardians are gone.  
+4. Talk to Purbasari at the spring.  
    *Where: The Leuweung Forest*
-5. Return to Ki Darsa in the kampung and tell him how the story ended.  
+5. Return to Ki Darsa and tell him how the tale ended.  
    *Where: Sunda Hamlet*
 
 ## Crying in the Bamboo
@@ -717,19 +781,19 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Tatar Sunda
 - Starts: talk to The village head
 
-> The village head has heard a woman crying in the dark bamboo grove, and the sound keeps the kampung children awake. He wants it to stop, but your first question is who she was. What is buried in the grove, and why does she still cry?
+> The village head hears a woman weeping in the dark bamboo grove, and the sound keeps the kampung children awake. He wants it to stop, but you want to know who she was first.
 
-1. Speak with the village head in the kampung about the crying from the bamboo grove.  
+1. Ask the village head who is weeping in the bamboo grove.  
    *Where: Sunda Hamlet*
-2. Examine the cempaka (frangipani) tree over an unmarked grave, then the torn white cloth in the dark grove.  
+2. Find where the weeping comes from: find the cempaka tree over the grave, then check the white cloth on the bamboo.  
    *Where: The Leuweung Forest*
-   - [ ] Find the cempaka tree over an unmarked grave in the dark grove.
-   - [ ] Examine the torn white cloth snagged on the bamboo, once the grave is found.
-3. Follow the memory of an old grandmother walking the grove at night.  
+   - [ ] Find the cempaka tree over the unmarked grave in the dark grove.
+   - [ ] Check the torn white cloth snagged on the bamboo.
+3. Follow the memory of an old grandmother who walked the grove at midnight.  
    *Where: The Leuweung Forest*
-4. Defeat the elite Kuntilanak in the grove, fighting from the safe ground.  
+4. Defeat the strong Kuntilanak in the grove, and fight from safe ground.  
    *Where: The Leuweung Forest*
-5. Help the village head carve the forgotten woman's name onto her grave marker.  
+5. Write two glyphs on the woman's grave marker with the village head.  
    *Where: Sunda Hamlet*
 
 ## The Lost Angklung Notes
@@ -737,11 +801,16 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Tatar Sunda
 - Starts: talk to The angklung leader
 
-> The village angklung group has lost several tuned bamboo tubes, and without them the kampung's music has fallen silent. The leader asks you to gather the scattered tubes from the garden, the village and the rice terraces. Where did the angklung go, and will the music return once every note is whole?
+> The kampung angklung group has lost three tuned bamboo tubes, and without them the music has gone quiet. The leader asks you to gather the tubes scattered over the garden, the kampung and the terraces.
 
-1. Gather 3 tuned bamboo tubes from the garden, the village and the rice terraces for the angklung leader.  
+1. Gather the 3 angklung tubes scattered over the garden, the kampung and the terraces.  
    *Where: Sunda Hamlet*
-2. Arrange the tubes into the pentatonic scale at the village pavilion, then speak with the angklung leader.  
+2. Hang the three tubes on the angklung frames in the kampung, from low note to high.  
+   *Where: Sunda Hamlet*
+   - [ ] Hang the lowest tube on the first frame.
+   - [ ] Hang the middle tube on the second frame.
+   - [ ] Hang the highest tube on the third frame.
+3. Go to the angklung leader and hear the notes.  
    *Where: Sunda Hamlet*
 
 ## Brave Cepot
@@ -749,11 +818,11 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Tatar Sunda
 - Starts: talk to Cepot
 
-> Cepot's supply pack is trapped in the garden by wild boars, and he has no food left for his journey. Help him win back his pack so he can keep going. What brought Cepot so far from the village, and where is he headed?
+> Cepot's pack is stuck in the tea garden, penned in by wild boars, and without it he will not take another step. Help him get it back.
 
-1. Defeat the wild boars in the garden that have trapped Cepot's supply pack.  
+1. Drive off the three wild boars penning in Cepot's pack in the garden.  
    *Where: Tea Gardens*
-2. Free Cepot's supply pack from the last three boars with the Ga Ward spell, then speak with Cepot.  
+2. Talk to Cepot, his pack is free.  
    *Where: Tea Gardens*
 
 ## Ande-Ande Lumut
@@ -761,13 +830,14 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Tanah Timur
 - Starts: talk to Klething Kuning
 
-> Klething Kuning is stranded at the cut ferry on the River, wanting to cross and meet Ande-Ande Lumut, but the giant crab Yuyu Kangkang lets no one pass without a toll. You have little time to spare, yet an open river may also open the road to the far bank. Will the crab be paid, or is there another way across?
+> Klething Kuning is stranded at the broken ferry on the River, hoping to cross and meet Ande-Ande Lumut. The giant crab Yuyu Kangkang demands a toll from anyone who passes, so the river must be opened another way.
 
-1. Find Klething Kuning at the cut ferry on the River (Kali) and hear why she needs to cross.  
+1. Find Klething Kuning at the broken ferry on the River and hear why she must cross.  
    *Where: The River*
-2. Find the sodo lanang, an old woman's broom rib, left in the Banyan Grove (Beringin). It may be able to part the river.  
-   *Where: Banyan Grove*
-3. Return to Klething Kuning at the cut ferry on the River (Kali) and tell her what you learned about the river and the sodo lanang.  
+2. Take the sodo lanang from the Banyan Grove and strike the river with it at the broken jetty, or fight the giant crab.  
+   *Where: The River*
+   - Tip: Take the sodo lanang from the Banyan Grove and strike the river with it at the broken jetty, or fight the giant crab.
+3. Speak with Klething Kuning at the ferry.  
    *Where: The River*
 
 ## Fire With No Wind
@@ -775,15 +845,17 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Tanah Timur
 - Starts: talk to The herder
 
-> The herder of the Savanna wants the grass fires that return each night put out before his flock and the new grass are lost. Every morning the scorched trail leads somewhere new, though no one lit it. What is burning the grass when no one sets it alight?
+> The herder of the Savanna wants the grass fires that return each night put out before his flock and the young grass are gone. The scorch line always leads somewhere new, though there is no wind and nobody lit it.
 
-1. Find the herder on the Savanna and hear about the grass fires that return each night.  
+1. Ask the herder on the Savanna why his grass burns every night.  
    *Where: The Savanna*
-2. Follow the scorched grass to the coast dunes of Pesisir, to a campfire that no one ever lit.  
+2. Follow the scorched grass to a campfire no one lit, in the dunes of Pesisir.  
    *Where: The Coast*
-3. Defeat the elite Banaspati (fire spirit) at the spring in the eastern dunes of Pesisir.  
+3. Put out the source at the spring in the eastern dunes: turn the channel wheel, then defeat the elite Banaspati.  
    *Where: The Coast*
-4. Return to the herder on the Savanna and tell him the fire spirit is beaten.  
+   - [ ] Turn the channel wheel at the spring.
+   - [ ] Defeat the elite Banaspati.
+4. Tell the herder on the Savanna that the fire is out.  
    *Where: The Savanna*
 
 ## Pamor from the Sky
@@ -791,13 +863,13 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Tanah Timur
 - Starts: talk to Mpu Wirasana
 
-> Mpu Wirasana wants a piece of the star-stone that fell on the temple plain of Candi Seribu in Mataram, to give a new keris its pamor (the bright pattern in its steel). The trip west is long, but the forge has done a great deal for you. Will the stone be worth the journey, and what will it become?
+> Mpu Wirasana wants a piece of the star-stone that fell on the plain of Candi Seribu in Mataram, to give a new keris its pamor. The road west is long, but his forge has done a great deal for you.
 
-1. Find Mpu Wirasana and Ratna at the forge in the Banyan Grove and hear what they need.  
+1. Ask Mpu Wirasana what he needs, at his forge in the Banyan Grove.  
    *Where: Banyan Grove*
-2. Find the fallen star-stone in the east yard of Candi Seribu in Mataram.  
+2. Take the star-stone from the east yard of Candi Seribu in Mataram.  
    *Where: The Temple*
-3. Hold the crater where the star fell against the stone guardians, then return to Mpu Wirasana at the Banyan Grove forge.  
+3. Bring the star-stone back to Mpu Wirasana in the Banyan Grove.  
    *Where: Banyan Grove*
 
 ## The Lost Kuda Kepang
@@ -805,13 +877,13 @@ Each quest lists where it starts, then its steps in order. "Where" is the area t
 - Type: Side | Region: Tanah Timur
 - Starts: talk to The kuda lumping leader
 
-> The leader of a kuda lumping troupe camped in the Banyan Grove has lost three woven bamboo horses to a storm, and the show cannot go on without them. The horses were carried to different corners of Tanah Timur, and the troupe's dance is one of the few bright things in this harsh land. Where did the wind carry them?
+> The leader of a kuda lumping troupe camped in the Banyan Grove has lost three woven bamboo horses to a storm, and the show cannot go on without them. They landed on the savanna, by the river and on the shore.
 
-1. Speak with the kuda lumping leader at the troupe camp in the Banyan Grove and take on the errand.  
+1. Speak with the kuda lumping leader at the Banyan Grove camp and hear the errand.  
    *Where: Banyan Grove*
-2. Search the savanna, the river and the shore for the three woven bamboo kuda kepang horses blown off by the storm.  
+2. Pick up the three kuda kepang the storm blew off: one on the savanna, one by the river, one on the shore.  
    *Where: Banyan Grove*
-3. Bring the three kuda kepang horses back to the troupe leader at the Banyan Grove camp.  
+3. Bring the three kuda kepang to the troupe leader at the Banyan Grove camp.  
    *Where: Banyan Grove*
-4. Watch the troupe dance on the kepang stage in the Banyan Grove, their thanks for the horses.  
+4. Go to the kepang stage in the Banyan Grove and watch the troupe dance.  
    *Where: Banyan Grove*

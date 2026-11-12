@@ -11,10 +11,10 @@ marker = {"zone": "tt_kali", "id": "klething_kuning"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
-objective = "Q_SQ_T1_S2_OBJ"
-on = "item_picked:sodo_lanang"
-alt = {"item_picked:sodo_lanang": "peaceful", "enemy_killed:yuyu_kangkang": "fight"}
-marker = {"zone": "tt_beringin", "id": "sodo_lanang"}
+objective = "Q_SQ_T1_S2_JETTY"
+on = "talked_to:jetty_post"
+alt = {"talked_to:jetty_post": "peaceful", "enemy_killed:yuyu_kangkang": "fight"}
+marker = {"zone": "tt_kali", "id": "jetty_post"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")

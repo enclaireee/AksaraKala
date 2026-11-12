@@ -7,7 +7,7 @@ script = ExtResource("1")
 npc_id = "faceless_deserter"
 name_key = "NPC_FACELESS_DESERTER_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mqg=7"], "lines": ["DLG_FACELESS_DESERTER_V1", "@NPC_HERO_NAME", "DLG_FACELESS_DESERTER_H1", "@NPC_FACELESS_DESERTER_NAME", "DLG_FACELESS_DESERTER_V2", "DLG_FACELESS_DESERTER_V3", "CHOICE_RANGA_1", "CHOICE_RANGA_2"], "do": [], "choices": [{"text": "CHOICE_RANGA_1", "do": ["flag:choice_freed"]}, {"text": "CHOICE_RANGA_2", "do": ["flag:choice_handed"]}]},
+	{"if": ["step:mqg=14"], "lines": ["DLG_FACELESS_DESERTER_V1", "@NPC_HERO_NAME", "DLG_FACELESS_DESERTER_H1", "@NPC_FACELESS_DESERTER_NAME", "DLG_FACELESS_DESERTER_V2", "DLG_FACELESS_DESERTER_V3", "CHOICE_RANGA_1", "CHOICE_RANGA_2"], "do": [], "choices": [{"text": "CHOICE_RANGA_1", "do": ["flag:choice_freed"]}, {"text": "CHOICE_RANGA_2", "do": ["flag:choice_handed"]}]},
 	{"if": ["flag:mq2_7", "flag:choice_freed", "zone:mt_candi", "!flag:c3_a"], "lines": ["DLG_DESERTER_V20", "DLG_FACELESS_DESERTER_V500", "@NPC_HERO_NAME", "DLG_FACELESS_DESERTER_H500", "@NPC_FACELESS_DESERTER_NAME", "DLG_FACELESS_DESERTER_V501"], "do": ["flag:c3_a", "start:sq_c3"], "quiet": true},
 	{"if": ["flag:mq3_6", "flag:choice_freed", "zone:tt_pasir", "!flag:c3_b"], "lines": ["DLG_DESERTER_V21", "DLG_FACELESS_DESERTER_V502", "@NPC_HERO_NAME", "DLG_FACELESS_DESERTER_H501", "@NPC_FACELESS_DESERTER_NAME", "DLG_FACELESS_DESERTER_V503"], "do": ["flag:c3_b"], "quiet": true},
 	{"if": ["flag:mq4_4", "flag:choice_freed", "zone:sk_pantai", "!flag:c3_c"], "lines": ["DLG_DESERTER_V22", "DLG_FACELESS_DESERTER_V504", "@NPC_HERO_NAME", "DLG_FACELESS_DESERTER_H502"], "do": ["flag:c3_c"], "quiet": true},

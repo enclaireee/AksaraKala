@@ -6,10 +6,10 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ0_S1_OBJ"
-on = "area_entered:purwa_tag_end"
+all = [{"on": "talked_to:purwa_cat", "set_flag": "", "objective": "Q_MQ0_S1_P1", "marker": {"zone": "desa_purwa", "id": "purwa_cat"}}, {"on": "talked_to:purwa_well", "set_flag": "", "objective": "Q_MQ0_S1_P2", "marker": {"zone": "desa_purwa", "id": "purwa_well"}}, {"on": "talked_to:purwa_root", "set_flag": "", "objective": "Q_MQ0_S1_P3", "marker": {"zone": "desa_purwa", "id": "purwa_root"}}]
 set_flag = "mq0_d1"
 recap = "Q_MQ0_S1_DONE"
-marker = {"zone": "desa_purwa", "id": "purwa_tag_cat"}
+marker = {"zone": "desa_purwa", "id": "purwa_cat"}
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
@@ -22,18 +22,18 @@ marker = {"zone": "desa_purwa", "id": "ibu"}
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ0_S3_OBJ"
-all = [{"on": "puzzle_solved:purwa_banyan_climb", "set_flag": "", "objective": "Q_MQ0_S3_P1"}, {"on": "talked_to:ciung_wanara", "set_flag": "mq0_d3", "objective": "Q_MQ0_S3_P2"}]
+all = [{"on": "clue_examined:ciung_basket", "set_flag": "", "objective": "Q_MQ0_S3_P3", "marker": {"zone": "desa_purwa", "id": "ciung_basket"}}, {"on": "talked_to:ciung_wanara", "set_flag": "mq0_d3", "objective": "Q_MQ0_S3_P2", "marker": {"zone": "desa_purwa", "id": "ciung_wanara"}}]
 set_flag = "mq0_d3"
 recap = "Q_MQ0_S3_DONE"
-marker = {"zone": "desa_purwa", "id": "purwa_banyan_climb"}
+marker = {"zone": "desa_purwa", "id": "ciung_wanara"}
 
 [sub_resource type="Resource" id="s4"]
 script = ExtResource("2")
 objective = "Q_MQ0_S4_OBJ"
-all = [{"on": "talked_to:purwa_stall", "set_flag": "", "objective": "Q_MQ0_S4_P1", "marker": {"zone": "desa_purwa", "id": "purwa_stall"}}, {"on": "talked_to:cepot", "set_flag": "", "objective": "Q_MQ0_S4_P2", "marker": {"zone": "desa_purwa", "id": "cepot"}}]
+all = [{"on": "talked_to:purwa_oil_seller", "set_flag": "", "objective": "Q_MQ0_S4_P1", "marker": {"zone": "desa_purwa", "id": "purwa_oil_seller"}}, {"on": "talked_to:cepot", "set_flag": "", "objective": "Q_MQ0_S4_P2", "marker": {"zone": "desa_purwa", "id": "cepot"}}]
 set_flag = "mq0_d6"
 recap = "Q_MQ0_S4_DONE"
-marker = {"zone": "desa_purwa", "id": "purwa_stall"}
+marker = {"zone": "desa_purwa", "id": "purwa_oil_seller"}
 
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
@@ -46,18 +46,18 @@ marker = {"zone": "desa_purwa", "id": "semar"}
 [sub_resource type="Resource" id="s6"]
 script = ExtResource("2")
 objective = "Q_MQ0_S6_OBJ"
-on = "area_entered:sanggar_lontar"
+on = "name_written:laras_la"
 set_flag = "mq0_d5"
 recap = "Q_MQ0_S6_DONE"
-marker = {"zone": "desa_purwa", "id": "sanggar_lontar"}
+marker = {"zone": "desa_purwa", "id": "laras"}
 
 [sub_resource type="Resource" id="s7"]
 script = ExtResource("2")
 objective = "Q_MQ0_S7_OBJ"
-on = "puzzle_solved:purwa_stage_lamps"
+all = [{"on": "talked_to:stage_lamp_1", "set_flag": "", "objective": "Q_MQ0_S7_P1", "marker": {"zone": "desa_purwa", "id": "stage_lamp_1"}}, {"on": "talked_to:stage_lamp_2", "set_flag": "", "objective": "Q_MQ0_S7_P2", "marker": {"zone": "desa_purwa", "id": "stage_lamp_2"}}, {"on": "talked_to:stage_lamp_3", "set_flag": "", "objective": "Q_MQ0_S7_P3", "marker": {"zone": "desa_purwa", "id": "stage_lamp_3"}}, {"on": "talked_to:stage_lamp_4", "set_flag": "", "objective": "Q_MQ0_S7_P4", "marker": {"zone": "desa_purwa", "id": "stage_lamp_4"}}]
 set_flag = "mq0_d6b"
 recap = "Q_MQ0_S7_DONE"
-marker = {"zone": "desa_purwa", "id": "purwa_stage_lamps"}
+marker = {"zone": "desa_purwa", "id": "stage_lamp_1"}
 
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
@@ -93,7 +93,7 @@ marker = {"zone": "desa_purwa", "id": "semar"}
 [sub_resource type="Resource" id="s12"]
 script = ExtResource("2")
 objective = "Q_MQ0_S12_OBJ"
-all = [{"marker": {"id": "purwa_raid", "zone": "desa_purwa"}, "objective": "Q_MQ0_S12_P1", "on": "area_cleared:purwa_raid", "set_flag": "mq0_7"}, {"marker": {"id": "exit_tatar_sunda", "zone": "desa_purwa"}, "objective": "Q_MQ0_S12_P2", "on": "zone_entered:ts_kebun", "set_flag": ""}]
+all = [{"marker": {"id": "purwa_raid", "zone": "desa_purwa"}, "objective": "Q_MQ0_S12_P1", "on": "area_cleared:purwa_raid", "set_flag": "mq0_7"}, {"marker": {"id": "exit_tatar_sunda", "zone": "desa_purwa"}, "objective": "Q_MQ0_S12_P2", "on": "zone_entered:ts_kebun", "set_flag": ""}, {"on": "talked_to:ibu", "set_flag": "", "objective": "Q_MQ0_S12_P3", "marker": {"zone": "desa_purwa", "id": "ibu"}}]
 recap = "Q_MQ0_S12_DONE"
 marker = {"zone": "desa_purwa", "id": "exit_tatar_sunda"}
 [resource]

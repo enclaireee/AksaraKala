@@ -16,12 +16,12 @@ const MAP := [
 	"#.............,..........rr...................,.............,,...................,.......#",
 	"#.............B...............................,.............,,...................,.......#",
 	"#..........S..S..S............................,.............,,...................,.......#",
-	"#.............M...............................,...V.........,,...................,.......#",
+	"#.............................................1...V...2.....,,...................,.......#",
 	"#.............,...............................,.............,,...................,.......#",
 	"Xe,,,,A,,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,,,,,,,,,H,,,,,,,,,,,,,,,,,,,,,,,,,,,,..........#",
 	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..........#",
 	"#.................................................,,.....................................#",
-	"#.................................................,,.....................................#",
+	"#.................................................3,.....................................#",
 	"#.................................................,,..................rr..rr.............#",
 	"#.................................................,,..................rr..rr.............#",
 	"#.................................................,,....b...........g...i...o............#",
@@ -48,7 +48,6 @@ const SPOTS := {
 	"E": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_empu"}, "tile": "_"},   # NPC Mpu Wirasana (3.3, SQ-T3 giver)
 	"R": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "sodo_lanang"}, "tile": "_"},   # pickup, sodo lanang (SQ-T1 step 2)
 	"S": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"practice": true}, "tile": "."},   # practice stake (3.4, one per tile)
-	"M": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "timur_praktik_mark", "size": Vector2i(10,5)}, "tile": "."},   # trigger, practice marks (3.4; id `timur_praktik_mark` so entering fires both the area and its puzzle alias, which is the step's `x2`)
 	"L": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kepang_leader"}, "tile": "."},   # NPC kuda lumping leader (SQ-T4 giver)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kepang_stage", "size": Vector2i(8,4)}, "tile": "."},   # trigger, kepang stage (SQ-T4 step 3)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "keris"}, "tile": "."},   # codex ruin, inscribed stone 1 (Keris)
@@ -65,6 +64,9 @@ const SPOTS := {
 	"H": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "buto_ambush_3", "size": Vector2i(16,9), "waves": [[["res://entities/bosses/buto_ijo.tscn", Vector2i(0,-4)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(-4,0)], ["res://entities/enemies/keris_hantu.tscn", Vector2i(0,-2)], ["res://entities/enemies/keris_hantu.tscn", Vector2i(4,2)]]]}, "tile": ","},   # encounter buto_ambush_3 (3.7 Stalking Ambush #3: consecrate the pouches at the ancient banyan while holding off Buto Ijo)
 	"V": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "banyan_altar", "memory_id": "k4_timun_mas", "cond": "flag:mq3_b3"}, "tile": "."},   # clue, the flat stone with small handprints in the hollow of the ancient banyan, beside Buto Ambush #3 (3.7 `clue_examined:banyan_altar`; shows after the ambush is cleared, then opens memory `k4_timun_mas` at 3.8; ASSUMED id)
 	"Q": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "forge_stone", "memory_id": "k5_forge", "cond": "flag:mq3_h4"}, "tile": "_"},   # clue, the old anvil stone in the corner of Wirasana's vault (3.13 K5; opens memory `k5_forge`; appears once the vault clues are done; moved here from `tt_candi`)
+	"1": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "banyan_root_1"}, "tile": "."},   # banyan root 1 of 3, set a charmed pouch here while Buto Ijo circles (3.7; sets `flag:banyan_root_1`)
+	"2": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "banyan_root_2"}, "tile": "."},   # banyan root 2 of 3, set a charmed pouch here while Buto Ijo circles (3.7; sets `flag:banyan_root_2`)
+	"3": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "banyan_root_3"}, "tile": ","},   # banyan root 3 of 3, set a charmed pouch here while Buto Ijo circles (3.7; sets `flag:banyan_root_3`)
 }
 
 

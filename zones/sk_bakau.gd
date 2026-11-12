@@ -11,11 +11,11 @@ const MAP := [
 	"#....................r....r................................#",
 	"#....................rrrrrr................................#",
 	"#..........................................................#",
-	"#..............rr..........................rr..............#",
-	"#..............rr..........................rr..............#",
+	"#..............rr.............2............rr..............#",
+	"#..............rr.......1..................rr..............#",
 	"#..........................................................#",
-	"#...........................T..............................#",
-	"#.........................S................................#",
+	"#..........................................................#",
+	"#.........................S......3.........................#",
 	"#..........................................................#",
 	"#..........................................................#",
 	"Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY",
@@ -44,10 +44,12 @@ const SPOTS := {
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_karang", "spawn_id": "from_sk_bakau"}, "tile": ","},   # exit to sk_karang (east edge, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
 	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_sari", "cond": "step:mq4=12"}, "tile": "."},   # NPC Sari, in the mangrove with you (4.13 entry 3, `"quiet": true`)
-	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "bakau_beacons", "size": Vector2i(4,4)}, "tile": "."},   # trigger, tidal beacons puzzle (4.13 `puzzle_solved:bakau_beacons`)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "bakau_pack", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-3,0)], ["res://entities/enemies/ula_segara.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter bakau_pack
 	"K": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "k2_scale", "memory_id": "sq_k2_fisher"}, "tile": "."},   # clue, white scale in torn net (SQ-K2)
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_bakau", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu
+	"1": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tidal_beacon_1"}, "tile": "."},   # tidal beacon 1 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_1`)
+	"2": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tidal_beacon_2"}, "tile": "."},   # tidal beacon 2 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_2`)
+	"3": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tidal_beacon_3"}, "tile": "."},   # tidal beacon 3 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_3`)
 }
 
 

@@ -1,0 +1,519 @@
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_A2_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_A2_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_A3_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_A3_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_B2_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_B2_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_B4_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_B4_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_C4_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_C4_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_D3_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_D3_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_D5_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_D5_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_E4_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_E4_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_F%233_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_Fs3_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_G2_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_G2_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Violin%20Section/susVib/VlnEns_susVib_G4_v2.wav
+  dir=ms/strings_vln
+  out=VlnEns_susVib_G4_v2.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_A3_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_A3_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_B2_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_B2_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_B4_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_B4_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_C2_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_C2_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_C4_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_C4_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_D2_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_D2_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_D3_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_D3_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_D5_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_D5_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_E2_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_E2_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_E4_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_E4_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_F3_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_F3_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_G2_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_G2_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Viola%20Section/susvib/ViolaEns_susvib_G4_v2_1.wav
+  dir=ms/strings_vla
+  out=ViolaEns_susvib_G4_v2_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_A2_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_A2_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_B1_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_B1_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_B3_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_B3_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_C1_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_C1_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_C3_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_C3_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_D2_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_D2_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_D4_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_D4_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_E1_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_E1_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_E3_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_E3_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_F2_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_F2_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_F4_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_F4_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_G1_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_G1_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Cello%20Section/susvib/susvib_G3_v3_1.wav
+  dir=ms/strings_vc
+  out=susvib_G3_v3_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_A3_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_A3_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_A4_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_A4_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_A5_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_A5_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_A6_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_A6_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_C4_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_C4_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_C5_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_C5_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_C6_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_C6_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_C7_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_C7_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_E4_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_E4_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_E5_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_E5_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_E6_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_E6_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_G3_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_G3_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_G4_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_G4_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_G5_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_G5_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Violin/Arco%20Vib/LLVln_ArcoVib_G6_f.wav
+  dir=ms/violin
+  out=LLVln_ArcoVib_G6_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_A3_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_A3_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_A4_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_A4_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_A5_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_A5_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_C3_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_C3_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_C4_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_C4_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_C5_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_C5_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_C6_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_C6_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_E3_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_E3_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_E4_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_E4_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Flute/susvib/LDFlute_susvib_E5_v1_1.wav
+  dir=ms/flute
+  out=LDFlute_susvib_E5_v1_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Oboe/Vib/Oboe_Vib_A%232_v3_Main.wav
+  dir=ms/oboe
+  out=Oboe_Vib_As2_v3_Main.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Oboe/Vib/Oboe_Vib_A%233_v3_Main.wav
+  dir=ms/oboe
+  out=Oboe_Vib_As3_v3_Main.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Oboe/Vib/Oboe_Vib_A%234_v3_Main.wav
+  dir=ms/oboe
+  out=Oboe_Vib_As4_v3_Main.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Oboe/Vib/Oboe_Vib_D3_v3_Main.wav
+  dir=ms/oboe
+  out=Oboe_Vib_D3_v3_Main.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Oboe/Vib/Oboe_Vib_D4_v3_Main.wav
+  dir=ms/oboe
+  out=Oboe_Vib_D4_v3_Main.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Oboe/Vib/Oboe_Vib_D5_v3_Main.wav
+  dir=ms/oboe
+  out=Oboe_Vib_D5_v3_Main.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Oboe/Vib/Oboe_Vib_F3_v3_Main.wav
+  dir=ms/oboe
+  out=Oboe_Vib_F3_v3_Main.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Oboe/Vib/Oboe_Vib_F4_v3_Main.wav
+  dir=ms/oboe
+  out=Oboe_Vib_F4_v3_Main.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Woodwinds/Oboe/Vib/Oboe_Vib_F5_v3_Main.wav
+  dir=ms/oboe
+  out=Oboe_Vib_F5_v3_Main.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_A2_mf.wav
+  dir=ms/harp
+  out=KSHarp_A2_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_A4_mf.wav
+  dir=ms/harp
+  out=KSHarp_A4_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_A6_mf.wav
+  dir=ms/harp
+  out=KSHarp_A6_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_B1_mf.wav
+  dir=ms/harp
+  out=KSHarp_B1_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_B3_mf.wav
+  dir=ms/harp
+  out=KSHarp_B3_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_B5_mf.wav
+  dir=ms/harp
+  out=KSHarp_B5_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_B6_mf.wav
+  dir=ms/harp
+  out=KSHarp_B6_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_C3_mf.wav
+  dir=ms/harp
+  out=KSHarp_C3_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_C5_mf.wav
+  dir=ms/harp
+  out=KSHarp_C5_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_D2_mf.wav
+  dir=ms/harp
+  out=KSHarp_D2_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_D4_mf.wav
+  dir=ms/harp
+  out=KSHarp_D4_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_D6_mf.wav
+  dir=ms/harp
+  out=KSHarp_D6_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_E3_mf.wav
+  dir=ms/harp
+  out=KSHarp_E3_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_E5_mf.wav
+  dir=ms/harp
+  out=KSHarp_E5_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_F2_mf.wav
+  dir=ms/harp
+  out=KSHarp_F2_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_F4_mf.wav
+  dir=ms/harp
+  out=KSHarp_F4_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_F6_mf.wav
+  dir=ms/harp
+  out=KSHarp_F6_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_G3_mf.wav
+  dir=ms/harp
+  out=KSHarp_G3_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Harp/KSHarp_G5_mf.wav
+  dir=ms/harp
+  out=KSHarp_G5_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_A%230_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_As0_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_A1_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_A1_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_B2_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_B2_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_C%232_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_Cs2_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_C1_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_C1_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_D1_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_D1_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_E0_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_E0_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_E1_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_E1_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_E2_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_E2_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_F%230_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_Fs0_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_F%231_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_Fs1_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_G%231_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_Gs1_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_G%232_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_Gs2_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/Pizz/BKCtbss_Pizz_G0_v1_rr1.wav
+  dir=ms/bass_pizz
+  out=BKCtbss_Pizz_G0_v1_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_A%230_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_As0_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_A1_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_A1_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_B2_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_B2_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_C%232_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_Cs2_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_C1_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_C1_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_D1_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_D1_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_E1_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_E1_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_E2_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_E2_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_F%230_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_Fs0_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_F%231_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_Fs1_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_G%231_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_Gs1_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_G%232_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_Gs2_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/Strings/Solo%20Contrabass/SusVib/BKCtbss_SusVib_G0_v3_rr1.wav
+  dir=ms/bass_arco
+  out=BKCtbss_SusVib_G0_v3_rr1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/VSCO%201%20Percussion/varMetal/Gong/gong_hit_f.wav
+  dir=ms/perc
+  out=gong_hit_f.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/VSCO%201%20Percussion/varMetal/Gong/gong_hit_mf.wav
+  dir=ms/perc
+  out=gong_hit_mf.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/VSCO%201%20Percussion/drums/other/ethnic/giant/mallet/EthnicLargeMallet_hit_f_1.wav
+  dir=ms/perc
+  out=EthnicLargeMallet_hit_f_1.wav
+https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/VSCO%201%20Percussion/drums/other/ethnic/giant/mallet/EthnicLargeMallet_hit_ff_1.wav
+  dir=ms/perc
+  out=EthnicLargeMallet_hit_ff_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/B1_f_1.wav
+  dir=ms/zither
+  out=B1_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/B2_f_1.wav
+  dir=ms/zither
+  out=B2_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/B3_f_1.wav
+  dir=ms/zither
+  out=B3_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/B4_f_1.wav
+  dir=ms/zither
+  out=B4_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/C%232_f_1.wav
+  dir=ms/zither
+  out=Cs2_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/C%233_f_1.wav
+  dir=ms/zither
+  out=Cs3_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/C%234_f_1.wav
+  dir=ms/zither
+  out=Cs4_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/D%232_f_1.wav
+  dir=ms/zither
+  out=Ds2_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/D%233_f_1.wav
+  dir=ms/zither
+  out=Ds3_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/D%234_f_1.wav
+  dir=ms/zither
+  out=Ds4_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/F%232_f_1.wav
+  dir=ms/zither
+  out=Fs2_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/F%233_f_1.wav
+  dir=ms/zither
+  out=Fs3_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/F%234_f_1.wav
+  dir=ms/zither
+  out=Fs4_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/G%232_f_1.wav
+  dir=ms/zither
+  out=Gs2_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/G%233_f_1.wav
+  dir=ms/zither
+  out=Gs3_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Chordophones/Zithers/Dan%20Tranh/Normal/G%234_f_1.wav
+  dir=ms/zither
+  out=Gs4_f_1.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_A3_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_A3_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_A4_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_A4_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_B3_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_B3_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_B4_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_B4_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_C3_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_C3_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_C4_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_C4_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_D3_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_D3_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_D4_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_D4_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_E3_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_E3_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_E4_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_E4_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_F%233_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_Fs3_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_F%234_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_Fs4_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_G3_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_G3_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Aerophones/Edge-blown%20Aerophones/Baroque%20Tenor%20Recorder/SusVib/TenRecorder_SusVib_G4_rr1_Main.wav
+  dir=ms/recorder
+  out=TenRecorder_SusVib_G4_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_A2_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_A2_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_A4_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_A4_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_B3_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_B3_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_C3_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_C3_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_C5_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_C5_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_D4_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_D4_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_E3_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_E3_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_E5_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_E5_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_F2_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_F2_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_F4_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_F4_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Idiophones/Struck%20Idiophones/Vibraphone/Soft%20Mallets/Vibes_soft_G3_v2_rr1_Main.wav
+  dir=ms/vibes
+  out=Vibes_soft_G3_v2_rr1_Main.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Conga_HitFM_v2_rr1_Sum.wav
+  dir=ms/perc
+  out=Conga_HitFM_v2_rr1_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Conga_HitFM_v2_rr2_Sum.wav
+  dir=ms/perc
+  out=Conga_HitFM_v2_rr2_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Conga_HitN_v2_rr1_Sum.wav
+  dir=ms/perc
+  out=Conga_HitN_v2_rr1_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Conga_HitN_v2_rr2_Sum.wav
+  dir=ms/perc
+  out=Conga_HitN_v2_rr2_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Quinto_HitFM1_v2_rr1_Sum.wav
+  dir=ms/perc
+  out=Quinto_HitFM1_v2_rr1_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Quinto_HitFM1_v2_rr2_Sum.wav
+  dir=ms/perc
+  out=Quinto_HitFM1_v2_rr2_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Quinto_HitN_v2_rr1_Sum.wav
+  dir=ms/perc
+  out=Quinto_HitN_v2_rr1_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Quinto_HitN_v2_rr2_Sum.wav
+  dir=ms/perc
+  out=Quinto_HitN_v2_rr2_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Tumba_HitN_v3_rr1_Sum.wav
+  dir=ms/perc
+  out=Tumba_HitN_v3_rr1_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Conga/Tumba_HitN_v3_rr2_Sum.wav
+  dir=ms/perc
+  out=Tumba_HitN_v3_rr2_Sum.wav
+https://raw.githubusercontent.com/sgossner/VCSL/master/Membranophones/Struck%20Membranophones/Bass%20Drum%202/bassdrum_hit_f.wav
+  dir=ms/perc
+  out=bassdrum_hit_f.wav

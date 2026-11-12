@@ -12,8 +12,8 @@ marker = {"zone": "mt_pasar", "id": "pande_besi"}
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_M3_S2_OBJ"
-on = "area_entered:tuyul_hideout"
-marker = {"zone": "mt_tegal", "id": "tuyul_hideout"}
+all = [{"on": "area_entered:tuyul_hideout", "set_flag": "", "objective": "Q_SQ_M3_S2_P1"}, {"on": "talked_to:bean_trap", "set_flag": "", "objective": "Q_SQ_M3_S2_P2"}]
+marker = {"zone": "mt_tegal", "id": "bean_trap"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")

@@ -12,7 +12,7 @@ const MAP := [
 	"#_____________________________________________________rr_________________________________#",
 	"#___________x____________________________________________________________________________#",
 	"#________________________________________________________________________________________#",
-	"#________________________________________________________________________________________#",
+	"#_______________________________________________________________2________________________#",
 	"#_______________________________________________________________________________##########",
 	"#_______________________________________________________________________________#______r_#",
 	"#_______________________________________________________________________________#__H_____#",
@@ -21,8 +21,8 @@ const MAP := [
 	"Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,,,cC",
 	"Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,C",
 	"#_________,,____________________________________________________________________,________#",
-	"#_________,,____________________________________________________________________#___I____#",
-	"#____rr___,,________________________________________K_____J___F_________________#________#",
+	"#_________,,________________________________________1___________________________#___I____#",
+	"#____rr___,,________________________________________K_________F___________3_____#________#",
 	"#____rr___,,____________________________________________________________________#______r_#",
 	"#_________,,______________________________________________________rr____________##########",
 	"#_________,,____________________________rr________________________rr_____________________#",
@@ -50,15 +50,17 @@ const SPOTS := {
 	"j": {"scene": "res://entities/enemies/prajurit_terkutuk.tscn", "props": {}, "tile": "_"},   # loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id)
 	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "_"},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)
 	"x": {"scene": "res://entities/enemies/keris_hantu.tscn", "props": {}, "tile": "_"},   # loose keris hantu, roaming pack (respawns on zone reload, no unique_id)
-	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga", "cond": "flag:mq3_6"}, "tile": "_"},   # NPC Hariang Banga, camp talk at `timur_2` (optional, quiet; cond `flag:mq3_6`)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga", "cond": "flag:mq3_5d"}, "tile": "_"},   # NPC Hariang Banga, camp talk at `timur_2` (optional, quiet; cond `flag:mq3_6`)
 	"A": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pesisir"}, "tile": "_"},   # spawn, arrival from tt_pesisir (south corridor, link L14)
 	"B": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pesisir", "spawn_id": "from_tt_pasir"}, "tile": "_"},   # exit to tt_pesisir (south edge, bottom of the south corridor, 2 tiles; link L14, the K4 kabut is on the pesisir side)
 	"D": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_penjaga", "size": Vector2i(10,6), "waves": [[["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(0,0)]]]}, "tile": "_"},   # encounter timur_penjaga (**miniboss**, 3.15: the gatekeeper of the Sea of Sand, an elite Prajurit Terkutuk `timur_penjaga`)
 	"F": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "puzzle_pasir_dunes", "size": Vector2i(16,8)}, "tile": "_"},   # trigger, puzzle `puzzle_pasir_dunes` (3.15: line up the three cairns with the Hunter's ash so the wind shows the safe way across the loose sand; sets `flag:puzzle_pasir_dunes`, no gate)
 	"G": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_pasir_sight", "size": Vector2i(10,4)}, "tile": ","},   # trigger, beat `pasir_sight` staging (3.15: Candi Gandring across the sand; ASSUMED, no quest effect)
 	"I": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lc4_lontar", "memory_id": "lc4", "cond": "flag:mq3_6"}, "tile": "_"},   # clue, Laras's lontar fragment in the alcove (3.17, opens chapter `lc4`; ASSUMED id)
-	"J": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "pasir_waymarkers", "size": Vector2i(4,4)}, "tile": "_"},   # trigger, ancient stone waymarkers in the Sea of Sand (3.15 puzzle `pasir_waymarkers`; its clue text is shown on `puzzle_solved:pasir_waymarkers`, the clue and the puzzle share the id, so no separate clue spot)
 	"K": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c3_road_mark", "cond": "flag:mq3_6"}, "tile": "_"},   # clue, Ranga's old shield mark / Lengser's note on the desert boundary stone (SQ-C3 fragment 2)
+	"1": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "waymarker_1"}, "tile": "_"},   # stone waymarker 1 of 3 in the ash-gale, touch in order to see the next (3.15; sets `flag:waymarker_1`)
+	"2": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "waymarker_2"}, "tile": "_"},   # stone waymarker 2 of 3 in the ash-gale, touch in order to see the next (3.15; sets `flag:waymarker_2`)
+	"3": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "waymarker_3"}, "tile": "_"},   # stone waymarker 3 of 3 in the ash-gale, touch in order to see the next (3.15; sets `flag:waymarker_3`)
 }
 
 

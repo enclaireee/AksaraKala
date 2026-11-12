@@ -5,7 +5,7 @@ const MAP := [
 	"############################NN##############################",
 	"#...........................n,.............................#",
 	"#......rrrrrr...............,,...................rr........#",
-	"#......r....r...............,,...................rr........#",
+	"#......r....r...............,,e..................rr........#",
 	"#......r..c.r...............,,.............................#",
 	"#......r....................,,.........1...................#",
 	"#......rrrrrr...............,,.............................#",
@@ -29,7 +29,7 @@ const MAP := [
 	"#......_______H____________.,,.............................#",
 	"#......_________________s__.,,.............................#",
 	"#......__________B_________.,,.............................#",
-	"#......____________________.,,........k....................#",
+	"#......____________________.,,........k.......L............#",
 	"#...........................,,.......p....T...l............#",
 	"#..............................D...........................#",
 	"#.....~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.....#",
@@ -60,14 +60,16 @@ const SPOTS := {
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_1", "item_id": "ilmu:380"}, "tile": "."},   # chest: 380 Ilmu (behind driftwood)
 	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "song_1"}, "tile": "_"},   # clue, the first forgotten verse, with the net-mending family at the west end of the net yard (4.11 K8, 1 of 3)
 	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "song_2"}, "tile": "_"},   # clue, the second verse, with the family drying the sea-offering baskets (4.11 K8, 2 of 3)
-	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "song_3", "memory_id": "k8_wiryo_wife"}, "tile": "."},   # clue, the third verse, with Mbah Wiryo's own family on the shore rock where he calls his wife's name at dusk (4.11 K8, 3 of 3; opens memory `k8_wiryo_wife`)
+	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "song_3", "cond": "flag:clue_song_1,flag:clue_song_2", "memory_id": "k8_wiryo_wife"}, "tile": "."},   # clue, the third verse, with Mbah Wiryo's own family on the shore rock where he calls his wife's name at dusk (4.11 K8, 3 of 3; opens memory `k8_wiryo_wife`)
 	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nelayan_jala"}, "tile": "_"},   # NPC net mender (arrival slice, flavor: the village is mending nets for the sea offering but nobody remembers the songs; unnamed)
 	"W": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_nelayan", "spawn_id": "from_sk_pantai"}, "tile": ","},   # exit to sk_nelayan (west edge, 2 tiles)
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_nelayan"}, "tile": ","},   # spawn, arrival from sk_nelayan
 	"k": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "k2_fisher"}, "tile": "."},   # NPC river-mouth fisher (SQ-K2)
 	"s": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "c3_shore_net", "memory_id": "sq_c3_ranga"}, "tile": "_"},   # clue, Ranga's carved driftwood token in the shore net (SQ-C3)
-	"p": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cepot"}, "tile": "."},   # NPC Cepot on the coast (SQ-C4 part 3)
-	"l": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "c4_lamp", "size": Vector2i(7,5)}, "tile": "."},   # trigger, hold the ward-lamp through the wave (SQ-C4 part 3)
+	"p": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cepot", "cond": "!step:mq4=7"}, "tile": "."},   # NPC Cepot on the coast (SQ-C4 part 3)
+	"l": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "c4_lamp", "cond": "quest:sq_c4_3=active"}, "tile": "."},   # the ward-lamp on the turtle beach; light it with Cepot to start the night defense (SQ-C4 part 3 step 2; sets `flag:c4_lamp`)
+	"e": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "cepot", "cond": "step:mq4=7"}, "tile": "."},   # NPC Cepot at the south gate with a bundle from Ibu (4.8; SQ-C4 part 3 hook)
+	"L": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "c4_lamp_night", "size": Vector2i(14,7), "cond": "flag:c4_lamp,step:sq_c4_3=1", "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-4,0)], ["res://entities/enemies/ula_segara.tscn", Vector2i(4,0)]], [["res://entities/enemies/ula_segara.tscn", Vector2i(-4,-1)], ["res://entities/enemies/ula_segara.tscn", Vector2i(4,-1)]]]}, "tile": "."},   # encounter c4_lamp_night, two waves at the ward-lamp (SQ-C4 part 3 step 2, `area_cleared:c4_lamp_night`)
 }
 
 

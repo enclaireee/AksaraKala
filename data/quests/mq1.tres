@@ -59,10 +59,10 @@ marker = {"zone": "ts_leuwi", "id": "oncor"}
 [sub_resource type="Resource" id="s8"]
 script = ExtResource("2")
 objective = "Q_MQ1_S8_OBJ"
-on = "puzzle_solved:leuwi_outer_oncor"
+all = [{"on": "talked_to:leuwi_oncor_1", "set_flag": "", "objective": "Q_MQ1_S8_P1", "marker": {"zone": "ts_leuwi", "id": "leuwi_oncor_1"}}, {"on": "talked_to:leuwi_oncor_2", "set_flag": "", "objective": "Q_MQ1_S8_P2", "marker": {"zone": "ts_leuwi", "id": "leuwi_oncor_2"}}, {"on": "talked_to:leuwi_oncor_3", "set_flag": "", "objective": "Q_MQ1_S8_P3", "marker": {"zone": "ts_leuwi", "id": "leuwi_oncor_3"}}, {"on": "area_cleared:leuwi_mist", "set_flag": "", "objective": "Q_MQ1_S8_P4", "marker": {"zone": "ts_leuwi", "id": "leuwi_mist"}}]
 set_flag = "mq1_h2b"
 recap = "Q_MQ1_S8_DONE"
-marker = {"zone": "ts_leuwi", "id": "leuwi_outer_oncor"}
+marker = {"zone": "ts_leuwi", "id": "leuwi_oncor_1"}
 
 [sub_resource type="Resource" id="s9"]
 script = ExtResource("2")
@@ -83,7 +83,7 @@ marker = {"zone": "ts_leuwi", "id": "sandekala"}
 [sub_resource type="Resource" id="s11"]
 script = ExtResource("2")
 objective = "Q_MQ1_S11_OBJ"
-all = [{"on": "area_cleared:sunda_batutulis", "set_flag": "", "objective": "Q_MQ1_S11_P1"}, {"on": "puzzle_solved:batu_stones_123", "set_flag": "mq1_4", "objective": "Q_MQ1_S11_P2"}]
+all = [{"on": "area_cleared:sunda_batutulis", "set_flag": "", "objective": "Q_MQ1_S11_P1"}, {"on": "talked_to:batu_stone_1", "set_flag": "", "objective": "Q_MQ1_S11_P3", "marker": {"zone": "ts_leuweung", "id": "batu_stone_1"}}, {"on": "talked_to:batu_stone_2", "set_flag": "", "objective": "Q_MQ1_S11_P4", "marker": {"zone": "ts_leuweung", "id": "batu_stone_2"}}, {"on": "talked_to:batu_stone_3", "set_flag": "", "objective": "Q_MQ1_S11_P5", "marker": {"zone": "ts_leuweung", "id": "batu_stone_3"}}]
 set_flag = "mq1_4"
 recap = "Q_MQ1_S11_DONE"
 marker = {"zone": "ts_leuweung", "id": "sunda_batutulis"}
@@ -115,10 +115,10 @@ marker = {"zone": "ts_sawah", "id": "sunda_terraces"}
 [sub_resource type="Resource" id="s15"]
 script = ExtResource("2")
 objective = "Q_MQ1_S15_OBJ"
-all = [{"on": "puzzle_solved:sawah_sluices", "set_flag": "", "objective": "Q_MQ1_S15_P1"}, {"on": "talked_to:sunda_weaver", "set_flag": "mq1_6", "objective": "Q_MQ1_S15_P2"}]
+all = [{"on": "talked_to:sluice_wheel_1", "set_flag": "", "objective": "Q_MQ1_S15_P3", "marker": {"zone": "ts_sawah", "id": "sluice_wheel_1"}}, {"on": "talked_to:sluice_wheel_2", "set_flag": "", "objective": "Q_MQ1_S15_P4", "marker": {"zone": "ts_sawah", "id": "sluice_wheel_2"}}, {"on": "talked_to:sunda_weaver", "set_flag": "mq1_6", "objective": "Q_MQ1_S15_P2", "marker": {"zone": "ts_sawah", "id": "sunda_weaver"}}]
 set_flag = "mq1_6"
 recap = "Q_MQ1_S15_DONE"
-marker = {"zone": "ts_sawah", "id": "sawah_sluices"}
+marker = {"zone": "ts_sawah", "id": "sluice_wheel_1"}
 
 [sub_resource type="Resource" id="s16"]
 script = ExtResource("2")
@@ -187,10 +187,10 @@ marker = {"zone": "ts_kawah", "id": "boat_ribs"}
 [sub_resource type="Resource" id="s24"]
 script = ExtResource("2")
 objective = "Q_MQ1_S24_OBJ"
-on = "boss_defeated:sangkuriang"
+all = [{"on": "talked_to:rarang_post", "set_flag": "", "objective": "Q_MQ1_S24_P1", "marker": {"zone": "ts_kawah", "id": "rarang_post"}}, {"on": "boss_defeated:sangkuriang", "set_flag": "mq1_10", "objective": "Q_MQ1_S24_P2", "marker": {"zone": "ts_kawah", "id": "sangkuriang"}}]
 set_flag = "mq1_10"
 recap = "Q_MQ1_S24_DONE"
-marker = {"zone": "ts_kawah", "id": "sangkuriang"}
+marker = {"zone": "ts_kawah", "id": "rarang_post"}
 [resource]
 script = ExtResource("1")
 id = "mq1"

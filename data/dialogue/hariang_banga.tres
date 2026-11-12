@@ -7,6 +7,10 @@ script = ExtResource("1")
 npc_id = "hariang_banga"
 name_key = "NPC_HARIANG_BANGA_NAME"
 entries = Array[Dictionary]([
+	{"if": ["step:mq3=15", "zone:tt_pasir", "flag:choice_mercy"], "lines": ["DLG_HARIANG_BANGA_V1", "@NPC_HERO_NAME", "DLG_HARIANG_BANGA_H1", "@NPC_HARIANG_BANGA_NAME", "DLG_HARIANG_BANGA_V2", "DLG_HARIANG_BANGA_LANCERS"], "do": ["flag:camp_timur"]},
+	{"if": ["step:mq3=15", "zone:tt_pasir"], "lines": ["DLG_HARIANG_BANGA_V1", "@NPC_HERO_NAME", "DLG_HARIANG_BANGA_H1", "@NPC_HARIANG_BANGA_NAME", "DLG_HARIANG_BANGA_V2"], "do": ["flag:camp_timur"]},
+	{"if": ["step:mq4=4", "flag:choice_mercy"], "lines": ["DLG_HARIANG_BANGA_TABLE_MERCY"], "do": []},
+	{"if": ["step:mq4=4"], "lines": ["DLG_HARIANG_BANGA_TABLE_JUDGMENT"], "do": []},
 	{"if": ["step:sq_c2=3", "flag:c2_sealed", "zone:tt_pasir", "!flag:c2_delivered"], "lines": ["DLG_HARIANG_BANGA_V10", "DLG_HARIANG_BANGA_V514", "@NPC_HERO_NAME", "DLG_HARIANG_BANGA_H504", "@NPC_HARIANG_BANGA_NAME", "DLG_HARIANG_BANGA_V515"], "do": ["flag:c2_delivered"], "quiet": true},
 	{"if": ["quest:sq_c2=active"], "lines": ["DLG_HARIANG_BANGA_V13"], "do": []},
 	{"if": ["quest:sq_c2=available", "quest:mq2=done", "flag:choice_mercy"], "lines": ["DLG_HARIANG_BANGA_V11", "DLG_HARIANG_BANGA_V12", "DLG_HARIANG_BANGA_V510", "DLG_HARIANG_BANGA_V512", "@NPC_HERO_NAME", "DLG_HARIANG_BANGA_H503", "@NPC_HARIANG_BANGA_NAME", "DLG_HARIANG_BANGA_V513"], "do": ["start:sq_c2"]},

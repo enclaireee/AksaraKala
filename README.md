@@ -9,7 +9,7 @@ Combine real-time melee and ranged combat with an authentic spellcasting system:
 ## Features
 
 - **Gesture-Based Spellcasting**: Real-time point-cloud recognizer interprets drawn Aksara glyphs to unleash spells (burst, bolt, ward, heal, and more).
-- **Folklore-Inspired World**: Explore interconnected regions spanning Desa Purwa, Tatar Sunda, Gunung Padang, Alas Roban, Dieng, and beyond.
+- **Folklore-Inspired World**: Explore interconnected regions spanning Desa Purwa, Tatar Sunda, Keraton Galuh, Mataram, Tanah Timur, Segara Kidul, and Gua Kala (49 areas across 7 regions).
 - **Dynamic Combat System**: 3-hit combos, directional dodge i-frames, perfect-dodge rewards, and poise/stagger mechanics.
 - **Layered Audio System**: Procedural and gamelan-inspired dynamic soundtracks that adapt across exploration, tension, and boss encounters.
 
@@ -75,6 +75,7 @@ $GODOT --headless --path . -s tests/save_test.gd
 | **Healing Flask** | `Q` | Consume Jamu charge |
 | **Interact** | `E` | Talk to NPCs, open chests, activate Petilasan shrines |
 | **Menu / Journal** | `Tab` | Inspect inventory, stats, quest tracker, and Aksara grimoire |
+| **Map** | `M` | Open and toggle world / local area map directly |
 | **Pause / Cancel** | `Esc` | Pause game, close menu, or cancel active spell drawing |
 
 *(Left-handed presets and custom bindings are configurable in settings.)*
@@ -104,14 +105,24 @@ budayago/
 Helper scripts located in `.docs/` and `tools/`:
 
 ```bash
+# Validate complete quest data, dialogue resources, and translation keys:
+python3 tools/quest_audit.py
+
+# Check narrative introduction order and character references:
+python3 .docs/know_check.py
+
+# Validate quest runtime and pacing balance:
+python3 .docs/pacing_model.py
+
 # Verify stroke confusability and recognizer datasets:
 python3 .docs/glyph_strokes.py
 
 # Check damage curves, TTK, and boss scaling:
 python3 .docs/balance_model.py
 
-# Generate/synthesize game audio assets:
-python3 tools/gen_audio.py
+# Build recorded audio from the manifests, then render the composed music:
+/usr/bin/python3 tools/build_audio.py
+/usr/bin/python3 tools/gen_music.py
 ```
 
 ---
@@ -120,7 +131,13 @@ python3 tools/gen_audio.py
 
 Full game design specifications, lore sources, and architectural decisions are documented in detail under [`.docs/`](.docs/):
 - [`.docs/concept.md`](.docs/concept.md): Core vision, gameplay pillars, cultural principles
-- [`.docs/combat.md`](.docs/combat.md): Frame timings, combo chains, poise mechanics
-- [`.docs/spells.md`](.docs/spells.md): Aksara drawing recognizer and spell catalogue
-- [`.docs/world.md`](.docs/world.md): Regions, points of interest, and zone layouts
+- [`.docs/story.md`](.docs/story.md): Story canon (v5), the Four Great Seals, Laras chapters (`LC1`–`LC6`), 6 Major Choices
+- [`.docs/combat.md`](.docs/combat.md): 3-hit combos, frame timings, poise breaks, statuses
+- [`.docs/spells.md`](.docs/spells.md): Aksara drawing recognizer, 9 glyphs + 3 name glyphs, 32 class spells
+- [`.docs/world.md`](.docs/world.md): Regions, points of interest, 49 areas, and town architecture
+- [`.docs/quests.md`](.docs/quests.md): Main quest (138 steps), 20 side quests, reward economy
+- [`.docs/tutorial.md`](.docs/tutorial.md): In-story quiet tutorial ladder and lesson progression
+- [`.docs/ui.md`](.docs/ui.md): HUD design, 7-tab field book menu, illustrated map system, pixel typography
+- [`.docs/architecture.md`](.docs/architecture.md): Autoloads, scene composition, Kelir v2 stage, physics layers
 - [`.docs/audio.md`](.docs/audio.md): Gamelan scale theory and layered audio architecture
+- [`.docs/HANDOFF.md`](.docs/HANDOFF.md): Authoritative system reference, test suite status, and roadmap

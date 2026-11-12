@@ -12,7 +12,7 @@ const MAP := [
 	"##............................bbbb...........###############",
 	"##.....Y.I....................bbbb.......y...###############",
 	"##......o.....................bbbb.........y.###############",
-	"##............TB,,R,,,........bbbb...........###############",
+	"##............T,,,R,,,........bbbb...........###############",
 	"##..................,,..............bbbb.....###############",
 	"##...bbbb.7.........,,.....6........bbbb.....###############",
 	"##...bbbb...........,,..............bbbb.....###############",
@@ -20,7 +20,7 @@ const MAP := [
 	"##...bbbb...........,,.......................###############",
 	"##..................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,F,,,,,eX",
 	"##........r.........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
-	"##...4...............................h.......###############",
+	"##...................................h.......###############",
 	"##...............................w.w.........###############",
 	"##############,,#####################bbb,,bbbbbbbbbbbbbbbbb#",
 	"###.......................###.......#bbb,,bbbbbbbbbbbbbbbbb#",
@@ -45,12 +45,10 @@ const SPOTS := {
 	"@": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kebun"}, "tile": ","},   # spawn, arrival from ts_kebun
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_boarlane", "size": Vector2i(11,3), "waves": [[["res://entities/enemies/wild_boar.tscn", Vector2i(-4,0)], ["res://entities/enemies/wild_boar.tscn", Vector2i(-4,1)]]]}, "tile": ","},   # encounter sunda_boarlane
 	"R": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "sunda_batutulis", "size": Vector2i(20,12), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(3,3)], ["res://entities/enemies/kuntilanak.tscn", Vector2i(7,-4)]]]}, "tile": ","},   # encounter sunda_batutulis
-	"B": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "batu_stones_123", "size": Vector2i(4,4)}, "tile": ","},   # trigger, align the three ancient name-stones (MQ1 1.11 `puzzle_solved:batu_stones_123`)
 	"T": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_tulis"}, "tile": ","},   # batu tulis stone, teaches Nga (MQ1 1.12); its learn entry needs `flag:batu_3` (the puzzle), its first lines are readable before
 	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "lutung_kasarung"}, "tile": "."},   # NPC Lutung Kasarung spirit (SQ-S1)
 	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ki_darsa"}, "tile": "."},   # NPC Ki Darsa, juru pantun in the forest (SQ-S1 giver in v5)
 	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "s1_offerings", "cond": "flag:mq1_3"}, "tile": "."},   # clue, the langur's fruit offerings in the forest grove (SQ-S1 `clue_examined:s1_offerings`)
-	"4": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "angklung_4"}, "tile": "."},   # angklung 4
 	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_ironring", "item_id": "iron_ring"}, "tile": "."},   # chest: Iron Ring (secret 3, alcove)
 	"q": {"scene": "res://entities/enemies/kuntilanak_elite.tscn", "props": {"unique_id": "kuntilanak_elite"}, "tile": "."},   # elite Kuntilanak (SQ-S2), the miniboss: carries `unique_id` and elite stats (HP 160, Dmg 10, Ilmu 24, bestiary, **TUNE**), a plain spot inert until `mq1_3` (not an encounter); the lakeshore wave entry in ts_situ reuses the scene without a `unique_id`, so it never fires `enemy_killed:kuntilanak_elite`
 	"d": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "dark_grove", "size": Vector2i(22,10)}, "tile": "."},   # trigger, dark grove entered (darkens arena, SQ-S2)
@@ -67,9 +65,9 @@ const SPOTS := {
 	"y": {"scene": "res://entities/enemies/wild_boar.tscn", "props": {}, "tile": "."},   # loose wild boar, roaming pack (respawns on zone reload, no unique_id)
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
 	"h": {"scene": "res://entities/enemies/kuntilanak.tscn", "props": {}, "tile": "."},   # loose kuntilanak, roaming pack (respawns on zone reload, no unique_id)
-	"5": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_1"}, "tile": "."},   # puzzle, fallen name-stone 1, the east stone (MQ1 1.11; stand it up, sets `batu_1`)
-	"6": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_2"}, "tile": "."},   # puzzle, fallen name-stone 2 (entry needs `flag:batu_1`, sets `batu_2`; out of order it shows a hint line)
-	"7": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_3"}, "tile": "."},   # puzzle, fallen name-stone 3, the west stone (entry needs `flag:batu_2`, sets `batu_3`; the Batu Tulis `T` can then be read)
+	"5": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_1"}, "tile": "."},   # puzzle, fallen name-stone 1, the east stone (MQ1 1.11, in order; sets `batu_stone_1` and `batu_1`)
+	"6": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_2"}, "tile": "."},   # puzzle, fallen name-stone 2 (needs `batu_stone_1`, sets `batu_stone_2`, `batu_2`; out of order a hint line)
+	"7": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "batu_stone_3"}, "tile": "."},   # puzzle, fallen name-stone 3, the west stone (needs `batu_stone_2`, sets `batu_stone_3`, `batu_3`; the Batu Tulis `T` can then be read)
 }
 
 

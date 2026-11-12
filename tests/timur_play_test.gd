@@ -14,14 +14,14 @@ const ROUTE := [
 	"go:tt_kulon", "do:buto_ambush_1", "q:mq3=active:2",
 	# 3.3 the red marks and Mpu Wirasana, then 3.4 the practice marks (one entry counts twice)
 	"go:tt_sabana", "go:tt_beringin", "do:timur_marks", "do:timur_empu", "q:mq3=active:3",
-	"do:timur_praktik_mark", "q:mq3=active:4",
+	"cast:jawa_ha", "cast:jawa_ha", "q:mq3=active:4",
 	# 3.5 Mbok Srini and the three spilled pouches
 	"go:tt_sabana", "go:tt_kali", "do:mbok_srini",
 	"do:seeds", "do:needle_case", "do:salt_terasi", "q:mq3=active:5",
 	# 3.6 Buto Ambush #2 in the canyon
-	"do:buto_ambush_2", "q:mq3=active:6",
+	"do:seed_marker", "q:mq3=active:5", "do:buto_ambush_2", "q:mq3=active:6",
 	# 3.7 Buto Ambush #3 at the banyan, then 3.8 the K4 memory
-	"go:tt_sabana", "go:tt_beringin", "do:buto_ambush_3", "q:mq3=active:7",
+	"go:tt_sabana", "go:tt_beringin", "do:banyan_root_1", "do:banyan_root_2", "do:banyan_root_3", "q:mq3=active:6", "do:buto_ambush_3", "q:mq3=active:7",
 	"do:banyan_altar", "q:mq3=active:8",
 	# 3.9 lure Buto Ijo into the lair (the long way round through the canyon road)
 	"go:tt_sabana", "go:tt_kali", "go:tt_ladang", "do:buto_ijo", "q:mq3=active:9",
@@ -34,9 +34,9 @@ const ROUTE := [
 	# 3.14 the volcanic coast
 	"go:tt_pesisir", "do:timur_pesisir", "q:mq3=active:14",
 	# 3.15 the Sea of Sand: the plain fight, then the waymarkers
-	"go:tt_pasir", "do:timur_pasir", "do:pasir_waymarkers", "q:mq3=active:15",
+	"go:tt_pasir", "do:timur_pasir", "do:waymarker_1", "do:waymarker_2", "do:waymarker_3", "q:mq3=active:15",
 	# 3.16 the desert petilasan, 3.17 the LC4 chapter
-	"do:timur_2", "q:mq3=active:16",
+	"do:timur_2", "q:mq3=active:15", "do:hariang_banga", "q:mq3=active:16",
 	"do:lc4_lontar", "q:mq3=active:17",
 	# 3.18 the wind tunnel into Candi Gandring, then the shrine sight beat
 	"go:tt_candi", "do:candi_inner_sanctum", "q:mq3=active:18", "beat:shrine_sight",
@@ -69,7 +69,7 @@ func _initialize() -> void:
 	game.save_path = "user://test_timur_play.json"
 	for f in ["mq0_done", "mq1_10", "mqg_7", "mq2_1", "mq2_2", "mq2_3", "mq2_4", "mq2_5", "mq2_6", "mq2_7", "mq2_8", "mq2_9",
 			"beat_hunter_raid", "beat_laras_1", "beat_naga", "beat_galuh_bout", "beat_laras_2", "beat_cage",
-			"beat_hunter_war", "beat_laras_3", "beat_ford", "beat_truce"]:
+			"beat_hunter_war", "beat_laras_3", "beat_ford", "beat_truce", "beat_confession", "beat_escape"]:
 		game.flags[f] = true
 	for q in ["mq1", "mqg", "mq2"]:
 		game.quests[q] = {"state": "done", "step": 0, "count": 0, "resolution": ""}
@@ -88,6 +88,7 @@ func _initialize() -> void:
 		await _drain()
 		match kv[0]:
 			"go": ok = await _go(kv[1])
+			"cast": events.spell_cast.emit(kv[1], 1.0)
 			"do": ok = await _do(kv[1])
 			"q": ok = _expect(kv[1])
 			"has": ok = check(game.inventory.has(kv[1]), "no %s in the inventory" % kv[1])
@@ -196,6 +197,8 @@ func _go(area: String) -> bool:
 
 func _target(id: String) -> Node:
 	for n in zone.entities.find_children("*", "", true, false):
+		if n is CanvasItem and not n.visible:
+			continue   # a cond-hidden twin (the epilogue Hariang is not the one at Ibu's table), as mataram_play_test
 		for k in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.get("clue_id"), n.get("memory_id")]:
 			if (k is String or k is StringName) and String(k) == id and not n.is_queued_for_deletion():
 				return n

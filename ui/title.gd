@@ -249,6 +249,7 @@ func _to_class_select() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("ui_cancel"):
 		return
+	Snd.play("ui_back")
 	if _card:
 		_close_card()
 		get_viewport().set_input_as_handled()

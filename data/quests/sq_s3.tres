@@ -7,14 +7,14 @@
 script = ExtResource("2")
 objective = "Q_SQ_S3_S1_OBJ"
 on = "item_picked:angklung_*"
+count = 3
 marker = {"zone": "ts_kampung", "id": "angklung_leader"}
-count = 5
 
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_SQ_S3_S2_OBJ"
-on = "talked_to:angklung_leader"
-marker = {"zone": "ts_kampung", "id": "angklung_leader"}
+all = [{"on": "talked_to:angklung_frame_1", "set_flag": "", "objective": "Q_SQ_S3_S2_P1", "marker": {"zone": "ts_kampung", "id": "angklung_frame_1"}}, {"on": "talked_to:angklung_frame_2", "set_flag": "", "objective": "Q_SQ_S3_S2_P2", "marker": {"zone": "ts_kampung", "id": "angklung_frame_2"}}, {"on": "talked_to:angklung_frame_3", "set_flag": "", "objective": "Q_SQ_S3_S2_P3", "marker": {"zone": "ts_kampung", "id": "angklung_frame_3"}}]
+marker = {"zone": "ts_kampung", "id": "angklung_frame_1"}
 
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
