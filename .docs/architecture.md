@@ -204,6 +204,14 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 - Launch Intro (`ui/intro.tscn`): 10 s wordless cinematic storm-and-dawn sequence.
 - Typography & Theme: `ui/theme.tres` with pixel fonts (Tiny5 8 body, Jersey 10 at 19 headings, Jersey 15 at 27 display) and the v3 dusk palette (`UIFx`). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
 
+## 10b. Demo mode (user call 2026-11-12, **ASSUMED**)
+A player-facing way to try any part of the story without playing up to it. The title's **Demo** card lists, per act, the start of the act, the first arrival in each area of the main route and the door of each boss (`DemoRoute.checkpoints()`, read from the main quest data, so it follows the quests when they change). A class can be picked.
+- **Organic state.** `ui/demo_route.gd` (`DemoRoute`) starts a real `Game.new_game` and plays the main quest step by step through the real quest engine: it walks area to area on `Zones.ADJ` (zone_entered on each arrival), talks to the NPC at each marker (that NPC's dialogue entry, first choice, its actions), lets every story beat whose condition holds play once (`beats.tres`), examines clues, lives memories (`memory_<id>` + `memory_done`, Laras flags), writes (`name_written`), clears encounters, beats bosses (`Game.killed`, the boss's Ilmu), rests at every petilasan it passes (`last_petilasan`, Ilmu spent on levels in the class's order), opens every chest and takes every pickup in sight, opens the shortcuts it passes from their open side, equips the best weapon of its class's kind and the heaviest armor, and does the side quests of the region it is in. A trigger it cannot stage from a scene is fired as its own event. So quests, flags (choices: always the first option), items, codex and levels are what play leaves.
+- **Levels.** Kill Ilmu is modelled (`KILL_ILMU` per enemy by region, 4 loose enemies per first visit, **TUNE**); at a boss door the hero is lifted to at least the low end of [balance.md](balance.md) 2.2 (`LEVEL_FLOOR`, **TUNE**).
+- **No side effects while replaying.** `Game.replaying` turns off `save_game` and the `quest_*` / `lesson_offered` / `consequence_noted` signals (no jingles, cards or the epilogue). The demo then saves once to `Game.DEMO_SAVE` (`user://demo_save.json`, `Game.demo` set); the title puts `save_path` back to `Game.SAVE_PATH` and resets the state, so the real save is never touched.
+- **Placement.** The prologue start is a plain new game; a boss whose area has a petilasan starts rested at it; anything else enters the area by the spawn the route came in on.
+- `tests/demo_test.gd` builds every checkpoint and checks it.
+
 ## 11. Input map
 `move_up/down/left/right`, `attack`, `dodge`, `cast`, `heal_jamu`, `interact`, `menu`, `map` (`M`), `pause` (`Esc`). P0: two presets (Default, Left-handed) and a mouse-button swap; P1: free rebinding. Details and notes: [controls.md](controls.md).
 

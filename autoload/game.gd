@@ -34,7 +34,11 @@ const DEFAULT_NAME := "Jaka"   # ASSUMED (ui.md 3)
 ## he / she / they -> [they, them, their, They] for Game.fmt.
 const PRONOUNS := {"he": ["he", "him", "his", "He"], "she": ["she", "her", "her", "She"], "they": ["they", "them", "their", "They"]}
 
-var save_path := "user://save.json"   # tests point this elsewhere
+const SAVE_PATH := "user://save.json"
+const DEMO_SAVE := "user://demo_save.json"   # demo mode plays in its own slot, never the real save (ui/demo_route.gd)
+var save_path := SAVE_PATH   # tests point this elsewhere
+var demo := false        # a run started from the title's Demo card; the title puts save_path back
+var replaying := false   # DemoRoute is replaying the route: no saves, no quest_* signals (no jingles, no cards)
 
 var class_id := ""
 var stats := {}
@@ -778,6 +782,8 @@ func restore() -> void:
 
 
 func _emit(sig: String, id: String) -> void:
+	if replaying:
+		return
 	var ev := get_node_or_null("/root/Events")
 	if ev:
 		ev.emit_signal(sig, id)
@@ -857,6 +863,8 @@ func has_save() -> bool:
 ## Write tmp, copy the current save to .bak, rename tmp over the save. A crash mid-write never
 ## leaves a broken save.json.
 func save_game() -> bool:
+	if replaying:
+		return true   # DemoRoute saves once, when the replay is over
 	if in_memory():
 		return false   # no saves inside a Kelir memory: the one made at the clue (with memory_return) resumes there
 	var tmp := save_path + ".tmp"

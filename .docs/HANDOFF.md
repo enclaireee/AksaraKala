@@ -163,4 +163,5 @@ Authoritative development status and system architecture reference for **Aksara 
 - **Clean Git Status:** Before concluding any task, verify with `git status` and `git diff --stat`. Leave no scratch files, debug logs, or unintended edits.
 - **No Third-Party Attribution in Commits:** All git commits must be made solely by the user without AI co-author trailers.
 - 2026-11-11: quests.md §9 added: quest flow v6 (old → new), pending user approval. Step numbers unchanged; fake puzzles become real props; broken gates listed. Fold into §4–§6 after approval.
+- 2026-11-12: Demo mode (user call): title **Demo** card, `ui/demo_route.gd` replays the story through the real quest engine to any act start, area arrival or boss door ([architecture.md](architecture.md) 10b). Own save slot. `tests/demo_test.gd` not yet run (no Godot in the cloud session): run it, and the i18n import for the 6 new `UI_DEMO*` keys.
 - 2026-11-11: quests.md §9 (quest flow v6) approved by the user; it overrides §4–§6 where they differ. Build in progress (props, gates, text rewrite).

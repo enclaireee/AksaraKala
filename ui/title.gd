@@ -21,6 +21,13 @@ var _card_from: Control          # menu entry to refocus when the card closes
 var _full_btn: Button
 var _lang_btn: Button
 var _fade: ColorRect
+var _demo_class := 0              # index into DemoRoute.CLASSES
+var _demo_act := 0                # index into DemoRoute.MAIN
+var _demo_cps: Array = []         # DemoRoute.checkpoints(), read when the Demo card opens
+var _demo_cls_btn: Button
+var _demo_act_lbl: Label
+var _demo_note: Label
+var _demo_list: VBoxContainer
 var _t := 0.0
 var _leaving := false
 
@@ -56,6 +63,11 @@ static func save_language(lang: String) -> void:
 
 
 func _ready() -> void:
+	var gm := get_node("/root/Game")
+	if gm.demo:   # back from a demo run: the real save slot again, and no demo state left in memory
+		gm.demo = false
+		gm.save_path = gm.SAVE_PATH
+		gm._reset()
 	TranslationServer.set_locale(load_language())
 	GameSettings.apply_display()
 	Snd.music("title", 2.0)
@@ -101,6 +113,7 @@ func _ready() -> void:
 	if get_node("/root/Game").has_save():
 		_btn("UI_CONTINUE", _continue)
 	_btn("UI_NEW_GAME", _new, false)
+	_btn("UI_DEMO", _open_card.bind("demo"), false)
 	_btn("UI_SETTINGS", _open_card.bind("settings"), false)
 	_btn("UI_ABOUT", _open_card.bind("about"), false)
 	_btn("UI_QUIT", func() -> void: get_tree().quit())
@@ -275,7 +288,7 @@ func _open_card(which: String) -> void:
 	v.size = _card.size - Vector2(20, 16)
 	v.add_theme_constant_override("separation", 2)
 	_card.add_child(v)
-	v.add_child(UIFx.text("UI_SETTINGS" if which == "settings" else "UI_ABOUT", "head", UIFx.HEAD))
+	v.add_child(UIFx.text({"settings": "UI_SETTINGS", "about": "UI_ABOUT", "demo": "UI_DEMO"}[which], "head", UIFx.HEAD))
 	var rule := ColorRect.new()
 	rule.color = UIFx.LINE_DIM
 	rule.custom_minimum_size = Vector2(v.size.x, 1)
@@ -283,6 +296,8 @@ func _open_card(which: String) -> void:
 	v.add_child(rule)
 	if which == "settings":
 		_build_settings(v)
+	elif which == "demo":
+		_build_demo(v)
 	else:
 		_build_about(v)
 	var fill := Control.new()   # Back sits at the foot of the card
@@ -300,6 +315,8 @@ func _open_card(which: String) -> void:
 	var first: Control = back
 	if which == "settings":
 		first = _card.find_children("*", "HSlider", true, false)[0]
+	elif which == "demo":
+		first = _demo_cls_btn
 	first.grab_focus()
 
 
@@ -310,6 +327,10 @@ func _close_card() -> void:
 	_card = null
 	_full_btn = null
 	_lang_btn = null
+	_demo_cls_btn = null
+	_demo_act_lbl = null
+	_demo_note = null
+	_demo_list = null
 	var tw := create_tween().set_parallel()
 	tw.tween_property(_logo, "modulate:a", 1.0, 0.2)
 	tw.tween_property(_sub, "modulate:a", 1.0, 0.2)
@@ -399,3 +420,96 @@ func _card_text() -> void:
 		_full_btn.text = "%s: %s" % [tr("UI_SYS_FULLSCREEN"), tr("UI_ON") if GameSettings.is_fullscreen() else tr("UI_OFF")]
 	if _lang_btn:
 		_lang_btn.text = "%s: %s" % [tr("UI_SYS_LANG"), GameSettings.language_name()]
+	if _demo_cls_btn:
+		var cls := load("res://data/classes/%s.tres" % DemoRoute.CLASSES[_demo_class]) as ClassData
+		_demo_cls_btn.text = "%s: %s" % [tr("UI_DEMO_CLASS"), tr(cls.title) if cls else DemoRoute.CLASSES[_demo_class]]
+	if _demo_list:
+		_demo_fill()
+
+
+# ---------------------------------------------------------------- Demo card (architecture.md 10b)
+
+## Pick a class, an act, then a point in it: the start of the act, the arrival in one of its areas, or the
+## door of one of its bosses. DemoRoute plays the story up to there; the run saves to its own slot.
+func _build_demo(v: VBoxContainer) -> void:
+	_demo_cps = DemoRoute.checkpoints()
+	_demo_note = UIFx.text("UI_DEMO_NOTE", "body", UIFx.DIM)
+	_demo_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_demo_note.custom_minimum_size.x = v.size.x - INDENT
+	v.add_child(_row(_demo_note))
+	_demo_cls_btn = LozengeButton.new("", 8)
+	_demo_cls_btn.pressed.connect(func() -> void:
+		_demo_class = (_demo_class + 1) % DemoRoute.CLASSES.size()
+		_card_text())
+	v.add_child(_demo_cls_btn)
+	var acts := HBoxContainer.new()
+	acts.add_theme_constant_override("separation", 0)
+	for d in [-1, 1]:
+		var b := LozengeButton.new("<" if d < 0 else ">", 8)
+		b.custom_minimum_size.x = 16
+		b.pressed.connect(func() -> void:
+			_demo_act = posmod(_demo_act + d, DemoRoute.MAIN.size())
+			_demo_fill())
+		acts.add_child(b)
+		if d < 0:
+			_demo_act_lbl = UIFx.text("", "body", UIFx.WARM)
+			_demo_act_lbl.custom_minimum_size.x = v.size.x - 40
+			_demo_act_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			acts.add_child(_demo_act_lbl)
+	v.add_child(acts)
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(v.size.x, 104)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_demo_list = VBoxContainer.new()
+	_demo_list.add_theme_constant_override("separation", 0)
+	_demo_list.size_flags_horizontal = SIZE_EXPAND_FILL
+	scroll.add_child(_demo_list)
+	v.add_child(scroll)
+
+
+## The act's name, then one entry per checkpoint of that act.
+func _demo_fill() -> void:
+	var q: String = DemoRoute.MAIN[_demo_act]
+	_demo_act_lbl.text = "%s  ·  %s" % [DemoRoute.act_label(q), tr("Q_%s_TITLE" % q.to_upper())]
+	for c in _demo_list.get_children():
+		_demo_list.remove_child(c)
+		c.queue_free()
+	for cp: Dictionary in _demo_cps:
+		if cp.quest != q:
+			continue
+		var b := LozengeButton.new(_demo_label(cp), 8)
+		if cp.kind == "boss":
+			b.add_theme_color_override("font_color", UIFx.WARM)
+		b.pressed.connect(_go.bind(_demo_start.bind(cp)))
+		_demo_list.add_child(b)
+
+
+func _demo_label(cp: Dictionary) -> String:
+	match String(cp.kind):
+		"act":
+			return tr("UI_DEMO_START")
+		"boss":
+			return tr("UI_DEMO_BOSS") % tr("BOSS_" + String(cp.boss).to_upper())
+	var zone: String = cp.zone
+	var key := "AREA_" + zone.to_upper()
+	if tr(key) != key:
+		return tr(key)
+	return "Desa Purwa" if zone == "desa_purwa" else zone.substr(zone.find("_") + 1).replace("_", " ").capitalize()
+
+
+func _demo_start(cp: Dictionary) -> void:
+	var game := get_node("/root/Game")
+	game.demo = true
+	game.save_path = game.DEMO_SAVE
+	var route := DemoRoute.new(game, get_node("/root/Zones"))
+	var ok := route.build(DemoRoute.CLASSES[_demo_class], cp)
+	for n in route.notes:
+		push_warning("demo: " + n)
+	if ok:
+		route.place(cp)
+		return
+	game.demo = false
+	game.save_path = game.SAVE_PATH
+	game._reset()
+	if _demo_note:
+		_demo_note.text = "UI_DEMO_FAIL"

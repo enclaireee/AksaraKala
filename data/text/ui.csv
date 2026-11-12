@@ -275,3 +275,9 @@ UI_TUT_REST,Tekan di petilasan untuk menyimpan dan pulih,Press at a shrine to sa
 UI_TUT_CAST,"Tahan, gambar aksara dengan mouse, lepas","Hold, draw the glyph with the mouse, release"
 UI_TUT_FLASK,Minum jamu untuk memulihkan nyawa,Drink jamu to restore health
 UI_TUT_PERFECT,Berguling tepat saat dipukul: stamina kembali,Dodge just as a blow lands to refund stamina
+UI_DEMO,Demo,Demo
+UI_DEMO_NOTE,Mulai dari titik mana pun dalam cerita. Demo memakai slot simpan sendiri.,Start from any point in the story. The demo keeps its own save slot.
+UI_DEMO_CLASS,Kelas,Class
+UI_DEMO_START,Awal babak,Start of the act
+UI_DEMO_BOSS,Sebelum %s,Before %s
+UI_DEMO_FAIL,Titik ini belum bisa dicapai.,This point cannot be reached yet.
