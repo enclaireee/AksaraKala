@@ -22,7 +22,7 @@ func _initialize() -> void:
 
 	# 2. NPC sheet & regional world tilesets
 	var npc_tex := load("res://assets/art/npcs.png") as Texture2D
-	check(npc_tex != null and npc_tex.get_width() == 64 and npc_tex.get_height() == 336, "npcs.png 64x336")
+	check(npc_tex != null and npc_tex.get_width() == 128 and npc_tex.get_height() == 448, "npcs.png 128x448 (4 cols x 14 rows of 32x32)")
 	for reg: String in ["sunda", "galuh", "mataram", "timur", "kidul", "kala", "kelir"]:
 		var tp := "res://assets/art/tiles_%s.png" % reg
 		var ttex := load(tp) as Texture2D

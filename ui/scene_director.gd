@@ -128,8 +128,8 @@ func _stage(who: String, lines: PackedStringArray) -> void:
 		sp.name = id
 		sp.texture = Npc.SHEET
 		sp.region_enabled = true
-		sp.region_rect = Rect2(0, row * 24, 16, 24)
-		sp.offset = Vector2(0, -12)
+		sp.region_rect = Rect2(0, row * Npc.CELL, Npc.CELL, Npc.CELL)
+		sp.offset = Vector2(0, -Npc.CELL * 0.5 + 2)   # feet on row 29 of the 32 px cell stand on the hero's line
 		pl.get_parent().add_child(sp)
 		sp.global_position = pl.global_position + STANDIN_SPOTS[_standins.size() % STANDIN_SPOTS.size()]
 		_standins[id] = sp

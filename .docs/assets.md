@@ -6,7 +6,7 @@ Third-party and custom asset manifest, license records, and cultural source docu
 
 ## 1. Art Direction & Visual Standards
 - **Pixel Art Standards:** 16x16 tiles, clean outlines, rich palette shading, clear silhouettes.
-- **Hero standard (2026-11-12):** 32x32 cells, about 2.6 heads tall, one dark plum outline, 3 tones per material lit from the top-left, a 2 px weapon. NPCs and normal enemies are still 16x24 and read small beside the hero until they get the same pass.
+- **Hero standard (2026-11-12):** 32x32 cells, about 2.6 heads tall, one dark plum outline, 3 tones per material lit from the top-left, a 2 px weapon. NPCs follow it since 2026-11-12 (`npcs.png` 128x448, 4 idle columns x 14 rows of 32x32, feet on row 29, `Npc.CELL`; `tools/gen_npcs_and_props.py`). Normal enemies are still 16x24 and read small beside the hero until they get the same pass.
 - **Big art standard (2026-11-12):** rounded forms cut to 4 tones per material, no dither. Class figures, hero busts and redrawn bosses share one painter (`tools/gen_portraits.py`).
 - **Resolution:** Native viewport 480x270 with integer scaling and Nearest texture filtering ([architecture.md](architecture.md) 1).
 - **Color Identity:**

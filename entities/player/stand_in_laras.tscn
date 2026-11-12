@@ -15,10 +15,10 @@ color = Color(0.101961, 0.0627451, 0.0313726, 0)
 polygon = PackedVector2Array(-3, -10, 3, -10, 4, 0, -4, 0)
 
 [node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(0, -12)
+position = Vector2(0, -14)
 texture = ExtResource("1_npcs")
 hframes = 4
-vframes = 12
+vframes = 14
 frame = 24
 
 [node name="Collision" type="CollisionShape2D" parent="."]

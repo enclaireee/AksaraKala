@@ -12,6 +12,7 @@ const DRESSING := [
 ]
 
 const SHEET: Texture2D = preload("res://assets/art/npcs.png")
+const CELL := 32   # px: npcs.png cells are 32x32 (the hero cell), 4 idle columns x 14 rows
 
 const TALL_RANGE := 64.0   # px: the grey talk marker shows only this close (ui.md 3b)
 const MARKER := "res://assets/art/ui/marker_%s.png"
@@ -87,18 +88,18 @@ static func frame_bounds(row: int) -> Vector2i:
 		if img != null:
 			if img.is_compressed():
 				img.decompress()
-			for r in img.get_height() / 24:
-				var top := 24
+			for r in img.get_height() / CELL:
+				var top := CELL
 				var bot := -1
 				for c in 4:
-					for y in 24:
-						for x in 16:
-							if img.get_pixel(c * 16 + x, r * 24 + y).a > 0.1:
+					for y in CELL:
+						for x in CELL:
+							if img.get_pixel(c * CELL + x, r * CELL + y).a > 0.1:
 								top = mini(top, y)
 								bot = maxi(bot, y)
 				if bot >= 0:
 					_bounds[r] = Vector2i(top, bot)
-		_bounds[-1] = Vector2i(2, 21)   # marks the scan as done; also the fallback
+		_bounds[-1] = Vector2i(3, 30)   # marks the scan as done; also the fallback
 	return _bounds.get(row, _bounds[-1])
 
 
@@ -141,8 +142,8 @@ func _row() -> int:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-5, -1, 10, 3), Color(0.09, 0.07, 0.16, 0.42))
-	var top := -20
+	draw_rect(Rect2(-6, -1, 12, 3), Color(0.09, 0.07, 0.16, 0.42))
+	var top := -27
 	var art := _art()
 	if art:   # story prop (assets/art/story/<npc_id>.png), feet on y 1 over the shadow
 		StoryArt.draw_standing(self, art, Vector2(0, 1))
@@ -152,7 +153,7 @@ func _draw() -> void:
 		var row := _row()
 		var fb := frame_bounds(row)
 		var y0 := -(fb.y + 1)   # lowest opaque row ends on y 0, over the shadow
-		draw_texture_rect_region(SHEET, Rect2(-8, y0, 16, 24), Rect2(col * 16, row * 24, 16, 24))
+		draw_texture_rect_region(SHEET, Rect2(-CELL * 0.5, y0, CELL, CELL), Rect2(col * CELL, row * CELL, CELL, CELL))
 		top = y0 + fb.x
 	else:
 		draw_rect(Rect2(-6, -8, 12, 16), Color(0.55, 0.4, 0.3))
