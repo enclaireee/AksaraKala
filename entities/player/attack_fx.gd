@@ -23,6 +23,10 @@ const TINTS := {
 	"rogue": [Color(0.95, 0.92, 0.88), Color(0.86, 0.26, 0.2), Color(1.0, 0.5, 0.42)],       # Pendekar: ink-white, sabuk red
 	"archer": [Color(0.78, 1.0, 0.88), Color(0.55, 0.9, 0.74), Color(0.5, 0.86, 0.7)],       # Pamanah: verdigris
 	"mage": [Color(0.62, 0.96, 0.88), Color(0.96, 0.9, 0.74), Color(0.45, 0.88, 0.82)],      # Wiku: teal ink-light, paper cream
+	"lancer": [Color(1.0, 0.95, 0.88), Color(0.9, 0.3, 0.24), Color(1.0, 0.82, 0.45)],        # Prajurit: white, lurik red, brass
+	"herder": [Color(0.98, 0.92, 0.74), Color(0.86, 0.72, 0.4), Color(0.96, 0.88, 0.62)],     # Pangangon: straw
+	"dancer": [Color(1.0, 0.88, 0.5), Color(0.9, 0.3, 0.55), Color(0.4, 0.86, 0.8)],          # Penari: gold, magenta, teal
+	"dalang": [Color(1.0, 0.82, 0.45), Color(0.96, 0.9, 0.74), Color(1.0, 0.7, 0.3)],         # Dalang: blencong lamp gold
 }
 
 ## Test or settings override. The Game autoload may also expose `reduce_flashes` (controls.md 6).
@@ -145,7 +149,7 @@ func on_swing() -> void:
 	var hit: int = player.hit
 	var finisher := hit == 2
 	var reach: float = item.reach * (player.tuning.melee_finisher_reach_mult if finisher else 1.0)
-	var spear: bool = str(item.id).contains("spear")
+	var spear: bool = str(item.id).contains("spear") or str(item.id).contains("tombak")
 	var heavy: bool = item.archetype == "heavy"
 	var active: float = player._phase_len(Player.Phase.ACTIVE)
 	var rec: float = player._phase_len(Player.Phase.RECOVERY)

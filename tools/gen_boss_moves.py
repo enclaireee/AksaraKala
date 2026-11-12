@@ -31,7 +31,7 @@ BOSSES = {
     "nameless_hunter": ((160, 220, 130), False),
     "keris_gandring": ((120, 255, 200), True),
     "buto_ijo": ((120, 230, 80), False),
-    "batara_kala": ((255, 90, 160), True),
+    # batara_kala: tools/gen_boss_kala.py writes its moves sheet
 }
 
 

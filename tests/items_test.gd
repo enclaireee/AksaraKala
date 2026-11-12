@@ -7,7 +7,7 @@ func _initialize() -> void:
 	var game := root.get_node("Game")
 	game.save_path = "user://items_test_save.json"
 
-	# 1. Verify all 32 items exist and load cleanly
+	# 1. Verify all 36 items exist and load cleanly
 	var expected_items := [
 		"amulet", "axe", "baju_batik", "batu_kali", "blangkon", "broadsword",
 		"cakra", "chainmail", "crossbow", "dagger", "feather_charm", "golok",
@@ -15,9 +15,9 @@ func _initialize() -> void:
 		"kain_hijau", "keris_luk_7", "keris_mpu_gandring", "kujang",
 		"leather_armor", "longbow", "lontar_kuno", "oak_staff", "padded_tunic",
 		"panah_pasopati", "sabuk_galuh", "short_sword", "silver_bangle",
-		"spear", "stone_ring"
+		"spear", "stone_ring", "tombak_prajurit", "kipas", "bandring", "kayon"
 	]
-	check(expected_items.size() == 32, "exactly 32 items expected")
+	check(expected_items.size() == 36, "exactly 36 items expected")
 
 	for item_id in expected_items:
 		var item := ItemData.by_id(item_id)
@@ -33,7 +33,7 @@ func _initialize() -> void:
 				check(item.lore != "", "Mythic item %s has non-empty lore" % item_id)
 
 	# 2. Verify all class starter gear
-	var classes := ["warrior", "archer", "rogue", "mage"]
+	var classes := ["warrior", "archer", "rogue", "mage", "lancer", "herder", "dancer", "dalang"]
 	for c_id in classes:
 		var c = load("res://data/classes/%s.tres" % c_id)
 		check(c != null, "Class %s loads" % c_id)

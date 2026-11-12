@@ -69,8 +69,8 @@ func _ready() -> void:
 	add_child(UIFx.rect_tex("vignette", Vector2.ZERO))
 
 	_list = VBoxContainer.new()
-	_list.position = Vector2(16, 92)
-	_list.size = Vector2(120, 80)
+	_list.position = Vector2(16, 58)   # 8 classes: 8 x 18 px rows + gaps
+	_list.size = Vector2(120, 158)
 	_list.add_theme_constant_override("separation", 2)
 	add_child(_list)
 	for id in ClassData.IDS:

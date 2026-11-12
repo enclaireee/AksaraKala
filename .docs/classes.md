@@ -1,6 +1,6 @@
 # Classes
 
-The player is a custom hero. At the start of their journey, they choose one of four core archetypes: Warrior, Archer, Rogue, or Mage. Cultural lore lives in the setting, bosses, mythic pusaka weapons, and aksara scripts.
+The player is a custom hero. At the start of their journey, they choose one of eight classes: four schools (Warrior, Archer, Rogue, Mage), each with a second path (Lancer, Herder, Dancer, Dalang; user call 2026-11-12). Cultural lore lives in the setting, bosses, mythic pusaka weapons, and aksara scripts.
 
 ---
 
@@ -14,9 +14,25 @@ Code ids stay `warrior`, `archer`, `rogue`, `mage`; mechanics below are unchange
 | rogue | Pendekar / Pendekar, Silat Fighter | dark headwrap, black pangsi, wide red sabuk, open-palm silat guard, low stance | Kujang (a plain working one, reverse grip) | ink black, wax red |
 | mage | Wiku / Wiku, Scribe-Sage | topknot with sumping, cream robe over batik kain, lontar at the hip that gives off teal ink-light | Tongkat with a ring top | paper cream, verdigris |
 
-- All four go barefoot in-world. The starting rogue weapon is a kujang, not a keris: a keris is a pusaka. ASSUMED.
+| lancer | Prajurit / Prajurit, Palace Spearman | tall black kuluk with a brass band, red-and-white lurik jacket, white trousers under a short indigo wrap | Tombak with a red tassel | lurik red, white, brass |
+| herder | Pangangon / Pangangon, Herder | wide straw caping, sleeveless pale kutang, indigo sarong slung over one shoulder, short trousers, suling in the belt | Bandring (sling) | straw, indigo |
+| dancer | Penari Topeng / Penari Topeng, Mask Dancer | gold sobrah headdress with tassels, the topeng pushed up at the temple, kace collar, batik kain, teal selendang | Kipas (twin fans) | gold, magenta, teal |
+| dalang | Dalang / Dalang, Shadow Puppeteer | batik blangkon, indigo beskap with brass buttons, parang kain, keris behind | Kayon (a gunungan on a staff) | indigo, batik brown, lamp gold |
+
+- All eight go barefoot in-world. The starting rogue weapon is a kujang, not a keris: a keris is a pusaka. ASSUMED.
 - VERIFY: Sundanese iket styles (the single front peak replaced the two-corner style, which read as horns at 96x128); Majapahit-era soldier dress on the Hulubalang; wayang costume terms on the Wiku; "Pendekar" chosen over "Jawara" (local-strongman connotation).
-- Art: `tools/gen_portraits.py` (96x128 class figures, 6-frame idle) and `tools/gen_hero_sprites.py` (in-world sprites) share the skin ramps and top-left light of the speaker portraits (ui.md 3.1).
+- VERIFY (second paths): keraton prajurit dress (kuluk, lurik) on the Prajurit; "Pangangon" and the bandring as a Sundanese herder's sling; Cirebon topeng dress terms (sobrah, kace, ronce) on the Penari Topeng; dalang dress (blangkon, beskap) and the kayon as a held focus (ASSUMED: in wayang it is planted, not carried).
+- Art (redesign 2026-11-12): `tools/gen_hero_sprites.py` draws the in-world sprites as a posed rig in 32x32 cells; `tools/gen_portraits.py` paints the 96x128 class figures (6-frame idle) and the hero's 48x48 dialogue busts `p_hero_<id>[_mood].png` from one figure, so the dialogue face is the class you picked ([assets.md](assets.md) 1).
+
+## Schools (ASSUMED, 2026-11-12)
+A second-path class uses its school's spell set, spell costs and spell damage (`ClassData.school`, read by `SpellUtil.class_id`). It has its own look, stats, starting weapon and passive.
+
+| School | First path | Second path |
+|---|---|---|
+| warrior | Hulubalang | Prajurit (lancer) |
+| archer | Pamanah | Pangangon (herder) |
+| rogue | Pendekar | Penari Topeng (dancer) |
+| mage | Wiku | Dalang |
 
 ## Shared Rules
 - Every class can draw and cast aksara spells ([spells.md](spells.md)).
@@ -36,6 +52,12 @@ Stats: Vitality (Vit), Endurance (End), Strength (Str), Dexterity (Dex), Spirit 
 | **Archer** | 5 | 6 | 4 | 9 | 4 | 28 | Hunting Bow (Ranged) | 8 |
 | **Rogue** | 5 | 7 | 6 | 7 | 3 | 28 | Dagger (Light Melee) | 8 |
 | **Mage** | 4 | 5 | 3 | 4 | 10 | 26 | Oak Staff (Staff Bolt) | 8 |
+| **Lancer** | 7 | 7 | 8 | 4 | 3 | 29 | Tombak Prajurit (Heavy Melee, reach 40, arc 40) | 20 |
+| **Herder** | 5 | 8 | 4 | 8 | 3 | 28 | Bandring (Ranged, 260 px/s, range 200) | 10 |
+| **Dancer** | 5 | 6 | 5 | 8 | 4 | 28 | Kipas Besi (Light Melee, arc 120) | 7 |
+| **Dalang** | 5 | 5 | 3 | 4 | 9 | 26 | Kayon (Staff Bolt, 190 px/s, range 170) | 8 |
+
+Second-path numbers are **TUNE**: they are not in `balance_model.py` yet.
 
 Displayed level is calculated as `1 + points spent`, ensuring classes with lower initial totals are not penalized.
 
@@ -71,6 +93,12 @@ Displayed level is calculated as `1 + points spent`, ensuring classes with lower
 - **Spell Modifiers:** spell damage x1.1, all spell costs x0.9. Wiku spells: storm orb, draining vines, rune circle, healing spring, blink bomb, focus (cheaper spells), fire tiger, flood of waves.
 - **Playstyle:** Frequent spellcaster, fragile in melee, relies on rapid aksara execution.
 
+### Second paths (2026-11-12, numbers **TUNE**, `data/combat_tuning.gd`)
+- **Lancer (Prajurit), warrior school.** Passive **Barisan Rapat**: takes 12% less damage. Every hit is a thrust; the tombak outreaches every starting weapon.
+- **Herder (Pangangon), archer school.** Passive **Kaki Padang**: moves 10% faster, stamina recovers 15% faster. The sling stone is slower than an arrow and hits harder.
+- **Dancer (Penari Topeng), rogue school.** Passive **Wirama**: attacks 12% faster, the finisher deals +25% damage. No backstab bonus and no cheaper dodge.
+- **Dalang, mage school.** Passive **Suluk**: Sakti fills 1.35x faster. Sakti capacity stays 100.
+
 ---
 
 ## Balance Goals
@@ -82,7 +110,7 @@ Displayed level is calculated as `1 + points spent`, ensuring classes with lower
 
 ## Class Selection Presentation (`ui/class_select.gd`)
 Presented when starting a New Game from the title screen:
-- **Left Column:** Class roster (Jersey 10 at 19) with the cyan diamond cursor.
+- **Left Column:** Class roster of 8 (Jersey 10 at 19) with the cyan diamond cursor, in school order.
 - **Center Pedestal:** 96x128 animated character sprite standing on a stone pedestal illuminated by lantern light with gentle floor mist. Switching classes dissolves the character into rising ink particles.
 - **Right Panel:** Detailed panel showing archetype title, narrative description, animated stat bars, starting equipment icon, and passive ability.
 - **Confirmation:** Framed confirmation prompt prevents accidental selection before saving.

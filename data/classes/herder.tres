@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ClassData" format=3]
+
+[ext_resource type="Script" path="res://data/class_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "herder"
+title = "CLASS_HERDER_NAME"
+description = "CLASS_HERDER_DESC"
+stats = {"vit": 5, "end": 8, "str": 4, "dex": 8, "spi": 3}
+start_weapon = "bandring"
+start_armor = "padded_tunic"
+passive = "CLASS_HERDER_PASSIVE"
+passive_text = "CLASS_HERDER_PASSIVE_DESC"

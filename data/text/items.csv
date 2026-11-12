@@ -121,3 +121,31 @@ ITEM_SABUK_GALUH_LORE,Sabuk kerajaan yang diberikan saat keadilan ditegakkan di 
 ITEM_LONTAR_KUNO_NAME,Lontar Kuno,Ancient Lontar
 ITEM_LONTAR_KUNO_DESC,Goresan yang kabur lebih mudah terbaca (ambang 0.65 ke 0.60).,Smudged strokes read more easily (threshold 0.65 to 0.60).
 ITEM_LONTAR_KUNO_LORE,Naskah daun lontar tua dari pustaka desa.,An old palm-leaf manuscript from the village archive.
+CLASS_LANCER_DESC,"Prajurit barisan dari alun-alun keraton.\nMenjaga jarak dengan tombak; tusukannya menjangkau jauh.","A line soldier from the palace square.\nHolds the distance with a tombak; the thrust reaches far."
+CLASS_LANCER_NAME,Prajurit,Prajurit
+CLASS_LANCER_PASSIVE,Barisan Rapat,Closed Rank
+CLASS_LANCER_PASSIVE_DESC,Menerima 12% lebih sedikit damage.,Takes 12% less damage.
+CLASS_LANCER_ROLE,Penombak Keraton,Palace Spearman
+CLASS_HERDER_DESC,"Anak gembala dari padang rumput.\nKakinya ringan, batu bandringnya jarang meleset.","A herder from the open grassland.\nLight on the feet; the bandring stone seldom misses."
+CLASS_HERDER_NAME,Pangangon,Pangangon
+CLASS_HERDER_PASSIVE,Kaki Padang,Field Legs
+CLASS_HERDER_PASSIVE_DESC,Bergerak 10% lebih cepat. Stamina pulih 15% lebih cepat.,Moves 10% faster. Stamina recovers 15% faster.
+CLASS_HERDER_ROLE,Gembala Padang,Herder
+CLASS_DANCER_DESC,"Penari topeng dari panggung pesisir.\nSepasang kipas, langkah berirama, pukulan penutup yang tajam.","A mask dancer from the coastal stage.\nTwin fans, measured steps, a sharp closing blow."
+CLASS_DANCER_NAME,Penari Topeng,Penari Topeng
+CLASS_DANCER_PASSIVE,Wirama,Wirama
+CLASS_DANCER_PASSIVE_DESC,Menyerang 12% lebih cepat. Pukulan penutup +25% damage.,Attacks 12% faster. The finisher deals +25% damage.
+CLASS_DANCER_ROLE,Penari Kipas,Mask Dancer
+CLASS_DALANG_DESC,"Juru cerita di balik kelir.\nKayon di tangan; bayangan menurut pada suaranya.","The storyteller behind the screen.\nKayon in hand; shadows answer the voice."
+CLASS_DALANG_NAME,Dalang,Dalang
+CLASS_DALANG_PASSIVE,Suluk,Suluk
+CLASS_DALANG_PASSIVE_DESC,"Sakti terisi 1,35x lebih cepat.",Sakti fills 1.35x faster.
+CLASS_DALANG_ROLE,Juru Wayang,Shadow Puppeteer
+ITEM_TOMBAK_PRAJURIT_DESC,"Tusukan panjang dan sempit, lebih ringan dari tombak perang.","A long, narrow thrust; lighter than a war spear."
+ITEM_TOMBAK_PRAJURIT_NAME,Tombak Prajurit,Soldier's Tombak
+ITEM_KIPAS_DESC,Sepasang kipas berbingkai besi. Cepat dan lebar.,A pair of iron-ribbed fans. Fast and wide.
+ITEM_KIPAS_NAME,Kipas Besi,Iron Fans
+ITEM_BANDRING_DESC,"Tali pelontar batu. Lambat diputar, keras menghantam.","A stone sling. Slow to whirl, hard to land."
+ITEM_BANDRING_NAME,Bandring,Bandring
+ITEM_KAYON_DESC,Gunungan wayang bertangkai. Melontar bayangan bercahaya.,A wayang gunungan on a staff. Casts a bolt of lit shadow.
+ITEM_KAYON_NAME,Kayon,Kayon

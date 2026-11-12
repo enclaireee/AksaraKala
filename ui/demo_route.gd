@@ -10,7 +10,7 @@ class_name DemoRoute extends RefCounted
 
 const MAIN := ["mq0", "mq1", "mqg", "mq2", "mq3", "mq4", "mq5"]
 const ACTS := {"mq0": "PROLOG", "mq1": "I", "mqg": "II", "mq2": "III", "mq3": "IV", "mq4": "V", "mq5": "VI"}
-const CLASSES := ["warrior", "archer", "rogue", "mage"]
+const CLASSES := ["warrior", "lancer", "archer", "herder", "rogue", "dancer", "mage", "dalang"]
 ## Region of an area (its id prefix) -> QuestData.zone of the side quests done there.
 const REGION := {"ts": "tatar_sunda", "kg": "keraton_galuh", "mt": "mataram", "tt": "tanah_timur",
 	"sk": "segara_kidul", "gk": "gua_kala", "desa_purwa": "desa_purwa"}
@@ -28,7 +28,9 @@ const LEVEL_FLOOR := {"sandekala": 3, "faceless_captain": 5, "sangkuriang": 6, "
 	"nameless_hunter": 19, "batara_kala": 24}
 ## Stats each class raises at a petilasan, in turn.
 const BUILD := {"warrior": ["str", "vit", "end", "str", "vit"], "archer": ["dex", "end", "vit", "dex", "vit"],
-	"rogue": ["dex", "str", "end", "dex", "vit"], "mage": ["spi", "vit", "spi", "end"]}
+	"rogue": ["dex", "str", "end", "dex", "vit"], "mage": ["spi", "vit", "spi", "end"],
+	"lancer": ["str", "end", "vit", "str", "vit"], "herder": ["dex", "end", "vit", "dex", "end"],
+	"dancer": ["dex", "str", "end", "dex", "vit"], "dalang": ["spi", "vit", "spi", "end"]}
 const MAX_STEPS := 2000   # main-loop guard
 
 var g: Node   # Game

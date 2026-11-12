@@ -5,7 +5,9 @@ Third-party and custom asset manifest, license records, and cultural source docu
 ---
 
 ## 1. Art Direction & Visual Standards
-- **Pixel Art Standards:** 16x16 characters and tiles, clean outlines, rich palette shading, clear silhouettes.
+- **Pixel Art Standards:** 16x16 tiles, clean outlines, rich palette shading, clear silhouettes.
+- **Hero standard (2026-11-12):** 32x32 cells, about 2.6 heads tall, one dark plum outline, 3 tones per material lit from the top-left, a 2 px weapon. NPCs and normal enemies are still 16x24 and read small beside the hero until they get the same pass.
+- **Big art standard (2026-11-12):** rounded forms cut to 4 tones per material, no dither. Class figures, hero busts and redrawn bosses share one painter (`tools/gen_portraits.py`).
 - **Resolution:** Native viewport 480x270 with integer scaling and Nearest texture filtering ([architecture.md](architecture.md) 1).
 - **Color Identity:**
   - Regional color casts: cool greens for Tatar Sunda, regal red-gold teak for Keraton Galuh, warm stone for Mataram, dry volcanic amber for Tanah Timur, deep turquoise for Segara Kidul, ash-violet for Gua Kala.
@@ -15,8 +17,9 @@ Third-party and custom asset manifest, license records, and cultural source docu
 ---
 
 ## 2. Asset Roster & Current Implementation Status
-- [x] **Character & Class Sprites:** Hero base + 4 class archetypes with unique gear, idle, walk, attack, hurt, dodge, and death frames.
-- [x] **Class Selection Portraits:** 96x128 animated portrait figures for Warrior, Archer, Rogue, and Mage standing on stone pedestals.
+- [x] **Character & Class Sprites (v4, 2026-11-12):** hero base + 8 classes, 192x576 sheets of 32x32 cells: 4-frame idle, 6-frame walk, 3 attack hits in 3 views, dodge, hurt, death (`tools/gen_hero_sprites.py`).
+- [x] **Class Selection Portraits (v2, 2026-11-12):** 96x128 figures with a 6-frame idle for all 8 classes, and 32 hero dialogue busts (8 classes x 4 moods) from the same figure (`tools/gen_portraits.py`).
+- [ ] **Boss redraw (started 2026-11-12):** Batara Kala is redrawn at 96x80 cells with a moves sheet (`tools/gen_boss_kala.py`). The other nine bosses still use the 2026-11-07 sheets (`tools/gen_bosses.py`). Intro and title hero art (`hero_storm`, `hero_wiku`) is not redrawn.
 - [x] **Regional Tilesets:** 7 full regional 128x256 tilesets (896 tiles across 21 sub-biomes) for Desa Purwa, Sunda, Galuh, Mataram, Timur, Kidul, and Gua Kala.
 - [x] **Bestiary Sprites:** 34 enemy spritesheets (Chasers, Shooters, Chargers, Tanks, Elites) and 10 multi-phase boss sheets.
 - [x] **Vernacular Architecture:** Composed building kits (`zones/buildings.gd`, `tools/gen_buildings.py`) for Sunda, Galuh, Mataram, and Kidul houses and warung stalls.

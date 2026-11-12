@@ -193,6 +193,14 @@ Only a few enemies attack at once, so crowds stay readable.
 - Phase 2 at 50% HP with a 1.5 s invulnerable pause and a line of dialogue or a roar, so the player gets a beat to breathe.
 - Each boss has at least one 2-3 s punish window per attack cycle (after a heavy attack or a poise break).
 - Mechanics that use spells (the Keris's curse marks, Sangkuriang's fake dawn, Kala's shield) are in [bestiary.md](bestiary.md).
+- **Staging (2026-11-12, ASSUMED, timings TUNE; `ui/boss_stage.gd`).** Visual only: no HP, damage or timing changes. It reads the boss-bar contract (`health`, `engaged`, `boss_name_key`, optional `phase`), so it covers every boss with no per-boss code.
+  - Entrance: when the boss engages, letterbox bars close in (0.35 s) and a name card opens between two brass rules for 1.5 s.
+  - Phase change: a warm flash, 0.3 s of slow motion at 35% speed, a 3 px camera shake, the bars pinch in for a beat.
+  - Finishing blow: a white flash, 0.7 s of slow motion at 25% speed, a 4 px shake.
+  - "Reduce flashing" dims the flashes to a quarter. Slow motion is skipped while a cast holds the time scale.
+  - Telegraphs keep their shapes and sizes (they are the hitboxes) and gain a bright closing edge, an inner rim, turning tick marks on circles and running chevrons on lines (`BossKit.Telegraph`).
+  - The boss bar has a brass rule with end studs and a pale ghost bar that trails the fill at 45 px/s.
+  - Not built yet: camera pan to the boss, per-boss entrance and defeat animations, arena dressing, phase-2 sprite forms.
 - **Laras sabotage phases (Story v5):** Bosses read their designated `sabotage_flag` (`Game.has_flag("laras_sabotage...")`) set by the cross-time chapters `LC1`–`LC6`. When set, the boss HUD bar displays a cracked-glyph flaw marker and unlocks specific phase vulnerabilities: Sangkuriang's cracked dawn groove, Barma Wijaya's copies that shatter in one glyph hit, Bondowoso's pillars that break on every lesung beat, the Keris's seventh stake, and Kala's Eclipse shield. Without the flag, encounters remain beatable with stricter timing. Details per boss: [bestiary.md](bestiary.md).
 - **Stalking ambush (Buto Ijo, Story v5):** Three open-field ambushes in `tt_kulon`, `tt_kali`, and `tt_beringin`. Buto Ijo retreats upon reaching HP damage thresholds, each encounter concluding with `area_cleared:buto_ambush_<n>`. The canyon lair in `tt_ladang` hosts the climactic 4-phase showdown utilizing Mbok Srini's four consecrated pouches.
 - **Choice effects in combat:** `choice_offer_memory` gives *Ombak* `+20%` poise damage to Eclipse enemies in Act VI ([spells.md](spells.md)). `choice_keep_secret` gives Ciung `+15%` ally damage in Galuh bouts. `choice_redeem_aria` adds `+6 s` to the Kala Phase 3 countdown (`batara_kala.gd` reads this flag). `choice_release_aria` grants Keteguhan Sunyi (+15% stamina and Sakti recovery in `gk_ruang_kala`).

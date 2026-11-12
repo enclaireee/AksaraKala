@@ -14,10 +14,10 @@ func check(cond: bool, msg: String) -> void:
 
 
 func _initialize() -> void:
-	# 1. Hero sheets: 6 cols x 18 rows of 24x24
+	# 1. Hero sheets: 6 cols x 18 rows of 32x32
 	for cls: String in ["base", "warrior", "archer", "rogue", "mage"]:
 		var tex := load("res://assets/art/hero_%s.png" % cls) as Texture2D
-		check(tex != null and tex.get_width() == 144 and tex.get_height() == 432, "hero_%s.png is 144x432" % cls)
+		check(tex != null and tex.get_width() == 192 and tex.get_height() == 576, "hero_%s.png is 192x576" % cls)
 	for n: String in ["smear_light", "smear_heavy", "smear_thrust", "smear_finisher", "smear_core", "spark", "ink_splash",
 			"ring", "ink_puff", "dust", "step_dust", "muzzle", "arrow_trail", "bolt_glow", "bolt_spark"]:
 		check(load("res://assets/art/fx/%s.png" % n) != null, "fx sheet exists: " + n)

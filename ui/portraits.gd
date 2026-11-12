@@ -1,7 +1,7 @@
 class_name Portraits
 ## Speaker id (the <ID> of NPC_<ID>_NAME, lower case) -> portrait name in assets/art/portraits/p_<name>.png
 ## (tools/gen_speaker_portraits.py, 48x48, ui.md 3.1). Each bust has mood variants p_<name>_<mood>.png (MOODS);
-## for_key(key, mood) falls back to the neutral bust. ASSUMED: archetype picks for minor NPCs; unlisted speakers show no portrait.
+## for_key(key, mood) falls back to the neutral bust. The hero's bust is per class: p_hero_<class_id>[_mood].png. ASSUMED: archetype picks for minor NPCs; unlisted speakers show no portrait.
 
 const MAP := {
 	"hero": "hero", "semar": "semar", "cepot": "cepot", "laras": "laras", "hunter": "hunter",
@@ -46,6 +46,12 @@ static func for_key(key: String, mood := "") -> Texture2D:
 	var pname := name_for_key(key)
 	if pname == "":
 		return null
+	if pname == "hero":   # the bust of the class the player picked (tools/gen_portraits.py); the old bust is the fallback
+		var loop := Engine.get_main_loop() as SceneTree
+		var g: Node = loop.root.get_node_or_null("Game") if loop else null
+		var cls := str(g.get("class_id")) if g else ""
+		if cls != "" and _load("p_hero_" + cls) != null:
+			pname = "hero_" + cls
 	if mood != "" and mood != "neutral" and MOODS.has(mood):
 		var t := _load("p_%s_%s" % [pname, mood])
 		if t != null:

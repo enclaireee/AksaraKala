@@ -48,6 +48,12 @@ extends Resource
 @export var eagle_mult := 1.15
 @export var keen_mind_max := 120.0
 @export var keen_mind_gain := 1.2
+@export var lancer_guard := 0.12               # Prajurit, Barisan Rapat: damage taken x0.88 (TUNE)
+@export var herder_move := 1.1                 # Pangangon, Kaki Padang (TUNE)
+@export var herder_regen := 1.15
+@export var dancer_speed := 1.12               # Penari Topeng, Wirama: attack speed (TUNE)
+@export var dancer_finisher := 1.25            # ...and finisher damage
+@export var dalang_gain := 1.35                # Dalang, Suluk: Sakti gain (TUNE)
 @export var flask_time := 0.6
 @export var flask_base_heal := 0.4
 @export var flask_pouch_heal := 0.05

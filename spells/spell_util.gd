@@ -49,7 +49,7 @@ static func poise_mult(spell: SpellData) -> float:
 
 
 static func class_id(caster: Node) -> String:
-	return str(caster.get("class_id")) if caster.get("class_id") != null else ""
+	return ClassData.school(str(caster.get("class_id"))) if caster.get("class_id") != null else ""
 
 
 static func spirit(caster: Node) -> float:

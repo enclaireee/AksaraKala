@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ClassData" format=3]
+
+[ext_resource type="Script" path="res://data/class_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "dancer"
+title = "CLASS_DANCER_NAME"
+description = "CLASS_DANCER_DESC"
+stats = {"vit": 5, "end": 6, "str": 5, "dex": 8, "spi": 4}
+start_weapon = "kipas"
+start_armor = "padded_tunic"
+passive = "CLASS_DANCER_PASSIVE"
+passive_text = "CLASS_DANCER_PASSIVE_DESC"

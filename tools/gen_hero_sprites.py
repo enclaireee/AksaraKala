@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""Budayago hero sprite sheets (v3, Phase 6c). 24x24 cells (was 16x24: attack poses need room for the weapon), 6 cols x 18 rows (contract used by player.gd):
- rows 0-2 idle (down, side, up), cols 0-3 | 3-5 walk (down, side, up), cols 0-3
- rows 6-8 attack hit 1-3, SIDE view (game flips for left), 6 frames each
- row 9 dodge, 6 frames: crouch, launch, tuck, roll, land, rise | 10 hurt (cols 0-3) | 11 death (cols 0-3)
+"""Aksara Kala hero sprite sheets (v4, 2026-11-12 redesign). 32x32 cells, about 2.6 heads tall, 6 cols x 18 rows
+(the contract player.gd reads):
+ rows 0-2 idle (down, side, up), cols 0-3 | rows 3-5 walk (down, side, up), cols 0-5
+ rows 6-8 attack hit 1-3, SIDE view (the game flips it for left), 6 frames each
+ row 9 dodge, 6 frames: crouch, launch, tuck, roll, land, rise | row 10 hurt (cols 0-3) | row 11 death (cols 0-3)
  rows 12-14 attack hit 1-3, DOWN view | rows 15-17 attack hit 1-3, UP view
- Attack frames: 0 anticipation, 1 coil, 2 strike, 3 smear-pose, 4 follow-through, 5 settle.
-   melee: wind-up = 0-1, active = 2-3, recovery = 4-5. Ranged (bow/staff, no active phase): wind-up = 0-2
-   (raise, draw/charge, hold), recovery = 3-5 (release, recoil, settle).
- Hit 1 forehand, hit 2 backhand, hit 3 finisher (thrust for base/rogue, ground slam for warrior and mage staff,
- full draw for the bow). The weapon smear is a separate sprite (tools/gen_combat_fx.py).
-Art is authored as layered ASCII (head/torso, class overlays, legs) then auto-outlined by pixlib.
+ Attack frames: 0 anticipation, 1 coil, 2 strike, 3 smear pose, 4 follow-through, 5 settle.
+   melee: wind-up 0-1, active 2-3, recovery 4-5. Ranged (bow, sling, staff): wind-up 0-2, recovery 3-5.
+The figure is a small rig, not ASCII: head, torso, limbs, lower cloth, headgear, back item and weapon are drawn per
+view from a pose (bob, lean, crouch, leg offsets, hand positions, weapon angle), then outlined. One class is one
+entry in CLASSES (materials) plus its branches in the part painters below.
 Run: python3 tools/gen_hero_sprites.py
-Outputs: assets/art/hero_{base,warrior,archer,rogue,mage}.png, hero_shadow.png, and a preview in tools/hero_preview.png
+Outputs: assets/art/hero_<class>.png for base + the 8 classes, hero_shadow.png, tools/hero_preview.png
 Needs PIL, or falls back to the stdlib shim tools/pilite.py.
 """
 import math
@@ -25,602 +25,1147 @@ import pixlib as px
 from pixlib import hexc
 
 COLS, ROWS = 6, 18
+CW = CH = 32
+GROUND = 29                      # the row the feet stand on
+OUTLINE = (30, 18, 34, 255)
+CLASS_IDS = ["base", "warrior", "archer", "rogue", "mage", "lancer", "herder", "dancer", "dalang"]
 
-CW, CH = 24, 24      # 24 wide so attack poses have room for the weapon in front of the body
-AW = 22              # attack canvas width (body composed on IW, pasted at an offset)
-IW, IH = 14, 21      # inner canvas (outline adds 1 px each side)
-Y0 = 3               # row of the first head row (headroom for hats/buns/crowns)
 
-# ---- shared colors (skin and hair ramps = the speaker portraits and tools/gen_portraits.py: sawo matang) ----
-COMMON = {
-    "s": hexc("C4844F"), "k": hexc("E8B27E"), "S": hexc("92543A"),
-    "h": hexc("2E2432"), "H": hexc("5A4A5E"), "e": hexc("1E1218"),
-    "m": hexc("B8C0C0"), "M": hexc("F4F6F0"), "g": hexc("C9A24A"), "G": hexc("F2D27A"),
-    "b": hexc("3A2A33"), "w": hexc("FFFFFF"),
-}
+def mix(a, b, t):
+    return tuple(int(round(a[i] + (b[i] - a[i]) * t)) for i in range(3)) + (255,)
 
-# t/T/u torso (mid/shadow/light), a sash or belt, p/P lower cloth, c/C headcloth, q weapon wood or bamboo,
-# f fletching/string/light; extra keys per class: d shield rim, r red cord/baldric, l calf wrap, y copper,
-# x pale trim, j sash shadow, v bamboo shadow, o lontar leaf, i teal ink-light.
+
+def ramp(h, dark=None, light=None):
+    """(dark, mid, light): the dark leans to plum, the light to warm paper."""
+    m = hexc(h)
+    d = hexc(dark) if dark else mix(mix(m, (0, 0, 0, 255), 0.30), (58, 30, 78, 255), 0.22)
+    l = hexc(light) if light else mix(m, (255, 240, 206, 255), 0.34)
+    return (d, m, l)
+
+
+SKIN = ramp("C07F4E", "8A4A34", "E4AC7A")
+HAIR = ramp("2B2331", "17121C", "4F4359")
+EYE = hexc("1B1018")
+STEEL = ramp("AEB8BE", "6A7482", "F2F6F2")
+GOLD = ramp("D0A244", "8E6426", "F8DE86")
+WOOD = ramp("7A5230", "4C3020", "A87A48")
+
+# materials per class: top (torso cloth), low (lower cloth), sash, gear (headgear), trim, plus extras
 CLASSES = {
-    "base": dict(t="B89B6A", T="8C7350", u="E3D0A0", a="5A3A22", p="4A3324", P="33231A", c="E3D0A0", C="B89B6A", q="6E4A2A", f="E8DDB8"),
-    # Hulubalang: red udeng, bare chest + red selempang, red kain with brass tumpal hem, round tameng on the back
-    "warrior": dict(t="C4844F", T="92543A", u="E8B27E", a="2A1C12", p="7A2420", P="531816", c="B8352C", C="6B1E1A",
-                    q="6E4A2A", f="E8DDB8", d="9E2B25", r="C2402F", l="9C7B55", y="C9A24A"),
-    # Pamanah: brown iket with a front peak, dark-green kampret, verdigris stagen, brown pangsi, bamboo quiver
-    "archer": dict(t="2E5A4A", T="1D3A31", u="4E8A72", a="6FAF8F", p="4A3324", P="33231A", c="6A4A2E", C="4A3220",
-                   q="B8964E", f="E8DDB8", v="7E6430"),
-    # Pendekar: dark headwrap with a pale edge, black pangsi, wide red sabuk, plain kujang
-    "rogue": dict(t="34303A", T="231F29", u="55525E", a="B8352C", p="2E2A34", P="1D1A22", c="2E2836", C="1A1620",
-                  q="6E4A2A", f="E8DDB8", x="D9C9A0", j="6B1E1A"),
-    # Wiku: topknot + sumping, cream robe over a tan batik kain, verdigris sash, lontar with teal light, ring staff
-    "mage": dict(t="E3D0A0", T="B89B6A", u="F4E8C8", a="3F7A66", p="A88A5A", P="7E6440", c="3F7A66", C="24493D",
-                 q="6E4A2A", f="9EF2E0", r="9E2B25", o="D4AC5E", i="6FE0D0"),
+    "base": dict(top=ramp("C2A674"), low=ramp("5A4030"), sash=ramp("7A4A2A"), gear=ramp("D8C494"), trim=GOLD,
+                 legs="pants", sleeve=3, weapon="knife"),
+    # Hulubalang: red udeng, bare chest with a red selempang, red kain with a brass hem, round tameng on the back
+    "warrior": dict(top=SKIN, low=ramp("A32C26"), sash=ramp("3A2620"), gear=ramp("C4382C"), trim=GOLD,
+                    extra=ramp("8E2620"), legs="kain", sleeve=0, weapon="kelewang"),
+    # Pamanah: brown iket with a front peak and a feather, green kampret, verdigris sash, bamboo quiver
+    "archer": dict(top=ramp("2F6B52"), low=ramp("6A4A30"), sash=ramp("7FC2A0"), gear=ramp("A06E3C"), trim=GOLD,
+                   extra=ramp("C2A054"), legs="pants", sleeve=6, weapon="bow"),
+    # Pendekar: dark headwrap with long tails, black pangsi, wide red sabuk, kujang
+    "rogue": dict(top=ramp("3A3644"), low=ramp("2E2A38"), sash=ramp("C23A2E"), gear=ramp("34303E"), trim=ramp("DCCBA4"),
+                  extra=ramp("C23A2E"), legs="pants", sleeve=6, weapon="kujang"),
+    # Wiku: topknot and sumping, cream robe, verdigris sash, lontar with teal light, ring staff
+    "mage": dict(top=ramp("E6D4A6"), low=ramp("E6D4A6"), sash=ramp("3F8A72"), gear=GOLD, trim=GOLD,
+                 extra=ramp("B08C54"), legs="robe", sleeve=6, weapon="staff"),
+    # Prajurit: black kuluk with a brass band, red-and-white lurik jacket, white trousers under a short indigo wrap
+    "lancer": dict(top=ramp("C63A30"), low=ramp("E8E0CC"), sash=ramp("2A2430"), gear=ramp("2E2834"), trim=GOLD,
+                   extra=ramp("38487E"), legs="pants", sleeve=6, weapon="tombak"),
+    # Pangangon: wide straw caping, sleeveless pale kutang, indigo sarong slung over one shoulder, short trousers, sling
+    "herder": dict(top=ramp("E2D6B0"), low=ramp("8A6A44"), sash=ramp("6A4A2A"), gear=ramp("DDBB6A"), trim=ramp("E8DDB8"),
+                   extra=ramp("3E5E8E"), legs="short", sleeve=0, weapon="sling"),
+    # Penari Topeng: gold sobrah headdress with red tassels, mask worn at the temple, selendang, twin fans
+    "dancer": dict(top=ramp("B8306A"), low=ramp("6E4A2E"), sash=GOLD, gear=GOLD, trim=GOLD,
+                   extra=ramp("2FA79A"), legs="kain", sleeve=0, weapon="fans"),
+    # Dalang: batik blangkon, indigo beskap with brass buttons, parang kain, gunungan staff
+    "dalang": dict(top=ramp("2E3A66"), low=ramp("7A5432"), sash=ramp("A8763A"), gear=ramp("7A5432"), trim=GOLD,
+                   extra=ramp("C23A2E"), legs="kain", sleeve=6, weapon="gunungan"),
 }
-LEGSTYLE = {"base": "pangsi", "warrior": "kain", "archer": "pangsi", "rogue": "pangsi", "mage": "robe"}
+FX = {"mage": hexc("7FF0DC"), "dalang": hexc("FFC860"), "archer": hexc("BFF5D8"), "herder": hexc("F4E8C8")}
+RANGED = ("bow", "sling", "staff", "gunungan")
 
 
-def palette(cls):
-    pal = dict(COMMON)
-    for k, v in CLASSES[cls].items():
-        pal[k] = hexc(v)
-    return pal
+class Cv:
+    """A sparse pixel canvas. `soft` pixels (glows) are not outlined."""
 
+    def __init__(self):
+        self.p = {}
+        self.soft = set()
 
-# ---- head + torso + hips (14 wide, 14 rows). Face down, side (faces right), up (back) ----
-FRONT = [
-    "....hhhhhh....",
-    "...hhHHhhhh...",
-    "...hhhhhhhh...",
-    "...hssssssh...",
-    "...hsessesh...",
-    "...hssssssh...",
-    "....SssssS....",
-    ".....SssS.....",
-    "..tttttttttt..",
-    ".ttutttttTttt.",
-    ".sTaaaaaaaaTs.",
-    "..tTtttttTtT..",
-    "...pppppppp...",
-    "...ppPppPpp...",
-]
-SIDE = [
-    "....hhhhhh....",
-    "...hhHHhhhh...",
-    "...hhhhhhhh...",
-    "...hhhssssk...",
-    "...hhsssses...",
-    "...hhssssssS..",
-    "...hhhssssS...",
-    ".....hhSsS....",
-    "...tttttttt...",
-    "...tuttttTt...",
-    "...tTaaaaTTs..",
-    "...tTtttttT...",
-    "...ppppppp....",
-    "...ppPppPp....",
-]
-BACK = [
-    "....hhhhhh....",
-    "...hhHHhhhh...",
-    "...hhhhhhhh...",
-    "...hhhhhhhh...",
-    "...hhhHhhhh...",
-    "...hhhhhhhh...",
-    "....hhhhhh....",
-    ".....SssS.....",
-    "..tttttttttt..",
-    ".ttttttttttTt.",
-    ".sTaaaaaaaaTs.",
-    "..tTtttttTtT..",
-    "...pppppppp...",
-    "...ppPppPpp...",
-]
-VIEWS = {"down": FRONT, "side": SIDE, "up": BACK}
-
-# ---- class overlays: (rows, y relative to first head row; '.' = leave). Applied on top of the base ----
-def _staff(x, top, bottom, ring="a"):
-    """Wiku staff at column x with a 3x3 ring above `top` (rest poses only; attacks draw their own staff)."""
-    rows = ["." * (x - 1) + "." + ring + "." + "." * (12 - x), "." * (x - 1) + ring + "." + ring + "." * (12 - x),
-            "." * (x - 1) + "." + ring + "." + "." * (12 - x)]
-    rows += ["." * x + "q" + "." * (13 - x) for _ in range(top, bottom)]
-    return (rows, top - 3)
-
-
-OVER = {
-    "base": {
-        "down": [(["...cccccccc..."], 2)],
-        "side": [(["...cccccccc..."], 2)],
-        "up": [(["...cccccccc..."], 2)],
-    },
-    "warrior": {   # udeng with a front knot and a back tail, selempang, belt buckle, armbands, tameng on the back
-        "down": [(["......c.......", ".....cCc......", "...cccccccc...", "...cCccccCc...", "...CCCCCCCC..."], -2),
-                 (["..c...........", "..C..........."], 3),
-                 (["...........dd.", "..........dqqd", "............qd", ".............d"], 5),
-                 (["...rr........."], 8), ([".g...rr.....g."], 9), (["......yy......"], 10), ([".......rr....."], 11)],
-        "side": [(["........c.....", ".......cCc....", "...cccccccc...", "...cCccccCc...", "...CCCCCCCC..."], -2),
-                 (["..c...........", "..cC..........", "..C..........."], 2),
-                 ([".dd...........", "dqqd..........", "dqyd..........", "dqqd..........", ".dd..........."], 8),
-                 (["....rr........"], 8), ([".....rr......."], 9)],
-        "up": [(["...cccccccc...", "...cCccccCc...", "...CCCCCCCC..."], 0),
-               (["......cC......", "......C......."], 3),
-               (["....dddddd....", "...dqqqqqqd...", "...dqqyyqqd...", "...dqqqqqqd...", "....dddddd...."], 8)],
-    },
-    "archer": {    # brown iket with a front peak and a feather, bamboo quiver on the back
-        "down": [(["........c.....", ".......cC.....", "...cccccccc...", "...cCcCcCcc...", "...CCCCCCCC..."], -2),
-                 (["............f.", "...........fq.", "...........qv.", "...........qv.", "............v."], 3)],
-        "side": [([".........c....", "........cC....", "...cccccccc...", "...cCcCcCcc...", "...CCCCCCCC..."], -2),
-                 (["..cc..........", "..c..........."], 3),
-                 ([".f............", "fq............", "qv............", ".qv...........", ".qv...........", "..qv..........", "..qv.........."], 4)],
-        "up": [(["...cccccccc...", "...cCcCcCcc...", "...CCCCCCCC..."], 0),
-               ([".....cc.......", ".....cC.......", "......c......."], 3),
-               (["..........f...", ".........fq...", ".........qv...", ".........qv...", "........qv....", "........qv....", ".......qv.....", ".......qv....."], 4)],
-    },
-    "rogue": {     # dark headwrap with a pale edge and knot tails, 3 px red sabuk with a hanging end
-        "down": [(["...cccccccc...", "...cCccccCc...", "...xxxxxxxx..."], 0), (["...........cc.", "...........cC.", "............c."], 1),
-                 (["..ajaaaaaaja.."], 11), (["..a...........", "..j...........", "..a..........."], 12)],
-        "side": [(["...cccccccc...", "...cCccccCc...", "...xxxxxxxx..."], 0), (["..cc..........", ".cC...........", "..c..........."], 1),
-                 (["...aaaaaaaa..."], 11), (["..a...........", "..j...........", ".a............"], 11)],
-        "up": [(["...cccccccc...", "...cCccccCc...", "...xxxxxxxx..."], 0), (["......cc......", ".....cCCc.....", ".....c..c....."], 3),
-               (["..ajaaaaaaja.."], 11), (["...........a..", "...........j.."], 12)],
-    },
-    "mage": {      # topknot with a gold pin, sumping at the ears, bare right shoulder, red cord, lontar at the hip
-        "down": [(["......hh......", ".....hHhh.....", "......g......."], -3), (["..Gg......gG.."], 4),
-                 (["........ssss.."], 8), (["......r..kss.."], 9), (["............g."], 9), ([".......r......"], 10),
-                 (["i.............", "oo............", "oo............"], 10),
-                 (["...tttttttt..."], 12), (["..tttutttttT.."], 13)],
-        "side": [(["....hh........", "...hHhh.......", "....g........."], -3), (["......gG......"], 4),
-                 (["...........i..", "..........oo..", "..........oo.."], 10)],
-        "up": [(["......hh......", ".....hHhh.....", "......g......."], -3), (["..gG......Gg.."], 4),
-               (["..ssss........"], 8), (["..ssk..r......"], 9), ([".g............"], 9), (["........r....."], 10),
-               (["...tttttttt..."], 12), (["..tttTtttttT.."], 13)],
-    },
-}
-
-# items shown only when the weapon is at rest (idle, walk, dodge, hurt, death); attack frames draw their own weapon
-REST = {
-    "base": {"down": [], "side": [], "up": []},
-    "warrior": {   # kelewang hanging low at the left hand
-        "down": [(["m.............", "M.............", "m.............", "m............."], 11)],
-        "side": [(["...........y..", "............m.", "............M."], 11)],
-        "up": [([".............m", ".............M"], 11)],
-    },
-    "archer": {    # gendewa in the left hand: recurved arc, string behind the body
-        "down": [(["..q...........", ".qf...........", "q.f...........", "q.............", "q.............", "q.............",
-                   "q.............", "q.f...........", ".qf...........", "..q..........."], 6)],
-        "side": [(["............q.", ".............q", ".............q", ".............q", ".............q", "............q."], 8)],
-        "up": [(["...........q..", "............q.", ".............q", ".............q", "............q.", "...........q.."], 8)],
-    },
-    "rogue": {     # kujang tucked at the hip
-        "down": [(["...........mM.", "............m."], 12)],
-        "side": [(["..........mM..", "...........m.."], 12)],
-        "up": [(["..mM..........", "...m.........."], 12)],
-    },
-    "mage": {"down": [_staff(12, 0, 18), (["............s."], 10)], "side": [_staff(12, 0, 18), (["...........ss."], 10)],
-             "up": [_staff(1, 0, 18), ([".s............"], 10)]},
-}
-
-# ---- walk / idle leg poses: list of (left_len, right_len, spread) ----
-def legs_img(pal, view, left, right, spread=0, hem=0, cls="base"):
-    """Lower 4 rows. Everyone is barefoot: kain (warrior) = skirt to the knee over wrapped calves,
-    pangsi = loose trousers with a flared cuff, robe (mage) = tan kain to the ankle with a verdigris hem."""
-    img = Image.new("RGBA", (IW, 4), (0, 0, 0, 0))
-    P = pal
-    style = LEGSTYLE[cls]
-    if style == "robe":
-        rows = ["..pppppppppp..", "..pPpppPpppp..", "..aaaaaaaaaa..", "...ss....ss..."]
-        if view == "side":
-            rows = ["...ppppppp....", "...pPpppPpp...", "...aaaaaaaa...", "....ss..ss...."]
-        return px.shift(px.sprite(rows, P, (IW, 4)), hem, 0)
-
-    def put(x, y, c):
-        if 0 <= x < IW and 0 <= y < 4:
-            img.putpixel((x, y), c)
-
-    def draw_leg(x, length, shd):
-        for y in range(length):
-            if y == length - 1:                       # bare foot
-                for fx in (x - 1, x, x + 1):
-                    put(fx, y, P["S"] if fx == x - 1 else P["s"])
-                if view == "side":
-                    put(x + 2, y, P["s"])
-            elif style == "kain":                     # calf with a leather wrap
-                put(x, y, P["l"] if y % 2 == 0 else P["S"] if shd else P["s"])
-                put(x + 1, y, P["l"] if y % 2 == 0 else P["s"])
-            else:                                     # pangsi, flared at the cuff
-                c = P["P"] if shd else P["p"]
-                put(x, y, c)
-                put(x + 1, y, c)
-                if y == length - 2:
-                    put(x - 1, y, P["P"])
-                    put(x + 2, y, P["P"] if shd else P["p"])
-    if view == "side":
-        draw_leg(4 + spread, left, True)
-        draw_leg(7 - spread, right, False)
-    else:
-        draw_leg(4, left, True)
-        draw_leg(8, right, False)
-    if style == "kain":                               # skirt over the knees, brass tumpal dots on the hem
-        sk = ["..pppppppppp..", "..PgPpPgPpPg.."] if view != "side" else ["...ppppppppp..", "...PgPpPgPp..."]
-        for y, row in enumerate(sk):
-            for x, ch in enumerate(row):
-                if ch != ".":
-                    put(x + hem, y, P[ch])
-    return img
-
-
-def overlay(img, rows, y, pal, rel0=Y0):
-    for i, row in enumerate(rows):
-        for x, ch in enumerate(row):
-            if ch == "." or ch == " ":
-                continue
-            yy = rel0 + y + i
-            if 0 <= yy < IH and 0 <= x < IW:
-                img.putpixel((x, yy), pal[ch])
-
-
-def body(cls, view, pose=None, rest=True):
-    """Upper body (head+torso+hips) on an IW x IH canvas, feet area empty."""
-    pal = palette(cls)
-    img = Image.new("RGBA", (IW, IH), (0, 0, 0, 0))
-    rows = VIEWS[view]
-    # base art (mage keeps its robe over the hips: overlay handles it)
-    for y, row in enumerate(rows):
-        for x, ch in enumerate(row):
-            if ch != ".":
-                img.putpixel((x, Y0 + y), pal[ch])
-    for rws, y in OVER[cls][view] + (REST[cls][view] if rest else []):
-        overlay(img, rws, y, pal)
-    return img, pal
-
-
-def compose(cls, view, bob=0, lx=0, legs=(4, 4, 0), hem=0, extra=None, upper_mod=None, rest=True):
-    up, pal = body(cls, view, rest=rest)
-    if upper_mod:
-        up = upper_mod(up)
-    can = Image.new("RGBA", (IW, IH), (0, 0, 0, 0))
-    leg = legs_img(pal, view, *legs, hem=hem, cls=cls) if True else None
-    px._clip_paste(can, leg, 0, Y0 + 14)
-    px._clip_paste(can, px.shift(up, lx, bob), 0, 0)
-    if extra:
-        extra(can, pal)
-    return can
-
-
-
-# =====================================================================================
-# Attack poses (Phase 6c, combat.md 2.3b). Procedural: body offsets + arm vector + weapon vector, authored once
-# for the SIDE view (facing right) and projected to the down / up views.
-# Frame order for every attack: 0 anticipation, 1 coil, 2 strike, 3 smear-pose, 4 follow-through, 5 settle.
-# =====================================================================================
-ARCH = {"base": "light", "rogue": "light", "warrior": "heavy", "mage": "staff", "archer": "bow"}
-WLEN = {"base": 6, "rogue": 6, "warrior": 8, "mage": 9}      # px of weapon beyond the hand at w_l = 1.0
-SMEAR = {"warrior": hexc("FFE6C8", 235), "base": hexc("FFFFFF", 200), "archer": hexc("C8F0D8", 220),
-         "rogue": hexc("FFD8CC", 220), "mage": hexc("9EF2E0", 235)}
-
-N, W, L, L3 = (4, 4, 0), (4, 4, -2), (4, 3, -2), (4, 3, -3)
-
-
-def F(bob, lx, lean, sq, legs, aa, al, wa, wl=1.0):
-    return dict(bob=bob, lx=lx, lean=lean, sq=sq, legs=legs, aa=aa, al=al, wa=wa, wl=wl)
-
-
-# melee tables: [hit][frame]. Angles in degrees, screen space, 0 = forward, 90 = down, -90 = up, 180 = back.
-LIGHT = [
-    [  # hit 1: forehand, overhead to low-forward
-        F(1, -1, -1, .95, N, -100, 3, -70), F(1, -2, -2, .92, W, -150, 3, -135),
-        F(0, 1, 1, 1, N, -30, 3, -10), F(0, 2, 2, 1, L, 10, 3, 35),
-        F(0, 2, 2, 1, L, 40, 3, 70), F(0, 1, 0, 1, N, 50, 3, 85)],
-    [  # hit 2: backhand, low-back to high-forward
-        F(1, 0, 0, .95, N, 60, 3, 100), F(1, -1, -2, .92, W, 90, 3, 140),
-        F(0, 1, 1, 1, N, 20, 3, 0), F(0, 2, 2, 1, L, -20, 3, -40),
-        F(0, 2, 2, 1, L, -50, 3, -80), F(0, 1, 0, 1, N, -20, 3, -45)],
-    [  # hit 3: finisher thrust (lunge)
-        F(1, -1, -1, .94, W, 140, 3, -15), F(1, -2, -2, .9, W, 180, 3, 0),
-        F(0, 2, 1, 1, L, 0, 2, 0), F(0, 3, 2, 1, L3, 0, 3, 0, 1.15),
-        F(0, 3, 2, 1, L3, 0, 3, 5, 1.1), F(0, 1, 0, 1, N, 20, 2, 30)],
-]
-HEAVY = [
-    [  # hit 1: forehand, big overhead arc
-        F(0, -1, -1, .98, N, -90, 3, -60), F(1, -2, -3, .92, W, -135, 3, -140),
-        F(0, 1, 1, 1, N, -40, 3, -20), F(0, 2, 2, 1, L, 10, 3, 30),
-        F(0, 2, 2, .96, L, 40, 3, 70), F(0, 1, 0, 1, N, 50, 3, 80)],
-    [  # hit 2: backhand sweep
-        F(1, 0, 0, .95, N, 70, 3, 110), F(1, -1, -3, .92, W, 100, 3, 155),
-        F(0, 1, 1, 1, N, 20, 3, 10), F(0, 2, 2, 1, L, -20, 3, -40),
-        F(0, 2, 2, 1, L, -50, 3, -80), F(0, 1, 0, 1, N, -30, 3, -50)],
-    [  # hit 3: finisher ground slam
-        F(0, 0, 0, 1, N, -100, 3, -90), F(-1, -2, -3, 1.04, W, -125, 3, -115),
-        F(1, 1, 2, .96, N, -30, 3, 15), F(1, 2, 3, .88, L, 40, 3, 80),
-        F(1, 2, 3, .86, L, 60, 3, 88), F(0, 1, 1, .96, N, 50, 3, 65)],
-]
-# bow: (bob, lx, lean, sq, legs, draw 0..1, tilt, front-arm angle). raise, draw, hold, release, recoil, settle
-def B(bob, lx, lean, sq, legs, draw, tilt, fa):
-    return dict(bob=bob, lx=lx, lean=lean, sq=sq, legs=legs, draw=draw, tilt=tilt, fa=fa)
-
-
-BOW = [
-    [B(0, 0, 0, 1, N, 0, 0, -25), B(0, -1, -1, 1, N, .5, 0, -10), B(0, -1, -1, 1, N, 1, 0, -5),
-     B(0, 0, 0, 1, N, 0, -1, -8), B(0, -1, -2, 1, N, 0, -2, -35), B(0, 0, 0, 1, N, 0, 0, -20)],
-    [B(0, 0, 0, 1, N, 0, 0, -10), B(0, -1, -1, 1, N, .5, 0, 0), B(0, -1, -1, 1, N, 1, 0, 5),
-     B(0, 0, 0, 1, N, 0, 1, 2), B(0, -1, -2, 1, N, 0, 2, -15), B(0, 0, 0, 1, N, 0, 0, -10)],
-    [B(1, -1, -1, .96, W, 0, 0, -30), B(1, -2, -2, .94, W, .6, 0, -15), B(1, -2, -2, .94, W, 1, 0, -8),
-     B(0, 0, 0, 1, W, 0, -2, -10), B(0, -2, -3, 1, W, 0, -3, -45), B(0, 0, -1, 1, N, 0, 0, -20)],
-]
-SHOULDER = {"side": (8, 12), "down": (11, 12), "up": (11, 12)}
-LAT = {0: -0.5, 1: 0.5, 2: -0.1}      # sideways swing factor per hit for the down and up views
-
-
-def project(view, hit, ang, ln):
-    """Side-view polar vector -> screen (dx, dy) in this view."""
-    fx, fy = math.cos(math.radians(ang)) * ln, math.sin(math.radians(ang)) * ln
-    if view == "side":
-        return fx, fy
-    k = 0.6 if view == "down" else -0.6
-    return fx * LAT[hit], fy + fx * k
-
-
-def line_pts(x0, y0, x1, y1):
-    pts, dx, dy = [], abs(x1 - x0), -abs(y1 - y0)
-    sx, sy = (1 if x0 < x1 else -1), (1 if y0 < y1 else -1)
-    err = dx + dy
-    while True:
-        pts.append((x0, y0))
-        if x0 == x1 and y0 == y1:
-            break
-        e2 = 2 * err
-        if e2 >= dy:
-            err += dy
-            x0 += sx
-        if e2 <= dx:
-            err += dx
-            y0 += sy
-    return pts
-
-
-def put_px(can, x, y, c):
-    if 0 <= x < can.width and 0 <= y < can.height:
-        can.putpixel((x, y), c)
-
-
-def draw_arm(can, pal, sx, sy, hx, hy):
-    for i, (x, y) in enumerate(line_pts(sx, sy, hx, hy)):
-        put_px(can, x, y, pal["s"] if (x, y) == (hx, hy) else pal["T"])
-
-
-def draw_weapon(can, pal, cls, hx, hy, vx, vy, hit):
-    """Weapon from the hand along (vx, vy). Handle, guard, blade (+ edge), kujang curve, staff orb."""
-    ln = max(1, round(math.hypot(vx, vy)))
-    tx, ty = hx + round(vx), hy + round(vy)
-    if cls == "mage":
-        bx, by = hx - round(vx * 0.25), hy - round(vy * 0.25)    # staff: grip sits near the middle
-        pts = line_pts(bx, by, tx, ty)
-        for i, (x, y) in enumerate(pts):
-            put_px(can, x, y, pal["q"] if i % 3 else pal["f"])
-        for ox, oy in ((1, 0), (-1, 0), (0, 1), (0, -1)):        # ring top (verdigris), teal ink-light inside
-            put_px(can, tx + ox, ty + oy, pal["a"])
-        put_px(can, tx, ty, pal["f"])
-        return
-    pts = line_pts(hx, hy, tx, ty)
-    n = len(pts)
-    mag = math.hypot(vx, vy) or 1.0
-    px_, py_ = -vy / mag, vx / mag                              # perpendicular
-    for i, (x, y) in enumerate(pts):
-        if i < 2 and n > 3:
-            put_px(can, x, y, pal["q"])
-        elif i == 2 and n > 4 and cls in ("warrior", "base", "rogue"):
-            put_px(can, x, y, pal["g"])
-            put_px(can, x + round(px_), y + round(py_), pal["g"])
-            put_px(can, x - round(px_), y - round(py_), pal["g"])
+    def px(self, x, y, c, soft=False):
+        k = (int(round(x)), int(round(y)))
+        self.p[k] = c
+        if soft:
+            self.soft.add(k)
         else:
-            put_px(can, x, y, pal["M"])
-            if cls == "warrior" and i > 3:
-                put_px(can, x + round(px_), y + round(py_), pal["m"])
-            if cls == "rogue" and i >= n - 2:                    # kujang hook
-                put_px(can, x + round(px_), y + round(py_), pal["m"])
-    put_px(can, tx, ty, pal["w"] if cls != "base" else pal["M"])  # bright tip
+            self.soft.discard(k)
+
+    def rect(self, x0, y0, x1, y1, c):
+        for y in range(int(y0), int(y1) + 1):
+            for x in range(int(x0), int(x1) + 1):
+                self.px(x, y, c)
+
+    def block(self, x0, y0, x1, y1, m):
+        """Filled box lit from the top-left: light left column, dark right column."""
+        self.rect(x0, y0, x1, y1, m[1])
+        if x1 - x0 >= 2:
+            self.rect(x0, y0, x0, y1, m[2])
+            self.rect(x1, y0, x1, y1, m[0])
+
+    def line(self, x0, y0, x1, y1, c, soft=False):
+        n = int(max(abs(x1 - x0), abs(y1 - y0)))
+        for i in range(n + 1):
+            t = i / n if n else 0.0
+            self.px(x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, c, soft)
+
+    def ray(self, hx, hy, ang, a, b, c, w=1, c2=None):
+        """Pixels from distance a to b along ang (degrees, y down) from (hx, hy). w=2 adds a second row (c2)."""
+        co, si = math.cos(math.radians(ang)), math.sin(math.radians(ang))
+        d = float(a)
+        while d <= b + 1e-6:
+            x, y = hx + co * d, hy + si * d
+            if w == 2:
+                self.px(x - si, y + co, c2 or c)
+            self.px(x, y, c)
+            d += 0.5
+
+    def disc(self, cx, cy, r, c, soft=False):
+        for y in range(int(cy - r - 1), int(cy + r + 2)):
+            for x in range(int(cx - r - 1), int(cx + r + 2)):
+                if (x - cx) ** 2 + (y - cy) ** 2 <= r * r + 0.3:
+                    self.px(x, y, c, soft)
+
+    def glow(self, cx, cy, r, c):
+        """A soft halo that never covers a solid pixel."""
+        for y in range(int(cy - r - 1), int(cy + r + 2)):
+            for x in range(int(cx - r - 1), int(cx + r + 2)):
+                d = math.hypot(x - cx, y - cy)
+                if d <= r + 0.2 and (x, y) not in self.p:
+                    a = int(190 * (1.0 - d / (r + 1.0)))
+                    self.px(x, y, c[:3] + (max(a, 40),), True)
+
+    def merge(self, o, dx=0, dy=0):
+        for (x, y), c in o.p.items():
+            self.px(x + dx, y + dy, c, (x, y) in o.soft)
+
+    def rot_fall(self):
+        """Lay the figure on its back: head to the left, feet to the right."""
+        o = Cv()
+        for (x, y), c in self.p.items():
+            o.px(y, CW - 1 - x, c, (x, y) in self.soft)
+        return o
+
+    def image(self):
+        img = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
+        solid = {k for k in self.p if k not in self.soft}
+        for (x, y) in solid:
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                k = (x + dx, y + dy)
+                if k not in solid and 0 <= k[0] < CW and 0 <= k[1] < CH:
+                    img.putpixel(k, OUTLINE)
+        for (x, y), c in self.p.items():
+            if 0 <= x < CW and 0 <= y < CH and ((x, y) in solid or img.getpixel((x, y))[3] == 0):
+                img.putpixel((x, y), c)
+        return img
 
 
-def draw_bow(can, pal, fx, fy, draw, tilt, view, back_from):
-    """Bow centred on the front hand. draw 0..1 pulls the string back."""
-    if view == "side":
-        bulge = {-3: 0, -2: 1, -1: 2, 0: 2, 1: 2, 2: 1, 3: 0}
-        bx = fx + 1
-        for r, b in bulge.items():
-            put_px(can, bx + b + round(tilt * r / 3.0), fy + r, pal["q"])
-        pull = round(draw * 4)
-        mid = (bx - 1 - pull, fy)
-        top, bot = (bx + round(tilt * -1), fy - 3), (bx + round(tilt), fy + 3)
-        for a, b in ((top, mid), (mid, bot)):
-            for x, y in line_pts(a[0], a[1], b[0], b[1]):
-                put_px(can, x, y, pal["f"])
-        if draw > 0:
-            for x in range(mid[0], bx + 4):
-                put_px(can, x, fy, pal["m"])
-            put_px(can, bx + 4, fy, pal["M"])
-            if draw >= .5:
-                draw_arm(can, pal, back_from[0], back_from[1], mid[0], mid[1])
-    else:
-        bx = fx + 1
-        for r, b in {-3: 0, -2: 1, -1: 1, 0: 1, 1: 1, 2: 1, 3: 0}.items():
-            put_px(can, bx + b, fy + r + round(tilt * 0), pal["q"])
-        for r in range(-3, 4):
-            put_px(can, bx - 1, fy + r, pal["f"])
-        if draw > 0:
-            if view == "down":
-                put_px(can, bx - 1, fy, pal["M"])
-                put_px(can, bx - 1, fy + 1, pal["m"])
+def P(**kw):
+    """A pose. Offsets are pixels; hands are absolute cell points or None for a hanging arm."""
+    d = dict(bob=0, lean=0, crouch=0, head=(0, 0), legl=(0, 0), legr=(0, 0), hand_w=None, hand_o=None,
+             wang=None, wstate=0, eyes="open", sway=0, wlayer="front", swing=0)
+    d.update(kw)
+    return d
+
+
+# ---------------------------------------------------------------- weapons
+def draw_weapon(cv, cid, hx, hy, ang, state=0, second=False):
+    C = CLASSES[cid]
+    kind = C["weapon"]
+    co, si = math.cos(math.radians(ang)), math.sin(math.radians(ang))
+    fx = FX.get(cid, hexc("FFFFFF"))
+    if kind == "knife":
+        cv.ray(hx, hy, ang, 0, 1, WOOD[1])
+        cv.ray(hx, hy, ang, 2, 6, STEEL[1])
+        cv.ray(hx, hy, ang, 5, 6, STEEL[2])
+    elif kind == "kelewang":
+        cv.ray(hx, hy, ang, -1, 1, WOOD[0])
+        cv.ray(hx, hy, ang, 2, 2, GOLD[1], 2, GOLD[2])
+        cv.px(hx + co * 2 + si, hy + si * 2 - co, GOLD[0])
+        cv.ray(hx, hy, ang, 3, 11, STEEL[1], 2, STEEL[2])
+        cv.ray(hx, hy, ang, 3, 9, STEEL[0])
+        cv.ray(hx, hy, ang, 10, 12, STEEL[2])
+    elif kind == "kujang":
+        cv.ray(hx, hy, ang, -1, 1, WOOD[1])
+        cv.ray(hx, hy, ang, 2, 7, STEEL[1])
+        cv.ray(hx, hy, ang, 3, 5, STEEL[2], 2, STEEL[0])
+        cv.px(hx + co * 8 - si, hy + si * 8 + co, STEEL[2])
+        cv.px(hx + co * 2, hy + si * 2, GOLD[1])
+    elif kind == "tombak":
+        a0, top = -8, 11
+        cv.ray(hx, hy, ang, a0, top, WOOD[1])
+        cv.ray(hx, hy, ang, a0, a0 + 1, GOLD[1])
+        for s in (-1, 1):
+            cv.px(hx + co * (top - 1) - si * s, hy + si * (top - 1) + co * s, C["top"][1])
+        cv.px(hx + co * (top - 1), hy + si * (top - 1) + 1, C["top"][0])
+        cv.px(hx + co * top, hy + si * top, GOLD[1])
+        cv.ray(hx, hy, ang, top + 1, top + 5, STEEL[1])
+        for s in (-1, 1):
+            cv.px(hx + co * (top + 2) - si * s, hy + si * (top + 2) + co * s, STEEL[0] if s > 0 else STEEL[2])
+        cv.ray(hx, hy, ang, top + 4, top + 5, STEEL[2])
+    elif kind == "fans":
+        rim = GOLD[2]
+        if state == 0:                          # folded at rest
+            cv.ray(hx, hy, ang, 1, 5, GOLD[1], 2, C["top"][1])
+            cv.ray(hx, hy, ang, 6, 6, rim)
+        for a in (range(-52, 53, 4) if state else ()):
+            sec = (a + 52) // 21
+            col = C["top"][1 if sec % 2 else 2] if sec != 2 else GOLD[1]
+            cv.ray(hx, hy, ang + a, 1, 4, col)
+            cv.ray(hx, hy, ang + a, 5, 5, rim if abs(a) < 50 else GOLD[0])
+        cv.px(hx, hy, GOLD[0])
+    elif kind in ("staff", "gunungan"):
+        cv.ray(hx, hy, ang, -7, 8, WOOD[1])
+        cv.ray(hx, hy, ang, -7, -6, WOOD[0])
+        tx, ty = hx + co * 11, hy + si * 11
+        if kind == "staff":
+            for a in range(0, 360, 30):
+                cv.px(tx + math.cos(math.radians(a)) * 2.2, ty + math.sin(math.radians(a)) * 2.2, GOLD[1])
+            cv.px(tx - 1.6, ty - 1.6, GOLD[2])
+            cv.px(tx, ty, fx)
+            cv.px(hx + co * 8, hy + si * 8, GOLD[0])
+        else:   # gunungan: a leaf-shaped kayon head, gold with a red heart
+            for d, wdt in ((8, 1), (9, 2), (10, 2), (11, 2), (12, 1), (13, 1), (14, 0)):
+                for s in range(-wdt, wdt + 1):
+                    col = GOLD[1] if abs(s) < wdt or wdt == 0 else GOLD[0]
+                    cv.px(hx + co * d - si * s, hy + si * d + co * s, col)
+            cv.px(hx + co * 10, hy + si * 10, C["extra"][1])
+            cv.px(hx + co * 11, hy + si * 11, C["extra"][1])
+            cv.px(hx + co * 14, hy + si * 14, GOLD[2])
+            cv.px(hx + co * 9 + si, hy + si * 9 - co, GOLD[2])
+            tx, ty = hx + co * 11, hy + si * 11
+        if state >= 1:
+            cv.glow(tx, ty, 2.2 + state, fx)
+        if state >= 3:
+            cv.px(tx, ty, hexc("FFFFFF"))
+    elif kind == "sling":
+        cord = C["trim"][0]
+        cv.ray(hx, hy, ang, 1, 6, cord)
+        ex, ey = hx + co * 7, hy + si * 7
+        cv.rect(round(ex) - 1, round(ey) - 1, round(ex), round(ey), WOOD[1])
+        if state != 2:   # 2: the stone is away
+            cv.px(round(ex), round(ey), STEEL[1])
+            cv.px(round(ex) - 1, round(ey) - 1, STEEL[2])
+    elif kind == "bow":
+        # ang is the aim; the bow stands across it. state: 0 rest, 1 half draw, 2 full draw, 3 just loosed
+        wood = C["extra"]
+        tips = []
+        for t in range(-7, 8):
+            f = 3.0 * (1.0 - (t / 7.0) ** 2)
+            x, y = hx + co * f - si * t, hy + si * f + co * t
+            cv.px(x, y, wood[2] if abs(t) >= 6 else (wood[1] if t < 0 else wood[0]))
+            if abs(t) == 7:
+                tips.append((x, y))
+        pull = {0: 0.0, 1: 3.0, 2: 5.0, 3: -1.0}[state]
+        sx, sy = hx - co * pull, hy - si * pull
+        string = hexc("EFE6C8")
+        for tx_, ty_ in tips:
+            cv.line(tx_, ty_, sx, sy, string)
+        if state in (1, 2):
+            cv.ray(sx, sy, ang, 0, pull + 6, WOOD[2])
+            cv.ray(sx, sy, ang, pull + 6, pull + 7, STEEL[2])
+            cv.px(sx, sy, hexc("F4F6F0"))
+            if state == 2:
+                cv.glow(hx + co * (pull + 3), hy + si * (pull + 3), 1.6, fx)
+        cv.px(hx, hy, wood[0])
+
+
+# ---------------------------------------------------------------- limbs
+def limb(cv, x0, y0, x1, y1, sleeve, cloth, wide=2, skin=SKIN, inner=1):
+    """A 2 px limb from (x0, y0) to (x1, y1): `sleeve` cloth pixels from the top, then skin."""
+    n = int(max(abs(x1 - x0), abs(y1 - y0)))
+    vert = abs(y1 - y0) >= abs(x1 - x0)
+    for i in range(n + 1):
+        t = i / n if n else 0.0
+        x, y = x0 + (x1 - x0) * t, y0 + (y1 - y0) * t
+        m = cloth if i < sleeve else skin
+        if vert:
+            a, b = (m[2], m[0]) if inner > 0 else (m[0], m[1])
+            cv.px(x, y, a if i < n else m[1])
+            if wide == 2:
+                cv.px(x + 1, y, b if i < n else m[1])
+        else:
+            cv.px(x, y, m[2])
+            if wide == 2:
+                cv.px(x, y + 1, m[0] if i < sleeve else m[1])
+
+
+def leg(cv, hipx, hipy, footx, footy, C, style, fwd=1, far=False):
+    """A 3 px leg from the hip to the foot (side and front views). `fwd` is the toe direction."""
+    low = C["low"]
+    cut = {"pants": 99, "short": 4}.get(style, 99)
+    n = max(1, footy - hipy)
+    for i in range(n):
+        x = hipx + (footx - hipx) * i / n
+        m = low if i < cut else SKIN
+        if far:
+            m = (m[0], m[0], m[1])
+        y = hipy + i
+        cv.px(x - 1, y, m[2])
+        cv.px(x, y, m[1])
+        cv.px(x + 1, y, m[0])
+    sk = (SKIN[0], SKIN[0], SKIN[1]) if far else SKIN
+    wrap = None
+    if style == "pants":
+        wrap = {"archer": C.get("extra"), "rogue": C["sash"], "lancer": C.get("extra")}.get(C.get("id"))
+        if wrap is None:
+            wrap = low
+    if wrap is not None and n >= 3 and wrap is not low:
+        for dx in (-1, 0, 1):
+            cv.px(footx + dx, footy - 1, wrap[1] if dx < 1 else wrap[0])
+    cv.px(footx - 1, footy, sk[1])
+    cv.px(footx, footy, sk[1])
+    cv.px(footx + 1, footy, sk[0])
+    cv.px(footx + (2 if fwd > 0 else -2), footy, sk[2] if fwd < 0 else sk[1])
+
+
+def skirt(cv, x0, x1, y0, y1, C, cid, sway=0, view="front"):
+    """A long kain or robe from y0 to y1, flaring 1 px toward the hem."""
+    low = C["low"]
+    for y in range(y0, y1 + 1):
+        t = (y - y0) / max(1, y1 - y0)
+        fl = 1 if t > 0.35 else 0
+        s = sway if t > 0.6 else 0
+        a, b = x0 - fl + min(s, 0), x1 + fl + max(s, 0)
+        for x in range(a, b + 1):
+            c = low[1]
+            if x == a:
+                c = low[2]
+            elif x >= b - (1 if view != "side" else 0):
+                c = low[0]
+            cv.px(x, y, c)
+    mid = (x0 + x1) // 2
+    if cid == "warrior":      # wiru pleats down the front, brass tumpal hem
+        if view != "back":
+            for y in range(y0 + 1, y1):
+                cv.px(mid + (1 if view == "side" else 0), y, low[2])
+                cv.px(mid + 1 + (1 if view == "side" else 0), y, low[0])
+        for x in range(x0 - 1, x1 + 2):
+            cv.px(x + (sway if sway else 0), y1, GOLD[1] if (x + y1) % 2 else GOLD[0])
+    elif cid == "mage":       # a batik band above the hem and a front panel line
+        for x in range(x0 - 1, x1 + 2):
+            cv.px(x, y1 - 1, C["extra"][1])
+            cv.px(x, y1, C["extra"][0] if x % 2 else C["extra"][1])
+        if view == "front":
+            for y in range(y0, y1 - 1):
+                cv.px(mid + 1, y, low[0])
+    elif cid == "dancer":     # batik dots and a gold hem; the selendang is drawn by the torso
+        for y in range(y0 + 1, y1, 2):
+            for x in range(x0 + (y // 2) % 2, x1 + 1, 3):
+                cv.px(x, y, GOLD[1])
+        for x in range(x0 - 1, x1 + 2):
+            cv.px(x, y1, GOLD[1])
+    elif cid == "dalang":     # parang: light diagonal bands
+        for y in range(y0, y1 + 1):
+            for x in range(x0 - 1, x1 + 2):
+                if (x + y) % 5 == 0 and (x, y) in cv.p:
+                    cv.px(x, y, low[2])
+        for x in range(x0 - 1, x1 + 2):
+            if (x, y1) in cv.p:
+                cv.px(x, y1, low[0])
+
+
+# ---------------------------------------------------------------- head
+def head(cv, cid, view, x, y, eyes="open"):
+    """A 10x10 head with its top-left at (x, y), then the class headgear."""
+    C = CLASSES[cid]
+    s, h = SKIN, HAIR
+
+    def row(r, a, b, c):
+        for i in range(a, b + 1):
+            cv.px(x + i, y + r, c)
+    if view == "front":
+        row(0, 2, 7, h[1]); row(1, 1, 8, h[1]); row(2, 0, 9, h[1]); row(3, 0, 9, h[1])
+        row(0, 2, 4, h[2]); row(1, 1, 2, h[2])
+        row(4, 0, 9, h[0]); row(4, 2, 7, s[1]); row(4, 2, 3, s[2])
+        row(5, 0, 9, s[1]); cv.px(x, y + 5, s[0]); cv.px(x + 9, y + 5, s[0]); row(5, 1, 3, s[2])
+        row(6, 0, 9, s[1]); cv.px(x, y + 6, s[0]); cv.px(x + 9, y + 6, s[0]); cv.px(x + 1, y + 6, s[2])
+        row(7, 1, 8, s[1]); cv.px(x + 1, y + 7, s[2]); cv.px(x + 8, y + 7, s[0])
+        row(8, 1, 8, s[1]); cv.px(x + 8, y + 8, s[0]); cv.px(x + 1, y + 8, s[1])
+        row(9, 3, 6, s[0])
+        cv.px(x + 2, y + 9, s[0]); cv.px(x + 7, y + 9, s[0])
+        if eyes == "open":
+            for ex in (2, 7):
+                cv.px(x + ex, y + 6, EYE); cv.px(x + ex, y + 7, EYE)
+            cv.px(x + 3, y + 6, hexc("F6EEDC")); cv.px(x + 6, y + 6, hexc("F6EEDC"))
+        else:
+            row(7, 2, 3, EYE); row(7, 6, 7, EYE)
+        cv.px(x + 4, y + 8, s[0]); cv.px(x + 5, y + 8, s[0])
+    elif view == "side":      # faces right
+        row(0, 2, 7, h[1]); row(1, 1, 8, h[1]); row(2, 0, 9, h[1]); row(3, 0, 9, h[1])
+        row(0, 2, 4, h[2]); row(1, 1, 2, h[2])
+        row(4, 0, 4, h[1]); row(4, 5, 9, s[1]); row(4, 5, 6, h[0])
+        row(5, 0, 3, h[1]); row(5, 4, 9, s[1]); cv.px(x + 4, y + 5, s[0])
+        row(6, 0, 3, h[0]); row(6, 4, 9, s[1]); cv.px(x + 4, y + 6, s[0])
+        row(7, 1, 2, h[0]); row(7, 3, 10, s[1]); cv.px(x + 10, y + 7, s[2])
+        row(8, 3, 9, s[1]); cv.px(x + 3, y + 8, s[0])
+        row(9, 4, 8, s[0])
+        row(5, 6, 8, s[2])
+        if eyes == "open":
+            cv.px(x + 7, y + 6, EYE); cv.px(x + 7, y + 7, EYE); cv.px(x + 8, y + 6, hexc("F6EEDC"))
+        else:
+            row(7, 7, 8, EYE)
+        cv.px(x + 8, y + 8, s[0])
+    else:                     # back
+        row(0, 2, 7, h[1]); row(1, 1, 8, h[1])
+        for r in range(2, 8):
+            row(r, 0, 9, h[1]); cv.px(x, y + r, h[2]); cv.px(x + 9, y + r, h[0])
+        row(0, 2, 4, h[2]); row(1, 1, 2, h[2]); row(3, 2, 5, h[2]); row(4, 1, 2, h[2]); cv.px(x + 6, y + 3, h[2])
+        row(7, 0, 9, h[0]); row(8, 1, 8, h[0]); cv.px(x + 4, y + 8, h[1]); row(9, 3, 6, s[0])
+    headgear(cv, cid, view, x, y, C)
+
+
+def headgear(cv, cid, view, x, y, C):
+    g, t = C["gear"], C["trim"]
+
+    def row(r, a, b, c):
+        for i in range(a, b + 1):
+            cv.px(x + i, y + r, c)
+    back = view == "back"
+    if cid == "base":         # a plain cloth band
+        row(3, 0, 9, g[1]); row(3, 0, 2, g[2]); cv.px(x + 9, y + 3, g[0])
+    elif cid == "warrior":    # red udeng with a standing front knot and a tail
+        row(0, 2, 7, g[1]); row(1, 1, 8, g[1]); row(2, 0, 9, g[1]); row(3, 0, 9, g[0])
+        row(0, 2, 4, g[2]); row(1, 1, 3, g[2]); cv.px(x, y + 2, g[2])
+        row(3, 3, 6, GOLD[1])
+        if view == "front":
+            row(-1, 4, 5, g[1]); cv.px(x + 4, y - 2, g[2]); cv.px(x + 5, y - 1, g[0])
+        elif view == "side":
+            row(-1, 6, 7, g[1]); cv.px(x + 7, y - 2, g[2])
+            cv.px(x - 1, y + 3, g[1]); cv.px(x - 1, y + 4, g[0]); cv.px(x - 2, y + 5, g[0])
+        else:
+            cv.px(x + 4, y + 4, g[1]); cv.px(x + 5, y + 4, g[0]); cv.px(x + 4, y + 5, g[0]); cv.px(x + 5, y + 6, g[0])
+    elif cid == "archer":     # brown iket, one front peak, a pale feather
+        row(1, 1, 8, g[1]); row(2, 0, 9, g[1]); row(3, 0, 9, g[0]); row(1, 1, 3, g[2]); cv.px(x, y + 2, g[2])
+        row(2, 2, 7, C["sash"][0])
+        if view == "front":
+            row(0, 4, 5, g[1]); cv.px(x + 4, y - 1, g[2]); cv.px(x + 5, y, g[0])
+            cv.px(x + 8, y, hexc("F4F0E0")); cv.px(x + 9, y - 1, hexc("F4F0E0")); cv.px(x + 9, y - 2, C["sash"][1])
+        elif view == "side":
+            row(0, 6, 8, g[1]); cv.px(x + 8, y - 1, g[2])
+            cv.px(x + 2, y, hexc("F4F0E0")); cv.px(x + 1, y - 1, hexc("F4F0E0")); cv.px(x, y - 2, C["sash"][1])
+        else:
+            cv.px(x + 1, y, hexc("F4F0E0")); cv.px(x, y - 1, hexc("F4F0E0")); cv.px(x, y - 2, C["sash"][1])
+            row(4, 4, 5, g[0])
+    elif cid == "rogue":      # dark wrap to the brow with a pale edge and two long tails
+        row(0, 2, 7, g[1]); row(1, 1, 8, g[1]); row(2, 0, 9, g[1]); row(3, 0, 9, g[1])
+        row(0, 2, 4, g[2]); row(1, 1, 2, g[2]); cv.px(x, y + 2, g[2])
+        if back:
+            for r in range(4, 8):
+                row(r, 0, 9, g[1]); cv.px(x + 9, y + r, g[0]); cv.px(x, y + r, g[2])
+            row(8, 1, 8, g[0])
+            for i in range(5):
+                cv.px(x + 3, y + 8 + i, C["sash"][1]); cv.px(x + 6, y + 8 + i, C["sash"][0])
+        else:
+            row(4, 0, 9 if view == "front" else 5, t[1])
+            if view == "front":
+                cv.px(x, y + 4, g[0]); cv.px(x + 9, y + 4, g[0])
+                for i in range(4):
+                    cv.px(x + 10, y + 4 + i, C["sash"][1 if i < 2 else 0])
             else:
-                for r in range(1, 6):
-                    put_px(can, bx - 1, fy - r, pal["m"])
-                put_px(can, bx - 1, fy - 6, pal["M"])
+                for i in range(6):
+                    cv.px(x - 1 - (i // 2), y + 4 + i, C["sash"][1]); cv.px(x - 2 - (i // 2), y + 5 + i, C["sash"][0])
+    elif cid == "mage":       # topknot tied with gold, a thin brow band, sumping at the ears
+        cx = {"front": 4, "side": 3, "back": 4}[view]
+        row(-2, cx, cx + 1, HAIR[1]); row(-1, cx, cx + 1, GOLD[1]); cv.px(x + cx, y - 2, HAIR[2])
+        row(-3, cx, cx + 1, HAIR[1]); cv.px(x + cx, y - 3, HAIR[2])
+        if not back:
+            row(3, 1 if view == "front" else 5, 8 if view == "front" else 9, GOLD[1])
+        if view == "front":
+            for ex in (0, 9):
+                cv.px(x + ex, y + 4, GOLD[2]); cv.px(x + ex, y + 5, GOLD[1]); cv.px(x + ex, y + 6, GOLD[0])
+        elif view == "side":
+            cv.px(x + 4, y + 4, GOLD[2]); cv.px(x + 4, y + 5, GOLD[1]); cv.px(x + 3, y + 6, GOLD[0])
+        else:
+            for ex in (0, 9):
+                cv.px(x + ex, y + 5, GOLD[1])
+    elif cid == "lancer":     # tall black kuluk with a brass band and a red knob
+        for r in range(-3, 4):
+            row(r, 1, 8, g[1]); cv.px(x + 1, y + r, g[2]); cv.px(x + 8, y + r, g[0])
+        row(-4, 2, 7, g[1]); cv.px(x + 2, y - 4, g[2])
+        row(2, 1, 8, GOLD[1]); cv.px(x + 1, y + 2, GOLD[2]); cv.px(x + 8, y + 2, GOLD[0])
+        row(3, 0, 9, g[0])
+        row(-5, 4, 5, C["top"][1]); cv.px(x + 4, y - 5, C["top"][2])
+        if view == "front":
+            cv.px(x + 4, y, GOLD[1]); cv.px(x + 5, y, GOLD[0])
+    elif cid == "herder":     # caping: a wide straw cone
+        for r, a, b in ((-3, 4, 5), (-2, 3, 6), (-1, 1, 8), (0, -1, 10), (1, -3, 12), (2, -4, 13)):
+            row(r, a, b, g[1])
+            cv.px(x + a, y + r, g[2]); cv.px(x + a + 1, y + r, g[2]); cv.px(x + b, y + r, g[0])
+        row(3, -3, 12, g[0])
+        cv.px(x + 4, y - 3, g[2])
+        for r, i in ((-1, 4), (0, 6), (1, 2), (1, 8), (2, 5), (0, 2), (2, 10)):
+            cv.px(x + i, y + r, g[0])
+        if not back:
+            row(4, 1 if view == "front" else 5, 8 if view == "front" else 9, SKIN[0])
+    elif cid == "dancer":     # gold sobrah: a jagged crown, red stones, tassels by the ears; a mask at the temple
+        row(0, 1, 8, g[1]); row(1, 0, 9, g[1]); row(2, 0, 9, g[1]); row(3, 0, 9, g[0])
+        row(0, 1, 3, g[2]); cv.px(x, y + 1, g[2])
+        for i in (1, 4, 5, 8):
+            cv.px(x + i, y - 1, g[1])
+        cv.px(x + 4, y - 2, g[2]); cv.px(x + 5, y - 2, g[1])
+        red = C["top"]
+        if view == "front":
+            cv.px(x + 4, y + 1, hexc("E8483C")); cv.px(x + 5, y + 1, hexc("A82A26"))
+            for i in range(5):
+                cv.px(x - 1, y + 3 + i, red[1 if i % 2 else 2]); cv.px(x + 10, y + 3 + i, red[0 if i % 2 else 1])
+        elif view == "side":
+            cv.px(x + 7, y + 1, hexc("E8483C"))
+            for i in range(5):
+                cv.px(x + 4, y + 4 + i, red[1 if i % 2 else 2])
+            # the mask sits at the back of the temple, facing away
+            cv.rect(x - 1, y + 2, x + 1, y + 6, hexc("F2ECE0")); cv.px(x - 1, y + 2, hexc("C8BFB0"))
+            cv.px(x, y + 4, EYE); cv.px(x - 1, y + 6, hexc("C83A30")); cv.px(x + 1, y + 2, hexc("C83A30"))
+        else:
+            cv.rect(x + 3, y + 2, x + 6, y + 7, hexc("F2ECE0"))
+            cv.px(x + 3, y + 2, hexc("C8BFB0")); cv.px(x + 6, y + 7, hexc("C8BFB0"))
+            cv.px(x + 4, y + 4, EYE); cv.px(x + 5, y + 4, EYE); cv.px(x + 4, y + 6, hexc("C83A30")); cv.px(x + 5, y + 6, hexc("C83A30"))
+            for i in range(4):
+                cv.px(x - 1, y + 3 + i, red[1]); cv.px(x + 10, y + 3 + i, red[0])
+    elif cid == "dalang":     # blangkon: smooth batik cap, a front fold, the mondolan knot behind
+        row(0, 2, 7, g[1]); row(1, 1, 8, g[1]); row(2, 0, 9, g[1]); row(3, 0, 9, g[1])
+        row(0, 2, 4, g[2]); row(1, 1, 2, g[2]); cv.px(x, y + 2, g[2])
+        for r, i in ((1, 5), (2, 2), (2, 7), (3, 4)):
+            cv.px(x + i, y + r, C["sash"][1])
+        if view == "front":
+            row(4, 0, 9, g[0]); row(4, 3, 6, SKIN[1])
+            cv.px(x + 4, y + 3, g[0]); cv.px(x + 5, y + 3, g[0])
+        elif view == "side":
+            row(4, 0, 5, g[0])
+            cv.rect(x - 1, y + 4, x, y + 6, g[1]); cv.px(x - 1, y + 4, g[2]); cv.px(x, y + 6, g[0])
+        else:
+            for r in range(4, 7):
+                row(r, 0, 9, g[1]); cv.px(x + 9, y + r, g[0]); cv.px(x, y + r, g[2])
+            row(7, 1, 8, g[0])
+            cv.rect(x + 4, y + 5, x + 5, y + 7, g[1]); cv.px(x + 4, y + 5, g[2]); cv.px(x + 5, y + 7, g[0])
 
 
-def attack_frame(cls, hit, view, f):
-    arch = ARCH[cls]
-    if arch == "bow":
-        p = BOW[hit][f]
-    elif arch == "staff":
-        p = (HEAVY[2] if hit == 2 else LIGHT[hit])[f]
+# ---------------------------------------------------------------- torso
+def torso_front(cv, cid, x, y, back, sway=0):
+    """An 8x8 torso with its top-left at (x, y), shoulders 1 px wider. Class dress on top."""
+    C = CLASSES[cid]
+    top, sash, s = C["top"], C["sash"], SKIN
+    cv.block(x, y, x + 7, y + 7, top)
+    cv.rect(x - 1, y, x + 8, y + 1, top[1]); cv.px(x - 1, y, top[2]); cv.px(x + 8, y, top[0]); cv.px(x + 8, y + 1, top[0])
+    if not back and top is not SKIN:
+        cv.px(x + 3, y, s[1]); cv.px(x + 4, y, s[0])
+    if cid == "base":
+        cv.rect(x, y + 6, x + 7, y + 7, sash[1]); cv.px(x + 7, y + 6, sash[0]); cv.px(x + 7, y + 7, sash[0])
+        if not back:
+            cv.px(x + 3, y + 1, s[0]); cv.px(x + 4, y + 2, top[0])
+    elif cid == "warrior":
+        cv.rect(x, y + 6, x + 7, y + 7, sash[1]); cv.px(x + 7, y + 6, sash[0]); cv.px(x, y + 6, sash[2])
+        red = C["gear"]
+        for i in range(8):                      # selempang, shoulder to hip
+            xx = x + (i if not back else 7 - i)
+            yy = y + int(i * 0.72)
+            cv.px(xx, yy, red[1]); cv.px(xx, yy + 1, red[0])
+        if back:                                # the tameng rides on the back
+            cv.disc(x + 3.5, y + 3.5, 4.3, C["extra"][1])
+            cv.disc(x + 3.5, y + 3.5, 3.3, C["gear"][1])
+            cv.disc(x + 3.5, y + 3.5, 1.2, GOLD[1])
+            cv.px(x + 2, y + 1, C["gear"][2]); cv.px(x + 1, y + 2, C["gear"][2]); cv.px(x + 3, y + 3, GOLD[2])
+            cv.px(x + 6, y + 6, C["extra"][0]); cv.px(x + 5, y + 7, C["extra"][0])
+        else:
+            cv.px(x + 2, y + 3, s[0]); cv.px(x + 5, y + 3, s[0]); cv.px(x + 3, y + 5, s[0])
+            cv.px(x + 3, y + 6, GOLD[1]); cv.px(x + 4, y + 6, GOLD[2]); cv.px(x + 3, y + 7, GOLD[0]); cv.px(x + 4, y + 7, GOLD[1])
+            cv.px(x + 8, y + 2, C["extra"][1]); cv.px(x + 9, y + 3, C["extra"][0])   # shield rim behind the shoulder
+    elif cid == "archer":
+        cv.rect(x, y + 6, x + 7, y + 7, sash[1]); cv.px(x + 7, y + 6, sash[0]); cv.px(x, y + 6, sash[2]); cv.px(x + 7, y + 7, sash[0])
+        for i in range(7):                      # quiver strap
+            cv.px(x + (7 - i if not back else i), y + int(i * 0.8), C["gear"][1])
+        if back:                                # bamboo quiver slung across the back, fletchings up
+            for i in range(8):
+                cv.px(x + 6 - i * 0.5, y - 1 + i, C["extra"][1]); cv.px(x + 7 - i * 0.5, y - 1 + i, C["extra"][0])
+            for dx, c in ((6, "F4F0E0"), (7, "C8483C"), (8, "F4F0E0")):
+                cv.px(x + dx, y - 2, hexc(c)); cv.px(x + dx, y - 3, hexc(c))
+        else:
+            for i in range(1, 6):
+                cv.px(x + 4, y + i, top[0])
+            cv.px(x + 3, y + 2, top[2]); cv.px(x + 3, y + 4, top[2])
+            cv.px(x + 8, y - 1, hexc("F4F0E0")); cv.px(x + 9, y - 2, hexc("C8483C")); cv.px(x + 8, y - 2, C["extra"][1])
+    elif cid == "rogue":
+        cv.rect(x, y + 5, x + 7, y + 7, sash[1]); cv.rect(x, y + 5, x + 7, y + 5, sash[2]); cv.rect(x + 7, y + 5, x + 7, y + 7, sash[0])
+        cv.rect(x, y + 7, x + 7, y + 7, sash[0])
+        if not back:
+            for i in range(4):                  # crossed lapel
+                cv.px(x + 2 + i, y + 1 + i, C["trim"][0])
+            cv.px(x + 1, y + 6, sash[2])
+        tx = x - 1 if not back else x + 8       # the sabuk's knot and tails at the hip
+        for i in range(6):
+            cv.px(tx + (sway if i > 2 else 0), y + 6 + i, sash[1]); cv.px(tx - (1 if not back else -1) + (sway if i > 2 else 0), y + 7 + i, sash[0])
+    elif cid == "mage":
+        cv.rect(x, y + 6, x + 7, y + 7, sash[1]); cv.px(x + 7, y + 6, sash[0]); cv.px(x, y + 6, sash[2]); cv.rect(x, y + 7, x + 7, y + 7, sash[0])
+        if not back:
+            for i in range(5):                  # overlapped collar
+                cv.px(x + 2 + i, y + 1 + i, top[0])
+            cv.px(x + 5, y + 1, top[0]); cv.px(x + 4, y + 2, top[0])
+            cv.rect(x + 8, y + 7, x + 9, y + 9, GOLD[1]); cv.px(x + 9, y + 9, GOLD[0])   # lontar at the hip
+            cv.px(x + 8, y + 8, FX["mage"], True)
+        else:
+            cv.px(x + 3, y + 1, top[0]); cv.px(x + 4, y + 1, top[0])
+    elif cid == "lancer":
+        white = C["low"]
+        for i in range(0, 8, 2):                # lurik: red and white stripes
+            cv.rect(x + i + 1, y + 1, x + i + 1, y + 5, white[1 if i < 6 else 0])
+        cv.rect(x, y + 6, x + 7, y + 7, sash[1]); cv.px(x, y + 6, sash[2])
+        cv.rect(x - 1, y, x + 8, y, white[1]); cv.px(x + 8, y, white[0])
+        if not back:
+            cv.px(x + 3, y + 6, GOLD[1]); cv.px(x + 4, y + 6, GOLD[2]); cv.px(x + 3, y + 7, GOLD[0]); cv.px(x + 4, y + 7, GOLD[1])
+            cv.px(x + 3, y, s[1]); cv.px(x + 4, y, s[0])
+    elif cid == "herder":
+        blue = C["extra"]
+        for i in range(8):                      # sarong slung shoulder to hip, three wide
+            xx = x + (7 - i if not back else i)
+            yy = y + int(i * 0.8)
+            cv.px(xx, yy - 1 if yy > y else yy, blue[2]); cv.px(xx, yy, blue[1]); cv.px(xx, yy + 1, blue[0])
+            if i % 2:
+                cv.px(xx, yy, C["trim"][1])
+        cv.rect(x, y + 7, x + 7, y + 7, sash[1]); cv.px(x + 7, y + 7, sash[0])
+        if not back:
+            cv.px(x + 2, y + 3, s[0]); cv.px(x + 3, y + 5, s[0])
+            cv.rect(x - 1, y + 6, x - 1, y + 9, C["gear"][1]); cv.px(x - 1, y + 6, C["gear"][2])   # suling at the belt
+    elif cid == "dancer":
+        s2, teal = SKIN, C["extra"]
+        cv.rect(x - 1, y, x + 8, y + 1, s2[1]); cv.px(x - 1, y, s2[2]); cv.px(x + 8, y + 1, s2[0])
+        cv.rect(x + 1, y, x + 6, y + 1, GOLD[1]); cv.px(x + 1, y, GOLD[2]); cv.px(x + 6, y + 1, GOLD[0])   # kace collar
+        cv.px(x + 3, y + 1, hexc("E8483C")) if not back else None
+        cv.rect(x, y + 6, x + 7, y + 7, GOLD[1]); cv.px(x, y + 6, GOLD[2]); cv.rect(x, y + 7, x + 7, y + 7, GOLD[0])
+        if not back:
+            cv.px(x + 3, y + 6, hexc("E8483C")); cv.px(x + 4, y + 6, hexc("A82A26"))
+        for side, tx in ((-1, x - 1), (1, x + 8)):   # selendang ends hang from the hips
+            for i in range(8):
+                dx = (sway if i > 3 else 0) + (side if i > 5 else 0)
+                cv.px(tx + dx, y + 6 + i, teal[2] if side < 0 else teal[1])
+                cv.px(tx + dx + side, y + 7 + i, teal[0]) if i < 6 else None
+    elif cid == "dalang":
+        cv.rect(x, y + 6, x + 7, y + 7, sash[1]); cv.px(x + 7, y + 6, sash[0]); cv.px(x, y + 6, sash[2])
+        for i in range(0, 8, 2):
+            cv.px(x + i, y + 7, GOLD[1])
+        if not back:
+            cv.px(x + 2, y, hexc("F2ECE0")); cv.px(x + 5, y, hexc("F2ECE0"))
+            for i in range(4):                  # the beskap closes on a slant with brass buttons
+                cv.px(x + 3 + (i // 2), y + 1 + i, top[0])
+                cv.px(x + 5 + (i // 3), y + 1 + i, GOLD[2 if i % 2 == 0 else 1]) if i < 4 else None
+        else:                                   # keris tucked in the sash behind
+            for i in range(5):
+                cv.px(x + 2 + i, y + 7 - i, WOOD[1] if i < 3 else GOLD[1])
+            cv.px(x + 6, y + 2, GOLD[2])
+
+
+def torso_side(cv, cid, x, y, sway=0):
+    """A 6x8 torso facing right, top-left at (x, y)."""
+    C = CLASSES[cid]
+    top, sash, s = C["top"], C["sash"], SKIN
+    if cid == "warrior":      # shield edge-on behind the back
+        cv.rect(x - 2, y, x - 1, y + 7, C["gear"][1]); cv.rect(x - 2, y + 1, x - 2, y + 6, C["extra"][0])
+        cv.px(x - 1, y, GOLD[1]); cv.px(x - 1, y + 7, GOLD[0]); cv.px(x - 3, y + 3, GOLD[1]); cv.px(x - 3, y + 4, GOLD[0])
+    elif cid == "archer":     # quiver behind the shoulder
+        for i in range(8):
+            cv.px(x - 2 + i * 0.25, y - 1 + i, C["extra"][1]); cv.px(x - 1 + i * 0.25, y - 1 + i, C["extra"][0])
+        for dx, c in ((-3, "F4F0E0"), (-2, "C8483C"), (-1, "F4F0E0")):
+            cv.px(x + dx, y - 2, hexc(c)); cv.px(x + dx, y - 3, hexc(c))
+    elif cid == "dalang":     # keris hilt at the small of the back
+        cv.px(x - 1, y + 5, WOOD[1]); cv.px(x - 2, y + 4, GOLD[1]); cv.px(x - 2, y + 3, GOLD[2])
+    cv.block(x, y, x + 5, y + 7, top)
+    cv.rect(x, y, x + 5, y, top[1]); cv.px(x, y, top[2])
+    if top is not SKIN:
+        cv.px(x + 4, y, s[0])
+    band = (y + 6, y + 7)
+    if cid == "rogue":
+        band = (y + 5, y + 7)
+    belt = GOLD if cid == "dancer" else sash
+    cv.rect(x, band[0], x + 5, band[1], belt[1]); cv.rect(x, band[0], x, band[1], belt[2]); cv.rect(x, band[1], x + 5, band[1], belt[0])
+    if cid == "warrior":
+        red = C["gear"]
+        for i in range(6):
+            cv.px(x + i, y + int(i * 0.9), red[1]); cv.px(x + i, y + int(i * 0.9) + 1, red[0])
+        cv.px(x + 4, y + 3, s[0])
+    elif cid == "archer":
+        for i in range(6):
+            cv.px(x + 5 - i, y + int(i * 0.9), C["gear"][1])
+    elif cid == "rogue":
+        for i in range(6):
+            cv.px(x - 1 - (i // 3) + sway, y + 6 + i, sash[1]); cv.px(x - 2 - (i // 3) + sway, y + 7 + i, sash[0])
+        cv.px(x + 4, y + 2, C["trim"][0]); cv.px(x + 3, y + 3, C["trim"][0])
+    elif cid == "mage":
+        cv.px(x + 4, y + 1, top[0]); cv.px(x + 3, y + 2, top[0]); cv.px(x + 2, y + 3, top[0])
+        cv.rect(x + 1, y + 7, x + 2, y + 9, GOLD[1]); cv.px(x + 2, y + 9, GOLD[0]); cv.px(x + 1, y + 8, FX["mage"], True)
+    elif cid == "lancer":
+        white = C["low"]
+        for i in (1, 3, 5):
+            cv.rect(x + i, y + 1, x + i, y + 5, white[1 if i < 5 else 0])
+        cv.rect(x, y, x + 5, y, white[1])
+        cv.px(x + 5, y + 6, GOLD[1])
+    elif cid == "herder":
+        blue = C["extra"]
+        for i in range(6):
+            yy = y + int(i * 1.0)
+            cv.px(x + 5 - i, yy, blue[1]); cv.px(x + 5 - i, yy + 1, blue[0])
+            if i % 2:
+                cv.px(x + 5 - i, yy, C["trim"][1])
+        cv.px(x + 4, y + 4, s[0])
+    elif cid == "dancer":
+        cv.rect(x, y, x + 5, y + 1, SKIN[1]); cv.rect(x + 1, y, x + 5, y + 1, GOLD[1]); cv.px(x + 1, y, GOLD[2]); cv.px(x + 5, y + 1, GOLD[0])
+        teal = C["extra"]
+        for i in range(8):
+            dx = -(i // 3) + (sway if i > 3 else 0)
+            cv.px(x - 1 + dx, y + 6 + i, teal[1]); cv.px(x - 2 + dx, y + 7 + i, teal[0]) if i < 7 else None
+        cv.px(x + 5, y + 6, hexc("E8483C"))
+    elif cid == "dalang":
+        for i in range(4):
+            cv.px(x + 4, y + 1 + i, GOLD[2 if i % 2 == 0 else 1]) if i % 2 == 0 else None
+        cv.px(x + 5, y, hexc("F2ECE0"))
+        for i in range(0, 6, 2):
+            cv.px(x + i, y + 7, GOLD[1])
+    elif cid == "base":
+        cv.px(x + 4, y + 1, s[0])
+
+
+# ---------------------------------------------------------------- whole figures
+def figure_front(cid, p, back=False):
+    """Down view, or the up view when back is set."""
+    C = dict(CLASSES[cid], id=cid)
+    cv = Cv()
+    style = C["legs"]
+    b, cr, ln = p["bob"], p["crouch"], p["lean"]
+    ty = 14 + b + cr                      # torso top
+    hipy = 22 + cr
+    hx, hy = 11 + ln + p["head"][0], 4 + b + cr + p["head"][1]
+    (ldx, ll), (rdx, rl) = p["legl"], p["legr"]
+    spread = 1 if cr >= 2 else 0
+    weapon = Cv()
+    if p["wang"] is not None and p["hand_w"] is not None:
+        draw_weapon(weapon, cid, p["hand_w"][0], p["hand_w"][1], p["wang"], p["wstate"])
+        if C["weapon"] == "fans" and p["hand_o"] is not None:
+            draw_weapon(weapon, cid, p["hand_o"][0], p["hand_o"][1], p.get("wang2", 180 - p["wang"]), p["wstate"], True)
+    if p["wlayer"] == "back":
+        cv.merge(weapon)
+    # legs
+    if style in ("pants", "short"):
+        leg(cv, 13 - spread + ln, hipy, 13 + ldx - spread, GROUND - ll, C, style, -1)
+        leg(cv, 18 + spread + ln, hipy, 18 + rdx + spread, GROUND - rl, C, style, 1)
+        if cid == "lancer":               # short indigo wrap over the trousers
+            ex = C["extra"]
+            cv.block(12 + ln, hipy, 19 + ln, hipy + 2, ex)
+            for i in range(12, 20, 2):
+                cv.px(i + ln, hipy + 1, GOLD[1])
+            cv.rect(12 + ln, hipy + 2, 19 + ln, hipy + 2, ex[0])
     else:
-        p = (HEAVY if arch == "heavy" else LIGHT)[hit][f]
-    bob, lx, lean, sq, legs = p["bob"], p["lx"], p["lean"], p["sq"], p["legs"]
-    if view != "side":     # forward is toward (down) or away from (up) the camera: lean becomes a vertical nudge
-        dy = round(lx / 2.0)
-        bob += dy if view == "down" else -dy
-        lx, lean = 0, 0
-    can = compose(cls, view, bob, lx, legs, hem=lx,
-                  upper_mod=(lambda u: px.shear_top(u, lean)) if lean else None, rest=False)
-    pal = palette(cls)
-    sx0, sy0 = SHOULDER[view]
-    sx = sx0 + lx + round(lean * (1 - 12 / 20.0))
-    sy = sy0 + bob
-    nh = max(1, round(IH * sq))
-    can = px.squash(can, sq, 1.0)
-    offx = 3 if view == "side" else 4     # side: body sits a pixel back so the weapon has room in front
-    wide = Image.new("RGBA", (AW, IH), (0, 0, 0, 0))
-    px._clip_paste(wide, can, offx, 0)
-    can = wide
-    sx += offx
-    sy = IH - nh + round(sy * nh / IH)
-    if arch == "bow":
-        dx, dy = project(view, hit, p["fa"], 3)
-        fxp, fyp = sx + round(dx), sy + round(dy)
+        hem = 27 if style == "kain" else 28
+        for fx_, lift, toe in ((13 + ldx, ll, -1), (18 + rdx, rl, 1)):
+            if lift < 2:
+                fy = GROUND - lift
+                cv.px(fx_ - 1, fy, SKIN[1]); cv.px(fx_, fy, SKIN[1]); cv.px(fx_ + 1, fy, SKIN[0]); cv.px(fx_ + toe * 2, fy, SKIN[1])
+                if style == "kain":
+                    cv.px(fx_ - 1, fy - 1, SKIN[1]); cv.px(fx_, fy - 1, SKIN[1]); cv.px(fx_ + 1, fy - 1, SKIN[0])
+        skirt(cv, 12 + ln, 19 + ln, hipy, hem - (1 if cr >= 3 else 0), C, cid, p["sway"], "back" if back else "front")
+    torso_front(cv, cid, 12 + ln, ty, back, p["sway"])
+    # arms: screen-left arm at x 10-11, screen-right at x 20-21
+    sl, sr = (10 + ln, ty + 1), (20 + ln, ty + 1)
+    wside = "r" if back else "l"          # the weapon hand: screen-left facing down, screen-right facing up
+    hands = {"l": None, "r": None}
+    hands[wside] = p["hand_w"]
+    hands["r" if wside == "l" else "l"] = p["hand_o"]
+    sleeve = C["sleeve"]
+    for side, sh in (("l", sl), ("r", sr)):
+        h = hands[side]
+        sw = p["swing"] * (1 if side == "l" else -1)
+        if h is None:
+            h = (sh[0], sh[1] + 6 + sw)
+        limb(cv, sh[0], sh[1], h[0], h[1], sleeve, C["top"], 2, SKIN, 1 if side == "l" else -1)
+        if cid == "warrior":
+            cv.px(sh[0], sh[1] + 1, GOLD[2]); cv.px(sh[0] + 1, sh[1] + 1, GOLD[0])
+        elif cid == "dancer":
+            cv.px(sh[0], sh[1] + 1, GOLD[2]); cv.px(sh[0] + 1, sh[1] + 1, GOLD[0])
+            cv.px(h[0], h[1] - 1, GOLD[1])
+        elif cid == "herder" and not back and side == "r":
+            pass
+    head(cv, cid, "back" if back else "front", hx, hy, p["eyes"])
+    if p["wlayer"] != "back":
+        cv.merge(weapon)
+        if p["hand_w"] is not None and p["wang"] is not None and C["weapon"] != "bow":
+            cv.px(p["hand_w"][0], p["hand_w"][1], SKIN[2])
+    return cv
+
+
+def figure_side(cid, p):
+    """Side view, facing right."""
+    C = dict(CLASSES[cid], id=cid)
+    cv = Cv()
+    style = C["legs"]
+    b, cr, ln = p["bob"], p["crouch"], p["lean"]
+    ty = 14 + b + cr
+    hipy = 22 + cr
+    hx, hy = 11 + ln + p["head"][0], 4 + b + cr + p["head"][1]
+    (ndx, nl), (fdx, fl) = p["legl"], p["legr"]      # near leg, far leg
+    sh = (15 + ln, ty + 1)
+    sleeve = C["sleeve"]
+    far_cloth = (C["top"][0], C["top"][0], C["top"][1])
+    far_skin = (SKIN[0], SKIN[0], SKIN[1])
+    ho = p["hand_o"]
+    if ho is None:
+        ho = (sh[0] + 1 - p["swing"], sh[1] + 6)
+    limb(cv, sh[0] + 1, sh[1], ho[0], ho[1], sleeve, far_cloth, 2, far_skin)
+    weapon = Cv()
+    if p["wang"] is not None and p["hand_w"] is not None:
+        draw_weapon(weapon, cid, p["hand_w"][0], p["hand_w"][1], p["wang"], p["wstate"])
+        if C["weapon"] == "fans":
+            w2 = Cv()
+            draw_weapon(w2, cid, ho[0], ho[1], p.get("wang2", p["wang"] + 40), p["wstate"], True)
+            cv.merge(w2)
+    if p["wlayer"] == "back":
+        cv.merge(weapon)
+    if style in ("pants", "short"):
+        leg(cv, 15 + ln, hipy, 15 + fdx, GROUND - fl, C, style, 1, True)
+        leg(cv, 16 + ln, hipy, 16 + ndx, GROUND - nl, C, style, 1)
+        if cid == "lancer":
+            ex = C["extra"]
+            cv.block(13 + ln, hipy, 18 + ln, hipy + 2, ex)
+            for i in range(13, 19, 2):
+                cv.px(i + ln, hipy + 1, GOLD[1])
+            cv.rect(13 + ln, hipy + 2, 18 + ln, hipy + 2, ex[0])
+    else:
+        hem = 27 if style == "kain" else 28
+        for fx_, lift, far in ((15 + fdx, fl, True), (16 + ndx, nl, False)):
+            if lift < 2:
+                fy = GROUND - lift
+                sk = far_skin if far else SKIN
+                cv.px(fx_ - 1, fy, sk[1]); cv.px(fx_, fy, sk[1]); cv.px(fx_ + 1, fy, sk[1]); cv.px(fx_ + 2, fy, sk[2])
+                if style == "kain":
+                    cv.px(fx_ - 1, fy - 1, sk[1]); cv.px(fx_, fy - 1, sk[1]); cv.px(fx_ + 1, fy - 1, sk[0])
+        stride = max(-2, min(2, (ndx - fdx) // 2))
+        skirt(cv, 13 + ln + min(stride, 0), 18 + ln + max(stride, 0), hipy, hem - (1 if cr >= 3 else 0), C, cid, p["sway"], "side")
+    torso_side(cv, cid, 13 + ln, ty, p["sway"])
+    head(cv, cid, "side", hx, hy, p["eyes"])
+    hw = p["hand_w"]
+    if hw is None:
+        hw = (sh[0] + p["swing"], sh[1] + 6)
+    limb(cv, sh[0], sh[1], hw[0], hw[1], sleeve, C["top"])
+    if cid in ("warrior", "dancer"):
+        cv.px(sh[0], sh[1] + 1, GOLD[2]); cv.px(sh[0] + 1, sh[1] + 1, GOLD[0])
+    if p["wlayer"] != "back":
+        cv.merge(weapon)
+        if p["hand_w"] is not None and p["wang"] is not None and C["weapon"] != "bow":
+            cv.px(hw[0], hw[1], SKIN[2])
+    return cv
+
+
+def figure(cid, view, p):
+    if view == "side":
+        return figure_side(cid, p)
+    return figure_front(cid, p, view == "up")
+
+
+# ---------------------------------------------------------------- poses
+def carry(cid, view, sw=0):
+    """Where the weapon rests while idle or walking: (hand, angle, layer, off hand)."""
+    kind = CLASSES[cid]["weapon"]
+    if view == "side":
+        hand = (15 + sw, 22)
+        table = {"knife": (hand, 55, "front"), "kelewang": ((16 + sw, 22), 38, "front"), "kujang": (hand, 145, "front"),
+                 "tombak": ((22, 20), -90, "front"), "fans": ((17 + sw, 22), 70, "front"),
+                 "staff": ((22, 19), -90, "front"), "gunungan": ((22, 19), -90, "front"),
+                 "sling": (hand, 90, "front"), "bow": ((19 + sw, 20), 0, "front")}
+        h, a, l = table[kind]
+        return h, a, l, None
+    left = view == "down"
+    hand = (10, 22 + sw) if left else (21, 22 + sw)
+    out = 180 if left else 0               # pointing away from the body
+    sgn = 1 if left else -1
+    table = {"knife": (hand, out - sgn * 60, "front"), "kelewang": (hand, out - sgn * 48, "front"),
+             "kujang": (hand, out - sgn * 50, "front"), "tombak": ((hand[0] - sgn * 3, 20), -90, "front"),
+             "fans": (hand, out - sgn * 70, "front"), "staff": ((hand[0] - sgn * 3, 19), -90, "front"),
+             "gunungan": ((hand[0] - sgn * 3, 19), -90, "front"), "sling": (hand, 90, "front"),
+             "bow": ((hand[0] - sgn, 20), out, "front")}
+    h, a, l = table[kind]
+    off = None
+    if kind == "fans":
+        off = (21, 22 - sw) if left else (10, 22 - sw)
+    if view == "up" and kind in ("kelewang", "knife", "kujang", "fans", "sling"):
+        l = "front"
+    return h, a, l, off
+
+
+def idle_pose(cid, view, f):
+    bob = (0, 0, 1, 1)[f]
+    h, a, l, off = carry(cid, view)
+    h = (h[0], h[1] + bob)
+    if off:
+        off = (off[0], off[1] + bob)
+    kw = dict(bob=bob, hand_w=h, wang=a, wlayer=l, hand_o=off, sway=(0, 0, 0, 0)[f])
+    if CLASSES[cid]["weapon"] == "fans":
+        kw["wang2"] = 180 - a if view != "side" else a + 30
+    return P(**kw)
+
+
+def walk_pose(cid, view, f):
+    if view == "side":
+        ndx = (3, 2, 0, -3, -2, 0)[f]
+        nl = (0, 0, 0, 0, 0, 2)[f]
+        fl = (0, 0, 2, 0, 0, 0)[f]
+        bob = (0, 0, -1, 0, 0, -1)[f]
+        sw = (-2, -1, 0, 2, 1, 0)[f]
+        h, a, l, off = carry(cid, view, sw if CLASSES[cid]["weapon"] not in ("tombak", "staff", "gunungan", "bow") else 0)
+        h = (h[0], h[1] + bob)
+        return P(bob=bob, legl=(ndx, nl), legr=(-ndx, fl), swing=sw, hand_w=h, wang=a, wlayer=l,
+                 sway=(-1, 0, 0, 1, 0, 0)[f], wang2=a + 30)
+    ll = (2, 1, 0, 0, 0, 0)[f]
+    rl = (0, 0, 0, 2, 1, 0)[f]
+    bob = (-1, 0, 0, -1, 0, 0)[f]
+    sw = (1, 1, 0, -1, -1, 0)[f]
+    h, a, l, off = carry(cid, view, sw if view == "down" else -sw)
+    h = (h[0], h[1] + bob)
+    if off:
+        off = (off[0], off[1] + bob)
+    kw = dict(bob=bob, legl=(0, ll), legr=(0, rl), swing=sw, hand_w=h, wang=a, wlayer=l, hand_o=off,
+              sway=(1, 0, 0, -1, 0, 0)[f])
+    if CLASSES[cid]["weapon"] == "fans":
+        kw["wang2"] = 180 - a
+    return P(**kw)
+
+
+SWING1 = (-118, -142, -24, 42, 76, 40)       # forehand, degrees from the facing direction
+SWING2 = (112, 138, 22, -44, -78, -38)       # backhand
+SLAM = (-84, -104, -30, 56, 62, 42)          # overhead finisher
+FACING = {"side": 0.0, "down": 90.0, "up": -90.0}
+
+
+def attack_pose(cid, view, hit, f):
+    kind = CLASSES[cid]["weapon"]
+    F = FACING[view]
+    if view == "side":
+        sh = (16, 16)
+    elif view == "down":
+        sh = (11, 16)
+    else:
+        sh = (20, 16)
+    fx, fy = math.cos(math.radians(F)), math.sin(math.radians(F))
+    lean_seq = (-1, -1, 1, 2, 1, 0)
+    kw = dict(wlayer="front")
+    if view == "side":
+        kw.update(lean=lean_seq[f], legl=((-1, -2, 3, 3, 2, 0)[f], 0), legr=((1, 1, -2, -2, -1, 0)[f], 0))
+        sh = (sh[0] + lean_seq[f], sh[1])
+    else:
+        kw.update(bob=(0, -1, 1, 1, 0, 0)[f], legl=((0, -1, -1, -1, 0, 0)[f], 0), legr=((0, 1, 1, 1, 0, 0)[f], 0))
+        sh = (sh[0], sh[1] + kw["bob"])
+    if kind in RANGED:
+        return ranged_pose(cid, view, hit, f, sh, F, kw)
+    thrust = hit == 2 and kind in ("knife", "kujang", "tombak")
+    if kind == "tombak" and hit < 2:            # the spear jabs on every hit; hits 1 and 2 are short
+        thrust = True
+    if thrust:
+        reach = ((-3, -5, 4, 6, 3, 0) if hit == 2 else (-2, -3, 3, 4, 2, 0))[f]
+        side_off = (0, 0, 0, 0, 0, 0)[f] + (1 if hit == 1 else 0)
+        hand = (sh[0] + fx * (3 + reach) - fy * side_off, sh[1] + 3 + fy * (3 + reach) * 0.8)
         if view != "side":
-            fxp, fyp = sx + 1, sy - 1
-        draw_arm(can, pal, sx, sy, fxp, fyp)
-        draw_bow(can, pal, fxp, fyp, p["draw"], p["tilt"], view, (sx - 1 if view == "side" else sx, sy))
-        return can
-    dx, dy = project(view, hit, p["aa"], p["al"])
-    hx, hy = sx + round(dx), sy + round(dy)
-    draw_arm(can, pal, sx, sy, hx, hy)
-    vx, vy = project(view, hit, p["wa"], WLEN[cls] * p["wl"])
-    draw_weapon(can, pal, cls, hx, hy, vx, vy, hit)
-    put_px(can, hx, hy, pal["s"])
-    return can
-
-
-def idle_frame(cls, view, f):
-    bob = (0, 0, -1, -1)[f] if cls != "mage" else (0, -1, -1, 0)[f]
-    return compose(cls, view, bob, 0, (4, 4, 0), hem=(0, 0, 0, 0)[f])
-
-
-def walk_frame(cls, view, f):
-    bob = (1, 0, 1, 0)[f]
-    lens = {0: (4, 3, 1), 1: (4, 4, 0), 2: (3, 4, -1), 3: (4, 4, 0)}[f]
-    hem = (1, 0, -1, 0)[f]
-    return compose(cls, view, bob, 0, lens, hem=hem)
-
-
-def ball(can, sq, ang, lift=0):
-    """Tuck: squash, rotate about the body centre, rest on the floor."""
-    s = px.squash(can, sq, 0.9)
-    bb = s.getbbox()
-    s = s.crop(bb)
-    r = s.rotate(ang, expand=True)
-    out = Image.new("RGBA", (IW, IH), (0, 0, 0, 0))
-    px._clip_paste(out, r, (IW - r.width) // 2, IH - r.height - lift)
-    return out
-
-
-def dodge_frame(cls, f):
-    """6 frames: crouch, launch, tuck, roll, land, rise."""
-    can = compose(cls, "side", 0, 0, (4, 4, 0))
-    streak = hexc("FFFFFF", 150)
-    if f == 0:
-        r = px.squash(compose(cls, "side", 1, -1, (4, 4, -2), upper_mod=lambda u: px.shear_top(u, -2)), 0.78, 1.0)
-    elif f == 1:
-        r = px.shift(px.squash(can, 0.7, 1.0), 1, -2)
-        r = px.shear_top(r, 3)
-        r.putpixel((0, IH - 7), streak)
-        r.putpixel((1, IH - 5), hexc("FFFFFF", 100))
-    elif f == 2:
-        r = ball(can, 0.62, -50, 2)
-        r.putpixel((0, IH - 8), streak)
-        r.putpixel((0, IH - 5), hexc("FFFFFF", 100))
-    elif f == 3:
-        r = ball(can, 0.6, -170, 1)
-        r.putpixel((0, IH - 9), streak)
-        r.putpixel((1, IH - 6), hexc("FFFFFF", 100))
-    elif f == 4:
-        r = px.squash(compose(cls, "side", 1, 1, (4, 4, -2), upper_mod=lambda u: px.shear_top(u, 2)), 0.8, 1.05)
+            hand = (sh[0] + fx * reach, sh[1] + 3 + fy * (2 + reach))
+        if kind == "tombak":                    # pulled far back, then driven out past the cell edge
+            t = ((-4, -6, 3, 5, 3, 0) if hit == 2 else (-3, -4, 2, 3, 2, 0))[f]
+            if view == "side":
+                hand = (sh[0] + t, sh[1] + 3 + (1 if hit == 1 else 0))
+            elif view == "down":
+                hand = (sh[0] + 1, sh[1] - 2 + t)
+            else:
+                hand = (sh[0] + 1, sh[1] + 5 - t)
+        ang = F + (0 if view == "side" else 0)
+        kw.update(hand_w=hand, wang=ang, wstate=1 if kind == "tombak" else 0)
     else:
-        r = px.squash(can, 0.93, 1.0)
-    return r
+        seq = SLAM if (hit == 2 and kind == "kelewang") else (SWING1, SWING2, SWING1)[hit]
+        rel = seq[f]
+        if kind == "fans" and hit == 2:         # the finisher is a full spin: both fans wide
+            rel = (-150, 170, 60, -30, -90, -40)[f]
+        ang = F + rel if view != "down" else F - rel
+        if view == "up":
+            ang = F - rel
+        r = 5.0
+        hand = (sh[0] + math.cos(math.radians(ang)) * r, sh[1] + 1 + math.sin(math.radians(ang)) * r * 0.85)
+        kw.update(hand_w=hand, wang=ang, wstate=1 if kind == "fans" else 0)
+        if hit == 2 and kind == "kelewang":
+            kw["bob"] = (0, -2, 1, 2, 1, 0)[f] if view != "side" else (-1, -2, 0, 1, 1, 0)[f]
+            kw["crouch"] = (0, 0, 1, 2, 1, 0)[f]
+    if view == "up":
+        a = kw["wang"] % 360
+        kw["wlayer"] = "back" if 180 < a < 360 else "front"
+    # off hand: out for balance
+    if kind == "fans":
+        a2 = 2 * F - kw["wang"] + (24 if view == "side" else 0)
+        osh = {"side": (17 + lean_seq[f], 16), "down": (20, 16 + kw.get("bob", 0)), "up": (11, 16 + kw.get("bob", 0))}[view]
+        kw["hand_o"] = (osh[0] + math.cos(math.radians(a2)) * 5, osh[1] + 1 + math.sin(math.radians(a2)) * 4.2)
+        kw["wang2"] = a2
+    else:
+        back = (-3, -4, -2, -3, -2, 0)[f]
+        if view == "side":
+            kw["hand_o"] = (sh[0] + 1 + back, sh[1] + 5 - (1 if f in (1, 3) else 0))
+        else:
+            ox = 20 if view == "down" else 11
+            sgn = 1 if view == "down" else -1
+            kw["hand_o"] = (ox + sgn * (1 if f in (2, 3) else 0), sh[1] + 5 - (1 if f in (2, 3) else 0))
+    return P(**kw)
 
 
-def hurt_frame(cls, f):
-    can = compose(cls, "side", 0, -1 if f == 0 else 0, (4, 4, 0), hem=-1, upper_mod=lambda u: px.shear_top(u, -2 if f == 0 else -1))
-    if f == 0:
-        can = px.tint(can, (255, 255, 255, 255), 0.6)
-    return can
+def ranged_pose(cid, view, hit, f, sh, F, kw):
+    kind = CLASSES[cid]["weapon"]
+    fx, fy = math.cos(math.radians(F)), math.sin(math.radians(F))
+    big = hit == 2
+    kw["lean"] = (0, -1, -1, 1, 0, 0)[f] if view == "side" else 0
+    kw["legl"] = ((1, 2, 2, 2, 1, 0)[f], 0) if view == "side" else (0, 0)
+    kw["legr"] = ((-1, -2, -2, -2, -1, 0)[f], 0) if view == "side" else (0, 0)
+    if kind == "bow":
+        state = (0, 1, 2, 3, 3, 0)[f]
+        ext = (4, 6, 6, 6, 5, 4)[f]
+        mid = (16, 17) if view != "side" else (16 + kw["lean"], 17)
+        hand = (mid[0] + fx * ext, mid[1] + fy * ext * (0.9 if view != "side" else 1.0))
+        if view == "up":
+            hand = (16, 12 - (ext - 4))
+        pull = {0: 0.0, 1: 3.0, 2: 5.0, 3: -1.0}[state]
+        kw.update(hand_w=hand, wang=F, wstate=state, hand_o=(hand[0] - fx * max(pull, 0.0), hand[1] - fy * max(pull, 0.0)))
+        if view == "up":
+            kw["wlayer"] = "back"
+        if big and f == 2:
+            kw["lean"] = -2 if view == "side" else 0
+    elif kind == "sling":
+        spin = (200, 320, 80, 0, 20, 60)[f]
+        raised = f < 3
+        if view == "side":
+            hand = (sh[0] + (0 if raised else 5), sh[1] - (5 if raised else 0))
+        else:
+            hand = (sh[0], sh[1] - 5) if raised else (sh[0] + fx * 2, sh[1] + 2 + fy * 4)
+        ang = spin if raised else F + (0, 25, 70)[f - 3]
+        kw.update(hand_w=hand, wang=ang, wstate=0 if raised else 2)
+        if view == "up" and not raised:
+            kw["wlayer"] = "back"
+    else:   # staff, gunungan
+        slam = big
+        glow = (1, 2, 3, 3, 1, 0)[f]
+        if slam:
+            tilt = (-90, -90, -90, -90, -90, -90)[f]
+            lift = (-2, -4, -5, 1, 1, 0)[f]
+            hand = ({"side": 19, "down": 10, "up": 21}[view], 19 + lift)
+            kw.update(hand_w=hand, wang=tilt, wstate=glow, crouch=(0, 0, 0, 1, 1, 0)[f])
+        else:
+            tilt = (-80, -70, -64, -14, -30, -60)[f] if hit == 0 else (-100, -112, -118, -28, -44, -70)[f]
+            if view == "side":
+                ang = tilt
+                hand = (sh[0] + (2, 1, 1, 5, 4, 3)[f], sh[1] + (3, 2, 1, 3, 3, 4)[f])
+            elif view == "down":
+                ang = 180 - tilt if hit == 0 else tilt + 0
+                ang = (-100, -110, -116, 104, 110, -100)[f]
+                hand = (sh[0], sh[1] + (3, 2, 1, 5, 4, 4)[f])
+            else:
+                ang = (-80, -70, -64, -84, -80, -80)[f]
+                hand = (sh[0], sh[1] + (3, 2, 1, -1, 1, 3)[f])
+                if f == 3:
+                    kw["wlayer"] = "back"
+            kw.update(hand_w=hand, wang=ang, wstate=glow)
+        if view == "side":
+            kw["hand_o"] = (sh[0] + 3, sh[1] + (4, 2, 1, 4, 4, 5)[f])
+    return P(**kw)
 
 
-def death_frame(cls, f):
-    can = compose(cls, "side", 0, 0, (4, 4, 0))
-    if f == 0:
-        return px.squash(px.tint(can, (255, 255, 255, 255), 0.35), 0.86, 1.0)
-    if f == 1:
-        return px.shift(px.shear_top(px.squash(can, 0.7, 1.0), -3), -1, 0)
-    rot = can.rotate(-90, expand=True)           # lies on its back
-    rot = rot.crop(rot.getbbox())
-    out = Image.new("RGBA", (IW, IH), (0, 0, 0, 0))
-    px._clip_paste(out, rot, (IW - rot.width) // 2, IH - rot.height)
-    if f == 3:
-        out = px.tint(out, (60, 50, 80, 255), 0.35)
-    return out
+def ball(cid, f):
+    """The tucked roll: a round bundle in the class colours."""
+    C = CLASSES[cid]
+    cv = Cv()
+    cx, cy, r = 15.5, 23.0, 5.4
+    for y in range(16, 30):
+        for x in range(9, 23):
+            if (x - cx) ** 2 + (y - cy) ** 2 <= r * r:
+                a = math.degrees(math.atan2(y - cy, x - cx)) + f * 150
+                a %= 360
+                m = C["gear"] if a < 100 else (SKIN if a < 150 else (C["top"] if a < 260 else C["low"]))
+                if m is SKIN and C["top"] is SKIN:
+                    m = SKIN
+                lit = 2 if (x - cx) + (y - cy) < -3 else (0 if (x - cx) + (y - cy) > 4 else 1)
+                cv.px(x, y, m[lit])
+    sash = C["sash"]
+    for i in range(4):
+        a = math.radians(200 + f * 150 + i * 14)
+        cv.px(cx + math.cos(a) * (r + 1 + i * 0.6), cy + math.sin(a) * (r + 1 + i * 0.6), sash[1])
+    return cv
 
 
-def finish(can):
-    """Outline then fit into a 16x24 cell, feet 1 px above the bottom edge (Shadow node draws ground shadow)."""
-    o = px.outline(can)
-    cell = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
-    px._clip_paste(cell, o, (CW - o.width) // 2, CH - o.height - 1)
-    return cell
-
-
-def build(cls):
-    sh = Image.new("RGBA", (COLS * CW, ROWS * CH), (0, 0, 0, 0))
-
-    def put(c, r, im):
-        sh.alpha_composite(finish(im), (c * CW, r * CH))
-    for vi, view in enumerate(("down", "side", "up")):
-        for f in range(4):
-            put(f, vi, idle_frame(cls, view, f))
-            put(f, 3 + vi, walk_frame(cls, view, f))
+def frames(cid):
+    """All 18 rows as lists of 32x32 images."""
+    rows = []
+    for v in ("down", "side", "up"):
+        rows.append([figure(cid, v, idle_pose(cid, v, f)).image() for f in range(4)])
+    for v in ("down", "side", "up"):
+        rows.append([figure(cid, v, walk_pose(cid, v, f)).image() for f in range(6)])
+    for hit in range(3):
+        rows.append([figure(cid, "side", attack_pose(cid, "side", hit, f)).image() for f in range(6)])
+    # dodge
+    h, a, l, off = carry(cid, "side")
+    def side(**kw):
+        d = dict(hand_w=h, wang=a, wlayer=l)
+        d.update(kw)
+        if d.get("hand_w") is not None:
+            d["hand_w"] = (d["hand_w"][0] + d.get("lean", 0), d["hand_w"][1] + d.get("bob", 0) + d.get("crouch", 0))
+        return figure(cid, "side", P(**d))
+    dodge = [side(crouch=3, legl=(2, 0), legr=(-2, 0)).image(),
+             side(crouch=2, lean=3, legl=(-3, 0), legr=(-1, 1), head=(1, 1)).image(),
+             ball(cid, 0).image(), ball(cid, 1).image(),
+             side(crouch=3, legl=(3, 0), legr=(-2, 0), head=(0, 1)).image(),
+             side(crouch=1, legl=(1, 0), legr=(-1, 0)).image()]
+    rows.append(dodge)
+    sh = (15, 15)
+    hurt = [side(lean=-2, eyes="shut", head=(-1, 0), legl=(2, 0), legr=(-1, 0), hand_w=(19, 13), hand_o=(11, 14), wang=-50).image(),
+            side(lean=-1, eyes="shut", head=(-1, 0), legl=(1, 0), legr=(-1, 0), hand_w=(18, 15), wang=-20).image(),
+            side(lean=-1, crouch=1, eyes="shut", legl=(1, 0), legr=(-1, 0)).image(),
+            side(eyes="shut").image()]
+    rows.append(hurt)
+    lying = figure(cid, "side", P(eyes="shut", hand_w=(15, 22), hand_o=(17, 21))).rot_fall()
+    down1, down2 = Cv(), Cv()
+    down1.merge(lying, 0, 5)
+    down2.merge(lying, 0, 8)
+    death = [hurt[0], side(crouch=4, lean=-1, eyes="shut", head=(0, 2), legl=(3, 0), legr=(-2, 0), hand_w=(17, 20), wang=80).image(),
+             down1.image(), down2.image()]
+    rows.append(death)
+    for v in ("down", "up"):
         for hit in range(3):
-            row = {"side": 6, "down": 12, "up": 15}[view] + hit
-            for f in range(6):
-                put(f, row, attack_frame(cls, hit, view, f))
-    for f in range(6):
-        put(f, 9, dodge_frame(cls, f))
-    for f in range(4):
-        put(f, 10, hurt_frame(cls, f % 2))
-        put(f, 11, death_frame(cls, f))
+            rows.append([figure(cid, v, attack_pose(cid, v, hit, f)).image() for f in range(6)])
+    return rows
+
+
+def build_sheet(cid):
+    sh = Image.new("RGBA", (CW * COLS, CH * ROWS), (0, 0, 0, 0))
+    for r, row in enumerate(frames(cid)):
+        for c in range(COLS):
+            sh.paste(row[min(c, len(row) - 1)] if c < len(row) else row[c % len(row)], (c * CW, r * CH))
     return sh
 
 
+def shadow():
+    img = Image.new("RGBA", (20, 8), (0, 0, 0, 0))
+    for y in range(8):
+        for x in range(20):
+            d = ((x - 9.5) / 9.5) ** 2 + ((y - 3.5) / 3.5) ** 2
+            if d <= 1.0:
+                img.putpixel((x, y), (20, 12, 26, 110 if d < 0.55 else 70))
+    return img
+
+
 def main():
-    sheets = []
-    for cls in ["base", "warrior", "archer", "rogue", "mage"]:
-        s = build(cls)
-        path = os.path.join(px.ART, f"hero_{cls}.png")
-        s.save(path)
-        sheets.append((cls, s))
-        print("wrote", path)
-    sh = Image.new("RGBA", (16, 8), (0, 0, 0, 0))
-    for dy in range(1, 6):
-        for dx in range(1, 15):
-            nx, ny = (dx - 7.5) / 6.5, (dy - 3.0) / 2.0
-            if nx * nx + ny * ny <= 1.0:
-                sh.putpixel((dx, dy), (24, 18, 43, 110))
-    sh.save(os.path.join(px.ART, "hero_shadow.png"))
-    # preview: all five sheets side by side, 3x
-    prev = Image.new("RGBA", (5 * (COLS * CW + 8) + 4, ROWS * CH + 8), (70, 96, 70, 255))
-    for i, (cls, s) in enumerate(sheets):
-        prev.alpha_composite(s, (4 + i * (COLS * CW + 8), 4))
+    out = []
+    for cid in CLASS_IDS:
+        sh = build_sheet(cid)
+        out.append((px.save(sh, "hero_%s.png" % cid), sh))
+    px.save(shadow(), "hero_shadow.png")
+    # preview: every class side by side, rows of the key poses
+    W = CW * COLS
+    prev = Image.new("RGBA", (W * 3 + 16, (CH * ROWS + 8) * 3), (64, 86, 66, 255))
+    for i, (_, sh) in enumerate(out):
+        prev.paste(sh, (8 + (i % 3) * (W + 4), 4 + (i // 3) * (CH * ROWS + 8)), sh)
     prev = prev.resize((prev.width * 3, prev.height * 3), Image.NEAREST)
     prev.save(os.path.join(os.path.dirname(os.path.abspath(__file__)), "hero_preview.png"))
+    print("wrote %d hero sheets (%dx%d)" % (len(out), CW * COLS, CH * ROWS))
 
 
 if __name__ == "__main__":

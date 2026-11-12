@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ClassData" format=3]
+
+[ext_resource type="Script" path="res://data/class_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "dalang"
+title = "CLASS_DALANG_NAME"
+description = "CLASS_DALANG_DESC"
+stats = {"vit": 5, "end": 5, "str": 3, "dex": 4, "spi": 9}
+start_weapon = "kayon"
+start_armor = "padded_tunic"
+passive = "CLASS_DALANG_PASSIVE"
+passive_text = "CLASS_DALANG_PASSIVE_DESC"

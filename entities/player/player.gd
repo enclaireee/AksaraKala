@@ -56,6 +56,7 @@ var debug_status := 0
 var game: Node             # the Game autoload (get_node, so tests can compile this script early)
 var _ev: Node              # Events: the tutorial listens for my inputs (docs/tutorial.md 4)
 var item: ItemData         # equipped weapon; the dagger when none is equipped
+const ROCK_TEX := "res://assets/art/fx/thrown_rock.png"
 var class_id := ""
 var dmg_mult := 1.0        # Str for melee, Dex for ranged and staff
 var atk_speed := 1.0       # Dex: shortens wind-up and recovery
@@ -298,6 +299,11 @@ func _shoot() -> void:
 		arrow.far_after = tuning.eagle_range
 	if item.archetype == "staff":
 		arrow.modulate = Color(0.6, 0.8, 1.0)   # ponytail: a recolored arrow until the bolt has art
+	elif item.id == "bandring":   # a sling stone, not an arrow
+		var line := arrow.get_node_or_null("Line") as Sprite2D
+		if line and ResourceLoader.exists(ROCK_TEX):
+			line.texture = load(ROCK_TEX)
+			line.hframes = 2
 	arrow.heavy = finisher
 	arrow.pierce = finisher
 	arrow.knockback = tuning.enemy_knockback_finisher if finisher else tuning.enemy_knockback_light
@@ -443,7 +449,8 @@ func _phase_len(p: Phase) -> float:
 
 
 func _damage() -> int:
-	return roundi(item.damage * dmg_mult * (tuning.finisher_mult if hit == 2 else 1.0))
+	var wirama: float = tuning.dancer_finisher if class_id == "dancer" and hit == 2 else 1.0
+	return roundi(item.damage * dmg_mult * (tuning.finisher_mult if hit == 2 else 1.0) * wirama)
 
 
 ## Rogue Light Step: the hit lands within 60 degrees of the enemy's back. Never on bosses.
@@ -485,6 +492,13 @@ func apply_from_game() -> void:
 	sakti.max_value = tuning.keen_mind_max if mage else tuning.sakti_max   # Keen Mind
 	sakti.gain_mult = (1.0 + tuning.stat_sakti_per * game.stat("spi") + aria_regen) * (tuning.keen_mind_gain if mage else 1.0)
 	sakti.value = minf(sakti.value, sakti.max_value)
+	match class_id:   # the second-path passives (classes.md)
+		"lancer": health.reduction = 1.0 - (1.0 - health.reduction) * (1.0 - tuning.lancer_guard)
+		"herder":
+			move_mult *= tuning.herder_move
+			stamina.regen *= tuning.herder_regen
+		"dancer": atk_speed *= tuning.dancer_speed
+		"dalang": sakti.gain_mult *= tuning.dalang_gain
 	_applied = true
 	health.changed.emit(health.hp, health.max_hp)
 	stamina.changed.emit(stamina.value, stamina.max_stamina)
@@ -524,7 +538,7 @@ func _update_animation() -> void:
 		State.FREE:
 			if move_dir != Vector2.ZERO:
 				row = 3 + dir_row
-				col = int(fmod(clock * 8.0, 4.0))
+				col = int(fmod(clock * 10.0, 6.0))   # 6-frame walk
 			else:
 				row = dir_row
 				col = int(fmod(clock * 4.0, 4.0))

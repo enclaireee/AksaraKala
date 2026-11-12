@@ -895,7 +895,7 @@ BOSSES = [
     ("buto_ijo", boss_buto_ijo),
     ("keris_gandring", boss_keris_gandring),
     ("nameless_hunter", boss_nameless_hunter),
-    ("batara_kala", boss_batara_kala),
+    # batara_kala: redrawn by tools/gen_boss_kala.py (2026-11-12), not written here
 ]
 
 

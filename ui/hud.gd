@@ -85,6 +85,7 @@ const BOSS_W := 240
 var _boss_root: Control
 var _boss_name: Label
 var _boss_fill: ColorRect
+var _boss_ghost: ColorRect   # the pale bar that trails the fill, so a hit reads as a chunk falling away
 var _boss_mark: Node2D   # cracked-glyph mark at the bar end: the boss's Laras sabotage flag is set (ui.md 2, v5)
 var _dawn_bg: ColorRect
 var _dawn_fill: ColorRect
@@ -510,6 +511,9 @@ func _build_extras() -> void:
 	_arrow.add_child(spr)
 	_arrow.visible = false
 	add_child(_arrow)
+	var stage: Control = preload("res://ui/boss_stage.gd").new()   # entrance card, phase and finishing beats
+	add_child(stage)
+	move_child(stage, 0)   # its letterbox sits behind the HUD widgets
 	_boss_root = Control.new()
 	_boss_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_boss_root.visible = false
@@ -524,6 +528,10 @@ func _build_extras() -> void:
 	var by := 270 - M - 10
 	_rect(Vector2(x - 1, by - 1), Vector2(BOSS_W + 2, 6), Color(UIFx.INK_BG, 0.95), _boss_root)   # outline
 	_rect(Vector2(x, by), Vector2(BOSS_W, 4), Color(0.2, 0.05, 0.04, 0.9), _boss_root)            # empty well
+	_rect(Vector2(x - 1, by - 3), Vector2(BOSS_W + 2, 1), Color(Color("D2A446"), 0.85), _boss_root)   # brass rule over the bar
+	for cx: float in [x - 4.0, x + BOSS_W + 1.0]:                                              # and a stud at each end of it
+		_rect(Vector2(cx, by - 4), Vector2(3, 3), Color("D2A446"), _boss_root)
+	_boss_ghost = _rect(Vector2(x, by), Vector2(BOSS_W, 4), Color(1.0, 0.9, 0.68, 0.9), _boss_root)
 	_boss_fill = _rect(Vector2(x, by), Vector2(BOSS_W, 4), HP_COL, _boss_root)
 	_boss_fill.clip_contents = true
 	_rect(Vector2(0, 0), Vector2(BOSS_W, 1), Color(1, 1, 1, 0.25), _boss_fill)                   # lit top row
@@ -757,6 +765,7 @@ func _update_boss() -> void:
 			parts.append("[%s]" % t.to_upper() if i == int(b.get("seq_index")) else t)
 		_boss_name.text += "   " + " · ".join(parts)
 	_boss_fill.size.x = roundf(BOSS_W * clampf(float(h.hp) / maxf(h.max_hp, 1.0), 0.0, 1.0))
+	_boss_ghost.size.x = maxf(_boss_fill.size.x, _boss_ghost.size.x - 45.0 * get_process_delta_time())
 	var dawn = b.get("dawn")
 	_dawn_bg.visible = dawn != null
 	_dawn_fill.visible = dawn != null

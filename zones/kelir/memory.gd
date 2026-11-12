@@ -221,8 +221,9 @@ func _physics_process(delta: float) -> void:
 	if sp:
 		if absf(stand_in.velocity.x) > 2.0:
 			sp.flip_h = stand_in.velocity.x < 0.0
-		var col := int(Time.get_ticks_msec() / 160.0) % 4
-		var row := 6 if kind == "chapter" else (3 if stand_in.velocity.length() > 4.0 else 0)
+		var walking := stand_in.velocity.length() > 4.0
+		var col := int(Time.get_ticks_msec() / 160.0) % (6 if walking and kind != "chapter" else 4)   # the hero sheet walks on 6 frames
+		var row := 6 if kind == "chapter" else (3 if walking else 0)
 		sp.frame_coords = Vector2i(col, row)
 	for c in get_tree().get_nodes_in_group("checkpoint"):
 		if is_ancestor_of(c) and c.global_position.distance_to(stand_in.global_position) <= CHECKPOINT_RANGE:

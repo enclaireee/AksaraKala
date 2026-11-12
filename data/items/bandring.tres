@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/bandring.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "bandring"
+title = "ITEM_BANDRING_NAME"
+slot = "weapon"
+archetype = "ranged"
+description = "ITEM_BANDRING_DESC"
+windup = 0.2
+recovery = 0.3
+cost = 5.0
+projectile_speed = 260.0
+projectile_range = 200.0
+damage = 10

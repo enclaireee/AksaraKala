@@ -115,6 +115,11 @@ class Telegraph extends Node2D:
 				draw_circle(Vector2.ZERO, radius, back)
 				draw_circle(Vector2.ZERO, radius * f, fill)
 				draw_arc(Vector2.ZERO, radius, 0.0, TAU, 40, edge, 1.0)
+				draw_arc(Vector2.ZERO, maxf(radius - 3.0, 1.0), 0.0, TAU, 40, Color(color, 0.4), 1.0)
+				draw_arc(Vector2.ZERO, radius * f, 0.0, TAU, 40, Color(1, 1, 1, 0.3 + 0.5 * flash), 1.0)   # the closing edge
+				for i in 8:   # tick marks turning on the rim, like a seal being drawn
+					var a := t * 1.6 + TAU * i / 8.0
+					draw_line(Vector2.from_angle(a) * maxf(radius - 3.0, 1.0), Vector2.from_angle(a) * radius, edge, 1.0)
 			"ring":
 				var mid := (radius + inner) * 0.5
 				draw_arc(Vector2.ZERO, mid, 0.0, TAU, 56, back, radius - inner)
@@ -133,11 +138,21 @@ class Telegraph extends Node2D:
 				draw_colored_polygon(pf, fill)
 				draw_polyline(pts, edge, 1.0)
 				draw_line(pts[pts.size() - 1], Vector2.ZERO, edge, 1.0)
+				draw_arc(Vector2.ZERO, length * f, dir - arc * 0.5, dir + arc * 0.5, 14, Color(1, 1, 1, 0.3 + 0.5 * flash), 1.0)
+				draw_arc(Vector2.ZERO, maxf(length - 3.0, 1.0), dir - arc * 0.5, dir + arc * 0.5, 14, Color(color, 0.4), 1.0)
 			"line":
 				draw_set_transform(Vector2.ZERO, dir)
 				draw_rect(Rect2(0.0, -width * 0.5, length, width), back)
 				draw_rect(Rect2(0.0, -width * 0.5, length * f, width), fill)
 				draw_rect(Rect2(0.0, -width * 0.5, length, width), edge, false, 1.0)
+				draw_line(Vector2(length * f, -width * 0.5), Vector2(length * f, width * 0.5), Color(1, 1, 1, 0.3 + 0.5 * flash), 1.0)
+				var step := 12.0
+				var off := fmod(t * 40.0, step)   # chevrons running down the lane
+				var cx := off
+				while cx < length - 3.0:
+					draw_line(Vector2(cx, -width * 0.3), Vector2(cx + 3.0, 0.0), Color(color, 0.45), 1.0)
+					draw_line(Vector2(cx + 3.0, 0.0), Vector2(cx, width * 0.3), Color(color, 0.45), 1.0)
+					cx += step
 
 
 static func _add(host: Node, n: Node2D, pos: Vector2) -> void:

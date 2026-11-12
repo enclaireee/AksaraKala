@@ -98,7 +98,7 @@ func _ready() -> void:
 	_hero.vframes = 18
 	_hero.frame_coords = Vector2i(0, 2)
 	_hero.centered = false
-	_hero.position = HERO_POS
+	_hero.position = HERO_POS + Vector2(-4, -6)   # 32 px frame: same feet, same centre as the old 24 px one
 	_hero.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(_hero)
 	add_child(UIFx.motes_layer(Rect2(300, 200, 180, 30), 10))

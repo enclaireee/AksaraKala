@@ -13,12 +13,12 @@ func check(cond: bool, msg: String) -> void:
 func _initialize() -> void:
 	await process_frame
 	# 1. Hero sheets
-	for cls: String in ["base", "warrior", "archer", "rogue", "mage"]:
+	for cls: String in ["base", "warrior", "archer", "rogue", "mage", "lancer", "herder", "dancer", "dalang"]:
 		var p := "res://assets/art/hero_%s.png" % cls
 		var tex := load(p) as Texture2D
 		check(tex != null, "hero sheet exists: " + p)
 		if tex:
-			check(tex.get_width() == 144 and tex.get_height() == 432, "hero sheet 144x432 (6 cols x 18 rows of 24x24): " + p)
+			check(tex.get_width() == 192 and tex.get_height() == 576, "hero sheet 192x576 (6 cols x 18 rows of 32x32): " + p)
 
 	# 2. NPC sheet & regional world tilesets
 	var npc_tex := load("res://assets/art/npcs.png") as Texture2D
