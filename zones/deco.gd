@@ -69,6 +69,8 @@ var placed: Array[Dictionary] = []
 var clear := PackedByteArray()   # 1 = no deco here (spot blocks +2 tiles around them, path tiles)
 
 var _g: Array[String] = []
+var _gb: Array[PackedByteArray] = []   # _g as bytes: reading a String per cell was most of the build time
+var _ground_b := Zone.C_GRASS          # zone.ground_char as a byte
 var _w := 0
 var _h := 0
 var _outdoor := PackedByteArray()
@@ -92,6 +94,8 @@ func build(z: Zone) -> void:
 	style = STYLE.get("%s_%d" % [region, z.sub_biome()], STYLE["sunda_0"])
 	rng.seed = z.zone_id.hash()
 	_g = z.grid
+	_gb = Zone.rows_bytes(_g)
+	_ground_b = z.ground_char.unicode_at(0)
 	_w = z.size.x
 	_h = z.size.y
 	for n in ["Fill", "Ground", "Canopy"]:
@@ -116,11 +120,12 @@ func _prepare() -> void:
 	_outdoor.resize(_w * _h)
 	clear.resize(_w * _h)
 	for y in _h:
+		var row := _gb[y]
 		for x in _w:
 			var i := y * _w + x
-			if _g[y][x] == "#" and not zone.indoor and (floor_d[i] > ring or zone.ground_char == "_"):
+			if row[x] == Zone.C_HASH and not zone.indoor and (floor_d[i] > ring or zone.ground_char == "_"):
 				_outdoor[i] = 1
-			if _g[y][x] == ",":
+			if row[x] == Zone.C_PATH:
 				clear[i] = 1
 	var s := zone.k
 	for c: Vector2i in zone.claimed:   # a town module placed something here
@@ -246,17 +251,18 @@ func _ground() -> void:
 	var open_floor := zone.ground_char == "_"
 	var plaza_cells := _plaza_cells()
 	for y in _h:
+		var row := _gb[y]
 		for x in _w:
-			var c := _g[y][x]
+			var c := row[x]
 			var m := 0
-			if c == ".":
+			if c == Zone.C_GRASS:
 				m = G_GRASS
-			elif c == ",":
+			elif c == Zone.C_PATH:
 				m = G_PATH
 				for o: Vector2i in G_NB:   # a path beside water is a bridge: keep the tileset's planks
-					if _tile(x + o.x, y + o.y) == "~":
+					if _tile(x + o.x, y + o.y) == Zone.C_WATER:
 						m = 0
-			elif c == "_":
+			elif c == Zone.C_FLOOR:
 				m = G_SAND if open_floor else (G_PLAZA if plaza_cells.has(Vector2i(x, y)) else G_WOOD)
 			ground_mat[y * _w + x] = m
 	for y in _h:
@@ -278,53 +284,61 @@ func _ground() -> void:
 			ground_var[i] = v
 			ground_layers[0].set_cell(Vector2i(x, y), 0, Vector2i(v, sbo + m - 1))
 	var dtree := Zone.dist_field(_g, "#", 3)
+	# Per edge kind (0 path, 1 water, 2 sand), a mask with a 1-cell border of 0 (off the map is none of them), so
+	# _edge reads 8 neighbours by index instead of 8 function calls.
+	var pw := _w + 2
+	var kinds: Array[PackedByteArray] = []
+	for kind in 3:
+		var km := PackedByteArray()
+		km.resize(pw * (_h + 2))
+		kinds.append(km)
+	for y in _h:
+		var row := _gb[y]
+		for x in _w:
+			var pi := (y + 1) * pw + x + 1
+			var gm := ground_mat[y * _w + x]
+			kinds[0][pi] = 1 if gm == G_PATH else 0
+			kinds[1][pi] = 1 if row[x] == Zone.C_WATER else 0
+			kinds[2][pi] = 1 if gm == G_SAND else 0
 	for y in _h:
 		for x in _w:
 			var m := ground_mat[y * _w + x]
 			if m == 0:
 				continue
 			var cell := Vector2i(x, y)
-			if (m == G_GRASS or m == G_SAND) and _edge(cell, 1, sbo, seed_i, ground_layers[2]):
-				pass
+			if m == G_GRASS or m == G_SAND:
+				_edge(cell, kinds[1], 1, sbo, seed_i, ground_layers[2])
 			if m == G_GRASS:
-				if not _edge(cell, 0, sbo, seed_i, ground_layers[1]):
-					_edge(cell, 2, sbo, seed_i, ground_layers[1])
+				if not _edge(cell, kinds[0], 0, sbo, seed_i, ground_layers[1]):
+					_edge(cell, kinds[2], 2, sbo, seed_i, ground_layers[1])
 			var d := _decal(x, y, m, dtree[y * _w + x] <= 3, seed_i)
 			if d.x >= 0 and not zone.claimed.has(cell):
 				ground_layers[3].set_cell(cell, 0, Vector2i(d.x, sbo + d.y))
 
 
-func _tile(x: int, y: int) -> String:
-	return _g[y][x] if x >= 0 and y >= 0 and x < _w and y < _h else "#"
+## The map char at (x, y) as a byte (Zone.C_*); outside the map is a wall.
+func _tile(x: int, y: int) -> int:
+	return _gb[y][x] if x >= 0 and y >= 0 and x < _w and y < _h else Zone.C_HASH
 
 
-## Which neighbours of the edge kind (0 path, 1 water, 2 sand) are at (x, y) + o.
-func _is_kind(kind: int, x: int, y: int) -> bool:
-	match kind:
-		0:
-			return _ground_mat(x, y) == G_PATH
-		1:
-			return _tile(x, y) == "~"
-	return _ground_mat(x, y) == G_SAND
-
-
-## Soft edge of a neighbouring material bleeding onto this cell: a side-mask piece, or a corner piece when only a diagonal touches.
-func _edge(cell: Vector2i, kind: int, sbo: int, seed_i: int, layer: TileMapLayer) -> bool:
-	if layer.get_cell_source_id(cell) != -1:
-		return false
-	var mask := 0
-	for i in 4:
-		if _is_kind(kind, cell.x + G_NB[i].x, cell.y + G_NB[i].y):
-			mask |= 1 << i
+## Soft edge of a neighbouring material bleeding onto this cell: a side-mask piece, or a corner piece when only a diagonal
+## touches. km is that kind's bordered mask (see _ground). Each cell is visited once per layer, so the cell is still empty.
+func _edge(cell: Vector2i, km: PackedByteArray, kind: int, sbo: int, seed_i: int, layer: TileMapLayer) -> bool:
+	var pw := _w + 2
+	var pi := (cell.y + 1) * pw + cell.x + 1
+	var mask := km[pi - pw] | (km[pi + 1] << 1) | (km[pi + pw] << 2) | (km[pi - 1] << 3)   # G_NB order: N E S W
 	var piece := mask - 1
 	if mask == 0:
-		piece = -1
-		for i in 4:
-			if _is_kind(kind, cell.x + G_DIAG[i].x, cell.y + G_DIAG[i].y):
-				piece = 15 + i
-				break
-	if piece < 0:
-		return false
+		if km[pi - pw + 1] == 1:   # G_DIAG order: NE SE SW NW
+			piece = 15
+		elif km[pi + pw + 1] == 1:
+			piece = 16
+		elif km[pi + pw - 1] == 1:
+			piece = 17
+		elif km[pi - pw - 1] == 1:
+			piece = 18
+		else:
+			return false
 	var idx := int(Zone._hash2(cell.x, cell.y, seed_i + 11) * 2.0) % 2 * 19 + piece
 	layer.set_cell(cell, 0, Vector2i(idx % 8, sbo + 5 + kind * 5 + idx / 8))
 	return true
@@ -332,36 +346,39 @@ func _edge(cell: Vector2i, kind: int, sbo: int, seed_i: int, layer: TileMapLayer
 
 ## Decal atlas coords (column, block row) for a cell, or (-1, -1).
 func _decal(x: int, y: int, m: int, near_tree: bool, seed_i: int) -> Vector2i:
-	if _tile(x, y - 1) == "#" and not zone.claimed.has(Vector2i(x, y - 1)):
+	if _tile(x, y - 1) == Zone.C_HASH and not zone.claimed.has(Vector2i(x, y - 1)):
 		return Vector2i(0, 20)   # shadow under a north wall
-	var h := Zone._hash2(x, y, seed_i + 21)
-	var h2 := Zone._hash2(x, y, seed_i + 22)
-	var pn := Zone.noise(x / 5.0, y / 5.0, seed_i + 23)
-	var pick := int(Zone._hash2(x, y, seed_i + 24) * 6.0) % 6
+	# The hashes and noise are pure, so each is worked out only on the branch that reads it (sand reads none).
 	match m:
 		G_GRASS:
-			if (pn > 0.62 and h < 0.22) or h < 0.012:
-				return Vector2i(pick, 22)
-			if near_tree and h2 < 0.1:
-				return Vector2i(pick % 4, 21)
+			var h := Zone._hash2(x, y, seed_i + 21)
+			if h < 0.012 or (h < 0.22 and Zone.noise(x / 5.0, y / 5.0, seed_i + 23) > 0.62):
+				return Vector2i(_pick(x, y, seed_i), 22)
+			if near_tree and Zone._hash2(x, y, seed_i + 22) < 0.1:
+				return Vector2i(_pick(x, y, seed_i) % 4, 21)
 		G_PATH:
+			var h := Zone._hash2(x, y, seed_i + 21)
 			var hz := _ground_mat(x - 1, y) == G_PATH and _ground_mat(x + 1, y) == G_PATH
 			var vt := _ground_mat(x, y - 1) == G_PATH and _ground_mat(x, y + 1) == G_PATH
 			if hz != vt and Zone.noise(x / 9.0, y / 9.0, seed_i + 24) > 0.35 and h < 0.6:
-				return Vector2i(1 + (0 if hz else 2) + pick % 2, 20)
-			if h2 < 0.06:
-				return Vector2i(5 + pick % 3, 20)
+				return Vector2i(1 + (0 if hz else 2) + _pick(x, y, seed_i) % 2, 20)
+			if Zone._hash2(x, y, seed_i + 22) < 0.06:
+				return Vector2i(5 + _pick(x, y, seed_i) % 3, 20)
 			if near_tree and h < 0.1:
-				return Vector2i(pick % 4, 21)
+				return Vector2i(_pick(x, y, seed_i) % 4, 21)
 		G_PLAZA:
-			if h < 0.1:
-				return G_CRACKS[pick % 4]
-			if h2 < 0.06:
-				return Vector2i(4 + pick % 3, 21)
+			if Zone._hash2(x, y, seed_i + 21) < 0.1:
+				return G_CRACKS[_pick(x, y, seed_i) % 4]
+			if Zone._hash2(x, y, seed_i + 22) < 0.06:
+				return Vector2i(4 + _pick(x, y, seed_i) % 3, 21)
 		G_WOOD:
-			if h < 0.05:
-				return G_CRACKS[pick % 4]
+			if Zone._hash2(x, y, seed_i + 21) < 0.05:
+				return G_CRACKS[_pick(x, y, seed_i) % 4]
 	return Vector2i(-1, -1)
+
+
+func _pick(x: int, y: int, seed_i: int) -> int:
+	return int(Zone._hash2(x, y, seed_i + 24) * 6.0) % 6
 
 
 ## `_` cells of open (plaza) floors, as opposed to rooms: a connected `_` area touching more than a few open ground cells,
@@ -372,7 +389,7 @@ func _plaza_cells() -> Dictionary:
 	seen.resize(_w * _h)
 	for sy in _h:
 		for sx in _w:
-			if _g[sy][sx] != "_" or seen[sy * _w + sx] == 1:
+			if _gb[sy][sx] != Zone.C_FLOOR or seen[sy * _w + sx] == 1:
 				continue
 			var comp: Array[Vector2i] = [Vector2i(sx, sy)]
 			seen[sy * _w + sx] = 1
@@ -384,11 +401,11 @@ func _plaza_cells() -> Dictionary:
 				for o: Vector2i in G_NB:
 					var n: Vector2i = c + o
 					var t := _tile(n.x, n.y)
-					if t == "_":
+					if t == Zone.C_FLOOR:
 						if seen[n.y * _w + n.x] == 0:
 							seen[n.y * _w + n.x] = 1
 							comp.append(n)
-					elif t == "." or t == ",":
+					elif t == Zone.C_GRASS or t == Zone.C_PATH:
 						open += 1
 			if not zone.is_town() or open > 6:
 				for c in comp:
@@ -435,7 +452,7 @@ func _ground_cover() -> void:
 	var dens: float = style.density
 	for y in _h:
 		for x in _w:
-			if _g[y][x] != zone.ground_char or not _ok(x, y):
+			if _gb[y][x] != _ground_b or not _ok(x, y):
 				continue
 			if rng.randf() >= dens:
 				continue
@@ -460,7 +477,7 @@ func _landmarks() -> void:
 			var open := true
 			for dy in range(-1, 2):
 				for dx in range(-1, 2):
-					if not _ok(x + dx, y + dy) or _g[y + dy][x + dx] != zone.ground_char:
+					if not _ok(x + dx, y + dy) or _gb[y + dy][x + dx] != _ground_b:
 						open = false
 			if open:
 				cand.append(Vector2i(x, y))
@@ -503,7 +520,7 @@ func _furnish() -> void:
 	var picks := ["shelf", "jar", "table", "jar", "shelf", "jar"]
 	for y in range(1, _h - 1):
 		for x in range(1, _w - 1):
-			if _g[y][x] != "_" or _g[y - 1][x] != "#" or not _ok(x, y) or (x * 3 + y * 5) % 5 != 0:
+			if _gb[y][x] != Zone.C_FLOOR or _gb[y - 1][x] != Zone.C_HASH or not _ok(x, y) or (x * 3 + y * 5) % 5 != 0:
 				continue
 			if rng.randf() > 0.55:
 				continue
@@ -514,7 +531,7 @@ func _furnish() -> void:
 				cells.append(Vector2i(x + 1, y))
 			var fine := true
 			for c in cells:
-				if not _ok(c.x, c.y) or _g[c.y][c.x] != "_" or _g[c.y - 1][c.x] != "#":
+				if not _ok(c.x, c.y) or _gb[c.y][c.x] != Zone.C_FLOOR or _gb[c.y - 1][c.x] != Zone.C_HASH:
 					fine = false
 			if not fine:
 				continue
@@ -523,13 +540,13 @@ func _furnish() -> void:
 			_sprite(prop, pos)
 	for y in range(2, _h - 2):   # a few mats on open floor
 		for x in range(2, _w - 2):
-			if (x * 7 + y * 11) % 31 != 3 or _g[y][x] != "_" or not _ok(x, y) or rng.randf() > 0.4:
+			if (x * 7 + y * 11) % 31 != 3 or _gb[y][x] != Zone.C_FLOOR or not _ok(x, y) or rng.randf() > 0.4:
 				continue
 			var cells: Array[Vector2i] = [Vector2i(x, y)]
 			var fine := true
 			for dy in range(-1, 2):
 				for dx in range(-1, 2):
-					if not _ok(x + dx, y + dy) or _g[y + dy][x + dx] != "_":
+					if not _ok(x + dx, y + dy) or _gb[y + dy][x + dx] != Zone.C_FLOOR:
 						fine = false
 			if fine:
 				var pos := Vector2(x * 16 + 8, y * 16 + 14)

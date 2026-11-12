@@ -188,39 +188,79 @@ func sub_biome() -> int:
 	return 0
 
 
-func _tile_at(g: Array[String], x: int, y: int) -> String:
-	if y >= 0 and y < g.size() and x >= 0 and x < g[y].length():
+# Map chars as bytes (all map chars are ASCII). The build reads the grid through these: indexing a String makes a new
+# one-char String per read, which made zone builds slow (.docs/performance.md P1).
+const C_HASH := 35    # "#"
+const C_WATER := 126  # "~"
+const C_PATH := 44    # ","
+const C_GRASS := 46   # "."
+const C_T := 116      # "t"
+const C_FLOOR := 95   # "_"
+
+
+## Each row of g as ASCII bytes.
+static func rows_bytes(g: Array[String]) -> Array[PackedByteArray]:
+	var out: Array[PackedByteArray] = []
+	for r in g:
+		out.append(r.to_ascii_buffer())
+	return out
+
+
+## 256-entry lookup table: 1 at the byte of each char in `chars`.
+static func char_set(chars: String) -> PackedByteArray:
+	var t := PackedByteArray()
+	t.resize(256)
+	for b in chars.to_ascii_buffer():
+		t[b] = 1
+	return t
+
+
+## Flat mask (index y * w + x, w = g[0].length()) of the cells whose char is in `chars`.
+static func mask_of(g: Array[String], chars: String) -> PackedByteArray:
+	var t := char_set(chars)
+	var h := g.size()
+	var w: int = g[0].length() if h > 0 else 0
+	var m := PackedByteArray()
+	m.resize(w * h)
+	for y in h:
+		var row := g[y].to_ascii_buffer()
+		var o := y * w
+		for x in mini(w, row.size()):
+			m[o + x] = t[row[x]]
+	return m
+
+
+func _tile_at(g: Array[PackedByteArray], x: int, y: int) -> int:
+	if y >= 0 and y < g.size() and x >= 0 and x < g[y].size():
 		return g[y][x]
-	return "#"
+	return C_HASH
 
 
-func _tile_row(g: Array[String], x: int, y: int, c: String) -> int:
-	if zone_id.begins_with("fixture"):
-		return 0
-	var b0 := sub_biome() * 5
+## Tile row in the region sheet for char byte c at (x, y); b0 = sub_biome() * 5.
+func _tile_row(g: Array[PackedByteArray], x: int, y: int, c: int, b0: int) -> int:
 	var up := _tile_at(g, x, y - 1)
 	var dn := _tile_at(g, x, y + 1)
 	var lf := _tile_at(g, x - 1, y)
 	var rt := _tile_at(g, x + 1, y)
 	var h := (x * 73 + y * 37) % 16
-	if c == "#":
-		if dn != "#":
-			return b0 + (2 if (h % 4 == 0 and up == "#") else 3)
-		if up != "#":
+	if c == C_HASH:
+		if dn != C_HASH:
+			return b0 + (2 if (h % 4 == 0 and up == C_HASH) else 3)
+		if up != C_HASH:
 			return b0 + 4
 		return b0 + ((x + y) % 2)
-	if c == "~":
-		if up != "~":
+	if c == C_WATER:
+		if up != C_WATER:
 			return b0 + 3
-		if dn != "~":
+		if dn != C_WATER:
 			return b0 + 4
 		return b0 + (2 if h % 5 == 0 else ((x + y) % 2))
-	if c == "," and (up == "~" or dn == "~" or lf == "~" or rt == "~"):
+	if c == C_PATH and (up == C_WATER or dn == C_WATER or lf == C_WATER or rt == C_WATER):
 		return 15
-	if c in ".,t_":
-		if up == "#":
+	if c == C_GRASS or c == C_PATH or c == C_T or c == C_FLOOR:
+		if up == C_HASH:
 			return b0 + 3
-		if (c == "," or c == "_") and (up == "." or dn == "." or lf == "." or rt == "."):
+		if (c == C_PATH or c == C_FLOOR) and (up == C_GRASS or dn == C_GRASS or lf == C_GRASS or rt == C_GRASS):
 			return b0 + 4
 		return b0 + (2 if h < 2 else (1 if h < 7 else 0))
 	return b0 + ((x * 3 + y * 5) % 4)
@@ -253,10 +293,11 @@ func _build() -> void:
 		dgrid.append(line)
 	grid_base = []
 	for y in size.y:
-		var line := ""
-		for x in size.x:
-			line += dgrid[y / k][x / k]
-		grid_base.append(line)
+		var src := dgrid[y / k].substr(0, doc_size.x)
+		var cells := PackedStringArray()
+		for x in src.length():
+			cells.append(src[x].repeat(k))   # each doc cell is k game cells wide
+		grid_base.append("".join(cells))
 	grid = grid_base.duplicate()
 	indoor = zone_id in INDOOR
 	ground_char = "_" if zone_id in OPEN_FLOOR else "."
@@ -265,13 +306,23 @@ func _build() -> void:
 		_erode()
 	solids = _child("Solids", TileMapLayer) as TileMapLayer
 	solids.tile_set = _solid_tileset()
+	var fixture := zone_id.begins_with("fixture")
+	var b0 := sub_biome() * 5
+	var gb := rows_bytes(grid)
+	var town_solid := char_set(TOWN_SOLID)
+	var legend_col := PackedInt32Array()   # byte -> column in the tile sheet (LEGEND index, 0 when not in it)
+	legend_col.resize(256)
+	var lb := LEGEND.to_ascii_buffer()
+	for i in lb.size():
+		legend_col[lb[i]] = i
 	for y in size.y:
-		for x in size.x:
-			var tc := grid[y][x]
-			if TOWN_SOLID.find(tc) >= 0:   # grass to look at, a collision-only tile to bump into
+		var row := gb[y]
+		for x in mini(size.x, row.size()):
+			var tc := row[x]
+			if town_solid[tc] == 1:   # grass to look at, a collision-only tile to bump into
 				solids.set_cell(Vector2i(x, y), 0, Vector2i.ZERO)
-				tc = "."
-			tiles.set_cell(Vector2i(x, y), src_id, Vector2i(maxi(0, LEGEND.find(tc)), _tile_row(grid, x, y, tc)))
+				tc = C_GRASS
+			tiles.set_cell(Vector2i(x, y), src_id, Vector2i(legend_col[tc], 0 if fixture else _tile_row(gb, x, y, tc, b0)))
 	var scenes := {}   # char -> PackedScene or null, loaded once
 	for dc: Vector2i in spot_cells:
 		var c: String = spot_cells[dc]
@@ -382,12 +433,12 @@ static func dist_field(g: Array[String], chars: String, cap: int) -> PackedByteA
 	var d := PackedByteArray()
 	d.resize(w * h)
 	d.fill(cap + 1)
+	var m := mask_of(g, chars)
 	var q := PackedInt32Array()
-	for y in h:
-		for x in w:
-			if chars.find(g[y][x]) >= 0:
-				d[y * w + x] = 0
-				q.append(y * w + x)
+	for i in w * h:
+		if m[i] == 1:
+			d[i] = 0
+			q.append(i)
 	var head := 0
 	while head < q.size():
 		var i := q[head]
@@ -397,12 +448,8 @@ static func dist_field(g: Array[String], chars: String, cap: int) -> PackedByteA
 			continue
 		var x := i % w
 		var y := i / w
-		for dy in range(-1, 2):
-			for dx in range(-1, 2):
-				var nx := x + dx
-				var ny := y + dy
-				if nx < 0 or ny < 0 or nx >= w or ny >= h:
-					continue
+		for ny in range(maxi(0, y - 1), mini(h, y + 2)):
+			for nx in range(maxi(0, x - 1), mini(w, x + 2)):
 				var ni := ny * w + nx
 				if d[ni] > nd:
 					d[ni] = nd
@@ -410,16 +457,18 @@ static func dist_field(g: Array[String], chars: String, cap: int) -> PackedByteA
 	return d
 
 
-func _walk_at(g: Array[String], i: int) -> bool:
-	return WALK.find(g[i / size.x][i % size.x]) >= 0
-
-
 ## Walkable cells reachable from `from` (flat index), 4-connected, as a byte mask.
 func _flood(g: Array[String], from: int) -> PackedByteArray:
+	return _flood_mask(mask_of(g, WALK), from)
+
+
+## _flood over a ready-made walkable mask (mask_of(g, WALK)).
+func _flood_mask(walk: PackedByteArray, from: int) -> PackedByteArray:
 	var w := size.x
+	var h := size.y
 	var seen := PackedByteArray()
-	seen.resize(w * size.y)
-	if from < 0 or not _walk_at(g, from):
+	seen.resize(w * h)
+	if from < 0 or from >= walk.size() or walk[from] == 0:
 		return seen
 	var q := PackedInt32Array([from])
 	seen[from] = 1
@@ -428,16 +477,18 @@ func _flood(g: Array[String], from: int) -> PackedByteArray:
 		var i := q[head]
 		head += 1
 		var x := i % w
-		var y := i / w
-		for o in [[1, 0], [-1, 0], [0, 1], [0, -1]]:
-			var nx: int = x + o[0]
-			var ny: int = y + o[1]
-			if nx < 0 or ny < 0 or nx >= w or ny >= size.y:
-				continue
-			var ni := ny * w + nx
-			if seen[ni] == 0 and WALK.find(g[ny][nx]) >= 0:
-				seen[ni] = 1
-				q.append(ni)
+		if x + 1 < w and seen[i + 1] == 0 and walk[i + 1] == 1:
+			seen[i + 1] = 1
+			q.append(i + 1)
+		if x > 0 and seen[i - 1] == 0 and walk[i - 1] == 1:
+			seen[i - 1] = 1
+			q.append(i - 1)
+		if i + w < w * h and seen[i + w] == 0 and walk[i + w] == 1:
+			seen[i + w] = 1
+			q.append(i + w)
+		if i - w >= 0 and seen[i - w] == 0 and walk[i - w] == 1:
+			seen[i - w] = 1
+			q.append(i - w)
 	return seen
 
 
@@ -468,10 +519,12 @@ func _erode() -> void:
 	var floor_d := dist_field(grid_base, "_", ring)
 	var dw := dist_field(grid_base, WALK, 3)
 	var ds := dist_field(grid_base, SOLID, 3)
+	var gb := rows_bytes(grid_base)
 	for y in h:
+		var row := gb[y]
 		for x in w:
 			var i := y * w + x
-			if x < 2 or y < 2 or x >= w - 2 or y >= h - 2 or grid_base[y][x] == "," or (floor_d[i] <= ring and ground_char == "."):
+			if x < 2 or y < 2 or x >= w - 2 or y >= h - 2 or row[x] == C_PATH or (floor_d[i] <= ring and ground_char == "."):
 				prot[i] = 1
 	var sp := spots()
 	for dc: Vector2i in spot_cells:
@@ -481,42 +534,68 @@ func _erode() -> void:
 			for e: Array in wave:
 				_protect(prot, dc + (e[1] as Vector2i))
 	# Base walkable components: a carve may never merge two of them.
-	var lab := PackedInt32Array()
+	var base_walk := mask_of(grid_base, WALK)
+	var lab := PackedInt32Array()   # one BFS pass labels every 4-connected walkable component, in scan order
 	lab.resize(w * h)
 	var n_lab := 0
-	for i in w * h:
-		if lab[i] == 0 and _walk_at(grid_base, i):
-			n_lab += 1
-			var m := _flood(grid_base, i)
-			for j in w * h:
-				if m[j] == 1:
-					lab[j] = n_lab
+	var q := PackedInt32Array()
+	for s0 in w * h:
+		if lab[s0] != 0 or base_walk[s0] == 0:
+			continue
+		n_lab += 1
+		lab[s0] = n_lab
+		q.clear()
+		q.append(s0)
+		var head := 0
+		while head < q.size():
+			var i := q[head]
+			head += 1
+			var x := i % w
+			if x + 1 < w and lab[i + 1] == 0 and base_walk[i + 1] == 1:
+				lab[i + 1] = n_lab
+				q.append(i + 1)
+			if x > 0 and lab[i - 1] == 0 and base_walk[i - 1] == 1:
+				lab[i - 1] = n_lab
+				q.append(i - 1)
+			if i + w < w * h and lab[i + w] == 0 and base_walk[i + w] == 1:
+				lab[i + w] = n_lab
+				q.append(i + w)
+			if i - w >= 0 and lab[i - w] == 0 and base_walk[i - w] == 1:
+				lab[i - w] = n_lab
+				q.append(i - w)
+	var ground_b := ground_char.unicode_at(0)
 	var carve: Array[int] = []
 	var grow: Array[int] = []
 	for y in h:
+		var row := gb[y]
 		for x in w:
 			var i := y * w + x
 			if prot[i] == 1:
 				continue
-			var ch := grid_base[y][x]
-			var nv := noise(x / 5.0, y / 5.0, seed_i) * 0.65 + noise(x / 2.2 + 17.0, y / 2.2 + 9.0, seed_i) * 0.35
-			nv = nv * 2.0 - 1.0
-			if ch == "#" and dw[i] >= 1 and dw[i] <= 2:
+			var ch := row[x]
+			if ch == C_HASH and dw[i] >= 1 and dw[i] <= 2:
+				var nv := _erode_noise(x, y, seed_i)
 				var depth := 2 if nv > 0.35 else (1 if nv > 0.05 else 0)
 				if dw[i] <= depth and _single_label(lab, x, y):
 					carve.append(i)
-			elif ch == ground_char and ds[i] == 1 and nv < -0.1:
+			elif ch == ground_b and ds[i] == 1 and _erode_noise(x, y, seed_i) < -0.1:
 				grow.append(i)
 	_apply(carve, ground_char)
 	_apply(grow, "#")
 	var start := _start_index()
 	if start < 0:
 		return
-	var base_reach := _flood(grid_base, start)
+	var base_reach := _flood_mask(base_walk, start)
 	if not _spots_reached(base_reach, _flood(grid, start)):
 		_apply(grow, ground_char)   # undo the growth; carving cannot disconnect anything
 		if not _spots_reached(base_reach, _flood(grid, start)):
 			grid = grid_base.duplicate()
+
+
+## The erosion noise at a cell, in -1..1 (only computed for the cells that can change).
+static func _erode_noise(x: int, y: int, seed_i: int) -> float:
+	var nv := noise(x / 5.0, y / 5.0, seed_i) * 0.65 + noise(x / 2.2 + 17.0, y / 2.2 + 9.0, seed_i) * 0.35
+	return nv * 2.0 - 1.0
 
 
 ## Marks the block of a doc cell and 2 tiles around it as off limits for erosion.

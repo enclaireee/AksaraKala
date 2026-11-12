@@ -407,8 +407,21 @@ func _sample(tab: Array) -> Vector2i:
 	return cells[lo]
 
 
+var _near_fields := {}   # "chars|r" -> Zone.dist_field: one pass per query kind instead of (2r+1)^2 reads per cell
+
+
+## True when a char of `chars` is within r cells (chessboard) of (x, y).
 func _near_char(x: int, y: int, chars: String, r: int) -> bool:
-	for yy in range(y - r, y + r + 1):
+	if chars == "":
+		return false
+	if x >= 0 and y >= 0 and x < w and y < h and not chars.contains("#") and grid.size() == h:
+		var key := "%s|%d" % [chars, r]
+		if not _near_fields.has(key):
+			var g: Array[String] = []
+			g.assign(grid)
+			_near_fields[key] = Zone.dist_field(g, chars, r)
+		return (_near_fields[key] as PackedByteArray)[y * w + x] <= r
+	for yy in range(y - r, y + r + 1):   # off the map, or "#" (which the edge counts as): read the cells
 		for xx in range(x - r, x + r + 1):
 			if _ch(xx, yy) in chars and chars != "":
 				return true

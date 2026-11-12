@@ -74,6 +74,7 @@ class Voice extends RefCounted:
 		p.volume_linear = sin(x * PI * 0.5)
 		if x <= 0.0 and goal <= 0.0 and p.playing and not keep_alive:
 			p.stop()
+			p.stream = null   # let a faded-out track be freed (Ogg streams keep their whole file in memory)
 
 	func play(stream: AudioStream, from := 0.0) -> void:
 		p.stream = stream
@@ -280,6 +281,27 @@ func _on_zone(zone: String) -> void:
 	_scene_override = ""
 	_hush = 0.0
 	apply_plan(plan)
+	_trim_cache(plan)
+
+
+## Forgets the music and ambience this zone does not use (.docs/performance.md P3). An Ogg stream holds its whole
+## file in memory and the cache kept every one ever played: about 105 MB after one walk through the world. SFX and
+## jingles are small and stay. A voice that is still fading out keeps its own stream until it stops.
+func _trim_cache(plan: Dictionary) -> void:
+	var keep := {}
+	for id: String in [plan.get("base", ""), plan.get("combat", ""), plan.get("boss", "")]:
+		keep["music/%s|loop" % id] = true
+	keep["amb/%s|loop" % plan.get("amb", "")] = true
+	var voices: Array[Voice] = []
+	voices.append_array(_bases)
+	voices.append_array(_amb)
+	voices.append_array([_combat, _boss])
+	for v in voices:
+		if not v.p.playing:
+			v.p.stream = null   # a stopped player still holds its last track
+	for key: String in _cache.keys():
+		if (key.begins_with("music/") or key.begins_with("amb/")) and not keep.has(key):
+			_cache.erase(key)
 
 
 func apply_plan(plan: Dictionary) -> void:
