@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/sabuk_merah.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "sabuk_merah"
+title = "ITEM_SABUK_MERAH_NAME"
+slot = "accessory"
+description = "ITEM_SABUK_MERAH_DESC"
+bonus = {"end": 1}
+favoured = "rogue"
+favoured_bonus = {"str": 1}

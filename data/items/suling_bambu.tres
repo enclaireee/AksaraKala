@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/suling_bambu.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "suling_bambu"
+title = "ITEM_SULING_BAMBU_NAME"
+slot = "accessory"
+description = "ITEM_SULING_BAMBU_DESC"
+bonus = {"stamina_regen": 0.1}
+favoured = "herder"
+favoured_bonus = {"end": 1}

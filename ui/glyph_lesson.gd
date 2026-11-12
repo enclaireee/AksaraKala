@@ -20,6 +20,8 @@ const DIM := UIFx.DIM
 const CHARS := {
 	"sunda_ka": "ᮊ", "sunda_ga": "ᮌ", "sunda_nga": "ᮍ", "sunda_ca": "ᮎ",
 	"jawa_ha": "ꦲ", "jawa_na": "ꦤ", "jawa_ca": "ꦕ", "jawa_ra": "ꦫ",
+	"sunda_ha": "ᮠ", "sunda_pa": "ᮕ", "jawa_pa": "ꦥ", "jawa_wa": "ꦮ",
+	"jawa_ga": "ꦒ", "sunda_ba": "ᮘ", "sunda_ta": "ᮒ", "jawa_la": "ꦭ",   # signature aksara, one per class
 	"sunda_la": "ᮜ", "sunda_ra": "ᮛ", "sunda_sa": "ᮞ",   # write-only (no lesson, no spell)
 }
 const MIN_LEN := 40.0   # px; a shorter stroke is a click, not an attempt

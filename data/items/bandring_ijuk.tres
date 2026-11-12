@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/bandring_ijuk.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "bandring_ijuk"
+title = "ITEM_BANDRING_IJUK_NAME"
+slot = "weapon"
+description = "ITEM_BANDRING_IJUK_DESC"
+archetype = "ranged"
+windup = 0.2
+recovery = 0.3
+cost = 5.0
+projectile_speed = 270.0
+projectile_range = 220.0
+damage = 11
+favoured = "herder"
+favoured_bonus = {"dex": 1}

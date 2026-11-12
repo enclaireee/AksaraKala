@@ -46,7 +46,7 @@ const SPOTS := {
 	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_sari", "cond": "step:mq4=12"}, "tile": "."},   # NPC Sari, in the mangrove with you (4.13 entry 3, `"quiet": true`)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "bakau_pack", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/lampor.tscn", Vector2i(-3,0)], ["res://entities/enemies/ula_segara.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter bakau_pack
 	"K": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "k2_scale", "memory_id": "sq_k2_fisher"}, "tile": "."},   # clue, white scale in torn net (SQ-K2)
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_bakau", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_bakau", "item_id": "genitri"}, "tile": "."},   # chest: class gear `genitri`, a second path gets its sibling (ASSUMED)
 	"1": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tidal_beacon_1"}, "tile": "."},   # tidal beacon 1 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_1`)
 	"2": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tidal_beacon_2"}, "tile": "."},   # tidal beacon 2 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_2`)
 	"3": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tidal_beacon_3"}, "tile": "."},   # tidal beacon 3 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_3`)

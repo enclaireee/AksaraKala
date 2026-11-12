@@ -8,6 +8,8 @@ var max_range := 220.0
 var pierce := false
 var far_damage := 0        # damage once past far_after px (Archer Eagle Eye); 0 = off
 var far_after := 120.0
+var bounce := 0.0          # Batu Pantul: > 0 = hop once to the nearest other foe at this damage multiplier
+var bounce_range := 70.0
 var _travelled := 0.0
 var _spent := false
 var _trail: Sprite2D   # 2-frame streak behind the shaft (combat.md 2.3b); visual only
@@ -29,10 +31,31 @@ func _ready() -> void:
 	body_entered.connect(func(b: Node2D) -> void: if not b is CharacterBody2D: queue_free())   # walls only; enemy bodies share layer 3
 	hit_landed.connect(func(_h: Hurtbox) -> void:
 		Snd.play("arrow_hit", 0.0, 1.0, 0.05)
+		if bounce > 0.0 and _hop(_h):
+			return
 		if not pierce:
 			_spent = true   # queue_free alone still lets other overlaps queued this frame land
 			queue_free())
 	activate()
+
+
+## Turn toward the nearest other enemy in bounce_range. The Hitbox already remembers who it hit.
+func _hop(from: Hurtbox) -> bool:
+	var best: Node2D = null
+	for e: Node2D in get_tree().get_nodes_in_group("enemy"):
+		var dist := e.global_position.distance_to(global_position)
+		if e != from.owner and dist <= bounce_range and (best == null or dist < best.global_position.distance_to(global_position)):
+			best = e
+	if best == null:
+		return false
+	direction = (best.global_position - global_position).normalized()
+	rotation = direction.angle()
+	damage = roundi(damage * bounce)
+	bounce = 0.0
+	pierce = false
+	_travelled = 0.0
+	max_range = bounce_range + 16.0
+	return true
 
 
 func _on_area_entered(area: Area2D) -> void:

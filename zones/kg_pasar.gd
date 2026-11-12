@@ -84,7 +84,7 @@ const SPOTS := {
 	"d": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g1_debt_ledger", "cond": "flag:mqg_a1"}, "tile": "."},   # clue g1_debt_ledger, the official's tax ledger (SQ-G1)
 	"a": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "g1_palm_sack", "memory_id": "sq_g1_kabayan", "cond": "flag:mqg_a1"}, "tile": "."},   # clue g1_palm_sack, Kabayan's sack; pulls into sq_g1_kabayan (SQ-G1)
 	"z": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "grain_roof_1", "cond": "quest:sq_c1=active"}, "tile": "."},   # prop, handful of grain on the west roof 1 (SQ-C1 step 4 press-each x3)
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "galuh_chest_pasar", "item_id": "ilmu:55"}, "tile": "."},   # chest galuh_chest_pasar (55 Ilmu)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "galuh_chest_pasar", "item_id": "kampret_pemburu"}, "tile": "."},   # chest galuh_chest_pasar class gear `kampret_pemburu`, a second path gets its sibling (ASSUMED)
 	"x": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "grain_roof_2", "cond": "quest:sq_c1=active"}, "tile": "."},   # prop, handful of grain on the east roof 2 (SQ-C1 step 4)
 	"y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "grain_roof_3", "cond": "quest:sq_c1=active"}, "tile": "."},   # prop, handful of grain on the east roof 3 (SQ-C1 step 4)
 }

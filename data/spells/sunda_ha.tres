@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SpellData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/spell_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+; Signature spell (spells.md 3). No scene: SpellVariants builds it, and only its own class can learn the glyph.
+glyph_id = "sunda_ha"
+title = "SPELL_SUNDA_HA_NAME"
+cost = 45.0
+power = 14.0
+duration = 9.0
+radius = 76.0

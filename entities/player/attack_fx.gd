@@ -198,6 +198,11 @@ func on_shoot(arrow: Node2D) -> void:
 
 
 ## A hit landed (player._on_hit_landed). `kill` is true when the target died from it.
+## The class mechanic is ready: the Prajurit braces, the Penari reaches full Wirama.
+func on_brace() -> void:
+	_anim("ring", 3, player.global_position, 0.0, 14.0, _tints()[2])
+
+
 func on_hit(hb: Node2D, heavy: bool, kill: bool) -> void:
 	if not is_instance_valid(hb):
 		return

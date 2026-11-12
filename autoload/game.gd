@@ -10,6 +10,12 @@ const VERSION := 3   # 2: quest records gain `all` (bits of an all step). Older 
 const STATS := ["vit", "end", "str", "dex", "spi"]
 const STARTER_GLYPHS: Array[String] = []   # glyphs come from the main quest (quests.md 3.3)
 ## Quest Ilmu by zone and size S/M/L (quests.md 3.1, TUNE). Desa Purwa uses the Act 1 row for now.
+## School item -> its second-path sibling (items.md, class-favoured gear). add_item swaps for the sibling's class.
+const SIBLING_ITEM := {
+	"parang_perang": "tombak_galah", "tombak_panji": "tombak_bendera", "zirah_sisik": "baju_keprajuritan", "gelang_baja": "tameng_rotan",
+	"busur_petung": "bandring_kulit", "gendewa_tanduk": "bandring_ijuk", "kampret_pemburu": "sarung_gembala", "kantong_panah": "suling_bambu",
+	"golok_pendek": "kipas_bambu", "kujang_kembar": "kipas_kembar", "pangsi_hitam": "baju_penari", "sabuk_merah": "gelang_kaki",
+	"tongkat_genta": "cempala", "tongkat_cendana": "kayon_gapuran", "jubah_wiku": "beskap_dalang", "genitri": "blencong"}
 const QUEST_ILMU := {"tatar_sunda": [30, 60, 90], "desa_purwa": [30, 60, 90], "keraton_galuh": [30, 60, 90], "mataram": [55, 110, 165],
 	"tanah_timur": [110, 220, 330], "segara_kidul": [190, 380, 570],
 	"gua_kala": [190, 380, 570]}
@@ -192,12 +198,26 @@ func add_ilmu(amount: int) -> void:
 	changed.emit()
 
 
-func add_item(id: String, save := true) -> void:
+## Returns the id really given: a second path gets its own sibling of a class-favoured item (items.md).
+func add_item(id: String, save := true) -> String:
+	var sib := ItemData.by_id(SIBLING_ITEM.get(id, ""))
+	if sib and sib.favoured == class_id:
+		id = sib.id
 	if id not in inventory:
 		inventory.append(id)
 		changed.emit()
 		if save:
 			save_game()
+	return id
+
+
+## A quest's rewards for this class: SQ-X1's class weapon joins the items (quests.md 6.3).
+func quest_rewards(q: QuestData) -> Dictionary:
+	var r := q.rewards.duplicate(true)
+	var own: String = r.get("class_items", {}).get(class_id, "")
+	if own != "":
+		r["items"] = r.get("items", []) + [own]
+	return r
 
 
 func equip(id: String) -> bool:
@@ -219,17 +239,21 @@ func stat(key: String) -> int:
 	return stats.get(key, 0) + int(bonus(key))
 
 
-## Sum of one bonus key over armor and accessory (items.md, ItemData.bonus).
+## Sum of one bonus key over the equipped gear, with the favoured extra for the right class (items.md).
 func bonus(key: String) -> float:
 	var total := 0.0
-	for slot in ["armor", "accessory"]:
+	for slot in ["weapon", "armor", "accessory"]:
 		var item := equipped_item(slot)
 		if item:
 			total += float(item.bonus.get(key, 0.0))
+			if item.favoured == class_id:
+				total += float(item.favoured_bonus.get(key, 0.0))
 	return total
 
 
 func learn_glyph(id: String) -> void:
+	if SpellVariants.SIGNATURE.get(id, class_id) != class_id:
+		return   # a signature aksara belongs to one class (classes.md)
 	if id not in glyphs_learned:
 		glyphs_learned.append(id)
 		changed.emit()
@@ -436,9 +460,11 @@ func _complete(id: String) -> void:
 	var row: Array = QUEST_ILMU.get(q.zone, QUEST_ILMU.tatar_sunda)
 	var base: int = row[["S", "M", "L"].find(q.size)] if q.size in ["S", "M", "L"] else 0
 	ilmu += base * 3 / 2 if quests[id].get("resolution", "") == "fight" else base   # quests.md 3: fight +50%
-	var r := q.rewards
+	var r := quest_rewards(q)
 	for item in r.get("items", []):
 		add_item(item, false)
+	if r.get("class_glyph", false):   # SQ-X1: the signature aksara of this class
+		learn_glyph(SpellVariants.SIGNATURE.find_key(class_id))
 	flask_max = mini(6, flask_max + int(r.get("flask_shard", 0)))
 	flask_charges = mini(flask_max, flask_charges + int(r.get("flask_shard", 0)))
 	herb_pouches = mini(4, herb_pouches + int(r.get("herb_pouch", 0)))
@@ -614,6 +640,8 @@ func check(cond: String) -> bool:
 			return arg in glyphs_learned
 		"item":
 			return arg in inventory
+		"class":
+			return arg == class_id
 		"quest":
 			var p := arg.split("=")
 			return p.size() == 2 and quest_state(p[0]) == p[1]
@@ -635,10 +663,10 @@ func run(action: String) -> void:
 		"start":
 			start_quest(arg)
 		"give":
-			add_item(arg)
+			var got := add_item(arg)
 			var ev := get_node_or_null("/root/Events")
 			if ev:
-				ev.item_picked.emit(arg)
+				ev.item_picked.emit(got)
 		"learn":
 			learn_glyph(arg)
 		"flag":

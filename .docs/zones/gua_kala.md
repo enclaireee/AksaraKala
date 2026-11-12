@@ -844,7 +844,7 @@ W__________________________________________________________#
 | `S` | exit to gk_lupa (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_hutan"}` | floor | 2 |
 | `s` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
 | `E` | encounter kala_hutan_echoes (5.6 `area_cleared:kala_hutan_echoes`) | `res://entities/world/encounter.tscn` | `{area_id:"kala_hutan_echoes", size:Vector2i(15,9), cond:"flag:mq5_1c,!flag:mq5_1cb", waves:[[[res://entities/enemies/kuntilanak.tscn, Vector2i(-4,0)], [res://entities/enemies/kemamang.tscn, Vector2i(4,-2)], [res://entities/enemies/kemamang.tscn, Vector2i(4,2)]]]}` | floor | 1 |
-| `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_hutan", item_id:"ilmu:55"}` | floor | 1 |
+| `c` | chest: class gear `gelang_baja`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_hutan", item_id:"gelang_baja"}` | floor | 1 |
 | `N` | clue, the whispering stone name-trees (5.6; journal note only; id `name_trees`, hunt `kala`; ASSUMED position) | `res://entities/world/clue.tscn` | `{clue_id:"name_trees", cond:"flag:mq5_1c"}` | floor | 1 |
 | `1` | whispering name-tree 1 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_1`) | `res://entities/npc/npc.tscn` | `{npc_id:"whisper_tree_1", cond:"flag:mq5_1c"}` | floor | 1 |
 | `2` | whispering name-tree 2 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_2`) | `res://entities/npc/npc.tscn` | `{npc_id:"whisper_tree_2", cond:"flag:mq5_1c"}` | floor | 1 |
@@ -900,5 +900,5 @@ W__________________________________________________________#
 | `W` | exit to gk_lupa (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_jembatan"}` | floor | 2 |
 | `w` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
 | `E` | encounter kala_jembatan_echoes (5.8, the miniboss is the Prajurit; sets `mq5_1e`; the beat `bridge` plays in this zone) | `res://entities/world/encounter.tscn` | `{area_id:"kala_jembatan_echoes", size:Vector2i(16,9), cond:"flag:mq5_ra,!flag:mq5_1e", waves:[[[res://entities/enemies/arca_penjaga.tscn, Vector2i(-4,0)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,0)], [res://entities/enemies/bajul_putih.tscn, Vector2i(4,0)]]]}` | floor | 1 |
-| `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_jembatan", item_id:"ilmu:55"}` | floor | 1 |
+| `c` | chest: class gear `kantong_panah`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_jembatan", item_id:"kantong_panah"}` | floor | 1 |
 | `B` | clue, the row of name-stones at the end of the bridge (5.8; journal note only; id `bridge_echo`, hunt `kala`; ASSUMED position) | `res://entities/world/clue.tscn` | `{clue_id:"bridge_echo", cond:"flag:mq5_ra"}` | floor | 1 |

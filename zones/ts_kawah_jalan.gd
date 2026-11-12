@@ -49,7 +49,7 @@ const SPOTS := {
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
 	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "lc1_voice", "memory_id": "lc1", "cond": "step:mq1=20"}, "tile": "."},   # clue, Laras's voice at the petilasan; pulls you into LC1 (MQ1 1.21, appears when step 1.21 is current, `step:mq1=20`; id ASSUMED)
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "faceless_captain_seen", "cond": "flag:mq1_7,!flag:mq1_8"}, "tile": "."},   # NPC the Faceless Captain, seen on the crater road before the rim (MQ1 1.20, a dark shape on the ridge; no talk; beat `crater_road` fires on entering the area with `flag:mq1_7`)
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_chest_jalan", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu (Ilmu S, ASSUMED), the area's optional find, behind the rocks (19..21,8..10)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_chest_jalan", "item_id": "busur_petung"}, "tile": "."},   # chest: class gear `busur_petung`, a second path gets its sibling (ASSUMED), the area's optional find, behind the rocks (19..21,8..10)
 }
 
 

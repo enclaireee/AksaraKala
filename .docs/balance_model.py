@@ -5,14 +5,18 @@ import statistics as st
 # Player (rpg.md, classes.md)
 CLASSES = {  # start stats [vit, end, str, dex, spi], weapon archetype, main stat index
     'Warrior': ([8, 6, 8, 4, 3], 'heavy', 2), 'Archer': ([5, 6, 4, 9, 4], 'ranged', 3),
-    'Assassin': ([5, 7, 6, 7, 3], 'light', 2), 'Mage': ([4, 5, 3, 4, 10], 'staff', 4)}
+    'Assassin': ([5, 7, 6, 7, 3], 'light', 2), 'Mage': ([4, 5, 3, 4, 10], 'staff', 4),
+    # second paths (classes.md): same archetype and main stat as their school; mechanics (brace, bounce, Wirama, Lakon) are not modelled
+    'Lancer': ([7, 7, 8, 4, 3], 'heavy', 2), 'Herder': ([5, 8, 4, 8, 3], 'ranged', 3),
+    'Dancer': ([5, 6, 5, 8, 4], 'light', 2), 'Dalang': ([4, 5, 3, 4, 9], 'staff', 4)}
 WEAPON = {'heavy': 22, 'light': 8, 'ranged': 8, 'staff': 8}          # starter base damage
 SWING = {'heavy': 0.8, 'light': 0.35, 'ranged': 0.45, 'staff': 0.5}  # seconds per attack
 GAIN = {'heavy': 10, 'light': 4, 'ranged': 4, 'staff': 4}           # sakti per hit
 UPTIME = {'heavy': 0.45, 'light': 0.5, 'ranged': 0.6, 'staff': 0.6}  # share of fight spent attacking
 SPELL_DMG, SPELL_COST = 42, 22  # average over Bolt (36 + burn), Burst, Dash-strike (spells redesign 2026-11-08)
-CLASS_SPELL = {'Warrior': 0.9, 'Mage': 1.1}
+CLASS_SPELL = {'Warrior': 0.9, 'Lancer': 0.9, 'Mage': 1.1, 'Dalang': 1.1}
 MAGE_GAIN, MAGE_COST = 1.2, 0.9
+MAGES = ('Mage', 'Dalang')  # Dalang's Suluk gain (1.35) is close to the Wiku's 1.2; modelled as the same
 INGATAN = 0.15
 
 # Enemies (balance.md section 6)
@@ -39,9 +43,9 @@ def power(cls, p, rank, wmult=1.0):
     ing = 1 + INGATAN * rank
     hit = WEAPON[arch] * wmult * (1 + 0.05 * (s[4] if arch == 'staff' else s[ms])) * ing
     rate = (1 / SWING[arch]) * (1 + 0.01 * s[3]) * UPTIME[arch]
-    gain = GAIN[arch] * (1 + 0.02 * s[4]) * (MAGE_GAIN if cls == 'Mage' else 1)
+    gain = GAIN[arch] * (1 + 0.02 * s[4]) * (MAGE_GAIN if cls in MAGES else 1)
     spell = SPELL_DMG * (1 + 0.05 * s[4]) * ing * CLASS_SPELL.get(cls, 1.0)
-    sdps = gain * rate / (SPELL_COST * (MAGE_COST if cls == 'Mage' else 1)) * spell
+    sdps = gain * rate / (SPELL_COST * (MAGE_COST if cls in MAGES else 1)) * spell
     return hit * rate + sdps, sdps, 80 + 10 * s[0]
 
 
@@ -58,7 +62,7 @@ if __name__ == '__main__':
         row = {c: power(c, p, R) for c in CLASSES}
         print(f'{z:8}', ' | '.join(f'{c[:4]} {d:5.1f} ({sd / d:.0%}) ttk {40 * HP_T[T] / d:.1f}/{150 * HP_T[T] / d:.1f}s'
                                    for c, (d, sd, hp) in row.items()))
-        non_mage = [row[c][0] for c in ('Warrior', 'Archer', 'Assassin')]
+        non_mage = [row[c][0] for c in CLASSES if c not in MAGES]
         assert max(non_mage) / min(non_mage) < 1.15, 'non-mage classes drift apart'
         assert all(1.0 < 40 * HP_T[T] / d < 2.0 for d in non_mage), 'chaser time to kill out of 1-2 s'
 

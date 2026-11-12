@@ -156,6 +156,7 @@ Authoritative development status and system architecture reference for **Aksara 
 3. **Audio Ear Tuning:** Open `tools/audio/audition.html` and play one region end to end; swap or re-trim sounds in the manifests as outlined in [audio.md](audio.md) section 7.
 4. **Cultural Codex Citations:** Finalize the "Sumber" source citations for folklore entries in `data/text/codex.csv`.
 
+5. **Phase 4g class depth (2026-11-12):** built: the four second paths have their own kit (9 spells each in `spells/path_<class>.gd`, signature aksara Jawa Ga / Sunda Ba / Sunda Ta / Jawa La) and mechanic (Kuda-kuda, Batu Pantul, Wirama, Lakon); 32 class-favoured items (16 school items in 12 chests, 16 siblings swapped in by `Game.add_item` for the second path, `SIBLING_ITEM`); `SQ-X1` from Nyai Rukmi gives all eight classes their signature aksara and a class weapon; the `class:` cond; `tests/second_path_test.gd`. 715 chest Ilmu became gear. Still by hand: draw the four new shapes in `tools/glyph_recorder.tscn`, play each second path for feel and numbers (all **TUNE**), check the **VERIFY** names in [classes.md](classes.md) and [items.md](items.md), redraw the recoloured icons. `balance_model.py` now has eight classes but does not model the four mechanics.
 ---
 
 ## 7. Standing Operational Rules

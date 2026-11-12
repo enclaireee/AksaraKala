@@ -13,6 +13,8 @@ const ELEMENT := {
 	"sunda_ka": Color("56B4E9"), "sunda_ga": Color("9FD8F5"), "sunda_nga": Color("7BC96F"), "sunda_ca": Color("F2B84B"),
 	"jawa_ha": Color("7EE2A0"), "jawa_na": Color("F26B5B"), "jawa_ca": Color("F5C242"), "jawa_ra": Color("FF9D3C"),
 	"jawa_ka": Color("4FD1C5"),
+	"sunda_ha": Color("E8C15A"), "sunda_pa": Color("B8E986"), "jawa_pa": Color("B48CF2"), "jawa_wa": Color("8FD3FF"),
+	"jawa_ga": Color("D9B36A"), "sunda_ba": Color("A8D672"), "sunda_ta": Color("F27BB0"), "jawa_la": Color("9FA8FF"),
 }
 
 # Story v5 Major Choice effects on spells (spells.md "Choice effects on spells"). All TUNE.
@@ -48,8 +50,14 @@ static func poise_mult(spell: SpellData) -> float:
 	return OFFER_MEMORY_OMBAK_POISE if spell.glyph_id == "jawa_ka" and has_flag("choice_offer_memory") and in_act6() else 1.0
 
 
+## The caster's real class: picks the spell kit (SpellVariants, PathSpells) and the glow.
 static func class_id(caster: Node) -> String:
-	return ClassData.school(str(caster.get("class_id"))) if caster.get("class_id") != null else ""
+	return str(caster.get("class_id")) if caster.get("class_id") != null else ""
+
+
+## The caster's school (classes.md "Schools"): only the damage multiplier and the cost rule read this.
+static func school(caster: Node) -> String:
+	return ClassData.school(class_id(caster))
 
 
 static func spirit(caster: Node) -> float:
@@ -58,7 +66,8 @@ static func spirit(caster: Node) -> float:
 
 ## Damage multiplier: Spirit x class.
 static func damage(caster: Node) -> float:
-	return spirit(caster) * CLASS_DAMAGE.get(class_id(caster), 1.0)
+	var g := _game()
+	return spirit(caster) * CLASS_DAMAGE.get(school(caster), 1.0) * (1.0 + (g.bonus("damage_mult") if g else 0.0))
 
 
 ## Gauge cost after class modifiers: Mage x0.9 on everything, Rogue x0.7 on Dash-strike.
@@ -69,7 +78,9 @@ static func cost(caster: Node, spell: SpellData) -> float:
 	var loop := Engine.get_main_loop()
 	if loop is SceneTree and not (loop as SceneTree).get_nodes_in_group("focus").is_empty():
 		c *= 0.75   # Wiku's Fokus Batin (Jawa Ca)
-	match class_id(caster):
+	if loop is SceneTree and not (loop as SceneTree).get_nodes_in_group("kayon").is_empty():
+		c *= 0.5   # Dalang's Tancep Kayon
+	match school(caster):
 		"mage": c *= 0.9
 		"rogue": c *= 0.7 if spell.glyph_id == "jawa_na" else 1.0
 	return c

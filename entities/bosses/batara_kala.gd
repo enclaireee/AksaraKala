@@ -747,7 +747,8 @@ func _raise_shield() -> void:
 func _new_sequence() -> void:
 	seq_index = 0
 	_elapsed = 0.0
-	var pool := PackedStringArray(get_node("/root/Game").glyphs_learned)
+	var pool := PackedStringArray(Array(get_node("/root/Game").glyphs_learned).filter(
+		func(g: String) -> bool: return not SpellVariants.SIGNATURE.has(g)))   # never asks for a class's own aksara
 	if pool.is_empty():
 		pool = PackedStringArray(["sunda_ka"])
 	sequence = PackedStringArray()

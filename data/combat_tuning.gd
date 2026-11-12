@@ -48,12 +48,21 @@ extends Resource
 @export var eagle_mult := 1.15
 @export var keen_mind_max := 120.0
 @export var keen_mind_gain := 1.2
-@export var lancer_guard := 0.12               # Prajurit, Barisan Rapat: damage taken x0.88 (TUNE)
-@export var herder_move := 1.1                 # Pangangon, Kaki Padang (TUNE)
-@export var herder_regen := 1.15
-@export var dancer_speed := 1.12               # Penari Topeng, Wirama: attack speed (TUNE)
-@export var dancer_finisher := 1.25            # ...and finisher damage
-@export var dalang_gain := 1.35                # Dalang, Suluk: Sakti gain (TUNE)
+# Second-path mechanics (classes.md "Second paths"); all TUNE
+@export var brace_time := 0.5                  # Prajurit, Kuda-kuda: seconds standing still to brace
+@export var brace_guard := 0.25                # ...damage taken x0.75 while braced
+@export var brace_thrust := 1.3                # ...and the next thrust
+@export var herder_move := 1.1                 # Pangangon
+@export var bounce_range := 70.0               # Batu Pantul: the stone hops to one more foe
+@export var bounce_mult := 0.6
+@export var bounce_poise := 2.0
+@export var wirama_max := 8                    # Penari Topeng, Wirama: stacks, one per hit landed
+@export var wirama_speed := 0.03               # attack speed per stack
+@export var wirama_move := 0.02                # move speed per stack
+@export var wirama_wave := 60.0                # extra finisher reach at full Wirama
+@export var lakon_step := 0.15                 # Dalang, Lakon: spell power per fresh glyph
+@export var lakon_max := 2
+@export var dalang_gain := 1.35                # Dalang, Suluk: Sakti gain
 @export var flask_time := 0.6
 @export var flask_base_heal := 0.4
 @export var flask_pouch_heal := 0.05

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+; Signature aksara of the Prajurit (classes.md). Stroke from .docs/glyph_strokes.py SIGNATURE; the order is a game design.
+id = "jawa_ga"
+aksara = "jawa"
+latin = "ga"
+templates = Array[PackedVector2Array]([PackedVector2Array(138, 322, 108, 305, 95, 270, 110, 242, 150, 235, 175, 250, 178, 280, 178, 395, 178, 270, 200, 240, 235, 235, 258, 260, 258, 395, 258, 265, 280, 238, 315, 236, 340, 262, 345, 395)])

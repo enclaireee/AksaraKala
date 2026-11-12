@@ -962,6 +962,46 @@ def preview(icons, path):
     sheet.save(path)
 
 
+# Class-favoured gear (items.md): ponytail: each reuses a kin icon's drawing with its own accent colour;
+# draw real ones when the art pass reaches them.
+RECOLOUR = {
+    "parang_perang": ("golok", "#8A2A2A"),
+    "tombak_panji": ("spear", "#C8A030"),
+    "zirah_sisik": ("chainmail", "#7A6A3A"),
+    "gelang_baja": ("silver_bangle", "#5A6A7A"),
+    "busur_petung": ("hunting_bow", "#6A7A3A"),
+    "gendewa_tanduk": ("longbow", "#3A3A4A"),
+    "kampret_pemburu": ("leather_armor", "#4A5A3A"),
+    "kantong_panah": ("feather_charm", "#7A4A2A"),
+    "golok_pendek": ("short_sword", "#4A4A5A"),
+    "kujang_kembar": ("kujang", "#C8A030"),
+    "pangsi_hitam": ("padded_tunic", "#2A2A3A"),
+    "sabuk_merah": ("sabuk_galuh", "#B8302A"),
+    "tongkat_genta": ("iron_staff", "#C8A030"),
+    "tongkat_cendana": ("oak_staff", "#B87A4A"),
+    "jubah_wiku": ("baju_batik", "#C8862A"),
+    "genitri": ("amulet", "#6A3A2A"),
+    "tombak_galah": ("tombak_prajurit", "#6A8A3A"),
+    "tombak_bendera": ("tombak_prajurit", "#C8A030"),
+    "baju_keprajuritan": ("chainmail", "#8A2A3A"),
+    "tameng_rotan": ("silver_bangle", "#B8904A"),
+    "bandring_kulit": ("bandring", "#8A5A3A"),
+    "bandring_ijuk": ("bandring", "#3A3A3A"),
+    "sarung_gembala": ("leather_armor", "#3A6A7A"),
+    "suling_bambu": ("feather_charm", "#B8A04A"),
+    "kipas_bambu": ("kipas", "#6A8A3A"),
+    "kipas_kembar": ("kipas", "#C8A030"),
+    "baju_penari": ("baju_batik", "#B8306A"),
+    "gelang_kaki": ("silver_bangle", "#C8A030"),
+    "cempala": ("oak_staff", "#5A3A2A"),
+    "kayon_gapuran": ("kayon", "#C8A030"),
+    "beskap_dalang": ("baju_batik", "#2A2A4A"),
+    "blencong": ("amulet", "#E8A030"),
+}
+for _id, (_base, _a) in RECOLOUR.items():
+    ICONS[_id] = (ICONS[_base][0], make_pal(_a), None, "#F2D488")
+
+
 if __name__ == "__main__":
     icons = build()
     preview(icons, os.path.join(ROOT, "tools", "items_preview.png"))

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/tombak_galah.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "tombak_galah"
+title = "ITEM_TOMBAK_GALAH_NAME"
+slot = "weapon"
+description = "ITEM_TOMBAK_GALAH_DESC"
+archetype = "heavy"
+windup = 0.22
+active = 0.1
+recovery = 0.4
+lunge = 6.0
+cost = 22.0
+sakti_per_hit = 10.0
+damage = 22
+reach = 50.0
+arc = 36.0
+favoured = "lancer"
+favoured_bonus = {"damage_mult": 0.1}

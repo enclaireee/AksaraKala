@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+; Signature aksara of the Hulubalang (classes.md). Stroke from .docs/glyph_strokes.py SIGNATURE; the order is a game design.
+id = "sunda_ha"
+aksara = "sunda"
+latin = "ha"
+templates = Array[PackedVector2Array]([PackedVector2Array(70, 250, 140, 250, 100, 350, 160, 350, 215, 155, 290, 155, 225, 355)])

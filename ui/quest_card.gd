@@ -157,7 +157,7 @@ func _on_completed(id: String) -> void:
 	var title := _t("Q_%s_TITLE" % id.to_upper())
 	if title == "":
 		return
-	var lines := build_reward_lines(q.rewards, _ilmu_gain(id, q))
+	var lines := build_reward_lines(get_node("/root/Game").quest_rewards(q), _ilmu_gain(id, q))
 	var caption := _t("UI_Q_DONE")
 	_queue.append({"caption": caption, "title": title, "lines": lines, "hold": HOLD_DONE})
 

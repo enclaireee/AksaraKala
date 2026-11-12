@@ -27,6 +27,9 @@ Baku (standard) set: 7 vowels (swara), 23 consonants (ngalagena). Basic consonan
 - Each glyph is earned by a deed (a fight, a rescue, an inscription read in place), then the lesson card runs ([story.md](story.md) Pacing rule 4, [quests.md](quests.md) 4). A teacher may name or show the glyph, never hand it over. Na is read off the Arca base (`arca_base`), not taught by an NPC. Practice in the sanggar with the ghost guide is optional (**ASSUMED**).
 - Zone 1 and 2 teach 4 glyphs each; Ombak (Jawa Ka) is the ninth, earned at the Trial of the Waves.
 
+### Signature aksara (Phase 4g, 2026-11-12, **ASSUMED**)
+A tenth glyph per class, learned only by that class from `SQ-X1` ([quests.md](quests.md) 6.3): Hulubalang Sunda **Ha**, Pamanah Sunda **Pa**, Pendekar Jawa **Pa**, Wiku Jawa **Wa**; Prajurit Jawa **Ga**, Pangangon Sunda **Ba**, Penari Topeng Sunda **Ta**, Dalang Jawa **La**. The rule is "the first letter of your own title", like the name glyphs; a second path takes the first letter of what it carries or is (Galah, Bandring, Topeng, Lakon; Jawa Ta and Jawa Da were tried first and failed the stroke check against Jawa Ha and Jawa Na), because Pa is taken in both scripts. Spells are in section 3, shapes in section 10.
+
 ## 3. Glyph and spell mapping (8 MVP glyphs plus Ombak; La, Ra and Sa are write-only name glyphs, not spells)
 The spell assigned to a letter is a **gameplay assignment**, not a traditional meaning. The codex must say so.
 
@@ -60,12 +63,41 @@ A stroke scoring at least 0.92 is a **Perfect cast**: +12% power (damage, shield
 | Ra | **Macan Penjaga**: a tiger that guards you (fights within 120 px of you) and mends you 1.5% per claw | **Sepasang Elang**: two spirit hawks dive again and again (55% damage each) | **Macan Bayangan**: two fast shadow tigers (60% each) | **Macan Api**: one huge fire tiger, claws burn, it scorches the ground and explodes at the end (36, r56) |
 | Ka (Jawa) | **Pasang Menghantam**: a slow wall of water carries enemies with it and crashes at the end (32, r56) | **Pasang Surut**: the wave goes out, turns, and hits everything again on its way back (x0.8) | **Arus Bawah**: an undertow zone ahead (r52, 2.8 s) pulls foes in, slows them 60% and cuts them (11 per 0.4 s) | **Banjir Aksara**: the wave rolls out in all six directions (the extra five at 60%) |
 
+**Second paths (2026-11-12, **ASSUMED**, **TUNE**).** Each has its own spell too; nothing is shared with the school except the damage multiplier and the cost rule.
+
+| Glyph | Prajurit (lancer) | Pangangon (herder) | Penari Topeng (dancer) | Dalang |
+|-------|-----|-----|-----|-----|
+| Ka (Sunda) | **Lembing Kilat**: a javelin, 28, through everything on the line | **Batu Guntur**: a lobbed boulder lands (40, r40), then rolls 80 px and shoves foes | **Kibas Kipas**: 5 fan blades in a wide cone (12 each, range 110), bleed | **Panah Pasopati**: Arjuna's shadow looses a homing arrow, 34 |
+| Nga | **Pagar Tombak**: 3 planted spears across your front, 7 s (8 per 0.5 s, slow 60%), destroy enemy shots | **Kandang Bambu**: a pen at the aim point (r50, 5 s): slow 70%, pulls to the centre, destroys enemy shots | **Selendang**: the scarf binds a line of 120 px: root 1.8 s, 12 | **Benang Dalang**: strings on the 4 nearest foes within 120 px: root 2.2 s, then a blast of 14 on each |
+| Ca (Sunda) | **Sapuan Galah**: a sweep in front only (r60), 40, big shove | **Putar Bandring**: 8 stones fly out in every direction (18 each, pierce 1) | **Topeng Klana**: burst r64, 46, then 6 s of +20% damage | **Gara-gara**: 0.8 s telegraph, then the biggest burst: r96, 62 |
+| Ha | **Sumpah Prajurit**: heal 15%; for 8 s each thrust that lands heals 3% | **Tembang Suling**: a song follows you 6 s (r70): heals 5% per second, slows foes 50% | **Tari Panji**: heal 4% per Wirama stack (up to 32%), clears ailments | **Suluk Pangruwat**: heal 15%; for 6 s damage is paid from Sakti first |
+| Na | **Terjang Tombak**: a 140 px charge, 30 to all it passes, pins the last foe 1.2 s | **Tunggang Kerbau**: a 150 px trample, 26, shoves foes aside | **Langkah Kembang**: three 40 px zigzag steps, 16 each, cannot be hit; each hit gives Wirama | **Cakil Menerjang**: a puppet charges 130 px for you (36); you do not move |
+| Ca (Jawa) | **Gelar Perang**: 12 s: +40% reach, +20% damage, no stagger | **Napas Padang**: 12 s: actions cost no stamina, +25% move speed | **Gamelan Bertalu**: 12 s: Wirama cannot be lost and builds twice as fast, +20% attack speed | **Suluk**: 12 s: +3 Sakti per second, Lakon does not reset |
+| Ra | **Barisan Bayangan**: two spirit spearmen stand at your flanks 10 s and thrust at anything within 50 px (16 per 0.6 s) | **Kerbau Sakti**: one spirit buffalo, slow, charges only (x1.6, double poise, heavy shove) | **Penari Bayangan**: four masks orbit you 10 s (r46, 10 per 0.4 s) | **Punakawan**: four small puppets, 30% damage each, 12 s |
+| Ka (Jawa) | **Ombak Baris**: a narrow wave lance, twice the speed and range, 50, no shove | **Banjir Sawah**: the wave leaves mud behind it (r50, 4 s, slow 60%) | **Menari di Ombak**: you ride the wave 100 px, cannot be hit | **Ombak Kelir**: the wave pins instead of pushing: root 1.5 s, 36 |
+
+**VERIFY** before shipping: Pasopati as Arjuna's arrow; Buta Cakil; Gara-gara as the upheaval scene; the Punakawan; Klana and Panji as topeng characters; "galah", "selendang", "kandang" are plain words. Code: `spells/path_spells.gd` routes to one file per class (`spells/path_<class>.gd`).
+
 Class spell names show in the cast result ("Ka . Petir Berantai"). Code: class spells that are zones or blasts are built in `spells/spell_variants.gd` from `spells/spell_zone.gd`; the rest live in each spell's scene script and read the caster's class (`bolt.gd` for the spear, `heal.gd`, `dash_strike.gd`, `rally.gd`, `summon.gd`, `ombak.gd`). Spirit scaling and Ingatan still apply. Spells never refill Sakti (Wiku's Fokus Batin gives 15 once). Unit-style numbers stay **TUNE**: play each one.
 
 Notes:
 - **Final glyph: Jawa Ka** (MQ4 4.9, P0 and main path since story v3.1; earned by passing the Trial of the Waves; **ASSUMED**). It completes "ha na ca ra ka", the first line of the Hanacaraka ("there were messengers"), which the epilogue recites, and it is the next letter by the first-letters rule. Kala's fight must stay beatable without it (it breaks the eclipse shield but is not required).
 - "Ca" and "Ka" exist in both scripts. They are different shapes, and the recognizer groups templates by script, so this is fine and also a good culture point.
 - The Boss 1 "light" mechanic reuses Ca (Burst), cast next to the boeh rarang banner: no extra glyph (**ASSUMED**, see [quests.md](quests.md) MQ1).
+
+### Signature spells (Phase 4g, cost 45, **TUNE**)
+One per class, cast only by that class (`SpellVariants`, keys `<glyph>/<class>`). Another class cannot learn the glyph, so there is no base spell.
+
+| Glyph | Class | Spell | Effect |
+|---|---|---|---|
+| Sunda Ha | Hulubalang | Panji Hulubalang | War banner, radius 76, 9 s: 30% less damage taken and no stagger inside; each melee hit adds a shock (14, radius 40) |
+| Sunda Pa | Pamanah | Panah Sakti | One arrow, 90 damage, pierces all, range 420. Eagle Eye applies |
+| Jawa Pa | Pendekar | Seribu Bayangan | Up to 5 foes within 130 px, a stab each (22, bleeds), 0.12 s apart, invincible throughout |
+| Jawa Wa | Wiku | Gema Aksara | 10 s: each other spell repeats once at 50% power after 0.6 s. The echo costs nothing and gives no mastery |
+| Jawa Ga | Prajurit | Supit Urang | Two lines of 4 blasts (20, r30) close on the aim point over 0.5 s; then a zone r50 pins 2 s |
+| Sunda Ba | Pangangon | Giring Kawanan | 5 lanes, 6 steps of blasts (60 once per foe at most per lane, r30), long shove in the aim direction |
+| Jawa La | Dalang | Tancep Kayon | Zone r240, root 3 s (bosses slowed 60%); spell costs x0.5 for 3 s |
+| Sunda Ta | Penari Topeng | Panca Wanda | One mask per second for 5 s: heal 8%; +30% move 5 s; burst 24 r64; stagger r80; burst 60 r90 |
 
 ### Choice effects on spells (Story v5, flags in `Game.flags`)
 Major Choices ([story.md](story.md) "Six Major Choices") modify spell performance directly via `spells/spell_util.gd` (verified in `tests/choice_effects_test.gd`):
@@ -139,6 +171,21 @@ Class changes numbers and delivery, not the glyph set. See [classes.md](classes.
 | Jawa Na | Tail, left arch, down and back up its leg, crossbar into the small loop, big right arch |
 | Jawa Ca | Tail, left bowl, small loop, diagonal down-right, up the stem, top bar, right leg. The small flag left of the stem is left out |
 | Jawa Ra | Small spur, top bar, hook down-left, diagonal down-right, up into the right arch |
+
+**Signature glyphs (traced 2026-11-12, Noto fonts, same method).**
+
+| Glyph | Single stroke (pen never lifts) |
+|-------|----------------------------------|
+| Sunda Ha | A small "7" on the left, slide up to a taller "7" on the right (like Ka, but the first seven is half height and sits low) |
+| Sunda Pa | Top bar, slant down-left, bottom bar right, long slant up-right, then a short bar back left along the top |
+| Jawa Pa | Tail, left arch, down into a bottom bowl, right arch, straight leg down (two arches, no middle retrace) |
+| Jawa Wa | Tail, left arch, bottom bowl, up into a small pointed notch on the left of the right arch, right arch, leg down |
+| Jawa Ga | A hook at the top left, then three legs joined by two arches (leg down, back up, arch, leg down, back up, arch, leg down) |
+| Jawa La | Tail, left arch, leg down and back up, a small arch down into a bottom bowl, right arch, leg down |
+| Sunda Ba | Short top bar to the left, slant down-left, bottom bar right, up to a peak, down, long slant up-right, top bar back left |
+| Sunda Ta | A "Z" (bar, slant down-left, bar), long slant up past the top, back down to a "7" |
+
+Simulation (`python3 glyph_strokes.py`, each signature glyph against the 9 shared glyphs, 300 sloppy drawings): closest template similarity Sunda Ha 0.67 (Sunda Ka), Sunda Pa 0.61 (Sunda Ca), Jawa Pa 0.78 (Jawa Ca), Jawa Wa 0.78 (Jawa Ca, Na). Cast rate 295 to 300 of 300, no misreads. All four pass the rule (similarity at most 0.85, no misreads), so no letter was swapped. Mouse feel is **VERIFY** by hand in `tools/glyph_recorder.tscn`.
 
 **Stroke order: no source found.** A research pass found no published stroke order, start point or direction for any of the 8: school articles list letters only, and handwriting-recognition datasets are images. So the order above is a game design. The codex says "cara menggambar di game ini / how to draw it in this game", never "the traditional stroke order". Open leads: the Kairaga "Panduan Menulis Aksara Sunda" PDF (kairaga.com, 2024) has a "Cara Menulis" section that could not be read; and expert review by a Sundanese and a Javanese teacher.
 

@@ -40,6 +40,13 @@ func _ready() -> void:
 		"seek":
 			_hits_left = 1
 			size = 0.7
+		"sakti":   # Pamanah's Panah Sakti: through everything, Eagle Eye applies
+			speed = 420.0
+			_hits_left = 99
+			size = 1.6
+			if caster.get("tuning") != null:
+				far_damage = roundi(damage * caster.tuning.eagle_mult)
+				far_after = caster.tuning.eagle_range
 	hit_landed.connect(_on_bolt_hit)
 	super()
 	_spr = SpellFX.make("bolt_fly", 4, 16.0)
@@ -61,7 +68,7 @@ func _on_bolt_hit(hb: Hurtbox) -> void:
 		_impale(hb.owner)
 	else:
 		SpellUtil.burn(hb.owner, damage)   # burn_share of the hit, as ticks
-		if _hits_left > 1:
+		if _hits_left > 1 and mode != "sakti":
 			damage = roundi(damage * 0.75)   # the next foe takes less
 	_hits_left -= 1
 	if _hits_left <= 0:

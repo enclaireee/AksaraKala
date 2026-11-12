@@ -8,7 +8,7 @@ const ITEM_DIR := "res://assets/art/items/"
 const COLS := 9
 const STAT_KEYS := {"damage": "UI_DER_ATK", "defense": "UI_DER_DEF", "max_hp": "UI_DER_HP", "move_speed": "UI_BK_SPEED",
 		"stamina_regen": "UI_BK_STA_REGEN", "vit": "UI_STAT_VIT", "end": "UI_STAT_END", "str": "UI_STAT_STR",
-		"dex": "UI_STAT_DEX", "spi": "UI_STAT_SPI"}
+		"dex": "UI_STAT_DEX", "spi": "UI_STAT_SPI", "damage_mult": "UI_DER_ATK", "sakti_gain": "UI_FAV_SAKTI", "smudge": "UI_FAV_SMUDGE"}
 # doll slot positions on the left page (24x24 wells) and the doll point each leader line runs to
 const DOLL := Vector2(72, 24)
 const SLOT_POS := {"weapon": Vector2(16, 64), "armor": Vector2(160, 40), "accessory": Vector2(160, 92)}
@@ -237,6 +237,9 @@ func _item_stats(item: ItemData) -> Dictionary:
 		out["defense"] = float(item.defense)
 	for k in item.bonus:
 		out[k] = float(item.bonus[k])
+	if item.favoured == get_node("/root/Game").class_id:
+		for k in item.favoured_bonus:
+			out[k] = out.get(k, 0.0) + float(item.favoured_bonus[k])
 	return out
 
 
@@ -300,7 +303,11 @@ func _show_card(item: ItemData) -> void:
 	var desc := tr(item.description)
 	if item.mythic and item.lore != "":
 		desc += " " + tr(item.lore)
+	var fav: bool = item.favoured != "" and item.favoured == get_node("/root/Game").class_id
+	if item.favoured != "":
+		desc = tr("UI_FAVOURED") % tr("CLASS_%s_NAME" % item.favoured.to_upper()) + "\n" + desc
 	_card_desc.text = desc
+	_card_desc.add_theme_color_override("font_color", MenuBook.INK_HEAD if fav else MenuBook.INK_DIM)   # ponytail: the whole note lights up, not just the line
 	_card_desc.position.y = 142 + 10 * keys.size() + 4
 
 

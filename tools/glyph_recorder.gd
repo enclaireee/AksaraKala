@@ -2,7 +2,8 @@ extends Control
 ## Dev-only glyph recorder. Pick a glyph, hold left mouse in the box and draw, release, then
 ## S = save as a template, D = discard. "Delete last" removes the newest template. Saves to glyph_dir.
 
-const IDS: Array[String] = ["sunda_ka", "sunda_ga", "sunda_nga", "sunda_ca", "jawa_ha", "jawa_na", "jawa_ca", "jawa_ra", "jawa_ka"]
+const IDS: Array[String] = ["sunda_ka", "sunda_ga", "sunda_nga", "sunda_ca", "jawa_ha", "jawa_na", "jawa_ca", "jawa_ra", "jawa_ka",
+	"sunda_ha", "sunda_pa", "jawa_pa", "jawa_wa", "jawa_ga", "sunda_ba", "sunda_ta", "jawa_la"]
 const MIN_LEN := 24.0
 const BOX := Rect2(140, 35, 200, 200)
 

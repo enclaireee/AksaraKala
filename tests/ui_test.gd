@@ -61,7 +61,7 @@ func run() -> void:
 	var cs: Node = load("res://ui/class_select.tscn").instantiate()
 	root.add_child(cs)
 	await frames(2)
-	check(cs.cards.size() == 4, "class select shows 4 cards, got %d" % cs.cards.size())
+	check(cs.cards.size() == 8, "class select shows 8 cards, got %d" % cs.cards.size())
 	cs.queue_free()
 
 	# Toasts: one at a time, 3 s each.

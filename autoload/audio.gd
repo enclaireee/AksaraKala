@@ -51,7 +51,9 @@ const SURFACE_ZONE := {"ts_kawah": "stone", "ts_kawah_2": "stone", "mt_candi": "
 		"kg_penjara": "stone", "mt_pasar": "grass", "sk_nelayan": "sand", "gk_mulut": "stone"}
 ## Glyph id -> spell sound (spells.md 3).
 const SPELL_SFX := {"sunda_ka": "bolt", "sunda_ga": "ward", "sunda_nga": "bind", "sunda_ca": "burst", "jawa_ha": "heal",
-		"jawa_na": "dash", "jawa_ca": "rally", "jawa_ra": "summon", "jawa_ka": "ombak"}
+		"jawa_na": "dash", "jawa_ca": "rally", "jawa_ra": "summon", "jawa_ka": "ombak",
+		"sunda_ha": "rally", "sunda_pa": "bolt", "jawa_pa": "dash", "jawa_wa": "rally",
+		"jawa_ga": "burst", "sunda_ba": "summon", "sunda_ta": "rally", "jawa_la": "bind"}
 ## Memory scene ids that get the ruwatan hymn instead of the shadow-play music.
 const RUWATAN_MEMORIES := ["k0_ruwatan", "k10_murwakala"]
 ## Minimum seconds between two plays of the same sound (default 0.03).

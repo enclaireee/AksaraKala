@@ -123,23 +123,23 @@ ITEM_LONTAR_KUNO_DESC,Goresan yang kabur lebih mudah terbaca (ambang 0.65 ke 0.6
 ITEM_LONTAR_KUNO_LORE,Naskah daun lontar tua dari pustaka desa.,An old palm-leaf manuscript from the village archive.
 CLASS_LANCER_DESC,"Prajurit barisan dari alun-alun keraton.\nMenjaga jarak dengan tombak; tusukannya menjangkau jauh.","A line soldier from the palace square.\nHolds the distance with a tombak; the thrust reaches far."
 CLASS_LANCER_NAME,Prajurit,Prajurit
-CLASS_LANCER_PASSIVE,Barisan Rapat,Closed Rank
-CLASS_LANCER_PASSIVE_DESC,Menerima 12% lebih sedikit damage.,Takes 12% less damage.
+CLASS_LANCER_PASSIVE,Kuda-kuda,Kuda-kuda
+CLASS_LANCER_PASSIVE_DESC,"Diam sejenak untuk memasang kuda-kuda: damage diterima -25%, tak goyah oleh pukulan ringan, tusukan berikutnya +30%. Bergerak membatalkannya.","Stand still a moment to brace: 25% less damage taken, light hits do not stagger, the next thrust +30%. Moving breaks it."
 CLASS_LANCER_ROLE,Penombak Keraton,Palace Spearman
 CLASS_HERDER_DESC,"Anak gembala dari padang rumput.\nKakinya ringan, batu bandringnya jarang meleset.","A herder from the open grassland.\nLight on the feet; the bandring stone seldom misses."
 CLASS_HERDER_NAME,Pangangon,Pangangon
-CLASS_HERDER_PASSIVE,Kaki Padang,Field Legs
-CLASS_HERDER_PASSIVE_DESC,Bergerak 10% lebih cepat. Stamina pulih 15% lebih cepat.,Moves 10% faster. Stamina recovers 15% faster.
+CLASS_HERDER_PASSIVE,Batu Pantul,Skipping Stone
+CLASS_HERDER_PASSIVE_DESC,"Batu bandring memantul ke satu musuh lain di dekatnya (60% damage) dan lebih menggoyahkan. Bergerak 10% lebih cepat.","A sling stone skips to one more foe nearby (60% damage) and staggers harder. Moves 10% faster."
 CLASS_HERDER_ROLE,Gembala Padang,Herder
 CLASS_DANCER_DESC,"Penari topeng dari panggung pesisir.\nSepasang kipas, langkah berirama, pukulan penutup yang tajam.","A mask dancer from the coastal stage.\nTwin fans, measured steps, a sharp closing blow."
 CLASS_DANCER_NAME,Penari Topeng,Penari Topeng
 CLASS_DANCER_PASSIVE,Wirama,Wirama
-CLASS_DANCER_PASSIVE_DESC,Menyerang 12% lebih cepat. Pukulan penutup +25% damage.,Attacks 12% faster. The finisher deals +25% damage.
+CLASS_DANCER_PASSIVE_DESC,"Tiap pukulan yang kena menambah 1 Wirama (maks 8): serangan dan langkah makin cepat. Terluka menghapus semuanya. Di 8, pukulan penutup melempar gelombang kipas.","Each hit landed adds 1 Wirama (max 8): faster attacks and steps. Getting hurt drops it all. At 8 the finisher throws a fan wave."
 CLASS_DANCER_ROLE,Penari Kipas,Mask Dancer
 CLASS_DALANG_DESC,"Juru cerita di balik kelir.\nKayon di tangan; bayangan menurut pada suaranya.","The storyteller behind the screen.\nKayon in hand; shadows answer the voice."
 CLASS_DALANG_NAME,Dalang,Dalang
-CLASS_DALANG_PASSIVE,Suluk,Suluk
-CLASS_DALANG_PASSIVE_DESC,"Sakti terisi 1,35x lebih cepat.",Sakti fills 1.35x faster.
+CLASS_DALANG_PASSIVE,Lakon,Lakon
+CLASS_DALANG_PASSIVE_DESC,"Mantra yang berbeda dari dua mantra terakhirmu +15% kekuatan, sampai +30%. Mengulang aksara meresetnya. Sakti terisi 1,35x lebih cepat.","A spell different from your last two gets +15% power, up to +30%. Repeating an aksara resets it. Sakti fills 1.35x faster."
 CLASS_DALANG_ROLE,Juru Wayang,Shadow Puppeteer
 ITEM_TOMBAK_PRAJURIT_DESC,"Tusukan panjang dan sempit, lebih ringan dari tombak perang.","A long, narrow thrust; lighter than a war spear."
 ITEM_TOMBAK_PRAJURIT_NAME,Tombak Prajurit,Soldier's Tombak
@@ -149,3 +149,75 @@ ITEM_BANDRING_DESC,"Tali pelontar batu. Lambat diputar, keras menghantam.","A st
 ITEM_BANDRING_NAME,Bandring,Bandring
 ITEM_KAYON_DESC,Gunungan wayang bertangkai. Melontar bayangan bercahaya.,A wayang gunungan on a staff. Casts a bolt of lit shadow.
 ITEM_KAYON_NAME,Kayon,Kayon
+SPELL_SUNDA_HA_NAME,Panji Hulubalang,Captain's Banner
+SPELL_SUNDA_PA_NAME,Panah Sakti,Spirit Arrow
+SPELL_JAWA_PA_NAME,Seribu Bayangan,Thousand Shadows
+SPELL_JAWA_WA_NAME,Gema Aksara,Echo of Letters
+SPELL_JAWA_GA_NAME,Supit Urang,Supit Urang
+SPELL_SUNDA_BA_NAME,Giring Kawanan,Drive the Herd
+SPELL_SUNDA_TA_NAME,Panca Wanda,Panca Wanda
+SPELL_JAWA_LA_NAME,Tancep Kayon,Tancep Kayon
+ITEM_PARANG_PERANG_NAME,Parang Perang,Parang Perang
+ITEM_PARANG_PERANG_DESC,"Parang lebar untuk medan laga. Ayunannya lebih cepat dari pedang besar.","A broad war parang. It swings quicker than a broadsword."
+ITEM_TOMBAK_PANJI_NAME,Tombak Panji,Tombak Panji
+ITEM_TOMBAK_PANJI_DESC,"Tombak panjang berpanji. Dibawa orang yang berdiri paling depan.","A long spear with a pennant. Carried by the one who stands in front."
+ITEM_ZIRAH_SISIK_NAME,Zirah Sisik,Zirah Sisik
+ITEM_ZIRAH_SISIK_DESC,"Zirah dari sisik logam yang dijahit rapat.","Armor of metal scales sewn close together."
+ITEM_GELANG_BAJA_NAME,Gelang Baja,Gelang Baja
+ITEM_GELANG_BAJA_DESC,"Gelang baja tebal. Bisa menahan sabetan.","A thick steel bracelet. It can turn a cut."
+ITEM_BUSUR_PETUNG_NAME,Busur Petung,Busur Petung
+ITEM_BUSUR_PETUNG_DESC,"Busur dari bambu petung. Ringan dan cepat dilepas.","A bow of petung bamboo. Light and quick to loose."
+ITEM_GENDEWA_TANDUK_NAME,Gendewa Tanduk,Gendewa Tanduk
+ITEM_GENDEWA_TANDUK_DESC,"Gendewa berlapis tanduk kerbau. Tarikannya berat, panahnya jauh.","A bow backed with buffalo horn. A heavy draw and a long shot."
+ITEM_KAMPRET_PEMBURU_NAME,Kampret Pemburu,Kampret Pemburu
+ITEM_KAMPRET_PEMBURU_DESC,"Baju kampret longgar milik pemburu. Enak dipakai berlari.","A hunter's loose kampret shirt. Easy to run in."
+ITEM_KANTONG_PANAH_NAME,Kantong Panah,Kantong Panah
+ITEM_KANTONG_PANAH_DESC,"Kantong panah dari kulit. Tangan tak perlu mencari-cari.","A leather quiver. The hand never has to search."
+ITEM_GOLOK_PENDEK_NAME,Golok Pendek,Golok Pendek
+ITEM_GOLOK_PENDEK_DESC,"Golok pendek yang mudah disembunyikan di balik sarung.","A short golok, easy to hide under a sarong."
+ITEM_KUJANG_KEMBAR_NAME,Kujang Kembar,Kujang Kembar
+ITEM_KUJANG_KEMBAR_DESC,"Sepasang kujang kecil, rekaan kisah ini. Kujang yang asli adalah pusaka, bukan senjata berpasangan.","A pair of small kujang, invented for this tale. The real kujang is an heirloom, not a paired weapon."
+ITEM_PANGSI_HITAM_NAME,Pangsi Hitam,Pangsi Hitam
+ITEM_PANGSI_HITAM_DESC,"Baju dan celana pangsi hitam. Longgar untuk bergerak.","A black pangsi shirt and trousers. Loose for moving."
+ITEM_SABUK_MERAH_NAME,Sabuk Merah,Sabuk Merah
+ITEM_SABUK_MERAH_DESC,"Sabuk kain merah yang dililit kencang di pinggang.","A red cloth belt wound tight at the waist."
+ITEM_TONGKAT_GENTA_NAME,Tongkat Genta,Tongkat Genta
+ITEM_TONGKAT_GENTA_DESC,"Tongkat dengan genta kecil di ujungnya. Tiap denting mengumpulkan Sakti.","A staff with a small bell at its head. Each chime gathers Sakti."
+ITEM_TONGKAT_CENDANA_NAME,Tongkat Cendana,Tongkat Cendana
+ITEM_TONGKAT_CENDANA_DESC,"Tongkat kayu cendana. Wanginya menenangkan pikiran.","A sandalwood staff. Its scent settles the mind."
+ITEM_JUBAH_WIKU_NAME,Jubah Wiku,Jubah Wiku
+ITEM_JUBAH_WIKU_DESC,"Jubah sederhana seorang wiku.","The plain robe of a wiku."
+ITEM_GENITRI_NAME,Genitri,Genitri
+ITEM_GENITRI_DESC,"Untaian biji genitri untuk menghitung doa.","A string of genitri seeds for counting prayers."
+ITEM_TOMBAK_GALAH_NAME,Tombak Galah,Tombak Galah
+ITEM_TOMBAK_GALAH_DESC,"Tombak bergagang galah bambu. Jangkauannya paling jauh.","A spear on a bamboo pole. The longest reach there is."
+ITEM_TOMBAK_BENDERA_NAME,Tombak Bendera,Tombak Bendera
+ITEM_TOMBAK_BENDERA_DESC,"Tombak pembawa bendera barisan. Selama ia tegak, barisan bertahan.","The spear that carries the line's flag. While it stands, the line holds."
+ITEM_BAJU_KEPRAJURITAN_NAME,Baju Keprajuritan,Baju Keprajuritan
+ITEM_BAJU_KEPRAJURITAN_DESC,"Busana prajurit keraton, tebal dan berlapis.","The dress of a palace soldier, thick and layered."
+ITEM_TAMENG_ROTAN_NAME,Tameng Rotan,Tameng Rotan
+ITEM_TAMENG_ROTAN_DESC,"Tameng kecil dari anyaman rotan. Ringan di lengan.","A small shield of woven rattan. Light on the arm."
+ITEM_BANDRING_KULIT_NAME,Bandring Kulit,Bandring Kulit
+ITEM_BANDRING_KULIT_DESC,"Bandring bertali kulit. Cepat diputar, cepat dilepas.","A sling with leather cords. Quick to whirl and quick to loose."
+ITEM_BANDRING_IJUK_NAME,Bandring Ijuk,Bandring Ijuk
+ITEM_BANDRING_IJUK_DESC,"Bandring dari tali ijuk yang dipilin kuat. Batunya terbang jauh.","A sling of tight-twisted palm fibre. Its stone flies far."
+ITEM_SARUNG_GEMBALA_NAME,Sarung Gembala,Sarung Gembala
+ITEM_SARUNG_GEMBALA_DESC,"Sarung yang diselempangkan penggembala. Hangat di padang.","A sarong a herder wears slung across the body. Warm out on the field."
+ITEM_SULING_BAMBU_NAME,Suling Bambu,Suling Bambu
+ITEM_SULING_BAMBU_DESC,"Suling bambu teman menggembala. Meniupnya melegakan napas.","A bamboo flute, a herder's company. Playing it eases the breath."
+ITEM_KIPAS_BAMBU_NAME,Kipas Bambu,Kipas Bambu
+ITEM_KIPAS_BAMBU_DESC,"Kipas berbilah bambu. Tepinya lebih tajam dari yang terlihat.","A fan with bamboo blades. Its edge is sharper than it looks."
+ITEM_KIPAS_KEMBAR_NAME,Kipas Kembar,Kipas Kembar
+ITEM_KIPAS_KEMBAR_DESC,"Dua kipas untuk dua tangan. Satu membuka, satu menutup.","Two fans for two hands. One opens, one closes."
+ITEM_BAJU_PENARI_NAME,Baju Penari,Baju Penari
+ITEM_BAJU_PENARI_DESC,"Busana tari yang ringan. Dibuat untuk bergerak.","A light dance costume. Made for moving."
+ITEM_GELANG_KAKI_NAME,Gelang Kaki,Gelang Kaki
+ITEM_GELANG_KAKI_DESC,"Gelang kaki bergenta. Tiap langkah punya bunyi.","Ankle bells. Every step has a sound."
+ITEM_CEMPALA_NAME,Cempala,Cempala
+ITEM_CEMPALA_DESC,"Pemukul kayu sang dalang. Ketukannya memberi aba-aba pada gamelan.","The dalang's wooden knocker. Its raps cue the gamelan."
+ITEM_KAYON_GAPURAN_NAME,Kayon Gapuran,Kayon Gapuran
+ITEM_KAYON_GAPURAN_DESC,"Kayon bergambar gapura. Membuka dan menutup setiap lakon.","A kayon painted with a gate. It opens and closes every lakon."
+ITEM_BESKAP_DALANG_NAME,Beskap Dalang,Beskap Dalang
+ITEM_BESKAP_DALANG_DESC,"Beskap yang dikenakan dalang semalam suntuk.","The beskap a dalang wears through the whole night."
+ITEM_BLENCONG_NAME,Blencong,Blencong
+ITEM_BLENCONG_DESC,"Lampu minyak di balik kelir. Tanpa cahayanya tak ada bayangan.","The oil lamp behind the screen. Without its light there is no shadow."

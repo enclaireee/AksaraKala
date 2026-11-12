@@ -482,6 +482,12 @@ To prevent side content from feeling repetitive, side quests are divided into **
 ### 6.2 SQ-D2 "Pustaka" (the codex keeper, Nyai Rukmi)
 - 25% codex: Ilmu M; 50%: **Lontar Kuno**; 75%: Ilmu L; 100%: keeper's blessing and credits tribute.
 
+### 6.3 SQ-X1 "Aksara Pusaka" (the class aksara, Nyai Rukmi; Phase 4g, **ASSUMED**)
+- Offered by Nyai Rukmi once `MQ1` is done. She has one palm leaf per calling and gives it only to a hand that already writes.
+- Step 1: learn the eight shared aksara (`glyph_learned`, count 8; ones already known count). Step 2: return to Nyai Rukmi.
+- Reward: the lesson card for your class's signature aksara (first paths `learn:sunda_ha` / `sunda_pa` / `jawa_pa` / `jawa_wa`; second paths `jawa_ga` / `sunda_ba` / `sunda_ta` / `jawa_la`; chosen by the dialogue cond `class:<id>` on the real class id) and the class weapon (Tombak Panji / Gendewa Tanduk / Kujang Kembar / Tongkat Cendana; a second path gets its sibling: Tombak Bendera / Bandring Ijuk / Kipas Kembar / Kayon Gapuran), plus the usual side-quest XP.
+- Not in the pacing model: no travel, no new area.
+
 ---
 
 ## 7. Quest & Narrative System (Technical Architecture)

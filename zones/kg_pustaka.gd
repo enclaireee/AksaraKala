@@ -49,7 +49,7 @@ const SPOTS := {
 	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nyai_sekar", "cond": "flag:mqg_4"}, "tile": "_"},   # NPC Nyai Sekar, royal archivist (MQG g.6 `talked_to:nyai_sekar`, sets `mqg_ar1`; hub; her closing lines after the grate, g.16)
 	"P": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "archive_mirror_1", "cond": "flag:mqg_ar1"}, "tile": "_"},   # prop, archive mirror 1 (MQG g.7, turn the mirrors in order 1-2-3; wrong order shows a hint)
 	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "scraped_genealogy", "cond": "flag:archive_mirror_3"}, "tile": "_"},   # clue scraped_genealogy, King Nagawiru's scraped lontar, readable once the third mirror throws its light (MQG g.7, `clue_examined:scraped_genealogy`, sets `mqg_ar2`)
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "galuh_chest_pustaka", "item_id": "ilmu:55"}, "tile": "_"},   # chest galuh_chest_pustaka (55 Ilmu)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "galuh_chest_pustaka", "item_id": "jubah_wiku"}, "tile": "_"},   # chest galuh_chest_pustaka class gear `jubah_wiku`, a second path gets its sibling (ASSUMED)
 	"Q": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "archive_mirror_2", "cond": "flag:mqg_ar1"}, "tile": "_"},   # prop, archive mirror 2 (MQG g.7, in order)
 	"R": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "archive_mirror_3", "cond": "flag:mqg_ar1"}, "tile": "_"},   # prop, archive mirror 3 (MQG g.7, in order)
 }

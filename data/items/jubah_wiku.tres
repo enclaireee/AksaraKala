@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/jubah_wiku.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "jubah_wiku"
+title = "ITEM_JUBAH_WIKU_NAME"
+slot = "armor"
+description = "ITEM_JUBAH_WIKU_DESC"
+defense = 1
+bonus = {"spi": 1}
+favoured = "mage"
+favoured_bonus = {"sakti_gain": 0.1}

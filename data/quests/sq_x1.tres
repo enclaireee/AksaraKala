@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_X1_S1_OBJ"
+on = "glyph_learned:*"
+count = 8
+marker = {"zone": "desa_purwa", "id": "nyai_rukmi"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_X1_S2_OBJ"
+on = "talked_to:nyai_rukmi"
+marker = {"zone": "desa_purwa", "id": "nyai_rukmi"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_x1"
+kind = "side"
+type = "errand"
+zone = "desa_purwa"
+size = "M"
+giver = "nyai_rukmi"
+requires = Array[String](["mq1_10"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2")])
+rewards = {"class_glyph": true, "class_items": {"warrior": "tombak_panji", "archer": "gendewa_tanduk", "rogue": "kujang_kembar", "mage": "tongkat_cendana", "lancer": "tombak_bendera", "herder": "bandring_ijuk", "dancer": "kipas_kembar", "dalang": "kayon_gapuran"}}

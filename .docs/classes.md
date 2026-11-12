@@ -24,8 +24,8 @@ Code ids stay `warrior`, `archer`, `rogue`, `mage`; mechanics below are unchange
 - VERIFY (second paths): keraton prajurit dress (kuluk, lurik) on the Prajurit; "Pangangon" and the bandring as a Sundanese herder's sling; Cirebon topeng dress terms (sobrah, kace, ronce) on the Penari Topeng; dalang dress (blangkon, beskap) and the kayon as a held focus (ASSUMED: in wayang it is planted, not carried).
 - Art (redesign 2026-11-12): `tools/gen_hero_sprites.py` draws the in-world sprites as a posed rig in 32x32 cells; `tools/gen_portraits.py` paints the 96x128 class figures (6-frame idle) and the hero's 48x48 dialogue busts `p_hero_<id>[_mood].png` from one figure, so the dialogue face is the class you picked ([assets.md](assets.md) 1).
 
-## Schools (ASSUMED, 2026-11-12)
-A second-path class uses its school's spell set, spell costs and spell damage (`ClassData.school`, read by `SpellUtil.class_id`). It has its own look, stats, starting weapon and passive.
+## Schools (ASSUMED, 2026-11-12, narrowed the same day)
+A school now sets only two numbers for its second path: the spell damage multiplier and the spell cost rule (`ClassData.school`, read by `SpellUtil.school`). Everything else is the class's own: look, stats, starting weapon, mechanic, all eight class spells, signature aksara and favoured gear (user call 2026-11-12: second paths must not be reskins).
 
 | School | First path | Second path |
 |---|---|---|
@@ -93,11 +93,36 @@ Displayed level is calculated as `1 + points spent`, ensuring classes with lower
 - **Spell Modifiers:** spell damage x1.1, all spell costs x0.9. Wiku spells: storm orb, draining vines, rune circle, healing spring, blink bomb, focus (cheaper spells), fire tiger, flood of waves.
 - **Playstyle:** Frequent spellcaster, fragile in melee, relies on rapid aksara execution.
 
-### Second paths (2026-11-12, numbers **TUNE**, `data/combat_tuning.gd`)
-- **Lancer (Prajurit), warrior school.** Passive **Barisan Rapat**: takes 12% less damage. Every hit is a thrust; the tombak outreaches every starting weapon.
-- **Herder (Pangangon), archer school.** Passive **Kaki Padang**: moves 10% faster, stamina recovers 15% faster. The sling stone is slower than an arrow and hits harder.
-- **Dancer (Penari Topeng), rogue school.** Passive **Wirama**: attacks 12% faster, the finisher deals +25% damage. No backstab bonus and no cheaper dodge.
-- **Dalang, mage school.** Passive **Suluk**: Sakti fills 1.35x faster. Sakti capacity stays 100.
+### Second paths (redesign 2026-11-12, **ASSUMED**, numbers **TUNE** in `data/combat_tuning.gd`)
+Each has a mechanic you play around, not a flat bonus, and its own spell for every glyph but Ga ([spells.md](spells.md) 3).
+
+- **Prajurit (lancer).** Fantasy: the palace spearman who holds the line. Mechanic **Kuda-kuda**: stand still 0.5 s to brace. Braced, you take 25% less damage, light hits do not stagger you, and your next thrust deals +30%. Moving breaks the brace. Spells are lines, walls and formations: javelin, spear fence, front sweep, soldier's oath, spear charge, battle array, shadow rank, wave lance.
+- **Pangangon (herder).** Fantasy: the herder of the open field, sling, flute and buffalo. Mechanic **Batu Pantul**: a sling stone bounces to one more foe within 70 px (60% damage) and deals double poise damage. Moves 10% faster. Spells are stones, pens and animals: thunder boulder, bamboo pen, whirling sling, flute song, buffalo ride, field breath, spirit buffalo, paddy flood.
+- **Penari Topeng (dancer).** Fantasy: the mask dancer who must not miss a beat. Mechanic **Wirama**: each hit you land gives one stack (max 8), each worth +3% attack speed and +2% move speed. Being hurt drops all of them. At 8 stacks the finisher also throws a fan wave 60 px ahead. Spells are fans, scarf and masks: fan blades, scarf bind, Klana mask, Panji dance, flower steps, gamelan, shadow dancers, wave dance.
+- **Dalang.** Fantasy: the puppeteer; his shadows act and he does not. Mechanic **Lakon**: a spell different from your last two casts gets +15% power, stacking to +30%; repeating a glyph resets it. Passive **Suluk** stays: Sakti fills 1.35x faster, capacity 100. Spells are puppets and the screen: Pasopati arrow, puppet strings, Gara-gara, Suluk Pangruwat, Cakil's charge, Suluk chant, Punakawan, screen wave.
+- **VERIFY**: "Kuda-kuda" as a spear stance word; "Wirama" as the rhythm term in Cirebon topeng; "Lakon" and "Suluk" as used here; every culture term in the spell names ([spells.md](spells.md) 3).
+
+---
+
+## Signature aksara (Phase 4g, user call 2026-11-12, **ASSUMED**, numbers **TUNE**)
+Each class learns one aksara no other class can learn. For the first paths it is the first letter of the title. Three second-path titles start with P and both Pa are taken, so a second path takes the first letter of what it carries or is (Galah, Bandring, Topeng, Lakon; Jawa Ta and Jawa Da were tried first and failed the stroke check against Jawa Ha and Jawa Na). It is the class's tenth glyph and its strongest spell (cost 45). A player only ever holds their own, so the eight never compete in the recognizer ([spells.md](spells.md) 10).
+
+| Class | Glyph (id) | Spell | Effect |
+|---|---|---|---|
+| Hulubalang | Sunda Ha (`sunda_ha`) | **Panji Hulubalang** | Plants a war banner (radius 76, 9 s). Inside it you take 30% less damage and are not staggered, and every melee hit adds a shock (14, radius 40) |
+| Pamanah | Sunda Pa (`sunda_pa`) | **Panah Sakti** | One charged arrow across the screen, 90 damage, pierces everything. Eagle Eye applies |
+| Pendekar | Jawa Pa (`jawa_pa`) | **Seribu Bayangan** | Marks up to 5 foes within 130 px and stabs each in turn (22 each, bleeds). Untouchable throughout |
+| Wiku | Jawa Wa (`jawa_wa`) | **Gema Aksara** | For 10 s every other spell you cast echoes once at 50% power after 0.6 s |
+| Prajurit | Jawa Ga (`jawa_ga`) | **Supit Urang** | Two lines of spirit spears close on the aim point (8 blasts of 20), then everything in the centre is pinned 2 s. **VERIFY**: supit urang as a battle formation |
+| Pangangon | Sunda Ba (`sunda_ba`) | **Giring Kawanan** | A spirit herd crosses the screen in 5 lanes: 60 damage, carries foes 100 px |
+| Penari Topeng | Sunda Ta (`sunda_ta`) | **Panca Wanda** | Five masks over 5 s, one a second: heal 8%, speed, burst 24, stagger r80, burst 60 r90. **VERIFY**: the five Cirebon masks and the term |
+| Dalang | Jawa La (`jawa_la`) | **Tancep Kayon** | Plants the kayon: every foe within 240 px is frozen 3 s (bosses slowed 60%) and your spells cost half meanwhile. **VERIFY**: tancep kayon |
+
+- Learned from side quest `SQ-X1` "Aksara Pusaka" ([quests.md](quests.md) 6.3). The spell is a gameplay assignment, and the codex says so.
+- Batara Kala's cast-sequence phase never asks for a signature glyph.
+
+## Favoured gear (Phase 4g, **ASSUMED**)
+Thirty-two common items, four per class ([items.md](items.md) "Class-favoured gear"). Anyone can equip them. The favoured class also gets one small extra bonus (`ItemData.favoured`, `favoured_bonus`). No gear is class-locked. A class chest or `SQ-X1` gives a second path its own piece in place of its school's (`Game.SIBLING_ITEM`).
 
 ---
 

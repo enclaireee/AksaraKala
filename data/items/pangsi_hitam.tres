@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/pangsi_hitam.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "pangsi_hitam"
+title = "ITEM_PANGSI_HITAM_NAME"
+slot = "armor"
+description = "ITEM_PANGSI_HITAM_DESC"
+defense = 2
+bonus = {"move_speed": 0.08}
+favoured = "rogue"
+favoured_bonus = {"stamina_regen": 0.1}

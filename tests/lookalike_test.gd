@@ -20,7 +20,7 @@ func _initialize() -> void:
 
 	var dir := "user://lookalike_test"
 	DirAccess.make_dir_recursive_absolute(dir)
-	for id in IDS:
+	for id: String in load("res://tools/glyph_recorder.gd").IDS:   # every glyph the recorder lists, signatures too
 		DirAccess.copy_absolute("res://data/glyphs/%s.tres" % id, "%s/%s.tres" % [dir, id])
 	var rec: Control = load("res://tools/glyph_recorder.gd").new()
 	rec.glyph_dir = dir

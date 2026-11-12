@@ -29,6 +29,10 @@ class_name ItemData extends Resource
 @export var defense := 0                 # 5% less damage per point (rpg.md 5)
 ## Keys: vit, end, str, dex, spi (stat points) and max_hp, move_speed, stamina_regen (flat or fraction).
 @export var bonus := {}
+## Class-favoured gear (items.md): this class id also gets favoured_bonus. Same keys as bonus, plus
+## damage_mult (weapon and spell damage fraction) and sakti_gain (Sakti gain fraction).
+@export var favoured := ""
+@export var favoured_bonus := {}
 
 
 func is_melee() -> bool:

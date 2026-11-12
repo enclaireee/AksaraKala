@@ -14,6 +14,7 @@ const NAMES := {
 	"jawa_na/warrior": "Terjang Banteng", "jawa_na/archer": "Lompat Mundur", "jawa_na/rogue": "Tebas Bayangan", "jawa_na/mage": "Langkah Kabut",
 	"jawa_ca/warrior": "Seruan Perang", "jawa_ca/archer": "Fokus Pemburu", "jawa_ca/rogue": "Langkah Silat", "jawa_ca/mage": "Fokus Batin",
 	"jawa_ra/warrior": "Macan Penjaga", "jawa_ra/archer": "Sepasang Elang", "jawa_ra/rogue": "Macan Bayangan", "jawa_ra/mage": "Macan Api",
+	"sunda_ha/warrior": "Panji Hulubalang", "sunda_pa/archer": "Panah Sakti", "jawa_pa/rogue": "Seribu Bayangan", "jawa_wa/mage": "Gema Aksara",
 	"jawa_ka/warrior": "Pasang Menghantam", "jawa_ka/archer": "Pasang Surut", "jawa_ka/rogue": "Arus Bawah", "jawa_ka/mage": "Banjir Aksara",
 }
 const HANDLED := [
@@ -21,11 +22,20 @@ const HANDLED := [
 	"sunda_nga/warrior", "sunda_nga/archer", "sunda_nga/rogue", "sunda_nga/mage",
 	"sunda_ca/warrior", "sunda_ca/archer", "sunda_ca/rogue", "sunda_ca/mage",
 	"jawa_ka/rogue",
+	"sunda_ha/warrior", "sunda_pa/archer", "jawa_pa/rogue", "jawa_wa/mage",
 ]
+## Signature aksara: glyph -> the only class that can learn it (classes.md).
+const SIGNATURE := {"sunda_ha": "warrior", "sunda_pa": "archer", "jawa_pa": "rogue", "jawa_wa": "mage",
+	"jawa_ga": "lancer", "sunda_ba": "herder", "sunda_ta": "dancer", "jawa_la": "dalang"}
+const ECHO_DELAY := 0.6   # Gema Aksara, TUNE
+const ECHO_POWER := 0.5
 
 
 ## The class spell's name for the result label ("" for Ga, for no class, or for an unknown pair).
 static func title(glyph_id: String, cls: String) -> String:
+	var kit = _kit(cls)
+	if kit != null:
+		return kit.NAMES.get(glyph_id, "")
 	return NAMES.get("%s/%s" % [glyph_id, cls], "")
 
 
@@ -33,13 +43,17 @@ static func title(glyph_id: String, cls: String) -> String:
 static func cast(spell: SpellData, caster: Node2D, aim: Vector2, power: float, perfect: bool) -> bool:
 	var key := "%s/%s" % [spell.glyph_id, SpellUtil.class_id(caster)]
 	var par := caster.get_parent()
-	if not HANDLED.has(key) or par == null:
+	var kit = _kit(SpellUtil.class_id(caster))
+	if par == null or not (kit.NAMES.has(spell.glyph_id) if kit != null else HANDLED.has(key)):
 		return false
 	power *= SpellUtil.perfect_mult(perfect)
 	var k := SpellUtil.damage(caster) * power
 	var tint := SpellUtil.tint(spell.glyph_id, caster)
 	var d := aim.normalized() if aim != Vector2.ZERO else Vector2.RIGHT
 	var pos := caster.global_position
+	if kit != null:
+		kit.cast(spell, caster, par, d, pos, tint, k, power)
+		return true
 	match key:
 		"sunda_ka/archer": _rain(spell, caster, par, d, pos, tint, k)
 		"sunda_ka/rogue": _chain(spell, caster, par, d, pos, tint, k)
@@ -53,7 +67,21 @@ static func cast(spell: SpellData, caster: Node2D, aim: Vector2, power: float, p
 		"sunda_ca/rogue": _spin(caster, par, pos, tint, k)
 		"sunda_ca/mage": _circle(caster, par, pos, tint, k)
 		"jawa_ka/rogue": _vortex(spell, caster, par, d, pos, tint, k)
+		"sunda_ha/warrior": _panji(spell, caster, par, pos, tint, power)
+		"sunda_pa/archer": _sakti_arrow(spell, caster, par, d, pos, power)
+		"jawa_pa/rogue": _bayangan(spell, caster, par, pos, tint, k)
+		"jawa_wa/mage": _gema(spell, caster, par, pos, tint, power)
 	return true
+
+
+## The second paths have a whole kit of their own, one file each (classes.md "Second paths").
+static func _kit(cls: String) -> GDScript:
+	match cls:
+		"lancer": return PathLancer
+		"herder": return PathHerder
+		"dancer": return PathDancer
+		"dalang": return PathDalang
+	return null
 
 
 # ---- helpers ------------------------------------------------------------------------------------------
@@ -311,3 +339,87 @@ static func _vortex(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos
 	z.slow = 0.4
 	z.damage = roundi(spell.power * 0.25 * k)
 	par.add_child(z)
+
+
+# ---- Signature aksara (classes.md) ------------------------------------------------------------------------
+
+## Hulubalang, Sunda Ha: a war banner. Inside it you take 30% less, are not staggered, and melee hits shock.
+static func _panji(spell: SpellData, caster: Node2D, par: Node, pos: Vector2, tint: Color, power: float) -> void:
+	var z := _zone(caster, pos, tint)
+	z.radius = spell.radius
+	z.life = spell.duration
+	z.tick = 0.2
+	var inside := func() -> bool:
+		return caster.global_position.distance_to(z.global_position) <= z.radius
+	var g := SpellUtil._game()
+	var set_buff := func(on: bool) -> void:
+		caster.set_meta("panji", on)   # player._on_hurt reads it: no stagger
+		if caster.get("health") != null:
+			caster.health.reduction = (g.bonus("defense") if g else 0.0) + (0.3 if on else 0.0)   # TUNE
+	z.on_tick = func(_z: SpellZone) -> void: set_buff.call(inside.call())
+	var shock := func(hb: Hurtbox) -> void:
+		if inside.call():
+			blast(caster, hb.global_position, spell.glyph_id, spell.power, 40.0, power)
+	var melee: Variant = caster.get("melee_hitbox")
+	if melee != null:
+		melee.hit_landed.connect(shock)
+	z.tree_exiting.connect(func() -> void:
+		if is_instance_valid(caster):
+			set_buff.call(false)
+			if melee != null and melee.hit_landed.is_connected(shock):
+				melee.hit_landed.disconnect(shock))
+	_replace(caster.get_tree(), "panji", z)
+	par.add_child(z)
+	set_buff.call(true)
+
+
+## Pamanah, Sunda Pa: one charged arrow that goes through everything (bolt.gd mode "sakti").
+static func _sakti_arrow(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos: Vector2, power: float) -> void:
+	var kd := SpellData.for_glyph("sunda_ka")
+	if kd == null or kd.scene == null:
+		return
+	var s: Bolt = kd.scene.instantiate()
+	s.mode = "sakti"
+	s.caster = caster
+	s.data = spell
+	s.power = power
+	s.reach = 420.0
+	s.direction = d
+	s.global_position = pos
+	par.add_child(s)
+
+
+## Pendekar, Jawa Pa: a stab for each of up to five foes in reach, one after another, untouchable throughout.
+static func _bayangan(spell: SpellData, caster: Node2D, par: Node, pos: Vector2, tint: Color, k: float) -> void:
+	var foes := caster.get_tree().get_nodes_in_group("enemy").filter(func(e: Node) -> bool:
+		return e is Node2D and (e as Node2D).global_position.distance_to(pos) <= spell.radius)
+	foes.sort_custom(func(a: Node2D, b: Node2D) -> bool:
+		return a.global_position.distance_squared_to(pos) < b.global_position.distance_squared_to(pos))
+	foes = foes.slice(0, 5)
+	var dmg := roundi(spell.power * k)
+	if caster.get("health") != null:
+		caster.health.set_invincible(0.12 * foes.size() + 0.3)
+	SpellFX.burst(par, "hit_burst", 5, pos, tint, 1.2, 20.0)
+	for i in foes.size():
+		var e: Node2D = foes[i]
+		later(caster, 0.12 * i, func() -> void:
+			if not is_instance_valid(e):
+				return
+			var to := (e.global_position - caster.global_position).normalized()
+			caster.global_position = e.global_position + to * 22.0   # the far side of him, like Tebas Bayangan
+			SpellUtil.strike(e, dmg)
+			SpellUtil.burn(e, dmg)   # a bleed
+			var cut := SpellFX.burst(par, "dash_slash", 4, e.global_position, tint, 1.0, 24.0)
+			if cut:
+				cut.rotation = to.angle())
+
+
+## Wiku, Jawa Wa: for a while every other spell echoes once (CastController reads the meta).
+static func _gema(spell: SpellData, caster: Node2D, par: Node, pos: Vector2, tint: Color, power: float) -> void:
+	caster.set_meta("gema_until", Time.get_ticks_msec() + int(spell.duration * power * 1000.0))
+	SpellFX.burst(par, "cast_sigil", 6, pos, tint, 1.4, 10.0)
+
+
+## True while the caster's spells echo.
+static func echoing(caster: Node) -> bool:
+	return Time.get_ticks_msec() < int(caster.get_meta("gema_until", 0))

@@ -8,7 +8,7 @@ signal read(result: Dictionary)   # every recognized stroke: {glyph, score, powe
 @export var overlay: CastOverlay
 @export var practice := false   # sanggar: no sakti gate, no cost (spells.md 9)
 
-const KICK := {"sunda_ca": 2.5, "jawa_ka": 2.0, "jawa_ra": 1.5, "jawa_na": 1.5}   # camera shake px per glyph
+const KICK := {"sunda_ca": 2.5, "jawa_ka": 2.0, "jawa_ra": 1.5, "jawa_na": 1.5, "sunda_pa": 2.0, "jawa_pa": 1.5}   # camera shake px per glyph
 
 @onready var player: Player = get_parent()
 
@@ -75,7 +75,7 @@ func start() -> bool:
 
 ## Mage and Rogue start at 1 less: their cheapest spell costs 14 (spells.md 9). ASSUMED: min - 1.
 func _min_sakti() -> float:
-	var c := SpellUtil.class_id(player)
+	var c := SpellUtil.school(player)
 	return player.tuning.cast_min_sakti - (1.0 if c == "mage" or c == "rogue" else 0.0)
 
 
@@ -103,6 +103,8 @@ func release() -> void:
 	else:
 		_exit_cast_mode()
 		var perfect: bool = r.score >= SpellUtil.PERFECT_SCORE and power >= 1.0
+		if player.has_method("lakon"):
+			power *= player.lakon(glyph.id)   # Dalang: a fresh glyph hits harder
 		var variant := SpellVariants.title(glyph.id, SpellUtil.class_id(player))   # the class's own spell, if it has one
 		overlay.finish(true, "%s · %s" % [glyph.latin.capitalize(), variant if variant != "" else tr(spell.title)], {
 			glyph_id = glyph.id, perfect = perfect, power = power, cost = SpellUtil.cost(player, spell),
@@ -112,6 +114,10 @@ func release() -> void:
 			_kick(spell, perfect)   # built from zones and blasts: no scene to spawn
 		else:
 			_spawn(spell, power, perfect)
+		if SpellVariants.echoing(player) and not SpellVariants.SIGNATURE.has(glyph.id):   # Gema Aksara: one free echo
+			SpellVariants.later(player, SpellVariants.ECHO_DELAY, func() -> void:
+				if not SpellVariants.cast(spell, player, aim, power * SpellVariants.ECHO_POWER, false):
+					_spawn(spell, power * SpellVariants.ECHO_POWER))
 		get_node("/root/Events").spell_cast.emit(glyph.id, power)
 
 
@@ -133,6 +139,8 @@ func _lock() -> void:
 
 
 func _spawn(spell: SpellData, power: float, perfect := false) -> void:
+	if spell.scene == null:
+		return   # a signature spell in the wrong hands: nothing happens
 	var s: Node2D = spell.scene.instantiate()
 	s.caster = player
 	s.data = spell

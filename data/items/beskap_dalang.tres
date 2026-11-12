@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/beskap_dalang.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "beskap_dalang"
+title = "ITEM_BESKAP_DALANG_NAME"
+slot = "armor"
+description = "ITEM_BESKAP_DALANG_DESC"
+defense = 1
+bonus = {"spi": 1}
+favoured = "dalang"
+favoured_bonus = {"sakti_gain": 0.1}

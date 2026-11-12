@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+; Signature aksara of the Wiku (classes.md). Stroke from .docs/glyph_strokes.py SIGNATURE; the order is a game design.
+id = "jawa_wa"
+aksara = "jawa"
+latin = "wa"
+templates = Array[PackedVector2Array]([PackedVector2Array(125, 372, 92, 355, 85, 325, 85, 250, 95, 222, 130, 212, 165, 222, 177, 250, 177, 330, 187, 358, 215, 370, 245, 358, 262, 330, 265, 240, 212, 230, 265, 222, 305, 218, 328, 245, 328, 375)])

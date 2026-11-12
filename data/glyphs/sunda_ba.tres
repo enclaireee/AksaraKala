@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+; Signature aksara of the Pangangon (classes.md). Stroke from .docs/glyph_strokes.py SIGNATURE; the order is a game design.
+id = "sunda_ba"
+aksara = "sunda"
+latin = "ba"
+templates = Array[PackedVector2Array]([PackedVector2Array(195, 178, 150, 178, 85, 372, 180, 372, 215, 245, 300, 372, 370, 178, 235, 178)])

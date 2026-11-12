@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/baju_keprajuritan.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "baju_keprajuritan"
+title = "ITEM_BAJU_KEPRAJURITAN_NAME"
+slot = "armor"
+description = "ITEM_BAJU_KEPRAJURITAN_DESC"
+defense = 4
+favoured = "lancer"
+favoured_bonus = {"max_hp": 10}

@@ -126,7 +126,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,_________E_F____
 | `F` | encounter galuh_bout_2 (tournament round 2); wave 2 is the champion, the `miniboss` piece (MQG g.4) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_bout_2", size:Vector2i(17,9), cond:"flag:mqg_1,!flag:mqg_2", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-5,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-1,3)], [res://entities/enemies/faceless_archer.tscn, Vector2i(6,-2)]], [[res://entities/enemies/faceless_champion.tscn, Vector2i(0,0)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)]]]}` | floor | 1 |
 | `L` | NPC Uwa Batara Lengser, the old court officer (after round 2, MQG g.5 `talked_to:lengser`, sets `mqg_3`) | `res://entities/npc/npc.tscn` | `{npc_id:"lengser", cond:"flag:mqg_2"}` | grass | 1 |
 | `C` | NPC Ciung Wanara at the ring's east gate, tournament contender (MQG g.1 plan; moves to the camp at `galuh_1` once step g.5 is done (`mqg_4`)) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"!flag:mqg_4"}` | grass | 1 |
-| `c` | chest: 55 Ilmu (Ilmu S, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_alun", item_id:"ilmu:55"}` | grass | 1 |
+| `c` | chest: class gear `zirah_sisik`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_alun", item_id:"zirah_sisik"}` | grass | 1 |
 | `g` | codex spot, the Karang Kamulyan site (VERIFY) | `res://entities/world/pickup.tscn` | `{codex_id:"galuh"}` | grass | 1 |
 | `u` | loose Faceless, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless.tscn` | `{}` | grass | 3 |
 | `S` | NPC the rooster seller at the ring's west gate; arrival slice (MQG g.1, `talked_to:galuh_seller`; no fight shown, only a basket and a crowd) | `res://entities/npc/npc.tscn` | `{npc_id:"galuh_seller"}` | grass | 1 |
@@ -504,7 +504,7 @@ Scale: 1
 | `d` | clue g1_debt_ledger, the official's tax ledger (SQ-G1) | `res://entities/world/clue.tscn` | `{clue_id:"g1_debt_ledger", cond:"flag:mqg_a1"}` | grass | 1 |
 | `a` | clue g1_palm_sack, Kabayan's sack; pulls into sq_g1_kabayan (SQ-G1) | `res://entities/world/clue.tscn` | `{clue_id:"g1_palm_sack", memory_id:"sq_g1_kabayan", cond:"flag:mqg_a1"}` | grass | 1 |
 | `z` | prop, handful of grain on the west roof 1 (SQ-C1 step 4 press-each x3) | `res://entities/npc/npc.tscn` | `{npc_id:"grain_roof_1", cond:"quest:sq_c1=active"}` | grass | 1 |
-| `c` | chest galuh_chest_pasar (55 Ilmu) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_pasar", item_id:"ilmu:55"}` | grass | 1 |
+| `c` | chest galuh_chest_pasar class gear `kampret_pemburu`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_pasar", item_id:"kampret_pemburu"}` | grass | 1 |
 | `x` | prop, handful of grain on the east roof 2 (SQ-C1 step 4) | `res://entities/npc/npc.tscn` | `{npc_id:"grain_roof_2", cond:"quest:sq_c1=active"}` | grass | 1 |
 | `y` | prop, handful of grain on the east roof 3 (SQ-C1 step 4) | `res://entities/npc/npc.tscn` | `{npc_id:"grain_roof_3", cond:"quest:sq_c1=active"}` | grass | 1 |
 
@@ -576,7 +576,7 @@ W,,,,,,,,,,,,,,,,,,_______________________.................#
 | `Y` | NPC Nyai Sekar, royal archivist (MQG g.6 `talked_to:nyai_sekar`, sets `mqg_ar1`; hub; her closing lines after the grate, g.16) | `res://entities/npc/npc.tscn` | `{npc_id:"nyai_sekar", cond:"flag:mqg_4"}` | floor | 1 |
 | `P` | prop, archive mirror 1 (MQG g.7, turn the mirrors in order 1-2-3; wrong order shows a hint) | `res://entities/npc/npc.tscn` | `{npc_id:"archive_mirror_1", cond:"flag:mqg_ar1"}` | floor | 1 |
 | `L` | clue scraped_genealogy, King Nagawiru's scraped lontar, readable once the third mirror throws its light (MQG g.7, `clue_examined:scraped_genealogy`, sets `mqg_ar2`) | `res://entities/world/clue.tscn` | `{clue_id:"scraped_genealogy", cond:"flag:archive_mirror_3"}` | floor | 1 |
-| `c` | chest galuh_chest_pustaka (55 Ilmu) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_pustaka", item_id:"ilmu:55"}` | floor | 1 |
+| `c` | chest galuh_chest_pustaka class gear `jubah_wiku`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_pustaka", item_id:"jubah_wiku"}` | floor | 1 |
 | `Q` | prop, archive mirror 2 (MQG g.7, in order) | `res://entities/npc/npc.tscn` | `{npc_id:"archive_mirror_2", cond:"flag:mqg_ar1"}` | floor | 1 |
 | `R` | prop, archive mirror 3 (MQG g.7, in order) | `res://entities/npc/npc.tscn` | `{npc_id:"archive_mirror_3", cond:"flag:mqg_ar1"}` | floor | 1 |
 
@@ -639,7 +639,7 @@ W,,,,,,,,,,,,,,,,,,_______________________.................#
 | `F` | clue g2_broom, worn-down broom in the Kaputren (SQ-G2) | `res://entities/world/clue.tscn` | `{clue_id:"g2_broom", cond:"flag:mqg_kp1"}` | floor | 1 |
 | `G` | clue g2_roll, scraped servants' roll; pulls into sq_g2_servant (SQ-G2) | `res://entities/world/clue.tscn` | `{clue_id:"g2_roll", memory_id:"sq_g2_servant", cond:"flag:clue_g2_broom"}` | floor | 1 |
 | `I` | write stone ririwa_name, write Ca-Nga on the roll (SQ-G2) | `res://entities/npc/npc.tscn` | `{npc_id:"ririwa_name", cond:"flag:memory_sq_g2_servant"}` | floor | 1 |
-| `c` | chest galuh_chest_kaputren (55 Ilmu) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_kaputren", item_id:"ilmu:55"}` | grass | 1 |
+| `c` | chest galuh_chest_kaputren class gear `pangsi_hitam`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_kaputren", item_id:"pangsi_hitam"}` | grass | 1 |
 | `Q` | clue, a covered mirror in the courtyard (MQG g.8; journal note only; id `kaputren_mirror` **ASSUMED**, not in quests.md; hunt `k_ii`) | `res://entities/world/clue.tscn` | `{clue_id:"kaputren_mirror", cond:"flag:mqg_ar2"}` | floor | 1 |
 | `U` | elite ririwa (SQ-G2 fight branch, the miniboss): `unique_id`, elite stats (HP 312, Dmg 16, Ilmu 56, bestiary, **TUNE**), a plain spot inert until `mqg_kp1`, not an encounter; moved here from `kg_keraton` so SQ-G2 lives in one area; `ririwa.tscn` is new (a Pocong-class Charger, **ASSUMED**) | `res://entities/enemies/ririwa.tscn` | `{unique_id:"ririwa", cond:"flag:mqg_kp1"}` | floor | 1 |
 | `s` | clue c2_signet, Queen Pangrenyep's signet ring on the table (SQ-C2) | `res://entities/world/clue.tscn` | `{clue_id:"c2_signet", cond:"flag:c2_reply"}` | floor | 1 |

@@ -282,3 +282,14 @@ UI_DEMO_CLASS,Kelas,Class
 UI_DEMO_START,Awal babak,Start of the act
 UI_DEMO_BOSS,Sebelum %s,Before %s
 UI_DEMO_FAIL,Titik ini belum bisa dicapai.,This point cannot be reached yet.
+LESSON_SUNDA_HA,"Dua angka 7: yang pertama kecil dan rendah, lalu geser naik ke yang kedua yang lebih tinggi.","Two 7s: the first small and low, then slide up to a taller second one."
+LESSON_SUNDA_PA,"Garis atas, miring ke kiri bawah, garis bawah, tarik panjang ke kanan atas, lalu garis pendek kembali ke kiri.","Top bar, slant down-left, bottom bar, a long pull up-right, then a short bar back left."
+LESSON_JAWA_PA,"Ekor, lengkung kiri, mangkuk bawah, lengkung kanan, kaki lurus turun.","Tail, left arch, bottom bowl, right arch, straight leg down."
+LESSON_JAWA_WA,"Seperti Pa, dengan takik runcing kecil di kiri lengkung kanan.","Like Pa, with a small pointed notch on the left of the right arch."
+LESSON_JAWA_GA,"Kait di kiri atas, lalu tiga kaki yang disambung dua lengkung.","A hook at the top left, then three legs joined by two arches."
+LESSON_SUNDA_BA,"Garis atas pendek ke kiri, miring ke kiri bawah, garis bawah, naik ke puncak, turun, tarik panjang ke kanan atas, garis atas kembali ke kiri.","Short top bar to the left, slant down-left, bottom bar, up to a peak, down, a long pull up-right, top bar back left."
+LESSON_SUNDA_TA,"Huruf Z, tarik panjang melewati garis atas, lalu turun menjadi angka 7.","A Z, a long pull up past the top, then back down into a 7."
+LESSON_JAWA_LA,"Ekor, lengkung kiri, kaki turun-naik, lengkung kecil ke mangkuk bawah, lengkung kanan, kaki turun.","Tail, left arch, leg down and up, a small arch into a bottom bowl, right arch, leg down."
+UI_FAVOURED,Cocok untuk: %s,Favoured: %s
+UI_FAV_SAKTI,Isi Sakti,Sakti gain
+UI_FAV_SMUDGE,Batas coretan,Smudge limit

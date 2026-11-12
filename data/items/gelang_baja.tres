@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/gelang_baja.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "gelang_baja"
+title = "ITEM_GELANG_BAJA_NAME"
+slot = "accessory"
+description = "ITEM_GELANG_BAJA_DESC"
+bonus = {"defense": 0.05}
+favoured = "warrior"
+favoured_bonus = {"str": 1}

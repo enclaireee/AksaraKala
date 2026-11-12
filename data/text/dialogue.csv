@@ -3607,3 +3607,7 @@ DLG_JETTY_POST_1,Kau memukul sungai dengan sodo lanang. Airnya surut dari tamban
 DLG_JETTY_POST_HINT,Arus di sini deras. Kau butuh sesuatu untuk memukulnya.,The current runs fast here. You need something to strike it with.
 DLG_CHANNEL_WHEEL_1,Kau memutar roda. Air mata air mengalir di saluran tua dan membasahi jejak hangus.,You turn the wheel. Spring water runs down the old channel and over the burn trail.
 DLG_LENGSER_C3_1,"Prajurit yang kau serahkan itu bicara. Catatannya kutinggal di kemah candi, bersama carikan kain bertanda Ra.","The deserter you handed me talked. His notes are in the temple camp, with a cloth scrap marked Ra."
+DLG_NYAI_RUKMI_X1,"Aku menyimpan satu lontar untuk tiap panggilan hidup. Satu di antaranya untukmu.","I keep one palm leaf for every calling. One of them is yours."
+DLG_NYAI_RUKMI_X2,"Tapi lontar itu hanya untuk tangan yang sudah bisa menulis. Kuasai dulu delapan aksara, lalu kembalilah.","But it only goes to a hand that already writes. Learn eight aksara first, then come back."
+DLG_NYAI_RUKMI_X3,"Delapan aksara. Tanganmu sudah tahu jalannya.","Eight aksara. Your hand knows the way now."
+DLG_NYAI_RUKMI_X4,"Ini aksara pusaka panggilanmu, dan senjata yang menyertainya. Tulislah dengan hati-hati.","This is the heirloom aksara of your calling, and the weapon that goes with it. Write it with care."

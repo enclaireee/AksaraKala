@@ -65,6 +65,15 @@ var dodge_cost := 20.0
 var _applied := false
 var _regen_base := 35.0
 var _zone_seen := ""
+# Second-path mechanics (classes.md "Second paths")
+var buffs := {}            # class spell buff id -> clock time it ends; read where it matters, nothing to undo
+var wirama := 0            # Penari Topeng: stacks from hits landed
+var still := 0.0           # Prajurit: seconds standing still (Kuda-kuda)
+var _thrust_ready := false # ...the braced thrust, once per brace
+var _lakon: Array[String] = []   # Dalang: the last two glyphs cast
+var _lakon_n := 0
+var _base_reduction := 0.0
+var _pang := 0             # Suluk Pangruwat: the Sakti lent to health.shield last frame
 
 # Story v5 Major Choice effects (quests.md 4, items.md). TUNE.
 const ARIA_REGEN := 0.15            # choice_release_aria: +15% stamina and Sakti regen in gk_ruang_kala
@@ -132,6 +141,7 @@ func _physics_process(delta: float) -> void:
 			buffer.erase(a)
 	if state != State.ATTACK and since_recovery > tuning.combo_reset:
 		combo = 0
+	_class_tick(delta)
 	move_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	# ASSUMED: the busur keeps tracking the mouse through its wind-up; melee commits to its snap
 	var ranged_windup := state == State.ATTACK and not item.is_melee() and phase == Phase.WINDUP
@@ -157,6 +167,62 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	# ponytail: debug readout until the HUD (ui.md) exists
 	debug.text = "HP %d  ST %d  SK %d  %s [F1]  status [F2]" % [health.hp, stamina.value, sakti.value, tr(item.title)]
+
+
+# --- second-path mechanics ---
+
+func buff(id: String, seconds: float) -> void:
+	buffs[id] = clock + seconds
+
+
+func has_buff(id: String) -> bool:
+	return buffs.get(id, 0.0) > clock
+
+
+func braced() -> bool:
+	return class_id == "lancer" and still >= tuning.brace_time
+
+
+func add_wirama(n: int) -> void:
+	if class_id == "dancer":
+		var full := wirama >= tuning.wirama_max
+		wirama = mini(tuning.wirama_max, wirama + n * (2 if has_buff("gamelan") else 1))
+		if fx and not full and wirama >= tuning.wirama_max: fx.on_brace()
+
+
+## Dalang: the power multiplier for casting this glyph now, and remember it.
+func lakon(glyph: String) -> float:
+	if class_id != "dalang":
+		return 1.0
+	if not glyph in _lakon:
+		_lakon_n = mini(tuning.lakon_max, _lakon_n + 1)
+	elif not has_buff("suluk"):
+		_lakon_n = 0
+	_lakon.append(glyph)
+	_lakon = _lakon.slice(-2)
+	return 1.0 + tuning.lakon_step * _lakon_n
+
+
+func _class_tick(delta: float) -> void:
+	var was := braced()
+	still = still + delta if move_dir == Vector2.ZERO and state != State.DODGE and state != State.HURT else 0.0
+	if braced() != was:
+		_thrust_ready = braced()
+		health.reduction = 1.0 - (1.0 - _base_reduction) * (1.0 - (tuning.brace_guard if braced() else 0.0))
+		if fx and braced(): fx.on_brace()
+	if has_buff("suluk"):
+		sakti.add(3.0 * delta)
+	# ponytail: lends Sakti to health.shield, so it would overwrite a Ward; the Dalang has no Ward spell
+	if has_buff("pangruwat") or _pang > 0:
+		sakti.value = maxf(0.0, sakti.value - (_pang - health.shield))
+		_pang = int(sakti.value) if has_buff("pangruwat") else 0
+		health.shield = _pang
+		sakti.changed.emit(sakti.value, sakti.max_value)
+
+
+func _reach() -> float:
+	var r := item.reach * (tuning.melee_finisher_reach_mult if hit == 2 else 1.0) * (1.4 if has_buff("gelar") else 1.0)
+	return r + (tuning.wirama_wave if hit == 2 and class_id == "dancer" and wirama >= tuning.wirama_max else 0.0)
 
 
 # --- states ---
@@ -245,7 +311,7 @@ func _try_flask() -> void:
 
 
 func _start_dodge() -> bool:
-	if not stamina.spend(dodge_cost):
+	if not stamina.spend(0.0 if has_buff("napas") else dodge_cost):
 		return false
 	dodge_dir = move_dir.normalized() if move_dir != Vector2.ZERO else aim_dir
 	health.set_invincible(tuning.dodge_iframes)
@@ -259,7 +325,7 @@ func _start_dodge() -> bool:
 
 
 func _start_attack() -> bool:
-	if not stamina.spend(item.cost):
+	if not stamina.spend(0.0 if has_buff("napas") else item.cost):
 		return false
 	hit = combo
 	combo = (combo + 1) % 3
@@ -278,11 +344,11 @@ func _swing(on: bool) -> void:
 		melee_hitbox.deactivate()
 		return
 	var finisher := hit == 2
-	var reach := item.reach * (tuning.melee_finisher_reach_mult if finisher else 1.0)
-	var poly := _arc(item.arc, reach)
+	var poly := _arc(item.arc, _reach())
 	melee_shape.polygon = poly
 	slash.polygon = poly
 	melee_hitbox.damage = _damage()
+	_thrust_ready = false
 	melee_hitbox.heavy = finisher
 	melee_hitbox.knockback = tuning.enemy_knockback_finisher if finisher else tuning.enemy_knockback_light
 	melee_hitbox.activate()
@@ -294,6 +360,11 @@ func _shoot() -> void:
 	var arrow: Arrow = ARROW.instantiate()
 	arrow.source = self
 	arrow.damage = _damage()
+	_thrust_ready = false
+	if class_id == "herder":   # Batu Pantul
+		arrow.bounce = tuning.bounce_mult
+		arrow.bounce_range = tuning.bounce_range
+		arrow.poise_mult = tuning.bounce_poise
 	if class_id == "archer":
 		arrow.far_damage = roundi(arrow.damage * tuning.eagle_mult)   # Eagle Eye
 		arrow.far_after = tuning.eagle_range
@@ -321,7 +392,7 @@ func _shoot() -> void:
 func _snap_aim(dir: Vector2) -> Vector2:
 	if not item.is_melee():
 		return dir   # ranged shots go exactly where the mouse points
-	var reach := item.reach * (tuning.melee_finisher_reach_mult if hit == 2 else 1.0) + SNAP_PAD
+	var reach := _reach() + SNAP_PAD
 	var best := Vector2.ZERO
 	for e: Node2D in get_tree().get_nodes_in_group("enemy"):
 		var d := e.global_position - aim.global_position
@@ -336,6 +407,9 @@ func _snap_aim(dir: Vector2) -> Vector2:
 func _on_hit_landed(hb: Hurtbox, attacker: Node, heavy: bool, dmg: int) -> void:
 	sakti.add(item.sakti_per_hit)   # weapon hits (balance.md 4); spells do not refill sakti
 	_ev.player_struck.emit(hit)
+	add_wirama(1)
+	if has_buff("sumpah"):
+		health.heal(ceili(health.max_hp * 0.03))
 	if item.self_damage > 0:   # Mpu Gandring's curse: costs HP, never kills
 		health.hp = maxi(1, health.hp - item.self_damage)
 		health.changed.emit(health.hp, health.max_hp)
@@ -377,7 +451,10 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	Snd.play("player_hurt", 0.0, 1.0, 0.04)
 	blink_until = clock + tuning.hurt_iframes
 	hit_flash.flash(tuning.flash_time)
-	var skin := class_id == "warrior" and not hitbox.heavy   # Iron Skin: no stagger or knockback
+	var skin: bool = (class_id == "warrior" and not hitbox.heavy) or get_meta("panji", false)   # Iron Skin, or inside the war banner
+	skin = skin or has_buff("gelar") or (braced() and not hitbox.heavy)
+	if not has_buff("gamelan"):
+		wirama = 0
 	if not skin:
 		_swing(false)
 		combo = 0
@@ -433,7 +510,8 @@ func _enter(s: State) -> void:
 
 
 func _walk() -> float:
-	return tuning.walk_speed * move_mult * status.speed_mult()   # Slow; dodge distance is unchanged (combat.md 4)
+	var m := 1.0 + tuning.wirama_move * wirama + (0.25 if has_buff("napas") else 0.0) + (0.3 if has_buff("wanda") else 0.0)
+	return tuning.walk_speed * move_mult * m * status.speed_mult()   # Slow; dodge distance is unchanged (combat.md 4)
 
 
 func _set_phase(p: Phase) -> void:
@@ -444,13 +522,13 @@ func _set_phase(p: Phase) -> void:
 func _phase_len(p: Phase) -> float:
 	var t: float = [item.windup, item.active if item.is_melee() else 0.0, item.recovery][p]
 	if p != Phase.ACTIVE:
-		t /= atk_speed
+		t /= atk_speed * (1.0 + tuning.wirama_speed * wirama + (0.2 if has_buff("gamelan") else 0.0))
 	return t * (tuning.finisher_mult if hit == 2 else 1.0)
 
 
 func _damage() -> int:
-	var wirama: float = tuning.dancer_finisher if class_id == "dancer" and hit == 2 else 1.0
-	return roundi(item.damage * dmg_mult * (tuning.finisher_mult if hit == 2 else 1.0) * wirama)
+	var m := (tuning.brace_thrust if _thrust_ready else 1.0) * (1.2 if has_buff("gelar") else 1.0) * (1.2 if has_buff("klana") else 1.0)
+	return roundi(item.damage * dmg_mult * (tuning.finisher_mult if hit == 2 else 1.0) * m)
 
 
 ## Rogue Light Step: the hit lands within 60 degrees of the enemy's back. Never on bosses.
@@ -485,19 +563,17 @@ func apply_from_game() -> void:
 	health.reduction = game.bonus("defense")   # Sabuk Galuh
 	var aria_regen := ARIA_REGEN if game.has_flag("choice_release_aria") and _zone_seen == ARIA_ZONE else 0.0
 	stamina.regen = _regen_base * (1.0 + tuning.stat_speed_per * game.stat("end") + game.bonus("stamina_regen") + aria_regen)
-	dmg_mult = 1.0 + tuning.stat_damage_per * game.stat("str" if item.is_melee() else "dex")
+	dmg_mult = (1.0 + tuning.stat_damage_per * game.stat("str" if item.is_melee() else "dex")) * (1.0 + game.bonus("damage_mult"))
 	atk_speed = 1.0 + tuning.stat_speed_per * game.stat("dex")
 	move_mult = 1.0 + game.bonus("move_speed")
 	dodge_cost = tuning.rogue_dodge_cost if class_id == "rogue" else tuning.dodge_cost
 	sakti.max_value = tuning.keen_mind_max if mage else tuning.sakti_max   # Keen Mind
-	sakti.gain_mult = (1.0 + tuning.stat_sakti_per * game.stat("spi") + aria_regen) * (tuning.keen_mind_gain if mage else 1.0)
+	sakti.gain_mult = (1.0 + tuning.stat_sakti_per * game.stat("spi") + aria_regen) * (tuning.keen_mind_gain if mage else 1.0) * (1.0 + game.bonus("sakti_gain"))
 	sakti.value = minf(sakti.value, sakti.max_value)
-	match class_id:   # the second-path passives (classes.md)
-		"lancer": health.reduction = 1.0 - (1.0 - health.reduction) * (1.0 - tuning.lancer_guard)
-		"herder":
-			move_mult *= tuning.herder_move
-			stamina.regen *= tuning.herder_regen
-		"dancer": atk_speed *= tuning.dancer_speed
+	_base_reduction = health.reduction
+	still = 0.0   # the brace re-forms on the new numbers
+	match class_id:   # the second-path flat passives; their mechanics are in _class_tick (classes.md)
+		"herder": move_mult *= tuning.herder_move
 		"dalang": sakti.gain_mult *= tuning.dalang_gain
 	_applied = true
 	health.changed.emit(health.hp, health.max_hp)

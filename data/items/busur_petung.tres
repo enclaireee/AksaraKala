@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/busur_petung.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "busur_petung"
+title = "ITEM_BUSUR_PETUNG_NAME"
+slot = "weapon"
+description = "ITEM_BUSUR_PETUNG_DESC"
+archetype = "ranged"
+windup = 0.12
+recovery = 0.25
+cost = 3.0
+projectile_speed = 300.0
+projectile_range = 220.0
+damage = 7
+favoured = "archer"
+favoured_bonus = {"damage_mult": 0.1}

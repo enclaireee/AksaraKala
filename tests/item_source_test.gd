@@ -1,6 +1,6 @@
 extends SceneTree
 ## Every `give:` names a real item (or a key token), and every item in data/items has a source:
-## a dialogue/beat give, a class start, a quest reward or a zone chest/drop (verification.md 5.3 B1, B2).
+## a dialogue/beat give, a class start, a quest reward, a zone chest/drop or a sibling swap (Game.SIBLING_ITEM) (verification.md 5.3 B1, B2).
 
 const TOKENS := ["boeh_rarang", "distraction"]   # key tokens checked by `item:` conds, not gear
 
@@ -9,7 +9,7 @@ var fails := 0
 
 func _initialize() -> void:
 	var text := ""
-	for dir in ["res://data/dialogue", "res://data/quests", "res://data/classes", "res://zones", "res://entities"]:
+	for dir in ["res://data/dialogue", "res://data/quests", "res://data/classes", "res://zones", "res://entities", "res://autoload"]:
 		text += _read_all(dir)
 	var gives := RegEx.create_from_string("\"give:([a-z0-9_]+)\"")
 	for m in gives.search_all(text):

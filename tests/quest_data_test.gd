@@ -29,7 +29,7 @@ func _initialize() -> void:
 	var qt := table("res://data/text/quests.csv")
 	var dt := table("res://data/text/dialogue.csv")
 	var quests := QuestData.all()
-	check(quests.size() == 29 or quests.size() == 30, "expected 29 quest files, got %d" % quests.size())
+	check(quests.size() == 31, "expected 31 quest files, got %d" % quests.size())
 	check(quests.size() >= 6, "expected at least 6 quests, got %d" % quests.size())
 	var dialogues: Array[DialogueData] = []
 	for f in DirAccess.get_files_at("res://data/dialogue"):

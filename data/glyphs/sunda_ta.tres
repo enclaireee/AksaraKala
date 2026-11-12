@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+; Signature aksara of the Penari Topeng (classes.md). Stroke from .docs/glyph_strokes.py SIGNATURE; the order is a game design.
+id = "sunda_ta"
+aksara = "sunda"
+latin = "ta"
+templates = Array[PackedVector2Array]([PackedVector2Array(95, 232, 165, 232, 105, 368, 195, 368, 255, 170, 240, 232, 325, 232, 270, 378)])

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/kipas_kembar.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "kipas_kembar"
+title = "ITEM_KIPAS_KEMBAR_NAME"
+slot = "weapon"
+description = "ITEM_KIPAS_KEMBAR_DESC"
+archetype = "light"
+windup = 0.06
+active = 0.06
+recovery = 0.14
+lunge = 10.0
+cost = 8.0
+sakti_per_hit = 4.0
+reach = 20.0
+arc = 120.0
+damage = 10
+favoured = "dancer"
+favoured_bonus = {"dex": 1}

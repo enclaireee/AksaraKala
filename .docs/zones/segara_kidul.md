@@ -745,7 +745,7 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `J` | NPC Mbah Wiryo, first met here (4.10, `talked_to:kidul_jurukunci`, sets `mq4_4`; the instance in `sk_pantai` takes over once `mq4_4` is set) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_jurukunci", cond:"!flag:mq4_4"}` | floor | 1 |
 | `s` | NPC Sari after the Trial of the Waves (entry 5, `"quiet": true`, hub `H`) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_sari", cond:"flag:mq4_8"}` | floor | 1 |
 | `F` | NPC river-mouth fisher (SQ-K2) | `res://entities/npc/npc.tscn` | `{npc_id:"k2_fisher"}` | grass | 1 |
-| `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_nelayan", item_id:"ilmu:55"}` | floor | 1 |
+| `c` | chest: class gear `sabuk_merah`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_nelayan", item_id:"sabuk_merah"}` | floor | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -811,7 +811,7 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `S` | NPC Sari, in the mangrove with you (4.13 entry 3, `"quiet": true`) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_sari", cond:"step:mq4=12"}` | grass | 1 |
 | `E` | encounter bakau_pack | `res://entities/world/encounter.tscn` | `{area_id:"bakau_pack", size:Vector2i(14,8), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(-3,0)], [res://entities/enemies/ula_segara.tscn, Vector2i(3,0)]]]}` | path | 1 |
 | `K` | clue, white scale in torn net (SQ-K2) | `res://entities/world/clue.tscn` | `{clue_id:"k2_scale", memory_id:"sq_k2_fisher"}` | grass | 1 |
-| `c` | chest: 55 Ilmu | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_bakau", item_id:"ilmu:55"}` | grass | 1 |
+| `c` | chest: class gear `genitri`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_bakau", item_id:"genitri"}` | grass | 1 |
 | `1` | tidal beacon 1 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_1`) | `res://entities/npc/npc.tscn` | `{npc_id:"tidal_beacon_1"}` | grass | 1 |
 | `2` | tidal beacon 2 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_2`) | `res://entities/npc/npc.tscn` | `{npc_id:"tidal_beacon_2"}` | grass | 1 |
 | `3` | tidal beacon 3 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_3`) | `res://entities/npc/npc.tscn` | `{npc_id:"tidal_beacon_3"}` | grass | 1 |

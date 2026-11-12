@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/blencong.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "blencong"
+title = "ITEM_BLENCONG_NAME"
+slot = "accessory"
+description = "ITEM_BLENCONG_DESC"
+bonus = {"spi": 1}
+favoured = "dalang"
+favoured_bonus = {"smudge": -0.03}

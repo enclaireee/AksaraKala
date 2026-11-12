@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/tameng_rotan.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "tameng_rotan"
+title = "ITEM_TAMENG_ROTAN_NAME"
+slot = "accessory"
+description = "ITEM_TAMENG_ROTAN_DESC"
+bonus = {"defense": 0.05}
+favoured = "lancer"
+favoured_bonus = {"end": 1}

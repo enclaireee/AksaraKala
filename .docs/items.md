@@ -62,6 +62,51 @@ Body armor only, one slot.
 | Sabuk Galuh | Mythic | +1 Vitality, +8% damage taken reduction (`bonus` keys `vit`, `defense`, **TUNE**, **ASSUMED**) | A royal belt of Galuh, a defense ward from the court smiths. A belt, not body armor, so it sits in the accessory slot | MQ2 Choice 3, judgment (`choice_judgment`) |
 | Jimat | Mythic | +10 max HP | A small protective charm, a jimat carried for luck and protection (ex-Jimat Kecil) | SQ-M2 Wewe Gombel |
 
+## Class-favoured gear (Phase 4g, user call 2026-11-12, all **ASSUMED**, numbers **TUNE**)
+Common tier. Anyone can equip these. The favoured class also gets the last column (`favoured`, `favoured_bonus` on `ItemData`). Bonus keys are the accessory keys plus `damage_mult` (weapon and spell damage fraction) and `sakti_gain` (Sakti gain fraction). The equipment card shows "Favoured: <class>" above the note, dark ink when it is active and dim when not. The 32 icons are recolours of a kin icon (`RECOLOUR` in `tools/gen_items.py`, **ASSUMED**, redraw when there is time). Names are plain Indonesian or Sundanese words for ordinary objects; **VERIFY** the three marked ones before shipping.
+
+| Item (id) | Slot | Stats | Favoured class: extra | Source |
+|---|---|---|---|---|
+| Parang Perang (`parang_perang`) | Heavy melee | 24 dmg, quicker swing | Hulubalang: +10% damage | Zone chest |
+| Tombak Panji (`tombak_panji`) | Heavy melee | 27 dmg, long reach | Hulubalang: +1 Vitality | SQ-X1 |
+| Zirah Sisik (`zirah_sisik`) | Armor | Defense 4 | Hulubalang: +10 max HP | Zone chest |
+| Gelang Baja (`gelang_baja`) | Accessory | +5% damage reduction | Hulubalang: +1 Strength | Zone chest |
+| Busur Petung (`busur_petung`) | Ranged | 7 dmg, 3 stamina, fast | Pamanah: +10% damage | Zone chest |
+| Gendewa Tanduk (`gendewa_tanduk`) | Ranged | 11 dmg | Pamanah: +1 Dexterity | SQ-X1 |
+| Kampret Pemburu (`kampret_pemburu`) | Armor | Defense 2, +5% move speed | Pamanah: +10% stamina regen | Zone chest |
+| Kantong Panah (`kantong_panah`) | Accessory | +10% stamina regen | Pamanah: +1 Dexterity | Zone chest |
+| Golok Pendek (`golok_pendek`) | Light melee | 11 dmg | Pendekar: +10% damage | Zone chest |
+| Kujang Kembar (`kujang_kembar`) | Light melee | 10 dmg, very fast. **VERIFY**: the kujang is a Sundanese heirloom blade; a paired fighting use is a game invention and the text must say so or the name changes | Pendekar: +1 Dexterity | SQ-X1 |
+| Pangsi Hitam (`pangsi_hitam`) | Armor | Defense 2, +8% move speed. **VERIFY**: pangsi as silat and daily Sundanese clothing | Pendekar: +10% stamina regen | Zone chest |
+| Sabuk Merah (`sabuk_merah`) | Accessory | +1 Endurance | Pendekar: +1 Strength | Zone chest |
+| Tongkat Genta (`tongkat_genta`) | Staff | 9 dmg, 6 Sakti per hit | Wiku: +10% Sakti gain | Zone chest |
+| Tongkat Cendana (`tongkat_cendana`) | Staff | 10 dmg | Wiku: +1 Spirit | SQ-X1 |
+| Jubah Wiku (`jubah_wiku`) | Armor | Defense 1, +1 Spirit | Wiku: +10% Sakti gain | Zone chest |
+| Genitri (`genitri`) | Accessory | +1 Spirit. **VERIFY**: genitri (rudraksha) prayer beads and who wore them | Wiku: smudge threshold -0.03 | Zone chest |
+
+**Second paths (2026-11-12).** Each row is the sibling of the school item in brackets. There are no extra chests: when a second-path player would receive the bracketed item (class chest or `SQ-X1`), `Game.add_item` gives the sibling instead (`Game.SIBLING_ITEM`).
+
+| Item (id) | Slot | Stats | Favoured class: extra | Sibling of |
+|---|---|---|---|---|
+| Tombak Galah (`tombak_galah`) | Heavy melee | 22 dmg, longest reach | Prajurit: +10% damage | `parang_perang` |
+| Tombak Bendera (`tombak_bendera`) | Heavy melee | 26 dmg, long reach | Prajurit: +1 Vitality | `tombak_panji` |
+| Baju Keprajuritan (`baju_keprajuritan`) | Armor | Defense 4. **VERIFY**: keraton soldier dress | Prajurit: +10 max HP | `zirah_sisik` |
+| Tameng Rotan (`tameng_rotan`) | Accessory | +5% damage reduction | Prajurit: +1 Endurance | `gelang_baja` |
+| Bandring Kulit (`bandring_kulit`) | Ranged | 8 dmg, 3 stamina, fast | Pangangon: +10% damage | `busur_petung` |
+| Bandring Ijuk (`bandring_ijuk`) | Ranged | 11 dmg | Pangangon: +1 Dexterity | `gendewa_tanduk` |
+| Sarung Gembala (`sarung_gembala`) | Armor | Defense 2, +5% move speed | Pangangon: +10% stamina regen | `kampret_pemburu` |
+| Suling Bambu (`suling_bambu`) | Accessory | +10% stamina regen | Pangangon: +1 Endurance | `kantong_panah` |
+| Kipas Bambu (`kipas_bambu`) | Light melee | 11 dmg | Penari Topeng: +10% damage | `golok_pendek` |
+| Kipas Kembar (`kipas_kembar`) | Light melee | 10 dmg, very fast | Penari Topeng: +1 Dexterity | `kujang_kembar` |
+| Baju Penari (`baju_penari`) | Armor | Defense 2, +8% move speed | Penari Topeng: +10% stamina regen | `pangsi_hitam` |
+| Gelang Kaki (`gelang_kaki`) | Accessory | +1 Endurance. Ankle bells | Penari Topeng: +1 Dexterity | `sabuk_merah` |
+| Cempala (`cempala`) | Staff | 9 dmg, 6 Sakti per hit. **VERIFY**: the dalang's wooden knocker | Dalang: +10% Sakti gain | `tongkat_genta` |
+| Kayon Gapuran (`kayon_gapuran`) | Staff | 10 dmg. **VERIFY**: gapuran as a kayon type | Dalang: +1 Spirit | `tongkat_cendana` |
+| Beskap Dalang (`beskap_dalang`) | Armor | Defense 1, +1 Spirit. **VERIFY**: beskap | Dalang: +10% Sakti gain | `jubah_wiku` |
+| Blencong (`blencong`) | Accessory | +1 Spirit. **VERIFY**: the oil lamp behind the screen | Dalang: smudge threshold -0.03 | `genitri` |
+
+The 12 chest items replace Ilmu-only chests in the zone docs (`.docs/zones/*.md`).
+
 ## Main-path quest items
 Not equipment. Each is a data resource with `quest_item = true` (**ASSUMED**), shown in the journal's items list, never sold or dropped. Ids are the ones quests.md and script.md use. Side-quest pickups (angklung, selendang, gong, batu bintang, sodo lanang, kuda kepang, tukik) are listed with their quests in [quests.md](quests.md) section 5.
 

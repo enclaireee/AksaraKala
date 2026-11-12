@@ -59,6 +59,38 @@ STROKES = {
                  (3355, 177), (3225, 445), (3290, 305), (3357, 305), (3215, 305)],
 }
 
+# Signature aksara, one per class (classes.md, Phase 4g). A player learns only their own, so each is checked
+# against the 9 shared glyphs alone (sim_signature below), never against each other. Own 500x500 grids.
+SIGNATURE = {
+    # Sunda Ha (Hulubalang): a small low "7", slide up to a taller "7".
+    "sunda_ha": [(70, 250), (140, 250), (100, 350), (160, 350), (215, 155), (290, 155), (225, 355)],
+    # Sunda Pa (Pamanah): bar, slant down-left, bottom bar, long slant up-right, short bar back left.
+    "sunda_pa": [(90, 160), (180, 160), (100, 350), (235, 350), (300, 155), (210, 155)],
+    # Jawa Pa (Pendekar): tail, left arch, bottom bowl, right arch, leg (no middle retrace).
+    "jawa_pa": [(125, 372), (92, 355), (85, 325), (85, 250), (95, 222), (130, 212), (165, 222), (177, 250),
+                (177, 330), (187, 358), (215, 370), (235, 358), (247, 330), (247, 250), (258, 222), (290, 212),
+                (322, 222), (333, 250), (333, 375)],
+    # Jawa Wa (Wiku): like Pa, with a small pointed notch on the left of the right arch.
+    "jawa_wa": [(125, 372), (92, 355), (85, 325), (85, 250), (95, 222), (130, 212), (165, 222), (177, 250),
+                (177, 330), (187, 358), (215, 370), (245, 358), (262, 330), (265, 240), (212, 230), (265, 222),
+                (305, 218), (328, 245), (328, 375)],
+    # Jawa Ga (Prajurit, Galah): a hook at top left, then three legs joined by two arches. Jawa Ta was tried
+    # first (Tombak) and failed: 0.90 against Jawa Ha.
+    "jawa_ga": [(138, 322), (108, 305), (95, 270), (110, 242), (150, 235), (175, 250), (178, 280), (178, 395),
+                (178, 270), (200, 240), (235, 235), (258, 260), (258, 395), (258, 265), (280, 238), (315, 236),
+                (340, 262), (345, 395)],
+    # Jawa La (Dalang, Lakon): tail, left arch, leg down and back up, small arch into a bottom bowl, right arch, leg.
+    # Jawa Da was tried first and failed: 0.87 against Jawa Na.
+    "jawa_la": [(145, 392), (115, 372), (105, 300), (115, 250), (150, 235), (183, 255), (186, 395), (186, 270),
+                (205, 240), (235, 238), (258, 262), (260, 370), (280, 392), (325, 390), (350, 360), (352, 265),
+                (375, 238), (400, 240), (420, 270), (422, 395)],
+    # Sunda Ba (Pangangon, Bandring): short top bar left, slant down-left, bottom bar, up to a peak, down, long slant up, top bar back.
+    "sunda_ba": [(195, 178), (150, 178), (85, 372), (180, 372), (215, 245), (300, 372), (370, 178), (235, 178)],
+    # Sunda Ta (Penari Topeng, Topeng): a Z, long slant up past the top, back down to a "7".
+    "sunda_ta": [(95, 232), (165, 232), (105, 368), (195, 368), (255, 170), (240, 232), (325, 232), (270, 378)],
+}
+SHARED = ["sunda_ka", "sunda_ga", "sunda_nga", "sunda_ca", "jawa_ha", "jawa_na", "jawa_ca", "jawa_ra", "jawa_ka"]
+
 N = 64
 
 
@@ -173,7 +205,28 @@ def sim(trials=300, seed=1):
     return res
 
 
+def sim_signature(trials=300, seed=1):
+    """Each signature glyph with the 9 shared ones: closest template, own cast rate, any misread in the pool."""
+    print("\nSignature glyphs (each vs the 9 shared):")
+    bad = []
+    for k, st in SIGNATURE.items():
+        pool = {s: TEMPLATES[s] for s in SHARED} | {k: normalize(st)}
+        near, who = max((score(pool[k], pool[s]), s) for s in SHARED)
+        rng = random.Random(seed)
+        ok = wrong = 0
+        for name in pool:
+            for _ in range(trials):
+                kind, guess = classify(sloppy(SIGNATURE.get(name) or STROKES[name], rng), pool)
+                if kind != "fizzle" and guess != name and k in (name, guess):
+                    wrong += 1   # only misreads the new glyph causes or suffers
+                ok += name == k and kind != "fizzle" and guess == k
+        print(f"  {k:10s} closest {who} {near:.2f}, cast {ok}/{trials}, misreads {wrong}")
+        bad += [k] * (not (near <= 0.85 and wrong == 0 and ok >= 0.85 * trials))
+    assert not bad, bad
+
+
 if __name__ == "__main__":
+    sim_signature()
     pairs = pair_table()
     res = sim()
     for k, (right, wrong) in res.items():

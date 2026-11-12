@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+; Signature aksara of the Pamanah (classes.md). Stroke from .docs/glyph_strokes.py SIGNATURE; the order is a game design.
+id = "sunda_pa"
+aksara = "sunda"
+latin = "pa"
+templates = Array[PackedVector2Array]([PackedVector2Array(90, 160, 180, 160, 100, 350, 235, 350, 300, 155, 210, 155)])

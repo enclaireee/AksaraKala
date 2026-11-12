@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/tombak_bendera.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "tombak_bendera"
+title = "ITEM_TOMBAK_BENDERA_NAME"
+slot = "weapon"
+description = "ITEM_TOMBAK_BENDERA_DESC"
+archetype = "heavy"
+windup = 0.22
+active = 0.1
+recovery = 0.4
+lunge = 6.0
+cost = 22.0
+sakti_per_hit = 10.0
+damage = 26
+reach = 46.0
+arc = 40.0
+favoured = "lancer"
+favoured_bonus = {"vit": 1}

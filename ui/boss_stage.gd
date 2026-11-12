@@ -72,7 +72,8 @@ func _process(_delta: float) -> void:
 	var h: Variant = b.get("health")
 	if h == null:
 		return
-	var ph := int(b.get("phase")) if b.get("phase") != null else 1
+	var pv: Variant = b.get("phase")
+	var ph: int = pv if pv is int else 1   # some bosses keep a non-number phase
 	if not _was_engaged:
 		if bool(b.get("engaged")) and h.hp > 0:
 			_was_engaged = true

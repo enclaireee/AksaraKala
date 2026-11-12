@@ -47,7 +47,7 @@ const SPOTS := {
 	"z": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_candi"}, "tile": ","},   # spawn, arrival from mt_candi (in the pocket on the open side of `=`)
 	"=": {"scene": "res://entities/world/shortcut.tscn", "props": {"id": "sc:mt_candi_gapura", "open_side": "e"}, "tile": ","},   # shortcut gate, walled causeway end (opens from the east pocket, 2 tiles)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_gerbang", "size": Vector2i(22,11), "waves": [[["res://entities/enemies/tuyul.tscn", Vector2i(-4,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(2,3)], ["res://entities/enemies/tuyul.tscn", Vector2i(6,-2)]]]}, "tile": ","},   # encounter mataram_gerbang
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_gapura", "item_id": "ilmu:55"}, "tile": "."},   # chest: 55 Ilmu (Ilmu S, ASSUMED)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_gapura", "item_id": "parang_perang"}, "tile": "."},   # chest: class gear `parang_perang`, a second path gets its sibling (ASSUMED)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "gapura"}, "tile": "."},   # codex spot, stone gate
 	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
 	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "recruiter_a"}, "tile": "."},   # NPC recruiter of the north bank at the border market (2.1, `all` with recruiter_b; tells the war one way)

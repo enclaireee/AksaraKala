@@ -95,6 +95,15 @@ Expands the game to **~21.5 h main story (138 steps, 1,285 min modeled, 49 areas
 - [x] **Step 3, Code & Data Rollout (done 2026-11-07, HANDOFF §5ze–§5zf):** engine support for `"Ask about..."` topic loops, `puzzle_solved` signal, `hunt_id` on `Clue`, and `laras_key:*` / `laras_sabotage:*` boss/gate hooks; regenerate zones (`gen_zones.py`) and memories (`gen_memories.py`); update all 28 quest `.tres`, 48 codex `.tres`, NPC dialogue `.tres`, and CSVs (`script_to_data.py`); update all 55 headless tests (0 failures, 0 warnings)
 - Exit: `pacing_model.py`, `know_check.py`, `gen_zones.py`, `gen_memories.py --check`, and all headless Godot tests pass; each Act plays with its own distinct structure and deep character conversations.
 
+## Phase 4g: Class depth (user call 2026-11-12)
+Gives each of the four classes something only it has: one signature aksara with its own spell, and four favoured items.
+- [x] Docs: [classes.md](classes.md) "Signature aksara" and "Favoured gear", [spells.md](spells.md) 2, 3, 10, [items.md](items.md) "Class-favoured gear", [quests.md](quests.md) 6.3.
+- [x] Four glyphs (`sunda_ha`, `sunda_pa`, `jawa_pa`, `jawa_wa`) and four spells in `SpellVariants`.
+- [ ] `SQ-X1`, the `class:` cond, 16 favoured items with icons and chest sources (was ticked 2026-11-12 but not in code or data; unticked the same day).
+- [ ] Second-path identity (user call 2026-11-12, "not reskins"): four mechanics (Kuda-kuda, Batu Pantul, Wirama, Lakon), 32 class spells in `spells/path_*.gd`, four signature glyphs (`jawa_ga`, `sunda_ba`, `sunda_ta`, `jawa_la`), 16 sibling items.
+- [ ] By hand: draw the four shapes in `tools/glyph_recorder.tscn` and record more templates if one reads badly; play each signature spell once and tune.
+- Exit: `glyph_strokes.py` passes with the eight signature glyphs, the headless tests pass, each of the eight classes can finish `SQ-X1`.
+
 ## Phase 5: Remaining regions
 Build each region from its area graph in `zones/<region>.md` ([mataram](zones/mataram.md), [tanah_timur](zones/tanah_timur.md), [segara_kidul](zones/segara_kidul.md), [gua_kala](zones/gua_kala.md)): first add tile maps per area (AGENTS.md 5), then build.
 - [x] Mataram zone and boss (built 2026-11-05, played 2026-11-12)

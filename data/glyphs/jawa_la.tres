@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GlyphData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/glyph_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+; Signature aksara of the Dalang (classes.md). Stroke from .docs/glyph_strokes.py SIGNATURE; the order is a game design.
+id = "jawa_la"
+aksara = "jawa"
+latin = "la"
+templates = Array[PackedVector2Array]([PackedVector2Array(145, 392, 115, 372, 105, 300, 115, 250, 150, 235, 183, 255, 186, 395, 186, 270, 205, 240, 235, 238, 258, 262, 260, 370, 280, 392, 325, 390, 350, 360, 352, 265, 375, 238, 400, 240, 420, 270, 422, 395)])

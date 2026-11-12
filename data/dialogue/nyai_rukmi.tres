@@ -11,6 +11,8 @@ entries = Array[Dictionary]([
 	{"if": ["flag:codex_75", "!flag:rukmi_75"], "lines": ["DLG_NYAI_RUKMI_V32", "DLG_NYAI_RUKMI_V33"], "do": ["flag:rukmi_75"]},
 	{"if": ["flag:codex_50", "!flag:rukmi_50"], "lines": ["DLG_NYAI_RUKMI_V34", "DLG_NYAI_RUKMI_V35"], "do": ["flag:rukmi_50"]},
 	{"if": ["flag:codex_25", "!flag:rukmi_25"], "lines": ["DLG_NYAI_RUKMI_V36"], "do": ["flag:rukmi_25", "start:sq_d2"]},
+	{"if": ["step:sq_x1=1"], "lines": ["DLG_NYAI_RUKMI_X3", "DLG_NYAI_RUKMI_X4"], "do": []},
+	{"if": ["quest:sq_x1=available"], "lines": ["DLG_NYAI_RUKMI_X1", "DLG_NYAI_RUKMI_X2"], "do": ["start:sq_x1"]},
 	{"if": [], "lines": ["DLG_NYAI_RUKMI_V37"], "do": [], "hub": true, "choices": [{"text": "CHOICE_NYAI_RUKMI_ASK_1", "do": ["topic:lontar"]}, {"text": "CHOICE_NYAI_RUKMI_ASK_2", "do": ["topic:catatan"]}, {"text": "CHOICE_NYAI_RUKMI_ASK_3", "do": ["topic:lupa"]}, {"text": "CHOICE_NYAI_RUKMI_ASK_4", "do": []}]},
 	{"if": [], "topic": "lontar", "quiet": true, "lines": ["DLG_NYAI_RUKMI_V38", "DLG_NYAI_RUKMI_V39"], "do": []},
 	{"if": [], "topic": "catatan", "quiet": true, "lines": ["DLG_NYAI_RUKMI_V40", "DLG_NYAI_RUKMI_V41"], "do": []},
