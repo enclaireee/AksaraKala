@@ -41,7 +41,7 @@ const ROUTE := [
 	# 2.17 descend through the opened crypt
 	"do:candi_crypt_hall", "q:mq2=active:17",
 	# 2.18 the K3 memory of the false-dawn lesung
-	"do:k3_lesung", "q:mq2=active:18",
+	"do:k3_lesung", "do:reh_bondowoso", "cast:jawa_ca", "q:mq2=active:18",   # and the rehearsal lesung (quests.md 10)
 	# 2.19 Bandung Bondowoso
 	"do:bandung_bondowoso", "q:mq2=active:19",
 	# 2.20 take the temple shortcut back to the border
@@ -52,7 +52,7 @@ const ROUTE := [
 	# 2.22 K-III, Ki Sumarto's shadow play
 	"do:sumarto_show", "q:mq2=active:22",
 	# 2.23 Hariang Banga's unsent letters
-	"do:hariang_letters", "q:mq2=active:23", "beat:ford",
+	"do:hariang_letters", "do:reh_hariang", "cast:jawa_na", "q:mq2=active:23", "beat:ford",   # and the rehearsal post
 	# 2.24 the duel, then the truce beat's choice (1 = judgment)
 	"pick:1", "do:hariang_banga", "q:mq2=done", "beat:truce", "flag:choice_judgment", "q:mq3=active:0",
 ]

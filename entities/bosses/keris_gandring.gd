@@ -117,6 +117,12 @@ class Orbit extends Node2D:
 @export var sword_second := 1.1        # TUNE: telegraph of the shifted second volley
 @export var sword_damage := 70         # TUNE: ~1.2x heavy, avoidable
 @export var sword_count := 7           # seven beams, seven stakes
+@export var pool_radius := 20.0        # TUNE: phase 2, a curse pool stays where his blade lands
+@export var pool_damage := 7           # TUNE: a tick (balance_model.py section 7.2: 3 ticks stay under one light hit)
+@export var pool_life := 5.0           # TUNE
+@export var pool_warm := 0.8           # TUNE: drawn faint first (rule: at least 0.5)
+@export var pool_max := 5              # TUNE: pools alive at once (a few percent of the court)
+@export var pool_keep_clear := 40.0    # TUNE: never this close to a stake (they answer the gimmick) or the gate
 
 var state := State.IDLE
 var state_time := 0.0
@@ -148,6 +154,7 @@ var _flur_total := 3
 var _salvo := 0
 var _marks: Array[Vector2] = []
 var _mark_tgs: Array[Node2D] = []
+var _owned: Array[Node] = []           # curse pools and fan arrows: freed when it kneels or dies (combat.md 5.3 v7)
 @export var cond := ""   # Game.check condition; empty = always on
 var active := true       # EliteGuard flips it
 
@@ -216,6 +223,7 @@ func _tick(delta: float) -> void:
 				BossKit.ghost(self, STEEL, 0.3)
 			if global_position.distance_to(_from) >= dart_range or (state_time > 0.05 and is_on_wall()):
 				attack_hitbox.deactivate()
+				_pool(global_position)
 				darts_left -= 1
 				if darts_left > 0:
 					_begin_dart(darts_left)   # phase 2: again at once
@@ -403,6 +411,44 @@ func _clear_attack() -> void:
 	if is_instance_valid(_orbit):
 		_orbit.queue_free()
 	_orbit = null
+	if dead or health.hp <= 0:   # the kneel (BossKit.finisher) and the death: nothing it made may hurt now
+		for n in _owned:
+			if is_instance_valid(n):
+				n.queue_free()
+		_owned.clear()
+
+
+## Phase 2: cursed ground. A pool stays where the blade lands, never by a stake (the object that answers the
+## gimmick) nor by a gate's door or threshold. The oldest goes when pool_max is reached.
+func _pool(pos: Vector2) -> void:
+	if phase < 2:
+		return
+	var keep: float = pool_radius + pool_keep_clear
+	for st in stakes():
+		if st.global_position.distance_to(pos) <= keep:
+			return
+	for g in get_tree().get_nodes_in_group("arena_gate"):
+		var th := g.get_node_or_null("Threshold") as Node2D
+		var door: Vector2 = g.call("door")
+		if g.global_position.distance_to(pos) <= keep or door.distance_to(pos) <= keep \
+				or (th != null and th.global_position.distance_to(pos) <= keep):
+			return
+	var live: Array[Node] = []
+	for n in _owned:
+		if is_instance_valid(n):
+			live.append(n)
+	_owned = live
+	var pools := 0
+	for n in _owned:
+		if n is BossKit.HazardZone:
+			pools += 1
+	if pools >= pool_max:
+		for n in _owned:
+			if n is BossKit.HazardZone:
+				n.queue_free()
+				_owned.erase(n)
+				break
+	_owned.append(BossKit.zone(self, pos, pool_radius, pool_damage, pool_life, CURSE_COLOR, pool_warm))
 
 
 func _begin_dart(left: int) -> void:
@@ -452,6 +498,7 @@ func _fire_fan() -> void:
 		shot.hit_landed.connect(_curse)
 		get_parent().add_child(shot)
 		shot.global_position = global_position + Vector2(0, -6)
+		_owned.append(shot)
 
 
 func _curse(hb: Hurtbox) -> void:
@@ -603,6 +650,7 @@ func _tick_move(delta: float) -> void:
 				var rad: float = flurry_radius + (14.0 if last else 0.0)
 				if BossKit.strike_circle(self, _spot, rad, dmg, last, CRIMSON):
 					_curse_player()
+				_pool(_spot)
 				BossKit.slash(self, _spot, _dir.angle(), 2.4, rad, STEEL)
 				if last:
 					BossKit.shake(self, 2.0, 0.25)

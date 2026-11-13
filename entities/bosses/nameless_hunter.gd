@@ -56,6 +56,12 @@ const HEAVY := ["void_lance", "decoys", "erasure"]
 @export var erase_arc := 140.0           # TUNE, degrees
 @export var erase_len := 150.0           # TUNE
 @export var erase_damage := 33           # TUNE: 1.5x heavy, avoidable
+@export var mist_radius := 22.0          # TUNE: phase 2, a patch of forget-mist where he blinked in
+@export var mist_damage := 6             # TUNE: a tick, well under the light 16
+@export var mist_life := 5.0             # TUNE
+@export var mist_warm := 0.8             # TUNE: drawn faint first (rule: at least 0.5)
+@export var mist_max := 4                # TUNE: patches alive at once
+@export var mist_keep_clear := 40.0      # TUNE: never this close to a Ga Ward (it answers the gimmick) or a gate
 
 var active := true   # EliteGuard flips it
 var state := State.IDLE
@@ -81,6 +87,7 @@ var _decoys: Array[Vector2] = []
 var _slash_i := 0
 var _slash_total := 2
 var _blast_left := 0.0
+var _owned: Array[Node] = []             # mist patches: freed when he kneels or dies (combat.md 5.3 v7)
 
 
 func _ready() -> void:
@@ -257,6 +264,49 @@ func _clear_all() -> void:
 	_tgs.clear()
 
 
+## What he owns must not outlive the last blow (BossKit.finisher calls this): telegraphs, mist, the Forget lockout
+## (it would keep the player from drawing the finishing glyph), and a faded body (the kneel mark is drawn on it).
+func _clear_attack() -> void:
+	_clear_all()
+	attack_hitbox.deactivate()
+	_hooking = false
+	if dead or health.hp <= 0:
+		for n in _owned:
+			if is_instance_valid(n):
+				n.queue_free()
+		_owned.clear()
+		body.modulate = Color.WHITE
+		var cast: Object = target.get("cast") if target != null else null
+		if cast != null:
+			cast.set("_locked_until", 0)
+
+
+## Phase 2: the court loses its names. Blank ground (forget-mist) stays where he blinked in, never by a Ga Ward
+## (the object that answers Forget) nor by a gate's door or threshold. The oldest goes when mist_max is reached.
+func _mist(pos: Vector2) -> void:
+	if phase < 2:
+		return
+	var keep: float = mist_radius + mist_keep_clear
+	for w in get_tree().get_nodes_in_group("ward"):
+		if w is Node2D and (w as Node2D).global_position.distance_to(pos) <= keep + 48.0:
+			return
+	for g in get_tree().get_nodes_in_group("arena_gate"):
+		var th := g.get_node_or_null("Threshold") as Node2D
+		var door: Vector2 = g.call("door")
+		if g.global_position.distance_to(pos) <= keep or door.distance_to(pos) <= keep \
+				or (th != null and th.global_position.distance_to(pos) <= keep):
+			return
+	var live: Array[Node] = []
+	for n in _owned:
+		if is_instance_valid(n):
+			live.append(n)
+	_owned = live
+	if _owned.size() >= mist_max:
+		_owned[0].queue_free()
+		_owned.remove_at(0)
+	_owned.append(BossKit.zone(self, pos, mist_radius, mist_damage, mist_life, Color(0.8, 0.85, 0.95), mist_warm))
+
+
 ## While faded he cannot be hit.
 func _gone(on: bool) -> void:
 	hurtbox.set_deferred("monitorable", not on and not dead)
@@ -272,6 +322,7 @@ func _land_step() -> void:
 	_clear_all()
 	BossKit.flash_fx(self, _spot + Vector2(0, -8), 20.0, 0.3, MASK)
 	global_position = _spot
+	_mist(_spot)
 	BossKit.ghost(self, MASK, 0.35)
 	attacks += 1
 	_steps_left -= 1
@@ -454,6 +505,7 @@ func _tick_move() -> void:
 				global_position = _spot
 				body.modulate.a = 1.0
 				_gone(false)
+				_mist(_spot)
 				BossKit.flash_fx(self, _spot + Vector2(0, -8), 16.0, 0.25, MASK)
 				BossKit.strike_cone(self, _spot, _facing.angle(), deg_to_rad(slash_arc), slash_len, slash_damage, false, MASK)
 				_slash_i += 1
@@ -532,7 +584,7 @@ func _on_flinch() -> void:
 
 
 func _on_died() -> void:
-	_clear_all()
+	_clear_attack()
 	BossKit.anim_stop(self)
 	super()
 	body.modulate.a = 1.0

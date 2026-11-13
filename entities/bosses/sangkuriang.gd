@@ -13,6 +13,9 @@ const MARKER := Color(1.0, 0.3, 0.3, 0.35)
 const STUNNED := Color(0.7, 0.75, 1.0)
 const TIMBER := Color(0.7, 0.5, 0.25)
 const DAWN := Color(1.0, 0.7, 0.2)
+const SEEP := Color(0.3, 0.6, 0.9)
+const SEEP_X := [-80.0, -56.0, -32.0]       # pool columns, px west of his lair spot: the lake side, one more as dawn nears
+const SEEP_Y := [-72.0, -24.0, 24.0, 72.0]  # pool rows, px from his lair spot
 const HEAVY := ["slam", "cleave", "earthshaker", "roll", "wrath", "timber"]
 
 @export var boss_name_key := "BOSS_SANGKURIANG"
@@ -52,6 +55,10 @@ const HEAVY := ["slam", "cleave", "earthshaker", "roll", "wrath", "timber"]
 @export var wrath_damage := 40         # TUNE: one shard of the Dawn Wrath (~1.1x heavy)
 @export var wrath_windup := 1.6        # TUNE: limit break wind-up
 @export var wrath_recovery := 2.8      # TUNE
+@export var seep_damage := 4           # TUNE: per tick in a seep pool (a light hit is throw_damage; v7 rule: at or below it)
+@export var seep_radius := 18.0        # TUNE
+@export var seep_warm := 0.6           # TUNE: v7 rule: at least 0.5
+@export var seep_life := 120.0         # TUNE: they last until the fake dawn, his fall or a retry
 
 var active := true   # EliteGuard flips it
 var state := State.IDLE
@@ -85,6 +92,8 @@ var _spots: Array[Vector2] = []
 var _land_at: Array[float] = []
 var _done: Array[bool] = []
 var _log: Polygon2D
+var _seep: Array[Node] = []   # phase 2: the dammed lake seeps in (HazardZones)
+var _seep_stage := 0
 
 
 func _ready() -> void:
@@ -116,6 +125,7 @@ func _tick(delta: float) -> void:
 			_deck.clear()
 			BossKit.roar(self, DAWN, 110.0)   # dawn breaks: he flies into a rage
 		enraged = now_enraged
+		_seep_to(1 + mini(2, int(dawn / 0.34)))
 		if dawn >= 0.7:   # the reminder: the post answers the dawn (combat.md 5.3 v7)
 			BossKit.hint(self, "BOSS_HINT_SANGKURIANG")
 			for p: Node in get_tree().get_nodes_in_group("interactable"):
@@ -514,6 +524,30 @@ func _clear_attack() -> void:
 	if is_instance_valid(_log):
 		_log.queue_free()
 	_log = null
+	if dead:   # the kneel (BossKit.finisher sets dead first): nothing he made may hurt the player now
+		_clear_seep()
+		for n in _shots:
+			if is_instance_valid(n):
+				n.queue_free()
+		_shots.clear()
+
+
+## Phase 2 floor: water pools creep in from the lake (west) side, a column more at each third of the dawn. The east
+## (the post, the gate, the threshold) stays dry. The fake dawn drains them (_on_cast).
+func _seep_to(stage: int) -> void:
+	while _seep_stage < stage:
+		var x: float = SEEP_X[_seep_stage]
+		_seep_stage += 1
+		for y: float in SEEP_Y:
+			_seep.append(BossKit.zone(self, home + Vector2(x, y), seep_radius, seep_damage, seep_life, SEEP, seep_warm))
+
+
+func _clear_seep() -> void:
+	for n in _seep:
+		if is_instance_valid(n):
+			n.queue_free()
+	_seep.clear()
+	_seep_stage = 0
 
 
 func _on_health(hp: int, max_hp: int) -> void:
@@ -535,6 +569,7 @@ func _on_cast(glyph_id: String, _score: float) -> void:
 		if p is ArenaPost and p.post_id == post_id and p.global_position.distance_to(target.global_position) <= post_range:
 			dawn = 0.0
 			enraged = false
+			_clear_seep()
 			_deck.clear()
 			_enter(State.STUN)
 			BossKit.open(self, stun_time + (sabotage_stun_bonus if _sabotaged() else 0.0))
@@ -554,6 +589,7 @@ func _on_flinch() -> void:
 func _on_died() -> void:
 	_move = ""
 	_clear_attack()
+	_clear_seep()
 	for n in _shots:
 		if is_instance_valid(n):
 			n.queue_free()

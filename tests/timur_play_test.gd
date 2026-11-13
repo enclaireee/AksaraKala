@@ -44,7 +44,7 @@ const ROUTE := [
 	"do:keris_gandring", "pick:1", "q:mq3=active:20", "flag:choice_sink",
 	# 3.21 H4 and the joined mask, then 3.22 the Nameless Hunter and the riders home
 	"do:hunter_mask_4", "q:mq3=active:20", "do:mask_joined", "q:mq3=active:21",
-	"do:nameless_hunter", "q:mq3=done", "beat:hunter_name", "q:mq4=active:0",
+	"do:reh_hunter", "cast:sunda_ga", "do:nameless_hunter", "q:mq3=done", "beat:hunter_name", "q:mq4=active:0",
 ]
 
 var fails := 0

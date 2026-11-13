@@ -186,6 +186,9 @@ Boss HP = mean class damage per second for the reference player x target fight t
 - The four story bosses (Captain, Barma Wijaya, Hariang Banga, the Hunter) use the same formula as the rows above (`balance_model.py`, section 7; points spent 5, 9, 15, 19, Ingatan rank 0, 1, 2, 3). All numbers are **TUNE**. Their Ilmu drops (bestiary.md) add 1,170 to the main-path income and are **not** in the section 2.2 and 8.2 income model yet: either halve them or accept about +1 level at Mataram and +3 at Timur, then re-run the model. Decision for the playtest.
 - Other minibosses: HP = about 40 s at that zone's damage per second, about 1100 in Sunda (Sandekala) and 1400 in Mataram.
 
+### 7.2 Floor hazards and the kneel (boss fights v7, 2026-11-13, **TUNE**)
+Phase-2 floor zones tick every 0.5 s. The model (`balance_model.py` 7.2) assumes a blunder costs 3 ticks and happens twice a fight, and asserts: one blunder costs no more than that boss's light hit, a fight's blunders no more than 25% of the reference HP (about one heavy hit). Ticks: Captain 5, Sangkuriang 4, Sandekala 3 (was 5), Barma 6, Bondowoso 6, Hariang Banga 6, Buto Ijo 7 (was 8), Keris 7, Hunter 6, Kala 8. Boss HP and hit damage are unchanged: the kneel adds at most 4 s with no risk, and the retry at the gate removes the walk back, so the target fight times and the "median 2 tries" target stand until a playtest says otherwise.
+
 ### 7.1 Making "1-3 tries" true
 - A petilasan sits at most about 20 seconds' walk from every boss door ([world.md](world.md) already puts one before each boss).
 - Boss phase 2 starts at 50% HP and is telegraphed with a short pause, so the player learns the second half on try 2.

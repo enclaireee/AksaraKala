@@ -70,6 +70,15 @@ const HEAVY := ["pulse", "hands", "meteor", "beams", "stop", "ruwatan"]
 @export var beams_damage := 36         # TUNE, heavy
 @export var ruwatan_windup := 2.4      # TUNE: the long telegraph of the limit break
 @export var ruwatan_damage := 58       # TUNE, ultimate (~1.5x heavy), always avoidable
+@export var crack_every := 9.0         # TUNE: seconds between new eclipse cracks (phase 2 and 3)
+@export var crack_count_p2 := 2        # TUNE: cracks at a time in phase 2 (each is a row of 3 patches)
+@export var crack_count_p3 := 4        # TUNE: and in phase 3
+@export var crack_radius := 14.0       # TUNE: one patch
+@export var crack_damage := 8          # TUNE: a tick, well under the light 18
+@export var crack_life := 7.0          # TUNE
+@export var crack_warm := 0.8          # TUNE: drawn faint first (rule: at least 0.5)
+@export var crack_near := 72.0         # TUNE: never this close to him (the shield glyphs are drawn at him) ...
+@export var crack_far := 150.0         # TUNE: ... nor beyond this from the arena centre
 
 var state := State.IDLE
 var state_time := 0.0
@@ -99,6 +108,8 @@ var _marks: Array[Polygon2D] = []
 var _fx: Array[Node] = []
 var _impacts: Array[Dictionary] = []
 var _spots: Array[Vector2] = []
+var _owned: Array[Node] = []   # eclipse cracks: freed when he kneels or dies (combat.md 5.3 v7)
+var _crack_t := 0.0
 var _ring: Line2D
 var _fill: Polygon2D
 var _shield: Polygon2D
@@ -172,6 +183,11 @@ func _tick(delta: float) -> void:
 			_open_left -= delta
 			if _open_left <= 0.0:
 				_raise_shield()
+	if phase >= 2 and engaged and state != State.PAUSE:
+		_crack_t -= delta
+		if _crack_t <= 0.0:
+			_crack_t = crack_every
+			_open_cracks()
 	var k := wind_p3 if phase >= 3 else 1.0
 	match state:
 		State.IDLE:
@@ -745,6 +761,52 @@ func _clear_attack() -> void:
 	_spots.clear()
 	_ring = null
 	_fill = null
+	if dead or health.hp <= 0:   # the kneel (BossKit.finisher) and the death: no crack may hurt now
+		for n in _owned:
+			if is_instance_valid(n):
+				n.queue_free()
+		_owned.clear()
+
+
+## Phase 2 and 3: the floor is his maw. Cracks of eclipse light open, a row of three patches each, between
+## `crack_near` and `crack_far` from the arena centre and never by him, a gate's door or its threshold.
+## The previous cracks close first, so at most 4 x 3 small patches (about 10% of the ring) are open.
+func _open_cracks() -> void:
+	for n in _owned:
+		if is_instance_valid(n):
+			n.queue_free()
+	_owned.clear()
+	var want: int = crack_count_p3 if phase >= 3 else crack_count_p2
+	var tries := 0
+	while want > 0 and tries < 40:
+		tries += 1
+		var ang := randf() * TAU
+		var dir := Vector2.from_angle(ang)
+		var mid := home + dir * randf_range(crack_near + 20.0, crack_far - 20.0)
+		var tang := dir.orthogonal()
+		var ok := true
+		for j in 3:
+			if not _crack_ok(mid + tang * 24.0 * (j - 1)):
+				ok = false
+		if not ok:
+			continue
+		for j in 3:
+			_owned.append(BossKit.zone(self, mid + tang * 24.0 * (j - 1), crack_radius, crack_damage, crack_life, VIOLET, crack_warm))
+		want -= 1
+	BossKit.ring_fx(self, global_position, 60.0, 0.4, VIOLET)
+
+
+func _crack_ok(p: Vector2) -> bool:
+	var keep: float = crack_radius + 24.0
+	if global_position.distance_to(p) < crack_near or home.distance_to(p) > crack_far:
+		return false
+	for g in get_tree().get_nodes_in_group("arena_gate"):
+		var th := g.get_node_or_null("Threshold") as Node2D
+		var door: Vector2 = g.call("door")
+		if g.global_position.distance_to(p) <= keep or door.distance_to(p) <= keep \
+				or (th != null and th.global_position.distance_to(p) <= keep):
+			return false
+	return true
 
 
 # --- the shield ---

@@ -60,6 +60,17 @@ func _bosses() -> Array:
 		return b.get("active") != false and h != null and (h.hp > 0 or b.has_meta("kneeling")))
 
 
+## Past every gate's threshold. One gate: its half-plane. Gates on opposite mouths (kg_pamali): the strip between them,
+## so a player on the far bank is not "inside" by the near gate's reckoning.
+func _inside(at: Vector2) -> bool:
+	for g in get_tree().get_nodes_in_group("arena_gate"):
+		var th := g.get_node_or_null("Threshold") as Node2D
+		var d: Vector2 = DIRS.get(String(g.get("side")), Vector2.LEFT)
+		if th == null or (at - th.global_position).dot(d) <= 0.0:
+			return false
+	return true
+
+
 func enter() -> void:
 	if entered or _bosses().is_empty():
 		return
@@ -84,8 +95,7 @@ func _physics_process(delta: float) -> void:
 		# A boss that wakes while the player already stands inside (Sangkuriang, by the cloth on the post):
 		# the fight starts where they stand. ponytail: "inside" is the half-plane past the threshold.
 		var p := get_tree().get_first_node_in_group("player") as Node2D
-		if _live_before == 0 and not live.is_empty() and _t > 0.5 and p != null \
-				and (p.global_position - $Threshold.global_position).dot(_dir()) > 0.0:
+		if _live_before == 0 and not live.is_empty() and _t > 0.5 and p != null and _inside(p.global_position):
 			enter()
 	_live_before = live.size()
 	var want: bool = entered and live.any(func(b: Node) -> bool: return bool(b.get("engaged")))

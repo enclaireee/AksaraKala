@@ -4,7 +4,7 @@ extends Zone
 const MAP := [
 	"#############################NN#############################",
 	"#############################AA#############################",
-	"##########################___n____##########################",
+	"##########################__Rn____##########################",
 	"#####################__________________#####################",
 	"##################________________________##################",
 	"################____________________________################",
@@ -46,6 +46,7 @@ const SPOTS := {
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "desa_purwa", "spawn_id": "from_gua_kala"}, "tile": "_"},   # exit to desa_purwa (south edge, the lit door, 2 tiles)
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq5_3"}, "tile": "_"},   # kabut, lifts on the boss (one per tile)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kala_exit", "size": Vector2i(4,2)}, "tile": "_"},   # trigger, quest marker kala_exit (4x2)
+	"R": {"scene": "res://entities/world/rehearsal.tscn", "props": {"id": "reh_kala", "glyph": "jawa_ka", "look": "lock", "boss": "batara_kala"}, "tile": "_"},   # rehearsal lock for Kala (5.12): a sealed glyph lock in the corridor between the gate and the threshold, by the arrival spawn, so it is reachable before Kala wakes (the corridor is all that lies outside the threshold; the gate stands on the map edge). Cast Jawa Ka on it (rehearsal.tscn, id `reh_kala`)
 }
 
 

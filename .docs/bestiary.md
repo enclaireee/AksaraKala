@@ -56,6 +56,7 @@ Lush sawah, bamboo forests, tea terraces, and the Tangkuban Perahu volcanic crat
   - *Mechanic:* Striking torches illuminates the gorge. When all 4 are lit, Sandekala cannot fade and remains vulnerable.
 
 #### Main Bosses
+- Boss fights v7 (2026-11-13): each boss's phase-2 floor change, kneel glyph and rehearsal object are listed in [combat.md](combat.md) 5.3 and [quests.md](quests.md) §10. Sandekala's zone tick is 3 and Buto Ijo's 7.
 - **Boss: Faceless Captain** (`ts_kawah`, lair entrance): HP 1800, Dmg 16/36, Ilmu 150.
   - Spear sweeps (120° arc, 16 dmg) and charging lunges (6-tile line, 36 dmg).
   - *Muster (66% and 33% HP):* Raises spear to summon 2 Faceless reinforcements. Casting Sunda `Ca` (Burst) during the 1.2 s muster disrupts the call and stuns the Captain for 2.0 s.

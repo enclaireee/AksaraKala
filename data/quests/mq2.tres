@@ -142,7 +142,7 @@ marker = {"zone": "mt_candi", "id": "candi_crypt_hall"}
 [sub_resource type="Resource" id="s18"]
 script = ExtResource("2")
 objective = "Q_MQ2_S18_OBJ"
-on = "memory_done:k3_lesung"
+all = [{"on": "memory_done:k3_lesung", "set_flag": "mq2_h2", "objective": "Q_MQ2_S18_P1"}, {"on": "clue_examined:reh_bondowoso", "set_flag": "", "objective": "Q_MQ2_S18_P2"}]
 set_flag = "mq2_h2"
 recap = "Q_MQ2_S18_DONE"
 marker = {"zone": "mt_candi", "id": "k3_lesung"}
@@ -182,7 +182,7 @@ marker = {"zone": "kg_pamali", "id": "ki_sumarto"}
 [sub_resource type="Resource" id="s23"]
 script = ExtResource("2")
 objective = "Q_MQ2_S23_OBJ"
-on = "clue_examined:hariang_letters"
+all = [{"on": "clue_examined:hariang_letters", "set_flag": "mq2_h3", "objective": "Q_MQ2_S23_P1"}, {"on": "clue_examined:reh_hariang", "set_flag": "", "objective": "Q_MQ2_S23_P2"}]
 set_flag = "mq2_h3"
 recap = "Q_MQ2_S23_DONE"
 marker = {"zone": "kg_pamali", "id": "hariang_letters"}

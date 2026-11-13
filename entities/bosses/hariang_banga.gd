@@ -65,6 +65,8 @@ const HEAVY: Array[String] = ["lunge", "iaido", "parry", "river_lunge", "flood",
 @export var flood_radius := 26.0       # TUNE
 @export var flood_damage := 20         # TUNE
 @export var pool_damage := 6           # TUNE: tick of a lingering pool
+@export var pool_warm := 0.5           # TUNE: a pool is drawn as a warning this long before it hurts (>= 0.5)
+@export var pool_keep_clear := 40.0    # TUNE (v7): no lingering pool this close to an arena gate's threshold or door
 @export var tsunami_windup := 1.6      # TUNE: limit break, long telegraph
 @export var tsunami_arc := 4.4         # TUNE: radians; the wedge behind him stays safe
 @export var tsunami_reach := 112.0     # TUNE
@@ -102,6 +104,7 @@ var _blast_left := 0.0
 var _ghost_t := 0.0
 var _dt := 0.0
 var _floored := false      # a raw hit reached 0 hp: no guard refund, he yields
+var _owned: Array[Node] = []   # pools, blade waves and shots he made: freed at the kneel and at the yield
 
 
 func _ready() -> void:
@@ -116,6 +119,7 @@ func _ready() -> void:
 
 
 func _tick(delta: float) -> void:
+	_prune_owned()
 	state_time += delta
 	open_left -= delta
 	_ult_cd = maxf(0.0, _ult_cd - delta)
@@ -198,6 +202,33 @@ func _clear_marks() -> void:
 		if is_instance_valid(n):
 			n.queue_free()
 	_tg.clear()
+
+
+## The kneel (BossKit.finisher calls it after setting dead) and the yield: no telegraph, pool, wave or blade outlives the last blow.
+func _clear_attack() -> void:
+	_clear_marks()
+	for n in _owned:
+		if is_instance_valid(n):
+			n.queue_free()
+	_owned.clear()
+
+
+func _prune_owned() -> void:
+	var keep: Array[Node] = []
+	for n in _owned:
+		if is_instance_valid(n):
+			keep.append(n)
+	_owned = keep
+
+
+## A lingering pool (phase 2 floor). Skipped near an arena gate's threshold or door, so the way in and the retry spot stay dry.
+func _pool(at: Vector2, radius: float, life: float) -> void:
+	for g in get_tree().get_nodes_in_group("arena_gate"):
+		var th := g.get_node_or_null("Threshold") as Node2D
+		var door: Vector2 = g.call("door")
+		if (th != null and at.distance_to(th.global_position) < pool_keep_clear + radius) or at.distance_to(door) < pool_keep_clear + radius:
+			return
+	_owned.append(BossKit.zone(self, at, radius, pool_damage, life, WATER, pool_warm))
 
 
 func _goto(stage: int) -> void:
@@ -380,6 +411,7 @@ func _strike() -> void:
 			BossKit.slash(self, global_position, facing, 1.4, 28.0, WATER)
 			var s := BossKit.shoot(self, global_position + Vector2(0, -8), facing, wave_speed, wave_damage, WATER, "blade", 7.0, wave_length / wave_speed)
 			s.pierce = true
+			_owned.append(s)
 			_finish(recovery)
 
 
@@ -449,7 +481,7 @@ func _do_counter(to_t: Vector2) -> void:
 		BossKit.strike_cone(self, global_position, facing, 2.4, counter_reach, counter_damage, true, Color(1.0, 1.0, 0.8))
 	else:
 		BossKit.slash(self, global_position, facing, 1.6, 30.0, Color(1.0, 1.0, 0.8))
-		BossKit.shoot(self, global_position + Vector2(0, -8), facing, 220.0, counter_damage, Color(1.0, 1.0, 0.8), "blade", 7.0, 1.2, 0.0, true)
+		_owned.append(BossKit.shoot(self, global_position + Vector2(0, -8), facing, 220.0, counter_damage, Color(1.0, 1.0, 0.8), "blade", 7.0, 1.2, 0.0, true))
 	BossKit.anim(self, "slam", 12.0, false)
 	BossKit.punch(self, 1.2, 0.85, 0.25)
 	BossKit.shake(self, 2.5, 0.25)
@@ -485,7 +517,7 @@ func _act_river(_to_t: Vector2) -> void:
 				BossKit.hurt_player(self, river_damage, false)
 			if global_position.distance_to(_from) >= river_length or _sub > 0.6 or (_sub > 0.05 and is_on_wall()):
 				velocity = Vector2.ZERO
-				BossKit.zone(self, global_position, 16.0, pool_damage, 3.0, WATER, 0.4)
+				_pool(global_position, 16.0, 3.0)
 				BossKit.ring_fx(self, global_position, 24.0, 0.3, WATER)
 				_count -= 1
 				if _count > 0:
@@ -518,7 +550,7 @@ func _act_flood() -> void:
 				for s in _spots:
 					BossKit.sparks(self, s, WATER, 10, 70.0, 0.35)
 					BossKit.ring_fx(self, s, flood_radius, 0.3, WATER)
-					BossKit.zone(self, s, flood_radius, pool_damage, 3.5, WATER, 0.5)
+					_pool(s, flood_radius, 3.5)
 					if BossKit.in_circle(BossKit.player_point(self), s, flood_radius):
 						hit = true
 				if hit:
@@ -539,7 +571,7 @@ func _act_tsunami() -> void:
 			if _sub >= tsunami_windup:
 				BossKit.anim(self, "slam", 12.0, false)
 				BossKit.strike_cone(self, global_position, facing, tsunami_arc, tsunami_reach, tsunami_damage, true, WATER)
-				BossKit.wave(self, global_position, 124.0, 150.0, tsunami_wave_damage, WATER, false)
+				_owned.append(BossKit.wave(self, global_position, 124.0, 150.0, tsunami_wave_damage, WATER, false))
 				BossKit.punch(self, 1.25, 0.8, 0.3)
 				BossKit.shake(self, 3.0, 0.4)
 				_goto(1)
@@ -595,9 +627,14 @@ func _on_health(hp: int, max_hp: int) -> void:
 		_check_yield.call_deferred()   # after _on_hurt's guard refund
 
 
+## He yields at 15%. Where the zone has an arena gate he first kneels, the keris at his side, until the Na dash knocks it
+## from his hand (BossKit.finisher: the glyph gives the flourish, the timer or a blow ends it plainly); then _yield runs as ever.
 func _check_yield() -> void:
 	if not dead and health.hp * 100 <= health.max_hp * yield_at:
-		_yield()
+		health.invincible_time = INF   # the kneel: nothing hurts him, he cannot fall to 0 hp and kneel twice
+		BossKit.finisher(self, _yield)
+		if has_meta("kneeling"):   # a blow he cannot feel still ends the kneel (the finisher listens for hurt)
+			hurtbox.dodged.connect(func(hb: Hitbox) -> void: hurtbox.hurt.emit(hb))
 
 
 func _on_flinch() -> void:
@@ -609,11 +646,15 @@ func _on_flinch() -> void:
 func _on_died() -> void:
 	health.hp = 1
 	_floored = true
+	_yield()   # direct: the kneel already happened (BossKit.finisher) or there is no gate
 
 
 ## EnemyBase death minus the free and enemy_killed: he stops, sheathes and stays, inert.
 func _yield() -> void:
+	if dead:
+		return
 	_stop_attack()
+	_clear_attack()
 	_enter(State.RECOVER)
 	dead = true
 	engaged = false

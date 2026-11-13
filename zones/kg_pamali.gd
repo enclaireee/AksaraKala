@@ -11,22 +11,22 @@ const MAP := [
 	"#...bbb.................~~~~~~~~~~~~........bbb............#",
 	"#.......................~~~~~~~~~~~~.......................#",
 	"#.......................~~~~~~~~~~~~.......................#",
-	"#.......................~~~~~~~~~~~~.......................#",
-	"#.......................,,,,,,,,,,,,.......................#",
-	"#.......................,,,,,r,,,,,,.......................#",
-	"#.......................,,,r,,,,,,,,....L.........bbb......#",
-	"#.......................,,,,,,,,,,,,..............bbb......#",
-	"#...............S.......,,,,,,,,,,,,..QK..........bbb......#",
-	"#...............N....c..,,,,,,,,,,,,......P................#",
-	"Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,,,,,,,,,,,,yY",
-	"X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
-	"#.......................,,,,,s,,,,,,H......................#",
-	"#.........1.............,,,,,,,,,,,,....2..................#",
-	"#.......................,,,,,,,,,,,,.......................#",
-	"#.......................,,,,,,,,r,,,.......................#",
-	"#.......................,,,,,,r,,,,,.......................#",
-	"#.......................,,,,,,,,,,,,.......................#",
-	"#.......................~~~~~~~~~~~~.......................#",
+	"#.......................~~~~~~~~~~~~r......................#",
+	"#......................r,,,,,,,,,,,,.r.....................#",
+	"#......................r,,,,,r,,,,,,.r.....................#",
+	"#......................r,,,r,,,,,,,,.r..L.........bbb......#",
+	"#......................r,,,,,,,,,,,,.r............bbb......#",
+	"#...............S......r,,,,,,,,,,,,.rQK..........bbb......#",
+	"#...............N....c.r,,,,,,,,,,,,.r....P................#",
+	"Xe,,,,,,,,,,,,,,,,,,,,,A,,,,,,,,,B,,,a,,,,,,,,,,,,,,,,,,,,yY",
+	"X,,,,,,,,,,,,,,,,,,,,,,A,,,,,,,,,,,,,a,,,,,,,,,,,,,,,,,,,,,Y",
+	"#......................r,,,,,s,,,,,,Hr..h..................#",
+	"#.........1............r,,,,,,,,,,,,.r..2..................#",
+	"#......................r,,,,,,,,,,,,.r.....................#",
+	"#......................r,,,,,,,,r,,,.r.....................#",
+	"#......................r,,,,,,r,,,,,.r.....................#",
+	"#......................r,,,,,,,,,,,,.r.....................#",
+	"#.......................~~~~~~~~~~~~r......................#",
 	"#.......................~~~~~~~~~~~~.......................#",
 	"#.......................~~~~~~~~~~~~.......................#",
 	"#...............g.......~~~~~~~~~~~~.......................#",
@@ -55,6 +55,9 @@ const SPOTS := {
 	"Q": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "sumarto_show", "memory_id": "k_iii", "cond": "flag:mq2_8"}, "tile": "."},   # clue, Ki Sumarto's show at the ford camp; pulls you into K-III (MQ2 2.22, `memory_done:k_iii`, sets `mq2_h5`; `memory_id` `k_iii`, scene specified in mataram.md)
 	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hariang_letters", "cond": "flag:mq2_h5"}, "tile": "."},   # clue, Hariang Banga's camp letters to his mother, the person-boss clue (MQ2 2.23, `clue_examined:hariang_letters`, sets `mq2_h3`; appears once K-III is done, then he comes to the ford)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "galuh_2"}, "tile": "."},   # petilasan galuh_2, at the river camp
+	"h": {"scene": "res://entities/world/rehearsal.tscn", "props": {"id": "reh_hariang", "glyph": "jawa_na", "look": "post", "boss": "hariang_banga"}, "tile": "."},   # rehearsal, a post in the east bank grass by the camp, 3 tiles outside the east gate and one row south of the road (he wades in from this side after the letters, so the west bank is behind the fight): cast Na through it to learn the dash-strike that knocks the keris from Hariang Banga's hand (boss fights v7, quests.md 10; id fixed, the 2.23 sub-goal reads `clue_examined:reh_hariang`)
+	"A": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "e"}, "tile": ","},   # arena gate (combat.md 5.3 v7), the ford's west mouth on the road; open until a threshold two tiles inside is crossed
+	"a": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "w"}, "tile": ","},   # arena gate, the ford's east mouth on the road (the side the player stands on at 2.23-2.24)
 	"N": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nagawiru", "cond": "flag:mq2_7c"}, "tile": "."},   # write spot nagawiru, on the Pamali stone (MQ2 2.21)
 }
 

@@ -54,7 +54,7 @@ const ROWS := [0.2, 0.4, 0.6, 0.8]   # TUNE: per phase, how far from his start t
 @export var seed_speed := 130.0        # TUNE
 @export var stomp_windup := 0.7        # TUNE
 @export var stomp_damage := 18         # TUNE, light
-@export var zone_damage := 8           # TUNE: bramble patch tick
+@export var zone_damage := 7           # TUNE: bramble patch tick (balance_model.py section 7.2: 3 ticks stay under one light hit)
 @export var leap_windup := 0.9         # TUNE
 @export var leap_time := 0.5           # TUNE: seconds in the air
 @export var leap_radius := 36.0        # TUNE
@@ -96,6 +96,7 @@ var _rec := 1.2
 var _ghost_t := 0.0
 var _body_pos := Vector2.ZERO
 var _tgs: Array[Node2D] = []
+var _owned: Array[Node] = []           # his zones, seeds and waves: freed when he kneels or dies (combat.md 5.3 v7)
 
 
 func _ready() -> void:
@@ -441,6 +442,34 @@ func _clear_attack() -> void:
 		if is_instance_valid(t):
 			t.queue_free()
 	_tgs.clear()
+	if dead or health.hp <= 0:   # the kneel (BossKit.finisher) and the death: nothing he made may hurt now
+		for n in _owned:
+			if is_instance_valid(n):
+				n.queue_free()
+		_owned.clear()
+		body.position = _body_pos   # a hunger-leap cut short in the air
+
+
+## A bramble patch of the stomp: never over a pouch field (the lure spot) nor the gate's door and threshold.
+func _bramble(pos: Vector2) -> void:
+	for f in fields:
+		if is_instance_valid(f) and f.global_position.distance_to(pos) < f.radius + 24.0:
+			return
+	for g in get_tree().get_nodes_in_group("arena_gate"):
+		var th := g.get_node_or_null("Threshold") as Node2D
+		var door: Vector2 = g.call("door")
+		if door.distance_to(pos) < 64.0 or (th != null and th.global_position.distance_to(pos) < 48.0):
+			return
+	_prune_owned()
+	_owned.append(BossKit.zone(self, pos, 24.0, zone_damage, 5.0, Color(0.3, 0.7, 0.2), 0.7))
+
+
+func _prune_owned() -> void:
+	var keep: Array[Node] = []
+	for n in _owned:
+		if is_instance_valid(n):
+			keep.append(n)
+	_owned = keep
 
 
 # --- scripted moves (State.MOVE): _move names it, _stage and state_time drive it ---
@@ -503,7 +532,9 @@ func _tick_move(delta: float) -> void:
 			if state_time >= seed_windup:
 				attacks += 1
 				var n: int = 7 if phase >= 2 else 5
-				BossKit.fan(self, at + Vector2(0, -8), _dir.angle(), deg_to_rad(70.0), n, seed_speed, seed_damage, GREEN, "shard", 4.0, 2.5)
+				_prune_owned()
+				for sh in BossKit.fan(self, at + Vector2(0, -8), _dir.angle(), deg_to_rad(70.0), n, seed_speed, seed_damage, GREEN, "shard", 4.0, 2.5):
+					_owned.append(sh)
 				BossKit.sparks(self, at + Vector2(0, -8), GREEN, 8, 60.0, 0.3)
 				if phase >= 2 and _stage == 0:
 					_aim()   # a second volley, re-aimed, with its own telegraph
@@ -519,17 +550,18 @@ func _tick_move(delta: float) -> void:
 				BossKit.shake(self, 1.5, 0.2)
 				var reach: Array[float] = [56.0, 96.0, 136.0]
 				for r in reach:
-					BossKit.zone(self, at + _dir * r, 24.0, zone_damage, 5.0, Color(0.3, 0.7, 0.2), 0.7)
+					_bramble(at + _dir * r)
 				if phase >= 3:
-					BossKit.zone(self, at + _dir.rotated(0.9) * 80.0, 24.0, zone_damage, 5.0, Color(0.3, 0.7, 0.2), 0.7)
-					BossKit.zone(self, at + _dir.rotated(-0.9) * 80.0, 24.0, zone_damage, 5.0, Color(0.3, 0.7, 0.2), 0.7)
+					_bramble(at + _dir.rotated(0.9) * 80.0)
+					_bramble(at + _dir.rotated(-0.9) * 80.0)
 				_end_move()
 		"hunger_leap":
 			_tick_leap(at, delta)
 		"quake":
 			if state_time >= quake_windup:
 				attacks += 1
-				BossKit.wave(self, at, 130.0, 100.0, quake_damage, HUNGER, true)
+				_prune_owned()
+				_owned.append(BossKit.wave(self, at, 130.0, 100.0, quake_damage, HUNGER, true))
 				BossKit.ring_fx(self, at, 40.0, 0.3, HUNGER)
 				BossKit.punch(self, 1.12, 0.9, 0.2)
 				BossKit.shake(self, 2.0, 0.2)

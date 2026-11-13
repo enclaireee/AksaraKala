@@ -692,6 +692,8 @@ class Mark extends Node2D:
 const KNEEL := 4.0   # TUNE
 
 static func finisher(host: EnemyBase, die: Callable) -> void:
+	if host.is_in_group("boss") and host.unique_id != "":   # the codex shows its "Cara melawan" line from here on (tab_codex.gd)
+		host.get_node("/root/Events").weakness_triggered.emit(host.unique_id)
 	if host.finish_glyph == "" or not host.is_in_group("boss") or host.get_tree().get_first_node_in_group("arena_gate") == null:
 		die.call()
 		return

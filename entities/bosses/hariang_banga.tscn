@@ -26,6 +26,7 @@ poise_ratio = 1.0
 ilmu = 320
 kind = "hariang_banga"
 unique_id = "hariang_banga"
+finish_glyph = "jawa_na"
 
 [node name="Body" type="Polygon2D" parent="."]
 antialiased = false

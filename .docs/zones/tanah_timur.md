@@ -861,7 +861,7 @@ Y,,,,,,,,,,,,,,,............################################
 | `K` | kabut K2, east exit of the arena (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq3_4"}` | path | 2 |
 | `Z` | exit to tt_pasir (east edge, behind K2, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pasir", spawn_id:"from_tt_ladang"}` | path | 2 |
 | `z` | spawn, arrival from tt_pasir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
-| `B` | boss Buto Ijo (arena 28x16: x 29..56, y 9..24) | `res://entities/bosses/buto_ijo.tscn` | `{}` | floor | 1 |
+| `B` | boss Buto Ijo (arena 28x16: x 29..56, y 9..24) | `res://entities/bosses/buto_ijo.tscn` | `{finish_glyph:"jawa_ra"}` | floor | 1 |
 | `G` | arena gate (combat.md 5.3 v7) at the arena's west mouth; open until the threshold two tiles inside is crossed; the east mouth is shut by kabut K2 | `res://entities/world/arena_gate.tscn` | `{side:"e"}` | path | 4 |
 | `E` | encounter timur_ladang | `res://entities/world/encounter.tscn` | `{area_id:"timur_ladang", size:Vector2i(30,14), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(8,0)], [res://entities/enemies/keris_hantu.tscn, Vector2i(4,-4)], [res://entities/enemies/banaspati.tscn, Vector2i(4,4)], [res://entities/enemies/kemamang.tscn, Vector2i(-6,-3)]]]}` | grass | 1 |
 | `x` | loose keris hantu, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/keris_hantu.tscn` | `{}` | grass | 1 |
@@ -985,20 +985,20 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #...........rr....#__________________________________#.....#
 #.................#__________________________________#..rr.#
 #.................#__________________________________#..rr.#
-#.................#_________________H________________#.....#
-#.................#___________N______________________#.....#
+#.................#________rr_______H_______rr_______#.....#
+#.................#________rr_N_____________rr_______#.....#
 #.................#__________________________________#.....#
 #.................#_________________R________________#.....#
 #.................#__________________________________#.....#
-#.................A__________________________________#.....#
+#.............Q...A__________________________________#.....#
 Xe,,,,,,,,,,,,,,,,A__E__S___________B___C________D___#.....#
 X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
-#.................A__________________________________#.....#
+#.............V...A__________________________________#.....#
 #.................#_____________W___K________________#.....#
 #.................#__________________________________#.....#
 #.................#__________________________________#.....#
-#.................#__________________________________#..rr.#
-#.................#__________________________________#..rr.#
+#.................#________rr_______________rr_______#..rr.#
+#.................#________rr_______________rr_______#..rr.#
 #.................#__________________________________#.....#
 #.................#__________________________________#.....#
 #...........rr....#__________________________________#.....#
@@ -1017,7 +1017,7 @@ X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
 | `X` | exit to tt_pasir (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pasir", spawn_id:"from_tt_candi"}` | path | 2 |
 | `e` | spawn, arrival from tt_pasir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
 | `B` | boss Mpu Gandring's Keris (3.19, arena centre; wakes after the `shrine_sight` beat) | `res://entities/bosses/keris_gandring.tscn` | `{cond:"flag:beat_shrine_sight", finish_glyph:"jawa_ha"}` | floor | 1 |
-| `H` | boss the Nameless Hunter, after the keris (MQ3 3.22) | `res://entities/bosses/nameless_hunter.tscn` | `{cond:"flag:mq3_h6", finish_glyph:"sunda_ga"}` | floor | 1 |
+| `H` | boss the Nameless Hunter, after the keris (MQ3 3.22; wakes after the `hunter_shrine` restore beat, so the fight never starts under the beat) | `res://entities/bosses/nameless_hunter.tscn` | `{cond:"flag:mq3_h6,flag:beat_hunter_shrine", finish_glyph:"sunda_ga"}` | floor | 1 |
 | `A` | arena gate (combat.md 5.3 v7) at the court's west mouth, shared by the Keris and the Hunter; open until the threshold two tiles inside is crossed | `res://entities/world/arena_gate.tscn` | `{side:"e"}` | path | 4 |
 | `1` | curse stake 1 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:1}` | floor | 1 |
 | `2` | curse stake 2 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:2}` | floor | 1 |
@@ -1034,6 +1034,8 @@ X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
 | `C` | clue, the last mask fragment where the keris lay (3.21 H4; opens memory `h4`; appears when `flag:beat_keris`) | `res://entities/world/clue.tscn` | `{clue_id:"hunter_mask_4", memory_id:"h4", cond:"flag:beat_keris"}` | floor | 1 |
 | `D` | clue, the joined mask at the shrine door (3.21 K6; opens memory `k6_servant`; appears when `flag:mq3_h7`) | `res://entities/world/clue.tscn` | `{clue_id:"mask_joined", memory_id:"k6_servant", cond:"flag:mq3_h7"}` | floor | 1 |
 | `E` | trigger, inner sanctum entry via Laras's wind-tunnel shortcut (3.18 `candi_inner_sanctum`) | `res://entities/world/trigger.tscn` | `{trigger_id:"candi_inner_sanctum", size:Vector2i(5,4)}` | floor | 1 |
+| `Q` | rehearsal post for the Keris (3.19): a practice stake outside the west gate, cast Jawa Ha on it (rehearsal.tscn, id `reh_keris`; the practice stakes of 3.4 stand in tt_beringin) | `res://entities/world/rehearsal.tscn` | `{id:"reh_keris", glyph:"jawa_ha", look:"post", boss:"keris_gandring"}` | grass | 1 |
+| `V` | rehearsal shade for the Hunter (3.22): cast Sunda Ga on it; visible once the Keris is beaten (`mq3_7`) (rehearsal.tscn, id `reh_hunter`) | `res://entities/world/rehearsal.tscn` | `{id:"reh_hunter", glyph:"sunda_ga", look:"shade", boss:"nameless_hunter", cond:"flag:mq3_7"}` | grass | 1 |
 
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |

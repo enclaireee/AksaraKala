@@ -80,6 +80,21 @@ if __name__ == '__main__':
         red = 1 - 0.05 * arm
         print(f'{n:12} HP {hp:6.0f} fight {hp / max(d):.0f}-{hp / min(d):.0f}s  light {round(ref * .10 / red)} heavy {round(ref * .22 / red)}')
 
+    print('== 7.2 v7 floor hazards and kneel (boss, tick, light hit, reference HP)')
+    # Phase-2 floor zones tick every 0.5 s (BossKit.HazardZone). A player who blunders into one is assumed to take
+    # HAZ_TICKS ticks before stepping out, HAZ_TIMES times a fight. TUNE. Rules: one blunder costs no more than one
+    # light hit, a fight's blunders no more than 25% of the reference HP (about one heavy hit), and the kneel (BossKit.KNEEL) adds at
+    # most 4 s to a fight without risk, so target fight times stand.
+    HAZ_TICKS, HAZ_TIMES, KNEEL = 3, 2, 4.0
+    for n, p, tick, light in [('Capt', 5, 5, 16), ('Sangkuriang', 6, 4, 16), ('Sandekala', 4, 3, 10), ('Barma', 9, 6, 18),
+                              ('Bondowoso', 12, 6, 18), ('Hariang', 15, 6, 21), ('Buto Ijo', 16, 7, 23),
+                              ('Keris', 18, 7, 23), ('Hunter', 19, 6, 24), ('Kala', 24, 8, 27)]:
+        ref = 80 + 10 * (5.5 + round(p * 0.3))
+        once, fight = tick * HAZ_TICKS, tick * HAZ_TICKS * HAZ_TIMES
+        print(f'{n:12} tick {tick}  blunder {once} (light {light})  per fight {fight} = {fight / ref:.0%} of HP {ref:.0f}  kneel +{KNEEL:.0f}s')
+        assert once <= light, f'{n}: one blunder into the floor costs more than a light hit'
+        assert fight / ref <= 0.25, f'{n}: floor hazards take over 25% of the reference HP in a fight'
+
     print('== 2.2 levels at boss doors (8 Ilmu avg per tier-0 kill)')
     quest = {'Sunda': 60 * 3 + 30 + 90 + 60, 'Mataram': 110 * 3 + 165, 'Timur': 220 * 2 + 330 + 110 + 330, 'Kidul': 190 + 570, 'Kala': 0}
     zones = [('Sunda', 0, 40, 150), ('Mataram', 1, 40, 300), ('Timur', 2, 40, 800), ('Kidul', 3, 30, 700), ('Kala', 4, 10, 0)]

@@ -174,12 +174,12 @@ Roaming packs: Faceless (113,59) (115,60) (114,62). 3 kills, skirtable, outside 
 #################____________H_____________#################
 ###____________##______________M___________#################
 ###__D_________##__________________________#################
-###____________##____________B_____________#################
+###____________##____r_______B________r____#################
 ###____________##_________Q_____O__________#################
 Zz__J__________##________q_________________#################
 Z______________##_________________R________#################
+###____________##____r________________r____#################
 ###____________##__________________________#################
-###____________##____________T_____________#################
 ###____________##__________________________#################
 ###____________##__________________________#################
 ########__#######__________________________#################
@@ -188,14 +188,14 @@ Z______________##_________________R________#################
 #.................#..........,,............................#
 #.................#..........,L............................#
 #.....bbb.........#..........,,...................bbb......#
-#.....bbb.........#...1......,,...................bbb.3....#
+#.....bbb.........#...1...Y..,,...................bbb.3....#
 #.....bbb.........#..........,,...................bbb......#
 #.................#..........,,.....2......................#
 #.................#..........,,............................#
 #...........P.....V..........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX
 #.............C...V..........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X
 #.................#..........,,............................#
-#.................#..........,,............................#
+#.................#..........,T............................#
 #.................#..........,,............................#
 #.....bbb.........#..........,,...................bbb......#
 #.....bbb.........#..........,,...................bbb......#
@@ -235,7 +235,8 @@ Z______________##_________________R________#################
 | `E` | clue, the scraped royal crest on the courtyard gate pillar (a clue on the courtyard gate pillar, part of the g.5 palace walk; id ASSUMED, quests.md names none) | `res://entities/world/clue.tscn` | `{clue_id:"palace_crest"}` | grass | 1 |
 | `D` | clue, the court portrait with its face scraped off; pulls you into K-II (MQG g.17, `clue_examined:court_portrait` sets `mqg_h1`, `memory_id` `k_ii`) | `res://entities/world/clue.tscn` | `{clue_id:"court_portrait", memory_id:"k_ii", cond:"flag:mqg_6b"}` | floor | 1 |
 | `M` | clue, the Hunter's mask fragment behind the throne; pulls you into H2 (MQG g.18, sets `mqg_h3` after `memory_done:h2`, `memory_id` `h2`; appears once K-II is done) | `res://entities/world/clue.tscn` | `{clue_id:"hunter_mask_2", memory_id:"h2", cond:"flag:mqg_h2"}` | floor | 1 |
-| `T` | encounter galuh_hall, the throne-room guards before the boss (MQG g.19 `fight x2`: the guards here, then the champion `L`; the step completes on `L`) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_hall", size:Vector2i(20,8), cond:"flag:mqg_h3,!flag:mqg_7", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-6,-1)], [res://entities/enemies/faceless.tscn, Vector2i(0,2)], [res://entities/enemies/faceless.tscn, Vector2i(6,-1)], [res://entities/enemies/faceless_archer.tscn, Vector2i(8,3)]]]}` | floor | 1 |
+| `Y` | rehearsal, a false reflection (a mirror on a stand) beside the courtyard path outside the throne door: any spell breaks it, the same trick that breaks Barma Wijaya's copies (boss fights v7, quests.md 10; id fixed, a quest sub-goal reads `clue_examined:reh_barma`) | `res://entities/world/rehearsal.tscn` | `{id:"reh_barma", glyph:"", look:"mirror", boss:"barma_wijaya"}` | grass | 1 |
+| `T` | encounter galuh_hall, the palace guards on the courtyard road before the throne room door (MQG g.19 `fight x2`: the guards here, then the champion `L`; the step completes on `L`). v7: moved out of the throne room (its old rect (19..39 x 5..13) covered the arena and the threshold, so it would have started inside the boss fight); cond ends at `mqg_6c` so it never starts again at the boss | `res://entities/world/encounter.tscn` | `{area_id:"galuh_hall", size:Vector2i(20,8), cond:"flag:mqg_h3,!flag:mqg_6c", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-6,-1)], [res://entities/enemies/faceless.tscn, Vector2i(0,2)], [res://entities/enemies/faceless.tscn, Vector2i(6,-1)], [res://entities/enemies/faceless_archer.tscn, Vector2i(8,3)]]]}` | path | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents |
@@ -245,12 +246,12 @@ Z______________##_________________R________#################
 | inner garden | (1,14)-(17,32) 17x19, wall x=18 with a gap (18,22..23) | The palace's inner garden: rest and the camp talk. Gate kabut `V` (18,22..23) flag `lamps_3` | petilasan `P` (12,22) (g.3), Ciung camp `C` (14,23), banyans (6..8,17..19) (6..8,27..29) |
 | cage | (25,6) | SQ-C2: the queen `q` beside the `cage` figure `Q` (26,5), after `mq2` is done | q |
 | portrait gallery | (3,2)-(14,11) 12x10, door (8..9,12..13) | The court portraits, entered from the archive grate (west edge `Z`, trigger `J` sets `mqg_6b`); the door `W` to the courtyard lifts on `mqg_6b`. The king's portrait is the clue (g.17) | clue `D` (5,3), trigger `J` (4,6), kabut `W` (8..9,13) flag `mqg_6b` |
-| throne room | (17,1)-(42,12) 26x12 | The g.9 guards, the boss arena, then the confession and cage staging | guards `T` (29,9) (rect 19..39 x 5..13), boss `B` (29,4), Hunter shadow `H` (29,1), mask clue `M` (31,2), Pangrenyep `Q` (26,5), Ciung `O` (32,5), Hariang `R` (34,7), kabut `K` (29..30,13) flag `mqg_h2`, arena gate `A` (29..30,14) side n |
+| throne room | (17,1)-(42,12) 26x12 | The g.9 guards, the boss arena, then the confession and cage staging | boss `B` (29,4), two mirrored rock columns (21,4) (21,8) (38,4) (38,8) as cover, 26x12 clear floor, Hunter shadow `H` (29,1), mask clue `M` (31,2), Pangrenyep `Q` (26,5), Ciung `O` (32,5), Hariang `R` (34,7), kabut `K` (29..30,13) flag `mqg_h2`, arena gate `A` (29..30,14) side n. Outside the gate: guards `T` (30,25) (rect 20..40 x 21..29, courtyard road), champion `L` (30,16), rehearsal `Y` (26,18) |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
-| `galuh_hall` | `T (29,9)` | 20x8 | W1: Faceless (-6,-1), Faceless (+0,+2), Faceless (+6,-1), Faceless Archer (+8,+3) | One wave, one shooter; cond `flag:mqg_h3,!flag:mqg_7` (g.19, with `keraton_throne_approach` `L`, cond `flag:mqg_h3,!flag:mqg_6c`); its rect (19..39 x 5..13) is south of the boss at (29,4), so the guards are not part of the boss arena. Burst clears the swarm |
+| `galuh_hall` | `T (30,25)` | 20x8 | W1: Faceless (-6,-1), Faceless (+0,+2), Faceless (+6,-1), Faceless Archer (+8,+3) | One wave, one shooter; cond `flag:mqg_h3,!flag:mqg_6c` (g.19, with `keraton_throne_approach` `L`, same cond); v7: its rect (20..40 x 21..29) is on the courtyard road, outside the gate (it used to cover the throne room and the threshold). Burst clears the swarm |
 
 Barma Wijaya `unique_id:"barma_wijaya"` is a boss, not an encounter.
 
@@ -348,22 +349,22 @@ No roaming enemies.
 #...bbb.................~~~~~~~~~~~~........bbb............#
 #.......................~~~~~~~~~~~~.......................#
 #.......................~~~~~~~~~~~~.......................#
-#.......................~~~~~~~~~~~~.......................#
-#.......................,,,,,,,,,,,,.......................#
-#.......................,,,,,r,,,,,,.......................#
-#.......................,,,r,,,,,,,,....L.........bbb......#
-#.......................,,,,,,,,,,,,..............bbb......#
-#...............S.......,,,,,,,,,,,,..QK..........bbb......#
-#...............N....c..,,,,,,,,,,,,......P................#
-Xe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,,,,,,,,,,,,yY
-X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
-#.......................,,,,,s,,,,,,H......................#
-#.........1.............,,,,,,,,,,,,....2..................#
-#.......................,,,,,,,,,,,,.......................#
-#.......................,,,,,,,,r,,,.......................#
-#.......................,,,,,,r,,,,,.......................#
-#.......................,,,,,,,,,,,,.......................#
-#.......................~~~~~~~~~~~~.......................#
+#.......................~~~~~~~~~~~~r......................#
+#......................r,,,,,,,,,,,,.r.....................#
+#......................r,,,,,r,,,,,,.r.....................#
+#......................r,,,r,,,,,,,,.r..L.........bbb......#
+#......................r,,,,,,,,,,,,.r............bbb......#
+#...............S......r,,,,,,,,,,,,.rQK..........bbb......#
+#...............N....c.r,,,,,,,,,,,,.r....P................#
+Xe,,,,,,,,,,,,,,,,,,,,,A,,,,,,,,,B,,,a,,,,,,,,,,,,,,,,,,,,yY
+X,,,,,,,,,,,,,,,,,,,,,,A,,,,,,,,,,,,,a,,,,,,,,,,,,,,,,,,,,,Y
+#......................r,,,,,s,,,,,,Hr..h..................#
+#.........1............r,,,,,,,,,,,,.r..2..................#
+#......................r,,,,,,,,,,,,.r.....................#
+#......................r,,,,,,,,r,,,.r.....................#
+#......................r,,,,,,r,,,,,.r.....................#
+#......................r,,,,,,,,,,,,.r.....................#
+#.......................~~~~~~~~~~~~r......................#
 #.......................~~~~~~~~~~~~.......................#
 #.......................~~~~~~~~~~~~.......................#
 #...............g.......~~~~~~~~~~~~.......................#
@@ -394,6 +395,9 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `Q` | clue, Ki Sumarto's show at the ford camp; pulls you into K-III (MQ2 2.22, `memory_done:k_iii`, sets `mq2_h5`; `memory_id` `k_iii`, scene specified in mataram.md) | `res://entities/world/clue.tscn` | `{clue_id:"sumarto_show", memory_id:"k_iii", cond:"flag:mq2_8"}` | grass | 1 |
 | `L` | clue, Hariang Banga's camp letters to his mother, the person-boss clue (MQ2 2.23, `clue_examined:hariang_letters`, sets `mq2_h3`; appears once K-III is done, then he comes to the ford) | `res://entities/world/clue.tscn` | `{clue_id:"hariang_letters", cond:"flag:mq2_h5"}` | grass | 1 |
 | `P` | petilasan galuh_2, at the river camp | `res://entities/petilasan/petilasan.tscn` | `{id:"galuh_2"}` | grass | 1 |
+| `h` | rehearsal, a post in the east bank grass by the camp, 3 tiles outside the east gate and one row south of the road (he wades in from this side after the letters, so the west bank is behind the fight): cast Na through it to learn the dash-strike that knocks the keris from Hariang Banga's hand (boss fights v7, quests.md 10; id fixed, the 2.23 sub-goal reads `clue_examined:reh_hariang`) | `res://entities/world/rehearsal.tscn` | `{id:"reh_hariang", glyph:"jawa_na", look:"post", boss:"hariang_banga"}` | grass | 1 |
+| `A` | arena gate (combat.md 5.3 v7), the ford's west mouth on the road; open until a threshold two tiles inside is crossed | `res://entities/world/arena_gate.tscn` | `{side:"e"}` | path | 2 |
+| `a` | arena gate, the ford's east mouth on the road (the side the player stands on at 2.23-2.24) | `res://entities/world/arena_gate.tscn` | `{side:"w"}` | path | 2 |
 | `N` | write spot nagawiru, on the Pamali stone (MQ2 2.21) | `res://entities/npc/npc.tscn` | `{npc_id:"nagawiru", cond:"flag:mq2_7c"}` | grass | 1 |
 
 ### Rooms
@@ -412,6 +416,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `pamali_ford` | `2 (40,19)` | 14x8 | W1: Faceless (-4,-1), (+2,+2), Faceless Archer (+5,-1) | One shooter; cond `step:mq2=20`; 8+ tiles from the camp spots `K` `Q` `L` |
 
 Hariang Banga `unique_id:"hariang_banga"` is a boss.
+
+**Arena gate (boss fights v7, placed 2026-11-13, ASSUMED).** The duel ground is the ford (x 24..35, y 10..23) plus the grass strip x 36. Rock lines `r` close both banks (x 23 and x 37, rows 10..15 and 18..23, plus (36,9) and (36,24)), so the only ways in are the road's two tiles on each side: gates `A` (23,16..17, side e) and `a` (37,16..17, side w). With gates on opposite sides, "the player is inside" means past every gate's threshold (`arena_gate.gd`). The gates stand open whenever he is absent or beaten, so the kg_alun to mt_gapura road is unchanged. `H` (36,18) and Sapto `s` are inside and only appear after the duel.
 
 ## Area 5: kg_pasar
 Scale: 1
@@ -954,7 +960,7 @@ RESULT: 32 checks, 0 FAIL
 
 ## Step 2 self-check ([AGENTS.md](../../AGENTS.md) section 5)
 - [x] Every MQG step g.1-g.9 and beat (`galuh_bout`, `galuh_escort`, camp talk, `throne_shadow`, `confession`, `cage`, `escape`) in quests.md section 4 has a marker or spot above, and every `Play` piece has a place (piece table). Clue ids `court_portrait`, `hunter_mask_2` and memory ids `k_ii`, `lc2`, `h2` are placed (`D`, `M`, `m`); the g.3 clue `palace_crest` and the g.5 clue `laras_wall` are the unnamed `clue` pieces.
-- [x] Petilasan `galuh_1` comes before the boss with no fight between it and the throne room (the cell-yard fights are a side trip east, the throne room door `K` and the gallery door `W` stay shut until g.7, and the guards `galuh_hall` wait inside the throne room).
+- [x] Petilasan `galuh_1` comes before the boss with no fight between it and the throne room (the cell-yard fights are a side trip east, the throne room door `K` and the gallery door `W` stay shut until g.7, and the guards `galuh_hall` wait on the courtyard road below the door).
 - [x] One shooter per encounter, at most two waves; the 4-plus-enemy rooms (ring 17x9 rects, guard hall 22x10 and 16x10, throne room 20x8 rect inside a 26x12 hall) meet the existing sizes. The champion is the region's one tank, in `galuh_bout_2` only.
 - [x] Critical path walkable with no glyph; kabut open on talk, fight and interact (lamp) flags only. The lamp puzzle is interact-only and the garden gate is not on the way to the boss (the petilasan is the only thing behind it).
 - [x] Rule 7: kg_alun codex `g` and chest `c`, kg_keraton camp talk, kg_penjara codex `g`. Rule 5: see the note under the piece table.

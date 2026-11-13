@@ -150,7 +150,7 @@ marker = {"zone": "kg_keraton", "id": "hunter_mask_2"}
 [sub_resource type="Resource" id="s19"]
 script = ExtResource("2")
 objective = "Q_MQG_S19_OBJ"
-on = "area_cleared:keraton_throne_approach"
+all = [{"on": "area_cleared:keraton_throne_approach", "set_flag": "mqg_6c", "objective": "Q_MQG_S19_P1"}, {"on": "clue_examined:reh_barma", "set_flag": "", "objective": "Q_MQG_S19_P2"}]
 set_flag = "mqg_6c"
 recap = "Q_MQG_S19_DONE"
 marker = {"zone": "kg_keraton", "id": "galuh_hall"}

@@ -55,6 +55,11 @@ const TEMPLE_HALF := 150.0     # half length of a lane
 @export var debris_spread := 48.0      # TUNE: marks land within this of the player
 @export var debris_radius := 16.0      # TUNE
 @export var debris_damage := 18        # spec
+@export var rubble_radius := 14.0      # TUNE (v7): phase 2, a broken pillar leaves rubble that cuts for a few seconds
+@export var rubble_damage := 6         # TUNE: below the light attack (boulder 18)
+@export var rubble_life := 4.0         # TUNE
+@export var rubble_warm := 0.6         # TUNE: drawn as a warning this long first (>= 0.5)
+@export var rubble_keep_clear := 40.0  # TUNE: none this close to an arena gate's threshold or door
 @export var recovery_heavy := 2.4      # TUNE: the punish window after a heavy move
 @export var shard_damage := 10         # TUNE: phase 2 boulders burst into shards
 @export var fist_windup := 0.8         # TUNE
@@ -118,6 +123,7 @@ var _from := Vector2.ZERO
 var _body0 := Vector2.ZERO
 var _spots: Array[Vector2] = []
 var _tg: Array[Node2D] = []
+var _owned: Array[Node] = []   # shards, waves and rubble zones: freed at the kneel and at the end
 
 
 func _ready() -> void:
@@ -145,6 +151,7 @@ func standing() -> int:
 
 func _tick(delta: float) -> void:
 	state_time += delta
+	_prune_owned()
 	_ca_cd = maxf(0.0, _ca_cd - delta)
 	_ult_cd = maxf(0.0, _ult_cd - delta)
 	var to_t := Vector2.INF
@@ -251,8 +258,29 @@ func _raise(pos: Vector2) -> void:
 	pillars.append(p)
 	p.broken.connect(func(q: Pillar) -> void:
 		pillars.erase(q)
-		_refresh_shield())
+		_refresh_shield()
+		_rubble(q.global_position))
 	_refresh_shield()
+
+
+## Phase 2 floor (v7): where a pillar broke, rubble stays as a small cutting zone. Not beside an arena gate's threshold or door.
+func _rubble(at: Vector2) -> void:
+	if dead or phase < 2:
+		return
+	for g in get_tree().get_nodes_in_group("arena_gate"):
+		var th := g.get_node_or_null("Threshold") as Node2D
+		var door: Vector2 = g.call("door")
+		if (th != null and at.distance_to(th.global_position) < rubble_keep_clear) or at.distance_to(door) < rubble_keep_clear:
+			return
+	_owned.append(BossKit.zone(self, at, rubble_radius, rubble_damage, rubble_life, Color(0.7, 0.62, 0.5), rubble_warm))
+
+
+func _prune_owned() -> void:
+	var keep: Array[Node] = []
+	for n in _owned:
+		if is_instance_valid(n):
+			keep.append(n)
+	_owned = keep
 
 
 func _drop_debris(pos: Vector2) -> void:
@@ -473,7 +501,7 @@ func _land() -> void:
 	elif phase == 2:
 		var base := randf() * TAU
 		for i in 6:   # phase 2: the boulder bursts into shards
-			BossKit.shoot(self, _spot, base + TAU * float(i) / 6.0, 100.0, shard_damage, STONE, "shard", 4.0, 0.8)
+			_owned.append(BossKit.shoot(self, _spot, base + TAU * float(i) / 6.0, 100.0, shard_damage, STONE, "shard", 4.0, 0.8))
 
 
 func _clear_attack() -> void:
@@ -486,6 +514,15 @@ func _clear_attack() -> void:
 		if is_instance_valid(tg):
 			tg.queue_free()
 	_tg.clear()
+	if dead:   # the kneel (BossKit.finisher sets dead first) and the end: nothing he made may hurt the player now
+		for n in _owned:
+			if is_instance_valid(n):
+				n.queue_free()
+		_owned.clear()
+		for m in _marks:   # pending rises and debris do not outlive the last blow
+			if is_instance_valid(m.marker):
+				m.marker.queue_free()
+		_marks.clear()
 
 
 # --- golem fist: a wide cone ---
@@ -512,11 +549,11 @@ func _act_quake() -> void:
 				BossKit.strike_circle(self, global_position, 44.0, quake_damage, true, STONE)
 				BossKit.shake(self, 3.0, 0.4)
 				BossKit.punch(self, 1.15, 0.88, 0.3)
-				BossKit.wave(self, global_position, quake_radius, 120.0, quake_wave_damage, STONE, false)
+				_owned.append(BossKit.wave(self, global_position, quake_radius, 120.0, quake_wave_damage, STONE, false))
 				_goto(1)
 		1:
 			if _sub >= 0.8:
-				BossKit.wave(self, global_position, quake_radius, 120.0, quake_wave_damage, STONE, false)
+				_owned.append(BossKit.wave(self, global_position, quake_radius, 120.0, quake_wave_damage, STONE, false))
 				BossKit.shake(self, 2.0, 0.3)
 				_goto(2)
 		2:
@@ -578,7 +615,7 @@ func _act_leap() -> void:
 				global_position = _spot
 				body.position = _body0
 				BossKit.strike_circle(self, _spot, leap_radius, leap_damage, true, STONE)
-				BossKit.wave(self, _spot, 120.0, 130.0, leap_wave_damage, STONE, false)
+				_owned.append(BossKit.wave(self, _spot, 120.0, 130.0, leap_wave_damage, STONE, false))
 				BossKit.punch(self, 1.2, 0.85, 0.3)
 				BossKit.shake(self, 3.0, 0.4)
 				_goto(2)
@@ -673,6 +710,7 @@ func _on_flinch() -> void:
 
 
 func _on_died() -> void:
+	dead = true   # _clear_attack frees what he owns once dead; EnemyBase._on_died sets it again
 	_clear_attack()
 	for m in _marks:
 		m.marker.queue_free()

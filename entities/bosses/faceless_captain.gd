@@ -17,6 +17,7 @@ const STEEL := Color(0.85, 0.9, 1.0)
 const GOLD := Color(1.0, 0.8, 0.3)
 const MUSTER_AT := [0.66, 0.33]
 const WARN := 0.5                    # TUNE: ground warning for the adds, as Encounter.WARN
+const SCORCH := Color(0.55, 0.3, 0.75)   # erased ink
 const HEAVY := ["whirlwind", "chain", "rally", "edict"]
 
 @export var boss_name_key := "BOSS_FACELESS_CAPTAIN"
@@ -51,6 +52,10 @@ const HEAVY := ["whirlwind", "chain", "rally", "edict"]
 @export var edict_inner := 30.0          # TUNE: the safe spot, hug the Captain
 @export var edict_damage := 28           # TUNE: ~1.5x heavy
 @export var edict_recovery := 2.6        # TUNE
+@export var scorch_damage := 5           # TUNE: per tick on erased ink (a light hit is volley_damage; v7 rule: at or below it)
+@export var scorch_radius := 20.0        # TUNE
+@export var scorch_warm := 0.6           # TUNE: v7 rule: at least 0.5
+@export var scorch_life := 16.0          # TUNE
 
 var active := true   # EliteGuard flips it
 var state := State.IDLE
@@ -79,6 +84,8 @@ var _spot := Vector2.ZERO
 var _deck: Array[String] = []
 var _tele: Array[Node] = []
 var _shots: Array[Node] = []
+var _owned: Array[Node] = []   # the erased-ink zones where the mustered soldiers fell in
+var _adds: Array[Node] = []    # the mustered Faceless
 
 
 func _ready() -> void:
@@ -415,6 +422,17 @@ func _clear_attack() -> void:
 		if is_instance_valid(n):
 			n.queue_free()
 	_tele.clear()
+	if dead:   # the kneel (BossKit.finisher sets dead first): nothing he made may hurt the player now
+		_clear_owned()
+
+
+func _clear_owned() -> void:
+	for n in _shots + _owned + _adds:
+		if is_instance_valid(n):
+			n.queue_free()
+	_shots.clear()
+	_owned.clear()
+	_adds.clear()
 
 
 ## Warning rings first, the Faceless drop in after WARN.
@@ -443,10 +461,16 @@ func _spawn_adds(marks: Array[Node], spots: Array[Vector2]) -> void:
 			m.queue_free()
 	if dead or not is_inside_tree():
 		return
+	for n in _owned:   # phase 2 floor: where the soldiers fall in the ground smoulders with erased ink; the old patches go
+		if is_instance_valid(n):
+			n.queue_free()
+	_owned.clear()
 	for at in spots:
 		var n: Node2D = (load(FACELESS) as PackedScene).instantiate()
 		n.position = at
 		get_parent().add_child(n)
+		_adds.append(n)
+		_owned.append(BossKit.zone(self, at, scorch_radius, scorch_damage, scorch_life, SCORCH, scorch_warm))
 
 
 func _on_health(hp: int, max_hp: int) -> void:
@@ -475,10 +499,7 @@ func _on_flinch() -> void:
 func _on_died() -> void:
 	_move = ""
 	_clear_attack()
-	for n in _shots:
-		if is_instance_valid(n):
-			n.queue_free()
-	_shots.clear()
+	_clear_owned()
 	BossKit.anim_stop(self)
 	super()
 	var tw := body.create_tween().set_parallel()

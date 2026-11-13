@@ -766,16 +766,16 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 ########r....................r##############################
 ########.HK.......r.....r.n...##############################
 ########......................##############################
-########.G....................##############################
-########...................Y..##############################
+########.G............r.......##############################
+########...................Y..###,a,,u,#####################
 ########...................q..,A,,,,,,,,,,,,,,,,,,,,,,,,,,eX
 ########...S...B.C.........Z..,A,,,,,,,,,,,,,,,,,,,,,,,,,,,X
 ########...................P..##############################
-########......................##############################
+########..............r.......##############################
 ########.V....................##############################
-########.............R........##############################
-########..........r.....r.....##############################
+########..........r..R..r.....##############################
 ########r....................r##############################
+############################################################
 ############################################################
 ############################################################
 ############################################################
@@ -807,12 +807,14 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 | `n` | codex spot, the cracked Crater Seal (the arena's optional find; id ASSUMED) | `res://entities/world/pickup.tscn` | `{codex_id:"crater_seal"}` | path | 1 |
 | `q` | prop, the eastern post Laras marked in LC1: hang the boeh rarang (MQ1 1.24; needs the cloth, sets `rarang_post` and `post:east`) | `res://entities/npc/npc.tscn` | `{npc_id:"rarang_post"}` | path | 1 |
 | `A` | arena gate (combat.md 5.3 v7) at the causeway's arena end; open until the threshold two tiles inside is crossed, then a wall of burning strokes until the boss falls | `res://entities/world/arena_gate.tscn` | `{side:"w"}` | path | 2 |
+| `a` | rehearsal, the Captain's muster shade on the causeway approach: cast Sunda Ca on it (quests.md 10, boss fights v7); hidden once the Captain is beaten | `res://entities/world/rehearsal.tscn` | `{id:"reh_captain", boss:"faceless_captain", glyph:"sunda_ca", look:"shade", cond:"!flag:mq1_8"}` | path | 1 |
+| `u` | rehearsal, Sangkuriang's post of cloth on the causeway approach: cast Sunda Ca on it; shows once the Captain is beaten (`mq1_8`), when he is the next boss | `res://entities/world/rehearsal.tscn` | `{id:"reh_sangkuriang", boss:"sangkuriang", glyph:"sunda_ca", look:"post", cond:"flag:mq1_8"}` | path | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
-| causeway | (30,16)-(58,17) 29x2 | Straight walk to the arena | exit `X` (59,16..17), spawn `e` (58,16), arena gate `A` (31,16..17) | none |
-| arena | (8,11)-(29,23) 22x13 | Nagawiru's lair: the Captain (1.22), the restore beat, Sangkuriang (1.24) | captain `C` (17,17), boss `B` (15,17), seal-stone `S` (11,17), Ciung `G` (9,14), Nagawiru `V` (9,20), Hunter `H` (9,12), Naganingrum `Y` (27,15), arena post `Z` (27,17, east side) | 1.22 `faceless_captain`, beat `crater_seal` (restore), 1.24 `sangkuriang` |
+| causeway | (30,16)-(58,17) 29x2, with a 6x1 alcove (33,15)-(38,15) beside the path | Straight walk to the arena | exit `X` (59,16..17), spawn `e` (58,16), arena gate `A` (31,16..17), rehearsal `a` (34,15) and `u` (37,15), 3 and 6 tiles before the gate | `clue_examined:reh_captain` (1.18), `clue_examined:reh_sangkuriang` (1.20/1.23) |
+| arena | (8,11)-(29,22) 22x12, symmetric about the gate axis (y 16..17); cover rocks (18,12) (24,12) (22,14) (22,19) (18,21) (24,21); threshold about x 29, the tiles between it and the gate (29..30) stay clear | Nagawiru's lair: the Captain (1.22), the restore beat, Sangkuriang (1.24) | captain `C` (17,17), boss `B` (15,17), seal-stone `S` (11,17), Ciung `G` (9,14), Nagawiru `V` (9,20), Hunter `H` (9,12), Naganingrum `Y` (27,15), arena post `Z` (27,17, east side) | 1.22 `faceless_captain`, beat `crater_seal` (restore), 1.24 `sangkuriang` |
 
 ### Encounters
 None.

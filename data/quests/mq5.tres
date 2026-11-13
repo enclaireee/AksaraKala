@@ -94,7 +94,7 @@ marker = {"zone": "gk_lupa", "id": "semar_kelir"}
 [sub_resource type="Resource" id="s12"]
 script = ExtResource("2")
 objective = "Q_MQ5_S12_OBJ"
-on = "memory_done:lc6"
+all = [{"on": "memory_done:lc6", "set_flag": "mq5_lc", "objective": "Q_MQ5_S12_P1"}, {"on": "clue_examined:reh_kala", "set_flag": "", "objective": "Q_MQ5_S12_P2", "marker": {"zone": "gk_ruang_kala", "id": "reh_kala"}}]
 set_flag = "mq5_lc"
 recap = "Q_MQ5_S12_DONE"
 marker = {"zone": "gk_lupa", "id": "lc6_lontar"}

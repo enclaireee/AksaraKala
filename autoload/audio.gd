@@ -676,7 +676,8 @@ func _poll_state(dt: float) -> void:
 			_boss_on = true
 			_boss_phase = phase
 			_hush = 0.0
-			play_sfx("boss_roar")
+			if tree.get_first_node_in_group("arena_gate") == null:   # a staged entrance (boss_stage.gd) roars when the camera returns
+				play_sfx("boss_roar")
 			play_jingle("boss_intro", -5.0)
 			_start_boss(id)
 		else:

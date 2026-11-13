@@ -678,7 +678,7 @@ X__________________________________________________________#
 ```
 #############################NN#############################
 #############################AA#############################
-##########################___n____##########################
+##########################__Rn____##########################
 #####################__________________#####################
 ##################________________________##################
 ################____________________________################
@@ -722,6 +722,7 @@ X__________________________________________________________#
 | `S` | exit to desa_purwa (south edge, the lit door, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"desa_purwa", spawn_id:"from_gua_kala"}` | floor | 2 |
 | `K` | kabut, lifts on the boss (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq5_3"}` | floor | 2 |
 | `T` | trigger, quest marker kala_exit (4x2) | `res://entities/world/trigger.tscn` | `{trigger_id:"kala_exit", size:Vector2i(4,2)}` | floor | 1 |
+| `R` | rehearsal lock for Kala (5.12): a sealed glyph lock in the corridor between the gate and the threshold, by the arrival spawn, so it is reachable before Kala wakes (the corridor is all that lies outside the threshold; the gate stands on the map edge). Cast Jawa Ka on it (rehearsal.tscn, id `reh_kala`) | `res://entities/world/rehearsal.tscn` | `{id:"reh_kala", glyph:"jawa_ka", look:"lock", boss:"batara_kala"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |

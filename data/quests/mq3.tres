@@ -173,7 +173,7 @@ marker = {"zone": "tt_candi", "id": "hunter_mask_4"}
 [sub_resource type="Resource" id="s22"]
 script = ExtResource("2")
 objective = "Q_MQ3_S22_OBJ"
-on = "boss_defeated:nameless_hunter"
+all = [{"on": "clue_examined:reh_hunter", "set_flag": "", "objective": "Q_MQ3_S22_P1"}, {"on": "boss_defeated:nameless_hunter", "set_flag": "mq3_8", "objective": "Q_MQ3_S22_P2"}]
 set_flag = "mq3_8"
 recap = "Q_MQ3_S22_DONE"
 marker = {"zone": "tt_candi", "id": "nameless_hunter"}

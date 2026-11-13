@@ -25,6 +25,7 @@ poise_ratio = 1.0
 ilmu = 300
 kind = "bandung_bondowoso"
 unique_id = "bandung_bondowoso"
+finish_glyph = "jawa_ca"
 
 [node name="Body" type="Polygon2D" parent="."]
 antialiased = false

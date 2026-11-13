@@ -23,9 +23,9 @@ const KALA_ROUTE := [
 	"do:kala_1", "do:letter_sa", "q:mq5=active:9", "beat:sa_back",
 	"do:semar_tale", "q:mq5=active:10",
 	"do:semar_kelir", "q:mq5=active:11",
-	"do:lc6_lontar", "q:mq5=active:12",
-	# 5.13 Batara Kala in gk_ruang_kala; 5.14 write Laras's name
-	"go:gk_ruang_kala", "beat:kala_wake", "do:batara_kala", "q:mq5=active:13",
+	"do:lc6_lontar",
+	# 5.12 ends at the rehearsal seal outside Kala's gate (quests.md 10); 5.13 Batara Kala; 5.14 write Laras's name
+	"go:gk_ruang_kala", "do:reh_kala", "cast:jawa_ka", "q:mq5=active:12", "beat:kala_wake", "do:batara_kala", "q:mq5=active:13",
 	"beat:write", "write:laras:sunda_la,sunda_ra,sunda_sa", "q:mq5=done",
 ]
 

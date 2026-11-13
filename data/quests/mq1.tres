@@ -171,7 +171,7 @@ marker = {"zone": "ts_kawah_jalan", "id": "lc1_voice"}
 [sub_resource type="Resource" id="s22"]
 script = ExtResource("2")
 objective = "Q_MQ1_S22_OBJ"
-all = [{"on": "boss_defeated:faceless_captain", "set_flag": "mq1_8", "objective": "Q_MQ1_S22_P1"}, {"on": "memory_done:h1", "set_flag": "mq1_h7", "objective": "Q_MQ1_S22_P2"}]
+all = [{"on": "clue_examined:reh_captain", "set_flag": "", "objective": "Q_MQ1_S22_P3"}, {"on": "boss_defeated:faceless_captain", "set_flag": "mq1_8", "objective": "Q_MQ1_S22_P1"}, {"on": "memory_done:h1", "set_flag": "mq1_h7", "objective": "Q_MQ1_S22_P2"}]
 set_flag = "mq1_h7"
 recap = "Q_MQ1_S22_DONE"
 marker = {"zone": "ts_kawah", "id": "faceless_captain"}
@@ -179,7 +179,7 @@ marker = {"zone": "ts_kawah", "id": "faceless_captain"}
 [sub_resource type="Resource" id="s23"]
 script = ExtResource("2")
 objective = "Q_MQ1_S23_OBJ"
-on = "memory_done:k2_dayang_sumbi"
+all = [{"on": "memory_done:k2_dayang_sumbi", "set_flag": "mq1_h6", "objective": "Q_MQ1_S23_P1"}, {"on": "clue_examined:reh_sangkuriang", "set_flag": "", "objective": "Q_MQ1_S23_P2"}]
 set_flag = "mq1_h6"
 recap = "Q_MQ1_S23_DONE"
 marker = {"zone": "ts_kawah", "id": "boat_ribs"}

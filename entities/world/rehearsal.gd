@@ -6,6 +6,8 @@ extends Node2D
 
 @export var id := ""
 @export var glyph := ""
+@export var boss := ""          # the boss this prepares for (its unique_id): answering it shows that boss's "Cara melawan" codex line,
+                                # and beating the boss unrehearsed counts it as done, so a blocking quest sub-goal cannot strand
 @export var cond := ""          # hidden and deaf while Game.check(cond) is false, as clue.gd
 @export var radius := 64.0      # TUNE
 @export var look := "post"      # post, mirror, shade, mist, lock, lesung: drawn in code. ponytail: no sprite sheet
@@ -19,7 +21,9 @@ func _ready() -> void:
 	add_to_group("rehearsal")
 	var game := get_node("/root/Game")
 	game.changed.connect(_apply)
-	get_node("/root/Events").spell_cast.connect(_on_cast)
+	var ev := get_node("/root/Events")
+	ev.spell_cast.connect(_on_cast)
+	ev.boss_defeated.connect(_on_boss_defeated)
 	_apply()
 
 
@@ -47,7 +51,22 @@ func _on_cast(glyph_id: String, _score: float) -> void:
 	Snd.play("boss_finish", -8.0, 1.3)
 	BossKit.ring_fx(self, global_position, 40.0, 0.5, BossKit.GOLD)
 	BossKit.sparks(self, global_position + Vector2(0, -10), BossKit.GOLD, 16, 70.0, 0.6)
-	get_node("/root/Game").run("clue:" + id)
+	_done()
+
+
+## Runs `clue:<id>` once. Later casts still react (sound, sparks) but record nothing.
+func _done() -> void:
+	var game := get_node("/root/Game")
+	if game.has_flag("clue_" + id):
+		return
+	if boss != "":
+		get_node("/root/Events").weakness_triggered.emit(boss)
+	game.run("clue:" + id)
+
+
+func _on_boss_defeated(boss_id: String) -> void:
+	if boss != "" and boss_id == boss:
+		_done()
 
 
 func _process(delta: float) -> void:

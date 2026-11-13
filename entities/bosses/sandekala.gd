@@ -36,7 +36,9 @@ const HEAVY := ["pillars", "pulse", "flurry", "eclipse"]
 @export var orb_damage := 9           # TUNE: one skull
 @export var pillar_damage := 16       # TUNE: the eruption
 @export var pillar_radius := 20.0     # TUNE
-@export var zone_damage := 5          # TUNE: per tick in a lingering zone
+@export var zone_damage := 3          # TUNE: per tick in a lingering zone (balance_model.py section 7.2: 3 ticks stay under his light hit, 10)
+@export var zone_warm := 0.5          # TUNE: seconds a lingering zone only warns (v7 rule: at least 0.5)
+@export var zone_keep_clear := 16.0   # TUNE: pillars keep this far beyond their radius from an oncor, the gates and the threshold
 @export var pulse_damage := 16        # TUNE
 @export var pulse_radius := 34.0      # TUNE
 @export var flurry_damage := 12       # TUNE: per rake
@@ -324,7 +326,7 @@ func _run_move(delta: float) -> void:
 			if _mt >= 0.9:
 				for p in _spots:
 					BossKit.strike_circle(self, p, pillar_radius, pillar_damage, true, DUSK)
-					_owned.append(BossKit.zone(self, p, pillar_radius, zone_damage, 5.0, DUSK, 0.2))
+					_owned.append(BossKit.zone(self, p, pillar_radius, zone_damage, 5.0, DUSK, zone_warm))
 				BossKit.shake(self, 2.0, 0.2)
 				_end_move(heavy_recovery)
 		"pulse":
@@ -358,6 +360,11 @@ func _clear_attack() -> void:
 		if is_instance_valid(n):
 			n.queue_free()
 	_tele.clear()
+	if dead:   # the kneel (BossKit.finisher sets dead first): nothing he made may hurt the player now
+		for n in _owned:
+			if is_instance_valid(n):
+				n.queue_free()
+		_owned.clear()
 
 
 func _prune_owned() -> void:
@@ -377,6 +384,20 @@ func _aim_claw(wind: float) -> void:
 	_track(BossKit.telegraph_cone(self, global_position, _ang, 1.5, claw_len, wind, DUSK))
 
 
+## True where a lingering pillar zone must not lie: on an oncor (it answers the gimmick), a gate's door spot or its threshold.
+func _blocked(p: Vector2) -> bool:
+	var keep := pillar_radius + zone_keep_clear
+	for o: Node2D in get_tree().get_nodes_in_group("oncor"):
+		if o.global_position.distance_to(p) <= keep:
+			return true
+	for g: Node2D in get_tree().get_nodes_in_group("arena_gate"):
+		var th := g.get_node_or_null("Threshold") as Node2D
+		if g.global_position.distance_to(p) <= keep or (th != null and th.global_position.distance_to(p) <= keep) \
+				or Vector2(g.call("door")).distance_to(p) <= keep:
+			return true
+	return false
+
+
 ## Dark pillars rise around the player (one right on him). None inside the light of a lit oncor.
 func _begin_pillars() -> void:
 	_spots.clear()
@@ -390,7 +411,7 @@ func _begin_pillars() -> void:
 		if i > 0:
 			p = base + Vector2.from_angle(_ang + TAU * i / n) * 46.0
 		p = _clamp_room(p)
-		if _in_light(p):
+		if _in_light(p) or _blocked(p):
 			continue
 		_spots.append(p)
 		_track(BossKit.telegraph_circle(self, p, pillar_radius, 0.9, DUSK))

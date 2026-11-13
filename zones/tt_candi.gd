@@ -12,20 +12,20 @@ const MAP := [
 	"#...........rr....#__________________________________#.....#",
 	"#.................#__________________________________#..rr.#",
 	"#.................#__________________________________#..rr.#",
-	"#.................#_________________H________________#.....#",
-	"#.................#___________N______________________#.....#",
+	"#.................#________rr_______H_______rr_______#.....#",
+	"#.................#________rr_N_____________rr_______#.....#",
 	"#.................#__________________________________#.....#",
 	"#.................#_________________R________________#.....#",
 	"#.................#__________________________________#.....#",
-	"#.................A__________________________________#.....#",
+	"#.............Q...A__________________________________#.....#",
 	"Xe,,,,,,,,,,,,,,,,A__E__S___________B___C________D___#.....#",
 	"X,,,,,,,,,,,,,,,,,A________________________________4_#.....#",
-	"#.................A__________________________________#.....#",
+	"#.............V...A__________________________________#.....#",
 	"#.................#_____________W___K________________#.....#",
 	"#.................#__________________________________#.....#",
 	"#.................#__________________________________#.....#",
-	"#.................#__________________________________#..rr.#",
-	"#.................#__________________________________#..rr.#",
+	"#.................#________rr_______________rr_______#..rr.#",
+	"#.................#________rr_______________rr_______#..rr.#",
 	"#.................#__________________________________#.....#",
 	"#.................#__________________________________#.....#",
 	"#...........rr....#__________________________________#.....#",
@@ -42,7 +42,7 @@ const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pasir", "spawn_id": "from_tt_candi"}, "tile": ","},   # exit to tt_pasir (west edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": ","},   # spawn, arrival from tt_pasir
 	"B": {"scene": "res://entities/bosses/keris_gandring.tscn", "props": {"cond": "flag:beat_shrine_sight", "finish_glyph": "jawa_ha"}, "tile": "_"},   # boss Mpu Gandring's Keris (3.19, arena centre; wakes after the `shrine_sight` beat)
-	"H": {"scene": "res://entities/bosses/nameless_hunter.tscn", "props": {"cond": "flag:mq3_h6", "finish_glyph": "sunda_ga"}, "tile": "_"},   # boss the Nameless Hunter, after the keris (MQ3 3.22)
+	"H": {"scene": "res://entities/bosses/nameless_hunter.tscn", "props": {"cond": "flag:mq3_h6,flag:beat_hunter_shrine", "finish_glyph": "sunda_ga"}, "tile": "_"},   # boss the Nameless Hunter, after the keris (MQ3 3.22; wakes after the `hunter_shrine` restore beat, so the fight never starts under the beat)
 	"A": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "e"}, "tile": ","},   # arena gate (combat.md 5.3 v7) at the court's west mouth, shared by the Keris and the Hunter; open until the threshold two tiles inside is crossed
 	"1": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 1}, "tile": "_"},   # curse stake 1 (arena edge)
 	"2": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 2}, "tile": "_"},   # curse stake 2 (arena edge)
@@ -59,6 +59,8 @@ const SPOTS := {
 	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hunter_mask_4", "memory_id": "h4", "cond": "flag:beat_keris"}, "tile": "_"},   # clue, the last mask fragment where the keris lay (3.21 H4; opens memory `h4`; appears when `flag:beat_keris`)
 	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "mask_joined", "memory_id": "k6_servant", "cond": "flag:mq3_h7"}, "tile": "_"},   # clue, the joined mask at the shrine door (3.21 K6; opens memory `k6_servant`; appears when `flag:mq3_h7`)
 	"E": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "candi_inner_sanctum", "size": Vector2i(5,4)}, "tile": "_"},   # trigger, inner sanctum entry via Laras's wind-tunnel shortcut (3.18 `candi_inner_sanctum`)
+	"Q": {"scene": "res://entities/world/rehearsal.tscn", "props": {"id": "reh_keris", "glyph": "jawa_ha", "look": "post", "boss": "keris_gandring"}, "tile": "."},   # rehearsal post for the Keris (3.19): a practice stake outside the west gate, cast Jawa Ha on it (rehearsal.tscn, id `reh_keris`; the practice stakes of 3.4 stand in tt_beringin)
+	"V": {"scene": "res://entities/world/rehearsal.tscn", "props": {"id": "reh_hunter", "glyph": "sunda_ga", "look": "shade", "boss": "nameless_hunter", "cond": "flag:mq3_7"}, "tile": "."},   # rehearsal shade for the Hunter (3.22): cast Sunda Ga on it; visible once the Keris is beaten (`mq3_7`) (rehearsal.tscn, id `reh_hunter`)
 }
 
 

@@ -59,6 +59,11 @@ const HEAVY: Array[String] = ["flurry", "decree", "mirror", "coronation"]
 @export var glamour_radius := 48.0     # TUNE: the 4 figures end on this ring
 @export var stun_time := 3.0           # spec
 @export var copy_mult := 0.5           # spec: copies hit for half
+@export var shard_radius := 14.0       # TUNE (v7): a broken copy leaves a cutting shard zone on the floor, phase 2
+@export var shard_damage := 6          # TUNE: below the light attacks (fan 12, thrust 14)
+@export var shard_life := 4.0          # TUNE
+@export var shard_warm := 0.7          # TUNE: drawn as a warning this long before it cuts (>= 0.5)
+@export var shard_keep_clear := 56.0   # TUNE: no shard this close to the arena gate's threshold or door
 
 var copy := false          # set before add_child: a glamour copy
 var real: BarmaWijaya      # a copy's king
@@ -87,6 +92,7 @@ var _ghost_t := 0.0
 var _tg: Array[Node2D] = []
 var _mpts: Array[Vector2] = []
 var _mdirs: Array[float] = []
+var _owned: Array[Node] = []   # darts and shard zones this king made: freed at the kneel and at the end
 
 
 func _ready() -> void:
@@ -113,6 +119,7 @@ func phase() -> int:
 func _tick(delta: float) -> void:
 	state_time += delta
 	_ult_cd = maxf(0.0, _ult_cd - delta)
+	_prune_owned()
 	if target == null:
 		return
 	var to_t := target.global_position - global_position
@@ -177,6 +184,27 @@ func _clear_marks() -> void:
 		if is_instance_valid(n):
 			n.queue_free()
 	_tg.clear()
+
+
+## The kneel (BossKit.finisher calls it after setting dead) and the end: no telegraph, dart or shard outlives the last blow.
+func _clear_attack() -> void:
+	_clear_marks()
+	_free_owned()
+
+
+func _free_owned() -> void:
+	for n in _owned:
+		if is_instance_valid(n):
+			n.queue_free()
+	_owned.clear()
+
+
+func _prune_owned() -> void:
+	var keep: Array[Node] = []
+	for n in _owned:
+		if is_instance_valid(n):
+			keep.append(n)
+	_owned = keep
 
 
 func _dmg(n: int) -> int:
@@ -325,6 +353,7 @@ func _fire_fan() -> void:
 		shot.max_range = fan_range
 		shot.modulate = Color(1.0, 0.85, 0.4)   # ponytail: a recolored spirit shot until darts have art
 		get_parent().add_child(shot)
+		_owned.append(shot)
 		shot.global_position = aim.global_position
 
 
@@ -395,7 +424,7 @@ func _fire_ring() -> void:
 		if i < decree_gap_slots:
 			continue
 		var a := offset + TAU * float(i) / float(decree_count)
-		BossKit.shoot(self, from, a, decree_speed, _dmg(decree_damage), GOLD, "blade", 4.0, 2.6)
+		_owned.append(BossKit.shoot(self, from, a, decree_speed, _dmg(decree_damage), GOLD, "blade", 4.0, 2.6))
 
 
 # --- mirror volley: three decoy points around the player, lines converge ---
@@ -419,7 +448,7 @@ func _mirror_mark() -> void:
 func _act_mirror() -> void:
 	if _stage == 1 and _sub >= mirror_windup:
 		for i in _mpts.size():
-			BossKit.shoot(self, _mpts[i], _mdirs[i], mirror_speed, _dmg(fan_damage), GOLD, "blade", 4.0, 1.4)
+			_owned.append(BossKit.shoot(self, _mpts[i], _mdirs[i], mirror_speed, _dmg(fan_damage), GOLD, "blade", 4.0, 1.4))
 			BossKit.sparks(self, _mpts[i], GOLD, 6, 40.0, 0.3)
 		_count -= 1
 		if _count > 0:
@@ -528,11 +557,26 @@ func _break() -> void:
 	hurtbox.set_deferred("monitorable", false)
 	BossKit.sparks(self, global_position + Vector2(0, -12), GOLD, 14, 70.0, 0.5)   # the glass shatters
 	BossKit.ring_fx(self, global_position, 24.0, 0.3, GOLD)
+	_free_owned()   # the copy's own darts go with it
 	if is_instance_valid(real):
+		real._shard(global_position)
 		real._copy_broken(self)
 	var tw := create_tween()
 	tw.tween_property(self, "modulate:a", 0.0, 0.3)   # ponytail: a fade until the true-face reveal has art
 	tw.tween_callback(queue_free)
+
+
+## Phase 2 floor (v7): the glass of a broken copy stays as a small cutting zone for a few seconds. Never beside the
+## arena gate's threshold or door, and never once he kneels or dies.
+func _shard(at: Vector2) -> void:
+	if dead or copy or phase() < 2:
+		return
+	for g in get_tree().get_nodes_in_group("arena_gate"):
+		var th := g.get_node_or_null("Threshold") as Node2D
+		var door: Vector2 = g.call("door")
+		if (th != null and at.distance_to(th.global_position) < shard_keep_clear) or at.distance_to(door) < shard_keep_clear:
+			return
+	_owned.append(BossKit.zone(self, at, shard_radius, shard_damage, shard_life, Color(0.75, 0.85, 1.0), shard_warm))
 
 
 func _copy_broken(c: BarmaWijaya) -> void:
@@ -558,6 +602,7 @@ func _on_flinch() -> void:
 func _on_died() -> void:
 	if dead:
 		return
+	_clear_attack()
 	_enter(State.STUN)
 	dead = true
 	engaged = false
