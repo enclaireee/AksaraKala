@@ -12,4 +12,4 @@ slot = "armor"
 description = "ITEM_BAJU_KEPRAJURITAN_DESC"
 defense = 4
 favoured = "lancer"
-favoured_bonus = {"max_hp": 10}
+favoured_bonus = {"brace_fast": 0.15}

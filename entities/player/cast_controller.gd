@@ -103,21 +103,28 @@ func release() -> void:
 	else:
 		_exit_cast_mode()
 		var perfect: bool = r.score >= SpellUtil.PERFECT_SCORE and power >= 1.0
+		var spent_cost := SpellUtil.cost(player, spell)
 		if player.has_method("lakon"):
 			power *= player.lakon(glyph.id)   # Dalang: a fresh glyph hits harder
+		var lakon_full: bool = player.has_method("lakon_maxed") and player.lakon_maxed()
+		if lakon_full and not practice:
+			var refund: float = spent_cost * player.tuning.lakon_refund + float(get_node("/root/Game").bonus("lakon_sakti"))
+			player.sakti.add(refund)
 		var variant := SpellVariants.title(glyph.id, SpellUtil.class_id(player))   # the class's own spell, if it has one
 		overlay.finish(true, "%s · %s" % [glyph.latin.capitalize(), variant if variant != "" else tr(spell.title)], {
-			glyph_id = glyph.id, perfect = perfect, power = power, cost = SpellUtil.cost(player, spell),
+			glyph_id = glyph.id, perfect = perfect, power = power, cost = spent_cost,
 			screen_pos = player.get_global_transform_with_canvas().origin + Vector2(0, -6),
 		})
 		if SpellVariants.cast(spell, player, aim, power, perfect):
 			_kick(spell, perfect)   # built from zones and blasts: no scene to spawn
 		else:
 			_spawn(spell, power, perfect)
-		if SpellVariants.echoing(player) and not SpellVariants.SIGNATURE.has(glyph.id):   # Gema Aksara: one free echo
-			SpellVariants.later(player, SpellVariants.ECHO_DELAY, func() -> void:
-				if not SpellVariants.cast(spell, player, aim, power * SpellVariants.ECHO_POWER, false):
-					_spawn(spell, power * SpellVariants.ECHO_POWER))
+		if (SpellVariants.echoing(player) or lakon_full) and not SpellVariants.SIGNATURE.has(glyph.id):   # Gema Aksara or maxed Lakon: free shadow echo
+			var echo_pow := power * (SpellVariants.ECHO_POWER if SpellVariants.echoing(player) else 0.35)
+			var echo_delay := SpellVariants.ECHO_DELAY if SpellVariants.echoing(player) else 0.45
+			SpellVariants.later(player, echo_delay, func() -> void:
+				if not SpellVariants.cast(spell, player, aim, echo_pow, false):
+					_spawn(spell, echo_pow))
 		get_node("/root/Events").spell_cast.emit(glyph.id, power)
 
 

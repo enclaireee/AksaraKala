@@ -52,6 +52,9 @@ extends Resource
 @export var brace_time := 0.5                  # Prajurit, Kuda-kuda: seconds standing still to brace
 @export var brace_guard := 0.25                # ...damage taken x0.75 while braced
 @export var brace_thrust := 1.3                # ...and the next thrust
+@export var brace_thrust_grace := 0.4          # ...lingers briefly after moving so you can step in
+@export var tip_sweet_spot := 0.6              # ...hits past 60% reach deal +25% damage
+@export var tip_sweet_mult := 1.25
 @export var herder_move := 1.1                 # Pangangon
 @export var bounce_range := 70.0               # Batu Pantul: the stone hops to one more foe
 @export var bounce_mult := 0.6
@@ -62,6 +65,7 @@ extends Resource
 @export var wirama_wave := 60.0                # extra finisher reach at full Wirama
 @export var lakon_step := 0.15                 # Dalang, Lakon: spell power per fresh glyph
 @export var lakon_max := 2
+@export var lakon_refund := 0.2                # Dalang: Sakti cost refund when Lakon is maxed
 @export var dalang_gain := 1.35                # Dalang, Suluk: Sakti gain
 @export var flask_time := 0.6
 @export var flask_base_heal := 0.4

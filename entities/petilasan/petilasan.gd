@@ -28,7 +28,7 @@ func _art() -> Texture2D:
 	elif owner:
 		path = owner.scene_file_path
 	var zone := path.get_file().get_basename()
-	var region := "sunda"
+	var region := "hub" if zone == "hub" else "sunda"
 	if zone.begins_with("kg_"):
 		region = "galuh"
 	elif zone.begins_with("mt_"):

@@ -87,7 +87,8 @@ func _ready() -> void:
 		g.cond = cond
 		add_child(g)
 	health.changed.connect(_on_health)
-	marker.polygon = _circle(GRAB_R)
+	var mk := BossKit.decal(self, GRAB_R, marker.color)   # the grab reach as a pixel disc; the Polygon2D only shows/hides it
+	marker.add_child(mk)
 	var ov := Polygon2D.new()
 	ov.polygon = PackedVector2Array([-OVERLAY_SIZE / 2.0, Vector2(OVERLAY_SIZE.x, -OVERLAY_SIZE.y) / 2.0,
 			OVERLAY_SIZE / 2.0, Vector2(-OVERLAY_SIZE.x, OVERLAY_SIZE.y) / 2.0])
@@ -524,9 +525,3 @@ func _on_died() -> void:
 	if is_instance_valid(overlay):
 		create_tween().tween_property(overlay, "color:a", 0.0, 1.0)   # TUNE
 
-
-static func _circle(r: float) -> PackedVector2Array:
-	var pts := PackedVector2Array()
-	for i in 16:
-		pts.append(Vector2.from_angle(TAU * i / 16.0) * r)
-	return pts

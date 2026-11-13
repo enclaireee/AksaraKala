@@ -74,6 +74,12 @@ func _ready() -> void:
 	caster.health.set_invincible(_life + (0.3 if _cls == "rogue" else 0.15))   # TUNE
 	hit_landed.connect(_on_hit)
 	super()
+	var streak := get_node_or_null("Streak") as Sprite2D   # the speed flare: class art, facing the dash
+	if streak:
+		var st := SpellFX.tex("dash_streak")
+		if st:
+			streak.texture = st
+		streak.rotation = direction.angle()
 	if live:
 		activate()
 	if _moves:

@@ -30,7 +30,7 @@ func _ready() -> void:
 	_spr = SpellFX.make("ward_bubble", 6, 9.0)
 	if _spr:
 		_spr.loop = true
-		_spr.modulate = Color(_tint, 0.9)
+		_spr.modulate = SpellFX.tint_for("ward_bubble", Color(_tint, 0.9))
 		_spr.position = Vector2(0, -6)
 		add_child(_spr)
 	SpellFX.burst(get_parent(), "cast_sigil", 6, global_position, _tint, 0.8, 16.0)

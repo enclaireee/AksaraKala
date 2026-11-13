@@ -48,7 +48,7 @@ func _ready() -> void:
 	_spr = SpellFX.make("ombak_wave", 5, 12.0)
 	if _spr:
 		_spr.loop = true
-		_spr.modulate = _tint
+		_spr.modulate = SpellFX.tint_for("ombak_wave", _tint)
 		_spr.scale = Vector2.ONE * size
 		add_child(_spr)
 		var c := get_node_or_null("Crest")

@@ -33,7 +33,11 @@ static func cast(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos: V
 		"sunda_ka": _fan(caster, par, d, pos, tint, k)
 		"sunda_nga": _scarf(caster, par, d, pos, tint, k)
 		"sunda_ca":
-			SpellVariants.blast(caster, pos, spell.glyph_id, KLANA_BLAST, 64.0, power)
+			var spent := mini(4, _wirama(caster))
+			if spent > 0 and caster.get("wirama") != null:
+				caster.set("wirama", _wirama(caster) - spent)
+			var mult := 1.0 + 0.15 * spent
+			SpellVariants.blast(caster, pos, spell.glyph_id, KLANA_BLAST * mult, 64.0 * (1.0 + 0.1 * spent), power)
 			_buff(caster, "klana", 6.0)
 		"jawa_ha": _panji(caster, par, pos, tint, power)
 		"jawa_na": _steps(caster, par, d, tint, k)
@@ -125,7 +129,7 @@ static func _steps(caster: Node2D, par: Node, d: Vector2, tint: Color, k: float)
 					caster.add_wirama(1))
 
 
-## Jawa Ra: four masks circle the caster. ponytail: the ring zone stands in for the mask sprites; each tick flashes four.
+## Jawa Ra: four masks orbit the caster faster with Wirama, feeding Wirama on multi-hits.
 static func _masks(caster: Node2D, par: Node, pos: Vector2, tint: Color, k: float) -> void:
 	var z := SpellVariants._zone(caster, pos, tint)
 	z.follow = true
@@ -134,9 +138,12 @@ static func _masks(caster: Node2D, par: Node, pos: Vector2, tint: Color, k: floa
 	z.tick = 0.4
 	z.damage = roundi(MASK_DMG * k)
 	z.on_tick = func(zz: SpellZone) -> void:
-		var a := Time.get_ticks_msec() / 400.0
+		var spd := 400.0 - 20.0 * _wirama(caster)
+		var a := Time.get_ticks_msec() / maxf(180.0, spd)
 		for i in 4:
 			SpellFX.burst(par, "hit_burst", 5, zz.global_position + Vector2.from_angle(a + i * TAU / 4.0) * zz.radius, tint, 0.6, 10.0)
+		if caster.has_method("add_wirama") and SpellUtil.enemies_near(zz.get_tree(), zz.global_position, zz.radius).size() >= 1:
+			caster.add_wirama(1)
 	SpellVariants._replace(caster.get_tree(), "dancer_masks", z)
 	par.add_child(z)
 
@@ -165,6 +172,8 @@ static func _panca(spell: SpellData, caster: Node2D, par: Node, tint: Color, pow
 
 static func _mask(i: int, id: String, caster: Node2D, par: Node, tint: Color, power: float) -> void:
 	var at := caster.global_position
+	if caster.has_method("add_wirama"):
+		caster.add_wirama(1)
 	SpellFX.burst(par, "cast_sigil", 6, at, tint, 0.9, 12.0)
 	match i:
 		0: _heal(caster, 0.08)

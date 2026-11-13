@@ -19,4 +19,4 @@ projectile_range = 170.0
 sakti_per_hit = 4.0
 damage = 10
 favoured = "dalang"
-favoured_bonus = {"spi": 1}
+favoured_bonus = {"zone_life": 0.15}

@@ -1307,6 +1307,41 @@ def dalang(P, f, mood="", bust=False):
     return H
 
 
+# ---------------------------------------------------------------- base hero (no class yet)
+def base(P, f, mood="", bust=False):
+    """The unclassed hero: plain sand tunic, brown trousers, a rope sash, bare feet, a short knife at the hip. Turned right."""
+    sk = SKINS["sawo"]
+    tun, brown, sash = ramp("C2A674"), ramp("6A4A34"), ramp("8A5A32")
+    b = BREATH[f]
+    spec = dict(skin=sk, jaw="soft", eyes="open", lip="7A3436")
+    limb(P, [(43, 72), (41, 94), (40, 116)], [8.6, 7.0, 5.6], brown)
+    foot(P, 40.5, GROUND, -1, sk, 5.0)
+    limb(P, [(53, 72), (55, 94), (56, 116)], [8.8, 7.0, 5.6], brown)
+    foot(P, 56.5, GROUND, 1, sk, 6.0)
+    limb(P, [(40, 44 + b), (37, 56 + b), (38, 66)], [6.2, 5.4, 4.6], sk)
+    fist(P, 38, 66, sk, -1)
+    tor = P.poly([(37, 42 + b), (42, 38 + b), (53, 38 + b), (58, 42 + b), (58, 58), (59, 76), (37, 77), (38, 58)])
+    P.shade(tor, tun, hi=1.0, shd=3.0)
+    P.fold([(45, 66), (44, 76)], tor)
+    P.fold([(52, 64), (54, 76)], tor)
+    nk = P.poly([(45, 38 + b), (51, 38 + b), (48, 45 + b)])
+    P.shade(nk, sk, hi=1.0, shd=1.0, edge=False)
+    P.lline([(45, 38 + b), (48, 45 + b), (51, 38 + b)], 2, tor)
+    sa = P.poly([(37, 62), (59, 61), (59, 67), (37, 68)])
+    P.shade(sa, sash, hi=1.0, shd=1.0)
+    kn = P.ell(54, 66, 2.4, 2.4)
+    P.shade(kn, sash, hi=1.0, shd=1.0)
+    kf = P.stroke([(36, 66), (33, 76)], [2.0, 1.6])
+    P.shade(kf, STEEL, hi=0.5, shd=0.5)
+    H = head(P, 48, 28 + b, 1, spec, mood, f == 4 and not bust)
+    hb = H.poly([(-6.6, -2.6), (7.0, -4.0), (7.0, -2.6), (-6.6, -1.2)])
+    P.shade(hb, ramp("8A5A32"), hi=1.0, shd=0.5, edge=False)
+    limb(P, [(56, 44 + b), (59, 57 + b), (60, 66 + b)], [6.2, 5.4, 4.6], sk)
+    sleeve_cuff(P, 57.8, 49 + b, 80, tun, w=6.4, ln=5.0)
+    fist(P, 60, 68 + b, sk, 1)
+    return H
+
+
 CLASSES = {"warrior": warrior, "lancer": lancer, "archer": archer, "herder": herder, "rogue": rogue,
            "dancer": dancer, "mage": mage, "dalang": dalang}
 
@@ -1349,6 +1384,10 @@ def bust(cid, mood):
 
 def main():
     os.makedirs(OUTDIR, exist_ok=True)
+    CLASSES["base"] = base
+    for mood in MOODS:   # the fallback hero bust, used before a class is picked
+        bimg = bust("base", mood)
+        bimg.save(os.path.join(OUTDIR, "p_hero%s.png" % ("_" + mood if mood else "")))
     strips, busts = [], []
     for cid in CLASS_IDS:
         if cid not in CLASSES:

@@ -6,6 +6,8 @@ class_name KelirStage extends CanvasLayer
 const VEIL := Color("0A0606")
 const PILL_Y := 232.0
 const METER_W := 120.0
+const _FILL: Texture2D = preload("res://assets/art/ui/kelir_fill.png")   # Kelir paper tile (#F2D9A0)
+const _FRAME: Texture2D = preload("res://assets/art/ui/kelir_frame.png")
 
 var _veil: ColorRect
 var _title: Label
@@ -139,12 +141,22 @@ func flash(amount := 0.5, secs := 0.5) -> void:
 	create_tween().tween_property(_flash, "modulate:a", 0.0, secs)
 
 
+func _frame_box(mod: Color) -> StyleBoxTexture:
+	var b := StyleBoxTexture.new()
+	b.texture = _FRAME
+	b.modulate_color = mod
+	for side in 4:
+		b.set_texture_margin(side as Side, 1.0)
+	return b
+
+
 func _draw_meter() -> void:
 	var danger := 1.0 - _meter_ratio
-	var col := UIFx.WARM.lerp(UIFx.DANGER, clampf(danger * 1.6 - 0.2, 0.0, 1.0))
-	_meter.draw_rect(Rect2(0, 0, METER_W, 5), UIFx.LACQUER)
-	_meter.draw_rect(Rect2(1, 1, METER_W - 2, 3), UIFx.NIGHT_HI)
-	var w := (METER_W - 2.0) * _meter_ratio
-	_meter.draw_rect(Rect2(1, 1, w, 3), col)
+	var frame := Rect2(0, 0, METER_W, 5)   # 9-slice: ink edge round a dark-brown well
+	var tint := Color.WHITE.lerp(Color(1.0, 0.55, 0.5), clampf(danger * 1.6 - 0.2, 0.0, 1.0))   # Kelir paper, warming to danger
 	if danger > 0.7 and int(_t * 6.0) % 2 == 0:
-		_meter.draw_rect(Rect2(0, 0, METER_W, 5), UIFx.DANGER, false, 1.0)
+		tint = UIFx.DANGER   # the low-meter blink: the paper flashes rose
+	_meter.draw_style_box(_frame_box(Color.WHITE), frame)
+	var w := roundf((METER_W - 2.0) * _meter_ratio)
+	if w > 0.0:
+		_meter.draw_texture_rect(_FILL, Rect2(1, 1, w, 3), true, tint)

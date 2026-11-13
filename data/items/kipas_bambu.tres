@@ -21,4 +21,4 @@ reach = 20.0
 arc = 120.0
 damage = 11
 favoured = "dancer"
-favoured_bonus = {"damage_mult": 0.1}
+favoured_bonus = {"wirama_finisher": 1.0}

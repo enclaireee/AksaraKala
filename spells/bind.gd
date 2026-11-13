@@ -22,7 +22,7 @@ func _ready() -> void:
 			_root(e, thorn, tint)
 	var ring := SpellFX.make("bind_ring", 5, 14.0)
 	if ring:
-		ring.modulate = tint
+		ring.modulate = SpellFX.tint_for("bind_ring", tint)
 		ring.scale = Vector2.ONE * radius / 62.0
 		add_child(ring)
 
@@ -38,7 +38,7 @@ func _root(e: Node, thorn: int, tint: Color) -> void:
 	SpellUtil.strike(e, thorn)
 	var roots := SpellFX.make("bind_roots", 6, 14.0)
 	if roots and e is Node2D:
-		roots.modulate = tint
+		roots.modulate = SpellFX.tint_for("bind_roots", tint)
 		roots.position = Vector2(0, 4)
 		roots.life = maxf(seconds, 1.0)
 		roots.fade = 0.3

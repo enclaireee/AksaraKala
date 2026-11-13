@@ -49,7 +49,7 @@ static func cast(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos: V
 			_buff(caster, par, pos, tint, "pangruwat", PANGRUWAT_TIME)
 		"jawa_na": _cakil(caster, par, d, pos, tint, k)
 		"jawa_ca": _buff(caster, par, pos, tint, "suluk", SULUK_TIME)
-		"jawa_ra": _punakawan(spell, caster, par, pos, tint, power)
+		"jawa_ra": _punakawan(spell, caster, par, pos, tint, k, power)
 		"jawa_ka": _kelir(caster, par, d, pos, tint, k)
 		"jawa_la": _kayon(caster, par, pos, tint)
 
@@ -60,20 +60,23 @@ static func _buff(caster: Node2D, par: Node, pos: Vector2, tint: Color, id: Stri
 	SpellFX.burst(par, "cast_sigil", 6, pos, tint, 1.0, 12.0)
 
 
-## Arjuna's shadow fires one homing arrow from behind the caster.
+## Arjuna's shadow fires one homing arrow from behind the caster (two converging when Lakon is maxed).
 static func _pasopati(caster: Node2D, par: Node, d: Vector2, pos: Vector2, power: float) -> void:
 	var kd := SpellData.for_glyph("sunda_ka")
 	if kd == null or kd.scene == null:
 		return
-	var s: Bolt = kd.scene.instantiate()
-	s.mode = "seek"
-	s.caster = caster
-	s.data = SpellUtil.sub_data("sunda_ka", BOLT_DMG, 0.0, kd.scene)
-	s.power = power
-	s.reach = 300.0
-	s.direction = d
-	s.global_position = pos - d * BOLT_BACK
-	par.add_child(s)
+	var maxed: bool = caster.has_method("lakon_maxed") and caster.lakon_maxed()
+	var offsets := [Vector2.ZERO] if not maxed else [d.orthogonal() * 14.0, -d.orthogonal() * 14.0]
+	for off in offsets:
+		var s: Bolt = kd.scene.instantiate()
+		s.mode = "seek"
+		s.caster = caster
+		s.data = SpellUtil.sub_data("sunda_ka", BOLT_DMG * (0.75 if maxed else 1.0), 0.0, kd.scene)
+		s.power = power
+		s.reach = 300.0
+		s.direction = d
+		s.global_position = pos - d * BOLT_BACK + off
+		par.add_child(s)
 
 
 ## Strings root the nearest foes (bosses are slowed), then each one still standing is hit.
@@ -94,12 +97,13 @@ static func _benang(caster: Node2D, par: Node, pos: Vector2, tint: Color, power:
 				SpellVariants.blast(caster, e.global_position, "sunda_nga", STRING_BLAST, 24.0, power))
 
 
-## A telegraph ring, then the biggest burst where it was cast.
+## A telegraph ring that pulls foes inward, then the biggest burst where it was cast.
 static func _gara(caster: Node2D, par: Node, pos: Vector2, tint: Color, power: float) -> void:
 	var z := SpellVariants._zone(caster, pos, tint)
 	z.radius = GARA_RADIUS
 	z.delay = GARA_DELAY
 	z.life = GARA_DELAY
+	z.pull = 35.0
 	z.on_end = func(_z: SpellZone) -> void:
 		SpellVariants.blast(caster, pos, "sunda_ca", GARA_BLAST, GARA_RADIUS, power, 2.0, 40.0)
 	par.add_child(z)
@@ -121,19 +125,26 @@ static func _cakil(caster: Node2D, par: Node, d: Vector2, pos: Vector2, tint: Co
 				cut.rotation = d.angle())
 
 
-## Four small puppets, each a base summon at 30% damage.
-static func _punakawan(spell: SpellData, caster: Node2D, par: Node, pos: Vector2, tint: Color, power: float) -> void:
-	if spell.scene == null:
-		return
-	var sd := SpellUtil.sub_data("jawa_ra", spell.power * PUNAKAWAN_SHARE, spell.radius, spell.scene)
-	sd.duration = PUNAKAWAN_TIME
-	for i in 4:
-		var s: Node2D = spell.scene.instantiate()
-		s.caster = caster
-		s.data = sd
-		s.power = power
-		s.global_position = pos + Vector2.from_angle(TAU * i / 4.0 + PI / 4.0) * 22.0
-		par.add_child(s)
+## Punakawan: Semar's calming/slowing aura + Gareng & Petruk flanking spirit puppets.
+static func _punakawan(spell: SpellData, caster: Node2D, par: Node, pos: Vector2, tint: Color, k: float, power: float) -> void:
+	var semar := SpellVariants._zone(caster, pos, tint)
+	semar.radius = 56.0
+	semar.life = PUNAKAWAN_TIME
+	semar.tick = 0.7
+	semar.slow = 0.45
+	semar.damage = roundi(6.0 * k)
+	SpellVariants._replace(caster.get_tree(), "punakawan_semar", semar)
+	par.add_child(semar)
+	if spell.scene != null:
+		var sd := SpellUtil.sub_data("jawa_ra", spell.power * 0.55, spell.radius, spell.scene)
+		sd.duration = PUNAKAWAN_TIME
+		for side in [-1, 1]:
+			var s: Node2D = spell.scene.instantiate()
+			s.caster = caster
+			s.data = sd
+			s.power = power
+			s.global_position = pos + Vector2(side * 24.0, -8.0)
+			par.add_child(s)
 	SpellFX.burst(par, "cast_sigil", 6, pos, tint, 1.0, 12.0)
 
 

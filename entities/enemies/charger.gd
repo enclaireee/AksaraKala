@@ -5,6 +5,7 @@ class_name Charger extends EnemyBase
 enum State { IDLE, APPROACH, TELEGRAPH, DASH, STUN, RECOVER, FLINCH, RETURN, DEAD }
 
 const TELEGRAPH_TINT := Color(1.0, 0.45, 0.45)
+const LANE_TILE := "res://assets/art/fx/lane_tile.png"
 const STUNNED := Color(0.7, 0.75, 1.0)
 
 var state := State.IDLE
@@ -19,7 +20,12 @@ func _ready() -> void:
 	super()
 	marker = Line2D.new()
 	marker.width = 3.0
-	marker.default_color = Color(1.0, 0.3, 0.3, 0.5)
+	marker.default_color = Color(1, 1, 1, 0.6)
+	marker.antialiased = false
+	if ResourceLoader.exists(LANE_TILE):   # art pass v8: stepped hatched lane, tiled along the line
+		marker.texture = load(LANE_TILE)
+		marker.texture_mode = Line2D.LINE_TEXTURE_TILE
+		marker.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	marker.points = PackedVector2Array([Vector2.ZERO, Vector2(t("dash_max"), 0)])
 	marker.visible = false
 	aim.add_child(marker)

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=42 format=3]
+[gd_resource type="Theme" load_steps=49 format=3]
 
 [ext_resource type="FontFile" path="res://assets/fonts/Tiny5-Regular.woff" id="f1"]
 [ext_resource type="FontFile" path="res://assets/fonts/Jersey15-Regular.ttf" id="f2"]
@@ -15,6 +15,12 @@
 [ext_resource type="Texture2D" path="res://assets/art/ui/slot.png" id="t_slot"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/slot_selected.png" id="t_slot_selected"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/lozenge.png" id="t_lozenge"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/theme_scroll.png" id="t_scroll"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/theme_grab.png" id="t_grab"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/theme_edit.png" id="t_edit"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/theme_pbar_bg.png" id="t_pbar_bg"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/theme_pbar_fill.png" id="t_pbar_fill"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/theme_pbar_fill_hi.png" id="t_pbar_fill_hi"]
 
 [sub_resource type="StyleBoxTexture" id="s_panel"]
 texture = ExtResource("t_panel")
@@ -134,23 +140,30 @@ content_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxEmpty" id="s_none"]
 
-[sub_resource type="StyleBoxFlat" id="s_grab"]
-bg_color = Color(0.247, 0.722, 0.753, 1)
+[sub_resource type="StyleBoxTexture" id="s_grab"]
+texture = ExtResource("t_grab")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
 content_margin_left = 2.0
 content_margin_right = 2.0
 
-[sub_resource type="StyleBoxFlat" id="s_scroll"]
-bg_color = Color(0.102, 0.0824, 0.188, 0.9)
+[sub_resource type="StyleBoxTexture" id="s_scroll"]
+texture = ExtResource("t_scroll")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
 content_margin_left = 2.0
 content_margin_right = 2.0
 
-[sub_resource type="StyleBoxFlat" id="s_edit"]
-bg_color = Color(0.0471, 0.0392, 0.0941, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.227, 0.184, 0.361, 1)
+[sub_resource type="StyleBoxTexture" id="s_edit"]
+texture = ExtResource("t_edit")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
 content_margin_left = 4.0
 content_margin_top = 2.0
 content_margin_right = 4.0
@@ -159,21 +172,24 @@ content_margin_bottom = 2.0
 [sub_resource type="StyleBoxFlat" id="s_sel"]
 bg_color = Color(0.498, 0.91, 0.878, 0.22)
 
-[sub_resource type="StyleBoxFlat" id="s_pbar_bg"]
-bg_color = Color(0.0549, 0.0431, 0.11, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.0392, 0.0314, 0.0784, 1)
+[sub_resource type="StyleBoxTexture" id="s_pbar_bg"]
+texture = ExtResource("t_pbar_bg")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
 content_margin_top = 2.0
 content_margin_bottom = 2.0
 
-[sub_resource type="StyleBoxFlat" id="s_pbar_fill"]
-bg_color = Color(0.247, 0.722, 0.753, 1)
+[sub_resource type="StyleBoxTexture" id="s_pbar_fill"]
+texture = ExtResource("t_pbar_fill")
+texture_margin_top = 1.0
+texture_margin_bottom = 1.0
 
-[sub_resource type="StyleBoxFlat" id="s_pbar_fill_hi"]
-bg_color = Color(0.498, 0.91, 0.878, 1)
+[sub_resource type="StyleBoxTexture" id="s_pbar_fill_hi"]
+texture = ExtResource("t_pbar_fill_hi")
+texture_margin_top = 1.0
+texture_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxLine" id="s_hline"]
 color = Color(0.227, 0.184, 0.361, 1)

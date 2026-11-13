@@ -12,4 +12,4 @@ slot = "accessory"
 description = "ITEM_BLENCONG_DESC"
 bonus = {"spi": 1}
 favoured = "dalang"
-favoured_bonus = {"smudge": -0.03}
+favoured_bonus = {"spell_radius": 0.15}

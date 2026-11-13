@@ -24,6 +24,7 @@ var _feats: Array = []   # [{pos (tiles), kind, name}]
 var _pulse := 0.0
 var _world: Texture2D
 var _icons: Texture2D
+var _halo_tex: Texture2D = load("res://assets/art/ui/map_halo.png")
 var _fogs := {}
 var _seen := {}            # region -> true once visited
 var _region := ""          # the running area's region
@@ -231,6 +232,12 @@ func _draw() -> void:
 	_legend()
 
 
+## The goal halo: a two-frame pixel ring strip (small, large) that pulses with the icon.
+func _halo(at: Vector2) -> void:
+	var f := 0 if sin(_pulse * 4.0) < 0.0 else 1
+	draw_texture_rect_region(_halo_tex, Rect2((at - Vector2(9, 9)).round(), Vector2(18, 18)), Rect2(f * 18, 0, 18, 18))
+
+
 func _draw_world() -> void:
 	var wr := _world_rect()
 	draw_texture(_world, wr.position)
@@ -249,8 +256,7 @@ func _draw_world() -> void:
 		_icon("you", hp, sin(_pulse * 3.0) * 1.2)
 	if _goal_region != "" and MapRegions.REGIONS.has(_goal_region):
 		var gp: Vector2 = wr.position + MapRegions.REGIONS[_goal_region].pos + Vector2(12 if _goal_region == _region else 0, -12)
-		var halo := 7.0 + sin(_pulse * 4.0) * 1.5
-		draw_arc(gp, halo, 0.0, TAU, 16, Color(UIFx.WARM, 0.55), 1.0)
+		_halo(gp)
 		_icon("goal", gp, sin(_pulse * 4.0) * 1.0)
 
 
@@ -266,8 +272,7 @@ func _draw_area() -> void:
 				continue
 			var p := _to_screen(f.pos)
 			if kind == "goal":
-				var halo := 6.0 + sin(_pulse * 4.0) * 1.2
-				draw_arc(p, halo, 0.0, TAU, 14, Color(UIFx.WARM, 0.6), 1.0)
+				_halo(p)
 			_icon(kind, p, sin(_pulse * 4.0) * 1.0 if kind == "goal" else 0.0)
 			if kind == "exit" and not seen.has(f.name):   # one label per destination
 				seen[f.name] = true

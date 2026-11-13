@@ -193,6 +193,7 @@ Only a few enemies attack at once, so crowds stay readable.
 - Phase 2 at 50% HP with a 1.5 s invulnerable pause and a line of dialogue or a roar, so the player gets a beat to breathe.
 - Each boss has at least one 2-3 s punish window per attack cycle (after a heavy attack or a poise break).
 - Mechanics that use spells (the Keris's curse marks, Sangkuriang's fake dawn, Kala's shield) are in [bestiary.md](bestiary.md).
+- **Telegraph look (2026-11-13, art pass v8, ASSUMED):** telegraph, hazard and wave shapes keep their size, timing and shape; only the drawing changes to the [assets.md](assets.md) 1 FX standard: no AA, pixel-snapped radii, a tiled motif fill per boss (kawung or parang), a 2-3 px stepped edge band and a chunky closing edge. Thrown objects use sprites (`thrown_rock`, `boss_log`, `boss_blade`).
 - **Staging (2026-11-12, ASSUMED, timings TUNE; `ui/boss_stage.gd`).** Visual only: no HP, damage or timing changes. It reads the boss-bar contract (`health`, `engaged`, `boss_name_key`, optional `phase`), so it covers every boss with no per-boss code.
   - Entrance: when the boss engages, letterbox bars close in (0.35 s) and a name card opens between two brass rules for 1.5 s.
   - Phase change: a warm flash, 0.3 s of slow motion at 35% speed, a 3 px camera shake, the bars pinch in for a beat.

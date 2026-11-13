@@ -7,7 +7,8 @@ const GOLD := UIFx.WARM       # quests are amber (ui.md 0.1)
 const GOLD_LIGHT := UIFx.HEAD
 const CREAM := UIFx.TEXT
 const OUTLINE := UIFx.LACQUER
-const BAND := Color(0.055, 0.043, 0.11, 0.84)   # night band
+const BAND := Color(0.26, 0.2, 0.42, 0.92)   # tints the cream lontar leaf down to a night band under light text
+const ART := "res://assets/art/ui/"
 const FADE_IN := 0.5
 const HOLD_START := 3.0
 const HOLD_DONE := 3.5
@@ -17,9 +18,9 @@ const ACTS := {"mq0": "PROLOG", "mq1": "I", "mqg": "II", "mq2": "III", "mq3": "I
 
 var _queue: Array[Dictionary] = []
 var _showing := false
-var _band: ColorRect
-var _rule_top: ColorRect
-var _rule_bottom: ColorRect
+var _band: NinePatchRect
+var _rule_top: NinePatchRect
+var _rule_bottom: NinePatchRect
 var _caption: Label
 var _title: Label
 var _body: Label
@@ -31,9 +32,10 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	modulate.a = 0.0
 	visible = false
-	_band = _rect(BAND)
-	_rule_top = _rect(Color(GOLD, 0.6))
-	_rule_bottom = _rect(Color(GOLD, 0.6))
+	_band = _nine("lontar_card", [12, 5, 12, 5])   # the leaf's end studs stay whole, its middle stretches
+	_band.self_modulate = BAND
+	_rule_top = _nine("book_rule", [6, 0, 0, 0])
+	_rule_bottom = _nine("book_rule", [6, 0, 0, 0])
 	_caption = _label(UIFx.caps_font(), UIFx.BODY, UIFx.WARM)   # tracked caps kicker (ui.md 1)
 	_caption.uppercase = true
 	_title = _label(UIFx.display(), UIFx.DISPLAY, GOLD_LIGHT)     # Jersey 15 at 27: the one display size
@@ -46,9 +48,13 @@ func _ready() -> void:
 		ev.quest_completed.connect(_on_completed)
 
 
-func _rect(c: Color) -> ColorRect:
-	var r := ColorRect.new()
-	r.color = c
+func _nine(tex: String, m: Array) -> NinePatchRect:
+	var r := NinePatchRect.new()
+	r.texture = load(ART + tex + ".png")
+	r.patch_margin_left = m[0]
+	r.patch_margin_top = m[1]
+	r.patch_margin_right = m[2]
+	r.patch_margin_bottom = m[3]
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(r)
 	return r
@@ -189,9 +195,9 @@ func _show(card: Dictionary) -> void:
 	_band.position = Vector2(0, top)
 	_band.size = Vector2(480, h)
 	_rule_top.position = Vector2(0, top)
-	_rule_top.size = Vector2(480, 1)
-	_rule_bottom.position = Vector2(0, top + h - 1.0)
-	_rule_bottom.size = Vector2(480, 1)
+	_rule_top.size = Vector2(480, 3)
+	_rule_bottom.position = Vector2(0, top + h - 3.0)
+	_rule_bottom.size = Vector2(480, 3)
 	_caption.position = Vector2(0, top + 10.0)
 	_caption.size = Vector2(480, 9)
 	_title.position = Vector2(0, top + 23.0)

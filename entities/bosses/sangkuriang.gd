@@ -91,7 +91,7 @@ var _shots: Array[Node] = []
 var _spots: Array[Vector2] = []
 var _land_at: Array[float] = []
 var _done: Array[bool] = []
-var _log: Polygon2D
+var _log: Node2D
 var _seep: Array[Node] = []   # phase 2: the dammed lake seeps in (HazardZones)
 var _seep_stage := 0
 
@@ -343,10 +343,8 @@ func _prune_shots() -> void:
 
 func _launch_log() -> void:
 	_launched = true
-	var lg := Polygon2D.new()
+	var lg := BossKit.prop("telegraph/small_log.png", Vector2(12, 4), Color(0.5, 0.33, 0.15))   # 14x6 log sprite
 	_log = lg
-	lg.polygon = PackedVector2Array([-6, -2, 6, -2, 6, 2, -6, 2])
-	lg.color = Color(0.5, 0.33, 0.15)
 	lg.z_index = 50
 	get_parent().add_child(lg)
 	var from := global_position + Vector2(0, -20)
@@ -358,9 +356,7 @@ func _launch_log() -> void:
 
 ## A log falling onto a marked circle (visual only; the hit is the strike when the marker is full).
 func _drop_log(spot: Vector2, time: float) -> void:
-	var lg := Polygon2D.new()
-	lg.polygon = PackedVector2Array([-7, -2, 7, -2, 7, 2, -7, 2])
-	lg.color = Color(0.5, 0.33, 0.15)
+	var lg := BossKit.prop("telegraph/small_log.png", Vector2(14, 4), Color(0.5, 0.33, 0.15))   # 14x6 log sprite
 	lg.z_index = 50
 	get_parent().add_child(lg)
 	var tw := lg.create_tween()

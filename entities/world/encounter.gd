@@ -95,12 +95,14 @@ func _on_died() -> void:
 
 
 func _marker(at: Vector2) -> Node2D:
-	var m := Polygon2D.new()
-	m.color = Color(0.9, 0.2, 0.15, 0.7)   # ASSUMED: red ground ring as the spawn warning
-	var pts := PackedVector2Array()
-	for i in 12:
-		pts.append(Vector2.from_angle(TAU * i / 12.0) * Vector2(7, 4))
-	m.polygon = pts
+	var m := Polygon2D.new()   # a textured quad: cracked ground with a red ink seal (tools/gen_world_fx.py spawn_mark.png, 16x10)
+	if ResourceLoader.exists("res://assets/art/world_fx/spawn_mark.png"):
+		m.texture = load("res://assets/art/world_fx/spawn_mark.png")
+		m.polygon = PackedVector2Array([Vector2(-8, -5), Vector2(8, -5), Vector2(8, 5), Vector2(-8, 5)])
+		m.uv = PackedVector2Array([Vector2(0, 0), Vector2(16, 0), Vector2(16, 10), Vector2(0, 10)])
+	else:
+		m.color = Color(0.9, 0.2, 0.15, 0.7)
+		m.polygon = PackedVector2Array([Vector2(-7, -4), Vector2(7, -4), Vector2(7, 4), Vector2(-7, 4)])
 	m.position = at
 	m.z_index = -1
 	get_parent().add_child(m)

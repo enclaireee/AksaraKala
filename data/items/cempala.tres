@@ -19,4 +19,4 @@ projectile_range = 170.0
 sakti_per_hit = 6.0
 damage = 9
 favoured = "dalang"
-favoured_bonus = {"sakti_gain": 0.1}
+favoured_bonus = {"lakon_sakti": 8.0}

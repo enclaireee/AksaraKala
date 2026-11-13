@@ -21,7 +21,7 @@ const TRACKER_REST_A := 0.5   # TUNE: tracker opacity once it has sat unchanged 
 const TRACKER_IDLE := 5.0   # TUNE: s at full opacity after a change before it dims
 const MENU_HINT_SHOW := 25.0   # s the [Esc] hint stays before it fades
 
-var _bars := {}   # name -> [fill ColorRect, width, frame, lag ColorRect, well ColorRect]
+var _bars := {}   # name -> [fill TextureRect, width, frame, lag TextureRect, well NinePatchRect, frame, red flash TextureRect]
 var _pips: Array[TextureRect] = []
 var _ilmu: Label        # logical value ("%d"), hidden; _ilmu_disp is the rolling one the player sees
 var _ilmu_disp: Label
@@ -46,7 +46,8 @@ var _grp_bars: Control   # dims to 40% while a dialogue is open: the vitals
 var _dialogue_focus := false
 var _focus_tw: Tween
 var _hp_txt: Label   # "120/120" right of the HP bar
-var _dist_bg: ColorRect   # lacquer pill behind the distance label
+var _class_txt: Label   # second-path mechanic indicator below Sakti bar
+var _dist_bg: NinePatchRect   # lacquer pill behind the distance label
 var _menu_hint: Label
 var _tracker_sig := ""
 var _pulse_tw: Tween
@@ -84,14 +85,16 @@ var _dist: Label       # metres to the target, or "-> zone" when it is elsewhere
 const BOSS_W := 240
 var _boss_root: Control
 var _boss_name: Label
-var _boss_fill: ColorRect
-var _boss_ghost: ColorRect   # the pale bar that trails the fill, so a hit reads as a chunk falling away
+var _boss_fill: TextureRect
+var _boss_ghost: TextureRect   # the pale bar that trails the fill, so a hit reads as a chunk falling away
 var _boss_ticks: Control
+var _boss_tex: Texture2D
+var _boss_tex_open: Texture2D
 var _boss_ticked: Node    # the boss the ticks were built for
 var _boss_open: Label     # "TERBUKA" while BossKit.is_open(boss)
 var _boss_mark: Node2D   # cracked-glyph mark at the bar end: the boss's Laras sabotage flag is set (ui.md 2, v5)
-var _dawn_bg: ColorRect
-var _dawn_fill: ColorRect
+var _dawn_bg: TextureRect
+var _dawn_fill: TextureRect
 
 
 func _ready() -> void:
@@ -100,15 +103,19 @@ func _ready() -> void:
 	_grp_bars = _group()
 	_grp_hide = _group()
 	# vitals, top left: three bare bars on one left edge, 2 px apart; HP carries its number to the right
-	_bars.hp = _bar(Vector2(M, M), HP_W, 6, HP_COL, _grp_bars)
-	_bars.st = _bar(Vector2(M, M + 10), ST_W, 3, ST_COL, _grp_bars)
-	_bars.sk = _bar(Vector2(M, M + 17), 60, 3, SK_COL, _grp_bars)
+	_bars.hp = _bar(Vector2(M, M), HP_W, 6, "hp", _grp_bars)
+	_bars.st = _bar(Vector2(M, M + 10), ST_W, 3, "st", _grp_bars)
+	_bars.sk = _bar(Vector2(M, M + 17), 60, 3, "sk", _grp_bars)
 	_st_nodes = [_bars.st[2], _bars.st[4], _bars.st[5]]
 	_hp_txt = UIFx.text("", "body", CREAM)
 	_hp_txt.position = Vector2(M + HP_W + 2 + 4, M - 1)
 	_hp_txt.size = Vector2(48, 9)
 	_hp_txt.modulate.a = 0.85
 	_grp_bars.add_child(_hp_txt)
+	_class_txt = UIFx.text("", "body", CREAM)
+	_class_txt.position = Vector2(M, M + 24)
+	_class_txt.size = Vector2(120, 9)
+	_grp_bars.add_child(_class_txt)
 	var well := TextureRect.new()   # weapon well, bottom left, with the flasks on its baseline
 	well.texture = _ui_tex("ink_slot")
 	well.position = Vector2(M, 270 - M - 20)
@@ -372,10 +379,10 @@ func _on_blocked(what: String) -> void:
 			tw.tween_property(n, "modulate", Color.WHITE, 0.25)
 			tw.finished.connect(refresh)
 	elif _bars.has(what):
-		var well: ColorRect = _bars[what][4]
-		well.color = Color.RED
+		var flash: TextureRect = _bars[what][6]
+		flash.modulate = Color(1, 0.2, 0.2, 0.9)
 		var tw2 := create_tween()
-		tw2.tween_property(well, "color", Color(0, 0, 0, 0.6), 0.25)
+		tw2.tween_property(flash, "modulate:a", 0.0, 0.25)
 		_st_full = 0.0   # a flash on stamina shows the bar
 
 
@@ -388,6 +395,19 @@ func _rect(pos: Vector2, sz: Vector2, col: Color, parent: Node = self) -> ColorR
 	r.position = pos
 	r.size = sz
 	r.color = col
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(r)
+	return r
+
+
+## A tiled pixel strip (the bar fills): resizing it crops the pattern, it never scales it.
+func _tile(pos: Vector2, sz: Vector2, tex: String, parent: Node) -> TextureRect:
+	var r := TextureRect.new()
+	r.texture = _ui_tex(tex)
+	r.position = pos
+	r.size = sz
+	r.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	r.stretch_mode = TextureRect.STRETCH_TILE
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	parent.add_child(r)
 	return r
@@ -483,25 +503,15 @@ func _build_extras() -> void:
 	_banner_body.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_banner_root.add_child(_banner_body)
 	_diamond = Node2D.new()   # floats over an on-screen target
-	var dk := Polygon2D.new()
-	dk.polygon = PackedVector2Array([Vector2(0, -5), Vector2(5, 0), Vector2(0, 5), Vector2(-5, 0)])
-	dk.color = OUTLINE
-	_diamond.add_child(dk)
-	var dg := Polygon2D.new()
-	dg.polygon = PackedVector2Array([Vector2(0, -4), Vector2(4, 0), Vector2(0, 4), Vector2(-4, 0)])
-	dg.color = GOLD
-	_diamond.add_child(dg)
-	var dh := Polygon2D.new()   # one lit facet
-	dh.polygon = PackedVector2Array([Vector2(0, -3), Vector2(2, -1), Vector2(0, 0), Vector2(-2, -1)])
-	dh.color = Color("FFE2BC")
-	_diamond.add_child(dh)
+	var dm := Sprite2D.new()   # 11 px amber diamond, pixel art (marker_objective.png)
+	dm.texture = _ui_tex("marker_objective")
+	dm.centered = false
+	dm.position = Vector2(-5, -5)
+	_diamond.add_child(dm)
 	_diamond.visible = false
 	add_child(_diamond)
-	_dist_bg = ColorRect.new()   # lacquer pill: "1 m" never floats loose over a character
-	_dist_bg.color = Color(UIFx.INK_BG, 0.8)
-	_dist_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_dist_bg = _nine("ink_panel", Rect2(0, 0, 40, 11), [4, 4, 4, 4])   # lacquer pill: "1 m" never floats loose over a character
 	_dist_bg.visible = false
-	add_child(_dist_bg)
 	_dist = UIFx.text("", "body", GOLD)
 	_dist.size = Vector2(80, 9)
 	_dist.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -529,15 +539,11 @@ func _build_extras() -> void:
 	_boss_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_boss_root.add_child(_boss_name)
 	var by := 270 - M - 10
-	_rect(Vector2(x - 1, by - 1), Vector2(BOSS_W + 2, 6), Color(UIFx.INK_BG, 0.95), _boss_root)   # outline
-	_rect(Vector2(x, by), Vector2(BOSS_W, 4), Color(0.2, 0.05, 0.04, 0.9), _boss_root)            # empty well
-	_rect(Vector2(x - 1, by - 3), Vector2(BOSS_W + 2, 1), Color(Color("D2A446"), 0.85), _boss_root)   # brass rule over the bar
-	for cx: float in [x - 4.0, x + BOSS_W + 1.0]:                                              # and a stud at each end of it
-		_rect(Vector2(cx, by - 4), Vector2(3, 3), Color("D2A446"), _boss_root)
-	_boss_ghost = _rect(Vector2(x, by), Vector2(BOSS_W, 4), Color(1.0, 0.9, 0.68, 0.9), _boss_root)
-	_boss_fill = _rect(Vector2(x, by), Vector2(BOSS_W, 4), HP_COL, _boss_root)
-	_boss_fill.clip_contents = true
-	_rect(Vector2(0, 0), Vector2(BOSS_W, 1), Color(1, 1, 1, 0.25), _boss_fill)                   # lit top row
+	_nine("hud_boss_frame", Rect2(x - 8, by - 3, BOSS_W + 16, 10), [8, 3, 8, 3], _boss_root)   # brass rails, batik end caps, dark well
+	_boss_ghost = _tile(Vector2(x, by), Vector2(BOSS_W, 4), "hud_lag_4", _boss_root)
+	_boss_fill = _tile(Vector2(x, by), Vector2(BOSS_W, 4), "hud_fill_boss", _boss_root)
+	_boss_tex = _boss_fill.texture
+	_boss_tex_open = _ui_tex("hud_fill_boss_open")
 	_boss_ticks = Control.new()   # phase ticks, rebuilt per boss from its `phase_marks`
 	_boss_ticks.position = Vector2(x, by)
 	_boss_root.add_child(_boss_ticks)
@@ -548,8 +554,9 @@ func _build_extras() -> void:
 	_boss_root.add_child(_boss_open)
 	_boss_mark = _make_crack_mark(Vector2(x + BOSS_W + 4, by - 3))
 	_boss_root.add_child(_boss_mark)
-	_dawn_bg = _rect(Vector2(x, by + 6), Vector2(BOSS_W, 2), Color(UIFx.INK_BG, 0.8), _boss_root)
-	_dawn_fill = _rect(Vector2(x, by + 6), Vector2(BOSS_W, 2), SK_COL, _boss_root)
+	_dawn_bg = _tile(Vector2(x, by + 6), Vector2(BOSS_W, 2), "hud_lag_3", _boss_root)
+	_dawn_bg.modulate = Color(0.1, 0.08, 0.2, 0.85)   # the empty track: the lag strip tinted down to night
+	_dawn_fill = _tile(Vector2(x, by + 6), Vector2(BOSS_W, 2), "hud_fill_dawn", _boss_root)
 
 
 ## Sizes the banner pill to its text: "QUEST UPDATED  Quest name" on one 15 px line (max 300 px); a sentence too
@@ -734,21 +741,14 @@ func _update_toast(delta: float) -> void:
 		_toast_root.modulate.a = minf(k, clampf(_toast_left / 0.4, 0.0, 1.0))
 
 
-## Placeholder drawing, no asset: a small glyph box (open at the top right) with a zigzag crack through it.
+## The sabotage mark: a pixel glyph box with a rose crack through it (icon_crack.png).
 func _make_crack_mark(at: Vector2) -> Node2D:
-	var n := Node2D.new()
+	var n := Sprite2D.new()
+	n.texture = _ui_tex("icon_crack")
+	n.centered = false
+	n.offset = Vector2(-1, -3)
 	n.position = at
 	n.visible = false
-	var frame := Line2D.new()
-	frame.width = 1.0
-	frame.default_color = Color(0.95, 0.85, 0.5)
-	frame.points = PackedVector2Array([Vector2(7, 0), Vector2(0, 0), Vector2(0, 9), Vector2(9, 9), Vector2(9, 3)])
-	n.add_child(frame)
-	var crack := Line2D.new()
-	crack.width = 1.0
-	crack.default_color = Color(0.9, 0.2, 0.15)
-	crack.points = PackedVector2Array([Vector2(8, -2), Vector2(5, 3), Vector2(6, 5), Vector2(2, 11)])
-	n.add_child(crack)
 	return n
 
 
@@ -771,9 +771,10 @@ func _update_boss() -> void:
 			c.queue_free()
 		var marks: Variant = b.get("phase_marks")
 		for f: float in (marks if marks is Array else [0.5]):
-			_rect(Vector2(roundf(BOSS_W * f), 0), Vector2(1, 4), Color(UIFx.INK_BG, 0.9), _boss_ticks)
+			var tk := _tile(Vector2(roundf(BOSS_W * f) - 1.0, -1), Vector2(2, 6), "hud_boss_tick", _boss_ticks)
+			tk.stretch_mode = TextureRect.STRETCH_SCALE
 	_boss_open.visible = BossKit.is_open(b)
-	_boss_fill.color = HP_COL.lightened(0.35) if _boss_open.visible else HP_COL
+	_boss_fill.texture = _boss_tex_open if _boss_open.visible else _boss_tex
 	_boss_mark.visible = boss_sabotaged(b)
 	var seq = b.get("sequence")   # Batara Kala's shield: the glyphs to cast in order, the next one in brackets
 	if seq is PackedStringArray and not seq.is_empty() and b.get("dawn") != null:
@@ -792,21 +793,24 @@ func _update_boss() -> void:
 		_dawn_fill.size.x = roundf(BOSS_W * clampf(float(dawn), 0.0, 1.0))
 
 
-## A bare bar: 1 px ink outline, dark well, fill with a lit top row (thick bars also get a shade row and
-## ticks every 10 px). Returns [fill, width, outline, lag, well, outline] (index 5 kept for the stamina fade).
-func _bar(pos: Vector2, w: int, h: int, col: Color, parent: Node) -> Array:
-	var frame := _rect(pos, Vector2(w + 2, h + 2), Color(UIFx.INK_BG, 0.9), parent)
-	var bg := _rect(pos + Vector2(1, 1), Vector2(w, h), Color(0, 0, 0, 0.55), parent)   # flashes red when blocked
-	var lag := _rect(Vector2.ZERO, Vector2(w, h), Color(CREAM, 0.85), bg)
+## A pixel bar: 9-slice ink frame with a dark well, a tiled 3-tone fill with a lit top row, a tiled cream lag chunk and,
+## on the thick HP bar, a notch every 10 px. `kind` names the fill art (hud_fill_<kind>.png).
+## Returns [fill, width, frame, lag, well, frame, flash] (index 5 kept for the stamina fade; the well holds the rest).
+func _bar(pos: Vector2, w: int, h: int, kind: String, parent: Node) -> Array:
+	var frame := _nine("hud_bar_frame", Rect2(pos, Vector2(w + 2, h + 2)), [1, 1, 1, 1], parent)
+	var bg := Control.new()   # the interior: the bars resize their children, so it is a plain holder
+	bg.position = pos + Vector2(1, 1)
+	bg.size = Vector2(w, h)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(bg)
+	var lag := _tile(Vector2.ZERO, Vector2(w, h), "hud_lag_%d" % h, bg)
 	lag.visible = false
-	var fill := _rect(Vector2.ZERO, Vector2(w, h), col, bg)
-	fill.clip_contents = true
-	_rect(Vector2.ZERO, Vector2(w, 1), Color(1, 1, 1, 0.3), fill)
+	var fill := _tile(Vector2.ZERO, Vector2(w, h), "hud_fill_" + kind, bg)
 	if h >= 5:
-		_rect(Vector2(0, h - 1), Vector2(w, 1), Color(0, 0, 0, 0.28), fill)
-		for tx in range(10, w, 10):
-			_rect(Vector2(tx, 0), Vector2(1, h), Color(0, 0, 0, 0.22), bg)
-	return [fill, w, frame, lag, bg, frame]
+		_tile(Vector2(10, 0), Vector2(w - 10, h), "hud_bar_ticks", bg)
+	var flash := _tile(Vector2.ZERO, Vector2(w, h), "hud_lag_%d" % h, bg)   # a blocked action flashes the well red
+	flash.modulate.a = 0.0
+	return [fill, w, frame, lag, bg, frame, flash]
 
 
 func _fill(name: String, value: float, max_value: float) -> void:
@@ -818,6 +822,7 @@ func _fill(name: String, value: float, max_value: float) -> void:
 			b[2].size.x = w + 2
 			b[4].size.x = w
 			b[3].size.x = w
+			b[6].size.x = w
 	b[0].size.x = roundf(b[1] * clampf(value / maxf(max_value, 1.0), 0.0, 1.0))
 
 
@@ -851,6 +856,7 @@ func _process(delta: float) -> void:
 		_fill("st", p.stamina.value, p.stamina.max_stamina)
 		_fill("sk", p.sakti.value, p.sakti.max_value)
 		_hp_txt.text = "%d/%d" % [ceili(p.health.hp), roundi(p.health.max_hp)]
+		_update_class_hud(p)
 		_update_hp_fx(delta, float(p.health.hp) / maxf(p.health.max_hp, 1.0))
 		_update_stamina_fade(delta, p.stamina.value >= p.stamina.max_stamina)
 	_menu_hint.modulate.a = 0.55 * clampf((MENU_HINT_SHOW + 2.0 - _t) / 2.0, 0.0, 1.0)
@@ -868,6 +874,37 @@ func _process(delta: float) -> void:
 		_saved_icon.visible = _saved.visible
 		_saved.modulate.a = clampf(_saved_left / 0.3, 0.0, 1.0)
 		_saved_icon.modulate.a = _saved.modulate.a
+
+
+## Second-path mechanic indicator below the Sakti bar.
+func _update_class_hud(p: Node) -> void:
+	var cid: String = str(p.get("class_id"))
+	match cid:
+		"lancer":
+			if p.has_method("braced") and p.braced():
+				_class_txt.text = "KUDA-KUDA"
+				_class_txt.modulate = GOLD
+			elif p.get("_thrust_ready"):
+				_class_txt.text = "THRUST"
+				_class_txt.modulate = Color(CREAM, 0.9)
+			else:
+				_class_txt.text = ""
+		"dancer":
+			var w: int = int(p.get("wirama"))
+			var cap: int = p.wirama_cap() if p.has_method("wirama_cap") else 8
+			_class_txt.text = "WIRAMA %d/%d" % [w, cap]
+			_class_txt.modulate = Color("F27BB0") if w >= cap else Color(CREAM, 0.85 if w > 0 else 0.45)
+		"dalang":
+			var n: int = int(p.get("_lakon_n"))
+			var pct: int = roundi(n * p.tuning.lakon_step * 100.0)
+			var maxed: bool = p.has_method("lakon_maxed") and p.lakon_maxed()
+			_class_txt.text = "LAKON +%d%%" % pct
+			_class_txt.modulate = GOLD if maxed else Color(CREAM, 0.85 if n > 0 else 0.45)
+		"herder":
+			_class_txt.text = "BATU PANTUL"
+			_class_txt.modulate = Color(CREAM, 0.6)
+		_:
+			_class_txt.text = ""
 
 
 ## HP: a cream lag chunk drains LAG_HOLD s after the fill drops; below 25% the fill and frame pulse.

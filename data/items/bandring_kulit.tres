@@ -18,4 +18,4 @@ projectile_speed = 270.0
 projectile_range = 200.0
 damage = 8
 favoured = "herder"
-favoured_bonus = {"damage_mult": 0.1}
+favoured_bonus = {"bounce_range": 35.0}

@@ -70,6 +70,7 @@ var buffs := {}            # class spell buff id -> clock time it ends; read whe
 var wirama := 0            # Penari Topeng: stacks from hits landed
 var still := 0.0           # Prajurit: seconds standing still (Kuda-kuda)
 var _thrust_ready := false # ...the braced thrust, once per brace
+var _thrust_grace := 0.0   # ...lingers briefly after moving so you can step in to thrust
 var _lakon: Array[String] = []   # Dalang: the last two glyphs cast
 var _lakon_n := 0
 var _base_reduction := 0.0
@@ -180,14 +181,28 @@ func has_buff(id: String) -> bool:
 
 
 func braced() -> bool:
-	return class_id == "lancer" and still >= tuning.brace_time
+	var need: float = tuning.brace_time * (1.0 - (float(game.bonus("brace_fast")) if game else 0.0))
+	return class_id == "lancer" and still >= need
+
+
+func wirama_cap() -> int:
+	return tuning.wirama_max + (int(game.bonus("wirama_cap")) if game else 0)
 
 
 func add_wirama(n: int) -> void:
 	if class_id == "dancer":
-		var full := wirama >= tuning.wirama_max
-		wirama = mini(tuning.wirama_max, wirama + n * (2 if has_buff("gamelan") else 1))
-		if fx and not full and wirama >= tuning.wirama_max: fx.on_brace()
+		var cap := wirama_cap()
+		var full := wirama >= cap
+		wirama = mini(cap, wirama + n * (2 if has_buff("gamelan") else 1))
+		if fx and not full and wirama >= cap: fx.on_brace()
+
+
+func lakon_cap() -> int:
+	return tuning.lakon_max + (int(game.bonus("lakon_cap")) if game else 0)
+
+
+func lakon_maxed() -> bool:
+	return class_id == "dalang" and _lakon_n >= lakon_cap()
 
 
 ## Dalang: the power multiplier for casting this glyph now, and remember it.
@@ -195,7 +210,7 @@ func lakon(glyph: String) -> float:
 	if class_id != "dalang":
 		return 1.0
 	if not glyph in _lakon:
-		_lakon_n = mini(tuning.lakon_max, _lakon_n + 1)
+		_lakon_n = mini(lakon_cap(), _lakon_n + 1)
 	elif not has_buff("suluk"):
 		_lakon_n = 0
 	_lakon.append(glyph)
@@ -207,9 +222,15 @@ func _class_tick(delta: float) -> void:
 	var was := braced()
 	still = still + delta if move_dir == Vector2.ZERO and state != State.DODGE and state != State.HURT else 0.0
 	if braced() != was:
-		_thrust_ready = braced()
+		if braced():
+			_thrust_ready = true
+			_thrust_grace = tuning.brace_thrust_grace
 		health.reduction = 1.0 - (1.0 - _base_reduction) * (1.0 - (tuning.brace_guard if braced() else 0.0))
 		if fx and braced(): fx.on_brace()
+	elif not braced() and _thrust_ready:
+		_thrust_grace -= delta
+		if _thrust_grace <= 0.0:
+			_thrust_ready = false
 	if has_buff("suluk"):
 		sakti.add(3.0 * delta)
 	# ponytail: lends Sakti to health.shield, so it would overwrite a Ward; the Dalang has no Ward spell
@@ -222,6 +243,8 @@ func _class_tick(delta: float) -> void:
 
 func _reach() -> float:
 	var r := item.reach * (tuning.melee_finisher_reach_mult if hit == 2 else 1.0) * (1.4 if has_buff("gelar") else 1.0)
+	if game:
+		r *= 1.0 + game.bonus("brace_reach")
 	return r + (tuning.wirama_wave if hit == 2 and class_id == "dancer" and wirama >= tuning.wirama_max else 0.0)
 
 
@@ -262,7 +285,8 @@ func _attack() -> void:
 
 func _dodge() -> void:
 	if state_time < tuning.dodge_duration:
-		velocity = dodge_dir * tuning.dodge_distance / tuning.dodge_duration
+		var dist: float = tuning.dodge_distance * (1.0 + (float(game.bonus("dodge_dist")) if game else 0.0))
+		velocity = dodge_dir * dist / tuning.dodge_duration
 	else:
 		velocity = move_dir * _walk()   # dodge recovery: free to move, actions wait
 		if state_time >= tuning.dodge_duration + tuning.dodge_recovery:
@@ -352,7 +376,27 @@ func _swing(on: bool) -> void:
 	melee_hitbox.heavy = finisher
 	melee_hitbox.knockback = tuning.enemy_knockback_finisher if finisher else tuning.enemy_knockback_light
 	melee_hitbox.activate()
+	if finisher and class_id == "dancer" and wirama >= tuning.wirama_max:
+		_spawn_fan_wave()
 	if fx: fx.on_swing()
+
+
+func _spawn_fan_wave() -> void:
+	if get_parent() == null:
+		return
+	var wave: Arrow = ARROW.instantiate()
+	wave.source = self
+	wave.damage = maxi(1, roundi(_damage() * 0.65))
+	wave.heavy = true
+	wave.pierce = true
+	wave.modulate = Color(1.0, 0.55, 0.8)
+	wave.knockback = tuning.enemy_knockback_light
+	wave.direction = aim_dir
+	wave.speed = 320.0
+	wave.max_range = 80.0
+	wave.position = aim.global_position + aim_dir * 10.0
+	wave.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, null, false, wave.damage))
+	get_parent().add_child(wave)
 
 
 func _shoot() -> void:
@@ -362,15 +406,16 @@ func _shoot() -> void:
 	arrow.damage = _damage()
 	_thrust_ready = false
 	if class_id == "herder":   # Batu Pantul
-		arrow.bounce = tuning.bounce_mult
-		arrow.bounce_range = tuning.bounce_range
+		arrow.bounce = tuning.bounce_mult + (game.bonus("bounce_mult") if game else 0.0)
+		arrow.bounce_range = tuning.bounce_range + (game.bonus("bounce_range") if game else 0.0)
+		arrow.bounces_left = 2 if finisher else 1
 		arrow.poise_mult = tuning.bounce_poise
 	if class_id == "archer":
 		arrow.far_damage = roundi(arrow.damage * tuning.eagle_mult)   # Eagle Eye
 		arrow.far_after = tuning.eagle_range
 	if item.archetype == "staff":
 		arrow.modulate = Color(0.6, 0.8, 1.0)   # ponytail: a recolored arrow until the bolt has art
-	elif item.id == "bandring":   # a sling stone, not an arrow
+	elif item.id.begins_with("bandring"):   # a sling stone, not an arrow
 		var line := arrow.get_node_or_null("Line") as Sprite2D
 		if line and ResourceLoader.exists(ROCK_TEX):
 			line.texture = load(ROCK_TEX)
@@ -407,7 +452,14 @@ func _snap_aim(dir: Vector2) -> Vector2:
 func _on_hit_landed(hb: Hurtbox, attacker: Node, heavy: bool, dmg: int) -> void:
 	sakti.add(item.sakti_per_hit)   # weapon hits (balance.md 4); spells do not refill sakti
 	_ev.player_struck.emit(hit)
-	add_wirama(1)
+	add_wirama(1 + (int(game.bonus("wirama_finisher")) if hit == 2 and game else 0))
+	if class_id == "lancer" and item.is_melee() and hb.owner is Node2D:
+		if (hb.owner as Node2D).global_position.distance_to(global_position) >= _reach() * tuning.tip_sweet_spot:
+			var tip_extra: float = tuning.tip_sweet_mult - 1.0 + (float(game.bonus("tip_damage")) if game else 0.0)
+			if tip_extra > 0.0:
+				hb.health.take_damage(maxi(1, roundi(dmg * tip_extra)), self, true)
+	if class_id == "herder" and hb.owner.get("poise") != null and hb.owner.poise.get("broken"):
+		sakti.add(4.0)
 	if has_buff("sumpah"):
 		health.heal(ceili(health.max_hp * 0.03))
 	if item.self_damage > 0:   # Mpu Gandring's curse: costs HP, never kills
@@ -436,6 +488,7 @@ func _on_dodged(hitbox: Hitbox) -> void:
 	last_perfect = clock
 	stamina.refund(tuning.dodge_cost)
 	sakti.add(tuning.perfect_sakti)
+	add_wirama(2)
 	hit_flash.flash(tuning.perfect_pause * 3.0)
 	Snd.play("perfect_dodge")
 	hitstop(tuning.perfect_pause)
@@ -453,8 +506,10 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	hit_flash.flash(tuning.flash_time)
 	var skin: bool = (class_id == "warrior" and not hitbox.heavy) or get_meta("panji", false)   # Iron Skin, or inside the war banner
 	skin = skin or has_buff("gelar") or (braced() and not hitbox.heavy)
+	if braced() and game and game.bonus("brace_stamina") > 0.0:
+		stamina.refund(game.bonus("brace_stamina"))
 	if not has_buff("gamelan"):
-		wirama = 0
+		wirama = wirama / 2 if game and game.bonus("wirama_keep") > 0.0 else 0
 	if not skin:
 		_swing(false)
 		combo = 0
@@ -510,7 +565,8 @@ func _enter(s: State) -> void:
 
 
 func _walk() -> float:
-	var m := 1.0 + tuning.wirama_move * wirama + (0.25 if has_buff("napas") else 0.0) + (0.3 if has_buff("wanda") else 0.0)
+	var haste: float = float(game.bonus("wirama_haste")) if game and wirama >= 4 else 0.0
+	var m: float = 1.0 + tuning.wirama_move * wirama + (0.25 if has_buff("napas") else 0.0) + (0.3 if has_buff("wanda") else 0.0) + haste
 	return tuning.walk_speed * move_mult * m * status.speed_mult()   # Slow; dodge distance is unchanged (combat.md 4)
 
 
@@ -522,7 +578,8 @@ func _set_phase(p: Phase) -> void:
 func _phase_len(p: Phase) -> float:
 	var t: float = [item.windup, item.active if item.is_melee() else 0.0, item.recovery][p]
 	if p != Phase.ACTIVE:
-		t /= atk_speed * (1.0 + tuning.wirama_speed * wirama + (0.2 if has_buff("gamelan") else 0.0))
+		var haste: float = float(game.bonus("wirama_haste")) if game and wirama >= 4 else 0.0
+		t /= atk_speed * (1.0 + tuning.wirama_speed * wirama + (0.2 if has_buff("gamelan") else 0.0) + haste)
 	return t * (tuning.finisher_mult if hit == 2 else 1.0)
 
 

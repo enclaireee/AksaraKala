@@ -42,7 +42,7 @@ static func cast(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos: V
 				caster.buff("napas", 12.0)
 			SpellFX.burst(par, "cast_sigil", 6, pos, tint, 1.0, 12.0)
 		"jawa_ra": _buffalo(spell, caster, par, d, pos, tint, power)
-		"jawa_ka": _flood(spell, caster, par, d, pos, tint)
+		"jawa_ka": _flood(spell, caster, par, d, pos, tint, k, power)
 		"sunda_ba": _herd(caster, par, d, pos, tint, k)
 
 
@@ -79,22 +79,23 @@ static func _pen(caster: Node2D, par: Node, d: Vector2, pos: Vector2, tint: Colo
 	par.add_child(z)
 
 
-## Putar Bandring: eight sling stones in a ring (plain bolts: no mode, no homing, pierce one).
+## Putar Bandring: eight sling stones in a staggered spiral; each can Batu Pantul bounce.
 static func _stones(caster: Node2D, par: Node, pos: Vector2, power: float) -> void:
 	var kd := SpellData.for_glyph("sunda_ka")
 	if kd == null or kd.scene == null:
 		return
 	var sd := SpellUtil.sub_data("sunda_ka", STONE_DAMAGE, 0.0, kd.scene)
 	for i in 8:
-		var s: Bolt = kd.scene.instantiate()
-		s.mode = "stone"   # matches no special branch in bolt.gd: no spear, no homing, no flash
-		s.caster = caster
-		s.data = sd
-		s.power = power
-		s.reach = 130.0
-		s.direction = Vector2.from_angle(TAU * i / 8.0)
-		s.global_position = pos
-		par.add_child(s)
+		SpellVariants.later(caster, 0.04 * i, func() -> void:
+			var s: Bolt = kd.scene.instantiate()
+			s.mode = "stone"   # matches no special branch in bolt.gd: no spear, no homing, no flash
+			s.caster = caster
+			s.data = sd
+			s.power = power
+			s.reach = 140.0
+			s.direction = Vector2.from_angle(TAU * i / 8.0)
+			s.global_position = caster.global_position if is_instance_valid(caster) else pos
+			par.add_child(s))
 
 
 ## Tembang Suling: a song that follows you, mending you and slowing foes.
@@ -134,32 +135,41 @@ static func _ride(caster: Node2D, par: Node, d: Vector2, pos: Vector2, tint: Col
 	SpellFX.burst(par, "dash_slash", 4, pos + d * RIDE_DIST * 0.5, tint, 1.0, 20.0)
 
 
-## Kerbau Sakti: the summon scene cannot be tuned through its public vars, so the buffalo is a SpellZone
-## whose tick jumps it to the nearest foe and charges (blast x1.6, double poise, heavy shove).
+## Kerbau Sakti: a spirit buffalo that charges in a line toward the nearest foe, shoving and breaking poise.
 static func _buffalo(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos: Vector2, tint: Color, power: float) -> void:
 	var z := SpellVariants._zone(caster, pos + d * 20.0, tint)
-	z.radius = 12.0
+	z.radius = 16.0
 	z.life = spell.duration if spell.duration > 0.0 else 8.0
-	z.delay = 0.6
+	z.delay = 0.5
 	z.tick = BUFFALO_EVERY
 	z.on_tick = func(zz: SpellZone) -> void:
-		var t := SpellUtil.nearest_enemy(zz.get_tree(), caster.global_position, 140.0)
+		var t := SpellUtil.nearest_enemy(zz.get_tree(), zz.global_position, 180.0)
 		if t == null:
-			zz.global_position = caster.global_position + d * 20.0   # ponytail: no walking, it waits at your side
+			zz.global_position = caster.global_position + d * 20.0
 			return
-		zz.global_position = t.global_position
-		SpellVariants.blast(caster, t.global_position, "jawa_ra", spell.power * BUFFALO_MULT, 28.0, power, 2.0, 40.0)
+		var cdir: Vector2 = (t.global_position - zz.global_position).normalized()
+		var dist := minf(110.0, zz.global_position.distance_to(t.global_position) + 24.0)
+		for step in 4:
+			var pt := zz.global_position + cdir * (dist * (step + 1) / 4.0)
+			SpellVariants.later(caster, 0.06 * step, func() -> void:
+				if is_instance_valid(zz):
+					zz.global_position = pt
+				var fx_s := SpellFX.burst(par, "dash_slash", 4, pt, tint, 0.85, 22.0)
+				if fx_s:
+					fx_s.rotation = cdir.angle()
+				if step == 3:
+					SpellVariants.blast(caster, pt, "jawa_ra", spell.power * BUFFALO_MULT, 32.0, power, 2.0, 44.0))
 	par.add_child(z)
 
 
-## Banjir Sawah: the normal wave, then mud behind it.
-static func _flood(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos: Vector2, tint: Color) -> void:
+## Banjir Sawah: the normal wave (with full power), then damaging mud behind it.
+static func _flood(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos: Vector2, tint: Color, k: float, power: float) -> void:
 	if spell.scene != null:
 		var s: Node2D = spell.scene.instantiate()
 		s.caster = caster
 		s.data = spell
 		s.direction = d
-		s.power = 1.0   # ponytail: the cast power is not passed down here
+		s.power = power
 		s.global_position = pos
 		par.add_child(s)
 	for i in 3:
@@ -168,7 +178,9 @@ static func _flood(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos:
 			var z := SpellVariants._zone(caster, at, tint)
 			z.radius = MUD_RADIUS
 			z.life = 4.0
-			z.slow = 0.4
+			z.tick = 0.7
+			z.damage = roundi(6.0 * k)
+			z.slow = 0.5
 			par.add_child(z))
 
 

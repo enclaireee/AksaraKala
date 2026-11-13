@@ -21,4 +21,4 @@ reach = 20.0
 arc = 120.0
 damage = 10
 favoured = "dancer"
-favoured_bonus = {"dex": 1}
+favoured_bonus = {"wirama_cap": 2.0}

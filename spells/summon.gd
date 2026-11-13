@@ -83,7 +83,7 @@ func _ready() -> void:
 			if s:
 				s.position = Vector2(0, -22 if _hawk else -10) * size
 				s.scale = Vector2.ONE * size
-				s.modulate = _look
+				s.modulate = SpellFX.tint_for("hawk_fly", _look) if _hawk else _look
 				s.self_modulate = Color(1, 1, 1, 0.92)
 				add_child(s)
 		if _pounce:

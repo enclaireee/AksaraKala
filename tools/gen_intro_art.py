@@ -10,10 +10,12 @@ the title art. Deterministic: re-running reproduces the same files.
 """
 import math
 import os
+import sys
 
 import numpy as np
 from PIL import Image, ImageDraw
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "assets", "art", "intro")
 W, H = 480, 270
@@ -501,53 +503,72 @@ def storm_peak():
 def hero_storm():
     """The Wiku on the crag, seen from behind and side-on, facing left into the wind towards Kala.
     Three 64x96 frames: two with the cloak and scarf cracking in the wind, staff planted; one with the staff
-    thrust up at the sky to write. Feet at (32, 95)."""
+    thrust up at the sky to write. Feet at (32, 95). Painted with the class-figure painter (gen_portraits): 4-tone
+    ramps, contour bands, lit from the eruption at the right."""
+    import gen_portraits as gp
     fw, fh = 64, 96
     sheet = Image.new("RGBA", (fw * 3, fh), (0, 0, 0, 0))
-    body, cloth = hx("100614"), hx("1C0A20")
+    lt = (0.62, -0.78)
+    robe, cloth = gp.ramp("2E1A46"), gp.ramp("3A2252")
+    sk = gp.SKINS["sawo_dk"]
+    cx = 30
     for f in range(3):
-        im = Image.new("RGBA", (fw, fh), (0, 0, 0, 0))
-        d = ImageDraw.Draw(im)
-        cx = 30
+        P = gp.Painter(fw, fh)
         ph = (0.0, 1.0, 0.5)[f]
-        # the cloak streaming right from the shoulders, its hem rippling
-        hem = []
-        for k in range(9):
-            t = k / 8
-            hem.append((cx + 4 + t * 30, 70 - t * 26 + math.sin(t * 7 + ph * 3.1) * 4))
+        sh = lambda m, rp, **kw: P.shade(m, rp, light=lt, **kw)
+        hem = [(cx + 4 + t * 30, 70 - t * 26 + math.sin(t * 7 + ph * 3.1) * 4) for t in [k / 8 for k in range(9)]]
         top = [(cx + 6 + t * 26, 28 + t * 6 + math.sin(t * 5 + ph * 3.1) * 2) for t in (0.3, 0.6, 0.85)]
-        d.polygon([(cx - 4, 30), (cx + 6, 27)] + top + hem[::-1] + [(cx - 2, 74)], fill=cloth)
-        # selendang scarf: two long ribbons snapping in the wind
+        ck = P.poly([(cx - 4, 30), (cx + 6, 27)] + top + hem[::-1] + [(cx - 2, 74)])
+        sh(ck, cloth, hi=2.0, shd=3.0)
+        for k in range(3):
+            P.lline([(cx + 6 + k * 3, 34 + k * 4), hem[2 + k * 2]], 2 if k % 2 else 0, ck, only=(1,))
         for off, ln in ((0, 30), (5, 22)):
             pts = [(cx + 4 + i * ln / 6, 30 + off - i * 1.6 + math.sin(i * 1.3 + ph * 4 + off) * 2.2) for i in range(7)]
-            d.line(pts, fill=cloth, width=3 if off == 0 else 2)
-        # robe flaring to the feet, pushed right by the wind
-        d.polygon([(cx - 7, 30), (cx + 7, 30), (cx + 15, 90), (cx + 18 + ph * 2, 95), (cx - 9, 95), (cx - 10, 88)], fill=body)
-        # shoulders, head, iket headcloth with its knot tails flying
-        d.ellipse((cx - 10, 24, cx + 10, 38), fill=body)
-        d.ellipse((cx - 7, 9, cx + 6, 25), fill=body)
-        d.polygon([(cx - 8, 13), (cx + 7, 13), (cx + 6, 7), (cx - 7, 7)], fill=cloth)
-        d.polygon([(cx + 5, 10), (cx + 15, 6 + ph * 2), (cx + 13, 12), (cx + 18, 13 - ph), (cx + 7, 15)], fill=cloth)
+            sc = P.stroke(pts, [3.4 if off == 0 else 2.6] * 7)
+            sh(sc, gp.ramp("9A3040"), hi=1.0, shd=1.0)
+        rb = P.poly([(cx - 7, 30), (cx + 7, 30), (cx + 15, 90), (cx + 18 + ph * 2, 95), (cx - 9, 95), (cx - 10, 88)])
+        sh(rb, robe, hi=2.0, shd=4.0)
+        P.fold([(cx + 1, 46), (cx + 4, 94)], rb, lit_side=1)
+        P.fold([(cx + 8, 50), (cx + 12, 92)], rb, lit_side=1)
+        sd = P.ell(cx, 31, 10, 7)
+        sh(sd, robe, hi=2.0, shd=3.0)
+        hd = P.ell(cx - 0.5, 17, 6.4, 8.0)
+        sh(hd, gp.HAIR, hi=1.0, shd=3.0)   # seen from behind: hair under the iket
+        ik = P.poly([(cx - 8, 13), (cx + 7, 13), (cx + 6, 7), (cx - 7, 7)])
+        sh(ik, gp.ramp("C98A52"), hi=1.0, shd=1.0)
+        kt = P.poly([(cx + 5, 10), (cx + 15, 6 + ph * 2), (cx + 13, 12), (cx + 18, 13 - ph), (cx + 7, 15)])
+        sh(kt, gp.ramp("C98A52"), hi=1.0, shd=1.0)
         if f < 2:
-            # staff planted ahead of him, the left hand on it
-            d.line([(cx - 13, 4), (cx - 13, 95)], fill=hx("26141E"), width=2)
-            d.polygon([(cx - 6, 32), (cx - 14, 44), (cx - 11, 46), (cx - 3, 36)], fill=body)
-            gem = (cx - 13, 2)
+            st = P.stroke([(cx - 13, 6), (cx - 13, 95)], [2.4, 2.4])
+            sh(st, gp.WOOD, hi=1.0, shd=1.0)
+            arm = P.stroke([(cx - 6, 33), (cx - 12, 43)], [4.6, 4.2])
+            sh(arm, robe, hi=1.0, shd=2.0)
+            gx, gy = cx - 13, 3
         else:
-            # the staff thrust up and forward at the sky, both arms behind it
-            d.polygon([(cx - 4, 30), (cx - 18, 10), (cx - 14, 8), (cx + 2, 30)], fill=body)
-            d.polygon([(cx + 4, 30), (cx - 12, 16), (cx - 9, 13), (cx + 8, 30)], fill=body)
-            d.line([(cx - 4, 40), (cx - 24, 4)], fill=hx("26141E"), width=2)
-            gem = (cx - 25, 2)
-        im = rim(im, hx("F6A85C"), dirs=((1, 0), (0, -1)))   # the eruption behind and to the right
-        im = rim(im, hx("6A2448"), dirs=((-1, 0),))
-        d = ImageDraw.Draw(im)
-        gx, gy = gem
-        d.ellipse((gx - 3, gy - 2, gx + 3, gy + 4), outline=hx("C98A52"))   # the crescent head of the staff
-        d.point((gx, gy + 1), fill=CYAN)
-        d.point((gx, gy + 2), fill=CREAM)
-        sheet.paste(im, (f * fw, 0))
+            st = P.stroke([(cx - 4, 40), (cx - 24, 6)], [2.4, 2.4])
+            sh(st, gp.WOOD, hi=1.0, shd=1.0)
+            for a0, a1 in (((cx - 3, 32), (cx - 16, 12)), ((cx + 4, 32), (cx - 11, 15))):
+                arm = P.stroke([a0, a1], [4.8, 4.0])
+                sh(arm, robe, hi=1.0, shd=2.0)
+            gx, gy = cx - 25, 3
+        ring = P.ell(gx, gy, 4.4, 4.4) - P.ell(gx, gy, 2.6, 2.6)
+        sh(ring, gp.GOLD, hi=1.0, shd=1.0)
+        P.flat(P.ell(gx, gy, 1.8, 1.8), (CYAN, CYAN, HALO, HALO), 1)
+        P.color([P.at(gx - 1, gy - 1)], CREAM)
+        sheet.paste(P.image(), (f * fw, 0))
     return sheet
+
+
+def hero_wiku():
+    """The hero (no class yet) meeting the Wiku: two figures facing each other, 96x72, the sage's ink-light on the right."""
+    import gen_portraits as gp
+    P = gp.Painter(96, 72)
+    P.k, P.ox, P.oy, P.sx = 0.5, 8.0, 12.0, 1       # hero, left, turned right
+    gp.base(P, 0, "", False)
+    P.k, P.ox, P.oy, P.sx = 0.56, 88.0, 8.0, -1     # wiku, right, turned left
+    P.big = False
+    gp.mage(P, 3, "", False)
+    return P.image()
 
 
 HERO_GEM_UP = (30 - 25, 3)   # the gem in the raised frame, relative to the frame's top-left (ui/intro.gd GEM_UP)
@@ -653,7 +674,7 @@ def main():
         "kala_close": kala_cloud(*CLOSE, **CLOSE_LOOK), "kala_close_eyes": kala_cloud_eyes(*CLOSE),
         "kala_sky": kala_cloud(*SKY_KALA, seed=95, soft=3, fray=1.5, cell=12), "kala_sky_eyes": kala_cloud_eyes(*SKY_KALA),
         "storm_far": storm_far(), "storm_mid": storm_mid(), "storm_peak": storm_peak(),
-        "hero_storm": hero_storm(), "lightning": lightning(),
+        "hero_storm": hero_storm(), "hero_wiku": hero_wiku(), "lightning": lightning(),
         "glow_cyan": alpha_glow(96, hx("7FE8E0"), 5, 200, 1.5),
         "glow_red": alpha_glow((360, 240), hx("B02040"), 6, 230, 1.1),
         "dawn_sky": dawn_sky(), "beam": beam(), "ring": ring(),

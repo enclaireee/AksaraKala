@@ -107,7 +107,7 @@ var _stomp := false
 var _spot := Vector2.ZERO
 var _launched := false
 var _marker: Node2D
-var _stone: Polygon2D
+var _stone: Node2D
 var moves_used: Dictionary = {}   # move name -> times begun
 var _move := ""
 var _deck: Array[String] = []
@@ -304,13 +304,8 @@ func _mark(pos: Vector2, left: float, kind: String) -> void:
 	_marks.append({"pos": pos, "left": left, "marker": _make_marker(pos, debris_radius if kind == "debris" else 10.0, RISE_MARKER if kind == "pillar" else MARKER), "kind": kind})
 
 
-func _make_marker(pos: Vector2, r: float, col: Color) -> Polygon2D:
-	var m := Polygon2D.new()
-	var pts := PackedVector2Array()
-	for i in 16:
-		pts.append(Vector2.from_angle(TAU * i / 16.0) * r)
-	m.polygon = pts
-	m.color = col
+func _make_marker(pos: Vector2, r: float, col: Color) -> Node2D:
+	var m := BossKit.decal(self, r, col)   # pixel disc: motif fill and a stepped edge
 	m.z_index = -1
 	get_parent().add_child(m)
 	m.global_position = pos
@@ -479,17 +474,17 @@ func _begin_attack(stomp: bool, spot: Vector2) -> void:
 
 func _launch_stone() -> void:
 	_launched = true
-	var st := Polygon2D.new()
+	var st := BossKit.prop("fx/thrown_rock.png", Vector2(8, 8), Color(0.5, 0.48, 0.45), 2)   # 2 frames of 10x10
 	_stone = st
-	st.polygon = PackedVector2Array([-4, -4, 4, -4, 4, 4, -4, 4])
-	st.color = Color(0.5, 0.48, 0.45)
 	st.z_index = 50
 	get_parent().add_child(st)
 	var from := global_position + Vector2(0, -20)
 	var to := _spot
 	var tw := st.create_tween()
 	tw.tween_method(func(f: float) -> void:
-		st.global_position = from.lerp(to, f) + Vector2(0, -sin(PI * f) * 40.0), 0.0, 1.0, STONE_SPEED)
+		st.global_position = from.lerp(to, f) + Vector2(0, -sin(PI * f) * 40.0)
+		if st is Sprite2D:
+			(st as Sprite2D).frame = int(f * 8.0) % 2, 0.0, 1.0, STONE_SPEED)
 
 
 func _land() -> void:

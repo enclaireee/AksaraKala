@@ -31,6 +31,11 @@ var _rooted := {}
 
 func _ready() -> void:
 	z_index = 4
+	if caster != null and caster.is_in_group("player"):
+		var g := SpellUtil._game()
+		if g:
+			radius *= 1.0 + g.bonus("spell_radius")
+		life *= SpellUtil.zone_life_mult()
 	_next = delay
 
 
@@ -98,7 +103,7 @@ func _root(e: Node) -> void:
 	e.status.apply(Status.Type.BOUND, root)
 	var roots := SpellFX.make("bind_roots", 6, 14.0)
 	if roots and e is Node2D:
-		roots.modulate = tint
+		roots.modulate = SpellFX.tint_for("bind_roots", tint)
 		roots.position = Vector2(0, 4)
 		roots.life = maxf(root, 1.0)
 		roots.fade = 0.3
@@ -113,17 +118,33 @@ func _finish() -> void:
 	queue_free()
 
 
+## Pixel-art ring: no anti-aliasing, a snapped radius, a 3 px stepped band in 3 tones (light inside, deep outside).
+func _band(r: float, col: Color) -> void:
+	var rr := roundf(r)
+	draw_arc(Vector2.ZERO, rr - 1.0, 0.0, TAU, maxi(24, int(rr * 1.6)), col.lightened(0.5), 1.0, false)
+	draw_arc(Vector2.ZERO, rr, 0.0, TAU, maxi(24, int(rr * 1.6)), col, 1.0, false)
+	draw_arc(Vector2.ZERO, rr + 1.0, 0.0, TAU, maxi(24, int(rr * 1.6)), col.darkened(0.5), 1.0, false)
+
+
 func _draw() -> void:
 	if not show_ring:
 		return
 	if _t < delay or (trap and _t < delay + 0.05):
-		draw_arc(Vector2.ZERO, radius, 0.0, TAU, 40, Color(tint, 0.4 + 0.3 * sin(_t * 16.0)), 1.0)   # telegraph
+		_band(radius, Color(tint, 0.5 + 0.35 * signf(sin(_t * 16.0))))   # telegraph blinks in whole steps
 		return
 	if trap:
-		draw_arc(Vector2.ZERO, radius, 0.0, TAU, 28, Color(tint, 0.25), 1.0)   # a faint ring: a hidden snare
+		_band(radius, Color(tint, 0.3))   # a faint ring: a hidden snare
 		return
-	draw_circle(Vector2.ZERO, radius, Color(tint, 0.08))
-	draw_arc(Vector2.ZERO, radius, 0.0, TAU, 40, Color(tint, 0.85), 1.5)
+	var tile := SpellFX.tex("zone_fill", false)
+	if tile != null:   # sparse tiled motif, whole 16 px cells inside the ring
+		var n := int(radius / 16.0)
+		for cy in range(-n, n):
+			for cx in range(-n, n):
+				var c := Vector2(cx * 16 + 8, cy * 16 + 8)
+				if c.length() + 8.0 <= radius - 2.0:
+					draw_texture(tile, c - Vector2(8, 8), Color(tint, 0.35))
+	_band(radius, Color(tint, 0.9))
 	for k in 8:
 		var a := _spin * 0.9 + k * TAU / 8.0
-		draw_line(Vector2.from_angle(a) * (radius - 3.0), Vector2.from_angle(a) * (radius + 3.0), Color(tint, 0.9), 1.0)
+		var p := (Vector2.from_angle(a) * (radius + 5.0)).round()
+		draw_rect(Rect2(p - Vector2(1, 1), Vector2(3, 3)), Color(tint.lightened(0.4), 0.95))

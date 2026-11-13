@@ -78,6 +78,7 @@ script = ExtResource("5")
 
 [node name="Slash" type="Polygon2D" parent="Aim/MeleeHitbox"]
 visible = false
+self_modulate = Color(1, 1, 1, 0)
 color = Color(1, 1, 1, 0.6)
 
 [node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health")]

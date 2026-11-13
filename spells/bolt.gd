@@ -52,7 +52,7 @@ func _ready() -> void:
 	_spr = SpellFX.make("bolt_fly", 4, 16.0)
 	if _spr:
 		_spr.loop = true
-		_spr.modulate = _tint
+		_spr.modulate = SpellFX.tint_for("bolt_fly", _tint)
 		_spr.scale = Vector2.ONE * size
 		add_child(_spr)
 		var d := get_node_or_null("Diamond")

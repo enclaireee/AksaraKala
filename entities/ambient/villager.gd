@@ -256,7 +256,9 @@ func _refresh() -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-5, -1, 10, 3), Color(0.09, 0.07, 0.16, 0.42))
+	var sh := Npc.shadow_tex("s")
+	if sh != null:
+		draw_texture(sh, Vector2(-5, -2))
 	var top := -9 if child else -19
 	if _sheet == null:
 		draw_rect(Rect2(-5, top, 10, -top), Color(0.55, 0.4, 0.3))

@@ -13,4 +13,4 @@ description = "ITEM_BESKAP_DALANG_DESC"
 defense = 1
 bonus = {"spi": 1}
 favoured = "dalang"
-favoured_bonus = {"sakti_gain": 0.1}
+favoured_bonus = {"lakon_cap": 1.0}

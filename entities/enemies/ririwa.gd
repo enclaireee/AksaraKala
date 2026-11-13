@@ -22,6 +22,7 @@ func _ready() -> void:
 	var pts := Player._arc(SWEEP_ARC, SWEEP_REACH)
 	($Aim/Sweep/Arc as CollisionPolygon2D).polygon = pts
 	sweep_marker.polygon = pts
+	Chaser.attach_smear(sweep_marker, true, 2)
 	var g := EliteGuard.new()
 	g.cond = "step:sq_g2=2"
 	add_child(g)
@@ -31,7 +32,7 @@ func _tick(delta: float) -> void:
 	super(delta)
 	if state == State.TELEGRAPH and not swept and state_time >= SWEEP_AT:
 		swept = true
-		sweep_marker.color.a = 0.6
+		sweep_marker.modulate.a = 1.0
 		sweep.activate()
 	elif swept and state_time >= SWEEP_AT + SWEEP_TIME:
 		sweep.deactivate()
@@ -42,7 +43,7 @@ func _enter(s: State) -> void:
 	sweep.deactivate()
 	swept = false
 	sweep_marker.visible = s == State.TELEGRAPH   # the ground marker while winding up
-	sweep_marker.color.a = 0.25
+	sweep_marker.modulate.a = 0.5
 	super(s)
 
 

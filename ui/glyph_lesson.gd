@@ -58,6 +58,7 @@ var _leaf: NinePatchRect
 var _lamp: TextureRect
 var _wguide: CastOverlay
 var _stroke: Line2D
+var _wet: Line2D
 
 
 func _ready() -> void:
@@ -152,10 +153,9 @@ func _ready() -> void:
 	_wguide = preload("res://ui/cast_overlay.tscn").instantiate()
 	_wguide.layer = 12   # over the card
 	add_child(_wguide)
-	_stroke = Line2D.new()
-	_stroke.width = 2.0
-	_stroke.default_color = GOLD
-	_stroke.antialiased = false
+	_wet = CastOverlay.brush_line(8.0, GOLD.darkened(0.55), false)   # wet edge under the brush stroke
+	_card.add_child(_wet)
+	_stroke = CastOverlay.brush_line(6.0, GOLD)
 	_card.add_child(_stroke)
 	var hint_w := Label.new()
 	hint_w.text = tr("UI_WRITE_HINT")
@@ -381,10 +381,13 @@ func _input(e: InputEvent) -> void:
 			_wdraw = true
 			_wpts = PackedVector2Array([e.position])
 			_stroke.points = _wpts
+			_wet.points = _wpts
 		elif _wdraw:
 			_wdraw = false
 			write_attempt(_wpts)   # a miss just clears it
 			_stroke.clear_points()
+			_wet.clear_points()
 	elif e is InputEventMouseMotion and _wdraw:
 		_wpts.append(e.position)
 		_stroke.add_point(e.position)
+		_wet.add_point(e.position)

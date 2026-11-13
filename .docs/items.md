@@ -88,22 +88,22 @@ Common tier. Anyone can equip these. The favoured class also gets the last colum
 
 | Item (id) | Slot | Stats | Favoured class: extra | Sibling of |
 |---|---|---|---|---|
-| Tombak Galah (`tombak_galah`) | Heavy melee | 22 dmg, longest reach | Prajurit: +10% damage | `parang_perang` |
-| Tombak Bendera (`tombak_bendera`) | Heavy melee | 26 dmg, long reach | Prajurit: +1 Vitality | `tombak_panji` |
-| Baju Keprajuritan (`baju_keprajuritan`) | Armor | Defense 4. **VERIFY**: keraton soldier dress | Prajurit: +10 max HP | `zirah_sisik` |
-| Tameng Rotan (`tameng_rotan`) | Accessory | +5% damage reduction | Prajurit: +1 Endurance | `gelang_baja` |
-| Bandring Kulit (`bandring_kulit`) | Ranged | 8 dmg, 3 stamina, fast | Pangangon: +10% damage | `busur_petung` |
-| Bandring Ijuk (`bandring_ijuk`) | Ranged | 11 dmg | Pangangon: +1 Dexterity | `gendewa_tanduk` |
-| Sarung Gembala (`sarung_gembala`) | Armor | Defense 2, +5% move speed | Pangangon: +10% stamina regen | `kampret_pemburu` |
-| Suling Bambu (`suling_bambu`) | Accessory | +10% stamina regen | Pangangon: +1 Endurance | `kantong_panah` |
-| Kipas Bambu (`kipas_bambu`) | Light melee | 11 dmg | Penari Topeng: +10% damage | `golok_pendek` |
-| Kipas Kembar (`kipas_kembar`) | Light melee | 10 dmg, very fast | Penari Topeng: +1 Dexterity | `kujang_kembar` |
-| Baju Penari (`baju_penari`) | Armor | Defense 2, +8% move speed | Penari Topeng: +10% stamina regen | `pangsi_hitam` |
-| Gelang Kaki (`gelang_kaki`) | Accessory | +1 Endurance. Ankle bells | Penari Topeng: +1 Dexterity | `sabuk_merah` |
-| Cempala (`cempala`) | Staff | 9 dmg, 6 Sakti per hit. **VERIFY**: the dalang's wooden knocker | Dalang: +10% Sakti gain | `tongkat_genta` |
-| Kayon Gapuran (`kayon_gapuran`) | Staff | 10 dmg. **VERIFY**: gapuran as a kayon type | Dalang: +1 Spirit | `tongkat_cendana` |
-| Beskap Dalang (`beskap_dalang`) | Armor | Defense 1, +1 Spirit. **VERIFY**: beskap | Dalang: +10% Sakti gain | `jubah_wiku` |
-| Blencong (`blencong`) | Accessory | +1 Spirit. **VERIFY**: the oil lamp behind the screen | Dalang: smudge threshold -0.03 | `genitri` |
+| Tombak Galah (`tombak_galah`) | Heavy melee | 22 dmg, longest reach | Prajurit: +15% tip sweet-spot damage | `parang_perang` |
+| Tombak Bendera (`tombak_bendera`) | Heavy melee | 26 dmg, long reach | Prajurit: +15% melee & spell reach | `tombak_panji` |
+| Baju Keprajuritan (`baju_keprajuritan`) | Armor | Defense 4. **VERIFY**: keraton soldier dress | Prajurit: 15% faster Kuda-kuda brace | `zirah_sisik` |
+| Tameng Rotan (`tameng_rotan`) | Accessory | +5% damage reduction | Prajurit: +15 stamina when hit while braced | `gelang_baja` |
+| Bandring Kulit (`bandring_kulit`) | Ranged | 8 dmg, 3 stamina, fast | Pangangon: +35 px Batu Pantul bounce range | `busur_petung` |
+| Bandring Ijuk (`bandring_ijuk`) | Ranged | 11 dmg | Pangangon: +20% Batu Pantul bounce damage | `gendewa_tanduk` |
+| Sarung Gembala (`sarung_gembala`) | Armor | Defense 2, +5% move speed | Pangangon: +15% dodge distance | `kampret_pemburu` |
+| Suling Bambu (`suling_bambu`) | Accessory | +10% stamina regen | Pangangon: +20% zone & summon duration | `kantong_panah` |
+| Kipas Bambu (`kipas_bambu`) | Light melee | 11 dmg | Penari Topeng: +1 Wirama on combo finisher | `golok_pendek` |
+| Kipas Kembar (`kipas_kembar`) | Light melee | 10 dmg, very fast | Penari Topeng: +2 max Wirama (8 -> 10) | `kujang_kembar` |
+| Baju Penari (`baju_penari`) | Armor | Defense 2, +8% move speed | Penari Topeng: keep half Wirama when hit | `pangsi_hitam` |
+| Gelang Kaki (`gelang_kaki`) | Accessory | +1 Endurance. Ankle bells | Penari Topeng: +12% atk & move speed at 4+ Wirama | `sabuk_merah` |
+| Cempala (`cempala`) | Staff | 9 dmg, 6 Sakti per hit. **VERIFY**: the dalang's wooden knocker | Dalang: +8 Sakti on max Lakon cast | `tongkat_genta` |
+| Kayon Gapuran (`kayon_gapuran`) | Staff | 10 dmg. **VERIFY**: gapuran as a kayon type | Dalang: +15% zone & summon duration | `tongkat_cendana` |
+| Beskap Dalang (`beskap_dalang`) | Armor | Defense 1, +1 Spirit. **VERIFY**: beskap | Dalang: +1 max Lakon stack (+45% cap) | `jubah_wiku` |
+| Blencong (`blencong`) | Accessory | +1 Spirit. **VERIFY**: the oil lamp behind the screen | Dalang: +15% spell zone & blast radius | `genitri` |
 
 The 12 chest items replace Ilmu-only chests in the zone docs (`.docs/zones/*.md`).
 

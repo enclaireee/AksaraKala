@@ -30,7 +30,9 @@ class_name ItemData extends Resource
 ## Keys: vit, end, str, dex, spi (stat points) and max_hp, move_speed, stamina_regen (flat or fraction).
 @export var bonus := {}
 ## Class-favoured gear (items.md): this class id also gets favoured_bonus. Same keys as bonus, plus
-## damage_mult (weapon and spell damage fraction) and sakti_gain (Sakti gain fraction).
+## damage_mult, sakti_gain, smudge, and second-path keys (tip_damage, brace_reach, brace_fast,
+## brace_stamina, bounce_range, bounce_mult, dodge_dist, zone_life, wirama_finisher, wirama_cap,
+## wirama_keep, wirama_haste, lakon_sakti, lakon_cap, spell_radius).
 @export var favoured := ""
 @export var favoured_bonus := {}
 

@@ -104,17 +104,17 @@ var _elapsed := 0.0
 var _open_left := 0.0
 var _ring_r := 0.0
 var _hit_ring := false
-var _marks: Array[Polygon2D] = []
+var _marks: Array[Node2D] = []
 var _fx: Array[Node] = []
 var _impacts: Array[Dictionary] = []
 var _spots: Array[Vector2] = []
 var _owned: Array[Node] = []   # eclipse cracks: freed when he kneels or dies (combat.md 5.3 v7)
 var _crack_t := 0.0
-var _ring: Line2D
-var _fill: Polygon2D
-var _shield: Polygon2D
+var _ring: BossKit.PxDecal   # pixel decals (BossKit.decal): motif fill, stepped edge
+var _fill: BossKit.PxDecal
+var _shield: BossKit.PxDecal
 # rotating blades (clock hands and hourglass beams share one code path)
-var _sw_lines: Array[Line2D] = []
+var _sw_lines: Array[BossKit.PxDecal] = []
 var _sw_a := 0.0
 var _sw_n := 2
 var _sw_off := 2.4
@@ -145,6 +145,13 @@ func _ready() -> void:
 	if dead or is_queued_for_deletion():
 		return
 	add_to_group("boss")
+	var clock := get_node_or_null("Clock") as Polygon2D
+	var face := BossKit._art("kala_clock.png")   # 48x48 pixel clock face over the octagon polygon
+	if clock != null and face != null:
+		var sp := Sprite2D.new()
+		sp.texture = face
+		clock.add_child(sp)
+		clock.color.a = 0.0
 	if cond != "":   # hidden and inert until Game.check(cond) holds (elite_guard.gd); the zone doc passes it
 		var g := EliteGuard.new()
 		g.cond = cond
@@ -204,9 +211,8 @@ func _tick(delta: float) -> void:
 				_enter(State.PULSE)
 				_hit_ring = false
 				_ring_r = pulse_inner
-				_ring = Line2D.new()
-				_ring.width = 2.0
-				_ring.default_color = Color(1.0, 0.3, 0.3, 0.8)
+				_ring = BossKit.decal(self, _ring_r, Color(1.0, 0.3, 0.3, 0.8))
+				_ring.inner = maxf(_ring_r - 3.0, 0.0)
 				add_child(_ring)
 				_ring.position = Vector2(0, -6)
 				BossKit.anim(self, "slam")
@@ -214,7 +220,8 @@ func _tick(delta: float) -> void:
 		State.PULSE:
 			var prev := _ring_r
 			_ring_r = pulse_inner + (pulse_radius - pulse_inner) * minf(1.0, state_time / pulse_grow)
-			_ring.points = _circle(_ring_r, 32, true)
+			_ring.inner = maxf(_ring_r - 3.0, 0.0)
+			_ring.radius = _ring_r
 			if not _hit_ring and d >= prev - pulse_band and d <= _ring_r + pulse_band:
 				_hit_ring = true
 				pulses += 1
@@ -241,7 +248,7 @@ func _tick(delta: float) -> void:
 				_enter(State.CHASE)
 		State.DEVOUR:
 			if is_instance_valid(_fill):
-				_fill.scale = Vector2.ONE * minf(1.0, state_time / devour_time)
+				_fill.radius = arena_radius * minf(1.0, state_time / devour_time)
 			if state_time >= devour_time:
 				devours += 1
 				BossKit.shake(self, 3.0, 0.4)
@@ -292,11 +299,8 @@ func _enter(s: State) -> void:
 	if s == State.DEVOUR:
 		BossKit.anim(self, "roar", 8.0, false)
 		BossKit.flash_fx(self, global_position + Vector2(0, -14), 40.0, 0.5, Color(1.0, 0.2, 0.2))
-		_fill = Polygon2D.new()
-		_fill.polygon = _circle(arena_radius, 48, false)
-		_fill.color = Color(1.0, 0.1, 0.1, 0.3)
+		_fill = BossKit.decal(self, 0.0, Color(1.0, 0.1, 0.1, 0.3))
 		_fill.z_index = -1
-		_fill.scale = Vector2.ZERO
 		add_child(_fill)
 
 
@@ -374,9 +378,8 @@ func _begin_pulse() -> void:
 	_enter(State.PULSE_WIND)
 	_recover_len = heavy_recovery
 	BossKit.anim(self, "cast")
-	var m := Polygon2D.new()   # the ring's reach, drawn on the ground during the wind-up
-	m.polygon = _circle(pulse_radius, 32, false)
-	m.color = Color(1.0, 0.3, 0.3, 0.12)
+	var m := BossKit.decal(self, pulse_radius, Color(1.0, 0.3, 0.3, 0.12))   # the ring's reach, drawn on the ground during the wind-up
+	m.edge_alpha = 0.5
 	m.z_index = -1
 	add_child(m)
 	m.position = Vector2(0, -6)
@@ -392,9 +395,7 @@ func _begin_sand() -> void:
 	for i in n:
 		var spot := c if i == 0 else c + Vector2.from_angle(TAU * (i - 1) / (n - 1) + randf() * 0.5) * randf_range(28.0, 56.0)
 		_spots.append(spot)
-		var m := Polygon2D.new()
-		m.polygon = _circle(sand_radius, 16, false)
-		m.color = MARKER
+		var m := BossKit.decal(self, sand_radius, MARKER)
 		m.z_index = -1
 		get_parent().add_child(m)
 		m.global_position = spot
@@ -503,9 +504,10 @@ func _begin_blades(beams: bool) -> void:
 		var ang := _sw_a + _sw_off * i
 		var v := Vector2.from_angle(ang)
 		_fx.append(BossKit.telegraph_line(self, global_position + v * _sw_inner, global_position + v * _sw_len, _sw_w, _sw_wind, _sw_color))
-		var ln := Line2D.new()
+		var ln := BossKit.decal(self, 0.0, Color(_sw_color, 0.4))
+		ln.kind = "line"
 		ln.width = _sw_w * 0.5
-		ln.default_color = Color(_sw_color, 0.4)
+		ln.band = 2
 		ln.z_index = -1
 		add_child(ln)
 		_sw_lines.append(ln)
@@ -518,8 +520,9 @@ func _draw_blades(alpha: float) -> void:
 		var v := Vector2.from_angle(_sw_a + _sw_off * i)
 		var ln := _sw_lines[i]
 		if is_instance_valid(ln):
-			ln.points = PackedVector2Array([v * _sw_inner, v * _sw_len])
-			ln.default_color = Color(_sw_color, alpha)
+			ln.a = v * _sw_inner
+			ln.b = v * _sw_len
+			ln.color = Color(_sw_color, alpha)
 
 
 func _tick_blades(delta: float) -> void:
@@ -740,13 +743,6 @@ func _hurt(amount: int, heavy: bool) -> void:
 	hb.receive(attack_hitbox)
 
 
-func _circle(r: float, n: int, closed: bool) -> PackedVector2Array:
-	var pts := PackedVector2Array()
-	for i in n + int(closed):
-		pts.append(Vector2.from_angle(TAU * i / n) * r)
-	return pts
-
-
 func _clear_attack() -> void:
 	for n: Node in _marks + [_ring, _fill]:
 		if is_instance_valid(n):
@@ -817,9 +813,7 @@ func _raise_shield() -> void:
 	health.invincible_time = 1.0e9   # Health refuses damage while invincible: the cleanest block
 	_new_sequence()
 	if _shield == null:
-		_shield = Polygon2D.new()
-		_shield.polygon = _circle(18.0, 24, false)
-		_shield.color = Color(0.6, 0.8, 1.0, 0.35)
+		_shield = BossKit.decal(self, 18.0, Color(0.6, 0.8, 1.0, 0.35))
 		_shield.position = Vector2(0, -14)
 		_shield.z_index = 1
 		add_child(_shield)

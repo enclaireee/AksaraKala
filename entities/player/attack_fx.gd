@@ -34,6 +34,7 @@ var reduce_flashes := false
 
 var player                      # the Player (untyped so this script has no hard cycle with player.gd)
 var _tex_cache := {}
+var _baked := {}                # strip name -> true when a class variant loaded (colour is baked, so no tint)
 var _fx: Array = []             # {node, t, fps, frames, life, fade, vel, grow}
 var _last_state := -1
 var _dodge_t := 0.0
@@ -73,11 +74,27 @@ func fx_count() -> int:
 	return _fx.size()
 
 
+## Loads `<name>_<class>` first (art pass v8: the class colours are baked in), then the neutral `<name>`.
 func _tex(name: String) -> Texture2D:
-	if not _tex_cache.has(name):
-		var p := FX_DIR % name
-		_tex_cache[name] = load(p) if ResourceLoader.exists(p) else null
-	return _tex_cache[name]
+	var key := "%s|%s" % [name, str(player.class_id) if player != null else ""]
+	if not _tex_cache.has(key):
+		var tex: Texture2D = null
+		var cls := str(player.class_id) if player != null else ""
+		var p := FX_DIR % ("%s_%s" % [name, cls])
+		if cls != "" and ResourceLoader.exists(p):
+			tex = load(p)
+			_baked[key] = true
+		else:
+			p = FX_DIR % name
+			tex = load(p) if ResourceLoader.exists(p) else null
+		_tex_cache[key] = tex
+	return _tex_cache[key]
+
+
+## A baked class variant keeps only the alpha of the requested modulate; the neutral strip keeps the tint.
+func _fit(name: String, c: Color) -> Color:
+	_tex(name)
+	return Color(1, 1, 1, c.a) if _baked.has("%s|%s" % [name, str(player.class_id)]) else c
 
 
 func _tints() -> Array:
@@ -102,7 +119,7 @@ func _anim(name: String, frames: int, pos: Vector2, rot := 0.0, fps := 14.0, mod
 	s.texture = tex
 	s.hframes = frames
 	s.rotation = rot
-	s.modulate = mod
+	s.modulate = _fit(name, mod)
 	s.scale = scl
 	s.z_index = 10
 	(parent if parent != null else _world()).add_child(s)
@@ -191,7 +208,7 @@ func on_shoot(arrow: Node2D) -> void:
 		var glow := Sprite2D.new()
 		glow.texture = _tex("bolt_glow")
 		glow.hframes = 3
-		glow.modulate = Color(t[2], 0.9)
+		glow.modulate = _fit("bolt_glow", Color(t[2], 0.9))
 		glow.z_index = 1
 		arrow.add_child(glow)
 		_bolts.append({"arrow": arrow, "glow": glow, "t": 0.0, "spark_t": 0.0})
@@ -325,7 +342,7 @@ func _poll_draw_glow(st: int) -> void:
 		_draw_glow.position = player.aim.position + (player.aim_dir as Vector2) * 9.0
 		_draw_glow.scale = Vector2.ONE * lerpf(0.4, 1.0, p)
 		_draw_glow.frame = int(p * 3.0) % 3
-		_draw_glow.modulate = Color(_tints()[2], (0.5 if reduced() else 0.85) * p + 0.15)
+		_draw_glow.modulate = _fit("bolt_glow", Color(_tints()[2], (0.5 if reduced() else 0.85) * p + 0.15))
 
 
 func _tick_bolts(delta: float) -> void:

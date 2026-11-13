@@ -21,4 +21,4 @@ damage = 22
 reach = 50.0
 arc = 36.0
 favoured = "lancer"
-favoured_bonus = {"damage_mult": 0.1}
+favoured_bonus = {"tip_damage": 0.15}

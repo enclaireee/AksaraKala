@@ -12,4 +12,4 @@ slot = "accessory"
 description = "ITEM_TAMENG_ROTAN_DESC"
 bonus = {"defense": 0.05}
 favoured = "lancer"
-favoured_bonus = {"end": 1}
+favoured_bonus = {"brace_stamina": 15.0}

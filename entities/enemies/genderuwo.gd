@@ -4,6 +4,7 @@ class_name Genderuwo extends Chaser
 ## ponytail: the throw skips attack tokens (one tank per room).
 
 const ROCK := preload("res://entities/enemies/thrown_rock.tscn")
+const ROCK_ART := preload("res://assets/art/fx/thrown_rock.png")
 const ROCK_DAMAGE := 12   # TUNE: keep equal to thrown_rock.tscn
 const THROW_WINDUP := 0.8   # TUNE
 const THROW_MIN := 90.0     # TUNE: closer than this it swings instead
@@ -14,14 +15,14 @@ const SHATTER_STAGGER := 1.5   # TUNE
 var throwing := false
 var throw_time := 0.0
 var cooldown := 1.5
-var rock: Polygon2D
+var rock: Sprite2D
 
 
 func _ready() -> void:
 	super()
-	rock = Polygon2D.new()
-	rock.color = Color(0.5, 0.45, 0.4)
-	rock.polygon = PackedVector2Array([Vector2(-4, -2), Vector2(-1, -4), Vector2(3, -3), Vector2(4, 1), Vector2(1, 4), Vector2(-3, 3)])
+	rock = Sprite2D.new()   # art pass v8: the thrown rock's own art (2 frames of 10x10)
+	rock.texture = ROCK_ART
+	rock.hframes = 2
 	rock.position = Vector2(0, -26)
 	rock.visible = false
 	add_child(rock)

@@ -85,15 +85,17 @@ func _draw() -> void:
 		"pot":
 			if _tex:
 				draw_texture_rect_region(_tex, Rect2(-8, -21, 16, 22), Rect2(_frame() * 16, 0, 16, 22))
-			draw_circle(Vector2(0, -3), 12.0, Color(1.0, 0.6, 0.2, 0.07))
+			_glow("glow_pot", 24, 0, Vector2(0, -3))
 		"fire":
-			draw_circle(Vector2(0, -5), 15.0, Color(1.0, 0.55, 0.15, 0.06 + 0.03 * float(_frame() % 2)))
+			_glow("glow_fire", 32, _frame() % 2, Vector2(0, -5))
 			if _tex:
 				draw_texture_rect_region(_tex, Rect2(-6, -13, 12, 14), Rect2(_frame() * 12, 0, 12, 14))
 		"butterfly":
 			var h := 9.0 + sin(_t * 2.3) * 3.0
 			var vx := cos(_t * 0.7 + _p.x)
-			draw_rect(Rect2(-2, -1, 4, 1), Color(0.0, 0.0, 0.0, 0.15))
+			var sh := Npc.shadow_tex("xs")
+			if sh != null:
+				draw_texture(sh, Vector2(-3, -1))
 			if _tex:
 				if vx > 0.0:
 					draw_set_transform(Vector2(0, -h), 0.0, Vector2(-1, 1))
@@ -115,18 +117,25 @@ func _draw_smoke() -> void:
 		draw_texture_rect_region(_tex, Rect2(off + Vector2(-6, -12), Vector2(12, 12)), Rect2(f * 12, 0, 12, 12))
 
 
+## A stepped-alpha glow from world_fx/<name>.png (square cells of `cell` px), centred on `at`.
+func _glow(name: String, cell: int, frame: int, at: Vector2) -> void:
+	var path := "res://assets/art/world_fx/%s.png" % name
+	if not ResourceLoader.exists(path):
+		return
+	var t: Texture2D = load(path)
+	draw_texture_rect_region(t, Rect2(at - Vector2(cell, cell) * 0.5, Vector2(cell, cell)), Rect2(frame * cell, 0, cell, cell))
+
+
 func _draw_laundry() -> void:
-	var pole := Color(0.5, 0.38, 0.22)
 	var top := -18.0
-	draw_rect(Rect2(-1, top, 2, 18), pole)
-	draw_rect(Rect2(length - 1, top, 2, 18), pole)
-	draw_rect(Rect2(-1, top, 2, 1), Color(0.7, 0.58, 0.36))
-	draw_rect(Rect2(length - 1, top, 2, 1), Color(0.7, 0.58, 0.36))
-	var pts := PackedVector2Array()
-	for i in 9:
-		var x := length * i / 8.0
-		pts.append(Vector2(x, top + 2.0 + sin(PI * i / 8.0) * 2.0))
-	draw_polyline(pts, Color(0.82, 0.78, 0.66), 1.0)
+	var pole: Texture2D = load("res://assets/art/world_fx/pole.png") if ResourceLoader.exists("res://assets/art/world_fx/pole.png") else null
+	if pole != null:
+		draw_texture(pole, Vector2(-2, top))
+		draw_texture(pole, Vector2(length - 2.0, top))
+	for i in int(length) + 1:   # the string: 1 px thin, two tones (dark under, light on top), pixel-snapped sag
+		var y := top + 2.0 + roundf(sin(PI * i / length) * 2.0)
+		draw_rect(Rect2(i, y + 1.0, 1, 1), Color(0.5, 0.44, 0.34))
+		draw_rect(Rect2(i, y, 1, 1), Color(0.88, 0.84, 0.72))
 	if _tex == null:
 		return
 	var n := cloths.size()

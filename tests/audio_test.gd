@@ -70,7 +70,7 @@ func run() -> void:
 			"stamina_empty", "wrong", "stagger", "enemy_death", "player_death", "cast_begin", "ink", "cast_fail", "cast_ok_low", "cast_ok_mid",
 			"cast_ok_high", "cast_perfect", "chest_open", "pickup", "exit", "petilasan", "lontar", "shortcut_open", "puzzle_solve",
 			"memory_in", "memory_out", "save", "boss_roar", "boss_slam", "boss_telegraph", "boss_phase", "boss_death", "ui_move", "ui_confirm",
-			"ui_back", "ui_open", "ui_close", "ui_page", "ui_slider", "ui_choice", "ui_start", "blip", "arrow_hit", "enemy_telegraph", "kabut", "pickup_rare, "boss_intro", "boss_finish", "gate_slam"]:
+			"ui_back", "ui_open", "ui_close", "ui_page", "ui_slider", "ui_choice", "ui_start", "blip", "arrow_hit", "enemy_telegraph", "kabut", "pickup_rare", "boss_intro", "boss_finish", "gate_slam"]:
 		if not has_file("sfx/" + id):
 			missing.append("sfx/" + id)
 	check(missing.is_empty(), "all referenced audio files exist (missing: %s)" % ", ".join(missing))

@@ -52,7 +52,7 @@ func _ready() -> void:
 		aura.loop = true
 		aura.life = _left
 		aura.fade = 1.0
-		aura.modulate = tint
+		aura.modulate = SpellFX.tint_for("rally_aura", tint)
 		aura.position = Vector2(0, 2)
 		aura.z_index = -1
 		add_child(aura)

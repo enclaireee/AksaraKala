@@ -53,6 +53,7 @@ func _initialize() -> void:
 		await physics_frame
 	var ok: bool = check(_exit_to("gk_pelataran") != null and not _reachable(_cells_of(_exit_to("gk_pelataran"))), "Gua Kala gate open before mq4_9")
 	if ok:   # the Hunter falls at tt_candi (Tanah Timur walk); the hunter_name beat then starts MQ4 (Act V comes before Gua Kala)
+		events.clue_examined.emit("reh_hunter")
 		events.boss_defeated.emit("nameless_hunter")
 		await _drain()
 	ok = ok and _expect("mq3=done") and check(game.has_flag("beat_hunter_name"), "hunter_name beat did not play") and _expect("mq4=active")

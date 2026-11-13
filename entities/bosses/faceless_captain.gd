@@ -442,12 +442,9 @@ func _call_adds() -> void:
 	for sx in [-1.0, 1.0]:
 		var at := home + Vector2(sx * add_offset, 0)
 		spots.append(at)
-		var m := Polygon2D.new()
-		var pts := PackedVector2Array()
-		for i in 12:
-			pts.append(Vector2.from_angle(TAU * i / 12.0) * Vector2(7, 4))
-		m.polygon = pts
-		m.color = MARKER
+		var m := BossKit.prop("telegraph/drop_mark.png", Vector2(14, 8), MARKER)   # 16x10 pixel ellipse, tinted
+		if m is Sprite2D:
+			m.modulate = MARKER
 		m.position = at
 		m.z_index = -1
 		get_parent().add_child(m)

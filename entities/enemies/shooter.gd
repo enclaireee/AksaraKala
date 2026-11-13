@@ -22,6 +22,7 @@ var facing := 0.0          # radians
 func _ready() -> void:
 	super()
 	if shriek:
+		Chaser.attach_smear(cone, false, 2)
 		arc.polygon = Player._arc(t("arc"), t("reach"))
 		cone.polygon = arc.polygon
 

@@ -83,7 +83,7 @@ func _ready() -> void:
 		rise.loop = true
 		rise.life = maxf(_life, 1.0)
 		rise.fade = 0.6
-		rise.modulate = _tint
+		rise.modulate = SpellFX.tint_for("heal_rise", _tint)
 		rise.position = Vector2(0, -16)
 		add_child(rise)
 	SpellFX.burst(get_parent(), "shock", 6, global_position, Color(_tint, 0.7), 0.3, 14.0)

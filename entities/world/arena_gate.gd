@@ -42,6 +42,7 @@ func _ready() -> void:
 		if b.is_in_group("player"):
 			enter())
 	z_index = 5
+	queue_redraw()   # the open posts
 
 
 func _dir() -> Vector2:
@@ -104,6 +105,7 @@ func _physics_process(delta: float) -> void:
 		$Shape.set_deferred("disabled", not shut)
 		get_node("/root/Zones").sealed = shut
 		Snd.play("gate_slam" if shut else "kabut")
+		queue_redraw()
 		if not shut:   # won, or the boss stood down
 			entered = false
 			get_node("/root/Game").boss_retry = {}
@@ -116,16 +118,28 @@ func _exit_tree() -> void:
 		get_node("/root/Zones").sealed = false
 
 
-## A wall of burning strokes: flickering columns over the whole block. Drawn only while shut.
+## Open: a post at each end of the block (arena_post.png). Shut: a pagar gaib, the 4-frame fence tile
+## (tools/gen_world_fx.py) tiled across the block. ponytail: the fence sheet is loaded once and shared.
+static var _fence: Texture2D
+static var _post: Texture2D
+
+
 func _draw() -> void:
-	if not shut:
-		return
+	if _fence == null and ResourceLoader.exists("res://assets/art/world_fx/pagar_gaib.png"):
+		_fence = load("res://assets/art/world_fx/pagar_gaib.png")
+	if _post == null and ResourceLoader.exists("res://assets/art/props/arena_post.png"):
+		_post = load("res://assets/art/props/arena_post.png")
 	var half := 8.0 * block
 	var across := _dir().orthogonal().abs()   # the wall runs across the passage
-	for i in range(-int(half), int(half), 2):
-		var f := 0.5 + 0.5 * sin(_t * 9.0 + i * 1.7)
-		var h := 10.0 + 12.0 * f
-		var at := across * float(i)
-		draw_rect(Rect2(at + Vector2(-1, -h), Vector2(2, h + 4.0)), Color(1.0, 0.45 + 0.4 * f, 0.15, 0.85))
-		if i % 6 == 0:   # a brighter stroke with a hook, like a written line
-			draw_rect(Rect2(at + Vector2(-1, -h - 3.0), Vector2(4, 2)), Color(1.0, 0.9, 0.55))
+	if not shut:
+		if _post != null:
+			for sgn in [-1.0, 1.0]:
+				var c: Vector2 = across * (half - 8.0) * sgn
+				draw_texture(_post, c + Vector2(-_post.get_width() * 0.5, 8 - _post.get_height()))
+		return
+	if _fence == null:
+		return
+	var f := int(_t * 8.0) % 4
+	for i in block:
+		var at := across * (-half + 8.0 + 16.0 * i)
+		draw_texture_rect_region(_fence, Rect2(at + Vector2(-8, 8 - 32), Vector2(16, 32)), Rect2(f * 16, 0, 16, 32))

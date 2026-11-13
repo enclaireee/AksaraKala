@@ -8,8 +8,9 @@ var max_range := 220.0
 var pierce := false
 var far_damage := 0        # damage once past far_after px (Archer Eagle Eye); 0 = off
 var far_after := 120.0
-var bounce := 0.0          # Batu Pantul: > 0 = hop once to the nearest other foe at this damage multiplier
+var bounce := 0.0          # Batu Pantul: > 0 = hop to the nearest other foe at this damage multiplier
 var bounce_range := 70.0
+var bounces_left := 1
 var _travelled := 0.0
 var _spent := false
 var _trail: Sprite2D   # 2-frame streak behind the shaft (combat.md 2.3b); visual only
@@ -51,7 +52,9 @@ func _hop(from: Hurtbox) -> bool:
 	direction = (best.global_position - global_position).normalized()
 	rotation = direction.angle()
 	damage = roundi(damage * bounce)
-	bounce = 0.0
+	bounces_left -= 1
+	if bounces_left <= 0:
+		bounce = 0.0
 	pierce = false
 	_travelled = 0.0
 	max_range = bounce_range + 16.0

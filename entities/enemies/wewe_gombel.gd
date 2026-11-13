@@ -8,6 +8,7 @@ const GRAB_MIN := 40.0        # TUNE: closer than this she swings instead
 const GRAB_RANGE := 110.0     # TUNE
 const GRAB_WIDTH := 14.0      # TUNE: half width of the line
 const GRAB_COOLDOWN := 4.0    # TUNE
+const LANE_TILE := "res://assets/art/fx/lane_tile.png"
 const PULL_STOP := 22.0       # the player lands this far from her
 
 var active := true
@@ -23,7 +24,12 @@ func _ready() -> void:
 		return
 	line = Line2D.new()
 	line.width = GRAB_WIDTH * 2.0
-	line.default_color = Color(1.0, 0.3, 0.3, 0.35)
+	line.default_color = Color(1, 1, 1, 0.45)
+	line.antialiased = false
+	if ResourceLoader.exists(LANE_TILE):   # art pass v8: stepped hatched lane, tiled along the line
+		line.texture = load(LANE_TILE)
+		line.texture_mode = Line2D.LINE_TEXTURE_TILE
+		line.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	line.points = PackedVector2Array([Vector2.ZERO, Vector2(GRAB_RANGE, 0)])
 	line.visible = false
 	aim.add_child(line)

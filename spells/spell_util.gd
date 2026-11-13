@@ -2,7 +2,7 @@ class_name SpellUtil extends RefCounted
 ## Shared spell scaling: Spirit (player.spell_mult) times the class damage modifier (classes.md).
 ## Reads the caster loosely so test dummies without these members still work (factor 1.0).
 
-const CLASS_DAMAGE := {"warrior": 0.9, "mage": 1.1}   # classes.md spell modifiers
+const CLASS_DAMAGE := {"warrior": 0.9, "mage": 1.1, "lancer": 1.0, "herder": 0.95, "dancer": 1.0, "dalang": 1.05}   # classes.md spell modifiers
 
 ## A clean cast (recognizer score at or above this) is a Perfect cast: +12% power and a gold flourish (spells.md 7).
 const PERFECT_SCORE := 0.92
@@ -40,14 +40,25 @@ static func in_act6() -> bool:
 	return z != null and str(z.get("current_zone")).begins_with("gk_")
 
 
-## Radius multiplier from choices (not class): Tell Ciung widens Sunda Ca.
+## Radius multiplier from choices and gear: Tell Ciung widens Sunda Ca; Blencong widens zones/blasts.
 static func radius_mult(spell: SpellData) -> float:
-	return TELL_CIUNG_BURST_RADIUS if spell.glyph_id == "sunda_ca" and has_flag("choice_tell_ciung") else 1.0
+	var m := TELL_CIUNG_BURST_RADIUS if spell.glyph_id == "sunda_ca" and has_flag("choice_tell_ciung") else 1.0
+	var g := _game()
+	return m * (1.0 + (g.bonus("spell_radius") if g else 0.0))
 
 
-## Poise damage multiplier from choices: Offer Memory's Ombak in Act VI.
-static func poise_mult(spell: SpellData) -> float:
-	return OFFER_MEMORY_OMBAK_POISE if spell.glyph_id == "jawa_ka" and has_flag("choice_offer_memory") and in_act6() else 1.0
+## Zone/summon duration multiplier from gear (Suling Bambu, Kayon Gapuran).
+static func zone_life_mult() -> float:
+	var g := _game()
+	return 1.0 + (g.bonus("zone_life") if g else 0.0)
+
+
+## Poise damage multiplier from choices and class: Offer Memory's Ombak in Act VI; Pangangon +25%.
+static func poise_mult(spell: SpellData, caster: Node = null) -> float:
+	var m := OFFER_MEMORY_OMBAK_POISE if spell.glyph_id == "jawa_ka" and has_flag("choice_offer_memory") and in_act6() else 1.0
+	if caster != null and class_id(caster) == "herder":
+		m *= 1.25
+	return m
 
 
 ## The caster's real class: picks the spell kit (SpellVariants, PathSpells) and the glow.
@@ -64,13 +75,13 @@ static func spirit(caster: Node) -> float:
 	return caster.spell_mult() if caster.has_method("spell_mult") else 1.0
 
 
-## Damage multiplier: Spirit x class.
+## Damage multiplier: Spirit x class (second paths use their own rules, not their first-path school).
 static func damage(caster: Node) -> float:
 	var g := _game()
-	return spirit(caster) * CLASS_DAMAGE.get(school(caster), 1.0) * (1.0 + (g.bonus("damage_mult") if g else 0.0))
+	return spirit(caster) * CLASS_DAMAGE.get(class_id(caster), 1.0) * (1.0 + (g.bonus("damage_mult") if g else 0.0))
 
 
-## Gauge cost after class modifiers: Mage x0.9 on everything, Rogue x0.7 on Dash-strike.
+## Gauge cost after class modifiers: Mage x0.9, Rogue x0.7 on Dash-strike, Lancer x0.85 on formations, Dancer x0.85 on dances.
 static func cost(caster: Node, spell: SpellData) -> float:
 	var c := spell.cost
 	if spell.glyph_id == "jawa_ka" and has_flag("choice_offer_memory"):
@@ -80,9 +91,11 @@ static func cost(caster: Node, spell: SpellData) -> float:
 		c *= 0.75   # Wiku's Fokus Batin (Jawa Ca)
 	if loop is SceneTree and not (loop as SceneTree).get_nodes_in_group("kayon").is_empty():
 		c *= 0.5   # Dalang's Tancep Kayon
-	match school(caster):
+	match class_id(caster):
 		"mage": c *= 0.9
 		"rogue": c *= 0.7 if spell.glyph_id == "jawa_na" else 1.0
+		"lancer": c *= 0.85 if spell.glyph_id in ["sunda_nga", "jawa_ca"] else 1.0
+		"dancer": c *= 0.85 if spell.glyph_id in ["jawa_na", "jawa_ka", "sunda_ta"] else 1.0
 	return c
 
 

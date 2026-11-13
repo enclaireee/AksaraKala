@@ -9,6 +9,7 @@ extends Control
 const BAR_H := 20.0
 const RULE_W := 168.0
 const GOLD := Color("D2A446")
+const ART := "res://assets/art/ui/"
 
 var _boss: Node
 var _was_engaged := false
@@ -18,14 +19,14 @@ var _top: ColorRect
 var _bot: ColorRect
 var _card: Control
 var _name: Label
-var _rules: Array[ColorRect] = []
+var _rules: Array[NinePatchRect] = []
 var _flash: ColorRect
 var _tw: Tween
 var _slow_scale := 0.0   # the time scale this node set, 0 when it holds none
 var _epithet: Label
 var _line: Label
 var _hint: Label
-var _hint_bg: ColorRect
+var _hint_bg: NinePatchRect
 var _hint_tw: Tween
 var _staging := false    # the tree is paused for an entrance
 var staged := DisplayServer.get_name() != "headless"   # tests set it true to run the paused entrance
@@ -48,7 +49,7 @@ func _ready() -> void:
 	_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_card.modulate.a = 0.0
 	add_child(_card)
-	_rect(Vector2(120, 86), Vector2(240, 50), Color(UIFx.INK_BG, 0.55), _card)
+	_nine("ink_panel", Rect2(120, 86, 240, 50), 4, _card).modulate.a = 0.75
 	_name = UIFx.text("", "head", UIFx.GOLD_HI)
 	_name.position = Vector2(0, 98)
 	_name.size = Vector2(240, 13)
@@ -66,7 +67,7 @@ func _ready() -> void:
 	_line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_line.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_card.add_child(_line)
-	_hint_bg = _rect(Vector2(90, 270 - 52), Vector2(300, 13), Color(UIFx.INK_BG, 0.8), self)
+	_hint_bg = _nine("ink_panel", Rect2(90, 270 - 52, 300, 13), 4, self)
 	_hint_bg.modulate.a = 0.0
 	_hint = UIFx.text("", "body", UIFx.GOLD_HI)
 	_hint.position = Vector2(0, 2)
@@ -75,10 +76,13 @@ func _ready() -> void:
 	_hint.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_hint_bg.add_child(_hint)
 	for y: float in [90.0, 131.0]:
-		_rules.append(_rect(Vector2(240, y), Vector2(0, 1), GOLD, _card))
-	for y: float in [88.0, 129.0]:   # a small lozenge on each rule
-		_rect(Vector2(238, y), Vector2(5, 5), GOLD, _card)
-		_rect(Vector2(239, y + 1), Vector2(3, 3), UIFx.INK_BG, _card)
+		_rules.append(_nine("hud_boss_rule", Rect2(240, y, 0, 2), 0, _card))
+	for y: float in [87.0, 128.0]:   # a small brass lozenge on each rule
+		var lz := TextureRect.new()
+		lz.texture = load(ART + "hud_boss_lozenge.png")
+		lz.position = Vector2(237, y)
+		lz.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_card.add_child(lz)
 
 
 func _rect(pos: Vector2, sz: Vector2, col: Color, parent: Node) -> ColorRect:
@@ -86,6 +90,20 @@ func _rect(pos: Vector2, sz: Vector2, col: Color, parent: Node) -> ColorRect:
 	r.position = pos
 	r.size = sz
 	r.color = col
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(r)
+	return r
+
+
+func _nine(tex: String, rect: Rect2, m: int, parent: Node) -> NinePatchRect:
+	var r := NinePatchRect.new()
+	r.texture = load(ART + tex + ".png")
+	r.position = rect.position
+	r.size = rect.size
+	r.patch_margin_left = m
+	r.patch_margin_top = m
+	r.patch_margin_right = m
+	r.patch_margin_bottom = m
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	parent.add_child(r)
 	return r

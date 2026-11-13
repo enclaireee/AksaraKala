@@ -6,11 +6,12 @@ const SNUFF_TIME := 3.0       # TUNE
 const SNUFF_MULT := 1.5       # TUNE
 const SNUFF_TINT := Color(0.5, 0.6, 0.9)
 const TRAIL_GAP := 0.3        # TUNE: seconds between fire patches
+const EMBER := preload("res://assets/art/fx/spells/ember.png")
 const TRAIL_RADIUS := 9.0     # TUNE
 
 var trail_life := 3.0         # TUNE: the elite doubles it
 var snuffed := 0.0
-var patches: Array[Polygon2D] = []
+var patches: Array[Sprite2D] = []
 var _gap := 0.0
 
 
@@ -43,9 +44,11 @@ func _tick(delta: float) -> void:
 	_gap -= delta
 	if snuffed <= 0.0 and _gap <= 0.0 and velocity != Vector2.ZERO:
 		_gap = TRAIL_GAP
-		var p := Polygon2D.new()
-		p.polygon = PackedVector2Array([Vector2(-4, -2), Vector2(0, -5), Vector2(4, -2), Vector2(0, 2)])
-		p.color = Color(1, 0.45, 0.1, 0.7)
+		var p := Sprite2D.new()   # art pass v8: ember strip (4 frames of 8x8) instead of a flat polygon
+		p.texture = EMBER
+		p.hframes = 4
+		p.scale = Vector2(1.5, 1.5)
+		p.modulate = Color(1, 0.55, 0.2, 0.85)
 		p.set_meta("left", trail_life)
 		get_parent().add_child(p)
 		p.global_position = global_position
@@ -53,6 +56,7 @@ func _tick(delta: float) -> void:
 	for p in patches.duplicate():
 		var left: float = p.get_meta("left") - delta
 		p.set_meta("left", left)
+		p.frame = int(left * 8.0) % 4
 		if left <= 0.0:
 			patches.erase(p)
 			p.queue_free()

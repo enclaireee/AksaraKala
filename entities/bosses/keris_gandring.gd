@@ -29,6 +29,7 @@ class Orbit extends Node2D:
 	var _t := 0.0
 	var _cool := 0.0
 	var _angle := 0.0
+	var _shard: Texture2D = BossKit._art("keris_shard.png")   # null: the old polygons
 
 	func _radius() -> float:
 		return lerpf(r_from, r_to, clampf((_t - warm) / close_time, 0.0, 1.0))
@@ -65,11 +66,16 @@ class Orbit extends Node2D:
 		var half: float = TAU / count * 0.5
 		for i in count:
 			var a: float = _slot_angle(i)
-			if gaps.has(i):
-				draw_arc(Vector2.ZERO, rad, a - half, a + half, 6, Color(1.0, 0.85, 0.3, 0.6), 1.0)
+			if gaps.has(i):   # the gap: a 2 px pixel arc band
+				draw_set_transform(Vector2.ZERO, 0.0)
+				BossKit.px_edge(self, BossKit.px_wedge(a, half * 2.0, roundf(rad) + 1.0, roundf(rad) - 1.0), BossKit.ramp(Color(1.0, 0.85, 0.3, 0.6)), 2, false)
+				continue
+			var col := Color(0.75, 0.85, 1.0, 1.0 if live else 0.35)
+			if _shard != null:   # telegraph/keris_shard.png, 14x6, tip toward +x (outward)
+				draw_set_transform((Vector2.from_angle(a) * rad).round(), a)
+				draw_texture(_shard, Vector2(-8, -3), col)
 				continue
 			draw_set_transform(Vector2.from_angle(a) * rad, a + PI * 0.5)
-			var col := Color(0.75, 0.85, 1.0, 1.0 if live else 0.35)
 			draw_colored_polygon(PackedVector2Array([Vector2(0, -8), Vector2(3, 3), Vector2(0, 6), Vector2(-3, 3)]), col)
 			draw_colored_polygon(PackedVector2Array([Vector2(0, -6), Vector2(1, 2), Vector2(-1, 2)]), Color(1, 1, 1, 0.8 if live else 0.2))
 		draw_set_transform(Vector2.ZERO, 0.0)

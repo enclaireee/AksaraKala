@@ -615,6 +615,10 @@ func _particles(kind: String) -> CPUParticles2D:
 func _fx_texture(kind: String) -> Texture2D:
 	if _fx_tex.has(kind):
 		return _fx_tex[kind]
+	var art := "res://assets/art/world_fx/fx_%s.png" % kind   # pixel PNGs from tools/gen_world_fx.py; the code below is the fallback
+	if ResourceLoader.exists(art):
+		_fx_tex[kind] = load(art)
+		return _fx_tex[kind]
 	var img: Image
 	match kind:
 		"dot":

@@ -241,15 +241,29 @@ func _refresh() -> void:
 		queue_redraw()
 
 
+static var _stake: Texture2D
+
+
+func _stake_tex() -> Texture2D:
+	if _stake == null and ResourceLoader.exists("res://assets/art/world_fx/stake.png"):
+		_stake = load("res://assets/art/world_fx/stake.png")
+	return _stake
+
+
 func _draw() -> void:
 	var cw := _cell.x
 	var ch := _cell.y
 	var big := species == "kerbau"
-	draw_rect(Rect2(-cw * 0.3, -1, cw * 0.6, 3 if big else 2), Color(0.09, 0.07, 0.16, 0.38))
+	var sh := Npc.shadow_tex("l" if big else ("m" if cw * 0.6 >= 12.0 else "s"))
+	if sh != null:
+		draw_texture(sh, Vector2(-sh.get_width() * 0.5, -2))
 	if _spec.g == "tether":   # the stake and its rope
 		var stake := home - position
-		draw_line(stake, Vector2(0, -ch * 0.35), Color(0.45, 0.33, 0.2), 1.0)
-		draw_rect(Rect2(stake + Vector2(-1, -5), Vector2(2, 5)), Color(0.35, 0.25, 0.15))
+		draw_line(stake + Vector2(0, -5), Vector2(0, -ch * 0.35), Color(0.3, 0.22, 0.14), 2.0)   # rope, dark under light
+		draw_line(stake + Vector2(0, -6), Vector2(0, -ch * 0.35 - 1.0), Color(0.62, 0.5, 0.32), 1.0)
+		var st := _stake_tex()
+		if st != null:
+			draw_texture(st, stake + Vector2(-3, -11))
 	if _sheet == null:
 		draw_rect(Rect2(-cw * 0.4, -ch * 0.7, cw * 0.8, ch * 0.7), Color(0.6, 0.5, 0.4))
 		return

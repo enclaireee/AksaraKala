@@ -21,4 +21,4 @@ damage = 26
 reach = 46.0
 arc = 40.0
 favoured = "lancer"
-favoured_bonus = {"vit": 1}
+favoured_bonus = {"brace_reach": 0.15}

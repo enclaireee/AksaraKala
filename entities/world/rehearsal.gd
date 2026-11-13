@@ -10,7 +10,7 @@ extends Node2D
                                 # and beating the boss unrehearsed counts it as done, so a blocking quest sub-goal cannot strand
 @export var cond := ""          # hidden and deaf while Game.check(cond) is false, as clue.gd
 @export var radius := 64.0      # TUNE
-@export var look := "post"      # post, mirror, shade, mist, lock, lesung: drawn in code. ponytail: no sprite sheet
+@export var look := "post"      # post, mirror, shade, mist, lock, lesung: world_fx/rehearse_<look>.png
 
 var _mark: Node2D
 var _t := 0.0
@@ -76,32 +76,19 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	var ink := Color(0.09, 0.07, 0.16)
-	var k := _hit / 0.6   # 1 right after the answer
+	var tex := _sheet()
+	if tex == null:
+		return
 	var done: bool = _mark == null
-	match look:
-		"mirror":   # a standing mirror; the false reflection breaks
-			draw_rect(Rect2(-6, -20, 12, 20), ink)
-			draw_rect(Rect2(-5, -19, 10, 17), Color(0.55, 0.75, 0.85).lerp(Color.WHITE, k))
-			if done:
-				draw_line(Vector2(-4, -17), Vector2(3, -6), ink, 1.0)
-				draw_line(Vector2(0, -12), Vector2(4, -15), ink, 1.0)
-			else:
-				draw_rect(Rect2(-2, -15, 4, 9), Color(0.85, 0.7, 0.3, 0.6 + 0.3 * sin(_t * 3.0)))
-		"shade", "mist":   # a shape of mist; fades when answered
-			var a := (0.15 if done else 0.55) + 0.1 * sin(_t * 2.0)
-			var col := Color(0.6, 0.5, 0.8, a) if look == "shade" else Color(0.8, 0.85, 0.9, a)
-			for i in 4:
-				draw_circle(Vector2(sin(_t * 1.3 + i * 1.7) * 5.0, -8.0 - i * 3.0), 7.0 - i, col)
-		"lock":   # a stone seal
-			draw_circle(Vector2(0, -9), 10.0, ink)
-			draw_circle(Vector2(0, -9), 9.0, Color(0.42, 0.36, 0.5).lerp(BossKit.GOLD, maxf(k, 0.5 if done else 0.0)))
-			draw_arc(Vector2(0, -9), 5.0, 0.0, TAU, 16, ink, 1.0)
-		"lesung":   # rice mortar and pestle
-			draw_rect(Rect2(-9, -7, 18, 8), ink)
-			draw_rect(Rect2(-8, -6, 16, 6), Color(0.48, 0.33, 0.2))
-			draw_rect(Rect2(-1, -20 + 6.0 * k, 3, 14), Color(0.7, 0.55, 0.35))
-		_:   # a post with a cloth
-			draw_rect(Rect2(-2, -22, 4, 22), ink)
-			draw_rect(Rect2(-1, -21, 2, 20), Color(0.48, 0.33, 0.2))
-			draw_rect(Rect2(1, -20, 7.0 + 2.0 * sin(_t * 4.0), 6), Color(0.9, 0.9, 0.85).lerp(BossKit.GOLD, k))
+	var f := 2 if done or _hit > 0.3 else int(_t * 2.0) % 2   # 0-1 idle, 2 answered
+	var a := 1.0
+	if done and (look == "shade" or look == "mist"):
+		a = 0.8
+	draw_texture_rect_region(tex, Rect2(-12, -30, 24, 32), Rect2(f * 24, 0, 24, 32), Color(1, 1, 1, a))
+
+
+## tools/gen_world_fx.py rehearse_<look>.png: 3 frames of 24x32, feet on row 30. Unknown look = the post.
+func _sheet() -> Texture2D:
+	var k := look if look in ["post", "mirror", "shade", "mist", "lock", "lesung"] else "post"
+	var path := "res://assets/art/world_fx/rehearse_%s.png" % k
+	return load(path) if ResourceLoader.exists(path) else null

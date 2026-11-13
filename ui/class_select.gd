@@ -127,10 +127,11 @@ func _build_info() -> void:
 	_role.position = Vector2(x, 24)
 	_role.size = Vector2(w, 9)
 	_info.add_child(_role)
-	var rule := ColorRect.new()
-	rule.color = UIFx.LINE_DIM
-	rule.position = Vector2(x, 37)
-	rule.size = Vector2(w, 1)
+	var rule := NinePatchRect.new()   # book_rule: a cyan lead-in, then the hairline
+	rule.texture = load("res://assets/art/ui/book_rule.png")
+	rule.patch_margin_left = 6
+	rule.position = Vector2(x, 36)
+	rule.size = Vector2(w, 3)
 	_info.add_child(rule)
 	_desc = UIFx.text("", "body", UIFx.CREAM)
 	_desc.position = Vector2(x, 42)
@@ -305,6 +306,8 @@ func _unhandled_input(e: InputEvent) -> void:
 
 ## Ten-segment stat bar that tweens to its value.
 class StatBar extends Control:
+	const _PIP_ON: Texture2D = preload("res://assets/art/ui/book_pip_on.png")
+	const _PIP_OFF: Texture2D = preload("res://assets/art/ui/book_pip_off.png")
 	var shown := 0.0
 	var _target := 0
 	var _tw: Tween
@@ -323,11 +326,8 @@ class StatBar extends Control:
 
 	func _draw() -> void:
 		for i in 10:   # 10 pips, 6 px on a 7 px pitch: empty = hairline, filled = gold with a lit top row
-			var r := Rect2(i * 7, 1, 6, 5)
-			draw_rect(r, UIFx.LINE_DIM)
 			var f := clampf(shown - i, 0.0, 1.0)
-			if f > 0.0:
-				var fw := roundf(6.0 * f)
-				draw_rect(Rect2(r.position, Vector2(fw, 5)), UIFx.ACCENT)
-				draw_rect(Rect2(r.position, Vector2(fw, 1)), Color("D8FFFB"))
+			var fw := roundf(6.0 * f)
+			for half in 2:   # each segment is two 3x5 book pips: lit once the fill reaches them
+				draw_texture(_PIP_ON if fw >= 3.0 * (half + 1) - 1.0 and f > 0.0 else _PIP_OFF, Vector2(i * 7 + half * 3, 1))
 		draw_string(UIFx.body_font(), Vector2(74, 6), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.CREAM)

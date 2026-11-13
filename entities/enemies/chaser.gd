@@ -18,8 +18,39 @@ var facing := 0.0          # radians
 @onready var arc: CollisionPolygon2D = attack_hitbox.get_node_or_null("Arc")
 
 
+const SMEAR := "res://assets/art/fx/%s.png"
+
+
+## Art pass v8: the swing wedge is the shape source only (its scene node is invisible); this child sprite is the
+## visual. It plays the 4-frame enemy smear whenever the wedge is shown and holds `hold_frame`. Fits the polygon's
+## reach and width at the moment it appears, so the polygon can be set after this call.
+static func attach_smear(wedge: Polygon2D, heavy: bool, hold_frame := 3) -> void:
+	var path := SMEAR % ("enemy_smear_heavy" if heavy else "enemy_smear")
+	if wedge == null or not ResourceLoader.exists(path):
+		return
+	var spr := Sprite2D.new()
+	spr.texture = load(path)
+	spr.hframes = 4
+	spr.visible = false
+	wedge.add_child(spr)
+	wedge.visibility_changed.connect(func() -> void:
+		if not wedge.is_visible_in_tree() or wedge.polygon.is_empty():
+			return
+		var reach := 0.0
+		var half := 0.0
+		for v in wedge.polygon:
+			reach = maxf(reach, v.x)
+			half = maxf(half, absf(v.y))
+		spr.scale = Vector2(maxf(reach, 8.0) / 20.0, maxf(half, 4.0) / (20.0 * sin(deg_to_rad(50.0))))
+		spr.visible = true
+		spr.frame = 0
+		var tw := spr.create_tween()
+		tw.tween_property(spr, "frame", hold_frame, 0.05 * (hold_frame + 1)))
+
+
 func _ready() -> void:
 	super()
+	attach_smear(slash, arc != null)
 	if bind_weak and status != null:
 		status.started.connect(func(type: Status.Type) -> void:
 			if type == Status.Type.BOUND:

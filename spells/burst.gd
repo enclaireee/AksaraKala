@@ -21,7 +21,7 @@ func _ready() -> void:
 	var dmg_mult := SpellUtil.spirit(caster) if flat else SpellUtil.damage(caster)
 	damage = roundi(data.power * power * dmg_mult)
 	source = caster
-	poise_mult = preload("res://data/combat_tuning.tres").spell_poise_mult * poise_scale
+	poise_mult = preload("res://data/combat_tuning.tres").spell_poise_mult * poise_scale * SpellUtil.poise_mult(data, caster)
 	knockback = knock   # px of push (Hitbox default is 6)
 	_radius = data.radius * SpellUtil.radius_mult(data)   # Tell Ciung +10%
 	var cs := CircleShape2D.new()   # own shape: the scene's is shared between instances
@@ -32,7 +32,7 @@ func _ready() -> void:
 	var tint := SpellUtil.tint(data.glyph_id, caster)
 	var wave := SpellFX.make("shock", 6, 6.0 / LIFE)
 	if wave:
-		wave.modulate = Color(tint, 0.95)
+		wave.modulate = SpellFX.tint_for("shock", Color(tint, 0.95))
 		wave.scale = Vector2.ONE * _radius / 60.0
 		add_child(wave)
 

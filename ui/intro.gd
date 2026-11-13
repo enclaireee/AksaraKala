@@ -76,6 +76,8 @@ class Ink extends Node2D:
 	var halo := Color(0.25, 0.72, 0.75, 0.3)
 	var hot := Color(1, 1, 1, 0.85)
 	var width := 2.0
+	var _wet: Line2D
+	var _brush: Line2D
 	var progress := 0.0:
 		set(v):
 			progress = v
@@ -101,9 +103,19 @@ class Ink extends Node2D:
 	func tint(c: Color) -> void:
 		core = c
 		halo = Color(c, 0.3)
+		if _brush:
+			_brush.default_color = c
+			_wet.default_color = c.darkened(0.55)
 		queue_redraw()
 
 	func _draw() -> void:
+		if _brush == null:   # brush look: wet edge under a tiled pixel brush, same as the cast stroke
+			_wet = CastOverlay.brush_line(width * 2.0 + 2.0, core.darkened(0.55), false)
+			_brush = CastOverlay.brush_line(width * 2.0, core)
+			add_child(_wet)
+			add_child(_brush)
+		_wet.visible = progress > 0.0 and stroke.size() >= 2
+		_brush.visible = _wet.visible
 		if progress <= 0.0 or stroke.size() < 2:
 			return
 		var target := dist[dist.size() - 1] * clampf(progress, 0.0, 1.0)
@@ -117,9 +129,8 @@ class Ink extends Node2D:
 				break
 		if pts.size() < 2:
 			return
-		draw_polyline(pts, halo, width + 4.0)
-		draw_polyline(pts, core, width + 1.0)
-		draw_polyline(pts, hot, maxf(1.0, width - 1.0))
+		_wet.points = pts
+		_brush.points = pts
 		if progress < 1.0:
 			var tip := pts[pts.size() - 1]
 			draw_rect(Rect2(tip - Vector2(2, 2), Vector2(4, 4)), Color(1, 1, 1, 0.9))

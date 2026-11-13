@@ -1,504 +1,554 @@
 #!/usr/bin/env python3
-"""Glyph spell FX sheets (spells.md 7). Every sheet is a horizontal strip of equal frames in assets/art/fx/spells/.
-Most art is white or pale grey with a little colour so spells/spell_fx.gd can tint it per glyph and per class;
-the tiger spirit keeps its own colours. Frames that move face +x (right); the game rotates or flips them.
+"""Glyph spell FX sheets (spells.md 7), art pass v8 (assets.md 1 "FX standard"). Every sheet is a horizontal strip
+of equal frames in assets/art/fx/spells/. Chunky lit pixel art drawn once in pixlib KEY tones (a = main ramp,
+b = accent ramp, w = hot core, plum outline on key frames) and written by pixlib.bake_all as a neutral strip plus
+one <name>_<class>.png per class (spells/spell_fx.gd picks it by Game.class_id). The tiger spirit and the ember
+keep their own colours and have no class variants. Frames that move face +x (right); the game rotates or flips them.
+Also writes zone_fill.png (16x16 tile for SpellZone rings) and zap / dash_streak (replace the old Line2D / Polygon2D).
 Run: python3 tools/gen_spell_fx.py   Output: assets/art/fx/spells/*.png and tools/spell_fx_preview.png
 """
 import math
 import os
 import random
+import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image, ImageDraw
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "assets", "art", "fx", "spells")
-os.makedirs(OUT, exist_ok=True)
+from pixlib import *
 
-WHITE = (255, 255, 255, 255)
-PALE = (214, 226, 240, 255)
-MID = (150, 170, 200, 255)
-DARK = (70, 84, 120, 255)
+D = "fx/spells/"
+W = KEY["w"]
+IMGS = {}   # name -> neutral strip, for the preview
 
 
-def a(c, al):
-    return (c[0], c[1], c[2], int(al))
-
-
-def strip(n, w, h):
-    return Image.new("RGBA", (n * w, h), (0, 0, 0, 0))
-
-
-def frame(n, w, h):
+def fr(n, w, h):
     return [Image.new("RGBA", (w, h), (0, 0, 0, 0)) for _ in range(n)]
 
 
-def join(frames):
-    w, h = frames[0].size
-    s = strip(len(frames), w, h)
-    for i, f in enumerate(frames):
-        s.paste(f, (i * w, 0))
-    return s
+def mk(w, h):
+    return Image.new("L", (w, h), 0)
 
 
-def px(im, x, y, c):
-    x, y = int(round(x)), int(round(y))
-    if 0 <= x < im.width and 0 <= y < im.height:
-        im.putpixel((x, y), c)
+def shade_mask(img, m, tones=None):
+    """Fill mask m with lit chunky tones: 1 px light rim top-left, 2 px shadow bottom-right, mid inside."""
+    tones = tones or A
+    p, W_, H_ = m.load(), m.width, m.height
+
+    def on(x, y):
+        return 0 <= x < W_ and 0 <= y < H_ and p[x, y] > 0
+
+    for y in range(H_):
+        for x in range(W_):
+            if not p[x, y]:
+                continue
+            light = not on(x - 1, y) or not on(x, y - 1)
+            shd = not on(x + 1, y) or not on(x, y + 1)
+            if light and not shd:
+                t = 0
+            elif shd and not light:
+                t = 3 if (not on(x + 2, y + 2) or not on(x + 1, y + 1)) else 2
+            elif light and shd:
+                t = 1
+            else:
+                t = 1 if on(x + 2, y + 2) else 2
+            dot(img, x, y, tones[min(t, len(tones) - 1)])
 
 
-def line(im, p0, p1, c):
+def ell(w, h, cx, cy, rx, ry):
+    m = mk(w, h)
+    ImageDraw.Draw(m).ellipse([cx - rx, cy - ry, cx + rx - 1, cy + ry - 1], fill=255)
+    return m
+
+
+def poly(w, h, pts):
+    m = mk(w, h)
+    ImageDraw.Draw(m).polygon(pts, fill=255)
+    return m
+
+
+def tline(img, p0, p1, wd, c):
+    """Thick line stamped as wd x wd squares (no AA)."""
     n = int(max(abs(p1[0] - p0[0]), abs(p1[1] - p0[1]))) + 1
     for i in range(n + 1):
         t = i / max(n, 1)
-        px(im, p0[0] + (p1[0] - p0[0]) * t, p0[1] + (p1[1] - p0[1]) * t, c)
+        x, y = p0[0] + (p1[0] - p0[0]) * t, p0[1] + (p1[1] - p0[1]) * t
+        for dx in range(wd):
+            for dy in range(wd):
+                dot(img, x + dx - wd // 2, y + dy - wd // 2, c)
 
 
-def ring(im, cx, cy, r, c, a0=0, a1=360, step=1.0):
-    n = int(2 * math.pi * r) + 8
-    for i in range(n):
-        ang = math.radians(a0 + (a1 - a0) * i / n)
-        px(im, cx + math.cos(ang) * r, cy + math.sin(ang) * r, c)
+def tmask(m, p0, p1, wd):
+    d = ImageDraw.Draw(m)
+    n = int(max(abs(p1[0] - p0[0]), abs(p1[1] - p0[1]))) + 1
+    for i in range(n + 1):
+        t = i / max(n, 1)
+        x, y = round(p0[0] + (p1[0] - p0[0]) * t - wd // 2), round(p0[1] + (p1[1] - p0[1]) * t - wd // 2)
+        d.rectangle([x, y, x + wd - 1, y + wd - 1], fill=255)
 
 
-def disc(im, cx, cy, r, c):
-    for y in range(int(cy - r) - 1, int(cy + r) + 2):
-        for x in range(int(cx - r) - 1, int(cx + r) + 2):
-            if (x - cx) ** 2 + (y - cy) ** 2 <= r * r:
-                px(im, x, y, c)
+def sq(img, x, y, s, c):
+    for i in range(s):
+        for j in range(s):
+            dot(img, x + i, y + j, c)
 
 
-def over(im, x, y, c):
-    if not (0 <= x < im.width and 0 <= y < im.height):
-        return
-    d = im.getpixel((x, y))
-    sa, da = c[3] / 255.0, d[3] / 255.0
-    oa = sa + da * (1 - sa)
-    if oa <= 0:
-        return
-    im.putpixel((x, y), tuple(int((c[k] * sa + d[k] * da * (1 - sa)) / oa) for k in range(3)) + (int(oa * 255),))
+def chunk_ring(im, c, r, n, size, tone, phase=0.0, alt=None):
+    """Sparse ring of fat size x size chunks (a fade stage); every 3rd chunk uses `alt` if given."""
+    for k in range(n):
+        a = phase + k * math.tau / n
+        sq(im, round(c + math.cos(a) * r) - size // 2, round(c + math.sin(a) * r) - size // 2, size,
+           alt if (alt and k % 3 == 0) else tone)
 
 
-def save(name, frames):
-    join(frames).save(os.path.join(OUT, name + ".png"))
+def fin(name, frames, outline=(), bake=True):
+    out = [plum_outline(f) if i in outline else f for i, f in enumerate(frames)]
+    s = strip(out)
+    IMGS[name] = s
+    if bake:
+        bake_all(s, D + name + ".png")
+    else:
+        save(s, D + name + ".png")
 
 
-# ---- bolt (Sunda Ka): crackling spear of light, 4 frames 24x12 ---------------------------------
+# ---- bolt (Sunda Ka): chunky spear of light, 4 frames 24x12 ---------------------------------------
 def make_bolt():
-    fr = frame(4, 24, 12)
-    for i, im in enumerate(fr):
-        rnd = random.Random(10 + i)
-        # tail glow
-        for x in range(0, 14):
-            al = 40 + x * 9
-            for y in (4, 5, 6, 7):
-                over(im, x, y, a(MID, al * (0.5 if y in (4, 7) else 1.0)))
-        # core
-        for x in range(8, 21):
-            over(im, x, 5, WHITE)
-            over(im, x, 6, WHITE)
-        for x in range(12, 22):
-            over(im, x, 4, a(PALE, 230))
-            over(im, x, 7, a(PALE, 230))
-        # head
-        px(im, 22, 5, WHITE); px(im, 22, 6, WHITE); px(im, 23, 5, a(WHITE, 200)); px(im, 23, 6, a(WHITE, 200))
-        px(im, 21, 3, a(PALE, 200)); px(im, 21, 8, a(PALE, 200))
-        # crackle: zig-zag arcs that change per frame
-        y = 5.5
-        for x in range(2, 20, 2):
-            y += rnd.choice([-1.5, -1, 1, 1.5])
-            y = max(1, min(10, y))
-            px(im, x, y, a(WHITE, 255))
-            px(im, x + 1, y + rnd.choice([-1, 1]), a(PALE, 190))
-    save("bolt_fly", fr)
+    out = fr(4, 24, 12)
+    for i, im in enumerate(out):
+        for x in range(0, 6):
+            for y in (5, 6):
+                dot(im, x, y, A[2] if x < 3 else A[1])
+        for x in range(6, 21):
+            dot(im, x, 4, A[0]); dot(im, x, 5, W); dot(im, x, 6, W); dot(im, x, 7, A[1])
+        for x in range(10 + i % 2, 19):
+            dot(im, x, 3, A[1]); dot(im, x, 8, A[2])
+        for y in (4, 5, 6, 7):
+            dot(im, 21, y, W if y in (5, 6) else A[0])
+        dot(im, 22, 5, W); dot(im, 22, 6, A[0])
+        sq(im, 8 + 4 * i % 9, 1 if i % 2 else 9, 2, B[0 if i % 2 else 1])   # crackle chunks
+        sq(im, 15 - 3 * i % 8, 9 if i % 2 else 1, 2, B[1])
+    fin("bolt_fly", out, outline=range(4))
 
 
-# ---- impact starburst, 5 frames 32x32 ------------------------------------------------------------
+# ---- impact starburst, 5 frames 32x32 ---------------------------------------------------------------
 def make_hit():
-    fr = frame(5, 32, 32)
-    for i, im in enumerate(fr):
-        t = i / 4.0
-        cx = cy = 16
-        r = 3 + t * 11
-        al = 255 * (1 - t * 0.85)
-        ring(im, cx, cy, r, a(WHITE, al))
-        if i < 4:
-            ring(im, cx, cy, r - 1.2, a(PALE, al * 0.6))
-        rnd = random.Random(40)
-        for k in range(8):
-            ang = k * math.pi / 4 + 0.2
-            r0, r1 = r * 0.5, r + 3 * (1 - t) + 2
-            line(im, (cx + math.cos(ang) * r0, cy + math.sin(ang) * r0),
-                 (cx + math.cos(ang) * r1, cy + math.sin(ang) * r1), a(WHITE, al))
-        if i < 2:
-            disc(im, cx, cy, 4 - i * 1.5, WHITE)
-    save("hit_burst", fr)
+    out = fr(5, 32, 32)
+    c = 16
+    for i, im in enumerate(out):
+        t = i / 4
+        if i == 0:
+            blob(im, c, c, 6, [W, A[0], A[1]])
+            for k in range(4):
+                a = k * math.pi / 2
+                tline(im, (c + math.cos(a) * 4, c + math.sin(a) * 4), (c + math.cos(a) * 10, c + math.sin(a) * 10), 3, A[0])
+        elif i <= 2:
+            r = 4 + i * 4
+            band(im, c, c, r + 2, 6 - i, tones=A)
+            band(im, c, c, r - 2, 2, tones=B[:3])
+            blob(im, c, c, 4 - i, [W, A[0]])
+            for k in range(8):
+                a = k * math.pi / 4 + 0.2
+                tline(im, (c + math.cos(a) * (r + 3), c + math.sin(a) * (r + 3)),
+                      (c + math.cos(a) * (r + 7 - i), c + math.sin(a) * (r + 7 - i)), 2, A[0] if k % 2 else B[0])
+        else:
+            r = 8 + (i - 2) * 3
+            chunk_ring(im, c, r, 8, 4 if i == 3 else 3, A[i - 2], i * 0.3, B[i - 2])
+            for k in range(4):
+                a = math.radians(45 + k * 90 + i * 10)
+                sq(im, round(c + math.cos(a) * (r + 5)) - 1, round(c + math.sin(a) * (r + 5)) - 1, 2, B[i - 2])
+    fin("hit_burst", out, outline=(0, 1, 2, 3))
 
 
-# ---- ward bubble, 6 frames 44x44, loops; and shatter, 5 frames 64x64 ----------------------------
+# ---- ward bubble (6 frames 44x44, loops) and shatter (5 frames 64x64) ---------------------------------
 def make_ward():
-    fr = frame(6, 44, 44)
-    for i, im in enumerate(fr):
-        cx = cy = 22
-        # soft fill
-        for y in range(44):
+    out = fr(6, 44, 44)
+    for i, im in enumerate(out):
+        c = 22
+        for y in range(44):                      # sparse tiled fill, a 2 px checker in the shadow tone
             for x in range(44):
-                d = math.hypot(x - cx, y - cy)
-                if d < 19:
-                    over(im, x, y, a(PALE, 14 + 18 * (d / 19) ** 2))
-        ring(im, cx, cy, 19, a(WHITE, 230))
-        ring(im, cx, cy, 18, a(PALE, 110))
-        # rotating rune ticks
-        for k in range(6):
-            ang = math.radians(k * 60 + i * 10)
-            x0, y0 = cx + math.cos(ang) * 16, cy + math.sin(ang) * 16
-            x1, y1 = cx + math.cos(ang) * 21, cy + math.sin(ang) * 21
-            line(im, (x0, y0), (x1, y1), WHITE)
-            px(im, cx + math.cos(ang + 0.2) * 19, cy + math.sin(ang + 0.2) * 19, a(MID, 255))
-        # travelling glint
-        ang = math.radians(i * 60 - 40)
-        disc(im, cx + math.cos(ang) * 19, cy + math.sin(ang) * 19, 1.6, WHITE)
-        # top highlight arc
-        ring(im, cx, cy, 15, a(WHITE, 120), 215, 300)
-    save("ward_bubble", fr)
+                if math.hypot(x + .5 - c, y + .5 - c) < 16 and x % 6 in (1, 2) and y % 6 in (1, 2) and (x // 6 + y // 6) % 2 == 0:
+                    dot(im, x, y, A[1])
+        band(im, c, c, 18, 4, tones=A)
+        band(im, c, c, 14.5, 2, 190 + 0, 290, tones=[A[0], A[1]])   # top-left sheen
+        for k in range(6):                         # rotating rune chunks
+            a = math.radians(k * 60 + i * 10)
+            x, y = c + math.cos(a) * 18, c + math.sin(a) * 18
+            sq(im, round(x) - 2, round(y) - 2, 4, B[1])
+            sq(im, round(x) - 2, round(y) - 2, 2, B[0])
+        a = math.radians(i * 60 - 40)
+        blob(im, c + math.cos(a) * 18, c + math.sin(a) * 18, 2.5, [W, A[0]])
+    fin("ward_bubble", out, outline=range(6))
 
-    fr = frame(5, 64, 64)
+    out = fr(5, 64, 64)
     rnd = random.Random(7)
-    shards = [(rnd.uniform(0, math.tau), rnd.uniform(0.7, 1.3)) for _ in range(14)]
-    for i, im in enumerate(fr):
-        t = i / 4.0
-        cx = cy = 32
-        if i < 3:
-            ring(im, cx, cy, 14 + 14 * t, a(WHITE, 255 * (1 - t)))
-        for ang, sp in shards:
-            r = 12 + t * 20 * sp
-            x, y = cx + math.cos(ang) * r, cy + math.sin(ang) * r
-            L = 4 * (1 - t * 0.6)
-            line(im, (x, y), (x + math.cos(ang + 1.2) * L, y + math.sin(ang + 1.2) * L), a(WHITE, 255 * (1 - t * 0.9)))
-    save("ward_break", fr)
+    shards = [(rnd.uniform(0, math.tau), rnd.uniform(0.8, 1.25)) for _ in range(12)]
+    for i, im in enumerate(out):
+        c = 32
+        if i == 0:
+            band(im, c, c, 17, 5, tones=A)
+            band(im, c, c, 12, 2, tones=B[:3])
+        elif i == 1:
+            for k in range(6):
+                a = k * 60 + 10
+                band(im, c, c, 22, 5, a, a + 44, tones=A)
+        for n, (ang, sp) in enumerate(shards):
+            if i == 0:
+                break
+            r = 14 + i * 4.5 * sp
+            x, y = c + math.cos(ang) * r, c + math.sin(ang) * r
+            s = 5 if i < 3 else 4
+            sq(im, round(x) - s // 2, round(y) - s // 2, s, A[min(i - 1, 3)] if n % 3 else B[min(i - 1, 3)])
+            if i < 3:
+                sq(im, round(x) - s // 2, round(y) - s // 2, 2, A[0])
+    fin("ward_break", out, outline=(0, 1, 2))
 
 
-# ---- shock wave (Burst, ward pulse), 6 frames 128x128 --------------------------------------------
+# ---- shock wave (Burst, ward pulse), 6 frames 128x128 --------------------------------------------------
 def make_shock():
-    fr = frame(6, 128, 128)
-    for i, im in enumerate(fr):
-        t = i / 5.0
-        cx = cy = 64
-        r = 8 + t * 54
-        al = 255 * (1 - t ** 2 * 0.9)
-        if i < 2:   # opening flash
-            for y in range(128):
-                for x in range(128):
-                    d = math.hypot(x - cx, y - cy)
-                    if d < r:
-                        over(im, x, y, a(WHITE, 120 * (1 - d / r) * (1 - i * 0.4)))
-        for w in range(3):
-            ring(im, cx, cy, r - w, a(WHITE if w == 0 else PALE, al * (1 - w * 0.3)))
-        ring(im, cx, cy, r * 0.72, a(PALE, al * 0.4))
-        rnd = random.Random(5)
-        for k in range(18):
-            ang = rnd.uniform(0, math.tau)
-            rr = r + rnd.uniform(-3, 5) * (0.3 + t)
-            x, y = cx + math.cos(ang) * rr, cy + math.sin(ang) * rr
-            px(im, x, y, a(WHITE, al))
-            px(im, x + math.cos(ang), y + math.sin(ang), a(PALE, al * 0.7))
-        # rune notches around the ring
-        for k in range(12):
-            ang = k * math.tau / 12 + t * 0.6
-            x0, y0 = cx + math.cos(ang) * (r - 3), cy + math.sin(ang) * (r - 3)
-            x1, y1 = cx + math.cos(ang) * (r + 3), cy + math.sin(ang) * (r + 3)
-            line(im, (x0, y0), (x1, y1), a(WHITE, al * 0.85))
-    save("shock", fr)
-
-
-# ---- bind: roots erupting at a foe (6 frames 32x32) and a ground ring (5 frames 128x128) -----------
-def make_bind():
-    fr = frame(6, 32, 32)
-    rnd = random.Random(3)
-    roots = [(rnd.uniform(-1.2, 1.2) - math.pi / 2, rnd.uniform(0.7, 1.1)) for _ in range(7)]
-    for i, im in enumerate(fr):
-        grow = min(1.0, (i + 1) / 4.0)
-        cx, cy = 16, 26
-        for ang, ln in roots:
-            L = 17 * ln * grow
-            x, y = cx, cy
-            n = int(L)
-            for s in range(n):
-                ang2 = ang + math.sin(s * 0.5 + ang * 3) * 0.35
-                x += math.cos(ang2)
-                y += math.sin(ang2) * 0.9
-                px(im, x, y, WHITE)
-                px(im, x + 1, y, a(MID, 220))
-            if n > 2:
-                px(im, x, y - 1, WHITE)
-        # base clump
-        for dx in range(-5, 6):
-            px(im, cx + dx, cy + 1, a(MID, 230))
-            px(im, cx + dx // 2, cy, WHITE)
-    save("bind_roots", fr)
-
-    fr = frame(5, 128, 128)
-    for i, im in enumerate(fr):
-        t = i / 4.0
-        cx = cy = 64
-        r = 10 + t * 52
-        al = 255 * (1 - t ** 2 * 0.8)
-        for k in range(36):
-            ang = k * math.tau / 36
-            for w in range(2):
-                rr = r - w
-                px(im, cx + math.cos(ang) * rr, cy + math.sin(ang) * rr, a(WHITE, al * (0.9 - 0.3 * w)))
-            # thorn spikes pointing in
-            if k % 2 == 0:
-                L = 5 * (1 - t * 0.4)
-                line(im, (cx + math.cos(ang) * r, cy + math.sin(ang) * r),
-                     (cx + math.cos(ang + 0.12) * (r - L), cy + math.sin(ang + 0.12) * (r - L)), a(WHITE, al))
-    save("bind_ring", fr)
-
-
-# ---- heal: rising leaves and sparkles, 8 frames 32x48, loops ---------------------------------------
-def make_heal():
-    fr = frame(8, 32, 48)
-    rnd = random.Random(12)
-    motes = [(rnd.uniform(6, 26), rnd.uniform(0, 1), rnd.uniform(0.7, 1.2), rnd.randint(0, 3)) for _ in range(9)]
-    for i, im in enumerate(fr):
-        t = i / 8.0
-        for x0, ph, sp, kind in motes:
-            yy = 44 - ((t * sp + ph) % 1.0) * 42
-            xx = x0 + math.sin((t + ph) * math.tau) * 3
-            fade = 1 - abs(((yy - 22) / 22))
-            al = 255 * max(0.25, fade)
-            if kind == 0:   # leaf
-                for dx, dy in ((0, 0), (1, 0), (1, -1), (2, -1), (-1, 1), (0, 1)):
-                    px(im, xx + dx, yy + dy, a(WHITE, al))
-                px(im, xx, yy - 1, a(PALE, al))
-            elif kind == 1:   # cross sparkle
-                for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1)):
-                    px(im, xx + dx, yy + dy, a(WHITE, al if (dx, dy) == (0, 0) else al * 0.6))
+    out = fr(6, 128, 128)
+    c = 64
+    for i, im in enumerate(out):
+        t = i / 5
+        r = 14 + t * 46
+        if i == 0:
+            blob(im, c, c, 14, [W, A[0], A[1]])
+        if i < 3:
+            th = 11 - i * 2
+            band(im, c, c, r, th, tones=A)
+            band(im, c, c, r - th / 2 - 2, 3, tones=B[:3])
+            for k in range(12):
+                a = math.radians(k * 30 + i * 8)
+                sq(im, round(c + math.cos(a) * (r + th / 2 + 3)) - 2, round(c + math.sin(a) * (r + th / 2 + 3)) - 2, 4, B[0] if k % 2 else A[0])
+        else:
+            if i == 3:
+                for k in range(8):
+                    band(im, c, c, r, 7, k * 45 + 27, k * 45 + 57, tones=A[1:])
             else:
-                px(im, xx, yy, a(WHITE, al)); px(im, xx + 1, yy, a(PALE, al * 0.6))
-        # soft ground glow
-        for dx in range(-9, 10):
-            over(im, 16 + dx, 45, a(WHITE, 90 - abs(dx) * 8))
-            over(im, 16 + dx, 44, a(PALE, 50 - abs(dx) * 5))
-    save("heal_rise", fr)
+                chunk_ring(im, c, r, 16, 4 if i == 4 else 3, A[i - 2], i * 0.2, B[i - 2])
+            rnd = random.Random(i)
+            for k in range(10):
+                a = rnd.uniform(0, math.tau)
+                rr = r + rnd.uniform(-6, 8)
+                sq(im, round(c + math.cos(a) * rr), round(c + math.sin(a) * rr), 4 if i < 5 else 3, B[min(i - 2, 3)])
+    fin("shock", out, outline=(1, 2, 3))
 
 
-# ---- dash slash: speed streak 4 frames 64x24 facing right ------------------------------------------
+# ---- bind: roots (6 frames 32x32) and ground ring (5 frames 128x128) -----------------------------------
+def make_bind():
+    out = fr(6, 32, 32)
+    rnd = random.Random(3)
+    roots = [(rnd.uniform(-1.1, 1.1) - math.pi / 2, rnd.uniform(0.7, 1.1), rnd.choice([-1, 1])) for _ in range(6)]
+    for i, im in enumerate(out):
+        grow = min(1.0, (i + 1) / 4)
+        cx, cy = 16, 27
+        for ang, ln, sg in roots:
+            m = mk(32, 32)
+            x, y = cx, cy
+            n = int(18 * ln * grow)
+            pts = []
+            for s in range(n):
+                a2 = ang + math.sin(s * 0.45 + ang * 3) * 0.4 * sg
+                x += math.cos(a2)
+                y += math.sin(a2) * 0.95
+                pts.append((x, y))
+            for q in range(1, len(pts)):
+                tmask(m, pts[q - 1], pts[q], 3 if q < n * 0.6 else 2)
+            shade_mask(im, m, A)
+            if pts and n > 4:
+                sq(im, round(pts[-1][0]) - 1, round(pts[-1][1]) - 2, 2, B[0])
+        blob(im, cx, cy, 5, [A[0], A[1], A[2], A[3]], wobble=0.2, seed=2)
+        m = mk(32, 32)
+        ImageDraw.Draw(m).rectangle([cx - 8, cy + 1, cx + 8, cy + 3], fill=255)
+        shade_mask(im, m, B)
+    fin("bind_roots", out, outline=range(6))
+
+    out = fr(5, 128, 128)
+    c = 64
+    for i, im in enumerate(out):
+        t = i / 4
+        r = 14 + t * 48
+        if i < 3:
+            band(im, c, c, r, 8 - i * 2, tones=A)
+            for k in range(18):          # thorns pointing inward
+                a = math.radians(k * 20 + i * 5)
+                for s in range(4):
+                    x, y = c + math.cos(a) * (r - 4 - s * 1.5), c + math.sin(a) * (r - 4 - s * 1.5)
+                    sq(im, round(x) - (3 - s) // 2 - (1 if s == 0 else 0), round(y) - 1, 3 - s // 2 if s < 3 else 1, B[s if s < 3 else 2])
+        else:
+            chunk_ring(im, c, r, 18, 4 if i == 3 else 3, A[i - 2], i * 0.25, B[i - 2])
+    fin("bind_ring", out, outline=(0, 1, 2))
+
+
+# ---- heal: rising leaves and sparkles, 8 frames 32x48 (loops) -----------------------------------------
+def make_heal():
+    out = fr(8, 32, 48)
+    rnd = random.Random(12)
+    motes = [(rnd.uniform(7, 25), rnd.uniform(0, 1), rnd.uniform(0.8, 1.2), k % 3) for k in range(8)]
+    for i, im in enumerate(out):
+        t = i / 8
+        m = mk(32, 3)
+        for x0, ph, sp, kind in motes:
+            yy = int(40 - ((t * sp + ph) % 1.0) * 36)
+            xx = int(x0 + math.sin((t + ph) * math.tau) * 3)
+            edge = abs(yy - 22) > 14
+            tn = [A[1], A[2], A[3]] if edge else A
+            if kind == 0:   # leaf: 2x4 lit slab with a shaded tip
+                lm = mk(32, 48)
+                ImageDraw.Draw(lm).polygon([(xx, yy + 3), (xx + 1, yy - 1), (xx + 4, yy - 3), (xx + 3, yy + 1)], fill=255)
+                shade_mask(im, lm, tn)
+            elif kind == 1:
+                sq(im, xx, yy, 3, B[1] if not edge else B[2])
+                sq(im, xx, yy, 2, B[0] if not edge else B[1])
+                if not edge:
+                    spark(im, xx + 1, yy + 1, 2, B[0])
+            else:
+                sq(im, xx, yy, 2, tn[0])
+                sq(im, xx + 1, yy + 1, 1, tn[2])
+        gm = ell(32, 48, 16, 44, 11, 3)
+        shade_mask(im, gm, B)
+        for x in range(8, 24, 4):
+            dot(im, x + (i % 2) * 2, 43, B[0])
+    fin("heal_rise", out, outline=range(8))
+
+
+# ---- dash slash: crescent smear 4 frames 64x24 facing right --------------------------------------------
 def make_slash():
-    fr = frame(4, 64, 24)
-    for i, im in enumerate(fr):
-        t = i / 3.0
-        fade = 1 - t * 0.8
-        for k in range(5):
-            y = 12 + (k - 2) * 2.4
-            L = 58 - abs(k - 2) * 9 - t * 8
-            for x in range(int(64 - L), 64):
-                u = (x - (64 - L)) / L
-                al = 255 * u * fade * (1 - abs(k - 2) * 0.18)
-                over(im, x, int(y), a(WHITE if k == 2 else PALE, al))
-        # crescent head
-        for dy in range(-9, 10):
-            x = 60 - int((dy * dy) / 14.0)
-            over(im, x, 12 + dy, a(WHITE, 255 * fade))
-            over(im, x - 1, 12 + dy, a(PALE, 200 * fade))
-    save("dash_slash", fr)
+    out = fr(4, 64, 24)
+    for i, im in enumerate(out):
+        tones = A[i // 2:] if i > 1 else A
+        for k, (y, x0, ln) in enumerate(((7, 4, 22), (12, 0, 28), (17, 6, 20))):   # speed bars
+            L = ln - i * 4
+            tline(im, (x0, y), (x0 + L, y), 2, B[min(i + (1 if k != 1 else 0), 3)])
+        if i < 2:
+            crescent(im, 42, 12, 11 - i, 9 - i, -62, 62, tones)
+            band(im, 42, 12, 15 - i, 3, -48, 48, tones=[W, A[0]])
+        else:
+            for a0, a1 in ((-62, -12), (12, 62)):
+                crescent(im, 42 + i, 12, 12, 8 - i, a0, a1, tones)
+    fin("dash_slash", out, outline=(0, 1))
 
 
-# ---- rally aura: flame ring at the feet, 6 frames 40x24 (loops) ---------------------------------
+# ---- rally aura: flame ring at the feet, 6 frames 40x24 (loops) -----------------------------------------
 def make_aura():
-    fr = frame(6, 40, 24)
-    rnd = random.Random(21)
-    for i, im in enumerate(fr):
-        cx, cy = 20, 14
-        for k in range(26):
-            ang = k * math.tau / 26
-            x = cx + math.cos(ang) * 15
-            y = cy + math.sin(ang) * 6.5
-            h = 3 + 3 * abs(math.sin(ang * 3 + i * 1.1)) + rnd.random()
-            for s in range(int(h)):
-                al = 255 * (1 - s / h)
-                px(im, x, y - s, a(WHITE if s < 2 else PALE, al))
-        for k in range(26):
-            ang = k * math.tau / 26
-            px(im, cx + math.cos(ang) * 15, cy + math.sin(ang) * 6.5, a(WHITE, 255))
-    save("rally_aura", fr)
+    out = fr(6, 40, 24)
+    for i, im in enumerate(out):
+        cx, cy = 20, 15
+        m = mk(40, 24)
+        for k in range(16):
+            ang = k * math.tau / 16
+            x, y = cx + math.cos(ang) * 15, cy + math.sin(ang) * 6.5
+            h = 4 + 3 * abs(math.sin(ang * 3 + i * 1.05))
+            fm = poly(40, 24, [(x - 2, y), (x + 3, y), (x + 2, y - h * 0.6), (x + 0.5, y - h)])
+            m.paste(fm, (0, 0), fm)
+        shade_mask(im, m, [B[0], A[0], A[1], A[2]])
+        rm = ell(40, 24, cx, cy + 1, 17, 8)
+        ImageDraw.Draw(rm).ellipse([cx - 13, cy - 5, cx + 12, cy + 6], fill=0)
+        shade_mask(im, rm, A)
+    fin("rally_aura", out, outline=range(6))
 
 
-# ---- tiger spirit: run (4 frames) and pounce (3 frames), 48x32, facing right ---------------------------
-TIG = (255, 196, 92, 235)
-TIG_L = (255, 232, 160, 240)
-TIG_D = (190, 96, 30, 240)
-STRIPE = (88, 38, 22, 245)
+# ---- tiger spirit: run (4 frames) and pounce (3 frames), 48x32, facing right; own colours ----------------
+TG = [(255, 240, 178, 255), (255, 196, 92, 255), (214, 118, 40, 255), (140, 64, 26, 255)]
+STRIPE = (88, 38, 22, 255)
 EYE = (120, 255, 230, 255)
 
 
 def tiger_frame(phase, pounce=0.0):
     im = Image.new("RGBA", (48, 32), (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
     lift = -int(round(pounce * 3))
-    # tail
-    tw = math.sin(phase * 2) * 2
-    line(im, (9, 15 + lift), (5, 11 + tw + lift), TIG_D)
-    line(im, (5, 11 + tw + lift), (3, 7 + tw + lift), TIG_D)
-    px(im, 3, 6 + tw + lift, STRIPE)
-    # legs
-    leg = [(0, 3), (2, 1), (0, -2), (2, 0)]
-    for k, lx in enumerate((12, 17, 28, 33)):
-        sw = math.sin(phase + k * 1.6) * (3.5 if pounce == 0 else 5)
-        base = 29 + (1 if pounce else 0)
-        line(im, (lx, 18 + lift), (lx + sw, base), TIG_D if k % 2 == 0 else TIG)
-        px(im, lx + sw, min(31, base + 1), TIG_L)
-        px(im, lx + sw + 1, min(31, base + 1), TIG_L)
-    # body (ellipse)
-    for y in range(8, 24):
-        for x in range(6, 38):
-            if ((x - 22) / 16.5) ** 2 + ((y - 16 + (lift // 2)) / 6.5) ** 2 <= 1:
-                px(im, x, y + (lift // 2), TIG if y < 18 else TIG_D)
-    for y in range(9, 14):
-        for x in range(10, 34):
-            if ((x - 22) / 12.5) ** 2 + ((y - 11) / 3.0) ** 2 <= 1:
-                px(im, x, y + (lift // 2), TIG_L)
-    # stripes
-    for sx in (13, 18, 23, 28):
-        line(im, (sx, 10 + (lift // 2)), (sx + 1, 17 + (lift // 2)), STRIPE)
-    # head
+    m = mk(48, 32)
+    tw = round(math.sin(phase * 2) * 2)
+    tmask(m, (9, 15 + lift), (5, 11 + tw + lift), 3)
+    tmask(m, (5, 11 + tw + lift), (3, 6 + tw + lift), 3)
+    shade_mask(im, m, TG)
+    for k, lx in enumerate((12, 17, 28, 33)):          # legs, back pair darker
+        sw = round(math.sin(phase + k * 1.6) * (3.5 if pounce == 0 else 5))
+        lm = mk(48, 32)
+        tmask(lm, (lx, 18 + lift), (lx + sw, 28 + (1 if pounce else 0)), 4)
+        shade_mask(im, lm, TG[1:] + [TG[3]] if k % 2 == 0 else TG)
+        sq(im, lx + sw - 2, 28 + (1 if pounce else 0), 5, TG[0])
+    body = ell(48, 32, 22, 16 + lift // 2, 17, 8)
+    shade_mask(im, body, TG)
+    for sx in (13, 19, 25, 30):
+        tline(im, (sx, 10 + lift // 2), (sx + 1, 16 + lift // 2), 2, STRIPE)
     hx, hy = 40, 12 + lift
-    for y in range(-5, 6):
-        for x in range(-5, 6):
-            if (x / 5.2) ** 2 + (y / 4.8) ** 2 <= 1:
-                px(im, hx + x, hy + y, TIG)
-    px(im, hx - 4, hy - 5, TIG_D); px(im, hx - 3, hy - 6, TIG_D)   # ears
-    px(im, hx + 1, hy - 5, TIG_D); px(im, hx + 2, hy - 6, TIG_D)
-    for x in range(3, 8):                                           # muzzle
-        px(im, hx + x, hy + 2, TIG_L); px(im, hx + x, hy + 3, TIG_L)
-    px(im, hx + 7, hy + 2, STRIPE)
-    px(im, hx + 2, hy - 1, EYE); px(im, hx + 3, hy - 1, EYE)       # spirit eyes
-    line(im, (hx - 1, hy - 4), (hx + 1, hy - 2), STRIPE)           # brow stripes
-    line(im, (hx - 3, hy - 3), (hx - 3, hy), STRIPE)
-    if pounce > 0.5:                                                 # open jaw and claw flash
-        px(im, hx + 6, hy + 4, WHITE); px(im, hx + 4, hy + 4, WHITE)
-        for k in range(4):
-            line(im, (hx + 8, hy - 2 + k * 2), (hx + 12, hy + k * 2 + 1), a(WHITE, 220))
-    return im
+    shade_mask(im, ell(48, 32, hx, hy, 7, 6), TG)
+    sq(im, hx - 5, hy - 8, 3, TG[2]); sq(im, hx, hy - 8, 3, TG[2])            # ears
+    shade_mask(im, poly(48, 32, [(hx + 2, hy), (hx + 9, hy + 1), (hx + 9, hy + 5), (hx + 1, hy + 5)]), [TG[0], TG[0], TG[1], TG[2]])
+    sq(im, hx + 8, hy + 1, 2, STRIPE)
+    sq(im, hx + 1, hy - 3, 2, EYE)
+    tline(im, (hx - 3, hy - 5), (hx - 3, hy - 1), 2, STRIPE)
+    if pounce > 0.5:
+        sq(im, hx + 4, hy + 5, 2, W)
+        for k in range(3):
+            tline(im, (hx + 9, hy - 2 + k * 3), (hx + 14, hy + 1 + k * 3), 2, W)
+    return plum_outline(im)
 
 
 def make_tiger():
-    save("tiger_run", [tiger_frame(i * math.pi / 2) for i in range(4)])
-    save("tiger_pounce", [tiger_frame(0.4, 0.0), tiger_frame(0.8, 0.6), tiger_frame(1.2, 1.0)])
+    fin("tiger_run", [tiger_frame(i * math.pi / 2) for i in range(4)], bake=False)
+    fin("tiger_pounce", [tiger_frame(0.4, 0.0), tiger_frame(0.8, 0.6), tiger_frame(1.2, 1.0)], bake=False)
 
 
-
-# ---- spirit hawk: 4 frames 36x28, facing right --------------------------------------------------------
+# ---- spirit hawk: 4 frames 36x28, facing right ----------------------------------------------------------
 def make_hawk():
-    fr = frame(4, 36, 28)
-    BODY = (200, 240, 235, 240)
-    WING = (120, 200, 210, 235)
-    DARKW = (60, 120, 150, 240)
-    for i, im in enumerate(fr):
+    out = fr(4, 36, 28)
+    for i, im in enumerate(out):
         up = [1.0, 0.3, -0.6, 0.3][i]
         cx, cy = 18, 15
-        for y in range(-4, 5):
-            for x in range(-9, 10):
-                if (x / 9.5) ** 2 + (y / 4.2) ** 2 <= 1:
-                    px(im, cx + x, cy + y, BODY if y < 2 else WING)
-        # wings: a filled triangle from the shoulder to a tip that flaps up and down
-        tipx, tipy = cx - 7, cy - 2 - up * 11
-        for t in range(0, 41):
-            u = t / 40.0
-            for v in range(0, 11):
-                w = v / 10.0
-                x = (cx - 5) * (1 - u) + tipx * u + (cx + 3 - (cx - 5)) * w * (1 - u)
-                y = (cy - 2) * (1 - u) + tipy * u
-                px(im, x, y, DARKW if (u > 0.6 and w < 0.3) else WING)
-        # head and beak
-        disc(im, cx + 10, cy - 1, 3, BODY)
-        px(im, cx + 13, cy, (255, 200, 90, 255)); px(im, cx + 14, cy + 1, (255, 200, 90, 255))
-        px(im, cx + 11, cy - 2, (40, 255, 230, 255))
-        # tail
-        for k in range(5):
-            px(im, cx - 10 - k, cy + 1 + k // 3, WING)
-            px(im, cx - 10 - k, cy + 2 + k // 3, DARKW)
-    save("hawk_fly", fr)
+        tipx, tipy = cx - 8, cy - 2 - up * 11
+        wing = poly(36, 28, [(cx - 5, cy - 2), (cx + 4, cy - 2), (tipx + 3, tipy), (tipx, tipy + 1)])
+        shade_mask(im, wing, [A[1], A[2], A[2], A[3]])
+        tail = poly(36, 28, [(cx - 8, cy), (cx - 15, cy + 1), (cx - 15, cy + 5), (cx - 8, cy + 3)])
+        shade_mask(im, tail, [A[1], A[2], A[3], A[3]])
+        shade_mask(im, ell(36, 28, cx, cy + 1, 10, 5), A)
+        shade_mask(im, ell(36, 28, cx + 10, cy - 1, 4, 4), A)
+        sq(im, cx + 13, cy - 1, 3, B[1]); sq(im, cx + 13, cy - 1, 2, B[0])   # beak
+        sq(im, cx + 10, cy - 3, 2, W)                                          # eye
+    fin("hawk_fly", out, outline=range(4))
 
 
-# ---- ombak: wave crest 5 frames 48x32 facing right -------------------------------------------------
+# ---- ombak: wave crest 5 frames 48x32 facing right ---------------------------------------------------------
 def make_ombak():
-    fr = frame(5, 48, 32)
-    for i, im in enumerate(fr):
-        ph = i * 0.9
-        cx, cy = 26, 16
-        for y in range(32):
-            for x in range(48):
-                d_out = math.hypot(x - cx, y - cy)
-                d_in = math.hypot(x - (cx - 7), y - cy)
-                if d_out <= 15 and d_in >= 13 and x >= cx - 7:
-                    u = (d_out - 8) / 7.0
-                    c = WHITE if (d_in - 13) < 2.2 else (PALE if (d_in - 13) < 4.5 else MID)
-                    px(im, x, y, c)
-        # curling lip at both tips
-        for sgn in (-1, 1):
-            for t in range(6):
-                px(im, cx - 5 + t * 1.4, cy + sgn * (14 - t * 0.5) + 0, WHITE)
-        # trailing ripples
-        for k in range(3):
-            xr = 6 + k * 5
-            for dy in range(-9 + k * 2, 10 - k * 2):
-                if (dy + k + i) % 5 != 0:
-                    px(im, xr + math.sin((dy + ph) * 0.7), 16 + dy, a(PALE if k else WHITE, 230 - k * 55))
+    out = fr(5, 48, 32)
+    for i, im in enumerate(out):
+        c = 26
+        m = ell(48, 32, c, 16, 15, 15)
+        ImageDraw.Draw(m).ellipse([c - 7 - 13, 16 - 13, c - 7 + 12, 16 + 12], fill=0)
+        shade_mask(im, m, A)
+        for sg in (-1, 1):                      # foam on both tips and the leading edge
+            sq(im, c + 4, 16 + sg * 12 - 1, 3, B[0])
+            sq(im, c + 11, 16 + sg * 7 - 1, 3, B[0])
+        sq(im, c + 15 - 3, 15, 3, B[0])
+        for k in range(3):                      # trailing ripples, 2 px bars that scroll
+            xr = 4 + k * 5
+            for dy in range(-8 + k * 2, 9 - k * 2, 4):
+                tline(im, (xr + (i + k) % 3, 16 + dy), (xr + (i + k) % 3, 16 + dy + 1), 2, A[1 + (k > 0)])
         rnd = random.Random(i)
-        for _ in range(9):
-            px(im, 28 + rnd.uniform(0, 16), 16 + rnd.uniform(-13, 13), a(WHITE, 220))
-    save("ombak_wave", fr)
+        for _ in range(4):
+            sq(im, 30 + rnd.randint(0, 14), 6 + rnd.randint(0, 20), 2, B[0])
+    fin("ombak_wave", out, outline=range(5))
 
 
-# ---- cast sigil: rune circle drawn around the caster, 6 frames 64x64 ------------------------------
+# ---- cast sigil: rune circle, 6 frames 64x64 -------------------------------------------------------------------
 def make_sigil():
-    fr = frame(6, 64, 64)
-    for i, im in enumerate(fr):
-        t = i / 5.0
-        cx = cy = 32
-        r = 12 + 18 * t
-        al = 255 * (1 - t ** 2)
-        ring(im, cx, cy, r, a(WHITE, al))
-        ring(im, cx, cy, r - 2, a(PALE, al * 0.6))
-        for k in range(8):
-            ang = k * math.tau / 8 + t * 1.2
-            line(im, (cx + math.cos(ang) * (r - 4), cy + math.sin(ang) * (r - 4)),
-                 (cx + math.cos(ang) * (r + 3), cy + math.sin(ang) * (r + 3)), a(WHITE, al))
-        for k in range(4):
-            ang = k * math.tau / 4 + t * 2.4 + 0.4
-            disc(im, cx + math.cos(ang) * r, cy + math.sin(ang) * r, 1.5, a(WHITE, al))
-    save("cast_sigil", fr)
+    out = fr(6, 64, 64)
+    c = 32
+    for i, im in enumerate(out):
+        t = i / 5
+        r = 12 + 17 * t
+        if i < 4:
+            th = 5 - i // 2
+            band(im, c, c, r, th, tones=A)
+            band(im, c, c, r - th / 2 - 2.5, 2, tones=B[:3])
+            for k in range(8):
+                a = math.radians(k * 45 + t * 70)
+                x, y = c + math.cos(a) * (r + th / 2 + 3), c + math.sin(a) * (r + th / 2 + 3)
+                sq(im, round(x) - 1, round(y) - 1, 3, B[0] if k % 2 else A[0])
+            for k in range(4):
+                a = math.radians(k * 90 + t * 140 + 20)
+                blob(im, c + math.cos(a) * r, c + math.sin(a) * r, 2.5, [W, A[0], A[1]])
+        else:
+            chunk_ring(im, c, r, 12, 4 if i == 4 else 3, A[i - 3], i * 0.3, B[i - 3])
+            for k in range(4):
+                a = math.radians(k * 90 + 20 + i * 18)
+                sq(im, round(c + math.cos(a) * (r + 5)) - 1, round(c + math.sin(a) * (r + 5)) - 1, 2, B[i - 2])
+    fin("cast_sigil", out, outline=(0, 1, 2, 3))
 
 
-def make_spark():
-    """Tiny 4-frame spark used for stroke embers and mote trails."""
-    fr = frame(4, 8, 8)
-    for i, im in enumerate(fr):
-        al = 255 - i * 55
-        px(im, 4, 4, a(WHITE, al))
-        if i < 3:
-            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-                px(im, 4 + dx * (i + 1) // 1, 4 + dy * (i + 1), a(PALE, al * 0.7))
-    save("ember", fr)
+# ---- ember: tiny fire chunk, 4 frames 8x8, fire colours, no class variants ---------------------------------------
+FIRE = [(255, 244, 200, 255), (255, 190, 70, 255), (226, 100, 30, 255), (130, 40, 24, 255)]
+
+
+def make_ember():
+    out = fr(4, 8, 8)
+    for i, im in enumerate(out):
+        s = [4, 4, 3, 2][i]
+        o = (8 - s) // 2
+        sq(im, o, o, s, FIRE[min(i + 1, 3)] if i else FIRE[1])
+        sq(im, o, o, max(s - 1, 1), FIRE[i] if i < 3 else FIRE[2])
+        if i == 0:
+            sq(im, o + 1, o + 1, 2, FIRE[0])
+    fin("ember", out, outline=(0, 1), bake=False)
+
+
+# ---- zap: jagged lightning, 4 frames 64x16, drawn left to right; the game stretches and rotates it ----------------
+def make_zap():
+    out = fr(4, 64, 16)
+    for i, im in enumerate(out):
+        rnd = random.Random(30 + i)
+        pts = [(2, 8)]
+        y = 8
+        for x in (14, 26, 38, 50):
+            y = max(5, min(11, y + rnd.choice([-4, -3, 3, 4])))
+            pts.append((x, y))
+        pts.append((61, 8))
+        m = mk(64, 16)
+        for q in range(1, len(pts)):
+            tmask(m, pts[q - 1], pts[q], 6)
+        tn = A if i < 3 else A[2:] + [A[3]]
+        shade_mask(im, m, tn)
+        core = mk(64, 16)
+        for q in range(1, len(pts)):
+            tmask(core, pts[q - 1], pts[q], 3)
+        shade_mask(im, core, [W, W, A[0], A[1]] if i < 3 else [A[1], A[1], A[2], A[2]])
+        for px_, py_ in pts[1:-1]:
+            sq(im, px_ - 1, py_ + (-5 if i % 2 else 3), 2, B[0 if i < 3 else 2])
+    fin("zap", out, outline=(0, 1, 2))
+
+
+# ---- dash streak: speed flare over the dasher, 4 frames 20x8 (plays once, 0.16 s) -----------------------------------
+def make_streak():
+    out = fr(4, 20, 8)
+    for i, im in enumerate(out):
+        x0 = 2 + i * 2
+        tn = A[min(i, 2):]
+        for x in range(x0 + 3, 17):
+            dot(im, x, 1, tn[0]); dot(im, x, 2, tn[0])
+        for x in range(x0, 19):
+            dot(im, x, 3, W if i < 2 else tn[0]); dot(im, x, 4, W if i < 2 else tn[1])
+        for x in range(x0 + 5, 15):
+            dot(im, x, 5, tn[1]); dot(im, x, 6, tn[2] if len(tn) > 2 else tn[-1])
+        for x in range(x0 + 2, x0 + 5):
+            dot(im, x, 3, B[0]); dot(im, x, 4, B[1])
+    fin("dash_streak", out, outline=(0, 1))
+
+
+# ---- zone fill tile, 16x16: sparse chunk motif drawn under SpellZone rings (tinted at runtime) ----------------------
+def make_zone_fill():
+    t = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    for x, y in ((2, 2), (10, 6), (5, 11), (13, 13)):
+        sq(t, x, y, 2, (255, 255, 255, 255))
+        dot(t, x + 2, y, (255, 255, 255, 255))
+        dot(t, x, y + 2, (255, 255, 255, 255))
+    save(t, D + "zone_fill.png")
 
 
 def preview():
-    names = ["bolt_fly", "hit_burst", "ward_bubble", "ward_break", "shock", "bind_roots", "bind_ring", "heal_rise",
-             "dash_slash", "rally_aura", "tiger_run", "tiger_pounce", "hawk_fly", "ombak_wave", "cast_sigil", "ember"]
-    sheets = [Image.open(os.path.join(OUT, n + ".png")) for n in names]
-    W = max(s.width for s in sheets) + 8
-    H = sum(s.height + 6 for s in sheets) + 6
-    pv = Image.new("RGBA", (W, H), (46, 52, 74, 255))
+    rows = [(n, IMGS[n]) for n in IMGS]
+    for cls in ("warrior", "mage"):
+        for n in ("hit_burst", "ward_bubble", "cast_sigil", "dash_slash", "zap", "heal_rise"):
+            rows.append((cls, bake(IMGS[n], cls)))
+    pv = os.path.join(ROOT, "tools", "spell_fx_preview.png")
+    preview_sheet(rows, pv)
+
+
+def preview_sheet(rows, path, scale=2):
+    imgs = [i for _, i in rows]
+    Wd = max(i.width for i in imgs) * scale + 8
+    H = sum(i.height * scale + 6 for i in imgs) + 6
+    out = Image.new("RGBA", (Wd, H), (46, 52, 74, 255))
     y = 6
-    for s in sheets:
-        pv.alpha_composite(s, (4, y))
-        y += s.height + 6
-    pv.save(os.path.join(ROOT, "tools", "spell_fx_preview.png"))
+    for im in imgs:
+        big = im.resize((im.width * scale, im.height * scale), Image.NEAREST)
+        out.alpha_composite(big, (4, y))
+        y += big.height + 6
+    out.save(path)
 
 
 if __name__ == "__main__":
     make_bolt(); make_hit(); make_ward(); make_shock(); make_bind(); make_heal(); make_slash()
-    make_aura(); make_tiger(); make_hawk(); make_ombak(); make_sigil(); make_spark()
+    make_aura(); make_tiger(); make_hawk(); make_ombak(); make_sigil(); make_ember()
+    make_zap(); make_streak(); make_zone_fill()
     preview()
-    print("ok", sorted(os.listdir(OUT)))
+    print("ok", len(IMGS), "strips")

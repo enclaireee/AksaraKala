@@ -632,6 +632,291 @@ def doll(w=56, h=104):
     return im
 
 
+# ---------------------------------------------------------------- HUD bars, markers, theme 9-slices (art pass v8)
+
+WHITE = (255, 255, 255, 255)
+BLACK = (0, 0, 0, 255)
+BRASS_HI = rgb("F0CB6E")
+BRASS = rgb("D2A446")
+BRASS_LO = rgb("8E6A2A")
+KELIR = rgb("F2D9A0")       # Kelir paper (assets.md 1)
+KELIR_HI = rgb("FFF0CC")
+KELIR_LO = rgb("C9A96A")
+KELIR_DK = rgb("6B5230")
+
+
+def fill_tile(col, h, w=4):
+    """A tiling bar fill: 1 px lit row on top, body, 1-2 darker rows below, a specular dot every 4 px."""
+    hi, mid, lo = mix(col, WHITE, 0.5), mix(col, BLACK, 0.15), mix(col, BLACK, 0.4)
+    im = new(w, h, col)
+    px = im.load()
+    for x in range(w):
+        px[x, 0] = hi
+        px[x, h - 1] = lo
+        if h >= 6:
+            px[x, h - 2] = mid
+        if h >= 4 and x == 0:
+            px[x, 1] = mix(col, WHITE, 0.25)
+    if h == 2:
+        for x in range(w):
+            px[x, 1] = lo
+    return im
+
+
+def bar_frame_hud():
+    """5x5, 1 px margin: chamfered ink outline round a dark well with a top inner shade (the well is its centre)."""
+    im = new(5, 5)
+    px = im.load()
+    for y in range(5):
+        for x in range(5):
+            if x in (0, 4) and y in (0, 4):
+                continue
+            px[x, y] = EDGE if x in (0, 4) or y in (0, 4) else rgb("0E0B1C", 235)
+    return im
+
+
+def bar_ticks(h=6):
+    im = new(10, h)
+    for y in range(h):
+        im.putpixel((9, y), rgb("000000", 120))
+    return im
+
+
+def boss_frame():
+    """19x10, 9-slice margins L/R 8 and T/B 3: brass rails, ink edge, dark well centre and a batik diamond cap at each end."""
+    im = new(19, 10)
+    px = im.load()
+    for x in range(19):
+        px[x, 0], px[x, 1], px[x, 2] = BRASS_HI, BRASS, EDGE
+        px[x, 9], px[x, 8], px[x, 7] = BRASS_LO, BRASS_LO, EDGE
+        for y in range(3, 7):
+            px[x, y] = rgb("160A0C", 240)
+    cap = [
+        "..eeeeee",
+        ".eHHHHbe",
+        "eHBBeeBb",
+        "eHBeHHeB",
+        "eBeHBBHe",
+        "eBeBBHeB",
+        "eLBeeBBb",
+        ".eLLLLbe",
+        "..eeeeee",
+        "........",
+    ]
+    pal = {"e": EDGE, "H": BRASS_HI, "B": BRASS, "b": BRASS, "L": BRASS_LO, ".": T}
+    cap = [r for r in cap if len(r) == 8]
+    for y, row in enumerate(cap):
+        for x, c in enumerate(row):
+            if c != ".":
+                px[x, y + 0] = pal[c]
+                px[18 - x, y + 0] = pal[c]
+    return im
+
+
+def boss_tick():
+    im = new(2, 6)
+    for y in range(6):
+        for x in range(2):
+            im.putpixel((x, y), BRASS if y in (0, 5) else EDGE)
+    return im
+
+
+def boss_rule():
+    im = new(8, 2)
+    for x in range(8):
+        im.putpixel((x, 0), BRASS_HI)
+        im.putpixel((x, 1), BRASS)
+    return im
+
+
+def boss_lozenge():
+    im = new(7, 7)
+    px = im.load()
+    for y in range(7):
+        for x in range(7):
+            d = abs(x - 3) + abs(y - 3)
+            if d <= 3:
+                px[x, y] = EDGE if d == 3 else (BRASS_HI if x + y < 6 and d < 2 else BRASS)
+    px[3, 3] = rgb("FFF4D0")
+    return im
+
+
+def marker_objective():
+    """11x11 amber diamond: ink outline, three tones lit from the top-left, a bright core."""
+    im = new(11, 11)
+    px = im.load()
+    for y in range(11):
+        for x in range(11):
+            d = abs(x - 5) + abs(y - 5)
+            if d <= 5:
+                if d == 5:
+                    px[x, y] = EDGE
+                elif d == 4:
+                    px[x, y] = AMBER_LO if (x + y > 10 or x > 5 and y > 5) else AMBER
+                elif x + y < 10:
+                    px[x, y] = AMBER_HI if d <= 2 else AMBER
+                else:
+                    px[x, y] = AMBER_LO if d >= 3 else AMBER
+    px[4, 4] = px[5, 4] = px[4, 5] = rgb("FFF7E6")
+    return im
+
+
+def icon_crack():
+    """12x15 sabotage mark: an open brass glyph box (gap at the top right) with a rose crack through it."""
+    im = new(12, 15)
+    px = im.load()
+    for x in range(1, 8):
+        px[x, 3] = px[x, 4] = BRASS
+    for y in range(3, 13):
+        px[1, y] = px[2, y] = BRASS
+    for x in range(1, 11):
+        px[x, 11] = px[x, 12] = BRASS_LO
+    for y in range(7, 13):
+        px[9, y] = px[10, y] = BRASS_LO
+    for x in range(1, 8):
+        px[x, 3] = BRASS_HI
+    crack = [(9, 0), (9, 1), (8, 2), (8, 3), (7, 4), (7, 5), (6, 6), (7, 7), (6, 8), (5, 9), (4, 10), (3, 11), (3, 12), (2, 13), (2, 14)]
+    for x, y in crack:
+        px[x, y] = ROSE
+        if x + 1 < 12:
+            px[x + 1, y] = ROSE
+    for x, y in crack:
+        px[x, y] = ROSE_LO if y % 2 else ROSE
+    return im
+
+
+def map_halo():
+    """Two-frame pixel ring strip (18x18 each, small then large): amber, 2 px thick, brighter on the top-left arc."""
+    im = new(36, 18)
+    px = im.load()
+    for f, r in enumerate((6.4, 7.9)):
+        for y in range(18):
+            for x in range(18):
+                d = math.hypot(x - 8.5, y - 8.5)
+                if r - 2.0 < d <= r:
+                    lit = (x + y) < 17
+                    outer = d > r - 1.0
+                    px[f * 18 + x, y] = AMBER_HI if lit and not outer else (AMBER_LO if outer else AMBER)
+    return im
+
+
+def kelir_frame():
+    im = new(5, 5)
+    px = im.load()
+    for y in range(5):
+        for x in range(5):
+            if x in (0, 4) and y in (0, 4):
+                continue
+            px[x, y] = EDGE if x in (0, 4) or y in (0, 4) else KELIR_DK
+    return im
+
+
+def kelir_fill():
+    """3 px tile, Kelir paper: lit row, body, shade row, with a fibre dot."""
+    im = new(4, 3, KELIR)
+    for x in range(4):
+        im.putpixel((x, 0), KELIR_HI)
+        im.putpixel((x, 2), KELIR_LO)
+    im.putpixel((2, 1), KELIR_LO)
+    return im
+
+
+def theme_scroll():
+    im = new(6, 6)
+    px = im.load()
+    for y in range(6):
+        for x in range(6):
+            if x in (0, 5) and y in (0, 5):
+                continue
+            px[x, y] = EDGE if x in (0, 5) or y in (0, 5) else rgb("141026", 235)
+    return im
+
+
+def theme_grab():
+    """6x6 cyan thumb: ink edge, lit top-left, deep bottom-right."""
+    im = new(6, 6)
+    px = im.load()
+    for y in range(6):
+        for x in range(6):
+            if x in (0, 5) and y in (0, 5):
+                continue
+            if x in (0, 5) or y in (0, 5):
+                px[x, y] = EDGE
+            elif x == 1 or y == 1:
+                px[x, y] = CYAN
+            elif x == 4 or y == 4:
+                px[x, y] = CYAN_DEEP
+            else:
+                px[x, y] = CYAN_HALO
+    return im
+
+
+def theme_edit():
+    im = new(6, 6)
+    px = im.load()
+    for y in range(6):
+        for x in range(6):
+            if x in (0, 5) and y in (0, 5):
+                continue
+            if x in (0, 5) or y in (0, 5):
+                px[x, y] = HAIR
+            else:
+                px[x, y] = rgb("07050F") if y == 1 else rgb("0C0A18")
+    return im
+
+
+def theme_pbar_bg():
+    im = new(6, 6)
+    px = im.load()
+    for y in range(6):
+        for x in range(6):
+            if x in (0, 5) and y in (0, 5):
+                continue
+            if x in (0, 5) or y in (0, 5):
+                px[x, y] = EDGE
+            else:
+                px[x, y] = rgb("07050F") if y == 1 else rgb("0E0B1C")
+    return im
+
+
+def theme_pbar_fill(hot=False):
+    """4x4, margins T/B 1 only: lit row, body that stretches, deep row."""
+    col = CYAN if hot else CYAN_HALO
+    im = new(4, 4, col)
+    for x in range(4):
+        im.putpixel((x, 0), CYAN_HI if hot else CYAN)
+        im.putpixel((x, 3), CYAN_HALO if hot else CYAN_DEEP)
+    return im
+
+
+def hud_art():
+    art = {}
+    art["hud_bar_frame"] = bar_frame_hud()
+    art["hud_bar_ticks"] = bar_ticks()
+    for n, col, h in (("hp", rgb("D55E00"), 6), ("st", rgb("F0E442"), 3), ("sk", rgb("56B4E9"), 3),
+                      ("boss", rgb("D55E00"), 4), ("boss_open", mix(rgb("D55E00"), WHITE, 0.35), 4)):
+        art["hud_fill_" + n] = fill_tile(col, h)
+    art["hud_fill_dawn"] = fill_tile(rgb("56B4E9"), 2)
+    for h in (3, 4, 6):
+        art["hud_lag_%d" % h] = fill_tile(rgb("ECE6F2"), h)
+    art["hud_boss_frame"] = boss_frame()
+    art["hud_boss_tick"] = boss_tick()
+    art["hud_boss_rule"] = boss_rule()
+    art["hud_boss_lozenge"] = boss_lozenge()
+    art["marker_objective"] = marker_objective()
+    art["icon_crack"] = icon_crack()
+    art["map_halo"] = map_halo()
+    art["kelir_frame"] = kelir_frame()
+    art["kelir_fill"] = kelir_fill()
+    art["theme_scroll"] = theme_scroll()
+    art["theme_grab"] = theme_grab()
+    art["theme_edit"] = theme_edit()
+    art["theme_pbar_bg"] = theme_pbar_bg()
+    art["theme_pbar_fill"] = theme_pbar_fill()
+    art["theme_pbar_fill_hi"] = theme_pbar_fill(True)
+    return art
+
+
 # ---------------------------------------------------------------- full-screen art
 
 def bayer(x, y):
@@ -1300,6 +1585,7 @@ def main():
     for k in GLYPHS:
         art["title_glyph_" + k] = glyph_sprite(k)
     art["logo"] = logo()
+    art.update(hud_art())
 
     for n, im in art.items():
         im.save(OUT / (n + ".png"))

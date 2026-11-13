@@ -252,7 +252,10 @@ func _draw_eyes() -> void:
 	var pose := int(_kala.region_rect.position.x / 96.0)
 	var hx: int = [0, 4, 9][pose]   # tools/gen_revamp_art.py KALA_HX / KALA_EYE: one round raksasa eye in profile
 	var pulse := 0.6 + 0.4 * sin(_t * 7.0)
+	var path := ART.replace("cutscene/", "world_fx/") + "kala_eye.png"   # 3 pulse frames of 10x10 (tools/gen_world_fx.py)
+	if not ResourceLoader.exists(path):
+		return
+	var f := clampi(int(pulse * 3.0), 0, 2)
 	for e: Vector2 in [Vector2(27 + hx, 27)]:
-		var ep := _kala.position + e + Vector2(0.5, 0.5)
-		_eyes.draw_circle(ep, 4.2, Color(1.0, 0.25, 0.1, 0.22 * pulse))
-		_eyes.draw_circle(ep, 2.4, Color(1.0, 0.45, 0.15, 0.35 * pulse))
+		var ep := (_kala.position + e).floor()
+		_eyes.draw_texture_rect_region(load(path), Rect2(ep - Vector2(4, 4), Vector2(10, 10)), Rect2(f * 10, 0, 10, 10))

@@ -141,8 +141,16 @@ func _row() -> int:
 	return 0
 
 
+## Pixel ground shadow (tools/gen_world_fx.py world_fx/shadow_<size>.png), centred on the feet; null when the art is missing.
+static func shadow_tex(size: String) -> Texture2D:
+	var path := "res://assets/art/world_fx/shadow_%s.png" % size
+	return load(path) if ResourceLoader.exists(path) else null
+
+
 func _draw() -> void:
-	draw_rect(Rect2(-6, -1, 12, 3), Color(0.09, 0.07, 0.16, 0.42))
+	var sh := Npc.shadow_tex("m")
+	if sh != null:
+		draw_texture(sh, Vector2(-7, -2))
 	var top := -27
 	var art := _art()
 	if art:   # story prop (assets/art/story/<npc_id>.png), feet on y 1 over the shadow

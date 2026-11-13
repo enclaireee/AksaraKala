@@ -28,18 +28,23 @@ static func cast(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos: V
 	var id := spell.glyph_id
 	var n := d.orthogonal()
 	match id:
-		"sunda_ka":   # an instant line hit; ponytail: no flying projectile, so no travel time
+		"sunda_ka":   # an instant line hit; if braced (Kuda-kuda), wider, +25% dmg, and slows
+			var is_braced: bool = caster.has_method("braced") and caster.braced()
+			var width := JAVELIN_WIDTH * (1.75 if is_braced else 1.0)
+			var dmg := roundi(28.0 * (1.25 if is_braced else 1.0) * k)
 			for e in caster.get_tree().get_nodes_in_group("enemy"):
 				if e is Node2D:
 					var rel: Vector2 = (e as Node2D).global_position - pos
 					var along := rel.dot(d)
-					if along >= 0.0 and along <= JAVELIN_REACH and absf(rel.dot(n)) <= JAVELIN_WIDTH:
-						SpellUtil.strike(e, roundi(28.0 * k))
+					if along >= 0.0 and along <= JAVELIN_REACH and absf(rel.dot(n)) <= width:
+						SpellUtil.strike(e, dmg)
+						if is_braced:
+							SpellUtil.slow(e, 1.5, 0.5)
 						SpellFX.burst(par, "hit_burst", 5, e.global_position, tint, 0.9, 22.0)
 			var cut := SpellFX.burst(par, "dash_slash", 4, pos + d * JAVELIN_REACH * 0.5, tint, 1.0, 20.0)
 			if cut:
 				cut.rotation = d.angle()
-				cut.scale = Vector2(JAVELIN_REACH / 56.0, 0.6)
+				cut.scale = Vector2(JAVELIN_REACH / 56.0, 1.0 if is_braced else 0.6)
 		"sunda_nga":
 			var first := true
 			for i in [-1, 0, 1]:
@@ -68,24 +73,40 @@ static func cast(spell: SpellData, caster: Node2D, par: Node, d: Vector2, pos: V
 		"jawa_ca":
 			_buff(caster, "gelar", 12.0)
 			SpellFX.burst(par, "cast_sigil", 6, pos, tint, 1.4, 12.0)
-		"jawa_ra":   # ponytail: the zone ring is the only marker
+		"jawa_ra":   # two flanking spirit spearmen that thrust forward along aim_dir
 			for side in [-1, 1]:
-				var z := SpellVariants._zone(caster, pos + n * (22.0 * side), tint)
-				z.radius = 50.0
+				var z := SpellVariants._zone(caster, pos + n * (24.0 * side), tint)
+				z.follow = false
+				z.radius = 28.0
 				z.life = 10.0
-				z.tick = 0.6
-				z.damage = roundi(16.0 * k)
+				z.tick = 0.65
+				z.show_ring = true
+				var s_off: Vector2 = n * (24.0 * side)
+				z.on_tick = func(zz: SpellZone) -> void:
+					if not is_instance_valid(caster):
+						return
+					var aim_v: Vector2 = caster.get("aim_dir") if caster.get("aim_dir") != null else d
+					var dir := aim_v.normalized() if aim_v != Vector2.ZERO else d
+					zz.global_position = caster.global_position + dir.orthogonal() * (24.0 * side)
+					var tip := zz.global_position + dir * 28.0
+					var cut := SpellFX.burst(par, "dash_slash", 4, tip, tint, 0.9, 22.0)
+					if cut:
+						cut.rotation = dir.angle()
+					for e in SpellUtil.enemies_near(zz.get_tree(), tip, 28.0):
+						SpellUtil.strike(e, roundi(18.0 * k))
+						SpellFX.burst(par, "hit_burst", 5, e.global_position, tint, 0.7, 20.0)
 				if side == -1:
 					SpellVariants._replace(caster.get_tree(), "barisan", z)
 				else:
 					z.add_to_group("barisan")
 				par.add_child(z)
-		"jawa_ka":   # a narrow drifting zone that strikes each foe once, no shove
+		"jawa_ka":   # a narrow drifting wave lance that strikes each foe once and eats enemy shots
 			var z := SpellVariants._zone(caster, pos + d * 14.0, tint)
-			z.radius = 12.0
+			z.radius = 14.0
 			z.life = LANCE_LIFE
 			z.tick = 0.05
 			z.drift = d * LANCE_SPEED
+			z.eat_shots = true
 			z.show_ring = false
 			var hit := {}
 			z.on_tick = func(zz: SpellZone) -> void:

@@ -125,22 +125,14 @@ static func _replace(tree: SceneTree, group: String, z: Node) -> void:
 
 
 static func _zap(par: Node, a: Vector2, b: Vector2, tint: Color) -> void:
-	var l := Line2D.new()
-	l.top_level = true
-	l.width = 2.0
-	l.default_color = tint.lightened(0.6)
-	l.antialiased = false
-	l.z_index = 9
-	var n := (b - a).normalized().orthogonal()
-	var pts := PackedVector2Array([a])
-	for i in range(1, 5):
-		pts.append(a.lerp(b, i / 5.0) + n * randf_range(-5.0, 5.0))
-	pts.append(b)
-	l.points = pts
-	par.add_child(l)
-	var tw := l.create_tween()
-	tw.tween_property(l, "modulate:a", 0.0, 0.3)
-	tw.tween_callback(l.queue_free)
+	var s := SpellFX.burst(par, "zap", 4, (a + b) * 0.5, tint.lightened(0.6), 1.0, 13.0)   # 0.3 s like the old fade
+	if s == null:
+		return
+	s.top_level = true
+	s.z_index = 9
+	s.global_position = (a + b) * 0.5
+	s.rotation = (b - a).angle()
+	s.scale = Vector2(maxf(a.distance_to(b), 8.0) / 64.0, 1.0 if randf() < 0.5 else -1.0)
 
 
 # ---- Ka: Sunda Bolt ---------------------------------------------------------------------------------------
