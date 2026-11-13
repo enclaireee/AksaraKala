@@ -139,7 +139,7 @@ class Ink extends Node2D:
 func _ready() -> void:
 	TranslationServer.set_locale(TitleScript.load_language())
 	GameSettings.apply_display()
-	DisplayServer.window_set_title("Aksara Kala")
+	DisplayServer.window_set_title("AksaraKala")
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	var bg := ColorRect.new()
 	bg.color = UIFx.LACQUER

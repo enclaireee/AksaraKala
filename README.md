@@ -1,4 +1,4 @@
-# Aksara Kala (The Script of Time)
+# AksaraKala (The Script of Time)
 
 A top-down 2D pixel-art action RPG set in the mythical folklore and landscapes of Java and Sunda, built with **Godot 4.7** (native 480×270 viewport, scaled with integer integer scaling).
 

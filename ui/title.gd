@@ -77,7 +77,7 @@ func _ready() -> void:
 	TranslationServer.set_locale(load_language())
 	GameSettings.apply_all()
 	Snd.music("title", 2.0)
-	DisplayServer.window_set_title("Aksara Kala")
+	DisplayServer.window_set_title("AksaraKala")
 	# the scene, back to front: sky and stars, the aksara constellation, the valley, the cliff, the Wiku (ui.md 4.1)
 	add_child(UIFx.rect_tex("title_sky", Vector2.ZERO))
 	add_child(Twinkle.new())
@@ -419,7 +419,7 @@ func _build_settings(v: VBoxContainer) -> void:
 
 
 func _build_about(v: VBoxContainer) -> void:
-	v.add_child(_row(UIFx.text("Aksara Kala  ·  The script of time", "body", UIFx.DIM)))
+	v.add_child(_row(UIFx.text("AksaraKala  ·  The script of time", "body", UIFx.DIM)))
 	_section(v, "UI_ABOUT_MADE_BY")
 	for n in CREDITS:
 		v.add_child(_row(UIFx.text(n, "body", UIFx.TEXT)))
