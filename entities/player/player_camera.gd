@@ -16,7 +16,10 @@ func _ready() -> void:
 
 
 func shake(px: float, seconds: float) -> void:
-	# ponytail: no settings slider yet (controls.md screenshake 0-100%); add with the settings menu
+	var scale := float(GameSettings.screenshake()) / 100.0
+	px *= scale
+	if px <= 0.0:
+		return
 	if px >= _current():
 		_amp = minf(px, MAX_SHAKE)
 		_left = seconds

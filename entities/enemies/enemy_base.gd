@@ -45,6 +45,7 @@ func _ready() -> void:
 	home = global_position
 	target = get_tree().get_first_node_in_group("player") as Node2D
 	hurtbox.hurt.connect(_on_hurt)
+	health.damaged.connect(_spawn_damage_number)
 	health.died.connect(func() -> void: BossKit.finisher(self, _on_died))
 	poise = _max_poise()
 
@@ -219,3 +220,24 @@ func _float_label() -> void:
 	tw.tween_property(l, "position:y", l.position.y - 12.0, 0.8)   # TUNE
 	tw.tween_property(l, "modulate:a", 0.0, 0.8)
 	tw.chain().tween_callback(l.queue_free)
+
+
+func _spawn_damage_number(amount: int, _source: Node) -> void:
+	if amount <= 0 or not GameSettings.damage_numbers() or get_parent() == null:
+		return
+	var wrap := Node2D.new()
+	wrap.z_index = 100
+	var l := Label.new()
+	l.text = str(amount)
+	l.add_theme_font_override("font", UIFx.body_font())
+	l.add_theme_font_size_override("font_size", UIFx.BODY)
+	l.add_theme_color_override("font_color", UIFx.TEXT)
+	l.add_theme_color_override("font_outline_color", UIFx.LACQUER)
+	l.add_theme_constant_override("outline_size", 1)
+	wrap.add_child(l)
+	get_parent().add_child(wrap)
+	wrap.global_position = (global_position + Vector2(-6, -24)).round()
+	var tw := wrap.create_tween().set_parallel()
+	tw.tween_property(wrap, "position:y", wrap.position.y - 12.0, 0.5)
+	tw.tween_property(wrap, "modulate:a", 0.0, 0.5)
+	tw.chain().tween_callback(wrap.queue_free)

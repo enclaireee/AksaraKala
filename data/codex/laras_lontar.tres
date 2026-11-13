@@ -6,4 +6,4 @@
 script = ExtResource("1")
 id = "laras_lontar"
 category = "item"
-source = ""
+source = "game"

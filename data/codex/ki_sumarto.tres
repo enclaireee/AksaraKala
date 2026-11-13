@@ -6,4 +6,4 @@
 script = ExtResource("1")
 id = "ki_sumarto"
 category = "legend"
-source = ""
+source = "game"

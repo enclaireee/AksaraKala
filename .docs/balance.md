@@ -173,7 +173,7 @@ Boss HP = mean class damage per second for the reference player x target fight t
 | Sangkuriang | L7, 0 | 60-75 s | **2100** (600) | 16 | 36 | 150 |
 | Prabu Barma Wijaya (Act II, Mataram tier) | L10, 1 | 55-75 s | **2400** | 18 | 40 | 220 |
 | Bandung Bondowoso | L13, 1 | 65-90 s | **3100** (1000) | 18 | 41 | 300 |
-| Hariang Banga (Act III duel, yields at 15% HP) | L16, 2 | 55-80 s | **3200** | 21 | 45 | 320 |
+| Hariang Banga (Act III duel, yields at 15% HP) | L16, 2 | 55-80 s | **2800** (3200) | 21 | 45 | 320 |
 | Buto Ijo (miniboss) | L17, 2 | 60-85 s | **3400** (800) | 23 | 51 | 300 |
 | Mpu Gandring's Keris | L19, 2 | 70-100 s | **4200** (1400) | 23 | 51 | 500 |
 | The Nameless Hunter (Act IV) | L20, 3 | 65-100 s | **4600** | 24 | 54 | 480 |

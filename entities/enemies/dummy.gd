@@ -12,7 +12,7 @@ func _ready() -> void:
 
 
 ## Runs before Health checks for death, so keeping hp above 0 means no died signal (no Ilmu, no free, no Game.killed).
-func _on_damaged(amount: int, _source: Node) -> void:
+func _on_damaged(_amount: int, _source: Node) -> void:
 	if health.hp <= 0:
 		health.hp = 1
 		if not _down:
@@ -22,14 +22,3 @@ func _on_damaged(amount: int, _source: Node) -> void:
 				_down = false
 				health.hp = health.max_hp
 				health.changed.emit(health.hp, health.max_hp))
-	var l := Label.new()
-	l.text = str(amount)
-	l.add_theme_color_override("font_outline_color", Color.BLACK)
-	l.add_theme_constant_override("outline_size", 3)
-	l.z_index = 100
-	get_parent().add_child(l)
-	l.global_position = (global_position + Vector2(-6, -24)).round()
-	var tw := l.create_tween().set_parallel()
-	tw.tween_property(l, "position:y", l.position.y - 10.0, 0.6)   # TUNE
-	tw.tween_property(l, "modulate:a", 0.0, 0.6)
-	tw.chain().tween_callback(l.queue_free)

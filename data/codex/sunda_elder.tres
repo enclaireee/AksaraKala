@@ -6,4 +6,4 @@
 script = ExtResource("1")
 id = "sunda_elder"
 category = "legend"
-source = ""
+source = "game"

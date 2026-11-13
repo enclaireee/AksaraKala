@@ -6,4 +6,4 @@
 script = ExtResource("1")
 id = "hunter_mask"
 category = "legend"
-source = ""
+source = "game"

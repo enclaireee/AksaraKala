@@ -75,10 +75,9 @@ func _ready() -> void:
 		gm.save_path = gm.SAVE_PATH
 		gm._reset()
 	TranslationServer.set_locale(load_language())
-	GameSettings.apply_display()
+	GameSettings.apply_all()
 	Snd.music("title", 2.0)
 	DisplayServer.window_set_title("Aksara Kala")
-	_set_cursor()
 	# the scene, back to front: sky and stars, the aksara constellation, the valley, the cliff, the Wiku (ui.md 4.1)
 	add_child(UIFx.rect_tex("title_sky", Vector2.ZERO))
 	add_child(Twinkle.new())
@@ -170,11 +169,7 @@ func _ready() -> void:
 
 ## Custom mouse cursor, scaled to the window so it stays readable (hotspot 0,0).
 func _set_cursor() -> void:
-	var img := UIFx.tex("cursor").get_image()
-	var k := maxi(1, int(DisplayServer.window_get_size().x / 480.0))
-	if k > 1:
-		img.resize(img.get_width() * k, img.get_height() * k, Image.INTERPOLATE_NEAREST)
-	Input.set_custom_mouse_cursor(ImageTexture.create_from_image(img), Input.CURSOR_ARROW, Vector2.ZERO)
+	GameSettings.apply_cursor()
 
 
 func _process(delta: float) -> void:

@@ -10,5 +10,5 @@ func _ready() -> void:
 
 
 func flash(duration: float = 0.08) -> void:
-	_mat.set_shader_parameter("flash", 1.0)
+	_mat.set_shader_parameter("flash", 0.25 if GameSettings.reduce_flashes() else 1.0)
 	get_tree().create_timer(duration).timeout.connect(func() -> void: _mat.set_shader_parameter("flash", 0.0))

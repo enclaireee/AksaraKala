@@ -524,7 +524,7 @@ func _on_hurt(hitbox: Hitbox) -> void:
 	if is_instance_valid(hitbox.source) and hitbox.source.has_method("hitstop"):   # a shot can outlive its shooter
 		hitbox.source.hitstop(tuning.hitstop_player_hit)
 	camera.shake(tuning.shake_player_hit.x, tuning.shake_player_hit.y)
-	vignette.modulate.a = 1.0
+	vignette.modulate.a = 0.25 if GameSettings.reduce_flashes() else 1.0
 	create_tween().tween_property(vignette, "modulate:a", 0.0, 0.4)
 	_ev.player_hurt.emit(health.hp / maxf(1.0, health.max_hp))
 

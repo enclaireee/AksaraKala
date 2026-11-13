@@ -116,6 +116,20 @@ UI_SYS_SFX,Efek suara,Sound effects
 UI_SYS_AMBIENCE,Suasana,Ambience
 UI_SYS_LANG,Bahasa,Language
 UI_SYS_FULLSCREEN,Layar penuh,Fullscreen
+UI_SYS_SHAKE,Guncangan layar,Screenshake
+UI_SYS_REDUCE_FLASHES,Kurangi kilatan,Reduce flashes
+UI_SYS_DAMAGE_NUMBERS,Angka serangan,Damage numbers
+UI_SYS_CURSOR_SIZE,Ukuran kursor,Cursor size
+UI_SYS_PRESET,Tata tombol,Control preset
+UI_SYS_PRESET_DEF,Bawaan,Default
+UI_SYS_PRESET_LEFT,Kidal,Left-handed
+UI_SYS_SWAP_MOUSE,Tukar tombol tetikus,Swap mouse buttons
+UI_SYS_TOGGLE_CAST,Sakelar merapal,Toggle cast
+UI_SYS_SLOWMO,Perlambat waktu,Slow-mo strength
+UI_SYS_DRAWTIME,Waktu menggambar,Draw time
+UI_SYS_GUIDE,Panduan selalu tampil,Guide always on
+UI_SYS_GENTLE,Pertarungan ringan,Gentle combat
+UI_SYS_DRAW_ASSIST,Bantuan menggambar,Drawing assist
 UI_ON,Nyala,On
 UI_OFF,Mati,Off
 UI_SYS_RESUME,Lanjutkan permainan,Resume game
@@ -236,6 +250,7 @@ UI_BK_OBJECTIVE,Tujuan,Objective
 UI_BK_OTHER,Lainnya,Other
 UI_BK_AUDIO,Suara,Audio
 UI_BK_DISPLAY,Tampilan,Display
+UI_BK_ACCESSIBILITY,Aksesibilitas & Bantuan,Accessibility & Assists
 UI_BK_GAME,Permainan,Game
 UI_BK_HINT_SELECT,Pilih,Select
 UI_BK_HINT_RAISE,Naikkan,Raise

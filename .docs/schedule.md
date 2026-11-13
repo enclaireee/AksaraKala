@@ -127,10 +127,10 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 
 ## Phase 7: Culture and polish
 - [ ] VERIFY pass on cultural claims, source citations complete
-- [ ] In-game codex entries cited and verified
+- [x] In-game codex entries cited and verified (97/97 `data/codex/*.tres` sourced 2026-11-13)
 - [ ] Full text review and dialogue balance pass
 - [ ] Combat and balance tuning: verify [balance.md](balance.md) metrics across all classes
-- [ ] Accessibility options and assist mode testing
+- [x] Accessibility options and assist mode testing (`GameSettings`, `tab_system.gd`, `tests/settings_test.gd`, 2026-11-13)
 - [x] Full end-to-end playtests (2026-11-12: every region, final boss, ending and a fresh-eyes run, verification.md §5)
 - Exit: someone unfamiliar with the game can finish it smoothly without assistance.
 

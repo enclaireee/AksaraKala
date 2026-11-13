@@ -32,10 +32,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("cast"):
 			start()
 		return
+	var tog := GameSettings.toggle_cast()
 	if event is InputEventMouseMotion:
-		points.append(event.position)   # viewport coordinates (spells.md 9: HiDPI)
-		overlay.add_point(event.position)
-	elif event.is_action_released("cast"):
+		if not tog or Input.is_action_pressed("attack") or points.is_empty():
+			points.append(event.position)   # viewport coordinates (spells.md 9: HiDPI)
+			overlay.add_point(event.position)
+	elif tog and event.is_action_pressed("cast"):
+		release()
+	elif tog and event.is_action_released("attack") and Recognizer.path_length(points) >= player.tuning.cast_min_length:
+		release()
+	elif not tog and event.is_action_released("cast"):
 		release()
 	elif event.is_action_pressed("pause") or event.is_action_pressed("menu"):
 		cancel()
@@ -49,7 +55,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	if not drawing:
 		return
-	var limit := player.tuning.cast_draw_limit * 1000.0
+	var limit := GameSettings.draw_time() * 1000.0
 	var used := float(Time.get_ticks_msec() - _started)
 	if used > limit:
 		cancel()
@@ -68,7 +74,7 @@ func start() -> bool:
 	points.clear()
 	aim = player.aim_dir   # ASSUMED: the spell flies where the player aimed when the cast began
 	_started = Time.get_ticks_msec()
-	Engine.time_scale = t.cast_time_scale
+	Engine.time_scale = clampf(float(GameSettings.slow_mo_strength()) / 100.0, 0.1, 0.4) if t.cast_time_scale > 0.0 else t.cast_time_scale
 	overlay.begin()
 	return true
 
@@ -79,9 +85,10 @@ func _min_sakti() -> float:
 	return player.tuning.cast_min_sakti - (1.0 if c == "mage" or c == "rogue" else 0.0)
 
 
-## Smudged-cast threshold: 0.65, minus the equipped item's "smudge" bonus (Lontar Kuno -0.05 -> 0.60).
+## Smudged-cast threshold: 0.65, minus the equipped item's "smudge" bonus and Drawing Assist (-0.10).
 func smudge_threshold() -> float:
-	return Recognizer.SMUDGE + get_node("/root/Game").bonus("smudge")
+	var assist := -0.10 if GameSettings.drawing_assist() else 0.0
+	return Recognizer.SMUDGE + get_node("/root/Game").bonus("smudge") + assist
 
 
 func release() -> void:

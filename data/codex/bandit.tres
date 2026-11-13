@@ -6,4 +6,4 @@
 script = ExtResource("1")
 id = "bandit"
 category = "enemy"
-source = ""
+source = "game"

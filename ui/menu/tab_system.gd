@@ -7,6 +7,7 @@ const BUSES := GameSettings.BUSES
 var action := ""   # "title" or "quit" while the confirm is open
 var lang_btn: Button
 var full_btn: Button
+var _toggles := {}   # key -> [Button, Callable(-> String)]
 var _modal: HBoxContainer
 var _modal_lbl: Label
 var _modal_yes: Button
@@ -43,9 +44,33 @@ func build(l: Control, r: Control) -> void:
 			_first = sl
 	lv.add_child(MenuBook.section(tr("UI_BK_DISPLAY")))
 	full_btn = _button(lv, toggle_fullscreen)
+	_slider_row(lv, "UI_SYS_SHAKE", 0, 100, 10, GameSettings.screenshake(), func(v: float) -> void: GameSettings.set_screenshake(int(v)))
+	_toggle_row(lv, "reduce_flashes", func() -> void: GameSettings.set_reduce_flashes(not GameSettings.reduce_flashes()), func() -> String:
+		return "%s: %s" % [tr("UI_SYS_REDUCE_FLASHES"), tr("UI_ON") if GameSettings.reduce_flashes() else tr("UI_OFF")])
+	_toggle_row(lv, "damage_numbers", func() -> void: GameSettings.set_damage_numbers(not GameSettings.damage_numbers()), func() -> String:
+		return "%s: %s" % [tr("UI_SYS_DAMAGE_NUMBERS"), tr("UI_ON") if GameSettings.damage_numbers() else tr("UI_OFF")])
+	_toggle_row(lv, "cursor_size", func() -> void: GameSettings.set_cursor_size(1 if GameSettings.cursor_size() >= 2 else 2), func() -> String:
+		return "%s: %dx" % [tr("UI_SYS_CURSOR_SIZE"), GameSettings.cursor_size()])
 	var rv := scroll(r, Rect2(0, 0, 200, 212))
 	rv.add_child(MenuBook.section(tr("UI_SYS_LANG")))
 	lang_btn = _button(rv, toggle_language)
+	rv.add_child(MenuBook.section(tr("UI_BK_ACCESSIBILITY")))
+	_toggle_row(rv, "preset", func() -> void:
+		GameSettings.set_control_preset("left_handed" if GameSettings.control_preset() == "default" else "default"), func() -> String:
+		var k := "UI_SYS_PRESET_LEFT" if GameSettings.control_preset() == "left_handed" else "UI_SYS_PRESET_DEF"
+		return "%s: %s" % [tr("UI_SYS_PRESET"), tr(k)])
+	_toggle_row(rv, "swap_mouse", func() -> void: GameSettings.set_swap_mouse(not GameSettings.swap_mouse()), func() -> String:
+		return "%s: %s" % [tr("UI_SYS_SWAP_MOUSE"), tr("UI_ON") if GameSettings.swap_mouse() else tr("UI_OFF")])
+	_toggle_row(rv, "toggle_cast", func() -> void: GameSettings.set_toggle_cast(not GameSettings.toggle_cast()), func() -> String:
+		return "%s: %s" % [tr("UI_SYS_TOGGLE_CAST"), tr("UI_ON") if GameSettings.toggle_cast() else tr("UI_OFF")])
+	_slider_row(rv, "UI_SYS_SLOWMO", 10, 40, 5, GameSettings.slow_mo_strength(), func(v: float) -> void: GameSettings.set_slow_mo_strength(int(v)))
+	_slider_row(rv, "UI_SYS_DRAWTIME", 2.5, 5.0, 0.5, GameSettings.draw_time(), func(v: float) -> void: GameSettings.set_draw_time(v))
+	_toggle_row(rv, "guide_always", func() -> void: GameSettings.set_guide_always_on(not GameSettings.guide_always_on()), func() -> String:
+		return "%s: %s" % [tr("UI_SYS_GUIDE"), tr("UI_ON") if GameSettings.guide_always_on() else tr("UI_OFF")])
+	_toggle_row(rv, "gentle_combat", func() -> void: GameSettings.set_gentle_combat(not GameSettings.gentle_combat()), func() -> String:
+		return "%s: %s" % [tr("UI_SYS_GENTLE"), tr("UI_ON") if GameSettings.gentle_combat() else tr("UI_OFF")])
+	_toggle_row(rv, "drawing_assist", func() -> void: GameSettings.set_drawing_assist(not GameSettings.drawing_assist()), func() -> String:
+		return "%s: %s" % [tr("UI_SYS_DRAW_ASSIST"), tr("UI_ON") if GameSettings.drawing_assist() else tr("UI_OFF")])
 	rv.add_child(MenuBook.section(tr("UI_BK_GAME")))
 	_button(rv, menu.close).text = tr("UI_SYS_RESUME")
 	_button(rv, ask.bind("title")).text = tr("UI_SYS_TITLE")
@@ -74,9 +99,34 @@ func _button(box: Control, cb: Callable) -> Button:
 	return b
 
 
+func _toggle_row(box: Control, key: String, cb: Callable, label_fn: Callable) -> void:
+	var b := _button(box, func() -> void:
+		cb.call()
+		refresh())
+	_toggles[key] = [b, label_fn]
+
+
+func _slider_row(box: Control, key: String, mn: float, mx: float, step: float, val: float, cb: Callable) -> void:
+	var row := HBoxContainer.new()
+	box.add_child(row)
+	var lab := MenuBook.bold(tr(key))
+	lab.custom_minimum_size.x = 88
+	row.add_child(lab)
+	var sl := HSlider.new()
+	sl.min_value = mn
+	sl.max_value = mx
+	sl.step = step
+	sl.value = val
+	sl.custom_minimum_size = Vector2(102, 12)
+	sl.value_changed.connect(cb)
+	row.add_child(sl)
+
+
 func refresh() -> void:
 	lang_btn.text = "%s: %s" % [tr("UI_SYS_LANG"), GameSettings.language_name()]
 	full_btn.text = "%s: %s" % [tr("UI_SYS_FULLSCREEN"), tr("UI_ON") if is_fullscreen() else tr("UI_OFF")]
+	for entry in _toggles.values():
+		(entry[0] as Button).text = (entry[1] as Callable).call()
 
 
 func focus_first() -> void:

@@ -39,6 +39,8 @@ func take_damage(amount: int, source: Node = null, ignore_iframes := false) -> b
 		amount = maxi(1, roundi(amount * (1.0 - 0.05 * defense)))
 	if reduction > 0.0 and amount > 0:
 		amount = maxi(1, roundi(amount * (1.0 - reduction)))
+	if amount > 0 and get_parent() != null and get_parent().is_in_group("player") and GameSettings.gentle_combat():
+		amount = maxi(1, roundi(amount * 0.5))
 	var soaked := mini(shield, amount)
 	shield -= soaked
 	hp = maxi(0, hp - (amount - soaked))

@@ -246,7 +246,7 @@ func _on_cue(cue: String, arg: String) -> void:
 		"bars":
 			set_bars(arg == "on")
 		"shake":
-			_shake_amp = clampf(arg.to_float(), 0.0, 3.0)
+			_shake_amp = clampf(arg.to_float(), 0.0, 3.0) * (float(GameSettings.screenshake()) / 100.0)
 			_shake_left = SHAKE_TIME if _shake_amp > 0.0 else 0.0
 
 
