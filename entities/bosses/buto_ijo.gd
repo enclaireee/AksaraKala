@@ -70,6 +70,7 @@ const ROWS := [0.2, 0.4, 0.6, 0.8]   # TUNE: per phase, how far from his start t
 
 var state := State.IDLE
 var state_time := 0.0
+var phase_marks := [0.75, 0.5, 0.25]   # the boss bar draws a tick at each pouch phase
 var phase := 0                         # 0 until the fight starts
 var engaged := false
 var attacks := 0
@@ -141,7 +142,7 @@ func _tick(delta: float) -> void:
 	if target != null:
 		to_t = target.global_position - global_position
 	var d := to_t.length()
-	if d <= engage_range:
+	if d <= engage_range and BossKit.may_engage(self):
 		_engage()
 	_field_effects(delta)
 	match state:
@@ -219,6 +220,7 @@ func _field_effects(delta: float) -> void:
 func _next_phase() -> void:
 	phase += 1
 	_spawn_fields(KINDS[phase - 1])
+	BossKit.hint(self, "BOSS_HINT_BUTO", 0.0)
 	if phase > 1:
 		attack_hitbox.deactivate()
 		_chain_left = 0
@@ -239,6 +241,7 @@ func _spawn_fields(kind: String) -> void:
 		get_parent().add_child(f)
 		f.global_position = spot
 		fields.append(f)
+		BossKit.mark(self, f, "", 10.0, f.radius)   # lure him over it: it only hurts him
 
 
 func _on_health(hp: int, max_hp: int) -> void:
@@ -361,6 +364,10 @@ func _enter(s: State) -> void:
 	state_time = 0.0
 	velocity = Vector2.ZERO
 	body.modulate = Color(1.0, 0.45, 0.45) if s == State.WINDUP or s == State.MOVE else (Color(0.7, 0.75, 1.0) if s == State.STUN else Color.WHITE)
+	if s == State.STUN:
+		BossKit.open(self, bamboo_stun)
+	elif s == State.RECOVER and _rec >= heavy_recovery:
+		BossKit.open(self, _rec)
 	if s == State.CHASE or s == State.STUN or s == State.RECOVER or s == State.PAUSE:
 		BossKit.anim_stop(self)
 		body.position = _body_pos

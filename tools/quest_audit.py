@@ -146,6 +146,10 @@ for qid, q in quests.items():
             if not known:
                 bad("Q3", "%s step %d: '%s' has no source anywhere in the game data" % (qid, i + 1, o))
         markers = [st.get("marker")] + [sub.get("marker") for sub in (st.get("all") or [])]
+        # A sub-goal without a marker gets its arrow from its `on` arg in the step's zone (Game.objective_marker).
+        for sub in (st.get("all") or []):
+            if not sub.get("marker") and st.get("marker") and sub.get("on", "").split(":")[0] in ("clue_examined", "talked_to"):
+                markers.append({"zone": st["marker"].get("zone", ""), "id": sub["on"].split(":", 1)[1]})
         for m in markers:
             if not m:
                 continue

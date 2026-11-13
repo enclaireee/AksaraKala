@@ -107,7 +107,7 @@ func _tick(delta: float) -> void:
 	if target != null:
 		to_t = target.global_position - global_position
 	var d := to_t.length()
-	if d <= engage_range:
+	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
 	if phase == 2 and state != State.STUN and state != State.PAUSE:
 		dawn = minf(1.0, dawn + delta / (dawn_time * (sabotage_dawn_mult if _sabotaged() else 1.0)))   # ASSUMED (v5)
@@ -116,6 +116,11 @@ func _tick(delta: float) -> void:
 			_deck.clear()
 			BossKit.roar(self, DAWN, 110.0)   # dawn breaks: he flies into a rage
 		enraged = now_enraged
+		if dawn >= 0.7:   # the reminder: the post answers the dawn (combat.md 5.3 v7)
+			BossKit.hint(self, "BOSS_HINT_SANGKURIANG")
+			for p: Node in get_tree().get_nodes_in_group("interactable"):
+				if p is ArenaPost and p.post_id == post_id:
+					BossKit.mark(self, p, "sunda_ca", 1.0, 14.0)
 	match state:
 		State.IDLE:
 			if engaged:
@@ -532,6 +537,7 @@ func _on_cast(glyph_id: String, _score: float) -> void:
 			enraged = false
 			_deck.clear()
 			_enter(State.STUN)
+			BossKit.open(self, stun_time + (sabotage_stun_bonus if _sabotaged() else 0.0))
 			return
 
 

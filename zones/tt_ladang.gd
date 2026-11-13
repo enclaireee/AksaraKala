@@ -17,10 +17,10 @@ const MAP := [
 	"#.......rr..............rr..#__rr_____________________rr_###",
 	"#.......rr.....E........rr..#____________________________###",
 	"#......................L....#____________________________###",
-	"#...........................,____________________________###",
-	"#.............,,,,,,,,C,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,KzZ",
-	"#.............,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,Z",
-	"#...rr........,,............,____________________________###",
+	"#...........................G____________________________###",
+	"#.............,,,,,,,,C,,,,,G,,,,,,,,,,,,,,B,,,,,,,,,,,,,KzZ",
+	"#.............,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,Z",
+	"#...rr........,,............G____________________________###",
 	"#...rr........,,............#____________________________###",
 	"#.............,,....rr..D...#____________________________###",
 	"#.............,,....rr......#____________________________###",
@@ -47,6 +47,7 @@ const SPOTS := {
 	"Z": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pasir", "spawn_id": "from_tt_ladang"}, "tile": ","},   # exit to tt_pasir (east edge, behind K2, 2 tiles)
 	"z": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": ","},   # spawn, arrival from tt_pasir
 	"B": {"scene": "res://entities/bosses/buto_ijo.tscn", "props": {}, "tile": "_"},   # boss Buto Ijo (arena 28x16: x 29..56, y 9..24)
+	"G": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "e"}, "tile": ","},   # arena gate (combat.md 5.3 v7) at the arena's west mouth; open until the threshold two tiles inside is crossed; the east mouth is shut by kabut K2
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_ladang", "size": Vector2i(30,14), "waves": [[["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(8,0)], ["res://entities/enemies/keris_hantu.tscn", Vector2i(4,-4)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,4)], ["res://entities/enemies/kemamang.tscn", Vector2i(-6,-3)]]]}, "tile": "."},   # encounter timur_ladang
 	"x": {"scene": "res://entities/enemies/keris_hantu.tscn", "props": {}, "tile": "."},   # loose keris hantu, roaming pack (respawns on zone reload, no unique_id)
 	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "."},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)

@@ -127,6 +127,11 @@ func _tick(delta: float) -> void:
 		dark = minf(1.0, dark + delta / darken_time * _dark_rate)
 		if state == State.CHASE or state == State.ACT or state == State.RECOVER:
 			fade_timer += delta
+	if engaged and not dead and in_shadow():   # the reminder: the dark oncor are the answer (combat.md 5.3 v7)
+		BossKit.hint(self, "BOSS_HINT_SANDEKALA")
+		for o: Oncor in get_tree().get_nodes_in_group("oncor"):
+			if not o.lit:
+				BossKit.mark(self, o, "", 1.0, 10.0)
 	var total := maxi(1, get_tree().get_node_count_in_group("oncor"))
 	overlay.color.a = max_dark * dark * (1.0 - float(lit_count()) / total)
 	var to_target := Vector2.INF
@@ -134,7 +139,7 @@ func _tick(delta: float) -> void:
 		to_target = target.global_position - global_position
 	match state:
 		State.IDLE:
-			if to_target.length() <= engage_dist:
+			if engaged or (to_target.length() <= engage_dist and BossKit.may_engage(self)):   # the arena gate sets engaged
 				engaged = true
 				gap = attack_gap   # a breath before the first move
 				_enter(State.CHASE)

@@ -542,10 +542,9 @@ static func sparks(host: Node, pos: Vector2, color: Color, count := 10, speed :=
 # --- sprite helpers -------------------------------------------------------------------------------------------
 
 ## Play a row of the boss's `<name>_moves.png` sheet (cast, slam, dash, roar). See EnemyArt.play.
-static func anim(host: Node, anim_name: String, fps := 10.0, hold := true) -> void:
+static func anim(host: Node, anim_name: String, fps := 10.0, hold := true) -> bool:
 	var art := host.get_node_or_null("Body/Art") as EnemyArt
-	if art != null:
-		art.play(anim_name, fps, hold)
+	return art != null and art.play(anim_name, fps, hold)
 
 
 static func anim_stop(host: Node) -> void:
@@ -611,3 +610,125 @@ static func roar(host: EnemyBase, color := Color(1.0, 0.8, 0.4), radius := 80.0)
 	sparks(host, host.global_position + Vector2(0, -14), color, 24, 90.0, 0.7)
 	punch(host, 1.12, 0.9, 0.4)
 	shake(host, 2.5, 0.5)
+
+
+# --- boss fights v7 (combat.md 5.3): gate, hints, marks, open window, finisher ------------------------------------
+
+## False while the zone has an arena gate whose threshold the player has not crossed. Zones without a gate
+## (tests, Buto Ijo's ambush fields) keep engage-by-range and first hit.
+static func may_engage(host: Node) -> bool:
+	var g := host.get_tree().get_first_node_in_group("arena_gate")
+	return g == null or bool(g.get("entered"))
+
+
+## One line above the boss bar. Call it every frame the gimmick state lasts: it shows on the first call and again
+## every `every` seconds. Stop calling when the player has answered the state.
+static func hint(host: Node, key: String, every := 12.0) -> void:
+	var now := Time.get_ticks_msec() / 1000.0
+	var m := "hint_" + key
+	if host.has_meta(m) and now - float(host.get_meta(m)) < every:
+		return
+	host.set_meta(m, now)
+	var stage := host.get_tree().get_first_node_in_group("boss_stage")
+	if stage != null:
+		stage.call("show_hint", host.tr(key))
+
+
+## Marks the next `seconds` as a free hit window: the boss bar glows and shows "TERBUKA".
+static func open(host: Node, seconds: float) -> void:
+	if host.is_in_group("boss"):
+		host.set_meta("open_until", Time.get_ticks_msec() / 1000.0 + seconds)
+
+
+static func is_open(host: Node) -> bool:
+	return host != null and float(host.get_meta("open_until", 0.0)) > Time.get_ticks_msec() / 1000.0
+
+
+## A pulsing gold ring with the glyph to draw, over the thing that answers a gimmick. One per target; frees
+## itself after `life` seconds or with the target. Call again to keep it up.
+static func mark(host: Node, target: Node2D, glyph_id := "", life := 4.0, radius := 12.0) -> void:
+	if target == null or not is_instance_valid(target) or target.has_node("BossMark"):
+		return
+	var m := Mark.new()
+	m.name = "BossMark"
+	m.glyph = GlyphData.by_id(glyph_id) if glyph_id != "" else null
+	m.radius = radius
+	m.z_index = 50
+	target.add_child(m)
+	target.get_tree().create_timer(life).timeout.connect(func() -> void:
+		if is_instance_valid(m):
+			m.queue_free())
+
+
+class Mark extends Node2D:
+	var glyph: GlyphData
+	var radius := 12.0
+	var _t := 0.0
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		var r := radius + 2.0 * sin(_t * 6.0)
+		draw_arc(Vector2.ZERO, r, 0.0, TAU, 24, Color(GOLD, 0.9), 1.0)
+		draw_arc(Vector2.ZERO, r + 3.0, 0.0, TAU, 24, Color(GOLD, 0.35), 1.0)
+		if glyph == null or glyph.templates.is_empty():
+			return
+		var st: PackedVector2Array = glyph.templates[0]   # one template is the whole glyph as one path
+		var box := Rect2(st[0], Vector2.ZERO)
+		for p in st:
+			box = box.expand(p)
+		var k := 14.0 / maxf(maxf(box.size.x, box.size.y), 0.001)   # the glyph, 14 px, floating over the ring
+		var at := Vector2(0, -radius - 14.0) - box.get_center() * k
+		draw_rect(Rect2(Vector2(-10, -radius - 24.0), Vector2(20, 20)), Color(0.05, 0.04, 0.08, 0.7))
+		for i in st.size() - 1:
+			draw_line(at + st[i] * k, at + st[i + 1] * k, Color(1.0, 0.92, 0.6), 1.0)
+
+
+## The aksara finisher. Called by EnemyBase when health dies; `die` is the boss's own _on_died. With no
+## `finish_glyph`, or in a zone without an arena gate, death is immediate as before. Otherwise the boss kneels
+## for up to `KNEEL` seconds; casting the glyph ends it with a flourish, else the timer does.
+const KNEEL := 4.0   # TUNE
+
+static func finisher(host: EnemyBase, die: Callable) -> void:
+	if host.finish_glyph == "" or not host.is_in_group("boss") or host.get_tree().get_first_node_in_group("arena_gate") == null:
+		die.call()
+		return
+	host.dead = true   # stops _tick; the boss's own _on_died still runs in full afterwards
+	host.set_meta("kneeling", true)   # the arena gate counts a kneeling boss as alive: no leaving before the kill is recorded
+	var t0 := Time.get_ticks_msec()
+	host.velocity = Vector2.ZERO
+	host.attack_hitbox.deactivate()
+	host.release_token()
+	if host.has_method("_clear_attack"):   # no telegraph outlives the last blow
+		host.call("_clear_attack")
+	if not anim(host, "kneel", 6.0, true):   # no kneel frames: squash
+		host.body.create_tween().tween_property(host.body, "scale:y", 0.8, 0.3)
+	mark(host, host, host.finish_glyph, KNEEL, 18.0)
+	hint(host, "BOSS_HINT_FINISH", 0.0)
+	var done := [false]
+	var end := func(by_glyph: bool) -> void:
+		if done[0] or not is_instance_valid(host):
+			return
+		done[0] = true
+		host.remove_meta("kneeling")
+		host.dead = false
+		host.body.scale.y = 1.0
+		if by_glyph:
+			Snd.play("boss_finish")
+			ring_fx(host, host.global_position, 110.0, 0.7, GOLD)
+			sparks(host, host.global_position + Vector2(0, -14), GOLD, 40, 120.0, 0.9)
+			shake(host, 3.0, 0.5)
+		die.call()
+	var ev := host.get_node("/root/Events")
+	var on_cast := func(id: String, _score: float) -> void:
+		if id == host.finish_glyph:
+			end.call(true)
+	ev.spell_cast.connect(on_cast)
+	# A weapon blow ends it too, after a beat so the killing combo's next hit does not skip the kneel. TUNE
+	host.hurtbox.hurt.connect(func(_hb: Hitbox) -> void:
+		if Time.get_ticks_msec() - t0 > 500:
+			end.call(false))
+	host.tree_exiting.connect(func() -> void: ev.spell_cast.disconnect(on_cast))
+	host.get_tree().create_timer(KNEEL).timeout.connect(func() -> void: end.call(false))

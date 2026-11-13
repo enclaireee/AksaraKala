@@ -66,6 +66,8 @@ var pinned := ""                       # pinned side quest id, "" follows the ma
 var hero_name := DEFAULT_NAME          # set on the name screen; new_game keeps it
 var hero_pronoun := "they"             # he, she or they
 var memory_return := {}                # inside a Kelir memory: {zone: scene path, pos: [x, y]} to go back to (Zones.enter_memory)
+var boss_retry := {}                   # died past an arena gate: {zone, pos: [x, y]} of its door (Zones.respawn uses it once). Not saved
+var boss_intro_seen: Array = []        # boss_name_key of every entrance already played this session: a retry gets the short one
 
 
 func _init() -> void:
@@ -93,6 +95,7 @@ func _reset() -> void:
 	hero_name = DEFAULT_NAME
 	hero_pronoun = "they"
 	memory_return = {}
+	boss_retry = {}
 
 
 func _ready() -> void:
@@ -533,6 +536,9 @@ func objective_marker() -> Dictionary:
 			var sm: Variant = st.all[i].get("marker", {})
 			if sm is Dictionary and not sm.is_empty():
 				return sm
+			var on := str(st.all[i].get("on", ""))   # no marker of its own: the thing its trigger names, in the step's zone
+			if on.get_slice(":", 0) in ["clue_examined", "talked_to"]:   # only signals that name a placed object
+				return {"zone": st.marker.get("zone", ""), "id": on.get_slice(":", 1)}
 		if not st.marker.is_empty():
 			return st.marker
 	return {}
@@ -921,6 +927,7 @@ func load_game() -> bool:
 		var d: Variant = _read(p)
 		if d != null and str(d.get("class_id", "")) != "":   # valid JSON with no run in it is not a save
 			from_dict(d)
+			boss_retry = {}   # a retry point never outlives the run it was set in
 			return true
 	return false
 

@@ -86,6 +86,9 @@ var _boss_root: Control
 var _boss_name: Label
 var _boss_fill: ColorRect
 var _boss_ghost: ColorRect   # the pale bar that trails the fill, so a hit reads as a chunk falling away
+var _boss_ticks: Control
+var _boss_ticked: Node    # the boss the ticks were built for
+var _boss_open: Label     # "TERBUKA" while BossKit.is_open(boss)
 var _boss_mark: Node2D   # cracked-glyph mark at the bar end: the boss's Laras sabotage flag is set (ui.md 2, v5)
 var _dawn_bg: ColorRect
 var _dawn_fill: ColorRect
@@ -535,7 +538,14 @@ func _build_extras() -> void:
 	_boss_fill = _rect(Vector2(x, by), Vector2(BOSS_W, 4), HP_COL, _boss_root)
 	_boss_fill.clip_contents = true
 	_rect(Vector2(0, 0), Vector2(BOSS_W, 1), Color(1, 1, 1, 0.25), _boss_fill)                   # lit top row
-	_rect(Vector2(x + BOSS_W / 2, by), Vector2(1, 4), Color(UIFx.INK_BG, 0.9), _boss_root)       # phase 2 at 50%
+	_boss_ticks = Control.new()   # phase ticks, rebuilt per boss from its `phase_marks`
+	_boss_ticks.position = Vector2(x, by)
+	_boss_root.add_child(_boss_ticks)
+	_boss_open = UIFx.text(tr("BOSS_OPEN"), "body", UIFx.GOLD_HI)
+	_boss_open.position = Vector2(x, 270 - M - 25)
+	_boss_open.size = Vector2(BOSS_W, 9)
+	_boss_open.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_boss_root.add_child(_boss_open)
 	_boss_mark = _make_crack_mark(Vector2(x + BOSS_W + 4, by - 3))
 	_boss_root.add_child(_boss_mark)
 	_dawn_bg = _rect(Vector2(x, by + 6), Vector2(BOSS_W, 2), Color(UIFx.INK_BG, 0.8), _boss_root)
@@ -755,6 +765,15 @@ func _update_boss() -> void:
 	if not _boss_root.visible:
 		return
 	_boss_name.text = tr(str(b.get("boss_name_key")))
+	if b != _boss_ticked:
+		_boss_ticked = b
+		for c in _boss_ticks.get_children():
+			c.queue_free()
+		var marks: Variant = b.get("phase_marks")
+		for f: float in (marks if marks is Array else [0.5]):
+			_rect(Vector2(roundf(BOSS_W * f), 0), Vector2(1, 4), Color(UIFx.INK_BG, 0.9), _boss_ticks)
+	_boss_open.visible = BossKit.is_open(b)
+	_boss_fill.color = HP_COL.lightened(0.35) if _boss_open.visible else HP_COL
 	_boss_mark.visible = boss_sabotaged(b)
 	var seq = b.get("sequence")   # Batara Kala's shield: the glyphs to cast in order, the next one in brackets
 	if seq is PackedStringArray and not seq.is_empty() and b.get("dawn") != null:

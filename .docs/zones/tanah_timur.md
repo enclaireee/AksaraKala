@@ -830,10 +830,10 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 #.......rr..............rr..#__rr_____________________rr_###
 #.......rr.....E........rr..#____________________________###
 #......................L....#____________________________###
-#...........................,____________________________###
-#.............,,,,,,,,C,,,,,,,,,,,,,,,,,,,,B,,,,,,,,,,,,,KzZ
-#.............,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,Z
-#...rr........,,............,____________________________###
+#...........................G____________________________###
+#.............,,,,,,,,C,,,,,G,,,,,,,,,,,,,,B,,,,,,,,,,,,,KzZ
+#.............,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,,,,,,,,,,K,Z
+#...rr........,,............G____________________________###
 #...rr........,,............#____________________________###
 #.............,,....rr..D...#____________________________###
 #.............,,....rr......#____________________________###
@@ -862,6 +862,7 @@ Y,,,,,,,,,,,,,,,............################################
 | `Z` | exit to tt_pasir (east edge, behind K2, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pasir", spawn_id:"from_tt_ladang"}` | path | 2 |
 | `z` | spawn, arrival from tt_pasir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
 | `B` | boss Buto Ijo (arena 28x16: x 29..56, y 9..24) | `res://entities/bosses/buto_ijo.tscn` | `{}` | floor | 1 |
+| `G` | arena gate (combat.md 5.3 v7) at the arena's west mouth; open until the threshold two tiles inside is crossed; the east mouth is shut by kabut K2 | `res://entities/world/arena_gate.tscn` | `{side:"e"}` | path | 4 |
 | `E` | encounter timur_ladang | `res://entities/world/encounter.tscn` | `{area_id:"timur_ladang", size:Vector2i(30,14), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(8,0)], [res://entities/enemies/keris_hantu.tscn, Vector2i(4,-4)], [res://entities/enemies/banaspati.tscn, Vector2i(4,4)], [res://entities/enemies/kemamang.tscn, Vector2i(-6,-3)]]]}` | grass | 1 |
 | `x` | loose keris hantu, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/keris_hantu.tscn` | `{}` | grass | 1 |
 | `b` | loose banaspati, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/banaspati.tscn` | `{}` | grass | 1 |
@@ -880,6 +881,7 @@ Y,,,,,,,,,,,,,,,............################################
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
+| arena gate | `G` (28,15)-(28,18) | West mouth of the Buto Ijo arena, side `e`; the east mouth is closed by kabut `K` | gate `G` x4 | 3.9 |
 | north-west nook | (20,1)-(27,3) | Optional find, off the Buto Ijo road | chest `A` (26,2) | rule 7 |
 | curse stake | (23,14) | The first stake of the waking Keris in the dry field, near the stakes fight `C` (21,16) | clue `L` (23,14) | 3.10 `ladang_stake`, `timur_ladang_stakes` |
 ## Area 6: tt_pasir
@@ -988,10 +990,10 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #.................#__________________________________#.....#
 #.................#_________________R________________#.....#
 #.................#__________________________________#.....#
-#.................,__________________________________#.....#
-Xe,,,,,,,,,,,,,,,,,__E__S___________B___C________D___#.....#
-X,,,,,,,,,,,,,,,,,,________________________________4_#.....#
-#.................,__________________________________#.....#
+#.................A__________________________________#.....#
+Xe,,,,,,,,,,,,,,,,A__E__S___________B___C________D___#.....#
+X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
+#.................A__________________________________#.....#
 #.................#_____________W___K________________#.....#
 #.................#__________________________________#.....#
 #.................#__________________________________#.....#
@@ -1014,8 +1016,9 @@ X,,,,,,,,,,,,,,,,,,________________________________4_#.....#
 |------|------|-------|-------|-------|-------|
 | `X` | exit to tt_pasir (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pasir", spawn_id:"from_tt_candi"}` | path | 2 |
 | `e` | spawn, arrival from tt_pasir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
-| `B` | boss Mpu Gandring's Keris (3.19, arena centre; wakes after the `shrine_sight` beat) | `res://entities/bosses/keris_gandring.tscn` | `{cond:"flag:beat_shrine_sight"}` | floor | 1 |
-| `H` | boss the Nameless Hunter, after the keris (MQ3 3.22) | `res://entities/bosses/nameless_hunter.tscn` | `{cond:"flag:mq3_h6"}` | floor | 1 |
+| `B` | boss Mpu Gandring's Keris (3.19, arena centre; wakes after the `shrine_sight` beat) | `res://entities/bosses/keris_gandring.tscn` | `{cond:"flag:beat_shrine_sight", finish_glyph:"jawa_ha"}` | floor | 1 |
+| `H` | boss the Nameless Hunter, after the keris (MQ3 3.22) | `res://entities/bosses/nameless_hunter.tscn` | `{cond:"flag:mq3_h6", finish_glyph:"sunda_ga"}` | floor | 1 |
+| `A` | arena gate (combat.md 5.3 v7) at the court's west mouth, shared by the Keris and the Hunter; open until the threshold two tiles inside is crossed | `res://entities/world/arena_gate.tscn` | `{side:"e"}` | path | 4 |
 | `1` | curse stake 1 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:1}` | floor | 1 |
 | `2` | curse stake 2 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:2}` | floor | 1 |
 | `3` | curse stake 3 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:3}` | floor | 1 |
@@ -1035,6 +1038,7 @@ X,,,,,,,,,,,,,,,,,,________________________________4_#.....#
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
+| arena gate | `A` (18,15)-(18,18) | West mouth of the court, side `e`, shared by the Keris and the Hunter; the shrine_sight trigger `S` and trigger `E` stand inside past the threshold (the gate ignores a boss that is not awake yet) | gate `A` x4 | 3.19, 3.22 |
 | clue spots | `hunter_mask_4` (40,16) east of the keris `B` (37,16); `mask_joined` (49,16) at the east shrine door (`forge_stone` is no longer here: it is in Wirasana's vault in `tt_beringin`) | Walked in this order | clues `C` `D` | 3.21 |
 ## Area 8: tt_pesisir
 

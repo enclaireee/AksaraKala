@@ -1546,6 +1546,30 @@
         }
       ]
     },
+    "sfx/boss_intro": {
+      "peak": -4,
+      "layers": [
+        {"src": "oga_wood_metal2/wood_and_metal_vol.2/metal7.aif", "dur": 1.6, "pitch": 0.4, "lp": 2600, "fadeout": 1.0},
+        {"src": "oga_spells/entrance.ogg", "dur": 1.8, "pitch": 0.7, "lp": 3500, "gain": -5, "fadein": 0.05, "fadeout": 0.8},
+        {"src": "oga_fantasy_lib/Fantasy Sound Library/Wav/Dragon_Growl_01.wav", "dur": 1.4, "pitch": 0.6, "lp": 1800, "gain": -9, "delay": 0.25, "fadein": 0.2, "fadeout": 0.7}
+      ]
+    },
+    "sfx/boss_finish": {
+      "peak": -3,
+      "layers": [
+        {"src": "oga_spells/blessing2.ogg", "dur": 1.6, "lp": 6000, "fadeout": 0.8},
+        {"src": "oga_wood_metal2/wood_and_metal_vol.2/metal7.aif", "dur": 1.4, "pitch": 0.8, "lp": 4000, "gain": -4, "fadeout": 0.9},
+        {"src": "oga_spells/forcepulse.ogg", "dur": 0.8, "pitch": 0.8, "lp": 3000, "gain": -6, "fadeout": 0.4}
+      ]
+    },
+    "sfx/gate_slam": {
+      "peak": -4,
+      "layers": [
+        {"src": "oga_wood_metal2/wood_and_metal_vol.2/metal3.aif", "dur": 0.9, "pitch": 0.5, "lp": 3000, "fadeout": 0.5},
+        {"src": "oga_wood_metal2/wood_and_metal_vol.2/wood5.aif", "dur": 0.4, "pitch": 0.6, "lp": 2500, "gain": -2},
+        {"src": "oga_spells/wind2.ogg", "start": 0.3, "dur": 0.9, "lp": 2000, "gain": -8, "delay": 0.1, "fadein": 0.1, "fadeout": 0.6}
+      ]
+    },
     "sfx/kabut": {
       "peak": -7,
       "layers": [

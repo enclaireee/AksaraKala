@@ -16,7 +16,7 @@ const MAP := [
 	"###____________##__________________________#################",
 	"########__#######__________________________#################",
 	"########WW###################KK#############################",
-	"#.................#..........,,............................#",
+	"#.................#..........AA............................#",
 	"#.................#..........,,............................#",
 	"#.................#..........,L............................#",
 	"#.....bbb.........#..........,,...................bbb......#",
@@ -48,6 +48,7 @@ const SPOTS := {
 	"J": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "keraton_upper_gallery", "size": Vector2i(4,4), "cond": "flag:mqg_6,flag:laras_key_archive_grate,!flag:mqg_6b"}, "tile": "_"},   # trigger keraton_upper_gallery (MQG g.16, `area_entered`, sets `mqg_6b`; reached through Laras's grate)
 	"L": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "keraton_throne_approach", "size": Vector2i(14,8), "cond": "flag:mqg_h3,!flag:mqg_6c", "waves": [[["res://entities/enemies/faceless_champion.tscn", Vector2i(0,0)], ["res://entities/enemies/faceless.tscn", Vector2i(-4,0)], ["res://entities/enemies/faceless.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter keraton_throne_approach (MQG g.19, the champion is the miniboss; sets `mqg_6c`)
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mqg_h2"}, "tile": ","},   # kabut, throne room door (one per tile); lifts when K-II is done (`mqg_h2`, g.17)
+	"A": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "n"}, "tile": ","},   # arena gate (combat.md 5.3 v7) at the throne room door, just south of the kabut `K`; open until the threshold two tiles inside is crossed
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "galuh_1"}, "tile": ","},   # petilasan galuh_1, inside the inner garden
 	"B": {"scene": "res://entities/bosses/barma_wijaya.tscn", "props": {"unique_id": "barma_wijaya", "cond": "flag:mqg_6c,!flag:mqg_7"}, "tile": "_"},   # boss Barma Wijaya, the false king (MQG g.20, `boss_defeated:barma_wijaya`, sets `mqg_7`; Laras's `laras_sabotage:glamour_seal` makes his Glamour crack)
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mqg_4"}, "tile": ","},   # NPC Ciung Wanara, camp talk at the petilasan `galuh_1` (g.5 done) (optional, `quiet`, 2-4 lines, entry `camp_galuh`; reachable after the boss too)

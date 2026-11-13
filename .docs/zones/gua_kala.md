@@ -19,7 +19,7 @@ Areas: 4. Critical path: `gk_mulut` -> `gk_pasir` -> (drop) `gk_lupa` -> `gk_rua
 | `gk_pelataran` | 2x2, 60x34 | Pelataran Waktu, the black-stone forecourt with ancestral pillars | First area of Act VI (5.1-5.2), the allies, the memorial stone, the siege | Spawns `from_gk_mulut` (N), `from_gk_pasir` (E). Encounter `kala_pelataran_siege`. NPCs `ciung_wanara`, `hariang_banga`, `faceless_deserter`, `naganingrum`, `cepot`, `memorial_stone`, `deserter_stone`. Petilasan `kala_0` |
 | `gk_hutan` | 2x2, 60x34 | Hutan Lupa, a petrified forest of name-trees and stone chimes | 5.6: fight, name-chimes puzzle, chest | Spawns `from_gk_pasir` (W), `from_gk_lupa` (S). Encounter `kala_hutan_echoes`, puzzle `whisper_tree_1`-`_3` (props), clue `name_trees`, chest `kala_chest_hutan` |
 | `gk_jembatan` | 2x2, 60x34 | Jembatan Bayang, the causeway over the chasm of eaten time | 5.8: the echoes of fallen legends | Spawns `from_gk_lupa` (W). Encounter `kala_jembatan_echoes`, clue `bridge_echo`, chest `kala_chest_jembatan` |
-| `gk_ruang_kala` | 2x2, 60x34 | A round chamber. A clock face on the floor, the great hourglass overhead. Four quadrants, each with a motif of an earlier region (phase 3 uses them all) | Boss arena, Batara Kala | Spawn `from_gk_lupa`. Boss `batara_kala` (marker `kala_boss`). After the fight a lit door leads to the epilogue (`kala_exit`, **ASSUMED**). No other enemies |
+| `gk_ruang_kala` | 2x2, 60x34 | A round chamber. A clock face on the floor, the great hourglass overhead. Four quadrants, each with a motif of an earlier region (phase 3 uses them all) | Boss arena, Batara Kala | Spawn `from_gk_lupa`. Boss `batara_kala` (marker `kala_boss`), arena gate `A` in the north corridor. After the fight a lit door leads to the epilogue (`kala_exit`, **ASSUMED**). No other enemies |
 
 ## Region graph
 `--` link, `=sc=` shortcut, `~D~>` drop (one way), `==K==` kabut. Story v5 (2026-11-07): the region is entered at `gk_pelataran`; the v4 entry into `gk_mulut` is retired.
@@ -672,13 +672,13 @@ X__________________________________________________________#
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: A round chamber, a clock face on the floor, the great hourglass overhead (art layer). Open floor, no rocks.
-- Purpose: Boss arena Batara Kala (interior about 44 x 29, no rocks). North door back to gk_lupa, south lit door to Desa Purwa behind the kabut `mq5_3`, quest marker `kala_exit`.
+- Purpose: Boss arena Batara Kala (interior about 44 x 29, no rocks). Arena gate `A` in the north corridor (the arrival spawn sits just inside it). North door back to gk_lupa, south lit door to Desa Purwa behind the kabut `mq5_3`, quest marker `kala_exit`.
 
 ### Map
 ```
 #############################NN#############################
-#############################n_#############################
-##########################________##########################
+#############################AA#############################
+##########################___n____##########################
 #####################__________________#####################
 ##################________________________##################
 ################____________________________################
@@ -716,8 +716,9 @@ X__________________________________________________________#
 | Char | What | Scene | Props | Floor | Count |
 |------|------|-------|-------|-------|-------|
 | `N` | exit to gk_lupa (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"gk_lupa", spawn_id:"from_gk_ruang_kala"}` | floor | 2 |
+| `A` | arena gate (combat.md 5.3 v7) at the north corridor mouth; open until the threshold two tiles inside is crossed | `res://entities/world/arena_gate.tscn` | `{side:"s"}` | floor | 2 |
 | `n` | spawn, arrival from gk_lupa | `res://entities/world/spawn.tscn` | `{id:"from_gk_lupa"}` | floor | 1 |
-| `B` | boss Batara Kala (arena centre; wakes after LC6, `flag:mq5_lc`, step 5.13; phase 3 is the ruwatan setpiece) | `res://entities/bosses/batara_kala.tscn` | `{cond:"flag:mq5_lc"}` | floor | 1 |
+| `B` | boss Batara Kala (arena centre; wakes after LC6, `flag:mq5_lc`, step 5.13; phase 3 is the ruwatan setpiece) | `res://entities/bosses/batara_kala.tscn` | `{cond:"flag:mq5_lc", finish_glyph:"jawa_ka"}` | floor | 1 |
 | `S` | exit to desa_purwa (south edge, the lit door, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"desa_purwa", spawn_id:"from_gua_kala"}` | floor | 2 |
 | `K` | kabut, lifts on the boss (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq5_3"}` | floor | 2 |
 | `T` | trigger, quest marker kala_exit (4x2) | `res://entities/world/trigger.tscn` | `{trigger_id:"kala_exit", size:Vector2i(4,2)}` | floor | 1 |

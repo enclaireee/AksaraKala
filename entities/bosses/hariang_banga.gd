@@ -79,6 +79,7 @@ var state_time := 0.0
 var engaged := false
 var attacks := 0
 var phase := 1
+var phase_marks := [0.5, 0.15]   # the river wakes at 50%; he yields at 15%
 var facing := 0.0          # radians
 var open_left := 0.0       # guard broken: x1.5 damage taken
 var cuts_left := 0
@@ -126,7 +127,7 @@ func _tick(delta: float) -> void:
 		return
 	var to_t := target.global_position - global_position
 	var d := to_t.length()
-	if d <= engage_range:
+	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
 	if state in [State.IDLE, State.CHASE, State.RECOVER, State.PARRY]:
 		var step := deg_to_rad(turn_rate) * delta
@@ -160,6 +161,7 @@ func _tick(delta: float) -> void:
 				_do_counter(to_t)
 			elif state_time >= parry_time:
 				open_left = parry_open   # he waited and nobody fell for it: guard down
+				BossKit.open(self, parry_open)
 				_finish(recovery)
 		State.RECOVER:
 			if state_time >= _rec:
@@ -176,6 +178,8 @@ func _tick(delta: float) -> void:
 func _enter(s: State) -> void:
 	_clear_marks()
 	BossKit.anim_stop(self)
+	if s == State.STAGGER:
+		BossKit.open(self, open_time)
 	state = s
 	state_time = 0.0
 	velocity = Vector2.ZERO
@@ -183,6 +187,8 @@ func _enter(s: State) -> void:
 
 
 func _finish(rec: float) -> void:
+	if rec >= recovery_heavy:
+		BossKit.open(self, rec)
 	_rec = rec
 	_enter(State.RECOVER)
 
@@ -560,6 +566,8 @@ func _on_hurt(hitbox: Hitbox) -> void:
 		mult = open_mult
 	elif front and not path.begins_with("res://spells/"):
 		mult = guard_mult
+		BossKit.hint(self, "BOSS_HINT_HARIANG")   # a blocked blow: say how to break the guard
+		BossKit.mark(self, self, "jawa_na", 4.0, 20.0)
 	super(hitbox)
 	if mult < 1.0 and not _floored:
 		health.heal(roundi(hitbox.damage * (1.0 - mult)))

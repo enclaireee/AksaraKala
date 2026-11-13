@@ -119,7 +119,7 @@ func _tick(delta: float) -> void:
 	if target != null:
 		to_t = target.global_position - global_position
 	var d := to_t.length()
-	if d <= engage_range:
+	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
 	match state:
 		State.IDLE:
@@ -231,6 +231,8 @@ func _begin(m: String, to_t: Vector2) -> void:
 func _enter(s: State) -> void:
 	_clear_all()
 	_enter_keep(s)
+	if s == State.RECOVER and _rec >= heavy_recovery:
+		BossKit.open(self, _rec)
 	if s == State.CHASE or s == State.RECOVER:
 		BossKit.anim_stop(self)
 
@@ -294,6 +296,8 @@ func _begin_cone(hook: bool, to_t: Vector2) -> void:
 		_marker = BossKit.telegraph_line(self, global_position, global_position + _facing * hook_len, 8.0, hook_windup, RED)
 	else:
 		_marker = BossKit.telegraph_cone(self, global_position, _facing.angle(), deg_to_rad(forget_arc), forget_radius, forget_windup, MASK)
+		BossKit.hint(self, "BOSS_HINT_HUNTER", 0.0)   # Forget: Ga Ward blocks it
+		BossKit.mark(self, self, "sunda_ga", forget_windup, 20.0)
 
 
 func _land_hook() -> void:

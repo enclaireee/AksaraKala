@@ -293,3 +293,35 @@ LESSON_JAWA_LA,"Ekor, lengkung kiri, kaki turun-naik, lengkung kecil ke mangkuk 
 UI_FAVOURED,Cocok untuk: %s,Favoured: %s
 UI_FAV_SAKTI,Isi Sakti,Sakti gain
 UI_FAV_SMUDGE,Batas coretan,Smudge limit
+BOSS_OPEN,TERBUKA,OPEN
+BOSS_HINT_FINISH,Tulis aksaranya untuk mengakhiri.,Draw the aksara to end it.
+BOSS_FACELESS_CAPTAIN_EPITHET,"Perwira Kala, pemecah Segel Kawah","Kala's officer, breaker of the Crater Seal"
+BOSS_FACELESS_CAPTAIN_INTRO,Segel ini pecah malam ini. Wajahmu boleh kau tinggal di sini.,This seal breaks tonight. You may leave your face here.
+BOSS_SANGKURIANG_EPITHET,Yang mengulang satu malam selamanya,He who repeats one night for ever
+BOSS_SANGKURIANG_INTRO,Fajar belum datang. Perahuku belum selesai. Minggir.,Dawn has not come. My boat is not finished. Stand aside.
+BOSS_SANDEKALA_EPITHET,Yang datang saat maghrib,The one who comes at dusk
+BOSS_SANDEKALA_INTRO,Sudah gelap. Anak-anak ikut aku.,It is dark. The children come with me.
+BOSS_BARMA_WIJAYA_EPITHET,Patih berwajah raja,The minister who wears the king's face
+BOSS_BARMA_WIJAYA_INTRO,"Aku rajamu. Lihat wajahku, lalu berlutut.","I am your king. Look at my face, then kneel."
+BOSS_HARIANG_BANGA_EPITHET,Kakak di seberang Pamali,The elder brother across the Pamali
+BOSS_HARIANG_BANGA_INTRO,Kau berdiri di pihak adikku. Maka kau melawanku.,You stand with my brother. Then you stand against me.
+BOSS_BANDUNG_BONDOWOSO_EPITHET,Pembangun seribu candi,Builder of a thousand temples
+BOSS_BANDUNG_BONDOWOSO_INTRO,Seribu candi sebelum fajar. Kau hanya batu berikutnya.,A thousand temples before dawn. You are only the next stone.
+BOSS_BUTO_IJO_EPITHET,Raksasa penagih janji,The giant who collects a promise
+BOSS_BUTO_IJO_INTRO,Anak itu dijanjikan padaku. Serahkan!,The child was promised to me. Hand her over!
+BOSS_KERIS_GANDRING_EPITHET,Bilah yang belum selesai,The unfinished blade
+BOSS_KERIS_GANDRING_INTRO,Tujuh turunan. Enam sudah lunas. Satu lagi.,Seven generations. Six are paid. One more.
+BOSS_NAMELESS_HUNTER_EPITHET,Yang menyerahkan namanya pada Kala,He who gave his name to Kala
+BOSS_NAMELESS_HUNTER_INTRO,Kau masih punya nama. Berikan padaku.,You still have a name. Give it to me.
+BOSS_BATARA_KALA_EPITHET,Sang Waktu yang lapar,"Time, the hungry one"
+BOSS_BATARA_KALA_INTRO,Ruwatan itu tak pernah selesai. Kau milikku sejak lahir.,The ruwatan was never finished. You have been mine since birth.
+BOSS_HINT_CAPTAIN,Ia memanggil pasukan. Gambar Ca untuk memutus panggilannya.,He calls his soldiers. Draw Ca to break the call.
+BOSS_HINT_SANGKURIANG,Fajar hampir tiba. Berdiri di tiang timur dan gambar Ca.,Dawn is close. Stand at the east post and draw Ca.
+BOSS_HINT_SANDEKALA,Ia bersembunyi dalam gelap. Pukul oncor yang padam.,He hides in the dark. Hit the unlit oncor.
+BOSS_HINT_KALA,Perisainya menunjukkan urutan huruf. Gambar huruf itu berurutan sebelum waktu habis.,His shield shows a glyph order. Draw the glyphs in that order before time runs out.
+BOSS_HINT_BARMA,Hanya satu yang raja sungguhan. Pecahkan wajah-wajah palsu dengan mantra aksara.,Only one is the real king. Break the false faces with an aksara spell.
+BOSS_HINT_HARIANG,"Ia menangkis dari depan. Tebas lewat dirinya dengan Na, atau serang dari belakang.","He blocks from the front. Dash through him with Na, or strike from behind."
+BOSS_HINT_BANDUNG,"Selama tiang berdiri, ia kebal. Gambar Ca untuk memanggil fajar palsu, lalu pecahkan tiangnya.","While a pillar stands, he cannot be hurt. Draw Ca to call a false dawn, then smash the pillar."
+BOSS_HINT_BUTO,Tarik Buto Ijo ke atas petak bungkusan. Petak itu hanya melukai dia.,Draw Buto Ijo onto the pouch fields. They hurt only him.
+BOSS_HINT_KERIS,Tonggak yang menyala harus dipadamkan. Gambar Ha di dekatnya sebelum ketujuhnya menyala.,Put out each lit stake. Draw Ha near it before all seven are lit.
+BOSS_HINT_HUNTER,Ia akan melupakanmu. Gambar Ga untuk perisai yang menahan Lupa.,He will make you forget. Draw Ga for the ward that blocks Forget.

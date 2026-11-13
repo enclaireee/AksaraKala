@@ -17,10 +17,10 @@ const MAP := [
 	"#.................#__________________________________#.....#",
 	"#.................#_________________R________________#.....#",
 	"#.................#__________________________________#.....#",
-	"#.................,__________________________________#.....#",
-	"Xe,,,,,,,,,,,,,,,,,__E__S___________B___C________D___#.....#",
-	"X,,,,,,,,,,,,,,,,,,________________________________4_#.....#",
-	"#.................,__________________________________#.....#",
+	"#.................A__________________________________#.....#",
+	"Xe,,,,,,,,,,,,,,,,A__E__S___________B___C________D___#.....#",
+	"X,,,,,,,,,,,,,,,,,A________________________________4_#.....#",
+	"#.................A__________________________________#.....#",
 	"#.................#_____________W___K________________#.....#",
 	"#.................#__________________________________#.....#",
 	"#.................#__________________________________#.....#",
@@ -41,8 +41,9 @@ const MAP := [
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pasir", "spawn_id": "from_tt_candi"}, "tile": ","},   # exit to tt_pasir (west edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": ","},   # spawn, arrival from tt_pasir
-	"B": {"scene": "res://entities/bosses/keris_gandring.tscn", "props": {"cond": "flag:beat_shrine_sight"}, "tile": "_"},   # boss Mpu Gandring's Keris (3.19, arena centre; wakes after the `shrine_sight` beat)
-	"H": {"scene": "res://entities/bosses/nameless_hunter.tscn", "props": {"cond": "flag:mq3_h6"}, "tile": "_"},   # boss the Nameless Hunter, after the keris (MQ3 3.22)
+	"B": {"scene": "res://entities/bosses/keris_gandring.tscn", "props": {"cond": "flag:beat_shrine_sight", "finish_glyph": "jawa_ha"}, "tile": "_"},   # boss Mpu Gandring's Keris (3.19, arena centre; wakes after the `shrine_sight` beat)
+	"H": {"scene": "res://entities/bosses/nameless_hunter.tscn", "props": {"cond": "flag:mq3_h6", "finish_glyph": "sunda_ga"}, "tile": "_"},   # boss the Nameless Hunter, after the keris (MQ3 3.22)
+	"A": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "e"}, "tile": ","},   # arena gate (combat.md 5.3 v7) at the court's west mouth, shared by the Keris and the Hunter; open until the threshold two tiles inside is crossed
 	"1": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 1}, "tile": "_"},   # curse stake 1 (arena edge)
 	"2": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 2}, "tile": "_"},   # curse stake 2 (arena edge)
 	"3": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 3}, "tile": "_"},   # curse stake 3 (arena edge)

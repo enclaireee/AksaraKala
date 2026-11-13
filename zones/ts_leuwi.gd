@@ -19,8 +19,8 @@ const MAP := [
 	"##################....,,M...####==##########################",
 	"##################~~..,,.E..####,,##########################",
 	"##################~~1.,,..c.####,,##########################",
-	"##################~~..,,...d####,,##########################",
-	"######################,3########,,##########################",
+	"##################~~..,3...d####,,##########################",
+	"######################AA########AA##########################",
 	"############r.....................r#########################",
 	"############...........j...........#########################",
 	"############....m.............n....#########################",
@@ -41,7 +41,7 @@ const MAP := [
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kampung", "spawn_id": "from_ts_leuwi"}, "tile": ","},   # exit to ts_kampung (north edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kampung"}, "tile": ","},   # spawn, arrival from ts_kampung
-	"S": {"scene": "res://entities/bosses/sandekala.tscn", "props": {"cond": "flag:mq1_h3"}, "tile": "."},   # miniboss Sandekala (MQ1 1.10); stays away until the K1 memory is done (`mq1_h3`) so the Hunt cannot be skipped
+	"S": {"scene": "res://entities/bosses/sandekala.tscn", "props": {"cond": "flag:mq1_h3", "finish_glyph": "sunda_ka"}, "tile": "."},   # miniboss Sandekala (MQ1 1.10); stays away until the K1 memory is done (`mq1_h3`) so the Hunt cannot be skipped
 	"m": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "nw"}, "tile": "."},   # oncor NW
 	"n": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "ne"}, "tile": "."},   # oncor NE
 	"p": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "sw"}, "tile": "."},   # oncor SW
@@ -59,6 +59,7 @@ const SPOTS := {
 	"a": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "leuwi_oncor_2"}, "tile": "."},   # prop, outer hamlet oncor lantern 2 (MQ1 1.8)
 	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "leuwi_oncor_3"}, "tile": "."},   # prop, outer hamlet oncor lantern 3 (MQ1 1.8)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "leuwi_mist", "cond": "step:mq1=7", "size": Vector2i(10, 7), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(-3, 0)], ["res://entities/enemies/jurig_leuweung.tscn", Vector2i(2, 1)]]]}, "tile": "."},   # encounter leuwi_mist, shades out of the dusk mist while you light the lanterns (MQ1 1.8, the Sandekala fight in small)
+	"A": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "s"}, "tile": ","},   # arena gate (combat.md 5.3 v7): the room's two mouths, the hamlet funnel and the tunnel foot; open until the threshold two tiles inside is crossed, then a wall of burning strokes until Sandekala falls
 }
 
 

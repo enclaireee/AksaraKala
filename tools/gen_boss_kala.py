@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_portraits as gp
 from gen_portraits import Paint, mat, hexc, GOLD, STEEL, WOOD, RED
 from PIL import Image
+import pixlib as P
 
 CW, CH = 96, 80      # 16 px of room each side of the 64 px figure for the bedama and the rings
 PADX = 16
@@ -191,11 +192,29 @@ def build():
          cell(head=(0, -2), mouth=3, eyes="glow", arm_l=((4, 46), (2, 56)), arm_r=((60, 46), (62, 56)), blade=-60, breath=-1, extra=rings(24)),
          cell(head=(0, -1), mouth=2, eyes="glow", arm_l=((5, 48), (4, 59)), arm_r=((59, 48), (60, 59)), blade=-70, extra=rings(30))],
     ]
+    # boss fights v7: row 4 rise (entrance), 5 kneel, 6 death (fades out)
+    down = dict(eyes="shut", mouth=0, lean=-1.0, arm_r=((57, 54), (59, 66)), blade=-20)
+    kn = [bow(cell(head=(-1, 1 + f // 2), crouch=(3, 5, 7, 8)[f], halo=(0.5, 0.35, 0.2, 0.12)[f], **down), (0.95, 0.86, 0.78, 0.74)[f]) for f in range(4)]
+    moves.append([bow(cell(crouch=8, halo=0.1, head=(-1, 2), **down), 0.7), bow(cell(crouch=5, halo=0.4, eyes="glow", mouth=1), 0.86),
+                  cell(crouch=2, halo=0.8, eyes="glow", mouth=2, extra=rings(18)), cell(halo=1.0, eyes="glow", mouth=3, breath=-1, extra=rings(28))])
+    moves.append(kn)
+    moves.append([fade(bow(cell(head=(-1, 2), crouch=8, halo=h, **down), k), a) for h, a, k in ((0.5, 1.0, 0.72), (0.9, 0.75, 0.68), (1.0, 0.45, 0.62), (1.0, 0.2, 0.56))])
     return base, moves
 
 
+def bow(img, sy):
+    """Sink about the feet (the painter's own crouch only bends the knees a little)."""
+    return P.squash(img, sy, 1.0 + (1.0 - sy) * 0.25)
+
+
+def fade(img, k):
+    out = img.copy()
+    out.putalpha(img.getchannel("A").point(lambda v: int(v * k)))
+    return out
+
+
 def sheet(rows):
-    sh = Image.new("RGBA", (CW * 4, CH * 4), (0, 0, 0, 0))
+    sh = Image.new("RGBA", (CW * 4, CH * len(rows)), (0, 0, 0, 0))
     for r, row in enumerate(rows):
         for c, im in enumerate(row):
             sh.paste(im, (c * CW, r * CH))

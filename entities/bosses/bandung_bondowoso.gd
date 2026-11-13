@@ -151,12 +151,16 @@ func _tick(delta: float) -> void:
 	if target != null:
 		to_t = target.global_position - global_position
 	var d := to_t.length()
-	if d <= engage_range:
+	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
 	if engaged:
 		_run_builders(delta)
 	for p in pillars:
 		p.tick(delta)
+		if engaged and not dead:
+			BossKit.mark(self, p, "" if p.is_exposed() else "jawa_ca", 2.0, 18.0)
+	if engaged and standing() > 0 and not dead:
+		BossKit.hint(self, "BOSS_HINT_BANDUNG")
 	_refresh_shield()
 	match state:
 		State.IDLE:
@@ -309,6 +313,8 @@ func _on_cast(glyph_id: String, _score: float) -> void:
 # --- the move deck ---
 
 func _enter(s: State) -> void:
+	if s == State.RECOVER and _rec >= recovery_heavy:
+		BossKit.open(self, _rec)
 	_clear_attack()
 	BossKit.anim_stop(self)
 	body.position = _body0   # a leap in the air ends on the ground

@@ -184,7 +184,7 @@ Z______________##_________________R________#################
 ###____________##__________________________#################
 ########__#######__________________________#################
 ########WW###################KK#############################
-#.................#..........,,............................#
+#.................#..........AA............................#
 #.................#..........,,............................#
 #.................#..........,L............................#
 #.....bbb.........#..........,,...................bbb......#
@@ -218,6 +218,7 @@ Z______________##_________________R________#################
 | `J` | trigger keraton_upper_gallery (MQG g.16, `area_entered`, sets `mqg_6b`; reached through Laras's grate) | `res://entities/world/trigger.tscn` | `{trigger_id:"keraton_upper_gallery", size:Vector2i(4,4), cond:"flag:mqg_6,flag:laras_key_archive_grate,!flag:mqg_6b"}` | floor | 1 |
 | `L` | encounter keraton_throne_approach (MQG g.19, the champion is the miniboss; sets `mqg_6c`) | `res://entities/world/encounter.tscn` | `{area_id:"keraton_throne_approach", size:Vector2i(14,8), cond:"flag:mqg_h3,!flag:mqg_6c", waves:[[[res://entities/enemies/faceless_champion.tscn, Vector2i(0,0)], [res://entities/enemies/faceless.tscn, Vector2i(-4,0)], [res://entities/enemies/faceless.tscn, Vector2i(4,0)]]]}` | path | 1 |
 | `K` | kabut, throne room door (one per tile); lifts when K-II is done (`mqg_h2`, g.17) | `res://entities/world/kabut.tscn` | `{flag:"mqg_h2"}` | path | 2 |
+| `A` | arena gate (combat.md 5.3 v7) at the throne room door, just south of the kabut `K`; open until the threshold two tiles inside is crossed | `res://entities/world/arena_gate.tscn` | `{side:"n"}` | path | 2 |
 | `P` | petilasan galuh_1, inside the inner garden | `res://entities/petilasan/petilasan.tscn` | `{id:"galuh_1"}` | path | 1 |
 | `B` | boss Barma Wijaya, the false king (MQG g.20, `boss_defeated:barma_wijaya`, sets `mqg_7`; Laras's `laras_sabotage:glamour_seal` makes his Glamour crack) | `res://entities/bosses/barma_wijaya.tscn` | `{unique_id:"barma_wijaya", cond:"flag:mqg_6c,!flag:mqg_7"}` | floor | 1 |
 | `C` | NPC Ciung Wanara, camp talk at the petilasan `galuh_1` (g.5 done) (optional, `quiet`, 2-4 lines, entry `camp_galuh`; reachable after the boss too) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mqg_4"}` | path | 1 |
@@ -244,7 +245,7 @@ Z______________##_________________R________#################
 | inner garden | (1,14)-(17,32) 17x19, wall x=18 with a gap (18,22..23) | The palace's inner garden: rest and the camp talk. Gate kabut `V` (18,22..23) flag `lamps_3` | petilasan `P` (12,22) (g.3), Ciung camp `C` (14,23), banyans (6..8,17..19) (6..8,27..29) |
 | cage | (25,6) | SQ-C2: the queen `q` beside the `cage` figure `Q` (26,5), after `mq2` is done | q |
 | portrait gallery | (3,2)-(14,11) 12x10, door (8..9,12..13) | The court portraits, entered from the archive grate (west edge `Z`, trigger `J` sets `mqg_6b`); the door `W` to the courtyard lifts on `mqg_6b`. The king's portrait is the clue (g.17) | clue `D` (5,3), trigger `J` (4,6), kabut `W` (8..9,13) flag `mqg_6b` |
-| throne room | (17,1)-(42,12) 26x12 | The g.9 guards, the boss arena, then the confession and cage staging | guards `T` (29,9) (rect 19..39 x 5..13), boss `B` (29,4), Hunter shadow `H` (29,1), mask clue `M` (31,2), Pangrenyep `Q` (26,5), Ciung `O` (32,5), Hariang `R` (34,7), kabut `K` (29..30,13) flag `mqg_h2` |
+| throne room | (17,1)-(42,12) 26x12 | The g.9 guards, the boss arena, then the confession and cage staging | guards `T` (29,9) (rect 19..39 x 5..13), boss `B` (29,4), Hunter shadow `H` (29,1), mask clue `M` (31,2), Pangrenyep `Q` (26,5), Ciung `O` (32,5), Hariang `R` (34,7), kabut `K` (29..30,13) flag `mqg_h2`, arena gate `A` (29..30,14) side n |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |

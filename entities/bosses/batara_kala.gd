@@ -74,6 +74,7 @@ const HEAVY := ["pulse", "hands", "meteor", "beams", "stop", "ruwatan"]
 var state := State.IDLE
 var state_time := 0.0
 var phase := 1
+var phase_marks := [0.66, 0.33]   # the boss bar draws a tick at each shield phase (hud.gd)
 var engaged := false
 var shielded := false
 var sequence := PackedStringArray()
@@ -124,6 +125,8 @@ var _land := Vector2.ZERO
 var _ru_base := 0.0
 var _ru_safe := 0
 var _ru_pulse := 0.0
+@export var cond := ""   # Game.check condition; empty = always on
+var active := true       # EliteGuard flips it
 
 
 func _ready() -> void:
@@ -131,6 +134,10 @@ func _ready() -> void:
 	if dead or is_queued_for_deletion():
 		return
 	add_to_group("boss")
+	if cond != "":   # hidden and inert until Game.check(cond) holds (elite_guard.gd); the zone doc passes it
+		var g := EliteGuard.new()
+		g.cond = cond
+		add_child(g)
 	health.changed.connect(_on_health)
 	get_node("/root/Events").spell_cast.connect(_on_cast)
 
@@ -141,7 +148,7 @@ func _tick(delta: float) -> void:
 	if target != null:
 		to_t = target.global_position - global_position
 	var d := to_t.length()
-	if d <= engage_range:
+	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
 	if phase >= 2 and state != State.PAUSE:
 		if shielded:
@@ -151,6 +158,16 @@ func _tick(delta: float) -> void:
 				if _elapsed >= _countdown():
 					_enter(State.DEVOUR)
 			dawn = minf(1.0, _elapsed / _countdown())
+			if sequence.size() >= 3 and seq_index < sequence.size():
+				BossKit.hint(self, "BOSS_HINT_KALA")
+				var old := get_node_or_null("BossMark")
+				if old != null and old.get_meta("idx", -1) != seq_index:   # the next glyph: swap the ring
+					old.name = "BossMarkOld"
+					old.queue_free()
+				BossKit.mark(self, self, sequence[seq_index], 1.0, 22.0)
+				var m := get_node_or_null("BossMark")
+				if m != null:
+					m.set_meta("idx", seq_index)
 		else:
 			_open_left -= delta
 			if _open_left <= 0.0:
@@ -248,6 +265,10 @@ func _enter(s: State) -> void:
 	velocity = Vector2.ZERO
 	body.visible = true
 	body.modulate = STUNNED if s == State.STUN else Color.WHITE
+	if s == State.STUN:
+		BossKit.open(self, stun_time + (sabotage_stun_bonus if _sabotaged() else 0.0))
+	elif s == State.RECOVER and _recover_len > recovery + 0.01:
+		BossKit.open(self, _recover_len)
 	if s in WINDY:
 		body.modulate = Color(1.0, 0.45, 0.45)
 	if s == State.CHASE or s == State.RECOVER or s == State.STUN:

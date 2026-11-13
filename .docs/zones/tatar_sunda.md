@@ -440,8 +440,8 @@ Roaming packs (loose, respawn like bonfire enemies): L1 2 boars `y` (41,8), (43,
 ##################....,,M...####==##########################
 ##################~~..,,.E..####,,##########################
 ##################~~1.,,..c.####,,##########################
-##################~~..,,...d####,,##########################
-######################,3########,,##########################
+##################~~..,3...d####,,##########################
+######################AA########AA##########################
 ############r.....................r#########################
 ############...........j...........#########################
 ############....m.............n....#########################
@@ -464,7 +464,7 @@ Roaming packs (loose, respawn like bonfire enemies): L1 2 boars `y` (41,8), (43,
 |------|------|-------|-------|-------|-------|
 | `X` | exit to ts_kampung (north edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"ts_kampung", spawn_id:"from_ts_leuwi"}` | path | 2 |
 | `e` | spawn, arrival from ts_kampung | `res://entities/world/spawn.tscn` | `{id:"from_ts_kampung"}` | path | 1 |
-| `S` | miniboss Sandekala (MQ1 1.10); stays away until the K1 memory is done (`mq1_h3`) so the Hunt cannot be skipped | `res://entities/bosses/sandekala.tscn` | `{cond:"flag:mq1_h3"}` | grass | 1 |
+| `S` | miniboss Sandekala (MQ1 1.10); stays away until the K1 memory is done (`mq1_h3`) so the Hunt cannot be skipped | `res://entities/bosses/sandekala.tscn` | `{cond:"flag:mq1_h3", finish_glyph:"sunda_ka"}` | grass | 1 |
 | `m` | oncor NW | `res://entities/bosses/oncor.tscn` | `{oncor_id:"nw"}` | grass | 1 |
 | `n` | oncor NE | `res://entities/bosses/oncor.tscn` | `{oncor_id:"ne"}` | grass | 1 |
 | `p` | oncor SW | `res://entities/bosses/oncor.tscn` | `{oncor_id:"sw"}` | grass | 1 |
@@ -482,13 +482,14 @@ Roaming packs (loose, respawn like bonfire enemies): L1 2 boars `y` (41,8), (43,
 | `a` | prop, outer hamlet oncor lantern 2 (MQ1 1.8) | `res://entities/npc/npc.tscn` | `{npc_id:"leuwi_oncor_2"}` | grass | 1 |
 | `d` | prop, outer hamlet oncor lantern 3 (MQ1 1.8) | `res://entities/npc/npc.tscn` | `{npc_id:"leuwi_oncor_3"}` | grass | 1 |
 | `E` | encounter leuwi_mist, shades out of the dusk mist while you light the lanterns (MQ1 1.8, the Sandekala fight in small) | `res://entities/world/encounter.tscn` | `{area_id:"leuwi_mist", cond:"step:mq1=7", size:Vector2i(10, 7), waves:[[[res://entities/enemies/jurig_leuweung.tscn, Vector2i(-3, 0)], [res://entities/enemies/jurig_leuweung.tscn, Vector2i(2, 1)]]]}` | grass | 1 |
+| `A` | arena gate (combat.md 5.3 v7): the room's two mouths, the hamlet funnel and the tunnel foot; open until the threshold two tiles inside is crossed, then a wall of burning strokes until Sandekala falls | `res://entities/world/arena_gate.tscn` | `{side:"s"}` | path | 4 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | passage | (44,1)-(45,9), (22,8)-(45,9), (22,10)-(23,18) | Long winding approach; two loose Faceless pairs (see passage packs), nothing else | exit `X` (44..45,0), spawn `e` (44,1) | none |
 | sande room | (12,19)-(34,30) 23x12 | Sandekala fight (step 1.10, main path); the K1 memory returns you to the prints `3` at its funnel | Sandekala `S` (23,24), oncor `m` (16,21) `n` (30,21) `p` (16,28) `s` (30,28), trigger `j` (23,20) | 1.10 `sandekala` |
-| hamlet | (18,11)-(27,17) 10x7, clearing carved off the passage (the corridor x 22..23 runs through it) | The gorge-side hamlet at dusk (hook of K1). Two huts `b` (19..20,12..13) (26..27,12..13), river edge `~` (18..19,15..17) | mother `M` (24,14), trigger `h` (22,13), sandal `1` (20,16), oncor `2` (25,12), codex `c` (26,16), prints `3` (23,18) at the funnel to the sande room | 1.5 `sunda_hamlet`, 1.6 `leuwi_mother`, `sandal`, 1.7 `oncor`, `gorge_prints`, 1.8 `leuwi_outer_oncor` (`O`), 1.9 `k1_maghrib` |
+| hamlet | (18,11)-(27,17) 10x7, clearing carved off the passage (the corridor x 22..23 runs through it) | The gorge-side hamlet at dusk (hook of K1). Two huts `b` (19..20,12..13) (26..27,12..13), river edge `~` (18..19,15..17) | mother `M` (24,14), trigger `h` (22,13), sandal `1` (20,16), oncor `2` (25,12), codex `c` (26,16), prints `3` (23,17) above the funnel; arena gates `A` (22..23,18) and (32..33,18) | 1.5 `sunda_hamlet`, 1.6 `leuwi_mother`, `sandal`, 1.7 `oncor`, `gorge_prints`, 1.8 `leuwi_outer_oncor` (`O`), 1.9 `k1_maghrib` |
 | gorge tunnel | (32,10)-(33,18) 2x9 | Shortcut from the sande room's north edge up to the passage (32..33,9). Gate `=` (32..33,14), open side `s` | gate `=` `sc:ts_leuwi` | none |
 | passage packs | (28,8)-(40,9) | Two pairs of loose Faceless on the long run | `w` (28,8) (29,9), (38,8) (40,9) | 1.5 `travel` |
 
@@ -730,7 +731,7 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
-| east lane | (49,16)-(58,17) 10x2 | Entry lane from ts_situ | exit `X` (59,16..17), spawn `e` (58,16) | none |
+| east lane | (49,16)-(58,17) 10x2 | Entry lane from ts_situ | exit `X` (59,16..17), spawn `e` (58,16), arena gate `A` (31,16..17) | none |
 | crater arena | (19,8)-(48,24) 30x17 | Crater floor, last fight, long boar lanes | E7 `O` (34,16) | `sunda_crater` |
 | west lane | (11,16)-(18,17) 8x2 | Lane from the arena to P2 | none | none |
 | p2 | (1,13)-(10,19) 10x7 | Petilasan 2, no enemies. The exit to ts_kawah is here. | petilasan `Q` (6,16), exit `%` (0,16..17), spawn `@` (1,16) | 1.20 `sunda_2`; 1.21 `lc1_voice` (LC1 entry) |
@@ -767,8 +768,8 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 ########......................##############################
 ########.G....................##############################
 ########...................Y..##############################
-########...................q..,,,,,,,,,,,,,,,,,,,,,,,,,,,,eX
-########...S...B.C.........Z..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,X
+########...................q..,A,,,,,,,,,,,,,,,,,,,,,,,,,,eX
+########...S...B.C.........Z..,A,,,,,,,,,,,,,,,,,,,,,,,,,,,X
 ########...................P..##############################
 ########......................##############################
 ########.V....................##############################
@@ -792,8 +793,8 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 |------|------|-------|-------|-------|-------|
 | `X` | exit to ts_kawah_jalan (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"ts_kawah_jalan", spawn_id:"from_ts_kawah"}` | path | 2 |
 | `e` | spawn, arrival from ts_kawah_jalan | `res://entities/world/spawn.tscn` | `{id:"from_ts_kawah_jalan"}` | path | 1 |
-| `B` | boss Sangkuriang (MQ1 1.24), wakes once the cloth hangs on the eastern post (`rarang_post`) | `res://entities/bosses/sangkuriang.tscn` | `{cond:"flag:mq1_8,flag:rarang_post"}` | path | 1 |
-| `C` | boss Faceless captain (MQ1 1.22) | `res://entities/bosses/faceless_captain.tscn` | `{}` | path | 1 |
+| `B` | boss Sangkuriang (MQ1 1.24), wakes once the cloth hangs on the eastern post (`rarang_post`) | `res://entities/bosses/sangkuriang.tscn` | `{cond:"flag:mq1_8,flag:rarang_post", finish_glyph:"sunda_ca"}` | path | 1 |
+| `C` | boss Faceless captain (MQ1 1.22) | `res://entities/bosses/faceless_captain.tscn` | `{finish_glyph:"sunda_ca"}` | path | 1 |
 | `Z` | arena post, east post (hang boeh rarang) | `res://entities/bosses/arena_post.tscn` | `{post_id:"east"}` | path | 1 |
 | `P` | trigger, Laras's marked eastern post (MQ1 1.21/1.24 `crater_post`, gated by `laras_key:crater_post`) | `res://entities/world/trigger.tscn` | `{trigger_id:"crater_post", size:Vector2i(3,3), cond:"flag:laras_key_crater_post"}` | path | 1 |
 | `S` | NPC-scene spot, the cracked seal-stone (Crater Seal); the Captain smashes it at the end of 1.22 | `res://entities/npc/npc.tscn` | `{npc_id:"seal_stone", cond:"!flag:mq1_8"}` | path | 1 |
@@ -805,11 +806,12 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 | `R` | clue, the ribs of the half-built boat; pulls you into K2 (MQ1 1.23) | `res://entities/world/clue.tscn` | `{clue_id:"boat_ribs", memory_id:"k2_dayang_sumbi", cond:"flag:mq1_h7"}` | path | 1 |
 | `n` | codex spot, the cracked Crater Seal (the arena's optional find; id ASSUMED) | `res://entities/world/pickup.tscn` | `{codex_id:"crater_seal"}` | path | 1 |
 | `q` | prop, the eastern post Laras marked in LC1: hang the boeh rarang (MQ1 1.24; needs the cloth, sets `rarang_post` and `post:east`) | `res://entities/npc/npc.tscn` | `{npc_id:"rarang_post"}` | path | 1 |
+| `A` | arena gate (combat.md 5.3 v7) at the causeway's arena end; open until the threshold two tiles inside is crossed, then a wall of burning strokes until the boss falls | `res://entities/world/arena_gate.tscn` | `{side:"w"}` | path | 2 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
-| causeway | (30,16)-(58,17) 29x2 | Straight walk to the arena | exit `X` (59,16..17), spawn `e` (58,16) | none |
+| causeway | (30,16)-(58,17) 29x2 | Straight walk to the arena | exit `X` (59,16..17), spawn `e` (58,16), arena gate `A` (31,16..17) | none |
 | arena | (8,11)-(29,23) 22x13 | Nagawiru's lair: the Captain (1.22), the restore beat, Sangkuriang (1.24) | captain `C` (17,17), boss `B` (15,17), seal-stone `S` (11,17), Ciung `G` (9,14), Nagawiru `V` (9,20), Hunter `H` (9,12), Naganingrum `Y` (27,15), arena post `Z` (27,17, east side) | 1.22 `faceless_captain`, beat `crater_seal` (restore), 1.24 `sangkuriang` |
 
 ### Encounters

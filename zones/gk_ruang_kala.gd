@@ -3,8 +3,8 @@ extends Zone
 
 const MAP := [
 	"#############################NN#############################",
-	"#############################n_#############################",
-	"##########################________##########################",
+	"#############################AA#############################",
+	"##########################___n____##########################",
 	"#####################__________________#####################",
 	"##################________________________##################",
 	"################____________________________################",
@@ -40,8 +40,9 @@ const MAP := [
 
 const SPOTS := {
 	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "gk_lupa", "spawn_id": "from_gk_ruang_kala"}, "tile": "_"},   # exit to gk_lupa (north edge, 2 tiles)
+	"A": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "s"}, "tile": "_"},   # arena gate (combat.md 5.3 v7) at the north corridor mouth; open until the threshold two tiles inside is crossed
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_gk_lupa"}, "tile": "_"},   # spawn, arrival from gk_lupa
-	"B": {"scene": "res://entities/bosses/batara_kala.tscn", "props": {"cond": "flag:mq5_lc"}, "tile": "_"},   # boss Batara Kala (arena centre; wakes after LC6, `flag:mq5_lc`, step 5.13; phase 3 is the ruwatan setpiece)
+	"B": {"scene": "res://entities/bosses/batara_kala.tscn", "props": {"cond": "flag:mq5_lc", "finish_glyph": "jawa_ka"}, "tile": "_"},   # boss Batara Kala (arena centre; wakes after LC6, `flag:mq5_lc`, step 5.13; phase 3 is the ruwatan setpiece)
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "desa_purwa", "spawn_id": "from_gua_kala"}, "tile": "_"},   # exit to desa_purwa (south edge, the lit door, 2 tiles)
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq5_3"}, "tile": "_"},   # kabut, lifts on the boss (one per tile)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "kala_exit", "size": Vector2i(4,2)}, "tile": "_"},   # trigger, quest marker kala_exit (4x2)

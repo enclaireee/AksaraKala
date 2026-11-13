@@ -56,6 +56,7 @@ var active := true   # EliteGuard flips it
 var state := State.IDLE
 var state_time := 0.0
 var phase := 1
+var phase_marks := [0.66, 0.33]   # the boss bar draws a tick at each muster (hud.gd)
 var engaged := false
 var attacks := 0
 var moves_used: Dictionary = {}
@@ -98,7 +99,7 @@ func _tick(delta: float) -> void:
 	if target != null:
 		to_t = target.global_position - global_position
 	var d := to_t.length()
-	if d <= engage_range:
+	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
 	match state:
 		State.IDLE:
@@ -143,6 +144,7 @@ func _enter(s: State) -> void:
 	if s in [State.IDLE, State.CHASE, State.RECOVER, State.STUN]:
 		BossKit.anim_stop(self)
 	if s == State.STUN:
+		BossKit.open(self, stun_time)
 		_move = ""
 		attack_hitbox.deactivate()
 	body.modulate = STUNNED if s == State.STUN else (Color(1.0, 0.45, 0.45) if s in [State.WINDUP, State.MUSTER] else Color.WHITE)
@@ -261,6 +263,8 @@ func _run_move(delta: float) -> void:
 
 
 func _end_move(rec: float) -> void:
+	if rec >= heavy_recovery:
+		BossKit.open(self, rec)
 	_move = ""
 	_recover_t = rec
 	_enter(State.RECOVER)
@@ -400,6 +404,8 @@ func _run_edict() -> void:
 
 func _begin_muster() -> void:
 	_enter(State.MUSTER)
+	BossKit.hint(self, "BOSS_HINT_CAPTAIN", 0.0)   # every muster: it happens twice a fight
+	BossKit.mark(self, self, "sunda_ca", muster_windup, 20.0)
 	BossKit.anim(self, "cast", 8.0, true)
 	_track(BossKit.telegraph_circle(self, global_position, 28.0, muster_windup, GOLD))
 

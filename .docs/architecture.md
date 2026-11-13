@@ -40,7 +40,7 @@ res://
     bosses/        one scene and script per boss, plus arena helpers (`oncor`, `arena_post`, `pillar`, `pouch_field`, `curse_stake`)
     npc/           npc.tscn
     petilasan/     petilasan.tscn
-    world/         interactable.gd and its scenes: chest, clue, encounter, exit, kabut, pickup, shortcut, spawn, trigger
+    world/         interactable.gd and its scenes: arena_gate (boss arena mouth, group `arena_gate`, combat.md 5.3 v7), chest, clue, encounter, exit, kabut, pickup, shortcut, spawn, trigger
   zones/           one scene and script per area (49 scenes, [world.md](world.md)), generated from `.docs/zones/*.md`; `zones/kelir/` holds the memory scenes
   ui/              hud, menu (status, gear, aksara, journal, codex in one scene), dialogue box, class select, name entry, glyph lesson, cast overlay, death screen, title, prologue, story beat, epilogue
   spells/          spell scenes (projectile, burst, ward, summon)
@@ -141,6 +141,8 @@ Custom `Resource` types so adding content is data entry:
 - Boss and elite scenes are referenced by path and loaded at runtime, so a zone imports cleanly before its boss exists.
 - Persistent state (killed bosses, opened fog gates, chests) lives in `Game`, not in the scene.
 - Normal enemies respawn by reloading the zone scene (state is intentionally not persisted for them).
+
+**Boss arenas (combat.md 5.3 v7, ASSUMED).** A zone doc places `arena_gate` on each arena mouth tile with `{side}` = where the arena lies. `Zones.sealed` (set by a shut gate) makes `Zones.go_to` return at once. `Game.boss_retry = {zone, pos}` is stored at the threshold and used once by `Zones.respawn`. Staged features (threshold engage, entrance pan, kneel) exist only in zones with a gate; a gateless boss (Hariang Banga at the open ford, Buto Ijo's road ambushes, the test scenes) engages by range as before. `ui/boss_stage.gd` is in group `boss_stage`. Text rows are set with `python3 tools/set_text.py <csv> <rows.json>` (`{KEY: [id, en]}`), then import.
 
 ## 9b. Kelir memory, Clue and lontar shimmer (Story v4, **ASSUMED**, all numbers **TUNE**)
 No new autoload. `Zones` gets two methods; `Game` keeps the return point so it is saved. Spec for [story.md](story.md) "Hunts".

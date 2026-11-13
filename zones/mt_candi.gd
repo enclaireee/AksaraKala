@@ -24,7 +24,7 @@ const MAP := [
 	"#............#,,,,,,,,,,,,,,,,I,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
 	"#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
-	"#............################,,,#################........................................#",
+	"#............################ggg#################........................................#",
 	"#............................M,,..................,,.....................................#",
 	"#............................,,,H..R..............,,.....................................#",
 	"#............................,P,.L................,,.....................................#",
@@ -61,7 +61,8 @@ const SPOTS := {
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "mt_gapura", "spawn_id": "from_mt_candi"}, "tile": ","},   # exit to mt_gapura (west edge, front yard, the `sc:mt_candi_gapura` pocket, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_mt_gapura"}, "tile": ","},   # spawn, arrival from mt_gapura (through the gate)
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "mataram_2"}, "tile": ","},   # petilasan 2
-	"B": {"scene": "res://entities/bosses/bandung_bondowoso.tscn", "props": {"cond": "flag:mq2_lc"}, "tile": ","},   # boss Bandung Bondowoso (2.19), awakened after the camp turn, the K3 memory and the LC3 chapter (`flag:mq2_lc`)
+	"B": {"scene": "res://entities/bosses/bandung_bondowoso.tscn", "props": {"cond": "flag:mq2_lc", "finish_glyph": "jawa_ca"}, "tile": ","},   # boss Bandung Bondowoso (2.19), awakened after the camp turn, the K3 memory and the LC3 chapter (`flag:mq2_lc`)
+	"g": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "n"}, "tile": ","},   # arena gate (combat.md 5.3 v7) in the gap south of the arena; open until the threshold two tiles inside is crossed
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_camp", "cond": "flag:mq2_6", "size": Vector2i(30,16), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(0,4)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(0,-6)]], [["res://entities/enemies/faceless.tscn", Vector2i(-8,2)], ["res://entities/enemies/faceless.tscn", Vector2i(8,2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(-4,-6)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-6)]]]}, "tile": ","},   # encounter mataram_camp (**setpiece**, 2.14: the Pamali stone wakes; hold the court until the seal cracks, MQ2 2.14)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_candi", "size": Vector2i(28,16), "waves": [[["res://entities/enemies/genderuwo.tscn", Vector2i(8,-4)], ["res://entities/enemies/arca.tscn", Vector2i(-12,-5)], ["res://entities/enemies/arca.tscn", Vector2i(12,-5)]], [["res://entities/enemies/tuyul.tscn", Vector2i(0,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,0)], ["res://entities/enemies/tuyul.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter mataram_candi
 	"s": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "batu_bintang"}, "tile": "."},   # pickup, batu bintang (SQ-T3 meteorite fragment)

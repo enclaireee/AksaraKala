@@ -66,6 +66,7 @@ var copies: Array[BarmaWijaya] = []
 var active := true         # EliteGuard
 var state := State.IDLE
 var state_time := 0.0
+var phase_marks := [0.7, 0.35]   # the boss bar draws a tick at each glamour
 var engaged := false
 var attacks := 0
 var glamours := 0
@@ -116,7 +117,7 @@ func _tick(delta: float) -> void:
 		return
 	var to_t := target.global_position - global_position
 	var d := to_t.length()
-	if d <= engage_range:
+	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
 	match state:
 		State.IDLE:
@@ -500,6 +501,8 @@ func _glamour() -> void:
 		get_parent().add_child(c)
 		copies.append(c)
 		figs.append(c)
+		BossKit.mark(self, c, "", 60.0, 14.0)   # every false face wears the ring; the king is the one without
+	BossKit.hint(self, "BOSS_HINT_BARMA", 0.0)   # twice a fight
 	figs.shuffle()
 	var at := global_position
 	for i in figs.size():
@@ -537,6 +540,7 @@ func _copy_broken(c: BarmaWijaya) -> void:
 	if copies.is_empty() and not dead:
 		health.invincible_time = 0.0
 		_enter(State.STUN)
+		BossKit.open(self, stun_time + (sabotage_stun_bonus if _sabotaged() else 0.0))
 		BossKit.flash_fx(self, global_position + Vector2(0, -12), 28.0, 0.4, Color(0.7, 0.75, 1.0))
 
 

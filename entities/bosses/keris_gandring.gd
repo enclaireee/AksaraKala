@@ -148,6 +148,8 @@ var _flur_total := 3
 var _salvo := 0
 var _marks: Array[Vector2] = []
 var _mark_tgs: Array[Node2D] = []
+@export var cond := ""   # Game.check condition; empty = always on
+var active := true       # EliteGuard flips it
 
 
 func _ready() -> void:
@@ -155,6 +157,10 @@ func _ready() -> void:
 	if dead or is_queued_for_deletion():
 		return
 	add_to_group("boss")
+	if cond != "":   # hidden and inert until Game.check(cond) holds (elite_guard.gd); the zone doc passes it
+		var g := EliteGuard.new()
+		g.cond = cond
+		add_child(g)
 	_start = global_position
 	stake_interval = stake_every
 	health.changed.connect(_on_health)
@@ -184,7 +190,7 @@ func _tick(delta: float) -> void:
 	if target != null:
 		to_t = target.global_position - global_position
 	var d := to_t.length()
-	if d <= engage_range:
+	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
 	if engaged and state != State.RING:
 		_run_stakes(delta)
@@ -247,6 +253,11 @@ func _run_stakes(delta: float) -> void:
 			st.start_mark()
 			if _sabotaged() and st == _seventh():   # ASSUMED (v5): "seventh" = the highest stake_id
 				st._left = st.mark_time * sabotage_mark_mult
+	for s in all:
+		if s.is_lit() and target != null and s.global_position.distance_to(target.global_position) < 160.0:
+			BossKit.mark(self, s, "jawa_ha", 6.0, 14.0)   # a lit stake: Jawa Ha puts it out
+	if lit_count() > 0:
+		BossKit.hint(self, "BOSS_HINT_KERIS")
 	if not all.is_empty() and all.all(func(s: CurseStake) -> bool: return s.is_lit()):
 		_begin_ring()
 
@@ -369,6 +380,8 @@ func _enter(s: State) -> void:
 	state_time = 0.0
 	velocity = Vector2.ZERO
 	body.modulate = Color(1.0, 0.45, 0.45) if s in [State.DART_WIND, State.FAN_WIND, State.RING, State.MOVE] else Color.WHITE
+	if s == State.RECOVER and _rec >= heavy_recovery:
+		BossKit.open(self, _rec)
 	if s == State.CHASE or s == State.RECOVER or s == State.PAUSE:
 		BossKit.anim_stop(self)
 

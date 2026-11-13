@@ -843,7 +843,7 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 #............#,,,,,,,,,,,,,,,,I,,,,,,,,,,,,,,,,,#........................................#
 #............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
 #............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
-#............################,,,#################........................................#
+#............################ggg#################........................................#
 #............................M,,..................,,.....................................#
 #............................,,,H..R..............,,.....................................#
 #............................,P,.L................,,.....................................#
@@ -882,7 +882,8 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | `Y` | exit to mt_gapura (west edge, front yard, the `sc:mt_candi_gapura` pocket, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"mt_gapura", spawn_id:"from_mt_candi"}` | path | 2 |
 | `y` | spawn, arrival from mt_gapura (through the gate) | `res://entities/world/spawn.tscn` | `{id:"from_mt_gapura"}` | path | 1 |
 | `P` | petilasan 2 | `res://entities/petilasan/petilasan.tscn` | `{id:"mataram_2"}` | path | 1 |
-| `B` | boss Bandung Bondowoso (2.19), awakened after the camp turn, the K3 memory and the LC3 chapter (`flag:mq2_lc`) | `res://entities/bosses/bandung_bondowoso.tscn` | `{cond:"flag:mq2_lc"}` | path | 1 |
+| `B` | boss Bandung Bondowoso (2.19), awakened after the camp turn, the K3 memory and the LC3 chapter (`flag:mq2_lc`) | `res://entities/bosses/bandung_bondowoso.tscn` | `{cond:"flag:mq2_lc", finish_glyph:"jawa_ca"}` | path | 1 |
+| `g` | arena gate (combat.md 5.3 v7) in the gap south of the arena; open until the threshold two tiles inside is crossed | `res://entities/world/arena_gate.tscn` | `{side:"n"}` | path | 3 |
 | `F` | encounter mataram_camp (**setpiece**, 2.14: the Pamali stone wakes; hold the court until the seal cracks, MQ2 2.14) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp", cond:"flag:mq2_6", size:Vector2i(30,16), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(0,4)], [res://entities/enemies/faceless_archer.tscn, Vector2i(0,-6)]], [[res://entities/enemies/faceless.tscn, Vector2i(-8,2)], [res://entities/enemies/faceless.tscn, Vector2i(8,2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(-4,-6)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,-6)]]]}` | path | 1 |
 | `E` | encounter mataram_candi | `res://entities/world/encounter.tscn` | `{area_id:"mataram_candi", size:Vector2i(28,16), waves:[[[res://entities/enemies/genderuwo.tscn, Vector2i(8,-4)], [res://entities/enemies/arca.tscn, Vector2i(-12,-5)], [res://entities/enemies/arca.tscn, Vector2i(12,-5)]], [[res://entities/enemies/tuyul.tscn, Vector2i(0,-3)], [res://entities/enemies/tuyul.tscn, Vector2i(-4,0)], [res://entities/enemies/tuyul.tscn, Vector2i(4,0)]]]}` | path | 1 |
 | `s` | pickup, batu bintang (SQ-T3 meteorite fragment) | `res://entities/world/pickup.tscn` | `{item_id:"batu_bintang"}` | grass | 1 |
@@ -909,7 +910,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | east yard | (66,28)-(88,48) 23x21 | Side yard | batu bintang `s` (72,36), chest `c` (80,30) | item_picked:batu_bintang |
 | west road | (1,26)-(28,27) 28x2 | Road to the petilasan, 30 tiles from the exit | exit `Y` (0,26..27), spawn `y` (1,26) | `sc:mt_candi_gapura` far side |
 | petilasan court | (29,23)-(31,27) 3x5 | Rest right before the arena, no fight | P (30,25) | LC3 clue `lc3_lontar` (32,24) at `mataram_2`; K3 memory clue `k3_lesung` (29,23) |
-| boss arena | (14,2)-(47,21) 34x20 | 34x20 open floor, gate gap (29..31,22), pillars spawn 5-8 tiles around B | camp F (30,12), B (30,9), beat trigger `T` (30,15) | 2.14 `mataram_camp` (sets `mq2_7`), beat `camp`; 2.19 `bandung_bondowoso` |
+| boss arena | (14,2)-(47,21) 34x20 | 34x20 open floor, gate gap (29..31,22) holds the arena gate `g` (side n), pillars spawn 5-8 tiles around B | camp F (30,12), B (30,9), beat trigger `T` (30,15) | 2.14 `mataram_camp` (sets `mq2_7`), beat `camp`; 2.19 `bandung_bondowoso` |
 | clue spots | rubble (60,41) east side of the front yard; `lesung_mid` (33,26) beside the petilasan court; `ka_strip` (28,16) in the court by the `camp` beat spot; `k3_lesung` (29,23) in the petilasan court | The K3 Hunt clues, walked in this order | clues `C` `D` `G`, `k3_lesung` `M` (29,23), hauler `A` (56,34), `lc3_lontar` `H` (32,24) | 2.15 `all` of three, 2.14 talk, 2.16, 2.18 memory |
 | camp sequence | the arena, gate (30,19), captain (20,9), camp (30,12) | In order: gate fight, captain miniboss, camp setpiece | E `I` (30,19), E `J` (20,9), `F` (30,12) | 2.14 |
 

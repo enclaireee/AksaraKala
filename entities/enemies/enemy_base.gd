@@ -8,6 +8,7 @@ class_name EnemyBase extends CharacterBody2D
 @export var ilmu := 6               # Ilmu awarded on death (balance.md 6). TUNE: chaser 6, shooter 6, tank 15
 @export var kind := ""              # quests count kills by this (Events.enemy_killed)
 @export var drop_chance := 0.15     # common enemies (bestiary.md Drops). TUNE. Elites (unique_id) always drop
+@export var finish_glyph := ""      # bosses: the glyph that ends the kneel at 0 HP (combat.md 5.3 v7). "" = no kneel
 @export var unique_id := ""         # bosses and minibosses: stays dead once listed in Game.killed (rpg.md 11)
 
 @onready var body: Polygon2D = $Body
@@ -44,7 +45,7 @@ func _ready() -> void:
 	home = global_position
 	target = get_tree().get_first_node_in_group("player") as Node2D
 	hurtbox.hurt.connect(_on_hurt)
-	health.died.connect(_on_died)
+	health.died.connect(func() -> void: BossKit.finisher(self, _on_died))
 	poise = _max_poise()
 
 
@@ -178,7 +179,7 @@ func _on_died() -> void:
 	attack_hitbox.deactivate()
 	hurtbox.set_deferred("monitorable", false)
 	body.modulate = Color(0.4, 0.4, 0.4)
-	# ponytail: no death anim yet.
+	BossKit.anim(self, "death", 12.0, true)   # bosses with a death row (enemy_art.gd); others keep the grey flash
 	_drop()
 	var game := get_node("/root/Game")
 	game.add_ilmu(ilmu)   # ASSUMED: awarded directly, no pickups

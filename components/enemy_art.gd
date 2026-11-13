@@ -4,12 +4,14 @@ class_name EnemyArt extends Sprite2D
 ## Sheet: assets/art/enemies/<scene name>.png, 4 columns x 4 rows:
 ##   row 0 idle, row 1 walk, row 2 telegraph (cols 0-1 windup, 2-3 strike), row 3 hurt. Art faces right; flipped to face the player.
 ## Bosses may add assets/art/enemies/<name>_moves.png (same cell size, 4x4, tools/gen_boss_moves.py): row 0 cast, 1 slam,
-## 2 dash, 3 roar. `play("slam")` runs a row (BossKit.anim); `stop()` hands control back to the automatic frames.
+## 2 dash, 3 roar,
+## and (boss fights v7) 4 rise (entrance), 5 kneel, 6 death. Kneel and death also play while the host is `dead`. `play("slam")` runs a row (BossKit.anim); `stop()` hands control back to the automatic frames.
 
 const DIR := "res://assets/art/enemies/"
 const IDLE_FPS := 4.0
 const WALK_FPS := 9.0
-const MOVE_ROWS := {"cast": 0, "slam": 1, "dash": 2, "roar": 3}
+const MOVE_ROWS := {"cast": 0, "slam": 1, "dash": 2, "roar": 3, "rise": 4, "kneel": 5, "death": 6}
+const LAST_ROWS := 5   # rows from here on show on a dead host
 
 var host: CharacterBody2D
 var cell := Vector2i(16, 24)
@@ -64,19 +66,21 @@ static func _find(e: Node) -> String:
 
 
 ## Run a row of the moves sheet. hold: stay on the last frame until stop(); otherwise return to auto frames after it.
-func play(anim_name: String, fps := 10.0, hold := true) -> void:
-	if moves_tex == null or not MOVE_ROWS.has(anim_name):
-		return
+func play(anim_name: String, fps := 10.0, hold := true) -> bool:
+	if moves_tex == null or not MOVE_ROWS.has(anim_name) or (int(MOVE_ROWS[anim_name]) + 1) * cell.y > moves_tex.get_height():
+		return false
 	_move = anim_name
 	_move_t = 0.0
 	_move_fps = fps
 	_move_hold = hold
+	return true
 
 
 func stop() -> void:
 	_move = ""
 	if texture != base_tex and base_tex != null:
 		texture = base_tex
+		vframes = 4
 
 
 func _process(delta: float) -> void:
@@ -103,7 +107,7 @@ func _process(delta: float) -> void:
 	var raw_hb: Variant = host.get("attack_hitbox")
 	var hb: Area2D = raw_hb as Area2D if is_instance_valid(raw_hb) else null
 	var sh: float = float(host.get("since_hit"))
-	if _move != "" and not is_dead and m.b <= m.r + 0.12:
+	if _move != "" and (not is_dead or int(MOVE_ROWS[_move]) >= LAST_ROWS) and m.b <= m.r + 0.12:
 		_move_t += delta * _move_fps
 		var mf := int(_move_t)
 		if mf >= 4:
@@ -114,6 +118,7 @@ func _process(delta: float) -> void:
 		if _move != "":
 			if texture != moves_tex:
 				texture = moves_tex
+				vframes = moves_tex.get_height() / cell.y
 			frame_coords = Vector2i(mf, int(MOVE_ROWS[_move]))
 			return
 	elif _move != "":

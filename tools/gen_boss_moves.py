@@ -74,6 +74,12 @@ def aura(img, color, strength=1.0, grow=1):
     return out
 
 
+def fade(img, k):
+    out = img.copy()
+    out.putalpha(img.getchannel("A").point(lambda v: int(v * k)))
+    return out
+
+
 def streak(img, n, step, color):
     """Motion streak: fading copies trailing behind (to the left, the art faces right)."""
     out = Image.new("RGBA", img.size, (0, 0, 0, 0))
@@ -90,7 +96,8 @@ def build(name, color, hover):
     sheet = Image.open(os.path.join(DIR, name + ".png")).convert("RGBA")
     base, wind, strike = cell(sheet, 0, 0), cell(sheet, 0, 2), cell(sheet, 2, 2)
     cw, ch = base.size
-    out = P.sheet(cw, ch, 4, 4)
+    out = P.sheet(cw, ch, 4, 7)
+    hurt = P.shear_top(base, -2)   # head bowed; the sheet's own hurt cell is a white flash
 
     def put(col, row, img):
         out.alpha_composite(img, (col * cw, row * ch))
@@ -127,6 +134,24 @@ def build(name, color, hover):
     put(1, 3, aura(sq(base, 1.07, 0.97, 1), color, 0.8, 1))
     put(2, 3, aura(sq(base, 1.1, 0.95, 1), color, 1.0, 2))
     put(3, 3, aura(sq(base, 1.04, 1.0), color, 0.6, 1))
+
+    # row 4: rise (entrance, boss fights v7): from a crouch to full height
+    put(0, 4, sq(hurt, 0.62, 1.06))
+    put(1, 4, aura(sq(base, 0.8, 1.03), color, 0.5))
+    put(2, 4, aura(sq(wind, 1.05, 0.98, 1), color, 0.9, 1))
+    put(3, 4, aura(base, color, 1.0, 2))
+
+    # row 5: kneel (0 HP, waiting for the last glyph)
+    put(0, 5, sq(hurt, 0.92, 1.02))
+    put(1, 5, sq(hurt, 0.8, 1.05))
+    put(2, 5, sq(hurt, 0.7, 1.08))
+    put(3, 5, aura(sq(hurt, 0.68, 1.08), color, 0.5))
+
+    # row 6: death: sinks and comes apart into light
+    put(0, 6, aura(sq(hurt, 0.66, 1.08), color, 0.8, 1))
+    put(1, 6, fade(aura(P.tint(sq(hurt, 0.58, 1.1), color + (255,), 0.35), color, 1.0, 2), 0.8))
+    put(2, 6, fade(aura(P.tint(P.shift(sq(hurt, 0.5, 1.12), 0, -1), color + (255,), 0.6), color, 1.0, 2), 0.5))
+    put(3, 6, fade(aura(P.tint(P.shift(sq(hurt, 0.42, 1.14), 0, -2), color + (255,), 0.85), color, 1.0, 3), 0.22))
     return out
 
 

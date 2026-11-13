@@ -114,6 +114,7 @@ const SHORTCUTS := {"sc:ts_pagar": ["ts_leuweung", "ts_kebun"], "sc:ts_tangga": 
 	"sc:mt_tt": ["tt_sabana", "mt_tegal"], "sc:tt_ladang": ["tt_ladang", "tt_beringin"], "sc:tt_pasir": ["tt_pasir", "tt_sabana"],
 	"sc:gk_lorong": ["gk_lupa", "gk_mulut"]}
 
+var sealed := false       # an arena gate is shut (combat.md 5.3 v7): go_to refuses until it opens
 var current_zone := ""   # set by Zone._ready; "" in scenes that are not a Zone
 var memory_id := ""      # the Kelir memory entered last (enter_memory); gap.tscn reads its data by it
 
@@ -161,7 +162,7 @@ func continue_game() -> void:
 ## zone_id is a ZONES key or a scene path. Calls while a change is running are ignored.
 func go_to(zone_id: String, spawn_id: String, pos := Vector2.INF) -> void:
 	var path: String = ZONES.get(zone_id, zone_id)
-	if _busy:
+	if _busy or sealed:
 		return
 	if not ResourceLoader.exists(path):
 		push_error("Zones.go_to: no scene for zone '%s'" % zone_id)
@@ -291,6 +292,12 @@ func respawn(rested := false) -> void:
 		zone = ZONES.get(mr.zone, mr.zone)
 		at = Vector2(mr.pos[0], mr.pos[1])
 	game.memory_return = {}
+	sealed = false
+	var br: Dictionary = {} if rested else game.boss_retry   # died in a boss arena: back at its door, once
+	game.boss_retry = {}
+	if at == Vector2.INF and not br.is_empty() and ResourceLoader.exists(ZONES.get(br.zone, br.zone)):
+		zone = ZONES.get(br.zone, br.zone)
+		at = Vector2(br.pos[0], br.pos[1])
 	_carry = {}
 	memory_id = ""
 	if zone == "" or not ResourceLoader.exists(zone):

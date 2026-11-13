@@ -705,3 +705,23 @@ Build pieces used (all exist in the engine today): **press-each** (N props, coun
 | SQ-T4 Kuda Kepang | 3.3, troupe at the forge road | Text only | Troupe dances in the Epilogue |
 | SQ-K1 Hatchlings | 4.9, fisher's child | Text only | Turtles on the beach in C4 part 3 |
 | SQ-K2 Bajul Putih | 4.10, Mbah Wiryo | Text only | Mbah Wiryo's line at the cliff |
+
+## 10. Boss chapters v7 (user call 2026-11-13, **ASSUMED**)
+
+Overrides §4–§9 where they differ. Before a boss door the quest text must say four things in plain words: **who** the boss is, **why it is here**, **what harm** it does to people, and **the trick** of the fight. The fight then only reminds ([combat.md](combat.md) 5.3 v7: hint pill, ring on the gimmick object). The harm and why-here lines below are our additions inside the folklore (**ASSUMED**); a line marked **VERIFY** states a culture fact and needs a source before it ships.
+
+| Boss | Why here / harm (quest text) | Trick taught | Steps that carry it | Gate | Kneel glyph |
+|---|---|---|---|---|---|
+| Faceless Captain | Kala's officer, sent to break the Crater Seal; the lake children lose their faces first | Sunda Ca during his muster call | 1.18, 1.22 | `ts_kawah` W | Sunda Ca |
+| Sangkuriang | Replays his one night: fells the forest and dams the river for the boat, so paddies drown | Cloth on the east post, Sunda Ca when dawn is near | 1.20, 1.23, 1.24 | `ts_kawah` W | Sunda Ca |
+| Sandekala (optional) | Takes children who stay out at maghrib (**VERIFY**) | Light the oncor; it cannot be hurt in the dark | 1.10 | `ts_leuwi` | Sunda Ka |
+| Barma Wijaya | A minister in the king's face: rules by decree, exiled the queen, conscripts the town | Spells break the copies; the last break opens him | g.19, g.20 | `kg_keraton` throne door | none |
+| Hariang Banga | Sent to take the throne from his brother; blood must not be spilled at the Pamali (**VERIFY**) | Jawa Na dash through his guard, or strike from behind | 2.23, 2.24 | none (open ford) | none (he yields) |
+| Bandung Bondowoso | A thousand temples in one night for Roro Jonggrang (**VERIFY**); villagers are the stone (**ASSUMED**) | Jawa Ca calls the false dawn, then break the pillars | 2.16, 2.18, 2.19 | `mt_candi` S gap | Jawa Ca |
+| Buto Ijo | Comes for the promised child, Timun Mas (**VERIFY**); farmers hide their children and leave the fields | Lure him onto the pouch fields | 3.9 | `tt_ladang` W | none |
+| Keris Mpu Gandring | The unfinished blade's curse takes one smith family a generation, six gone (**ASSUMED**; the curse's count in the Pararaton is **VERIFY**) | Jawa Ha puts out a lit stake | 3.19 | `tt_candi` W | Jawa Ha |
+| Nameless Hunter | Gave Kala his own name; hunts anyone who still has one | Ga Ward blocks Forget | 3.22 | `tt_candi` W | Sunda Ga |
+| Batara Kala | Owed every child born under a bad sign because the ruwatan was never finished (**VERIFY**) | Draw the shield's glyphs in order | 5.12, 5.13 | `gk_ruang_kala` N | Jawa Ka |
+
+**Not built yet (v7 plan):** the rehearsal step before each door (teaching is text only today, except the practice stake and the lanterns that already existed), redrawn arenas and phase-2 floor changes, entrance / kneel / death frames, the "Cara melawan" codex paragraph. The arrow rule: a sub-goal on `clue_examined:x` or `talked_to:x` without its own marker points at `x` in the step's marker zone (`Game.objective_marker`, checked by `tools/quest_audit.py` Q4).
+
