@@ -41,8 +41,8 @@ All fonts and assets adhere to open-source or permissive licenses:
 |---|---|---|---|---|
 | **Tiny5** | https://github.com/google/fonts/tree/main/ofl/tiny5 | SIL OFL 1.1 | Body text, labels, dialogue, HUD, menus (8 px) | Shipped (`assets/fonts/OFL_Tiny5.txt`) |
 | **Jersey 10 / Jersey 15** | https://github.com/google/fonts/tree/main/ofl/jersey10 | SIL OFL 1.1 | Headings (10 at 19), display titles (15 at 27) | Shipped (`assets/fonts/OFL_Jersey.txt`) |
-| **Noto Sans Sundanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Sunda character rendering | Shipped |
-| **Noto Sans Javanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Jawa character rendering | Shipped |
+| **Noto Sans Sundanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Sunda character rendering | Shipped (`assets/fonts/OFL_Noto.txt`) |
+| **Noto Sans Javanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Jawa character rendering | Shipped (`assets/fonts/OFL_Noto.txt`) |
 | **Dungeon Tileset II** | https://0x72.itch.io/dungeontileset-ii | CC0 | Prototyping reference | CC0 Public Domain |
 
 *(Note: UI type is pixel fonts only, at their grid sizes ([ui.md](ui.md) 1). Almendra and Crimson Pro were removed in UI v3; the game logo is pixel art, not a font.)*
@@ -52,7 +52,11 @@ All fonts and assets adhere to open-source or permissive licenses:
 ## 4. Cultural & Audio References
 
 ### 4.1 Audio Sources & Recording
-- **Sources and credits per sound are in `tools/audio/sources/{sfx,amb,music}.json`** (`credits` keys; set-piece music is Kevin MacLeod, incompetech.com, CC BY 4.0; instrument multisamples are VSCO-2 CE and VCSL, CC0). They are not cleared for release: check every licence before the game goes public. See [audio.md](audio.md).
+- **Music (`tools/audio/sources/music.json`):** 14 set-piece tracks by Kevin MacLeod (incompetech.com), **CC BY 4.0** (credited in-game in `ui/title.gd` About card). Composed region layers and stingers (`tools/gen_music.py`) use recorded orchestral/percussion multisamples from **VSCO-2 CE** and **VCSL**, **CC0** (credited in `ui/title.gd`).
+- **Cleared SFX packs (`tools/audio/sources/sfx.json`):**
+  - **Kenney RPG Sounds & Interface Sounds (1.0)** (`oga_kenney_rpg`, `oga_kenney_iface`): **CC0** (`License.txt` / `license.txt` verified in `tools/audio/raw/`).
+  - **Socapex - Evol Online SFX - Punches and hits** (`oga_punches`): **CC BY 3.0 / CC0** Freesound contributors (`LICENSES.txt` verified in `tools/audio/raw/`; 5 WAVs used).
+- **Uncleared SFX & Ambience (`tools/audio/sources/{sfx,amb}.json`):** Remaining OpenGameArt packs (`oga_*`) and Freesound URLs (`freesound/*`, `amb_src/*`) do not yet have recorded license metadata in the JSON manifests and are not cleared for public release without checking each source URL. See [audio.md](audio.md).
 - **Not used yet (candidates if recordings replace the generator):** "Kendang, Kendhang or Gendang" by redafs (Freesound 348234), **CC BY 4.0** (attribution required); Demung hits by duniapanggung (Freesound), CC0. Original recordings or commissioned degung and gamelan would replace files one by one; ids and code stay the same.
 
 ### 4.2 Verified Folklore Sources (Secondary Research)

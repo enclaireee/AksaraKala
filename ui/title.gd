@@ -429,13 +429,26 @@ func _build_about(v: VBoxContainer) -> void:
 	v.add_child(_row(UIFx.text("Kementerian Kebudayaan Republik Indonesia", "body", UIFx.DIM)))
 	_section(v, "UI_ABOUT_BUILT_WITH")
 	v.add_child(_row(UIFx.text("Godot Engine", "body", UIFx.TEXT)))
-	v.add_child(_row(UIFx.text("Tiny5, Jersey 10 / 15, Noto Sans (SIL OFL)", "body", UIFx.DIM)))
+	var fonts := UIFx.text("Tiny5, Jersey 10 / 15, Noto Sans Sundanese & Javanese (SIL OFL 1.1)", "body", UIFx.DIM)
+	fonts.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	fonts.custom_minimum_size.x = v.custom_minimum_size.x - INDENT
+	v.add_child(_row(fonts))
 	_section(v, "UI_ABOUT_MUSIC")
 	v.add_child(_row(UIFx.text(MUSIC_BY, "body", UIFx.TEXT)))
 	var tracks := UIFx.text(", ".join(MUSIC), "body", UIFx.DIM)
 	tracks.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	tracks.custom_minimum_size.x = v.custom_minimum_size.x - INDENT
 	v.add_child(_row(tracks))
+	_section(v, "UI_ABOUT_AUDIO")
+	for line in [
+		"VSCO-2 CE & VCSL (CC0)",
+		"Kenney RPG & Interface Sounds (CC0)",
+		"Socapex - Evol Online SFX (CC BY 3.0)"
+	]:
+		var lbl := UIFx.text(line, "body", UIFx.DIM)
+		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		lbl.custom_minimum_size.x = v.custom_minimum_size.x - INDENT
+		v.add_child(_row(lbl))
 
 
 ## Texts built from more than one key (they do not retranslate on their own).

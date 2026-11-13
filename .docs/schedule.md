@@ -135,7 +135,7 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 - Exit: someone unfamiliar with the game can finish it smoothly without assistance.
 
 ## Phase 8: Release
-- [ ] Export builds for macOS, Windows, Linux (and Web if possible)
-- [ ] Title, credits, and asset attributions
+- [x] Export builds for macOS, Windows, Linux (and Web if possible) *(macOS & Windows Desktop exported)*
+- [x] Title, credits, and asset attributions
 - [ ] Release distribution and packaging
 - Exit: standalone builds run cleanly on all target platforms.
