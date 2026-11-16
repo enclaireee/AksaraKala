@@ -147,3 +147,39 @@ func _aim_when_drawing(target: Variant) -> void:
 			var p: Vector2 = target if target is Vector2 else ((target as Node2D).global_position if is_instance_valid(target) else hero().global_position + Vector2.RIGHT)
 			cc.set("aim", (p - hero().global_position).normalized())
 			return
+
+
+# ---------------------------------------------------------------- segment 4 cast demo
+
+## One clean cast demonstration in the ts_sawah meadow, HUD on (clean). `foes` = [[kind, offset], ...] around the
+## hero; they wake and walk in, freeze while the stroke is drawn (no hit lands mid-draw), wake when it releases.
+func cast_demo(glyph: String, foes_spec: Array, o := {}) -> void:
+	await start_demo({"index": 6})
+	make_strong(20)
+	clear_enemies()
+	god = true
+	infinite_sakti = true
+	english_spell_names()
+	show_hud()
+	var c := hero().global_position + Vector2(float(o.get("dx", 300)), float(o.get("dy", 0)))
+	teleport(c)
+	face(o.get("face", Vector2.RIGHT))
+	var foes := []
+	for s in foes_spec:
+		foes.append(spawn_enemy(str(s[0]), c + (s[1] as Vector2), true))
+	await wait_seconds(0.8)
+	rec_start()
+	mark("start")
+	await wait_seconds(float(o.get("lead", 0.5)))
+	for f in foes:
+		wake(f)
+	await wait_seconds(float(o.get("approach", 0.9)))
+	mark("cast_start")
+	var tgt: Variant = o.get("target", foes[0])
+	var r := await cast_at(glyph, tgt, {"center": o.get("center", Vector2(240, 112)), "size": float(o.get("size", 120.0)),
+		"seconds": float(o.get("seconds", 1.6)), "freeze": foes, "jitter": float(o.get("jitter", 0.6)), "expect": o.get("expect", true)})
+	mark("released")
+	print("shot: demo %s score %.2f" % [glyph, float(r.get("score", 0))])
+	await wait_seconds(float(o.get("after", 4.0)))
+	print("shot: alive after %d" % live(foes).size())
+	rec_stop()

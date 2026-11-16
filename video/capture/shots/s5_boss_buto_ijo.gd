@@ -32,10 +32,13 @@ func run() -> void:
 		return
 	b.global_position = gate.global_position + inward * float(arg("bd", 190)) + Vector2(0, float(arg("bdy", 0)))
 	b.set("_start", b.global_position)
+	b.set_physics_process(false)   # he would engage before the threshold (game bug: see report)
 	teleport(gate.global_position - inward * 36)
 	await wait_seconds(1.0)
 	rec_start()
 	hold_move(inward)
+	await wait_until(func() -> bool: return get_tree().get_nodes_in_group("arena_gate").any(func(g): return g.entered), 400, "no threshold")
+	b.set_physics_process(true)
 	await wait_until(func() -> bool: return b.engaged, 400, "never engaged")
 	mark("engaged")
 	await wait_frames(3)
