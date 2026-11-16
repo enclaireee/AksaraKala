@@ -628,6 +628,7 @@ def _mataram():
     d = ImageDraw.Draw(sky)
     for r, col in [(34, hx("ffb44a")), (29, hx("ffcf6a")), (25, hx("ffe28c")), (21, hx("fff0b4"))]:
         d.ellipse((SX - r, SY - r, SX + r, SY + r), fill=col)
+    sky = img(np.where((np.mgrid[0:H, 0:W][0] >= 177)[..., None], arr(gradient(W, H, ['#a8407a', '#7a2a74', '#4a2062'], np.clip((np.repeat(np.arange(H)[:, None], W, 1) - 177) / 40.0, 0, 1))), arr(sky)))
     stars = make_stars(12, 30, 70)
     # long dusk cloud streaks lit from below by the sun
     clouds = []
@@ -781,5 +782,403 @@ def vista_mataram(dur=DUR):
         for i, (bx, by, sp) in enumerate([(-10, 100, 15), (-60, 118, 13), (-30, 86, 17), (-90, 108, 14)]):
             bird(c, (bx + sp * t + 110 * i) % 560 - 40, by + int(math.sin(t * 1.3 + i) * 2), int(t * 6 + i), hx("3a1a50"))
         motes(c, t, 55, 20, (0, 196, W, 262), [hx("fff0a0"), hx("ffc858"), hx("d88838")], (3, 7), 7, True)
+        return finish(c, t, dur)
+    return fn
+
+
+# ============================================================================ 4. TIMUR
+def _blob_tree(cs, mid, lit, shd, seed, y_cut=None):
+    m = circles_mask(cs, LW, H)
+    if y_cut:
+        m[y_cut:] = False
+    im = shaded(newl(), m, mid, lit, shd, None, -1, -1, 3, 4)
+    im = tex(im, m, mid, fbm2(LW, H, 6, 5, seed, 2), 0.5, 0.1) if False else im
+    im = tex(im, m, tuple(max(0, c - 18) for c in shd[:3]) + (255,), fbm2(LW, H, 7, 5, seed + 5, 2), 0.66, 0.08)
+    return im, m
+
+
+def _timur():
+    HZ = 176
+    sky = gradient(W, H, ["#4a86c4", "#7fb0d8", "#c4d8d0", "#f4e4a0", "#ffd478"],
+                   np.clip(np.repeat(np.arange(H)[:, None] / 176.0, W, 1) ** 1.2 + sunglow(W, H, 410, 60, 200, 150) * 0.3, 0, 1))
+    d = ImageDraw.Draw(sky)
+    for r, col in [(18, hx("ffe9a0")), (14, hx("fff2c0")), (11, hx("ffffe0"))]:
+        d.ellipse((410 - r, 56 - r, 410 + r, 56 + r), fill=col)
+    clouds = [(cumulus(120, 34, 31, (hx("fffae0"), hx("f6e8c8"), hx("c8c0c0")), rmax=15), 44, 4, 60),
+              (cumulus(90, 26, 32, (hx("fffae0"), hx("f6e8c8"), hx("c8c0c0")), rmax=11), 92, 6, 290)]
+    # volcano (speed 4)
+    vol = newl()
+    vp = prof_pts([(300, 176), (360, 150), (405, 124), (432, 108), (452, 100), (460, 103), (472, 101), (486, 108), (510, 126), (560, 152), (640, 176)], smooth=2)
+    vp += noise1(LW, 20, 5, 2) * 2
+    vol = fill_below(vol, vp, hx("6e82b0"), rim=hx("c8d4e4"))
+    a = arr(vol)
+    yy, xx = np.mgrid[0:H, 0:LW]
+    dep = yy - np.round(vp).astype(int)[None, :]
+    ins = a[..., 3] > 0
+    a[ins & (xx > 470 + 0.4 * dep) & (bay(H, LW) < np.clip((xx - 470 - 0.4 * dep) / 20, 0, 1))] = hx("55689a")
+    vol = img(a)
+    vol = tex(vol, ins, hx("5a70a2"), fbm2(LW, H, 5, 18, 4, 2) + dep / 160.0, 0.72, 0.08)
+    # the giant on the far ridge (speed 6): hulking green silhouette, hazed by distance
+    gi = newl()
+    d = ImageDraw.Draw(gi)
+    GC, GL, GD = hx("5e8f52"), hx("8cb46a"), hx("3f6a40")
+    gx, gy = 130, 160
+    d.polygon([(gx - 22, gy), (gx - 26, gy - 26), (gx - 20, gy - 44), (gx - 8, gy - 52), (gx + 8, gy - 52), (gx + 20, gy - 44), (gx + 27, gy - 24), (gx + 22, gy)], fill=GC)
+    d.ellipse((gx - 8, gy - 66, gx + 8, gy - 50), fill=GC)                       # head
+    d.polygon([(gx - 7, gy - 63), (gx - 12, gy - 72), (gx - 4, gy - 66)], fill=GC)  # horns
+    d.polygon([(gx + 7, gy - 63), (gx + 12, gy - 72), (gx + 4, gy - 66)], fill=GC)
+    d.polygon([(gx - 26, gy - 40), (gx - 36, gy - 20), (gx - 34, gy - 2), (gx - 28, gy - 2), (gx - 24, gy - 22)], fill=GC)      # arms
+    d.polygon([(gx + 24, gy - 40), (gx + 36, gy - 30), (gx + 40, gy - 8), (gx + 34, gy - 8), (gx + 28, gy - 28)], fill=GC)
+    d.line([(gx + 38, gy - 8), (gx + 42, gy - 56)], fill=GD, width=3)               # club
+    d.ellipse((gx + 36, gy - 66, gx + 48, gy - 52), fill=GD)
+    gi = rim_light(gi, GL, -1, -1)
+    gi = dmask(gi, arr(gi)[..., 3] > 0, hx("7ea66a"), 0.18)
+    gi = dmask(gi, np.zeros((H, LW), bool) | (arr(gi)[..., 3] > 0), hx("3f6a40"), 0.0)
+    gi.alpha_composite(Image.new("RGBA", gi.size, (0, 0, 0, 0)))
+    for (x, y) in [(gx - 3, gy - 60), (gx + 3, gy - 60)]:
+        gi.putpixel((x, y), hx("ffd040"))
+    # far and mid hills
+    h1 = newl()
+    p1 = prof_pts([(0, 164), (80, 154), (170, 160), (260, 168), (340, 160), (430, 150), (540, 160), (640, 164)], smooth=4) + noise1(LW, 30, 3, 2) * 5
+    h1 = fill_below(h1, p1, hx("b0ac66"), rim=hx("e0d890"), haze=hx("c8c47c"))
+    h2 = newl()
+    p2 = prof_pts([(0, 180), (90, 170), (200, 176), (310, 184), (420, 174), (540, 170), (640, 178)], smooth=4) + noise1(LW, 26, 7, 2) * 4
+    h2 = fill_below(h2, p2, hx("8c9448"), rim=hx("d0cc78"), haze=hx("a8ac5c"))
+    h2 = tex(h2, np.ones((H, LW), bool), hx("747e3c"), fbm2(LW, H, 9, 4, 5, 2), 0.58, 0.1)
+    # savanna plain + the great banyan (speed 14)
+    sv = newl()
+    sp_ = prof_pts([(0, 204), (150, 200), (300, 202), (450, 198), (640, 202)], smooth=3) + noise1(LW, 20, 4, 2) * 2
+    r = random.Random(4)
+    cs = []
+    for i in range(22):
+        cs.append((int(260 + r.gauss(0, 58)), int(118 + r.gauss(0, 12)), r.randint(14, 26), r.randint(10, 17)))
+    cs += [(210, 142, 30, 14), (300, 138, 34, 15), (360, 148, 28, 12), (250, 150, 30, 12)]
+    bt, bm = _blob_tree(cs, hx("4e7a34"), hx("b4c850"), hx("24442c"), 3, 176)
+    sv = fill_below(sv, sp_, hx("d8b050"), rim=hx("fbe898"), rim2=hx("e8c870"))
+    d = ImageDraw.Draw(sv)
+    d.polygon([(246, 204), (252, 170), (258, 152), (268, 150), (278, 152), (284, 170), (292, 204)], fill=hx("5e3c26"))
+    for k in range(6):       # buttress roots / trunk bark
+        d.line([(252 + k * 7, 204), (254 + k * 6, 160)], fill=hx("3e2620") if k % 2 else hx("7a4e30"))
+    sv.alpha_composite(bt)
+    d = ImageDraw.Draw(sv)
+    for _ in range(28):      # hanging aerial roots
+        x = int(260 + r.gauss(0, 55))
+        top = 150 + r.randint(0, 14)
+        ln = r.randint(14, 44)
+        for y in range(top, min(203, top + ln)):
+            d.point((x, y), fill=hx("4a2e22") if y % 3 else hx("7a4e30"))
+    a = arr(sv)
+    ins = a[..., 3] > 0
+    gd = ins & (yy > np.round(sp_).astype(int)[None, :] + 3)
+    a[gd & (bay(H, LW) < 0.45)] = hx("b88a38")
+    a[gd & (yy > 214)] = hx("a07430")
+    sv = img(a)
+    # foreground: dry grass + giant cucumber vines (speed 24)
+    fg = newl()
+    fp = prof_pts([(0, 256), (200, 252), (360, 244), (520, 238), (640, 238)], smooth=3) + noise1(LW, 18, 2, 2) * 2
+    fg = fill_below(fg, fp, hx("8a6a2c"), rim=hx("e8c868"))
+    d = ImageDraw.Draw(fg)
+    for x in range(380, 560, 1):     # vine
+        y = 250 - int(18 * math.sin((x - 380) / 38.0)) - (x - 380) // 12
+        d.point((x, y), fill=hx("3e7a30"))
+        d.point((x, y + 1), fill=hx("2a5a28"))
+    for cx, cy in [(408, 232), (452, 226), (498, 218)]:
+        d.ellipse((cx - 11, cy - 20, cx + 11, cy + 20), fill=hx("78a838")) if False else None
+        cy += 18
+        d.ellipse((cx - 14, cy - 6, cx + 14, cy + 6), fill=hx("5e9a30"))
+        d.line([(cx - 12, cy - 4), (cx + 12, cy - 4)], fill=hx("b8d860"))
+        d.line([(cx - 12, cy + 4), (cx + 12, cy + 4)], fill=hx("34602a"))
+        for q in range(-10, 12, 5):
+            d.point((cx + q, cy), fill=hx("e8e090"))
+        d.polygon([(cx - 14, cy), (cx - 22, cy - 3), (cx - 22, cy + 3)], fill=hx("e8c040"))
+        for sgn in (-1, 1):
+            d.polygon([(cx, cy - 6), (cx + sgn * 16, cy - 20), (cx + sgn * 24, cy - 8), (cx + sgn * 8, cy - 4)], fill=hx("3e8a38"))
+            d.line([(cx, cy - 6), (cx + sgn * 20, cy - 14)], fill=hx("a0d058"))
+    fg = tone(fg, (1 - xx / 420.0) * 0.5 + (yy - 220) / 80.0, 0.8, 0.3, hx("4a3818"), 0.5)
+    return dict(sky=sky, clouds=clouds, vol=vol, gi=gi, h1=h1, h2=h2, sv=sv, fg=fg, fp=fp)
+
+
+@scene("vista_timur", DUR)
+def vista_timur(dur=DUR):
+    T = _timur()
+    r = random.Random(8)
+    blades = [(r.randrange(0, LW), r.randint(8, 26), r.random() * 6.28) for _ in range(110)]
+
+    def fn(t):
+        c = Image.new("RGBA", (W, H))
+        c.alpha_composite(T["sky"])
+        for im, y, spd, x0 in T["clouds"]:
+            put(c, im, int(x0 - spd * t) % 640 - 100, y)
+        view(c, T["vol"], 20 + 4 * t)
+        # smoke plume leaning in the wind: stacked dithered puffs
+        ox = 20 + 4 * t
+        for k in range(9):
+            cx = 466 - int(ox) + int(k * 6 + math.sin(t * 0.8 + k) * 2)
+            cy = 100 - k * 8
+            rr = 4 + k
+            for yy_ in range(-rr, rr + 1):
+                for xx_ in range(-rr, rr + 1):
+                    if xx_ * xx_ + yy_ * yy_ <= rr * rr and BY4[(cy + yy_) % 4, (cx + xx_) % 4] < 0.62 - k * 0.04:
+                        px(c, cx + xx_, cy + yy_, hx("8c9cc0") if yy_ < 0 else hx("6e82b0"))
+        view(c, T["h1"], 20 + 6 * t)
+        view(c, T["gi"], 20 + 6 * t)
+        view(c, T["h2"], 20 + 10 * t)
+        view(c, T["sv"], 20 + 14 * t)
+        for i, (bx, by, sp) in enumerate([(-10, 46, 10), (-70, 70, 9), (-120, 30, 11)]):
+            bird(c, (bx + sp * t + 160 * i) % 560 - 40, by + int(math.sin(t * 1.1 + i) * 2), int(t * 5 + i), hx("3a2a2a"))
+        off = 40 + 24 * t
+        view(c, T["fg"], off)
+        fp = T["fp"]
+        for x, hh, ph in blades:
+            sx = x - int(off)
+            if 0 <= sx < W:
+                y = int(fp[x])
+                sw = int(round(math.sin(t * 1.6 + ph + x * 0.05) * 1.5))
+                for k in range(hh):
+                    px(c, sx + (sw * k) // hh, y - k, hx("f0d070") if k > hh * 0.5 else hx("a88a38"))
+        motes(c, t, 90, 22, (0, 130, W, 250), [hx("fff0a0"), hx("f8d870"), hx("d8a850")], (3, 8), 8, True)
+        return finish(c, t, dur)
+    return fn
+
+
+# ============================================================================ 5. KIDUL
+def _kidul():
+    HZ = 150
+    sky = gradient(W, H, ["#040a1a", "#081a2c", "#0e3240", "#1a5a62", "#2c8a86"],
+                   np.clip(np.repeat(np.arange(H)[:, None] / 150.0, W, 1) ** 1.3 + sunglow(W, H, 330, 70, 150, 100) * 0.3, 0, 1))
+    MX, MY = 330, 66
+    d = ImageDraw.Draw(sky)
+    for r, col in [(30, hx("1e5860")), (26, hx("3a8284")), (22, hx("8fc4c0")), (19, hx("e4f4ee"))]:
+        d.ellipse((MX - r, MY - r, MX + r, MY + r), fill=col)
+    a = arr(sky)
+    yy, xx = np.mgrid[0:H, 0:W]
+    cr = (np.hypot(xx - MX, yy - MY) < 18) & (fbm2(W, H, 5, 5, 3, 2) > 0.58) & (bay(H, W) < 0.8)
+    a[cr] = hx("b4d4d0")
+    sky = img(a)
+    stars = make_stars(21, 70, 100)
+    clouds = [(cloud_band(480, 16, th, sd, hx("12404c"), hx("0a2634"), cell=100, floor=0.3), y, sp) for y, th, sp, sd in [(40, 6, 3, 5), (100, 7, 5, 6), (126, 5, 4, 7)]]
+    # karst stacks (speed 8) with the shrine
+    ks = newl()
+    kp = np.full(LW, 400.0)
+    def stack(cx, wd, top, steep):
+        for x in range(cx - wd, cx + wd):
+            k = abs(x - cx) / wd
+            y = top + (k ** steep) * (HZ + 20 - top)
+            kp[x] = min(kp[x], y + noise1(LW, 8, x // 9 + 3, 1)[x] * 6 if False else y)
+    stack(430, 70, 96, 1.6)
+    stack(500, 50, 124, 1.5)
+    stack(70, 40, 128, 1.7)
+    kp = kp + noise1(LW, 10, 12, 3) * 5 * (kp < 300)
+    ks = fill_below(ks, kp, hx("0a1c26"), rim=hx("7fc4c0"))
+    a = arr(ks)
+    yy2, xx2 = np.mgrid[0:H, 0:LW]
+    ins = a[..., 3] > 0
+    dep = yy2 - np.round(kp).astype(int)[None, :]
+    a[ins & (dep < 12) & (xx2 < 440) & (bay(H, LW) < 0.45)] = hx("16384a")
+    a[ins & (dep > 30) & (bay(H, LW) < 0.4)] = hx("060e18")
+    ks = img(a)
+    d = ImageDraw.Draw(ks)
+    SHX, SHY = 428, int(kp[428])
+    d.rectangle((SHX - 8, SHY - 7, SHX + 8, SHY), fill=hx("2a3c4a"))
+    for k, (hw_, yb) in enumerate([(11, SHY - 7), (8, SHY - 11), (5, SHY - 15)]):          # tiered tumpang roof
+        d.polygon([(SHX - hw_, yb), (SHX - hw_ + 3, yb - 4), (SHX + hw_ - 3, yb - 4), (SHX + hw_, yb)], fill=hx("1a2c3c"))
+        d.line([(SHX - hw_, yb), (SHX - hw_ + 3, yb - 4)], fill=hx("8fc4c0"))
+    d.point((SHX, SHY - 20), fill=hx("ffd060"))
+    d.rectangle((SHX - 2, SHY - 6, SHX + 2, SHY - 1), fill=hx("ffb040"))
+    for dx in (-7, -5, 5, 7):
+        d.point((SHX + dx, SHY - 1), fill=hx("ffd060"))
+        d.point((SHX + dx, SHY - 2), fill=hx("e86a50"))
+    # wave bands (periodic over 640 so they wrap): far to near
+    bands = []
+    spec = [(158, 3, 5, "#0e3a48", "#2a7a84", 4, 1), (168, 4, 6, "#0c3440", "#2c8a8a", 5, 2), (181, 5, 8, "#0a2c38", "#34988e", 6, 3),
+            (198, 7, 10, "#08242f", "#48ac98", 7, 1), (222, 9, 14, "#061c28", "#68c8ae", 8, 2), (250, 11, 20, "#04141e", "#8ee0c0", 9, 3)]
+    for base, amp, spd, col, crest, nper, ph in spec:
+        L = newl()
+        x = np.arange(LW)
+        u = x * 2 * math.pi / LW
+        p = base + np.sin(u * nper + ph) * amp + np.sin(u * (nper + 2) + ph * 2.3) * amp * 0.6 + np.sin(u * (2 * nper + 1) + ph * 0.7) * amp * 0.3
+        p = p + np.abs(np.sin(u * (nper + 1) * 0.5 + ph)) * amp * 0.5
+        L = fill_below(L, p, hx(col), rim=hx(crest), rim2=hx(crest), haze=hx(crest), haze_h=5)
+        a = arr(L)
+        ins = a[..., 3] > 0
+        dd = yy2 - np.round(p).astype(int)[None, :]
+        a[ins & (dd > 6) & (dd < 12) & (bay(H, LW) < 0.25)] = hx(crest)
+        L = img(a)
+        bands.append((L, p, spd, crest))
+    # palace lights far out, under the horizon
+    return dict(sky=sky, stars=stars, clouds=clouds, ks=ks, bands=bands, MX=MX)
+
+
+@scene("vista_kidul", DUR)
+def vista_kidul(dur=DUR):
+    K = _kidul()
+    lamps = [(150, 153), (158, 154), (166, 151), (174, 154), (182, 152), (190, 154), (162, 156), (178, 156), (170, 148)]
+
+    def fn(t):
+        c = Image.new("RGBA", (W, H))
+        c.alpha_composite(K["sky"])
+        twinkle(c, K["stars"], t, [hx("2a5a6a"), hx("6aa8b0"), hx("c8ece8"), hx("ffffff")])
+        for cb, y, spd in K["clouds"]:
+            view(c, cb, spd * t, y, wrap=True)
+        view(c, K["ks"], 20 + 7 * t)
+        # the sea floor lights of her palace glimmer under the swell
+        for i, (lx, ly) in enumerate(lamps):
+            flicker(c, lx, ly, t, i * 2, [hx("7affc8"), hx("2aa88a")])
+        for i, (L, p, spd, crest) in enumerate(K["bands"]):
+            view(c, L, 20 + spd * t, 0, wrap=True)
+            if i == 2:       # moon path on the water (before the nearer swells)
+                for y in range(156, 215):
+                    wd = 4 + (y - 156) // 2
+                    for dx in range(-wd, wd + 1):
+                        if (int(t * 3 + y * 0.7 + dx * 1.3)) % 3 == 0:
+                            px(c, K["MX"] + dx + int(math.sin(t * 1.5 + y) * 1), y, hx("e4f4ee") if abs(dx) < wd // 2 else hx("8fc4c0"))
+        # silver foam on the near crests
+        for i, (L, p, spd, crest) in enumerate(K["bands"][3:]):
+            off = int(20 + spd * t)
+            for x in range(0, W, 3):
+                y = int(p[(x + off) % LW])
+                if int(t * 4 + x * 0.37 + i) % 5 < 2:
+                    px(c, x, y - 1, hx("dff4ec"))
+        for i, (bx, by, sp) in enumerate([(-10, 112, 12), (-80, 128, 10)]):
+            bird(c, (bx + sp * t + 170 * i) % 560 - 40, by + int(math.sin(t * 1.0 + i) * 2), int(t * 5 + i), hx("0a1c26"))
+        motes(c, t, 12, 12, (0, 200, W, 262), [hx("c8f0e0"), hx("7acab8"), hx("2a7a78")], (3, 6), 6, True)
+        return finish(c, t, dur)
+    return fn
+
+
+# ============================================================================ 6. KALA
+HERO = ["....c....",
+        "....c....",
+        "....c.hh.",
+        "....c.hhh",
+        "....cbbbb",
+        "....bbbbb",
+        "...bbbbbb",
+        "...bbbbbb",
+        "...bbbbbb",
+        "...bbbbbb",
+        "..bbbbbbb",
+        "..bbbbbbb"]
+
+
+def _kala():
+    cols = ["#06040e", "#0e0a22", "#1c1240", "#2c1a5e", "#4a2a8a"]
+    bg = gradient(W, H, cols, np.clip(1 - np.hypot(np.mgrid[0:H, 0:W][1] - 250, (np.mgrid[0:H, 0:W][0] - 170) * 1.4) / 230.0, 0, 1))
+    a = arr(bg)
+    yy, xx = np.mgrid[0:H, 0:W]
+    # far arches / depth ribs inside the cave
+    far = newl(LW)
+    d = ImageDraw.Draw(far)
+    for i, cx in enumerate([120, 260, 400, 540]):
+        d.polygon([(cx - 40, 240), (cx - 30, 120), (cx, 90), (cx + 30, 120), (cx + 40, 240)], fill=hx("160e34"))
+        d.polygon([(cx - 26, 240), (cx - 20, 130), (cx, 108), (cx + 20, 130), (cx + 26, 240)], fill=hx("231552"))
+    far = rim_light(far, hx("5a38a8"), 1, 0)
+    # the mouth: heavy rock frame carved like a kala face (brows, eye sockets, fangs, jaw)
+    fr = newl()
+    d = ImageDraw.Draw(fr)
+    d.rectangle((0, 0, LW, H), fill=hx("0a0618"))
+    m = Image.new("L", (LW, H), 0)
+    md = ImageDraw.Draw(m)
+    OX = 270                                                       # mouth centre in layer coords (screen 240 at off 40 -> shifted)
+    mouth = [(OX - 110, 250), (OX - 104, 160), (OX - 84, 130), (OX - 50, 118), (OX, 112), (OX + 50, 118), (OX + 84, 130), (OX + 104, 160), (OX + 110, 250)]
+    md.polygon(mouth, fill=255)
+    mm = np.array(m) > 0
+    fa = arr(fr)
+    fa[mm] = (0, 0, 0, 0)
+    fr = img(fa)
+    fr = tone(fr, fbm2(LW, H, 30, 16, 3, 3), 0.52, 0.2, hx("1c1240"), 0.45)
+    d = ImageDraw.Draw(fr)
+    ys = 52
+    for sgn in (-1, 1):
+        ex = OX + sgn * 52
+        d.polygon([(ex - 30, ys + 18), (ex - 24, ys + 4), (ex + 10, ys - 6), (ex + 30, ys + 4), (ex + 26, ys + 22), (ex, ys + 26)], fill=hx("1c1240"))
+        d.polygon([(ex - 22, ys + 14), (ex - 12, ys + 8), (ex + 14, ys + 6), (ex + 22, ys + 14), (ex, ys + 20)], fill=hx("06040e"))   # eye socket
+        d.line([(ex - 30, ys + 4), (ex + 6, ys - 8), (ex + 32, ys)], fill=hx("4a2a8a"), width=2)          # heavy brow
+    d.polygon([(OX - 6, ys + 4), (OX + 6, ys + 4), (OX + 10, 112), (OX - 10, 112)], fill=hx("1c1240"))      # nose bridge
+    d.polygon([(OX - 16, ys + 30), (OX + 16, ys + 30), (OX + 10, 108), (OX - 10, 108)], fill=hx("160e34"))
+    # fangs hanging from the upper jaw, tusks rising from the lower
+    for fx, ln in [(OX - 78, 14), (OX - 60, 22), (OX - 40, 12), (OX - 22, 34), (OX + 22, 34), (OX + 40, 12), (OX + 60, 22), (OX + 78, 14)]:
+        d.polygon([(fx - 6, 126), (fx + 6, 126), (fx, 126 + ln)], fill=hx("e8e0f4") if ln > 30 else hx("a89cc8"))
+    fa = arr(fr)
+    fr = rim_light(img(fa), hx("5a38b0"), 0, 1)
+    return bg, far, fr, OX
+
+
+def _crystal(im, x, y, h, w, seed):
+    r = random.Random(seed)
+    d = ImageDraw.Draw(im)
+    for i in range(3):
+        cx = x + i * w // 2 + r.randint(-2, 2)
+        hh = h * (1 - 0.25 * i) + r.randint(-4, 4)
+        d.polygon([(cx - w // 2, y), (cx - w // 3, y - hh + 6), (cx, y - hh), (cx + w // 3, y - hh + 8), (cx + w // 2, y)], fill=hx("5a2ab0"))
+        d.polygon([(cx - w // 3, y - 1), (cx - w // 3, y - hh + 6), (cx, y - hh)], fill=hx("9a62f0"))
+        d.line([(cx, y - hh), (cx + 1, y - hh // 2)], fill=hx("d8b8ff"))
+        d.polygon([(cx + w // 4, y), (cx + w // 3, y - hh + 8), (cx + w // 2, y)], fill=hx("341a74"))
+
+
+@scene("vista_kala", DUR)
+def vista_kala(dur=DUR):
+    bg, far, fr, OX = _kala()
+    fl = newl()
+    fp = prof_pts([(0, 232), (200, 228), (400, 230), (640, 226)], smooth=3)
+    fl = fill_below(fl, fp, hx("100a28"), rim=hx("6a40c8"), rim2=hx("3a2290"))
+    a = arr(fl)
+    yy, xx = np.mgrid[0:H, 0:LW]
+    a[(a[..., 3] > 0) & (yy > 236) & (bay(H, LW) < 0.5)] = hx("0a0618")
+    fl = img(a)
+    cr_l, cr_r = newl(), newl()
+    _crystal(cr_l, 40, 262, 64, 22, 1)
+    _crystal(cr_l, 96, 270, 36, 14, 2)
+    _crystal(cr_r, 520, 262, 70, 24, 3)
+    _crystal(cr_r, 470, 270, 34, 14, 4)
+    hero = spr(HERO, {"c": hx("7fe8e0"), "h": hx("2a2060"), "b": hx("1a1240")})
+    ha = arr(hero)
+    ha[3, 0] = (0, 0, 0, 0)
+    for y in range(4, 12):
+        xs = np.where(ha[y, :, 3] > 0)[0]
+        ha[y, xs.min()] = hx("5ac8d0")
+    hero = img(ha)
+    stars_ = make_stars(30, 40, 110)
+
+    def fn(t):
+        c = Image.new("RGBA", (W, H))
+        c.alpha_composite(bg)
+        view(c, far, 30 + 4 * t)
+        off = 20 + 7 * t
+        view(c, fr, off)
+        # two dim eye-glows burning in the carved sockets
+        for sgn in (-1, 1):
+            ex = OX + sgn * 52 - int(off) + 2
+            lvl = 0.55 + 0.25 * math.sin(t * 2.2 + sgn)
+            for yy_ in range(-7, 8):
+                for xx_ in range(-12, 13):
+                    dd = (xx_ / 12.0) ** 2 + (yy_ / 6.0) ** 2
+                    if dd < 1 and BY4[(60 + yy_) % 4, (ex + xx_) % 4] < (1 - dd) * lvl * 1.6:
+                        px(c, ex + xx_, 66 + yy_, hx("c8a0ff") if dd < 0.25 else (hx("8a5ae0") if dd < 0.6 else hx("5a38a8")))
+        # the sand trickle between the central fangs, pooling on the threshold
+        sx = OX - int(off)
+        for k in range(26):
+            y = 120 + ((k * 4 + int(t * 40)) % 104)
+            px(c, sx, y, hx("f0d890") if k % 2 else hx("c8a860"))
+        px(c, sx - 1, 224, hx("c8a860")); px(c, sx + 1, 224, hx("c8a860"))
+        for i in range(5):
+            for dx in range(-(5 - i), 6 - i):
+                px(c, sx + dx, 226 + i - 4 + 4, hx("d8b870") if (dx + i) % 3 else hx("a88848"))
+        view(c, fl, off)
+        # hero at the threshold, cyan staff pulsing
+        hxp = OX + 52 - int(off)
+        hyp = int(fp[OX + 52]) - 12
+        put(c, hero, hxp, hyp)
+        pul = 0.6 + 0.3 * math.sin(t * 3)
+        for yy_ in range(-9, 10):
+            for xx_ in range(-9, 10):
+                dd = math.hypot(xx_, yy_) / 9
+                if dd < 1 and BY4[(hyp + yy_) % 4, (hxp + 4 + xx_) % 4] < (1 - dd) * pul * 0.9:
+                    px(c, hxp + 4 + xx_, hyp - 1 + yy_, hx("7fe8e0") if dd < 0.3 else hx("3a9aa8"))
+        px(c, hxp + 4, hyp - 1, hx("ffffff")); px(c, hxp + 4, hyp, hx("d8fffb"))
+        view(c, cr_l, 20 + 22 * t * 0.5)
+        view(c, cr_r, 20 + 22 * t * 0.5)
+        motes(c, t, 6, 26, (0, 40, W, 230), [hx("d8fffb"), hx("a888f0"), hx("5a38a8")], (3, 9), 8, True)
+        twinkle(c, [(x, y, k, p) for x, y, k, p in stars_ if y > 0][:6], t, [hx("5a38a8"), hx("8a68d8"), hx("c8a8ff"), hx("ffffff")])
         return finish(c, t, dur)
     return fn
