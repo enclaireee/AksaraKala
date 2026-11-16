@@ -19,7 +19,7 @@ const GLYPHS := ["sunda_ka", "sunda_ga", "sunda_nga", "sunda_ca", "sunda_ha", "s
 	"sunda_la", "sunda_ra", "sunda_sa", "jawa_ha", "jawa_na", "jawa_ca", "jawa_ra", "jawa_ka", "jawa_ga",
 	"jawa_pa", "jawa_la", "jawa_wa"]
 const UI_PARTS := ["hud", "tracker", "arrow", "menu_hint", "banner", "toast", "boss_bar", "saved", "area_title",
-	"quest_card", "tutorial", "vignette", "dialogue"]
+	"quest_card", "tutorial", "vignette", "dialogue", "prompts"]
 
 var G: Node    # /root/Game
 var Z: Node    # /root/Zones
@@ -27,6 +27,7 @@ var EV: Node   # /root/Events
 var frame := 0             # process frames since the shot started
 var failed := false
 var opts := {}             # from config(), merged over defaults by the runner
+var args := {}             # --set k=v from shoot.sh
 
 # --- recording marks
 var _rec_start := -1
@@ -60,6 +61,16 @@ var infinite_sakti := false
 var infinite_stamina := false
 var no_beats := true       # story beats (auto dialogues) stay off unless a shot turns this off
 var _early: Node
+
+
+## A --set value from the command line, or `default`.
+func arg(key: String, default: Variant = "") -> Variant:
+	if not args.has(key):
+		return default
+	if default is float: return float(args[key])
+	if default is int: return int(args[key])
+	if default is bool: return args[key] in ["1", "true", "yes"]
+	return args[key]
 
 
 ## Override: the shot. Await helpers in order; return when the shot is over.
@@ -107,6 +118,39 @@ func _base_setup() -> void:
 	set_bus("Ambience", bool(opts.get("ambience", true)))
 	G.hero_name = str(opts.get("hero_name", G.hero_name))
 	G.hero_pronoun = str(opts.get("hero_pronoun", G.hero_pronoun))
+	seed(int(opts.get("seed", 20261116)))   # the same shot plays the same way at every resolution
+	_pin_textures(opts.get("pin_dirs", PIN_DIRS))
+	get_tree().node_added.connect(_on_node_added)
+
+
+## Game bug workaround: several _draw() functions draw a texture they load() into a local variable (Npc.shadow_tex,
+## ambient fx glows). Nothing else holds it, so the texture is freed right after the draw and the canvas keeps a
+## dead RID: it renders as an opaque white box (the cream boxes under every NPC and villager). Holding a
+## reference to every texture in these folders keeps them alive.
+const PIN_DIRS := ["res://assets/art/world_fx/", "res://assets/art/fx/", "res://assets/art/ambient/",
+	"res://assets/art/telegraph/", "res://assets/art/props/"]
+var _pinned: Array = []
+
+func _pin_textures(dirs: Array) -> void:
+	for d: String in dirs:
+		_pin_dir(d)
+	print("shot: pinned %d textures" % _pinned.size())
+
+
+func _pin_dir(d: String) -> void:
+	for f: String in ResourceLoader.list_directory(d):
+		if f.ends_with("/"):
+			_pin_dir(d + f)
+		elif f.ends_with(".png"):
+			var t := load(d + f)
+			if t:
+				_pinned.append(t)
+
+
+func _on_node_added(n: Node) -> void:
+	# Story beats (auto-played dialogues) are tried the moment a zone loads; stop them before their first try.
+	if no_beats and n.name == "StoryBeat" and n.get("_busy") != null:
+		n.set("_busy", true)
 
 
 ## Mutes (on=false) or unmutes a bus: "Music", "SFX", "Ambience". Audio creates the buses at boot.
@@ -338,8 +382,8 @@ func spot(id: String) -> Vector2:
 		for s in get_tree().get_nodes_in_group(grp):
 			if str(s.get("id")) == id:
 				return s.global_position
-	for n in get_tree().get_nodes_in_group("npc"):
-		if str(n.get("npc_id")) == id or n.name == id:
+	for n in get_tree().get_nodes_in_group("interactable"):
+		if str(n.get("npc_id")) == id or str(n.get("id")) == id:
 			return n.global_position
 	var z := zone()
 	var n := z.find_child(id, true, false) if z else null
@@ -364,14 +408,14 @@ func cell(x: int, y: int) -> Vector2:
 
 ## Hides the whole HUD (vitals, tracker, arrow, toasts, banners), area titles, quest cards and tutorial pills.
 func hide_hud() -> void:
-	hide_ui(["hud", "area_title", "quest_card", "tutorial", "dialogue"])
+	hide_ui(["hud", "area_title", "quest_card", "tutorial", "dialogue", "prompts"])
 
 
 ## Shows the HUD again but keeps the noisy parts off: tracker, objective arrow, [Esc] hint, toasts, save icon.
 func show_hud(clean := true) -> void:
 	show_ui(UI_PARTS)
 	if clean:
-		hide_ui(["tracker", "arrow", "menu_hint", "toast", "saved", "banner", "area_title", "quest_card", "tutorial"])
+		hide_ui(["tracker", "arrow", "menu_hint", "toast", "saved", "banner", "area_title", "quest_card", "tutorial", "prompts"])
 
 
 ## Hides UI parts (UI_PARTS) every frame until show_ui. "vignette" is the soft screen edge of the game look.
@@ -392,6 +436,9 @@ func show_ui(parts: Array) -> void:
 
 
 func _ui_nodes(part: String) -> Array:
+	if part == "prompts":   # the "[E] Talk" pills over NPCs, chests, pickups
+		return get_tree().get_nodes_in_group("interactable").map(func(n: Node) -> Variant: return n.get("_prompt_root")).filter(
+			func(n: Variant) -> bool: return n is CanvasItem)
 	var ui := game_ui()
 	if ui == null:
 		return []
@@ -610,7 +657,7 @@ func teleport(p: Vector2) -> void:
 	h.reset_physics_interpolation()
 
 
-## Holds a move direction (as the WASD keys would, analog strength). ZERO lets go.
+## Holds a move direction; its length (0-1) is the fraction of the full walk speed (90 px/s). ZERO lets go.
 func hold_move(dir: Vector2) -> void:
 	_move = dir.limit_length(1.0)
 
@@ -632,7 +679,7 @@ func walk_to(p: Vector2, speed := 1.0, arrive := 3.0) -> void:
 		if d.length() <= arrive:
 			stop()
 			return
-		_move = d.normalized() * clampf(speed, 0.3, 1.0)
+		_move = d.normalized() * clampf(speed, 0.2, 1.0)
 		if d.length() < best - 0.5:
 			best = d.length()
 			since = 0
@@ -689,8 +736,11 @@ func press(action: String, pressed := true) -> void:
 
 
 func _apply_move() -> void:
-	var want := {"move_right": maxf(_move.x, 0.0), "move_left": maxf(-_move.x, 0.0),
-		"move_down": maxf(_move.y, 0.0), "move_up": maxf(-_move.y, 0.0)}
+	# Input.get_vector applies the actions' 0.5 deadzone and rescales: a raw stick length of 0.5 + 0.5 * speed
+	# gives `speed` of the full walk.
+	var raw := _move.normalized() * (0.5 + 0.5 * _move.length()) if _move.length() > 0.001 else Vector2.ZERO
+	var want := {"move_right": maxf(raw.x, 0.0), "move_left": maxf(-raw.x, 0.0),
+		"move_down": maxf(raw.y, 0.0), "move_up": maxf(-raw.y, 0.0)}
 	for a: String in want:
 		var s: float = want[a]
 		if s > 0.01:
@@ -722,9 +772,13 @@ func cast_glyph(glyph_id: String, o := {}) -> Dictionary:
 		G.glyphs_learned = gl
 	var path := stroke_path(gd.templates[clampi(int(o.get("template", 0)), 0, gd.templates.size() - 1)],
 		o.get("center", world_to_screen(h.global_position) + Vector2(0, -40)), float(o.get("size", 96.0)))
+	# The pen goes down where the stroke starts (or over the target, when the spell is aimed) and rests there
+	# until every pending mouse move has arrived: the first point the cast records is the stroke's first point.
 	if o.has("aim_at"):
 		aim_at(o.aim_at)
-		await wait_frames(3)
+	else:
+		mouse_screen(path[0])
+	await wait_frames(3)
 	cc.set("_locked_until", 0)
 	var spell := SpellData.for_glyph(glyph_id)
 	if spell and h.sakti.value < 100.0:
@@ -755,6 +809,11 @@ func cast_glyph(glyph_id: String, o := {}) -> Dictionary:
 		mouse_screen(p)
 		await get_tree().process_frame
 	await wait_frames(int(o.get("hold_frames", 3)))   # the pen rests a moment, as hands do
+	if o.get("debug", false):
+		var pts: PackedVector2Array = cc.get("points")
+		print("shot: cast points %d (path %d frames %d): first %s last %s; path first %s last %s; ideal score %.2f" % [pts.size(), path.size(), n, pts[0] if pts.size() else "-", pts[-1] if pts.size() else "-", path[0], path[-1],
+			Recognizer.score(Recognizer.normalize(pts), Recognizer.normalize(path)) if pts.size() > 1 else 0.0])
+		print("shot: pts ", pts)
 	press("cast", false)
 	await wait_frames(2)
 	_drawing = false
@@ -793,6 +852,23 @@ static func _point_at(p: PackedVector2Array, s: float) -> Vector2:
 			return p[i - 1].lerp(p[i], s / maxf(seg, 0.0001))
 		s -= seg
 	return p[p.size() - 1]
+
+
+# ======================================================================================== story UI
+
+## The glyph lesson card (ui/glyph_lesson.gd) for `glyph_id`, as when a quest teaches it: the aksara in its
+## Noto font, the spell, the ghost stroke guide. The hero can then cast_glyph() it as practice (no cost).
+func show_lesson(glyph_id: String) -> void:
+	EV.glyph_learned.emit(glyph_id)
+	await wait_until(func() -> bool:
+		var gl := game_ui().get_node_or_null("GlyphLesson") if game_ui() else null
+		return gl != null and str(gl.get("active")) == glyph_id, 120, "lesson card for %s did not open" % glyph_id)
+
+
+func close_lesson() -> void:
+	var gl := game_ui().get_node_or_null("GlyphLesson") if game_ui() else null
+	if gl:
+		gl.finish()
 
 
 # ======================================================================================== enemies
@@ -839,10 +915,15 @@ func enemies(p := Vector2.INF, radius := INF) -> Array:
 		return is_instance_valid(e) and not e.get("dead") and (p == Vector2.INF or (e as Node2D).global_position.distance_to(p) <= radius))
 
 
-## Removes the zone's own enemies (placed spots and encounters) so a shot sets up its own.
-func clear_enemies() -> void:
+## Removes the zone's own enemies (placed spots) and, with encounters=true, its encounter areas too (they would
+## spawn their waves when the hero steps in), so a shot sets up its own fight.
+func clear_enemies(encounters := true) -> void:
 	for e in get_tree().get_nodes_in_group("enemy"):
 		e.queue_free()
+	if encounters and zone():
+		for n in zone().find_children("*", "", true, false):
+			if n.scene_file_path.ends_with("encounter.tscn"):
+				n.queue_free()
 
 
 # ======================================================================================== per-frame

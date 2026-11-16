@@ -16,6 +16,7 @@ from multiprocessing import Pool
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pxkit as K  # noqa: E402
 from scenes import SCENES  # noqa: E402
+import scenes_future  # noqa: E402,F401  (segment 7 scenes register into SCENES)
 
 
 def build(name, dur=None, kw=None):

@@ -10,9 +10,12 @@ var max_frames := 60 * 600
 
 func _initialize() -> void:
 	var name := ""
+	var args := {}
 	for a: String in OS.get_cmdline_user_args():
 		if a.begins_with("--shot="):
 			name = a.substr(7)
+		elif a.begins_with("--") and "=" in a:
+			args[a.substr(2, a.find("=") - 2)] = a.substr(a.find("=") + 1)
 	var path := name if name.begins_with("res://") else "res://video/capture/shots/%s.gd" % name
 	var sc := load(path) as GDScript
 	if sc == null:
@@ -24,6 +27,7 @@ func _initialize() -> void:
 	var cfg: Dictionary = {"music": false, "sfx": true, "ambience": true, "locale": "en", "max_seconds": 600}
 	cfg.merge(shot.config(), true)
 	shot.opts = cfg
+	shot.args = args
 	max_frames = int(float(cfg.max_seconds) * 60.0)
 	root.add_child(shot)
 	_go.call_deferred()

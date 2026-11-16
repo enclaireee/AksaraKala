@@ -1,0 +1,16 @@
+extends "res://video/capture/shot.gd"
+func run() -> void:
+	var l := Node2D.new()
+	get_tree().root.add_child(l)
+	var bg := ColorRect.new(); bg.color = Color(0.3, 0.5, 0.3); bg.size = Vector2(480, 270); l.add_child(bg)
+	var npc: Node2D = load("res://entities/npc/npc.tscn").instantiate()
+	npc.set("npc_id", "kepala_desa")
+	npc.position = Vector2(100, 120)
+	l.add_child(npc)
+	var sh: Texture2D = load("res://assets/art/world_fx/shadow_m.png")
+	var n := Node2D.new(); n.position = Vector2(200, 120); l.add_child(n)
+	n.draw.connect(func() -> void: n.draw_texture(sh, Vector2(-7, -2)))
+	await wait_frames(3)
+	rec_start()
+	await wait_frames(1)
+	rec_stop()

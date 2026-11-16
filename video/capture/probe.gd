@@ -1,7 +1,7 @@
 extends SceneTree
-var n := 0
-func _process(_d: float) -> bool:
-	n += 1
-	if n in [1, 3, 10]:
-		print(n, " ds=", DisplayServer.window_get_size(), " root=", root.size, " vis=", root.get_visible_rect(), " tex=", root.get_texture().get_size(), " final=", root.get_final_transform().x)
-	return n > 10
+func _initialize() -> void:
+	for p in ["res://assets/art/world_fx/shadow_m.png", "res://assets/art/hero_shadow.png"]:
+		var t: Texture2D = load(p)
+		var im := t.get_image()
+		print(p, " ", im.get_size(), " fmt ", im.get_format(), " ", im.get_pixel(im.get_width()/2, im.get_height()/2))
+	quit()
