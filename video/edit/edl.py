@@ -54,16 +54,16 @@ def O(name, at=0.0, inp=0.0, dur=None):
     return dict(src=name, at=float(at), inp=float(inp), dur=dur)
 
 
-def vista(region, beats, lt=None):
+def vista(region, beats):
     """A region vista (4 s source with 0.2 s dither fades at each end: trimmed inside them)."""
     return E(f"gfx/vista_{region}", 0.2, B(beats), need=f"gfx/vista_{region}.mp4")
 
 
 # rapid-fire glyph run: popup frames of the 8 casts in s4_glyph_rapid (s), and the beats each cut gets
 RAPID_POPUP = [1.08, 3.18, 5.28, 7.38, 9.48, 11.58, 13.68, 15.78]
-RAPID_BEATS = [2, 2, 2, 2, 1, 1, 1, 1]
-# aksara_montage: 4 glyphs at 1 beat, 16 at half a beat, then the grid holds for 5 beats
-MONTAGE_BEATS = [B(1)] * 4 + [B(0.5)] * 16
+RAPID_BEATS = [2, 1, 1, 1, 1, 1, 0.5, 0.5]
+# aksara_montage: 2 glyphs at 1 beat, 18 at half a beat (11 beats), then the grid + line hold for 6 beats
+MONTAGE_BEATS = [B(1)] * 2 + [B(0.5)] * 18
 
 
 def rapid():
@@ -79,6 +79,11 @@ def region(lt, first, rest):
     return [first] + rest
 
 
+def world(entries, gain=-1.0):
+    """World segment: the game's ambience sits under the main theme."""
+    return [dict(e, gain=e.get("gain", gain)) if e["src"].startswith("raw/") else e for e in entries]
+
+
 def region_game(lt, shots):
     return region(lt, shots[0], shots[1:])
 
@@ -87,7 +92,7 @@ SEGMENTS = [
     # 1 ---------------------------------------------------------------- cold open (no music)
     dict(name="s1_cold_open", entries=[
         E("black", 0, 1.0, id="open_black"),
-        E("raw/s1_hook_a", 0.6, out=6.35, fin=0.4, id="hook", gain=4.0),   # cut on the kill hit at 6.35
+        E("raw/s1_hook_a", 0.6, out=6.35, fin=0.4, id="hook", gain=4.0, atail=0.9),   # cut on the kill hit at 6.35
         E("gfx/card_written", 0, 4.0, id="card_written"),
     ]),
     # 2 ---------------------------------------------------------------- premise
@@ -103,7 +108,7 @@ SEGMENTS = [
         E("raw/s2_intro", 0.0, 9.25, fout=0.25, id="intro", gain=6.0),   # logo at 7.0, breathes to 9.25
     ]),
     # 3 ---------------------------------------------------------------- world showcase (explore_timur from bar 1)
-    dict(name="s3_world", entries=[
+    dict(name="s3_world", entries=world([
         E("raw/s3_map", 0.0, B(8), id="map", audio=False,
           zoom=[(0.0, 4, 240, 135), (B(2), 5, 238, 130), (B(4), 6, 236, 128), (B(6), 8, 236, 128)]),
         E("gfx/card_world", 0, B(6), render=dict(dur=B(6)), id="card_world"),
@@ -114,62 +119,61 @@ SEGMENTS = [
         *region("tanah_timur", vista("timur", 6), [E("raw/s3_tt_2", 1.0, B(6))]),
         *region("segara_kidul", vista("kidul", 5), [E("raw/s3_sk_1", 1.0, B(7))]),
         *region("gua_kala", vista("kala", 5), [E("raw/s3_gk_1", 1.0, B(7))]),
-    ]),
+    ])),
     # 4 ---------------------------------------------------------------- aksara casting (combat_timur, in sync)
     dict(name="s4_casting", entries=[
         E("gfx/card_cast", 0, B(6), render=dict(dur=B(6)), id="card_cast"),
-        E("raw/s4_lesson", 0.3, B(9), ov=[O("feature_label_learn", 0.25)], id="lesson"),
-        E("raw/s4_cast_demo_1", 1.3, B(12), ov=[O("feature_label_ml", 0.25)], id="demo1"),
-        E("raw/s4_cast_weak", 0.5, B(12), id="weak"),
+        E("raw/s4_lesson", 0.85, B(8), ov=[O("feature_label_learn", 0.25)], id="lesson"),
+        E("raw/s4_cast_demo_1", 1.3, B(11), ov=[O("feature_label_ml", 0.25)], id="demo1"),
+        E("raw/s4_cast_weak", 0.5, B(11), id="weak"),
         E("raw/s4_cast_demo_2", 1.6, B(8), id="demo2"),
         E("raw/s4_cast_demo_3", 1.9, B(8), id="demo3"),
         *rapid(),
         E("gfx/aksara_montage", 0, B(17), render=dict(dur=B(17), kw={"beats": MONTAGE_BEATS}), id="montage"),
-        E("raw/s4_combo", 1.9, B(12), id="combo"),
+        E("raw/s4_combo", 2.3, B(10), id="combo"),
     ]),
     # 5 ---------------------------------------------------------------- gameplay & features (boss_sunda peak)
     dict(name="s5_features", entries=[
         E("raw/s5_class_select", 0.0, S(7), ov=[O("feature_label_classes", 0.2)], id="classes", gain=8.0),
         E("raw/s5_class_warrior", 2.25, S(3), id="cls_warrior"),
-        E("raw/s5_class_archer", 2.25, S(3)),
         E("raw/s5_class_rogue", 2.25, S(3)),
         E("raw/s5_class_lancer", 2.25, S(3)),
         E("raw/s5_class_dalang", 2.25, S(3)),
         E("raw/s5_boss_sangkuriang", 0.5, S(7), ov=[O("feature_label_bosses", 0.15)], id="boss_sangkuriang_card"),
         E("raw/s5_boss_sangkuriang", 5.85, S(3)),
-        E("raw/s5_boss_sangkuriang", 8.1, S(4)),
+        E("raw/s5_boss_sangkuriang", 8.3, S(3)),
         E("raw/s5_boss_buto_ijo", 1.5, S(3), id="boss_buto_card"),
         E("raw/s5_boss_buto_ijo", 8.9, S(2)),
         E("raw/s5_boss_buto_ijo", 10.9, S(4)),
         E("raw/s5_boss_bondowoso", 1.6, S(2), id="boss_bondo_card"),
         E("raw/s5_boss_bondowoso", 7.2, S(3)),
         E("raw/s5_boss_kala", 0.9, S(5), id="boss_kala_card"),
-        E("raw/s5_boss_kala", 7.0, S(3)),
-        E("raw/s5_boss_kala", 10.0, S(6), id="kala_calmed"),        # Jawa KA: Kala is calmed and fades
-        E("raw/s5_choice", 2.6, S(9), ov=[O("feature_label_choices", 0.2)], id="choice", gain=8.0),
+        E("raw/s5_boss_kala", 6.9, S(3)),          # ends 2 frames before the eclipse's white flash
+        E("raw/s5_boss_kala", 10.2, S(5), id="kala_calmed"),        # Jawa KA: Kala is calmed and fades
+        E("raw/s5_choice", 2.9, S(8), ov=[O("feature_label_choices", 0.2)], id="choice", gain=8.0),
         E("raw/s5_codex", 0.4, S(7), ov=[O("feature_label_codex", 0.15)], id="codex", gain=8.0),
-        E("raw/s5_dialogue", 0.3, S(7), id="semar", gain=6.0),
+        E("raw/s5_dialogue", 0.3, S(6), id="semar", gain=6.0),
         E("gfx/card_free", 0, S(7), render=dict(dur=S(7)), id="card_free"),
     ]),
     # 6 ---------------------------------------------------------------- culture, benefit, proof (home / Morning)
     dict(name="s6_culture", entries=[
         E("gfx/card_built_with", 0, H(6), id="card_built_with"),
-        E("gfx/quote_pearly", 0, H(8), id="quote1"),
-        E("gfx/quote_nurbani", 0, H(8), id="quote2"),
-        E("gfx/quote_munawar", 0, H(8), id="quote3"),
-        E("gfx/quote_yazid", 0, H(8), id="quote4"),
-        E("gfx/card_partners", 0, H(8), id="card_partners"),
-        E("gfx/card_numbers", 0, H(10), id="card_numbers"),
+        E("gfx/quote_pearly", 0, H(8.5), id="quote1"),
+        E("gfx/quote_nurbani", 0, H(8.5), id="quote2"),
+        E("gfx/quote_munawar", 0, H(8.5), id="quote3"),
+        E("gfx/quote_yazid", 0, H(8.5), id="quote4"),
+        E("gfx/card_partners", 0, H(7), id="card_partners"),
+        E("gfx/card_numbers", 0, H(9), id="card_numbers"),
     ]),
-    # 7 ---------------------------------------------------------------- what's next (explore_timur returns, bar 13)
+    # 7 ---------------------------------------------------------------- what's next (explore_timur returns at bar 12)
     dict(name="s7_next", entries=[
         E("gfx/card_next", 0, B(5), render=dict(dur=B(5)), id="card_next"),
-        E("gfx/fut_skins", 0, B(14), render=dict(dur=B(14)), id="fut_skins"),
-        E("gfx/fut_coop", 0, B(14), render=dict(dur=B(14)), id="fut_coop"),
-        E("gfx/fut_mobile", 0, B(14), render=dict(dur=B(14)), id="fut_mobile"),
+        E("gfx/fut_skins", 0, B(16), render=dict(dur=B(16)), id="fut_skins"),
+        E("gfx/fut_coop", 0, B(16), render=dict(dur=B(16)), id="fut_coop"),
+        E("gfx/fut_mobile", 0, B(16), render=dict(dur=B(16)), id="fut_mobile"),
         E("gfx/fut_map", 0, B(18), render=dict(dur=B(18)), id="fut_map"),   # last line lands at 7.4 s
     ]),
-    # 8 ---------------------------------------------------------------- end card (theme's final cadence at +B(15))
+    # 8 ---------------------------------------------------------------- end card (theme's final cadence at +B(13))
     dict(name="s8_end", entries=[
         E("gfx/end_card", 0, 12.0, id="end_card"),
     ]),
