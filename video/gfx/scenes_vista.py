@@ -241,3 +241,288 @@ def vista_sunda(dur=DUR):
         motes(c, t, 77, 12, (0, 150, W, 230), [hx("e0f0b0"), hx("b0d890"), hx("78b070")], (3, 7), 6, True)
         return finish(c, t, dur)
     return fn
+
+
+# ============================================================================ 2. GALUH
+def tier_roof(im, cx, ybot, hwb, hwt, h, tiles, curve=1.7, tip=3):
+    """one tier of a pendopo roof: concave flared silhouette, tile rows, upturned eave tips, shaded underside."""
+    lit, mid, shd, line, deep = tiles
+    d = ImageDraw.Draw(im)
+    left, right = [], []
+    for i in range(h + 1):
+        s = i / h
+        w_ = hwt + (hwb - hwt) * (s ** curve)
+        left.append((cx - w_, ybot - h + i))
+        right.append((cx + w_, ybot - h + i))
+    pts = left + [(cx - hwb - tip, ybot - 2), (cx - hwb - tip + 1, ybot - 3)] + right[::-1][:0]
+    poly = left + [(cx - hwb - tip, ybot - 3)] + [(cx + hwb + tip, ybot - 3)] + right[::-1]
+    d.polygon([(round(x), round(y)) for x, y in poly], fill=mid)
+    # underside + eave shadow
+    d.rectangle((round(cx - hwb - tip + 2), ybot - 2, round(cx + hwb + tip - 2), ybot - 1), fill=deep)
+    d.line([(round(cx - hwb - tip + 1), ybot - 3), (round(cx + hwb + tip - 1), ybot - 3)], fill=shd)
+    a = arr(im)
+    H_, W_ = a.shape[:2]
+    m = poly_mask([(round(x), round(y)) for x, y in poly], W_, H_)
+    yy, xx = np.mgrid[0:H_, 0:W_]
+    ln = m & ((yy - (ybot - h)) % 3 == 0) & (yy < ybot - 3)
+    a[ln & ((xx + yy) % 2 == 0)] = line
+    # lit left half (sun upper-left) with dithered core edge
+    lm = m & (xx < cx - 1) & (yy < ybot - 3)
+    a[lm & (bay(H_, W_) < 0.5) & (yy % 3 != 0)] = lit
+    sm = m & (xx > cx + 2)
+    a[sm & ((yy - (ybot - h)) % 3 == 1) & ((xx + yy) % 2 == 0)] = shd
+    # ridge cap
+    top_y = ybot - h
+    a[top_y, round(cx - hwt):round(cx + hwt) + 1] = lit
+    return img(a)
+
+
+def _galuh():
+    HZ = 186
+    sky = gradient(W, H, ["#3f78c0", "#5f94d4", "#8fb8e2", "#c0d6e4", "#e8e4cc", "#f8e8bc"],
+                   np.clip((np.repeat(np.arange(H)[:, None] / 175.0, W, 1)) ** 1.15 + sunglow(W, H, 70, 40, 180, 140) * 0.28, 0, 1))
+    d = ImageDraw.Draw(sky)
+    for r, col in [(16, hx("fff0c8")), (13, hx("fff6dc")), (10, hx("ffffee"))]:
+        d.ellipse((70 - r, 36 - r, 70 + r, 36 + r), fill=col)
+    cc = (hx("fffaf0"), hx("f0e2d4"), hx("a8b4d8"))
+    clouds = [(cumulus(150, 46, 3, cc, rmax=22), 36, 5, 0), (cumulus(110, 34, 8, cc, rmax=16), 70, 4, 250),
+              (cumulus(170, 52, 12, cc, rmax=24), 84, 7, 120), (cumulus(90, 28, 4, cc, rmax=13), 28, 3, 380),
+              (cumulus(130, 40, 21, cc, rmax=19), 112, 6, 70)]
+    # far hills (speed 4)
+    far = newl()
+    prof = prof_pts([(0, 150), (70, 140), (130, 146), (210, 154), (330, 150), (420, 138), (500, 128), (570, 140), (640, 150)], smooth=4)
+    prof += noise1(LW, 30, 4, 2) * 6
+    far = fill_below(far, prof, hx("7f9cc8"), rim=hx("bcd0e4"), haze=hx("a0b8d8"))
+    far = tex(far, np.ones((H, LW), bool), hx("7090c0"), fbm2(LW, H, 16, 6, 3, 2), 0.6, 0.1)
+
+    # ---- the walled compound (speed 8)
+    O = 24
+    comp_ = newl()
+    d = ImageDraw.Draw(comp_)
+    # backdrop trees
+    r = random.Random(11)
+    cs = []
+    for i in range(34):
+        cx = 100 + i * 11 + r.randint(-3, 3)
+        cs.append((cx + O, 146 - r.randint(2, 14), r.randint(8, 14), r.randint(7, 12)))
+    for cx, cy in [(112, 112), (452, 108)]:        # two big shade trees flank the compound
+        for k in range(9):
+            cs.append((cx + O + r.randint(-24, 24), cy + r.randint(-12, 14), r.randint(10, 17), r.randint(9, 14)))
+    tm = circles_mask(cs, LW, H)
+    tm[158:] = False
+    comp_ = shaded(comp_, tm, hx("2f6a42"), hx("86b44e"), hx("1c4638"), None, -1, -1, 3, 4)
+    comp_ = tex(comp_, tm, hx("3f7e48"), fbm2(LW, H, 6, 5, 3, 2), 0.55, 0.1)
+    comp_ = tex(comp_, tm, hx("245a3c"), fbm2(LW, H, 6, 5, 8, 2) - (np.mgrid[0:H, 0:LW][0] - 110) / 120.0, 0.55, 0.1)
+    # wall
+    wall = [(100 + O, 154), (480 + O, 154), (480 + O, 178), (100 + O, 178)]
+    d = ImageDraw.Draw(comp_)
+    d.rectangle((100 + O, 154, 480 + O, 178), fill=hx("b84a30"))
+    a = arr(comp_)
+    yy, xx = np.mgrid[0:H, 0:LW]
+    wm = (yy >= 154) & (yy <= 178) & (xx >= 100 + O) & (xx <= 480 + O)
+    a[wm & ((yy - 154) % 4 == 3) & ((xx + (yy // 4) * 5) % 9 != 0)] = hx("8e3228")
+    a[wm & ((yy - 154) % 4 == 0) & (xx % 2 == 0)] = hx("d46a44")
+    a[wm & (yy > 170) & (bay(H, LW) < 0.45)] = hx("8e3228")
+    a[wm & (yy > 174)] = hx("6e2a2c")
+    a[(yy == 152) & (xx >= 100 + O) & (xx <= 480 + O)] = hx("f0d8a4")
+    a[(yy == 153) & (xx >= 100 + O) & (xx <= 480 + O)] = hx("c8a070")
+    # merlons: little pale-capped triangular crests
+    for x in range(100 + O, 480 + O, 8):
+        a[150:152, x:x + 4] = hx("e8c890")
+        a[149, x + 1:x + 3] = hx("f8e8b4")
+    comp_ = img(a)
+    d = ImageDraw.Draw(comp_)
+    # roofs
+    TL = (hx("f08a58"), hx("cc5638"), hx("93313a"), hx("e47448"), hx("5e1c2e"))
+    def pavilion(cx, ybot, tiers, post=True):
+        # white-washed colonnade under the roof
+        d2 = ImageDraw.Draw(comp_)
+        hw0 = tiers[0][0]
+        d2.rectangle((cx + O - hw0 + 6, ybot, cx + O + hw0 - 6, 156), fill=hx("e8d8b8"))
+        for k in range(-hw0 + 8, hw0 - 6, 6):
+            d2.rectangle((cx + O + k, ybot, cx + O + k + 1, 156), fill=hx("6a3a2a"))
+        d2.rectangle((cx + O - hw0 + 8, ybot + 2, cx + O + hw0 - 8, ybot + 5), fill=hx("3a1c24"))
+        yb = ybot
+        for hwb, hwt, h in tiers:
+            nonlocal_im = tier_roof(newl(), cx + O, yb, hwb, hwt, h, TL)
+            comp_.alpha_composite(nonlocal_im)
+            yb -= h - 1
+        top = yb
+        d2.line([(cx + O, top - 6), (cx + O, top)], fill=hx("f2c25a"))
+        d2.point((cx + O, top - 7), fill=hx("fff0a0"))
+        d2.point((cx + O - 1, top - 2), fill=hx("f2c25a"))
+        d2.point((cx + O + 1, top - 2), fill=hx("c9953e"))
+    pavilion(176, 148, [(26, 17, 8), (17, 5, 11)])
+    pavilion(386, 146, [(28, 19, 9), (19, 6, 12)])
+    pavilion(262, 142, [(42, 31, 12), (31, 22, 11), (22, 8, 15)])
+    # the split gate (candi bentar): two stepped halves with a dark gap that shows the dais beyond
+    GX = 262 + O
+    gate_l = [(GX - 28, 178), (GX - 28, 160), (GX - 24, 160), (GX - 24, 150), (GX - 20, 150), (GX - 20, 142), (GX - 16, 142), (GX - 16, 134),
+              (GX - 7, 134), (GX - 7, 178)]
+    gate_r = [(2 * GX - x, y) for x, y in gate_l]
+    gap = [(GX - 7, 178), (GX - 7, 136), (GX + 7, 136), (GX + 7, 178)]
+    d = ImageDraw.Draw(comp_)
+    d.polygon(gap, fill=hx("3a1c24"))
+    # glimpse of the inner court: white dais + warm lamp
+    d.rectangle((GX - 6, 156, GX + 6, 160), fill=hx("e6d4aa"))
+    d.rectangle((GX - 3, 146, GX + 3, 156), fill=hx("7a3a30"))
+    d.point((GX, 150), fill=hx("ffd470"))
+    for pts, lit_side in ((gate_l, True), (gate_r, False)):
+        d.polygon(pts, fill=hx("c05034"))
+    a = arr(comp_)
+    for gx0, gx1, lt in ((GX - 28, GX - 7, True), (GX + 7, GX + 28, False)):
+        sub = (yy >= 134) & (yy < 178) & (xx >= gx0) & (xx < gx1)
+        brick = sub & (a[..., 0] > 150) & (a[..., 1] < 100)
+        a[brick & ((yy - 134) % 4 == 3) & ((xx + (yy // 4) * 3) % 7 != 0)] = hx("8e3228")
+        edge_x = gx1 - 1 if lt else gx0
+        a[brick & (xx == (gx0 if lt else gx1 - 1))] = hx("e6805a") if lt else hx("8e3228")
+        a[brick & (xx == (gx1 - 1 if lt else gx0))] = hx("6e2a2c")
+        a[brick & (xx == (gx0 + 1 if lt else gx1 - 2)) & (yy % 2 == 0)] = hx("d46a44") if lt else hx("8e3228")
+    # pale caps on every step
+    for pts in (gate_l, gate_r):
+        for i in range(len(pts) - 1):
+            (xa, ya), (xb, yb_) = pts[i], pts[i + 1]
+            if ya == yb_ and ya < 178:
+                a[ya - 1:ya + 1, min(xa, xb):max(xa, xb) + 1] = hx("f0d8a4")
+    # steps down from the gate
+    for i in range(5):
+        a[178 + i, GX - 12 - i * 2:GX + 12 + i * 2 + 1] = hx("e0d0a8") if i % 2 == 0 else hx("b8a47c")
+    comp_ = img(a)
+    # ---- bank (speed 10): ochre earth, reeds, grass fringe
+    bank = newl()
+    bp = prof_pts([(0, 180), (100, 178), (220, 182), (330, 180), (460, 178), (640, 181)], smooth=2) + noise1(LW, 18, 3, 2) * 2
+    bank = fill_below(bank, bp, hx("a8723c"), rim=hx("7fae4a"), rim2=hx("6a9a40"))
+    a = arr(bank)
+    inside = a[..., 3] > 0
+    dep = yy - np.round(bp).astype(int)[None, :]
+    a[inside & (dep > 3)] = hx("a8723c")
+    a[inside & (dep > 5) & (bay(H, LW) < 0.5)] = hx("8e5a34")
+    a[inside & (dep > 7)] = hx("6e4430")
+    bank = img(a)
+    r = random.Random(5)
+    d = ImageDraw.Draw(bank)
+    for _ in range(60):
+        x = r.randrange(0, LW)
+        y = int(bp[x])
+        hh = r.randint(2, 5)
+        d.line([(x, y), (x + r.choice([-1, 0, 1]), y - hh)], fill=hx("86b450") if r.random() < 0.6 else hx("c8cf7c"))
+    # foreground earth + post for the rooster (speed 16)
+    fg = newl()
+    fp = prof_pts([(0, 260), (120, 257), (250, 254), (380, 246), (470, 236), (560, 232), (640, 232)], smooth=3) + noise1(LW, 16, 6, 2) * 2
+    fg = fill_below(fg, fp, hx("8a5a38"), rim=hx("e0b068"), rim2=hx("c08c4c"))
+    a = arr(fg)
+    inside = a[..., 3] > 0
+    dep = yy - np.round(fp).astype(int)[None, :]
+    a[inside & (dep > 3) & (bay(H, LW) < 0.5)] = hx("6e4230")
+    a[inside & (dep > 6)] = hx("4e2e2c")
+    fg = img(a)
+    d = ImageDraw.Draw(fg)
+    # post
+    PX = 452
+    d.rectangle((PX, 224, PX + 6, 268), fill=hx("7a4a30"))
+    d.rectangle((PX, 224, PX + 1, 262), fill=hx("c88a50"))
+    d.rectangle((PX + 5, 224, PX + 6, 262), fill=hx("4a2a2a"))
+    d.rectangle((PX - 1, 222, PX + 7, 224), fill=hx("9a6038"))
+    d.line([(PX - 1, 222), (PX + 7, 222)], fill=hx("e8b070"))
+    for k in range(230, 262, 8):
+        d.line([(PX + 1, k), (PX + 5, k)], fill=hx("5a3428"))
+    r = random.Random(9)
+    for _ in range(70):       # tall dry grass
+        x = r.randrange(0, LW)
+        y = int(fp[x])
+        hh = r.randint(3, 9) if not (PX - 8 < x < PX + 14) else 2
+        lean = r.choice([-1, -1, 0, 1])
+        for k in range(hh):
+            d.point((x + (lean * k) // 3, y - k), fill=hx("d8b868") if k > hh // 2 else hx("8a7a3c"))
+    return dict(sky=sky, clouds=clouds, far=far, comp=comp_, bank=bank, fg=fg, O=O, HZ=HZ, PX=PX, TOP=222)
+
+
+ROOSTER = ["...........rr.....",
+           "..........rrrr....",
+           ".........orrro....",
+           "....g....oooo.....",
+           "...ggo..ooooo.....",
+           "....ooooooooo.....",
+           "....oooooooo..tt..",
+           "....bbbbbbbbbttt..",
+           "...bbbbbbbbbbtttt.",
+           "...wbbbbbbbbbbttt.",
+           "...wwbbbbbbbbbbtt.",
+           "....wbbbbbbbbbbt..",
+           ".....bbbbbbbbb....",
+           "......bbbbbbb.....",
+           ".......y..y.......",
+           ".......y..y......."]
+PAL_R = {"r": hx("e8402c"), "o": hx("d8602a"), "g": hx("f2c25a"), "b": hx("8e2a30"), "w": hx("e89a3a"), "t": hx("1f5a50"), "y": hx("c8962e")}
+
+
+@scene("vista_galuh", DUR)
+def vista_galuh(dur=DUR):
+    G = _galuh()
+    HZ = G["HZ"]
+    rooster = spr(ROOSTER, PAL_R)
+    ra = arr(rooster)
+    ra[(ra[..., 0] == 232) & (ra[..., 1] == 64)] = (232, 64, 44, 255)
+    rooster = img(ra)
+    rooster_b = rooster.transpose(Image.FLIP_TOP_BOTTOM) if False else rooster
+    mist_a = mist(480, 24, 7, hx("fff0d0"), 0.3, 80, 8)
+    poles = [(222, 90), (310, 86), (404, 94), (160, 108)]
+    boatA = spr(["......................", "..............w.......", ".............ww.......", "............www.......", "...........wwww..h....",
+                 "..........wwwww.hh....", "..dd.hhhhhhhhhhhhhhdd.", "..dddddrrrrrrrrdddddd.", "...dddddddddddddddd...", ".....dddddddddddd....."],
+                {"d": hx("4a2a26"), "r": hx("d8402e"), "w": hx("f4e6c0"), "h": hx("7a4a30")})
+    boatB = flip(spr(["......................", "..............c.......", ".............cc.......", "............ccc.......", "...........cccc..h....",
+                      "..........ccccc.hh....", "..dd.hhhhhhhhhhhhhhdd.", "..dddddyyyyyyyydddddd.", "...dddddddddddddddd...", ".....dddddddddddd....."],
+                     {"d": hx("3a2a30"), "y": hx("f2c25a"), "c": hx("d8402e"), "h": hx("7a4a30")}))
+
+    def fn(t):
+        c = Image.new("RGBA", (W, H))
+        c.alpha_composite(G["sky"])
+        for im, y, spd, x0 in G["clouds"]:
+            view(c, im, spd * t + x0, y, wrap=True) if False else None
+        # clouds drift on a 640 wrap
+        for im, y, spd, x0 in G["clouds"]:
+            xx = int(x0 - spd * t) % 640 - 100
+            put(c, im, xx, y)
+        view(c, G["far"], 20 + 4 * t)
+        view(c, mist_a, 6 * t, 146, wrap=True)
+        off = G["O"] + 8 * t
+        view(c, G["comp"], off)
+        # pennants on tall poles (wave in whole pixels)
+        for i, (px_, top) in enumerate(poles):
+            x = px_ + G["O"] - int(off)
+            for y in range(top, 152):
+                px(c, x, y, hx("5a3426"))
+            px(c, x, top - 1, hx("f2c25a"))
+            for k in range(1, 15):
+                wv = int(round(math.sin(t * 6 - k * 0.6 + i) * (1 + k * 0.1)))
+                wd = max(1, 5 - k // 3)
+                for j in range(wd):
+                    col = hx("d8402e") if (k // 3) % 2 == 0 else hx("f6e2b8")
+                    px(c, x + k, top + 1 + j + wv, col)
+        # kitchen smoke
+        motes(c, t, 4, 8, (330 + G["O"] - int(off), 112, 338 + G["O"] - int(off), 150), [hx("f4ecd8"), hx("d0d0d4"), hx("a8b4d0")], (5, 9), 2, True)
+        view(c, G["bank"], 30 + 10 * t)
+        reflect(c, 186, 250, t, hx("2a62b0"), 0.58, amp=2, period=1.0)
+        # river sheen: far-bank light, drifting highlight dashes
+        glints(c, 188, 246, t, 3, 46, [hx("fff6d8"), hx("cfe4f4"), hx("8fc0e4")], 0, W, (2, 7), 1.3)
+        mist_b = None
+        # the two brothers part: two boats crossing in opposite directions
+        for im, bx, sp, by in ((boatA, 360, -8, 203), (boatB, 150, 7, 224)):
+            x = bx + sp * t
+            bob = int(math.sin(t * 2.0 + bx) * 1)
+            put(c, im, x, by + bob)
+            wk = 1 if sp < 0 else -1
+            for j in range(3):
+                px(c, x + (24 if sp < 0 else -3) + wk * j * 3, by + 9 + bob, hx("e8f4fc"))
+        view(c, G["fg"], 30 + 16 * t)
+        # rooster on the post: head bob / crow beat, tail sway
+        fx = G["PX"] - 30 - 16 * t - 5
+        beat = int(t * 2.5) % 4
+        put(c, rooster, fx + 1, G["TOP"] - 16 - (1 if beat == 1 else 0))
+        if beat == 1:
+            px(c, fx + 3, G["TOP"] - 22, hx("fff0a0"))
+        for i, (bx, by, sp) in enumerate([(-10, 60, 14), (-80, 40, 12), (-40, 90, 16), (-120, 52, 13)]):
+            bird(c, (bx + sp * t + 150 * i) % 640 - 60, by + int(math.sin(t * 1.1 + i) * 2), int(t * 6 + i), hx("fffaf0"))
+        motes(c, t, 70, 16, (0, 120, W, 240), [hx("fff0a8"), hx("f8d870"), hx("d8a850")], (3, 6), 6, True)
+        return finish(c, t, dur)
+    return fn
