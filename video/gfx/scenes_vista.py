@@ -526,3 +526,260 @@ def vista_galuh(dur=DUR):
         motes(c, t, 70, 16, (0, 120, W, 240), [hx("fff0a8"), hx("f8d870"), hx("d8a850")], (3, 6), 6, True)
         return finish(c, t, dur)
     return fn
+
+
+# ============================================================================ 3. MATARAM
+def _hw(f):
+    """half-width (0..1) of a Prambanan-style candi at fraction f above its base: stepped plinth, body, tiered needle."""
+    if f < 0.05:
+        return 1.0
+    if f < 0.10:
+        return 0.88
+    if f < 0.15:
+        return 0.76
+    if f < 0.40:
+        return 0.64 - (f - 0.15) * 0.12
+    if f < 0.44:
+        return 0.70
+    g = (f - 0.44) / 0.56
+    base = 0.56 * (1 - g) ** 0.85
+    tier = int(g * 8)
+    bump = 0.10 * (1 - g) if (int(g * 16) % 2 == 0 and g < 0.8) else 0.0
+    return max(0.03, base + bump) if g < 0.93 else 0.03
+
+
+def candi(w, h, cols, niches=True, lamps=False, seed=0):
+    lit, mid, shd, deep = cols
+    im = Image.new("RGBA", (w + 2, h + 2), (0, 0, 0, 0))
+    a = np.zeros((h + 2, w + 2, 4), "uint8")
+    cx = (w + 1) / 2.0
+    spans = {}
+    for y in range(h):
+        f = (h - 1 - y) / max(1, h - 1)
+        hwp = _hw(f) * w / 2.0
+        x0, x1 = int(round(cx - hwp)), int(round(cx + hwp - 1))
+        x1 = max(x1, x0)
+        spans[y] = (x0, x1)
+        a[y + 1, x0:x1 + 1] = mid
+    for y, (x0, x1) in spans.items():
+        f = (h - 1 - y) / max(1, h - 1)
+        wd = x1 - x0 + 1
+        a[y + 1, x0] = lit
+        if wd > 4:
+            a[y + 1, x1] = deep
+            a[y + 1, x1 - 1] = shd
+        if wd > 8:
+            half = x0 + wd // 2
+            for x in range(half, x1):
+                if (x + y) % 2 == 0:
+                    a[y + 1, x] = shd
+        # tier grooves
+        if f > 0.44 and int((f - 0.44) / 0.56 * 16) % 2 == 1 and wd > 3:
+            a[y + 1, x0 + 1:x1] = shd if wd > 5 else a[y + 1, x0 + 1:x1]
+            a[y + 1, x0] = lit
+        if f < 0.44 and f > 0.04 and (y % 6 == 0) and wd > 8:
+            a[y + 1, x0 + 1:x1] = shd
+    if niches and w >= 14:
+        ny0, ny1 = int(h * (1 - 0.38)), int(h * (1 - 0.20))
+        for dx in (-int(w * 0.22), int(w * 0.18)):
+            xx0 = int(cx) + dx
+            a[ny0 + 1:ny1 + 1, xx0:xx0 + 3] = deep
+            if lamps:
+                a[ny1, xx0 + 1] = hx("ffb050")
+        dy0 = int(h * (1 - 0.14))
+        a[dy0 + 1:h, int(cx) - 1:int(cx) + 2] = deep
+        a[dy0, int(cx)] = deep
+    # finial ball
+    a[0, int(cx)] = lit
+    return img(a)
+
+
+def _spire_row(seed, base_y, x0, x1, step, hr, wr, cols, density=0.9, niches=False, extra=None):
+    r = random.Random(seed)
+    layer = newl()
+    x = x0
+    while x < x1:
+        if r.random() < density:
+            h = r.randint(*hr)
+            w = r.randint(*wr)
+            if h > w * 4:
+                w = max(5, h // 4)
+            layer.alpha_composite(candi(w, h, cols, niches=niches), (x - w // 2, base_y - h))
+        x += r.randint(step - 2, step + 4)
+    if extra:
+        for ex, ew, eh in extra:
+            layer.alpha_composite(candi(ew, eh, cols, niches=True, lamps=True), (ex - ew // 2, base_y - eh))
+    return layer
+
+
+def _mataram():
+    SX, SY = 332, 152
+    cols = ["#1d1240", "#3f1a62", "#7a2a74", "#b8386c", "#e8583c", "#ff8a3a", "#ffb850", "#ffe08a"]
+    yy = np.repeat(np.arange(H)[:, None] / 178.0, W, 1)
+    v = np.clip(yy ** 1.15 + sunglow(W, H, SX, SY, 220, 130) ** 1.4 * 0.35, 0, 1)
+    sky = gradient(W, H, cols, v)
+    a = arr(sky)
+    yyg, xxg = np.mgrid[0:H, 0:W]
+    ang = np.arctan2(yyg - SY, xxg - SX)
+    d2 = np.hypot((xxg - SX), (yyg - SY))
+    ray = (np.sin(ang * 11 + 0.6) > 0.72) & (yyg < SY - 4) & (d2 < 260) & (bay(H, W) < 0.42)
+    a[ray] = np.clip(a[ray].astype(int) + [34, 22, 4, 0], 0, 255).astype("uint8")
+    sky = img(a)
+    d = ImageDraw.Draw(sky)
+    for r, col in [(34, hx("ffb44a")), (29, hx("ffcf6a")), (25, hx("ffe28c")), (21, hx("fff0b4"))]:
+        d.ellipse((SX - r, SY - r, SX + r, SY + r), fill=col)
+    stars = make_stars(12, 30, 70)
+    # long dusk cloud streaks lit from below by the sun
+    clouds = []
+    for y, th, sp, sd in [(52, 6, 3, 1), (80, 9, 5, 2), (106, 7, 7, 3), (128, 5, 4, 4)]:
+        clouds.append((cloud_band(480, 18, th, sd, hx("a8327a"), hx("ff8a58"), cell=100, floor=0.28), y, sp))
+    # four receding skylines of temples
+    far = _spire_row(1, 170, -20, LW + 20, 8, (14, 32), (5, 9), [hx(c) for c in ("f2a07e", "d8688a", "bc4a82", "9a3a7a")])
+    rowB = _spire_row(2, 176, -20, LW + 20, 10, (22, 44), (7, 12), [hx(c) for c in ("e07a80", "b04a84", "8a3478", "682a6c")],
+                      extra=[(250, 16, 56)])
+    rowC = _spire_row(3, 183, -20, LW + 20, 17, (30, 56), (9, 16), [hx(c) for c in ("c85a7e", "8c3a7c", "682c70", "4a2060")],
+                      extra=[(120, 22, 64), (420, 20, 60)], niches=True)
+    # the near terrace platform with the great central candi group
+    rowD = newl()
+    d = ImageDraw.Draw(rowD)
+    d.rectangle((60, 192, 520, 214), fill=hx("2c1a42"))
+    d.rectangle((60, 192, 520, 193), fill=hx("ff9650"))
+    d.rectangle((60, 194, 520, 194), fill=hx("a8508a"))
+    CT = [hx(c) for c in ("ff9a58", "4a2468", "2c1646", "180c2e")]
+    CT2 = [hx(c) for c in ("ff9a58", "55306e", "34204e", "1c1032")]
+    for cx, w_, h_ in [(200, 36, 96), (150, 26, 66), (252, 28, 74), (112, 18, 46), (292, 20, 52), (82, 14, 34), (326, 14, 36)]:
+        rowD.alpha_composite(candi(w_, h_, CT if w_ > 20 else CT2, niches=True, lamps=True), (cx - w_ // 2, 192 - h_))
+    # little shrine rows on the platform front
+    for cx in range(70, 520, 26):
+        if 330 > cx or cx > 372:
+            rowD.alpha_composite(candi(8, 18, CT2, niches=False), (cx - 4, 193 - 18 + 6))
+    d = ImageDraw.Draw(rowD)
+    d.rectangle((60, 198, 520, 214), fill=hx("261640"))
+    a = arr(rowD)
+    yy2, xx2 = np.mgrid[0:H, 0:LW]
+    pm = (yy2 >= 195) & (yy2 <= 214) & (xx2 >= 60) & (xx2 <= 520)
+    a[pm & ((yy2 - 195) % 5 == 4)] = hx("180c2e")
+    a[pm & ((xx2 + (yy2 // 5) * 7) % 12 == 0) & ((yy2 - 195) % 5 != 4)] = hx("3a2058")
+    rowD = img(a)
+
+    # rice terraces (speed 20): flooded paddies mirroring the sunset, dark bunds, seedling rows
+    pad = newl()
+    a = arr(pad)
+    edges = [208, 219, 232, 247, 264]
+    skyc = ["#ffb050", "#ff8a48", "#e8603c", "#b8386c", "#7a2a74"]
+    xs = np.arange(LW)
+    es = []
+    for k, b in enumerate(edges):
+        es.append(np.round(b - 10 / (1 + np.exp(-(xs - 360) / 80.0)) * (1 - 0.15 * k) + np.sin(xs / (90 + 25 * k) + k * 2.1) * (3 + k * 1.2)).astype(int))
+    for k in range(len(edges) - 1, -1, -1):
+        e = es[k]
+        nx = es[k + 1] if k + 1 < len(edges) else np.full(LW, H)
+        for x in range(LW):
+            y0, y1 = e[x], min(H, nx[x])
+            for y in range(max(0, y0), y1):
+                dd = y - y0
+                if dd < 2:
+                    col = hx("2a2036")
+                elif dd >= (y1 - y0) - 3 and k + 1 < len(edges):
+                    col = hx("1a1230")
+                else:
+                    f = (dd - 2) / max(1, (y1 - y0) - 5)
+                    col = hx(skyc[min(len(skyc) - 1, k + (1 if f > 0.55 and (x + y) % 2 == 0 else 0))])
+                a[y, x] = col
+            # seedling dots along a row
+            yy_ = y0 + 6
+            if k < 3 and y1 - y0 > 12 and 0 <= yy_ < H and (x + k) % 5 == 0:
+                a[yy_, x] = hx("2c6a40")
+                if yy_ - 1 >= 0:
+                    a[yy_ - 1, x] = hx("5a9a4a")
+    pad = img(a)
+    pad = tone(pad, (1 - xx2 / 440.0) * 0.5 + (yy2 - 200) / 120.0, 0.8, 0.3, hx("1a0e30"), 0.55)
+    # princess terrace: carved stone platform (speed 20, shares the paddy layer's pan)
+    tr = newl()
+    d = ImageDraw.Draw(tr)
+    TX0, TX1, TY = 312, 470, 214
+    d.rectangle((TX0, TY, TX1, TY + 12), fill=hx("2e1c46"))
+    d.rectangle((TX0, TY, TX1, TY), fill=hx("ff9a58"))
+    d.rectangle((TX0, TY + 1, TX1, TY + 1), fill=hx("b0508a"))
+    a = arr(tr)
+    tm = (yy2 >= TY + 2) & (yy2 <= TY + 12) & (xx2 >= TX0) & (xx2 <= TX1)
+    a[tm & ((xx2 // 8 + (yy2 // 4)) % 2 == 0)] = hx("3a2456")
+    a[tm & ((yy2 - TY) % 4 == 0)] = hx("1e1034")
+    # balustrade posts with small lamp niches
+    for x in range(TX0 + 4, TX1, 14):
+        a[TY - 6:TY, x:x + 3] = hx("2c1a44")
+        a[TY - 7, x:x + 3] = hx("ff9a58")
+        a[TY - 4, x + 1] = hx("ffb050")
+    tr = img(a)
+    return dict(sky=sky, stars=stars, clouds=clouds, far=far, rowB=rowB, rowC=rowC, rowD=rowD, pad=pad, tr=tr, TX0=TX0, TY=TY, SX=SX, SY=SY)
+
+
+PRINCESS = ["......g......",
+            ".....ggg.....",
+            ".....hhh.....",
+            ".....hhh.....",
+            "......h......",
+            ".....bbb.....",
+            "....bbbbb....",
+            "....bbbbb.a..",
+            ".....bbb..a..",
+            ".....kkk.....",
+            "....kkkkk....",
+            "....kkkkkk...",
+            "...kkkkkkk...",
+            "...kkkkkkkk..",
+            "..kkkkkkkkk..",
+            "..kkkkkkkkkk."]
+
+
+@scene("vista_mataram", DUR)
+def vista_mataram(dur=DUR):
+    M = _mataram()
+    pal = {"g": hx("ffb050"), "h": hx("2a1844"), "b": hx("2a1844"), "k": hx("221238"), "a": hx("2a1844")}
+    pr = spr(PRINCESS, pal)
+    pa = arr(pr)
+    for y in range(pa.shape[0]):               # sun on her right side: warm rim on the right-hand edge
+        xs = np.where(pa[y, :, 3] > 0)[0]
+        if len(xs):
+            pa[y, xs.max()] = hx("ff9a58")
+    pr = img(pa)
+    mistA = mist(480, 28, 3, hx("ffb078"), 0.5, 80, 10)
+    mistB = mist(480, 30, 5, hx("d8587c"), 0.5, 90, 10)
+    mistC = mist(480, 30, 9, hx("a83c78"), 0.45, 100, 10)
+
+    def fn(t):
+        c = Image.new("RGBA", (W, H))
+        c.alpha_composite(M["sky"])
+        twinkle(c, M["stars"], t, [hx("6a4a90"), hx("a890c8"), hx("e8d8f0"), hx("ffffff")])
+        for cb, y, spd in M["clouds"]:
+            view(c, cb, spd * t, y, wrap=True)
+        view(c, M["far"], 20 + 4 * t)
+        view(c, mistA, 5 * t, 148, wrap=True)
+        view(c, M["rowB"], 20 + 7 * t)
+        view(c, mistB, 8 * t, 156, wrap=True)
+        view(c, M["rowC"], 20 + 11 * t)
+        view(c, mistC, 11 * t, 162, wrap=True)
+        off = 20 + 15 * t
+        view(c, M["rowD"], off)
+        # lamps glimmer in the great candi's niches
+        for i, (lx, ly) in enumerate([(196, 128), (190, 150), (214, 144), (150, 150), (248, 160), (172, 162), (200, 168)]):
+            flicker(c, lx - int(off), ly, t, i * 3, [hx("ffc060"), hx("ff9040")])
+        view(c, M["pad"], 40 + 20 * t)
+        view(c, M["tr"], 40 + 20 * t)
+        # the princess on the terrace: a long selendang streaming in the evening breeze
+        px0 = M["TX0"] + 64 - 40 - int(20 * t)
+        py0 = M["TY"] - 16
+        put(c, pr, px0, py0)
+        for k in range(1, 10):
+            wv = int(round(math.sin(t * 3.2 - k * 0.7) * (0.6 + k * 0.18)))
+            px(c, px0 + 11 + k, py0 + 8 + wv + k // 4, hx("ff7a58") if k % 3 else hx("ffb050"))
+            if k > 4:
+                px(c, px0 + 11 + k, py0 + 9 + wv + k // 4, hx("e0505a"))
+        for k in range(1, 7):       # kain hem sways
+            px(c, px0 + 12 + int(round(math.sin(t * 2.4) * 1)), py0 + 15, hx("221238"))
+        # dusk fliers homing to the temples
+        for i, (bx, by, sp) in enumerate([(-10, 100, 15), (-60, 118, 13), (-30, 86, 17), (-90, 108, 14)]):
+            bird(c, (bx + sp * t + 110 * i) % 560 - 40, by + int(math.sin(t * 1.3 + i) * 2), int(t * 6 + i), hx("3a1a50"))
+        motes(c, t, 55, 20, (0, 196, W, 262), [hx("fff0a0"), hx("ffc858"), hx("d88838")], (3, 7), 7, True)
+        return finish(c, t, dur)
+    return fn
