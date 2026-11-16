@@ -18,6 +18,7 @@ import pxkit as K  # noqa: E402
 from scenes import SCENES  # noqa: E402
 import scenes_future  # noqa: E402,F401  (segment 7 scenes register into SCENES)
 import scenes_vista  # noqa: E402,F401  (region vistas)
+import scenes_cine  # noqa: E402,F401  (story cinematics)
 
 
 def build(name, dur=None, kw=None):
