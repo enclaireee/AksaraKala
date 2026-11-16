@@ -507,7 +507,7 @@ def vista_galuh(dur=DUR):
         glints(c, 188, 246, t, 3, 46, [hx("fff6d8"), hx("cfe4f4"), hx("8fc0e4")], 0, W, (2, 7), 1.3)
         mist_b = None
         # the two brothers part: two boats crossing in opposite directions
-        for im, bx, sp, by in ((boatA, 360, -8, 203), (boatB, 150, 7, 224)):
+        for im, bx, sp, by in ((boatA, 360, -8, 203), (boatB, 215, 7, 224)):
             x = bx + sp * t
             bob = int(math.sin(t * 2.0 + bx) * 1)
             put(c, im, x, by + bob)
@@ -788,12 +788,16 @@ def vista_mataram(dur=DUR):
 
 # ============================================================================ 4. TIMUR
 def _blob_tree(cs, mid, lit, shd, seed, y_cut=None):
+    """structured leaf clusters: each a 3-tone lobe (shadow base, mid body, lit top-left cap)."""
+    im = newl()
+    d = ImageDraw.Draw(im)
     m = circles_mask(cs, LW, H)
+    for cx, cy, rx, ry in sorted(cs, key=lambda c: c[1]):
+        d.ellipse((cx - rx, cy - ry, cx + rx, cy + ry), fill=shd)
+        d.ellipse((cx - rx + 1, cy - ry + 1, cx + rx - 3, cy + ry - 4), fill=mid)
+        d.ellipse((cx - rx + 3, cy - ry + 2, cx + rx - 12, cy + ry - 13), fill=lit)
     if y_cut:
-        m[y_cut:] = False
-    im = shaded(newl(), m, mid, lit, shd, None, -1, -1, 3, 4)
-    im = tex(im, m, mid, fbm2(LW, H, 6, 5, seed, 2), 0.5, 0.1) if False else im
-    im = tex(im, m, tuple(max(0, c - 18) for c in shd[:3]) + (255,), fbm2(LW, H, 7, 5, seed + 5, 2), 0.66, 0.08)
+        a = arr(im); a[y_cut:] = 0; im = img(a); m[y_cut:] = False
     return im, m
 
 
@@ -821,7 +825,7 @@ def _timur():
     # the giant on the far ridge (speed 6): hulking green silhouette, hazed by distance
     gi = newl()
     d = ImageDraw.Draw(gi)
-    GC, GL, GD = hx("5e8f52"), hx("8cb46a"), hx("3f6a40")
+    GC, GL, GD = hx("3e6a40"), hx("6a9460"), hx("2a4a34")
     gx, gy = 130, 160
     d.polygon([(gx - 22, gy), (gx - 26, gy - 26), (gx - 20, gy - 44), (gx - 8, gy - 52), (gx + 8, gy - 52), (gx + 20, gy - 44), (gx + 27, gy - 24), (gx + 22, gy)], fill=GC)
     d.ellipse((gx - 8, gy - 66, gx + 8, gy - 50), fill=GC)                       # head
@@ -832,8 +836,8 @@ def _timur():
     d.line([(gx + 38, gy - 8), (gx + 42, gy - 56)], fill=GD, width=3)               # club
     d.ellipse((gx + 36, gy - 66, gx + 48, gy - 52), fill=GD)
     gi = rim_light(gi, GL, -1, -1)
-    gi = dmask(gi, arr(gi)[..., 3] > 0, hx("7ea66a"), 0.18)
-    gi = dmask(gi, np.zeros((H, LW), bool) | (arr(gi)[..., 3] > 0), hx("3f6a40"), 0.0)
+    yq = np.arange(H)[:, None]
+    gi = dmask(gi, (arr(gi)[..., 3] > 0) & (yq > 128), hx("a8b890"), np.clip((yq - 128) / 40.0, 0, 1) * 0.55)
     gi.alpha_composite(Image.new("RGBA", gi.size, (0, 0, 0, 0)))
     for (x, y) in [(gx - 3, gy - 60), (gx + 3, gy - 60)]:
         gi.putpixel((x, y), hx("ffd040"))
@@ -853,7 +857,7 @@ def _timur():
     for i in range(22):
         cs.append((int(260 + r.gauss(0, 58)), int(118 + r.gauss(0, 12)), r.randint(14, 26), r.randint(10, 17)))
     cs += [(210, 142, 30, 14), (300, 138, 34, 15), (360, 148, 28, 12), (250, 150, 30, 12)]
-    bt, bm = _blob_tree(cs, hx("4e7a34"), hx("b4c850"), hx("24442c"), 3, 176)
+    bt, bm = _blob_tree(cs, hx("3e7a34"), hx("78a846"), hx("1f4a2c"), 3, 176)
     sv = fill_below(sv, sp_, hx("d8b050"), rim=hx("fbe898"), rim2=hx("e8c870"))
     d = ImageDraw.Draw(sv)
     d.polygon([(246, 204), (252, 170), (258, 152), (268, 150), (278, 152), (284, 170), (292, 204)], fill=hx("5e3c26"))
@@ -882,18 +886,19 @@ def _timur():
         y = 250 - int(18 * math.sin((x - 380) / 38.0)) - (x - 380) // 12
         d.point((x, y), fill=hx("3e7a30"))
         d.point((x, y + 1), fill=hx("2a5a28"))
-    for cx, cy in [(408, 232), (452, 226), (498, 218)]:
+    for cx, cy in [(402, 226), (462, 220), (524, 214)]:
         d.ellipse((cx - 11, cy - 20, cx + 11, cy + 20), fill=hx("78a838")) if False else None
         cy += 18
-        d.ellipse((cx - 14, cy - 6, cx + 14, cy + 6), fill=hx("5e9a30"))
-        d.line([(cx - 12, cy - 4), (cx + 12, cy - 4)], fill=hx("b8d860"))
-        d.line([(cx - 12, cy + 4), (cx + 12, cy + 4)], fill=hx("34602a"))
-        for q in range(-10, 12, 5):
+        d.ellipse((cx - 22, cy - 10, cx + 22, cy + 10), fill=hx("5e9a30"))
+        d.line([(cx - 18, cy - 7), (cx + 14, cy - 7)], fill=hx("c0e068"))
+        d.line([(cx - 18, cy + 7), (cx + 18, cy + 7)], fill=hx("2e5a28"))
+        for q in range(-16, 18, 6):
             d.point((cx + q, cy), fill=hx("e8e090"))
-        d.polygon([(cx - 14, cy), (cx - 22, cy - 3), (cx - 22, cy + 3)], fill=hx("e8c040"))
+        d.polygon([(cx - 22, cy), (cx - 30, cy - 4), (cx - 30, cy + 4)], fill=hx("e8c040"))
         for sgn in (-1, 1):
-            d.polygon([(cx, cy - 6), (cx + sgn * 16, cy - 20), (cx + sgn * 24, cy - 8), (cx + sgn * 8, cy - 4)], fill=hx("3e8a38"))
-            d.line([(cx, cy - 6), (cx + sgn * 20, cy - 14)], fill=hx("a0d058"))
+            d.polygon([(cx, cy - 8), (cx + sgn * 22, cy - 30), (cx + sgn * 36, cy - 12), (cx + sgn * 12, cy - 6)], fill=hx("3e8a38"))
+            d.line([(cx, cy - 8), (cx + sgn * 30, cy - 20)], fill=hx("a0d058"))
+            d.line([(cx + sgn * 4, cy - 7), (cx + sgn * 24, cy - 12)], fill=hx("2a6a2e"))
     fg = tone(fg, (1 - xx / 420.0) * 0.5 + (yy - 220) / 80.0, 0.8, 0.3, hx("4a3818"), 0.5)
     return dict(sky=sky, clouds=clouds, vol=vol, gi=gi, h1=h1, h2=h2, sv=sv, fg=fg, fp=fp)
 
@@ -990,8 +995,8 @@ def _kidul():
         d.point((SHX + dx, SHY - 2), fill=hx("e86a50"))
     # wave bands (periodic over 640 so they wrap): far to near
     bands = []
-    spec = [(158, 3, 5, "#0e3a48", "#2a7a84", 4, 1), (168, 4, 6, "#0c3440", "#2c8a8a", 5, 2), (181, 5, 8, "#0a2c38", "#34988e", 6, 3),
-            (198, 7, 10, "#08242f", "#48ac98", 7, 1), (222, 9, 14, "#061c28", "#68c8ae", 8, 2), (250, 11, 20, "#04141e", "#8ee0c0", 9, 3)]
+    spec = [(158, 3, 3, "#2a7c80", "#6cc4b8", 4, 1), (170, 4, 5, "#226c72", "#5ab4aa", 5, 2), (184, 5, 8, "#1a5a64", "#4aa498", 6, 3),
+            (201, 7, 11, "#144a56", "#7ad0c0", 7, 1), (224, 9, 15, "#0e3a48", "#9ee8d4", 8, 2), (250, 11, 21, "#082a38", "#b8f4e0", 9, 3)]
     for base, amp, spd, col, crest, nper, ph in spec:
         L = newl()
         x = np.arange(LW)
@@ -1022,16 +1027,26 @@ def vista_kidul(dur=DUR):
             view(c, cb, spd * t, y, wrap=True)
         view(c, K["ks"], 20 + 7 * t)
         # the sea floor lights of her palace glimmer under the swell
+        for yy_ in range(-9, 10):
+            for xx_ in range(-30, 31):
+                dd = (xx_ / 30.0) ** 2 + (yy_ / 9.0) ** 2
+                if dd < 1 and BY4[(151 + yy_) % 4, (172 + xx_) % 4] < (1 - dd) * 0.55:
+                    px(c, 172 + xx_, 151 + yy_, hx("3ac89a") if dd < 0.5 else hx("1e8a74"))
         for i, (lx, ly) in enumerate(lamps):
-            flicker(c, lx, ly, t, i * 2, [hx("7affc8"), hx("2aa88a")])
+            flicker(c, lx, ly, t, i * 2, [hx("f0ffb0"), hx("7affc8")])
         for i, (L, p, spd, crest) in enumerate(K["bands"]):
             view(c, L, 20 + spd * t, 0, wrap=True)
-            if i == 2:       # moon path on the water (before the nearer swells)
-                for y in range(156, 215):
-                    wd = 4 + (y - 156) // 2
-                    for dx in range(-wd, wd + 1):
-                        if (int(t * 3 + y * 0.7 + dx * 1.3)) % 3 == 0:
-                            px(c, K["MX"] + dx + int(math.sin(t * 1.5 + y) * 1), y, hx("e4f4ee") if abs(dx) < wd // 2 else hx("8fc4c0"))
+            if i == 3:       # moon path on the water (before the nearer swells)
+                for y in range(156, 232, 2):
+                    wd = 3 + (y - 156) // 2
+                    rr = random.Random(y)
+                    for k in range(4):
+                        dx = rr.randint(-wd, wd)
+                        ln = rr.randint(2, 3 + (y - 156) // 14)
+                        if int(t * 2.2 + y * 0.31 + k * 1.7) % 3 == 0:
+                            continue
+                        for q in range(ln):
+                            px(c, K["MX"] + dx + q + int(math.sin(t * 1.5 + y) * 1), y, hx("f0faf4") if abs(dx) < wd // 2 else hx("a4d8d0"))
         # silver foam on the near crests
         for i, (L, p, spd, crest) in enumerate(K["bands"][3:]):
             off = int(20 + spd * t)
@@ -1086,7 +1101,9 @@ def _kala():
     fa = arr(fr)
     fa[mm] = (0, 0, 0, 0)
     fr = img(fa)
-    fr = tone(fr, fbm2(LW, H, 30, 16, 3, 3), 0.52, 0.2, hx("1c1240"), 0.45)
+    yy_s = np.mgrid[0:H, 0:LW][0]
+    fr = tone(fr, fbm2(LW, H, 90, 5, 3, 2) + ((yy_s // 3) % 2) * 0.12, 0.5, 0.06, hx("2a1c5a"), 0.7)
+    fr = tone(fr, fbm2(LW, H, 40, 3, 9, 2), 0.62, 0.05, hx("0a0618"), 0.8)
     d = ImageDraw.Draw(fr)
     ys = 52
     for sgn in (-1, 1):
@@ -1096,6 +1113,11 @@ def _kala():
         d.line([(ex - 30, ys + 4), (ex + 6, ys - 8), (ex + 32, ys)], fill=hx("4a2a8a"), width=2)          # heavy brow
     d.polygon([(OX - 6, ys + 4), (OX + 6, ys + 4), (OX + 10, 112), (OX - 10, 112)], fill=hx("1c1240"))      # nose bridge
     d.polygon([(OX - 16, ys + 30), (OX + 16, ys + 30), (OX + 10, 108), (OX - 10, 108)], fill=hx("160e34"))
+    for sgn in (-1, 1):       # carved cheek spirals and brow wrinkles
+        for r_ in (30, 22, 14):
+            d.arc((OX + sgn * 92 - r_, 150 - r_, OX + sgn * 92 + r_, 150 + r_), 0, 300, fill=hx("3a2478"))
+        for k in range(3):
+            d.line([(OX + sgn * 20, 92 - k * 5), (OX + sgn * 70, 86 - k * 5)], fill=hx("2e1c64"))
     # fangs hanging from the upper jaw, tusks rising from the lower
     for fx, ln in [(OX - 78, 14), (OX - 60, 22), (OX - 40, 12), (OX - 22, 34), (OX + 22, 34), (OX + 40, 12), (OX + 60, 22), (OX + 78, 14)]:
         d.polygon([(fx - 6, 126), (fx + 6, 126), (fx, 126 + ln)], fill=hx("e8e0f4") if ln > 30 else hx("a89cc8"))
@@ -1137,7 +1159,7 @@ def vista_kala(dur=DUR):
     for y in range(4, 12):
         xs = np.where(ha[y, :, 3] > 0)[0]
         ha[y, xs.min()] = hx("5ac8d0")
-    hero = img(ha)
+    hero = img(ha).resize((18, 24), Image.NEAREST)
     stars_ = make_stars(30, 40, 110)
 
     def fn(t):
@@ -1155,27 +1177,34 @@ def vista_kala(dur=DUR):
                     dd = (xx_ / 12.0) ** 2 + (yy_ / 6.0) ** 2
                     if dd < 1 and BY4[(60 + yy_) % 4, (ex + xx_) % 4] < (1 - dd) * lvl * 1.6:
                         px(c, ex + xx_, 66 + yy_, hx("c8a0ff") if dd < 0.25 else (hx("8a5ae0") if dd < 0.6 else hx("5a38a8")))
-        # the sand trickle between the central fangs, pooling on the threshold
+        # the sand trickle: a visible falling column, pooling on the threshold
         sx = OX - int(off)
-        for k in range(26):
-            y = 120 + ((k * 4 + int(t * 40)) % 104)
-            px(c, sx, y, hx("f0d890") if k % 2 else hx("c8a860"))
-        px(c, sx - 1, 224, hx("c8a860")); px(c, sx + 1, 224, hx("c8a860"))
-        for i in range(5):
-            for dx in range(-(5 - i), 6 - i):
-                px(c, sx + dx, 226 + i - 4 + 4, hx("d8b870") if (dx + i) % 3 else hx("a88848"))
+        for y in range(126, 226):
+            ph = (y * 3 - int(t * 70)) % 12
+            col = hx("fff0b0") if ph < 7 else hx("d8b068")
+            px(c, sx, y, col)
+            px(c, sx + 1, y, hx("a88848") if ph < 9 else hx("fff0b0"))
+        for i in range(6):
+            for dx in range(-(8 - i * 1), 9 - i):
+                px(c, sx + dx, 226 + i - 5, hx("e8c878") if (dx + i) % 3 else hx("b89040"))
         view(c, fl, off)
         # hero at the threshold, cyan staff pulsing
         hxp = OX + 52 - int(off)
-        hyp = int(fp[OX + 52]) - 12
+        hyp = int(fp[OX + 52]) - 24
+        pul = 0.75 + 0.2 * math.sin(t * 3)
+        for yy_ in range(-4, 5):                      # pool of cyan light on the floor
+            for xx_ in range(-26, 27):
+                dd = (xx_ / 26.0) ** 2 + (yy_ / 4.0) ** 2
+                if dd < 1 and BY4[(hyp + 24 + yy_) % 4, (hxp + 9 + xx_) % 4] < (1 - dd) * pul * 0.8:
+                    px(c, hxp + 9 + xx_, hyp + 23 + yy_, hx("5ad8d8") if dd < 0.4 else hx("2a7a90"))
         put(c, hero, hxp, hyp)
-        pul = 0.6 + 0.3 * math.sin(t * 3)
-        for yy_ in range(-9, 10):
-            for xx_ in range(-9, 10):
-                dd = math.hypot(xx_, yy_) / 9
-                if dd < 1 and BY4[(hyp + yy_) % 4, (hxp + 4 + xx_) % 4] < (1 - dd) * pul * 0.9:
-                    px(c, hxp + 4 + xx_, hyp - 1 + yy_, hx("7fe8e0") if dd < 0.3 else hx("3a9aa8"))
-        px(c, hxp + 4, hyp - 1, hx("ffffff")); px(c, hxp + 4, hyp, hx("d8fffb"))
+        for yy_ in range(-14, 15):
+            for xx_ in range(-14, 15):
+                dd = math.hypot(xx_, yy_) / 14
+                if dd < 1 and BY4[(hyp + yy_) % 4, (hxp + 9 + xx_) % 4] < (1 - dd) * pul * 1.1:
+                    px(c, hxp + 9 + xx_, hyp - 1 + yy_, hx("d8fffb") if dd < 0.25 else (hx("7fe8e0") if dd < 0.55 else hx("3aa0b0")))
+        for q in range(-1, 2):
+            px(c, hxp + 9 + q, hyp - 1, hx("ffffff")); px(c, hxp + 9, hyp - 1 + q, hx("ffffff"))
         view(c, cr_l, 20 + 22 * t * 0.5)
         view(c, cr_r, 20 + 22 * t * 0.5)
         motes(c, t, 6, 26, (0, 40, W, 230), [hx("d8fffb"), hx("a888f0"), hx("5a38a8")], (3, 9), 8, True)
