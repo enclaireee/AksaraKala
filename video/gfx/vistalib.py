@@ -390,3 +390,72 @@ def tone(im, noise, thr, soft, tint, k=0.3, dither=True):
     t_ = np.array(tint[:3], "float32")
     a[..., :3][m] = (a[..., :3][m] * (1 - k) + t_ * k).astype("uint8")
     return img(a)
+
+
+def shift_mask(m, dx, dy):
+    o = np.zeros_like(m)
+    h, w = m.shape
+    ys, xs = slice(max(0, dy), h + min(0, dy)), slice(max(0, dx), w + min(0, dx))
+    yd, xd = slice(max(0, -dy), h + min(0, -dy)), slice(max(0, -dx), w + min(0, -dx))
+    o[ys, xs] = m[yd, xd]
+    return o
+
+
+def shaded(im, mask, mid, lit=None, shade=None, deep=None, dx=-2, dy=-2, t_lit=3, t_sh=4, dither=True):
+    """paint a mask as a 3-tone lit/mid/shade volume: light from (dx,dy) direction."""
+    a = arr(im)
+    h, w = mask.shape
+    a[mask] = mid
+    if lit is not None:
+        inner = shift_mask(mask, -dx * t_lit // 2 or 0, -dy * t_lit // 2 or 0)
+        edge = mask & ~shift_mask(mask, -dx, -dy)           # pixels whose light-side neighbour is empty
+        # grow the lit band inward by repeated shifts
+        band = np.zeros_like(mask)
+        cur = mask.copy()
+        for i in range(t_lit):
+            cur = cur & shift_mask(cur, -dx, -dy) if False else cur
+        m2 = mask.copy()
+        lit_m = np.zeros_like(mask)
+        for i in range(1, t_lit + 1):
+            lit_m |= mask & ~shift_mask(mask, int(np.sign(-dx)) * i, int(np.sign(-dy)) * i)
+        if dither:
+            lit_m &= (bay(h, w) < 0.85) | ~shift_mask(mask, int(np.sign(-dx)), int(np.sign(-dy)))
+        a[lit_m] = lit
+    if shade is not None:
+        sh_m = np.zeros_like(mask)
+        for i in range(1, t_sh + 1):
+            sh_m |= mask & ~shift_mask(mask, int(np.sign(dx)) * i, int(np.sign(dy)) * i)
+        if dither:
+            sh_m &= (bay(h, w) < 0.8) | ~shift_mask(mask, int(np.sign(dx)), int(np.sign(dy)))
+        a[sh_m] = shade
+    return img(a)
+
+
+def circles_mask(circles, w, h):
+    m = Image.new("L", (w, h), 0)
+    d = ImageDraw.Draw(m)
+    for cx, cy, rx, ry in circles:
+        d.ellipse((cx - rx, cy - ry, cx + rx, cy + ry), fill=255)
+    return np.array(m) > 0
+
+
+def cumulus(w, h, seed, cols, flat=0.5, n=9, rmax=None):
+    """a pixel cumulus: bumpy ellipses on a flat base, lit top-left, shaded under side. cols = (lit, mid, shade)."""
+    r = random.Random(seed)
+    rmax = rmax or h // 2
+    cs = []
+    base = int(h * 0.78)
+    for i in range(n):
+        cx = int(w * (0.12 + 0.76 * i / (n - 1)) + r.randint(-4, 4))
+        mid = 1 - abs(i / (n - 1) - 0.5) * 2
+        ry = int(rmax * (0.35 + 0.65 * mid) * r.uniform(0.6, 1.1))
+        rx = int(ry * r.uniform(1.1, 1.6))
+        cs.append((cx, base - int(ry * 0.7), rx, ry))
+    m = circles_mask(cs, w, h)
+    m[base + 1:] = False
+    im = newl(w, h)
+    im = shaded(im, m, cols[1], cols[0], cols[2], None, -1, -1, 3, 3)
+    yy = np.arange(h)[:, None]
+    lowm = m & (yy > base - h * 0.22)
+    im = dmask(im, lowm, cols[2], np.clip((yy - (base - h * 0.22)) / (h * 0.22), 0, 1) * 0.9)
+    return im
