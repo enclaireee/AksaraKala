@@ -37,7 +37,7 @@ func hook(demo: int, zone_id: String, off: Vector2, glyph: String, kinds: Array)
 	await wait_seconds(float(arg("approach", 1.5)))
 	mark("cast_start")
 	var r := await cast_at(glyph, foes[0], {"center": Vector2(240, float(arg("cy", 128))), "size": float(arg("size", 130)),
-		"seconds": float(arg("secs", 2.1)), "freeze": foes, "wake_delay": float(arg("wake_delay", 0.8)), "creep": float(arg("creep", 30)), "creep_to": float(arg("creep_to", 30))})
+		"seconds": float(arg("secs", 2.1)), "freeze": foes, "wake_delay": float(arg("wake_delay", 0.8)), "creep": float(arg("creep", 48)), "creep_to": float(arg("creep_to", 30))})
 	mark("released")
 	print("shot: hook %s score %.2f" % [glyph, float(r.get("score", 0))])
 	await wait_seconds(float(arg("after", 3.4)))
