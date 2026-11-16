@@ -15,6 +15,9 @@ func run() -> void:
 	infinite_stamina = true
 	show_hud()
 	hide_boss_hint()
+	for e in enemies():
+		if e != boss():
+			e.queue_free()
 	var b := boss()
 	print("s5: boss ", b.global_position, " hero ", hero().global_position)
 	var gate: Node2D = null
@@ -34,7 +37,17 @@ func run() -> void:
 	b.set("_start", b.global_position)
 	b.set_physics_process(false)   # he would engage before the threshold (game bug: see report)
 	teleport(gate.global_position - inward * 36)
-	await wait_seconds(1.0)
+	await wait_seconds(0.5)
+	await wait_until(func() -> bool: return not get_tree().paused, 600, "first card")
+	await wait_seconds(0.5)
+	print("s5: before reset engaged=", b.engaged, " entered=", gate.entered)
+	b.engaged = false
+	G.boss_intro_seen.clear()
+	boss_stage()._boss = null   # it saw him engaged during the demo placement
+	b._enter(b.State.IDLE)
+	for g in get_tree().get_nodes_in_group("arena_gate"):
+		g.entered = false
+	await wait_seconds(0.5)
 	rec_start()
 	hold_move(inward)
 	await wait_until(func() -> bool: return get_tree().get_nodes_in_group("arena_gate").any(func(g): return g.entered), 400, "no threshold")
@@ -71,7 +84,7 @@ func run() -> void:
 	await wait_seconds(0.3)
 	await walk_to(hero().global_position + (hero().global_position - b.global_position).normalized() * 50.0, 1.2, 4.0)
 	aim_at(b)
-	var r := await cast_glyph(arg("glyph", "jawa_ra"), {"center": Vector2(240, 96), "size": 96.0, "seconds": 1.3, "aim_at": b})
+	var r := await cast_still(arg("glyph", "jawa_ra"), {"center": Vector2(240, 96), "size": 96.0, "seconds": 1.3, "aim_at": b, "jitter": 0.0, "template": int(arg("tpl", 0))})
 	mark("cast")
 	await wait_seconds(arg("after", 2.0))
 	boss_log("end")

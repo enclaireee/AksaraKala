@@ -63,7 +63,7 @@ func run() -> void:
 	mark("sweep2"); boss_log("sweep2"); print("s5: zone ", Z.current_zone, " pillars ", b.pillars.map(func(q): return q.global_position))
 	await wait_seconds(0.4)
 	aim_at(b)
-	var r := await cast_glyph("jawa_ca", {"center": Vector2(240, 96), "size": 96.0, "seconds": 1.3, "aim_at": b})
+	var r := await cast_still("jawa_ca", {"center": Vector2(240, 96), "size": 96.0, "seconds": 1.3, "aim_at": b})
 	mark("cast_ca"); boss_log("cast_ca"); print("s5: zone ", Z.current_zone, " pillars ", b.pillars.map(func(q): return q.global_position))
 	await wait_seconds(0.3)
 	if b.pillars.size() > 0:

@@ -91,3 +91,35 @@ func hide_boss_hint() -> void:
 	var st := boss_stage()
 	if st and st.get("_hint_bg"):
 		st._hint_bg.visible = false
+
+
+## Casts with the shot camera held still (a moving camera bends the stroke and the recogniser misreads it).
+func cast_still(glyph: String, o := {}) -> Dictionary:
+	var keep: Node2D = _cam_follow
+	_cam_follow = null
+	var r := await cast_glyph(glyph, o)
+	if keep and is_instance_valid(keep):
+		_cam_follow = keep
+	return r
+
+
+## A real key press (physical keycode), as the menu reads Q/E/Esc.
+func key(code: Key) -> void:
+	var e := InputEventKey.new()
+	e.physical_keycode = code
+	e.keycode = code
+	e.pressed = true
+	Input.parse_input_event(e)
+	await wait_frames(2)
+	var u := e.duplicate()
+	u.pressed = false
+	Input.parse_input_event(u)
+	await wait_frames(1)
+
+
+## Every codex entry unlocked (the Codex tab lists them all).
+func unlock_codex() -> void:
+	for f in DirAccess.get_files_at(CodexEntry.dir):
+		var id := f.trim_suffix(".remap").trim_suffix(".tres")
+		if f.contains(".tres") and id not in G.codex:
+			G.codex.append(id)

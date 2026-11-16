@@ -134,9 +134,39 @@ func cast_at(glyph_id: String, target: Variant, o := {}) -> Dictionary:
 	o.erase("freeze")
 	freeze_all(hold, true)
 	_aim_when_drawing(target)
+	var wd := float(o.get("wake_delay", 0.0))
+	o.erase("wake_delay")
+	var creep := float(o.get("creep", 0.0))
+	o.erase("creep")
+	if creep > 0.0:
+		_creep(hold, creep, float(o.get("creep_to", 34.0)))
 	var r := await cast_glyph(glyph_id, o)
-	freeze_all(live(hold), false)
+	if wd <= 0.0:
+		freeze_all(live(hold), false)
+	else:
+		_wake_later(hold, wd)
 	return r
+
+
+## While the cast is drawn (slow motion), frozen foes keep sliding in toward the hero at `pxs` px/s (footage),
+## stopping `to` px away: the pack still closing in under the slowed time.
+func _creep(foes: Array, pxs: float, to: float) -> void:
+	var cc: Node = hero().get("cast")
+	for i in 20:
+		await get_tree().process_frame
+		if cc.get("drawing"):
+			break
+	while cc.get("drawing"):
+		for f in live(foes):
+			var d: Vector2 = hero().global_position - f.global_position
+			if d.length() > to:
+				f.global_position += d.normalized() * minf(pxs / FPS, d.length() - to)
+		await get_tree().process_frame
+
+
+func _wake_later(hold: Array, s: float) -> void:
+	await wait_seconds(s)
+	freeze_all(live(hold), false)
 
 
 func _aim_when_drawing(target: Variant) -> void:
@@ -161,6 +191,7 @@ func cast_demo(glyph: String, foes_spec: Array, o := {}) -> void:
 	infinite_sakti = true
 	english_spell_names()
 	show_hud()
+	show_cursor()
 	var c := hero().global_position + Vector2(float(o.get("dx", 300)), float(o.get("dy", 0)))
 	teleport(c)
 	face(o.get("face", Vector2.RIGHT))
@@ -170,14 +201,14 @@ func cast_demo(glyph: String, foes_spec: Array, o := {}) -> void:
 	await wait_seconds(0.8)
 	rec_start()
 	mark("start")
-	await wait_seconds(float(o.get("lead", 0.5)))
+	await wait_seconds(float(o.get("lead", 1.4)))
 	for f in foes:
 		wake(f)
 	await wait_seconds(float(o.get("approach", 0.9)))
 	mark("cast_start")
 	var tgt: Variant = o.get("target", foes[0])
 	var r := await cast_at(glyph, tgt, {"center": o.get("center", Vector2(240, 112)), "size": float(o.get("size", 120.0)),
-		"seconds": float(o.get("seconds", 1.6)), "freeze": foes, "jitter": float(o.get("jitter", 0.6)), "expect": o.get("expect", true)})
+		"seconds": float(o.get("seconds", 2.0)), "freeze": foes, "wake_delay": float(o.get("wake_delay", 0.6)), "creep": float(o.get("creep", 0.0)), "creep_to": float(o.get("creep_to", 36.0)), "jitter": float(o.get("jitter", 0.6)), "expect": o.get("expect", true)})
 	mark("released")
 	print("shot: demo %s score %.2f" % [glyph, float(r.get("score", 0))])
 	await wait_seconds(float(o.get("after", 4.0)))

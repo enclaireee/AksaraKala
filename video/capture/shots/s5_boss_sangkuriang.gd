@@ -63,7 +63,7 @@ func run() -> void:
 	await wait_until(func() -> bool: return b._stage == 2, 200, "no ring 2")
 	mark("ring2")
 	await wait_seconds(0.6)
-	var r := await cast_glyph("sunda_ca", {"center": Vector2(240, 96), "size": 96.0, "seconds": 1.3, "aim_at": b})
+	var r := await cast_still("sunda_ca", {"center": Vector2(240, 96), "size": 96.0, "seconds": 1.3, "aim_at": b})
 	mark("cast_ca")
 	boss_log("after cast")
 	await wait_seconds(arg("after", 2.0))
