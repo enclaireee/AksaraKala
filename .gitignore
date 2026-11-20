@@ -11,3 +11,6 @@ __pycache__/
 
 # Audio source cache (tools/build_audio.py re-downloads it)
 /tools/audio/raw/
+
+# Release signing key: never in the repo (tools/release_pack.py)
+*.pem

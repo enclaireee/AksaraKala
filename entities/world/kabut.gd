@@ -27,8 +27,7 @@ func _ready() -> void:
 
 
 func _lifted() -> bool:
-	var flags: Dictionary = get_node("/root/Game").flags
-	return flag != "" and flags.has(flag) and flags[flag]
+	return flag != "" and get_node("/root/Game").has_flag(flag)
 
 
 func _on_changed() -> void:

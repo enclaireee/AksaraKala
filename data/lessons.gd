@@ -46,7 +46,7 @@ const LESSONS := {
 		"steps": [{"event": "drink", "n": 1}],
 	},
 	"perfect": {
-		"text": "UI_TUT_PERFECT", "key": "dodge", "when": "!flag:tut_flask", "on": "hurt",
+		"text": "UI_TUT_PERFECT", "key": "dodge", "when": "flag:tut_flask", "on": "hurt",
 		"steps": [{"event": "perfect", "n": 1}], "ttl": 14.0,
 	},
 }

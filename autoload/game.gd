@@ -168,10 +168,7 @@ func new_game(cls: ClassData) -> void:
 		if id != "":
 			add_item(id, false)
 			equipped[ItemData.by_id(id).slot] = id
-	if start_quest("mq0"):
-		quests.mq0.step = 2   # 0.1-0.2 (prologue, class) are struck before the save; 0.3 Ibu is next (quests.md MQ0)
-		for f in ["mq0_d1", "mq0_d2", "mq0_d2b"]:
-			flags[f] = true
+	start_quest("mq0")
 	save_game()
 	changed.emit()
 
@@ -423,6 +420,13 @@ func _already(on: String, need: int) -> int:
 	match kv[0]:
 		"boss_defeated", "enemy_killed":
 			return need if kv[1] in killed else 0
+		"area_cleared":
+			return need if bool(flags.get("cleared:" + kv[1], false)) else 0
+		"petilasan_activated":
+			return need if bool(flags.get("petilasan:" + kv[1], false)) else 0
+		"zone_entered":
+			var zones := get_node_or_null("/root/Zones")
+			return need if zones != null and str(zones.current_zone) == kv[1] else 0
 		"memory_done":   # a Kelir memory can only be lived once: its flag stays set after the signal is gone
 			return need if has_flag("memory_" + kv[1]) else 0
 		"clue_examined":   # entered out of order, the signal fired before the step was current
@@ -444,15 +448,22 @@ func _catch_up(id: String) -> void:
 		return
 	if not st.all.is_empty():
 		for i in st.all.size():
-			if _already(str(st.all[i].get("on", "")), 1) > 0 and _all_hit(id, i):
+			if not _all_bit(id, i) and _already(str(st.all[i].get("on", "")), 1) > 0 and _all_hit(id, i):
 				return
 		return
 	var n := _already(st.on, st.count)
 	if n >= st.count:
 		quests[id].count = st.count - 1
 		_bump(id)
-	else:
-		quests[id].count = n
+		return
+	if not st.alt.is_empty():
+		for alt_on in st.alt.keys():
+			if _already(str(alt_on), 1) > 0:
+				quests[id].resolution = st.alt[alt_on]
+				quests[id].count = st.count - 1
+				_bump(id)
+				return
+	quests[id].count = n
 
 
 func _complete(id: String) -> void:
@@ -491,13 +502,64 @@ func active_sub(id: String) -> int:
 	return -1
 
 
-## The open sub-goal the HUD and arrow follow: the first open one whose marker is in the zone the player is in,
-## else the first open one. -1 when the step has no sub-goals or all are done.
+## Derives a marker dict for an `all` sub-goal, falling back to its trigger target when no explicit marker is set.
+func _sub_marker(st: QuestStep, sub: Dictionary) -> Dictionary:
+	var sm: Variant = sub.get("marker", {})
+	if sm is Dictionary and not sm.is_empty():
+		return sm
+	var on := str(sub.get("on", ""))
+	var sig := on.get_slice(":", 0)
+	var arg := on.get_slice(":", 1) if ":" in on else ""
+	var st_zone := str(st.marker.get("zone", ""))
+	match sig:
+		"clue_examined", "talked_to", "area_cleared", "petilasan_activated", "memory_done", "name_written":
+			if arg != "":
+				return {"zone": st_zone, "id": arg}
+		"zone_entered":
+			if arg != "":
+				return {"zone": arg, "id": ""}
+		"glyph_learned", "spell_cast":
+			if not st.marker.is_empty():
+				return st.marker
+			if arg != "":
+				return {"zone": st_zone, "id": arg}
+	return {}
+
+
+## False when a marker points to a node in the current scene that is hidden or whose `cond` currently fails.
+func _marker_actionable(m: Dictionary, here: String) -> bool:
+	if m.is_empty():
+		return true
+	var mz := str(m.get("zone", ""))
+	if here == "" or (mz != "" and mz != here):
+		return true
+	var tid := str(m.get("id", ""))
+	if tid == "":
+		return true
+	var tree := get_tree()
+	var scene := tree.current_scene if tree != null else null
+	if scene == null:
+		return true
+	var found_any := false
+	for n in scene.find_children("*", "Node2D", true, false):
+		if tid in [str(n.get("id")), str(n.get("npc_id")), str(n.get("trigger_id")), str(n.get("area_id")), str(n.get("item_id")), str(n.get("kind")), str(n.get("clue_id")), str(n.get("memory_id")), n.name]:
+			found_any = true
+			if "visible" in n and not n.visible:
+				continue
+			if "cond" in n and str(n.cond) != "" and not check(str(n.cond)):
+				continue
+			return true
+	return not found_any
+
+
+## The open sub-goal the HUD and arrow follow: the first actionable open one whose marker is in the zone the player is in,
+## else the first actionable open one, else the first open one. -1 when the step has no sub-goals or all are done.
 func focus_sub(id: String) -> int:
 	var st := current_step(id)
 	if st == null:
 		return -1
 	var first := -1
+	var first_actionable := -1
 	var zones := get_node_or_null("/root/Zones")
 	var here: String = str(zones.current_zone) if zones != null else ""
 	for i in st.all.size():
@@ -505,10 +567,13 @@ func focus_sub(id: String) -> int:
 			continue
 		if first < 0:
 			first = i
-		var sm: Variant = st.all[i].get("marker", {})
-		if here != "" and sm is Dictionary and str(sm.get("zone", "")) == here:
+		var sm := _sub_marker(st, st.all[i])
+		var ok := _marker_actionable(sm, here)
+		if ok and first_actionable < 0:
+			first_actionable = i
+		if ok and here != "" and not sm.is_empty() and str(sm.get("zone", here)) == here:
 			return i
-	return first
+	return first_actionable if first_actionable >= 0 else first
 
 
 ## Finished and total sub-goals of the current step (a counted step: kills so far and needed). Vector2i.ZERO if none.
@@ -525,20 +590,19 @@ func step_progress(id: String) -> Vector2i:
 
 
 ## The objective to point the arrow at: the tracked side quest, else the first active main quest. In an `all`
-## step it is the marker of the focus sub-goal, falling back to the step's own marker.
+## step it is the marker of the focus sub-goal (if actionable), falling back to the step's own marker.
 func objective_marker() -> Dictionary:
+	var zones := get_node_or_null("/root/Zones")
+	var here: String = str(zones.current_zone) if zones != null else ""
 	for id in _tracked():
 		var st := current_step(id)
 		if st == null:
 			continue
 		var i := focus_sub(id)
 		if i >= 0:
-			var sm: Variant = st.all[i].get("marker", {})
-			if sm is Dictionary and not sm.is_empty():
+			var sm := _sub_marker(st, st.all[i])
+			if not sm.is_empty() and _marker_actionable(sm, here):
 				return sm
-			var on := str(st.all[i].get("on", ""))   # no marker of its own: the thing its trigger names, in the step's zone
-			if on.get_slice(":", 0) in ["clue_examined", "talked_to"]:   # only signals that name a placed object
-				return {"zone": st.marker.get("zone", ""), "id": on.get_slice(":", 1)}
 		if not st.marker.is_empty():
 			return st.marker
 	return {}

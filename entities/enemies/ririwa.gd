@@ -8,6 +8,7 @@ const SWEEP_TIME := 0.2    # TUNE: how long the arc hurts
 const SWEEP_ARC := 200.0   # TUNE: degrees
 const SWEEP_REACH := 34.0  # TUNE: pixels
 
+@export var cond: String = ""
 var active := true
 var swept := false
 
@@ -24,7 +25,7 @@ func _ready() -> void:
 	sweep_marker.polygon = pts
 	Chaser.attach_smear(sweep_marker, true, 2)
 	var g := EliteGuard.new()
-	g.cond = "step:sq_g2=2"
+	g.cond = cond if cond != "" else "step:sq_g2=2"
 	add_child(g)
 
 

@@ -248,7 +248,9 @@ func _spawn_fields(kind: String) -> void:
 func _on_health(hp: int, max_hp: int) -> void:
 	_engage()   # first hit
 	var r := retreat_at()
-	if r > 0.0 and not retreated and hp > 0 and hp <= max_hp * r:
+	if r > 0.0 and not retreated and hp <= max_hp * r:
+		if hp <= 0:
+			health.hp = 1
 		retreated = true
 		_retreat.call_deferred()   # the hit can come mid physics query
 		return
@@ -256,7 +258,7 @@ func _on_health(hp: int, max_hp: int) -> void:
 		_next_phase()
 
 
-## Ambush over: he drops back into the grass (not killed, so the lair fight stays), the encounter reports cleared.
+## Ambush over: he drops back into the grass (not killed, so the lair fight stays), and notifies his Encounter.
 func _retreat() -> void:
 	if dead or is_queued_for_deletion():
 		return
@@ -276,7 +278,23 @@ func _retreat() -> void:
 	var tw := body.create_tween()
 	tw.tween_property(body, "modulate:a", 0.0, retreat_fade)
 	tw.tween_callback(queue_free)
-	get_node("/root/Events").area_cleared.emit(ambush_id)
+	var enc: Node = null
+	var par := get_parent()
+	if par != null:
+		if par.get("area_id") == ambush_id and par.has_method("_on_died"):
+			enc = par
+		else:
+			for n in par.get_children():
+				if n != self and n.get("area_id") == ambush_id and n.has_method("_on_died"):
+					enc = n
+					break
+	if enc != null:
+		var cb := Callable(enc, "_on_died")
+		if health.died.is_connected(cb):
+			health.died.disconnect(cb)
+		enc.call("_on_died")
+	else:
+		get_node("/root/Events").area_cleared.emit(ambush_id)
 
 
 # --- move deck ---
@@ -500,7 +518,7 @@ func _begin_move(m: String) -> void:
 			_tg(BossKit.telegraph_circle(self, global_position, 40.0, stomp_windup, GREEN))
 		"hunger_leap":
 			BossKit.anim(self, "cast", 10.0, true)
-			_spot = target.global_position
+			_spot = BossKit.clamp_arena_pos(self, target.global_position if target != null else global_position)
 			_tg(BossKit.telegraph_circle(self, _spot, leap_radius, leap_windup, HUNGER))
 		"quake":
 			_quake_left = 3 if phase >= 3 else 2
@@ -618,6 +636,15 @@ func _on_flinch() -> void:
 
 
 func _on_died() -> void:
+	if retreat_at() > 0.0:
+		if not retreated:
+			retreated = true
+			_retreat()
+		return
+	for f in fields:
+		if is_instance_valid(f):
+			f.queue_free()
+	fields.clear()
 	_clear_attack()
 	BossKit.anim_stop(self)
 	body.position = _body_pos

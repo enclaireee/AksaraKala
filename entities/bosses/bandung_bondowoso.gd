@@ -204,7 +204,7 @@ func _run_builders(delta: float) -> void:
 	if _build_t >= build_interval and standing() + _pending("pillar") < max_pillars:
 		_build_t = 0.0
 		_mark(_ring_spot(), rise_mark, "pillar")
-	if phase == 2:
+	if phase == 2 and target != null:
 		_debris_t += delta
 		if _debris_t >= debris_every:
 			_debris_t = 0.0
@@ -404,14 +404,15 @@ func _begin_move(m: String) -> void:
 	_last_move = m
 	moves_used[m] = int(moves_used.get(m, 0)) + 1
 	attacks += 1
+	var target_pos := target.global_position if target != null else global_position
 	match m:
 		"boulder":
-			_begin_attack(false, target.global_position)
+			_begin_attack(false, target_pos)
 		"stomp":
-			_begin_attack(true, target.global_position)
+			_begin_attack(true, target_pos)
 		"fist":
 			_enter(State.ACT)
-			var ang := (target.global_position - global_position).angle()
+			var ang := (target_pos - global_position).angle()
 			_spot = Vector2.from_angle(ang)   # the aim, kept as a direction
 			var c := BossKit.telegraph_cone(self, global_position, ang, fist_arc, fist_reach, fist_windup, BossKit.RED)
 			c.follow = self
@@ -430,7 +431,7 @@ func _begin_move(m: String) -> void:
 			_crush_mark()
 		"leap":
 			_enter(State.ACT)
-			_spot = target.global_position
+			_spot = BossKit.clamp_arena_pos(self, target_pos)
 			_from = global_position
 			_tg.append(BossKit.telegraph_circle(self, _spot, leap_radius, leap_windup, BossKit.RED))
 			BossKit.anim(self, "cast", 10.0, false)
@@ -560,7 +561,7 @@ func _act_quake() -> void:
 
 func _crush_mark() -> void:
 	_spots.clear()
-	var feet := target.global_position
+	var feet := target.global_position if target != null else global_position
 	_spots.append(feet)
 	var n := crush_count + (2 if phase == 2 else 0)
 	for i in range(1, n):
@@ -629,7 +630,7 @@ func _lane_ends(k: int) -> Array[Vector2]:
 
 
 func _temples_mark(life: float, first: bool) -> void:
-	var feet := target.global_position
+	var feet := target.global_position if target != null else global_position
 	if first:
 		_spot = feet
 		_axis_h = randf() < 0.5

@@ -28,6 +28,9 @@ var _demo_cls_btn: Button
 var _demo_act_lbl: Label
 var _demo_note: Label
 var _demo_list: VBoxContainer
+var _upd: PanelContainer          # the update card, top right (architecture.md Auto-update)
+var _upd_msg: Label
+var _upd_btns: HBoxContainer
 var _about_scroll: ScrollContainer   # the About body: taller than the card, so it scrolls
 var _t := 0.0
 var _leaving := false
@@ -129,6 +132,12 @@ func _ready() -> void:
 	_lang.pressed.connect(_toggle_lang)
 	add_child(_lang)
 	_lang_text()
+	var ver := UIFx.text("v" + str(ProjectSettings.get_setting("application/config/version", "")), "body", UIFx.DIM)
+	ver.position = Vector2(420, 256)
+	ver.size = Vector2(52, 12)
+	ver.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	add_child(ver)
+	_build_update_card()
 	_msg = UIFx.text("", "body", UIFx.DANGER)
 	_msg.position = Vector2(LOGO_POS.x - 10, 234)
 	_msg.size = Vector2(160, 20)
@@ -165,6 +174,65 @@ func _ready() -> void:
 	tw.tween_interval(0.35)
 	tw.tween_property(_sub, "modulate:a", 1.0, 0.4)
 	tw.tween_callback(func() -> void: UIFx.rise_in(_box, 4.0, 0.3))
+
+
+func _build_update_card() -> void:
+	_upd = PanelContainer.new()
+	_upd.add_theme_stylebox_override("panel", UIFx.ink_box())
+	_upd.position = Vector2(332, 26)
+	_upd.custom_minimum_size.x = 140
+	_upd.visible = false
+	add_child(_upd)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 2)
+	_upd.add_child(v)
+	_upd_msg = UIFx.text("", "body", UIFx.TEXT)
+	_upd_msg.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_upd_msg.custom_minimum_size.x = 140 - 2 * UIFx.PAD
+	v.add_child(_upd_msg)
+	_upd_btns = HBoxContainer.new()
+	_upd_btns.add_theme_constant_override("separation", 8)
+	v.add_child(_upd_btns)
+	var u := get_node("/root/Updater")
+	u.changed.connect(_update_card)
+	u.check()
+	_update_card()
+
+
+func _update_card() -> void:
+	var u := get_node("/root/Updater")
+	var ver := str(u.info.get("version", ""))
+	var later := ["UI_UPD_LATER", u.dismiss]
+	var acts := []
+	match u.state:
+		u.AVAILABLE:
+			_upd_msg.text = tr("UI_UPD_AVAILABLE") % ver
+			acts = [["UI_UPD_DOWNLOAD", u.download], later]
+		u.DOWNLOADING:
+			_upd_msg.text = tr("UI_UPD_DOWNLOADING") % int(100.0 * float(u.info.get("progress", 0.0)))
+		u.READY:
+			_upd_msg.text = tr("UI_UPD_READY") % ver
+			acts = [["UI_UPD_RESTART", u.restart], later]
+		u.MANUAL:
+			_upd_msg.text = tr("UI_UPD_MANUAL") % ver
+			acts = [["UI_UPD_OPEN", u.open_page], later]
+		u.FAILED:
+			_upd_msg.text = tr("UI_UPD_FAILED")
+			acts = [["UI_UPD_RETRY", u.download], later]
+		_:
+			_upd.visible = false
+			return
+	_upd.visible = true
+	if _upd_btns.get_child_count() == acts.size() and _upd_btns.get_meta("state", -1) == u.state:
+		return   # progress ticks only change the text
+	_upd_btns.set_meta("state", u.state)
+	for b in _upd_btns.get_children():
+		b.queue_free()
+	for a in acts:
+		var b := LozengeButton.new(a[0], 8)
+		b.pressed.connect(a[1])
+		_upd_btns.add_child(b)
+	_upd.reset_size()
 
 
 ## Custom mouse cursor, scaled to the window so it stays readable (hotspot 0,0).
@@ -419,36 +487,28 @@ func _build_settings(v: VBoxContainer) -> void:
 
 
 func _build_about(v: VBoxContainer) -> void:
-	v.add_child(_row(UIFx.text("AksaraKala  ·  The script of time", "body", UIFx.DIM)))
-	_section(v, "UI_ABOUT_MADE_BY")
-	for n in CREDITS:
-		v.add_child(_row(UIFx.text(n, "body", UIFx.TEXT)))
-	_section(v, "UI_ABOUT_MADE_FOR")
-	v.add_child(_row(UIFx.text("BUDAYA GO! 2026", "body", UIFx.WARM)))
-	v.add_child(_row(UIFx.text("Kompetisi Inovasi Digital Budaya Indonesia", "body", UIFx.TEXT)))
-	v.add_child(_row(UIFx.text("Kementerian Kebudayaan Republik Indonesia", "body", UIFx.DIM)))
-	_section(v, "UI_ABOUT_BUILT_WITH")
-	v.add_child(_row(UIFx.text("Godot Engine", "body", UIFx.TEXT)))
-	var fonts := UIFx.text("Tiny5, Jersey 10 / 15, Noto Sans Sundanese & Javanese (SIL OFL 1.1)", "body", UIFx.DIM)
-	fonts.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	fonts.custom_minimum_size.x = v.custom_minimum_size.x - INDENT
-	v.add_child(_row(fonts))
-	_section(v, "UI_ABOUT_MUSIC")
-	v.add_child(_row(UIFx.text(MUSIC_BY, "body", UIFx.TEXT)))
-	var tracks := UIFx.text(", ".join(MUSIC), "body", UIFx.DIM)
-	tracks.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	tracks.custom_minimum_size.x = v.custom_minimum_size.x - INDENT
-	v.add_child(_row(tracks))
-	_section(v, "UI_ABOUT_AUDIO")
-	for line in [
-		"VSCO-2 CE & VCSL (CC0)",
-		"Kenney RPG & Interface Sounds (CC0)",
-		"Socapex - Evol Online SFX (CC BY 3.0)"
-	]:
-		var lbl := UIFx.text(line, "body", UIFx.DIM)
+	var para := func(t: String, col: Color) -> void:   # every line wraps: Pixeloid runs wider than the card
+		var lbl := UIFx.text(t, "body", col)
 		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		lbl.custom_minimum_size.x = v.custom_minimum_size.x - INDENT
 		v.add_child(_row(lbl))
+	para.call("AksaraKala  ·  The script of time", UIFx.DIM)
+	_section(v, "UI_ABOUT_MADE_BY")
+	for n in CREDITS:
+		para.call(n, UIFx.TEXT)
+	_section(v, "UI_ABOUT_MADE_FOR")
+	para.call("BUDAYA GO! 2026", UIFx.WARM)
+	para.call("Kompetisi Inovasi Digital Budaya Indonesia", UIFx.TEXT)
+	para.call("Kementerian Kebudayaan Republik Indonesia", UIFx.DIM)
+	_section(v, "UI_ABOUT_BUILT_WITH")
+	para.call("Godot Engine", UIFx.TEXT)
+	para.call("Pixeloid Sans, Tiny5, Jersey 10 / 15, Noto Sans Sundanese & Javanese (SIL OFL 1.1)", UIFx.DIM)
+	_section(v, "UI_ABOUT_MUSIC")
+	para.call(MUSIC_BY, UIFx.TEXT)
+	para.call(", ".join(MUSIC), UIFx.DIM)
+	_section(v, "UI_ABOUT_AUDIO")
+	for line in ["VSCO-2 CE & VCSL (CC0)", "Kenney RPG & Interface Sounds (CC0)", "Socapex - Evol Online SFX (CC BY 3.0)"]:
+		para.call(line, UIFx.DIM)
 
 
 ## Texts built from more than one key (they do not retranslate on their own).

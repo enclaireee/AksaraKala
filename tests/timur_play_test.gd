@@ -363,7 +363,10 @@ func _clear(id: String) -> bool:
 	if enc:
 		var sz: Vector2i = enc.get("size")
 		rect = Rect2(zone.tiles.map_to_local(_cell(enc.global_position)) - Vector2(sz) * 8.0, Vector2(sz) * 16.0)
-	for i in 60 * 30:
+	var budget := 60 * 30
+	if enc:   # waits between waves (wave_pause, e.g. 20 s at the Kidul trial) come on top
+		budget += int(60.0 * float(enc.get("wave_pause")) * maxf(0.0, (enc.get("waves") as Array).size() - 1))
+	for i in budget:
 		if done[0]:
 			break
 		_hit_inside(rect)

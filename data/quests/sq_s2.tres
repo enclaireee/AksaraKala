@@ -41,6 +41,6 @@ type = "bounty"
 zone = "tatar_sunda"
 size = "L"
 giver = "kepala_desa"
-requires = Array[String](["mq1_3"])
+requires = Array[String](["mq1_4"])
 steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5")])
 rewards = {"items": ["golok"], "herb_pouch": 1, "codex": ["kuntilanak_rumpun"]}

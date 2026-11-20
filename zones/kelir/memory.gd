@@ -131,6 +131,11 @@ func _start() -> void:
 		await stage.curtain_up(tr(tk) if tk != "" else "", tr("UI_KELIR_SUB_" + kind.to_upper()))
 	await say(_keys("IN"))
 	_intro = false
+	var _total := spots().filter(func(s: MemorySpot) -> bool: return s.counts()).size()
+	if _total == 0:
+		push_warning("memory %s: 0 counting MemorySpots; finishing gracefully" % memory_id)
+		finish()
+		return
 	show_objective()
 
 

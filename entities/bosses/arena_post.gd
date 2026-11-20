@@ -9,9 +9,17 @@ var _spr: Sprite2D
 
 func _ready() -> void:
 	super()
+	var game := get_node("/root/Game")
+	if not game.changed.is_connected(_sync):
+		game.changed.connect(_sync)
+	_sync()
+
+
+func _sync() -> void:
 	hung = get_node("/root/Game").has_flag("post:" + post_id)
 	usable = not hung
 	_sync_sprite()
+	_refresh_prompt()
 
 
 func _sync_sprite() -> void:

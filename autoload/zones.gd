@@ -113,6 +113,48 @@ const SHORTCUTS := {"sc:ts_pagar": ["ts_leuweung", "ts_kebun"], "sc:ts_tangga": 
 	"sc:mt_ruin_sawah": ["mt_reruntuhan", "mt_sawah"], "sc:mt_candi_gapura": ["mt_candi", "mt_gapura"],
 	"sc:mt_tt": ["tt_sabana", "mt_tegal"], "sc:tt_ladang": ["tt_ladang", "tt_beringin"], "sc:tt_pasir": ["tt_pasir", "tt_sabana"],
 	"sc:gk_lorong": ["gk_lupa", "gk_mulut"]}
+## Directed ADJ edges ("a>b") blocked by a kabut gate until Game.has_flag(req) is true.
+const GATED_EDGES := {
+	"desa_purwa>ts_kebun": "mq0_7",
+	"desa_purwa>kg_alun": "mq1_10",
+	"desa_purwa>gk_pelataran": "mq4_9",
+	"desa_purwa>sk_pantai": "mq4_i5",
+	"ts_kampung>ts_leuweung": "mq1_3",
+	"ts_kampung>ts_sawah": "mq1_5",
+	"ts_situ>ts_kawah_jalan": "mq1_7",
+	"kg_alun>kg_keraton": "mqg_3",
+	"kg_alun>kg_pamali": "mqg_7",
+	"kg_penjara>kg_keraton": "mqg_3",
+	"kg_pustaka>kg_keraton": "laras_key:archive_grate",
+	"mt_wetan>mt_candi": "mq2_6",
+	"mt_wetan>tt_kulon": "mq2_9",
+	"tt_kulon>mt_wetan": "mq2_9",
+	"tt_ladang>tt_pasir": "mq3_4",
+	"tt_pesisir>tt_pasir": "mq3_h4",
+	"tt_pesisir>sk_karang": "mq4_9",
+	"sk_karang>sk_keraton": "mq4_offering",
+	"sk_tebing>sk_keraton": "mq4_offering",
+	"sk_keraton>gk_pelataran": "mq4_9",
+	"gk_ruang_kala>desa_purwa": "mq5_3",
+}
+## Zone id -> Petilasan shrine id (for Petilasan Fast Travel).
+const PETILASANS := {
+	"desa_purwa": "desa_purwa",
+	"ts_kebun": "sunda_1",
+	"ts_kawah_jalan": "sunda_2",
+	"kg_keraton": "galuh_1",
+	"kg_pamali": "galuh_2",
+	"mt_sawah": "mataram_1",
+	"mt_candi": "mataram_2",
+	"tt_sabana": "timur_1",
+	"tt_pasir": "timur_2",
+	"sk_pantai": "kidul_1",
+	"sk_keraton": "kidul_2",
+	"sk_tebing": "kidul_3",
+	"gk_pelataran": "kala_0",
+	"gk_lupa": "kala_1",
+	"gk_mulut": "kala_2",
+}
 
 var sealed := false       # an arena gate is shut (combat.md 5.3 v7): go_to refuses until it opens
 var current_zone := ""   # set by Zone._ready; "" in scenes that are not a Zone
@@ -137,15 +179,28 @@ func _ready() -> void:
 	_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.add_child(_fade)
 	get_node("/root/Events").quest_completed.connect(_on_quest_completed)
+	get_node("/root/Events").petilasan_activated.connect(_on_petilasan_activated)
 
 
-## MQ5 done (the walk home through kala_exit): play the epilogue once the arrival has settled.
+## MQ5 done (writing Laras's name): play the epilogue bridge, which returns the player to Desa Purwa for the playable epilogue.
 func _on_quest_completed(id: String) -> void:
 	if id != "mq5":
 		return
 	while _busy:
 		await get_tree().process_frame
 	go_to("res://ui/epilogue.tscn", "")
+
+
+func _on_petilasan_activated(id: String) -> void:
+	var game := get_node_or_null("/root/Game")
+	if game == null or id == "":
+		return
+	game.set_flag("petilasan:" + id, false)
+	for zid: String in PETILASANS:
+		if PETILASANS[zid] == id:
+			game.set_flag("petilasan:" + zid, false)
+			break
+	game.save_game()
 
 
 ## After class choice. Game.new_game() has already saved.
@@ -184,7 +239,7 @@ func go_to(zone_id: String, spawn_id: String, pos := Vector2.INF) -> void:
 	await tree.scene_changed
 	tree.paused = false   # again: a menu or dialogue may have opened during the fade-out
 	Engine.time_scale = 1.0
-	var s := _spawn(spawn_id)
+	var s: Node2D = _petilasan(spawn_id.trim_prefix("petilasan:")) if spawn_id.begins_with("petilasan:") else _spawn(spawn_id)
 	var player := tree.get_first_node_in_group("player") as Node2D
 	if player:
 		if prev_hp > 0 and player.get("health"):
@@ -194,7 +249,8 @@ func go_to(zone_id: String, spawn_id: String, pos := Vector2.INF) -> void:
 			player.sakti.value = minf(prev_sakti, player.sakti.max_value)
 			player.sakti.changed.emit(player.sakti.value, player.sakti.max_value)
 	if player and (s or pos != Vector2.INF):
-		player.global_position = pos if pos != Vector2.INF else s.global_position
+		var dest := pos if pos != Vector2.INF else (s.global_position + Vector2(0, 20) if spawn_id.begins_with("petilasan:") else s.global_position)
+		player.global_position = dest
 		player.reset_physics_interpolation()
 	elif spawn_id != "":
 		push_warning("Zones.go_to: no spawn '%s' in %s" % [spawn_id, path])
@@ -255,15 +311,60 @@ static func gap_data_path(id: String) -> String:
 	return "res://data/memories/%s.tres" % (id if id.begins_with("gap_") else "gap_" + id)
 
 
-## The neighbour of `from` on the shortest path to `to`, or "" if there is none or they are equal.
+## True when the zone's Petilasan has been activated and is available for Fast Travel.
+func has_petilasan(zone_id: String) -> bool:
+	var game := get_node_or_null("/root/Game")
+	if game == null or not PETILASANS.has(zone_id):
+		return false
+	var pid: String = PETILASANS[zone_id]
+	if game.has_flag("petilasan:" + zone_id) or game.has_flag("petilasan:" + pid):
+		return true
+	var lp: Dictionary = game.last_petilasan
+	return lp.get("id", "") == pid or lp.get("zone", "") == ZONES.get(zone_id, "")
+
+
+## Warp directly to an activated Petilasan zone (refused while sealed, busy, or inside a KelirMemory).
+func fast_travel(zone_id: String) -> bool:
+	var game := get_node_or_null("/root/Game")
+	if _busy or sealed or game == null or game.in_memory():
+		return false
+	if not ZONES.has(zone_id) or not has_petilasan(zone_id):
+		return false
+	var pid: String = PETILASANS.get(zone_id, "")
+	go_to(zone_id, "petilasan:" + pid if pid != "" else "")
+	return true
+
+
+## The neighbour of `from` on the shortest open path to `to`, or "" if there is none or they are equal.
+## Traverses kabut-gated edges only when Game.has_flag(req) holds, and includes unlocked SHORTCUTS back-edges.
 func next_zone(from: String, to: String) -> String:
 	if from == to:
 		return ""
+	var open_hit := _bfs_next(from, to, true)
+	if open_hit != "":
+		return open_hit
+	return _bfs_next(from, to, false)
+
+
+func _bfs_next(from: String, to: String, check_gates: bool) -> String:
+	var game := get_node_or_null("/root/Game")
 	var prev := {from: ""}
 	var queue: Array = [from]
 	while not queue.is_empty():
 		var z: String = queue.pop_front()
+		var nbrs: Array = []
 		for n: String in ADJ.get(z, []):
+			if check_gates:
+				var req: String = GATED_EDGES.get(z + ">" + n, "")
+				if req != "" and (game == null or not game.has_flag(req)):
+					continue
+			nbrs.append(n)
+		if game != null:
+			for sc: String in SHORTCUTS:
+				var ab: Array = SHORTCUTS[sc]
+				if ab[1] == z and game.has_flag(sc) and not nbrs.has(ab[0]):
+					nbrs.append(ab[0])
+		for n: String in nbrs:
 			if prev.has(n):
 				continue
 			prev[n] = z

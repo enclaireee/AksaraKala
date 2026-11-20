@@ -67,10 +67,10 @@ Scale: 1
 #..................,,,..bb...,,,,,,,,,,,,.....,,,.......bb....,,,,,,,,,,,,,,,,,,,,,,,,,,..''.[[[[[[[[.,,,.bbbbbb..............,,,-.[[[[..............#
 #....}.......r.....,,,..bb...,,,,,,,,,,,,.....,,,............Z,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,.bb..................,,,....................#
 #..h..n............,,,.......,,,,,,,,,,,,.....,,,........c....,,,,,,,,,,,,F,,,,,,,,,,U,,..----..-----.,,,.....................,,,....................#
-#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,###########
-Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,vKE
-W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE
-#..................,,,.......,,,,,,,,,,,,.....,,,....-----..--,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,..---------..-.......,,,..........###########
+###,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,###########
+Wwt,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,vKE
+W,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE
+###................,,,.......,,,,,,,,,,,,.....,,,....-----..--,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,..---------..-.......,,,..........###########
 #..................,,,.......,,,,,,,,,,,,.....,,,.............,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,.....................,,,....................#
 #..................,,,.......,,,,,,,,,,,,.....,,,.r.....[[[[[[,,,,{{{,,,,,,,,,,,{{{,,,,,......bb......,,,.....[[[[[[[[[..r....,,,....................#
 #..................,,,.......,,,,,,,,,,,,.....,,,.......[[[[[[,,,,,,,,,,,,,,,,,,,,,,,,,,......bb......,,,.....[[[[[[[[[.......,,,.......r............#
@@ -117,14 +117,15 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | Char | Entity | Scene | Props | Floor under | Tiles |
 |------|--------|-------|-------|-------------|-------|
 | `W` | exit to Tatar Sunda | `res://entities/world/exit.tscn` | `{id:"exit_tatar_sunda", target_zone:"ts_kebun", spawn_id:"from_desa_purwa"}` | path | 2 |
+| `t` | kabut, the west road to Tatar Sunda stays misted through the Prologue (lifts on `mq0_7`, set by clearing `purwa_raid`; keeps a new player from leaving before 0.12) | `res://entities/world/kabut.tscn` | `{flag:"mq0_7"}` | path | 2 |
 | `w` | spawn, arrival from Tatar Sunda | `res://entities/world/spawn.tscn` | `{id:"from_ts_kebun"}` | path | 1 |
 | `v` | spawn, arrival from Keraton Galuh | `res://entities/world/spawn.tscn` | `{id:"from_kg_alun"}` | path | 1 |
 | `K` | kabut, Galuh gate (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq1_10"}` | path | 2 |
 | `E` | exit to Keraton Galuh | `res://entities/world/exit.tscn` | `{id:"exit_mataram", target_zone:"kg_alun", spawn_id:"from_desa_purwa"}` | path | 2 |
 | `I` | NPC Ibu, the hero's mother (MQ0 0.2 tea and 0.10, Interlude 4.4, epilogue cups); at the west gate `}` during 0.12 | `res://entities/npc/npc.tscn` | `{npc_id:"ibu", cond:"!step:mq0=11"}` | floor | 1 |
-| `F` | encounter purwa_raid, the plaza fight, 3 Faceless (MQ0 0.12, last of three skirmishes; `area_cleared:purwa_raid` sets `mq0_7`; v5 step index 11) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid", cond:"step:mq0=11", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(0,2)]]]}` | path | 1 |
-| `9` | encounter purwa_raid_a, west road skirmish, 2 Faceless (MQ0 0.12, first) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid_a", cond:"step:mq0=11", size:Vector2i(12,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | path | 1 |
-| `0` | encounter purwa_raid_b, stage road skirmish, 2 Faceless (MQ0 0.12, second) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid_b", cond:"step:mq0=11", size:Vector2i(12,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | path | 1 |
+| `F` | encounter purwa_raid, the plaza fight, 3 Faceless (MQ0 0.12, last of three skirmishes; `area_cleared:purwa_raid` sets `mq0_7`; v5 step index 11) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid", cond:"step:mq0=11,!flag:cleared:purwa_raid", size:Vector2i(14,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(4,-2)], [res://entities/enemies/faceless.tscn, Vector2i(0,2)]]]}` | path | 1 |
+| `9` | encounter purwa_raid_a, west road skirmish, 2 Faceless (MQ0 0.12, first) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid_a", cond:"step:mq0=11,!flag:cleared:purwa_raid_a", size:Vector2i(12,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | path | 1 |
+| `0` | encounter purwa_raid_b, stage road skirmish, 2 Faceless (MQ0 0.12, second) | `res://entities/world/encounter.tscn` | `{area_id:"purwa_raid_b", cond:"step:mq0=11,!flag:cleared:purwa_raid_b", size:Vector2i(12,8), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless.tscn, Vector2i(3,0)]]]}` | path | 1 |
 | `s` | spawn, player start after class choice | `res://entities/world/spawn.tscn` | `{id:"start"}` | path | 1 |
 | `P` | petilasan | `res://entities/petilasan/petilasan.tscn` | `{id:"desa_purwa"}` | path | 1 |
 | `M` | NPC Semar, the village dalang (MQ0 0.5 and 0.11, Interlude 4.7; SQ-D1 lakon giver) | `res://entities/npc/npc.tscn` | `{npc_id:"semar"}` | floor | 1 |

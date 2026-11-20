@@ -49,6 +49,7 @@ var _hp_txt: Label   # "120/120" right of the HP bar
 var _class_txt: Label   # second-path mechanic indicator below Sakti bar
 var _dist_bg: NinePatchRect   # lacquer pill behind the distance label
 var _menu_hint: Label
+var _menu_hint_t := 0.0
 var _tracker_sig := ""
 var _pulse_tw: Tween
 var _sub_seen := {}   # quest id -> [step, finished sub-goals] last seen, to spot a new step or sub-goal
@@ -184,6 +185,7 @@ func _ready() -> void:
 	var g := get_node("/root/Game")
 	g.changed.connect(refresh)
 	g.changed.connect(refresh_objective)
+	g.changed.connect(refresh_arrow)
 	g.saved.connect(func() -> void:
 		_saved_left = 1.0
 		_saved.visible = true
@@ -272,7 +274,7 @@ func refresh_objective() -> void:
 	var inner := float(TRACKER_W - 12)
 	for r in rows:
 		if r[0] == "title":   # small tracked caps: the quest's name is a label, the objective is the message
-			var t := UIFx.text(String(r[1]), "label", r[2])
+			var t := UIFx.tiny(UIFx.text(String(r[1]), "label", r[2]))   # Tiny5: user call 2026-11-20
 			t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			t.custom_minimum_size.x = inner
 			_tracker.add_child(t)
@@ -296,7 +298,7 @@ func refresh_objective() -> void:
 			col.add_child(pad)
 			col.add_child(ic)
 			row.add_child(col)
-			var l := UIFx.text(String(r[1]), "body", r[2])
+			var l := UIFx.tiny(UIFx.text(String(r[1]), "body", r[2]))
 			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			l.add_theme_constant_override("line_spacing", 1)
 			l.custom_minimum_size.x = inner - 9.0
@@ -384,6 +386,13 @@ func _on_blocked(what: String) -> void:
 		var tw2 := create_tween()
 		tw2.tween_property(flash, "modulate:a", 0.0, 0.25)
 		_st_full = 0.0   # a flash on stamina shows the bar
+		if what == "sk" and _player != null and is_instance_valid(_player):
+			var cast_ctrl: Variant = _player.get("cast")
+			var in_practice: bool = cast_ctrl != null and cast_ctrl.get("practice") == true
+			var g := get_node("/root/Game")
+			if not in_practice and _player.sakti.value < 15.0 and not g.has_flag("tut_sakti"):
+				g.set_flag("tut_sakti")
+				_push_toast(tr("UI_TUT_LOW_SAKTI"))
 
 
 func _title(id: String) -> String:
@@ -587,35 +596,57 @@ func _push_toast(text: String) -> void:
 
 
 ## Finds the node the arrow points at (marker in this zone, or the exit toward the target's zone).
-## Called on quest events and zone_entered; the position is read every frame.
+## Called on quest events, Game.changed, and zone_entered; the position is read every frame.
 func refresh_arrow() -> void:
 	_tnode = null
 	_tzone = ""
-	var m: Dictionary = get_node("/root/Game").objective_marker()
-	if m.is_empty():
-		return
+	var g := get_node("/root/Game")
 	var zones := get_node("/root/Zones")
-	var zone: String = m.get("zone", "")
-	var id: String = m.get("id", "")
+	var m: Dictionary = g.objective_marker()
+	if _find_arrow_target(m, zones, g):
+		return
+	for id in g._tracked():
+		var st: QuestStep = g.current_step(id)
+		if st == null:
+			continue
+		if not st.all.is_empty():
+			for i in st.all.size():
+				if g._all_bit(id, i):
+					continue
+				if _find_arrow_target(g._sub_marker(st, st.all[i]), zones, g):
+					return
+		if not st.marker.is_empty() and _find_arrow_target(st.marker, zones, g):
+			return
+
+
+func _find_arrow_target(m: Dictionary, zones: Node, g: Node) -> bool:
+	if m.is_empty():
+		return false
+	var zone: String = str(m.get("zone", ""))
+	var id: String = str(m.get("id", ""))
 	var nxt: String = ""
-	if zone != zones.current_zone:
+	if zone != "" and zone != zones.current_zone:
 		nxt = zones.next_zone(zones.current_zone, zone)
 		if nxt == "":
-			return
+			return false
 		_tzone = zone
+	else:
+		_tzone = ""
 	# ponytail: one scan of the tree per event; no group or lookup hook in Zone yet
 	for n in get_tree().root.find_children("*", "Node2D", true, false):
 		if nxt != "":
 			if "target_zone" in n and n.target_zone == nxt:
 				_tnode = n
-				return
-		elif id in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.get("clue_id"), n.get("memory_id"), n.name]:
+				return true
+		elif id != "" and id in [n.get("id"), n.get("npc_id"), n.get("trigger_id"), n.get("area_id"), n.get("item_id"), n.get("kind"), n.get("clue_id"), n.get("memory_id"), n.name]:
 			if "visible" in n and not n.visible:
 				continue
-			if "cond" in n and str(n.cond) != "" and not get_node("/root/Game").check(str(n.cond)):
+			if "cond" in n and str(n.cond) != "" and not g.check(str(n.cond)):
 				continue
 			_tnode = n
-			return
+			return true
+	_tzone = ""
+	return false
 
 
 ## True when the player is inside the arena/encounter where the hunt/fight is taking place.
@@ -859,7 +890,9 @@ func _process(delta: float) -> void:
 		_update_class_hud(p)
 		_update_hp_fx(delta, float(p.health.hp) / maxf(p.health.max_hp, 1.0))
 		_update_stamina_fade(delta, p.stamina.value >= p.stamina.max_stamina)
-	_menu_hint.modulate.a = 0.55 * clampf((MENU_HINT_SHOW + 2.0 - _t) / 2.0, 0.0, 1.0)
+	if not _menu_hint_paused():
+		_menu_hint_t += delta
+	_menu_hint.modulate.a = 0.55 * clampf((MENU_HINT_SHOW + 2.0 - _menu_hint_t) / 2.0, 0.0, 1.0)
 	_update_toast(delta)
 	_update_banner(delta)
 	_update_arrow()
@@ -874,6 +907,22 @@ func _process(delta: float) -> void:
 		_saved_icon.visible = _saved.visible
 		_saved.modulate.a = clampf(_saved_left / 0.3, 0.0, 1.0)
 		_saved_icon.modulate.a = _saved.modulate.a
+
+
+## Pauses the [Esc] Menu hint countdown while dialogue, cutscenes, write cards, or pause are active.
+func _menu_hint_paused() -> bool:
+	if get_tree().paused or _dialogue_focus:
+		return true
+	var box := get_node_or_null("../DialogueBox")
+	if box != null and box.has_method("is_open") and box.is_open():
+		return true
+	var lesson := get_node_or_null("../GlyphLesson")
+	if lesson != null and str(lesson.get("writing")) != "":
+		return true
+	var dir := get_node_or_null("../SceneDirector")
+	if dir != null and (dir.get("_bars") == true or dir.get("_beat") == true):
+		return true
+	return false
 
 
 ## Second-path mechanic indicator below the Sakti bar.

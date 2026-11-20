@@ -16,7 +16,7 @@ const IDX := {"you": 0, "goal": 1, "npc": 2, "rest": 3, "chest": 4, "clue": 5, "
 const REGION_PREFIX := {"ts_": "tatar_sunda", "kg_": "keraton_galuh", "mt_": "mataram", "tt_": "tanah_timur",
 		"sk_": "segara_kidul", "gk_": "gua_kala"}
 
-var mode := "world"
+var mode := "area"
 var _tex: ImageTexture      # the painted area
 var _tiles := Vector2.ZERO  # area size in tiles
 var _hero := Vector2.ZERO
@@ -120,7 +120,7 @@ func refresh(name_of: Callable) -> void:
 	queue_redraw()
 
 
-## Every tracked quest's current target in this zone: [{node, name}] (the sub-goal marker when the step has one).
+## Every tracked quest's current target in this zone: [{node, name}] (falls back to next visible sub-goal or st.marker).
 func _goal_nodes(z: Node, g: Node) -> Array:
 	var out := []
 	var zone_id: String = z.zone_id if "zone_id" in z else ""
@@ -128,18 +128,47 @@ func _goal_nodes(z: Node, g: Node) -> Array:
 		var st: QuestStep = g.current_step(id)
 		if st == null:
 			continue
-		var m: Dictionary = st.marker
+		var found: Node2D = null
+		var key := ""
 		var i: int = g.focus_sub(id)
-		if i >= 0 and st.all[i].get("marker", {}) is Dictionary and not st.all[i].get("marker", {}).is_empty():
-			m = st.all[i].marker
-		if m.is_empty() or m.get("zone", zone_id) != zone_id:
-			continue
-		for n in z.find_children("*", "Node2D", true, false):
-			if n.visible and str(m.get("id", "")) in [str(n.get("id")), str(n.get("npc_id")), str(n.get("trigger_id")), str(n.get("area_id")), str(n.get("item_id")), str(n.get("kind")), str(n.get("clue_id")), str(n.get("memory_id")), n.name]:
-				var key: String = (st.all[i].get("objective", "") if i >= 0 else "")
-				out.append({"node": n, "name": tr(key if key != "" else st.objective)})
-				break
+		if i >= 0:
+			var sm: Dictionary = g._sub_marker(st, st.all[i])
+			found = _find_goal_node(z, g, sm, zone_id)
+			if found != null:
+				key = str(st.all[i].get("objective", ""))
+		if found == null and not st.all.is_empty():
+			for j in st.all.size():
+				if j == i or g._all_bit(id, j):
+					continue
+				var smj: Dictionary = g._sub_marker(st, st.all[j])
+				found = _find_goal_node(z, g, smj, zone_id)
+				if found != null:
+					key = str(st.all[j].get("objective", ""))
+					break
+		if found == null:
+			found = _find_goal_node(z, g, st.marker, zone_id)
+		if found != null:
+			out.append({"node": found, "name": tr(key if key != "" else st.objective)})
 	return out
+
+
+func _find_goal_node(z: Node, g: Node, m: Dictionary, zone_id: String) -> Node2D:
+	if m.is_empty():
+		return null
+	var mz := str(m.get("zone", zone_id))
+	if mz != "" and mz != zone_id:
+		return null
+	var tid := str(m.get("id", ""))
+	if tid == "":
+		return null
+	for n in z.find_children("*", "Node2D", true, false):
+		if not n.visible:
+			continue
+		if "cond" in n and str(n.cond) != "" and not g.check(str(n.cond)):
+			continue
+		if tid in [str(n.get("id")), str(n.get("npc_id")), str(n.get("trigger_id")), str(n.get("area_id")), str(n.get("item_id")), str(n.get("kind")), str(n.get("clue_id")), str(n.get("memory_id")), n.name]:
+			return n
+	return null
 
 
 func _npc_name(id: String) -> String:
@@ -264,7 +293,6 @@ func _draw_area() -> void:
 	var r := _area_rect()
 	draw_texture_rect(_tex, r, false)
 	draw_rect(Rect2(r.position - Vector2.ONE, r.size + Vector2(2, 2)), UIFx.LINE_DIM, false, 1.0)
-	var font := UIFx.body_font()
 	var seen := {}
 	for kind in ["exit", "chest", "clue", "rest", "npc", "goal"]:
 		for f in _feats:
@@ -277,7 +305,8 @@ func _draw_area() -> void:
 			if kind == "exit" and not seen.has(f.name):   # one label per destination
 				seen[f.name] = true
 				var tp := p + Vector2(7, 4)
-				var lw := font.get_string_size(f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
+				tp.y = minf(tp.y, size.y - 19)   # a bottom exit's label stays above the legend bar
+				var lw := UIFx.caps_font().get_string_size(f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x   # the font _label draws with
 				if tp.x + lw > size.x - 2:   # near the right edge: label sits left of the marker
 					tp.x = p.x - 7 - lw
 				_label(f.name, tp, UIFx.ACCENT, false)

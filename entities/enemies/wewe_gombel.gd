@@ -70,6 +70,9 @@ func _end_grab() -> void:
 
 func _grab() -> void:
 	_end_grab()
+	if target == null or not is_instance_valid(target):
+		_enter(State.RECOVER)
+		return
 	var rel := target.global_position - global_position
 	var along := rel.dot(Vector2.from_angle(facing))
 	var across := absf(rel.cross(Vector2.from_angle(facing)))

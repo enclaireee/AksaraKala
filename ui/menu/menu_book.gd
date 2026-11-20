@@ -28,8 +28,6 @@ const VERD := Color("8FD9A0")
 const ACCENT := Color("7FE8E0")
 const KEY_INK := Color("141026")   # letters on the light keycap
 
-const FONT_NUM := "res://assets/fonts/Tiny5-Regular.woff"      # ui.md 1: body face, 8 / 16 only
-const FONT_ITALIC := "res://assets/fonts/Tiny5-Regular.woff"
 
 var content: Control           # the menu adds its TabContainer here (between the pages and the front ornaments)
 var footer_box: HBoxContainer
@@ -216,7 +214,7 @@ static func box(name_: String, m: int, content := -1) -> StyleBoxTexture:
 	return s
 
 
-## Body text (Tiny5 8), cool cream on the night page.
+## Body text (Pixeloid Sans 9), cool cream on the night page.
 static func text(t: String, color := INK, wrap := false) -> Label:
 	var l := Label.new()
 	l.text = t
@@ -236,7 +234,7 @@ static func italic(t: String, color := INK_DIM, wrap := true) -> Label:
 	return text(t, color, wrap)   # the pixel face has no italic: secondary text is the lavender colour
 
 
-## Small tracked caps (Tiny5 8 +1): labels, section names, menu entries.
+## Small tracked caps (Pixeloid Sans 9 +1): labels, section names, menu entries.
 static func bold(t: String, color := INK) -> Label:
 	var l := text(t, color)
 	l.add_theme_font_override("font", UIFx.caps_font())
@@ -253,10 +251,10 @@ static func head(t: String, _size := 12, color := INK_HEAD) -> Label:
 	return l
 
 
-## Numbers: Tiny5 at 8, or 16 for a big figure (size >= 16).
-static func num(t: String, color := INK, size := 8) -> Label:
+## Numbers: the body face at 9, or 18 for a big figure (size >= 16).
+static func num(t: String, color := INK, size := 9) -> Label:
 	var l := text(t, color)
-	l.add_theme_font_size_override("font_size", 16 if size >= 16 else UIFx.BODY)
+	l.add_theme_font_size_override("font_size", UIFx.BODY * 2 if size >= 16 else UIFx.BODY)
 	return l
 
 
@@ -293,7 +291,7 @@ static func keycap(k: String) -> Control:
 		l.add_theme_constant_override("outline_size", 0)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		n.size = Vector2(maxi(10, int(ceil(w)) + 5), 10)
+		n.size = Vector2(maxi(10, int(ceil(w)) + 6), 12)   # Pixeloid's 11 px box + 1, so the cap's lip clears the glyphs
 		l.position = Vector2(0, 0)
 		l.size = n.size
 		n.add_child(l)

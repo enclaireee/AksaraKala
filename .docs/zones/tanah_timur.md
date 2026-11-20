@@ -861,7 +861,7 @@ Y,,,,,,,,,,,,,,,............################################
 | `K` | kabut K2, east exit of the arena (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq3_4"}` | path | 2 |
 | `Z` | exit to tt_pasir (east edge, behind K2, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pasir", spawn_id:"from_tt_ladang"}` | path | 2 |
 | `z` | spawn, arrival from tt_pasir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
-| `B` | boss Buto Ijo (arena 28x16: x 29..56, y 9..24) | `res://entities/bosses/buto_ijo.tscn` | `{finish_glyph:"jawa_ra"}` | floor | 1 |
+| `B` | boss Buto Ijo (arena 28x16: x 29..56, y 9..24) | `res://entities/bosses/buto_ijo.tscn` | `{cond:"flag:mq3_3", finish_glyph:"jawa_ra"}` | floor | 1 |
 | `G` | arena gate (combat.md 5.3 v7) at the arena's west mouth; open until the threshold two tiles inside is crossed; the east mouth is shut by kabut K2 | `res://entities/world/arena_gate.tscn` | `{side:"e"}` | path | 4 |
 | `E` | encounter timur_ladang | `res://entities/world/encounter.tscn` | `{area_id:"timur_ladang", size:Vector2i(30,14), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(8,0)], [res://entities/enemies/keris_hantu.tscn, Vector2i(4,-4)], [res://entities/enemies/banaspati.tscn, Vector2i(4,4)], [res://entities/enemies/kemamang.tscn, Vector2i(-6,-3)]]]}` | grass | 1 |
 | `x` | loose keris hantu, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/keris_hantu.tscn` | `{}` | grass | 1 |
@@ -893,11 +893,11 @@ Y,,,,,,,,,,,,,,,............################################
 ### Map
 ```
 ##########################################################################################
-#________________________________________________________________________________________#
-#________________________________________________________________________________________#
-#________________________________________________________________________________________#
-#_______rr__________b_______________________________________rr___________________________#
-#_______rr______j_________rr________________________________rr___________________________#
+#_______________________________________________________________________________#________#
+#_______________________________________________________________________________#___T____#
+#_______________________________________________________________________________S________#
+#_______rr__________b_______________________________________rr__________________S________#
+#_______rr______j_________rr________________________________rr__________________##########
 #_________________________rr__________________________rr_________________________________#
 #_____________________________________________________rr_________________________________#
 #___________x____________________________________________________________________________#
@@ -941,6 +941,8 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `E` | encounter timur_pasir | `res://entities/world/encounter.tscn` | `{area_id:"timur_pasir", size:Vector2i(36,16), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(10,-3)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(10,3)], [res://entities/enemies/banaspati.tscn, Vector2i(4,-5)], [res://entities/enemies/kemamang.tscn, Vector2i(-6,0)]],[[res://entities/enemies/keris_hantu.tscn, Vector2i(12,-3)], [res://entities/enemies/keris_hantu.tscn, Vector2i(12,3)]]]}` | path | 1 |
 | `j` | loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/prajurit_terkutuk.tscn` | `{}` | floor | 1 |
 | `b` | loose banaspati, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/banaspati.tscn` | `{}` | floor | 1 |
+| `S` | kabut, Laras's sand tunnel into the walled cache in the north-east corner (lifts on `laras_key:sand_tunnel`, LC4) | `res://entities/world/kabut.tscn` | `{flag:"laras_key:sand_tunnel"}` | floor | 2 |
+| `T` | chest, sand tunnel cache (250 Ilmu, behind `S`) | `res://entities/world/chest.tscn` | `{chest_id:"timur_sand_tunnel", item_id:"ilmu:250"}` | floor | 1 |
 | `x` | loose keris hantu, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/keris_hantu.tscn` | `{}` | floor | 1 |
 | `H` | NPC Hariang Banga, camp talk at `timur_2` (optional, quiet; cond `flag:mq3_6`) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga", cond:"flag:mq3_5d"}` | floor | 1 |
 | `A` | spawn, arrival from tt_pesisir (south corridor, link L14) | `res://entities/world/spawn.tscn` | `{id:"from_tt_pesisir"}` | floor | 1 |

@@ -31,10 +31,14 @@ func _ready() -> void:
 	th.name = "Threshold"
 	th.collision_layer = 0
 	th.collision_mask = 2   # player
-	th.position = _dir() * 16.0 * (block * 0.5 + DEPTH)
+	var d := _dir()
+	var along := d.abs()
+	var across := d.orthogonal().abs()
+	var depth_px := 16.0 * (block * 0.5 + DEPTH)
+	th.position = d * (8.0 * block + depth_px * 0.5)
 	var ts := CollisionShape2D.new()
 	var tr := RectangleShape2D.new()
-	tr.size = Vector2.ONE * 16.0 * block
+	tr.size = along * depth_px + across * (16.0 * block + 16.0)
 	ts.shape = tr
 	th.add_child(ts)
 	add_child(th)
@@ -49,10 +53,10 @@ func _dir() -> Vector2:
 	return DIRS.get(side, Vector2.LEFT)
 
 
-## Where a retry puts the player: just inside the open gate, short of the threshold.
+## Where a retry puts the player: safely inside the arena engagement zone, past the threshold center.
 ## ponytail: inside, not outside: a gate on the map edge (gk_ruang_kala) has only the zone exit behind it.
 func door() -> Vector2:
-	return global_position + _dir() * 16.0 * (block * 0.5 + 0.5)
+	return global_position + _dir() * 16.0 * (block * 0.5 + DEPTH)
 
 
 func _bosses() -> Array:

@@ -15,6 +15,9 @@ Checks
   Q10 every memory scene has TITLE and an id text, and every MEM_*_HINT with {key}-less text is fine
   Q11 no step or `all` part completes on `puzzle_solved:*`, and a walk-in trigger id is only used under
       `area_entered:` (a witness step: arrive, see, overhear). A puzzle is props you press (talked_to) or write.
+  Q13 every NPC dialogue `start:<qid>` action guards its `if` with `quest:<qid>=available`
+  Q14 no `CHOICE_*` key leaks into `lines[]`
+  Q15 every `zones/kelir/*.tscn` memory scene has at least one `MemorySpot`
 """
 import csv
 import glob
@@ -238,6 +241,8 @@ for name, entries in dialogs.items():
                 if k.startswith("@") and len(k) > 1 and k[1:] not in text:
                     bad("Q8", "%s.tres:%d: speaker key %s missing" % (name, ln, k))
                 continue
+            if k.startswith("CHOICE_"):
+                bad("Q14", "%s.tres:%d: choice key %s leaked into lines[]" % (name, ln, k))
             if k not in text:
                 bad("Q8", "%s.tres:%d: line key %s missing from dialogue.csv" % (name, ln, k))
         for d in e.get("do", []):
@@ -248,6 +253,8 @@ for name, entries in dialogs.items():
                 sets.add(arg)
             if kind == "learn" and arg not in GLYPHS:
                 bad("Q8", "%s.tres:%d: learn:%s is not a glyph" % (name, ln, arg))
+            if kind == "start" and name != "beats" and ("quest:%s=available" % arg) not in conds:
+                bad("Q13", "%s.tres:%d: start:%s missing quest:%s=available in if" % (name, ln, arg, arg))
         for ch in e.get("choices", []):
             for d in ch.get("do", []):
                 if d.startswith("flag:"):
@@ -261,11 +268,14 @@ for flag, where in sorted(reads.items()):
         continue
     bad("Q6", "flag '%s' is read (%s) but nothing sets it" % (base, ", ".join(where[:2])))
 
-# Q9/Q10: memories
+# Q9/Q10/Q15: memories
 for f in sorted(glob.glob(os.path.join(ROOT, "zones/kelir/*.tscn"))):
     mid = os.path.basename(f)[:-5]
     if mid in ("gap", "memory_spot", "memory_threat"):
         continue
+    raw_mem = open(f, encoding="utf-8").read()
+    if "memory_spot.tscn" not in raw_mem and "MemorySpot" not in raw_mem:
+        bad("Q15", "memory %s has no MemorySpot" % mid)
     tid = mid.upper()
     if mid.startswith("lc"):   # the Laras chapters are LC_<n>_TITLE and LC<n>_1.. (KelirMemory.resolve / _spread_chapter_lines)
         n = mid[2:]

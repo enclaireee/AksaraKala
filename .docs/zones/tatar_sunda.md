@@ -469,7 +469,7 @@ Roaming packs (loose, respawn like bonfire enemies): L1 2 boars `y` (41,8), (43,
 | `n` | oncor NE | `res://entities/bosses/oncor.tscn` | `{oncor_id:"ne"}` | grass | 1 |
 | `p` | oncor SW | `res://entities/bosses/oncor.tscn` | `{oncor_id:"sw"}` | grass | 1 |
 | `s` | oncor SE | `res://entities/bosses/oncor.tscn` | `{oncor_id:"se"}` | grass | 1 |
-| `j` | trigger, Sandekala room entered (starts darkening) | `res://entities/world/trigger.tscn` | `{trigger_id:"sande_room", size:Vector2i(21,10)}` | grass | 1 |
+| `j` | trigger, Sandekala room entered (starts darkening) | `res://entities/world/trigger.tscn` | `{trigger_id:"sande_room", size:Vector2i(21,10), cond:"flag:mq1_h3"}` | grass | 1 |
 | `M` | NPC the mother who calls her son's name into the trees (MQ1 1.6 `talked_to:leuwi_mother`; she lights her oncor again after Sandekala) | `res://entities/npc/npc.tscn` | `{npc_id:"leuwi_mother"}` | grass | 1 |
 | `h` | trigger, the gorge-side hamlet entered at dusk (MQ1 1.5 `area_entered:sunda_hamlet`, plays `hamlet_hook`) | `res://entities/world/trigger.tscn` | `{trigger_id:"sunda_hamlet", size:Vector2i(10,7)}` | path | 1 |
 | `1` | clue, the boy's sandal at the river's edge (MQ1 1.6 K1 clue 1) | `res://entities/world/clue.tscn` | `{clue_id:"sandal"}` | grass | 1 |
@@ -615,11 +615,11 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 #######.,,....................,,...........................#
 #######.,,....r.....w.........R,................r..........#
 #######.,,.....r..............,,............y....r.........#
-#######.,,....................FF...........................#
-#######.,,....................,,..............y............#
-#######.,,....................,,...........................#
-#######.,,....................,,...........................#
-#######.@,....................e,...........................#
+#######.,,#~~~~~~~~~~~~~~~~~~~FF~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#######.,,#...................,,..............y............#
+#######.,,#...................,,...........................#
+#######.,,#...................,,...........................#
+#######.@,#...................e,...........................#
 ########%%####################XX############################
 ```
 
@@ -794,7 +794,7 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 | `X` | exit to ts_kawah_jalan (east edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"ts_kawah_jalan", spawn_id:"from_ts_kawah"}` | path | 2 |
 | `e` | spawn, arrival from ts_kawah_jalan | `res://entities/world/spawn.tscn` | `{id:"from_ts_kawah_jalan"}` | path | 1 |
 | `B` | boss Sangkuriang (MQ1 1.24), wakes once the cloth hangs on the eastern post (`rarang_post`) | `res://entities/bosses/sangkuriang.tscn` | `{cond:"flag:mq1_8,flag:rarang_post", finish_glyph:"sunda_ca"}` | path | 1 |
-| `C` | boss Faceless captain (MQ1 1.22) | `res://entities/bosses/faceless_captain.tscn` | `{finish_glyph:"sunda_ca"}` | path | 1 |
+| `C` | boss Faceless captain (MQ1 1.22) | `res://entities/bosses/faceless_captain.tscn` | `{cond:"flag:mq1_lc", finish_glyph:"sunda_ca"}` | path | 1 |
 | `Z` | arena post, east post (hang boeh rarang) | `res://entities/bosses/arena_post.tscn` | `{post_id:"east"}` | path | 1 |
 | `P` | trigger, Laras's marked eastern post (MQ1 1.21/1.24 `crater_post`, gated by `laras_key:crater_post`) | `res://entities/world/trigger.tscn` | `{trigger_id:"crater_post", size:Vector2i(3,3), cond:"flag:laras_key_crater_post"}` | path | 1 |
 | `S` | NPC-scene spot, the cracked seal-stone (Crater Seal); the Captain smashes it at the end of 1.22 | `res://entities/npc/npc.tscn` | `{npc_id:"seal_stone", cond:"!flag:mq1_8"}` | path | 1 |

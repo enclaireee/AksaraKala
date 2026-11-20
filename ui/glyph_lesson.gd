@@ -45,6 +45,8 @@ var _progress: Label
 var _pips: Array[TextureRect] = []
 var _hold_bar: ColorRect
 var _msg: Label
+var _cast_cue: Label
+var _hint_w: Label
 var writing := ""   # write-mode sequence id while the card is up
 var _seq := PackedStringArray()
 var _wi := 0
@@ -111,6 +113,10 @@ func _ready() -> void:
 	_tip = _label(Vector2(cx + 10, cy + 108), Vector2(CARD.size.x - 20, 36))
 	_body = _label(Vector2.ZERO, Vector2.ONE)   # the codex lore stays in the codex; the card only teaches the stroke
 	_body.visible = false
+	_cast_cue = _label(Vector2(cx + 10, cy + CARD.size.y - 17), Vector2(88, 12))
+	_cast_cue.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_cast_cue.add_theme_color_override("font_color", UIFx.GOLD_HI)
+	_cast_cue.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	var hint := _label(Vector2(cx + 10, cy + CARD.size.y - 17), Vector2(CARD.size.x - 20, 12))
 	hint.text = tr("UI_HOLD_SKIP")
 	hint.autowrap_mode = TextServer.AUTOWRAP_OFF
@@ -157,13 +163,14 @@ func _ready() -> void:
 	_card.add_child(_wet)
 	_stroke = CastOverlay.brush_line(6.0, GOLD)
 	_card.add_child(_stroke)
-	var hint_w := Label.new()
-	hint_w.text = tr("UI_WRITE_HINT")
-	hint_w.position = Vector2(0, 220)
-	hint_w.size = Vector2(480, 12)
-	hint_w.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint_w.add_theme_color_override("font_color", DIM)   # the theme default is paper ink: invisible on this dark card
-	_card.add_child(hint_w)
+	_hint_w = Label.new()
+	_hint_w.text = _write_cue_text()
+	_hint_w.position = Vector2(0, 220)
+	_hint_w.size = Vector2(480, 12)
+	_hint_w.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hint_w.add_theme_color_override("font_color", UIFx.GOLD_HI)
+	_card.add_child(_hint_w)
+	_cast_cue.text = _cast_cue_text()
 
 
 func _nine(tex: String, rect: Rect2, m: int) -> NinePatchRect:
@@ -223,6 +230,7 @@ func _next() -> void:
 	_font(_aksara, g)
 	_body.text = _t("CODEX_%s_BODY" % up)
 	_tip.text = _t("LESSON_%s" % up)
+	_cast_cue.text = _cast_cue_text()
 	_msg.text = ""
 	_set_progress(1.0, false)
 	var player := get_tree().get_first_node_in_group("player")
@@ -237,6 +245,15 @@ func _next() -> void:
 
 func _t(key: String) -> String:
 	return get_node("/root/Game").fmt(tr(key))
+
+
+func _cast_cue_text() -> String:
+	var k: String = get_node("/root/Game").key_name("cast")
+	return tr("UI_HOLD_KEY") % k
+
+
+func _write_cue_text() -> String:
+	return (tr("UI_HOLD_KEY") % tr("UI_KEY_LMB")) + "  " + tr("UI_WRITE_HINT")
 
 
 ## The aksara system font on a label, or the Latin fallback text when it is missing.
@@ -307,6 +324,7 @@ func _on_write(seq_id: String, glyphs: PackedStringArray) -> void:
 	_wdraw = false
 	_card.modulate.a = 1.0
 	_card.visible = true
+	_hint_w.text = _write_cue_text()
 	var lx := (480.0 - _seq.size() * SLOT.x) / 2.0 - 26.0
 	_leaf.position = Vector2(lx, 58)
 	_leaf.size = Vector2(_seq.size() * SLOT.x + 52.0, 124)

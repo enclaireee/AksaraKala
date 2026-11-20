@@ -41,7 +41,7 @@ func _initialize() -> void:
 	check(gate.shut and zones.sealed, "gate shuts and exits are sealed")
 	check(boss.hurtbox.monitorable, "boss can be hurt once engaged")
 	var rx: float = game.boss_retry.get("pos", [0])[0]
-	check(rx < 300.0 and rx > 268.0, "retry point is between the gate and the threshold")
+	check(rx <= 268.0 and rx >= 230.0, "retry point is safely inside the flush threshold")
 	zones.go_to("no_such_zone_but_sealed_returns_first", "")   # must return silently: sealed is checked before the path
 	boss.finish_glyph = "sunda_ca"
 	boss.health.take_damage(boss.health.max_hp)

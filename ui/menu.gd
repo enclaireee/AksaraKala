@@ -160,8 +160,10 @@ func _modal_open() -> bool:
 func _input(e: InputEvent) -> void:
 	var box := get_node_or_null("../DialogueBox")
 	var lesson := get_node_or_null("../GlyphLesson")
-	if (box and box.is_open()) or (lesson and lesson.writing != ""):
-		return   # the box and the write card own pause and input while they are open
+	var death := get_node_or_null("../DeathScreen")
+	var zones := get_node_or_null("/root/Zones")
+	if (box and box.is_open()) or (lesson and lesson.writing != "") or (death and death.visible) or (zones and zones._busy):
+		return   # the box, write card, death fade and zone transitions own pause and input
 	var is_map: bool = e.is_action_pressed("map") or (e is InputEventKey and e.pressed and not e.echo and (e.physical_keycode == KEY_M or e.keycode == KEY_M))
 	if is_map and not _modal_open():
 		if visible and _tabs.current_tab == TAB_MAP:
@@ -197,4 +199,8 @@ func _input(e: InputEvent) -> void:
 func _set_hud(on: bool) -> void:
 	var hud := get_node_or_null("../HUD")
 	if hud:
+		var game := get_node_or_null("/root/Game")
+		if on and game and game.in_memory():
+			hud.visible = false   # stand-ins inside a KelirMemory have no hero HUD
+			return
 		hud.visible = on

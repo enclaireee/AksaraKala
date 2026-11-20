@@ -19,6 +19,32 @@ static func player_point(host: EnemyBase) -> Vector2:
 	return host.target.global_position + HURT_OFFSET
 
 
+## Clamp a boss teleport/leap/copy destination inside world walls (layer 1), backing off by `margin`.
+static func clamp_arena_pos(boss: Node2D, dest: Vector2, margin: float = 16.0) -> Vector2:
+	if boss == null or not is_instance_valid(boss) or not boss.is_inside_tree():
+		return dest
+	var w := boss.get_world_2d()
+	if w == null:
+		return dest
+	var origin := boss.global_position
+	var diff := dest - origin
+	var dist := diff.length()
+	if dist < 0.5:
+		return dest
+	var dir := diff / dist
+	var q := PhysicsRayQueryParameters2D.create(origin, dest + dir * margin, 1)
+	q.collide_with_areas = false
+	q.collide_with_bodies = true
+	if boss is CollisionObject2D:
+		q.exclude = [(boss as CollisionObject2D).get_rid()]
+	var hit := w.direct_space_state.intersect_ray(q)
+	if not hit.is_empty():
+		var hit_pos: Vector2 = hit["position"]
+		var safe_dist := maxf(0.0, origin.distance_to(hit_pos) - margin)
+		return origin + dir * minf(dist, safe_dist)
+	return dest
+
+
 static func in_circle(p: Vector2, centre: Vector2, radius: float) -> bool:
 	return p.distance_to(centre) <= radius + HURT_RADIUS
 

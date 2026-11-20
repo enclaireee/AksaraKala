@@ -43,10 +43,10 @@ const MAP := [
 	"#..................,,,..bb...,,,,,,,,,,,,.....,,,.......bb....,,,,,,,,,,,,,,,,,,,,,,,,,,..''.[[[[[[[[.,,,.bbbbbb..............,,,-.[[[[..............#",
 	"#....}.......r.....,,,..bb...,,,,,,,,,,,,.....,,,............Z,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,.bb..................,,,....................#",
 	"#..h..n............,,,.......,,,,,,,,,,,,.....,,,........c....,,,,,,,,,,,,F,,,,,,,,,,U,,..----..-----.,,,.....................,,,....................#",
-	"#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,###########",
-	"Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,vKE",
-	"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE",
-	"#..................,,,.......,,,,,,,,,,,,.....,,,....-----..--,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,..---------..-.......,,,..........###########",
+	"###,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,###########",
+	"Wwt,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,vKE",
+	"W,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,KE",
+	"###................,,,.......,,,,,,,,,,,,.....,,,....-----..--,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,..---------..-.......,,,..........###########",
 	"#..................,,,.......,,,,,,,,,,,,.....,,,.............,,,,,,,,,,,,,,,,,,,,,,,,,,..............,,,.....................,,,....................#",
 	"#..................,,,.......,,,,,,,,,,,,.....,,,.r.....[[[[[[,,,,{{{,,,,,,,,,,,{{{,,,,,......bb......,,,.....[[[[[[[[[..r....,,,....................#",
 	"#..................,,,.......,,,,,,,,,,,,.....,,,.......[[[[[[,,,,,,,,,,,,,,,,,,,,,,,,,,......bb......,,,.....[[[[[[[[[.......,,,.......r............#",
@@ -91,14 +91,15 @@ const MAP := [
 
 const SPOTS := {
 	"W": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_tatar_sunda", "target_zone": "ts_kebun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Tatar Sunda
+	"t": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq0_7"}, "tile": ","},   # kabut, the west road to Tatar Sunda stays misted through the Prologue (lifts on `mq0_7`, set by clearing `purwa_raid`; keeps a new player from leaving before 0.12)
 	"w": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kebun"}, "tile": ","},   # spawn, arrival from Tatar Sunda
 	"v": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_alun"}, "tile": ","},   # spawn, arrival from Keraton Galuh
 	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq1_10"}, "tile": ","},   # kabut, Galuh gate (one per tile)
 	"E": {"scene": "res://entities/world/exit.tscn", "props": {"id": "exit_mataram", "target_zone": "kg_alun", "spawn_id": "from_desa_purwa"}, "tile": ","},   # exit to Keraton Galuh
 	"I": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ibu", "cond": "!step:mq0=11"}, "tile": "_"},   # NPC Ibu, the hero's mother (MQ0 0.2 tea and 0.10, Interlude 4.4, epilogue cups); at the west gate `}` during 0.12
-	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid", "cond": "step:mq0=11", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]]]}, "tile": ","},   # encounter purwa_raid, the plaza fight, 3 Faceless (MQ0 0.12, last of three skirmishes; `area_cleared:purwa_raid` sets `mq0_7`; v5 step index 11)
-	"9": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid_a", "cond": "step:mq0=11", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter purwa_raid_a, west road skirmish, 2 Faceless (MQ0 0.12, first)
-	"0": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid_b", "cond": "step:mq0=11", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter purwa_raid_b, stage road skirmish, 2 Faceless (MQ0 0.12, second)
+	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid", "cond": "step:mq0=11,!flag:cleared:purwa_raid", "size": Vector2i(14,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(4,-2)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)]]]}, "tile": ","},   # encounter purwa_raid, the plaza fight, 3 Faceless (MQ0 0.12, last of three skirmishes; `area_cleared:purwa_raid` sets `mq0_7`; v5 step index 11)
+	"9": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid_a", "cond": "step:mq0=11,!flag:cleared:purwa_raid_a", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter purwa_raid_a, west road skirmish, 2 Faceless (MQ0 0.12, first)
+	"0": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "purwa_raid_b", "cond": "step:mq0=11,!flag:cleared:purwa_raid_b", "size": Vector2i(12,8), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless.tscn", Vector2i(3,0)]]]}, "tile": ","},   # encounter purwa_raid_b, stage road skirmish, 2 Faceless (MQ0 0.12, second)
 	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "start"}, "tile": ","},   # spawn, player start after class choice
 	"P": {"scene": "res://entities/petilasan/petilasan.tscn", "props": {"id": "desa_purwa"}, "tile": ","},   # petilasan
 	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "semar"}, "tile": "_"},   # NPC Semar, the village dalang (MQ0 0.5 and 0.11, Interlude 4.7; SQ-D1 lakon giver)

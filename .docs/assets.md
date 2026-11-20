@@ -39,7 +39,7 @@ All fonts and assets adhere to open-source or permissive licenses:
 
 | Asset | Source URL | License | Usage in Budayago | Attribution Status |
 |---|---|---|---|---|
-| **Tiny5** | https://github.com/google/fonts/tree/main/ofl/tiny5 | SIL OFL 1.1 | Body text, labels, dialogue, HUD, menus (8 px) | Shipped (`assets/fonts/OFL_Tiny5.txt`) |
+| **Pixeloid Sans** (Regular, Bold) | https://ggbot.itch.io/pixeloid-font | SIL OFL 1.1 | Body text, labels, dialogue, HUD, menus (9 px) | Shipped (`assets/fonts/OFL_Pixeloid.txt`) |
 | **Jersey 10 / Jersey 15** | https://github.com/google/fonts/tree/main/ofl/jersey10 | SIL OFL 1.1 | Headings (10 at 19), display titles (15 at 27) | Shipped (`assets/fonts/OFL_Jersey.txt`) |
 | **Noto Sans Sundanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Sunda character rendering | Shipped (`assets/fonts/OFL_Noto.txt`) |
 | **Noto Sans Javanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Jawa character rendering | Shipped (`assets/fonts/OFL_Noto.txt`) |

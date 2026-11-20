@@ -341,3 +341,23 @@ BOSS_HINT_BANDUNG,"Selama tiang berdiri, ia kebal. Gambar Ca untuk memanggil faj
 BOSS_HINT_BUTO,Tarik Buto Ijo ke atas petak bungkusan. Petak itu hanya melukai dia.,Draw Buto Ijo onto the pouch fields. They hurt only him.
 BOSS_HINT_KERIS,Tonggak yang menyala harus dipadamkan. Gambar Ha di dekatnya sebelum ketujuhnya menyala.,Put out each lit stake. Draw Ha near it before all seven are lit.
 BOSS_HINT_HUNTER,Ia akan melupakanmu. Gambar Ga untuk perisai yang menahan Lupa.,He will make you forget. Draw Ga for the ward that blocks Forget.
+UI_MAP_TOGGLE,Ganti tampilan,Switch view
+UI_VERB_TRAVEL,Pergi,Travel
+UI_VERB_REST,Istirahat,Rest
+UI_FT_LABEL,Petilasan:,Petilasan:
+UI_FT_LOCKED_WHY,Terkunci (pertarungan / kenangan),Locked (combat / memory)
+UI_FT_NONE,Belum ada Petilasan lain,No other Petilasan yet
+UI_HOLD_KEY,[Tahan %s],[Hold %s]
+UI_TUT_LOW_SAKTI,Sakti kurang — serang musuh untuk mengisi Sakti,Low Sakti — strike enemies to build Sakti
+UI_TUT_MOVE,{move} Jalan  ·  {interact} Bicara / Periksa,{move} Move  ·  {interact} Talk / Inspect
+UI_UPD_AVAILABLE,Versi %s sudah ada.,Version %s is out.
+UI_UPD_DOWNLOAD,Unduh,Download
+UI_UPD_LATER,Nanti,Later
+UI_UPD_DOWNLOADING,Mengunduh... %d%%,Downloading... %d%%
+UI_UPD_READY,Versi %s siap. Mulai ulang untuk memakainya.,Version %s is ready. Restart to play it.
+UI_UPD_RESTART,Mulai ulang,Restart now
+UI_UPD_MANUAL,Versi %s perlu diunduh ulang dari halaman rilis.,Version %s needs a fresh download from the release page.
+UI_UPD_OPEN,Buka halaman,Open page
+UI_UPD_FAILED,Unduhan gagal. Permainan tetap bisa dimainkan.,Download failed. You can keep playing.
+UI_UPD_RETRY,Coba lagi,Retry
+UI_SYS_UPDATES,Cek pembaruan,Check for updates

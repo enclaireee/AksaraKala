@@ -14,6 +14,7 @@ func _ready() -> void:
 	body_entered.connect(func(b: Node) -> void: _set_near(b, true))
 	body_exited.connect(func(b: Node) -> void: _set_near(b, false))
 	prompt.visible = false
+	_refresh_prompt()
 	if _art() != null:   # a drawn shrine replaces the placeholder polygons
 		for n in ["Base", "Stone", "Flame"]:
 			get_node(n).visible = false
@@ -51,7 +52,14 @@ func _draw() -> void:
 func _set_near(b: Node, on: bool) -> void:
 	if b.is_in_group("player"):
 		_near = on
+		if on:
+			_refresh_prompt()
 		prompt.visible = on
+
+
+func _refresh_prompt() -> void:
+	var k: String = get_node("/root/Game").key_name("interact")
+	prompt.text = "[%s] %s" % [k, tr("UI_VERB_REST")]
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -64,6 +72,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func rest() -> void:
 	var game := get_node("/root/Game")
 	game.last_petilasan = {"zone": get_tree().current_scene.scene_file_path, "id": id}
+	game.flags["petilasan:" + id] = true
+	game.changed.emit()
 	game.restore()   # flask now; HP and stamina also come back full when respawn reloads the zone
 	game.save_game()
 	get_node("/root/Events").petilasan_activated.emit(id)

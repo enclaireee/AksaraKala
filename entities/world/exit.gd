@@ -10,6 +10,8 @@ const ARM_TIME := 0.5   # ignore the player right after load so arriving here ne
 
 const ART := "res://assets/art/world_fx/%s.png"
 const CELL := 16   # sheet cells (tools/gen_world_fx.py): 0 path stones, 1 gapura post, 2-5 mote fade stages
+const SIGN_RANGE := 64.0   # px from exit center where the quiet signpost appears
+const SIGN_FONT := preload("res://assets/fonts/PixeloidSans.woff")
 
 var _armed := false
 var _sheet: Texture2D
@@ -19,15 +21,19 @@ var _across := Vector2.RIGHT   # the line of the two posts, across the passage
 var _out := Vector2.DOWN       # toward the nearest map edge: the way the mote drifts
 var _t := 0.0
 var _key := -1
+var _sign: Label
 
 
 func _ready() -> void:
+	add_to_group("exit")
 	var r := RectangleShape2D.new()
 	r.size = Vector2.ONE * 16.0 * block
 	$Shape.shape = r
 	get_tree().create_timer(ARM_TIME).timeout.connect(func() -> void: _armed = true)
 	body_entered.connect(_on_body_entered)
 	_look()
+	_make_sign()
+	set_process(true)
 
 
 func _on_body_entered(b: Node) -> void:
@@ -67,6 +73,64 @@ func _look() -> void:
 	queue_redraw()
 
 
+func _make_sign() -> void:
+	if target_zone == "" or target_zone.begins_with("res://"):
+		return
+	_sign = Label.new()
+	_sign.add_theme_font_override("font", SIGN_FONT)
+	_sign.add_theme_font_size_override("font_size", UIFx.BODY)
+	_sign.add_theme_color_override("font_color", Color("F2E9D8"))
+	_sign.add_theme_color_override("font_outline_color", Color(0.08, 0.06, 0.12, 0.9))
+	_sign.add_theme_constant_override("outline_size", 2)
+	_sign.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_sign.custom_minimum_size = Vector2(140, 12)
+	var inset := -_out * (8.0 * block + 10.0)
+	_sign.position = inset + Vector2(-70, -14)
+	_sign.z_index = 20
+	_sign.modulate.a = 0.0
+	_sign.visible = false
+	add_child(_sign)
+
+
+## ASCII, not an arrow glyph: the body face has no U+2192 and would fall back to a system font.
+func _arrow() -> String:
+	if absf(_out.x) >= absf(_out.y):
+		return ">" if _out.x > 0.0 else "<"
+	return "^" if _out.y < 0.0 else "v"
+
+
+func _zone_label() -> String:
+	var key := "UI_ZONE_" + target_zone.to_upper()
+	var t := tr(key)
+	return t if t != key else target_zone.replace("_", " ").capitalize()
+
+
+func _update_sign(delta: float) -> void:
+	if _sign == null:
+		return
+	var show_sign := false
+	if not _sealed:
+		var pl := get_tree().get_first_node_in_group("player") as Node2D
+		if pl != null and is_instance_valid(pl):
+			var dist := global_position.distance_to(pl.global_position)
+			var reach := SIGN_RANGE + 8.0 * block
+			if dist <= reach:
+				show_sign = true
+				for other in get_tree().get_nodes_in_group("exit"):
+					if other == self or other.get_parent() != get_parent():
+						continue
+					if other.get("target_zone") == target_zone:
+						var od: float = other.global_position.distance_to(pl.global_position)
+						if od < dist - 0.5 or (absf(od - dist) <= 0.5 and other.get_index() < get_index()):
+							show_sign = false
+							break
+	if show_sign:
+		_sign.text = "%s %s" % [_arrow(), _zone_label()]
+	var target_a := 0.92 if show_sign else 0.0
+	_sign.modulate.a = move_toward(_sign.modulate.a, target_a, delta * 5.0)
+	_sign.visible = _sign.modulate.a > 0.01
+
+
 func _process(delta: float) -> void:
 	_t += delta
 	var sealed: bool = get_node("/root/Zones").sealed
@@ -74,7 +138,9 @@ func _process(delta: float) -> void:
 	if key != _key or sealed != _sealed:
 		_key = key
 		_sealed = sealed
-		queue_redraw()
+		if _sheet != null:
+			queue_redraw()
+	_update_sign(delta)
 
 
 func _draw() -> void:

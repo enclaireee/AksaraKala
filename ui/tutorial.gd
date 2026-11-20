@@ -29,6 +29,8 @@ var _a := 0.0               # fade 0..1
 var _hold := 0.0
 var _ttl := -1.0
 var _t := 0.0
+var _moved := false
+var _interacted := false
 
 var _root: Control
 var _panel: NinePatchRect
@@ -74,6 +76,7 @@ func _ready() -> void:
 	_lbl.mouse_filter = MOUSE_FILTER_IGNORE
 	_root.add_child(_lbl)
 	_connect_events()
+	_maybe_offer_opening()
 
 
 func _connect_events() -> void:
@@ -84,6 +87,9 @@ func _connect_events() -> void:
 	_ev.player_drank.connect(func() -> void: _hit("drink"))
 	_ev.spell_cast.connect(func(_glyph: String, _score: float) -> void: _hit("cast"))
 	_ev.petilasan_activated.connect(func(_id2: String) -> void: _hit("rest"))
+	_ev.talked_to.connect(func(_npc: String) -> void: _note_interact())
+	_ev.clue_examined.connect(func(_clue: String) -> void: _note_interact())
+	_ev.zone_entered.connect(func(_z: String) -> void: _maybe_offer_opening())
 	_ev.player_hurt.connect(_on_hurt)
 	_ev.player_died.connect(_quiet)
 	_ev.dialogue_requested.connect(func(_k: String, _l: PackedStringArray) -> void: _refresh_visible())
@@ -104,10 +110,52 @@ func offer(id: String) -> void:
 		return
 	if l.get("needs_flask", false) and int(_game.flask_charges) <= 0:
 		return
+	if _id == "move":
+		_quiet()
 	if _id == "":
 		_begin(id)
 	else:
 		_queue.append(id)
+
+
+## Quiet, non-blocking Move + Interact opening prompt at mq0 step 0; auto-dismisses once both happen.
+func _maybe_offer_opening() -> void:
+	if _id != "" or _game.has_flag("tut_move") or not _game.check("step:mq0=0"):
+		return
+	_moved = false
+	_interacted = false
+	_id = "move"
+	_lesson = {"when": "step:mq0=0", "key": "", "steps": []}
+	_step = 0
+	_got = 0
+	_ttl = -1.0
+	_t = 0.0
+	_hold = 0.0
+	_state = "on"
+	_a = 0.0
+	_root.visible = true
+	_refresh_text()
+	_refresh_visible()
+
+
+func _note_interact() -> void:
+	if _id != "move" or _state != "on":
+		return
+	_interacted = true
+	if _moved:
+		_finish()
+
+
+func _input(event: InputEvent) -> void:
+	if _id != "move" or _state != "on" or blocked_now():
+		return
+	if event.is_action_pressed("move_up") or event.is_action_pressed("move_down") \
+			or event.is_action_pressed("move_left") or event.is_action_pressed("move_right"):
+		_moved = true
+	elif event.is_action_pressed("interact"):
+		_interacted = true
+	if _moved and _interacted:
+		_finish()
 
 
 ## The lesson on screen ("" when none). Tests read this; nothing else should.
@@ -190,6 +238,7 @@ func _on_changed() -> void:
 		var when: String = l.get("when", "")
 		if when != "" and not _game.check(when):
 			_queue.erase(id)
+	_maybe_offer_opening()
 	_refresh_visible()
 
 
@@ -209,9 +258,15 @@ func _refresh_text() -> void:
 		keys[a] = _game.key_name(a)
 	keys.move = "%s%s%s%s" % [_game.key_name("move_up"), _game.key_name("move_left"),
 		_game.key_name("move_down"), _game.key_name("move_right")]
-	var text: String = tr(str(l.get("text", ""))).format(keys)
-	if _state != "done" and _lesson.steps.size() > 1 and _step < _lesson.steps.size():
-		text += "  %d/%d" % [_got, int(_lesson.steps[_step].get("n", 1))]
+	var text := ""
+	if _id == "move":
+		text = tr("UI_TUT_MOVE").format(keys)
+	else:
+		text = tr(str(l.get("text", ""))).format(keys)
+	if _state != "done" and _step < _lesson.steps.size():
+		var need := int(_lesson.steps[_step].get("n", 1))
+		if need > 1 or _lesson.steps.size() > 1:
+			text += "  %d/%d" % [_got, need]
 	_lbl.text = text
 	var k: String = str(l.get("key", ""))
 	var kw := 0.0
@@ -249,9 +304,10 @@ func _refresh_visible() -> void:
 func blocked_now() -> bool:
 	var box := get_node_or_null("../DialogueBox")
 	var lesson := get_node_or_null("../GlyphLesson")
+	var glyph_blocks: bool = lesson != null and (str(lesson.get("writing")) != "" or (str(lesson.get("active")) != "" and _id != "cast"))
 	return get_tree().paused \
 		or (box != null and box.is_open()) \
-		or (lesson != null and (lesson.active != "" or lesson.writing != ""))
+		or glyph_blocks
 
 
 func _process(delta: float) -> void:

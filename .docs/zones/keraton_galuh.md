@@ -125,7 +125,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,_________E_F____
 | `E` | encounter galuh_bout_1 (tournament round 1, MQG g.4; opens after the riggers, `mqg_p2`) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_bout_1", size:Vector2i(17,9), cond:"flag:mqg_p2,!flag:mqg_1", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-5,-3)], [res://entities/enemies/faceless.tscn, Vector2i(-2,3)], [res://entities/enemies/faceless.tscn, Vector2i(3,-2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(6,2)]]]}` | floor | 1 |
 | `F` | encounter galuh_bout_2 (tournament round 2); wave 2 is the champion, the `miniboss` piece (MQG g.4) | `res://entities/world/encounter.tscn` | `{area_id:"galuh_bout_2", size:Vector2i(17,9), cond:"flag:mqg_1,!flag:mqg_2", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-5,-2)], [res://entities/enemies/faceless.tscn, Vector2i(-1,3)], [res://entities/enemies/faceless_archer.tscn, Vector2i(6,-2)]], [[res://entities/enemies/faceless_champion.tscn, Vector2i(0,0)], [res://entities/enemies/faceless.tscn, Vector2i(-4,2)]]]}` | floor | 1 |
 | `L` | NPC Uwa Batara Lengser, the old court officer (after round 2, MQG g.5 `talked_to:lengser`, sets `mqg_3`) | `res://entities/npc/npc.tscn` | `{npc_id:"lengser", cond:"flag:mqg_2"}` | grass | 1 |
-| `C` | NPC Ciung Wanara at the ring's east gate, tournament contender (MQG g.1 plan; moves to the camp at `galuh_1` once step g.5 is done (`mqg_4`)) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"!flag:mqg_4"}` | grass | 1 |
+| `C` | NPC Ciung Wanara at the ring's east gate, tournament contender (MQG g.1 plan; also camps at `galuh_1` once g.5 is done (`mqg_4`), but stays here until SQ-C1 is done so its markers never point at an empty spot, ASSUMED) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"!quest:sq_c1=done"}` | grass | 1 |
 | `c` | chest: class gear `zirah_sisik`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"galuh_chest_alun", item_id:"zirah_sisik"}` | grass | 1 |
 | `g` | codex spot, the Karang Kamulyan site (VERIFY) | `res://entities/world/pickup.tscn` | `{codex_id:"galuh"}` | grass | 1 |
 | `u` | loose Faceless, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless.tscn` | `{}` | grass | 3 |
@@ -279,8 +279,8 @@ Barma Wijaya `unique_id:"barma_wijaya"` is a boss, not an encounter.
 ######_______________________________________________#######
 ######_______________________________________________#######
 ######_______________________________________________#######
-Xe,,,,____V_____W_____________________G______________#######
-X,,,,,_______________________________________________#######
+Xe,,,K____V_____W_____________________G______________#######
+X,,,,K_______________________________________________#######
 ######__________________B____________________________#######
 ######_______________________________________________#######
 ######_______________________________________________#######
@@ -303,6 +303,7 @@ X,,,,,_______________________________________________#######
 | Char | What | Scene | Props | Floor | Count |
 |------|------|-------|-------|-------|-------|
 | `X` | exit to kg_keraton (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_keraton", spawn_id:"from_kg_penjara"}` | path | 2 |
+| `K` | kabut, seals the west exit to kg_keraton until the palace is open (`mqg_3`); matches `Zones.GATED_EDGES` | `res://entities/world/kabut.tscn` | `{flag:"mqg_3"}` | path | 2 |
 | `e` | spawn, arrival from kg_keraton | `res://entities/world/spawn.tscn` | `{id:"from_kg_keraton"}` | path | 1 |
 | `S` | exit to kg_kaputren (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_kaputren", spawn_id:"from_kg_penjara"}` | floor | 2 |
 | `s` | spawn, arrival from kg_kaputren | `res://entities/world/spawn.tscn` | `{id:"from_kg_kaputren"}` | floor | 1 |
@@ -390,7 +391,7 @@ X,,,,,,,,,,,,,,,,,,,,,,A,,,,,,,,,,,,,a,,,,,,,,,,,,,,,,,,,,,Y
 | `c` | NPC Ciung Wanara on the west bank, staging for the `truce` beat (the same `ciung_wanara` NPC id as Act II; he has no talk here) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"quest:mq2=done,!flag:beat_truce"}` | grass | 1 |
 | `1` | encounter pamali_bank, the Faceless pickets on the west bank (MQ2 2.21 `fight x2`, only while step 2.21 is current) | `res://entities/world/encounter.tscn` | `{area_id:"pamali_bank", size:Vector2i(14,8), cond:"step:mq2=20", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,0)], [res://entities/enemies/faceless.tscn, Vector2i(0,3)], [res://entities/enemies/faceless.tscn, Vector2i(4,-1)]]]}` | grass | 1 |
 | `2` | encounter pamali_ford, the guards of Hariang Banga's camp at the ford's east side (MQ2 2.21 `fight x2`) | `res://entities/world/encounter.tscn` | `{area_id:"pamali_ford", size:Vector2i(14,8), cond:"step:mq2=20", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-4,-1)], [res://entities/enemies/faceless.tscn, Vector2i(2,2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(5,-1)]]]}` | grass | 1 |
-| `H` | NPC Hariang Banga at the ford after the truce (MQ2 camp talk `camp_mataram`: optional, 2-4 lines, `quiet`, `do`: `flag:camp_mataram`; the first time you two talk as brothers, not rivals; entry cond `flag:beat_truce`, `!flag:mq3_1`, **ASSUMED**; the same `hariang_banga` NPC id as the boss `B`, whose spot is gone after the duel) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga", cond:"flag:beat_truce,!flag:mq3_1"}` | grass | 1 |
+| `H` | NPC Hariang Banga at the ford after the truce (MQ2 camp talk `camp_mataram`: optional, 2-4 lines, `quiet`, `do`: `flag:camp_mataram`; the first time you two talk as brothers, not rivals; entry cond `flag:beat_truce`, `!quest:sq_c2=done` (stays at the ford until SQ-C2 is done, so its step 1 marker is always live), **ASSUMED**; the same `hariang_banga` NPC id as the boss `B`, whose spot is gone after the duel) | `res://entities/npc/npc.tscn` | `{npc_id:"hariang_banga", cond:"flag:beat_truce,!quest:sq_c2=done"}` | grass | 1 |
 | `K` | NPC Ki Sumarto at the ford camp, the dalang of the brothers' show (MQ2 2.22; he is a staging figure, the clue `Q` starts the memory) | `res://entities/npc/npc.tscn` | `{npc_id:"ki_sumarto", cond:"flag:mq2_8,!flag:mq2_h5"}` | grass | 1 |
 | `Q` | clue, Ki Sumarto's show at the ford camp; pulls you into K-III (MQ2 2.22, `memory_done:k_iii`, sets `mq2_h5`; `memory_id` `k_iii`, scene specified in mataram.md) | `res://entities/world/clue.tscn` | `{clue_id:"sumarto_show", memory_id:"k_iii", cond:"flag:mq2_8"}` | grass | 1 |
 | `L` | clue, Hariang Banga's camp letters to his mother, the person-boss clue (MQ2 2.23, `clue_examined:hariang_letters`, sets `mq2_h3`; appears once K-III is done, then he comes to the ford) | `res://entities/world/clue.tscn` | `{clue_id:"hariang_letters", cond:"flag:mq2_h5"}` | grass | 1 |
@@ -535,8 +536,8 @@ Scale: 1
 ### Map
 ```
 #############################NN#############################
+#.................#_________#KK#_________#.................#
 #.................#__________n___________#.................#
-#.................#______________________#.................#
 #.................#______________________#.................#
 #...bbb...........#___________________c__#..........bbb....#
 #...bbb...........#______Q_______R_______#..........bbb....#
@@ -578,6 +579,7 @@ W,,,,,,,,,,,,,,,,,,_______________________.................#
 | `S` | exit to kg_kaputren (south edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"kg_kaputren", spawn_id:"from_kg_pustaka"}` | path | 2 |
 | `s` | spawn, arrival from kg_kaputren | `res://entities/world/spawn.tscn` | `{id:"from_kg_kaputren"}` | path | 1 |
 | `N` | exit to kg_keraton (north edge, 2 tiles, archive grate; the link needs `laras_key:archive_grate`, set by LC2) | `res://entities/world/exit.tscn` | `{target_zone:"kg_keraton", spawn_id:"from_kg_pustaka"}` | floor | 2 |
+| `K` | kabut, the archive grate under the north exit (lifts on `laras_key:archive_grate`, LC2); matches `Zones.GATED_EDGES` | `res://entities/world/kabut.tscn` | `{flag:"laras_key:archive_grate"}` | floor | 2 |
 | `n` | spawn, arrival from kg_keraton | `res://entities/world/spawn.tscn` | `{id:"from_kg_keraton"}` | floor | 1 |
 | `G` | encounter pustaka_guards, archive guards (MQG g.6, `area_cleared:pustaka_guards`) | `res://entities/world/encounter.tscn` | `{area_id:"pustaka_guards", size:Vector2i(14,8), cond:"flag:mqg_4,!flag:mqg_ar1", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-3,0)], [res://entities/enemies/faceless_archer.tscn, Vector2i(3,0)]]]}` | floor | 1 |
 | `Y` | NPC Nyai Sekar, royal archivist (MQG g.6 `talked_to:nyai_sekar`, sets `mqg_ar1`; hub; her closing lines after the grate, g.16) | `res://entities/npc/npc.tscn` | `{npc_id:"nyai_sekar", cond:"flag:mqg_4"}` | floor | 1 |

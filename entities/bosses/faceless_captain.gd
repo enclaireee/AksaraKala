@@ -382,7 +382,7 @@ func _run_rally() -> void:
 	if _mt < rally_windup:
 		return
 	BossKit.roar(self, GOLD)
-	BossKit.wave(self, global_position, 120.0, 110.0, rally_damage, GOLD, true)
+	_shots.append(BossKit.wave(self, global_position, 120.0, 110.0, rally_damage, GOLD, true))
 	if _muster_next:
 		_muster_next = false
 		_begin_muster()
@@ -401,7 +401,7 @@ func _run_edict() -> void:
 				BossKit.shake(self, 3.0, 0.3)
 				if dist <= edict_outer + BossKit.HURT_RADIUS and dist >= edict_inner:
 					BossKit.hurt_player(self, edict_damage, true)
-				BossKit.wave(self, _spot, 150.0, 100.0, rally_damage, GOLD, true)
+				_shots.append(BossKit.wave(self, _spot, 150.0, 100.0, rally_damage, GOLD, true))
 				_stage = 1
 				_mt = 0.0
 		1:

@@ -22,7 +22,7 @@ marker = {"zone": "desa_purwa", "id": "ibu"}
 [sub_resource type="Resource" id="s3"]
 script = ExtResource("2")
 objective = "Q_MQ0_S3_OBJ"
-all = [{"on": "clue_examined:ciung_basket", "set_flag": "", "objective": "Q_MQ0_S3_P3", "marker": {"zone": "desa_purwa", "id": "ciung_basket"}}, {"on": "talked_to:ciung_wanara", "set_flag": "mq0_d3", "objective": "Q_MQ0_S3_P2", "marker": {"zone": "desa_purwa", "id": "ciung_wanara"}}]
+all = [{"on": "talked_to:ciung_wanara", "set_flag": "mq0_d3", "objective": "Q_MQ0_S3_P2", "marker": {"zone": "desa_purwa", "id": "ciung_wanara"}}, {"on": "clue_examined:ciung_basket", "set_flag": "", "objective": "Q_MQ0_S3_P3", "marker": {"zone": "desa_purwa", "id": "ciung_basket"}}]
 set_flag = "mq0_d3"
 recap = "Q_MQ0_S3_DONE"
 marker = {"zone": "desa_purwa", "id": "ciung_wanara"}

@@ -148,7 +148,8 @@ func _tick(delta: float) -> void:
 			if _ghost_t <= 0.0:
 				_ghost_t = 0.05
 				BossKit.ghost(self, GOLD, 0.25)
-			if global_position.distance_to(_from) >= thrust_length or (state_time > 0.05 and is_on_wall()):
+			var max_t := thrust_length / maxf(thrust_speed, 1.0) + 0.25
+			if global_position.distance_to(_from) >= thrust_length or state_time >= max_t or (state_time > 0.05 and is_on_wall()):
 				_finish(recovery)
 		State.ACT:
 			_act(delta)
@@ -360,8 +361,11 @@ func _fire_fan() -> void:
 # --- teleport flurry: ghost mark, blink, cone cut, three times ---
 
 func _flurry_mark() -> void:
+	if target == null:
+		_finish(recovery)
+		return
 	var feet := target.global_position
-	_spot = feet + Vector2.from_angle(randf() * TAU) * flurry_radius
+	_spot = BossKit.clamp_arena_pos(self, feet + Vector2.from_angle(randf() * TAU) * flurry_radius)
 	_tg.append(BossKit.telegraph_circle(self, _spot, 14.0, flurry_tele, GOLD))
 	BossKit.ghost(self, GOLD, flurry_tele)
 	BossKit.anim(self, "dash", 12.0, false)
@@ -535,7 +539,7 @@ func _glamour() -> void:
 	figs.shuffle()
 	var at := global_position
 	for i in figs.size():
-		var spot := at + Vector2.from_angle(TAU * (i + 0.5) / figs.size()) * glamour_radius
+		var spot := BossKit.clamp_arena_pos(self, at + Vector2.from_angle(TAU * (i + 0.5) / figs.size()) * glamour_radius)
 		figs[i].create_tween().tween_property(figs[i], "global_position", spot, glamour_time)
 
 
@@ -602,6 +606,10 @@ func _on_flinch() -> void:
 func _on_died() -> void:
 	if dead:
 		return
+	for c in copies:
+		if is_instance_valid(c):
+			c.queue_free()
+	copies.clear()
 	_clear_attack()
 	_enter(State.STUN)
 	dead = true

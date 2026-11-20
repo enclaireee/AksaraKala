@@ -138,6 +138,7 @@ class Ink extends Node2D:
 
 func _ready() -> void:
 	TranslationServer.set_locale(TitleScript.load_language())
+	get_node("/root/Updater").mark_good()   # the autoloads loaded, so this pack boots: the crash guard starts over
 	GameSettings.apply_display()
 	DisplayServer.window_set_title("AksaraKala")
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN

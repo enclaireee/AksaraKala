@@ -93,6 +93,14 @@ static func set_reduce_flashes(on: bool) -> void:
 	save_value("reduce_flashes", on)
 
 
+static func check_updates() -> bool:
+	return bool(load_value("check_updates", true))
+
+
+static func set_check_updates(on: bool) -> void:
+	save_value("check_updates", on)
+
+
 static func damage_numbers() -> bool:
 	return bool(load_value("damage_numbers", true))
 

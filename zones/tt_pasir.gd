@@ -3,11 +3,11 @@ extends Zone
 
 const MAP := [
 	"##########################################################################################",
-	"#________________________________________________________________________________________#",
-	"#________________________________________________________________________________________#",
-	"#________________________________________________________________________________________#",
-	"#_______rr__________b_______________________________________rr___________________________#",
-	"#_______rr______j_________rr________________________________rr___________________________#",
+	"#_______________________________________________________________________________#________#",
+	"#_______________________________________________________________________________#___T____#",
+	"#_______________________________________________________________________________S________#",
+	"#_______rr__________b_______________________________________rr__________________S________#",
+	"#_______rr______j_________rr________________________________rr__________________##########",
 	"#_________________________rr__________________________rr_________________________________#",
 	"#_____________________________________________________rr_________________________________#",
 	"#___________x____________________________________________________________________________#",
@@ -49,6 +49,8 @@ const SPOTS := {
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_pasir", "size": Vector2i(36,16), "waves": [[["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(10,-3)], ["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(10,3)], ["res://entities/enemies/banaspati.tscn", Vector2i(4,-5)], ["res://entities/enemies/kemamang.tscn", Vector2i(-6,0)]],[["res://entities/enemies/keris_hantu.tscn", Vector2i(12,-3)], ["res://entities/enemies/keris_hantu.tscn", Vector2i(12,3)]]]}, "tile": ","},   # encounter timur_pasir
 	"j": {"scene": "res://entities/enemies/prajurit_terkutuk.tscn", "props": {}, "tile": "_"},   # loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id)
 	"b": {"scene": "res://entities/enemies/banaspati.tscn", "props": {}, "tile": "_"},   # loose banaspati, roaming pack (respawns on zone reload, no unique_id)
+	"S": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "laras_key:sand_tunnel"}, "tile": "_"},   # kabut, Laras's sand tunnel into the walled cache in the north-east corner (lifts on `laras_key:sand_tunnel`, LC4)
+	"T": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "timur_sand_tunnel", "item_id": "ilmu:250"}, "tile": "_"},   # chest, sand tunnel cache (250 Ilmu, behind `S`)
 	"x": {"scene": "res://entities/enemies/keris_hantu.tscn", "props": {}, "tile": "_"},   # loose keris hantu, roaming pack (respawns on zone reload, no unique_id)
 	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hariang_banga", "cond": "flag:mq3_5d"}, "tile": "_"},   # NPC Hariang Banga, camp talk at `timur_2` (optional, quiet; cond `flag:mq3_6`)
 	"A": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pesisir"}, "tile": "_"},   # spawn, arrival from tt_pesisir (south corridor, link L14)

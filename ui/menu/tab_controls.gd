@@ -33,7 +33,7 @@ func refresh() -> void:
 		row.add_child(name_)
 		var shown := {}
 		for ev in InputMap.action_get_events(a):
-			var t := ev.as_text().get_slice(" (", 0)
+			var t := ev.as_text().get_slice(" (", 0).trim_suffix(" - Physical")
 			if not shown.has(t):
 				shown[t] = true
 				row.add_child(MenuBook.keycap(t))

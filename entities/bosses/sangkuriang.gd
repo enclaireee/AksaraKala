@@ -278,6 +278,7 @@ func _begin_move(m: String) -> void:
 		"earthshaker":
 			_wind = _wt(1.0)
 			_from = global_position
+			_spot = BossKit.clamp_arena_pos(self, _spot)
 			_rec_mult = heavy_recovery / recovery
 			BossKit.anim(self, "dash", 8.0, true)
 			_track(BossKit.telegraph_circle(self, _spot, leap_radius, _wind), false)

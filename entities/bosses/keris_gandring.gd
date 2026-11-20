@@ -86,7 +86,7 @@ class Orbit extends Node2D:
 @export var sabotage_flag := "laras_sabotage_keris_seventh_stake"   # HUD boss bar reads this
 @export var sabotage_mark_mult := 2.0  # TUNE (v5): the seventh stake takes this many times longer to light
 @export var sabotage_ha_range := 120.0  # TUNE (v5): Jawa Ha cleanses this far (spec 80)
-@export var arena_radius := 176.0      # TUNE: the curse wave reaches this far from the keris' start
+@export var arena_radius := 540.0      # TUNE: the curse wave reaches this far from the keris' start (SCALE=2)
 @export var dart_min := 48.0           # TUNE
 @export var dart_range := 200.0        # spec: it flies 200 px
 @export var dart_speed := 300.0        # TUNE
@@ -227,7 +227,8 @@ func _tick(delta: float) -> void:
 			if _ghost_t <= 0.0:
 				_ghost_t = 0.04
 				BossKit.ghost(self, STEEL, 0.3)
-			if global_position.distance_to(_from) >= dart_range or (state_time > 0.05 and is_on_wall()):
+			var max_t := dart_range / maxf(dart_speed, 1.0) + 0.25
+			if global_position.distance_to(_from) >= dart_range or state_time >= max_t or (state_time > 0.05 and is_on_wall()):
 				attack_hitbox.deactivate()
 				_pool(global_position)
 				darts_left -= 1
@@ -460,7 +461,7 @@ func _pool(pos: Vector2) -> void:
 func _begin_dart(left: int) -> void:
 	_enter(State.DART_WIND)
 	darts_left = left
-	_dir = (target.global_position - global_position).normalized()
+	_dir = (target.global_position - global_position).normalized() if target != null else Vector2.RIGHT
 	BossKit.anim(self, "cast", 10.0, true)
 	_tg(BossKit.telegraph_line(self, global_position, global_position + _dir * dart_range, 10.0, dart_windup, CRIMSON))
 
@@ -485,7 +486,7 @@ func _fan_count() -> int:
 
 func _begin_fan() -> void:
 	_enter(State.FAN_WIND)
-	_dir = (target.global_position - global_position).normalized()
+	_dir = (target.global_position - global_position).normalized() if target != null else Vector2.RIGHT
 	BossKit.anim(self, "cast", 10.0, true)
 	var arc: float = deg_to_rad((_fan_count() - 1) * fan_spread * 0.5 + 10.0)
 	_tg(BossKit.telegraph_cone(self, global_position, _dir.angle(), arc, dart_range * 0.6, fan_windup, CRIMSON))
@@ -600,7 +601,7 @@ func _next_blink() -> void:
 	_clear_attack()
 	var base: float = (global_position - target.global_position).angle() if target != null else 0.0
 	var last: bool = _flur_i >= _flur_total   # the finisher
-	_spot = (target.global_position if target != null else global_position) + Vector2.from_angle(base + _flur_i * 2.2) * 44.0
+	_spot = BossKit.clamp_arena_pos(self, (target.global_position if target != null else global_position) + Vector2.from_angle(base + _flur_i * 2.2) * 44.0)
 	var r: float = flurry_radius + (14.0 if last else 0.0)
 	_tg(BossKit.telegraph_circle(self, _spot, r, flurry_windup + (0.2 if last else 0.0), CRIMSON))
 	body.modulate = Color(1.0, 0.45, 0.45, 0.4)

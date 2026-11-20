@@ -11,7 +11,7 @@ class_name Sandekala extends EnemyBase
 enum State { IDLE, CHASE, FADING, GONE, WINDUP, GRAB, RECOVER, DEAD, ACT }
 
 const GRAB_R := 24.0
-const OVERLAY_SIZE := Vector2(368, 192)   # the ts_leuwi Sandekala room, 23x12 tiles (zones/tatar_sunda.md)
+const OVERLAY_SIZE := Vector2(736, 384)   # the ts_leuwi Sandekala room, 23x12 tiles at SCALE=2 (zones/tatar_sunda.md)
 const DUSK := Color(0.65, 0.35, 1.0)
 const LIGHT := Color(1.0, 0.9, 0.5)
 const HEAVY := ["pillars", "pulse", "flurry", "eclipse"]
@@ -195,7 +195,7 @@ func _enter(s: State) -> void:
 		State.FADING:
 			_ambush = true
 			moves_used["fade"] = int(moves_used.get("fade", 0)) + 1
-			health.set_invincible(1000.0)
+			health.invincible_time = INF
 			hurtbox.set_deferred("monitorable", false)
 		State.GONE:
 			modulate.a = 0.0
@@ -469,14 +469,18 @@ func _begin_eclipse() -> void:
 func _run_eclipse() -> void:
 	if _mt < eclipse_windup:
 		return
+	if target == null:
+		_end_move(eclipse_recovery)
+		return
 	var pt := target.global_position
 	var safe := _in_light(pt)
 	for p in _spots:
 		safe = safe or pt.distance_to(p) <= 30.0
-	BossKit.flash_fx(self, home, 150.0, 0.6, DUSK)
-	BossKit.ring_fx(self, home, 200.0, 0.6, DUSK)
+	var eclipse_r := OVERLAY_SIZE.length() * 0.5 + 16.0
+	BossKit.flash_fx(self, home, eclipse_r * 0.7, 0.6, DUSK)
+	BossKit.ring_fx(self, home, eclipse_r, 0.6, DUSK)
 	BossKit.shake(self, 3.0, 0.4)
-	if not safe and pt.distance_to(home) <= 200.0:
+	if not safe and pt.distance_to(home) <= eclipse_r:
 		BossKit.hurt_player(self, eclipse_damage, true)
 	dark = minf(1.0, dark + 0.25)
 	_end_move(eclipse_recovery)
@@ -484,7 +488,8 @@ func _run_eclipse() -> void:
 
 func _clamp_room(p: Vector2) -> Vector2:
 	var half := OVERLAY_SIZE / 2.0 - Vector2(16, 16)
-	return Vector2(clampf(p.x, home.x - half.x, home.x + half.x), clampf(p.y, home.y - half.y, home.y + half.y))
+	var clamped := Vector2(clampf(p.x, home.x - half.x, home.x + half.x), clampf(p.y, home.y - half.y, home.y + half.y))
+	return BossKit.clamp_arena_pos(self, clamped)
 
 
 ## ASSUMED: behind = opposite the player's aim, 28 px out, kept inside the room.

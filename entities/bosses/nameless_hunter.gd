@@ -143,7 +143,7 @@ func _tick(delta: float) -> void:
 					velocity = to_t.normalized() * speed * (1.2 if phase == 2 else 1.0) * slow()
 		State.FADE:
 			if state_time >= fade_time * _pace():
-				_spot = target.global_position + to_t.normalized() * step_behind if target != null else global_position
+				_spot = BossKit.clamp_arena_pos(self, target.global_position + to_t.normalized() * step_behind) if target != null else global_position
 				_show_ring(step_radius, _spot, _mark_len())
 				_enter_keep(State.MARK)
 		State.MARK:
@@ -454,8 +454,8 @@ func _begin_move(m: String) -> void:
 			var away: Vector2 = (p - global_position).normalized()
 			if away == Vector2.ZERO:
 				away = Vector2.RIGHT
-			_spot = p + away * 90.0   # he reappears across the player and faces back
-			_facing = -away
+			_spot = BossKit.clamp_arena_pos(self, p + away * 90.0)   # he reappears across the player and faces back
+			_facing = (p - _spot).normalized() if p.distance_to(_spot) > 1.0 else -away
 
 
 ## Twin slash: vanish, a cone marker appears beside the player, he blinks in and cuts; again from another side.
@@ -464,7 +464,7 @@ func _next_slash() -> void:
 	var p: Vector2 = _player_ground()
 	var base: float = (global_position - p).angle()
 	var offs: Array[float] = [PI, PI * 0.5, -PI * 0.5]
-	_spot = p + Vector2.from_angle(base + offs[_slash_i % 3]) * 38.0
+	_spot = BossKit.clamp_arena_pos(self, p + Vector2.from_angle(base + offs[_slash_i % 3]) * 38.0)
 	_facing = (p - _spot).normalized()
 	_marker = BossKit.telegraph_cone(self, _spot, _facing.angle(), deg_to_rad(slash_arc), slash_len, _slash_wait(), MASK)
 	body.modulate.a = 0.0

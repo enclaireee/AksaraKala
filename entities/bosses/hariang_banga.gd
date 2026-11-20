@@ -155,7 +155,8 @@ func _tick(delta: float) -> void:
 			if _ghost_t <= 0.0:
 				_ghost_t = 0.05
 				BossKit.ghost(self, WATER, 0.25)
-			if global_position.distance_to(_from) >= lunge_length or (state_time > 0.05 and is_on_wall()):
+			var max_t := lunge_length / maxf(lunge_speed, 1.0) + 0.25
+			if global_position.distance_to(_from) >= lunge_length or state_time >= max_t or (state_time > 0.05 and is_on_wall()):
 				attack_hitbox.deactivate()
 				_finish(recovery_heavy)
 		State.ACT:

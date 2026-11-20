@@ -33,7 +33,7 @@ func is_dead() -> bool:
 
 
 func take_damage(amount: int, source: Node = null, ignore_iframes := false) -> bool:
-	if is_dead() or (is_invincible() and not ignore_iframes):
+	if is_dead() or is_inf(invincible_time) or (is_invincible() and not ignore_iframes):
 		return false
 	if defense > 0 and amount > 0:
 		amount = maxi(1, roundi(amount * (1.0 - 0.05 * defense)))

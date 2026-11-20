@@ -113,7 +113,7 @@ objective = "Q_MQ4_S14_OBJ"
 on = "area_cleared:kidul_karang_2"
 set_flag = "mq4_5b"
 recap = "Q_MQ4_S14_DONE"
-marker = {"zone": "sk_karang", "id": "kidul_karang_3"}
+marker = {"zone": "sk_karang", "id": "kidul_karang_2"}
 
 [sub_resource type="Resource" id="s15"]
 script = ExtResource("2")
@@ -161,7 +161,7 @@ objective = "Q_MQ4_S20_OBJ"
 on = "petilasan_activated:kidul_2"
 set_flag = "mq4_7"
 recap = "Q_MQ4_S20_DONE"
-marker = {"zone": "sk_karang", "id": "causeway_post"}
+marker = {"zone": "sk_keraton", "id": "kidul_2"}
 
 [sub_resource type="Resource" id="s21"]
 script = ExtResource("2")

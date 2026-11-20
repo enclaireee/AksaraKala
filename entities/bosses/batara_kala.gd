@@ -48,7 +48,7 @@ const HEAVY := ["pulse", "hands", "meteor", "beams", "stop", "ruwatan"]
 @export var countdown_p3 := 20.0       # TUNE
 @export var devour_time := 2.0         # TUNE: the red ring fills the arena
 @export var devour_damage := 60        # TUNE, heavy
-@export var arena_radius := 176.0      # TUNE
+@export var arena_radius := 500.0      # TUNE (SCALE=2)
 @export var wind_p3 := 0.7             # TUNE: wind-up multiplier in phase 3
 @export var sweep_wind := 0.6          # TUNE: each cut of the scythe sweep
 @export var sweep_arc := 1.9           # TUNE: radians
@@ -170,7 +170,7 @@ func _tick(delta: float) -> void:
 		engaged = true
 	if phase >= 2 and state != State.PAUSE:
 		if shielded:
-			health.invincible_time = 1.0e9
+			health.invincible_time = INF
 			if state != State.DEVOUR:
 				_elapsed += delta
 				if _elapsed >= _countdown():
@@ -252,7 +252,8 @@ func _tick(delta: float) -> void:
 			if state_time >= devour_time:
 				devours += 1
 				BossKit.shake(self, 3.0, 0.4)
-				_hurt(devour_damage, true)
+				if BossKit.player_point(self).distance_to(global_position) <= arena_radius + BossKit.HURT_RADIUS:
+					_hurt(devour_damage, true)
 				_new_sequence()
 				_enter(State.CHASE)
 		State.SWEEP:
@@ -448,7 +449,7 @@ func _chime_ring(gap: float) -> void:
 		var a := TAU * i / 12.0
 		if absf(angle_difference(a, gap)) <= 0.62:
 			continue
-		BossKit.shoot(self, global_position + Vector2(0, -8), a, chime_speed, chime_damage, ICE, "orb", 4.0, 3.4)
+		_owned.append(BossKit.shoot(self, global_position + Vector2(0, -8), a, chime_speed, chime_damage, ICE, "orb", 4.0, 3.4))
 
 
 func _tick_chime() -> void:
@@ -490,7 +491,7 @@ func _begin_blades(beams: bool) -> void:
 	else:
 		_sw_n = 3 if phase >= 3 else 2
 		_sw_off = TAU / 3.0 if phase >= 3 else 2.4
-		_sw_len = 140.0
+		_sw_len = arena_radius * 0.8
 		_sw_w = 8.0
 		_sw_inner = 22.0
 		_sw_omega = 1.6 if phase >= 3 else 1.3
@@ -630,7 +631,7 @@ func _tick_stop() -> void:
 		BossKit.flash_fx(self, global_position, 120.0, 0.3, Color(1, 1, 1))
 		BossKit.shake(self, 2.5, 0.3)
 	if _step >= 1 and _step <= waves and state_time >= stop_hold + 0.3 * (_step - 1):
-		BossKit.wave(self, global_position, 126.0, 110.0, stop_damage, ICE, false)
+		_owned.append(BossKit.wave(self, global_position, 126.0, 110.0, stop_damage, ICE, false))
 		_step += 1
 	if _step > waves and state_time >= stop_hold + 0.3 * waves + 0.3:
 		_enter(State.RECOVER)
@@ -810,7 +811,7 @@ func _crack_ok(p: Vector2) -> bool:
 func _raise_shield() -> void:
 	shielded = true
 	_elapsed = 0.0
-	health.invincible_time = 1.0e9   # Health refuses damage while invincible: the cleanest block
+	health.invincible_time = INF   # Health refuses damage while invincible: the cleanest block
 	_new_sequence()
 	if _shield == null:
 		_shield = BossKit.decal(self, 18.0, Color(0.6, 0.8, 1.0, 0.35))

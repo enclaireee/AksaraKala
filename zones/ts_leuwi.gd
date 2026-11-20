@@ -46,7 +46,7 @@ const SPOTS := {
 	"n": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "ne"}, "tile": "."},   # oncor NE
 	"p": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "sw"}, "tile": "."},   # oncor SW
 	"s": {"scene": "res://entities/bosses/oncor.tscn", "props": {"oncor_id": "se"}, "tile": "."},   # oncor SE
-	"j": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sande_room", "size": Vector2i(21,10)}, "tile": "."},   # trigger, Sandekala room entered (starts darkening)
+	"j": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sande_room", "size": Vector2i(21,10), "cond": "flag:mq1_h3"}, "tile": "."},   # trigger, Sandekala room entered (starts darkening)
 	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "leuwi_mother"}, "tile": "."},   # NPC the mother who calls her son's name into the trees (MQ1 1.6 `talked_to:leuwi_mother`; she lights her oncor again after Sandekala)
 	"h": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "sunda_hamlet", "size": Vector2i(10,7)}, "tile": ","},   # trigger, the gorge-side hamlet entered at dusk (MQ1 1.5 `area_entered:sunda_hamlet`, plays `hamlet_hook`)
 	"1": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "sandal"}, "tile": "."},   # clue, the boy's sandal at the river's edge (MQ1 1.6 K1 clue 1)

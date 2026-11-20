@@ -26,9 +26,9 @@ color = Color(0.34, 0.71, 0.91, 1)
 polygon = PackedVector2Array(-2, -20, 2, -20, 0, -25)
 
 [node name="Prompt" type="Label" parent="."]
-offset_left = -16.0
+offset_left = -48.0
 offset_top = -38.0
-offset_right = 16.0
+offset_right = 48.0
 offset_bottom = -24.0
-text = "[E] Rest"
+text = ""
 horizontal_alignment = 1

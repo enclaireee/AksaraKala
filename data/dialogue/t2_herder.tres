@@ -10,6 +10,6 @@ entries = Array[Dictionary]([
 	{"if": ["quest:sq_t2=done"], "lines": ["DLG_T2_HERDER_V20"], "do": []},
 	{"if": ["step:sq_t2=3"], "lines": ["DLG_T2_HERDER_V20", "DLG_T2_HERDER_V21"], "do": []},
 	{"if": ["quest:sq_t2=active"], "lines": ["DLG_T2_HERDER_V22"], "do": []},
-	{"if": ["flag:mq3_1"], "lines": ["DLG_T2_HERDER_V23", "DLG_T2_HERDER_V24", "DLG_T2_HERDER_V25"], "do": ["start:sq_t2"]},
+	{"if": ["quest:sq_t2=available", "flag:mq3_1"], "lines": ["DLG_T2_HERDER_V23", "DLG_T2_HERDER_V24", "DLG_T2_HERDER_V25"], "do": ["start:sq_t2"]},
 	{"if": [], "lines": ["DLG_T2_HERDER_V26"], "do": []}
 ])

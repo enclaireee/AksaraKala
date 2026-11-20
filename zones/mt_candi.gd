@@ -30,11 +30,11 @@ const MAP := [
 	"#..........................z.,P,.L................,,.....................................#",
 	"Yy,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.D..N.............,,.....................................#",
 	"Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,.....................................#",
-	"#.............................,,,,,,,,,,K,,,,,,,,,,,..................rr.................#",
-	"#.............................,,,,,,,,,,,,,,,,,,,,,,..................rr.................#",
-	"#.................................................,,............................c........#",
-	"#.......rr........................................,,.....................................#",
-	"#.......rr........................................,,.....................................#",
+	"#.............................,,,,,,,,,,K,,,,,,,,,,,..................rr.....#######.....#",
+	"#.............................,,,,,,,,,,,,,,,,,,,,,,..................rr.....#.....#.....#",
+	"#.................................................,,.........................q..c..#.....#",
+	"#.......rr........................................,,.........................q.....#.....#",
+	"#.......rr........................................,,.........................#######.....#",
 	"#.................................................,,.....................................#",
 	"#...................rr............................,,....A................................#",
 	"#...................rr............................,,.....................................#",
@@ -67,7 +67,8 @@ const SPOTS := {
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_camp", "cond": "flag:mq2_6,!flag:mq2_7", "size": Vector2i(30,16), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(0,4)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(0,-6)]], [["res://entities/enemies/faceless.tscn", Vector2i(-8,2)], ["res://entities/enemies/faceless.tscn", Vector2i(8,2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(-4,-6)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-6)]]]}, "tile": ","},   # encounter mataram_camp (**setpiece**, 2.14: the Pamali stone wakes; hold the court until the seal cracks, MQ2 2.14; cond ends at `mq2_7`, so the boss arena is clean for 2.19)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_candi", "size": Vector2i(28,16), "waves": [[["res://entities/enemies/genderuwo.tscn", Vector2i(8,-4)], ["res://entities/enemies/arca.tscn", Vector2i(-12,-5)], ["res://entities/enemies/arca.tscn", Vector2i(12,-5)]], [["res://entities/enemies/tuyul.tscn", Vector2i(0,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,0)], ["res://entities/enemies/tuyul.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter mataram_candi
 	"s": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "batu_bintang"}, "tile": "."},   # pickup, batu bintang (SQ-T3 meteorite fragment)
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_candi", "item_id": "tongkat_genta"}, "tile": "."},   # chest: class gear `tongkat_genta`, a second path gets its sibling (ASSUMED)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_candi", "item_id": "tongkat_genta"}, "tile": "."},   # chest: class gear `tongkat_genta`, sealed in the walled crypt cache behind kabut `q` until LC3 (a second path gets its sibling, ASSUMED)
+	"q": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "laras_key:candi_crypt"}, "tile": "."},   # kabut, Laras's crypt cache gate in front of chest `c` (lifts on `laras_key:candi_crypt`, LC3)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_camp", "size": Vector2i(12,6)}, "tile": ","},   # trigger, beat `camp` staging (plays when `flag:mq2_7`, `zone:mt_candi`; the cleared camp, Laras's lontar strip)
 	"A": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "hauler"}, "tile": "."},   # NPC bound hauler at the temple gate (2.14 `talk`; unnamed, says where the prisoners are held)
 	"C": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "rubble"}, "tile": "."},   # clue, rubble with fresh chisel marks and spirit hand-prints (2.15 K3, 1 of 3)

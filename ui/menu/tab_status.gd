@@ -76,13 +76,13 @@ func build(l: Control, r: Control) -> void:
 	lv.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	put(l, lv, Vector2(0, 70), Vector2(44, 10))
 	# play time, top right (balances the seal)
-	put(l, MenuBook.pic("book_ic_time", Vector2.ZERO), Vector2(173, 32))
+	put(l, MenuBook.pic("book_ic_time", Vector2.ZERO), Vector2(165, 32))
 	_time = MenuBook.num("", MenuBook.INK, 10)
 	_time.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	put(l, _time, Vector2(156, 46), Vector2(44, 12))
+	put(l, _time, Vector2(148, 46), Vector2(44, 12))
 	var tl := MenuBook.bold(tr("UI_BK_TIME"), MenuBook.INK_HEAD)
 	tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	put(l, tl, Vector2(156, 70), Vector2(44, 10))
+	put(l, tl, Vector2(136, 70), Vector2(64, 10))   # 64 wide: PLAY TIME in Pixeloid caps stays on the page
 	# Ilmu: label, value, bar, status line
 	put(l, MenuBook.pic("book_ic_ilmu", Vector2.ZERO), Vector2(0, 170))
 	put(l, MenuBook.bold(tr("UI_BK_ILMU"), MenuBook.INK_HEAD), Vector2(14, 168), Vector2(80, 12))

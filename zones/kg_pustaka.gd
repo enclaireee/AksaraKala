@@ -3,8 +3,8 @@ extends Zone
 
 const MAP := [
 	"#############################NN#############################",
+	"#.................#_________#KK#_________#.................#",
 	"#.................#__________n___________#.................#",
-	"#.................#______________________#.................#",
 	"#.................#______________________#.................#",
 	"#...bbb...........#___________________c__#..........bbb....#",
 	"#...bbb...........#______Q_______R_______#..........bbb....#",
@@ -44,6 +44,7 @@ const SPOTS := {
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_kaputren", "spawn_id": "from_kg_pustaka"}, "tile": ","},   # exit to kg_kaputren (south edge, 2 tiles)
 	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_kaputren"}, "tile": ","},   # spawn, arrival from kg_kaputren
 	"N": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_keraton", "spawn_id": "from_kg_pustaka"}, "tile": "_"},   # exit to kg_keraton (north edge, 2 tiles, archive grate; the link needs `laras_key:archive_grate`, set by LC2)
+	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "laras_key:archive_grate"}, "tile": "_"},   # kabut, the archive grate under the north exit (lifts on `laras_key:archive_grate`, LC2); matches `Zones.GATED_EDGES`
 	"n": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_keraton"}, "tile": "_"},   # spawn, arrival from kg_keraton
 	"G": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "pustaka_guards", "size": Vector2i(14,8), "cond": "flag:mqg_4,!flag:mqg_ar1", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-3,0)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(3,0)]]]}, "tile": "_"},   # encounter pustaka_guards, archive guards (MQG g.6, `area_cleared:pustaka_guards`)
 	"Y": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "nyai_sekar", "cond": "flag:mqg_4"}, "tile": "_"},   # NPC Nyai Sekar, royal archivist (MQG g.6 `talked_to:nyai_sekar`, sets `mqg_ar1`; hub; her closing lines after the grate, g.16)

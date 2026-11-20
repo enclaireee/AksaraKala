@@ -20,14 +20,23 @@ tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 0, 
 [node name="Stand" type="Marker2D" parent="."]
 position = Vector2(40, 136)
 
-; prop - | -> T | 
-[node name="Prop1_-" type="Marker2D" parent="."]
+; spot 1 | line 1 | narrate on walk-in
+[node name="Spot1" parent="." instance=ExtResource("3")]
 position = Vector2(168, 136)
+action_kind = "narrate"
+order = -1
+line_key = "MEM_SQ_C3_RANGA_1"
 
-; prop : | :DLG_MEM_C3_1 -> T | 
-[node name="Prop2_:" type="Marker2D" parent="."]
+; spot 2 | line 2 | narrate on walk-in
+[node name="Spot2" parent="." instance=ExtResource("3")]
 position = Vector2(296, 136)
+action_kind = "narrate"
+order = -1
+line_key = "MEM_SQ_C3_RANGA_2"
 
-; prop : | :DLG_MEM_C3_2 -> E | 
-[node name="Prop3_:" type="Marker2D" parent="."]
+; spot 3 | goal | ends the memory
+[node name="Spot3" parent="." instance=ExtResource("3")]
 position = Vector2(424, 136)
+action_kind = "goal"
+order = -1
+line_key = "MEM_SQ_C3_RANGA_3"

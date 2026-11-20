@@ -14,7 +14,7 @@ var _tween: Tween
 var _hid_far := false   # the prompt is hidden only because a nearer one is in range
 
 const KEYCAP := preload("res://assets/art/ui/keycap.png")
-const KEY_FONT := preload("res://assets/fonts/Tiny5-Regular.woff")   # body face at its 8 px grid (ui.md 1)
+const KEY_FONT := preload("res://assets/fonts/PixeloidSans.woff")   # body face at its 9 px grid (ui.md 1)
 const PILL := preload("res://assets/art/ui/ink_panel.png")
 const RISE := 3.0
 
@@ -42,7 +42,7 @@ func _ready() -> void:
 	_prompt_root.add_child(_cap)
 	_key_lbl = Label.new()
 	_key_lbl.add_theme_font_override("font", KEY_FONT)
-	_key_lbl.add_theme_font_size_override("font_size", 8)
+	_key_lbl.add_theme_font_size_override("font_size", UIFx.BODY)
 	_key_lbl.add_theme_color_override("font_color", Color("141026"))   # night letter on the light keycap
 	_key_lbl.add_theme_constant_override("outline_size", 0)
 	_key_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -51,7 +51,7 @@ func _ready() -> void:
 	_prompt_root.add_child(_key_lbl)
 	_prompt = Label.new()
 	_prompt.add_theme_font_override("font", KEY_FONT)
-	_prompt.add_theme_font_size_override("font_size", 8)
+	_prompt.add_theme_font_size_override("font_size", UIFx.BODY)
 	_prompt.add_theme_color_override("font_color", UIFx.TEXT)
 	_prompt.add_theme_constant_override("outline_size", 0)
 	_prompt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

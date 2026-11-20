@@ -42,7 +42,7 @@ const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "ts_kawah_jalan", "spawn_id": "from_ts_kawah"}, "tile": ","},   # exit to ts_kawah_jalan (east edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_ts_kawah_jalan"}, "tile": ","},   # spawn, arrival from ts_kawah_jalan
 	"B": {"scene": "res://entities/bosses/sangkuriang.tscn", "props": {"cond": "flag:mq1_8,flag:rarang_post", "finish_glyph": "sunda_ca"}, "tile": ","},   # boss Sangkuriang (MQ1 1.24), wakes once the cloth hangs on the eastern post (`rarang_post`)
-	"C": {"scene": "res://entities/bosses/faceless_captain.tscn", "props": {"finish_glyph": "sunda_ca"}, "tile": ","},   # boss Faceless captain (MQ1 1.22)
+	"C": {"scene": "res://entities/bosses/faceless_captain.tscn", "props": {"cond": "flag:mq1_lc", "finish_glyph": "sunda_ca"}, "tile": ","},   # boss Faceless captain (MQ1 1.22)
 	"Z": {"scene": "res://entities/bosses/arena_post.tscn", "props": {"post_id": "east"}, "tile": ","},   # arena post, east post (hang boeh rarang)
 	"P": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "crater_post", "size": Vector2i(3,3), "cond": "flag:laras_key_crater_post"}, "tile": ","},   # trigger, Laras's marked eastern post (MQ1 1.21/1.24 `crater_post`, gated by `laras_key:crater_post`)
 	"S": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "seal_stone", "cond": "!flag:mq1_8"}, "tile": ","},   # NPC-scene spot, the cracked seal-stone (Crater Seal); the Captain smashes it at the end of 1.22

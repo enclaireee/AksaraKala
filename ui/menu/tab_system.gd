@@ -3,6 +3,7 @@ extends MenuTab
 ## with a confirm. The regrouped layout (Tampilan scale and shake, Aksesibilitas, "Simpan & Keluar") comes later.
 
 const BUSES := GameSettings.BUSES
+const LABEL_W := 112   # slider label column; longer labels wrap, the slider fills the rest
 
 var action := ""   # "title" or "quit" while the confirm is open
 var lang_btn: Button
@@ -29,14 +30,17 @@ func build(l: Control, r: Control) -> void:
 		var row := HBoxContainer.new()
 		lv.add_child(row)
 		var lab := MenuBook.bold(tr("UI_SYS_" + b.to_upper()))
-		lab.custom_minimum_size.x = 80
+		lab.custom_minimum_size.x = LABEL_W
+		lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		row.add_child(lab)
 		var sl := HSlider.new()
 		sl.name = b
 		sl.min_value = 0
 		sl.max_value = 100
 		sl.step = 5
-		sl.custom_minimum_size = Vector2(110, 12)
+		sl.custom_minimum_size = Vector2(60, 12)
+		sl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		sl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		sl.value = load_setting("vol_" + b.to_lower(), 100)
 		sl.value_changed.connect(set_volume.bind(b))
 		row.add_child(sl)
@@ -72,6 +76,8 @@ func build(l: Control, r: Control) -> void:
 	_toggle_row(rv, "drawing_assist", func() -> void: GameSettings.set_drawing_assist(not GameSettings.drawing_assist()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_DRAW_ASSIST"), tr("UI_ON") if GameSettings.drawing_assist() else tr("UI_OFF")])
 	rv.add_child(MenuBook.section(tr("UI_BK_GAME")))
+	_toggle_row(rv, "check_updates", func() -> void: GameSettings.set_check_updates(not GameSettings.check_updates()), func() -> String:
+		return "%s: %s" % [tr("UI_SYS_UPDATES"), tr("UI_ON") if GameSettings.check_updates() else tr("UI_OFF")])
 	_button(rv, menu.close).text = tr("UI_SYS_RESUME")
 	_button(rv, ask.bind("title")).text = tr("UI_SYS_TITLE")
 	_button(rv, ask.bind("quit")).text = tr("UI_SYS_QUIT")
@@ -110,14 +116,17 @@ func _slider_row(box: Control, key: String, mn: float, mx: float, step: float, v
 	var row := HBoxContainer.new()
 	box.add_child(row)
 	var lab := MenuBook.bold(tr(key))
-	lab.custom_minimum_size.x = 88
+	lab.custom_minimum_size.x = LABEL_W
+	lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	row.add_child(lab)
 	var sl := HSlider.new()
 	sl.min_value = mn
 	sl.max_value = mx
 	sl.step = step
 	sl.value = val
-	sl.custom_minimum_size = Vector2(102, 12)
+	sl.custom_minimum_size = Vector2(60, 12)
+	sl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	sl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	sl.value_changed.connect(cb)
 	row.add_child(sl)
 
@@ -170,6 +179,8 @@ func ask(a: String) -> void:
 func _do() -> void:
 	var a := action
 	cancel()
+	if game and not game.in_memory():
+		game.save_game()
 	menu.close()
 	if a == "title":
 		get_tree().change_scene_to_file("res://ui/title.tscn")

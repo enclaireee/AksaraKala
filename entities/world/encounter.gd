@@ -11,6 +11,8 @@ const WARN := 0.5   # TUNE
 @export var waves: Array = []
 ## Game.check condition; the encounter stays off (starts nothing, draws nothing) until it holds. Empty = always on.
 @export var cond := ""
+## Seconds of warning/breather before waves 2+ spawn.
+@export var wave_pause: float = WARN
 
 var _wave := -1   # index of the wave on the field
 var _alive := 0
@@ -23,8 +25,11 @@ func _ready() -> void:
 	r.size = Vector2(size * 16)
 	$Shape.shape = r
 	body_entered.connect(_on_body_entered)
+	var game := get_node("/root/Game")
+	if area_id != "" and game.has_flag("cleared:" + area_id):
+		_started = true
 	if cond != "":
-		get_node("/root/Game").changed.connect(_on_game_changed)
+		game.changed.connect(_on_game_changed)
 
 
 ## True when the given player node is physically within this encounter's arena rect.
@@ -43,7 +48,8 @@ func _on_game_changed() -> void:
 
 
 func _on_body_entered(b: Node) -> void:
-	if not _started and b.is_in_group("player") and get_node("/root/Game").check(cond):
+	var game := get_node("/root/Game")
+	if not _started and b.is_in_group("player") and (area_id == "" or not game.has_flag("cleared:" + area_id)) and game.check(cond):
 		_started = true
 		_next.call_deferred()   # no adding bodies during the physics flush
 
@@ -51,6 +57,10 @@ func _on_body_entered(b: Node) -> void:
 func _next() -> void:
 	_wave += 1
 	if _wave >= waves.size():
+		if area_id != "":
+			var game := get_node("/root/Game")
+			game.flags["cleared:" + area_id] = true
+			game.changed.emit()
 		get_node("/root/Events").area_cleared.emit(area_id)
 		return
 	if _wave == 0:
@@ -60,7 +70,7 @@ func _next() -> void:
 	for e in waves[_wave]:
 		marks.append(_marker(position + Vector2(e[1] * 16)))
 	# A connection, not an await: it drops by itself if the zone unloads first.
-	get_tree().create_timer(WARN, false).timeout.connect(_after_warning.bind(marks))
+	get_tree().create_timer(maxf(wave_pause, 0.05), false).timeout.connect(_after_warning.bind(marks))
 
 
 func _after_warning(marks: Array[Node]) -> void:

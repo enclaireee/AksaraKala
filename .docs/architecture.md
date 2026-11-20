@@ -21,7 +21,7 @@ Configured in `project.godot`:
 ```
 res://
   main.tscn        Initial launch harness; main game entrypoint is ui/title.tscn
-  autoload/        game.gd, events.gd, zones.gd, audio.gd
+  autoload/        updater.gd, game.gd, events.gd, zones.gd, audio.gd
   components/      health, stamina, sakti_gauge, hitbox, hurtbox, hit_flash, status, recognizer
   data/            combat_tuning.gd/.tres (every combat timing, combat.md 7)
     classes/       ClassData .tres
@@ -53,6 +53,7 @@ res://
 ## 3. Autoloads
 | Name | Responsibility |
 |------|----------------|
+| `Updater` | Listed first. Boot mount of a downloaded update pack and the once-per-launch update check (13b). Exported builds only. |
 | `Game` | Run state: class, stats, Ilmu, glyphs learned, equipment, healing flask (charges, Flask Shards, Herb Pouches), last petilasan, story flags, quest state, codex unlocks. Advances quest steps on `Events` signals. Autosave and load, one slot (JSON in `user://`, [rpg.md](rpg.md) 11) |
 | `Events` | Global signals, decouples systems. Signals as built in `autoload/events.gd`: `enemy_killed(enemy, ilmu)`, `player_died`, `rested(petilasan)`, `talked_to(npc_id)`, `item_picked(item_id)`, `boss_defeated(boss_id)`, `area_cleared(area_id)`, `area_entered(trigger_id)`, `zone_entered(zone_id)`, `petilasan_activated(id)`, `glyph_learned(id)`, `spell_cast(glyph_id, score)`, `class_chosen(class_id)`, `weakness_triggered(kind)`, `clue_examined(clue_id)`, `memory_started(memory_id)`, `memory_done(memory_id)`, `puzzle_solved(puzzle_id)`, `trial_completed(trial_id)`, `quest_started/updated/completed(id)`, `dialogue_requested(speaker_key, lines)`, `dialogue_choices(keys)`, `dialogue_picked(index)`, `dialogue_finished`, `write_requested(seq_id, glyphs)`, `name_written(seq_id)`. Quest steps match `"<signal>:<arg>"` for the signals in `Game.QUEST_SIGNALS` (`talked_to`, `item_picked`, `boss_defeated`, `area_cleared`, `area_entered`, `zone_entered`, `petilasan_activated`, `glyph_learned`, `class_chosen`, `weakness_triggered`, `name_written`, `clue_examined`, `memory_done`, `puzzle_solved`, `trial_completed`); for `enemy_killed` the arg is the enemy's `kind` ([quests.md](quests.md) 7.2). Story v5 events: `puzzle_solved:<id>` and `trial_completed:<id>` (sluice wheels, mangrove beacons, sea trials), `area_cleared:buto_ambush_<n>`, `memory_done:lc<n>` |
 | `Zones` | Zone loading (`go_to`, `respawn`, `next_zone`), fade transitions, spawn points, the `ZONES`, `ADJ`, `SHORTCUTS` and `DROPS` tables, Kelir memories (`enter_memory`, `exit_memory`, `memory_path`). Killed minibosses/bosses and opened gates live in `Game` so they are saved |
@@ -60,7 +61,7 @@ res://
 
 **Flags (Story v5).** `Game.flags` is a dictionary of `name -> true`, read with `Game.has_flag(name)` and set with `Game.set_flag(name)` (the dialogue action `flag:<name>`; conditions `flag:`, `glyph:`, `item:`, `quest:<id>=<state>`, `step:<id>=<n>`, `zone:<area>`, joined with commas, `!` negates). Flag families: `choice_*` (the six Major Choices: `choice_tell_ciung` / `choice_keep_secret`, `choice_freed` / `choice_handed`, `choice_mercy` / `choice_judgment`, `choice_reforge` / `choice_sink`, `choice_offer_memory` / `choice_offer_song`, `choice_redeem_aria` / `choice_release_aria`), `clue_<id>`, `memory_<id>`, `puzzle_<id>`, `post:<id>`, `lakon:<id>`, `seen_name_<npc>`, and the cross-time Laras flags. `Game.LARAS_FLAGS` sets them when `LC1`-`LC6` finish: `laras_key:crater_post`, `archive_grate`, `candi_crypt`, `sand_tunnel`, `tidal_gate` and `laras_sabotage:crater_seal`, `glamour_seal`, `bondowoso_pillar`, `keris_seventh_stake`, `kala_eclipse`. Each is stored in both spellings (`laras_key:x` and `laras_key_x`) and `has_flag` accepts either. Boss and gate scripts read them, e.g. `batara_kala.gd` checks `choice_redeem_aria` and `player.gd` checks `choice_release_aria`.
 
-Keep the list short (4). No further autoloads without a reason.
+Keep the list short (5). No further autoloads without a reason. `Updater` is one because it must run before `Game` loads anything from the pack.
 
 ## 4. Data-driven resources
 Custom `Resource` types so adding content is data entry:
@@ -138,6 +139,14 @@ Custom `Resource` types so adding content is data entry:
     - stall goods that fill `{`, plus fences and gardens drawn on `-` and `'`
     Density is about 6-10 living things per screen in a town.
   - **Ground.** Tiles have several variants per ground type, soft transitions between grass, path, dirt and water, and decals (worn tracks, puddles, leaves), so no 3x3 area of ground repeats.
+- **Foolproofing pass (2026-11-20, ASSUMED, numbers TUNE).**
+  - Fast travel: the Map tab lists every zone in `Zones.PETILASANS` whose shrine is lit (flag `petilasan:<id>`, set on rest). `Zones.fast_travel(zone)` lands on spawn `petilasan:<id>` and is refused while `Zones.sealed`, mid-fade or inside a Kelir memory.
+  - Objective routing: `Zones.next_zone` skips a directed edge in `Zones.GATED_EDGES` until its flag holds. That dict is a hand copy of the kabut gates, so `tests/foolproofing_test.gd` checks each entry against a kabut with the same `flag` in the source zone.
+  - Exit signs: `exit.gd` labels each exit with an ASCII arrow (`< > ^ v`, kept ASCII from the Tiny5 days) and the destination's name.
+  - Encounters with an `area_id` set `cleared:<id>` when done and never restart. Their region-doc `cond` also carries `!flag:cleared:<id>` where a marker or gate reads it. `wave_pause` (default 0.5 s) is the warning before waves 2+. The Kidul trial uses 20 s.
+  - `Health.invincible_time = INF` is phase invulnerability. Burn and other `ignore_iframes` damage cannot pierce it.
+  - `BossKit.clamp_arena_pos` keeps boss teleports, leaps and copies inside the layer-1 walls.
+  - `tools/quest_audit.py` Q13–Q15 check dialogue `start:` guards, `CHOICE_*` keys leaking into lines, and that every Kelir memory has a `MemorySpot`.
 - Interiors (`_` floor areas such as the keraton rooms) keep straight walls and get furniture props instead of trees.
 - Boss and elite scenes are referenced by path and loaded at runtime, so a zone imports cleanly before its boss exists.
 - Persistent state (killed bosses, opened fog gates, chests) lives in `Game`, not in the scene.
@@ -205,7 +214,7 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 - Field Book Menu (`ui/menu.gd`, `ui/menu/menu_book.gd`): 7 tabs (Diri/Status, Perlengkapan/Equipment, Catatan/Journal, Peta/Map, Pustaka/Codex, Penuntun/Controls, Sistem/Settings).
 - Peta / Map System: Illustrated world map with fog of war (`tools/gen_map_art.py`, `map_world.png`, `map_fog_*.png`) and dynamic painted area map (`MapRender.painted()`). Toggled instantly via the `M` key or menu Tab 4.
 - Launch Intro (`ui/intro.tscn`): 10 s wordless cinematic storm-and-dawn sequence.
-- Typography & Theme: `ui/theme.tres` with pixel fonts (Tiny5 8 body, Jersey 10 at 19 headings, Jersey 15 at 27 display) and the v3 dusk palette (`UIFx`). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
+- Typography & Theme: `ui/theme.tres` with pixel fonts (Pixeloid Sans 9 body, Jersey 10 at 19 headings, Jersey 15 at 27 display) and the v3 dusk palette (`UIFx`). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
 
 ## 10b. Demo mode (user call 2026-11-12, **ASSUMED**)
 A player-facing way to try any part of the story without playing up to it. The title's **Demo** card lists, per act, the start of the act, the first arrival in each area of the main route and the door of each boss (`DemoRoute.checkpoints()`, read from the main quest data, so it follows the quests when they change). A class can be picked.
@@ -234,6 +243,17 @@ A player-facing way to try any part of the story without playing up to it. The t
 - Export presets for Windows and macOS (user's machine is a Mac), Web if Compatibility renderer is used.
 - Keep `.docs/` out of the exported build.
 - Remember `.gitignore` for `.godot/` and export artifacts.
+
+## 13b. Auto-update (user call 2026-11-20, HTTPS + SHA-256 + RSA signature)
+Players get only the new game data (a `.pck`), never a new engine binary. `autoload/updater.gd`, `tests/updater_test.gd`, `tools/release_pack.py`.
+- **Active only in exported builds** (`OS.has_feature("template")`). Editor runs and headless tests never check or relaunch. Setting **Check for updates** (System tab, default on, `GameSettings.check_updates()`).
+- **Check.** Once per launch from the title screen: GET `api.github.com/repos/enclaireee/AksaraKala/releases/latest` (User-Agent `AksaraKala-updater`). Only asset URLs starting with `https://github.com/enclaireee/AksaraKala/releases/download/` are used. Downloads `AksaraKala-update.json` (64 KB cap).
+- **Manifest.** `{"version", "engine", "packs": {"macOS"|"Windows": {"file", "size", "sha256"}}, "sig"}`. `sig` is RSA PKCS#1 v1.5 over SHA-256 of `AksaraKala-update|<version>|<engine>|<Name>:<file>:<size>:<sha256>|…` (packs sorted by name). The public key is `Updater.PUBLIC_KEY`; the private key lives at `~/.aksarakala/update_key.pem`, outside the repo (`*.pem` is git-ignored). **Back it up: losing it means no player can verify a future update.**
+- **States** (title card, top right): AVAILABLE (Download / Later), DOWNLOADING (percent), READY (Restart now / Later; Later applies it on next launch), MANUAL (the release needs another engine: Open page), FAILED (Retry). Every failure is quiet and never blocks play.
+- **Download.** To `user://update/<version>-<file>.part`, capped at the signed size, then size and SHA-256 must match the signed values before the rename. Then `installed.json` records `{version, engine, file, sha256, tries, manifest}`; if it cannot be written the download counts as failed.
+- **Boot mount.** Official export templates refuse `--main-pack` (built with `disable_path_overrides`), so there is no relaunch. `Updater._init()` runs before any other autoload loads: if `installed.json` names a pack newer than the built-in version, for the same engine (`Updater.engine_id()`), whose stored manifest still verifies against `PUBLIC_KEY` and names this file and hash, with a matching SHA-256, it mounts it with `ProjectSettings.load_resource_pack(pack, true)` and sets `application/config/version` to the pack's version. Then it reloads the files the engine read before autoloads (the theme and every file in `locale/translations`) from the pack. `tries` goes up before each mount (no mount if it cannot be saved); the intro resets it (`mark_good`), so quitting during the intro is not a failed boot. After 2 failed boots the pack is deleted and its version is written to `user://update/bad.txt`, so it is never offered again. A newer full install also deletes the pack. **Restart now** starts a fresh copy of the game, which mounts the pack.
+- **Release steps.** Set `config/version` in `project.godot`, then `python3 tools/release_pack.py <version>`: it checks the key matches `PUBLIC_KEY`, exports both packs, hashes, signs, writes `build/update/AksaraKala-update.json`, and prints the `gh release create` command. It never publishes. Attach the full builds too, for new players; export them with `--export-release` (a debug template honours the test-server env below).
+- **Limits.** v1.0.0 has no updater: those players reinstall once. A pack cannot change what the engine reads at startup from the built-in `project.godot` (the autoload list, input map, layers, display, the translation file list) or `autoload/updater.gd` and the scripts it loads. A release that changes any of these bumps `Updater.BASE` first: `engine_id()` ends in `.b<BASE>`, so every older game shows MANUAL for that release and all later ones, and the player reinstalls once. A Godot engine upgrade also forces MANUAL. Debug builds only: env `AKSARAKALA_UPDATE_API` / `AKSARAKALA_UPDATE_PREFIX` point the updater at a local test server.
 
 ## 14. Technical risks
 | Risk | Mitigation |

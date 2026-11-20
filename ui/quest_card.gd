@@ -188,8 +188,9 @@ func _show(card: Dictionary) -> void:
 	var lines: PackedStringArray = card.lines
 	_body.text = "\n".join(lines)
 	_body.visible = not lines.is_empty()
-	# layout on the 2 px grid: 10 pad, caption 9, 4 gap, title 20, 6 gap, body lines (10 each), 10 pad
-	var body_h := 10.0 * lines.size() - 1.0 if not lines.is_empty() else 0.0
+	# layout on the 2 px grid: 10 pad, caption 9, 4 gap, title 20, 6 gap, body lines (UIFx.LINE each, wrapped), 10 pad
+	_body.size = Vector2(360, 0)
+	var body_h := UIFx.LINE * _body.get_line_count() - 1.0 if not lines.is_empty() else 0.0
 	var h := 10.0 + 9.0 + 4.0 + 20.0 + (6.0 + body_h if body_h > 0.0 else 0.0) + 10.0
 	var top := roundf(CENTER_Y - h / 2.0)
 	_band.position = Vector2(0, top)

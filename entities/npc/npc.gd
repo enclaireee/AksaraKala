@@ -214,13 +214,28 @@ func _draw_dot(at: Vector2) -> void:
 func interact() -> void:
 	if _busy or data == null:
 		return
-	var e: Dictionary = get_node("/root/Game").pick_entry(data.entries)   # skips topic entries
+	var game := get_node("/root/Game")
+	var e: Dictionary = game.pick_entry(data.entries)   # skips topic entries
 	if e.is_empty():
 		return
 	_busy = true
 	var ev := get_node("/root/Events")
-	await get_node("/root/Game").play(data.name_key, e, data.entries)   # lines, choices, then the actions (a hub loops its topics)
+	var lessons: Array[String] = []
+	var e_play: Dictionary = e
+	var raw_do: Array = e.get("do", [])
+	if raw_do.any(func(a: Variant) -> bool: return str(a).begins_with("lesson:")):
+		var kept: Array = []
+		for a in raw_do:
+			if str(a).begins_with("lesson:"):
+				lessons.append(str(a))
+			else:
+				kept.append(a)
+		e_play = e.duplicate()
+		e_play["do"] = kept
+	await game.play(data.name_key, e_play, data.entries)   # lines, choices, then the actions (a hub loops its topics)
 	_busy = false
 	if not (e.get("quiet", false) or e.get("hub", false) or e.has("topic")):   # a quiet entry (a refusal) does not count as the talk
 		ev.talked_to.emit(npc_id)
+	for a in lessons:
+		game.run(a)
 	_recompute()

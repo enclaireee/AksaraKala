@@ -38,19 +38,22 @@ static func tex(name: String) -> Texture2D:
 # ---------------------------------------------------------------------------------------------------------------
 # Design system v2 (ui.md 0-1). Every screen takes its type, colour and spacing from here.
 # Pixel fonts render crisp ONLY at their grid sizes; never pass any other size:
-#   BODY    Tiny5 8    cap 5, line 10   all body text, numbers, hints, dialogue, lists
-#   LABEL   Tiny5 8    CAPS + 1 px tracking, dim gold: small section labels and kickers
+#   BODY    Pixeloid Sans 9  cap 7, line 12   all body text, numbers, hints, dialogue, lists (Bold: FONT_BODY_BOLD)
+#   LABEL   Pixeloid Sans 9  CAPS + 1 px tracking, dim gold: small section labels and kickers
 #   HEAD    Jersey10 19 cap 10, line 13  screen / page / card headings, names, boss name
 #   DISPLAY Jersey15 27 cap 15, line 20  area titles, quest titles, "Fallen"; LOGO = 54
 # ---------------------------------------------------------------------------------------------------------------
-const FONT_BODY := "res://assets/fonts/Tiny5-Regular.woff"
+const FONT_BODY := "res://assets/fonts/PixeloidSans.woff"
+const FONT_BODY_BOLD := "res://assets/fonts/PixeloidSans-Bold.woff"
+const FONT_TINY := "res://assets/fonts/Tiny5-Regular.woff"   # the old body face, kept for the HUD quest tracker
+const TINY := 8         # Tiny5's pixel grid
 const FONT_HEAD := "res://assets/fonts/Jersey10-Regular.ttf"
 const FONT_DISPLAY := "res://assets/fonts/Jersey15-Regular.ttf"
-const BODY := 8
+const BODY := 9         # Pixeloid's pixel grid: 9, or 18 for a big figure
 const HEAD_SIZE := 19   # (the colour of the same name is HEAD)
 const DISPLAY := 27
 const LOGO := 54
-const LINE := 10        # body line pitch (9 px glyph box + 1 spacing)
+const LINE := 12        # body line pitch (11 px glyph box + 1 spacing)
 
 # spacing: one 4 px grid. Screen-safe margin 8, panel padding 6, gaps 2 / 4 / 8 / 16.
 const MARGIN := 8
@@ -83,12 +86,19 @@ static func _font(path: String, top := 0, bottom := 0, track := 0) -> Font:
 	return _fonts[k]
 
 
-## Tiny5: the body face for everything small.
+## Pixeloid Sans: the body face for everything small.
 static func body_font() -> Font:
 	return _font(FONT_BODY)
 
 
-## Tiny5 with 1 px tracking for CAPS labels.
+## Puts a UIFx.text label on Tiny5 8 (CAPS labels keep their 1 px tracking): the HUD quest tracker only.
+static func tiny(l: Label) -> Label:
+	l.add_theme_font_override("font", _font(FONT_TINY, 0, 0, 1 if l.uppercase else 0))
+	l.add_theme_font_size_override("font_size", TINY)
+	return l
+
+
+## Pixeloid Sans with 1 px tracking for CAPS labels.
 static func caps_font() -> Font:
 	return _font(FONT_BODY, 0, 0, 1)
 

@@ -18,8 +18,8 @@ const MAP := [
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
-	"Xe,,,,____V_____W_____________________G______________#######",
-	"X,,,,,_______________________________________________#######",
+	"Xe,,,K____V_____W_____________________G______________#######",
+	"X,,,,K_______________________________________________#######",
 	"######__________________B____________________________#######",
 	"######_______________________________________________#######",
 	"######_______________________________________________#######",
@@ -40,6 +40,7 @@ const MAP := [
 
 const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_keraton", "spawn_id": "from_kg_penjara"}, "tile": ","},   # exit to kg_keraton (west edge, 2 tiles)
+	"K": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mqg_3"}, "tile": ","},   # kabut, seals the west exit to kg_keraton until the palace is open (`mqg_3`); matches `Zones.GATED_EDGES`
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_keraton"}, "tile": ","},   # spawn, arrival from kg_keraton
 	"S": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "kg_kaputren", "spawn_id": "from_kg_penjara"}, "tile": "_"},   # exit to kg_kaputren (south edge, 2 tiles)
 	"s": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_kg_kaputren"}, "tile": "_"},   # spawn, arrival from kg_kaputren
