@@ -217,6 +217,7 @@ func quest_rewards(q: QuestData) -> Dictionary:
 	var own: String = r.get("class_items", {}).get(class_id, "")
 	if own != "":
 		r["items"] = r.get("items", []) + [own]
+	r.merge(r.get("class_rewards", {}).get(class_id, {}), true)   # per-class override, e.g. SQ-V1 gives a Dalang Ilmu, not a 2nd blencong
 	return r
 
 
@@ -475,6 +476,7 @@ func _complete(id: String) -> void:
 	var base: int = row[["S", "M", "L"].find(q.size)] if q.size in ["S", "M", "L"] else 0
 	ilmu += base * 3 / 2 if quests[id].get("resolution", "") == "fight" else base   # quests.md 3: fight +50%
 	var r := quest_rewards(q)
+	ilmu += int(r.get("ilmu", 0))
 	for item in r.get("items", []):
 		add_item(item, false)
 	if r.get("class_glyph", false):   # SQ-X1: the signature aksara of this class

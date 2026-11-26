@@ -7,6 +7,17 @@ script = ExtResource("1")
 npc_id = "kidul_sari"
 name_key = "NPC_KIDUL_SARI_NAME"
 entries = Array[Dictionary]([
-	{"if": ["!flag:kidul_sari_met"], "lines": ["DLG_KIDUL_SARI_1"], "do": ["flag:kidul_sari_met"]},
-	{"if": [], "lines": ["DLG_KIDUL_SARI_2"], "do": []}
+	{"if": ["flag:mq5_4", "flag:choice_offer_song"], "lines": ["DLG_KIDUL_SARI_V401", "@NPC_HERO_NAME", "DLG_KIDUL_SARI_H401", "@NPC_KIDUL_SARI_NAME", "DLG_KIDUL_SARI_V402"], "do": [], "quiet": true},
+	{"if": ["flag:mq5_4", "flag:choice_offer_memory"], "lines": ["DLG_KIDUL_SARI_V403", "@NPC_HERO_NAME", "DLG_KIDUL_SARI_H402", "@NPC_KIDUL_SARI_NAME", "DLG_KIDUL_SARI_V404"], "do": [], "quiet": true},
+	{"if": ["step:mq4=9", "flag:mq4_4"], "lines": ["DLG_KIDUL_SARI_V1", "DLG_KIDUL_SARI_V2", "@NPC_HERO_NAME", "DLG_KIDUL_SARI_H1", "@NPC_KIDUL_SARI_NAME", "DLG_KIDUL_SARI_V3", "DLG_KIDUL_SARI_V4", "@NPC_HERO_NAME", "DLG_KIDUL_SARI_H2", "@NPC_KIDUL_SARI_NAME", "DLG_KIDUL_SARI_V5", "DLG_KIDUL_SARI_V6"], "do": []},
+	{"if": ["step:mq4=9", "!flag:mq4_4"], "lines": ["DLG_KIDUL_SARI_V7"], "do": [], "quiet": true},
+	{"if": ["step:mq4=12"], "lines": ["DLG_KIDUL_SARI_V8", "DLG_KIDUL_SARI_V9", "@NPC_HERO_NAME", "DLG_KIDUL_SARI_H3", "@NPC_KIDUL_SARI_NAME", "DLG_KIDUL_SARI_V10"], "do": [], "quiet": true},
+	{"if": ["step:mq4=16"], "lines": ["DLG_KIDUL_SARI_V11", "DLG_KIDUL_SARI_V12", "@NPC_HERO_NAME", "DLG_KIDUL_SARI_H4", "@NPC_KIDUL_SARI_NAME", "DLG_KIDUL_SARI_V13"], "do": [], "quiet": true},
+	{"if": ["flag:mq4_8"], "lines": ["DLG_KIDUL_SARI_V14", "DLG_KIDUL_SARI_V15"], "do": [], "quiet": true},
+	{"if": ["quest:mq4=active"], "lines": ["DLG_KIDUL_SARI_V16"], "do": [], "hub": true, "quiet": true, "choices": [{"text": "CHOICE_SARI_ASK_1", "do": ["topic:sari_grandmother"]}, {"text": "CHOICE_SARI_ASK_2", "do": ["topic:sari_diving"]}, {"text": "CHOICE_SARI_ASK_3", "do": ["topic:sari_father"]}, {"text": "CHOICE_SARI_ASK_4", "do": ["topic:sari_deep"]}, {"text": "CHOICE_SARI_LEAVE", "do": []}]},
+	{"if": [], "topic": "sari_grandmother", "quiet": true, "lines": ["DLG_KIDUL_SARI_V17", "DLG_KIDUL_SARI_V18", "DLG_KIDUL_SARI_V19"], "do": []},
+	{"if": [], "topic": "sari_diving", "quiet": true, "lines": ["DLG_KIDUL_SARI_V20", "DLG_KIDUL_SARI_V21", "DLG_KIDUL_SARI_V22"], "do": []},
+	{"if": [], "topic": "sari_father", "quiet": true, "lines": ["DLG_KIDUL_SARI_V23", "DLG_KIDUL_SARI_V24"], "do": []},
+	{"if": [], "topic": "sari_deep", "quiet": true, "lines": ["DLG_KIDUL_SARI_V301", "DLG_KIDUL_SARI_V302", "@NPC_HERO_NAME", "DLG_KIDUL_SARI_H301", "@NPC_KIDUL_SARI_NAME", "DLG_KIDUL_SARI_V303", "DLG_KIDUL_SARI_V304"], "do": []},
+	{"if": [], "lines": ["DLG_KIDUL_SARI_2"], "do": [], "quiet": true}
 ])

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "kidul_fam_wiryo"
+name_key = "NPC_KIDUL_FAM_WIRYO_NAME"
+entries = Array[Dictionary]([
+	{"if": ["!flag:kidul_fam_wiryo_met"], "lines": ["DLG_KIDUL_FAM_WIRYO_V1", "DLG_KIDUL_FAM_WIRYO_V2", "DLG_KIDUL_FAM_WIRYO_V3"], "do": ["flag:kidul_fam_wiryo_met"], "quiet": true},
+	{"if": [], "lines": ["DLG_KIDUL_FAM_WIRYO_V4"], "do": [], "hub": true, "quiet": true, "choices": [{"text": "CHOICE_KIDUL_FAM_WIRYO_ASK_1", "do": ["topic:wiryo_kin_song"]}, {"text": "CHOICE_KIDUL_FAM_WIRYO_ASK_2", "do": ["topic:wiryo_kin_dusk"]}, {"text": "CHOICE_KIDUL_FAM_WIRYO_ASK_3", "do": ["topic:wiryo_kin_bajul"]}, {"text": "CHOICE_KIDUL_FAM_WIRYO_LEAVE", "do": []}]},
+	{"if": [], "topic": "wiryo_kin_song", "quiet": true, "lines": ["DLG_KIDUL_FAM_WIRYO_V5", "DLG_KIDUL_FAM_WIRYO_V6"], "do": []},
+	{"if": [], "topic": "wiryo_kin_dusk", "quiet": true, "lines": ["DLG_KIDUL_FAM_WIRYO_V7", "@NPC_HERO_NAME", "DLG_KIDUL_FAM_WIRYO_H1", "@NPC_KIDUL_FAM_WIRYO_NAME", "DLG_KIDUL_FAM_WIRYO_V8"], "do": []},
+	{"if": [], "topic": "wiryo_kin_bajul", "quiet": true, "lines": ["DLG_KIDUL_FAM_WIRYO_V9", "DLG_KIDUL_FAM_WIRYO_V10", "DLG_KIDUL_FAM_WIRYO_V11"], "do": []}
+])

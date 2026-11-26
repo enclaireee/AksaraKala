@@ -504,8 +504,12 @@ func _landmarks() -> void:
 			var cells: Array[Vector2i] = []
 			var t := texture(prop)
 			var half := 0 if t == null else int(ceil(t.get_width() / 32.0))
-			for dx in range(-half, half + 1):
+			var fits := true
+			for dx in range(-half, half + 1):   # the 3x3 candidate check is narrower than a wide prop (boat)
 				cells.append(Vector2i(c.x + dx, c.y))
+				fits = fits and _ok(c.x + dx, c.y) and _gb[c.y][c.x + dx] == _ground_b
+			if not fits:
+				continue
 			_record(prop, c, cells, pos)
 			if prop in ["bones_0", "bones_1", "coral_0", "coral_1"]:
 				_flat(1, prop, c, pos)

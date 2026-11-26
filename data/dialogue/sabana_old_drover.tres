@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "sabana_old_drover"
+name_key = "NPC_SABANA_OLD_DROVER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:mq3=done"], "lines": ["DLG_SABANA_OLD_DROVER_V4", "DLG_SABANA_OLD_DROVER_V5"], "do": [], "quiet": true},
+	{"if": ["!flag:sabana_old_drover_met"], "lines": ["DLG_SABANA_OLD_DROVER_V1", "DLG_SABANA_OLD_DROVER_V2", "@NPC_HERO_NAME", "DLG_SABANA_OLD_DROVER_H1", "@NPC_SABANA_OLD_DROVER_NAME", "DLG_SABANA_OLD_DROVER_V3"], "do": ["flag:sabana_old_drover_met"], "quiet": true},
+	{"if": [], "lines": ["DLG_SABANA_OLD_DROVER_V6", "DLG_SABANA_OLD_DROVER_V7"], "do": [], "quiet": true}
+])

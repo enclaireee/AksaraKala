@@ -186,6 +186,35 @@ Boss bar names (`ui.csv`, next to the existing `BOSS_*`): BOSS_FACELESS_CAPTAIN 
 | NPC_MEMORIAL_STONE_WHO | Batu Leluhur. Menyimpan nama-nama. | The Ancestors' Stone. Keeps the names. |
 | NPC_RIRIWA_ROLL_NAME (new) | Daftar pelayan | The servants' roll |
 | NPC_NYAI_RUKMI_WHO (new) | Nyai Rukmi. Penjaga catatan. | Nyai Rukmi. Keeps the records. |
+| NPC_KULON_GATE_WATCHMAN_NAME (new) | Penjaga gerbang tua | The old gate watchman |
+| NPC_SABANA_OLD_DROVER_NAME (new) | Penggembala tua | The old drover |
+| NPC_SABANA_CAMP_COOK_NAME (new) | Juru masak perkemahan | The camp cook |
+| NPC_SABANA_WATER_WARDEN_NAME (new) | Penjaga kubangan | The waterhole warden |
+| NPC_LADANG_FARMER_NAME (new) | Petani timun | The cucumber farmer |
+| NPC_LADANG_NEIGHBOR_NAME (new) | Tetangga ladang | The farmer's neighbour |
+| NPC_PESISIR_FISHER_NAME (new) | Nelayan tanpa perahu | The boatless fisher |
+| NPC_PESISIR_SALT_RAKER_NAME (new) | Penggaruk garam | The salt raker |
+| NPC_CANDI_CARETAKER_NAME (new) | Penjaga halaman candi | The candi yard keeper |
+| NPC_KIDUL_PEMUNGUT_KARANG_NAME (new) | Pemungut kolam karang | The tide-pool gleaner |
+| NPC_KIDUL_PENJAGA_PELITA_NAME (new) | Penjaga pelita tebing | The cliff lamp keeper |
+| NPC_KIDUL_PEDAGANG_GARAM_NAME (new) | Pedagang garam dari gunung | The upland salt trader |
+| NPC_KIDUL_DAYANG_NAME (new) | Dayang berselendang hijau | The green-sashed attendant |
+| NPC_KIDUL_FAM_JALA_NAME (new) | Kepala keluarga jala | The net family's elder |
+| NPC_KIDUL_FAM_BAKUL_NAME (new) | Kepala keluarga bakul | The basket family's elder |
+| NPC_KIDUL_FAM_WIRYO_NAME (new) | Keponakan juru kunci | The juru kunci's nephew |
+| NPC_KIDUL_WARUNG_NAME (new) | Pemilik warung | The warung keeper |
+| NPC_KIDUL_PENCARI_KEPITING_NAME (new) | Pencari kepiting bakau | The mud-crab catcher |
+| NPC_KIDUL_PEMETIK_WALET_NAME (new) | Pemetik sarang walet | The swiftlet-nest gatherer |
+| NPC_NELAYAN_JALA_NAME (new) | Penambal jala | The net mender |
+| NPC_ECHO_KI_DARSA_NAME (new) | Gema Ki Darsa | Echo of Ki Darsa |
+| NPC_ECHO_GALUH_SELLER_NAME (new) | Gema penjual ayam jago | Echo of the rooster seller |
+| NPC_ECHO_SAWAH_FARMER_NAME (new) | Gema petani sawah | Echo of a rice farmer |
+| NPC_ECHO_TIMUR_EMPU_NAME (new) | Gema Mpu Wirasana | Echo of Mpu Wirasana |
+| NPC_ECHO_SUNDA_ELDER_NAME (new) | Gema sesepuh kampung | Echo of the kampung elder |
+| NPC_ECHO_KI_SUMARTO_NAME (new) | Gema Ki Sumarto | Echo of Ki Sumarto |
+| NPC_ECHO_LEUWI_MOTHER_NAME (new) | Gema Ceu Imas | Echo of Ceu Imas |
+| NPC_ECHO_KIDUL_NELAYAN_TUA_NAME (new) | Gema Pak Raka | Echo of Pak Raka |
+| NPC_ECHO_MBOK_SRINI_NAME (new) | Gema Mbok Srini | Echo of Mbok Srini |
 
 Name check: `python3 .docs/know_check.py` (Pacing 10) runs over sections 4-11 and 15. Name check exceptions: (none)
 
@@ -3796,6 +3825,291 @@ The Hunter boss's cond is `flag:mq3_h6`. He says nothing here.
 | @NPC_HARIANG_BANGA_NAME | | |
 | BEAT_HUNTER_NAME_7 | Nanti kau lihat. Naik dulu. | You'll see. Get up first. |
 
+### Act IV depth: the people on the road (v6)
+Depth pass v6 (2026-11-26, ASSUMED): late-game people and clues placed in the zone docs. Every new person is `"quiet"` unless its table says otherwise, so talking never moves a quest step.
+
+#### kulon_gate_watchman (tt_kulon; the old gate watchman east of the ruined gate; name NPC_KULON_GATE_WATCHMAN_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq3=done` (`"quiet": true`) |  |
+| B | `!flag:kulon_gate_watchman_met` (`"quiet": true`) | `flag:kulon_gate_watchman_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_KULON_GATE_WATCHMAN_NAME | | |
+| A | DLG_KULON_GATE_WATCHMAN_V4 | Semalam aku tidur tanpa mimpi api. Pertama kali sejak retakan itu. | Last night I slept without dreaming of fire. The first time since that crack. |
+| A | DLG_KULON_GATE_WATCHMAN_V5 | Dari sini terdengar palu sang Mpu. Ia menempa lagi, dan kali ini tak pura-pura tuli. | I can hear the Mpu's hammer from here. He's forging again, and this time he isn't pretending to be deaf. |
+| B | DLG_KULON_GATE_WATCHMAN_V1 | Ambanya retak tiga malam sebelum kutukan datang. Bunyinya seperti kayu basah di api, padahal itu batu. | The lintel cracked three nights before the curse came. It sounded like wet wood on a fire, and it's stone. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KULON_GATE_WATCHMAN_H1 | Kau melaporkannya? | Did you report it? |
+| B | @NPC_KULON_GATE_WATCHMAN_NAME | | |
+| B | DLG_KULON_GATE_WATCHMAN_V2 | Ke Mpu Wirasana. Ia pura-pura tak dengar. Jadi aku menggores tanda tolak bala yang diajarkan ibuku. | To Mpu Wirasana. He pretended not to hear. So I scratched the warding mark my mother taught me. |
+| B | DLG_KULON_GATE_WATCHMAN_V3 | Lihat sendiri tandanya, lalu tanyakan pada Mpu siapa yang dulu memahat amba itu. | Look at the mark yourself, then ask the Mpu who carved that lintel. |
+| C | DLG_KULON_GATE_WATCHMAN_V6 | Tiga puluh tahun aku jaga gerbang ini. Belum pernah ada yang mengetuk dari bawah tanah. | Thirty years I've kept this gate. Nobody ever knocked from under the ground before. |
+| C | DLG_KULON_GATE_WATCHMAN_V7 | Kalau tanah berguncang lagi, aku yang pertama lari ke tempat tempa. Kau yang kedua, ya. | If the ground shakes again, I'm first to the forge. You're second, all right? |
+
+#### sabana_old_drover (tt_sabana; an old drover by the burnt rings; name NPC_SABANA_OLD_DROVER_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq3=done` (`"quiet": true`) |  |
+| B | `!flag:sabana_old_drover_met` (`"quiet": true`) | `flag:sabana_old_drover_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_SABANA_OLD_DROVER_NAME | | |
+| A | DLG_SABANA_OLD_DROVER_V4 | Rumput tumbuh lagi, sudah setinggi telapak tangan. Ternak tak lagi menghindari lingkaran itu. | The grass is back, a hand high already. The herd doesn't shy from the rings anymore. |
+| A | DLG_SABANA_OLD_DROVER_V5 | Anak sapiku bersih. Entah karena lumpur, entah karena kau. Kubilang saja karena kau. | My calf is clean. Either the mud did it or you did. I'll say it was you. |
+| B | DLG_SABANA_OLD_DROVER_V1 | Rumput di sini terbakar sendiri, membentuk lingkaran. Tak ada api, tak ada asap. Cuma abu. | The grass here burnt by itself, in rings. No fire, no smoke. Just ash. |
+| B | DLG_SABANA_OLD_DROVER_V2 | Anak sapiku yang paling kecil bangun dengan tanda merah di pinggulnya. Bukan capku. | My smallest calf woke with a red mark on its hip. Not my brand. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_SABANA_OLD_DROVER_H1 | Kau yakin? | Are you sure? |
+| B | @NPC_SABANA_OLD_DROVER_NAME | | |
+| B | DLG_SABANA_OLD_DROVER_V3 | Capku masih tergantung di pagar. Bandingkan sendiri kalau tak percaya pada orang tua. | My branding iron still hangs on the fence. Compare them yourself if you don't trust an old man. |
+| C | DLG_SABANA_OLD_DROVER_V6 | Penggembala dihitung dari ternaknya, bukan dari umurnya. Hitunganku sedang buruk. | A drover is counted by his herd, not his years. My count is poor right now. |
+| C | DLG_SABANA_OLD_DROVER_V7 | Lapar? Juru masak perkemahan masih menyimpan nasi. Bilang saja aku yang menyuruh. | Hungry? The camp cook still has rice put by. Say I sent you. |
+
+#### sabana_camp_cook (tt_sabana; the herders' camp cook; name NPC_SABANA_CAMP_COOK_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq3=done` (`"quiet": true`) |  |
+| B | `!flag:sabana_camp_cook_met` (`"quiet": true`) | `flag:sabana_camp_cook_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_SABANA_CAMP_COOK_NAME | | |
+| A | DLG_SABANA_CAMP_COOK_V4 | Para gembala makan dua piring lagi. Itu tanda paling jujur bahwa dunia membaik. | The herders are eating two plates again. That's the most honest sign the world is mending. |
+| A | DLG_SABANA_CAMP_COOK_V5 | Penjaga kubangan bilang hitungannya naik terus. Aku masak lebih banyak sejak itu. | The warden says the count keeps rising. I've been cooking more since. |
+| B | DLG_SABANA_CAMP_COOK_V1 | Makan dulu, baru bicara. Itu aturan perkemahan ini, dan aku yang membuatnya. | Eat first, talk after. That's the rule of this camp, and I made it. |
+| B | DLG_SABANA_CAMP_COOK_V2 | Semua kabar lewat sini. Raksasa hijau, keris terbang, ladang timun yang mati dalam semalam. | Every rumour passes this pot. A green giant, a flying keris, a cucumber field dead overnight. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_SABANA_CAMP_COOK_H1 | Mana yang benar? | Which ones are true? |
+| B | @NPC_SABANA_CAMP_COOK_NAME | | |
+| B | DLG_SABANA_CAMP_COOK_V3 | Separuhnya bohong, separuhnya lebih buruk. Yang pasti, ternak berbalik di kubangan. Tanya penjaganya. | Half are lies and half are worse. What I know is the herd turned back at the waterhole. Ask its warden. |
+| C | DLG_SABANA_CAMP_COOK_V6 | Sejak hujan abu, tak ada garam dan terasi dari pesisir. Masakanku jadi sedih. | Since the ash fell, no salt or terasi comes up from the coast. My cooking has gone sad. |
+| C | DLG_SABANA_CAMP_COOK_V7 | Kalau kau ke pesisir, tanya penggaruk garam kenapa garamnya kelabu. | If you go to the coast, ask the salt raker why the salt's gone grey. |
+
+#### sabana_water_warden (tt_sabana; keeps the waterhole and counts who drinks; name NPC_SABANA_WATER_WARDEN_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq3=done` (`"quiet": true`) |  |
+| B | `!flag:sabana_water_warden_met` (`"quiet": true`) | `flag:sabana_water_warden_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_SABANA_WATER_WARDEN_NAME | | |
+| A | DLG_SABANA_WATER_WARDEN_V4 | Tiga ratus dua belas ekor minum kemarin. Seminggu lalu tak sampai seratus. | Three hundred and twelve head drank yesterday. A week ago it was under a hundred. |
+| A | DLG_SABANA_WATER_WARDEN_V5 | Tenang, kau tak kuhitung. Kau bukan ternak, meski minummu banyak. | Don't worry, I won't count you. You're not livestock, though you drink like it. |
+| B | DLG_SABANA_WATER_WARDEN_V1 | Jangan injak tepi lumpurnya. Di situ aku membaca jejak, dan kakimu menghapus kalimatku. | Don't tread the mud edge. That's where I read tracks, and your feet are rubbing out my sentences. |
+| B | DLG_SABANA_WATER_WARDEN_V2 | Tiap pagi kusaring daunnya dan kuhitung yang minum. Sapi, kerbau, rusa. Kadang macan tutul. | Every morning I skim the leaves and count who drinks. Cattle, buffalo, deer. Sometimes a leopard. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_SABANA_WATER_WARDEN_H1 | Lalu apa yang berubah? | So what changed? |
+| B | @NPC_SABANA_WATER_WARDEN_NAME | | |
+| B | DLG_SABANA_WATER_WARDEN_V3 | Ternak mencium airnya lalu berbalik semua. Ada jejak kuku dan cincin abu. Lihat sendiri di tepi. | The herd smelled the water and every head turned back. There are hoofprints and an ash ring. Look at the edge. |
+| C | DLG_SABANA_WATER_WARDEN_V6 | Air tak bisa bohong. Kalau ia keruh, ada yang salah di hulu. | Water can't lie. If it runs cloudy, something's wrong upstream. |
+| C | DLG_SABANA_WATER_WARDEN_V7 | Parit petani timun di sebelah kering kerontang. Coba lihat ke mana airnya lari. | The cucumber grower's ditch next door is bone dry. Go and see where that water ran. |
+
+#### ladang_farmer (tt_ladang; the cucumber farmer among the dead rows; name NPC_LADANG_FARMER_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq3=done` (`"quiet": true`) |  |
+| B | `!flag:ladang_farmer_met` (`"quiet": true`) | `flag:ladang_farmer_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_LADANG_FARMER_NAME | | |
+| A | DLG_LADANG_FARMER_V4 | Tiga baris sudah kutanam ulang. Timun pertama nanti buatmu, jangan ditolak. | I've replanted three rows. The first cucumber is yours, so don't refuse it. |
+| A | DLG_LADANG_FARMER_V5 | Tetanggaku masih menyiram baris yang mati. Siapa tahu mereka cuma tidur. | My neighbour still waters the dead rows, in case they're only sleeping. |
+| B | DLG_LADANG_FARMER_V1 | Daunnya seperti kertas terbakar. Semua mati pada malam patok-patok itu muncul. | The leaves look like burnt paper. All of them died the night those stakes came up. |
+| B | DLG_LADANG_FARMER_V2 | Patoknya hangat seperti batu tungku, padahal tak ada yang menyalakan api. | The stakes are warm as hearth stones, and nobody lit a fire. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_LADANG_FARMER_H1 | Bagaimana dengan airnya? | What about the water? |
+| B | @NPC_LADANG_FARMER_NAME | | |
+| B | DLG_LADANG_FARMER_V3 | Paritku hilang. Ada alur kering melingkar di ladang. Lihat sendiri, jangan sampai tersandung. | My ditch is gone. There's a dry spiral furrow in the field. Go and look, and mind your feet. |
+| C | DLG_LADANG_FARMER_V6 | Benihku kusimpan di abu dapur. Abu yang baik menjaga, abu yang buruk menghabisi. | I keep my seed in kitchen ash. Good ash keeps things. Bad ash ends them. |
+| C | DLG_LADANG_FARMER_V7 | Mbok Srini di tepi sungai suka cerita soal benih timun emas. Tanyakan, ia senang ditanya. | Mbok Srini by the river tells of a golden cucumber seed. Ask her, she likes being asked. |
+
+#### ladang_neighbor (tt_ladang; the neighbour who carries water every evening; name NPC_LADANG_NEIGHBOR_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq3=done` (`"quiet": true`) |  |
+| B | `!flag:ladang_neighbor_met` (`"quiet": true`) | `flag:ladang_neighbor_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_LADANG_NEIGHBOR_NAME | | |
+| A | DLG_LADANG_NEIGHBOR_V5 | Raksasa itu sekarang duduk di pinggir ladang, menonton kami menanam. | The giant sits at the field's edge now, watching us plant. |
+| A | DLG_LADANG_NEIGHBOR_V6 | Ia minum dari kendiku dengan dua jari. Kendinya pecah sedikit, tapi aku tak marah. | He drinks from my jug with two fingers. It chipped a little, but I'm not cross. |
+| B | DLG_LADANG_NEIGHBOR_V1 | Tiap petang aku angkut air ke sini. Kebiasaan, meski ladangnya bukan punyaku. | I carry water here every evening. Habit, though the field isn't mine. |
+| B | DLG_LADANG_NEIGHBOR_V2 | Aku lihat raksasa hijau itu lewat. Pelan, kepala tertunduk, tak satu baris pun diinjaknya. | I saw the green giant pass. Slowly, head down, and he didn't tread a single row. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_LADANG_NEIGHBOR_H1 | Lalu patoknya? | And the stakes? |
+| B | @NPC_LADANG_NEIGHBOR_NAME | | |
+| B | DLG_LADANG_NEIGHBOR_V3 | Patok-patok itu tumbuh di belakangnya. Kutukannya yang membuntuti dia, bukan dia yang membawa. | The stakes rose behind him. The curse was following him, not the other way round. |
+| B | DLG_LADANG_NEIGHBOR_V4 | Ratna di gerbang Kulon pernah melihatnya dari dekat. Tanyakan padanya. | Ratna at the Kulon gate has seen him up close. Ask her. |
+| C | DLG_LADANG_NEIGHBOR_V7 | Dua kendi tiap petang. Satu untuk ladang, satu untuk siapa saja yang haus. | Two jugs every evening. One for the field, one for whoever's thirsty. |
+| C | DLG_LADANG_NEIGHBOR_V8 | Petani sebelah bilang sudah menyerah, tapi tiap pagi masih datang. Coba sapa. | The farmer next door swears they've given up, yet they come every morning. Go and say hello. |
+
+#### pesisir_fisher (tt_pesisir; a fisher beside a broken boat; name NPC_PESISIR_FISHER_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq3=done` (`"quiet": true`) |  |
+| B | `!flag:pesisir_fisher_met` (`"quiet": true`) | `flag:pesisir_fisher_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_PESISIR_FISHER_NAME | | |
+| A | DLG_PESISIR_FISHER_V4 | Tiga ikan, lalu lima. Seperti utang yang dibayar sedikit-sedikit. | Three fish, then five. Like a debt being paid back a little at a time. |
+| A | DLG_PESISIR_FISHER_V5 | Kata orang tua, jala yang utuh akan menemukan perahunya sendiri. Aku menunggu. | The old folk say a whole net finds its own boat. I'm waiting. |
+| B | DLG_PESISIR_FISHER_V1 | Kalau tangan berhenti bekerja, kepala mulai menghitung kerugian. Itu lebih capek dari melaut. | When the hands stop, the head starts counting losses. That's more tiring than fishing. |
+| B | DLG_PESISIR_FISHER_V2 | Perahuku pecah waktu badai abu. Lautnya tenang, tapi lambungnya retak seperti ditinju. | My boat broke in the ash storm. The sea was calm, but the hull split like it had been punched. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_PESISIR_FISHER_H1 | Jalamu juga? | Your nets too? |
+| B | @NPC_PESISIR_FISHER_NAME | | |
+| B | DLG_PESISIR_FISHER_V3 | Kosong tiap kali diangkat. Lihat bangkai perahuku: ada goresan hitungan dan tanda merah di lambung. | Empty every haul. Look at my wreck: tally cuts, and a red mark on the hull. |
+| C | DLG_PESISIR_FISHER_V6 | Bapakku bilang laut itu seperti ibu. Kalau marah, ada sebabnya. Kalau diam, lebih seram. | My father said the sea is like a mother. When she's angry there's a reason. When she's quiet, it's worse. |
+| C | DLG_PESISIR_FISHER_V7 | Penggaruk garam di ujung pantai mengeluh soal garam kelabu. Dengarkan, ia jarang bicara. | The salt raker down the shore complains of grey salt. Listen, they rarely talk. |
+
+#### pesisir_salt_raker (tt_pesisir; rakes the salt pans by the tide stone; name NPC_PESISIR_SALT_RAKER_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq3=done` (`"quiet": true`) |  |
+| B | `!flag:pesisir_salt_raker_met` (`"quiet": true`) | `flag:pesisir_salt_raker_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_PESISIR_SALT_RAKER_NAME | | |
+| A | DLG_PESISIR_SALT_RAKER_V4 | Garam putih pertama kusimpan di bumbung. Bukan untuk dijual. Untuk diingat. | I've kept the first white salt in a bamboo tube. Not to sell. To remember. |
+| A | DLG_PESISIR_SALT_RAKER_V5 | Kakiku basah lagi waktu pasang. Tak pernah kusangka aku akan rindu kaki basah. | My feet get wet at high tide again. I never thought I'd miss wet feet. |
+| B | DLG_PESISIR_SALT_RAKER_V1 | Laut tak mau naik ke petakku. Aku menggaruk lumpur, bukan garam. | The sea won't come up to my pans. I'm raking mud, not salt. |
+| B | DLG_PESISIR_SALT_RAKER_V2 | Sejak hujan abu, garamnya kelabu dan pahit. Tak ada yang mau beli, aku pun tak mau makan. | Since the ash, the salt comes up grey and bitter. Nobody will buy it, and I won't eat it. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_PESISIR_SALT_RAKER_H1 | Lautnya surut? | Has the sea drawn back? |
+| B | @NPC_PESISIR_SALT_RAKER_NAME | | |
+| B | DLG_PESISIR_SALT_RAKER_V3 | Jauh di bawah tanda lama. Kakekku menggores garis pasang di batu itu. Lihat seberapa jauh airnya pergi. | Far below the old mark. My grandfather cut the tide line on that rock. See how far the water's gone. |
+| C | DLG_PESISIR_SALT_RAKER_V6 | Garam itu laut yang ditinggal matahari. Jadi tiap butir masih ingat ombak. | Salt is the sea the sun leaves behind. Every grain still remembers a wave. |
+| C | DLG_PESISIR_SALT_RAKER_V7 | Kalau ke sabana, bilang pada juru masak: garam putih segera datang. | If you pass the savanna, tell the camp cook white salt is on its way. |
+
+#### candi_caretaker (tt_candi; sweeps the west yard and never crosses the gate; name NPC_CANDI_CARETAKER_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq3=done` (`"quiet": true`) |  |
+| B | `!flag:candi_caretaker_met` (`"quiet": true`) | `flag:candi_caretaker_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_CANDI_CARETAKER_NAME | | |
+| A | DLG_CANDI_CARETAKER_V4 | Sapu itu doa yang bisa dipegang. Halaman ini bersih lagi, dan doaku terasa lebih ringan. | A broom is a prayer you can hold. The yard's clean again, and my prayer feels lighter. |
+| A | DLG_CANDI_CARETAKER_V5 | Masih ada tempat di candi ini yang bukan untukku. Itu bukan hal buruk. | There are still places in this candi that aren't for me. That isn't a bad thing. |
+| B | DLG_CANDI_CARETAKER_V1 | Ini halaman barat Candi Gandring. Aku menyapu abu patok-patok itu, tapi patoknya tak kusentuh. | This is the west yard of Candi Gandring. I sweep the stakes' ash, but I never touch the stakes. |
+| B | DLG_CANDI_CARETAKER_V2 | Masuk dengan kaki kanan, Penulis, dan jangan menoleh ke belakang. Itu sopan santun di sini. | Step in right foot first, writer, and don't look back. That's the manners here. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_CANDI_CARETAKER_H1 | Kau pernah masuk ke dalam? | Have you been inside? |
+| B | @NPC_CANDI_CARETAKER_NAME | | |
+| B | DLG_CANDI_CARETAKER_V3 | Tak pernah lewat gerbang dalam. Penjaga menjaga pintu, bukan rumahnya. | Never past the inner gate. A caretaker keeps the door, not the house. |
+| C | DLG_CANDI_CARETAKER_V6 | Konon Keris Gandring dulu disimpan di sini. Aku cuma menyapu, jadi tak tahu benar tidaknya. | They say the Keris Gandring was kept here once. I only sweep, so I can't say if it's true. |
+| C | DLG_CANDI_CARETAKER_V7 | Kalau bertemu Mpu Wirasana, bilang penjaga halaman barat masih menyapu. | If you see Mpu Wirasana, tell him the west yard keeper still sweeps. |
+
+VERIFY: stepping into a sacred yard right foot first, and not looking back (candi_caretaker V2).
+
+#### timur_empu (v6 addition; name NPC_TIMUR_EMPU_NAME)
+The hub and its topics go after the `quest:sq_t3=active` reminder and before the idle line, so the sq_t3 entries still win. The road topic is new.
+
+| Entry | if | do |
+|-------|----|----|
+| H | `quest:mq3=active` (`"hub": true`, `"quiet": true`) |  |
+| T1 | `topic:wirasana_gandring` (`"quiet": true`) |  |
+| T2 | `topic:wirasana_seven` (`"quiet": true`) |  |
+| T3 | `topic:wirasana_ratna` (`"quiet": true`) |  |
+| T4 | `topic:wirasana_road` (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| H | @NPC_TIMUR_EMPU_NAME | | |
+| H | DLG_TIMUR_EMPU_V39 (keep) | | |
+| T1 | DLG_TIMUR_EMPU_V40 (keep) | | |
+| T1 | DLG_TIMUR_EMPU_V41 (keep) | | |
+| T1 | DLG_TIMUR_EMPU_V42 (keep) | | |
+| T2 | DLG_TIMUR_EMPU_V43 (keep) | | |
+| T2 | DLG_TIMUR_EMPU_V44 (keep) | | |
+| T2 | DLG_TIMUR_EMPU_V45 (keep) | | |
+| T3 | DLG_TIMUR_EMPU_V46 (keep) | | |
+| T3 | DLG_TIMUR_EMPU_V47 (keep) | | |
+| T3 | DLG_TIMUR_EMPU_V48 (keep) | | |
+| T4 | DLG_TIMUR_EMPU_V50 | Orang-orang di jalan? Mereka yang memikul kutukan ini, bukan aku. Aku cuma memegang kunci besinya. | The people on the road? They carry this curse, not me. I only keep the key to the iron. |
+| T4 | DLG_TIMUR_EMPU_V51 | Penjaga gerbang melihat amba retak tiga malam lebih awal. Aku pura-pura tak dengar. Itu utangku yang pertama. | The gate watchman saw the lintel crack three nights early. I pretended not to hear. That's my first debt. |
+| T4 | DLG_TIMUR_EMPU_V52 | Gembala, petani timun, nelayan, penggaruk garam. Tiap tanda merah jatuh pada orang yang tak pernah memegang keris. | Drovers, cucumber growers, a fisher, a salt raker. Every red mark falls on someone who never held a keris. |
+| T4 | DLG_TIMUR_EMPU_V53 | Kalau kau lewat, dengarkan mereka. Hitung yang hilang. Suatu hari aku harus membayar semuanya. | If you pass them, listen. Count what's lost. One day I'll have to pay all of it back. |
+
+| Key | ID | EN | do |
+|-----|----|----|----|
+| CHOICE_WIRASANA_ASK_1 (keep) | | | `topic:wirasana_gandring` |
+| CHOICE_WIRASANA_ASK_2 (keep) | | | `topic:wirasana_seven` |
+| CHOICE_WIRASANA_ASK_3 (keep) | | | `topic:wirasana_ratna` |
+| CHOICE_WIRASANA_ASK_4 | Soal orang-orang di jalan. | About the people on the road. | `topic:wirasana_road` |
+| CHOICE_WIRASANA_LEAVE (keep) | | |  |
+
+##### Act IV clues (v6)
+
+#### Clue `gerbang_lintel` (tt_kulon; the cracked lintel over the ruined gate; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_GERBANG_LINTEL_1 | Tanda tolak bala baru, digores dengan paku di atas amba yang dipahat. | A fresh warding mark, scratched with a nail over the carved lintel. |
+| CLUE_GERBANG_LINTEL_2 | Retakannya lebih tua dari tandanya. Tanda itu dibuat untuk menambal, bukan mencegah. | The crack is older than the mark. The mark was made to patch, not to prevent. |
+| CLUE_GERBANG_LINTEL_NOTE | Amba gerbang Kulon retak tiga malam sebelum kutukan. | The Kulon gate lintel cracked three nights before the curse. |
+
+#### Clue `herd_brand` (tt_sabana; the drover's iron and the calf's mark; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_HERD_BRAND_1 | Cap si penggembala berbentuk tanduk melengkung, rapi dan tua. | The drover's iron is a curled horn, neat and old. |
+| CLUE_HERD_BRAND_2 | Tanda di anak sapi merah dan bergerigi, seperti tanda di pintu-pintu. | The calf's mark is red and jagged, like the marks on the doors. |
+| CLUE_HERD_BRAND_NOTE | Tanda merah di ternak bukan cap pemiliknya. | The red mark on the herd isn't its owner's brand. |
+
+#### Clue `waterhole_hoofprints` (tt_sabana; the waterhole's mud edge; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_WATERHOLE_HOOFPRINTS_1 | Jejak kuku berhenti selangkah sebelum air, lalu berbalik. | The hoofprints stop a step short of the water, then turn back. |
+| CLUE_WATERHOLE_HOOFPRINTS_2 | Ada cincin abu mengambang di permukaan, tak terbawa angin. | A ring of ash floats on the surface, and the wind doesn't move it. |
+| CLUE_WATERHOLE_HOOFPRINTS_NOTE | Ternak menolak minum di kubangan sabana: cincin abu. | The herd refused the savanna waterhole: a ring of ash. |
+
+#### Clue `ladang_dry_furrow` (tt_ladang; a spiral furrow in the dead field; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_LADANG_DRY_FURROW_1 | Alur melingkar yang terbakar kering. Tanahnya retak seperti kulit hangus. | A spiral furrow burnt dry. The soil cracks like scorched skin. |
+| CLUE_LADANG_DRY_FURROW_2 | Air parit hilang, seolah diminum dari bawah. | The ditch water is gone, as if drunk from below. |
+| CLUE_LADANG_DRY_FURROW_NOTE | Ladang timun: alur kering melingkar, air parit lenyap. | The cucumber field: a dry spiral, the ditch water gone. |
+
+#### Clue `wreck_hull_marks` (tt_pesisir; the boatless fisher's wreck; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_WRECK_HULL_MARKS_1 | Goresan hitungan di lambung, terlalu banyak untuk hitungan tangkapan. | Tally cuts on the hull, too many to be a catch count. |
+| CLUE_WRECK_HULL_MARKS_2 | Di bawahnya, tanda merah seperti di patok ladang. | Below them, a red mark like the ones on the field stakes. |
+| CLUE_WRECK_HULL_MARKS_NOTE | Bangkai perahu pesisir: goresan hitungan dan tanda merah. | The coastal wreck: tally cuts and a red mark. |
+
+#### Clue `shore_tide_line` (tt_pesisir; the salt raker's grandfather's tide stone; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_SHORE_TIDE_LINE_1 | Garis pasang lama dipahat setinggi dada di batu. Airnya jauh di bawah. | An old tide line cut chest-high in the rock. The water is far below it. |
+| CLUE_SHORE_TIDE_LINE_2 | Di antaranya pasir kering penuh cangkang mati. | Between them lies dry sand full of dead shells. |
+| CLUE_SHORE_TIDE_LINE_NOTE | Batu pasang kakek si penggaruk: laut surut jauh. | The salt raker's grandfather's tide stone: the sea has drawn far back. |
+
 ## 10. Interlude and Act V (MQ4 4.1-4.22)
 The Interlude is quiet and has no combat: the village forgets its own names, you write them back, Ibu sees three of Laras's things, the brothers eat at one table, Aria asks to be forgotten, and Semar says why he remembers. Act V is the sea: the lost song, the mangrove beacons, Laras in the dark water, the Three Sacred Trials, the cliff offering and the Trial of the Waves. Step indices are 0-based: `step:mq4=0` is 4.1, `step:mq4=8` is 4.9. Act VI starts at "### Act VI: Gua Kala" (another fragment).
 
@@ -4630,6 +4944,463 @@ Told as belief; she is never fought or touched. VERIFY the tradition of her tria
 
 (Entries S and M come before the plain entry 2; the plain lines V21-V23 are the fallback.)
 
+### Act V depth: the coast and its families (v6)
+Depth pass v6 (2026-11-26, ASSUMED): late-game people and clues placed in the zone docs. Every new person is `"quiet"` unless its table says otherwise, so talking never moves a quest step.
+
+#### kidul_pemungut_karang (sk_karang; gleans the tide pools; name NPC_KIDUL_PEMUNGUT_KARANG_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| B | `!flag:kidul_pemungut_karang_met` (`"quiet": true`) | `flag:kidul_pemungut_karang_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| B | @NPC_KIDUL_PEMUNGUT_KARANG_NAME | | |
+| B | DLG_KIDUL_PEMUNGUT_KARANG_V1 | Injak yang hijau, jangan yang hitam. Yang hitam licin, dan yang licin suka menggigit pergelangan kaki. | Step on the green, not the black. Black is slick, and slick likes to bite ankles. |
+| B | DLG_KIDUL_PEMUNGUT_KARANG_V2 | Aku memungut di sini sejak pasang sampai ke pinggangku waktu kecil. Sekarang sampai ke lutut pun jarang. | I've gleaned here since the tide reached my waist as a girl. Now it barely reaches my knees. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KIDUL_PEMUNGUT_KARANG_H1 | Bagaimana tahu airnya datang? | How do you know when the water's coming? |
+| B | @NPC_KIDUL_PEMUNGUT_KARANG_NAME | | |
+| B | DLG_KIDUL_PEMUNGUT_KARANG_V3 | Kalau kepiting naik ke batu tinggi, air datang. Mereka lebih pintar dari kita soal itu. | When the crabs climb the high rocks, water's coming. They're smarter than us about that. |
+| B | DLG_KIDUL_PEMUNGUT_KARANG_V4 | Soal arus, tanya Sari. Anak itu bisa mendengar laut dari bawah. | For currents, ask Sari. That girl hears the sea from underneath. |
+| C | DLG_KIDUL_PEMUNGUT_KARANG_V5 | Ambil semuanya, dan laut lupa jalan pulang ke kolam ini. Sisakan separuh. | Take everything and the sea forgets the way back to this pool. Leave half. |
+| C | DLG_KIDUL_PEMUNGUT_KARANG_V6 | Jangan hitung ombaknya. Hitung saja langkahmu kembali ke pasir. Lalu tanya Sari soal arus. | Don't count the waves. Count your steps back to the sand, then ask Sari about the currents. |
+
+#### kidul_penjaga_pelita (sk_tebing; trims the cliff lamp at dusk; name NPC_KIDUL_PENJAGA_PELITA_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| B | `!flag:kidul_penjaga_pelita_met` (`"quiet": true`) | `flag:kidul_penjaga_pelita_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| B | @NPC_KIDUL_PENJAGA_PELITA_NAME | | |
+| B | DLG_KIDUL_PENJAGA_PELITA_V1 | Sumbu dipotong miring, biar apinya tegak. Itu satu-satunya ilmu yang kupunya. | Trim the wick at a slant so the flame stands straight. That's the only learning I have. |
+| B | DLG_KIDUL_PENJAGA_PELITA_V2 | Tiap senja aku naik ke sini. Pelita ini untuk yang di laut, yang pulang dan yang tidak. | Every dusk I climb up here. The lamp is for those at sea, the ones coming home and the ones not. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KIDUL_PENJAGA_PELITA_H1 | Kain hijau di pegangan tangga itu? | The green cloth on the stair rail? |
+| B | @NPC_KIDUL_PENJAGA_PELITA_NAME | | |
+| B | DLG_KIDUL_PENJAGA_PELITA_V3 | Diikat banyak tangan, banyak doa. Baca saja, jangan dilepas. | Tied by many hands, for many prayers. Read them, but don't untie them. |
+| C | DLG_KIDUL_PENJAGA_PELITA_V4 | Mbah Wiryo memegang kunci tempat ini, tapi tiap senja ia di pantai, memanggil nama. | Mbah Wiryo holds the keys to this place, but every dusk he's on the beach, calling a name. |
+| C | DLG_KIDUL_PENJAGA_PELITA_V5 | Ada pedagang garam dari gunung beristirahat di jalan barat. Ia butuh teman bicara. | An upland salt trader is resting on the west road. They could use someone to talk to. |
+
+VERIFY: shrine cloth and shell charms tied on a sacred stair rail, never untied (kidul_penjaga_pelita V4, clue tebing_stair_rail).
+
+#### kidul_pedagang_garam (sk_tebing; an upland salt trader resting on the west road; name NPC_KIDUL_PEDAGANG_GARAM_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| B | `!flag:kidul_pedagang_garam_met` (`"quiet": true`) | `flag:kidul_pedagang_garam_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| B | @NPC_KIDUL_PEDAGANG_GARAM_NAME | | |
+| B | DLG_KIDUL_PEDAGANG_GARAM_V1 | Punten. Maaf, kakiku masih basah dari menyeberang danau tiga hari lalu. | Punten. Sorry, my feet are still wet from crossing the lake three days ago. |
+| B | DLG_KIDUL_PEDAGANG_GARAM_V2 | Gula aren dan kain kubawa turun, garam kubawa naik. Begitu sejak kakekku. | Palm sugar and cloth go down, salt comes back up. That's how it's been since my grandfather. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KIDUL_PEDAGANG_GARAM_H1 | Jalannya aman? | Is the road safe? |
+| B | @NPC_KIDUL_PEDAGANG_GARAM_NAME | | |
+| B | DLG_KIDUL_PEDAGANG_GARAM_V3 | Aman, asal jangan berjalan waktu sandekala. Di sini lain lagi: jangan berbaju hijau di tepi laut. | Safe, if you don't walk at sandekala. Here it's different: don't wear green by the sea. |
+| B | DLG_KIDUL_PEDAGANG_GARAM_V4 | Desa ini masih menggarami cara lama. Lihat para-paranya di dekat rumah-rumah. | This village still salts the old way. Look at the drying racks by the houses. |
+| C | DLG_KIDUL_PEDAGANG_GARAM_V5 | Garam pesisir timur kelabu sejak hujan abu. Di sini masih putih, syukurlah. | East-coast salt has been grey since the ash. Here it's still white, thank goodness. |
+| C | DLG_KIDUL_PEDAGANG_GARAM_V6 | Kalau kau lewat danau, bilang pada mereka: ada pedagang yang masih ingat jalan pulang. | If you pass the lake, tell them a trader still remembers the way home. |
+
+VERIFY: 'punten' as a Sundanese courtesy word (kidul_pedagang_garam V1).
+
+VERIFY: the belief that one should not wear green by the south sea (kidul_pedagang_garam V3, kidul_dayang V5).
+
+#### kidul_dayang (sk_keraton; a green-sashed attendant who sweeps and changes the flowers; name NPC_KIDUL_DAYANG_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| B | `!flag:kidul_dayang_met` (`"quiet": true`) | `flag:kidul_dayang_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| B | @NPC_KIDUL_DAYANG_NAME | | |
+| B | DLG_KIDUL_DAYANG_V1 | Pelan-pelan, Penulis. Hamba cuma menyapu dan mengganti bunga. Itu saja tugas hamba. | Softly, writer. I only sweep and change the flowers. That is all my duty. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KIDUL_DAYANG_H1 | Kau pernah melihat Beliau? | Have you seen Her? |
+| B | @NPC_KIDUL_DAYANG_NAME | | |
+| B | DLG_KIDUL_DAYANG_V2 | Lantainya basah tiap pagi, padahal tak ada hujan. Hamba tak bertanya. Hamba mengepel. | The floor is wet every morning, and there's no rain. I don't ask. I mop. |
+| B | DLG_KIDUL_DAYANG_V3 | Kalau kau perlu jawaban, tanyakan pada laut di ujung titian. Ia lebih fasih dari hamba. | If you need an answer, ask the sea at the end of the walkway. It speaks better than I do. |
+| C | DLG_KIDUL_DAYANG_V4 | Melatinya tak pernah layu, tapi tetap hamba ganti. Bunga segar itu soal sopan, bukan soal layu. | The jasmine never wilts, but I change it anyway. Fresh flowers are about manners, not wilting. |
+| C | DLG_KIDUL_DAYANG_V5 | Selendang hijau ini bukan untuk tamu, Penulis. Jangan pakai hijau di sini. Pergilah ke ujung titian. | This green sash isn't for guests, writer. Don't wear green here. Go on to the end of the walkway. |
+
+VERIFY: green as the colour kept for Kanjeng Ratu's court (kidul_dayang V5).
+
+#### kidul_fam_jala (sk_nelayan; the net family's elder, mending on the south row; name NPC_KIDUL_FAM_JALA_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq4=done` (`"quiet": true`) |  |
+| B | `!flag:kidul_fam_jala_met` (`"quiet": true`) | `flag:kidul_fam_jala_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_KIDUL_FAM_JALA_NAME | | |
+| A | DLG_KIDUL_FAM_JALA_V4 | Sejak ujian itu, anak-anak muda menyenandungkan ketiga bait sambil menambal. Aku pura-pura tak mendengar. | Since the trial, the young ones hum all three verses while they mend. I pretend I'm not listening. |
+| B | DLG_KIDUL_FAM_JALA_V1 | Ini simpul mata ikan. Keluarga kami mengikatnya begini sejak sebelum ada kampung. | This is the fish-eye knot. Our family has tied it like this since before there was a village. |
+| B | DLG_KIDUL_FAM_JALA_V2 | Kami menjaga bait pertama: Ombak datang, ombak pergi, nama kita ikut pasang. | We keep the first verse: Waves come, waves go, our names ride the tide. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KIDUL_FAM_JALA_H1 | Hanya bait pertama? | Only the first verse? |
+| B | @NPC_KIDUL_FAM_JALA_NAME | | |
+| B | DLG_KIDUL_FAM_JALA_V3 | Jala yang pertama pulang, jadi bait kami yang pertama. Lagunya setengah terlupa. Tanya keluarga bakul soal bait kedua. | The net comes home first, so our verse is first. The song's half forgotten. Ask the basket family for verse two. |
+| C | DLG_KIDUL_FAM_JALA_V5 | Jangan injak jala yang dijemur. Itu meja makan seseorang. | Don't step on a net laid out to dry. That's someone's dinner table. |
+| C | DLG_KIDUL_FAM_JALA_V6 | Tiap keluarga punya simpulnya sendiri. Dari simpulnya, kami tahu jala siapa yang hanyut. Lihat jala di jemuran. | Every family has its own knot. From the knot we know whose net washed up. Look at the nets on the poles. |
+
+#### kidul_fam_bakul (sk_nelayan; the basket family's elder, hanging squid; name NPC_KIDUL_FAM_BAKUL_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| B | `!flag:kidul_fam_bakul_met` (`"quiet": true`) | `flag:kidul_fam_bakul_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| B | @NPC_KIDUL_FAM_BAKUL_NAME | | |
+| B | DLG_KIDUL_FAM_BAKUL_V1 | Hati-hati, cumi-cuminya baru kugantung. Tinta mereka susah hilang dari baju. | Careful, I've just hung the squid. Their ink won't come out of cloth. |
+| B | DLG_KIDUL_FAM_BAKUL_V2 | Bait kedua milik kami: Perahu pulang, jala penuh, laut tak lupa siapa kita. | The second verse is ours: Boats come home, nets full, the sea forgets not who we are. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KIDUL_FAM_BAKUL_H1 | Siapa yang menjaga bait ketiga? | Who keeps the third verse? |
+| B | @NPC_KIDUL_FAM_BAKUL_NAME | | |
+| B | DLG_KIDUL_FAM_BAKUL_V3 | Keponakan juru kunci, di halaman depan rumah Mbah Wiryo. Suaranya jelek, tapi ingatannya bagus. | The juru kunci's nephew, in Mbah Wiryo's front yard. Awful voice, good memory. |
+| C | DLG_KIDUL_FAM_BAKUL_V4 | Bakul yang baik seperti hati. Rapat anyamannya, tapi masih bisa bernapas. | A good basket is like a heart. Woven tight, but it can still breathe. |
+| C | DLG_KIDUL_FAM_BAKUL_V5 | Nenek Sari lahir di keluarga kami. Anyamannya masih dipakai di dapurku. Tanya Sari soal neneknya. | Sari's grandmother was born one of ours. Her weaving's still in my kitchen. Ask Sari about her. |
+
+#### kidul_fam_wiryo (sk_nelayan; the juru kunci's nephew in Mbah Wiryo's front yard; name NPC_KIDUL_FAM_WIRYO_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `!flag:kidul_fam_wiryo_met` (`"quiet": true`) | `flag:kidul_fam_wiryo_met` |
+| H | (none) (`"hub": true`, `"quiet": true`) |  |
+| T1 | `topic:wiryo_kin_song` (`"quiet": true`) |  |
+| T2 | `topic:wiryo_kin_dusk` (`"quiet": true`) |  |
+| T3 | `topic:wiryo_kin_bajul` (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_KIDUL_FAM_WIRYO_NAME | | |
+| A | DLG_KIDUL_FAM_WIRYO_V1 | Kau penulis yang selalu diceritakan Pakde? Ia bicara soal kau seperti soal cuaca. | You're the writer Uncle keeps talking about? He talks about you like he talks about the weather. |
+| A | DLG_KIDUL_FAM_WIRYO_V2 | Bait ketiga ada di keluarga kami: Panggil nama ke air, dan air memanggil balik. | Our family keeps the third verse: Call a name into the water, and the water calls back. |
+| A | DLG_KIDUL_FAM_WIRYO_V3 | Suaraku payah. Pakde yang biasa menyanyikannya. Tanya saja soal lagunya, atau soal Pakde. | My voice is awful. Uncle's the one who sings it. Ask about the song, or about Uncle. |
+| H | DLG_KIDUL_FAM_WIRYO_V4 | Mau tahu apa? Simpul ini masih panjang jalannya. | What do you want to know? This knot has a long way to go yet. |
+| T1 | DLG_KIDUL_FAM_WIRYO_V5 | Tiga bait, tiga keluarga, tak pernah tertukar urutannya. | Three verses, three families, and never out of order. |
+| T1 | DLG_KIDUL_FAM_WIRYO_V6 | Dulu semua menyanyikannya bersama di sedekah laut. Kalau disatukan lagi, laut akan ingat. | Once everyone sang it together at the sea offering. Put it back together and the sea remembers. |
+| T2 | DLG_KIDUL_FAM_WIRYO_V7 | Tiap senja Pakde membisikkan nama Bude Sumi ke ombak. Lalu nama semua yang hilang di laut. | Every dusk Uncle whispers Aunt Sumi's name to the surf. Then the names of everyone lost at sea. |
+| T2 | @NPC_HERO_NAME | | |
+| T2 | DLG_KIDUL_FAM_WIRYO_H1 | Kau pernah ikut dengannya? | Have you gone with him? |
+| T2 | @NPC_KIDUL_FAM_WIRYO_NAME | | |
+| T2 | DLG_KIDUL_FAM_WIRYO_V8 | Sekali. Airnya menjawab terlalu mirip suara orang. Sejak itu aku menunggu di jalan. | Once. The water answered too much like a person. Since then I wait on the path. |
+| T3 | DLG_KIDUL_FAM_WIRYO_V9 | Bajul putih? Kata Pakde ia penjaga muara, bukan hantu. Anak-anak di sini diajari menyapanya, bukan melemparinya batu. | The white crocodile? Uncle says it keeps the river mouth, it's no ghost. Kids greet it here, they don't throw stones. |
+| T3 | DLG_KIDUL_FAM_WIRYO_V10 | Ada yang bilang ia utusan Kanjeng Ratu, ada yang bilang leluhur. Kata Pakde, tak perlu memilih. | Some say it's Kanjeng Ratu's messenger, some say an ancestor. Uncle says there's no need to choose. |
+| T3 | DLG_KIDUL_FAM_WIRYO_V11 | Kalau jaring robek, orang sini tak bertanya siapa yang salah. Mereka bertanya apa yang lupa dihaturkan. | When nets tear, people here don't ask who's to blame. They ask what they forgot to offer. |
+
+| Key | ID | EN | do |
+|-----|----|----|----|
+| CHOICE_KIDUL_FAM_WIRYO_ASK_1 | Soal lagu itu. | About the song. | `topic:wiryo_kin_song` |
+| CHOICE_KIDUL_FAM_WIRYO_ASK_2 | Soal Pakde di pantai. | About your uncle on the beach. | `topic:wiryo_kin_dusk` |
+| CHOICE_KIDUL_FAM_WIRYO_ASK_3 | Soal bajul putih. | About the white crocodile. | `topic:wiryo_kin_bajul` |
+| CHOICE_KIDUL_FAM_WIRYO_LEAVE | Aku jalan dulu. | I'll be going. |  |
+
+VERIFY: the white crocodile of the south coast as a river-mouth keeper, messenger or ancestor (kidul_fam_wiryo V9-V10).
+
+VERIFY: 'Pakde' and 'Bude' for an uncle and aunt older than one's parent (kidul_fam_wiryo).
+
+VERIFY: asking what offering was forgotten, not who is to blame, after a loss at sea (kidul_fam_wiryo V11).
+
+#### kidul_warung (sk_nelayan; keeps the village warung; name NPC_KIDUL_WARUNG_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| B | `!flag:kidul_warung_met` (`"quiet": true`) | `flag:kidul_warung_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| B | @NPC_KIDUL_WARUNG_NAME | | |
+| B | DLG_KIDUL_WARUNG_V1 | Teh manis, ikan goreng, dan kabar. Yang terakhir gratis, tapi tak selalu enak. | Sweet tea, fried fish, and news. The last one's free, but it isn't always tasty. |
+| B | DLG_KIDUL_WARUNG_V2 | Perahu dagang tak mau memutari tanjung lagi. Katanya ada ombak yang berdiri di sana. | The trading boats won't round the cape anymore. They say there's a wave standing up out there. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KIDUL_WARUNG_H1 | Kau percaya? | Do you believe them? |
+| B | @NPC_KIDUL_WARUNG_NAME | | |
+| B | DLG_KIDUL_WARUNG_V3 | Aku percaya siapa saja yang bayar teh. Mau kabar benar? Dengar keluarga penambal jala di deret selatan. | I believe whoever pays for their tea. Want true news? Listen to the net-mending families on the south row. |
+| C | DLG_KIDUL_WARUNG_V4 | Ikannya dari keluarga jala. Bumbunya bawang putih dan sabar. | The fish comes from the net family. The seasoning is garlic, and patience. |
+| C | DLG_KIDUL_WARUNG_V5 | Tadi Sari minta teh tanpa gula. Berarti ia gugup. Mungkin mau menyelam lagi. | Sari asked for tea without sugar earlier. That means she's nervous. Maybe she's diving again. |
+
+#### kidul_pencari_kepiting (sk_bakau; catches mud crabs among the roots; name NPC_KIDUL_PENCARI_KEPITING_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| B | `!flag:kidul_pencari_kepiting_met` (`"quiet": true`) | `flag:kidul_pencari_kepiting_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| B | @NPC_KIDUL_PENCARI_KEPITING_NAME | | |
+| B | DLG_KIDUL_PENCARI_KEPITING_V1 | Ssst. Jalan di akar, jangan di lumpur. Kepitingnya mendengar langkah lebih baik dari kita. | Shh. Walk on the roots, not the mud. The crabs hear footsteps better than we do. |
+| B | DLG_KIDUL_PENCARI_KEPITING_V2 | Aku hafal tiap alur di bakau ini. Dulu perahu ditambat sejauh ini ke dalam. Cincin besinya sudah lapuk. | I know every channel in these mangroves. Boats used to moor this far in. The iron ring's rotted now. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KIDUL_PENCARI_KEPITING_H1 | Sejauh ini? Airnya setinggi itu? | This far in? The water came that high? |
+| B | @NPC_KIDUL_PENCARI_KEPITING_NAME | | |
+| B | DLG_KIDUL_PENCARI_KEPITING_V3 | Lihat tanda airnya di batang, tinggi sekali. Kata kakek, laut pernah mundur, lalu kembali dengan marah. | Look at the water marks on the trunks, high up. Grandfather said the sea drew back once, then came back angry. |
+| B | DLG_KIDUL_PENCARI_KEPITING_V4 | Makanya bakau tak boleh ditebang. Akar-akar ini yang menahan laut waktu ia lupa sopan. | That's why nobody cuts the mangroves. These roots held the sea back when it forgot its manners. |
+| C | DLG_KIDUL_PENCARI_KEPITING_V5 | Kepiting yang bertelur kulepas lagi. Kalau semua diambil, tahun depan aku pencari lumpur. | I let the egg-bearing crabs go. Take them all and next year I'm just a mud catcher. |
+| C | DLG_KIDUL_PENCARI_KEPITING_V6 | Ke gua, ambil alur timur sebelum air naik. Alur barat menipu. | For the cave, take the east channel before the water rises. The west one lies. |
+
+#### kidul_pemetik_walet (sk_gua; gathers swiftlet nests on the cave ledges; name NPC_KIDUL_PEMETIK_WALET_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| B | `!flag:kidul_pemetik_walet_met` (`"quiet": true`) | `flag:kidul_pemetik_walet_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| B | @NPC_KIDUL_PEMETIK_WALET_NAME | | |
+| B | DLG_KIDUL_PEMETIK_WALET_V1 | Gua ini bergema dua kali. Sekali untukmu, sekali untuk entah siapa. | This cave echoes twice. Once for you, and once for who knows. |
+| B | DLG_KIDUL_PEMETIK_WALET_V2 | Sarang kuambil hanya setelah anak-anaknya terbang. Walet yang marah tak kembali. | I only take the nests after the chicks have flown. An angry swiftlet doesn't come back. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_KIDUL_PEMETIK_WALET_H1 | Seberapa tinggi airnya naik? | How high does the water rise? |
+| B | @NPC_KIDUL_PEMETIK_WALET_NAME | | |
+| B | DLG_KIDUL_PEMETIK_WALET_V3 | Tiga tingkat terbawah tenggelam tiap pasang, yang keempat cuma waktu purnama. Hafalkan itu. | The lowest three ledges flood every tide, the fourth only at full moon. Learn that by heart. |
+| B | DLG_KIDUL_PEMETIK_WALET_V4 | Di dinding barat ada noda hijau dan tanda perunggu, di tempat yang tak pernah dicapai pasang. | On the west wall there are green stains and bronze marks, where the tide never reaches. |
+| C | DLG_KIDUL_PEMETIK_WALET_V5 | Sejumput beras kutinggal di mulut gua tiap pagi. Sopan pada pemilik rumah. | I leave a pinch of rice at the cave mouth each morning. Manners, toward whoever owns the house. |
+| C | DLG_KIDUL_PEMETIK_WALET_V6 | Kadang ada bunyi lonceng di bawah air. Kalau mau turun, ajak Sari. | Sometimes there's a bell ringing under the water. If you go down, take Sari. |
+
+VERIFY: a swiftlet-nest gatherer's morning offering of rice at the cave mouth (kidul_pemetik_walet V5).
+
+#### nelayan_jala (sk_pantai; mends a net on the beach before the sea offering; name NPC_NELAYAN_JALA_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| A | `quest:mq4=done` (`"quiet": true`) |  |
+| B | `!flag:nelayan_jala_met` (`"quiet": true`) | `flag:nelayan_jala_met` |
+| C | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| A | @NPC_NELAYAN_JALA_NAME | | |
+| A | DLG_NELAYAN_JALA_V4 | Ketiga bait dinyanyikan lagi. Jalaku selesai juga, kebetulan sekali. | All three verses are sung again. My net's finished too, what a coincidence. |
+| B | DLG_NELAYAN_JALA_V1 | Selamat datang, Nak. Jala ini harus selesai sebelum sedekah laut, jadi bicaralah sambil kupegang benangnya. | Welcome, child. This net must be done before the sea offering, so talk while I hold the thread. |
+| B | DLG_NELAYAN_JALA_V2 | Tangan ingat simpulnya, mulut lupa lagunya. Ada tiga bait, sekarang cuma disenandungkan. | Hands remember the knots, mouths forget the song. There are three verses, and now we only hum them. |
+| B | @NPC_HERO_NAME | | |
+| B | DLG_NELAYAN_JALA_H1 | Siapa yang masih ingat? | Who still remembers? |
+| B | @NPC_NELAYAN_JALA_NAME | | |
+| B | DLG_NELAYAN_JALA_V3 | Mbah Wiryo, juru kunci di kampung nelayan. Kalau ia lupa, berarti lautnya juga lupa. | Mbah Wiryo, the juru kunci in the fishing village. If he's forgotten, so has the sea. |
+| C | DLG_NELAYAN_JALA_V5 | Ini simpul mati. Sekali diikat, tak bisa dibuka. Pakai hanya kalau kau yakin. | This is the dead knot. Once tied, it won't open. Use it only when you're sure. |
+| C | DLG_NELAYAN_JALA_V6 | Kalau dengar orang bersenandung, ikutlah. Lagu yang dinyanyikan bersama lebih susah hilang. | If you hear someone humming, join in. A song sung together is harder to lose. |
+
+#### kidul_sari (v6 rewrite; name NPC_KIDUL_SARI_NAME)
+The `step:mq4=9`, `flag:mq4_4` entry stays non-quiet: its talk completes mq4 step 9 with Wiryo. The old first-meeting entry (`DLG_KIDUL_SARI_1`) is replaced by the Act V slice.
+
+| Entry | if | do |
+|-------|----|----|
+| SA1 | `flag:mq5_4`, `flag:choice_offer_song` (`"quiet": true`) |  |
+| SA2 | `flag:mq5_4`, `flag:choice_offer_memory` (`"quiet": true`) |  |
+| 1 | `step:mq4=9`, `flag:mq4_4` |  |
+| 1b | `step:mq4=9`, `!flag:mq4_4` (`"quiet": true`) |  |
+| 2 | `step:mq4=12` (`"quiet": true`) |  |
+| 3 | `step:mq4=16` (`"quiet": true`) |  |
+| 4 | `flag:mq4_8` (`"quiet": true`) |  |
+| H | `quest:mq4=active` (`"hub": true`, `"quiet": true`) |  |
+| T1 | `topic:sari_grandmother` (`"quiet": true`) |  |
+| T2 | `topic:sari_diving` (`"quiet": true`) |  |
+| T3 | `topic:sari_father` (`"quiet": true`) |  |
+| T4 | `topic:sari_deep` (`"quiet": true`) |  |
+| 5 | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| SA1 | @NPC_KIDUL_SARI_NAME | | |
+| SA1 | DLG_KIDUL_SARI_V401 (keep) | | |
+| SA1 | @NPC_HERO_NAME | | |
+| SA1 | DLG_KIDUL_SARI_H401 (keep) | | |
+| SA1 | @NPC_KIDUL_SARI_NAME | | |
+| SA1 | DLG_KIDUL_SARI_V402 (keep) | | |
+| SA2 | DLG_KIDUL_SARI_V403 (keep) | | |
+| SA2 | @NPC_HERO_NAME | | |
+| SA2 | DLG_KIDUL_SARI_H402 (keep) | | |
+| SA2 | @NPC_KIDUL_SARI_NAME | | |
+| SA2 | DLG_KIDUL_SARI_V404 (keep) | | |
+| 1 | DLG_KIDUL_SARI_V1 (keep) | | |
+| 1 | DLG_KIDUL_SARI_V2 (keep) | | |
+| 1 | @NPC_HERO_NAME | | |
+| 1 | DLG_KIDUL_SARI_H1 (keep) | | |
+| 1 | @NPC_KIDUL_SARI_NAME | | |
+| 1 | DLG_KIDUL_SARI_V3 (keep) | | |
+| 1 | DLG_KIDUL_SARI_V4 (keep) | | |
+| 1 | @NPC_HERO_NAME | | |
+| 1 | DLG_KIDUL_SARI_H2 (keep) | | |
+| 1 | @NPC_KIDUL_SARI_NAME | | |
+| 1 | DLG_KIDUL_SARI_V5 (keep) | | |
+| 1 | DLG_KIDUL_SARI_V6 (keep) | | |
+| 1b | DLG_KIDUL_SARI_V7 (keep) | | |
+| 2 | DLG_KIDUL_SARI_V8 (keep) | | |
+| 2 | DLG_KIDUL_SARI_V9 (keep) | | |
+| 2 | @NPC_HERO_NAME | | |
+| 2 | DLG_KIDUL_SARI_H3 (keep) | | |
+| 2 | @NPC_KIDUL_SARI_NAME | | |
+| 2 | DLG_KIDUL_SARI_V10 (keep) | | |
+| 3 | DLG_KIDUL_SARI_V11 (keep) | | |
+| 3 | DLG_KIDUL_SARI_V12 (keep) | | |
+| 3 | @NPC_HERO_NAME | | |
+| 3 | DLG_KIDUL_SARI_H4 (keep) | | |
+| 3 | @NPC_KIDUL_SARI_NAME | | |
+| 3 | DLG_KIDUL_SARI_V13 (keep) | | |
+| 4 | DLG_KIDUL_SARI_V14 (keep) | | |
+| 4 | DLG_KIDUL_SARI_V15 (keep) | | |
+| H | DLG_KIDUL_SARI_V16 (keep) | | |
+| T1 | DLG_KIDUL_SARI_V17 (keep) | | |
+| T1 | DLG_KIDUL_SARI_V18 (keep) | | |
+| T1 | DLG_KIDUL_SARI_V19 (keep) | | |
+| T2 | DLG_KIDUL_SARI_V20 (keep) | | |
+| T2 | DLG_KIDUL_SARI_V21 (keep) | | |
+| T2 | DLG_KIDUL_SARI_V22 (keep) | | |
+| T3 | DLG_KIDUL_SARI_V23 (keep) | | |
+| T3 | DLG_KIDUL_SARI_V24 (keep) | | |
+| T4 | DLG_KIDUL_SARI_V301 | Aku takut tiap kali turun, Kak. Kata Nenek, hari kau berhenti takut, hari itu kau tinggal di pasir saja. | I'm scared every time I go down, Kak. Grandma said the day you stop being scared, you stay on the sand. |
+| T4 | DLG_KIDUL_SARI_V302 | Baca pasang dari karang. Kalau karang mulai menampakkan bahunya, air berbalik. Naiklah. | Read the tide by the reef. When the coral shows its shoulders, the water's turning. Come up. |
+| T4 | @NPC_HERO_NAME | | |
+| T4 | DLG_KIDUL_SARI_H301 | Dan suar-suar di tebing? | And the beacons on the cliff? |
+| T4 | @NPC_KIDUL_SARI_NAME | | |
+| T4 | DLG_KIDUL_SARI_V303 | Kata Nenek, suar yang menyala artinya masih ada yang menunggu di rumah. | Grandma said a lit beacon means someone at home is still waiting. |
+| T4 | DLG_KIDUL_SARI_V304 | Hehe. Hormati laut dalam, Kak, tapi jangan jadikan ia monster. Ia cuma besar, dan belum kenal kita. | Hehe. Respect the deep, Kak, but don't make it a monster. It's just big, and doesn't know us yet. |
+| 5 | DLG_KIDUL_SARI_2 (keep) | | |
+
+| Key | ID | EN | do |
+|-----|----|----|----|
+| CHOICE_SARI_ASK_1 (keep) | | | `topic:sari_grandmother` |
+| CHOICE_SARI_ASK_2 (keep) | | | `topic:sari_diving` |
+| CHOICE_SARI_ASK_3 (keep) | | | `topic:sari_father` |
+| CHOICE_SARI_ASK_4 | Soal laut dalam. | About the deep. | `topic:sari_deep` |
+| CHOICE_SARI_LEAVE (keep) | | |  |
+
+#### kidul_jurukunci (v6 rewrite; Mbah Wiryo; name NPC_WIRYO_NAME)
+The step 9 slice stays non-quiet and now carries V301-V304 and the `three_trials` codex. After Sari's half is done, a quiet V303 reminder points to her.
+
+| Entry | if | do |
+|-------|----|----|
+| WY1 | `flag:mq5_4`, `flag:choice_offer_song` (`"quiet": true`) |  |
+| WY2 | `flag:mq5_4`, `flag:choice_offer_memory` (`"quiet": true`) |  |
+| CS | `flag:mq4_8`, `flag:choice_offer_song`, `zone:sk_pantai`, `!flag:mq5_1` (`"quiet": true`) | `flag:camp_kidul` |
+| CM | `flag:mq4_8`, `flag:choice_offer_memory`, `zone:sk_pantai`, `!flag:mq5_1` (`"quiet": true`) | `flag:camp_kidul` |
+| C | `flag:mq4_8`, `zone:sk_pantai`, `!flag:mq5_1` (`"quiet": true`) | `flag:camp_kidul` |
+| D | `quest:mq4=done` |  |
+| 1b | `step:mq4=9`, `flag:mq4_4` (`"quiet": true`) |  |
+| 1 | `step:mq4=9` | `codex:nyi_roro_kidul`, `codex:three_trials` |
+| 2 | `step:mq4=10` (`"quiet": true`) |  |
+| 3 | `step:mq4=12` (`"quiet": true`) |  |
+| H | `quest:mq4=active` (`"hub": true`, `"quiet": true`) |  |
+| T1 | `topic:wiryo_sumi` (`"quiet": true`) |  |
+| T2 | `topic:wiryo_manners` (`"quiet": true`) |  |
+| T3 | `topic:wiryo_trials` (`"quiet": true`) |  |
+| 5 | (none) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| WY1 | @NPC_WIRYO_NAME | | |
+| WY1 | DLG_WIRYO_V8 (keep) | | |
+| WY1 | DLG_KIDUL_JURUKUNCI_V401 (keep) | | |
+| WY1 | @NPC_HERO_NAME | | |
+| WY1 | DLG_KIDUL_JURUKUNCI_H401 (keep) | | |
+| WY1 | @NPC_WIRYO_NAME | | |
+| WY1 | DLG_KIDUL_JURUKUNCI_V402 (keep) | | |
+| WY2 | DLG_WIRYO_V8 (keep) | | |
+| WY2 | DLG_KIDUL_JURUKUNCI_V403 (keep) | | |
+| WY2 | @NPC_HERO_NAME | | |
+| WY2 | DLG_KIDUL_JURUKUNCI_H402 (keep) | | |
+| WY2 | @NPC_WIRYO_NAME | | |
+| WY2 | DLG_KIDUL_JURUKUNCI_V404 (keep) | | |
+| CS | DLG_WIRYO_V316 (keep) | | |
+| CS | DLG_WIRYO_V317 (keep) | | |
+| CM | DLG_WIRYO_V318 (keep) | | |
+| CM | DLG_WIRYO_V319 (keep) | | |
+| C | DLG_WIRYO_V21 (keep) | | |
+| C | DLG_WIRYO_V22 (keep) | | |
+| C | DLG_WIRYO_V23 (keep) | | |
+| D | DLG_WIRYO_V6 (keep) | | |
+| 1b | DLG_WIRYO_V303 (keep) | | |
+| 1 | DLG_WIRYO_V1 (keep) | | |
+| 1 | @NPC_HERO_NAME | | |
+| 1 | DLG_WIRYO_H1 (keep) | | |
+| 1 | @NPC_WIRYO_NAME | | |
+| 1 | DLG_WIRYO_V2 (keep) | | |
+| 1 | DLG_WIRYO_V3 (keep) | | |
+| 1 | DLG_WIRYO_V301 (keep) | | |
+| 1 | @NPC_HERO_NAME | | |
+| 1 | DLG_WIRYO_H301 (keep) | | |
+| 1 | @NPC_WIRYO_NAME | | |
+| 1 | DLG_WIRYO_V302 (keep) | | |
+| 1 | DLG_WIRYO_V303 (keep) | | |
+| 1 | DLG_WIRYO_V304 (keep) | | |
+| 2 | DLG_WIRYO_V7 (keep) | | |
+| 3 | DLG_WIRYO_V305 (keep) | | |
+| H | DLG_WIRYO_V306 (keep) | | |
+| T1 | DLG_WIRYO_V307 (keep) | | |
+| T1 | DLG_WIRYO_V308 (keep) | | |
+| T1 | DLG_WIRYO_V309 (keep) | | |
+| T2 | DLG_WIRYO_V310 (keep) | | |
+| T2 | DLG_WIRYO_V311 (keep) | | |
+| T2 | DLG_WIRYO_V312 (keep) | | |
+| T3 | DLG_WIRYO_V313 (keep) | | |
+| T3 | DLG_WIRYO_V314 (keep) | | |
+| T3 | DLG_WIRYO_V315 (keep) | | |
+| 5 | DLG_WIRYO_V1 (keep) | | |
+
+| Key | ID | EN | do |
+|-----|----|----|----|
+| CHOICE_WIRYO_ASK_1 (keep) | | | `topic:wiryo_sumi` |
+| CHOICE_WIRYO_ASK_2 (keep) | | | `topic:wiryo_manners` |
+| CHOICE_WIRYO_ASK_3 (keep) | | | `topic:wiryo_trials` |
+| CHOICE_WIRYO_LEAVE (keep) | | |  |
+
+##### Act V clues (v6)
+
+#### Clue `tebing_stair_rail` (sk_tebing; the cliff stair rail; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_TEBING_STAIR_RAIL_1 | Kain hijau dan jimat kerang terikat di pegangan tangga, ada yang baru, ada yang sudah pudar. | Green cloth and shell charms are tied along the stair rail, some fresh, some long faded. |
+| CLUE_TEBING_STAIR_RAIL_2 | Banyak tangan, banyak doa, satu tangga. Tak satu pun simpul yang dilepas. | Many hands, many prayers, one stair. Not one knot has been untied. |
+| CLUE_TEBING_STAIR_RAIL_NOTE | Pegangan tangga tebing: kain dan jimat dari banyak doa. | The cliff stair rail: cloth and charms from many prayers. |
+
+VERIFY: cloth and shell charms tied at a south-coast shrine stair.
+
+#### Clue `nelayan_nets` (sk_nelayan; nets drying on the poles; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_NELAYAN_NETS_1 | Tiga simpul di satu jala: mata ikan, simpul mati, dan satu yang tak kukenal. | Three knots in one net: the fish-eye, the dead knot, and one I don't know. |
+| CLUE_NELAYAN_NETS_2 | Jala ini seperti peta kampung. Tiap keluarga menyimpan bagiannya. | This net is like a map of the village. Every family keeps its own piece. |
+| CLUE_NELAYAN_NETS_NOTE | Jala kampung nelayan: tiap simpul milik satu keluarga. | The fishing village nets: each knot belongs to one family. |
+
+#### Clue `nelayan_racks` (sk_nelayan; salt drying racks by the houses; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_NELAYAN_RACKS_1 | Para-para garam kasar, dijemur terbuka. Baunya tajam dan jujur. | Racks of coarse salt drying in the open. The smell is sharp and honest. |
+| CLUE_NELAYAN_RACKS_2 | Tak ada atap, tak ada tungku. Cara lama: laut, matahari, dan kesabaran. | No roof, no stove. The old way: sea, sun and patience. |
+| CLUE_NELAYAN_RACKS_NOTE | Para-para garam: kampung ini masih menggarami cara lama. | The salt racks: this village still salts the old way. |
+
+#### Clue `nelayan_sedekah` (sk_nelayan; sea offering preparations by the boats; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_NELAYAN_SEDEKAH_1 | Bakul sesaji dan anyaman janur ditata rapi di dekat perahu. Ini bukan untuk disentuh. | Offering baskets and plaited janur are set out neatly by the boats. These are not for touching. |
+| CLUE_NELAYAN_SEDEKAH_2 | Aku melihatnya dari jauh, seperti orang kampung sendiri melakukannya. | I watch them from a distance, the way the villagers themselves do. |
+| CLUE_NELAYAN_SEDEKAH_NOTE | Persiapan sedekah laut di kampung nelayan. Dilihat, tidak disentuh. | Sea offering preparations in the fishing village. Watched, not touched. |
+
+VERIFY: sedekah laut offering baskets and plaited janur set out by the boats beforehand (backdrop only).
+
+#### Clue `bakau_tide_mark` (sk_bakau; high-water marks and an old mooring ring; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_BAKAU_TIDE_MARK_1 | Tanda air pasang di batang bakau, lebih tinggi dari kepalaku. | High-water marks on the mangrove trunks, above my head. |
+| CLUE_BAKAU_TIDE_MARK_2 | Sebuah cincin tambat dari besi, separuh ditelan kulit kayu. | An iron mooring ring, half swallowed by bark. |
+| CLUE_BAKAU_TIDE_MARK_NOTE | Bakau: dulu perahu ditambat jauh ke dalam. Laut pernah setinggi ini. | The mangroves: boats once moored deep inside. The sea was once this high. |
+
 ### Act VI: Gua Kala (MQ5, "Ke Rahang Sang Waktu")
 Story v5, 14 steps, 7 areas. `step:mq5=N` is step 5.(N+1). The Hunter does not appear in Act VI, but Aria Kebonan's name is decided at the memorial stone (Choice 6, step 5.2), and if `flag:choice_redeem_aria` his shadow, unmasked, steps in once in Phase 3. The three letters of Laras's name are held in three memories of the prologue day (section 5), eaten in part by Kala. The player replays each and fills the grey gaps by choosing the right detail (3 gaps per memory, 3 options per gap, **ASSUMED**). A wrong pick flashes the gap grey and changes nothing. Memory ids `la`, `ra`, `sa`. Each starts from a lontar-lit letter clue (`letter_la`, `letter_ra`, `letter_sa`). Allies at `gk_pelataran` depend on earlier choices and side quests: Ciung and Hariang always; Ranga (`faceless_deserter`) if `flag:choice_freed`; Dewi Naganingrum (`naganingrum`) if `flag:choice_tell_ciung`; Cepot (`cepot`) if `flag:c4_done`. Ciung's royal vanguard stands on the walls if `flag:choice_judgment`.
 
@@ -5431,6 +6202,405 @@ LC6_10 to LC6_12 are the `lc6_p2` segment; LC6_13 to LC6_15 and `LC6_H4` are the
 | @NPC_SEMAR_NAME | | |
 | BEAT_WRITE_6 | Kau tak akan gagal. Kau tahu cara memegang. | You won't fail. You know how to hold on. |
 
+### Act VI depth: the echoes (v6)
+Depth pass v6 (2026-11-26, ASSUMED): late-game people and clues placed in the zone docs. Every new person is `"quiet"` unless its table says otherwise, so talking never moves a quest step.
+An echo is one moment Kala ate; the real person is still alive up above. Each echo's first talk sets `echo_<id>_heard` and varies by an earlier choice.
+
+#### echo_ki_darsa (gk_mulut; echo; name NPC_ECHO_KI_DARSA_NAME; name NPC_KI_DARSA_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| E1 | `quest:sq_s1=done`, `!flag:echo_ki_darsa_heard` (`"quiet": true`) | `flag:echo_ki_darsa_heard` |
+| F | `!flag:echo_ki_darsa_heard` (`"quiet": true`) | `flag:echo_ki_darsa_heard` |
+| I | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| E1 | @NPC_ECHO_KI_DARSA_NAME | | |
+| E1 | DLG_ECHO_KI_DARSA_V1 | Kau yang menamatkan kisah lutung itu bersamaku. Di atas sana, aku pasti masih menyanyikannya. | You're the one who finished the lutung's tale with me. Up above, I'm surely still singing it. |
+| E1 | DLG_ECHO_KI_DARSA_V3 | Aku cuma gema satu malam yang dimakan Kala. Ki Darsa yang asli masih berpantun di atas sana. | I'm only the echo of one night Kala ate. The real Ki Darsa is still singing pantun up above. |
+| E1 | DLG_ECHO_KI_DARSA_V4 | Lutung yang bukan lutung, putri yang diusir kakaknya. Aku tak mengarang kisah, Nak. Aku cuma menyanyikannya lagi. | A lutung that was no monkey, a princess cast out by her sister. I don't make tales up, child. I sing them again. |
+| E1 | @NPC_HERO_NAME | | |
+| E1 | DLG_ECHO_KI_DARSA_H1 | Kenapa Kala memakan malam itu? | Why did Kala eat that night? |
+| E1 | @NPC_ECHO_KI_DARSA_NAME | | |
+| E1 | DLG_ECHO_KI_DARSA_V5 | Lapar, Nak. Malam yang hangat paling mengenyangkan. Tapi lapar bisa dibalikkan, asal ada yang mengingat. | Hunger, child. A warm night fills the belly best. But hunger can be turned back, if someone remembers. |
+| E1 | DLG_ECHO_KI_DARSA_V6 | Di dekat sini ada gema penjual ayam jago, masih meneriakkan harga ke pasar kosong. Sapalah. | Close by there's the rooster seller's echo, still calling prices to an empty market. Go and say hello. |
+| F | DLG_ECHO_KI_DARSA_V2 | Kau pernah duduk di dekat apiku dan membiarkanku menyanyikan kisah lutung sampai habis. Duduk, duduk. | You once sat by my fire and let me sing the lutung's tale to the end. Sit, sit. |
+| F | DLG_ECHO_KI_DARSA_V3 | Aku cuma gema satu malam yang dimakan Kala. Ki Darsa yang asli masih berpantun di atas sana. | I'm only the echo of one night Kala ate. The real Ki Darsa is still singing pantun up above. |
+| F | DLG_ECHO_KI_DARSA_V4 | Lutung yang bukan lutung, putri yang diusir kakaknya. Aku tak mengarang kisah, Nak. Aku cuma menyanyikannya lagi. | A lutung that was no monkey, a princess cast out by her sister. I don't make tales up, child. I sing them again. |
+| F | @NPC_HERO_NAME | | |
+| F | DLG_ECHO_KI_DARSA_H1 | Kenapa Kala memakan malam itu? | Why did Kala eat that night? |
+| F | @NPC_ECHO_KI_DARSA_NAME | | |
+| F | DLG_ECHO_KI_DARSA_V5 | Lapar, Nak. Malam yang hangat paling mengenyangkan. Tapi lapar bisa dibalikkan, asal ada yang mengingat. | Hunger, child. A warm night fills the belly best. But hunger can be turned back, if someone remembers. |
+| F | DLG_ECHO_KI_DARSA_V6 | Di dekat sini ada gema penjual ayam jago, masih meneriakkan harga ke pasar kosong. Sapalah. | Close by there's the rooster seller's echo, still calling prices to an empty market. Go and say hello. |
+| I | DLG_ECHO_KI_DARSA_V7 | Apinya tak hangat, tapi tanganku tetap mendekat. Kebiasaan lebih tua dari api. | The fire isn't warm, but my hands still reach for it. Habit is older than fire. |
+| I | DLG_ECHO_KI_DARSA_V8 | Kalau Kala mengembalikan malam itu, akan kunyanyikan bait terakhir untukmu. Tanya gema penjual ayam dulu. | If Kala gives that night back, I'll sing you the last verse. Ask the rooster seller's echo first. |
+
+#### echo_galuh_seller (gk_mulut; echo; name NPC_ECHO_GALUH_SELLER_NAME; name NPC_GALUH_SELLER_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| E1 | `flag:choice_freed`, `!flag:echo_galuh_seller_heard` (`"quiet": true`) | `flag:echo_galuh_seller_heard` |
+| E2 | `flag:choice_handed`, `!flag:echo_galuh_seller_heard` (`"quiet": true`) | `flag:echo_galuh_seller_heard` |
+| F | `!flag:echo_galuh_seller_heard` (`"quiet": true`) | `flag:echo_galuh_seller_heard` |
+| I | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| E1 | @NPC_ECHO_GALUH_SELLER_NAME | | |
+| E1 | DLG_ECHO_GALUH_SELLER_V1 | Kau yang melepas pembelot Tanpa Rupa itu. Seisi pasar membicarakannya, dan ayamku laku lebih banyak minggu itu. | You let the Faceless deserter walk free. The whole market talked of it, and I sold more birds that week. |
+| E1 | DLG_ECHO_GALUH_SELLER_V4 | Aku cuma gema satu hari pasar yang dimakan Kala. Yang asli masih meneriakkan harga di Galuh. | I'm only the echo of one market day Kala ate. The real me is still shouting prices in Galuh. |
+| E1 | @NPC_HERO_NAME | | |
+| E1 | DLG_ECHO_GALUH_SELLER_H1 | Ada yang ingin kau tahu? | Is there something you want to know? |
+| E1 | @NPC_ECHO_GALUH_SELLER_NAME | | |
+| E1 | DLG_ECHO_GALUH_SELLER_V5 | Si muka masam di gerbang timur, Ciung itu. Apa ia pernah tersenyum? Bilang ya, meski bohong. | The scowler at the east gate, Ciung. Did he ever smile? Say yes, even if it's a lie. |
+| E1 | DLG_ECHO_GALUH_SELLER_V6 | Dengar, gema Ki Darsa masih bernyanyi di mulut gua. Lebih merdu dari aslinya. Jangan bilang padanya. | Listen, Ki Darsa's echo is still singing by the cave mouth. Sweeter than the real one. Don't tell him. |
+| E2 | DLG_ECHO_GALUH_SELLER_V2 | Kau yang menyerahkan pembelot Tanpa Rupa pada penjaga. Pasar sunyi seharian. Tak seekor pun laku. | You handed the Faceless deserter to the guards. The market went quiet all day. I didn't sell one bird. |
+| E2 | DLG_ECHO_GALUH_SELLER_V4 | Aku cuma gema satu hari pasar yang dimakan Kala. Yang asli masih meneriakkan harga di Galuh. | I'm only the echo of one market day Kala ate. The real me is still shouting prices in Galuh. |
+| E2 | @NPC_HERO_NAME | | |
+| E2 | DLG_ECHO_GALUH_SELLER_H1 | Ada yang ingin kau tahu? | Is there something you want to know? |
+| E2 | @NPC_ECHO_GALUH_SELLER_NAME | | |
+| E2 | DLG_ECHO_GALUH_SELLER_V5 | Si muka masam di gerbang timur, Ciung itu. Apa ia pernah tersenyum? Bilang ya, meski bohong. | The scowler at the east gate, Ciung. Did he ever smile? Say yes, even if it's a lie. |
+| E2 | DLG_ECHO_GALUH_SELLER_V6 | Dengar, gema Ki Darsa masih bernyanyi di mulut gua. Lebih merdu dari aslinya. Jangan bilang padanya. | Listen, Ki Darsa's echo is still singing by the cave mouth. Sweeter than the real one. Don't tell him. |
+| F | DLG_ECHO_GALUH_SELLER_V3 | Penulis dari pasar Galuh. Aku cuma berjualan, tak pernah bertaruh, ingat? | The writer from the Galuh market. I only sell, I never bet, remember? |
+| F | DLG_ECHO_GALUH_SELLER_V4 | Aku cuma gema satu hari pasar yang dimakan Kala. Yang asli masih meneriakkan harga di Galuh. | I'm only the echo of one market day Kala ate. The real me is still shouting prices in Galuh. |
+| F | @NPC_HERO_NAME | | |
+| F | DLG_ECHO_GALUH_SELLER_H1 | Ada yang ingin kau tahu? | Is there something you want to know? |
+| F | @NPC_ECHO_GALUH_SELLER_NAME | | |
+| F | DLG_ECHO_GALUH_SELLER_V5 | Si muka masam di gerbang timur, Ciung itu. Apa ia pernah tersenyum? Bilang ya, meski bohong. | The scowler at the east gate, Ciung. Did he ever smile? Say yes, even if it's a lie. |
+| F | DLG_ECHO_GALUH_SELLER_V6 | Dengar, gema Ki Darsa masih bernyanyi di mulut gua. Lebih merdu dari aslinya. Jangan bilang padanya. | Listen, Ki Darsa's echo is still singing by the cave mouth. Sweeter than the real one. Don't tell him. |
+| I | DLG_ECHO_GALUH_SELLER_V7 | Ayam jagoku tak pernah berkokok di sini. Tak ada fajar untuk disambut. | My rooster never crows down here. There's no dawn to greet. |
+| I | DLG_ECHO_GALUH_SELLER_V8 | Kalau kau pulang, sampaikan salam gemanya pada aku yang asli. Lalu dengarkan Ki Darsa bernyanyi. | When you get home, give the real me the echo's regards. Then go and hear Ki Darsa sing. |
+
+#### echo_sawah_farmer (gk_pasir; echo; name NPC_ECHO_SAWAH_FARMER_NAME; name NPC_SAWAH_FARMER_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| E1 | `flag:choice_mercy`, `!flag:echo_sawah_farmer_heard` (`"quiet": true`) | `flag:echo_sawah_farmer_heard` |
+| E2 | `flag:choice_judgment`, `!flag:echo_sawah_farmer_heard` (`"quiet": true`) | `flag:echo_sawah_farmer_heard` |
+| F | `!flag:echo_sawah_farmer_heard` (`"quiet": true`) | `flag:echo_sawah_farmer_heard` |
+| I | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| E1 | @NPC_ECHO_SAWAH_FARMER_NAME | | |
+| E1 | DLG_ECHO_SAWAH_FARMER_V1 | Kabar pengadilan di Pamali sampai ke sawahku. Katanya kau memilih ampun. Tanahku pun ikut lega. | Word of the judgment at the Pamali reached my paddy. They said you chose mercy. Even my soil sighed. |
+| E1 | DLG_ECHO_SAWAH_FARMER_V4 | Aku cuma gema satu musim tanam yang dimakan Kala. Yang asli masih mengeringkan sawahnya di atas. | I'm only the echo of one planting season Kala ate. The real me is still draining her paddy up above. |
+| E1 | DLG_ECHO_SAWAH_FARMER_V5 | Tanah itu keras kepala, seperti aku. Tapi di sini cuma ada pasir. Keras kepalaku tak punya lawan. | Soil is stubborn, like me. But there's only sand down here. My stubbornness has nothing to push against. |
+| E1 | DLG_ECHO_SAWAH_FARMER_V6 | Di seberang aliran pasir ada gema pandai besi, memukul udara. Bunyinya bikin aku rindu suara cangkul. | Across the sand stream there's a smith's echo hammering air. It makes me miss the sound of a hoe. |
+| E2 | DLG_ECHO_SAWAH_FARMER_V2 | Kabar pengadilan di Pamali sampai ke sawahku. Katanya kau memilih hukum. Tanah keras pun butuh pagar. | Word of the judgment at the Pamali reached my paddy. They said you chose the law. Hard soil needs a fence too. |
+| E2 | DLG_ECHO_SAWAH_FARMER_V4 | Aku cuma gema satu musim tanam yang dimakan Kala. Yang asli masih mengeringkan sawahnya di atas. | I'm only the echo of one planting season Kala ate. The real me is still draining her paddy up above. |
+| E2 | DLG_ECHO_SAWAH_FARMER_V5 | Tanah itu keras kepala, seperti aku. Tapi di sini cuma ada pasir. Keras kepalaku tak punya lawan. | Soil is stubborn, like me. But there's only sand down here. My stubbornness has nothing to push against. |
+| E2 | DLG_ECHO_SAWAH_FARMER_V6 | Di seberang aliran pasir ada gema pandai besi, memukul udara. Bunyinya bikin aku rindu suara cangkul. | Across the sand stream there's a smith's echo hammering air. It makes me miss the sound of a hoe. |
+| F | DLG_ECHO_SAWAH_FARMER_V3 | Kau yang berjalan di sawahku yang kebanjiran dan tak tertawa. Aku ingat itu. | You walked my flooded paddy and didn't laugh. I remember that. |
+| F | DLG_ECHO_SAWAH_FARMER_V4 | Aku cuma gema satu musim tanam yang dimakan Kala. Yang asli masih mengeringkan sawahnya di atas. | I'm only the echo of one planting season Kala ate. The real me is still draining her paddy up above. |
+| F | DLG_ECHO_SAWAH_FARMER_V5 | Tanah itu keras kepala, seperti aku. Tapi di sini cuma ada pasir. Keras kepalaku tak punya lawan. | Soil is stubborn, like me. But there's only sand down here. My stubbornness has nothing to push against. |
+| F | DLG_ECHO_SAWAH_FARMER_V6 | Di seberang aliran pasir ada gema pandai besi, memukul udara. Bunyinya bikin aku rindu suara cangkul. | Across the sand stream there's a smith's echo hammering air. It makes me miss the sound of a hoe. |
+| I | DLG_ECHO_SAWAH_FARMER_V7 | Kusiram pasir ini tiap hari. Tak ada yang tumbuh, tapi tanganku tenang. | I water this sand every day. Nothing grows, but my hands are calm. |
+| I | DLG_ECHO_SAWAH_FARMER_V8 | Kalau bertemu aku yang asli, larang aku menjual sawah itu. Lalu sapa si pandai besi untukku. | If you meet the real me, don't let her sell that paddy. And greet the smith's echo for me. |
+
+#### echo_timur_empu (gk_pasir; echo; name NPC_ECHO_TIMUR_EMPU_NAME; name NPC_TIMUR_EMPU_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| E1 | `flag:choice_reforge`, `!flag:echo_timur_empu_heard` (`"quiet": true`) | `flag:echo_timur_empu_heard` |
+| E2 | `flag:choice_sink`, `!flag:echo_timur_empu_heard` (`"quiet": true`) | `flag:echo_timur_empu_heard` |
+| F | `!flag:echo_timur_empu_heard` (`"quiet": true`) | `flag:echo_timur_empu_heard` |
+| I | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| E1 | @NPC_ECHO_TIMUR_EMPU_NAME | | |
+| E1 | DLG_ECHO_TIMUR_EMPU_V1 | Aku ingat dentang pertama palu itu, bersih seperti lonceng. Kau ada di sana, Penulis. | I remember the first ring of that hammer, clean as a bell. You were there, writer. |
+| E1 | DLG_ECHO_TIMUR_EMPU_V4 | Aku cuma gema satu hari tempa yang dimakan Kala. Mpu Wirasana yang asli masih di bengkelnya. | I'm only the echo of one forging day Kala ate. The real Mpu Wirasana is still at his forge. |
+| E1 | DLG_ECHO_TIMUR_EMPU_V5 | Tanganku masih memukul, padahal tak ada besi. Kebiasaan empu: palu dulu, pikir belakangan. | My hands still strike, and there's no iron. A smith's habit: hammer first, think after. |
+| E1 | DLG_ECHO_TIMUR_EMPU_V6 | Kalau kau bertemu Ratna, bilang lipatannya lurus. Aku tak pernah sempat mengatakannya. | If you see Ratna, tell her her folds are straight. I never got round to saying it. |
+| E2 | DLG_ECHO_TIMUR_EMPU_V2 | Aku ingat bilah itu tenggelam, dan arwah-arwahnya menjadi kunang-kunang. Kau ada di sana, Penulis. | I remember the blade going under, and its wisps turning to fireflies. You were there, writer. |
+| E2 | DLG_ECHO_TIMUR_EMPU_V4 | Aku cuma gema satu hari tempa yang dimakan Kala. Mpu Wirasana yang asli masih di bengkelnya. | I'm only the echo of one forging day Kala ate. The real Mpu Wirasana is still at his forge. |
+| E2 | DLG_ECHO_TIMUR_EMPU_V5 | Tanganku masih memukul, padahal tak ada besi. Kebiasaan empu: palu dulu, pikir belakangan. | My hands still strike, and there's no iron. A smith's habit: hammer first, think after. |
+| E2 | DLG_ECHO_TIMUR_EMPU_V6 | Kalau kau bertemu Ratna, bilang lipatannya lurus. Aku tak pernah sempat mengatakannya. | If you see Ratna, tell her her folds are straight. I never got round to saying it. |
+| F | DLG_ECHO_TIMUR_EMPU_V3 | Kau yang bertanya hal-hal yang tak pernah kujawab. Di sini waktuku banyak, jawabanku tetap sedikit. | You're the one who asked what I never answered. Down here I have the time, if not the answers. |
+| F | DLG_ECHO_TIMUR_EMPU_V4 | Aku cuma gema satu hari tempa yang dimakan Kala. Mpu Wirasana yang asli masih di bengkelnya. | I'm only the echo of one forging day Kala ate. The real Mpu Wirasana is still at his forge. |
+| F | DLG_ECHO_TIMUR_EMPU_V5 | Tanganku masih memukul, padahal tak ada besi. Kebiasaan empu: palu dulu, pikir belakangan. | My hands still strike, and there's no iron. A smith's habit: hammer first, think after. |
+| F | DLG_ECHO_TIMUR_EMPU_V6 | Kalau kau bertemu Ratna, bilang lipatannya lurus. Aku tak pernah sempat mengatakannya. | If you see Ratna, tell her her folds are straight. I never got round to saying it. |
+| I | DLG_ECHO_TIMUR_EMPU_V7 | Pasir tak bisa ditempa. Sudah kucoba, dan petani di sebelah menertawakanku. | Sand can't be forged. I tried, and the farmer next door laughed at me. |
+| I | DLG_ECHO_TIMUR_EMPU_V8 | Itu tawa pertama di tempat ini. Terima kasih sudah datang. Dengarkan dia juga. | That was the first laugh this place has heard. Thank you for coming. Go and listen to her too. |
+
+#### echo_sunda_elder (gk_lupa; echo; name NPC_ECHO_SUNDA_ELDER_NAME; name NPC_SUNDA_ELDER_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| E1 | `flag:remember_freed_scout`, `!flag:echo_sunda_elder_heard` (`"quiet": true`) | `flag:echo_sunda_elder_heard` |
+| E2 | `flag:remember_questioned_scout`, `!flag:echo_sunda_elder_heard` (`"quiet": true`) | `flag:echo_sunda_elder_heard` |
+| E3 | `flag:remember_hid_scout`, `!flag:echo_sunda_elder_heard` (`"quiet": true`) | `flag:echo_sunda_elder_heard` |
+| F | `!flag:echo_sunda_elder_heard` (`"quiet": true`) | `flag:echo_sunda_elder_heard` |
+| I | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| E1 | @NPC_ECHO_SUNDA_ELDER_NAME | | |
+| E1 | DLG_ECHO_SUNDA_ELDER_V1 | Kau melepas anak bertopeng itu. Di bawah sini aku berharap ia menemukan jalan pulang. | You let the masked boy go. Down here I hope he found his way home. |
+| E1 | DLG_ECHO_SUNDA_ELDER_V5 | Aku cuma gema satu petang yang dimakan Kala. Yang asli masih menjaga kampung di atas sana. | I'm only the echo of one evening Kala ate. The real me still keeps the kampung up above. |
+| E1 | DLG_ECHO_SUNDA_ELDER_V6 | Huruf-huruf di dinding ini memudar. Kubaca keras-keras supaya tak hilang semua. Ka, ga, nga, ca, ja, nya. | The letters on this wall are fading. I read them aloud so not all of them go. Ka, ga, nga, ca, ja, nya. |
+| E1 | DLG_ECHO_SUNDA_ELDER_V7 | Bacalah bersamaku, Penulis. Dua suara lebih susah dimakan daripada satu. | Read with me, writer. Two voices are harder to eat than one. |
+| E2 | DLG_ECHO_SUNDA_ELDER_V2 | Kau membuat tawanan itu bicara. Teriakannya terdengar lebih pelan di bawah sini. | You made the prisoner talk. The shouting sounds softer down here. |
+| E2 | DLG_ECHO_SUNDA_ELDER_V5 | Aku cuma gema satu petang yang dimakan Kala. Yang asli masih menjaga kampung di atas sana. | I'm only the echo of one evening Kala ate. The real me still keeps the kampung up above. |
+| E2 | DLG_ECHO_SUNDA_ELDER_V6 | Huruf-huruf di dinding ini memudar. Kubaca keras-keras supaya tak hilang semua. Ka, ga, nga, ca, ja, nya. | The letters on this wall are fading. I read them aloud so not all of them go. Ka, ga, nga, ca, ja, nya. |
+| E2 | DLG_ECHO_SUNDA_ELDER_V7 | Bacalah bersamaku, Penulis. Dua suara lebih susah dimakan daripada satu. | Read with me, writer. Two voices are harder to eat than one. |
+| E3 | DLG_ECHO_SUNDA_ELDER_V3 | Kau menyembunyikan tawanan itu. Aku masih tak bertanya di mana. Gema pandai menyimpan rahasia. | You hid the prisoner. I still don't ask where. Echoes keep secrets. |
+| E3 | DLG_ECHO_SUNDA_ELDER_V5 | Aku cuma gema satu petang yang dimakan Kala. Yang asli masih menjaga kampung di atas sana. | I'm only the echo of one evening Kala ate. The real me still keeps the kampung up above. |
+| E3 | DLG_ECHO_SUNDA_ELDER_V6 | Huruf-huruf di dinding ini memudar. Kubaca keras-keras supaya tak hilang semua. Ka, ga, nga, ca, ja, nya. | The letters on this wall are fading. I read them aloud so not all of them go. Ka, ga, nga, ca, ja, nya. |
+| E3 | DLG_ECHO_SUNDA_ELDER_V7 | Bacalah bersamaku, Penulis. Dua suara lebih susah dimakan daripada satu. | Read with me, writer. Two voices are harder to eat than one. |
+| F | DLG_ECHO_SUNDA_ELDER_V4 | Duduk sebentar, Nak. Tehku tak hangat di sini, tapi kebiasaannya masih. | Sit a moment, child. My tea isn't warm down here, but the habit is. |
+| F | DLG_ECHO_SUNDA_ELDER_V5 | Aku cuma gema satu petang yang dimakan Kala. Yang asli masih menjaga kampung di atas sana. | I'm only the echo of one evening Kala ate. The real me still keeps the kampung up above. |
+| F | DLG_ECHO_SUNDA_ELDER_V6 | Huruf-huruf di dinding ini memudar. Kubaca keras-keras supaya tak hilang semua. Ka, ga, nga, ca, ja, nya. | The letters on this wall are fading. I read them aloud so not all of them go. Ka, ga, nga, ca, ja, nya. |
+| F | DLG_ECHO_SUNDA_ELDER_V7 | Bacalah bersamaku, Penulis. Dua suara lebih susah dimakan daripada satu. | Read with me, writer. Two voices are harder to eat than one. |
+| I | DLG_ECHO_SUNDA_ELDER_V8 | Ka, ga, nga. Hilang satu huruf saja, kata-katanya goyah seperti rumah tanpa tiang. | Ka, ga, nga. Lose one letter and the whole word wobbles, like a house missing a post. |
+| I | DLG_ECHO_SUNDA_ELDER_V9 | Kalau kau menulis di dinding ini, tulis yang jelas. Lalu teruslah ke jembatan, ada yang menunggumu. | If you write on this wall, write clearly. Then go on to the bridge, someone's waiting there. |
+
+VERIFY: the Aksara Sunda ngalagena order ka, ga, nga, ca, ja, nya (echo_sunda_elder).
+
+#### echo_leuwi_mother (gk_hutan; echo; name NPC_ECHO_LEUWI_MOTHER_NAME; name NPC_SUNDA_MOTHER_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| E1 | `flag:choice_tell_ciung`, `!flag:echo_leuwi_mother_heard` (`"quiet": true`) | `flag:echo_leuwi_mother_heard` |
+| E2 | `flag:choice_keep_secret`, `!flag:echo_leuwi_mother_heard` (`"quiet": true`) | `flag:echo_leuwi_mother_heard` |
+| F | `!flag:echo_leuwi_mother_heard` (`"quiet": true`) | `flag:echo_leuwi_mother_heard` |
+| I | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| E1 | @NPC_ECHO_LEUWI_MOTHER_NAME | | |
+| E1 | DLG_ECHO_LEUWI_MOTHER_V1 | Kau memberi tahu Ciung soal ibunya. Sebagai ibu, aku tahu: rahasia yang dibuka pelan-pelan lebih ringan dipikul. | You told Ciung about his mother. As a mother, I know a secret opened gently is lighter to carry. |
+| E1 | DLG_ECHO_LEUWI_MOTHER_V4 | Aku cuma gema senja sandekala itu, yang dimakan Kala. Ceu Imas yang asli ada di atas, bersama anaknya. | I'm only the echo of that Sandekala dusk, the one Kala ate. The real Ceu Imas is up above with her boy. |
+| E1 | DLG_ECHO_LEUWI_MOTHER_V5 | Tanganku masih ingat cara memegang sumbu. Di sini tak ada api, jadi aku memegang udara. | My hands still remember how to hold the wick. There's no fire down here, so I hold the air. |
+| E1 | DLG_ECHO_LEUWI_MOTHER_V6 | Di hutan timur ada gema Ki Sumarto. Ia sedang mencari penonton. Temani dia. | Ki Sumarto's echo is in the east grove, looking for an audience. Keep him company. |
+| E2 | DLG_ECHO_LEUWI_MOTHER_V2 | Kau menyimpan rahasia Naganingrum. Sebagai ibu, aku mengerti. Ada kebenaran yang harus menunggu gilirannya. | You kept Naganingrum's secret. As a mother, I understand. Some truths have to wait their turn. |
+| E2 | DLG_ECHO_LEUWI_MOTHER_V4 | Aku cuma gema senja sandekala itu, yang dimakan Kala. Ceu Imas yang asli ada di atas, bersama anaknya. | I'm only the echo of that Sandekala dusk, the one Kala ate. The real Ceu Imas is up above with her boy. |
+| E2 | DLG_ECHO_LEUWI_MOTHER_V5 | Tanganku masih ingat cara memegang sumbu. Di sini tak ada api, jadi aku memegang udara. | My hands still remember how to hold the wick. There's no fire down here, so I hold the air. |
+| E2 | DLG_ECHO_LEUWI_MOTHER_V6 | Di hutan timur ada gema Ki Sumarto. Ia sedang mencari penonton. Temani dia. | Ki Sumarto's echo is in the east grove, looking for an audience. Keep him company. |
+| F | DLG_ECHO_LEUWI_MOTHER_V3 | Kau yang ikut memegang oncor waktu senja kami mencari Asep. | You held an oncor with us the dusk we searched for Asep. |
+| F | DLG_ECHO_LEUWI_MOTHER_V4 | Aku cuma gema senja sandekala itu, yang dimakan Kala. Ceu Imas yang asli ada di atas, bersama anaknya. | I'm only the echo of that Sandekala dusk, the one Kala ate. The real Ceu Imas is up above with her boy. |
+| F | DLG_ECHO_LEUWI_MOTHER_V5 | Tanganku masih ingat cara memegang sumbu. Di sini tak ada api, jadi aku memegang udara. | My hands still remember how to hold the wick. There's no fire down here, so I hold the air. |
+| F | DLG_ECHO_LEUWI_MOTHER_V6 | Di hutan timur ada gema Ki Sumarto. Ia sedang mencari penonton. Temani dia. | Ki Sumarto's echo is in the east grove, looking for an audience. Keep him company. |
+| I | DLG_ECHO_LEUWI_MOTHER_V7 | Asep pulang, kan? Bilang saja ya. Gema tak perlu tahu lebih dari itu. | Asep came home, didn't he? Just say yes. An echo doesn't need to know more. |
+| I | DLG_ECHO_LEUWI_MOTHER_V8 | Lonceng-lonceng batu itu bunyinya seperti nama yang dipanggil pulang. Dengarkan sebelum kau pergi. | Those stone chimes sound like names being called home. Listen to them before you go. |
+
+#### echo_kidul_nelayan_tua (gk_jembatan; echo; name NPC_ECHO_KIDUL_NELAYAN_TUA_NAME; name NPC_KIDUL_TUA_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| E1 | `flag:choice_offer_song`, `!flag:echo_kidul_nelayan_tua_heard` (`"quiet": true`) | `flag:echo_kidul_nelayan_tua_heard` |
+| E2 | `flag:choice_offer_memory`, `!flag:echo_kidul_nelayan_tua_heard` (`"quiet": true`) | `flag:echo_kidul_nelayan_tua_heard` |
+| F | `!flag:echo_kidul_nelayan_tua_heard` (`"quiet": true`) | `flag:echo_kidul_nelayan_tua_heard` |
+| I | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| E1 | @NPC_ECHO_KIDUL_NELAYAN_TUA_NAME | | |
+| E1 | DLG_ECHO_KIDUL_NELAYAN_TUA_V1 | Kau yang menyanyikan lagu itu di altar tebing. Seluruh kampung ikut. Aku menangis, tapi kubilang itu angin. | You sang that song at the cliff altar. The whole village joined in. I cried, but said it was the wind. |
+| E1 | DLG_ECHO_KIDUL_NELAYAN_TUA_V4 | Aku cuma gema satu pagi melaut yang dimakan Kala. Pak Raka yang asli masih menambal perahunya di atas. | I'm only the echo of one fishing morning Kala ate. The real Pak Raka is still patching his boat up above. |
+| E1 | DLG_ECHO_KIDUL_NELAYAN_TUA_V5 | Jembatan ini seperti tempat pendaratan nelayan, tapi tak ada perahu. Cuma jejak kaki, semua ke satu arah. | This bridge is like a fishermen's landing with no boats. Only footprints, all going one way. |
+| E1 | DLG_ECHO_KIDUL_NELAYAN_TUA_V6 | Bajul putih itu penjaga, bukan musuh. Kalau di ujung sana kau bertemu yang lapar, ingat itu. | The white crocodile was a keeper, not an enemy. If you meet something hungry at the far end, remember that. |
+| E2 | DLG_ECHO_KIDUL_NELAYAN_TUA_V2 | Kau yang menyerahkan kenangan di altar tebing. Laut menerimanya dengan lembut. Belum pernah kulihat selembut itu. | You gave up a memory at the cliff altar. The sea took it gently. I'd never seen it so gentle. |
+| E2 | DLG_ECHO_KIDUL_NELAYAN_TUA_V4 | Aku cuma gema satu pagi melaut yang dimakan Kala. Pak Raka yang asli masih menambal perahunya di atas. | I'm only the echo of one fishing morning Kala ate. The real Pak Raka is still patching his boat up above. |
+| E2 | DLG_ECHO_KIDUL_NELAYAN_TUA_V5 | Jembatan ini seperti tempat pendaratan nelayan, tapi tak ada perahu. Cuma jejak kaki, semua ke satu arah. | This bridge is like a fishermen's landing with no boats. Only footprints, all going one way. |
+| E2 | DLG_ECHO_KIDUL_NELAYAN_TUA_V6 | Bajul putih itu penjaga, bukan musuh. Kalau di ujung sana kau bertemu yang lapar, ingat itu. | The white crocodile was a keeper, not an enemy. If you meet something hungry at the far end, remember that. |
+| F | DLG_ECHO_KIDUL_NELAYAN_TUA_V3 | Kau yang berdiri di karangku menanyakan teluk itu. Masih ingat, Nak? | You stood on my reef asking about the cove. Still remember, child? |
+| F | DLG_ECHO_KIDUL_NELAYAN_TUA_V4 | Aku cuma gema satu pagi melaut yang dimakan Kala. Pak Raka yang asli masih menambal perahunya di atas. | I'm only the echo of one fishing morning Kala ate. The real Pak Raka is still patching his boat up above. |
+| F | DLG_ECHO_KIDUL_NELAYAN_TUA_V5 | Jembatan ini seperti tempat pendaratan nelayan, tapi tak ada perahu. Cuma jejak kaki, semua ke satu arah. | This bridge is like a fishermen's landing with no boats. Only footprints, all going one way. |
+| F | DLG_ECHO_KIDUL_NELAYAN_TUA_V6 | Bajul putih itu penjaga, bukan musuh. Kalau di ujung sana kau bertemu yang lapar, ingat itu. | The white crocodile was a keeper, not an enemy. If you meet something hungry at the far end, remember that. |
+| I | DLG_ECHO_KIDUL_NELAYAN_TUA_V7 | Air surut dulu sebelum menerjang. Begitu juga lapar. | Water draws back before it charges. So does hunger. |
+| I | DLG_ECHO_KIDUL_NELAYAN_TUA_V8 | Gema Mbok Srini ada di sekitar sini. Ia bicara cukup untuk dua orang, jadi kau tak perlu. | Mbok Srini's echo is about somewhere. She talks enough for two, so you won't have to. |
+
+#### echo_mbok_srini (gk_jembatan; echo; name NPC_ECHO_MBOK_SRINI_NAME; name NPC_MBOK_SRINI_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| F | `!flag:echo_mbok_srini_heard` (`"quiet": true`) | `flag:echo_mbok_srini_heard` |
+| I | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| F | @NPC_ECHO_MBOK_SRINI_NAME | | |
+| F | DLG_ECHO_MBOK_SRINI_V1 | Ah, kau. Kau yang duduk di gubukku di tepi sungai, mendengar Timun Mas sampai nasiku gosong. | Ah, you. You sat in my river hut listening to Timun Mas until my rice burnt. |
+| F | DLG_ECHO_MBOK_SRINI_V2 | Aku cuma gema satu sore yang dimakan Kala. Mbok Srini yang asli pasti masih mengomel soal nasi itu. | I'm only the echo of one afternoon Kala ate. The real Mbok Srini is surely still grumbling about that rice. |
+| F | DLG_ECHO_MBOK_SRINI_V3 | Empat kantong Timun Mas, urut: biji timun, jarum, garam, terasi. Hafalkan, siapa tahu berguna. | Timun Mas's four pouches, in order: cucumber seed, needles, salt, terasi. Learn them, they might be useful. |
+| F | @NPC_HERO_NAME | | |
+| F | DLG_ECHO_MBOK_SRINI_H1 | Kau mencari sesuatu di sini? | Are you looking for something here? |
+| F | @NPC_ECHO_MBOK_SRINI_NAME | | |
+| F | DLG_ECHO_MBOK_SRINI_V4 | Sebutir biji timun emas. Kalau kau melihatnya, jangan dipungut. Biar aku yang menemukannya sendiri. | A golden cucumber seed. If you see it, don't pick it up. Let me find it myself. |
+| F | DLG_ECHO_MBOK_SRINI_V5 | Sekarang pergilah, ajak gema Pak Raka bicara. Orang laut itu pelit kata. | Now go and get Pak Raka's echo talking. Sea folk are stingy with words. |
+| I | DLG_ECHO_MBOK_SRINI_V6 | Aku menawar dengan diriku sendiri, dan kalah. Gema memang pedagang yang buruk. | I haggle with myself, and lose. Echoes make poor traders. |
+| I | DLG_ECHO_MBOK_SRINI_V7 | Kalau gema Pak Raka diam saja, bilang Mbok Srini menunggu jawabannya. | If Pak Raka's echo stays quiet, tell him Mbok Srini is waiting for an answer. |
+
+VERIFY: the order of Timun Mas's four pouches: cucumber seed, needles, salt, terasi (echo_mbok_srini V3).
+
+#### ciung_wanara (v6 addition at `gk_pelataran`; name NPC_CIUNG_WANARA_NAME)
+Inserted before the `flag:mq4_9` idle. The pillars topic is new; V440 and V441 extend the troops and brother topics.
+
+| Entry | if | do |
+|-------|----|----|
+| K1 | `step:mq5=1`, `!flag:ciung_k1`, `zone:gk_pelataran` | `flag:ciung_k1` |
+| KH | `flag:mq5_0`, `zone:gk_pelataran` (`"hub": true`, `"quiet": true`) |  |
+| T1 | `topic:ciung_troops`, `flag:choice_judgment` (`"quiet": true`) |  |
+| T1b | `topic:ciung_troops` (`"quiet": true`) |  |
+| T2 | `topic:ciung_mother`, `flag:choice_tell_ciung` (`"quiet": true`) |  |
+| T2b | `topic:ciung_mother` (`"quiet": true`) |  |
+| T3 | `topic:ciung_brother` (`"quiet": true`) |  |
+| T4 | `topic:ciung_pillars` (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| K1 | @NPC_CIUNG_WANARA_NAME | | |
+| K1 | DLG_CIUNG_WANARA_V401 (keep) | | |
+| K1 | DLG_CIUNG_WANARA_V402 (keep) | | |
+| K1 | @NPC_HERO_NAME | | |
+| K1 | DLG_CIUNG_WANARA_H401 (keep) | | |
+| K1 | @NPC_CIUNG_WANARA_NAME | | |
+| K1 | DLG_CIUNG_WANARA_V403 (keep) | | |
+| K1 | DLG_CIUNG_WANARA_V404 (keep) | | |
+| K1 | @NPC_HERO_NAME | | |
+| K1 | DLG_CIUNG_WANARA_H402 (keep) | | |
+| K1 | @NPC_CIUNG_WANARA_NAME | | |
+| K1 | DLG_CIUNG_WANARA_V405 (keep) | | |
+| K1 | DLG_CIUNG_WANARA_V406 (keep) | | |
+| K1 | DLG_CIUNG_WANARA_V407 (keep) | | |
+| KH | DLG_CIUNG_WANARA_V408 (keep) | | |
+| T1 | DLG_CIUNG_WANARA_V409 (keep) | | |
+| T1 | DLG_CIUNG_WANARA_V410 (keep) | | |
+| T1 | DLG_CIUNG_WANARA_V411 (keep) | | |
+| T1 | DLG_CIUNG_WANARA_V440 | Tiang pancang di tepi timur, tempat Tanpa Rupa paling keras mendorong. Satu obor untuk tiap tiga tombak. | Stakes on the east edge, where the Faceless pushed hardest. One torch to every three spears. |
+| T1b | DLG_CIUNG_WANARA_V412 (keep) | | |
+| T1b | DLG_CIUNG_WANARA_V413 (keep) | | |
+| T1b | DLG_CIUNG_WANARA_V414 (keep) | | |
+| T1b | DLG_CIUNG_WANARA_V440 | Tiang pancang di tepi timur, tempat Tanpa Rupa paling keras mendorong. Satu obor untuk tiap tiga tombak. | Stakes on the east edge, where the Faceless pushed hardest. One torch to every three spears. |
+| T2 | DLG_CIUNG_WANARA_V415 (keep) | | |
+| T2 | DLG_CIUNG_WANARA_V416 (keep) | | |
+| T2 | DLG_CIUNG_WANARA_V417 (keep) | | |
+| T2b | DLG_CIUNG_WANARA_V418 (keep) | | |
+| T2b | DLG_CIUNG_WANARA_V419 (keep) | | |
+| T2b | @NPC_HERO_NAME | | |
+| T2b | DLG_CIUNG_WANARA_H403 (keep) | | |
+| T3 | @NPC_CIUNG_WANARA_NAME | | |
+| T3 | DLG_CIUNG_WANARA_V420 (keep) | | |
+| T3 | DLG_CIUNG_WANARA_V421 (keep) | | |
+| T3 | DLG_CIUNG_WANARA_V422 (keep) | | |
+| T3 | DLG_CIUNG_WANARA_V441 | Di Galuh orang menceritakannya sebagai dua kerajaan dipisah sungai. Di sini cuma dua lelaki di satu tembok. | In Galuh they tell it as two kingdoms split by a river. Out here it's two men on one wall. |
+| T4 | DLG_CIUNG_WANARA_V442 | Tiap nama yang dipahat adalah orang yang tak rela dilepas keluarganya. Galuh, Mataram, pesisir, perbukitan. | Every name cut there is someone a family refused to let go. Galuh, Mataram, the coast, the hills. |
+| T4 | DLG_CIUNG_WANARA_V443 | Ada nama yang ejaannya dua, satu dari tiap tepi sungai. Tak ada yang memahat ulang yang lain. | Some names have two spellings, one for each bank. Nobody chiselled the other one out. |
+| T4 | @NPC_HERO_NAME | | |
+| T4 | DLG_CIUNG_WANARA_H407 | Ada nama yang kau cari di sana? | Is there a name you look for there? |
+| T4 | @NPC_CIUNG_WANARA_NAME | | |
+| T4 | DLG_CIUNG_WANARA_V444 | Tiap jaga, aku mengusap satu nama yang tak kukenal, supaya ada yang mengingatnya. Pergilah baca, Penulis. | Every watch I touch one name I don't know, so someone remembers it. Go and read them, writer. |
+
+| Key | ID | EN | do |
+|-----|----|----|----|
+| CHOICE_CIUNG_ASK_401 (keep) | | | `topic:ciung_troops` |
+| CHOICE_CIUNG_ASK_402 (keep) | | | `topic:ciung_mother` |
+| CHOICE_CIUNG_ASK_403 (keep) | | | `topic:ciung_brother` |
+| CHOICE_CIUNG_ASK_405 | Soal tiang-tiang nama. | About the name pillars. | `topic:ciung_pillars` |
+| CHOICE_CIUNG_ASK_404 (keep) | | |  |
+
+#### hariang_banga (v6 addition at `gk_pelataran`; name NPC_HARIANG_BANGA_NAME)
+Inserted before the `flag:mq4_9` idle. Choices cannot be gated, so a duplicate hub gated on `choice_freed` comes first and adds the Ranga topic.
+
+| Entry | if | do |
+|-------|----|----|
+| H1 | `step:mq5=1`, `!flag:hariang_k1`, `zone:gk_pelataran` | `flag:hariang_k1` |
+| HR | `flag:mq5_0`, `flag:choice_freed`, `zone:gk_pelataran` (`"hub": true`, `"quiet": true`) |  |
+| HB | `flag:mq5_0`, `zone:gk_pelataran` (`"hub": true`, `"quiet": true`) |  |
+| T1 | `topic:hariang_mother`, `flag:choice_mercy` (`"quiet": true`) |  |
+| T1b | `topic:hariang_mother` (`"quiet": true`) |  |
+| T2 | `topic:hariang_brother` (`"quiet": true`) |  |
+| T3 | `topic:hariang_kala` (`"quiet": true`) |  |
+| T4 | `topic:hariang_ranga` (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| H1 | @NPC_HARIANG_BANGA_NAME | | |
+| H1 | DLG_HARIANG_BANGA_V401 (keep) | | |
+| H1 | DLG_HARIANG_BANGA_V402 (keep) | | |
+| H1 | @NPC_HERO_NAME | | |
+| H1 | DLG_HARIANG_BANGA_H401 (keep) | | |
+| H1 | @NPC_HARIANG_BANGA_NAME | | |
+| H1 | DLG_HARIANG_BANGA_V403 (keep) | | |
+| H1 | DLG_HARIANG_BANGA_V404 (keep) | | |
+| H1 | @NPC_HERO_NAME | | |
+| H1 | DLG_HARIANG_BANGA_H402 (keep) | | |
+| H1 | @NPC_HARIANG_BANGA_NAME | | |
+| H1 | DLG_HARIANG_BANGA_V405 (keep) | | |
+| H1 | DLG_HARIANG_BANGA_V406 (keep) | | |
+| HR | DLG_HARIANG_BANGA_V407 (keep) | | |
+| HB | DLG_HARIANG_BANGA_V407 (keep) | | |
+| T1 | DLG_HARIANG_BANGA_V408 (keep) | | |
+| T1 | DLG_HARIANG_BANGA_V409 (keep) | | |
+| T1 | DLG_HARIANG_BANGA_V410 (keep) | | |
+| T1b | DLG_HARIANG_BANGA_V411 (keep) | | |
+| T1b | DLG_HARIANG_BANGA_V412 (keep) | | |
+| T1b | DLG_HARIANG_BANGA_V413 (keep) | | |
+| T2 | DLG_HARIANG_BANGA_V414 (keep) | | |
+| T2 | DLG_HARIANG_BANGA_V415 (keep) | | |
+| T2 | DLG_HARIANG_BANGA_V430 | Terakhir kali aku melawannya, sungai hampir menelan kami berdua. | The last time I stood against him, a river nearly took us both. |
+| T2 | DLG_HARIANG_BANGA_V431 | Sekarang ia satu-satunya di sini yang membantahku seperti saudara. Aku tak akan mengakuinya di depannya. | Now he's the only one here who argues with me like family. I won't admit that to his face. |
+| T3 | DLG_HARIANG_BANGA_V416 (keep) | | |
+| T3 | DLG_HARIANG_BANGA_V417 (keep) | | |
+| T3 | DLG_HARIANG_BANGA_V418 (keep) | | |
+| T3 | DLG_HARIANG_BANGA_V432 | Garis kepung timur tempat temboknya paling tipis. Tanpa Rupa bersandar di sana seperti pasang pada gosong pasir. | The east siege line is where the wall is thinnest. The Faceless lean on it like tide on a sandbar. |
+| T3 | DLG_HARIANG_BANGA_V433 | Kalau kau dengar patoknya berdengung, berteriaklah. Kami bawa obor sebelum mereka sampai ke nama-nama. | If you hear the stakes hum, call out. We'll bring torches before they reach the names. |
+| T4 | DLG_HARIANG_BANGA_V434 | Ranga berdiri paling depan. Katanya Kala sudah pernah memakan namanya, jadi tak ada lagi yang bisa diambil. | Ranga stands at the very front. He says Kala ate his name once already, so there's nothing left to take. |
+| T4 | DLG_HARIANG_BANGA_V435 | Ia menyebut namanya sendiri tiap pergantian jaga, pelan, seperti orang mencoba sandal baru. | He says his own name at every change of watch, quietly, like a man trying on new sandals. |
+| T4 | @NPC_HERO_NAME | | |
+| T4 | DLG_HARIANG_BANGA_H405 | Kau percaya padanya? | Do you trust him? |
+| T4 | @NPC_HARIANG_BANGA_NAME | | |
+| T4 | DLG_HARIANG_BANGA_V436 | Aku percaya ia lelah berlari. Orang lelah menahan barisan lebih baik daripada orang berani. Sapalah dia. | I trust that he's tired of running. A tired man holds a line better than a brave one. Go and greet him. |
+
+| Key | ID | EN | do |
+|-----|----|----|----|
+| CHOICE_HARIANG_ASK_401 (keep) | | | `topic:hariang_mother` |
+| CHOICE_HARIANG_ASK_402 (keep) | | | `topic:hariang_brother` |
+| CHOICE_HARIANG_ASK_403 (keep) | | | `topic:hariang_kala` |
+| CHOICE_HARIANG_ASK_405 | Soal Ranga. | About Ranga. | `topic:hariang_ranga` |
+| CHOICE_HARIANG_ASK_404 (keep) | | |  |
+
+##### Act VI clues (v6)
+
+#### Clue `pasir_sand_stream` (gk_pasir; the glittering sand stream; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_PASIR_SAND_STREAM_1 | Pasir berkilau mengalir tanpa henti, tak pernah habis. | Glittering sand runs without stopping, and never runs out. |
+| CLUE_PASIR_SAND_STREAM_2 | Tak ada yang ditakar. Cuma indah. | Nothing is being measured. It's only pretty. |
+| CLUE_PASIR_SAND_STREAM_NOTE | Aliran pasir di Gua Kala: waktu yang tak menghitung apa pun. | The sand stream in Gua Kala: time that counts nothing. |
+
+#### Clue `hutan_stone_chimes` (gk_hutan; hanging stone chimes; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_HUTAN_STONE_CHIMES_1 | Batu-batu gantung berdenting pelan. Bunyinya seperti nama-nama. | Hanging stones chime softly. They sound like names. |
+| CLUE_HUTAN_STONE_CHIMES_2 | Tak ada angin, tapi tetap berbunyi. | There's no wind, yet they ring. |
+| CLUE_HUTAN_STONE_CHIMES_NOTE | Lonceng batu di hutan: berbunyi tanpa angin. | The forest's stone chimes: they ring with no wind. |
+
+#### Clue `bridge_footprints` (gk_jembatan; footprints on the bridge; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_BRIDGE_FOOTPRINTS_1 | Jejak kaki di jembatan: telanjang, bersandal, anak kecil, kuda. | Footprints on the bridge: bare feet, sandals, a child's, a horse's. |
+| CLUE_BRIDGE_FOOTPRINTS_2 | Jejakku sendiri ada di sana, dan jejak kecil yang kukenal berjalan lebih dulu. | My own are there too, and small ones I know, going on ahead. |
+| CLUE_BRIDGE_FOOTPRINTS_NOTE | Jembatan Gua Kala: jejak kecil yang kukenal, mendahuluiku. | The Gua Kala bridge: small prints I know, going ahead. |
+
+#### Clue `pelataran_ancestor_pillars` (gk_pelataran; black pillars carved with names; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_PELATARAN_ANCESTOR_PILLARS_1 | Tiang-tiang hitam penuh nama: Galuh, Mataram, pesisir, perbukitan. | Black pillars full of names: Galuh, Mataram, the coast, the hills. |
+| CLUE_PELATARAN_ANCESTOR_PILLARS_2 | Ada yang aus seperti dijilat, ada yang dipahat ulang. | Some are worn as if licked away, some have been cut again. |
+| CLUE_PELATARAN_ANCESTOR_PILLARS_NOTE | Tiang leluhur pelataran: nama yang tak rela dilepas. | The yard's ancestor pillars: names that families refused to let go. |
+
+#### Clue `pelataran_siege_line` (gk_pelataran; the east siege line; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_PELATARAN_SIEGE_LINE_1 | Patok dan tanah hangus di tempat Tanpa Rupa paling keras mendesak. | Stakes and scorched ground where the Faceless pressed hardest. |
+| CLUE_PELATARAN_SIEGE_LINE_2 | Obor-obor masih menyala. Tak seorang pun mundur. | The torches are still burning. Nobody fell back. |
+| CLUE_PELATARAN_SIEGE_LINE_NOTE | Garis kepung timur pelataran: di sini tembok paling tipis. | The east siege line: the wall's thinnest point. |
+
 ### Staging NPCs (v5, replaces the 2026-11-06 table)
 These NPCs stand in a scene for a beat or a later act. Each gets one line so a talk is never empty. Hariang Banga's file runs, in order: the epilogue entries (section 11), entries `H1`, `HH` and the topics (Gua Kala, above), entry 2 `quest:mq4=active` (V4, the Interlude table), entry 3 the `camp_timur` talk (section 9), entry 4 no cond (V5, the throne room before his escape). The old entry `DLG_HARIANG_BANGA_V3` (the cave mouth) and the old Deserter lines `DLG_DESERTER_MOUTH_V1` and `_V2` are replaced by the Gua Kala entries above. The others have a single entry with no cond.
 
@@ -6108,6 +7278,12 @@ Ratna's reforge entry sets `flag:epi_ratna_temper`, the moment she tempers your 
 | Q_SQ_K2_S3_OBJ | Defeat the old white crocodile. | Kalahkan Bajul Putih Tua. |
 | Q_SQ_K2_S4_OBJ | Go back to Pak Raka. | Kembali ke Pak Raka. |
 | Q_SQ_K2_S5_OBJ | Report to Pak Raka. | Lapor kepada Pak Raka. |
+| Q_SQ_V1_TITLE | The Small Ruwatan | Ruwatan Kecil |
+| Q_SQ_V1_DESC | Ki Sumarto's echo wants to hold the ruwatan the children's echoes in Gua Kala never had. | Gema Ki Sumarto ingin mengadakan ruwatan yang tak pernah didapat para gema anak di Gua Kala. |
+| Q_SQ_V1_S1_OBJ | Talk to Ki Sumarto's echo in the east grove. | Bicara dengan gema Ki Sumarto di hutan timur. |
+| Q_SQ_V1_S2_OBJ | Look at the offerings in the east nook. | Lihat sesaji di ceruk timur. |
+| Q_SQ_V1_S3_OBJ | Find the stone ring in the east grove. | Temukan lingkaran batu di hutan timur. |
+| Q_SQ_V1_S4_OBJ | Go back to Ki Sumarto's echo. | Kembali ke gema Ki Sumarto. |
 | Q_SQ_C1_TITLE | Ciung's Rooster | Ayam Jago Ciung |
 | Q_SQ_C1_S1_OBJ | Talk to Ciung Wanara at the ring's east gate and ask about his rooster. | Temui Ciung Wanara di gerbang timur arena dan tanyakan ayam jagonya. |
 | Q_SQ_C1_S2_OBJ | Trace the rooster: examine its feathers and the river basket in the square. | Telusuri jejak ayam jago: periksa bulunya dan bakul sungai di alun-alun. |
@@ -7318,6 +8494,85 @@ Card: giver `k2_fisher` (card says `sk_nelayan`; zone docs place him at the rive
 | MEM_SQ_K2_FISHER_OUT | Begitulah ceritanya: air surut dulu, lalu menerjang. Ingat itu saat ia datang. | So the tale goes: the water draws back first, then charges. Remember it when it comes. |
 
 VERIFY: the offering at the river mouth as belief, told with respect; the white crocodile in the Aji Saka legend; the tide tell is a game rule (ASSUMED).
+
+### SQ-V1: The Small Ruwatan (v6, `sq_v1`, giver `echo_ki_sumarto`, requires `mq5_1c`)
+Ki Sumarto's echo holds the ruwatan the anak sukerta echoes in `gk_hutan` never had. Steps: talk to the echo, look at `sqv1_offerings`, walk into `sqv1_ruwatan_place`, go back. Reward: the blencong and the `murwakala` codex. Kala comes hungry, hears the old words and turns back; nothing is fought.
+
+#### echo_ki_sumarto (gk_hutan; echo; SQ-V1 giver; name NPC_ECHO_KI_SUMARTO_NAME; name NPC_MATARAM_DALANG_NAME)
+
+| Entry | if | do |
+|-------|----|----|
+| E1 | `quest:sq_v1=done`, `flag:sqv1_ans_laras` (`"quiet": true`) |  |
+| E2 | `quest:sq_v1=done`, `flag:sqv1_ans_tell` (`"quiet": true`) |  |
+| E3 | `quest:sq_v1=done` (`"quiet": true`) |  |
+| D | `step:sq_v1=3` |  |
+| C | `step:sq_v1=2` (`"quiet": true`) |  |
+| B | `step:sq_v1=1` (`"quiet": true`) |  |
+| A | `quest:sq_v1=available` | `start:sq_v1`, `flag:sqv1_started` |
+| F | (none) (`"quiet": true`) |  |
+
+| Entry | Key | ID | EN |
+|-------|-----|----|----|
+| E1 | @NPC_ECHO_KI_SUMARTO_NAME | | |
+| E1 | DLG_ECHO_KI_SUMARTO_V13 | Nyalakan di tempat yang paling gelap. Di situ pelita paling berguna, dan paling mudah ditemukan. | Light it where it's darkest. That's where a lamp does most good, and where it's easiest to find. |
+| E1 | DLG_ECHO_KI_SUMARTO_V16 | Hutan ini lebih tenang sekarang, dan lonceng batu di barat berdenting lebih lembut. Gema Ceu Imas ada di hutan barat. | The grove is quieter now, and the west chimes ring softer. Ceu Imas's echo is in the west grove. |
+| E2 | DLG_ECHO_KI_SUMARTO_V14 | Ceritakan padanya pelan-pelan. Dalang tak suka mendengar ada lakon dimainkan tanpa dia. | Tell him gently. A dalang doesn't like hearing a play went on without him. |
+| E2 | DLG_ECHO_KI_SUMARTO_V16 | Hutan ini lebih tenang sekarang, dan lonceng batu di barat berdenting lebih lembut. Gema Ceu Imas ada di hutan barat. | The grove is quieter now, and the west chimes ring softer. Ceu Imas's echo is in the west grove. |
+| E3 | DLG_ECHO_KI_SUMARTO_V15 | Dalang yang bermain untuk dua tepi sungai bisa juga bermain untuk para gema. | A dalang who plays for both banks can play for echoes too. |
+| E3 | DLG_ECHO_KI_SUMARTO_V16 | Hutan ini lebih tenang sekarang, dan lonceng batu di barat berdenting lebih lembut. Gema Ceu Imas ada di hutan barat. | The grove is quieter now, and the west chimes ring softer. Ceu Imas's echo is in the west grove. |
+| D | DLG_ECHO_KI_SUMARTO_V9 | Mereka datang dan duduk, seperti penonton paling sopan yang pernah kumiliki. | They came and sat down, like the politest audience I've ever had. |
+| D | DLG_ECHO_KI_SUMARTO_V10 | Kala datang lapar, mendengar kata-kata lama dibacakan, lalu berbalik pulang. | Kala came hungry, heard the old words read out, and turned back home. |
+| D | @NPC_HERO_NAME | | |
+| D | DLG_ECHO_KI_SUMARTO_H2 | Lalu bagaimana anak-anak itu sekarang? | What happens to the children now? |
+| D | @NPC_ECHO_KI_SUMARTO_NAME | | |
+| D | DLG_ECHO_KI_SUMARTO_V11 | Mereka lebih ringan. Gema yang ringan pulang ke tempat asalnya, Nak, entah di mana itu. | They're lighter. A light echo drifts home, child, wherever home is. |
+| D | DLG_ECHO_KI_SUMARTO_V12 | Bawalah blencong ini. Minyaknya cukup untuk dua pelita. Satu untukmu, satu untuk yang kau cari. | Take this blencong. Enough oil for two lamps. One for you, one for whoever you're seeking. |
+| C | DLG_ECHO_KI_SUMARTO_V8 | Cari lingkaran batu di hutan timur. Itu panggungnya. Dan jangan hitung anak-anaknya. | Find the stone ring in the east grove. That's the stage. And don't count the children. |
+| B | DLG_ECHO_KI_SUMARTO_V7 | Sesajinya di ceruk timur. Jangan ambil kainnya. Siapa pun yang menaruhnya tahu caranya. | The offerings are in the east nook. Don't take the cloths. Whoever left them knew how. |
+| A | DLG_ECHO_KI_SUMARTO_V1 | Kau ingat aku? Kau pernah menonton dari depan kelir putihku di perkemahan dekat arungan. | Do you remember me? You watched from in front of my white kelir at the camp by the ford. |
+| A | DLG_ECHO_KI_SUMARTO_V2 | Aku cuma gema satu malam pertunjukan yang dimakan Kala. Ki Sumarto yang asli masih mendalang di atas. | I'm only the echo of one show night Kala ate. The real Ki Sumarto still performs up above. |
+| A | DLG_ECHO_KI_SUMARTO_V3 | Dan gema ini punya satu tugas yang belum selesai, Nak. | And this echo has one task left undone, child. |
+| A | @NPC_HERO_NAME | | |
+| A | DLG_ECHO_KI_SUMARTO_H1 | Tugas apa? | What task? |
+| A | @NPC_ECHO_KI_SUMARTO_NAME | | |
+| A | DLG_ECHO_KI_SUMARTO_V4 | Di hutan ini ada gema anak-anak sukerta. Kata kepercayaan lama, Kala mencari mereka lebih dulu. Anak tunggal, misalnya. | This grove holds echoes of anak sukerta. The old belief says Kala seeks them first. An only child, say. |
+| A | DLG_ECHO_KI_SUMARTO_V5 | Di atas, orang tua mereka mengadakan ruwatan dengan lakon Murwakala. Gema-gema ini tak pernah diruwat. | Up above, their parents held a ruwatan with the Murwakala play. These echoes never had one. |
+| A | DLG_ECHO_KI_SUMARTO_V6 | Sesajinya sudah ada di ceruk timur. Lihat dulu, baru kita mulai. | The offerings are waiting in the east nook. Look at them first, then we begin. |
+| F | DLG_ECHO_KI_SUMARTO_V17 | Kelirku putih dan menunggu. Lakon yang baik tak pernah benar-benar selesai. | My kelir is white and waiting. A good play is never quite finished. |
+| F | DLG_ECHO_KI_SUMARTO_V18 | Kalau kau perlu cahaya, tanya gema Ceu Imas. Tangannya masih ingat cara memegang sumbu. | If you need light, ask Ceu Imas's echo. Her hands still remember how to hold a wick. |
+
+| Key | ID | EN | do |
+|-----|----|----|----|
+| CHOICE_ECHO_KI_SUMARTO_ANS_1 | Akan kunyalakan untuk Laras. | I'll light it for Laras. | `flag:sqv1_ans_laras` |
+| CHOICE_ECHO_KI_SUMARTO_ANS_2 | Ki Sumarto yang asli akan mendengar ini dariku. | The real Ki Sumarto will hear about this from me. | `flag:sqv1_ans_tell` |
+| CHOICE_ECHO_KI_SUMARTO_ANS_3 | Terima kasih, Ki. | Thank you, Ki. | `flag:sqv1_ans_thanks` |
+
+VERIFY: anak sukerta: children the old belief says Kala seeks first, such as an only child (echo_ki_sumarto V4).
+
+VERIFY: ruwatan with the Murwakala play held for anak sukerta (echo_ki_sumarto V5, sqv1_ring beat).
+
+VERIFY: the blencong as the wayang kulit oil lamp, and giving one as a gift (echo_ki_sumarto V12).
+
+#### Clue `sqv1_offerings` (gk_hutan; offerings in the east nook, SQ-V1 step 2; journal note)
+| Key | ID | EN |
+|-----|----|----|
+| CLUE_SQV1_OFFERINGS_1 | Bunga tujuh rupa, sebutir telur, dan kain-kain gendongan yang dilipat rapi. | Flowers of seven kinds, an egg, and cradle cloths folded with care. |
+| CLUE_SQV1_OFFERINGS_2 | Kainnya seukuran bayi. Untuk anak-anak yang dimakan waktu. | The cloths are baby-sized. For children that time ate. |
+| CLUE_SQV1_OFFERINGS_NOTE | Sesaji di ceruk timur: untuk ruwatan para gema anak. | Offerings in the east nook, for the ruwatan of the children's echoes. |
+
+VERIFY: bunga tujuh rupa, an egg and cradle cloths among ruwatan offerings.
+
+### Beat `sqv1_ring` (if `step:sq_v1=3`, `flag:sqv1_ruwatan_place`, `zone:gk_hutan`; do `flag:beat_sqv1_ring`). The trigger sets the flag as the hero walks into the stone ring.
+| Key | ID | EN |
+|-----|----|----|
+| BEAT_SQV1_RING_1 | Kelir itu terbentang sendiri. Tak ada angin, tak ada dalang. | The kelir stretches itself out. No wind, no dalang. |
+| BEAT_SQV1_RING_2 | Bayang-bayang kecil duduk di depannya, diam semua. | Small shadows sit down in front of it, all of them silent. |
+| @NPC_ECHO_KI_SUMARTO_NAME | | |
+| BEAT_SQV1_RING_3 | Jangan dihitung, Nak. Lakonnya sudah dimulai. | Don't count them, child. The play has begun. |
+| @ | | |
+| BEAT_SQV1_RING_4 | Gending pelan mengalun, lalu sunyi. Lingkaran batu itu kosong dan terang. | A slow gending plays, then silence. The stone ring is empty and bright. |
+
+VERIFY: a ruwatan play read for children, with a gending after the reading (beat `sqv1_ring`).
 
 ### Companion stories
 

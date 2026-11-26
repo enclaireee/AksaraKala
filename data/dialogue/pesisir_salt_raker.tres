@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "pesisir_salt_raker"
+name_key = "NPC_PESISIR_SALT_RAKER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:mq3=done"], "lines": ["DLG_PESISIR_SALT_RAKER_V4", "DLG_PESISIR_SALT_RAKER_V5"], "do": [], "quiet": true},
+	{"if": ["!flag:pesisir_salt_raker_met"], "lines": ["DLG_PESISIR_SALT_RAKER_V1", "DLG_PESISIR_SALT_RAKER_V2", "@NPC_HERO_NAME", "DLG_PESISIR_SALT_RAKER_H1", "@NPC_PESISIR_SALT_RAKER_NAME", "DLG_PESISIR_SALT_RAKER_V3"], "do": ["flag:pesisir_salt_raker_met"], "quiet": true},
+	{"if": [], "lines": ["DLG_PESISIR_SALT_RAKER_V6", "DLG_PESISIR_SALT_RAKER_V7"], "do": [], "quiet": true}
+])

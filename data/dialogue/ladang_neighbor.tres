@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "ladang_neighbor"
+name_key = "NPC_LADANG_NEIGHBOR_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:mq3=done"], "lines": ["DLG_LADANG_NEIGHBOR_V5", "DLG_LADANG_NEIGHBOR_V6"], "do": [], "quiet": true},
+	{"if": ["!flag:ladang_neighbor_met"], "lines": ["DLG_LADANG_NEIGHBOR_V1", "DLG_LADANG_NEIGHBOR_V2", "@NPC_HERO_NAME", "DLG_LADANG_NEIGHBOR_H1", "@NPC_LADANG_NEIGHBOR_NAME", "DLG_LADANG_NEIGHBOR_V3", "DLG_LADANG_NEIGHBOR_V4"], "do": ["flag:ladang_neighbor_met"], "quiet": true},
+	{"if": [], "lines": ["DLG_LADANG_NEIGHBOR_V7", "DLG_LADANG_NEIGHBOR_V8"], "do": [], "quiet": true}
+])

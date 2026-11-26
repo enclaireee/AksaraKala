@@ -52,6 +52,15 @@ Research summary: Eastward (gamedeveloper.com "Road to the IGF: Pixpil's Eastwar
    - Kidul: stilt houses with nipah thatch, jukung boats, drying racks and nets.
    - Pasar: warung stalls (`{`) with cloth or tin awnings.
 
+## Area depth floor (Phase 7b, 2026-11-26, **ASSUMED**, numbers **TUNE**)
+Every non-arena area, in every region, carries at least:
+1. **2 people** NPCs with 4 or more dialogue lines each. Objects (stones, beacons, name-trees, waymarkers, altars) do not count. Each regional lead also gets one "Ask about..." `quiet` topic.
+2. **2 clues or codex spots** (`clue` or `pickup` spots).
+3. **1 encounter or puzzle** (an `encounter`, a `rehearsal`, or a puzzle prop). Towns (`Zone.TOWNS`) are safe hubs and skip this one.
+4. **10% hand-placed features** inside the outer wall ring (any map char that is not floor `.,_` or a spot key). Areas of 90x51 and up are split into 3 or more readable rooms or pockets, not one field.
+
+Exempt: boss-only arenas (`gk_ruang_kala`). `python3 tools/content_density.py` checks this from `zones/*.gd`: it fails on Acts IV-VI (`tt`, `sk`, `gk`) and `--all` fails on every region (`-v` prints the table). Acts I-III still have areas below the floor; that is known and not yet scheduled.
+
 ## Regions & Area Roster (49 Areas)
 
 ### 0. Desa Purwa (1 Area: `desa_purwa`) — Prologue, Interlude & Playable Epilogue

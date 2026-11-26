@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "kulon_gate_watchman"
+name_key = "NPC_KULON_GATE_WATCHMAN_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:mq3=done"], "lines": ["DLG_KULON_GATE_WATCHMAN_V4", "DLG_KULON_GATE_WATCHMAN_V5"], "do": [], "quiet": true},
+	{"if": ["!flag:kulon_gate_watchman_met"], "lines": ["DLG_KULON_GATE_WATCHMAN_V1", "@NPC_HERO_NAME", "DLG_KULON_GATE_WATCHMAN_H1", "@NPC_KULON_GATE_WATCHMAN_NAME", "DLG_KULON_GATE_WATCHMAN_V2", "DLG_KULON_GATE_WATCHMAN_V3"], "do": ["flag:kulon_gate_watchman_met"], "quiet": true},
+	{"if": [], "lines": ["DLG_KULON_GATE_WATCHMAN_V6", "DLG_KULON_GATE_WATCHMAN_V7"], "do": [], "quiet": true}
+])

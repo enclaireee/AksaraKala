@@ -5,13 +5,13 @@ const MAP := [
 	"############################################################",
 	"#...........................################################",
 	"#.........................A.################################",
-	"#.......x.......v...........################################",
+	"#...U...x.......v...........################################",
 	"#...........b.........rr....################################",
 	"#....rr...............rr....################################",
 	"#....rr.....................################################",
 	"#...........................################################",
-	"#...........................################################",
-	"#...........................#____________________________###",
+	"#....................W......################################",
+	"#.........R.................#____________________________###",
 	"#...........................#____________________________###",
 	"#...........................#__rr_____________________rr_###",
 	"#.......rr..............rr..#__rr_____________________rr_###",
@@ -57,6 +57,9 @@ const SPOTS := {
 	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ladang_stake"}, "tile": "."},   # clue, the first red curse stake in the dry field, a name charring on it (3.10 `clue_examined:ladang_stake`; journal note only; ASSUMED id)
 	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "t2_burn_trail", "cond": "quest:sq_t2=active"}, "tile": "."},   # clue, circular scorched grass trail in the dry field (SQ-T2 clue 1 of 2)
 	"F": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "t2_campfire", "memory_id": "sq_t2_herder", "cond": "quest:sq_t2=active"}, "tile": "."},   # clue, unlit campsite in the field (SQ-T2 clue 2 of 2; opens memory `sq_t2_herder`)
+	"U": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ladang_farmer"}, "tile": "."},   # NPC the farmer whose fields are cursed, standing in his dead cucumber rows (ASSUMED; the vines died the night the stakes appeared)
+	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ladang_neighbor"}, "tile": "."},   # NPC a neighbour still carrying water to the dead rows (ASSUMED; saw Buto Ijo walk the field)
+	"R": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ladang_dry_furrow"}, "tile": "."},   # clue, a furrow burnt dry in a spiral, the water gone from the ditch (ASSUMED id; journal note only)
 }
 
 

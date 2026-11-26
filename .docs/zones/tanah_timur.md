@@ -13,14 +13,16 @@ Sizes: 1 screen = 30x17 tiles. 2x2 = 60x34, 3x2 = 90x34, 3x3 = 90x51. Total 8 ar
 
 | id | screens / tiles | look | purpose | contents |
 |----|-----------------|------|---------|----------|
-| `tt_kulon` | 2x2 / 60x34 | Burnt-gold grass, a broken stone gate, Mataram kabut on the west edge | Entry, gentle first fights, first view of the landmark | Spawn `from_mt_wetan`. E `timur_kulon` (west half). E `timur_gerbang` at the ruined gate (east end, leads to `tt_sabana`). Kabut `K1` at the west exit. Landmark silhouette on the east horizon. **Smiths' street** along the road (art): Ratna (`timur_daughter`) (3.1, codex pamor), clue `doorpost_mark` (3.1), a small chest in the north-east hollow. No petilasan. |
-| `tt_sabana` | 3x3 / 90x51 | Open savanna, termite mounds, acacia, a dry pond, a wooden back-road door in the west wall | Hub of the region. Petilasan, side-quest givers, door to Mataram | Petilasan `timur_1` (west-centre, 6 tiles from the kulon link). E `timur_embers` (open centre). Herder `t2_herder` (SQ-T2 giver) near `timur_1`. Secret chest `chest_tt_sabana` in a mound ring (south-west). Kuda kepang pickup `kuda_kepang_1`. Burn-trail path (SQ-T2) to the south, ends at `tt_pesisir`. Gate `sc:mt_tt` in the west wall (north end) to `mt_tegal`. Gate `sc:tt_pasir` in the east wall (north end). Exits: kulon (W), kali (N), beringin (E), pesisir (S). |
+| `tt_kulon` | 2x2 / 60x34 | Burnt-gold grass, a broken stone gate, Mataram kabut on the west edge | Entry, gentle first fights, first view of the landmark | Spawn `from_mt_wetan`. E `timur_kulon` (west half). E `timur_gerbang` at the ruined gate (east end, leads to `tt_sabana`). Kabut `K1` at the west exit. Landmark silhouette on the east horizon. **Smiths' street** along the road (art): Ratna (`timur_daughter`) (3.1, codex pamor), clue `doorpost_mark` (3.1), a small chest in the north-east hollow. **Depth (v4e, ASSUMED):** old gate watchman `kulon_gate_watchman` and clue `gerbang_lintel` east of the gate, a burnt house, a cistern and stalls along the street. No petilasan. |
+| `tt_sabana` | 3x3 / 90x51 | Open savanna, termite mounds, acacia, a dry pond, a wooden back-road door in the west wall | Hub of the region. Petilasan, side-quest givers, door to Mataram | Petilasan `timur_1` (west-centre, 6 tiles from the kulon link). E `timur_embers` (open centre). Herder `t2_herder` (SQ-T2 giver) near `timur_1`. Secret chest `chest_tt_sabana` in a mound ring (south-west). Kuda kepang pickup `kuda_kepang_1`. Burn-trail path (SQ-T2) to the south, ends at `tt_pesisir`. Gate `sc:mt_tt` in the west wall (north end) to `mt_tegal`. Gate `sc:tt_pasir` in the east wall (north end). Exits: kulon (W), kali (N), beringin (E), pesisir (S). **Depth (v4e, ASSUMED):** three pockets: the herders' camp (west, a thorn-fenced kraal with `timur_herder`, `t2_herder`, `sabana_old_drover`, `sabana_camp_cook`, clue `herd_brand`), the waterhole (south-east, `sabana_water_warden`, clue `waterhole_hoofprints`, `kuda_kepang_1` on its bank) and the thorn stand and rock outcrops (north, north-east, south-west). |
 | `tt_kali` | 3x2 / 90x34 | West half: dry riverbed with rocks and one trickle channel. East half: a narrow canyon with red walls | Teach Kemamang and Keris Hantu, two NPCs, the long way to Buto Ijo | E `timur_wisps` (riverbed, west half). E `timur_ngarai` (canyon, east half, straight 12-tile lanes). Mbok Srini `mbok_srini` at her hut (middle, between the two halves). Klething Kuning `klething_kuning` at the river crossing (riverbed) with elite Yuyu Kangkang `yuyu_kangkang` (SQ-T1). Kuda kepang pickup `kuda_kepang_2` (riverbed). Clues `seeds`, `needle_case`, `salt_terasi` around Mbok Srini's hut (3.5, journal notes only; `salt_terasi` no longer opens the K4 memory), Buto Ambush #2 `buto_ambush_2` (3.6). Exits: sabana (S-W), ladang (E). |
-| `tt_beringin` | 3x2 / 90x34 | Giant banyan grove, hanging roots, cracked shrine ruins, a forge under a banyan, a troupe camp | Empu forge, codex ruin, performance, drop to the coast | Mpu Wirasana `timur_empu` at the forge. Practice marks (3 stakes) in the forge yard. Kuda lumping leader `kepang_leader` at the camp and stage `kepang_stage`. (The old `sodo_lanang` pickup is dropped in v4d: the sodo lanang is in Klething Kuning's bundle, clue `t1_sodo` in `tt_kali`.) Codex ruin `codex_ruin` (2 inscribed stones, 1 statue plinth). Secret chest `chest_tt_beringin` in a hollow banyan (north-east). Drop ledge `drop_pesisir` (south rim). Gate `sc:tt_ladang` (north wall, seen from the inside as a root-choked door). Trigger `timur_marks` at the village mouth (3.3), forge-mark puzzle and practice stakes (3.4), clue `banyan_altar` at the ancient banyan with Buto Ambush #3 `buto_ambush_3` (3.7, opens K4), forge defence `timur_forge_defense` (3.11), clues `scabbard` and `forge_records` and the old anvil `forge_stone` in Wirasana's vault (3.12-3.13, opens K5). Exits: sabana (W). No fight room: a quiet area. |
-| `tt_ladang` | 2x2 / 60x34 | Dry field of dead cucumber vines, a dark lair of hanging bones and a lamp | Buto Ijo's field and miniboss arena | E `timur_ladang` (field, west half). Root-gate `sc:tt_ladang` (south wall of the field, opens from this side). Miniboss `buto_ijo` in the arena (east half, 28x16). Kabut `K2` at the east exit, lifts when Buto Ijo is beaten. Optional chest `chest_tt_ladang` in the north-west nook (rule 7). Exits: kali (W), beringin (sc), pasir (E, kabut). |
+| `tt_beringin` | 3x2 / 90x34 | Giant banyan grove, hanging roots, cracked shrine ruins, a forge under a banyan, a troupe camp | Empu forge, codex ruin, performance, drop to the coast | Mpu Wirasana `timur_empu` at the forge. Practice marks (3 stakes) in the forge yard. Kuda lumping leader `kepang_leader` at the camp and stage `kepang_stage`. (The old `sodo_lanang` pickup is dropped in v4d: the sodo lanang is in Klething Kuning's bundle, clue `t1_sodo` in `tt_kali`.) Codex ruin `codex_ruin` (2 inscribed stones, 1 statue plinth). Secret chest `chest_tt_beringin` in a hollow banyan (north-east). Drop ledge `drop_pesisir` (south rim). Gate `sc:tt_ladang` (north wall, seen from the inside as a root-choked door). Trigger `timur_marks` at the village mouth (3.3), forge-mark puzzle and practice stakes (3.4), clue `banyan_altar` at the ancient banyan with Buto Ambush #3 `buto_ambush_3` (3.7, opens K4), forge defence `timur_forge_defense` (3.11), clues `scabbard` and `forge_records` and the old anvil `forge_stone` in Wirasana's vault (3.12-3.13, opens K5). Exits: sabana (W). No fight room: a quiet area. **Depth (v4e, ASSUMED):** banyan trunks and a thicket in the north-west grove, troupe tents, a root pool in the south-west and broken shrine walls round the codex ruin. |
+| `tt_ladang` | 2x2 / 60x34 | Dry field of dead cucumber vines, a dark lair of hanging bones and a lamp | Buto Ijo's field and miniboss arena | E `timur_ladang` (field, west half). Root-gate `sc:tt_ladang` (south wall of the field, opens from this side). Miniboss `buto_ijo` in the arena (east half, 28x16). Kabut `K2` at the east exit, lifts when Buto Ijo is beaten. Optional chest `chest_tt_ladang` in the north-west nook (rule 7). Exits: kali (W), beringin (sc), pasir (E, kabut). **Depth (v4e, ASSUMED):** the farmer `ladang_farmer` and his neighbour `ladang_neighbor` in the north-west of the field, clue `ladang_dry_furrow`. |
 | `tt_pasir` | 3x2 / 90x34 | Pale sea-sand plain, a wide crater rim, black stones, the landmark huge in the east | The last fight, petilasan 2, then the boss gate | E `timur_pasir` (centre, two waves). Petilasan `timur_2` (east end, in a sand alcove, no enemy inside). Hariang Banga stands in the alcove after `timur_2` (camp talk). Stone sentries (decor) at the candi gate. Gate `sc:tt_pasir` (south-west wall) to sabana. Overlook with the Tengger sign (scenery, optional text in the codex ruin). The gatekeeper miniboss `timur_penjaga` and the south-coast link from `tt_pesisir` (3.15), the dune puzzle (3.15), waymarkers puzzle `pasir_waymarkers` (3.15), clue `lc4_lontar` in the alcove (3.17). Exits: ladang (W, kabut), candi (E), sabana (sc), pesisir (S, kabut `K4`). |
-| `tt_candi` | 2x2 / 60x34 | Banyan courtyard in front of Candi Gandring, seven curse stakes | Boss arena | Boss `keris_gandring` (Mpu Gandring's Keris, wakes after the `shrine_sight` beat), then the Nameless Hunter. 7 curse-mark stakes at the arena edge. Five beat spots (see Quest steps and markers). Mpu Wirasana stands in the court for the `keris` beat. Entered only from the `timur_2` alcove side of `tt_pasir`. Clues `hunter_mask_4` and `mask_joined` (3.21); `forge_stone` is no longer here (it is in Wirasana's vault in `tt_beringin`). Exits: pasir (W) only. |
-| `tt_pesisir` | 2x2 / 60x34 | Dunes, a dry shore, driftwood, a pale sea fog on the south edge | Main-path coast since v3.1 (step 3.14, the Hunter's ash trail), with an elite and a secret, and the later back door to Segara Kidul | E `timur_pesisir`. Elite Banaspati `banaspati_elite` (SQ-T2). Kuda kepang pickup `kuda_kepang_3`. Secret chest `chest_tt_pesisir` (wreck in the dunes, east). Kabut `K3` at the south edge to `sk_karang` (opens on `quest:mq4=done`, flag `mq4_9`; a back route only). Drop landing from `tt_beringin`. Clue `ash_trail` and the second fight `timur_dune` (3.14); new east pocket to `tt_pasir` (kabut `K4`, flag `mq3_h4`). Exits: sabana (N), pasir (E, kabut `K4`), sk_karang (S, kabut). |
+| `tt_candi` | 2x2 / 60x34 | Banyan courtyard in front of Candi Gandring, seven curse stakes | Boss arena | Boss `keris_gandring` (Mpu Gandring's Keris, wakes after the `shrine_sight` beat), then the Nameless Hunter. 7 curse-mark stakes at the arena edge. Five beat spots (see Quest steps and markers). Mpu Wirasana stands in the court for the `keris` beat. Entered only from the `timur_2` alcove side of `tt_pasir`. Clues `hunter_mask_4` and `mask_joined` (3.21); `forge_stone` is no longer here (it is in Wirasana's vault in `tt_beringin`). Exits: pasir (W) only. **Depth (v4e, ASSUMED):** caretaker `candi_caretaker` in the west yard, a pond and sentry stones outside the court. |
+| `tt_pesisir` | 2x2 / 60x34 | Dunes, a dry shore, driftwood, a pale sea fog on the south edge | Main-path coast since v3.1 (step 3.14, the Hunter's ash trail), with an elite and a secret, and the later back door to Segara Kidul | E `timur_pesisir`. Elite Banaspati `banaspati_elite` (SQ-T2). Kuda kepang pickup `kuda_kepang_3`. Secret chest `chest_tt_pesisir` (wreck in the dunes, east). Kabut `K3` at the south edge to `sk_karang` (opens on `quest:mq4=done`, flag `mq4_9`; a back route only). Drop landing from `tt_beringin`. Clue `ash_trail` and the second fight `timur_dune` (3.14); new east pocket to `tt_pasir` (kabut `K4`, flag `mq3_h4`). Exits: sabana (N), pasir (E, kabut `K4`), sk_karang (S, kabut). **Depth (v4e, ASSUMED):** fisher `pesisir_fisher` at the wreck, salt raker `pesisir_salt_raker` on the shore flats, clues `wreck_hull_marks` and `shore_tide_line`. |
+
+Depth floor (v4e, ASSUMED, world.md Area depth floor): every area has 2+ people, 2+ clues, 1+ encounter or puzzle and 10%+ hand-placed features (`tt_kulon` 13.9%, `tt_sabana` 15.7%, `tt_beringin` 16.2%, `tt_ladang` 39%, `tt_candi` 13%, `tt_pesisir` 15%; `tt_kali` and `tt_pasir` already passed). The new people are `kulon_gate_watchman`, `sabana_old_drover`, `sabana_camp_cook`, `sabana_water_warden`, `ladang_farmer`, `ladang_neighbor`, `pesisir_fisher`, `pesisir_salt_raker`, `candi_caretaker` (dialogue lines to be written). Lead "Ask about..." topic: `timur_empu`, "the people on the road".
 
 Quest NPCs: 6 (Mpu Wirasana, Mbok Srini, Klething Kuning, the herder, the kuda lumping leader, Hariang Banga at `timur_2`). Elites: Yuyu Kangkang, Banaspati elite. Miniboss: Buto Ijo. Secrets: 3 chests. Codex: 1 location (`tt_beringin`). Petilasans: `timur_1` (`tt_sabana`), `timur_2` (`tt_pasir`).
 
@@ -428,6 +430,7 @@ Small own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `g
 Enter `tt_kulon` (landmark on the horizon): the smiths' street and Ratna, `doorpost_mark`, `timur_kulon` (Ward teach), `timur_gerbang` (3.1, Prajurit, Summon), Buto Ambush #1 (3.2) > `tt_sabana` and petilasan **`timur_1`** > the village mouth with the red marks, the forge in `tt_beringin`, Mpu Wirasana (3.3), the forge-mark puzzle and practice stakes (3.4) > `tt_kali`: wisps (Dash), Mbok Srini, three pouch clues, canyon (Bind) (3.5), Buto Ambush #2 (3.6) > the banyan in `tt_beringin`: `banyan_altar`, Buto Ambush #3 (3.7), the K4 memory (3.8) > `tt_ladang`: **Buto Ijo (3.9)**, the curse stakes (3.10) > `sc:tt_ladang` to the forge: the forge defence (3.11), scabbard and forge records in the vault (3.12), `forge_stone` and the K5 memory (3.13) > drop to `tt_pesisir`: ash trail, two fights (3.14) > the east pocket (K4) > `tt_pasir`: the gatekeeper, the waymarkers, the sand-plain fight (3.15) > petilasan **`timur_2`**, camp talk (3.16), LC4 (3.17) > `tt_candi`: `shrine_sight` (3.18), **Mpu Gandring's Keris (3.19)**, beat `keris` (choice 4, 3.20) > H4 and K6, `hunter_shrine` (restore) (3.21) > **the Nameless Hunter (3.22)**, beat `hunter_name` (riders take you home). Branch: back door `sc:mt_tt`, shortcuts `sc:tt_ladang` and `sc:tt_pasir`.
 
 ## Step 2 self-check ([AGENTS.md](../../AGENTS.md) section 5), re-run for v4c 2026-11-06
+- [x] Depth floor (v4e, 2026-11-26): see the Depth floor note above the quest NPC count; `tt_sabana` is split into the camp, the waterhole and the thorn and rock pockets; no new encounters, no new enemy types.
 - [~] POI counts: 1 boss arena (`tt_candi`), 1 miniboss room (Buto Ijo) plus the gatekeeper miniboss, 2 elites, 7 NPCs (daughter added), 5 secrets or finds (sabana mound ring, hollow banyan, pesisir wreck, kulon hollow, ladang nook), 1 codex ruin, 10 encounters, 2 petilasans. The extra encounters, the second miniboss and the extra chests exist because the v4c step tables count the pieces and rule 7 asks for a find in every area.
 - [x] Petilasan before the boss, no fight between: `timur_2` is in the east alcove of `tt_pasir`; `timur_pasir` and the gatekeeper are before it; the camp talk, LC4, and the K5 memory (inside `tt_candi`) are not fights.
 - [x] Each enemy first appears alone or with known enemies with a usable weakness: unchanged; `timur_dune` (Banaspati only) and the gatekeeper (Prajurit, known) are repeats.
@@ -465,6 +468,8 @@ Enter `tt_kulon` (landmark on the horizon): the smiths' street and Ratna, `doorp
 
 - Story v5 pass (**ASSUMED** 2026-11-06): step numbers follow the 22-step MQ3 (quests.md section 4). `salt_terasi` lost its `memory_id`; the K4 memory opens from the new clue `banyan_altar` (`V` (50,14) in `tt_beringin`, cond `flag:mq3_b3`). `forge_stone` moved from `tt_candi` to Wirasana's vault (`Q` (19,4) in `tt_beringin`, cond `flag:mq3_h4`, K5 = 3.13). New clue `ladang_stake` (`L` (23,14) in `tt_ladang`). `ash_trail` and `doorpost_mark` were already placed. `pasir_waymarkers` stays the trigger `J`: the clue and the puzzle share the id. The beat `marks_hook` now reads `flag:mq3_h1` instead of `step:mq3=1`. There is no `tt_pasar`: Ratna's street is `tt_kulon`, the savanna `tt_sabana`, the forge and banyan `tt_beringin`.
 
+- v4e depth pass (**ASSUMED** 2026-11-26): the new npc_ids, clue ids (`gerbang_lintel`, `herd_brand`, `waterhole_hoofprints`, `ladang_dry_furrow`, `wreck_hull_marks`, `shore_tide_line`), rooms and features above. New people carry no `cond` (always present). The herders' camp is the closest thing to a town in Act IV; the Tengger/Madura cattle-herding details are **VERIFY** before the writer uses them.
+
 ## Open questions
 1. Mataram: confirm `mt_wetan`/`mt_tegal` exist in the Mataram doc, and where `batu_bintang` lies.
 2. Resolved by the main session (2026-11-06): `K3` opens on `quest:mq4=done` (`mq4_9`), a back route only.
@@ -497,36 +502,36 @@ The 8 sections below follow the format of [mataram.md](mataram.md) (tile chars a
 ############################################################
 #...........................................##.............#
 #...........................................##.............#
-#...........................................##.............#
-#...........................................##.............#
-#.............................rr..b.........##......rr.....#
-#.........rr..................rr............##......rr.....#
-#.........rr.........................b......##.............#
-#...........................................##.............#
-#...........................................##.............#
-#...........................................##.........C...#
-#...........................................##.............#
-#...........................................##.............#
-#...........................................rr.............#
+#...#########.......rr......................##......rr.....#
+#...#.......#.......rr......................##.L....rr.....#
+#...#.......#.................rr..b.........##......rr.....#
+#...#.....rr#.................rr............##......rr.....#
+#...#.....rr#.........r..............b......##.....rrrrrrrr#
+#...###..####.....rr..rr.rr...........rr....##.....r......r#
+#.................r.r.r..r............rr....##.....r......r#
+#.................r.rrr.r...................##.........C..r#
+#...........................................##.....r......r#
+#...........................................##.....r......r#
+#..............####............####...####..rr.....rr..rrrr#
 #...........A...............B...............rr.............#
 #######....................................................#
 Xe,,K,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,D,,,,,,,,,,,,G,,,,,,,,,yY
 X,,,K,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
-#######....................................................#
+#######..####...........####.........####..................#
 #...........................................rr.............#
 #...........................................rr.............#
 #...........................................##.............#
-#...........................................##.............#
-#...........................................##.............#
-#..................................rr.......##.............#
-#..................................rr.......##.............#
-#...........................................##.............#
-#...................rr......................##.............#
-#...................rr......................##........rr...#
-#...........................................##........rr...#
-#...........................................##.............#
-#...........................................##.............#
-#...........................................##.............#
+#.....rr....................................##.............#
+#.....rr....................................##.............#
+#............~~~~~.................rr.......##....P........#
+#............~~~~~.................rr.......##.............#
+#............~~~~~..........................##.............#
+#...................rr......................##....rr.......#
+#...................rr..................rr..##.r..rr..rr...#
+#.........rr..............rr...rr..rr...rr..##rrrr....rr...#
+#.........rr..............rr.rrrrrr.........##.rrrr........#
+#.............rr..............rrrrrrr.......##r............#
+#.............rr.................r..........##.............#
 ############################################################
 ```
 
@@ -545,6 +550,8 @@ X,,,K,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `B` | clue, the first red curse mark on a stall doorpost (3.1 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"doorpost_mark"}` | grass | 1 |
 | `C` | chest: 150 Ilmu (north-east hollow, rule 7 optional find, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"chest_tt_kulon", item_id:"ilmu:150"}` | grass | 1 |
 | `D` | encounter buto_ambush_1 (3.2 Stalking Ambush #1: Buto Ijo's sudden rampage across the western savanna) | `res://entities/world/encounter.tscn` | `{area_id:"buto_ambush_1", size:Vector2i(16,9), waves:[[[res://entities/bosses/buto_ijo.tscn, Vector2i(0,-4)], [res://entities/enemies/banaspati.tscn, Vector2i(-4,-2)], [res://entities/enemies/banaspati.tscn, Vector2i(4,-2)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,2)]]]}` | path | 1 |
+| `P` | NPC the old gate watchman, east of the ruined gate off the road (ASSUMED; saw the gate crack before the curse) | `res://entities/npc/npc.tscn` | `{npc_id:"kulon_gate_watchman"}` | grass | 1 |
+| `L` | clue, the carved gate lintel with a warding mark scratched over it (ASSUMED id; journal note only) | `res://entities/world/clue.tscn` | `{clue_id:"gerbang_lintel"}` | grass | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -557,6 +564,8 @@ X,,,K,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 |------|----------------------|---------|----------|---------------|
 | smiths' street | (7,13)-(43,18) | The arrival slice: stalls along the road (art), the daughter, the first mark | NPC `A` (12,14), clue `B` (28,14) | 3.1 `talked_to:timur_daughter` |
 | hollow | (50,9)-(58,11) | North-east hollow behind the rocks | chest `C` (55,10) | rule 7 |
+| ruined gate yard | (46,3)-(58,31) | East of the broken gate: the watchman and the lintel (v4e) | NPC `P` (50,24), clue `L` (47,4) | depth floor |
+| burnt house and cistern | (4,3)-(12,8), (13,24)-(17,26) | Hand-placed ruin and cistern off the road (v4e) | walls, water | depth floor |
 ## Area 2: tt_sabana
 
 - Size: 90 x 51 tiles = 3 x 3 screens (30 x 17 each).
@@ -567,53 +576,53 @@ X,,,K,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 ```
 ##############################NN##########################################################
 #.............................n,.........................................................#
-#.............................,,.........................................................#
-#.............................,,.........................................................#
-#.............................,,.........................................................#
-#.............................,,.........................................................#
-#.............................,,.........................................................#
-#.............................,,.........................................................#
-#.............................,,............................rr...........................#
-#.............................,,............................rr...........................#
-#######.............rr........,,.....................................................#####
-Mm,,,,,.............rr........,,.....................................................+,,zZ
+#................t.t.t........,,..............t..........................r...............#
+#..............tt.ttt...t.....,,........t.tt.t.tttt.tt............r........r.............#
+#............t..t..........t..,,....ttt.ttt.t.t.trt...tt........rrr.......r..r..r........#
+#...........tt...t..ttt.....t.,,...tt.r..tt.t.trr.rttttttr......rrrrrr..r.rr.............#
+#..............tt.t.t.t...t...,,..t.ttttttt..ttt..t.tt.tttt......rrrrrrrr..r...r.........#
+#.................tt..t...t...,,...ttt.tttttt.t.rtttt..t.t............rrrrrr.............#
+#...............t......tt.....,,.....t.t....t.tt.ttttrttt...rr.......r...rrrrrr..........#
+#.............................,,.........ttttttt...ttt......rr....rrr.......rrr..........#
+#######.............rr........,,..............t...................rrrrrr.............#####
+Mm,,,,,.............rr........,,.....................................rrr.............+,,zZ
 M,,,,,,.......................,,..................................j..................+,,,Z
 #######.......................,,.....................................................#####
 #.............................,,.......................rr.......b........................#
-#.............................,,.......................rr................................#
-#..............rr.............,,...................................b.....................#
-#..............rr.............,,.........................................................#
-#.............................,,...........................................rr............#
-#.............................,,...........................................rr............#
-#.............................,,.........................................................#
-#.............................,,.........................................................#
-#.........H..T................,,.........................................................#
-#.............................,,.........................................................#
+#...########...##########.....,,.......................rr................................#
+#...#..........rr.......#.....,,...................................b.....................#
+#...#.####.....rr..####.#.....,,.........................................................#
+#...#.####.U...W...####.#.....,,...........................................rr............#
+#...........rr................,,...........................................rr............#
+#.....####..........####......,,.........................................................#
+#...#.####..........#####.....,,.........................................................#
+#...#.....H..T........F.#.....,,.........................................................#
+#...####.........########.....,,.........................................................#
 Xe,,,,,P,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY
 X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
-#...........................................,,...........................................#
-#...........................................,,...........................................#
-#...........................................,,...........................................#
-#...........................................,,...........................................#
-#...........................................,,...........................................#
-#...........................................,,...........................................#
-#...........................................,,...........................................#
-#...........................................,,...........................................#
-#........................rr.................,,...........................................#
-#........................rr.................,,........................rr.................#
-#...........................................,,........................rr.................#
-#.......rrrr..rrr...........................,,...........................................#
-#.......r.......r...........................,,...........................................#
-#.......r.......r...........................,,...........................................#
-#.......r...c...r...........................,,..............k............................#
-#.......r.......r...........................,,...........................................#
-#.......r.......r.....................rr....,,...........................................#
-#.......rrrrrrrrr.....................rr....,,...........................................#
-#...........................................,,...................rr......................#
-#...........................................,,...................rr......................#
-#...........................................,,...........................................#
-#...........................................,,...........................................#
-#...........................................,,...........................................#
+#..........r.r..............................,,...........................................#
+#.....r....r...r............................,,....................................rr.....#
+#.....rr.r.....rr...........................,,..............................t.....rr.....#
+#........rr..r..............................,,..............................tt....rr.....#
+#.....r...............rrr...................,,.............................tt..t..rr.....#
+#.........r...........rrr...t...............,,.........................t..t.t.tt.........#
+#.....................t.trrr....t...........,,.............................t..tt..t......#
+#....................t.ttrrr................,,..........................t..t.ttt.trr.....#
+#........................rrtrrr.............,,..........................t.......t.rr.....#
+#....................tt..rrtrrrt............,,.....................t.trrttt.tt...........#
+#..................tttt.t..t.t.rrr..........,,.................tt..t..rr..t.ttt...rr.....#
+#.......rrrr..rrr......t...t.t.rrrt.........,,.....................ttrr...........rr.....#
+#.......r.......r...t.t...rrr.tt..t.........,,.................t.rt.t..r..r..............#
+#.......r.......r....t..t.rrrtt.trrr........,,............t....rr.~~~~~~~~~.t............#
+#.......r...c...r.........t.tt...rrr........,,..............k.tt~~~~~~~~~~~~~rL..........#
+#.......r.......r......rrrt..rrr............,,.............t.trr~~~~~~~~~~~~~rt....t.....#
+#.......r.......r......rrr...rrr......rr....,,............t...tQ~~~~~~~~~~~~~.r..........#
+#.....t.rrrrrrrrr.....................rr....,,..................rr~~~~~~~~~.r............#
+#.....t..t...t...tt.........................,,......tttt.r...tt.rrr.r.....r..ttt.........#
+#...t...ttt.t.t..t..........................,,.rtrt.t.tt.tt.tt..trrtrr.rr.r..............#
+#..tt.t...t..tt..tt.........................,,rttt.t.tt.tt..tt.t..........t..t...........#
+#....t.t..tt..t.............................,,..tt..tttrr.t.t.ttt.t.......t..............#
+#...........................................,,.....trt.ttt.t.tt..........................#
 #...........................................s,...........................................#
 ############################################SS############################################
 ```
@@ -642,11 +651,19 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `E` | encounter timur_embers | `res://entities/world/encounter.tscn` | `{area_id:"timur_embers", size:Vector2i(26,14), waves:[[[res://entities/enemies/banaspati.tscn, Vector2i(8,-4)], [res://entities/enemies/banaspati.tscn, Vector2i(8,4)], [res://entities/enemies/banaspati.tscn, Vector2i(4,-5)], [res://entities/enemies/banaspati.tscn, Vector2i(4,5)]]]}` | path | 1 |
 | `b` | loose banaspati, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/banaspati.tscn` | `{}` | grass | 2 |
 | `j` | loose prajurit terkutuk, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/prajurit_terkutuk.tscn` | `{}` | grass | 1 |
+| `U` | NPC old cattle drover at the herders' camp (ASSUMED; knows the herds and the burnt grass) | `res://entities/npc/npc.tscn` | `{npc_id:"sabana_old_drover"}` | grass | 1 |
+| `W` | NPC the camp cook at the hearth (ASSUMED; feeds the herders, hears every rumour) | `res://entities/npc/npc.tscn` | `{npc_id:"sabana_camp_cook"}` | grass | 1 |
+| `Q` | NPC the waterhole warden (ASSUMED; keeps the hole clean, counts who drinks) | `res://entities/npc/npc.tscn` | `{npc_id:"sabana_water_warden"}` | grass | 1 |
+| `F` | clue, a branding iron and a calf marked with a red curse mark at the camp (ASSUMED id; journal note only) | `res://entities/world/clue.tscn` | `{clue_id:"herd_brand"}` | grass | 1 |
+| `L` | clue, hoofprints and ash at the waterhole rim, the herd turned back from the water (ASSUMED id; journal note only) | `res://entities/world/clue.tscn` | `{clue_id:"waterhole_hoofprints"}` | grass | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
 |---------|------|------|-----------------------|--------------|
 | `timur_embers` | `E (50,25)` | 26x14 | W1: Banaspati (+8,-4), Banaspati (+8,+4), Banaspati (+4,-5), Banaspati (+4,+5) | Ga Ward |
+| herders' camp | (4,15)-(24,23) | Thorn-fenced kraal, huts and a hearth: the closest thing to a town in Act IV (v4e, ASSUMED) | NPCs `H` (10,22), `T` (13,22), `U` (11,18), `W` (15,18); clue `F` (22,22) | SQ-T2 |
+| waterhole | (57,34)-(83,48) | Pool, rock rim and acacia; kuda kepang `k` (60,40) on the west bank | NPC `Q` (63,42), clue `L` (78,40) | SQ-T4 |
+| thorn stand and outcrops | (34,2)-(80,12), (20,30)-(36,44), (56,44)-(66,49), (80,26)-(86,38) | Hand-placed acacia and rock pockets that break up the open field (v4e, ASSUMED) | features only | depth floor |
 
 ## Area 3: tt_kali
 
@@ -735,36 +752,36 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ```
 ############################################################NN############################
 #..........................................................#n,#..........................#
-#..........................................................#,,#.............###########..#
-#.......#############...................#############......#++#.............#_________#..#
-#.......#__________Q#.........rr........#___________#.......,,..............#____c____#..#
-#.......#___________#.........rr........#___________#.......,,..............#_________#..#
-#.......#_____E_____#...................#_____R_____#.......,,..............#_________#..#
-#.......#___________#...................#___________#.......,,..............#_________#..#
-#.......#___C____F__#...................#___________#.......,,..............#####,#####..#
-#.......#___________#...................#___________#.......,,...................,.......#
-#.......######,######....rr.............######,######.......,,...................,.......#
-#.............,..........rr...................,.............,,...................,.......#
-#.............B...............................,.............,,...................,.......#
-#..........S..S..S............................,.............,,...................,.......#
+#.......................rrtt..ttt.rr.......................#,,#.............###########..#
+#.......#############...rr....tt..rr....#############......#++#.............#_________#..#
+#.......#__________Q#.tt.....trrt...t...#___________#.......,,.......t.r....#____c____#..#
+#.......#___________#t.tttt..rrr..tt...t#___________#.......,,....t......t..#_________#..#
+#.......#_____E_____#.t...t..rrt.....tt.#_____R_____#.......,,..t.tttttt.tt.#_________#..#
+#.......#___________#...ttt.....t...rr..#___________#.......,,t.......t.....#_________#..#
+#...ttt.#___C____F__#.....trr..t..t.rr..#___________#.......,,..rt..r.t.t..t#####,#####..#
+#.....t.#___________#......rr...........#___________#.......,,.trtt..t..trt......,.......#
+#..tt.tt######,######....rr.............######,######.......,,..t....trt.t.......,.......#
+#....t........,..........rr...................,.............,,.t.....t..t........,.......#
+#.t...t.......B...............................,.............,,......t.t..........,.......#
+#..tt......S..S..S............................,.............,,...................,.......#
 #.............................................1...V...2.....,,...................,.......#
 #.............,...............................,.............,,...................,.......#
 Xe,,,,A,,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,,,,,,,,,H,,,,,,,,,,,,,,,,,,,,,,,,,,,,..........#
 X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..........#
-#.................................................,,.....................................#
-#.................................................3,.....................................#
-#.................................................,,..................rr..rr.............#
-#.................................................,,..................rr..rr.............#
-#.................................................,,....b...........g...i...o............#
-#.................................................,,.....................................#
-#.............................L...................,,......b..............................#
-#....rr...........................................,,..................rr..rr.............#
-#....rr...........................................,,....j.............rr..rr.............#
-#.................................................,,.....................................#
-#.............................T...................,,........rr...........................#
-#.................................................,,........rr...........................#
-#.................................................,,.....................................#
-#.................................................,,.....................................#
+#...rr.r..r.r.....................................,,.....................................#
+#...r.r...r...r...................................3,............###..####..#####.........#
+#...r.....rr......................................,,............#.....rr..rr...#.........#
+#.......rrr..................................t....,,...tt.......#.....rr..rr...#.........#
+#.......r.........................................,,t.ttb.......#...g...i...o..#.........#
+#.....................####..........####.......t.t,,...t.................................#
+#.....................####....L.....####.tt..t...t,,......b..............................#
+#....rrr...r...t.t.......................tt......t,,.t...ttt....#.....rr..rr...#.........#
+#....rr~~~t................................tt.....,,....j.tt....#.....rr..rr...#.........#
+#..r..~~~~~rr...t.......rr..........####...tt.t...,,..t...t.....#..............#.........#
+#.rr.~~~~~~~..rt.t......rr....T.....####.......t..,,tt.t....rr..######..####..##.........#
+#..rr.~~~~~trr...............................r...t,,.t.r.t.rrr...t..t......ttt....r......#
+#..rr..~~~..r.....t..........................r.r.r,,.rt.trt..t.t.t...t...r.t..trt..t.t...#
+#......r.r.t................................rr....,,.r....t.tt.t....tt..r.ttrt...trt.....#
 #.................................................,,.....................................#
 ##################################################DD######################################
 ```
@@ -807,6 +824,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 | forge house vault | (9,4)-(19,9) forge interior | Wirasana's vault: the three K5 clues | `C` scabbard (12,8), `F` forge_records (17,8), `Q` forge_stone (19,4), the old anvil in the corner | 3.12 `all` of `clue_examined:scabbard`, `clue_examined:forge_records`; 3.13 `forge_stone` |
 | ancient banyan | (42,12)-(58,20) | The banyan on the road east of the forge, Buto Ambush #3 `H` (50,16) | `V` banyan_altar (50,14) | 3.7 `buto_ambush_3`, `banyan_altar`; 3.8 `k4_timun_mas` |
 | village mouth and forge door | marks trigger `A` (6,16), puzzle `B` (14,12) | Hook and the forge-door puzzle | `timur_marks`, `puzzle_timur_forgemark` | 3.3 `timur_marks`; 3.4 `puzzle_timur_forgemark` |
+| grove, camp tents, pool, shrine walls (v4e) | (22,2)-(37,9), (22,23)-(39,28), (4,25)-(14,31), (64,19)-(79,28) | Hand-placed banyan trunks, troupe tents, a root pool and broken shrine walls | features only | depth floor |
 ## Area 5: tt_ladang
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
@@ -818,13 +836,13 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 ############################################################
 #...........................################################
 #.........................A.################################
-#.......x.......v...........################################
+#...U...x.......v...........################################
 #...........b.........rr....################################
 #....rr...............rr....################################
 #....rr.....................################################
 #...........................################################
-#...........................################################
-#...........................#____________________________###
+#....................W......################################
+#.........R.................#____________________________###
 #...........................#____________________________###
 #...........................#__rr_____________________rr_###
 #.......rr..............rr..#__rr_____________________rr_###
@@ -872,6 +890,9 @@ Y,,,,,,,,,,,,,,,............################################
 | `L` | clue, the first red curse stake in the dry field, a name charring on it (3.10 `clue_examined:ladang_stake`; journal note only; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"ladang_stake"}` | grass | 1 |
 | `D` | clue, circular scorched grass trail in the dry field (SQ-T2 clue 1 of 2) | `res://entities/world/clue.tscn` | `{clue_id:"t2_burn_trail", cond:"quest:sq_t2=active"}` | grass | 1 |
 | `F` | clue, unlit campsite in the field (SQ-T2 clue 2 of 2; opens memory `sq_t2_herder`) | `res://entities/world/clue.tscn` | `{clue_id:"t2_campfire", memory_id:"sq_t2_herder", cond:"quest:sq_t2=active"}` | grass | 1 |
+| `U` | NPC the farmer whose fields are cursed, standing in his dead cucumber rows (ASSUMED; the vines died the night the stakes appeared) | `res://entities/npc/npc.tscn` | `{npc_id:"ladang_farmer"}` | grass | 1 |
+| `W` | NPC a neighbour still carrying water to the dead rows (ASSUMED; saw Buto Ijo walk the field) | `res://entities/npc/npc.tscn` | `{npc_id:"ladang_neighbor"}` | grass | 1 |
+| `R` | clue, a furrow burnt dry in a spiral, the water gone from the ditch (ASSUMED id; journal note only) | `res://entities/world/clue.tscn` | `{clue_id:"ladang_dry_furrow"}` | grass | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -884,6 +905,7 @@ Y,,,,,,,,,,,,,,,............################################
 | arena gate | `G` (28,15)-(28,18) | West mouth of the Buto Ijo arena, side `e`; the east mouth is closed by kabut `K` | gate `G` x4 | 3.9 |
 | north-west nook | (20,1)-(27,3) | Optional find, off the Buto Ijo road | chest `A` (26,2) | rule 7 |
 | curse stake | (23,14) | The first stake of the waking Keris in the dry field, near the stakes fight `C` (21,16) | clue `L` (23,14) | 3.10 `ladang_stake`, `timur_ladang_stakes` |
+| dead rows | (3,3)-(21,9) | The farmer and his neighbour at the north-west of the field, away from the stakes fight (v4e, ASSUMED) | NPCs `U` (4,3), `W` (21,8); clue `R` (10,9) | depth floor |
 ## Area 6: tt_pasir
 
 - Size: 90 x 34 tiles = 3 x 2 screens (30 x 17 each).
@@ -979,36 +1001,36 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ```
 ############################################################
 #..........................................................#
+#...t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t......#
 #..........................................................#
-#..........................................................#
-#.....rr..........####################################.....#
-#.....rr..........#__________________________________#.....#
-#...........rr....#__1______________2______________3_#.....#
-#...........rr....#__________________________________#.....#
+#.....rr..........####################################..r..#
+#.....rr..........#__________________________________#...r.#
+#.......~~~~rr....#__1______________2______________3_#.....#
+#......~~~~~rr....#__________________________________#..r..#
+#.......~~~~~.....#__________________________________#..rr.#
 #.................#__________________________________#..rr.#
-#.................#__________________________________#..rr.#
-#.................#________rr_______H_______rr_______#.....#
-#.................#________rr_N_____________rr_______#.....#
+#..rr.............#________rr_______H_______rr_______#..r..#
+#..rr.............#________rr_N_____________rr_______#...r.#
 #.................#__________________________________#.....#
-#.................#_________________R________________#.....#
-#.................#__________________________________#.....#
+#.................#_________________R________________#..r..#
+#.....r...r...r...#__________________________________#...r.#
 #.............Q...A__________________________________#.....#
-Xe,,,,,,,,,,,,,,,,A__E__S___________B___C________D___#.....#
-X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
+Xe,,,,,,,,,,,,,,,,A__E__S___________B___C________D___#..r..#
+X,,,,,,,,,,,,,,,,,A________________________________4_#...r.#
 #.............V...A__________________________________#.....#
-#.................#_____________W___K________________#.....#
-#.................#__________________________________#.....#
+#.....r...r...r...#_____________W___K________________#..r..#
+#........U........#__________________________________#...r.#
 #.................#__________________________________#.....#
 #.................#________rr_______________rr_______#..rr.#
 #.................#________rr_______________rr_______#..rr.#
-#.................#__________________________________#.....#
-#.................#__________________________________#.....#
-#...........rr....#__________________________________#.....#
+#..rr.............#__________________________________#.....#
+#..rr.............#__________________________________#..r..#
+#...........rr....#__________________________________#...r.#
 #...........rr....#__7______________6______________5_#.....#
-#.......rr........#__________________________________#.....#
-#.......rr........####################################.....#
-#..........................................................#
-#..........................................................#
+#.......rr........#__________________________________#..r..#
+#.......rr........####################################...r.#
+#...t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t......#
+#....t...t...t...t...t...t...t...t...t...t...t...t.........#
 #..........................................................#
 ############################################################
 ```
@@ -1038,12 +1060,14 @@ X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
 | `E` | trigger, inner sanctum entry via Laras's wind-tunnel shortcut (3.18 `candi_inner_sanctum`) | `res://entities/world/trigger.tscn` | `{trigger_id:"candi_inner_sanctum", size:Vector2i(5,4)}` | floor | 1 |
 | `Q` | rehearsal post for the Keris (3.19): a practice stake outside the west gate, cast Jawa Ha on it (rehearsal.tscn, id `reh_keris`; the practice stakes of 3.4 stand in tt_beringin) | `res://entities/world/rehearsal.tscn` | `{id:"reh_keris", glyph:"jawa_ha", look:"post", boss:"keris_gandring"}` | grass | 1 |
 | `V` | rehearsal shade for the Hunter (3.22): cast Sunda Ga on it; visible once the Keris is beaten (`mq3_7`) (rehearsal.tscn, id `reh_hunter`) | `res://entities/world/rehearsal.tscn` | `{id:"reh_hunter", glyph:"sunda_ga", look:"shade", boss:"nameless_hunter", cond:"flag:mq3_7"}` | grass | 1 |
+| `U` | NPC the old caretaker of Candi Gandring, in the west yard outside the court (ASSUMED; keeps the stakes swept, will not cross the gate) | `res://entities/npc/npc.tscn` | `{npc_id:"candi_caretaker"}` | grass | 1 |
 
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | arena gate | `A` (18,15)-(18,18) | West mouth of the court, side `e`, shared by the Keris and the Hunter; the shrine_sight trigger `S` and trigger `E` stand inside past the threshold (the gate ignores a boss that is not awake yet) | gate `A` x4 | 3.19, 3.22 |
 | clue spots | `hunter_mask_4` (40,16) east of the keris `B` (37,16); `mask_joined` (49,16) at the east shrine door (`forge_stone` is no longer here: it is in Wirasana's vault in `tt_beringin`) | Walked in this order | clues `C` `D` | 3.21 |
+| west yard (v4e) | (1,4)-(17,31) | Caretaker `U` (9,20) beside the rehearsal posts; pond and sentry stones | NPC `U` | depth floor |
 ## Area 8: tt_pesisir
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
@@ -1057,7 +1081,7 @@ X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
 #...........................,,.............................#
 #...........................,,.............................#
 #...........................,,................l............#
-#...........................,,.............................#
+#...........................,,......W......................#
 #.......rr..................,,..........rr.................#
 #.......rr..................,,..........rr.................#
 #.............B.............,,.............................#
@@ -1070,7 +1094,7 @@ X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
 #.....rr....................,,.........................#####
 #...........................,,.............................#
 #.....................T.....,,..E..........................#
-#...........................,,.............................#
+#...........................,,.......................L.....#
 #...........................,,.............................#
 #.........rr................,,......................rrrrrr.#
 #.........rr................,,......................r....r.#
@@ -1078,8 +1102,8 @@ X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
 #...........................,,......................r....r.#
 #.......k...................,,......................r....r.#
 #...........................,,......................rrrrrr.#
-#...........................,,..............rr.............#
-#.................rr........,,..............rr.............#
+#...........................,,..............rr....U........#
+#.................rr....R...,,..............rr.............#
 #.................rr........,,.............................#
 ############################KK##############################
 ############################,,##############################
@@ -1108,6 +1132,10 @@ X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
 | `C` | spawn, arrival from tt_pasir (inside the east pocket) | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | grass | 1 |
 | `D` | exit to tt_pasir (east edge, east pocket behind K4, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pasir", spawn_id:"from_tt_pesisir"}` | path | 2 |
 | `w` | channel wheel at the spring; turn it to flood the burn channel (SQ-T2 step 3; sets `flag:channel_wheel`) | `res://entities/npc/npc.tscn` | `{npc_id:"channel_wheel"}` | grass | 1 |
+| `U` | NPC a fisher mending a net beside the wreck, no boat left to launch (ASSUMED; the sea stopped giving) | `res://entities/npc/npc.tscn` | `{npc_id:"pesisir_fisher"}` | grass | 1 |
+| `W` | NPC a salt raker working the dry shore flats (ASSUMED; the salt comes up grey since the ash) | `res://entities/npc/npc.tscn` | `{npc_id:"pesisir_salt_raker"}` | grass | 1 |
+| `L` | clue, tally cuts and a red mark burnt into the wreck hull (ASSUMED id; journal note only) | `res://entities/world/clue.tscn` | `{clue_id:"wreck_hull_marks"}` | grass | 1 |
+| `R` | clue, a tide line drawn on the sand far below where the water used to reach (ASSUMED id; journal note only) | `res://entities/world/clue.tscn` | `{clue_id:"shore_tide_line"}` | grass | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -1121,3 +1149,4 @@ X,,,,,,,,,,,,,,,,,A________________________________4_#.....#
 | north dunes | (6,4)-(22,12) | Second fight of 3.14 | E `B` (14,8) `timur_dune` | 3.14 fight |
 | ash trail | clue `A` (14,22) | The trail runs west to east along the dunes | `ash_trail` | 3.14 `clue` |
 | east pocket (new, v4c) | (55,13)-(59,14) 5x2, walls (55..59,12) and (55..59,15) | The coast road into the Sea of Sand: kabut `@` (55,13..14) lifts on `mq3_h4`, spawn `C` (57,13), exit `D` (59,13..14) | link L14 to `tt_pasir` | 3.7 |
+| shore folk (v4e) | `U` (50,26), `W` (36,5) | People of the dry coast, outside both fights | NPCs `U`, `W`; clues `L` (53,18), `R` (24,27) | depth floor |

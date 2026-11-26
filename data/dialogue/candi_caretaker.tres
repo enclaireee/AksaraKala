@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "candi_caretaker"
+name_key = "NPC_CANDI_CARETAKER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:mq3=done"], "lines": ["DLG_CANDI_CARETAKER_V4", "DLG_CANDI_CARETAKER_V5"], "do": [], "quiet": true},
+	{"if": ["!flag:candi_caretaker_met"], "lines": ["DLG_CANDI_CARETAKER_V1", "DLG_CANDI_CARETAKER_V2", "@NPC_HERO_NAME", "DLG_CANDI_CARETAKER_H1", "@NPC_CANDI_CARETAKER_NAME", "DLG_CANDI_CARETAKER_V3"], "do": ["flag:candi_caretaker_met"], "quiet": true},
+	{"if": [], "lines": ["DLG_CANDI_CARETAKER_V6", "DLG_CANDI_CARETAKER_V7"], "do": [], "quiet": true}
+])

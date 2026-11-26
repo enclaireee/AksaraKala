@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate NPC & interactive prop spritesheet (assets/art/npcs.png) for Budayago.
-32x32 cells (the hero's cell, gen_hero_sprites.py), 4 columns (idle breathing frames) x 14 archetype rows:
+32x32 cells (the hero's cell, gen_hero_sprites.py), 4 columns (idle breathing frames) x 17 archetype rows:
   0: villager / farmer / fisher (brown caping, green kampret, hoe on the shoulder)
   1: elder / juru_kunci / lengser / dalang (white beard, indigo batik, leans on a staff)
   2: woman / ibu / weaver / nyai / dayang_sumbi (maroon kebaya, bakul carried in a selendang)
@@ -15,6 +15,9 @@
  11: stone oil lamp (galuh_lamp), animated flame
  12: masked stranger (tall blank mask, wide hat: nameless hunter, market stranger)
  13: faceless villager (hooded, blank face: deserter)
+ 14: Kidul fisher (batik iket, rust kaos, trousers rolled to the knee, cast net on the shoulder, kepis at the hip)
+ 15: Timur drover / herder (wide straw hat, lurik baju, checked sarong across the chest, long herding stick)
+ 16: coastal woman (pale head-cloth, cream kebaya, red pesisir batik, bakul of fish on the hip)
 Figures stand on row 29 like the hero (GROUND), about 26 px tall, head 10 px, lit from the top-left, 3 tones per
 material (the hero's ramps), a coloured outline on the lit side and the hero's dark plum outline on the shade side.
 Idle frames: breathing bob (0, 0, 1, 1) over planted feet, plus cloth, tail, flame and glyph glow loops.
@@ -30,7 +33,7 @@ from gen_hero_sprites import ramp, mix, SKIN, HAIR, EYE, GOLD, WOOD, STEEL, OUTL
 
 CW = CH = 32
 GROUND = 29                      # the row the feet stand on, as for the hero
-ROWS = 14
+ROWS = 17
 BOB = (0, 0, 1, 1)
 WHITE_EYE = hexc("F6EEDC")
 
@@ -793,7 +796,171 @@ def lamp(f):
     return cv
 
 
-DRAW = [villager, elder, woman, royal, semar, cepot, laras, smith, lutung, prasasti, mechanism, lamp, stranger, faceless]
+# ---------------------------------------------------------------- late-game coast and savanna (rows 14-16)
+SUN = ramp("A86A40", "6A3A24", "CC8C5A")          # sun-dark skin of the coast and the savanna
+FADED = ramp("5E7E98", "34485E", "86A4B8")        # sea-faded indigo trousers
+RUST = ramp("A8523A", "6A2E24", "CC7A58")         # the fisher's sleeveless kaos
+BATIK = ramp("7A4A2E", "4A2A1C", "A06A44")        # iket batik
+NET = ramp("C8B07A", "8A7044", "E8D8A8")          # net cord
+STRAW = ramp("CDB06A", "8E6E38", "EED89A")        # the herder's wide hat
+LURIK = ramp("7E6650", "4A3A2E", "A48A6E")        # lurik baju, striped
+CHECK_A, CHECK_B = ramp("A83A34", "6A2224", "D0604E"), ramp("3E6A44", "24402C", "5E8E60")   # kotak sarong
+CREAM = ramp("E6DCC2", "A89C80", "FFF8E6")        # coastal kebaya
+PESISIR = ramp("8E3A2E", "58201E", "B45A44")      # red pesisir batik kain
+FISH = ramp("B8C4C8", "6E7C86", "EEF4F2")
+
+
+def fisher(f):
+    """Kidul fisher: batik iket, sun-dark bare arms, rust kaos, sea-faded trousers rolled to the knee, a cast net
+    over the left shoulder with lead weights at the hem, a bamboo kepis with a fish tail at the right hip."""
+    cv, b = Cv(), BOB[f]
+    for lx in (12, 16):                                    # trousers rolled to the knee, bare shins
+        cv.rect(lx, 22, lx + 3, 23, FADED[1]); cv.px(lx, 22, FADED[2]); cv.px(lx + 3, 23, FADED[0])
+        cv.row(24, lx, lx + 3, FADED[2]); cv.px(lx + 3, 24, FADED[1])   # the rolled cuff
+        cv.rect(lx + 1, 25, lx + 2, 28, SUN[1]); cv.px(lx + 1, 25, SUN[2]); cv.px(lx + 2, 28, SUN[0])
+    cv.rect(16, 23, 16, 24, FADED[0])
+    feet(cv, SUN, 13, 18)
+    ty = 14 + b
+    cv.block(12, ty, 19, 22, RUST)
+    cv.row(ty, 13, 18, RUST[1]); cv.row(ty, 14, 17, SUN[1]); cv.px(14, ty, SUN[2]); cv.row(ty + 1, 15, 16, SUN[0])
+    cv.px(16, ty + 4, RUST[0]); cv.px(14, ty + 6, RUST[0])  # worn spots
+    cv.row(21, 12, 19, BATIK[1]); cv.px(12, 21, BATIK[2]); cv.px(19, 21, BATIK[0]); cv.px(15, 21, NET[1])   # cloth belt
+    arm(cv, 10, ty + 1, 10, 20 + b, 0, SUN)                # bare sun-dark arms
+    arm(cv, 20, ty + 1, 21, 19 + b, 0, SUN, inner=-1)
+    # cast net: gathered on the left shoulder, a mesh falling to the knee, lead weights on the hem, swaying
+    sw = (0, 0, -1, 0)[f]
+    for y in range(ty - 1, 26):
+        t = (y - ty) / max(1, 26 - ty)
+        x0 = 10 - int(t * 4) + (sw if y > 21 else 0)
+        x1 = 12 - int(t * 2) + (sw if y > 21 else 0)
+        for x in range(x0, x1 + 1):
+            c = NET[0] if (x + y) % 2 else (NET[2] if x == x0 else NET[1])
+            cv.px(x, y, c)
+    for x in range(6 + sw, 11 + sw, 2):                    # weights
+        cv.px(x, 26, STEEL[0]); cv.px(x, 27, STEEL[1])
+    cv.rect(10, ty - 1, 12, ty, NET[2]); cv.px(12, ty, NET[1])   # the gathered bundle on the shoulder
+    cv.px(9, ty + 4, hexc("E8622A")); cv.px(8, ty + 8, hexc("E8622A"))   # two float knots
+    # kepis: a narrow-necked bamboo fish basket on a cord at the right hip, a silver tail poking out
+    kx, ky = 21, 20 + b
+    cv.rect(kx, ky + 1, kx + 4, ky + 5, BAMBOO[1]); cv.row(ky + 6, kx + 1, kx + 3, BAMBOO[0])
+    cv.rect(kx + 1, ky, kx + 3, ky, BAMBOO[2]); cv.px(kx, ky + 1, BAMBOO[2]); cv.rect(kx + 4, ky + 1, kx + 4, ky + 5, BAMBOO[0])
+    for y in (ky + 2, ky + 4):
+        cv.row(y, kx + 1, kx + 3, BAMBOO[0])
+    cv.px(kx + 2, ky - 1, FISH[2]); cv.px(kx + 3, ky - 2, FISH[1]); cv.px(kx + 1, ky - 2, FISH[1])
+    hx, hy = 11, 4 + b
+    hair_cap(cv, hx, hy, HAIR)
+    face(cv, hx, hy, SUN, mouth="smile", brow=HAIR[0])
+    cv.px(hx + 4, hy + 7, SUN[2])
+    # batik iket, tied low; the two knot ends stand up at the back-right like small ears
+    for r, a, c in ((0, 2, 7), (1, 1, 8), (2, 0, 9), (3, 0, 9)):
+        cv.row(hy + r, hx + a, hx + c, BATIK[1])
+    cv.row(hy, hx + 2, hx + 4, BATIK[2]); cv.px(hx + 1, hy + 1, BATIK[2]); cv.row(hy + 3, hx, hx + 9, BATIK[0])
+    for x, y in ((hx + 3, hy + 1), (hx + 6, hy + 1), (hx + 2, hy + 2), (hx + 5, hy + 2), (hx + 8, hy + 2)):
+        cv.px(x, y, GOLD[0])                               # parang-dot motif
+    cv.px(hx + 10, hy + 1, BATIK[1]); cv.px(hx + 11, hy, BATIK[1]); cv.px(hx + 10, hy, BATIK[2])
+    cv.px(hx + 11, hy + 2, BATIK[0]); cv.px(hx + 12, hy + 1, BATIK[0])
+    return cv
+
+
+def herder(f):
+    """Timur drover: a very wide straw hat on a chin cord, lurik baju, a checked sarong slung across the chest,
+    dark pangsi, a long herding stick in the left hand with a cord tassel."""
+    cv, b = Cv(), BOB[f]
+    pangsi(cv, DARK, SUN)
+    ty = 14 + b
+    cv.block(12, ty, 19, 22, LURIK)
+    cv.row(ty, 11, 20, LURIK[1]); cv.px(11, ty, LURIK[2]); cv.px(20, ty, LURIK[0])
+    for x in (13, 17):                                     # lurik stripes
+        for y in range(ty + 1, 22):
+            cv.px(x, y, LURIK[0])
+    cv.row(ty, 14, 17, SUN[1]); cv.px(14, ty, SUN[2]); cv.px(15, ty + 1, SUN[0])
+    # kotak sarong slung from the right shoulder to the left hip, the knot at the hip
+    for i in range(9):
+        x, y = 19 - i, ty + i
+        for k in range(3):
+            c = (CHECK_A if ((i // 2) + k) % 2 else CHECK_B)[2 if k == 0 else (1 if k == 1 else 0)]
+            cv.px(x - k + 1, y, c)
+    cv.rect(10, 21 + b, 12, 23 + b, CHECK_A[1]); cv.px(10, 21 + b, CHECK_A[2]); cv.px(12, 23 + b, CHECK_A[0])
+    cv.px(11, 24 + b, CHECK_B[1]); cv.px(10, 24 + b, CHECK_B[0])
+    cv.row(21, 13, 19, DARK[0])                            # dark belt
+    # long stick: in the left hand, planted beside the left foot, taller than the hat
+    for y in range(1, GROUND + 1):
+        cv.px(8, y, WOOD[2] if y > 2 else WOOD[1]); cv.px(9, y, WOOD[0])
+    cv.px(7, 1, hexc("C23A2E")); cv.px(6, 2, hexc("C23A2E")); cv.px(6, 3, hexc("8E2620"))   # cord tassel
+    arm(cv, 10, ty + 1, 9, 16 + b, 3, LURIK)
+    cv.rect(8, 16 + b, 9, 17 + b, SUN[1]); cv.px(8, 16 + b, SUN[2]); cv.px(9, 17 + b, SUN[0])
+    arm(cv, 20, ty + 1, 20, 21 + b, 3, LURIK, inner=-1)
+    hx, hy = 11, 4 + b
+    hair_cap(cv, hx, hy, HAIR)
+    face(cv, hx, hy, SUN, mouth=None, brow=HAIR[0])
+    cv.row(hy + 8, hx + 3, hx + 6, HAIR[1]); cv.px(hx + 3, hy + 9, HAIR[1]); cv.px(hx + 6, hy + 9, HAIR[0])   # moustache
+    cv.px(hx + 4, hy + 7, SUN[2])
+    # wide straw hat: a shallow crown, a brim well past the shoulders, a dark band, the chin cord
+    for r, a, c in ((-2, 3, 6), (-1, 2, 7), (0, 1, 8)):
+        cv.row(hy + r, hx + a, hx + c, STRAW[1]); cv.px(hx + a, hy + r, STRAW[2]); cv.px(hx + c, hy + r, STRAW[0])
+    cv.row(hy + 1, hx + 1, hx + 8, DARK[1]); cv.px(hx + 1, hy + 1, DARK[2])
+    cv.row(hy + 2, hx - 4, hx + 14, STRAW[1]); cv.row(hy + 2, hx - 4, hx - 1, STRAW[2])
+    cv.row(hy + 3, hx - 3, hx + 13, STRAW[0]); cv.px(hx + 14, hy + 2, STRAW[0])
+    for i in (-3, 0, 4, 9, 12):
+        cv.px(hx + i, hy + 2, STRAW[0] if i > 4 else STRAW[2])
+    cv.px(hx + 3, hy - 1, STRAW[2]); cv.px(hx + 6, hy, STRAW[0])
+    cv.row(hy + 4, hx + 1, hx + 8, SUN[0])                 # brim shadow on the brow
+    cv.px(hx, hy + 8, NET[0]); cv.px(hx + 9, hy + 8, NET[0]); cv.px(hx + 1, hy + 9, NET[0])   # chin cord
+    return cv
+
+
+def coast_woman(f):
+    """Coastal woman: a pale head-cloth, cream kebaya with brooch pins, red pesisir batik kain, an ochre selendang
+    from the left shoulder, a bakul of silver fish on the right hip."""
+    cv, b = Cv(), BOB[f]
+    feet(cv, SUN, 13, 18)
+    kain(cv, PESISIR, 12, 19, 22, 27, motif=hexc("F4C060"), hem=PESISIR)
+    for x, y in ((13, 24), (18, 25), (14, 27)):
+        cv.px(x, y, hexc("E8A0A8"))                        # pink flower dots of the pesisir batik
+    ty = 14 + b
+    cv.block(12, ty, 19, 22, CREAM)
+    cv.row(ty, 11, 20, CREAM[1]); cv.px(11, ty, CREAM[2]); cv.px(20, ty, CREAM[0])
+    cv.row(ty, 14, 17, SUN[1]); cv.px(14, ty, SUN[2]); cv.row(ty + 1, 15, 16, SUN[0])
+    for y in (ty + 2, ty + 4, ty + 6):                     # three brooch pins down the front
+        cv.px(16, y, GOLD[1])
+    for x, y in ((13, ty + 5), (18, ty + 3), (13, ty + 7), (18, ty + 7)):
+        cv.px(x, y, CREAM[0])                              # lace openwork
+    cv.row(22, 11, 20, CREAM[0])
+    for i in range(8):                                     # selendang, left shoulder to right hip
+        x, y = 12 + i, ty + i
+        cv.px(x, y, SELENDANG[1]); cv.px(x + 1, y, SELENDANG[0]); cv.px(x, y + 1, SELENDANG[2])
+    # bakul on the right hip, silver fish and a leaf inside
+    bx, by = 19, 18 + b
+    cv.rect(bx, by, bx + 6, by + 5, BAMBOO[1])
+    cv.row(by, bx - 1, bx + 7, BAMBOO[2]); cv.row(by + 5, bx + 1, bx + 5, BAMBOO[0])
+    for y in range(by + 1, by + 5):
+        for x in range(bx, bx + 7):
+            if (x - y) % 3 == 0:
+                cv.px(x, y, BAMBOO[0])
+        cv.px(bx + 6, y, BAMBOO[0])
+    cv.row(by - 1, bx + 1, bx + 4, FISH[1]); cv.px(bx + 1, by - 1, FISH[2]); cv.px(bx + 5, by - 2, FISH[1]); cv.px(bx + 4, by - 2, FISH[0])
+    cv.px(bx + 2, by - 2, hexc("6A994E")); cv.px(bx + 6, by - 1, hexc("386641"))
+    arm(cv, 10, ty + 1, 10, 21 + b, 3, CREAM)
+    arm(cv, 20, ty + 1, 21, 19 + b, 3, CREAM, inner=-1)    # right hand on the basket rim
+    cv.px(21, by + 1, SUN[1]); cv.px(22, by + 1, SUN[0])
+    hx, hy = 11, 4 + b
+    hair_cap(cv, hx, hy, HAIR)
+    face(cv, hx, hy, SUN, eyes="lash", mouth="lips", brow=HAIR[1])
+    cv.rect(hx, hy + 4, hx, hy + 7, HAIR[1]); cv.rect(hx + 9, hy + 4, hx + 9, hy + 7, HAIR[0])
+    # head-cloth: a sea-blue batik cloth over the crown, hair showing at the temples, the knot ends at the nape
+    HC = FADED
+    for r, a, c in ((-1, 2, 7), (0, 1, 8), (1, 0, 9), (2, 0, 9)):
+        cv.row(hy + r, hx + a, hx + c, HC[1])
+    cv.row(hy - 1, hx + 2, hx + 4, HC[2]); cv.row(hy, hx + 1, hx + 3, HC[2]); cv.px(hx, hy + 1, HC[2])
+    cv.row(hy + 2, hx + 1, hx + 8, HC[0]); cv.px(hx + 9, hy + 1, HC[0])
+    for x, y in ((hx + 3, hy), (hx + 6, hy), (hx + 2, hy + 1), (hx + 5, hy + 1), (hx + 8, hy + 1)):
+        cv.px(x, y, CREAM[2])                              # white dots of the batik
+    cv.px(hx + 10, hy + 2, HC[1]); cv.px(hx + 11, hy + 3, HC[0]); cv.px(hx + 10, hy + 4, HC[0])
+    return cv
+
+
+DRAW = [villager, elder, woman, royal, semar, cepot, laras, smith, lutung, prasasti, mechanism, lamp, stranger, faceless,
+        fisher, herder, coast_woman]
 
 
 def main():

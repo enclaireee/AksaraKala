@@ -12,7 +12,7 @@ const MAP := [
 	"#___________________#######_____________rr__________________#########____________________#",
 	"#_________P_________#######______________________________________________________________#",
 	"#___________________________________________________________________________#####________#",
-	"#___________________________________________________________________________#####________#",
+	"#_____________K_____________________________________________________________#####________#",
 	"#___________________________________________________________________________#####________#",
 	"#_______________________rr__________________________________rr______________#####________#",
 	"#_______________________rr__________________________________rr______________#####________#",
@@ -25,7 +25,7 @@ const MAP := [
 	"#_________________rr_____________________________________________________________________#",
 	"#_________________rr_____________________________________________________________________#",
 	"#_______________________________________________________________________________rr_______#",
-	"#_______________________________________________________________________________rr_______#",
+	"#___________________________J___________________________________________________rr_______#",
 	"#_______#####_____________________________________________________#########______________#",
 	"#_______#####_____________________________________________________#########______________#",
 	"#_______#####_________________#########_____________rr____________#########______________#",
@@ -53,6 +53,8 @@ const SPOTS := {
 	"C": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kala_chest_0", "item_id": "ilmu:300"}, "tile": "_"},   # chest: 300 Ilmu (north nook, rule 7 optional find, ASSUMED)
 	"V": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "eclipse_veil", "cond": "flag:mq5_choice6"}, "tile": "_"},   # clue, the Eclipse veil across the cave mouth; the player draws *Ombak* to part it (5.3 `clue` piece; journal note only; id `eclipse_veil`, hunt `kala`; ASSUMED position by the arrival from `gk_pelataran`)
 	"O": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ombak_barrier"}, "tile": "_"},   # the Eclipse barrier across the cave mouth; cast Ombak (Jawa Ka) at it (5.3; `flag:ombak_barrier` is set by the cast)
+	"J": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "echo_galuh_seller", "cond": "flag:mq5_choice6"}, "tile": "_"},   # NPC echo of the Galuh seller (friendly shadow of a Kraton Galuh stallkeeper; ASSUMED, new id `echo_galuh_seller`)
+	"K": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "echo_ki_darsa", "cond": "flag:mq5_choice6"}, "tile": "_"},   # NPC echo of Ki Darsa the juru pantun, by the rest fire (ASSUMED, new id `echo_ki_darsa`)
 }
 
 

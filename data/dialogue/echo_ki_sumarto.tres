@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "echo_ki_sumarto"
+name_key = "NPC_ECHO_KI_SUMARTO_NAME"
+entries = Array[Dictionary]([
+	{"if": ["quest:sq_v1=done", "flag:sqv1_ans_laras"], "lines": ["DLG_ECHO_KI_SUMARTO_V13", "DLG_ECHO_KI_SUMARTO_V16"], "do": [], "quiet": true},
+	{"if": ["quest:sq_v1=done", "flag:sqv1_ans_tell"], "lines": ["DLG_ECHO_KI_SUMARTO_V14", "DLG_ECHO_KI_SUMARTO_V16"], "do": [], "quiet": true},
+	{"if": ["quest:sq_v1=done"], "lines": ["DLG_ECHO_KI_SUMARTO_V15", "DLG_ECHO_KI_SUMARTO_V16"], "do": [], "quiet": true},
+	{"if": ["step:sq_v1=3"], "lines": ["DLG_ECHO_KI_SUMARTO_V9", "DLG_ECHO_KI_SUMARTO_V10", "@NPC_HERO_NAME", "DLG_ECHO_KI_SUMARTO_H2", "@NPC_ECHO_KI_SUMARTO_NAME", "DLG_ECHO_KI_SUMARTO_V11", "DLG_ECHO_KI_SUMARTO_V12"], "do": [], "choices": [{"text": "CHOICE_ECHO_KI_SUMARTO_ANS_1", "do": ["flag:sqv1_ans_laras"]}, {"text": "CHOICE_ECHO_KI_SUMARTO_ANS_2", "do": ["flag:sqv1_ans_tell"]}, {"text": "CHOICE_ECHO_KI_SUMARTO_ANS_3", "do": ["flag:sqv1_ans_thanks"]}]},
+	{"if": ["step:sq_v1=2"], "lines": ["DLG_ECHO_KI_SUMARTO_V8"], "do": [], "quiet": true},
+	{"if": ["step:sq_v1=1"], "lines": ["DLG_ECHO_KI_SUMARTO_V7"], "do": [], "quiet": true},
+	{"if": ["quest:sq_v1=available"], "lines": ["DLG_ECHO_KI_SUMARTO_V1", "DLG_ECHO_KI_SUMARTO_V2", "DLG_ECHO_KI_SUMARTO_V3", "@NPC_HERO_NAME", "DLG_ECHO_KI_SUMARTO_H1", "@NPC_ECHO_KI_SUMARTO_NAME", "DLG_ECHO_KI_SUMARTO_V4", "DLG_ECHO_KI_SUMARTO_V5", "DLG_ECHO_KI_SUMARTO_V6"], "do": ["start:sq_v1", "flag:sqv1_started"]},
+	{"if": [], "lines": ["DLG_ECHO_KI_SUMARTO_V17", "DLG_ECHO_KI_SUMARTO_V18"], "do": [], "quiet": true}
+])

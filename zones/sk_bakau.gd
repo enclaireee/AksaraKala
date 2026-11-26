@@ -9,10 +9,10 @@ const MAP := [
 	"#.....~~~~~~~~.......r....r...................~~~~~~~~.....#",
 	"#....................r..c.r................................#",
 	"#....................r....r................................#",
-	"#....................rrrrrr................................#",
+	"#....................rr.rrr................................#",
 	"#..........................................................#",
 	"#..............rr.............2............rr..............#",
-	"#..............rr.......1..................rr..............#",
+	"#..............rr.......1...............Z..rr..............#",
 	"#..........................................................#",
 	"#..........................................................#",
 	"#.........................S......3.........................#",
@@ -20,7 +20,7 @@ const MAP := [
 	"#..........................................................#",
 	"Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY",
 	"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y",
-	"#..........................................................#",
+	"#...................H......................................#",
 	"#..........................................................#",
 	"#..............rr..........................rr..............#",
 	"#..............rr..........................rr..............#",
@@ -50,6 +50,8 @@ const SPOTS := {
 	"1": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tidal_beacon_1"}, "tile": "."},   # tidal beacon 1 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_1`)
 	"2": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tidal_beacon_2"}, "tile": "."},   # tidal beacon 2 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_2`)
 	"3": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "tidal_beacon_3"}, "tile": "."},   # tidal beacon 3 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_3`)
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_pencari_kepiting"}, "tile": "."},   # NPC the mud-crab catcher, wades the roots at low tide and knows the channels (Act V depth floor, **ASSUMED**; quiet talk)
+	"Z": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "bakau_tide_mark"}, "tile": "."},   # clue, old high-water marks and a rotted mooring ring on the mangrove roots (journal note only, **ASSUMED** id)
 }
 
 

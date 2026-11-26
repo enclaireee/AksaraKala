@@ -134,6 +134,15 @@ Build each region from its area graph in `zones/<region>.md` ([mataram](zones/ma
 - [x] Full end-to-end playtests (2026-11-12: every region, final boss, ending and a fresh-eyes run, verification.md §5)
 - Exit: someone unfamiliar with the game can finish it smoothly without assistance.
 
+## Phase 7b: Late-game depth (2026-11-26, user call)
+Acts IV-VI were thinner than Acts I-III in people, clues, side quests and hand-placed layout ([world.md](world.md) "Area depth floor").
+- [x] Tanah Timur, Segara Kidul and Gua Kala zone docs meet the floor (`sk_nelayan` to the town rules, `tt_sabana` herders' camp, `gk_pasir` halls, echoes in `gk_jembatan`)
+- [x] New NPC, clue and "Ask about..." text in [script.md](script.md), ID and EN, VERIFY tags on culture claims
+- [x] Optional SQ-V1 (ruwatan for the echoes of anak sukerta, `gk_hutan`), [quests.md](quests.md) §5
+- [x] Zones regenerated, `script_to_data.py` run, headless play tests pass
+- Exit: `python3 tools/content_density.py` exits 0, and the design checks and play tests pass. Main quest steps, bosses and beats are unchanged.
+- Still by hand: walk each changed area in Demo mode; check the new **VERIFY** items (list in HANDOFF); female sprite rows for some new women NPCs.
+
 ## Phase 8: Release
 - [x] Export builds for macOS, Windows, Linux (and Web if possible) *(macOS & Windows Desktop exported)*
 - [x] Title, credits, and asset attributions

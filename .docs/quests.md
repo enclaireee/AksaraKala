@@ -10,7 +10,7 @@ Conventions as in [README.md](README.md): **ASSUMED**, **VERIFY**, **TUNE**. Eve
 | Guidance | Quest journal in the Tab/Esc menu, Tracker Card on HUD top-left, soft edge-of-screen arrow with distance/zone label, and floating in-world diamond for the active objective |
 | Main order | Fixed: Desa Purwa (Prologue, 12 steps), Tatar Sunda (Act I, 24 steps), Keraton Galuh (Act II, 20 steps), Mataram (Act III, 24 steps), Tanah Timur (Act IV, 22 steps), Desa Purwa (Interlude, 8 steps), Segara Kidul (Act V, 14 steps), Gua Kala (Act VI, 14 steps). Total: **138 main steps (~21.5 hours)**. Fog gates enforce regional gating |
 | Anti-repetition | Each Act and boss features a distinct gameplay and narrative structure (Folklore Hunt, Rising Floodwaters, 3-Wing Palace Heist, Two-Front War & Night-Building Siege, 3-Zone Stalking Predator & 7-Generation Curse, Coastal Recovery & 3 Sacred Trials, 3-Realm Memory Descent & Dual Finale) |
-| Side quest types | 4 distinct types: Folklore Re-tellings, Two-Way Spirit Investigations, Cultural Craft/World-State Quests, and Multi-Act Companion Chains (`SQ-C1`–`SQ-C4`). 20 side quests total (~7+ hours) |
+| Side quest types | 4 distinct types: Folklore Re-tellings, Two-Way Spirit Investigations, Cultural Craft/World-State Quests, and Multi-Act Companion Chains (`SQ-C1`–`SQ-C4`). 21 side quests total (~7.5+ hours) |
 | Missable | Never. No quest closes, fails, or times out. All stay accessible after their zone's boss and in post-game |
 | Choices | **6 Major Choices** (one per Act) that ripple across quests, allies, boss mechanics, and the Epilogue, plus two-way side quest resolutions (peaceful vs. fight) |
 | Dialogue depth | Main-path & camp talks up to **8–12 lines**; story beats **8–10 lines**; major NPCs and companions offer optional **"Ask about..."** (`"quiet": true`) topic branches |
@@ -63,6 +63,7 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 | Batu Kali | Choice 4 (`choice_sink`, MQ3) |
 | Sabuk Galuh | Choice 3 (`choice_judgment`, MQ2, **ASSUMED**) |
 | Cakra | SQ-K2 Bajul Putih Tua bounty (or Ilmu L x2) |
+| Blencong | SQ-V1 Small Ruwatan, not for a Dalang (also the Dalang sibling of the `kidul_chest_bakau` genitri) |
 | Iket Sunda | SQ-S1 Lutung Kasarung |
 | Blangkon | SQ-M4 Gamelan errand |
 | Baju Batik | Main quest, Bandung Bondowoso (MQ2) |
@@ -343,7 +344,7 @@ Structure: **Allied Stand at the Gate, Three-Realm Memory Descent (`La`, `Ra`, `
 
 ---
 
-## 5. Side quests & Companion Stories (Story v5: 20 Quests, ~430+ min Modeled)
+## 5. Side quests & Companion Stories (Story v5: 21 Quests, ~465 min Modeled)
 To prevent side content from feeling repetitive, side quests are divided into **four distinct gameplay templates** (Retellings, Two-Way Spirit Hunts, Cultural Craft/World-State Quests, and Multi-Act Companion Chains). Sizes in v5 (`pacing_model.py` bands): **S** (8–15 min), **M** (15–28 min), **L** (25–45 min).
 
 ### Tatar Sunda
@@ -446,6 +447,15 @@ To prevent side content from feeling repetitive, side quests are divided into **
 - Steps: (1) talk to `k2_fisher`, (2) examine the ancient white scale in `sk_bakau` and ask Mbah Wiryo about the river-mouth guardian (`clue_examined:k2_scale`, `talked_to:kidul_jurukunci`), (3) play `memory_done:sq_k2_fisher` (teaches reading the receding tide-tell before its lunge), (4) face `enemy_killed:bajul_putih_tua` in the river-mouth lagoon (at 0 HP the ancient white crocodile dives peacefully back into the deep), (5) report to `k2_fisher`.
 - Reward: **Cakra** (or Ilmu L x2).
 - Play: `talk, beat, travel x2, fight x2, clue x2, memory, miniboss, talk, beat`
+
+### Gua Kala
+**SQ-V1 "Ruwatan Kecil" / "The Small Ruwatan" (Cultural Craft Errand, S, no fight, ASSUMED)**
+- Giver: the echo of Ki Sumarto the dalang (`echo_ki_sumarto`) in the `gk_hutan` east grove. Unlock: `mq5_1c` (after the 5.5 time-wards). His offer sets `sqv1_started`, which shows the clue and the ring.
+- Story: in Hutan Lupa he still waits to hold a ruwatan for the echoes of *anak sukerta*, the children a ruwatan is held for (**VERIFY**: the term, who counts as sukerta, e.g. an only child, and that the rite is held for them). Living rituals are backdrop only; nothing here is fought.
+- Steps: (1) talk to `echo_ki_sumarto`, (2) take up the small offerings left in the east nook (`clue_examined:sqv1_offerings`; **VERIFY** what offerings a ruwatan uses), (3) stand in the ring of stone where he holds the rite (`area_entered:sqv1_ruwatan_place`; **VERIFY** the ritual elements before shipping), (4) talk to `echo_ki_sumarto`.
+- Reward: **Blencong** (his lamp, as a keepsake; the same item as the Dalang sibling of `genitri`), codex `murwakala` (the tale told at a ruwatan, **VERIFY** with the codex note), Ilmu S (190, **TUNE**). A Dalang gets a second 190 Ilmu instead of the blencong (`class_rewards`, ASSUMED, TUNE), since the genitri chest may already have given them one.
+- Play: `talk, travel, clue, beat, talk, beat`
+- Data: `data/quests/sq_v1.tres`, test `tests/sq_v1_test.gd`.
 
 ### Multi-Act Companion Stories (`SQ-C1`–`SQ-C4`)
 **SQ-C1 "Ayam Jago Ciung" / "Ciung's Rooster" (Act II, M)**
@@ -705,6 +715,7 @@ Build pieces used (all exist in the engine today): **press-each** (N props, coun
 | SQ-T4 Kuda Kepang | 3.3, troupe at the forge road | Text only | Troupe dances in the Epilogue |
 | SQ-K1 Hatchlings | 4.9, fisher's child | Text only | Turtles on the beach in C4 part 3 |
 | SQ-K2 Bajul Putih | 4.10, Mbah Wiryo | Text only | Mbah Wiryo's line at the cliff |
+| SQ-V1 Small Ruwatan | after 5.5, echo of Ki Sumarto (`gk_hutan`) | New (v6 depth floor, 2026-11-26) | None yet (ASSUMED; open question) |
 
 ## 10. Boss chapters v7 (user call 2026-11-13, **ASSUMED**)
 

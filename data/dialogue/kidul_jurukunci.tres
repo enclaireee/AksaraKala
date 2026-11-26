@@ -7,8 +7,19 @@ script = ExtResource("1")
 npc_id = "kidul_jurukunci"
 name_key = "NPC_WIRYO_NAME"
 entries = Array[Dictionary]([
+	{"if": ["flag:mq5_4", "flag:choice_offer_song"], "lines": ["DLG_WIRYO_V8", "DLG_KIDUL_JURUKUNCI_V401", "@NPC_HERO_NAME", "DLG_KIDUL_JURUKUNCI_H401", "@NPC_WIRYO_NAME", "DLG_KIDUL_JURUKUNCI_V402"], "do": [], "quiet": true},
+	{"if": ["flag:mq5_4", "flag:choice_offer_memory"], "lines": ["DLG_WIRYO_V8", "DLG_KIDUL_JURUKUNCI_V403", "@NPC_HERO_NAME", "DLG_KIDUL_JURUKUNCI_H402", "@NPC_WIRYO_NAME", "DLG_KIDUL_JURUKUNCI_V404"], "do": [], "quiet": true},
+	{"if": ["flag:mq4_8", "flag:choice_offer_song", "zone:sk_pantai", "!flag:mq5_1"], "lines": ["DLG_WIRYO_V316", "DLG_WIRYO_V317"], "do": ["flag:camp_kidul"], "quiet": true},
+	{"if": ["flag:mq4_8", "flag:choice_offer_memory", "zone:sk_pantai", "!flag:mq5_1"], "lines": ["DLG_WIRYO_V318", "DLG_WIRYO_V319"], "do": ["flag:camp_kidul"], "quiet": true},
+	{"if": ["flag:mq4_8", "zone:sk_pantai", "!flag:mq5_1"], "lines": ["DLG_WIRYO_V21", "DLG_WIRYO_V22", "DLG_WIRYO_V23"], "do": ["flag:camp_kidul"], "quiet": true},
 	{"if": ["quest:mq4=done"], "lines": ["DLG_WIRYO_V6"], "do": []},
-	{"if": ["step:mq4=9"], "lines": ["DLG_WIRYO_V1", "@NPC_HERO_NAME", "DLG_WIRYO_H1", "@NPC_WIRYO_NAME", "DLG_WIRYO_V2", "DLG_WIRYO_V3"], "do": ["codex:nyi_roro_kidul"]},
-	{"if": ["quest:mq4=active"], "lines": ["DLG_WIRYO_V4"], "do": []},
+	{"if": ["step:mq4=9", "flag:mq4_4"], "lines": ["DLG_WIRYO_V303"], "do": [], "quiet": true},
+	{"if": ["step:mq4=9"], "lines": ["DLG_WIRYO_V1", "@NPC_HERO_NAME", "DLG_WIRYO_H1", "@NPC_WIRYO_NAME", "DLG_WIRYO_V2", "DLG_WIRYO_V3", "DLG_WIRYO_V301", "@NPC_HERO_NAME", "DLG_WIRYO_H301", "@NPC_WIRYO_NAME", "DLG_WIRYO_V302", "DLG_WIRYO_V303", "DLG_WIRYO_V304"], "do": ["codex:nyi_roro_kidul", "codex:three_trials"]},
+	{"if": ["step:mq4=10"], "lines": ["DLG_WIRYO_V7", "DLG_WIRYO_V4"], "do": [], "quiet": true},
+	{"if": ["step:mq4=12"], "lines": ["DLG_WIRYO_V305"], "do": [], "quiet": true},
+	{"if": ["quest:mq4=active"], "lines": ["DLG_WIRYO_V306"], "do": [], "hub": true, "quiet": true, "choices": [{"text": "CHOICE_WIRYO_ASK_1", "do": ["topic:wiryo_sumi"]}, {"text": "CHOICE_WIRYO_ASK_2", "do": ["topic:wiryo_manners"]}, {"text": "CHOICE_WIRYO_ASK_3", "do": ["topic:wiryo_trials"]}, {"text": "CHOICE_WIRYO_LEAVE", "do": []}]},
+	{"if": [], "topic": "wiryo_sumi", "quiet": true, "lines": ["DLG_WIRYO_V307", "DLG_WIRYO_V308", "DLG_WIRYO_V309"], "do": []},
+	{"if": [], "topic": "wiryo_manners", "quiet": true, "lines": ["DLG_WIRYO_V310", "DLG_WIRYO_V311", "DLG_WIRYO_V312"], "do": []},
+	{"if": [], "topic": "wiryo_trials", "quiet": true, "lines": ["DLG_WIRYO_V313", "DLG_WIRYO_V314", "DLG_WIRYO_V315"], "do": []},
 	{"if": [], "lines": ["DLG_WIRYO_V1"], "do": []}
 ])

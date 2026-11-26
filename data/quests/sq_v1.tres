@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://data/quest_data.gd" id="1"]
+[ext_resource type="Script" path="res://data/quest_step.gd" id="2"]
+
+[sub_resource type="Resource" id="s1"]
+script = ExtResource("2")
+objective = "Q_SQ_V1_S1_OBJ"
+on = "talked_to:echo_ki_sumarto"
+marker = {"zone": "gk_hutan", "id": "echo_ki_sumarto"}
+
+[sub_resource type="Resource" id="s2"]
+script = ExtResource("2")
+objective = "Q_SQ_V1_S2_OBJ"
+on = "clue_examined:sqv1_offerings"
+marker = {"zone": "gk_hutan", "id": "sqv1_offerings"}
+
+[sub_resource type="Resource" id="s3"]
+script = ExtResource("2")
+objective = "Q_SQ_V1_S3_OBJ"
+on = "area_entered:sqv1_ruwatan_place"
+marker = {"zone": "gk_hutan", "id": "sqv1_ruwatan_place"}
+
+[sub_resource type="Resource" id="s4"]
+script = ExtResource("2")
+objective = "Q_SQ_V1_S4_OBJ"
+on = "talked_to:echo_ki_sumarto"
+marker = {"zone": "gk_hutan", "id": "echo_ki_sumarto"}
+
+[resource]
+script = ExtResource("1")
+id = "sq_v1"
+kind = "side"
+type = "errand"
+zone = "gua_kala"
+size = "S"
+giver = "echo_ki_sumarto"
+requires = Array[String](["mq5_1c"])
+steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
+rewards = {"items": ["blencong"], "codex": ["murwakala"], "class_rewards": {"dalang": {"items": [], "ilmu": 190}}}

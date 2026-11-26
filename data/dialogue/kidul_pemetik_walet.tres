@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "kidul_pemetik_walet"
+name_key = "NPC_KIDUL_PEMETIK_WALET_NAME"
+entries = Array[Dictionary]([
+	{"if": ["!flag:kidul_pemetik_walet_met"], "lines": ["DLG_KIDUL_PEMETIK_WALET_V1", "DLG_KIDUL_PEMETIK_WALET_V2", "@NPC_HERO_NAME", "DLG_KIDUL_PEMETIK_WALET_H1", "@NPC_KIDUL_PEMETIK_WALET_NAME", "DLG_KIDUL_PEMETIK_WALET_V3", "DLG_KIDUL_PEMETIK_WALET_V4"], "do": ["flag:kidul_pemetik_walet_met"], "quiet": true},
+	{"if": [], "lines": ["DLG_KIDUL_PEMETIK_WALET_V5", "DLG_KIDUL_PEMETIK_WALET_V6"], "do": [], "quiet": true}
+])

@@ -7,7 +7,7 @@ const MAP := [
 	"#...........................,,.............................#",
 	"#...........................,,.............................#",
 	"#...........................,,................l............#",
-	"#...........................,,.............................#",
+	"#...........................,,......W......................#",
 	"#.......rr..................,,..........rr.................#",
 	"#.......rr..................,,..........rr.................#",
 	"#.............B.............,,.............................#",
@@ -20,7 +20,7 @@ const MAP := [
 	"#.....rr....................,,.........................#####",
 	"#...........................,,.............................#",
 	"#.....................T.....,,..E..........................#",
-	"#...........................,,.............................#",
+	"#...........................,,.......................L.....#",
 	"#...........................,,.............................#",
 	"#.........rr................,,......................rrrrrr.#",
 	"#.........rr................,,......................r....r.#",
@@ -28,8 +28,8 @@ const MAP := [
 	"#...........................,,......................r....r.#",
 	"#.......k...................,,......................r....r.#",
 	"#...........................,,......................rrrrrr.#",
-	"#...........................,,..............rr.............#",
-	"#.................rr........,,..............rr.............#",
+	"#...........................,,..............rr....U........#",
+	"#.................rr....R...,,..............rr.............#",
 	"#.................rr........,,.............................#",
 	"############################KK##############################",
 	"############################,,##############################",
@@ -56,6 +56,10 @@ const SPOTS := {
 	"C": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": "."},   # spawn, arrival from tt_pasir (inside the east pocket)
 	"D": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pasir", "spawn_id": "from_tt_pesisir"}, "tile": ","},   # exit to tt_pasir (east edge, east pocket behind K4, 2 tiles)
 	"w": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "channel_wheel"}, "tile": "."},   # channel wheel at the spring; turn it to flood the burn channel (SQ-T2 step 3; sets `flag:channel_wheel`)
+	"U": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pesisir_fisher"}, "tile": "."},   # NPC a fisher mending a net beside the wreck, no boat left to launch (ASSUMED; the sea stopped giving)
+	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "pesisir_salt_raker"}, "tile": "."},   # NPC a salt raker working the dry shore flats (ASSUMED; the salt comes up grey since the ash)
+	"L": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "wreck_hull_marks"}, "tile": "."},   # clue, tally cuts and a red mark burnt into the wreck hull (ASSUMED id; journal note only)
+	"R": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "shore_tide_line"}, "tile": "."},   # clue, a tide line drawn on the sand far below where the water used to reach (ASSUMED id; journal note only)
 }
 
 

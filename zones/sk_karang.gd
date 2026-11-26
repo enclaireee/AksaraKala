@@ -14,7 +14,7 @@ const MAP := [
 	"#.....~~~~~~~~......B.......,,...................r..c.r....#",
 	"#...........................,,...................r....r....#",
 	"#.........D.................,,........................r....#",
-	"#..............rr...........,,...................rrrrrr....X",
+	"#...H..........rr...........,,...................rrrrrr....X",
 	"#..............rr...........,,............................xX",
 	"#...........................,,.............................#",
 	"#......A....................,,.............................#",
@@ -63,6 +63,7 @@ const SPOTS := {
 	"x": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_bakau"}, "tile": "."},   # spawn, arrival from sk_bakau
 	"Y": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "sk_gua", "spawn_id": "from_sk_karang"}, "tile": ","},   # exit to sk_gua (east edge, main road, 2 tiles)
 	"y": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_gua"}, "tile": ","},   # spawn, arrival from sk_gua
+	"H": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_pemungut_karang"}, "tile": "."},   # NPC the tide-pool gleaner, a woman who picks shellfish and seaweed at the reef pools and reads the tide for you (Act V depth floor, **ASSUMED**; quiet talk)
 }
 
 

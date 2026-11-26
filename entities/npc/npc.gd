@@ -12,13 +12,14 @@ const DRESSING := [
 ]
 
 const SHEET: Texture2D = preload("res://assets/art/npcs.png")
-const CELL := 32   # px: npcs.png cells are 32x32 (the hero cell), 4 idle columns x 14 rows
+const CELL := 32   # px: npcs.png cells are 32x32 (the hero cell), 4 idle columns x 17 rows
 
 const TALL_RANGE := 64.0   # px: the grey talk marker shows only this close (ui.md 3b)
 const MARKER := "res://assets/art/ui/marker_%s.png"
 
 static var _bounds: Dictionary = {}    # sheet row -> Vector2i(highest, lowest opaque frame row) over its 4 frames
 static var _markers: Dictionary = {}   # "quest" / "talk" -> Texture2D or false (file not there yet)
+static var _echo_sheet: Texture2D = null   # echo_sheet() cache
 
 var data: DialogueData   # tests may preset this
 var _busy := false
@@ -26,11 +27,13 @@ var _gold := false
 var _t := 0.0
 var _last_frame := -1
 var _near_player := false
+var _echo := false   # echo_<id>: a Gua Kala memory, redrawn every frame for its shimmer
 
 
 func _ready() -> void:
 	verb = "UI_VERB_TALK"
 	super()
+	_echo = npc_id.begins_with("echo_")
 	if data == null:
 		data = DialogueData.by_id(npc_id)
 	if data == null and npc_id not in DRESSING:
@@ -75,7 +78,7 @@ func _process(delta: float) -> void:
 	if data != null and not _gold and usable:
 		var pl := get_tree().get_first_node_in_group("player") as Node2D
 		near = pl != null and pl.global_position.distance_to(global_position) <= TALL_RANGE
-	if _gold or f != _last_frame or near != _near_player:
+	if _gold or _echo or f != _last_frame or near != _near_player:
 		_last_frame = f
 		_near_player = near
 		queue_redraw()
@@ -111,32 +114,55 @@ static func marker_texture(kind: String) -> Texture2D:
 	return _markers[kind] if _markers[kind] is Texture2D else null
 
 
+## npcs.png with most of its colour drained, built once, for the echoes.
+static func echo_sheet() -> Texture2D:
+	if _echo_sheet == null:
+		var img := SHEET.get_image()
+		if img.is_compressed():
+			img.decompress()
+		img.adjust_bcs(1.4, 0.8, 0.2)   # TUNE: pale, washed-out ghost: brightness, contrast, saturation
+		_echo_sheet = ImageTexture.create_from_image(img)
+	return _echo_sheet
+
+
 func _row() -> int:
-	if npc_id in ["nameless_hunter", "faceless_captain_seen", "market_stranger"]:
-		return 12   # tall stranger in the blank mask
-	if npc_id == "faceless_deserter":
-		return 13   # hooded, face a smooth blank
-	if npc_id in ["semar", "semar_kala"]:
-		return 4
-	if npc_id == "cepot":
-		return 5
-	if npc_id == "laras" or npc_id.begins_with("laras_"):
-		return 6
-	if npc_id in ["lutung_kasarung", "stray_cat", "purwa_cat"]:
-		return 8
-	if "lamp" in npc_id or npc_id.begins_with("leuwi_oncor_"):
-		return 11
-	if npc_id.begins_with("door_") or npc_id.begins_with("sluice_") or npc_id in ["galuh_wagon", "purwa_stall", "purwa_well", "rarang_post"] or npc_id.begins_with("angklung_frame_") or npc_id.begins_with("kaputren_screen_") or npc_id.begins_with("archive_mirror_"):
-		return 10
-	if "stone" in npc_id or "altar" in npc_id or npc_id.begins_with("batu_") or npc_id in ["arca_base", "beats", "ririwa_name", "purwa_root"] or npc_id.begins_with("grain_roof_"):
-		return 9
-	if npc_id in ["ciung_wanara", "purbasari", "nawang_wulan", "klething_kuning", "naganingrum", "galuh_queen"]:
-		return 3
-	if npc_id in ["ibu", "dayang_sumbi", "sunda_weaver", "tea_picker", "lesung_women", "leuwi_mother", "mbok_srini", "nini_balangantrang", "nyai_rukmi", "nyai_sekar", "g2_maid", "kidul_sari", "timur_daughter", "wirasana_daughter"]:
+	var id := npc_id.trim_prefix("echo_")   # a Gua Kala echo reuses its original's row
+	# late-game rows first, by exact id, so the substring checks below cannot catch them
+	if id in ["kidul_pencari_kepiting", "kidul_pemetik_walet", "kidul_fam_jala", "kidul_fam_bakul", "nelayan_jala", "k2_fisher", "pesisir_fisher"]:
+		return 14   # Kidul fisher: iket, rolled trousers, cast net
+	if id in ["sabana_old_drover", "sabana_water_warden", "timur_herder", "t2_herder", "kulon_gate_watchman", "ladang_farmer", "ladang_neighbor", "pesisir_salt_raker", "kidul_pedagang_garam"]:
+		return 15   # Timur drover: wide straw hat, sarong across the chest, long stick
+	if id in ["kidul_warung", "kidul_pemungut_karang"]:
+		return 16   # coastal woman: head-cloth, cream kebaya, bakul of fish
+	if id in ["sabana_camp_cook", "kidul_dayang", "sawah_farmer"]:   # sawah_farmer: her echo (gk_pasir) calls her "her"
 		return 2
-	if npc_id in ["sunda_elder", "kepala_desa", "juru_kunci", "kidul_jurukunci", "lengser", "mataram_dalang", "ki_darsa", "ki_sumarto", "pak_karto", "nagawiru", "purwa_old_couple", "kidul_nelayan_tua"]:
+	if id in ["kidul_fam_wiryo", "candi_caretaker", "kidul_penjaga_pelita"]:
 		return 1
-	if npc_id in ["pande_besi", "m3_smith", "timur_empu", "aria_kebonan", "pangrenyep", "galuh_official", "galuh_herald", "recruiter_a", "recruiter_b", "hariang_banga"]:
+	if id in ["nameless_hunter", "faceless_captain_seen", "market_stranger"]:
+		return 12   # tall stranger in the blank mask
+	if id == "faceless_deserter":
+		return 13   # hooded, face a smooth blank
+	if id in ["semar", "semar_kala"]:
+		return 4
+	if id == "cepot":
+		return 5
+	if id == "laras" or id.begins_with("laras_"):
+		return 6
+	if id in ["lutung_kasarung", "stray_cat", "purwa_cat"]:
+		return 8
+	if "lamp" in id or id.begins_with("leuwi_oncor_"):
+		return 11
+	if id.begins_with("door_") or id.begins_with("sluice_") or id in ["galuh_wagon", "purwa_stall", "purwa_well", "rarang_post"] or id.begins_with("angklung_frame_") or id.begins_with("kaputren_screen_") or id.begins_with("archive_mirror_"):
+		return 10
+	if "stone" in id or "altar" in id or id.begins_with("batu_") or id in ["arca_base", "beats", "ririwa_name", "purwa_root"] or id.begins_with("grain_roof_"):
+		return 9
+	if id in ["ciung_wanara", "purbasari", "nawang_wulan", "klething_kuning", "naganingrum", "galuh_queen"]:
+		return 3
+	if id in ["ibu", "dayang_sumbi", "sunda_weaver", "tea_picker", "lesung_women", "leuwi_mother", "mbok_srini", "nini_balangantrang", "nyai_rukmi", "nyai_sekar", "g2_maid", "kidul_sari", "timur_daughter", "wirasana_daughter"]:
+		return 2
+	if id in ["sunda_elder", "kepala_desa", "juru_kunci", "kidul_jurukunci", "lengser", "mataram_dalang", "ki_darsa", "ki_sumarto", "pak_karto", "nagawiru", "purwa_old_couple", "kidul_nelayan_tua"]:
+		return 1
+	if id in ["pande_besi", "m3_smith", "timur_empu", "aria_kebonan", "pangrenyep", "galuh_official", "galuh_herald", "recruiter_a", "recruiter_b", "hariang_banga"]:
 		return 7
 	return 0
 
@@ -148,9 +174,12 @@ static func shadow_tex(size: String) -> Texture2D:
 
 
 func _draw() -> void:
+	var tint := Color.WHITE
+	if _echo:   # a memory: desaturated sheet, cool tint, a slow breath of alpha
+		tint = Color(0.78, 0.9, 1.15, 0.52 + 0.14 * sin(_t * 1.7))   # TUNE
 	var sh := Npc.shadow_tex("m")
 	if sh != null:
-		draw_texture(sh, Vector2(-7, -2))
+		draw_texture(sh, Vector2(-7, -2), Color(1, 1, 1, 0.35) if _echo else Color.WHITE)
 	var top := -27
 	var art := _art()
 	if art:   # story prop (assets/art/story/<npc_id>.png), feet on y 1 over the shadow
@@ -161,7 +190,7 @@ func _draw() -> void:
 		var row := _row()
 		var fb := frame_bounds(row)
 		var y0 := -(fb.y + 1)   # lowest opaque row ends on y 0, over the shadow
-		draw_texture_rect_region(SHEET, Rect2(-CELL * 0.5, y0, CELL, CELL), Rect2(col * CELL, row * CELL, CELL, CELL))
+		draw_texture_rect_region(echo_sheet() if _echo else SHEET, Rect2(-CELL * 0.5, y0, CELL, CELL), Rect2(col * CELL, row * CELL, CELL, CELL), tint)
 		top = y0 + fb.x
 	else:
 		draw_rect(Rect2(-6, -8, 12, 16), Color(0.55, 0.4, 0.3))

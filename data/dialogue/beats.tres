@@ -126,5 +126,6 @@ entries = Array[Dictionary]([
 	{"if": ["!flag:beat_m4_gong", "step:sq_m4=2"], "lines": ["@", "BEAT_M4_GONG_1", "@NPC_HERO_NAME", "BEAT_M4_GONG_H1", "@", "#cam:mataram_dalang", "BEAT_M4_GONG_2", "@NPC_MATARAM_DALANG_NAME", "BEAT_M4_GONG_3", "@", "BEAT_M4_GONG_4", "BEAT_M4_GONG_5"], "do": ["flag:beat_m4_gong"]},
 	{"if": ["!flag:beat_t4_dance", "step:sq_t4=3"], "lines": ["@", "#cam:kepang_leader", "BEAT_T4_DANCE_1", "BEAT_T4_DANCE_2", "@NPC_KEPANG_LEADER_NAME", "BEAT_T4_DANCE_3", "@", "BEAT_T4_DANCE_4"], "do": ["flag:beat_t4_dance"]},
 	{"if": ["!flag:beat_k1_release", "step:sq_k1=2"], "lines": ["@", "BEAT_K1_RELEASE_1", "BEAT_K1_RELEASE_2"], "do": ["flag:beat_k1_release"]},
+	{"if": ["!flag:beat_sqv1_ring", "step:sq_v1=3", "flag:sqv1_ruwatan_place", "zone:gk_hutan"], "lines": ["BEAT_SQV1_RING_1", "BEAT_SQV1_RING_2", "@NPC_ECHO_KI_SUMARTO_NAME", "BEAT_SQV1_RING_3", "@", "BEAT_SQV1_RING_4"], "do": ["flag:beat_sqv1_ring"]},
 	{"if": ["!flag:beat_c1_rooster_found", "flag:c1_rooster_found"], "lines": ["@", "BEAT_C1_ROOSTER_FOUND_2", "BEAT_C1_ROOSTER_FOUND_1", "@NPC_HERO_NAME", "BEAT_C1_ROOSTER_FOUND_H1", "@", "BEAT_C1_ROOSTER_FOUND_3"], "do": ["flag:beat_c1_rooster_found"]}
 ])

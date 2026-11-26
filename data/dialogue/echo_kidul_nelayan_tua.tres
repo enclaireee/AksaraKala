@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "echo_kidul_nelayan_tua"
+name_key = "NPC_ECHO_KIDUL_NELAYAN_TUA_NAME"
+entries = Array[Dictionary]([
+	{"if": ["flag:choice_offer_song", "!flag:echo_kidul_nelayan_tua_heard"], "lines": ["DLG_ECHO_KIDUL_NELAYAN_TUA_V1", "DLG_ECHO_KIDUL_NELAYAN_TUA_V4", "DLG_ECHO_KIDUL_NELAYAN_TUA_V5", "DLG_ECHO_KIDUL_NELAYAN_TUA_V6"], "do": ["flag:echo_kidul_nelayan_tua_heard"], "quiet": true},
+	{"if": ["flag:choice_offer_memory", "!flag:echo_kidul_nelayan_tua_heard"], "lines": ["DLG_ECHO_KIDUL_NELAYAN_TUA_V2", "DLG_ECHO_KIDUL_NELAYAN_TUA_V4", "DLG_ECHO_KIDUL_NELAYAN_TUA_V5", "DLG_ECHO_KIDUL_NELAYAN_TUA_V6"], "do": ["flag:echo_kidul_nelayan_tua_heard"], "quiet": true},
+	{"if": ["!flag:echo_kidul_nelayan_tua_heard"], "lines": ["DLG_ECHO_KIDUL_NELAYAN_TUA_V3", "DLG_ECHO_KIDUL_NELAYAN_TUA_V4", "DLG_ECHO_KIDUL_NELAYAN_TUA_V5", "DLG_ECHO_KIDUL_NELAYAN_TUA_V6"], "do": ["flag:echo_kidul_nelayan_tua_heard"], "quiet": true},
+	{"if": [], "lines": ["DLG_ECHO_KIDUL_NELAYAN_TUA_V7", "DLG_ECHO_KIDUL_NELAYAN_TUA_V8"], "do": [], "quiet": true}
+])

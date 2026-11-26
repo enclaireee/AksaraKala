@@ -17,13 +17,13 @@ Sizes: screens are 30 x 17 tiles. All seven maps are 60 x 34 tiles (2x2). Spawn 
 
 | id | size (screens, tiles) | look | purpose | contents |
 |----|-----------------------|------|---------|----------|
-| `sk_pantai` | 2x2, 60x34 | Black-sand beach, dunes in the north, a wide tidal flat in the south, a green sea. A barred coral gate (the gerbang) stands on the south-east shore | Arrival slice: the fishing village mends nets for the sea offering (the net yard `_`), teach encounters, rest, Mbah Wiryo, the three families and their forgotten song verses (K8), turtle nest. MQ4 4.8-4.9 (arrival, `kidul_1`) and 4.11-4.12 (K8 clues and memory) | Spawns `from_desa_purwa` (N), `from_sk_karang` (E), `from_sk_keraton` (gerbang, SE). Petilasan `kidul_1` (centre-west dunes, after the first fights). NPCs `kidul_jurukunci` (Mbah Wiryo), `kidul_nelayan_anak`, `semar` (at `kidul_1`). Encounters `kidul_pantai_1`, `kidul_pantai_2`, `kidul_pantai_3`. Chest `kidul_chest_1` (behind driftwood in the dunes). Turtle nest `kidul_nest` (dunes), water trigger `kidul_tukik_laut` (shore). Shortcut gate `sc:sk_gerbang` (arrival side). Clues `song_1`, `song_2`, `song_3` (K8, 4.11). Semar `M` at `kidul_1` (cond `step:mq4=8`); Mbah Wiryo `J` here after `mq4_4` (before it he stands in `sk_nelayan`). Quest markers `kidul_1`, `kidul_jurukunci`, `kidul_nelayan_anak`, `semar`. No exit to `sk_tebing` any more |
-| `sk_karang` | 2x2, 60x34 | Reef of dark rock and tide pools under cliffs, a long sandbar, a fishing hut | Trial I, the Torch-Lines (MQ4 4.14: fight, sign clue, tide-pool puzzle, second fight, the Ula Segara miniboss at the stair foot), the way to the cliff stair, the Bajul Putih Tua cove | Spawns `from_tt_pesisir` (N), `from_sk_pantai` (W), `from_sk_tebing` (NW stair), `from_sk_keraton` (S causeway, behind kabut `mq4_8`). NPC `kidul_nelayan_tua` (hut, west end). Encounters `kidul_karang_1`, `kidul_karang_2`, `kidul_karang_3`. Elite room `kidul_elite_cove` (SQ-K2): Bajul Putih Tua. Chest `kidul_chest_2` (hidden tide pool between rocks). Reef pieces: `reef_thread` clue, `puzzle_kidul_tide`, `kidul_karang_4`, miniboss `kidul_karang_2`. Clue `causeway_post` (4.20) beside the causeway kabut (now `mq4_offering`). Quest markers `kidul_karang_2` (step 4.14), `kidul_nelayan_tua`, `kidul_elite` |
-| `sk_tebing` | 2x2, 60x34 | Tall black cliffs, a switchback stair, a sea cave, wind and gulls, a small shrine with a lamp above the drop | The cliff path (MQ4 4.18), the cliff shrine with the K9 memory (4.18) and the cliff altar for Choice 5 (4.19), the drop onto the keraton (kabut-gated until Choice 5). Holds the Segara Kidul end of `sc:ts_sk` | Spawns `from_sk_karang` (S), `from_ts_situ` (the shortcut door, W). Encounters `kidul_tebing_1`, `kidul_tebing_2`. Petilasan `kidul_3` (cliff shrine beside the drop, after the last fight, no fight between it and the drop). Chest `kidul_chest_3` (sea cave, narrow ledge). Shortcut gate `sc:ts_sk` (opens from here). Drop `D1` at the cliff edge (east side). Clue `shrine_tale` (K9) and the cliff altar `cliff_altar` at the shrine (`lc5_lontar` is retired: LC5 opens in `sk_gua`). Quest markers `kidul_tebing_2` (step 4.18), `kidul_3` (step 4.18), `cliff_altar` (4.19) |
-| `sk_keraton` | 2x2, 60x34 | Outer court of green-glass stone over the sea (the sea pavilion court), then a calm inner pendopo (open hall). Waves lap at the walls | The Trial of the Waves (4.21: three setpiece waves with two sign clues between them), the Sea Altar (4.22), the rest at `kidul_2` (4.20), codex, the exit to Gua Kala | Spawns `from_sk_karang` (N), `from_sk_tebing` (drop landing, NE), `from_sk_pantai` (W), `from_gk_mulut` (S). Trial `kidul_trial` (outer court centre, 3 waves). Petilasan `kidul_2` (inner pendopo, right before the kabut). Sea Altar `kidul_altar` (pendopo, Ombak and Kain Hijau). Codex spot `kidul_keraton_codex` (pendopo, Nyi Roro Kidul as belief). Shortcut gate `sc:sk_gerbang` (opens from here). Kabut `mq4_9` (= `quest:mq4=done`) to `gk_mulut`. No fight in the pendopo. Semar `M` at `kidul_2` (cond `step:mq4=19`). Clues `trial_sign_1`, `trial_sign_2` (4.21). Quest markers `kidul_2` (4.20), `kidul_trial` (4.21), `kidul_altar` (4.22) |
-| `sk_nelayan` | 5x4, 150x68 (Scale 1) | Kampung Nelayan: a stilt-house fishing village with drying racks, net yards and a cove path toward the mangrove | Arrival into the village (4.9, beat `song_hook`), Mbah Wiryo and Sari (4.10), SQ-K2 giver, SQ-C3 fragment 3 | Spawns `from_sk_pantai` (W), `from_sk_bakau` (E). Mbah Wiryo `J` (before `mq4_4`), Sari `S` (until `mq4_h2`) and `s` (after the trial), fisher `k2_fisher`, clue `c3_shore_net`, chest `kidul_chest_nelayan`. Quest markers `kidul_jurukunci` (4.10), `kidul_sari` (4.10) |
-| `sk_bakau` | 2x2, 60x34 | Hutan Bakau, a flooded mangrove with boardwalks and tidal beacons | The three tidal beacons with Sari (4.13), SQ-K2 clue, a chest | Spawns `from_sk_nelayan` (W), `from_sk_karang` (E). Puzzle trigger `tidal_beacon_1`-`_3` (props), encounter `bakau_pack`, Sari `S` (step 4.13), clue `k2_scale`, chest `kidul_chest_bakau`. Quest markers `tidal_beacon_1`-`_3` (props) (4.13), `kidul_sari` |
-| `sk_gua` | 2x2, 60x34 | Gua Karang: an echoing sea cavern with bronze bells and abyssal pools | The sunken-shrine approach (4.15), LC5 (4.16), Trial II, the Abyssal Current (4.17) | Spawns `from_sk_karang` (W), `from_sk_tebing` (N). Clue `gua_bell_marks` `G` (4.15), encounter `gua_karang_approach` `E`, clue `lc5_cavern` `L` (opens `lc5`), encounter `kidul_gua_trial` `F` (cond `flag:laras_key_tidal_gate`), Sari `S` at the mouth (step 4.17). Quest markers `gua_karang_approach`, `lc5_cavern`, `kidul_gua_trial` |
+| `sk_pantai` | 2x2, 60x34 | Black-sand beach, dunes in the north, a wide tidal flat in the south, a green sea. A barred coral gate (the gerbang) stands on the south-east shore | Arrival slice: the fishing village mends nets for the sea offering (the net yard `_`), teach encounters, rest, Mbah Wiryo, the three families and their forgotten song verses (K8), turtle nest. MQ4 4.8-4.9 (arrival, `kidul_1`) and 4.11-4.12 (K8 clues and memory) | Spawns `from_desa_purwa` (N), `from_sk_karang` (E), `from_sk_keraton` (gerbang, SE). Petilasan `kidul_1` (centre-west dunes, after the first fights). NPCs `kidul_jurukunci` (Mbah Wiryo), `kidul_nelayan_anak`, `semar` (at `kidul_1`). Encounters `kidul_pantai_1`, `kidul_pantai_2`, `kidul_pantai_3`. Chest `kidul_chest_1` (behind driftwood in the dunes). Turtle nest `kidul_nest` (dunes), water trigger `kidul_tukik_laut` (shore). Shortcut gate `sc:sk_gerbang` (arrival side). Clues `song_1`, `song_2`, `song_3` (K8, 4.11). Semar `M` at `kidul_1` (cond `step:mq4=8`); Mbah Wiryo `J` here after `mq4_4` (before it he stands in `sk_nelayan`). Quest markers `kidul_1`, `kidul_jurukunci`, `kidul_nelayan_anak`, `semar`. No exit to `sk_tebing` any more; depth pass: dune rocks, a tide pool and two beached jukung hulls (`#` runs) raise the hand-placed share to 10%; no new spots |
+| `sk_karang` | 2x2, 60x34 | Reef of dark rock and tide pools under cliffs, a long sandbar, a fishing hut | Trial I, the Torch-Lines (MQ4 4.14: fight, sign clue, tide-pool puzzle, second fight, the Ula Segara miniboss at the stair foot), the way to the cliff stair, the Bajul Putih Tua cove | Spawns `from_tt_pesisir` (N), `from_sk_pantai` (W), `from_sk_tebing` (NW stair), `from_sk_keraton` (S causeway, behind kabut `mq4_8`). NPC `kidul_nelayan_tua` (hut, west end). Encounters `kidul_karang_1`, `kidul_karang_2`, `kidul_karang_3`. Elite room `kidul_elite_cove` (SQ-K2): Bajul Putih Tua. Chest `kidul_chest_2` (hidden tide pool between rocks). Reef pieces: `reef_thread` clue, `puzzle_kidul_tide`, `kidul_karang_4`, miniboss `kidul_karang_2`. Clue `causeway_post` (4.20) beside the causeway kabut (now `mq4_offering`). Quest markers `kidul_karang_2` (step 4.14), `kidul_nelayan_tua`, `kidul_elite`; depth pass: NPC `kidul_pemungut_karang` `H` (tide-pool gleaner, west shore) |
+| `sk_tebing` | 2x2, 60x34 | Tall black cliffs, a switchback stair, a sea cave, wind and gulls, a small shrine with a lamp above the drop | The cliff path (MQ4 4.18), the cliff shrine with the K9 memory (4.18) and the cliff altar for Choice 5 (4.19), the drop onto the keraton (kabut-gated until Choice 5). Holds the Segara Kidul end of `sc:ts_sk` | Spawns `from_sk_karang` (S), `from_ts_situ` (the shortcut door, W). Encounters `kidul_tebing_1`, `kidul_tebing_2`. Petilasan `kidul_3` (cliff shrine beside the drop, after the last fight, no fight between it and the drop). Chest `kidul_chest_3` (sea cave, narrow ledge). Shortcut gate `sc:ts_sk` (opens from here). Drop `D1` at the cliff edge (east side). Clue `shrine_tale` (K9) and the cliff altar `cliff_altar` at the shrine (`lc5_lontar` is retired: LC5 opens in `sk_gua`). Quest markers `kidul_tebing_2` (step 4.18), `kidul_3` (step 4.18), `cliff_altar` (4.19); depth pass: NPCs `kidul_penjaga_pelita` `K` (shrine lamp-keeper) and `kidul_pedagang_garam` `M` (salt trader, west road), clue `tebing_stair_rail` `R`, cliff ledges and rock added (about 11% hand-placed) |
+| `sk_keraton` | 2x2, 60x34 | Outer court of green-glass stone over the sea (the sea pavilion court), then a calm inner pendopo (open hall). Waves lap at the walls | The Trial of the Waves (4.21: three setpiece waves with two sign clues between them), the Sea Altar (4.22), the rest at `kidul_2` (4.20), codex, the exit to Gua Kala | Spawns `from_sk_karang` (N), `from_sk_tebing` (drop landing, NE), `from_sk_pantai` (W), `from_gk_pelataran` (S). Trial `kidul_trial` (outer court centre, 3 waves). Petilasan `kidul_2` (inner pendopo, right before the kabut). Sea Altar `kidul_altar` (pendopo, Ombak and Kain Hijau). Codex spot `kidul_keraton_codex` (pendopo, Nyi Roro Kidul as belief). Shortcut gate `sc:sk_gerbang` (opens from here). Kabut `mq4_9` (= `quest:mq4=done`) to `gk_pelataran`. No fight in the pendopo. Semar `M` at `kidul_2` (cond `step:mq4=19`). Clues `trial_sign_1`, `trial_sign_2` (4.21). Quest markers `kidul_2` (4.20), `kidul_trial` (4.21), `kidul_altar` (4.22); depth pass: NPC `kidul_dayang` `H` (pavilion attendant, pendopo), flank pillars and pools added (about 11% hand-placed) |
+| `sk_nelayan` | 5x4, 150x68 (Scale 1) | Kampung Nelayan: a stilt-house fishing village with drying racks, net yards and a cove path toward the mangrove | Arrival into the village (4.9, beat `song_hook`), Mbah Wiryo and Sari (4.10), SQ-K2 giver, SQ-C3 fragment 3 | Spawns `from_sk_pantai` (W), `from_sk_bakau` (E). Mbah Wiryo `J` (before `mq4_4`), Sari `S` (until `mq4_h2`) and `s` (after the trial), fisher `k2_fisher`, clue `c3_shore_net`, chest `kidul_chest_nelayan`. Quest markers `kidul_jurukunci` (4.10), `kidul_sari` (4.10); **town pass**: the three coastal families as named heads (`kidul_fam_jala` `K`, `kidul_fam_bakul` `L`, `kidul_fam_wiryo` `M`), warung `{` stall with owner `kidul_warung` `O`, clues `nelayan_nets` `1`, `nelayan_racks` `2`, `nelayan_sedekah` `3` (backdrop only), no fight or puzzle (town); 7 people in all |
+| `sk_bakau` | 2x2, 60x34 | Hutan Bakau, a flooded mangrove with boardwalks and tidal beacons | The three tidal beacons with Sari (4.13), SQ-K2 clue, a chest | Spawns `from_sk_nelayan` (W), `from_sk_karang` (E). Puzzle trigger `tidal_beacon_1`-`_3` (props), encounter `bakau_pack`, Sari `S` (step 4.13), clue `k2_scale`, chest `kidul_chest_bakau`. Quest markers `tidal_beacon_1`-`_3` (props) (4.13), `kidul_sari`; depth pass: NPC `kidul_pencari_kepiting` `H` (mud-crab catcher), clue `bakau_tide_mark` `Z` |
+| `sk_gua` | 2x2, 60x34 | Gua Karang: an echoing sea cavern with bronze bells and abyssal pools | The sunken-shrine approach (4.15), LC5 (4.16), Trial II, the Abyssal Current (4.17) | Spawns `from_sk_karang` (W), `from_sk_tebing` (N). Clue `gua_bell_marks` `G` (4.15), encounter `gua_karang_approach` `E`, clue `lc5_cavern` `L` (opens `lc5`), encounter `kidul_gua_trial` `F` (cond `flag:laras_key_tidal_gate`), Sari `S` at the mouth (step 4.17). Quest markers `gua_karang_approach`, `lc5_cavern`, `kidul_gua_trial`; depth pass: NPC `kidul_pemetik_walet` `H` (swiftlet-nest gatherer, east chamber), `#` ribs at x17 and x41 split the cavern into three pockets (west antechamber, central bell ring, east chamber), stalagmites and pools added (about 11% hand-placed) |
 
 ## Region graph
 `==K==` kabut, `--` link, `=sc=` shortcut, `~D~>` drop (one way).
@@ -115,9 +115,10 @@ Counts (v4c): 11 encounters (`kidul_karang_4` and the `kidul_karang_2` miniboss 
 |-------|-------|-------|
 | Boss arena | 0, the trial site instead | `sk_keraton` outer court (`kidul_trial`) |
 | Elite room | 1 (+ 1 miniboss on the path) | `kidul_elite_cove` in `sk_karang`; the Ula Segara elite `kidul_karang_2` at the stair foot (4.9) |
-| NPCs | 4 (+ Nyi Roro Kidul as a presence) | `kidul_jurukunci` (Mbah Wiryo), `kidul_nelayan_anak`, `semar` in pantai; `kidul_nelayan_tua` in karang. Main-path speakers: Mbah Wiryo and Semar; Damar and Pak Raka are side-quest NPCs (cast budget, story.md Pacing rule 2). Nyi Roro Kidul (`kidul_ratu`, ASSUMED) is a green glimmer and a voice, not a talkable NPC |
+| NPCs | 4 + 10 depth-pass NPCs (+ Nyi Roro Kidul as a presence). Placed people per area after the 2026-11-26 pass: pantai 7, karang 2, tebing 2, keraton 2, nelayan 7 (town), bakau 2, gua 2 | `kidul_jurukunci` (Mbah Wiryo), `kidul_nelayan_anak`, `semar` in pantai; `kidul_nelayan_tua` in karang. Main-path speakers: Mbah Wiryo and Semar; Damar and Pak Raka are side-quest NPCs (cast budget, story.md Pacing rule 2). Nyi Roro Kidul (`kidul_ratu`, ASSUMED) is a green glimmer and a voice, not a talkable NPC; new locals: `kidul_pemungut_karang` (karang), `kidul_penjaga_pelita`, `kidul_pedagang_garam` (tebing), `kidul_dayang` (keraton), `kidul_fam_jala`, `kidul_fam_bakul`, `kidul_fam_wiryo`, `kidul_warung` (nelayan), `kidul_pencari_kepiting` (bakau), `kidul_pemetik_walet` (gua) |
 | Secrets and finds | 3 | `kidul_chest_1` (pantai), `kidul_chest_2` (karang), `kidul_chest_3` (tebing) |
 | Codex spot | 1 | `kidul_keraton_codex` (pendopo) |
+| Clue spots added by the depth pass | 5 | `tebing_stair_rail` (tebing), `nelayan_nets`, `nelayan_racks`, `nelayan_sedekah` (nelayan, backdrop only), `bakau_tide_mark` (bakau); journal notes only |
 | Petilasans | 3 (full-act exception) | `kidul_1` (pantai), `kidul_3` (tebing, cliff shrine), `kidul_2` (keraton pendopo) |
 
 ## Quest step locations
@@ -307,7 +308,7 @@ Small own scenes under `zones/kelir/`, not areas (no `## Area n:` heading, so `g
 Arrive at `sk_pantai` (`from_desa_purwa`, green glow on the horizon; 4.8) > petilasan `kidul_1` with Semar, teach encounters (Lampor, Ula Segara) (4.9) > west to `sk_nelayan`, beat `song_hook`, Mbah Wiryo and Sari (4.10) > the net yard and the shore in `sk_pantai`: three families, three verses (4.11), the K8 memory and the dusk talk (4.12) > `sk_nelayan` east to `sk_bakau`: the beacons with Sari (4.13) > `sk_karang`: Trial I across the reef, the thread clue, the tide-pool puzzle, the Ula Segara miniboss at the stair foot (4.14) > east to `sk_gua`: the bell marks and the approach fight (4.15), LC5 (4.16), Trial II (4.17) with Sari at the mouth > north to `sk_tebing`: two cliff fights, `kidul_3`, the K9 memory (4.18), the cliff altar and Choice 5 (4.19) > back down to `sk_karang` and the causeway (kabut `mq4_offering`, `causeway_post`) > `sk_keraton`: `kidul_2` with Semar (4.20), the Trial of the Waves (4.21), Nyi Roro Kidul speaks once, Ombak and the Kain Hijau at the Sea Altar (4.22) > kabut `mq4_9` gone > `gk_mulut`. Optional: the cove, chests, the turtle nest, `sc:sk_gerbang` and `sc:ts_sk`.
 
 ## Self-check ([AGENTS.md](../../AGENTS.md) section 5 Step 2), re-run for Story v5 2026-11-06
-- [~] POI counts: 0 boss arenas (the trial site replaces it, by design), 1 elite room plus the miniboss on the path (`kidul_karang_2`), 4 NPCs (3-5; the net mender and the three families are unnamed locals), 3 secrets (2-3), 1 codex spot, 11 encounters (6-10; every extra is a piece the step tables count), 3 petilasans (full-act exception, world.md rule 7).
+- [~] POI counts: 0 boss arenas (the trial site replaces it, by design), 1 elite room plus the miniboss on the path (`kidul_karang_2`), 18 placed NPCs after the depth pass (the net mender is an unnamed local; the three families now have named heads in `sk_nelayan`), 3 secrets (2-3), 1 codex spot, 11 encounters (6-10; every extra is a piece the step tables count), 3 petilasans (full-act exception, world.md rule 7).
 - [x] Petilasan before the trial/exit: `kidul_3` is beside the drop, no fight between it and the pavilion court; the K9 memory and LC5 chapter are scenes, not fights. `kidul_2` is in the calm pendopo before the kabut to Gua Kala.
 - [x] First appearances: `kidul_pantai_1` (Lampor alone), `_2` (Ula with known Lampor), `_3` (Bajul alone, optional); the reef lane (`kidul_karang_3`) repeats Bajul with known Lampor; the miniboss reuses the Ula Segara with its known Ka Bolt answer.
 - [~] One tank per encounter: yes. Trial W2 has 2 Ula Segara (two shooters), the trial has 3 waves, both fixed by bestiary.md and quests.md 4.21. Named exception.
@@ -341,6 +342,8 @@ Arrive at `sk_pantai` (`from_desa_purwa`, green glow on the horizon; 4.8) > peti
 
 - Story v5 pass (**ASSUMED**): Mbah Wiryo has two instances (`J` in `sk_nelayan` with cond `!flag:mq4_4`, `J` in `sk_pantai` with cond `flag:mq4_4`); Sari has four (`sk_nelayan` `S` until `mq4_h2` and `s` after `mq4_8`, `sk_bakau` `S` at `step:mq4=12`, the mouth of `sk_gua` `S` at `step:mq4=16`); Semar stands at `kidul_1` (`step:mq4=8`) and `kidul_2` (`step:mq4=19`). The causeway kabut (L3) and a new drop kabut `Z` on D1 lift with Choice 5 (`mq4_offering`), so the Sea Pavilion cannot be reached before the cliff altar; the old `mq4_8` kabut flag is retired. `kidul_gua_trial` carries cond `flag:laras_key_tidal_gate`. New journal clues `gua_bell_marks` (`sk_gua` (28,21)) and `causeway_post` (`sk_karang` (30,27)); `lc5_lontar` is gone (the chapter opens from `lc5_cavern`). The direct link L1 (`sk_pantai` to `sk_karang`) is kept, so the order pantai > nelayan > bakau > karang is held by the quest arrow only.
 
+- Depth pass (Phase 7b, 2026-11-26, **ASSUMED**): every Segara Kidul area meets world.md "Area depth floor" (2 people, 2 clue or codex spots, 1 action, 10% features). New npc ids: `kidul_pemungut_karang`, `kidul_penjaga_pelita`, `kidul_pedagang_garam`, `kidul_dayang`, `kidul_fam_jala`, `kidul_fam_bakul`, `kidul_fam_wiryo`, `kidul_warung`, `kidul_pencari_kepiting`, `kidul_pemetik_walet`. New clue ids: `tebing_stair_rail`, `nelayan_nets`, `nelayan_racks`, `nelayan_sedekah`, `bakau_tide_mark`. None carries a cond (they stand there from first arrival), none is a quest step, and the sedekah laut clue is backdrop only (quests.md section 2). No new enemies, no new fights.
+
 ## Open questions
 1. VERIFY: wearing green on the south coast and her association with the Parangkusumo / Parangtritis shore (a ritual stage, Panggung Sanggabuwana). Do not name real places in game text without a source.
 2. VERIFY: sea-gate and "keraton" imagery (palace under the sea). A single source for any codex line.
@@ -348,6 +351,8 @@ Arrive at `sk_pantai` (`from_desa_purwa`, green glow on the horizon; 4.8) > peti
 4. Who gives Jawa Ka? Here the trial and the sea, with Nyi Roro Kidul speaking once, at the Sea Altar (quests.md 4.9).
 5. Does the quest engine complete a step whose event already happened (for a `tt_pesisir` arrival who cleared `kidul_karang_2` on the first pass)? If not, the second crossing needs the encounter to respawn, or the step must accept the cleared state. quests.md 7 does not say.
 6. Mbah Wiryo's words to the sea: the name of his wife. Script.md owns the line (VERIFY nothing cultural, but keep the name plain, not a real figure).
+7. ~~`sk_bakau` chest `c` (24,5) stood inside a closed ring of rocks.~~ Resolved 2026-11-26: the ring has a gap on its south side (row 7).
+8. VERIFY (depth pass): swiftlet-nest gathering in sea caves of the south coast, salt trade over the uplands, and the *dayang* title for a palace attendant, before any of them ships in text.
 
 ## Doc conflicts found (not fixed)
 - Resolved 2026-11-06 (consistency pass): the `mq3_8` gates in tanah_timur.md and desa_purwa.md now read `mq4_9` and `mq4_2`/`mq4_9`; bestiary.md and spells.md call Segara Kidul main path and P0; script.md uses Mbah Wiryo and the v3.1 flow.
@@ -364,6 +369,7 @@ Arrive at `sk_pantai` (`from_desa_purwa`, green glow on the horizon; 4.8) > peti
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Dark reef rock, tide pools, a long sandbar from `tt_pesisir`, a fishing hut in the west, a switchback stair up the cliff in the north-west (to `sk_tebing`), and a rocky south-east cove where Bajul Putih Tua lurks.
 - Purpose: MQ4 4.14 (Trial I, `kidul_karang_2`) and 4.20 (the causeway, `causeway_post`). Entry from `tt_pesisir`, reef encounters (`kidul_karang_1`, `kidul_karang_2`, `kidul_karang_3`), NPC `kidul_nelayan_tua` (SQ-K2), elite room `kidul_elite_cove` (`bajul_putih_tua`), secret chest `kidul_chest_2`, the cliff stair north to `sk_tebing` (the main path, link L4), and the south causeway to `sk_keraton` (kabut `mq4_8`, open only after the Trial, so the way in is the drop).
+- Depth (Phase 7b, 2026-11-26, **ASSUMED**): one more person (`H`, `kidul_pemungut_karang`, tide-pool gleaner at (4,12)); clues `reef_thread` and `causeway_post`, the reef encounters and the tide-pool puzzle already meet the floor; hand-placed share 18%.
 
 ### Map
 ```
@@ -379,7 +385,7 @@ Arrive at `sk_pantai` (`from_desa_purwa`, green glow on the horizon; 4.8) > peti
 #.....~~~~~~~~......B.......,,...................r..c.r....#
 #...........................,,...................r....r....#
 #.........D.................,,........................r....#
-#..............rr...........,,...................rrrrrr....X
+#...H..........rr...........,,...................rrrrrr....X
 #..............rr...........,,............................xX
 #...........................,,.............................#
 #......A....................,,.............................#
@@ -430,52 +436,55 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY
 | `x` | spawn, arrival from sk_bakau | `res://entities/world/spawn.tscn` | `{id:"from_sk_bakau"}` | grass | 1 |
 | `Y` | exit to sk_gua (east edge, main road, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"sk_gua", spawn_id:"from_sk_karang"}` | path | 2 |
 | `y` | spawn, arrival from sk_gua | `res://entities/world/spawn.tscn` | `{id:"from_sk_gua"}` | path | 1 |
+| `H` | NPC the tide-pool gleaner, a woman who picks shellfish and seaweed at the reef pools and reads the tide for you (Act V depth floor, **ASSUMED**; quiet talk) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_pemungut_karang"}` | grass | 1 |
 
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | reef crossing (4.14) | road row 16..17, pool (6,7)-(13,9), stair foot (12,1)-(15,5) | Fight 1 `F` (18,16), clue `C` (22,18), puzzle `D` (10,11), fight 2 `B` (20,9), miniboss `G` (14,3), then the stair `U` | 4.14 all pieces; causeway clue `Q` (30,27) 4.20 |
 ## Area 2: sk_pantai
+| west shore | (2,10)-(6,13) | A person at the reef pools | `H` kidul_pemungut_karang (4,12) | |
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Black-sand dunes in the north, a wide wet tidal flat in the south, green southern surf, and the barred coral gate (`sc:sk_gerbang`) on the south-east shore.
 - Purpose: MQ4 4.8-4.9 and 4.11-4.12 (rest at `kidul_1` with Semar, the K8 clues and memory). Petilasan `kidul_1`, NPCs `semar` `M`, `kidul_jurukunci` (Mbah Wiryo, after `mq4_4`) and `kidul_nelayan_anak` (SQ-K1), teach encounters (`kidul_pantai_1`, `kidul_pantai_2`, `kidul_pantai_3`), north exit to `desa_purwa`, east exit to `sk_karang`, shortcut gate `sc:sk_gerbang` to `sk_keraton`. The Trial of the Waves moved to `sk_keraton`; the tidal flat is now shore and landmark only.
+- Depth (Phase 7b, 2026-11-26, **ASSUMED**): only features were short (7%): two beached jukung hulls (`#` runs at (7..11,29) and (17..21,29)), dune rocks, a tide pool at (33..38,21..22), rock heaps along the shore and a dry pool at (2..4,31..32) take it to 11%. People, clues and encounters already exceed the floor.
 
 ### Map
 ```
 ############################NN##############################
 #...........................n,.............................#
 #......rrrrrr...............,,...................rr........#
-#......r....r...............,,e..................rr........#
-#......r..c.r...............,,.............................#
-#......r....................,,.........1...................#
+#......r....r...............,,e..rrr.............rr.....rr.#
+#......r..c.r...............,,....r.....................rr.#
+#......r....................,,.........1................rr.#
 #......rrrrrr...............,,.............................#
 #...........................,,.......................2.....#
 #.............E.............,,.............................#
-#...........................,,.............................#
-#...........................,,.............................#
+#...........................,,.rr...................rr.....#
+#...........................,,.rr...................rr.....#
 #......C....................,,...................3.........#
 #...........................,,.............................#
-#...........................,,.............................#
-#...................P....J..,,.............................#
+#..rr.........rr............,,.............................#
+#..rr.........rr....P....J..,,.............................#
 #.....................M.....,,.............................#
 Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,yY
 W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 #...........................,,.............................#
-#.........G.................,,.............................#
-#...........................,,........................######
-#......____________________.,,........................=,;..$
-#......____________________.,,........................=,,..$
+#.........G.................,,.rr..........................#
+#...........................,,.r......................######
+#......____________________.,,...~~~~~~...............=,;..$
+#......____________________.,,...~~~~~~...............=,,..$
 #......___A________________.,,........................######
 #......_______H____________.,,.............................#
 #......_________________s__.,,.............................#
 #......__________B______R__.,,.............................#
 #......____________________.,,........k.......L............#
-#...........................,,.......p....T...l............#
-#..............................D...........................#
+#...........................,,.......p....T...l.......rrrr.#
+#......#####.....#####.........D......................rrrr.#
 #.....~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.....#
-#.....~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.....#
-#..........................................................#
+#.~~~.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.....#
+#.~~~....................,....................~~~~~........#
 ############################################################
 ```
 
@@ -521,46 +530,49 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | net yard (the village) | (7,21)-(26,27) 20x7 | Arrival slice: the fishing village mends nets for the sea offering | clue `A` song_1 (10,23), clue `B` song_2 (17,26), net mender `H` (14,24) | 4.9 view, 4.11 |
 | shore rock | (28,28)-(34,29) | Mbah Wiryo's family, dusk calling place | clue `D` song_3 (31,29) | 4.11, opens K8 (4.12) |
 ## Area 3: sk_tebing
+| beached jukung hulls | (7,29)-(11,29), (17,29)-(21,29) | Hand-placed features on the shore, south of the net yard | two `#` runs (boat hulls, **ASSUMED**) | |
+| dunes and flat features | dune rocks (31..35,3..10), (52..57,3..10), tide pool (33,21)-(38,22) | Hand-placed features to reach 10% | `r` heaps, `~` tide pool, dry pool (2,31)-(4,32) | |
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: High black sea cliffs, switchback stone stairs, wind-carved sea cave in the north-east, a small cliff shrine with a lamp above the drop, and a cliff-edge slide dropping onto `sk_keraton`.
 - Purpose: MQ4 4.18-4.19 (climb the cliff path, rest at the cliff shrine `kidul_3`, K9 memory, the cliff altar and Choice 5; LC5 is now in `sk_gua`). On the main path, entered from `sk_karang` (south edge, link L4). Also holds the `sc:ts_sk` cliff shortcut into Tatar Sunda (`ts_situ`), two cliff encounters (`kidul_tebing_1`, `kidul_tebing_2`), secret chest `kidul_chest_3`, petilasan `kidul_3` (beside the drop, after the last fight) and the one-way drop `D` to `sk_keraton`. There is no link to `sk_pantai` any more.
+- Depth (Phase 7b, 2026-11-26, **ASSUMED**): cliff ledges (`#`), rock heaps and a sea-edge cliff mass take hand-placed share to about 11%; two people (`K`, `M`) and the stair-rail clue `R` meet the floor. None of the new walls touch the encounter rects or the stair column (x27-28).
 
 ### Map
 ```
 ############################################################
-#..........................................................#
-#...........................................##########.....#
+#.###############..........................................#
+#.###############...........................##########.....#
 #........rr.................................#........#.....#
 #........rr.................................#....c...#.....#
 #...........................................#........#.....#
 Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,...............####..####.....#
 W,,,,,,,,,,,,,,,,,,,,,,,,,,,,..............................#
-#..........................,,..............................#
-#..........................,,.......F......................#
-#..........................,,..............................#
-#..........................,,..............................#
+#.........M.........R......,,...........................####
+#..........................,,.......F...................####
+#..#########...............,,...........................####
+#..........................,,...........................####
 #.............rr...........,,...................rr.........#
 #.............rr...........,,...................rr.........#
-#..........................,,..............................#
-#..........................,,..............................#
-#..........................,,........................C.P..ZD
+#.....###########..........,,......................K.......#
+#..........................,,.............rr...............#
+#..........................,,....########.rr.........C.P..ZD
 #..........................,,.............................ZD
 #..........................,,........................A.....#
-#..........................,,..............................#
+#.#####....................,,..............................#
+#.#####.rr.................,,..............rr..............#
 #.......rr.................,,..............rr..............#
-#.......rr.................,,..............rr..............#
-#..........................,,..............................#
-#..........................E,..............................#
-#..........................,,..............................#
-#..........................,,..............................#
-#..........................,,..............................#
-#.................rr.......,,..............................#
-#.................rr.......,,..............................#
-#..........................,,..............................#
-#..........................,,..............................#
-#..........................,,..............................#
-#.............g............s,..............................#
+#..........................,,...........................####
+#..........................E,...........................####
+#..#######.................,,...........................####
+#..........................,,...........................####
+#.............rrrr.........,,...........................####
+#.............rrrrrr.......,,...........................####
+#....rrr..........rr.......,,..############.............####
+#....rrr...................,,...........................####
+#..........................,,...........rrrr............####
+#.................rr.......,,...........................####
+#.............g...rr.......s,..............................#
 #############GG############SS###############################
 ```
 
@@ -581,16 +593,22 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,..............................#
 | `A` | clue, the shrine's carved tale and lamp, Ki Sumarto's version (4.18; opens memory `k9_queen_south`; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"shrine_tale", memory_id:"k9_queen_south"}` | grass | 1 |
 | `Z` | kabut on the drop D1, lifts with Choice 5 (`mq4_offering`; one per tile; ASSUMED, keeps the drop from skipping the causeway walk) | `res://entities/world/kabut.tscn` | `{flag:"mq4_offering"}` | path | 2 |
 | `C` | NPC cliff altar for Choice 5 (4.19, sets `mq4_offering`) | `res://entities/npc/npc.tscn` | `{npc_id:"cliff_altar"}` | grass | 1 |
+| `K` | NPC the shrine lamp-keeper, an old man who trims the lamp and sweeps the cliff shrine (Act V depth floor, **ASSUMED**; quiet talk) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_penjaga_pelita"}` | grass | 1 |
+| `M` | NPC a salt trader from the Sunda uplands resting on the west road after the `ts_situ` crossing (Act V depth floor, **ASSUMED**; quiet talk) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_pedagang_garam"}` | grass | 1 |
+| `R` | clue, green cloth and shell charms tied to the stair rail by many hands over many years (journal note only, **ASSUMED** id) | `res://entities/world/clue.tscn` | `{clue_id:"tebing_stair_rail"}` | grass | 1 |
 
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | cliff shrine | (50,12)-(58,20) | Petilasan `kidul_3`, the shrine tale and the cliff altar beside it, then the drop `D` behind kabut `Z` (58,16..17) | clue `A` shrine_tale (53,18), altar `C` (53,16) | 4.18 memory, 4.19 Choice 5 |
 ## Area 4: sk_keraton
+| west road rest | (3,6)-(22,9) | A trader from the uplands rests where the shortcut arrives; a rail of charms at the stair foot | `M` kidul_pedagang_garam (10,8), clue `R` tebing_stair_rail (20,8) | |
+| cliff ledges | (2,1)-(16,2), (3,10)-(11,10), (6,14)-(16,14), (2,19)-(6,20), (3,24)-(9,24), (31,28)-(42,28), (33,16)-(40,16), (56,8)-(58,11), (56,22)-(58,31) | Hand-placed cliff walls and rock | `#` and `r` features, kept clear of the stair column and encounter rects | |
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Outer causeway and court of green-glass stone over the Southern Sea, leading south into a tranquil inner pendopo where waves lap softly against carved pillars.
 - Purpose: MQ4 4.20-4.22. The Trial of the Waves (`kidul_trial`, 3 waves) in the outer court, drop landing from `sk_tebing`, west coral gate exit to `sk_pantai` (opens `sc:sk_gerbang`), inner pendopo with petilasan `kidul_2`, codex `nyi_roro_kidul`, the Sea Altar (`kidul_altar`) where the player inscribes `jawa_ka` (*Ombak*) and receives the Queen's blessing (`kain_hijau`), and the south exit to `gk_mulut` behind a kabut that lifts when MQ4 is done.
+- Depth (Phase 7b, 2026-11-26, **ASSUMED**): flank pillars (`rr`), side pools (`~`) and court-edge pillars take hand-placed share to about 11% (the trial ring stays clear); `H` `kidul_dayang` is the second person (the first is Semar). The pendopo has no fight and no new clue is needed (`B`, `C`, `x` already count).
 
 ### Map
 ```
@@ -600,13 +618,13 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,..............................#
 #_______~~~~____________________________________~~~~_______#
 #_______~~~~____________________________________~~~~_______#
 #__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
+#_________rr________rr________________rr________rr_________#
+#_________rr________rr________________rr________rr_________#
 #__________________________________________________________#
 #____________________________E_____________________________#
 #__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
+#_________rr________rr________________rr________rr_________#
+#_________rr________rr________________rr________rr_________#
 #_____________________B_____________C______________________#
 #__________________________________________________________#
 #__________________________________________________________#
@@ -615,13 +633,13 @@ W__________________________________________________________#
 #__________________________________________________________#
 #___________############____________############___________#
 #___________############____________############___________#
-#__________________________________________________________#
-#___________________rr________________rr___________________#
+#__~~~~______________________________________________~~~~__#
+#__~~~~_____________rr________________rr_____________~~~~__#
 #___________________rr________________rr___________________#
 #__________________________________________________________#
 #_______________________P_________x________________________#
-#_________________________M________________________________#
-#____________________________A_____________________________#
+#_____________rr__________M_______________rr_______________#
+#_____________rr_____________A__H_________rr_______________#
 #__________________________________________________________#
 #_______~~~~____________________________________~~~~_______#
 #_______~~~~____________________________________~~~~_______#
@@ -648,12 +666,15 @@ W__________________________________________________________#
 | `K` | kabut to Gua Kala, lifts when MQ4 is done (`quest:mq4=done`, set with step 4.22, so flag `mq4_9`; one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq4_9"}` | floor | 2 |
 | `B` | clue, a sign that rises from the shallows after wave 1: the water says names back (4.21 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"trial_sign_1"}` | floor | 1 |
 | `C` | clue, a second sign after wave 2 (4.21 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"trial_sign_2"}` | floor | 1 |
+| `H` | NPC the pavilion attendant (a *dayang*), a quiet green-sashed woman who keeps the pendopo and answers a guest in few words; never the Queen (Act V depth floor, **ASSUMED**) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_dayang"}` | floor | 1 |
 
 ### Rooms (v4c)
 | room | tile rect (x,y) size | purpose | contents | quest markers |
 |------|----------------------|---------|----------|---------------|
 | trial ring | (19,4)-(39,14) 21x11 | The three setpiece waves and the sign clues | E `kidul_trial` (29,9), clues `B` (22,13), `C` (36,13) | 4.21 |
 | pendopo | (20,24)-(36,28) | Semar at `kidul_2`, the Sea Altar | `M` (26,26), `P` (24,25), `A` (29,27) | 4.20, 4.22 |
+| court flanks | (3,21)-(6,22), (53,21)-(56,22), (10,6)-(11,12), (48,6)-(49,12), (14,26)-(15,27), (42,26)-(43,27) | Pillars and pools beside the court | `rr` and `~` features, trial ring and pendopo stay clear | |
+| attendant's post | pendopo south (30,26)-(34,28) | Guest courtesy and a few quiet words | `H` kidul_dayang (32,27) | |
 
 ## Area 5: sk_nelayan
 Scale: 1
@@ -661,6 +682,7 @@ Scale: 1
 - Size: 150 x 68 tiles = 5 x 4 screens (30 x 17 each), drawn at Scale 1 (a town, Phase 6c; it was 60 x 34). 3 enterable rooms (see Rooms), about 55 `[` houses and rooftops, 12 fenced drying-rack and net yards (`'` beds), a sand beach (y53-57) with rocks, the sea (`~`, y58-66), a boat-landing plaza (62-90, 34-52) and a jetty of path (75-77, 53-63, T-head 68-84, 62-64) as the landmark. A second short jetty stands at (125-126, 54-62).
 - Look: Kampung Nelayan, stilt-house fishing village with drying racks, net-mending yards, and a cove path toward the mangrove.
 - Purpose: MQ4 4.9–4.10 (beat `song_hook`, Mbah Wiryo `J`, `kidul_sari` `S`), SQ-K2 giver (`k2_fisher`), and chest `kidul_chest_nelayan`. Links to `sk_pantai` and `sk_bakau`.
+- Depth (Phase 7b, 2026-11-26, **ASSUMED**): town pass. Named people: Mbah Wiryo `J`, Sari `S`/`s`, `k2_fisher` `F`, the three coastal families (`K` net-mending, `L` basket-drying and weaving, `M` Mbah Wiryo's own family), and the warung owner `O` at the `{` stall in the boat-landing plaza (80..85,44..45). Three backdrop clues (`1` nets, `2` drying racks, `3` offering preparations for the sedekah laut: the player only sees it, never takes part). No fight or puzzle: a town is a safe hub (world.md "Area depth floor").
 
 ### Map
 ```
@@ -675,7 +697,7 @@ Scale: 1
 #...#__________#...[[[[[[[[..[[[[[[[[.,,,...[[[[[[[[[bb[[[[[[[[bb[[[[[[[[[.,,,...[[[[[[[[..[[[[[[[[[..[[[[[[[.,,,...[[[[[[[[[...[[[[[[[[..[[[[[[[[...#
 #...#####,,#####..-........-.[[[[[[[[.,,,..-.........--........--.........-,,,..-........--.........--.......-,,,..-.........-.-........--........-..#
 #..-............-.-''''....--........-,,,..-''''.....--''''..b.--''''.....-,,,..-''''....--''''.....--''''...-,,,..-''''..r..-.-''''....--''''....-..#
-#..-............-.-........--''''....-,,,..-.........--........--.........-,,,..-........--.........--.......-,,,..-.........-.-........--........-..#
+#..-.........M..-.-........--''''....-,,,..-.........--........--.........-,,,..-........--.........--.......-,,,..-.........-.-........--........-..#
 #..------..------.----..--------..----,,,..----..---------..--------..-----,,,..----..--------..--------..----,,,..----..-----.----..--------..----..#
 #,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
 #,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
@@ -692,7 +714,7 @@ Scale: 1
 #.b..............r..................r.,,,..................................,,,................................,,,..b.................................#
 #...------------.r.--------------...r.,,,..--------------.------------..bb.,,,..------------...--------------.,,,....------------...------------.....#
 #.r.-.''''''''.-...-.''''''''''.-.....,,,..-.''''''''''.-.-.''''''''.-..bb.,,,..-.''''''''.-...-.''''''''''.-.,,,....-.''''''''.-...-.''''''''.-.....#
-#.r.-..........-...-............-.....,,,..-............-.-..........-.....,,,..-..........-...-............-.,,,.b..-..........-...-..........-.....#
+#.r.-..1....K..-...-.....2......-.....,,,..-.....L......-.-..........-.....,,,..-..........-...-............-.,,,.b..-..........-...-..........-.....#
 #...------..----...-------..-----.....,,,..-------..-----.------..----.....,,,..------..----...-------..-----.,,,.b..------..----...------..----.....#
 #.....................................,,,..................................,,,................................,,,....................................#
 Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY
@@ -708,16 +730,16 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
 #,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
 #,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
-#.....................................,,,......##########.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,...................,,,....................................#
-#............................b.b......,,,.b.bb.#________#.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,................bb.,,,..............b.......r.............#
-#...[[[[[[[[...[[[[[[[[[..............,,,...bb.#_c______#.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..[[[[[[[[.r....bb.,,,..[[[[[[[[[..............[[[[[[[[...#
+#.....................................,,,......##########.....,,,,,,,,,,,,,,,,,,{{{{{{,,,,,...................,,,....................................#
+#............................b.b......,,,.b.bb.#________#.....,,,,,,,,,,,,,,,,,,{{{{{{,,,,,................bb.,,,..............b.......r.............#
+#...[[[[[[[[...[[[[[[[[[..............,,,...bb.#_c______#.....,,,,,,,,,,,,,,,,,,,,,O,,,,,,,..[[[[[[[[.r....bb.,,,..[[[[[[[[[..............[[[[[[[[...#
 #...[[[[[[[[...[[[[[[[[[..[[[[[[[[[...,,,......#________#.bbb.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..[[[[[[[[....r.bb.,,,..[[[[[[[[[...[[[[[[[[...[[[[[[[[...#
 #...[[[[[[[[...[[[[[[[[[..[[[[[[[[[...,,,......#________#.bbb.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..[[[[[[[[.........,,,..[[[[[[[[[...[[[[[[[[...[[[[[[[[...#
 #...[[[[[[[[...[[[[[[[[[..[[[[[[[[[...,,,.bb...#________#.....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..[[[[[[[[....b....,,,..[[[[[[[[[...[[[[[[[[...[[[[[[[[...#
 #...[[[[[[[[...[[[[[[[[[..[[[[[[[[[...,,,.bb...####,,####..b..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..[[[[[[[[.........,,,..[[[[[[[[[...[[[[[[[[...[[[[[[[[...#
 #..-........-.-.........--.........-..,,,.bb..-..........-.b..,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.-........-.r......,,,.-.........-.-........-.-........-..#
 #..----..----.----..---------..-----..,,,.....-----..-----....,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.----..----........,,,.----..-----.----..----.----..----..#
-#..........................................................r...............,,,.......................................................................#
+#...........................3..............................r...............,,,.......................................................................#
 #.......------,,----..-----,,----.....r.............rr..........rr.........,,,..................------,,----....------,,----.,,...............rr.....#
 #.......-b''''''''b-..-b'''''''b-.......rr....rrr........rrr..........rr...,,,..r.......rr..rrr.-b''''''''b-....-b''''''''b-.,,.rr........r..........#
 #.......-bbbbbbbbbb-..-bbbbbbbbb-..r..........rrr........rrr...............,,,....F.rr......rrr.-bbbbbbbbbb-....-bbbbbbbbbb-.,,......................#
@@ -746,6 +768,13 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | `s` | NPC Sari after the Trial of the Waves (entry 5, `"quiet": true`, hub `H`) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_sari", cond:"flag:mq4_8"}` | floor | 1 |
 | `F` | NPC river-mouth fisher (SQ-K2) | `res://entities/npc/npc.tscn` | `{npc_id:"k2_fisher"}` | grass | 1 |
 | `c` | chest: class gear `sabuk_merah`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kidul_chest_nelayan", item_id:"sabuk_merah"}` | floor | 1 |
+| `M` | NPC the head of Mbah Wiryo's own family, his nephew, mends in the front yard of the juru kunci's house; the third of the three coastal families (Act V town, **ASSUMED**) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_fam_wiryo"}` | grass | 1 |
+| `K` | NPC the head of the net-mending family, in the net yard of the south row; the first of the three coastal families (**ASSUMED**) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_fam_jala"}` | grass | 1 |
+| `L` | NPC the head of the basket-weaving and drying family, in the yard of the south-east row; the second of the three coastal families (**ASSUMED**) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_fam_bakul"}` | grass | 1 |
+| `O` | NPC the warung owner, serves the plaza stall (`{`) with tea, fried fish and gossip (**ASSUMED**) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_warung"}` | path | 1 |
+| `1` | clue, a long gill net spread over its racks, mended in many different knots (journal note only, backdrop, **ASSUMED** id) | `res://entities/world/clue.tscn` | `{clue_id:"nelayan_nets"}` | grass | 1 |
+| `2` | clue, fish and squid drying on bamboo racks, salted by the old method (journal note only, backdrop, **ASSUMED** id) | `res://entities/world/clue.tscn` | `{clue_id:"nelayan_racks"}` | grass | 1 |
+| `3` | clue, offering baskets and plaited palm-leaf pieces being made for the village's sedekah laut; an observation, never an objective, the player does not take part (journal note only, **ASSUMED** id) | `res://entities/world/clue.tscn` | `{clue_id:"nelayan_sedekah"}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents | quest markers |
@@ -756,12 +785,19 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 | Sari's house | (93,18)-(104,24) 12x7 | Door (98..99,18) on the north lane | S (97,20), s (100,20) | 4.10 `kidul_sari` |
 | gudang jaring (net store) | (47,44)-(56,50) 10x7 | Near the landing, door (51..52,50) onto the beach yard | chest `c` (49,46) | |
 | boat landing | plaza (62,34)-(90,52), jetty (75,53)-(77,63) | The landmark: the lane V2 (75-77) runs 57 tiles from the north edge to the jetty | fisher `F` (82,56) on the beach | SQ-K2 `k2_fisher` |
+| Wiryo's yard | (4,10)-(15,11) 12x2 | The juru kunci's own family, in the fenced front yard of his house | `M` kidul_fam_wiryo (13,11) | family 3 of 3 |
+| net yard | (5,27)-(14,28) | The net-mending family; a long net on its racks | `K` kidul_fam_jala (12,28), `1` nelayan_nets (7,28) | family 1 of 3 |
+| rack yard | (20,27)-(31,28) | Fish and squid drying on bamboo racks | `2` nelayan_racks (25,28) | |
+| basket yard | (44,27)-(55,28) | The basket-weaving and drying family | `L` kidul_fam_bakul (49,28) | family 2 of 3 |
+| beach prep row | beach lane (20,53)-(40,53) with the basket yards on y54-56 | Offering baskets and plaited leaf pieces being made for the sedekah laut (backdrop, the player only sees it) | `3` nelayan_sedekah (28,53) | |
+| warung | stall (80,44)-(85,45), owner (83,46) | The one stall of the plaza, tea and fried fish | `{` 12 tiles, `O` kidul_warung (83,46) | |
 
 ## Area 6: sk_bakau
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Hutan Bakau, flooded coastal mangrove forest and river mouth with tidal beacons and boardwalks.
 - Purpose: MQ4 4.13 (`tidal_beacon_1`-`_3` (props), `bakau_pack`), SQ-K2 clue (`k2_scale`), and chest `kidul_chest_bakau`. Links to `sk_nelayan` and `sk_karang`.
+- Depth (Phase 7b, 2026-11-26, **ASSUMED**): one more person (`H`, `kidul_pencari_kepiting` at (20,18)) and one more clue (`Z`, `bakau_tide_mark` at (40,10)). Hand-placed share 12%. The chest `c` (24,5) already sat inside a closed rock ring in the earlier drawing (see Open questions).
 
 ### Map
 ```
@@ -772,10 +808,10 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #.....~~~~~~~~.......r....r...................~~~~~~~~.....#
 #....................r..c.r................................#
 #....................r....r................................#
-#....................rrrrrr................................#
+#....................rr.rrr................................#
 #..........................................................#
 #..............rr.............2............rr..............#
-#..............rr.......1..................rr..............#
+#..............rr.......1...............Z..rr..............#
 #..........................................................#
 #..........................................................#
 #.........................S......3.........................#
@@ -783,7 +819,7 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #..........................................................#
 Ww,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,yY
 W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
-#..........................................................#
+#...................H......................................#
 #..........................................................#
 #..............rr..........................rr..............#
 #..............rr..........................rr..............#
@@ -815,48 +851,57 @@ W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Y
 | `1` | tidal beacon 1 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_1`) | `res://entities/npc/npc.tscn` | `{npc_id:"tidal_beacon_1"}` | grass | 1 |
 | `2` | tidal beacon 2 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_2`) | `res://entities/npc/npc.tscn` | `{npc_id:"tidal_beacon_2"}` | grass | 1 |
 | `3` | tidal beacon 3 of 3, lit with Sari as the water rises (4.13; sets `flag:tidal_beacon_3`) | `res://entities/npc/npc.tscn` | `{npc_id:"tidal_beacon_3"}` | grass | 1 |
+| `H` | NPC the mud-crab catcher, wades the roots at low tide and knows the channels (Act V depth floor, **ASSUMED**; quiet talk) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_pencari_kepiting"}` | grass | 1 |
+| `Z` | clue, old high-water marks and a rotted mooring ring on the mangrove roots (journal note only, **ASSUMED** id) | `res://entities/world/clue.tscn` | `{clue_id:"bakau_tide_mark"}` | grass | 1 |
+
+### Rooms (depth pass, 2026-11-26)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| mangrove boardwalk | (14,12)-(26,19) | Crab catcher on the roots south-west of the E fight | `H` kidul_pencari_kepiting (20,18) | |
+| east roots | (36,8)-(44,12) | High-water marks, mooring ring | `Z` bakau_tide_mark (40,10) | |
 
 ## Area 7: sk_gua
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
 - Look: Gua Karang, echoing sunken sea cavern with bronze bells and abyssal pools.
 - Purpose: MQ4 4.15–4.17 (`gua_bell_marks`, `gua_karang_approach`, `lc5_cavern`, `kidul_gua_trial`, Sari at the mouth). Links to `sk_karang` and `sk_tebing`.
+- Depth (Phase 7b, 2026-11-26, **ASSUMED**): `#` ribs at x17 and x41 (gaps at y13-20, so the west exit row y16-17 and the bell ring stay open) divide the cavern into three pockets: a west antechamber (Sari at the mouth), the central bell ring (clue `G`, `L`, encounters `E`, `F`) and an east chamber (`H`, `kidul_pemetik_walet`). Stalagmites and pools take hand-placed share to about 11%.
 
 ### Map
 ```
 ############################NN##############################
-#___________________________n______________________________#
-#__________________________________________________________#
-#_______~~~~____________________________________~~~~_______#
-#_______~~~~____________________________________~~~~_______#
-#__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
-#__________________________________________________________#
-#_____________________________F____________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#______________rr__________________________rr______________#
-#______________rr__________________________rr______________#
-#__________________________________________________________#
-#_____________________________L____________________________#
+#________________#__________n____________#_________________#
+#________________#_____rrrr______rrrr____#_________________#
+#_______~~~~_____#_______________________#______~~~~_______#
+#_______~~~~_____#_______________________#______~~~~_______#
+#________________#_______________________#_________________#
+#________________#__rr________________rr_#_________________#
+#________________#__rr________________rr_#_________________#
+#____rr__________#_______________________#_____rr__________#
+#____rr____~~~___#____________F__________#_____rr__________#
+#__________~~~___#_______________________#_________________#
+#________________#_______________________#_________________#
+#______________rr#_______________________#_rr______________#
+#______________rr__________________________rr_~~~__________#
+#_____________________________________________~~~______rr__#
+#_____________________________L________________________rr__#
 Ww_________________________________________________________#
-W__________________________________________________________#
+W_________________________________________________H________#
 #___S______________________________________________________#
 #__________________________________________________________#
 #______________rr__________________________rr______________#
-#______________rr___________G______________rr______________#
-#__________________________________________________________#
-#_____________________________E____________________________#
-#__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
-#__________________________________________________________#
-#_______~~~~____________________________________~~~~_______#
-#_______~~~~____________________________________~~~~_______#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
+#______________rr#__________G____________#_rr______________#
+#__~~~~~~__rr____#_______________________#_________________#
+#__~~~~~~__rr____#____________E__________#_________________#
+#__~~~~~~________#_______________________#__________rr_____#
+#________________#__rr________________rr_#__________rr_____#
+#___rr___________#__rr________________rr_#_________________#
+#___rr___________#_______________________#_________________#
+#_______~~~~_____#_______________________#______~~~~_______#
+#_______~~~~_____#_______________________#______~~~~_~~~~~_#
+#________________#_______________________#___________~~~~~_#
+#________________#_____rrrr______rrrr____#___________~~~~~_#
+#________________#_______________________#_________________#
 ############################################################
 ```
 
@@ -872,3 +917,11 @@ W__________________________________________________________#
 | `E` | encounter gua_karang_approach (4.15) | `res://entities/world/encounter.tscn` | `{area_id:"gua_karang_approach", size:Vector2i(15,9), waves:[[[res://entities/enemies/lampor.tscn, Vector2i(-4,-2)], [res://entities/enemies/lampor.tscn, Vector2i(4,-2)], [res://entities/enemies/ula_segara.tscn, Vector2i(0,2)]]]}` | floor | 1 |
 | `F` | encounter kidul_gua_trial (4.17 Sacred Trial II; inert until Laras opens the tidal gate) | `res://entities/world/encounter.tscn` | `{area_id:"kidul_gua_trial", size:Vector2i(16,9), cond:"flag:laras_key_tidal_gate", waves:[[[res://entities/enemies/ula_segara.tscn, Vector2i(-4,0)], [res://entities/enemies/bajul_putih.tscn, Vector2i(0,0)], [res://entities/enemies/lampor.tscn, Vector2i(4,0)]]]}` | floor | 1 |
 | `L` | clue, the sunken bronze bells (4.16, opens chapter `lc5`; replaces the retired `lc5_lontar`) | `res://entities/world/clue.tscn` | `{clue_id:"lc5_cavern", memory_id:"lc5"}` | floor | 1 |
+| `H` | NPC a swiftlet-nest gatherer, rests in the east chamber between climbs and knows which ledges the tide reaches (Act V depth floor, **ASSUMED**; quiet talk) | `res://entities/npc/npc.tscn` | `{npc_id:"kidul_pemetik_walet"}` | floor | 1 |
+
+### Rooms (depth pass, 2026-11-26)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| west antechamber | (1,13)-(16,20) | The mouth of the cavern, Sari's talk, the west exit | `S` (4,18) | 4.17 |
+| central bell ring | (18,1)-(40,32) | Bell marks, the sunken bells, both encounters | `G` (28,21), `L` (30,15), `E` (30,23), `F` (30,9) | 4.15 to 4.17 |
+| east chamber | (42,13)-(58,20), reached through the gap in the x41 rib | A quiet side pocket for the nest gatherer | `H` kidul_pemetik_walet (50,17) | |

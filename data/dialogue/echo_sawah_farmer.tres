@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/dialogue_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "echo_sawah_farmer"
+name_key = "NPC_ECHO_SAWAH_FARMER_NAME"
+entries = Array[Dictionary]([
+	{"if": ["flag:choice_mercy", "!flag:echo_sawah_farmer_heard"], "lines": ["DLG_ECHO_SAWAH_FARMER_V1", "DLG_ECHO_SAWAH_FARMER_V4", "DLG_ECHO_SAWAH_FARMER_V5", "DLG_ECHO_SAWAH_FARMER_V6"], "do": ["flag:echo_sawah_farmer_heard"], "quiet": true},
+	{"if": ["flag:choice_judgment", "!flag:echo_sawah_farmer_heard"], "lines": ["DLG_ECHO_SAWAH_FARMER_V2", "DLG_ECHO_SAWAH_FARMER_V4", "DLG_ECHO_SAWAH_FARMER_V5", "DLG_ECHO_SAWAH_FARMER_V6"], "do": ["flag:echo_sawah_farmer_heard"], "quiet": true},
+	{"if": ["!flag:echo_sawah_farmer_heard"], "lines": ["DLG_ECHO_SAWAH_FARMER_V3", "DLG_ECHO_SAWAH_FARMER_V4", "DLG_ECHO_SAWAH_FARMER_V5", "DLG_ECHO_SAWAH_FARMER_V6"], "do": ["flag:echo_sawah_farmer_heard"], "quiet": true},
+	{"if": [], "lines": ["DLG_ECHO_SAWAH_FARMER_V7", "DLG_ECHO_SAWAH_FARMER_V8"], "do": [], "quiet": true}
+])

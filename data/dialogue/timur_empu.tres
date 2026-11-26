@@ -15,5 +15,10 @@ entries = Array[Dictionary]([
 	{"if": ["step:mq3=3"], "lines": ["DLG_TIMUR_EMPU_V6"], "do": []},
 	{"if": ["step:mq3=5"], "lines": ["DLG_TIMUR_EMPU_V7"], "do": []},
 	{"if": ["quest:sq_t3=active"], "lines": ["DLG_TIMUR_EMPU_19"], "do": []},
+	{"if": ["quest:mq3=active"], "lines": ["DLG_TIMUR_EMPU_V39"], "do": [], "hub": true, "quiet": true, "choices": [{"text": "CHOICE_WIRASANA_ASK_1", "do": ["topic:wirasana_gandring"]}, {"text": "CHOICE_WIRASANA_ASK_2", "do": ["topic:wirasana_seven"]}, {"text": "CHOICE_WIRASANA_ASK_3", "do": ["topic:wirasana_ratna"]}, {"text": "CHOICE_WIRASANA_ASK_4", "do": ["topic:wirasana_road"]}, {"text": "CHOICE_WIRASANA_LEAVE", "do": []}]},
+	{"if": [], "topic": "wirasana_gandring", "quiet": true, "lines": ["DLG_TIMUR_EMPU_V40", "DLG_TIMUR_EMPU_V41", "DLG_TIMUR_EMPU_V42"], "do": []},
+	{"if": [], "topic": "wirasana_seven", "quiet": true, "lines": ["DLG_TIMUR_EMPU_V43", "DLG_TIMUR_EMPU_V44", "DLG_TIMUR_EMPU_V45"], "do": []},
+	{"if": [], "topic": "wirasana_ratna", "quiet": true, "lines": ["DLG_TIMUR_EMPU_V46", "DLG_TIMUR_EMPU_V47", "DLG_TIMUR_EMPU_V48"], "do": []},
+	{"if": [], "topic": "wirasana_road", "quiet": true, "lines": ["DLG_TIMUR_EMPU_V50", "DLG_TIMUR_EMPU_V51", "DLG_TIMUR_EMPU_V52", "DLG_TIMUR_EMPU_V53"], "do": []},
 	{"if": [], "lines": ["DLG_TIMUR_EMPU_22"], "do": []}
 ])

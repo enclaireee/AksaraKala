@@ -13,12 +13,12 @@ Areas: 4. Critical path: `gk_mulut` -> `gk_pasir` -> (drop) `gk_lupa` -> `gk_rua
 ## Area table
 | id | size (screens, tiles) | look | purpose | contents |
 |----|-----------------------|------|---------|----------|
-| `gk_mulut` | 3x2, 90x34 | The cave mouth. Wet black rock, carved clock gears, drifting faded letters, the chasm with the far hourglass in view | Entry, first rest, landmark view | Spawns `from_desa_purwa` (W, gate `quest:mq4=done`), `from_sk_keraton` (S, a sea-cave passage from the pavilion, gate `quest:mq4=done`), `from_gk_pasir` (link L1), `from_gk_lupa` (shortcut landing). Petilasan `kala_2` (near the entry). Encounters `kala_mulut` and `kala_mulut_2` (5.1). Gap memory letter `letter_la` (east road). Optional chest `kala_chest_0` (rule 7). Shortcut landing `sc:gk_lorong`. NPC variant spot `mouth_freed` (the Deserter, `deserter_mouth`, only when `choice_freed`). Quest markers `kala_mulut` (5.1, 5.2) |
-| `gk_pasir` | 3x3, 90x51 | The sand halls. Giant hourglass shapes in the walls, thin sand streams that only look pretty, rocky floors and pillars | The long way in, two fights, a secret | Spawns `from_gk_mulut` (W). Encounters `kala_pasir_1`, `kala_pasir_2`. Time-ward puzzles `puzzle_pasir_ward_w`, `puzzle_pasir_ward_e`, clue `ward_inscription`, beat spot `beat_wards_down` (5.2). Chest `kala_chest_1` (hidden sand cave, gap between pillars). Drop `D1` (high gallery, sand-slide) onto `gk_lupa`. Quest marker none |
-| `gk_lupa` | 2x3, 60x51 | The hall of faded letters. Aksara float like dim motes: Sunda, Jawa, forgotten scripts. Shelves of stone tablets | Rest before the boss, codex, the shortcut, the boss door | Spawns `from_gk_pasir` (drop landing, N), `from_gk_ruang_kala` (S door). Encounters `kala_lupa_1` (fight) and `kala_lupa` (**miniboss**) (5.3). Gap memory letter `letter_ra` (5.3). Chest `kala_chest_2` (behind tablets). Petilasan `kala_1` (south end, 10 tiles from the door, no fight between). NPC `semar` at `kala_1`. Codex spot `kala_aksara_pudar`. Shortcut gate `sc:gk_lorong` (opens from here). Quest markers `kala_1`, `kala_boss` (door) |
-| `gk_pelataran` | 2x2, 60x34 | Pelataran Waktu, the black-stone forecourt with ancestral pillars | First area of Act VI (5.1-5.2), the allies, the memorial stone, the siege | Spawns `from_gk_mulut` (N), `from_gk_pasir` (E). Encounter `kala_pelataran_siege`. NPCs `ciung_wanara`, `hariang_banga`, `faceless_deserter`, `naganingrum`, `cepot`, `memorial_stone`, `deserter_stone`. Petilasan `kala_0` |
-| `gk_hutan` | 2x2, 60x34 | Hutan Lupa, a petrified forest of name-trees and stone chimes | 5.6: fight, name-chimes puzzle, chest | Spawns `from_gk_pasir` (W), `from_gk_lupa` (S). Encounter `kala_hutan_echoes`, puzzle `whisper_tree_1`-`_3` (props), clue `name_trees`, chest `kala_chest_hutan` |
-| `gk_jembatan` | 2x2, 60x34 | Jembatan Bayang, the causeway over the chasm of eaten time | 5.8: the echoes of fallen legends | Spawns `from_gk_lupa` (W). Encounter `kala_jembatan_echoes`, clue `bridge_echo`, chest `kala_chest_jembatan` |
+| `gk_mulut` | 3x2, 90x34 | The cave mouth. Wet black rock, carved clock gears, drifting faded letters, the chasm with the far hourglass in view | Entry, first rest, landmark view | Spawns `from_gk_pelataran` (the region is entered at `gk_pelataran`: `desa_purwa` and `sk_keraton` exit there, see the link table), `from_gk_pasir` (link L1), `from_gk_lupa` (shortcut landing). Petilasan `kala_2` (near the entry). Echoes `echo_galuh_seller`, `echo_ki_darsa` (v6, ASSUMED). Encounters `kala_mulut` and `kala_mulut_2` (5.1). Gap memory letter `letter_la` (east road). Optional chest `kala_chest_0` (rule 7). Shortcut landing `sc:gk_lorong`. NPC variant spot `mouth_freed` (the Deserter, `deserter_mouth`, only when `choice_freed`). Quest markers `kala_mulut` (5.1, 5.2) |
+| `gk_pasir` | 3x3, 90x51 | The sand halls. Giant hourglass shapes in the walls, thin sand streams that only look pretty, rocky floors and pillars | The long way in, two fights, a secret | Spawns `from_gk_mulut` (W). Encounters `kala_pasir_1`, `kala_pasir_2`. Time-ward puzzles `puzzle_pasir_ward_w`, `puzzle_pasir_ward_e`, clue `ward_inscription`, beat spot `beat_wards_down` (5.2). Chest `kala_chest_1` (hidden sand cave, gap between pillars). Drop `D1` (high gallery, sand-slide) onto `gk_lupa`. Quest marker none. v6: 4 sand-hall pockets, two echoes `echo_sawah_farmer`, `echo_timur_empu`, codex spot `tengger_lautan_pasir`, clue `pasir_sand_stream` |
+| `gk_lupa` | 2x3, 60x51 | The hall of faded letters. Aksara float like dim motes: Sunda, Jawa, forgotten scripts. Shelves of stone tablets | Rest before the boss, codex, the shortcut, the boss door | Spawns `from_gk_pasir` (drop landing, N), `from_gk_ruang_kala` (S door). Encounters `kala_lupa_1` (fight) and `kala_lupa` (**miniboss**) (5.3). Gap memory letter `letter_ra` (5.3). Chest `kala_chest_2` (behind tablets). Petilasan `kala_1` (south end, 10 tiles from the door, no fight between). NPC `semar` at `kala_1`. Codex spot `kala_aksara_pudar`. Shortcut gate `sc:gk_lorong` (opens from here). v6: west wing reading rooms, echo `echo_sunda_elder`. Quest markers `kala_1`, `kala_boss` (door) |
+| `gk_pelataran` | 2x2, 60x34 | Pelataran Waktu, the black-stone forecourt with ancestral pillars | First area of Act VI (5.1-5.2), the allies, the memorial stone, the siege | Spawns `from_gk_mulut` (N), `from_gk_pasir` (E). Encounter `kala_pelataran_siege`. NPCs `ciung_wanara`, `hariang_banga`, `faceless_deserter`, `naganingrum`, `cepot`, `memorial_stone`, `deserter_stone`. Petilasan `kala_0`. v6: clues `pelataran_ancestor_pillars`, `pelataran_siege_line`; tents, palisade. Ask-about topics for Ciung Wanara and Hariang Banga are for the writer |
+| `gk_hutan` | 2x2, 60x34 | Hutan Lupa, a petrified forest of name-trees and stone chimes | 5.6: fight, name-chimes puzzle, chest | Spawns `from_gk_pasir` (W), `from_gk_lupa` (S). Encounter `kala_hutan_echoes`, puzzle `whisper_tree_1`-`_3` (props), clue `name_trees`, chest `kala_chest_hutan`. v6: echoes `echo_ki_sumarto`, `echo_leuwi_mother`, clue `hutan_stone_chimes`, optional SQ-V1 markers `sqv1_offerings`, `sqv1_ruwatan_place` |
+| `gk_jembatan` | 2x2, 60x34 | Jembatan Bayang, the causeway over the chasm of eaten time | 5.8: the echoes of fallen legends | Spawns `from_gk_lupa` (W). Encounter `kala_jembatan_echoes`, clue `bridge_echo`, chest `kala_chest_jembatan`. v6: echoes `echo_kidul_nelayan_tua`, `echo_mbok_srini`, clue `bridge_footprints` |
 | `gk_ruang_kala` | 2x2, 60x34 | A round chamber. A clock face on the floor, the great hourglass overhead. Four quadrants, each with a motif of an earlier region (phase 3 uses them all) | Boss arena, Batara Kala | Spawn `from_gk_lupa`. Boss `batara_kala` (marker `kala_boss`), arena gate `A` in the north corridor. After the fight a lit door leads to the epilogue (`kala_exit`, **ASSUMED**). No other enemies |
 
 ## Region graph
@@ -88,9 +88,9 @@ Total about 20 kills after v4c (two more fights, the Abyss fight and the minibos
 |-------|-------|-------|
 | Boss arena | 1 | `gk_ruang_kala` |
 | Elite room | 0 (smaller: short finale) | none |
-| NPCs | 1 | `semar` at `kala_1` |
+| NPCs | 1 main + 9 echoes (v6) | `semar_kala` at `kala_1`; echoes in mulut (2), pasir (2), lupa (1), hutan (2), jembatan (2) |
 | Secrets | 2 | `kala_chest_1`, `kala_chest_2` |
-| Codex spot | 1 | `kala_aksara_pudar` in `gk_lupa` (faded letters, Kala, ruwatan note) |
+| Codex spot | 2 (v6) | `tengger_lautan_pasir` in `gk_pasir` (existing codex id, ASSUMED reuse), | `kala_aksara_pudar` in `gk_lupa` (faded letters, Kala, ruwatan note) |
 | Petilasans | 2 | `kala_2` (mulut), `kala_1` (lupa, the last one) |
 
 ## Quest step locations
@@ -354,6 +354,7 @@ Story v5 order: `gk_pelataran` (siege, allies, memorial stone, 5.1-5.2) -> `gk_m
 Enter `gk_mulut` (the far hourglass in view) > `kala_mulut`, beat `mouth`, `kala_mulut_2`, letter La and the tag game (5.1) > petilasan `kala_2` is optional > `gk_pasir`: `kala_pasir_1`, the inscription, the west ward puzzle, `kala_pasir_2`, the east ward puzzle, the gallery beat (5.2) > sand-slide drop > `gk_lupa`: `kala_lupa_1`, the elite `kala_lupa`, letter Ra and the two cups (5.3) > open `sc:gk_lorong` (short way back) > petilasan `kala_1`, Semar, letter Sa (5.4), K10 (5.5), LC6 (5.6), K7 (5.7) > door > `gk_ruang_kala`, Batara Kala (5.8), write her name (5.9) > the lit door home.
 
 ## Self-check ([AGENTS.md](../../AGENTS.md) section 5 Step 2), re-run for v4c 2026-11-06
+- [x] v6 area depth floor (2026-11-26): every non-arena area has 2+ NPC spots, 2+ clue or pickup spots, 1+ encounter or trigger, 10%+ features; big areas have 3+ halls with 2-3 tile gaps. Checked by a script (row lengths, legend counts, BFS from each spawn to each exit and spot).
 - [~] POI counts: 1 boss arena, 1 miniboss (`kala_lupa`), 1 NPC (3-5), 3 secrets or finds (`kala_chest_0`, `kala_chest_1`, `kala_chest_2`), 1 codex spot, 7 encounters (6-10), 2 petilasans. The finale keeps few talkers by design.
 - [x] Petilasan before the boss, no fight between: `kala_1` is 10 tiles from the door; `kala_lupa` and `kala_lupa_1` are 20+ tiles away in the north; the gap memories, K10, LC6 and K7 are scenes, not fights.
 - [x] First appearances: every enemy was met earlier, each encounter has its weakness glyph.
@@ -376,12 +377,21 @@ Enter `gk_mulut` (the far hourglass in view) > `kala_mulut`, beat `mouth`, `kala
 
 - v4c (2026-11-06): gap-memory letters, `ward_inscription`, `lc6_lontar` and the beat `beat_wards_down` are ASSUMED ids. The boss `B` waits on `flag:mq5_h1` (K7) so the sequence cannot be skipped. Gap `correct` options depend on the prologue text (script owner).
 
+## SQ-V1: the small ruwatan (optional, size S, ASSUMED, all culture details VERIFY)
+- Giver: `echo_ki_sumarto` in `gk_hutan` east grove (52,18), cond `flag:mq5_1c`. A kind echo of a dalang who once did ruwatan; he speaks of children called anak sukerta (VERIFY the term and who counts as one).
+- Step 1: take the offerings: clue `sqv1_offerings` (48,3, east nook). Talking to him sets `flag:sqv1_started` (ASSUMED flag, owned by the script writer).
+- Step 2: stand in the ring at trigger `sqv1_ruwatan_place` (53,23) and answer him; no fight, no enemy (VERIFY ritual elements before shipping; living rituals are backdrop only, Semar and deities are never hostile).
+- Reward idea: a journal note and a small keepsake. Not tied to the critical path.
+
 ## Open questions
+0. v6: should the echoes (`echo_*`, 9 new npc ids) share one portrait set, and is `flag:sqv1_started` the right flag name? Dialogue files (4+ lines each) are for the writer.
 1. VERIFY (ruwatan): the codex note on ruwatan, and the claim that Kala is "turned back", not killed, need sources ([story.md](../story.md) says verified with nuance). Any new culture claim about hourglass or clock motifs for Kala is a design invention, not folklore.
 2. Should the arena be bigger than 2x2 for phase 3 "all arenas combined"? Here 60x34 with four quadrant motifs.
 3. Segara Kidul is now on the main path, so Lampor, Bajul Putih and Ombak are all known by Act VI. `kala_lupa` keeps the Timur "Old guard" mix (1 Prajurit Terkutuk, 2 Banaspati); swap to the Segara W3 mix? (ASSUMED no.)
 4. How does the player return to Desa Purwa after the boss? A lit door (ASSUMED) or a cutscene.
 5. Is Semar at `kala_1` wanted, or does story.md want him silent in the finale?
+
+- **v6 depth floor (2026-11-26):** new ASSUMED npc ids `echo_galuh_seller`, `echo_ki_darsa` (mulut), `echo_sawah_farmer`, `echo_timur_empu` (pasir), `echo_sunda_elder` (lupa), `echo_ki_sumarto`, `echo_leuwi_mother` (hutan), `echo_kidul_nelayan_tua`, `echo_mbok_srini` (jembatan); clues `pasir_sand_stream`, `hutan_stone_chimes`, `bridge_footprints`, `pelataran_ancestor_pillars`, `pelataran_siege_line`, `sqv1_offerings`; trigger `sqv1_ruwatan_place`; flag `sqv1_started`; codex reuse `tengger_lautan_pasir`. Echo conds copy a cond already used in the same area. Walls, pillars and tents are hand-placed features.
 
 ## Decisions (ASSUMED 2026-11-05, updated for v3.1 2026-11-06; resolve open questions 2-5 and the conflicts)
 - Entry (v5): link X1 from `sk_keraton` (the main entry, a sea-cave passage in the south wall of `gk_pelataran`, spawn `from_sk_keraton`) and link X0 from `desa_purwa` (the west exit of `gk_pelataran`, spawns `from_desa_purwa` in pelataran and `from_gk_pelataran` in Desa Purwa). Both open on `quest:mq4=done` (kabut flag `mq4_9`). MQ5 requires `mq4_9`; the beat `kidul` starts it (`start:mq5`). The Hunter does not appear in Act VI.
@@ -392,7 +402,7 @@ Enter `gk_mulut` (the far hourglass in view) > `kala_mulut`, beat `mouth`, `kala
 - Kala HP 9300 (starting value; Segara Kidul is on the main path, so the old P0 figure 8400 no longer applies). No tier scaling exists, so the reused mixes keep their own stats.
 
 ## Doc conflicts found (not fixed)
-- v5 (2026-11-06): the link table still routes `sk_keraton` and `desa_purwa` into `gk_mulut`, while step 5.1 is `zone_entered:gk_pelataran` and `gk_pelataran` links only to `gk_mulut` and `gk_pasir`; the player walks mulut -> pelataran for 5.1-5.2 and back for 5.3. Needs a design call (an entry link into `gk_pelataran`, or 5.1 starting at the mouth). The critical-path and self-check paragraphs below are the v4c four-area text.
+- Resolved 2026-11-26 (depth-pass review): the code and the link table (X0/X1) route `sk_keraton` and `desa_purwa` into `gk_pelataran`; the area table now says so. Old note: v5 (2026-11-06): the link table still routes `sk_keraton` and `desa_purwa` into `gk_mulut`, while step 5.1 is `zone_entered:gk_pelataran` and `gk_pelataran` links only to `gk_mulut` and `gk_pasir`; the player walks mulut -> pelataran for 5.1-5.2 and back for 5.3. Needs a design call (an entry link into `gk_pelataran`, or 5.1 starting at the mouth). The critical-path and self-check paragraphs below are the v4c four-area text.
 - Resolved by v3.1: Segara Kidul is P0 and `gk_mulut` has two entries (`sk_keraton`, `desa_purwa`) on `quest:mq4=done`.
 - Resolved 2026-11-06 (consistency pass): desa_purwa.md gates its Gua Kala exit on `mq4_9`; bestiary.md calls Ombak P0 and Kala HP 9300.
 - The three letters of her name (*huruf nama*: La, Ra, Sa) of quests.md MQ5 have no map object; they are released by the clears (La, Ra) and the petilasan (Sa). Phase 5 may want pickups.
@@ -424,7 +434,7 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 #___________________#######_____________rr__________________#########____________________#
 #_________P_________#######______________________________________________________________#
 #___________________________________________________________________________#####________#
-#___________________________________________________________________________#####________#
+#_____________K_____________________________________________________________#####________#
 #___________________________________________________________________________#####________#
 #_______________________rr__________________________________rr______________#####________#
 #_______________________rr__________________________________rr______________#####________#
@@ -437,7 +447,7 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 #_________________rr_____________________________________________________________________#
 #_________________rr_____________________________________________________________________#
 #_______________________________________________________________________________rr_______#
-#_______________________________________________________________________________rr_______#
+#___________________________J___________________________________________________rr_______#
 #_______#####_____________________________________________________#########______________#
 #_______#####_____________________________________________________#########______________#
 #_______#####_________________#########_____________rr____________#########______________#
@@ -467,6 +477,8 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 | `C` | chest: 300 Ilmu (north nook, rule 7 optional find, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_0", item_id:"ilmu:300"}` | floor | 1 |
 | `V` | clue, the Eclipse veil across the cave mouth; the player draws *Ombak* to part it (5.3 `clue` piece; journal note only; id `eclipse_veil`, hunt `kala`; ASSUMED position by the arrival from `gk_pelataran`) | `res://entities/world/clue.tscn` | `{clue_id:"eclipse_veil", cond:"flag:mq5_choice6"}` | floor | 1 |
 | `O` | the Eclipse barrier across the cave mouth; cast Ombak (Jawa Ka) at it (5.3; `flag:ombak_barrier` is set by the cast) | `res://entities/npc/npc.tscn` | `{npc_id:"ombak_barrier"}` | floor | 1 |
+| `J` | NPC echo of the Galuh seller (friendly shadow of a Kraton Galuh stallkeeper; ASSUMED, new id `echo_galuh_seller`) | `res://entities/npc/npc.tscn` | `{npc_id:"echo_galuh_seller", cond:"flag:mq5_choice6"}` | floor | 1 |
+| `K` | NPC echo of Ki Darsa the juru pantun, by the rest fire (ASSUMED, new id `echo_ki_darsa`) | `res://entities/npc/npc.tscn` | `{npc_id:"echo_ki_darsa", cond:"flag:mq5_choice6"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -481,6 +493,12 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 | veil | (18,28)-(26,32) | The Eclipse veil by the arrival from `gk_pelataran` | clue `V` eclipse_veil (22,30) | 5.3 |
 | north nook | (28,2)-(34,6) | Optional chest | `C` (30,4) | rule 7 |
 | name stone (v4d) | (5,16)-(7,18) | SQ-C3 step 4: the write stone `deserter_stone` at (6,17), not drawn on the map (**ASSUMED**: a plain NPC spot on floor; `gen_zones.py` reads only the legend). The stone is the only side spot in Gua Kala; it sits 2 tiles from the Deserter spot `d` (4,18), so the freed variant is one scene | NPC `{npc_id:"deserter_stone", cond:"flag:mq5_1"}` (the three clue conds are in the quest step table) | SQ-C3 `name_written:deserter_name` |
+### Rooms (v6 depth floor, ASSUMED)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| rest fire | (10,8)-(18,12) | Quiet pocket by the north wall | NPC `K` echo_ki_darsa (14,10) | none |
+| stall row | (24,20)-(32,26) | Faded market shadows near the path | NPC `J` echo_galuh_seller (28,23) | none |
+
 ## Area 2: gk_pasir
 
 - Size: 90 x 51 tiles = 3 x 3 screens (30 x 17 each).
@@ -490,55 +508,55 @@ The 4 sections below follow the format of [tanah_timur.md](tanah_timur.md) (tile
 ### Map
 ```
 ##########################################################################################
-#___________________________________________________________#____________________________#
-#___________________________________________________________#____________________________#
-#___________________________________________________________#_____________________rr_____#
-#___________________________________________________________#_____rr______________rr_____#
-#___________________________________________________________#_____rr_____________________#
-#_______________________rr__________________________________#____________________________D
-#_______________________rr__________________________________#____________________________D
+#_________#_______#___________##____#_______#_______#_______#_____#_________#____________#
+#_________#_______#___________##____#_______#_______#_______#_____#_________#____________#
+#_________#_______#___rr______##____#_______#_______#_______#_____#_______________rr_____#
+#_____rr__________#___rr______##____________#_____Q_________#_____rr______________rr_____#
+#_____rr____K_________________##____________________________#_____rr__rr_________________#
+#_______________________rr____________________________rr____#_________rr________rr_______D
+#_______________________rr____________________________rr____#___________________rr_______D
 #_____________________________rr________________rr__________#____________________________#
-#_____________________________rr________________rr__________#_______________rr___________#
-#_______rr____________________________rr____________________#_______________rr____G______#
-#_______rr____________________________rr____________________#____________________________#
-#___________________________________________________________#____________________________#
-#___________________________________________________________#____________________________#
-#___________________________________________________________##########__##################
-Ww_______________________________________________________________________________________#
-W_______________rr________________________________rr_____________________________________#
-#_______________rr________________________________rr_____________________________________#
-#________________________________________________________________________________________#
-#________________________________________________________________________________________#
-#_____________________________________B__________________________________________________#
-#___________________________rr___________________________________________________________#
-#___________________________rr______________________________________________C____________#
-#________________________________________________________________________________________#
-Xe________________A______________________________________________________________________#
-X_________________________________E_________________________rr__________________________yY
-#___________________rr______________________________________rr___________________________Y
-#___________________rr__________________rr_______________________________________________#
-#_______________________________________rr______________________F_rr_____________________#
-#_________________________________________________________________rr_____________________#
-#________________________________________________________________________________________#
-#___________________________________________________________rr___________________________#
-#___________________________________________________________rr___________________________#
-#________________________________________________________________________________________#
-#_______________rr__________________________rr___________________________________________#
-#_______________rr__________________________rr___________________________________________#
-#________________________________________________________________________________________#
-#________________________________________________________________________________________#
-#_______rr__________________________________________rr______rrrrrrrrrrrr__rrrrrrrrrrrrr__#
-#_______rr__________________________________________rr______rrrrrrrrrrrr__rrrrrrrrrrrrr__#
-#___________________________________rr______________________#_________________________#__#
-#___________________________________rr______________________#_________________________#__#
-#_________________________rr________________________________#_________________________#__#
-#_________________________rr________________________________#_________________________#__#
+#_____________rr______________##________rr______rr__________#_______________rr___________#
+#_______rr____rr______________##______rrrr__________________#_______________rr____G______#
+#_______rr____________________##______rr____________________#____________________________#
+#_____________________________##____________________________#___rr_______________________#
+#_____________________________##____________________________#___rr_______________________#
+##############___###########################___########___############__##################
+Ww___________________##____________________________##___________________________rr_______#
+W_______________rr___##___________________________r##___________________________rr_______#
+#_______________rr___##___________________________rr_____________________________________#
+#_______rr___________##_____________________rr____________________rr_____________________#
+#_______rr___________##_____________________rr____________________rr_____________________#
+#____________________##_______________B____________##____________________________________#
+#____________________##_____rr_____________________##____________________________________#
+#____________________##_____rr_____________________##_____rr________________C____________#
+#__________________________________________________##_____rr_____________________________#
+Xe________________A________________________________##____________________________________#
+X_________________________________E________________##_______rr__________________________yY
+#_________rr________r##____________________________##_______rr___________________________Y
+#_________rr________r##_________________rr_________##____________________________________#
+#_____________rr_____##_________________rr_________##___________F_rr_____________________#
+#_____________rr_____##_________________rr________________________rr_____________________#
+#____________________##_____________________________________________________________rr___#
+#____________________##_____________________________________rr______________________rr___#
+#_______rr___________##___________rr_______________##_______rr___________________________#
+#_______rr________________________rr________rr_____##_____________rr_____________________#
+#_______________rr__________________________rr_____##___rr________rr_____________________#
+#_______________rr__________________________rr_____##___rr_______________________________#
+#____________________##____________________________##____________________________________#
+##############___#######################___############___##_____________________________#
+#_______rr____________________##____________________rr______rrrrrrrrrrrr__rrrrrrrrrrrrr__#
+#_______rr____________________##____________________rr______rrrrrrrrrrrr__rrrrrrrrrrrrr__#
+#_____________________________##____rr______rr______________#_________________________#__#
+#_____________________________##____rrrr____rr______________#_________________________#__#
+#___________rr____________rr__##______rr____________________#_________________________#__#
+#___________rr____________rr__##____________________________#_________________________#__#
 #_____________rr______________________________rr____________#_________________________#__#
 #_____________rr______________________________rr____________#____________c____________#__#
-#___________________________________________________________#_________________________#__#
-#___________________________________________________________#_________________________#__#
-#___________________________________________________________#_________________________#__#
-#___________________________________________________________#_________________________#__#
+#_______R___________________________________________________#_________________________#__#
+#___________________rr________##____________J_____rr________#_________________________#__#
+#___________________rr________##__________________rr________#_________________________#__#
+#_____________________________##____________________________#_________________________#__#
 ##########################################################################################
 ```
 
@@ -559,6 +577,10 @@ X_________________________________E_________________________rr__________________
 | `B` | trigger, puzzle `puzzle_pasir_ward_w` (5.5: turn the three hourglass stones until the sand runs up; the western ward shatters) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_pasir_ward_w", size:Vector2i(12,8), cond:"flag:mq5_la"}` | floor | 1 |
 | `C` | trigger, puzzle `puzzle_pasir_ward_e` (5.5: same, mirrored; the eastern ward shatters) | `res://entities/world/trigger.tscn` | `{trigger_id:"puzzle_pasir_ward_e", size:Vector2i(12,8), cond:"flag:mq5_la"}` | floor | 1 |
 | `G` | trigger, beat spot at the high gallery (5.5: both wards down, Semar's one line; ASSUMED) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_wards_down", size:Vector2i(8,6), cond:"flag:mq5_1c"}` | floor | 1 |
+| `K` | NPC echo of the Mataram rice farmer, in the north-west sand hall (ASSUMED, new id `echo_sawah_farmer`) | `res://entities/npc/npc.tscn` | `{npc_id:"echo_sawah_farmer", cond:"flag:mq5_la"}` | floor | 1 |
+| `J` | NPC echo of Mpu Wirasana the smith, in the south-east sand court (ASSUMED, new id `echo_timur_empu`) | `res://entities/npc/npc.tscn` | `{npc_id:"echo_timur_empu", cond:"flag:mq5_la"}` | floor | 1 |
+| `Q` | codex spot, the hourglass wall of the north-east sand hall (Tengger sand sea, ASSUMED) | `res://entities/world/pickup.tscn` | `{codex_id:"tengger_lautan_pasir"}` | floor | 1 |
+| `R` | clue, the thin sand streams that only look pretty (journal note only, id `pasir_sand_stream`, ASSUMED) | `res://entities/world/clue.tscn` | `{clue_id:"pasir_sand_stream", cond:"flag:mq5_la"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -571,6 +593,18 @@ X_________________________________E_________________________rr__________________
 |------|----------------------|---------|----------|---------------|
 | west ward | (30,15)-(45,25) | Clue, puzzle | clue `A` (18,24), trigger `B` (38,20) | 5.2 |
 | east ward and gallery | (68,17)-(88,12) | Puzzle, beat before the drop | trigger `C` (76,22), trigger `G` (82,10) | 5.2 |
+### Rooms (v6 depth floor, ASSUMED)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| NW sand hall A | (1,1)-(29,13) | Pocket by the west door, gaps in the wall at y14 | NPC `K` echo_sawah_farmer (12,5), pillars | none |
+| NW sand hall B | (32,1)-(59,13) | Hourglass wall | pickup `Q` codex `tengger_lautan_pasir` (50,4) | none |
+| gallery | (61,1)-(88,13) | High gallery and the D1 drop (unchanged) | none new | 5.2 |
+| west antechamber | (1,15)-(20,36) | Split from the centre hall by a wall with gaps at y23-25 and y33-35 | pillars | none |
+| centre hall | (23,15)-(50,36) | Ward W (unchanged) | pillars | 5.2 |
+| east hall | (53,15)-(88,36) | Ward E (unchanged), gaps at y17-19 and y29-31 | pillars | 5.2 |
+| SW sand hall A | (1,38)-(29,49) | South-west pocket | clue `R` pasir_sand_stream (8,46) | none |
+| SW sand hall B | (32,38)-(59,49) | South-east court | NPC `J` echo_timur_empu (44,47) | none |
+
 ## Area 3: gk_lupa
 
 - Size: 60 x 51 tiles = 2 x 3 screens (30 x 17 each).
@@ -580,55 +614,55 @@ X_________________________________E_________________________rr__________________
 ### Map
 ```
 ############################NN##############################
-#___________________________n______________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#_____l____________________________________________________#
-Xm_________________________________________________________#
+#_________#_____#____#______n_____#___________#____________#
+#_________#_____#____#____________#___________#____________#
+#_________#__________#__###_______#___________#_####_______#
+#_____l___________rr_#__###_______#___________#_####_______#
+Xm________________rr__________________________#____________#
 X__________________________________________________________#
 #__________________________________________________________#
-#_____________A_______________________________________rr___#
-#_____________________________________________________rr___#
+#___rr________A______#________________________________rr___#
+#___rr_______________#________________________________rr___#
+#____rr_____rr_______#____rr_______________________________#
+#____rr_____rr_______#____rr________________________#####__#
+#____________________#______________________rr______#####__#
+#____________________#__________E___________rr_____________#
+########___###########________________________________rr___#
+#___rr_______________#____________________________rr__rr___#
+#_________________________________________________rr______yY
+#__#####___________________________________________________Y
 #__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#_______________________________E__________________________#
-#___rr________________________________________________rr___#
-#___rr________________________________________________rr___#
-#_________________________________________________________yY
-#__________________________________________________________Y
-#__________________________________________________________#
-#__________________________________________________________#
-#___rr_____________________________________________________#
-#___rr_____________________________________________________#
-#____________________________________________________#######
-#__________________________________________________rr#_____#
-#_____________________________B____________________rr#_____#
-#__________________________________________________________#
-#___rr__________________________________________________c__#
+#____________________#######___###############___###########
+#___rr_____#######___#__________________#__________________#
+#___rr_______________#__________________#__________________#
+#____________________#__rr________rr____#____________#######
+##############___#####__rr________rr____#__________rr#_____#
+#____________________#________B_________#_____rr___rr#_____#
+#_rr_________________#__________________#_____rr___________#
+#_rrrr_______________#__________________________________c__#
 #___rr_____________________________________________rr#_____#
-#__________________________________________________rr#_____#
-#_________rr______rr_________________________________#_____#
-#_________rr______rr_________________________________#######
+#__######___________________________________rr__rr_rr#_____#
+#_________rr______rr______________rr____#___rr__rr___#_____#
+#_________rr_######r_#____________rr____#____________#######
+#____________________#__________________#__________________#
+#___________g___i____#######___#################___#########
+#____________________#___________________#_________________#
+#____________________#___________________#_________________#
+########___###########___________________#______________rr_#
+#___rr_______________#______F________rr__#____rr________rr_#
+#___rr_______________#___________G___rr__#____rr___________#
+#___________________r#__________________r#____________rr___#
+#___________________r#__________________r#__#########_rr___#
+#__########__________#___rr___P__H_______#_________________#
+#____________J_______#___rr______________#_________________#
+#___rr_______________#_____C________D____#_________________#
+#___rr_______________#___________________#_________________#
+#_________#########_________________________rr________rr___#
+#_______________rr__________________________rr###########__#
 #__________________________________________________________#
-#___________g___i__________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#___rr______________________F______________________________#
-#___rr___________________________G_________________________#
-#___________________rr__________________rr____________rr___#
-#___________________rr__________________rr____________rr___#
-#_____________________________P__H_________________________#
-#__________________________________________________________#
-#___rr_____________________C________D______________________#
-#___rr_____________________________________________________#
-#_______________rr__________________________rr________rr___#
-#_______________rr__________________________rr________rr___#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#____________________________s_____________________________#
+#_____rr______rr_____#__rr__________rr___#_________________#
+#_____rr______rr_____#__rr__________rr___#_________________#
+#____________________#_______s___________#_________________#
 #############################SS#############################
 ```
 
@@ -656,6 +690,7 @@ X__________________________________________________________#
 | `D` | clue, Semar's tale stone (5.10 K10; opens `k10_murwakala`; cond `flag:memory_sa`) | `res://entities/world/clue.tscn` | `{clue_id:"semar_tale", memory_id:"k10_murwakala", cond:"flag:memory_sa"}` | floor | 1 |
 | `F` | clue, Laras's lontar fragment (5.12 LC6, after K7; opens `lc6`; ASSUMED id; cond `flag:mq5_h2`) | `res://entities/world/clue.tscn` | `{clue_id:"lc6_lontar", memory_id:"lc6", cond:"flag:mq5_h1"}` | floor | 1 |
 | `G` | clue, Semar's kelir (5.11 K7, after K10; opens `k7_ruwatan`; cond `flag:mq5_lc`) | `res://entities/world/clue.tscn` | `{clue_id:"semar_kelir", memory_id:"k7_ruwatan", cond:"flag:mq5_h2"}` | floor | 1 |
+| `J` | NPC echo of the Kampung elder, reading the faded letters in the west wing (ASSUMED, new id `echo_sunda_elder`) | `res://entities/npc/npc.tscn` | `{npc_id:"echo_sunda_elder", cond:"flag:mq5_1d"}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -668,6 +703,14 @@ X__________________________________________________________#
 |------|----------------------|---------|----------|---------------|
 | last rest | (24,34)-(38,46) | Petilasan `kala_1`, Semar, clues in v5 order: `C` letter_sa (5.9), `D` semar_tale (K10, 5.10), `G` semar_kelir (K7, 5.11), `F` lc6_lontar (LC6, 5.12) | 5.9-5.12 |
 | abyss | (4,4)-(40,28) | Fight (14,8), miniboss (32,13), letter_ra `B` (30,24) | 5.7 |
+### Rooms (v6 depth floor, ASSUMED)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| west wing, upper | (1,1)-(20,13) | Tablet shelves | blocks and shelves | none |
+| west wing, middle | (1,15)-(20,34) | Reading rooms joined by 3-wide gaps | shelves | none |
+| west wing, south | (1,36)-(20,49) | Faded letters | NPC `J` echo_sunda_elder (13,41) | none |
+| east halls | (22,1)-(58,49) | Split by walls at y19 and y32 with gaps; the abyss, the last rest and the door (unchanged) | rocks and pillars | 5.7, 5.9-5.12 |
+
 ## Area 4: gk_ruang_kala
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
@@ -739,37 +782,37 @@ X__________________________________________________________#
 ```
 ############################NN##############################
 #___________________________n______________________________#
-#__________________________________________________________#
-#______________rr__________________________rr______________#
-#______________rr__________________________rr______________#
-#__________________________________________________________#
-#______________________C___________H_______________________#
+#___________________r___r___________r___r__________________#
+#__######______rr___r___r______L____r___r__rr______######__#
+#__#____#______rr__________________________rr______#____#__#
+#__#____#__________________________________________#____#__#
+#__##__##______________C___________H_______________##__##__#
 #___________________________R__G______T____________________#
 #__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
-#__________________________________________________________#
-#_____________________________E____________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#___________________rr________________rr___________________#
-Kk__________________rr________________rr__________________yY
-K__________________________________________________________Y
+#__######___________rr________________rr___________######__#
+#__#____#___________rr________________rr___________#____#__#
+#__#____#__________________________________________#____#__#
+#__##__##_____________________E____________________##__##__#
 #__________________________________________________________#
 #__________________________________________________________#
-#______________rr__________________________rr______________#
-#______________rr__________________________rr______________#
+#_________rr________rr________________rr________rr_________#
+Kk________rr________rrrrr___________rrrr________rr________yY
+K_____________________________Z____________________________Y
 #__________________________________________________________#
-#____________________M________P________D___________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#_______________________________________w__________________#
+########___##################___#################___########
+#______________rr__________##______________rr______________#
+#______________rr__________##______________rr______________#
+#________rr____rr__________##_________________rr___________#
+#________rr____rr____M_____##_P________D______rr___________#
+#__________________________##______________________________#
+#__________________________________rr______________________#
+#___________________rr_____________rr_rr____________rr_____#
+#_____________rr____rr________________rr____________rr_____#
+#_____________rr___________##____rr________________________#
+#____rr____________________##____rr________________________#
+#____rr____________________##___________________rr_____rr__#
+#_________________rr_______##___________________rr_____rr__#
+#_________________rr_______##___________w__________________#
 ########################################WW##################
 ```
 
@@ -793,6 +836,24 @@ K__________________________________________________________Y
 | `R` | NPC Ranga, the freed Faceless Deserter, an ally in the siege (Choice 2; replaces the retired `gk_mulut` spot `deserter_mouth`; the write stone `D` is his SQ-C3 stone) | `res://entities/npc/npc.tscn` | `{npc_id:"faceless_deserter", cond:"flag:choice_freed"}` | floor | 1 |
 | `G` | NPC Dewi Naganingrum with her lake-wardens (Choice 1, Tell Ciung) | `res://entities/npc/npc.tscn` | `{npc_id:"naganingrum", cond:"flag:choice_tell_ciung"}` | floor | 1 |
 | `T` | NPC Cepot with the lamp from the turtle beach (SQ-C4 done) | `res://entities/npc/npc.tscn` | `{npc_id:"cepot", cond:"flag:c4_done"}` | floor | 1 |
+| `L` | clue, the ancestor pillars, names cut in black stone (journal note only, id `pelataran_ancestor_pillars`, ASSUMED) | `res://entities/world/clue.tscn` | `{clue_id:"pelataran_ancestor_pillars", cond:"flag:mq4_9"}` | floor | 1 |
+| `Z` | clue, the siege line: the stakes and scorched ground where the Faceless pressed (journal note only, id `pelataran_siege_line`, ASSUMED) | `res://entities/world/clue.tscn` | `{clue_id:"pelataran_siege_line", cond:"flag:mq5_0"}` | floor | 1 |
+
+### Rooms (v6 depth floor, ASSUMED)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| ancestor row | (28,2)-(34,5) | Black stone pillars with cut names, between pillar pairs at y2 | clue `L` pelataran_ancestor_pillars (31,3) | none |
+| tents | (3,3)-(8,12) and (51,3)-(56,12) | Four ally tents, each with a south door | tent walls (no spots) | none |
+| palisade | y19, gaps at x8-10, x29-31, x49-51 | Siege line; the inner wall x27 (y20-32) has a 3-wide gap at y25-27 | stakes at y16, clue `Z` pelataran_siege_line (30,17) | 5.1 |
+
+### Rooms (v6 depth floor, ASSUMED)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| west grove | (1,6)-(17,32) | Joined to the centre by 3-wide gaps at y15-17 and y27-29 | NPC `K` echo_leuwi_mother (9,18), clue `Q` hutan_stone_chimes (8,28) | none |
+| centre grove | (20,6)-(43,32) | Name-trees; a wall at y22 with 3-wide gaps | trees `1`-`3`, fight (unchanged) | 5.6 |
+| east grove | (46,6)-(58,32) | SQ-V1: the echoes of anak sukerta | NPC `J` echo_ki_sumarto (52,18), trigger `M` sqv1_ruwatan_place (53,23) | SQ-V1 |
+| east nook | (44,3)-(51,4) | Small offerings | clue `L` sqv1_offerings (48,3) | SQ-V1 |
+| chest room | (7,3)-(15,4) | Chest (unchanged) | chest | rule 7 |
 
 ## Area 6: gk_hutan
 
@@ -805,36 +866,36 @@ K__________________________________________________________Y
 ############################################################
 #__________________________________________________________#
 #______##########__________________________##########______#
-#______#________#__________________________#________#______#
+#______#________#__________________________#____L___#______#
 #______#___c____#__________________________#________#______#
 #______####__####__________________________####__####______#
-#__________________________________________________________#
-#______________rr__________________________rr______________#
-#______________rr__________________________rr______________#
-#__________________________________________________________#
-#__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
+#_________________##_________________________##____________#
+#______________rr_##____rr______rr_________rr##____________#
+#__rr__________rr_##____rr______rr_________rr##_rr_________#
+#__rr_____________##________________rr_______##_rr____rr___#
+#________rr_______##________________rr_______##_______rr___#
+#________rr_______##rr________________rr_____##____________#
+#_rr______________##rr________________rr_____##____________#
+#_rr________rr____##_________________________##____________#
+#______r____rr____##______________________rr_##___rr_______#
+#_________________________________________rr______rr_______#
 Ww____________________________E____________________________#
-W__________________________________________________________#
-#_______________________________________N__________________#
-#__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#_________________________1_______3________________________#
-#______________rr__________________________rr______________#
-#______________rr_____________2____________rr______________#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#___________________________s______________________________#
+W______________________rr__________________________________#
+#________K________##___rr_______________N____##_____J__rr__#
+#______________r__##_________________________##________rr__#
+#___rr____________##rr________________rr_____##_r__________#
+#___rr____________##rr________________rr_____##____________#
+#____________rr___######___#########___########____________#
+#____________rr___##_________________________##______M_____#
+#__r______rr______##______1_______3__________##_rr_________#
+#_________rr___rr_##_______________________rr##_rr_________#
+#______________rr_##__rr______2____________rr##____________#
+#_____________________rr________________rr_____________rr__#
+#_______Q_______________________________rr_____________rr__#
+#____rr_______rr________rr__________rr_____________________#
+#____rr_______rr__##____rr__________rr_______##_____rr_____#
+#_________________##_________________________##_____rr_____#
+#_________________##________s________________##____________#
 ############################SS##############################
 ```
 
@@ -851,6 +912,12 @@ W__________________________________________________________#
 | `1` | whispering name-tree 1 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_1`) | `res://entities/npc/npc.tscn` | `{npc_id:"whisper_tree_1", cond:"flag:mq5_1c"}` | floor | 1 |
 | `2` | whispering name-tree 2 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_2`) | `res://entities/npc/npc.tscn` | `{npc_id:"whisper_tree_2", cond:"flag:mq5_1c"}` | floor | 1 |
 | `3` | whispering name-tree 3 of 3; answer it with the name of someone you helped (5.6; sets `flag:whisper_tree_3`) | `res://entities/npc/npc.tscn` | `{npc_id:"whisper_tree_3", cond:"flag:mq5_1c"}` | floor | 1 |
+| `J` | NPC echo of Ki Sumarto the dalang, giver of SQ-V1 (ASSUMED, new id `echo_ki_sumarto`) | `res://entities/npc/npc.tscn` | `{npc_id:"echo_ki_sumarto", cond:"flag:mq5_1c"}` | floor | 1 |
+| `K` | NPC echo of the Leuwi hamlet mother (ASSUMED, new id `echo_leuwi_mother`) | `res://entities/npc/npc.tscn` | `{npc_id:"echo_leuwi_mother", cond:"flag:mq5_1c"}` | floor | 1 |
+| `L` | clue, SQ-V1 marker 1: small offerings and cradle cloths left in the east nook (journal note; id `sqv1_offerings`, **VERIFY** offerings; ASSUMED) | `res://entities/world/clue.tscn` | `{clue_id:"sqv1_offerings", cond:"flag:mq5_1c,flag:sqv1_started"}` | floor | 1 |
+| `M` | trigger, SQ-V1 marker 2: the place of the small ruwatan, a ring of stone in the east grove (id `sqv1_ruwatan_place`; ASSUMED) | `res://entities/world/trigger.tscn` | `{trigger_id:"sqv1_ruwatan_place", size:Vector2i(8,6), cond:"flag:mq5_1c,flag:sqv1_started"}` | floor | 1 |
+| `Q` | clue, the hanging stone chimes of the west grove (journal note only, id `hutan_stone_chimes`, ASSUMED) | `res://entities/world/clue.tscn` | `{clue_id:"hutan_stone_chimes", cond:"flag:mq5_1c"}` | floor | 1 |
+
 
 ## Area 7: gk_jembatan
 
@@ -861,38 +928,38 @@ W__________________________________________________________#
 ### Map
 ```
 ############################################################
-#__________________________________________________________#
-#_______~~~~____________________________________~~~~_______#
-#_______~~~~____________________________________~~~~_______#
-#_______~~~~____________________________________~~~~_______#
-#__________________________________________________________#
-#______________rr__________________________rr______________#
-#______________rr__________________________rr______________#
-#__________________________________________________________#
-#__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
-Ww____________________________E____________________________#
+#____________~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~____________#
+#_______~~~~_~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~_~~~~_______#
+#_______~~~~_~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~_~~~~_______#
+#_______~~~~_~~______________________________~~_~~~~_______#
+#____________~~______________________________~~____________#
+#____________~~rr__________________________rr~~____________#
+#____________~~rr__________________________rr~~____________#
+#____________~~______________________________~~_____rr_____#
+#____rr______~~______________________________~~_____rr_____#
+#____rr______~~_____rr________________rr_____~~____________#
+#____________~~_____rr________________rr_____~~____________#
+#_____J______~~______________________________~~________K___#
+#____________~~______________________________~~____________#
+#_______rr___~~______________________________~~____________#
+#_______rr_____________________________________________rr__#
+Ww____________________________E________________________rr__#
 W__________________________________________________________#
-#_____________________________B____________________________#
-#__________________________________________________________#
-#___________________rr________________rr___________________#
-#___________________rr________________rr___________________#
-#__________________________________________________________#
-#__________________________________________________c_______#
-#______________rr__________________________rr______________#
-#______________rr__________________________rr______________#
-#__________________________________________________________#
-#_______~~~~____________________________________~~~~_______#
-#_______~~~~____________________________________~~~~_______#
-#_______~~~~____________________________________~~~~_______#
-#__________________________________________________________#
-#__________________________________________________________#
-#__________________________________________________________#
+#____________~~_______________B______________~~____________#
+#____________~~______________________________~~____________#
+#____________~~_____rr________________rr_____~~____________#
+#____________~~_____rr________________rr_____~~____________#
+#____________~~______________________________~~____________#
+#____________~~______________________________~~____c_______#
+#____________~~rr_____________L____________rr~~____________#
+#____________~~rr__________________________rr~~________rr__#
+#____________~~______________________________~~________rr__#
+#_______~~~~_~~______________________________~~_~~~~_______#
+#_______~~~~_~~______________________________~~_~~~~_______#
+#_______~~~~_~~______________________________~~_~~~~_______#
+#____________~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~____________#
+#____________~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~____________#
+#____________~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~____________#
 ############################################################
 ```
 
@@ -904,3 +971,13 @@ W__________________________________________________________#
 | `E` | encounter kala_jembatan_echoes (5.8, the miniboss is the Prajurit; sets `mq5_1e`; the beat `bridge` plays in this zone) | `res://entities/world/encounter.tscn` | `{area_id:"kala_jembatan_echoes", size:Vector2i(16,9), cond:"flag:mq5_ra,!flag:mq5_1e", waves:[[[res://entities/enemies/arca_penjaga.tscn, Vector2i(-4,0)], [res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(0,0)], [res://entities/enemies/bajul_putih.tscn, Vector2i(4,0)]]]}` | floor | 1 |
 | `c` | chest: class gear `kantong_panah`, a second path gets its sibling (ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"kala_chest_jembatan", item_id:"kantong_panah"}` | floor | 1 |
 | `B` | clue, the row of name-stones at the end of the bridge (5.8; journal note only; id `bridge_echo`, hunt `kala`; ASSUMED position) | `res://entities/world/clue.tscn` | `{clue_id:"bridge_echo", cond:"flag:mq5_ra"}` | floor | 1 |
+| `J` | NPC echo of Pak Raka the old fisherman, on the west shore (ASSUMED, new id `echo_kidul_nelayan_tua`) | `res://entities/npc/npc.tscn` | `{npc_id:"echo_kidul_nelayan_tua", cond:"flag:mq5_ra"}` | floor | 1 |
+| `K` | NPC echo of Mbok Srini, on the east shore (ASSUMED, new id `echo_mbok_srini`) | `res://entities/npc/npc.tscn` | `{npc_id:"echo_mbok_srini", cond:"flag:mq5_ra"}` | floor | 1 |
+| `L` | clue, the footprints of everyone who crossed the bridge (journal note only, id `bridge_footprints`, ASSUMED) | `res://entities/world/clue.tscn` | `{clue_id:"bridge_footprints", cond:"flag:mq5_ra"}` | floor | 1 |
+
+### Rooms (v6 depth floor, ASSUMED)
+| room | tile rect (x,y) size | purpose | contents | quest markers |
+|------|----------------------|---------|----------|---------------|
+| west shore | (1,1)-(12,32) | Fishermen's landing | NPC `J` echo_kidul_nelayan_tua (6,12) | none |
+| causeway | (15,4)-(44,29) | Bridge over the chasm; chasm bands `~` at x13-14 and x45-46 are crossed at y15-17 | clue `L` bridge_footprints (30,24), fight (unchanged) | 5.8 |
+| east shore | (47,1)-(58,32) | Market-day landing | NPC `K` echo_mbok_srini (55,12) | none |
