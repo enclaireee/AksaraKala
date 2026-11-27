@@ -14,7 +14,7 @@ marker = {"zone": "mt_gapura", "id": "recruiter_a"}
 [sub_resource type="Resource" id="s2"]
 script = ExtResource("2")
 objective = "Q_MQ2_S2_OBJ"
-all = [{"on": "area_cleared:mataram_gerbang", "set_flag": "", "objective": "Q_MQ2_S2_P1"}, {"on": "petilasan_activated:mataram_1", "set_flag": "mq2_1", "objective": "Q_MQ2_S2_P2"}]
+all = [{"on": "area_cleared:mataram_gerbang", "set_flag": "", "objective": "Q_MQ2_S2_P1"}, {"on": "petilasan_activated:mataram_1", "set_flag": "mq2_1", "objective": "Q_MQ2_S2_P2", "marker": {"zone": "mt_sawah", "id": "mataram_1"}}]
 set_flag = "mq2_1"
 recap = "Q_MQ2_S2_DONE"
 marker = {"zone": "mt_gapura", "id": "mataram_gerbang"}

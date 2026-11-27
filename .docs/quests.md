@@ -466,7 +466,7 @@ To prevent side content from feeling repetitive, side quests are divided into **
 
 **SQ-C2 "Surat di Seberang Pamali" / "Letters Across the Pamali" (Acts III–IV, M, Cross-Zone)**
 - Giver: Hariang Banga at `kg_pamali`. Unlock: `quest:mq2=done`.
-- Steps: (1) talk to `hariang_banga`, (2) travel back into `kg_keraton`/`kg_penjara` and deliver his letters to Queen Pangrenyep (`talked_to:galuh_queen`, lines vary by **Choice 3** `choice_mercy` / `choice_judgment`), (3) retrieve the Queen's heirloom signet from `kg_kaputren`, (4) deliver her reply to Hariang Banga in Tanah Timur and read the final note on Ibu's table in the Interlude (`clue_examined:c2_reply_letter`).
+- Steps: (1) talk to `hariang_banga`, (2) travel back into `kg_keraton`/`kg_penjara` and deliver his letters to Queen Pangrenyep (`talked_to:galuh_queen`, lines vary by **Choice 3** `choice_mercy` / `choice_judgment`), (3) retrieve the Queen's heirloom signet from `kg_kaputren`, (4) deliver her reply to Hariang Banga at the Pamali ford (`kg_pamali`, where he stands from the truce until SQ-C2 ends; the sub marker points there) and read the final note on Ibu's table in the Interlude (`clue_examined:c2_reply_letter`).
 - Reward: codex `pangrenyep_letter`.
 - Play: `talk, travel x2, fight, talk, puzzle, clue, beat`
 

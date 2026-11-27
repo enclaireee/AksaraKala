@@ -21,14 +21,14 @@ const MAP := [
 	"##################~~1.,,..c.####,,##########################",
 	"##################~~..,3...d####,,##########################",
 	"######################AA########AA##########################",
-	"############r.....................r#########################",
+	"############F.....................r#########################",
 	"############...........j...........#########################",
 	"############....m.............n....#########################",
 	"############.......................#########################",
-	"############.......................#########################",
+	"############.......r.......r.......#########################",
 	"############...........S...........#########################",
 	"############.......................#########################",
-	"############.......................#########################",
+	"############.......r.......r.......#########################",
 	"############.......................#########################",
 	"############....p.............s....#########################",
 	"############.......................#########################",
@@ -60,6 +60,7 @@ const SPOTS := {
 	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "leuwi_oncor_3"}, "tile": "."},   # prop, outer hamlet oncor lantern 3 (MQ1 1.8)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "leuwi_mist", "cond": "step:mq1=7", "size": Vector2i(10, 7), "waves": [[["res://entities/enemies/jurig_leuweung.tscn", Vector2i(-3, 0)], ["res://entities/enemies/jurig_leuweung.tscn", Vector2i(2, 1)]]]}, "tile": "."},   # encounter leuwi_mist, shades out of the dusk mist while you light the lanterns (MQ1 1.8, the Sandekala fight in small)
 	"A": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "s"}, "tile": ","},   # arena gate (combat.md 5.3 v7): the room's two mouths, the hamlet funnel and the tunnel foot; open until the threshold two tiles inside is crossed, then a wall of burning strokes until Sandekala falls
+	"F": {"scene": "res://entities/world/arena_floor.tscn", "props": {"art": "res://assets/art/arena/ts_leuwi.png"}, "tile": "."},   # arena floor, painted (boss revamp v9): one image over the arena rect from its top-left cell; the Sandekala room
 }
 
 

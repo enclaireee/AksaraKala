@@ -377,7 +377,7 @@ Desa Purwa has four fights, all in the MQ0 raid (`purwa_raid_a`, `purwa_raid_b`,
 ## Open questions
 1. The `route` prop for Laras `l` (and the epilogue mirror) needs a script that reads it. Alternative: a `waypoints` array in `data/`.
 2. Does `clue.tscn` take a `cond` export (the `q`, `1`-`3` spots use one)? architecture.md 9b lists none; Pickup and Npc have it.
-3. Item ids `laras_board` and `laras_strip_ka` are new (items.md); `laras_board` is a pickup in `kg_penjara` (keraton_galuh.md), `laras_strip_ka` comes from Act III.
+3. Item ids `laras_board` and `laras_strip_ka` are new (items.md); `laras_board` is a pickup in `kg_penjara` (keraton_galuh.md), `laras_strip_ka` is given by the `camp` beat (script.md, the strip on the camp floor).
 
 ## Doc conflicts found
 - Resolved 2026-11-06 (consistency pass): world.md gates the hub to Gua Kala on `quest:mq4=done` (`mq4_9`) and the hub to `sk_pantai` on `mq4_i5` (was `mq4_2`); quests.md 7.1 and script.md name the `goto` spawn `from_riders`; `tt_pesisir` to `sk_karang` opens on `mq4_9` only.

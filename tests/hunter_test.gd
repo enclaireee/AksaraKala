@@ -1,5 +1,5 @@
 extends SceneTree
-## Nameless Hunter: shadow-step, hook pull, Forget locks casting, Ward blocks it, pairs in phase 2, release.
+## Nameless Hunter (boss revamp v9): shadow-step, hook pull, Forget locks casting, Ward blocks it, Sunda Ga in the mask window reflects it, pairs in phase 2, release.
 
 const DT := 1.0 / 60.0
 var fails := 0
@@ -46,6 +46,10 @@ func _player(at: Vector2) -> void:
 	root.add_child(player)
 
 
+func art(b: Node) -> Node:
+	return b.get_node("Body/Art")
+
+
 func step(b: Node, frames: int) -> void:
 	for i in frames:
 		b._physics_process(DT)
@@ -75,7 +79,7 @@ func _initialize() -> void:
 	root.add_child(b)
 	await process_frame
 	b.set_physics_process(false)
-	check(b.is_in_group("boss") and b.health.max_hp == 3600 and b.phase == 1, "starts phase 1, 3600 HP")
+	check(b.is_in_group("boss") and b.health.max_hp == 3060 and b.phase == 1, "starts phase 1, 3060 HP (v9 x0.85)")
 
 	# Shadow-step: faded, ground marker, reappears on it.
 	b.engaged = true
@@ -116,6 +120,31 @@ func _initialize() -> void:
 	step_to(b, NamelessHunter.State.RECOVER)
 	check(fp.sakti.value == 80.0 and fp.cast.locks == 0, "Ward blocks Forget")
 	ward.free()
+
+	# v9: the mask is raised for 1.2 s (sig1); Sunda Ga in that window reflects Forget: no lock, he is unmasked and stunned 4 s.
+	fp.sakti.value = 80.0
+	fp.cast.locks = 0
+	step_to(b, NamelessHunter.State.CHASE)
+	b.global_position = Vector2(100, 135)
+	b._begin_cone(false, Vector2(1, 0))
+	check(is_equal_approx(b.forget_windup, 1.2) and art(b)._move == "sig1", "mask raise plays sig1 for a 1.2 s window")
+	step(b, 20)
+	events.spell_cast.emit("sunda_ca", 1.0)
+	check(b.state == NamelessHunter.State.FORGET, "another glyph does not reflect it")
+	events.spell_cast.emit("sunda_ga", 1.0)
+	check(b.state == NamelessHunter.State.STUN and BossKit.is_open(b) and art(b)._move == "sig2", "Sunda Ga: unmasked stun, TERBUKA, sig2")
+	step(b, 230)
+	check(b.state == NamelessHunter.State.STUN, "still stunned at 3.8 s")
+	step(b, 20)
+	check(b.state != NamelessHunter.State.STUN, "stun ends after 4 s")
+	check(fp.sakti.value == 80.0 and fp.cast.locks == 0, "a reflected Forget never lands")
+	# Ga after the window (state RECOVER) does nothing.
+	b._begin_cone(false, Vector2(1, 0))
+	step_to(b, NamelessHunter.State.RECOVER)
+	events.spell_cast.emit("sunda_ga", 1.0)
+	check(b.state == NamelessHunter.State.RECOVER, "Ga after Forget landed: no reflect")
+	fp.sakti.value = 80.0
+	fp.cast.locks = 0
 
 	# Outside the cone: nothing.
 	step_to(b, NamelessHunter.State.CHASE)

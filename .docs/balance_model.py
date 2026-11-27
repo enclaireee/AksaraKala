@@ -80,6 +80,15 @@ if __name__ == '__main__':
         red = 1 - 0.05 * arm
         print(f'{n:12} HP {hp:6.0f} fight {hp / max(d):.0f}-{hp / min(d):.0f}s  light {round(ref * .10 / red)} heavy {round(ref * .22 / red)}')
 
+    print('== 7.3 v9 scaled boss HP and hits (scene HP x0.85, mercy floor x0.68; damage x0.85)')
+    HP_K, DMG_K, MERCY_CAP = 0.85, 0.85, 0.20
+    for n, hp, light, heavy in [('Capt', 1800, 16, 36), ('Sangkuriang', 2100, 16, 36), ('Sandekala', 1100, 10, 22),
+                                ('Barma', 2400, 18, 40), ('Bondowoso', 3100, 18, 41), ('Hariang', 2800, 21, 45),
+                                ('Buto Ijo', 3400, 23, 51), ('Keris', 4200, 23, 51), ('Hunter', 3600, 24, 54),
+                                ('Kala', 9300, 27, 60)]:
+        print(f'{n:12} HP {round(hp * HP_K):5} (mercy floor {round(hp * HP_K * (1 - MERCY_CAP)):5})'
+              f'  light {max(1, round(light * DMG_K))} heavy {max(1, round(heavy * DMG_K))}')
+
     print('== 7.2 v7 floor hazards and kneel (boss, tick, light hit, reference HP)')
     # Phase-2 floor zones tick every 0.5 s (BossKit.HazardZone). A player who blunders into one is assumed to take
     # HAZ_TICKS ticks before stepping out, HAZ_TIMES times a fight. TUNE. Rules: one blunder costs no more than one

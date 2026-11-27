@@ -3,12 +3,14 @@ class_name NamelessHunter extends EnemyBase
 ## and Forget: a cone that empties sakti and locks casting. A Ga Ward up when it lands blocks it.
 ## Added (boss redesign): twin slash (two telegraphed blinks, each a cone), void lance (long line), phantom decoys that explode,
 ## and the limit break Erasure (a huge Forget cone, then one behind him; stand at his flank).
+## Boss revamp v9: Forget is preceded by the mask raise (sig1, 1.2 s). Sunda Ga cast in that window reflects it: Forget turns back,
+## he is unmasked and stunned 4 s (sig2, TERBUKA). A Ga Ward up when it lands still blocks it.
 ## Phase 2 at 50% HP: the mask cracks, steps come in pairs (Forget follows the second) and everything is quicker.
 ## Defeat: EnemyBase death, then Events.boss_defeated("nameless_hunter").
 ## The HUD polls: group "boss", health, boss_name_key, engaged.
 # ponytail: the pull is a collision-checked slide, not an animated chain.
 
-enum State { IDLE, CHASE, FADE, MARK, HOOK, FORGET, RECOVER, MOVE }
+enum State { IDLE, CHASE, FADE, MARK, HOOK, FORGET, RECOVER, MOVE, STUN }
 
 const MARKER := Color(1.0, 0.3, 0.3, 0.35)
 const PALE := Color(0.85, 0.85, 1.0, 0.4)
@@ -31,7 +33,8 @@ const HEAVY := ["void_lance", "decoys", "erasure"]
 @export var hook_len := 128.0            # spec: 8 tiles
 @export var hook_damage := 16            # spec, light
 @export var hook_pull := 48.0            # spec: 3 tiles
-@export var forget_windup := 0.8         # spec
+@export var forget_windup := 1.2         # TUNE (v9): the mask is raised this long; Sunda Ga in it reflects Forget
+@export var reflect_stun := 4.0          # spec (v9): unmasked and stunned
 @export var forget_radius := 64.0        # spec
 @export var forget_arc := 90.0           # spec, degrees
 @export var forget_lock := 4.0           # spec: seconds of cast lockout
@@ -101,6 +104,7 @@ func _ready() -> void:
 		add_child(g)
 	health.changed.connect(_on_health)
 	attack_hitbox.hit_landed.connect(_on_hit_landed)
+	get_node("/root/Events").spell_cast.connect(_on_cast)
 
 
 func _pace() -> float:
@@ -157,6 +161,9 @@ func _tick(delta: float) -> void:
 				_land_forget()
 		State.MOVE:
 			_tick_move()
+		State.STUN:
+			if state_time >= reflect_stun:
+				_enter(State.CHASE)
 		State.RECOVER:
 			if state_time >= _rec:
 				_enter(State.CHASE)
@@ -238,7 +245,9 @@ func _begin(m: String, to_t: Vector2) -> void:
 func _enter(s: State) -> void:
 	_clear_all()
 	_enter_keep(s)
-	if s == State.RECOVER and _rec >= heavy_recovery:
+	if s == State.STUN:
+		BossKit.open(self, reflect_stun)
+	elif s == State.RECOVER and _rec >= heavy_recovery:
 		BossKit.open(self, _rec)
 	if s == State.CHASE or s == State.RECOVER:
 		BossKit.anim_stop(self)
@@ -342,7 +351,7 @@ func _begin_cone(hook: bool, to_t: Vector2) -> void:
 	_enter(State.HOOK if hook else State.FORGET)
 	_facing = to_t.normalized()
 	aim.rotation = _facing.angle()
-	BossKit.anim(self, "cast", 10.0, true)
+	BossKit.anim(self, "cast" if hook else "sig1", 10.0, true)   # sig1: the mask raise, the tell
 	if hook:
 		_marker = BossKit.telegraph_line(self, global_position, global_position + _facing * hook_len, 8.0, hook_windup, RED)
 	else:
@@ -381,6 +390,17 @@ func _land_forget() -> void:
 	if absf(angle_difference(_facing.angle(), off.angle())) > deg_to_rad(forget_arc / 2.0):
 		return
 	_forget_effect()
+
+
+## The answer: Sunda Ga while the mask is up turns Forget back on him.
+func _on_cast(glyph_id: String, _score: float) -> void:
+	if glyph_id != "sunda_ga" or dead or state != State.FORGET:
+		return
+	BossKit.ring_fx(self, global_position, forget_radius, 0.4, MASK)
+	BossKit.flash_fx(self, global_position + Vector2(0, -10), 24.0, 0.4, MASK)
+	_enter(State.STUN)
+	BossKit.anim(self, "sig2", 8.0, true)   # the unmasked reel
+	BossKit.shake(self, 2.0, 0.3)
 
 
 func _warded() -> bool:

@@ -1,5 +1,5 @@
 extends SceneTree
-## Faceless Captain: phases, muster adds, Burst breaks the muster, release, stays dead.
+## Faceless Captain (v9): phases, every move, the banner rule (answer = Ca near it: stun + TERBUKA; miss = one heavy hit), release, stays dead.
 
 const DT := 1.0 / 60.0
 var fails := 0
@@ -25,6 +25,7 @@ func _player(at: Vector2) -> void:
 	player.add_to_group("player")
 	player.position = at
 	var hb := Hurtbox.new()
+	hb.name = "Hurtbox"   # BossKit.hurt_player finds it by name
 	hb.collision_layer = 2
 	hb.position = Vector2(0, -6)
 	var cs := CollisionShape2D.new()
@@ -37,6 +38,10 @@ func _player(at: Vector2) -> void:
 	player.add_child(hp)
 	player.add_child(hb)
 	root.add_child(player)
+
+
+func _hp() -> int:
+	return (player.get_node("Hurtbox") as Hurtbox).health.hp
 
 
 func step(b: Node, frames: int) -> void:
@@ -63,13 +68,6 @@ func run_move(b: FacelessCaptain, m: String) -> bool:
 	return b.state == FacelessCaptain.State.RECOVER
 
 
-func _faceless() -> int:
-	var n := 0
-	for c in root.get_children():
-		n += int(c.get("kind") == "faceless")
-	return n
-
-
 func _initialize() -> void:
 	await process_frame
 	game = root.get_node("Game")
@@ -85,16 +83,16 @@ func _initialize() -> void:
 	await process_frame
 	b.set_physics_process(false)
 
-	check(b.is_in_group("boss") and b.health.max_hp == 1800 and b.phase == 1, "starts phase 1, 1800 HP")
+	check(b.is_in_group("boss") and b.health.max_hp == 1530 and b.phase == 1, "starts phase 1, 1530 HP (v9 x0.85)")
 	step(b, 600)
 	check(b.attacks > 0 and b.engaged, "attacks")
 
 	# Deck: phase 1 has only the 3 base moves; later phases add the rest; never the same heavy twice in a row.
 	check(b._pool().size() == 3 and "sweep" in b._pool() and "lunge" in b._pool() and "volley" in b._pool(), "phase 1 pool")
 	b.phase = 2
-	check("whirlwind" in b._pool() and "chain" in b._pool() and "rally" in b._pool() and not ("edict" in b._pool()), "phase 2 pool")
+	check("whirlwind" in b._pool() and "chain" in b._pool() and b._pool().size() == 5, "phase 2 pool")
 	b.phase = 3
-	check("edict" in b._pool(), "phase 3 pool has the Edict")
+	check(b._pool().size() == 5, "phase 3 pool: the banner grows, no new move")
 	var prev := ""
 	var dup := false
 	var picked := {}
@@ -103,52 +101,70 @@ func _initialize() -> void:
 		dup = dup or (pm == prev and pm in FacelessCaptain.HEAVY)
 		picked[pm] = true
 		prev = pm
-	check(not dup and not picked.has("") and picked.size() >= 4, "deck: no heavy twice in a row, varied (%s)" % [picked.keys()])
+	check(not dup and not picked.has("") and picked.size() >= 3, "deck: no heavy twice in a row, varied (%s)" % [picked.keys()])
 	b.phase = 1
 	b._deck.clear()
+	b._clear_banner()
 
-	# Every move runs to its recovery and is counted.
-	for m in ["sweep", "lunge", "volley", "whirlwind", "chain", "rally", "edict"]:
+	# Every move runs to its recovery and is counted (sig1 = plant, sig2 = lunge).
+	for m in ["sweep", "lunge", "volley", "whirlwind", "chain", "plant"]:
 		var before: int = int(b.moves_used.get(m, 0))
 		check(run_move(b, m), "move %s ends in RECOVER" % m)
 		check(int(b.moves_used.get(m, 0)) == before + 1, "move %s counted" % m)
-	b._muster_next = false
+	check(b.banner != null and b._ranks.size() == 4, "plant: banner up, 4 ranks in phase 1")
+	b._clear_banner()
 	b._enter(FacelessCaptain.State.CHASE)
 	b.global_position = Vector2(150, 135)
 
-	# Muster 1 at 66%: Burst during the wind-up breaks it.
-	b.health.take_damage(613, player)
-	check(b.phase == 2, "phase 2 at 66%")
-	step_to(b, FacelessCaptain.State.MUSTER)
-	check(b.state == FacelessCaptain.State.MUSTER, "muster wind-up")
-	var fp := FakePlayer.new()
-	fp.add_child(fp.health)
-	fp.position = Vector2(-1000, 0)
-	root.add_child(fp)
-	var bd := SpellData.for_glyph("sunda_ca")
-	var burst := bd.scene.instantiate()
-	burst.caster = fp
-	burst.data = bd
-	root.add_child(burst)
-	b.hurtbox.receive(burst)
-	check(b.state == FacelessCaptain.State.STUN and kinds == ["faceless_captain"], "Burst breaks the muster")
-	step(b, 100)   # past the 2 s stun
-	for i in 40:
-		await physics_frame
-	check(_faceless() == 0, "broken muster calls no adds")
+	# Early boss: the whirlwind's wind-up is 15% longer (0.8 s -> 0.92 s).
+	b._begin_move("whirlwind", Vector2.RIGHT)
+	step(b, int(b.whirl_windup / DT) + 2)
+	check(b.state == FacelessCaptain.State.WINDUP and b._stage == 0, "whirlwind has not struck at the old wind-up")
+	step(b, int(b.whirl_windup * 0.15 / DT) + 4)
+	check(b._stage == 1, "whirlwind strikes after the 15% longer wind-up")
+	b._enter(FacelessCaptain.State.CHASE)
 
-	# Muster 2 at 33%: left alone, 2 Faceless after the warning.
-	b.health.take_damage(594, player)
+	# The rule, missed: the ranks strike once, one heavy hit on a square, then the banner furls.
+	player.global_position = Vector2(200, 135)
+	b._plant_banner(Vector2(150, 135))
+	check(b.banner != null and b.banner_t == 0.0, "banner planted")
+	player.global_position = b._rank_at[0]
+	var hp_before := _hp()
+	for i in int(b.rank_time / DT) + 4:
+		if b.banner != null:
+			b._run_banner(DT)   # the banner alone: his own attacks would muddy the count
+	check(b.banner == null and b._ranks.is_empty(), "missed: the banner furls")
+	check(hp_before - _hp() == BossKit.boss_damage(b.rank_damage), "missed: exactly one heavy hit (%d)" % [hp_before - _hp()])
+
+	# The rule, answered: Ca near the banner burns it, ranks gone, stun 3.5 s with TERBUKA.
+	b._enter(FacelessCaptain.State.CHASE)
+	b._plant_banner(Vector2(150, 135))
+	player.global_position = Vector2(400, 135)
+	events.spell_cast.emit("sunda_ca", 1.0)
+	check(b.banner != null and b.state != FacelessCaptain.State.STUN, "Ca far from the banner does nothing")
+	player.global_position = Vector2(180, 135)
+	events.spell_cast.emit("sunda_ka", 1.0)
+	check(b.banner != null and b.state != FacelessCaptain.State.STUN, "another glyph does nothing")
+	events.spell_cast.emit("sunda_ca", 1.0)
+	check(b.state == FacelessCaptain.State.STUN and b.banner == null and b._ranks.is_empty(), "Ca burns the banner: ranks gone, stun")
+	check(BossKit.is_open(b) and kinds == ["faceless_captain"], "answered: TERBUKA and the codex line")
+	step(b, int(3.3 / DT))
+	check(b.state == FacelessCaptain.State.STUN, "stunned 3.3 s in")
+	step(b, int(0.4 / DT))
+	check(b.state != FacelessCaptain.State.STUN, "stun over after 3.5 s")
+
+	# Phases at 66% and 33%: more ranks each time.
+	b.health.take_damage(b.health.hp - int(b.health.max_hp * 0.66), player)
+	check(b.phase == 2, "phase 2 at 66%")
+	b._clear_banner()
+	b._plant_banner(Vector2(150, 135))
+	check(b._ranks.size() == 6, "phase 2: 6 ranks")
+	b.health.take_damage(b.health.hp - int(b.health.max_hp * 0.33), player)
 	check(b.phase == 3, "phase 3 at 33%")
-	step_to(b, FacelessCaptain.State.MUSTER)
-	step(b, int(b.muster_windup / DT) + 2)
-	check(b.state == FacelessCaptain.State.RECOVER and _faceless() == 0, "warning first, no adds yet")
-	for i in 40:
-		await physics_frame
-	check(_faceless() == 2, "muster calls 2 Faceless (%d)" % _faceless())
-	for c in root.get_children():
-		if c.get("kind") == "faceless":
-			c.free()
+	b._clear_banner()
+	b._plant_banner(Vector2(150, 135))
+	check(b._ranks.size() == 8, "phase 3: 8 ranks")
+	b._clear_banner()
 
 	# Release.
 	b.health.take_damage(b.health.hp, player)

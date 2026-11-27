@@ -158,7 +158,10 @@ func _beat_boss(b: Node) -> bool:
 			events.spell_cast.emit(b.sequence[b.seq_index], 1.0)
 		if is_instance_valid(b) and not b.health.is_dead():
 			b.health.take_damage(200, player, true)
+		if paused:   # a phase beat (kala_p2 / kala_p3) opened a box: read it like the player
+			await _drain()
 		await physics_frame
 	events.boss_defeated.disconnect(cb)
 	await _settle()
+	check(game.has_flag("beat_kala_p2") and game.has_flag("beat_kala_p3"), "Kala phase beats did not play")
 	return check(done[0], "%s: Batara Kala never calmed" % zone.zone_id)

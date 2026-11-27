@@ -1,5 +1,5 @@
 extends SceneTree
-## Buto Ijo test: phases and fields, the four field effects, charge limits, defeat. Steps the boss by hand.
+## Buto Ijo test (boss revamp v9): phases, the lit pouch rule (charge through it: 4 s stun, next pouch), the moves, defeat. Steps the boss by hand.
 
 const DT := 1.0 / 60.0
 var fails := 0
@@ -24,69 +24,67 @@ func _initialize() -> void:
 	await process_frame
 	b.set_physics_process(false)
 
-	check(b.is_in_group("boss") and b.health.max_hp == 3400 and b.boss_name_key == "BOSS_BUTO_IJO", "stats")
+	var mx: int = b.health.max_hp
+	check(b.is_in_group("boss") and mx == 2890 and b.boss_name_key == "BOSS_BUTO_IJO", "stats")
 	check(b.phase == 0 and not b.engaged and b.fields.is_empty(), "inert until the player is near")
 	player.position = Vector2(200, 135)
 	b._physics_process(DT)
-	check(b.engaged and b.phase == 1 and b.fields.size() == 3, "engages: phase 1, 3 fields")
-	check(b.fields.all(func(f: PouchField) -> bool: return f.kind == "bramble"), "phase 1 is bramble")
+	check(b.engaged and b.phase == 1 and b.fields.size() == 1, "engages: phase 1, one lit pouch")
+	check(b.pouch().kind == "bramble", "phase 1 pouch is bramble")
 
-	# phases at 75/50/25%, 3 fields each, one kind per phase
+	# phases at 75/50/25%, one lit pouch each, one kind per phase
 	var want := ["bramble", "bamboo", "salt", "mud"]
 	for p in [2, 3, 4]:
-		b.health.take_damage(b.health.hp - int(3400 * (1.0 - 0.25 * (p - 1))) + 1, player)   # just past the threshold
-		check(b.phase == p and b.fields.size() == 3 * p, "phase %d with %d fields (%d)" % [p, 3 * p, b.fields.size()])
+		b.health.take_damage(b.health.hp - int(mx * (1.0 - 0.25 * (p - 1))) + 1, player)   # just past the threshold
+		check(b.phase == p and b.fields.size() == 1, "phase %d with one pouch (%d)" % [p, b.fields.size()])
 		check(b.state == ButoIjo.State.PAUSE, "roar pause in phase %d" % p)
-		check(b.fields.filter(func(f: PouchField) -> bool: return f.kind == want[p - 1]).size() == 3, "3 %s fields" % want[p - 1])
+		check(b.pouch().kind == want[p - 1], "phase %d pouch is %s" % [p, want[p - 1]])
 	b.health.take_damage(1, player)
 	check(b.phase == 4, "no phase 5")
 
-	# bramble slows him (no moves while the deck is off)
-	b.forced_move = "idle"
-	solo("bramble", Vector2(100, 135))
-	b._enter(ButoIjo.State.CHASE)
-	b._physics_process(DT)
-	check(is_equal_approx(b.slow(), 0.5), "bramble: half speed (%f)" % b.slow())
-	solo("salt", Vector2(100, 135))
-	b._physics_process(DT)
-	check(is_equal_approx(b.slow(), 0.4), "salt: 60%% slow (%f)" % b.slow())
-
-	# no charge from saltwater; a charge from outside works
+	# the rule: a charge that misses the pouch just ends; one that crosses it stuns him for 4 s with TERBUKA and lights the next
 	b.forced_move = "charge"
-	b._enter(ButoIjo.State.CHASE)
-	player.position = Vector2(200, 135)
-	b._physics_process(DT)
-	check(b.state == ButoIjo.State.CHASE, "salt: no charge start")
-	solo("salt", Vector2(100, 400))
-	b._physics_process(DT)
-	check(b.state == ButoIjo.State.WINDUP and not b._pound, "charge starts outside salt")
-
-	# a charge into bamboo stops and stuns
-	b.status.clear(Status.Type.SLOW)
+	player.position = Vector2(260, 135)
 	b.global_position = Vector2(100, 135)
-	solo("bamboo", Vector2(160, 135))
+	put_pouch(Vector2(100, 300))
+	var first := b.pouch()
 	b._enter(ButoIjo.State.CHASE)
 	run(b.charge_windup + 0.05)
 	check(b.state == ButoIjo.State.CHARGE, "charging")
-	run(0.6)
-	check(b.state == ButoIjo.State.STUN, "bamboo stuns him")
-	check(b.global_position.x < 100.0 + b.charge_length, "bamboo ended the charge early (x=%f)" % b.global_position.x)
-	run(b.bamboo_stun + 0.05)
-	check(b.state != ButoIjo.State.STUN, "stun ends after 1.5 s")
+	for i in 300:
+		if b.state != ButoIjo.State.CHARGE:
+			break
+		run(DT)
+	check(b.state == ButoIjo.State.RECOVER and b.pouch() == first, "a miss: no stun, the same pouch stays lit (state %d, same %s, pos %s, dir %s, move %s)" % [b.state, b.pouch() == first, b.global_position, b._dir, b._move])
+	b.global_position = Vector2(100, 135)
+	put_pouch(Vector2(180, 135))
+	first = b.pouch()
+	b._enter(ButoIjo.State.CHASE)
+	run(b.charge_windup + 0.05)
+	for i in 120:
+		if b.state == ButoIjo.State.STUN:
+			break
+		run(DT)
+	check(b.state == ButoIjo.State.STUN and BossKit.is_open(b), "crossing the pouch stuns him and opens TERBUKA")
+	check(b.pouch() != first and b.fields.size() == 1, "the next pouch lights")
+	check(b.global_position.x < 100.0 + b.charge_length, "the stun ended the charge early (x=%f)" % b.global_position.x)
+	run(3.9)
+	check(b.state == ButoIjo.State.STUN, "still stunned at 3.9 s")
+	run(0.2)
+	check(b.state != ButoIjo.State.STUN, "stun ends after 4 s")
 
 	# pound up close
 	b.forced_move = "pound"
-	solo("bramble", Vector2(900, 900))
 	b.global_position = Vector2(150, 135)
 	b._enter(ButoIjo.State.CHASE)
 	player.position = Vector2(180, 135)
 	b._physics_process(DT)
 	check(b.state == ButoIjo.State.WINDUP and b._pound, "ground pound at 56 px or closer")
 
-	# every move starts and ends in RECOVER (heavy ones leave a 2 s punish window)
-	solo("bramble", Vector2(900, 900))
+	# every move starts and ends in RECOVER (heavy ones leave a punish window); the maw drags the player in
+	put_pouch(Vector2(900, 900))
 	var kit := {"pound": 30.0, "charge": 100.0, "devour": 40.0, "seed_volley": 120.0, "bramble_stomp": 60.0,
-		"hunger_leap": 120.0, "rampage": 100.0, "quake": 60.0, "famine_maw": 100.0}
+		"quake": 60.0, "famine_maw": 100.0}
 	for m: String in kit:
 		b.global_position = Vector2(100, 135)
 		player.position = Vector2(100.0 + float(kit[m]), 135)
@@ -104,9 +102,12 @@ func _initialize() -> void:
 				ended = true
 				break
 		check(ended, "move %s ends in RECOVER" % m)
-		if ended and ["pound", "charge", "devour", "hunger_leap", "rampage", "quake", "famine_maw"].has(m):
+		if ended and ["pound", "charge", "devour", "quake", "famine_maw"].has(m):
 			check(b._rec >= b.heavy_recovery, "heavy move %s leaves a punish window (%f)" % [m, b._rec])
+		if m == "famine_maw":
+			check(player.position.x < 100.0 + float(kit[m]) - 20.0, "the famine maw pulled the player in (x=%f)" % player.position.x)
 	check(b._since_ult == 0, "the limit break resets its counter")
+	check(b.moves_used.get("hunger_leap", 0) == 0 and b.moves_used.get("rampage", 0) == 0, "hunger_leap and rampage are cut")
 	# the deck never repeats a heavy move back to back
 	b.forced_move = ""
 	b._last_move = "pound"
@@ -116,32 +117,15 @@ func _initialize() -> void:
 	player.position = Vector2(130, 135)
 	b.global_position = Vector2(100, 135)
 	b._since_ult = 0
+	b._since_charge = 0
 	check(b._pick_move(30.0) != "pound", "no heavy twice in a row")
+	# the charge comes round after two other moves
+	b._since_charge = 2
+	b._last_move = "pound"
+	player.position = Vector2(200, 135)
+	check(b._pick_move(100.0) == "charge", "the charge is due after two other moves")
 	b._deck.clear()
 	b.forced_move = "idle"
-
-	# mud binds once, then rests
-	solo("mud", Vector2(400, 135))
-	b._enter(ButoIjo.State.RECOVER)
-	b.global_position = Vector2(300, 135)
-	b._physics_process(DT)
-	check(not b.status.has(Status.Type.BOUND), "outside mud: free")
-	b.global_position = Vector2(400, 135)
-	b._physics_process(DT)
-	check(b.status.has(Status.Type.BOUND) and b.slow() == 0.0, "mud binds")
-	b.status.clear(Status.Type.BOUND)
-	b.global_position = Vector2(300, 135)
-	b._physics_process(DT)
-	b.global_position = Vector2(400, 135)
-	b._physics_process(DT)
-	check(not b.status.has(Status.Type.BOUND), "mud resting for 4 s")
-	for i in int(b.mud_rest / DT) + 2:
-		b._physics_process(DT)
-	b.global_position = Vector2(300, 135)
-	b._physics_process(DT)
-	b.global_position = Vector2(400, 135)
-	b._physics_process(DT)
-	check(b.status.has(Status.Type.BOUND), "mud binds again after resting")
 
 	# defeat
 	b.health.take_damage(99999, player)
@@ -153,13 +137,13 @@ func _initialize() -> void:
 	quit(1 if fails > 0 else 0)
 
 
-## Replaces his fields with one of this kind.
-func solo(kind: String, pos: Vector2) -> void:
+## Replaces his lit pouch with one at pos.
+func put_pouch(pos: Vector2) -> void:
 	for f in b.fields:
 		f.queue_free()
 	b.fields.clear()
 	var f := (load("res://entities/bosses/pouch_field.tscn") as PackedScene).instantiate() as PouchField
-	f.kind = kind
+	f.kind = "bamboo"
 	root.add_child(f)
 	f.global_position = pos
 	b.fields.append(f)

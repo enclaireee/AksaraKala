@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="s1"]
 script = ExtResource("2")
 objective = "Q_MQ3_S1_OBJ"
-all = [{"on": "talked_to:timur_daughter", "set_flag": "mq3_a1", "objective": "Q_MQ3_S1_P1"}, {"on": "petilasan_activated:timur_1", "set_flag": "mq3_1", "objective": "Q_MQ3_S1_P2"}]
+all = [{"on": "talked_to:timur_daughter", "set_flag": "mq3_a1", "objective": "Q_MQ3_S1_P1"}, {"on": "petilasan_activated:timur_1", "set_flag": "mq3_1", "objective": "Q_MQ3_S1_P2", "marker": {"zone": "tt_sabana", "id": "timur_1"}}]
 set_flag = "mq3_1"
 recap = "Q_MQ3_S1_DONE"
 marker = {"zone": "tt_kulon", "id": "timur_daughter"}

@@ -7,29 +7,29 @@ const MAP := [
 	"#...t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t......#",
 	"#..........................................................#",
 	"#.....rr..........####################################..r..#",
-	"#.....rr..........#__________________________________#...r.#",
-	"#.......~~~~rr....#__1______________2______________3_#.....#",
-	"#......~~~~~rr....#__________________________________#..r..#",
-	"#.......~~~~~.....#__________________________________#..rr.#",
-	"#.................#__________________________________#..rr.#",
-	"#..rr.............#________rr_______H_______rr_______#..r..#",
-	"#..rr.............#________rr_N_____________rr_______#...r.#",
+	"#.....rr..........#F_________________________________#...r.#",
+	"#.......~~~~rr....#__________________________________#.....#",
+	"#......~~~~~rr....#_________________1________________#..r..#",
+	"#.......~~~~~.....#___rr________________________rr___#..rr.#",
+	"#.................#___rr________________________rr___#..rr.#",
+	"#..rr.............#__________7______H______2_________#..r..#",
+	"#..rr.............#___________N______________________#...r.#",
 	"#.................#__________________________________#.....#",
 	"#.................#_________________R________________#..r..#",
 	"#.....r...r...r...#__________________________________#...r.#",
 	"#.............Q...A__________________________________#.....#",
 	"Xe,,,,,,,,,,,,,,,,A__E__S___________B___C________D___#..r..#",
-	"X,,,,,,,,,,,,,,,,,A________________________________4_#...r.#",
-	"#.............V...A__________________________________#.....#",
+	"X,,,,,,,,,,,,,,,,,A__________________________________#...r.#",
+	"#.............V...A________6_________________3_______#.....#",
 	"#.....r...r...r...#_____________W___K________________#..r..#",
 	"#........U........#__________________________________#...r.#",
 	"#.................#__________________________________#.....#",
-	"#.................#________rr_______________rr_______#..rr.#",
-	"#.................#________rr_______________rr_______#..rr.#",
-	"#..rr.............#__________________________________#.....#",
+	"#.................#__________________________________#..rr.#",
+	"#.................#___rr________________________rr___#..rr.#",
+	"#..rr.............#___rr________5_______4_______rr___#.....#",
 	"#..rr.............#__________________________________#..r..#",
 	"#...........rr....#__________________________________#...r.#",
-	"#...........rr....#__7______________6______________5_#.....#",
+	"#...........rr....#__________________________________#.....#",
 	"#.......rr........#__________________________________#..r..#",
 	"#.......rr........####################################...r.#",
 	"#...t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t......#",
@@ -42,15 +42,16 @@ const SPOTS := {
 	"X": {"scene": "res://entities/world/exit.tscn", "props": {"target_zone": "tt_pasir", "spawn_id": "from_tt_candi"}, "tile": ","},   # exit to tt_pasir (west edge, 2 tiles)
 	"e": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_tt_pasir"}, "tile": ","},   # spawn, arrival from tt_pasir
 	"B": {"scene": "res://entities/bosses/keris_gandring.tscn", "props": {"cond": "flag:beat_shrine_sight", "finish_glyph": "jawa_ha"}, "tile": "_"},   # boss Mpu Gandring's Keris (3.19, arena centre; wakes after the `shrine_sight` beat)
+	"F": {"scene": "res://entities/world/arena_floor.tscn", "props": {"art": "res://assets/art/arena/tt_candi.png"}, "tile": "_"},   # painted arena floor (boss revamp v9): the courtyard image `assets/art/arena/tt_candi.png` over the arena rect (19,5)-(52,28), placed at its top-left cell
 	"H": {"scene": "res://entities/bosses/nameless_hunter.tscn", "props": {"cond": "flag:mq3_h6,flag:beat_hunter_shrine", "finish_glyph": "sunda_ga"}, "tile": "_"},   # boss the Nameless Hunter, after the keris (MQ3 3.22; wakes after the `hunter_shrine` restore beat, so the fight never starts under the beat)
 	"A": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "e"}, "tile": ","},   # arena gate (combat.md 5.3 v7) at the court's west mouth, shared by the Keris and the Hunter; open until the threshold two tiles inside is crossed
-	"1": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 1}, "tile": "_"},   # curse stake 1 (arena edge)
-	"2": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 2}, "tile": "_"},   # curse stake 2 (arena edge)
-	"3": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 3}, "tile": "_"},   # curse stake 3 (arena edge)
-	"4": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 4}, "tile": "_"},   # curse stake 4 (arena edge)
-	"5": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 5}, "tile": "_"},   # curse stake 5 (arena edge)
-	"6": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 6}, "tile": "_"},   # curse stake 6 (arena edge)
-	"7": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 7}, "tile": "_"},   # curse stake 7 (arena edge)
+	"1": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 1}, "tile": "_"},   # curse stake 1, the first mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise)
+	"2": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 2}, "tile": "_"},   # curse stake 2, the second mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise)
+	"3": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 3}, "tile": "_"},   # curse stake 3, the third mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise)
+	"4": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 4}, "tile": "_"},   # curse stake 4, the fourth mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise)
+	"5": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 5}, "tile": "_"},   # curse stake 5, the fifth mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise)
+	"6": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 6}, "tile": "_"},   # curse stake 6, the sixth mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise)
+	"7": {"scene": "res://entities/bosses/curse_stake.tscn", "props": {"stake_id": 7}, "tile": "_"},   # curse stake 7, the seventh mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise)
 	"S": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_shrine_sight", "size": Vector2i(6,6)}, "tile": "_"},   # trigger, beat `shrine_sight` staging (Laras across the shrine; `flag:mq3_6`, `flag:beat_laras_4`, `zone:tt_candi`)
 	"K": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "beat_keris", "size": Vector2i(10,6)}, "tile": "_"},   # trigger, beat `keris` staging (choice 3; `flag:mq3_7`)
 	"W": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "timur_empu", "cond": "flag:mq3_7,!flag:beat_keris"}, "tile": "_"},   # NPC Mpu Wirasana, hands over the reforged keris in the `keris` beat

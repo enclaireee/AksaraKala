@@ -823,23 +823,23 @@ Roaming packs (loose, `u` Tuyul, `k` Pocong, 6+ tiles from every spawn, exit and
 ```
 ##########################################################################################
 #............####################################........................................#
+#............#rrf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
 #............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
-#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
 #............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
-#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
-#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
+#............#,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,,#........................................#
+#............#,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,,#........................................#
 #............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
 #............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
 #............#,,,,,,J,,,,,,,,,B,,,,,,,,,,,,,,,,,#........................................#
 #............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
 #............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
 #............#,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,,,#........................................#
-#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
-#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
+#............#,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,,#........................................#
+#............#,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,,#........................................#
 #............#,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,#........................................#
 #............#,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,#........................................#
-#............#,,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,#........................................#
-#............#,,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,#........................................#
+#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
+#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#
 #............#,,,,,,,,,,,,,,,,I,,,,,,,,,,,,,,,,,#........................................#
 #............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
 #............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#
@@ -885,6 +885,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | `B` | boss Bandung Bondowoso (2.19), awakened after the camp turn, the K3 memory and the LC3 chapter (`flag:mq2_lc`) | `res://entities/bosses/bandung_bondowoso.tscn` | `{unique_id:"bandung_bondowoso", cond:"flag:mq2_lc", finish_glyph:"jawa_ca"}` | path | 1 |
 | `z` | rehearsal, a lesung left standing outside the arena gate: answers Ca, the rhythm that calls the dawn beat (boss fights v7, quests.md 10; id fixed, a quest sub-goal reads `clue_examined:reh_bondowoso`) | `res://entities/world/rehearsal.tscn` | `{id:"reh_bondowoso", glyph:"jawa_ca", look:"lesung", boss:"bandung_bondowoso"}` | grass | 1 |
 | `g` | arena gate (combat.md 5.3 v7) in the gap south of the arena; open until the threshold two tiles inside is crossed | `res://entities/world/arena_gate.tscn` | `{side:"n"}` | path | 3 |
+| `f` | painted arena floor (boss revamp v9): `assets/art/arena/mt_candi.png` over the arena rect (14,2)-(47,21), placed 2 cells east of its top-left cell (dx) | `res://entities/world/arena_floor.tscn` | `{art:"res://assets/art/arena/mt_candi.png", dx:2, dy:0}` | path | 1 |
 | `F` | encounter mataram_camp (**setpiece**, 2.14: the Pamali stone wakes; hold the court until the seal cracks, MQ2 2.14; cond ends at `mq2_7`, so the boss arena is clean for 2.19) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_camp", cond:"flag:mq2_6,!flag:mq2_7", size:Vector2i(30,16), waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(6,-3)], [res://entities/enemies/faceless.tscn, Vector2i(0,4)], [res://entities/enemies/faceless_archer.tscn, Vector2i(0,-6)]], [[res://entities/enemies/faceless.tscn, Vector2i(-8,2)], [res://entities/enemies/faceless.tscn, Vector2i(8,2)], [res://entities/enemies/faceless_archer.tscn, Vector2i(-4,-6)], [res://entities/enemies/faceless_archer.tscn, Vector2i(4,-6)]]]}` | path | 1 |
 | `E` | encounter mataram_candi | `res://entities/world/encounter.tscn` | `{area_id:"mataram_candi", size:Vector2i(28,16), waves:[[[res://entities/enemies/genderuwo.tscn, Vector2i(8,-4)], [res://entities/enemies/arca.tscn, Vector2i(-12,-5)], [res://entities/enemies/arca.tscn, Vector2i(12,-5)]], [[res://entities/enemies/tuyul.tscn, Vector2i(0,-3)], [res://entities/enemies/tuyul.tscn, Vector2i(-4,0)], [res://entities/enemies/tuyul.tscn, Vector2i(4,0)]]]}` | path | 1 |
 | `s` | pickup, batu bintang (SQ-T3 meteorite fragment) | `res://entities/world/pickup.tscn` | `{item_id:"batu_bintang"}` | grass | 1 |
@@ -912,7 +913,7 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................,,............................
 | east yard | (66,28)-(88,48) 23x21 | Side yard | batu bintang `s` (72,36), chest `c` (80,30) | item_picked:batu_bintang |
 | west road | (1,26)-(28,27) 28x2 | Road to the petilasan, 30 tiles from the exit | exit `Y` (0,26..27), spawn `y` (1,26) | `sc:mt_candi_gapura` far side |
 | petilasan court | (29,23)-(31,27) 3x5 | Rest right before the arena, no fight | P (30,25) | LC3 clue `lc3_lontar` (32,24) at `mataram_2`; K3 memory clue `k3_lesung` (29,23) |
-| boss arena | (14,2)-(47,21) 34x20 | 34x20 open floor, gate gap (29..31,22) holds the arena gate `g` (side n), pillars spawn 5-8 tiles around B; v7 redraw: two mirrored 2x2 rock covers (22..23 and 38..39, 17..18) flank the approach lane, corner rocks kept, centre 34x20 clear; rehearsal `z` (27,25) outside the gate, beside the court road | camp F (30,12), B (30,9), beat trigger `T` (30,15) | 2.14 `mataram_camp` (sets `mq2_7`), beat `camp`; 2.19 `bandung_bondowoso` |
+| boss arena | (14,2)-(47,21) 34x20 | 34x20 open floor, gate gap (29..31,22) holds the arena gate `g` (side n), pillars spawn 5-8 tiles around B; v9 redraw: painted floor `f` (14,2); four drum stones (boss code, `props/arena_drum.png`) in a square 72 px around B; four 2x2 rock covers at (21..22 and 37..38, 5..6 and 13..14) outside the drum square, corner rocks kept (the old covers at 22..23 / 38..39, 17..18 are gone), centre clear; rehearsal `z` (27,25) outside the gate, beside the court road | camp F (30,12), B (30,9), beat trigger `T` (30,15) | 2.14 `mataram_camp` (sets `mq2_7`), beat `camp`; 2.19 `bandung_bondowoso` |
 | clue spots | rubble (60,41) east side of the front yard; `lesung_mid` (33,26) beside the petilasan court; `ka_strip` (28,16) in the court by the `camp` beat spot; `k3_lesung` (29,23) in the petilasan court | The K3 Hunt clues, walked in this order | clues `C` `D` `G`, `k3_lesung` `M` (29,23), hauler `A` (56,34), `lc3_lontar` `H` (32,24) | 2.15 `all` of three, 2.14 talk, 2.16, 2.18 memory |
 | camp sequence | the arena, gate (30,19), captain (20,9), camp (30,12) | In order: gate fight, captain miniboss, camp setpiece | E `I` (30,19), E `J` (20,9), `F` (30,12) | 2.14 |
 

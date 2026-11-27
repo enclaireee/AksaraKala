@@ -1,5 +1,5 @@
 extends SceneTree
-## Keris Gandring test: stakes light, cleanse (any glyph, Ha wide), the seven-mark wave, phase 2, defeat, practice stake.
+## Keris Gandring test (boss revamp v9): the floor clock lights in order, Jawa Ha resets it and stuns him, the 7th is the curse burst, moves, phase 2, defeat, practice stake.
 
 const DT := 1.0 / 60.0
 var fails := 0
@@ -35,49 +35,55 @@ func _initialize() -> void:
 	await process_frame
 	k.set_physics_process(false)
 
-	check(k.is_in_group("boss") and k.health.max_hp == 4200 and k.boss_name_key == "BOSS_KERIS_GANDRING", "stats")
+	check(k.is_in_group("boss") and k.health.max_hp == 3570 and k.boss_name_key == "BOSS_KERIS_GANDRING", "stats")
 	check(k.stakes().size() == 7 and k.lit_count() == 0, "7 unlit stakes")
 	k.forced_move = "idle"   # no moves while the stakes are tested
 	run(9.0)
 	check(not k.engaged and k.lit_count() == 0 and not all.any(func(s: CurseStake) -> bool: return s.state != CurseStake.State.UNLIT), "inert until the player is near")
 
-	# stakes light over time: mark first, then lit
+	# the floor clock: stakes light in stake_id order, the next one marked; a stake only reddens, then marks 1 s, then lights
 	player.position = all[0].position   # on the first stake; nothing is lit yet
-	run(8.1)
-	check(all.filter(func(s: CurseStake) -> bool: return s.state == CurseStake.State.MARK).size() == 1, "a stake is marked after 8 s")
+	run(k.stake_every * 0.5)
+	check(all[0].charge > 0.4 and all[0].charge < 0.6 and all[1].charge == 0.0, "the next stake reddens as its turn nears (%f)" % all[0].charge)
+	run(k.stake_every * 0.5 + 0.1)
+	check(all[0].state == CurseStake.State.MARK and all.filter(func(s: CurseStake) -> bool: return s.state == CurseStake.State.MARK).size() == 1, "stake 1 is marked after 6 s")
 	check(k.lit_count() == 0, "marking is not lit yet")
 	run(1.0)
-	check(k.lit_count() == 1, "lit after the 1 s mark")
+	check(k.lit_count() == 1 and all[0].is_lit(), "stake 1 lit after the 1 s mark")
+	run(k.stake_every)
+	run(1.1)
+	check(all[1].is_lit() and not all[2].is_lit(), "stake 2 follows, in order")
 
-	# cleanse: any glyph within 40 px, not outside it
-	var lit := all.filter(func(s: CurseStake) -> bool: return s.is_lit())[0] as CurseStake
-	player.position = lit.position + Vector2(60, 0)
+	# other glyphs and a far Ha do nothing; boss stakes ignore casts
+	player.position = all[0].position + Vector2(30, 0)
 	events.spell_cast.emit("sunda_ca", 1.0)
-	check(lit.is_lit(), "60 px: no cleanse")
-	player.position = lit.position + Vector2(30, 0)
-	events.spell_cast.emit("sunda_ca", 1.0)
-	check(not lit.is_lit(), "any glyph within 40 px cleanses")
-
-	# Ha cleanses within 80 px
-	var a := all[0]
-	var c := all[1]
-	for s in [a, c]:
-		s.state = CurseStake.State.LIT
-	player.position = (a.position + c.position) / 2.0
-	var half := a.position.distance_to(c.position) / 2.0
-	check(half > 40.0 and half <= 80.0, "fixture: stakes %f px from the player" % half)
-	events.spell_cast.emit("sunda_ga", 1.0)
-	check(a.is_lit() and c.is_lit(), "other glyph at 40-80 px: no cleanse")
+	check(all[0].is_lit() and k.state != KerisGandring.State.STUN, "any other glyph: nothing")
+	player.position = all[0].position + Vector2(100, 0)
 	events.spell_cast.emit("jawa_ha", 1.0)
-	check(not a.is_lit() and not c.is_lit(), "Ha cleanses every lit stake within 80 px")
+	check(all[0].is_lit() and k.state != KerisGandring.State.STUN, "Ha from 100 px: nothing")
 
-	# all 7 lit: red ring, then the wave
+	# the answer: Jawa Ha within 80 px of a lit stake resets the clock and stuns him for 3 s (TERBUKA)
+	player.position = all[0].position + Vector2(40, 0)
+	events.spell_cast.emit("jawa_ha", 1.0)
+	check(k.lit_count() == 0 and not all.any(func(s: CurseStake) -> bool: return s.state != CurseStake.State.UNLIT), "Ha resets the whole clock")
+	check(k.state == KerisGandring.State.STUN and BossKit.is_open(k), "and stuns him with TERBUKA")
+	run(2.9)
+	check(k.state == KerisGandring.State.STUN and k.lit_count() == 0 and all[0].state == CurseStake.State.UNLIT, "stunned 3 s: the clock does not run")
+	run(0.2)
+	check(k.state != KerisGandring.State.STUN, "stun ends after 3 s")
+	k._light_t = 0.0
+
+	# the 7th lit: too late, Ha does nothing and the ring starts
 	for s in all:
 		s.state = CurseStake.State.LIT
 	k._enter(KerisGandring.State.CHASE)
 	player.position = Vector2(300, 135) + Vector2(0, 40)
 	run(DT * 2)
 	check(k.state == KerisGandring.State.RING, "7 lit: ring")
+	player.position = all[0].position + Vector2(10, 0)
+	events.spell_cast.emit("jawa_ha", 1.0)
+	check(k.state == KerisGandring.State.RING and all[0].is_lit(), "Ha during the ring is too late")
+	player.position = Vector2(300, 135) + Vector2(0, 40)
 	run(1.5)
 	check(k.waves == 0 and k.state == KerisGandring.State.RING, "ring fills for 2 s")
 	run(0.6)
@@ -92,8 +98,8 @@ func _initialize() -> void:
 	player.position = Vector2(400, 135)
 	k._physics_process(DT)
 	check(k.state == KerisGandring.State.DART_WIND and k.darts_left == 1, "phase 1: one dart %d %d %s" % [k.state, k.darts_left, k.global_position.distance_to(player.position)])
-	k.health.take_damage(k.health.hp - 2100, player)
-	check(k.phase == 2 and k.state == KerisGandring.State.PAUSE and k.stake_interval == 5.0, "phase 2 at 50%: pause, 5 s stakes")
+	k.health.take_damage(k.health.hp - int(k.health.max_hp * 0.5), player)
+	check(k.phase == 2 and k.state == KerisGandring.State.PAUSE and k.stake_interval == 4.0, "phase 2 at 50%: pause, 4 s stakes")
 	k._enter(KerisGandring.State.CHASE)
 	k.global_position = Vector2(300, 135)
 	k._physics_process(DT)
@@ -101,16 +107,16 @@ func _initialize() -> void:
 	k._enter(KerisGandring.State.PAUSE)
 	k.forced_move = "idle"
 	k._light_t = 0.0
-	run(5.1)
-	check(all.any(func(s: CurseStake) -> bool: return s.state == CurseStake.State.MARK), "a stake marked within 5 s")
+	run(4.1)
+	check(all.any(func(s: CurseStake) -> bool: return s.state == CurseStake.State.MARK), "a stake marked within 4 s")
 
 	# every move starts and ends in RECOVER; the heavy ones leave a 2 s punish window; no stake lights meanwhile
 	for s in all:
 		s.state = CurseStake.State.UNLIT
 		s._paint()
-	var kit := {"dart": 100.0, "fan": 100.0, "teleport_flurry": 100.0, "orbit_blades": 60.0, "crimson_cross": 100.0,
+	var kit := {"dart": 100.0, "fan": 100.0, "teleport_flurry": 100.0, "orbit_blades": 60.0, "blade_drill": 100.0,
 		"curse_mark": 100.0, "seven_swords": 100.0}
-	var heavy := ["teleport_flurry", "orbit_blades", "crimson_cross", "seven_swords"]
+	var heavy := ["teleport_flurry", "orbit_blades", "blade_drill", "seven_swords"]
 	for m: String in kit:
 		k.global_position = Vector2(300, 135)
 		player.position = Vector2(300.0 + float(kit[m]), 135)
@@ -135,10 +141,10 @@ func _initialize() -> void:
 	check(k.phase == 2 and k.attacks >= 10, "moves landed their strikes (%d)" % k.attacks)
 	# the deck never repeats a heavy move back to back
 	k.forced_move = ""
-	k._last_move = "crimson_cross"
+	k._last_move = "blade_drill"
 	k._since_ult = 0
 	k._deck.clear()
-	k._deck.append("crimson_cross")
+	k._deck.append("blade_drill")
 	k._deck.append("dart")
 	k.global_position = Vector2(300, 135)
 	player.position = Vector2(400, 135)

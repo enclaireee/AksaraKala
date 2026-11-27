@@ -193,8 +193,17 @@ Phase-2 floor zones tick every 0.5 s. The model (`balance_model.py` 7.2) assumes
 - A petilasan sits at most about 20 seconds' walk from every boss door ([world.md](world.md) already puts one before each boss).
 - Boss phase 2 starts at 50% HP and is telegraphed with a short pause, so the player learns the second half on try 2.
 - Bosses never one-shot: no attack deals more than 35% of the reference HP.
-- After 3 deaths to the same boss, Semar offers the assist toggles once, in one line of dialogue. It is never automatic and never asked again.
+- Retry mercy (boss revamp v9, 7.3) replaces the old "Semar offers the assist toggles after 3 deaths" idea, which was never built.
 - Playtest target: median 2 tries per boss, no boss over 4 for the reference player.
+
+### 7.3 Boss revamp v9 scaling (user call 2026-11-27, **TUNE**)
+The table above stays the design HP. Code applies, for scene bosses only (`entities/bosses/` with a `unique_id`; pillars, oncor and Barma's copies are left alone):
+- **HP x0.85** at spawn (`BossKit.scale_boss`, called from `EnemyBase._ready`).
+- **Damage x0.85** on every hit whose source is in the `boss` group (`Hurtbox.receive` -> `BossKit.boss_damage`, at least 1). This covers strikes, floor zones and direct hits.
+- **Retry mercy:** each death inside a sealed arena adds 1 to `Game.boss_deaths[unique_id]` (`Zones.respawn`, from the ids `arena_gate` stores in `boss_retry`). Each death takes another 7% off that boss's HP, capped at 20% (x0.85 x0.80 = x0.68 at worst). Not saved: a reload starts fresh.
+- **Early wind-ups:** Captain, Sangkuriang and Sandekala heavy wind-ups are 15% longer (combat.md, boss revamp v9).
+- The scene HP for the Hunter is 3600, not the 4600 in the table (tuned down at some point, never written back). v9 scales from the scene value.
+- Effective HP and hits: `balance_model.py` 7.3.
 
 ## 8. Ilmu economy
 ### 8.1 Level cost

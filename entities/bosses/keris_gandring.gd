@@ -1,18 +1,20 @@
 class_name KerisGandring extends EnemyBase
-## Boss: Mpu Gandring's Keris (bestiary.md "Build spec"). Lights curse stakes (group "curse_stake") one by one; all 7 lit
-## means a 2 s red ring, then a curse wave that only dash i-frames avoid. Phase 2 (50%): faster stakes, double dart.
+## Boss: Mpu Gandring's Keris (bestiary.md "Build spec", boss revamp v9). The 7 curse stakes (group "curse_stake") are a floor
+## clock: they light in order of stake_id, the next one marked. Jawa Ha near a lit stake before the 7th lights resets the clock
+## and stuns him 3 s (TERBUKA). The 7th lit means a 2 s red ring, then a curse burst (heavy, cursed) that only dash i-frames avoid.
+## Phase 2 (50%): faster stakes, double dart.
 ## Defeat: EnemyBase death, then Events.boss_defeated. The quest step sets mq3_7 (as with Bondowoso).
 ## The HUD polls: group "boss", health, boss_name_key, engaged.
 
-enum State { IDLE, CHASE, DART_WIND, DART, FAN_WIND, RECOVER, PAUSE, RING, MOVE }
+enum State { IDLE, CHASE, DART_WIND, DART, FAN_WIND, RECOVER, PAUSE, RING, MOVE, STUN }
 
 const MARKER := Color(1.0, 0.3, 0.3, 0.35)
 const SHOT := preload("res://entities/enemies/spirit_shot.tscn")
 const CRIMSON := Color(1.0, 0.2, 0.25)
 const STEEL := Color(0.75, 0.85, 1.0)
 const CURSE_COLOR := Color(0.75, 0.3, 1.0)
-const MOVES_ALL := ["dart", "fan", "teleport_flurry", "orbit_blades", "crimson_cross", "curse_mark"]   # the deck; seven_swords is the limit break
-const HEAVY := ["teleport_flurry", "orbit_blades", "crimson_cross", "seven_swords"]
+const MOVES_ALL := ["dart", "fan", "teleport_flurry", "orbit_blades", "curse_mark", "blade_drill"]   # the deck; blade_drill is sig1, seven_swords (sig2) is the limit break
+const HEAVY := ["teleport_flurry", "orbit_blades", "blade_drill", "seven_swords"]
 
 
 ## The orbit-blades set-piece: a ring of shards around the boss that turns and closes in. The gaps are the way through.
@@ -85,7 +87,8 @@ class Orbit extends Node2D:
 @export var engage_range := 160.0      # TUNE
 @export var sabotage_flag := "laras_sabotage_keris_seventh_stake"   # HUD boss bar reads this
 @export var sabotage_mark_mult := 2.0  # TUNE (v5): the seventh stake takes this many times longer to light
-@export var sabotage_ha_range := 120.0  # TUNE (v5): Jawa Ha cleanses this far (spec 80)
+@export var sabotage_ha_range := 120.0  # TUNE (v5): Jawa Ha reaches a lit stake from this far (spec 80)
+@export var ha_stun := 3.0             # spec (v9): the clock reset stuns him this long
 @export var arena_radius := 540.0      # TUNE: the curse wave reaches this far from the keris' start (SCALE=2)
 @export var dart_min := 48.0           # TUNE
 @export var dart_range := 200.0        # spec: it flies 200 px
@@ -98,8 +101,8 @@ class Orbit extends Node2D:
 @export var shot_speed := 110.0        # TUNE
 @export var recovery := 1.0            # TUNE
 @export var pause_time := 1.0          # spec
-@export var stake_every := 8.0         # spec
-@export var stake_every_2 := 5.0       # spec, phase 2
+@export var stake_every := 6.0         # TUNE (v9: 7 stakes in 42 s)
+@export var stake_every_2 := 4.0       # TUNE, phase 2
 @export var ring_time := 2.0           # spec
 @export var wave_damage := 60          # spec, heavy
 @export var heavy_recovery := 2.2      # TUNE: punish window after a heavy move
@@ -112,9 +115,10 @@ class Orbit extends Node2D:
 @export var orbit_time := 3.0          # TUNE: how long it takes to close in
 @export var orbit_damage := 18         # TUNE, light
 @export var orbit_radius := 120.0      # TUNE
-@export var cross_windup := 1.0        # TUNE
-@export var cross_damage := 45         # TUNE, heavy
-@export var cross_width := 18.0        # TUNE
+@export var drill_windup := 0.9        # TUNE: blade drill telegraph
+@export var drill_damage := 36         # TUNE, heavy
+@export var drill_len := 240.0         # TUNE
+@export var drill_speed := 380.0       # TUNE
 @export var mark_time := 2.0           # TUNE: the homing curse mark
 @export var mark_speed := 55.0         # TUNE: it crawls toward you, you outrun it
 @export var mark_radius := 28.0        # TUNE
@@ -137,7 +141,7 @@ var engaged := false
 var attacks := 0
 var waves := 0
 var darts_left := 0
-var stake_interval := 8.0
+var stake_interval := 6.0
 var _start := Vector2.ZERO
 var _light_t := 0.0
 var _dir := Vector2.RIGHT
@@ -248,6 +252,9 @@ func _tick(delta: float) -> void:
 		State.PAUSE:
 			if state_time >= pause_time:
 				_enter(State.CHASE)
+		State.STUN:
+			if state_time >= ha_stun:
+				_enter(State.CHASE)
 		State.RING:
 			if state_time >= ring_time:
 				_wave()
@@ -260,19 +267,23 @@ func _tick(delta: float) -> void:
 func _run_stakes(delta: float) -> void:
 	var all := stakes()
 	_light_t += delta
+	var nxt: CurseStake = null   # the next stake of the clock: the lowest id still unlit
+	for s in all:
+		if s.state == CurseStake.State.UNLIT and (nxt == null or s.stake_id < nxt.stake_id):
+			nxt = s
+		s.charge = 0.0
+	if nxt != null:
+		nxt.charge = clampf(_light_t / stake_interval, 0.0, 1.0)   # it reddens as its turn comes
 	if _light_t >= stake_interval:
 		_light_t = 0.0
-		var unlit := all.filter(func(s: CurseStake) -> bool: return s.state == CurseStake.State.UNLIT)
-		if not unlit.is_empty():
-			var st: CurseStake = unlit.pick_random()
-			st.start_mark()
-			if _sabotaged() and st == _seventh():   # ASSUMED (v5): "seventh" = the highest stake_id
-				st._left = st.mark_time * sabotage_mark_mult
+		if nxt != null:
+			nxt.start_mark()
+			if _sabotaged() and nxt == _seventh():   # ASSUMED (v5): "seventh" = the highest stake_id
+				nxt._left = nxt.mark_time * sabotage_mark_mult
 	for s in all:
 		if s.is_lit() and target != null and s.global_position.distance_to(target.global_position) < 160.0:
 			BossKit.mark(self, s, "jawa_ha", 6.0, 14.0)   # a lit stake: Jawa Ha puts it out
-	if lit_count() > 0:
-		BossKit.hint(self, "BOSS_HINT_KERIS")
+	BossKit.hint(self, "BOSS_HINT_KERIS")
 	if not all.is_empty() and all.all(func(s: CurseStake) -> bool: return s.is_lit()):
 		_begin_ring()
 
@@ -285,13 +296,27 @@ func _seventh() -> CurseStake:
 	return top
 
 
-## v5: with the flag, Jawa Ha puts out every lit stake within sabotage_ha_range (the stake itself reaches 80).
+## The answer: Jawa Ha near a lit stake (80 px; 120 with the v5 flag) before the 7th lights resets the whole clock
+## and stuns him. Once the 7th is lit the ring is on and it is too late.
 func _on_cast(glyph_id: String, _score: float) -> void:
-	if glyph_id != "jawa_ha" or dead or target == null or not _sabotaged():
+	if glyph_id != "jawa_ha" or dead or target == null or state == State.RING or state == State.STUN:
+		return
+	var seventh := _seventh()
+	if seventh == null or seventh.is_lit():
+		return
+	var reach: float = sabotage_ha_range if _sabotaged() else 80.0
+	var near := false
+	for s in stakes():
+		if s.is_lit() and s.global_position.distance_to(target.global_position) <= reach:
+			near = true
+	if not near:
 		return
 	for s in stakes():
-		if s.is_lit() and s.global_position.distance_to(target.global_position) <= sabotage_ha_range:   # ASSUMED (v5)
-			s.put_out()
+		s.state = CurseStake.State.UNLIT
+		s._paint()
+	_light_t = 0.0
+	_enter(State.STUN)
+	BossKit.shake(self, 2.0, 0.3)
 
 
 func _begin_ring() -> void:
@@ -332,8 +357,8 @@ func _eligible(m: String, d: float) -> bool:
 			return d <= 220.0
 		"orbit_blades":
 			return d <= 110.0
-		"crimson_cross":
-			return d <= 240.0 and in_arena
+		"blade_drill":
+			return d >= 48.0 and d <= 220.0
 		"curse_mark":
 			return d >= 60.0 and d <= 240.0
 		"seven_swords":
@@ -395,7 +420,10 @@ func _enter(s: State) -> void:
 	state_time = 0.0
 	velocity = Vector2.ZERO
 	body.modulate = Color(1.0, 0.45, 0.45) if s in [State.DART_WIND, State.FAN_WIND, State.RING, State.MOVE] else Color.WHITE
-	if s == State.RECOVER and _rec >= heavy_recovery:
+	if s == State.STUN:
+		BossKit.open(self, ha_stun)
+		body.modulate = Color(0.7, 0.75, 1.0)
+	elif s == State.RECOVER and _rec >= heavy_recovery:
 		BossKit.open(self, _rec)
 	if s == State.CHASE or s == State.RECOVER or s == State.PAUSE:
 		BossKit.anim_stop(self)
@@ -564,15 +592,9 @@ func _begin_move(m: String) -> void:
 			o.global_position = global_position
 			_orbit = o
 			_tg(BossKit.telegraph_ring(self, global_position, orbit_radius + 12.0, orbit_radius - 4.0, orbit_windup, STEEL))
-		"crimson_cross":
-			_salvo = 0
-			_blink_to(_start)
-			var out: Vector2 = Vector2.RIGHT
-			if target != null:
-				out = (target.global_position - _start).normalized()
-			_dir = out   # one line points at the player: they must move
-			BossKit.anim(self, "cast", 10.0, true)
-			_cross_telegraph(_dir.angle(), cross_windup)
+		"blade_drill":
+			BossKit.anim(self, "sig1", 10.0, true)   # sig1: he spins into a drill
+			_tg(BossKit.telegraph_line(self, global_position, global_position + _dir * drill_len, 14.0, drill_windup, CRIMSON))
 		"curse_mark":
 			BossKit.anim(self, "cast", 10.0, true)
 			var first: Vector2 = BossKit.player_point(self)
@@ -585,6 +607,7 @@ func _begin_move(m: String) -> void:
 			if target != null:
 				_dir = (target.global_position - _start).normalized()
 			BossKit.roar(self, CRIMSON, 70.0)
+			BossKit.anim(self, "sig2", 6.0, true)   # sig2: he splits into seven blades
 			_sword_telegraph(_dir.angle() + TAU / sword_count * 0.5, sword_windup)
 
 
@@ -613,26 +636,6 @@ func _add_mark(pos: Vector2) -> void:
 	_mark_tgs.append(t)
 
 
-## Line through the arena centre at `ang`, both ways, for a crimson-cross salvo (2 lines in phase 1, 3 in phase 2).
-func _cross_lines() -> int:
-	return 3 if phase == 2 else 2
-
-
-func _cross_telegraph(base: float, life: float) -> void:
-	_clear_attack()
-	for k in _cross_lines():
-		var a: float = base + PI * k / _cross_lines()
-		var reach: Vector2 = Vector2.from_angle(a) * (arena_radius + 16.0)
-		_tg(BossKit.telegraph_line(self, _start - reach, _start + reach, cross_width, life, CRIMSON))
-
-
-func _cross_strike(base: float) -> void:
-	for k in _cross_lines():
-		var a: float = base + PI * k / _cross_lines()
-		var reach: Vector2 = Vector2.from_angle(a) * (arena_radius + 16.0)
-		BossKit.strike_line(self, _start - reach, _start + reach, cross_width, cross_damage, true, CRIMSON)
-
-
 func _sword_telegraph(base: float, life: float) -> void:
 	_clear_attack()
 	for k in sword_count:
@@ -640,10 +643,12 @@ func _sword_telegraph(base: float, life: float) -> void:
 		_tg(BossKit.telegraph_line(self, _start, _start + Vector2.from_angle(a) * (arena_radius + 16.0), 16.0, life, CRIMSON))
 
 
-func _sword_strike(base: float) -> void:
+func _sword_strike(base: float) -> bool:
+	var hit := false
 	for k in sword_count:
 		var a: float = base + TAU * k / sword_count
-		BossKit.strike_line(self, _start, _start + Vector2.from_angle(a) * (arena_radius + 16.0), 16.0, sword_damage, true, CRIMSON)
+		hit = BossKit.strike_line(self, _start, _start + Vector2.from_angle(a) * (arena_radius + 16.0), 16.0, sword_damage, true, CRIMSON) or hit
+	return hit
 
 
 func _tick_move(delta: float) -> void:
@@ -669,19 +674,27 @@ func _tick_move(delta: float) -> void:
 		"orbit_blades":
 			if _orbit == null or not is_instance_valid(_orbit) or _orbit.step(delta):
 				_end_move()
-		"crimson_cross":
-			if _salvo == 0 and state_time >= cross_windup:
+		"blade_drill":
+			if _stage == 0 and state_time >= drill_windup:
 				attacks += 1
-				_cross_strike(_dir.angle())
-				BossKit.shake(self, 2.5, 0.3)
-				_salvo = 1   # the second volley is shifted half a gap, onto where the safe wedges were
-				_cross_telegraph(_dir.angle() + PI / (2.0 * _cross_lines()), cross_windup * 0.9)
-				state_time = 0.0
-			elif _salvo == 1 and state_time >= cross_windup * 0.9:
-				attacks += 1
-				_cross_strike(_dir.angle() + PI / (2.0 * _cross_lines()))
-				BossKit.shake(self, 2.5, 0.3)
-				_end_move()
+				_stage_to(1)
+				_from = global_position
+				_ghost_t = 0.0
+				velocity = _dir * drill_speed
+				attack_hitbox.position = Vector2.ZERO
+				(attack_hitbox.get_node("Shape") as CollisionShape2D).shape.radius = 12.0
+				attack_hitbox.damage = drill_damage
+				attack_hitbox.heavy = true
+				attack_hitbox.activate()
+			elif _stage == 1:
+				velocity = _dir * drill_speed
+				_ghost_t -= delta
+				if _ghost_t <= 0.0:
+					_ghost_t = 0.04
+					BossKit.ghost(self, STEEL, 0.3)
+				if global_position.distance_to(_from) >= drill_len or state_time > 1.0 or (state_time > 0.05 and is_on_wall()):
+					attack_hitbox.deactivate()
+					_end_move()
 		"curse_mark":
 			var crawl: bool = state_time < mark_time - 0.5
 			var p: Vector2 = BossKit.player_point(self)
@@ -700,11 +713,15 @@ func _tick_move(delta: float) -> void:
 			if _salvo == 0 and state_time >= sword_windup:
 				attacks += 1
 				var base: float = _dir.angle() + TAU / sword_count * 0.5
-				_sword_strike(base)
+				var hit: bool = _sword_strike(base)
 				BossKit.shake(self, 3.0, 0.4)
-				_salvo = 1
-				_sword_telegraph(base + TAU / sword_count * 0.5, sword_second)
-				state_time = 0.0
+				if hit:   # a miss costs one heavy hit, not two (v9)
+					_rec = heavy_recovery + 0.8
+					_end_move()
+				else:
+					_salvo = 1
+					_sword_telegraph(base + TAU / sword_count * 0.5, sword_second)
+					state_time = 0.0
 			elif _salvo == 1 and state_time >= sword_second:
 				attacks += 1
 				_sword_strike(_dir.angle() + TAU / sword_count)

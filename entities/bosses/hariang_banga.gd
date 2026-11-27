@@ -1,11 +1,10 @@
 class_name HariangBanga extends EnemyBase
-## Boss: Hariang Banga, the river duel (bestiary.md Story v2). Guard: he faces the player (never turning in a wind-up
-## or attack); weapon hits from the front do x0.2. A Jawa Na Dash-strike through him (the Arca check) breaks the
-## guard: 2 s stagger, x1.5 damage taken for 3 s. Hits from behind and spells land in full.
-## Moves: 3-cut combo, lunge, rising crescent (blade wave), iaido (long stance, then an instant wide cone), triple-step
-## cuts, and the parry stance (any hit during the glow is negated and countered; waiting it out leaves him open 1.5 s).
-## Phase 2 at 50% HP (a pause and a roar): the river wakes: water lunges, flood circles that leave pools, and the limit
-## break Tsunami (a huge cone with a safe wedge behind him, then a ring wave).
+## Boss: Hariang Banga, the river duel (bestiary.md Story v2, boss revamp v9).
+## The rule: his guard is the cyan arc drawn in front of him (weapon hits through it do x0.2). Cast Jawa Na (the Dash-strike)
+## through the arc and the guard breaks: stun 3 s with TERBUKA, x1.5 damage. Hits from behind and spells land in full.
+## Moves: 3-cut combo, lunge, rising crescent (blade wave), and the signatures: guard stance (sig1, "parry": the arc
+## blazes, any hit is negated and countered; waiting it out leaves him open) and riposte flurry (sig2, "triple_step").
+## Phase 2 at 50% HP (a pause and a roar): river lunges and flood circles that leave pools.
 ## Yields at 15% HP: he never dies; he sheathes, goes inert, stays in Game.killed, then Events.boss_defeated.
 ## The HUD polls: group "boss", health, boss_name_key, engaged.
 # ponytail: the guard refunds hp after the hit lands (Hurtbox applies damage first), as PrajuritTerkutuk does.
@@ -17,7 +16,7 @@ const STUNNED := Color(0.7, 0.75, 1.0)
 const WATER := Color(0.35, 0.7, 1.0)
 const STEEL := Color(0.85, 0.92, 1.0)
 const FRONT_HALF := PI / 2.0   # TUNE: the front is a half circle, as the Prajurit's shield
-const HEAVY: Array[String] = ["lunge", "iaido", "parry", "river_lunge", "flood", "tsunami"]
+const HEAVY: Array[String] = ["lunge", "parry", "river_lunge", "flood"]
 
 @export var boss_name_key := "BOSS_HARIANG_BANGA"
 @export var cond := ""                 # hidden and inert until Game.check(cond) holds (EliteGuard); "" = always
@@ -26,7 +25,7 @@ const HEAVY: Array[String] = ["lunge", "iaido", "parry", "river_lunge", "flood",
 @export var turn_rate := 270.0         # TUNE: degrees per second
 @export var guard_mult := 0.2          # spec
 @export var open_mult := 1.5           # spec
-@export var stagger_time := 2.0        # spec
+@export var stagger_time := 3.0        # v9: the broken guard stuns >= 3 s
 @export var open_time := 3.0           # spec
 @export var yield_at := 15             # spec: HP percent
 @export var cut_range := 32.0          # TUNE: starts the combo at or inside this
@@ -104,6 +103,7 @@ var _blast_left := 0.0
 var _ghost_t := 0.0
 var _dt := 0.0
 var _floored := false      # a raw hit reached 0 hp: no guard refund, he yields
+var _guard: Node2D        # the cyan arc
 var _owned: Array[Node] = []   # pools, blade waves and shots he made: freed at the kneel and at the yield
 
 
@@ -112,6 +112,9 @@ func _ready() -> void:
 	if dead or is_queued_for_deletion():
 		return
 	add_to_group("boss")
+	_guard = GuardArc.new()
+	_guard.host = self
+	add_child(_guard)
 	health.changed.connect(_on_health)
 	var g := EliteGuard.new()
 	g.cond = cond
@@ -249,7 +252,7 @@ func _aim_now(to_t: Vector2) -> void:
 
 func _refill() -> void:
 	_deck.clear()
-	var names: Array[String] = ["cut", "lunge", "wave", "iaido", "triple_step", "parry"]
+	var names: Array[String] = ["cut", "lunge", "wave", "triple_step", "parry"]
 	if phase >= 2:
 		names.append("river_lunge")
 		names.append("flood")
@@ -267,8 +270,6 @@ func _ok(m: String, d: float) -> bool:
 			return d >= 40.0 and d <= lunge_length + 12.0
 		"wave":
 			return d >= 64.0 and d <= wave_length
-		"iaido":
-			return d <= iaido_reach - 8.0
 		"triple_step":
 			return d >= 30.0 and d <= 110.0
 		"parry":
@@ -282,8 +283,6 @@ func _ok(m: String, d: float) -> bool:
 
 ## Next move by distance and phase: Tsunami when ready, else the first fitting card of the shuffled deck.
 func _pick(d: float) -> String:
-	if phase >= 2 and _ult_cd <= 0.0 and d <= 140.0:
-		return "tsunami"
 	for attempt in 2:
 		for i in _deck.size():
 			var m: String = _deck[i]
@@ -307,21 +306,14 @@ func _begin_move(m: String) -> void:
 			_begin_windup("cut")
 		"lunge", "wave":
 			_begin_windup(m)
-		"iaido":
-			_enter(State.ACT)
-			BossKit.anim(self, "cast")
-			var c := BossKit.telegraph_cone(self, global_position, facing, iaido_arc, iaido_reach, iaido_windup, STEEL)
-			c.follow = self
-			_tg.append(c)
-			_goto(0)
-		"triple_step":
+		"triple_step":   # sig2, the riposte flurry
 			_enter(State.ACT)
 			_count = 3
 			_step_mark()
 		"parry":
 			_counter = false
 			_enter(State.PARRY)
-			BossKit.anim(self, "cast")
+			BossKit.anim(self, "sig1", 8.0, false)
 			var p := BossKit.telegraph_circle(self, global_position, 30.0, parry_time, Color(1.0, 1.0, 0.7))
 			p.follow = self
 			_tg.append(p)
@@ -333,15 +325,6 @@ func _begin_move(m: String) -> void:
 		"flood":
 			_enter(State.ACT)
 			_flood_mark()
-		"tsunami":
-			_ult_cd = tsunami_cooldown
-			_enter(State.ACT)
-			BossKit.anim(self, "cast")
-			BossKit.roar(self, WATER, 60.0)
-			var c := BossKit.telegraph_cone(self, global_position, facing, tsunami_arc, tsunami_reach, tsunami_windup, WATER)
-			c.follow = self
-			_tg.append(c)
-			_goto(0)
 		_:
 			_finish(recovery)
 
@@ -350,16 +333,12 @@ func _act(delta: float, to_t: Vector2) -> void:
 	_sub += delta
 	_dt = delta
 	match _move:
-		"iaido":
-			_act_iaido()
 		"triple_step":
 			_act_step(to_t)
 		"river_lunge":
 			_act_river(to_t)
 		"flood":
 			_act_flood()
-		"tsunami":
-			_act_tsunami()
 		_:
 			_finish(recovery)
 
@@ -421,31 +400,13 @@ func _stop_attack() -> void:
 	_blast_left = 0.0
 
 
-# --- iaido: a long still stance, then one instant wide cut ---
-
-func _act_iaido() -> void:
-	match _stage:
-		0:
-			body.modulate = Color(1.0, 1.0, 1.0, 1.0).lerp(Color(1.4, 1.4, 1.6), clampf(_sub / iaido_windup, 0.0, 1.0))
-			if _sub >= iaido_windup:
-				BossKit.anim(self, "slam", 12.0, false)
-				BossKit.strike_cone(self, global_position, facing, iaido_arc, iaido_reach, iaido_damage, true, STEEL)
-				BossKit.punch(self, 1.2, 0.85, 0.25)
-				BossKit.shake(self, 2.5, 0.25)
-				BossKit.sparks(self, global_position + _dir * 40.0, STEEL, 12, 90.0, 0.35)
-				_goto(1)
-		1:
-			if _sub >= 0.2:
-				_finish(recovery_heavy)
-
-
 # --- triple step: three steps in, each ending in a cut where the marker showed ---
 
 func _step_mark() -> void:
 	_aim_now(BossKit.player_point(self) - global_position)
 	var dest := global_position + _dir * step_length
 	_tg.append(BossKit.telegraph_cone(self, dest, facing, 1.4, 44.0, step_windup, STEEL))
-	BossKit.anim(self, "cast", 10.0, false)
+	BossKit.anim(self, "sig2", 10.0, false)
 	_goto(0)
 
 
@@ -563,24 +524,6 @@ func _act_flood() -> void:
 				_finish(recovery_heavy)
 
 
-# --- Tsunami (limit break): a huge cone with a safe wedge behind him, then a ring wave ---
-
-func _act_tsunami() -> void:
-	match _stage:
-		0:
-			body.modulate = Color(1.0, 1.0, 1.0, 1.0).lerp(Color(1.2, 1.4, 1.7), clampf(_sub / tsunami_windup, 0.0, 1.0))
-			if _sub >= tsunami_windup:
-				BossKit.anim(self, "slam", 12.0, false)
-				BossKit.strike_cone(self, global_position, facing, tsunami_arc, tsunami_reach, tsunami_damage, true, WATER)
-				_owned.append(BossKit.wave(self, global_position, 124.0, 150.0, tsunami_wave_damage, WATER, false))
-				BossKit.punch(self, 1.25, 0.8, 0.3)
-				BossKit.shake(self, 3.0, 0.4)
-				_goto(1)
-		1:
-			if _sub >= 0.5:
-				_finish(recovery_heavy + 0.5)
-
-
 # --- guard ---
 
 func _on_hurt(hitbox: Hitbox) -> void:
@@ -672,3 +615,28 @@ func _yield() -> void:
 	_float_label()
 	var events := get_node("/root/Events")
 	get_tree().create_timer(0.3).timeout.connect(func() -> void: events.boss_defeated.emit("hariang_banga"))
+
+
+## The guard arc (v9 set piece): cyan, in front of him while the guard is up, blazing in the guard stance.
+class GuardArc extends Node2D:
+	var host: HariangBanga
+
+	func _ready() -> void:
+		z_index = 20
+		top_level = true
+
+	func _process(_d: float) -> void:
+		if host == null or not is_instance_valid(host):
+			return
+		global_position = host.global_position + Vector2(0, -8)
+		visible = not host.dead and host.open_left <= 0.0 and host.state != HariangBanga.State.PHASE
+		queue_redraw()
+
+	func _draw() -> void:
+		var hot := host != null and host.state == HariangBanga.State.PARRY
+		var col := Color(0.4, 1.0, 1.0, 0.95 if hot else 0.6)
+		var pts := PackedVector2Array()
+		for i in 13:
+			pts.append(Vector2.from_angle(host.facing - 0.9 + 1.8 * i / 12.0).round() * 26.0)
+		for i in pts.size() - 1:
+			draw_line(pts[i].round(), pts[i + 1].round(), col, 3.0 if hot else 2.0)

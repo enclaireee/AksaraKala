@@ -31,7 +31,7 @@ func _initialize() -> void:
 	b.set_physics_process(false)
 	var ilmu0: int = game.ilmu
 
-	check(b.is_in_group("boss") and b.visible and b.health.max_hp == 2800, "groups, stats")
+	check(b.is_in_group("boss") and b.visible and b.health.max_hp == 2380, "groups, stats")
 	b.facing = PI   # away from the player; he turns to face him
 	for i in 60:
 		b._physics_process(DT)
@@ -43,7 +43,7 @@ func _initialize() -> void:
 
 	# every move runs to its end (phase 2 moves too); heavy moves leave a 2 s+ window; an unanswered parry opens him
 	b.phase = 2
-	for mv in ["cut", "lunge", "wave", "iaido", "triple_step", "parry", "river_lunge", "flood", "tsunami"]:
+	for mv in ["cut", "lunge", "wave", "triple_step", "parry", "river_lunge", "flood"]:
 		b._stop_attack()
 		b.global_position = Vector2(150, 135)
 		b.facing = 0.0
@@ -60,6 +60,7 @@ func _initialize() -> void:
 			check(b._rec >= 2.0, "punish window after " + mv)
 		if mv == "parry":
 			check(b.open_left > 0.0, "an unanswered parry leaves him open")
+	check(b.moves_used.get("parry", 0) >= 1 and b.moves_used.get("triple_step", 0) >= 1 and not b.moves_used.has("iaido") and not b.moves_used.has("tsunami"), "both signatures ran, cut moves gone")
 	# a hit during the glow is negated and countered
 	b.global_position = Vector2(150, 135)
 	b.facing = 0.0
@@ -106,14 +107,15 @@ func _initialize() -> void:
 	for i in 15:
 		await physics_frame
 	check(b.health.hp == hp0 - ds_dmg, "dash-strike lands (%d of %d)" % [hp0 - b.health.hp, ds_dmg])
-	check(b.state == HariangBanga.State.STAGGER and b.open_left > 0.0, "dash-strike breaks the guard")
+	check(b.state == HariangBanga.State.STAGGER and b.open_left > 0.0 and BossKit.is_open(b) and b.stagger_time >= 3.0, "Jawa Na through the arc: guard breaks, stun >= 3 s, TERBUKA")
+	check(b._guard != null and not b._guard.visible, "the cyan arc is down while stunned")
 	player.position = Vector2(130, 135)
 	hp0 = b.health.hp
 	b.hurtbox.receive(_hit(player))
 	check(b.health.hp == hp0 - 15, "x1.5 while open, even from the front")
 	for i in int(b.stagger_time / DT) + 2:
 		b._physics_process(DT)
-	check(b.state != HariangBanga.State.STAGGER, "stagger ends after 2 s")
+	check(b.state != HariangBanga.State.STAGGER, "stagger ends after 3 s")
 	for i in 70:
 		b._physics_process(DT)
 	b.global_position = Vector2(100, 135)
@@ -125,7 +127,7 @@ func _initialize() -> void:
 	check(b.health.hp == hp0 - 2, "guard back after 3 s")
 
 	# yield at 15%, never 0
-	b.health.take_damage(b.health.hp - 421, player)
+	b.health.take_damage(b.health.hp - (b.health.max_hp * 15 / 100 + 1), player)
 	await process_frame
 	check(b.phase == 2 and b.state == HariangBanga.State.PHASE, "phase 2 at 50% with a pause")
 	check(not b.dead, "fights on above 15%")

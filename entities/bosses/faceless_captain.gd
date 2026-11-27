@@ -1,24 +1,21 @@
 class_name FacelessCaptain extends EnemyBase
-## Boss: the Faceless Captain (bestiary.md Story v2). A disciplined legion commander: spear sweep, lunge, spear
-## volley; from phase 2 a double whirlwind, a chain charge and a rally cry; in phase 3 the Edict (limit break).
-## Moves are picked from a shuffled deck by distance and phase, never the same heavy move twice in a row.
-## Muster at 66% and 33% HP: a rally-cry shockwave first, then 2 Faceless with a ground warning.
-## Ca Burst during the muster wind-up breaks it: no adds, stun.
+## Boss: the Faceless Captain (bestiary.md, combat.md boss revamp v9). A disciplined legion commander. One rule: he
+## plants his war banner (sig1) and ghost ranks fade in on the floor squares over 3 s. Sunda Ca cast near the banner
+## burns it: the ranks scatter and he is stunned 3.5 s (TERBUKA). Unanswered, the ranks strike the squares once (a heavy
+## hit if you stand on one), then the banner furls. Moves: spear sweep, long spear lunge (sig2), blade volley; phase 2
+## (66%) adds the whirlwind and the chain charge; phase 3 (33%) fields more ranks and plants sooner.
 ## Defeat: EnemyBase death, then Events.boss_defeated("faceless_captain").
 ## The HUD polls: group "boss", health, boss_name_key, engaged.
 
-enum State { IDLE, CHASE, WINDUP, DASH, RECOVER, MUSTER, STUN }
+enum State { IDLE, CHASE, WINDUP, DASH, RECOVER, STUN }
 
-const BURST := preload("res://spells/burst.gd")
-const FACELESS := "res://entities/enemies/faceless.tscn"
-const MARKER := Color(1.0, 0.3, 0.3, 0.35)
-const STUNNED := Color(0.7, 0.75, 1.0)
+const WIND := 1.15                   # v9: an early boss's heavy attacks wind up 15% longer (telegraph and strike together)
 const STEEL := Color(0.85, 0.9, 1.0)
 const GOLD := Color(1.0, 0.8, 0.3)
-const MUSTER_AT := [0.66, 0.33]
-const WARN := 0.5                    # TUNE: ground warning for the adds, as Encounter.WARN
-const SCORCH := Color(0.55, 0.3, 0.75)   # erased ink
-const HEAVY := ["whirlwind", "chain", "rally", "edict"]
+const GHOST := Color(0.65, 0.75, 1.0)    # the ghost ranks
+const STUNNED := Color(0.7, 0.75, 1.0)
+const PHASE_AT := [0.66, 0.33]
+const HEAVY := ["lunge", "whirlwind", "chain"]
 
 @export var boss_name_key := "BOSS_FACELESS_CAPTAIN"
 @export var cond := ""                   # Game.check condition; empty = always on
@@ -28,15 +25,13 @@ const HEAVY := ["whirlwind", "chain", "rally", "edict"]
 @export var sweep_arc := 120.0           # spec, degrees
 @export var sweep_windup := 0.5          # spec
 @export var sweep_damage := 18           # spec, heavy
-@export var lunge_len := 96.0            # spec: 6 tiles
+@export var lunge_len := 132.0           # TUNE: sig2, the long spear lunge
 @export var lunge_windup := 0.6          # spec
-@export var lunge_time := 0.25           # TUNE: dash duration
+@export var lunge_time := 0.3            # TUNE: dash duration
 @export var lunge_damage := 16           # spec, heavy
 @export var recovery := 0.9              # TUNE: after a light move
 @export var heavy_recovery := 2.2        # TUNE: punish window after a heavy move
-@export var muster_windup := 1.2         # spec
-@export var stun_time := 2.0             # spec
-@export var add_offset := 72.0           # TUNE: adds appear this far left and right of the lair spot
+@export var stun_time := 3.5             # v9: the burnt banner
 @export var volley_damage := 12          # TUNE: one blade
 @export var volley_range := 70.0         # TUNE: volley from this far
 @export var whirl_radius := 50.0         # TUNE
@@ -45,28 +40,22 @@ const HEAVY := ["whirlwind", "chain", "rally", "edict"]
 @export var chain_len := 84.0            # TUNE: each of the 3 lunges
 @export var chain_time := 0.2            # TUNE
 @export var chain_damage := 14           # TUNE
-@export var rally_windup := 0.8          # TUNE
-@export var rally_damage := 16           # TUNE: the shockwave
-@export var edict_windup := 1.4          # TUNE: limit break wind-up
-@export var edict_outer := 120.0         # TUNE
-@export var edict_inner := 30.0          # TUNE: the safe spot, hug the Captain
-@export var edict_damage := 28           # TUNE: ~1.5x heavy
-@export var edict_recovery := 2.6        # TUNE
-@export var scorch_damage := 5           # TUNE: per tick on erased ink (a light hit is volley_damage; v7 rule: at or below it)
-@export var scorch_radius := 20.0        # TUNE
-@export var scorch_warm := 0.6           # TUNE: v7 rule: at least 0.5
-@export var scorch_life := 16.0          # TUNE
+@export var plant_windup := 0.8          # TUNE: sig1, planting the banner
+@export var plant_gap := 10.0            # TUNE: seconds between banners (2 s sooner each phase)
+@export var rank_time := 3.0             # v9: the ranks fade in over 3 s, then strike once
+@export var rank_radius := 18.0          # TUNE: one rank square
+@export var rank_ring := 56.0            # TUNE: squares sit this far around the banner
+@export var rank_damage := 22            # TUNE: the one heavy hit a missed banner costs
+@export var banner_range := 90.0         # TUNE: Ca this near the banner burns it
 
 var active := true   # EliteGuard flips it
 var state := State.IDLE
 var state_time := 0.0
 var phase := 1
-var phase_marks := [0.66, 0.33]   # the boss bar draws a tick at each muster (hud.gd)
+var phase_marks := [0.66, 0.33]   # the boss bar draws a tick at each phase (hud.gd)
 var engaged := false
 var attacks := 0
 var moves_used: Dictionary = {}
-var _muster_due := 0
-var _muster_next := false
 var _move := ""
 var _last := ""
 var _stage := 0
@@ -80,12 +69,15 @@ var _volleys := 1
 var _hit_done := false
 var _ghost_t := 0.0
 var _recover_t := 0.9
+var banner: Node2D          # the planted war banner; null when none
+var banner_t := -1.0        # seconds since planting, -1 when none
+var _plant_cd := 3.0
+var _ranks: Array[Node] = []
+var _rank_at: Array[Vector2] = []
 var _spot := Vector2.ZERO
 var _deck: Array[String] = []
 var _tele: Array[Node] = []
 var _shots: Array[Node] = []
-var _owned: Array[Node] = []   # the erased-ink zones where the mustered soldiers fell in
-var _adds: Array[Node] = []    # the mustered Faceless
 
 
 func _ready() -> void:
@@ -98,6 +90,7 @@ func _ready() -> void:
 		g.cond = cond
 		add_child(g)
 	health.changed.connect(_on_health)
+	get_node("/root/Events").spell_cast.connect(_on_cast)
 
 
 func _tick(delta: float) -> void:
@@ -108,6 +101,10 @@ func _tick(delta: float) -> void:
 	var d := to_t.length()
 	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
+	if engaged and banner == null and state != State.STUN:
+		_plant_cd -= delta
+	if banner != null:
+		_run_banner(delta)
 	match state:
 		State.IDLE:
 			if engaged:
@@ -115,10 +112,8 @@ func _tick(delta: float) -> void:
 		State.CHASE:
 			if target == null:
 				pass
-			elif _muster_due > 0:
-				_muster_due -= 1
-				_muster_next = true
-				_begin_move("rally", to_t)
+			elif banner == null and _plant_cd <= 0.0:
+				_begin_move("plant", to_t)
 			else:
 				var m: String = _pick(d)
 				if m != "":
@@ -132,11 +127,6 @@ func _tick(delta: float) -> void:
 		State.RECOVER:
 			if state_time >= _recover_t:
 				_enter(State.CHASE)
-		State.MUSTER:
-			if state_time >= muster_windup:
-				_call_adds()
-				_recover_t = recovery * 1.5
-				_enter(State.RECOVER)
 		State.STUN:
 			if state_time >= stun_time:
 				_enter(State.CHASE)
@@ -154,7 +144,7 @@ func _enter(s: State) -> void:
 		BossKit.open(self, stun_time)
 		_move = ""
 		attack_hitbox.deactivate()
-	body.modulate = STUNNED if s == State.STUN else (Color(1.0, 0.45, 0.45) if s in [State.WINDUP, State.MUSTER] else Color.WHITE)
+	body.modulate = STUNNED if s == State.STUN else (Color(1.0, 0.45, 0.45) if s == State.WINDUP else Color.WHITE)
 
 
 # --- the deck ------------------------------------------------------------------------------------------------
@@ -164,9 +154,6 @@ func _pool() -> Array[String]:
 	if phase >= 2:
 		out.append("whirlwind")
 		out.append("chain")
-		out.append("rally")
-	if phase >= 3:
-		out.append("edict")
 	return out
 
 
@@ -182,10 +169,6 @@ func _fits(m: String, d: float) -> bool:
 			return d <= 70.0
 		"chain":
 			return d >= 50.0 and d <= 170.0
-		"rally":
-			return d <= 140.0
-		"edict":
-			return d <= 160.0
 	return false
 
 
@@ -225,33 +208,29 @@ func _begin_move(m: String, to_t: Vector2) -> void:
 	match m:
 		"sweep":
 			BossKit.anim(self, "slam", 10.0, true)
-			_track(BossKit.telegraph_cone(self, global_position, _ang, deg_to_rad(sweep_arc), sweep_range, sweep_windup))
+			_track(BossKit.telegraph_cone(self, global_position, _ang, deg_to_rad(sweep_arc), sweep_range, sweep_windup * WIND))
 		"lunge":
-			_aim_lunge(lunge_windup, lunge_len, lunge_time)
+			_aim_lunge(lunge_windup * WIND, lunge_len, lunge_time)
 		"chain":
 			_chain_left = 3
-			_aim_lunge(lunge_windup, chain_len, chain_time)
+			_aim_lunge(lunge_windup * WIND, chain_len, chain_time)
 		"volley":
 			_volleys = 2 if phase >= 2 else 1
 			_aim_volley(0.7)
 		"whirlwind":
 			BossKit.anim(self, "slam", 10.0, true)
-			_track(BossKit.telegraph_circle(self, global_position, whirl_radius, whirl_windup))
-		"rally":
-			BossKit.anim(self, "roar", 8.0, true)
-			_track(BossKit.telegraph_circle(self, global_position, 36.0, rally_windup, GOLD))
-		"edict":
-			BossKit.anim(self, "cast", 8.0, true)
-			_track(BossKit.telegraph_ring(self, global_position, edict_outer, edict_inner, edict_windup))
-			BossKit.ring_fx(self, global_position, edict_inner, 0.5, GOLD)
-
+			_track(BossKit.telegraph_circle(self, global_position, whirl_radius, whirl_windup * WIND))
+		"plant":
+			BossKit.anim(self, "sig1", 8.0, true)
+			_spot = BossKit.clamp_arena_pos(self, global_position + Vector2.from_angle(_ang + PI) * 40.0)   # behind him, away from you
+			_track(BossKit.telegraph_circle(self, _spot, 14.0, plant_windup * WIND, GOLD))
 
 func _run_move(delta: float) -> void:
 	_mt += delta
 	velocity = Vector2.ZERO
 	match _move:
 		"sweep":
-			if _mt >= sweep_windup:
+			if _mt >= sweep_windup * WIND:
 				BossKit.strike_cone(self, global_position, _ang, deg_to_rad(sweep_arc), sweep_range, sweep_damage, true, STEEL)
 				BossKit.shake(self, 1.5, 0.15)
 				_end_move(recovery)
@@ -261,10 +240,10 @@ func _run_move(delta: float) -> void:
 			_run_volley()
 		"whirlwind":
 			_run_whirlwind()
-		"rally":
-			_run_rally()
-		"edict":
-			_run_edict()
+		"plant":
+			if _mt >= plant_windup * WIND:
+				_plant_banner(_spot)
+				_end_move(recovery)
 		_:
 			_end_move(recovery)
 
@@ -300,7 +279,7 @@ func _aim_lunge(wind: float, length: float, dur: float) -> void:
 	_stage = 0
 	_mt = 0.0
 	_hit_done = false
-	BossKit.anim(self, "cast", 10.0, true)
+	BossKit.anim(self, "sig2" if _move == "lunge" else "cast", 10.0, true)
 	_track(BossKit.telegraph_line(self, global_position, global_position + Vector2.from_angle(_ang) * length, 14.0, wind))
 
 
@@ -311,7 +290,8 @@ func _run_lunge(delta: float) -> void:
 				_stage = 1
 				_mt = 0.0
 				_ghost_t = 0.0
-				BossKit.anim(self, "dash", 10.0, true)
+				if _move != "lunge":
+					BossKit.anim(self, "dash", 10.0, true)   # the lunge keeps its sig2 row
 		1:
 			velocity = Vector2.from_angle(_ang) * _len / _dur
 			_ghost_t -= delta
@@ -327,7 +307,7 @@ func _run_lunge(delta: float) -> void:
 				if _move == "chain":
 					_chain_left -= 1
 					if _chain_left > 0:
-						_aim_lunge(0.5, chain_len, chain_time)
+						_aim_lunge(0.5 * WIND, chain_len, chain_time)
 						return
 					_end_move(heavy_recovery)
 				else:
@@ -361,7 +341,7 @@ func _run_volley() -> void:
 func _run_whirlwind() -> void:
 	match _stage:
 		0:
-			if _mt >= whirl_windup:
+			if _mt >= whirl_windup * WIND:
 				BossKit.strike_circle(self, global_position, whirl_radius, whirl_damage, true, STEEL)
 				BossKit.shake(self, 1.5, 0.15)
 				_stage = 1
@@ -377,44 +357,70 @@ func _run_whirlwind() -> void:
 				_end_move(heavy_recovery)
 
 
-## Rally cry: a gold shockwave (dodge through it). Before a muster it is followed by the muster wind-up.
-func _run_rally() -> void:
-	if _mt < rally_windup:
+## The banner: planted at `at`, ghost ranks fade in on the floor squares around it over rank_time (telegraph circles
+## that fill up). Left alone they strike once; Sunda Ca near the banner burns it first (_on_cast).
+## ponytail: the squares are round telegraphs, not painted squares; the count grows with the phase.
+func _plant_banner(at: Vector2) -> void:
+	_clear_banner()
+	banner = BossKit.prop("props/arena_banner.png", Vector2(16, 40), Color(0.7, 0.15, 0.15), 4)
+	if banner is Sprite2D:
+		banner.offset = Vector2(0, -20)
+		var spr := banner as Sprite2D
+		var tw := spr.create_tween().set_loops()
+		tw.tween_callback(func() -> void: spr.frame = (spr.frame + 1) % 4)
+		tw.tween_interval(0.15)
+	banner.z_index = 4
+	get_parent().add_child(banner)
+	banner.global_position = at
+	banner_t = 0.0
+	BossKit.flash_fx(self, at + Vector2(0, -16), 18.0, 0.3, GOLD)
+	BossKit.shake(self, 1.0, 0.1)
+	var n := 4 + 2 * (phase - 1)
+	for i in n:
+		var p := at + Vector2.from_angle(TAU * i / n + 0.4) * rank_ring
+		_rank_at.append(p)
+		_ranks.append(BossKit.telegraph_circle(self, p, rank_radius, rank_time, GHOST))
+	BossKit.hint(self, "BOSS_HINT_CAPTAIN", 0.0)
+
+
+func _run_banner(delta: float) -> void:
+	banner_t += delta
+	BossKit.hint(self, "BOSS_HINT_CAPTAIN")
+	BossKit.mark(self, banner, "sunda_ca", maxf(0.1, rank_time - banner_t), 16.0)
+	if banner_t < rank_time:
 		return
-	BossKit.roar(self, GOLD)
-	_shots.append(BossKit.wave(self, global_position, 120.0, 110.0, rally_damage, GOLD, true))
-	if _muster_next:
-		_muster_next = false
-		_begin_muster()
-	else:
-		_end_move(heavy_recovery)
+	for p in _rank_at:   # missed: the ranks strike once, then the banner furls
+		BossKit.strike_circle(self, p, rank_radius, rank_damage, true, GHOST)
+	BossKit.shake(self, 2.0, 0.2)
+	_clear_banner()
 
 
-## Limit break (phase 3): stand inside the inner circle, next to the Captain, or dodge through the ring.
-func _run_edict() -> void:
-	match _stage:
-		0:
-			if _mt >= edict_windup:
-				var dist := BossKit.player_point(self).distance_to(_spot)
-				BossKit.ring_fx(self, _spot, edict_outer, 0.5, STEEL)
-				BossKit.flash_fx(self, _spot + Vector2(0, -10), 40.0, 0.4, GOLD)
-				BossKit.shake(self, 3.0, 0.3)
-				if dist <= edict_outer + BossKit.HURT_RADIUS and dist >= edict_inner:
-					BossKit.hurt_player(self, edict_damage, true)
-				_shots.append(BossKit.wave(self, _spot, 150.0, 100.0, rally_damage, GOLD, true))
-				_stage = 1
-				_mt = 0.0
-		1:
-			if _mt >= 0.6:
-				_end_move(edict_recovery)
+func _clear_banner() -> void:
+	for n in _ranks:
+		if is_instance_valid(n):
+			n.queue_free()
+	_ranks.clear()
+	_rank_at.clear()
+	if is_instance_valid(banner):
+		banner.queue_free()
+	banner = null
+	banner_t = -1.0
+	_plant_cd = maxf(2.0, plant_gap - 2.0 * (phase - 1))
 
 
-func _begin_muster() -> void:
-	_enter(State.MUSTER)
-	BossKit.hint(self, "BOSS_HINT_CAPTAIN", 0.0)   # every muster: it happens twice a fight
-	BossKit.mark(self, self, "sunda_ca", muster_windup, 20.0)
-	BossKit.anim(self, "cast", 8.0, true)
-	_track(BossKit.telegraph_circle(self, global_position, 28.0, muster_windup, GOLD))
+## The answer: Ca cast near the planted banner burns it. The ranks scatter and he reels (TERBUKA).
+func _on_cast(glyph_id: String, _score: float) -> void:
+	if glyph_id != "sunda_ca" or banner == null or dead or target == null:
+		return
+	if banner.global_position.distance_to(target.global_position) > banner_range:
+		return
+	BossKit.sparks(self, banner.global_position + Vector2(0, -16), Color(1.0, 0.5, 0.15), 14, 70.0, 0.5)
+	BossKit.flash_fx(self, banner.global_position + Vector2(0, -16), 22.0, 0.4, Color(1.0, 0.55, 0.2))
+	for p in _rank_at:
+		BossKit.sparks(self, p, GHOST, 6, 40.0, 0.4)
+	_clear_banner()
+	get_node("/root/Events").weakness_triggered.emit(kind)
+	_enter(State.STUN)
 
 
 func _clear_attack() -> void:
@@ -427,66 +433,22 @@ func _clear_attack() -> void:
 
 
 func _clear_owned() -> void:
-	for n in _shots + _owned + _adds:
+	for n in _shots:
 		if is_instance_valid(n):
 			n.queue_free()
 	_shots.clear()
-	_owned.clear()
-	_adds.clear()
-
-
-## Warning rings first, the Faceless drop in after WARN.
-func _call_adds() -> void:
-	var marks: Array[Node] = []
-	var spots: Array[Vector2] = []
-	for sx in [-1.0, 1.0]:
-		var at := home + Vector2(sx * add_offset, 0)
-		spots.append(at)
-		var m := BossKit.prop("telegraph/drop_mark.png", Vector2(14, 8), MARKER)   # 16x10 pixel ellipse, tinted
-		if m is Sprite2D:
-			m.modulate = MARKER
-		m.position = at
-		m.z_index = -1
-		get_parent().add_child(m)
-		marks.append(m)
-	get_tree().create_timer(WARN, false).timeout.connect(_spawn_adds.bind(marks, spots))
-
-
-func _spawn_adds(marks: Array[Node], spots: Array[Vector2]) -> void:
-	for m in marks:
-		if is_instance_valid(m):
-			m.queue_free()
-	if dead or not is_inside_tree():
-		return
-	for n in _owned:   # phase 2 floor: where the soldiers fall in the ground smoulders with erased ink; the old patches go
-		if is_instance_valid(n):
-			n.queue_free()
-	_owned.clear()
-	for at in spots:
-		var n: Node2D = (load(FACELESS) as PackedScene).instantiate()
-		n.position = at
-		get_parent().add_child(n)
-		_adds.append(n)
-		_owned.append(BossKit.zone(self, at, scorch_radius, scorch_damage, scorch_life, SCORCH, scorch_warm))
+	_clear_banner()
 
 
 func _on_health(hp: int, max_hp: int) -> void:
 	engaged = true   # first hit
 	var was := phase
-	while phase <= MUSTER_AT.size() and hp > 0 and hp <= max_hp * MUSTER_AT[phase - 1]:
+	while phase <= PHASE_AT.size() and hp > 0 and hp <= max_hp * PHASE_AT[phase - 1]:
 		phase += 1
-		_muster_due += 1
 	if phase != was:
 		_deck.clear()
-		BossKit.roar(self, GOLD)   # the legion answers: new moves join the deck
-
-
-## Ca Burst during the muster wind-up breaks it.
-func _on_hurt(hitbox: Hitbox) -> void:
-	if state == State.MUSTER and hitbox.get_script() == BURST:
-		get_node("/root/Events").weakness_triggered.emit(kind)
-		_enter(State.STUN)
-	super(hitbox)
+		_plant_cd = minf(_plant_cd, 1.0)   # the legion answers: a banner soon, more ranks
+		BossKit.roar(self, GOLD)
 
 
 func _on_flinch() -> void:

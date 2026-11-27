@@ -2,7 +2,7 @@ extends SceneTree
 ## Every `give:` names a real item (or a key token), and every item in data/items has a source:
 ## a dialogue/beat give, a class start, a quest reward, a zone chest/drop or a sibling swap (Game.SIBLING_ITEM) (verification.md 5.3 B1, B2).
 
-const TOKENS := ["boeh_rarang", "distraction"]   # key tokens checked by `item:` conds, not gear
+const TOKENS := ["boeh_rarang", "distraction", "laras_strip_ka"]   # key tokens checked by `item:` conds, not gear
 
 var fails := 0
 
@@ -19,6 +19,16 @@ func _initialize() -> void:
 		if f.ends_with(".tres"):
 			var id := f.get_basename()
 			check(RegEx.create_from_string("\\b%s\\b" % id).search(text) != null, "item %s has no source" % id)
+	# Every `item:X` cond needs something that hands X over, or the gate it guards never opens.
+	var seen := {}
+	for m in RegEx.create_from_string("[^a-z_]item:([a-z0-9_]+)").search_all(text):
+		var id := m.get_string(1)
+		if seen.has(id):
+			continue
+		seen[id] = true
+		var given := text.contains("give:%s\"" % id) or text.contains("\"item_id\": \"%s\"" % id) \
+			or ResourceLoader.exists("res://data/items/%s.tres" % id)
+		check(given, "item:%s is checked but nothing gives it" % id)
 	quit(1 if fails else 0)
 
 

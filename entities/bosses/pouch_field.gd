@@ -1,5 +1,5 @@
 class_name PouchField extends Node2D
-## One pouch field (bestiary.md Buto Ijo). Only affects Buto; Buto's script reads kind, radius and rest.
+## The lit pouch (bestiary.md Buto Ijo, boss revamp v9): one glowing spot of Mbok Srini's pouch. Buto's script reads kind, radius and contains().
 
 const COLORS := {   # the four kinds; the art is fx/pouch_<kind>.png
 	"bramble": Color(0.25, 0.5, 0.2, 0.45),
@@ -10,8 +10,6 @@ const COLORS := {   # the four kinds; the art is fx/pouch_<kind>.png
 
 var kind := "bramble"
 var radius := 32.0     # spec
-var rest_left := 0.0   # mud: seconds until it can Bind again
-var inside := false
 
 
 func _ready() -> void:
@@ -21,6 +19,9 @@ func _ready() -> void:
 	p.scale = Vector2.ONE * (radius * 2.0 / 64.0)
 	p.z_index = -1
 	add_child(p)
+	var tw := create_tween().set_loops()   # the glow: a slow pulse so it reads as lit
+	tw.tween_property(p, "modulate", Color(1.5, 1.4, 1.0), 0.6)
+	tw.tween_property(p, "modulate", Color(1, 1, 1), 0.6)
 
 
 func contains(pos: Vector2) -> bool:

@@ -1,5 +1,6 @@
 class_name ButoIjo extends EnemyBase
-## Miniboss: Buto Ijo (bestiary.md "Build spec"). Four pouch phases (100/75/50/25%), each adds 3 fields that only hurt him.
+## Miniboss: Buto Ijo (bestiary.md "Build spec", boss revamp v9). Four pouch phases (100/75/50/25%), one lit pouch each.
+## Rule: his head-down charge (sig1) crossing the lit pouch stuns him for 4 s (TERBUKA) and lights the next pouch.
 ## Defeat: EnemyBase death, then Events.boss_defeated. The quest step sets mq3_4 (as with Bondowoso).
 ## The HUD polls: group "boss", health, boss_name_key, engaged.
 # ponytail: Timun Mas is not a node. The arena centre is where the player stood when the fight began unless arena_center is set.
@@ -10,12 +11,11 @@ enum State { IDLE, CHASE, WINDUP, CHARGE, RECOVER, PAUSE, STUN, MOVE }
 const MARKER := Color(1.0, 0.3, 0.3, 0.35)
 const GREEN := Color(0.45, 0.9, 0.2)
 const HUNGER := Color(1.0, 0.45, 0.15)
-const MOVES_ALL := ["pound", "charge", "devour", "seed_volley", "bramble_stomp", "hunger_leap", "rampage", "quake"]   # the deck; famine_maw is the limit break
-const HEAVY := ["pound", "charge", "devour", "hunger_leap", "rampage", "quake", "famine_maw"]
+const MOVES_ALL := ["pound", "charge", "devour", "seed_volley", "bramble_stomp", "quake"]   # the deck; charge is sig1, famine_maw (sig2) is the limit break
+const HEAVY := ["pound", "charge", "devour", "quake", "famine_maw"]
 const FIELD_SCENE := preload("res://entities/bosses/pouch_field.tscn")
 const KINDS := ["bramble", "bamboo", "salt", "mud"]
 const AMBUSH_RETREAT := {"buto_ambush_1": 0.80, "buto_ambush_2": 0.65, "buto_ambush_3": 0.50}   # TUNE: HP fraction he retreats at (quests.md 7.1)
-const ROWS := [0.2, 0.4, 0.6, 0.8]   # TUNE: per phase, how far from his start to the arena centre its 3 fields sit
 
 @export var boss_name_key := "BOSS_BUTO_IJO"
 @export var speed := 30.0              # TUNE
@@ -37,12 +37,9 @@ const ROWS := [0.2, 0.4, 0.6, 0.8]   # TUNE: per phase, how far from his start t
 @export var pound_damage := 41         # spec, heavy
 @export var recovery := 1.2            # TUNE
 @export var pause_time := 1.0          # spec: the roar
-@export var field_spread := 36.0       # TUNE: sideways gap between a phase's fields
-@export var bramble_slow := 0.5        # spec: speed multiplier
-@export var salt_slow := 0.4           # spec: 60% slow
-@export var bamboo_stun := 1.5         # spec
-@export var mud_bind := 2.0            # spec
-@export var mud_rest := 4.0            # spec
+@export var pouch_stun := 4.0          # spec (v9): his charge crossed the lit pouch
+@export var pouch_dist := 80.0         # TUNE: the lit pouch sits this far from the arena centre
+@export var maw_pull := 45.0           # TUNE: px/s the famine maw drags the player in
 @export var heavy_recovery := 2.2      # TUNE: punish window after a heavy move
 @export var devour_range := 64.0       # TUNE: close enough to start the grab
 @export var devour_length := 60.0      # TUNE
@@ -55,12 +52,6 @@ const ROWS := [0.2, 0.4, 0.6, 0.8]   # TUNE: per phase, how far from his start t
 @export var stomp_windup := 0.7        # TUNE
 @export var stomp_damage := 18         # TUNE, light
 @export var zone_damage := 7           # TUNE: bramble patch tick (balance_model.py section 7.2: 3 ticks stay under one light hit)
-@export var leap_windup := 0.9         # TUNE
-@export var leap_time := 0.5           # TUNE: seconds in the air
-@export var leap_radius := 36.0        # TUNE
-@export var leap_damage := 41          # TUNE, heavy
-@export var rampage_chain := 3         # TUNE: charges in a row
-@export var chain_windup := 0.55       # TUNE: telegraph of the 2nd and 3rd charge
 @export var quake_windup := 0.55       # TUNE: between waves
 @export var quake_damage := 28         # TUNE: one wave, dodge through it
 @export var maw_windup := 2.2          # TUNE: limit break telegraph
@@ -87,9 +78,8 @@ var _deck: Array[String] = []
 var _last_move := ""
 var _move := ""
 var _stage := 0
-var _spot := Vector2.ZERO
-var _chain_left := 0
-var _chain_idx := 0
+var _lit_n := 0                        # pouches lit so far: turns the next spot around the arena
+var _since_charge := 0                 # moves since his last charge: the rule needs it often
 var _quake_left := 0
 var _since_ult := 0
 var _rec := 1.2
@@ -126,11 +116,9 @@ func retreat_at() -> float:
 	return AMBUSH_RETREAT.get(ambush_id, 0.0)
 
 
-func in_field(kind: String) -> bool:
-	for f in fields:
-		if f.kind == kind and f.contains(global_position):
-			return true
-	return false
+## The one lit pouch, or null.
+func pouch() -> PouchField:
+	return fields[0] if not fields.is_empty() and is_instance_valid(fields[0]) else null
 
 
 func _tick(delta: float) -> void:
@@ -145,7 +133,6 @@ func _tick(delta: float) -> void:
 	var d := to_t.length()
 	if d <= engage_range and BossKit.may_engage(self):
 		_engage()
-	_field_effects(delta)
 	match state:
 		State.IDLE:
 			if engaged:
@@ -170,7 +157,9 @@ func _tick(delta: float) -> void:
 			if _ghost_t <= 0.0:
 				_ghost_t = 0.05
 				BossKit.ghost(self, Color(0.4, 1.0, 0.3), 0.3)
-			if in_field("bamboo"):
+			var lit := pouch()
+			if lit != null and lit.contains(global_position):   # the rule: he charged through the lit pouch
+				_light_pouch()
 				_end_charge(State.STUN)
 			elif global_position.distance_to(_from) >= charge_length or (state_time > 0.05 and is_on_wall()):
 				_end_charge(State.RECOVER)
@@ -183,7 +172,7 @@ func _tick(delta: float) -> void:
 			if state_time >= pause_time:
 				_enter(State.CHASE)
 		State.STUN:
-			if state_time >= bamboo_stun:
+			if state_time >= pouch_stun:
 				_enter(State.CHASE)
 	move_and_slide()
 
@@ -192,57 +181,41 @@ func _engage() -> void:
 	if engaged:
 		return
 	engaged = true
-	if arena_center == Vector2.INF and target != null:
-		arena_center = target.global_position
+	if arena_center == Vector2.INF:   # the lair: he stands at its centre; an ambush: where the player stood
+		arena_center = _start if ambush_id == "" or target == null else target.global_position
 	if phase == 0:
 		_next_phase()
 
 
 # --- pouches ---
 
-func _field_effects(delta: float) -> void:
-	for f in fields:
-		f.rest_left = maxf(0.0, f.rest_left - delta)
-		var now := f.contains(global_position)
-		match f.kind:
-			"bramble":
-				if now and status:
-					status.apply(Status.Type.SLOW, 0.1, bramble_slow)
-			"salt":
-				if now and status:
-					status.apply(Status.Type.SLOW, 0.1, salt_slow)
-			"mud":
-				if now and not f.inside and f.rest_left <= 0.0 and status:
-					status.apply(Status.Type.BOUND, mud_bind)
-					f.rest_left = mud_rest
-		f.inside = now
-
-
 func _next_phase() -> void:
 	phase += 1
-	_spawn_fields(KINDS[phase - 1])
+	_light_pouch()
 	BossKit.hint(self, "BOSS_HINT_BUTO", 0.0)
 	if phase > 1:
 		attack_hitbox.deactivate()
-		_chain_left = 0
-		_chain_idx = 0
 		_enter(State.PAUSE)   # the roar; phase 1 starts as the fight does
 		BossKit.roar(self, HUNGER, 90.0)
 
 
-func _spawn_fields(kind: String) -> void:
+## One glowing pouch per phase (the kind follows the phase). Each time his charge crosses it, the next one lights
+## further round the arena. ponytail: the spot is not checked against walls beyond clamp_arena_pos.
+func _light_pouch() -> void:
+	for f in fields:
+		if is_instance_valid(f):
+			f.queue_free()
+	fields.clear()
 	var c := arena_center if arena_center != Vector2.INF else _start
-	var along := (c - _start)
-	var side := along.orthogonal().normalized() if along.length() > 1.0 else Vector2.DOWN
-	for i in 3:
-		var f := FIELD_SCENE.instantiate() as PouchField
-		f.kind = kind
-		var spot := _start.lerp(c, ROWS[phase - 1]) + side * field_spread * (i - 1)
-		f.position = spot
-		get_parent().add_child(f)
-		f.global_position = spot
-		fields.append(f)
-		BossKit.mark(self, f, "", 10.0, f.radius)   # lure him over it: it only hurts him
+	var spot := BossKit.clamp_arena_pos(self, c + Vector2.from_angle(PI + _lit_n * 2.4) * pouch_dist)
+	_lit_n += 1
+	var f := FIELD_SCENE.instantiate() as PouchField
+	f.kind = KINDS[maxi(phase, 1) - 1]
+	f.position = spot
+	get_parent().add_child(f)
+	f.global_position = spot
+	fields.append(f)
+	BossKit.mark(self, f, "", 10.0, f.radius)   # a gold ring on the lit pouch
 
 
 func _on_health(hp: int, max_hp: int) -> void:
@@ -300,22 +273,17 @@ func _retreat() -> void:
 # --- move deck ---
 
 func _eligible(m: String, d: float) -> bool:
-	var salt: bool = in_field("salt")
 	match m:
 		"pound":
 			return d <= pound_range
 		"charge":
-			return d >= charge_min and d <= charge_max and not salt
+			return d >= charge_min and d <= charge_max
 		"devour":
 			return d <= devour_range
 		"seed_volley":
 			return d >= 80.0 and d <= 240.0
 		"bramble_stomp":
 			return d <= 130.0
-		"hunger_leap":
-			return d >= 72.0 and d <= 220.0 and not salt
-		"rampage":
-			return phase >= 2 and d >= charge_min and d <= charge_max and not salt
 		"quake":
 			return phase >= 2 and d <= 100.0
 		"famine_maw":
@@ -338,6 +306,8 @@ func _pick_move(d: float) -> String:
 		return forced_move if _eligible(forced_move, d) else ""
 	if _eligible("famine_maw", d):
 		return "famine_maw"
+	if _since_charge >= 2 and _eligible("charge", d) and _last_move != "charge":
+		return "charge"   # the rule lives on his charge, so it comes round often
 	for _pass in 2:
 		if _deck.is_empty():
 			_refill()
@@ -358,18 +328,13 @@ func _begin(m: String) -> void:
 	moves_used[m] = n + 1
 	_last_move = m
 	_since_ult = 0 if m == "famine_maw" else _since_ult + 1
+	_since_charge = 0 if m == "charge" else _since_charge + 1
 	_rec = heavy_recovery if HEAVY.has(m) else recovery
 	_move = m
-	_chain_left = 0
-	_chain_idx = 0
 	match m:
 		"pound":
 			_begin_attack(true)
 		"charge":
-			_begin_attack(false)
-		"rampage":
-			_chain_left = rampage_chain - 1
-			_rec = heavy_recovery + 0.6
 			_begin_attack(false)
 		_:
 			_begin_move(m)
@@ -384,7 +349,7 @@ func _enter(s: State) -> void:
 	velocity = Vector2.ZERO
 	body.modulate = Color(1.0, 0.45, 0.45) if s == State.WINDUP or s == State.MOVE else (Color(0.7, 0.75, 1.0) if s == State.STUN else Color.WHITE)
 	if s == State.STUN:
-		BossKit.open(self, bamboo_stun)
+		BossKit.open(self, pouch_stun)
 	elif s == State.RECOVER and _rec >= heavy_recovery:
 		BossKit.open(self, _rec)
 	if s == State.CHASE or s == State.STUN or s == State.RECOVER or s == State.PAUSE:
@@ -395,8 +360,6 @@ func _enter(s: State) -> void:
 func _windup_len() -> float:
 	if _pound:
 		return pound_windup
-	if _chain_idx > 0:
-		return chain_windup
 	return charge_windup
 
 
@@ -412,7 +375,7 @@ func _begin_attack(pound: bool) -> void:
 		BossKit.anim(self, "slam", 10.0, true)
 		_tg(BossKit.telegraph_circle(self, global_position, pound_radius, pound_windup, HUNGER))
 	else:
-		BossKit.anim(self, "dash", 10.0, true)
+		BossKit.anim(self, "sig1", 10.0, true)   # head down
 		_tg(BossKit.telegraph_line(self, global_position, global_position + _dir * charge_length, 16.0, _windup_len(), HUNGER))
 
 
@@ -445,13 +408,6 @@ func _start_charge() -> void:
 
 func _end_charge(next: State) -> void:
 	attack_hitbox.deactivate()
-	if next == State.RECOVER and _chain_left > 0 and target != null:
-		_chain_left -= 1   # rampage: turn and charge again at once
-		_chain_idx += 1
-		_begin_attack(false)
-		return
-	_chain_left = 0
-	_chain_idx = 0
 	_enter(next)
 
 
@@ -465,7 +421,6 @@ func _clear_attack() -> void:
 			if is_instance_valid(n):
 				n.queue_free()
 		_owned.clear()
-		body.position = _body_pos   # a hunger-leap cut short in the air
 
 
 ## A bramble patch of the stomp: never over a pouch field (the lure spot) nor the gate's door and threshold.
@@ -516,16 +471,12 @@ func _begin_move(m: String) -> void:
 		"bramble_stomp":
 			BossKit.anim(self, "slam", 10.0, true)
 			_tg(BossKit.telegraph_circle(self, global_position, 40.0, stomp_windup, GREEN))
-		"hunger_leap":
-			BossKit.anim(self, "cast", 10.0, true)
-			_spot = BossKit.clamp_arena_pos(self, target.global_position if target != null else global_position)
-			_tg(BossKit.telegraph_circle(self, _spot, leap_radius, leap_windup, HUNGER))
 		"quake":
 			_quake_left = 3 if phase >= 3 else 2
 			BossKit.anim(self, "slam", 10.0, true)
 			_tg(BossKit.telegraph_circle(self, global_position, 40.0, quake_windup, HUNGER))
 		"famine_maw":
-			BossKit.anim(self, "cast", 6.0, true)
+			BossKit.anim(self, "sig2", 6.0, true)   # the inhale
 			_tg(BossKit.telegraph_ring(self, global_position, maw_outer, maw_inner, maw_windup, Color(1.0, 0.3, 0.1)))
 			BossKit.flash_fx(self, global_position + Vector2(0, -14), 24.0, 0.4, HUNGER)
 
@@ -573,8 +524,6 @@ func _tick_move(delta: float) -> void:
 					_bramble(at + _dir.rotated(0.9) * 80.0)
 					_bramble(at + _dir.rotated(-0.9) * 80.0)
 				_end_move()
-		"hunger_leap":
-			_tick_leap(at, delta)
 		"quake":
 			if state_time >= quake_windup:
 				attacks += 1
@@ -591,6 +540,7 @@ func _tick_move(delta: float) -> void:
 				else:
 					_end_move()
 		"famine_maw":
+			_maw_pull(at, delta)
 			if state_time >= maw_windup:
 				attacks += 1
 				var d: float = BossKit.player_point(self).distance_to(at)
@@ -605,30 +555,13 @@ func _tick_move(delta: float) -> void:
 			_end_move()
 
 
-## Hunger-leap: a fixed landing marker, then a hop over the arena onto it.
-func _tick_leap(at: Vector2, delta: float) -> void:
-	if _stage == 0:
-		if state_time >= leap_windup:
-			_from = at
-			_ghost_t = 0.0
-			BossKit.anim(self, "dash", 10.0, true)
-			_clear_attack()
-			_stage_to(1)
-	else:
-		var f: float = clampf(state_time / leap_time, 0.0, 1.0)
-		global_position = _from.lerp(_spot, f)
-		body.position = _body_pos + Vector2(0, -sin(f * PI) * 28.0)
-		_ghost_t -= delta
-		if _ghost_t <= 0.0:
-			_ghost_t = 0.08
-			BossKit.ghost(self, Color(0.4, 1.0, 0.3), 0.3)
-		if f >= 1.0:
-			attacks += 1
-			body.position = _body_pos
-			BossKit.strike_circle(self, _spot, leap_radius, leap_damage, true, HUNGER)
-			BossKit.punch(self, 1.2, 0.8, 0.3)
-			BossKit.shake(self, 2.5, 0.3)
-			_end_move()
+## The inhale drags the player in while the ring fills. The safe direction is in: the inner ring hugs him.
+func _maw_pull(at: Vector2, delta: float) -> void:
+	if not target is CharacterBody2D:
+		return
+	var gap: Vector2 = at - BossKit.player_point(self)
+	if gap.length() > maw_inner * 0.6 and gap.length() < maw_outer:
+		(target as CharacterBody2D).move_and_collide(gap.normalized() * maw_pull * delta)
 
 
 func _on_flinch() -> void:

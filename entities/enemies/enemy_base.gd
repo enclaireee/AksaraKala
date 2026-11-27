@@ -42,6 +42,8 @@ func _ready() -> void:
 		return
 	add_to_group("enemy")
 	EnemyArt.attach(self)
+	if unique_id != "" and get_script().resource_path.begins_with("res://entities/bosses/"):
+		BossKit.scale_boss(self)   # boss revamp v9 (balance.md 7.3)
 	home = global_position
 	target = get_tree().get_first_node_in_group("player") as Node2D
 	hurtbox.hurt.connect(_on_hurt)

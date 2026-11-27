@@ -9,6 +9,27 @@ const RED := Color(1.0, 0.25, 0.2)
 const GOLD := Color(1.0, 0.8, 0.3)
 const HURT_OFFSET := Vector2(0, -8)   # the player's hurtbox centre sits this far above its feet
 const HURT_RADIUS := 6.0
+# Boss revamp v9 scaling (balance.md 7.3). TUNE.
+const HP_SCALE := 0.85
+const DMG_SCALE := 0.85
+const MERCY_STEP := 0.07   # HP off per death to this boss this run
+const MERCY_CAP := 0.20
+
+
+# --- difficulty (boss revamp v9) -----------------------------------------------------------------------------
+
+static func boss_damage(amount: int) -> int:
+	return maxi(1, roundi(amount * DMG_SCALE)) if amount > 0 else amount
+
+
+## Scene bosses only (EnemyBase._ready): HP x0.85, then retry mercy from Game.boss_deaths.
+static func scale_boss(host: EnemyBase) -> void:
+	var game := host.get_node_or_null("/root/Game")
+	var deaths := int(game.boss_deaths.get(host.unique_id, 0)) if game != null else 0
+	var k := HP_SCALE * (1.0 - minf(MERCY_CAP, MERCY_STEP * deaths))
+	host.health.max_hp = maxi(1, roundi(host.health.max_hp * k))
+	host.health.hp = host.health.max_hp
+	host.health.changed.emit(host.health.hp, host.health.max_hp)
 
 
 # --- queries -------------------------------------------------------------------------------------------------

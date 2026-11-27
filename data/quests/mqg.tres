@@ -38,7 +38,7 @@ marker = {"zone": "kg_alun", "id": "galuh_bout_1"}
 [sub_resource type="Resource" id="s5"]
 script = ExtResource("2")
 objective = "Q_MQG_S5_OBJ"
-all = [{"on": "talked_to:lengser", "set_flag": "mqg_3", "objective": "Q_MQG_S5_P1"}, {"on": "petilasan_activated:galuh_1", "set_flag": "mqg_4", "objective": "Q_MQG_S5_P2"}]
+all = [{"on": "talked_to:lengser", "set_flag": "mqg_3", "objective": "Q_MQG_S5_P1"}, {"on": "petilasan_activated:galuh_1", "set_flag": "mqg_4", "objective": "Q_MQG_S5_P2", "marker": {"zone": "kg_keraton", "id": "galuh_1"}}]
 set_flag = "mqg_4"
 recap = "Q_MQG_S5_DONE"
 marker = {"zone": "kg_alun", "id": "lengser"}

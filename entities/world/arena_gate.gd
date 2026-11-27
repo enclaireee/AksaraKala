@@ -82,7 +82,8 @@ func enter() -> void:
 	for g in get_tree().get_nodes_in_group("arena_gate"):
 		g.entered = true
 	var zones := get_node("/root/Zones")
-	get_node("/root/Game").boss_retry = {"zone": zones.current_zone, "pos": [door().x, door().y]}
+	get_node("/root/Game").boss_retry = {"zone": zones.current_zone, "pos": [door().x, door().y],
+		"ids": _bosses().map(func(b: Node) -> String: return String(b.get("unique_id")))}
 	for b in _bosses():
 		b.hurtbox.set_deferred("monitorable", true)
 		if b.has_method("_engage"):   # Buto Ijo sets his arena up in it

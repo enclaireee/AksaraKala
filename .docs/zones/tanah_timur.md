@@ -19,7 +19,7 @@ Sizes: 1 screen = 30x17 tiles. 2x2 = 60x34, 3x2 = 90x34, 3x3 = 90x51. Total 8 ar
 | `tt_beringin` | 3x2 / 90x34 | Giant banyan grove, hanging roots, cracked shrine ruins, a forge under a banyan, a troupe camp | Empu forge, codex ruin, performance, drop to the coast | Mpu Wirasana `timur_empu` at the forge. Practice marks (3 stakes) in the forge yard. Kuda lumping leader `kepang_leader` at the camp and stage `kepang_stage`. (The old `sodo_lanang` pickup is dropped in v4d: the sodo lanang is in Klething Kuning's bundle, clue `t1_sodo` in `tt_kali`.) Codex ruin `codex_ruin` (2 inscribed stones, 1 statue plinth). Secret chest `chest_tt_beringin` in a hollow banyan (north-east). Drop ledge `drop_pesisir` (south rim). Gate `sc:tt_ladang` (north wall, seen from the inside as a root-choked door). Trigger `timur_marks` at the village mouth (3.3), forge-mark puzzle and practice stakes (3.4), clue `banyan_altar` at the ancient banyan with Buto Ambush #3 `buto_ambush_3` (3.7, opens K4), forge defence `timur_forge_defense` (3.11), clues `scabbard` and `forge_records` and the old anvil `forge_stone` in Wirasana's vault (3.12-3.13, opens K5). Exits: sabana (W). No fight room: a quiet area. **Depth (v4e, ASSUMED):** banyan trunks and a thicket in the north-west grove, troupe tents, a root pool in the south-west and broken shrine walls round the codex ruin. |
 | `tt_ladang` | 2x2 / 60x34 | Dry field of dead cucumber vines, a dark lair of hanging bones and a lamp | Buto Ijo's field and miniboss arena | E `timur_ladang` (field, west half). Root-gate `sc:tt_ladang` (south wall of the field, opens from this side). Miniboss `buto_ijo` in the arena (east half, 28x16). Kabut `K2` at the east exit, lifts when Buto Ijo is beaten. Optional chest `chest_tt_ladang` in the north-west nook (rule 7). Exits: kali (W), beringin (sc), pasir (E, kabut). **Depth (v4e, ASSUMED):** the farmer `ladang_farmer` and his neighbour `ladang_neighbor` in the north-west of the field, clue `ladang_dry_furrow`. |
 | `tt_pasir` | 3x2 / 90x34 | Pale sea-sand plain, a wide crater rim, black stones, the landmark huge in the east | The last fight, petilasan 2, then the boss gate | E `timur_pasir` (centre, two waves). Petilasan `timur_2` (east end, in a sand alcove, no enemy inside). Hariang Banga stands in the alcove after `timur_2` (camp talk). Stone sentries (decor) at the candi gate. Gate `sc:tt_pasir` (south-west wall) to sabana. Overlook with the Tengger sign (scenery, optional text in the codex ruin). The gatekeeper miniboss `timur_penjaga` and the south-coast link from `tt_pesisir` (3.15), the dune puzzle (3.15), waymarkers puzzle `pasir_waymarkers` (3.15), clue `lc4_lontar` in the alcove (3.17). Exits: ladang (W, kabut), candi (E), sabana (sc), pesisir (S, kabut `K4`). |
-| `tt_candi` | 2x2 / 60x34 | Banyan courtyard in front of Candi Gandring, seven curse stakes | Boss arena | Boss `keris_gandring` (Mpu Gandring's Keris, wakes after the `shrine_sight` beat), then the Nameless Hunter. 7 curse-mark stakes at the arena edge. Five beat spots (see Quest steps and markers). Mpu Wirasana stands in the court for the `keris` beat. Entered only from the `timur_2` alcove side of `tt_pasir`. Clues `hunter_mask_4` and `mask_joined` (3.21); `forge_stone` is no longer here (it is in Wirasana's vault in `tt_beringin`). Exits: pasir (W) only. **Depth (v4e, ASSUMED):** caretaker `candi_caretaker` in the west yard, a pond and sentry stones outside the court. |
+| `tt_candi` | 2x2 / 60x34 | Banyan courtyard in front of Candi Gandring, seven curse stakes | Boss arena (v9: stakes re-laid as a floor clock, painted floor `F` at (19,5)) | Boss `keris_gandring` (Mpu Gandring's Keris, wakes after the `shrine_sight` beat), then the Nameless Hunter. 7 curse-mark stakes at the arena edge. Five beat spots (see Quest steps and markers). Mpu Wirasana stands in the court for the `keris` beat. Entered only from the `timur_2` alcove side of `tt_pasir`. Clues `hunter_mask_4` and `mask_joined` (3.21); `forge_stone` is no longer here (it is in Wirasana's vault in `tt_beringin`). Exits: pasir (W) only. **Depth (v4e, ASSUMED):** caretaker `candi_caretaker` in the west yard, a pond and sentry stones outside the court. |
 | `tt_pesisir` | 2x2 / 60x34 | Dunes, a dry shore, driftwood, a pale sea fog on the south edge | Main-path coast since v3.1 (step 3.14, the Hunter's ash trail), with an elite and a secret, and the later back door to Segara Kidul | E `timur_pesisir`. Elite Banaspati `banaspati_elite` (SQ-T2). Kuda kepang pickup `kuda_kepang_3`. Secret chest `chest_tt_pesisir` (wreck in the dunes, east). Kabut `K3` at the south edge to `sk_karang` (opens on `quest:mq4=done`, flag `mq4_9`; a back route only). Drop landing from `tt_beringin`. Clue `ash_trail` and the second fight `timur_dune` (3.14); new east pocket to `tt_pasir` (kabut `K4`, flag `mq3_h4`). Exits: sabana (N), pasir (E, kabut `K4`), sk_karang (S, kabut). **Depth (v4e, ASSUMED):** fisher `pesisir_fisher` at the wreck, salt raker `pesisir_salt_raker` on the shore flats, clues `wreck_hull_marks` and `shore_tide_line`. |
 
 Depth floor (v4e, ASSUMED, world.md Area depth floor): every area has 2+ people, 2+ clues, 1+ encounter or puzzle and 10%+ hand-placed features (`tt_kulon` 13.9%, `tt_sabana` 15.7%, `tt_beringin` 16.2%, `tt_ladang` 39%, `tt_candi` 13%, `tt_pesisir` 15%; `tt_kali` and `tt_pasir` already passed). The new people are `kulon_gate_watchman`, `sabana_old_drover`, `sabana_camp_cook`, `sabana_water_warden`, `ladang_farmer`, `ladang_neighbor`, `pesisir_fisher`, `pesisir_salt_raker`, `candi_caretaker` (dialogue lines to be written). Lead "Ask about..." topic: `timur_empu`, "the people on the road".
@@ -135,7 +135,7 @@ First appearances (teach, then test):
 `timur_pesisir` (Prajurit with 2 known Banaspati) is the step-3.14 repeat fight; Ra Summon is known by then. Order is guaranteed: `timur_wisps` and `timur_ngarai` are in `tt_kali`, which is only reachable from `tt_sabana` before `sc:tt_ladang` is opened; `timur_ladang` is only reachable through `tt_kali` the first time. `timur_pesisir` and the sabana fights use only Banaspati and Prajurit.
 
 ## Buto Ijo (miniboss room)
-Arena in `tt_ladang`, east half, 28x16, with the lamp-lit lair. Four phases, one pouch per phase (cucumber seeds: bramble field, needles: bamboo forest, salt: saltwater, terasi: mud). **VERIFY** the legend's items (bestiary.md). Mbok Srini hands over the pouches in `tt_kali` before the fight (step 3.5; the river wisps `timur_wisps` fall first). Timun Mas runs off as in the legend. HP 3400. Kabut `K2` lifts on the death (step 3.9, `mq3_4`), the field gate `sc:tt_ladang` must be opened before the arena to give a short retry path.
+Arena in `tt_ladang`, east half, 28x16, with the lamp-lit lair. Four phases, one lit pouch per phase (cucumber seeds, needles, salt, terasi; boss revamp v9: his charge crossing the lit pouch stuns him 4 s and lights the next). Arena re-laid 2026-11-27: cover pairs on the north and south walls, open centre, painted floor `J` at (29,9). **VERIFY** the legend's items (bestiary.md). Mbok Srini hands over the pouches in `tt_kali` before the fight (step 3.5; the river wisps `timur_wisps` fall first). Timun Mas runs off as in the legend. HP 3400. Kabut `K2` lifts on the death (step 3.9, `mq3_4`), the field gate `sc:tt_ladang` must be opened before the arena to give a short retry path.
 
 ## Quest steps and markers
 Marker form `{zone: "tanah_timur", id: ...}`. Ids from quests.md marked (Q); others are **ASSUMED**.
@@ -842,10 +842,10 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 #....rr.....................################################
 #...........................################################
 #....................W......################################
-#.........R.................#____________________________###
+#.........R.................#J___________________________###
+#...........................#______rr_____________rr_____###
 #...........................#____________________________###
-#...........................#__rr_____________________rr_###
-#.......rr..............rr..#__rr_____________________rr_###
+#.......rr..............rr..#____________________________###
 #.......rr.....E........rr..#____________________________###
 #......................L....#____________________________###
 #...........................G____________________________###
@@ -855,8 +855,8 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
 #...rr........,,............#____________________________###
 #.............,,....rr..D...#____________________________###
 #.............,,....rr......#____________________________###
-#.............,,............#__rr_____________________rr_###
-#.............,,........F...#__rr_____________________rr_###
+#.............,,............#____________________________###
+#.............,,........F...#______rr_____________rr_____###
 Yy,,,,,,,,,,,,,,............#____________________________###
 Y,,,,,,,,,,,,,,,............################################
 #...........................################################
@@ -880,6 +880,7 @@ Y,,,,,,,,,,,,,,,............################################
 | `Z` | exit to tt_pasir (east edge, behind K2, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pasir", spawn_id:"from_tt_ladang"}` | path | 2 |
 | `z` | spawn, arrival from tt_pasir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
 | `B` | boss Buto Ijo (arena 28x16: x 29..56, y 9..24) | `res://entities/bosses/buto_ijo.tscn` | `{cond:"flag:mq3_3", finish_glyph:"jawa_ra"}` | floor | 1 |
+| `J` | painted arena floor (boss revamp v9): the lair image `assets/art/arena/tt_ladang.png` over the arena rect (29,9)-(56,24), placed at its top-left cell | `res://entities/world/arena_floor.tscn` | `{art:"res://assets/art/arena/tt_ladang.png"}` | floor | 1 |
 | `G` | arena gate (combat.md 5.3 v7) at the arena's west mouth; open until the threshold two tiles inside is crossed; the east mouth is shut by kabut K2 | `res://entities/world/arena_gate.tscn` | `{side:"e"}` | path | 4 |
 | `E` | encounter timur_ladang | `res://entities/world/encounter.tscn` | `{area_id:"timur_ladang", size:Vector2i(30,14), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(8,0)], [res://entities/enemies/keris_hantu.tscn, Vector2i(4,-4)], [res://entities/enemies/banaspati.tscn, Vector2i(4,4)], [res://entities/enemies/kemamang.tscn, Vector2i(-6,-3)]]]}` | grass | 1 |
 | `x` | loose keris hantu, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/keris_hantu.tscn` | `{}` | grass | 1 |
@@ -1004,29 +1005,29 @@ Y,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #...t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t......#
 #..........................................................#
 #.....rr..........####################################..r..#
-#.....rr..........#__________________________________#...r.#
-#.......~~~~rr....#__1______________2______________3_#.....#
-#......~~~~~rr....#__________________________________#..r..#
-#.......~~~~~.....#__________________________________#..rr.#
-#.................#__________________________________#..rr.#
-#..rr.............#________rr_______H_______rr_______#..r..#
-#..rr.............#________rr_N_____________rr_______#...r.#
+#.....rr..........#F_________________________________#...r.#
+#.......~~~~rr....#__________________________________#.....#
+#......~~~~~rr....#_________________1________________#..r..#
+#.......~~~~~.....#___rr________________________rr___#..rr.#
+#.................#___rr________________________rr___#..rr.#
+#..rr.............#__________7______H______2_________#..r..#
+#..rr.............#___________N______________________#...r.#
 #.................#__________________________________#.....#
 #.................#_________________R________________#..r..#
 #.....r...r...r...#__________________________________#...r.#
 #.............Q...A__________________________________#.....#
 Xe,,,,,,,,,,,,,,,,A__E__S___________B___C________D___#..r..#
-X,,,,,,,,,,,,,,,,,A________________________________4_#...r.#
-#.............V...A__________________________________#.....#
+X,,,,,,,,,,,,,,,,,A__________________________________#...r.#
+#.............V...A________6_________________3_______#.....#
 #.....r...r...r...#_____________W___K________________#..r..#
 #........U........#__________________________________#...r.#
 #.................#__________________________________#.....#
-#.................#________rr_______________rr_______#..rr.#
-#.................#________rr_______________rr_______#..rr.#
-#..rr.............#__________________________________#.....#
+#.................#__________________________________#..rr.#
+#.................#___rr________________________rr___#..rr.#
+#..rr.............#___rr________5_______4_______rr___#.....#
 #..rr.............#__________________________________#..r..#
 #...........rr....#__________________________________#...r.#
-#...........rr....#__7______________6______________5_#.....#
+#...........rr....#__________________________________#.....#
 #.......rr........#__________________________________#..r..#
 #.......rr........####################################...r.#
 #...t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t..t......#
@@ -1041,15 +1042,16 @@ X,,,,,,,,,,,,,,,,,A________________________________4_#...r.#
 | `X` | exit to tt_pasir (west edge, 2 tiles) | `res://entities/world/exit.tscn` | `{target_zone:"tt_pasir", spawn_id:"from_tt_candi"}` | path | 2 |
 | `e` | spawn, arrival from tt_pasir | `res://entities/world/spawn.tscn` | `{id:"from_tt_pasir"}` | path | 1 |
 | `B` | boss Mpu Gandring's Keris (3.19, arena centre; wakes after the `shrine_sight` beat) | `res://entities/bosses/keris_gandring.tscn` | `{cond:"flag:beat_shrine_sight", finish_glyph:"jawa_ha"}` | floor | 1 |
+| `F` | painted arena floor (boss revamp v9): the courtyard image `assets/art/arena/tt_candi.png` over the arena rect (19,5)-(52,28), placed at its top-left cell | `res://entities/world/arena_floor.tscn` | `{art:"res://assets/art/arena/tt_candi.png"}` | floor | 1 |
 | `H` | boss the Nameless Hunter, after the keris (MQ3 3.22; wakes after the `hunter_shrine` restore beat, so the fight never starts under the beat) | `res://entities/bosses/nameless_hunter.tscn` | `{cond:"flag:mq3_h6,flag:beat_hunter_shrine", finish_glyph:"sunda_ga"}` | floor | 1 |
 | `A` | arena gate (combat.md 5.3 v7) at the court's west mouth, shared by the Keris and the Hunter; open until the threshold two tiles inside is crossed | `res://entities/world/arena_gate.tscn` | `{side:"e"}` | path | 4 |
-| `1` | curse stake 1 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:1}` | floor | 1 |
-| `2` | curse stake 2 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:2}` | floor | 1 |
-| `3` | curse stake 3 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:3}` | floor | 1 |
-| `4` | curse stake 4 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:4}` | floor | 1 |
-| `5` | curse stake 5 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:5}` | floor | 1 |
-| `6` | curse stake 6 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:6}` | floor | 1 |
-| `7` | curse stake 7 (arena edge) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:7}` | floor | 1 |
+| `1` | curse stake 1, the first mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:1}` | floor | 1 |
+| `2` | curse stake 2, the second mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:2}` | floor | 1 |
+| `3` | curse stake 3, the third mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:3}` | floor | 1 |
+| `4` | curse stake 4, the fourth mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:4}` | floor | 1 |
+| `5` | curse stake 5, the fifth mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:5}` | floor | 1 |
+| `6` | curse stake 6, the sixth mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:6}` | floor | 1 |
+| `7` | curse stake 7, the seventh mark of the floor clock (boss revamp v9: ring of radius 9 tiles around `B`, 12 o'clock then clockwise) | `res://entities/bosses/curse_stake.tscn` | `{stake_id:7}` | floor | 1 |
 | `S` | trigger, beat `shrine_sight` staging (Laras across the shrine; `flag:mq3_6`, `flag:beat_laras_4`, `zone:tt_candi`) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_shrine_sight", size:Vector2i(6,6)}` | floor | 1 |
 | `K` | trigger, beat `keris` staging (choice 3; `flag:mq3_7`) | `res://entities/world/trigger.tscn` | `{trigger_id:"beat_keris", size:Vector2i(10,6)}` | floor | 1 |
 | `W` | NPC Mpu Wirasana, hands over the reforged keris in the `keris` beat | `res://entities/npc/npc.tscn` | `{npc_id:"timur_empu", cond:"flag:mq3_7,!flag:beat_keris"}` | floor | 1 |

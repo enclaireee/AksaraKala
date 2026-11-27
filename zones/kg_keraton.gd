@@ -3,16 +3,16 @@ extends Zone
 
 const MAP := [
 	"############################################################",
-	"#################____________H_____________#################",
+	"#################F___________H_____________#################",
 	"###____________##______________M___________#################",
 	"###__D_________##__________________________#################",
-	"###____________##____r_______B________r____#################",
+	"###____________##____________B_____________#################",
 	"###____________##_________Q_____O__________#################",
 	"Zz__J__________##________q_________________#################",
-	"Z______________##_________________R________#################",
-	"###____________##____r________________r____#################",
+	"Z______________##____r____________R___r____#################",
 	"###____________##__________________________#################",
 	"###____________##__________________________#################",
+	"###____________##________r________r________#################",
 	"###____________##__________________________#################",
 	"########__#######__________________________#################",
 	"########WW###################KK#############################",
@@ -66,6 +66,7 @@ const SPOTS := {
 	"D": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "court_portrait", "memory_id": "k_ii", "cond": "flag:mqg_6b"}, "tile": "_"},   # clue, the court portrait with its face scraped off; pulls you into K-II (MQG g.17, `clue_examined:court_portrait` sets `mqg_h1`, `memory_id` `k_ii`)
 	"M": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "hunter_mask_2", "memory_id": "h2", "cond": "flag:mqg_h2"}, "tile": "_"},   # clue, the Hunter's mask fragment behind the throne; pulls you into H2 (MQG g.18, sets `mqg_h3` after `memory_done:h2`, `memory_id` `h2`; appears once K-II is done)
 	"Y": {"scene": "res://entities/world/rehearsal.tscn", "props": {"id": "reh_barma", "glyph": "", "look": "mirror", "boss": "barma_wijaya"}, "tile": "."},   # rehearsal, a false reflection (a mirror on a stand) beside the courtyard path outside the throne door: any spell breaks it, the same trick that breaks Barma Wijaya's copies (boss fights v7, quests.md 10; id fixed, a quest sub-goal reads `clue_examined:reh_barma`)
+	"F": {"scene": "res://entities/world/arena_floor.tscn", "props": {"art": "res://assets/art/arena/kg_keraton.png"}, "tile": "_"},   # painted arena floor (boss revamp v9): the throne room image `assets/art/arena/kg_keraton.png` over the arena rect (17,1)-(42,12), placed at its top-left cell
 	"T": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "galuh_hall", "size": Vector2i(20,8), "cond": "flag:mqg_h3,!flag:mqg_6c", "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-6,-1)], ["res://entities/enemies/faceless.tscn", Vector2i(0,2)], ["res://entities/enemies/faceless.tscn", Vector2i(6,-1)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(8,3)]]]}, "tile": ","},   # encounter galuh_hall, the palace guards on the courtyard road before the throne room door (MQG g.19 `fight x2`: the guards here, then the champion `L`; the step completes on `L`). v7: moved out of the throne room (its old rect (19..39 x 5..13) covered the arena and the threshold, so it would have started inside the boss fight); cond ends at `mqg_6c` so it never starts again at the boss
 }
 

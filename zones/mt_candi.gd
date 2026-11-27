@@ -4,23 +4,23 @@ extends Zone
 const MAP := [
 	"##########################################################################################",
 	"#............####################################........................................#",
+	"#............#rrf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
 	"#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
-	"#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
-	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
-	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
+	"#............#,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,,#........................................#",
+	"#............#,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,J,,,,,,,,,B,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,,,#........................................#",
-	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
-	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
+	"#............#,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,,#........................................#",
+	"#............#,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,#........................................#",
-	"#............#,,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,#........................................#",
-	"#............#,,,,,,,,rr,,,,,,,,,,,,,,rr,,,,,,,,#........................................#",
+	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
+	"#............#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#,,,,,,,,,,,,,,,,I,,,,,,,,,,,,,,,,,#........................................#",
 	"#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
 	"#............#rr,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,rr#........................................#",
@@ -64,6 +64,7 @@ const SPOTS := {
 	"B": {"scene": "res://entities/bosses/bandung_bondowoso.tscn", "props": {"unique_id": "bandung_bondowoso", "cond": "flag:mq2_lc", "finish_glyph": "jawa_ca"}, "tile": ","},   # boss Bandung Bondowoso (2.19), awakened after the camp turn, the K3 memory and the LC3 chapter (`flag:mq2_lc`)
 	"z": {"scene": "res://entities/world/rehearsal.tscn", "props": {"id": "reh_bondowoso", "glyph": "jawa_ca", "look": "lesung", "boss": "bandung_bondowoso"}, "tile": "."},   # rehearsal, a lesung left standing outside the arena gate: answers Ca, the rhythm that calls the dawn beat (boss fights v7, quests.md 10; id fixed, a quest sub-goal reads `clue_examined:reh_bondowoso`)
 	"g": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "n"}, "tile": ","},   # arena gate (combat.md 5.3 v7) in the gap south of the arena; open until the threshold two tiles inside is crossed
+	"f": {"scene": "res://entities/world/arena_floor.tscn", "props": {"art": "res://assets/art/arena/mt_candi.png", "dx": 2, "dy": 0}, "tile": ","},   # painted arena floor (boss revamp v9): `assets/art/arena/mt_candi.png` over the arena rect (14,2)-(47,21), placed 2 cells east of its top-left cell (dx)
 	"F": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_camp", "cond": "flag:mq2_6,!flag:mq2_7", "size": Vector2i(30,16), "waves": [[["res://entities/enemies/faceless.tscn", Vector2i(-6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(6,-3)], ["res://entities/enemies/faceless.tscn", Vector2i(0,4)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(0,-6)]], [["res://entities/enemies/faceless.tscn", Vector2i(-8,2)], ["res://entities/enemies/faceless.tscn", Vector2i(8,2)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(-4,-6)], ["res://entities/enemies/faceless_archer.tscn", Vector2i(4,-6)]]]}, "tile": ","},   # encounter mataram_camp (**setpiece**, 2.14: the Pamali stone wakes; hold the court until the seal cracks, MQ2 2.14; cond ends at `mq2_7`, so the boss arena is clean for 2.19)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_candi", "size": Vector2i(28,16), "waves": [[["res://entities/enemies/genderuwo.tscn", Vector2i(8,-4)], ["res://entities/enemies/arca.tscn", Vector2i(-12,-5)], ["res://entities/enemies/arca.tscn", Vector2i(12,-5)]], [["res://entities/enemies/tuyul.tscn", Vector2i(0,-3)], ["res://entities/enemies/tuyul.tscn", Vector2i(-4,0)], ["res://entities/enemies/tuyul.tscn", Vector2i(4,0)]]]}, "tile": ","},   # encounter mataram_candi
 	"s": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "batu_bintang"}, "tile": "."},   # pickup, batu bintang (SQ-T3 meteorite fragment)

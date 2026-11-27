@@ -331,16 +331,16 @@ BOSS_NAMELESS_HUNTER_EPITHET,Yang menyerahkan namanya pada Kala,He who gave his 
 BOSS_NAMELESS_HUNTER_INTRO,Kau masih punya nama. Berikan padaku.,You still have a name. Give it to me.
 BOSS_BATARA_KALA_EPITHET,Sang Waktu yang lapar,"Time, the hungry one"
 BOSS_BATARA_KALA_INTRO,Ruwatan itu tak pernah selesai. Kau milikku sejak lahir.,The ruwatan was never finished. You have been mine since birth.
-BOSS_HINT_CAPTAIN,Ia memanggil pasukan. Gambar Ca untuk memutus panggilannya.,He calls his soldiers. Draw Ca to break the call.
-BOSS_HINT_SANGKURIANG,Fajar hampir tiba. Berdiri di tiang timur dan gambar Ca.,Dawn is close. Stand at the east post and draw Ca.
-BOSS_HINT_SANDEKALA,Ia bersembunyi dalam gelap. Pukul oncor yang padam.,He hides in the dark. Hit the unlit oncor.
-BOSS_HINT_KALA,Perisainya menunjukkan urutan huruf. Gambar huruf itu berurutan sebelum waktu habis.,His shield shows a glyph order. Draw the glyphs in that order before time runs out.
-BOSS_HINT_BARMA,Hanya satu yang raja sungguhan. Pecahkan wajah-wajah palsu dengan mantra aksara.,Only one is the real king. Break the false faces with an aksara spell.
-BOSS_HINT_HARIANG,"Ia menangkis dari depan. Tebas lewat dirinya dengan Na, atau serang dari belakang.","He blocks from the front. Dash through him with Na, or strike from behind."
-BOSS_HINT_BANDUNG,"Selama tiang berdiri, ia kebal. Gambar Ca untuk memanggil fajar palsu, lalu pecahkan tiangnya.","While a pillar stands, he cannot be hurt. Draw Ca to call a false dawn, then smash the pillar."
-BOSS_HINT_BUTO,Tarik Buto Ijo ke atas petak bungkusan. Petak itu hanya melukai dia.,Draw Buto Ijo onto the pouch fields. They hurt only him.
-BOSS_HINT_KERIS,Tonggak yang menyala harus dipadamkan. Gambar Ha di dekatnya sebelum ketujuhnya menyala.,Put out each lit stake. Draw Ha near it before all seven are lit.
-BOSS_HINT_HUNTER,Ia akan melupakanmu. Gambar Ga untuk perisai yang menahan Lupa.,He will make you forget. Draw Ga for the ward that blocks Forget.
+BOSS_HINT_CAPTAIN,Ia menancapkan panjinya dan barisan hantu muncul di petak lantai dalam 3 detik. Bakar panjinya dan barisan bubar.,He plants his banner and ghost ranks fade in on the squares over 3 s. Burn the banner and the ranks scatter.
+BOSS_HINT_SANGKURIANG,Jam matahari terisi saat perahu naik. Nyalakan tiang kain untuk fajar palsu.,The sundial fills as the boat rises. Light the cloth post for a false dawn.
+BOSS_HINT_SANDEKALA,Ia tak bisa masuk ke cahaya. Nyalakan keempat oncor dan ia tak punya tempat bersembunyi.,He cannot enter light. Light all four oncor and he has nowhere to hide.
+BOSS_HINT_KALA,Perisainya menyebut hurufnya. Gambar berurutan untuk memecahnya. Saat jam pasir habis hindari dentumannya.,The shield names its glyphs. Draw them in order to break it. When the hourglass empties dodge the pulse.
+BOSS_HINT_BARMA,Tiruan keluar dari cermin. Hanya raja sungguhan yang punya bayangan.,Copies step out of the mirrors. Only the real king casts a shadow.
+BOSS_HINT_HARIANG,"Penjagaannya adalah busur biru. Gambar Na menembus busur itu.","His guard is the cyan arc. Cast Jawa Na through it."
+BOSS_HINT_BANDUNG,"Batu gendang menyala berirama. Gambar Ca saat gong berkilat.","The drum stones light in a beat. Cast Jawa Ca on the gong flash."
+BOSS_HINT_BUTO,Satu bungkusan menyala. Berdirilah di belakangnya dan biarkan ia menyeruduk melewatinya.,One pouch glows. Stand behind it and let him charge through it.
+BOSS_HINT_KERIS,Tonggak menyala berurutan seperti jam. Bersihkan dengan Ha Jawa sebelum yang ketujuh.,The stakes light in order like a clock. Cleanse with Jawa Ha before the seventh.
+BOSS_HINT_HUNTER,Ia mengangkat topengnya sebelum Lupa. Pantulkan dengan Ga Sunda.,He raises his mask before Forget. Reflect it with Sunda Ga.
 UI_MAP_TOGGLE,Ganti tampilan,Switch view
 UI_VERB_TRAVEL,Pergi,Travel
 UI_VERB_REST,Istirahat,Rest

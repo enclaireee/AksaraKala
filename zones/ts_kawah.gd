@@ -13,16 +13,16 @@ const MAP := [
 	"############################################################",
 	"############################################################",
 	"############################################################",
-	"########r....................r##############################",
+	"########F....................r##############################",
 	"########.HK.......r.....r.n...##############################",
 	"########......................##############################",
-	"########.G............r.......##############################",
+	"########.G....r...............##############################",
 	"########...................Y..###,a,,u,#####################",
 	"########...................q..,A,,,,,,,,,,,,,,,,,,,,,,,,,,eX",
 	"########...S...B.C.........Z..,A,,,,,,,,,,,,,,,,,,,,,,,,,,,X",
 	"########...................P..##############################",
-	"########..............r.......##############################",
-	"########.V....................##############################",
+	"########......................##############################",
+	"########.V....r...............##############################",
 	"########..........r..R..r.....##############################",
 	"########r....................r##############################",
 	"############################################################",
@@ -57,6 +57,7 @@ const SPOTS := {
 	"A": {"scene": "res://entities/world/arena_gate.tscn", "props": {"side": "w"}, "tile": ","},   # arena gate (combat.md 5.3 v7) at the causeway's arena end; open until the threshold two tiles inside is crossed, then a wall of burning strokes until the boss falls
 	"a": {"scene": "res://entities/world/rehearsal.tscn", "props": {"id": "reh_captain", "boss": "faceless_captain", "glyph": "sunda_ca", "look": "shade", "cond": "!flag:mq1_8"}, "tile": ","},   # rehearsal, the Captain's muster shade on the causeway approach: cast Sunda Ca on it (quests.md 10, boss fights v7); hidden once the Captain is beaten
 	"u": {"scene": "res://entities/world/rehearsal.tscn", "props": {"id": "reh_sangkuriang", "boss": "sangkuriang", "glyph": "sunda_ca", "look": "post", "cond": "flag:mq1_8"}, "tile": ","},   # rehearsal, Sangkuriang's post of cloth on the causeway approach: cast Sunda Ca on it; shows once the Captain is beaten (`mq1_8`), when he is the next boss
+	"F": {"scene": "res://entities/world/arena_floor.tscn", "props": {"art": "res://assets/art/arena/ts_kawah.png"}, "tile": ","},   # arena floor, painted (boss revamp v9): one image over the arena rect from its top-left cell, shared by the Captain and Sangkuriang
 }
 
 

@@ -1,20 +1,22 @@
 class_name Sandekala extends EnemyBase
-## Optional miniboss (bestiary.md): the dusk terror that lives in darkness. The room darkens while engaged. While any
-## oncor is unlit he fades out every few seconds and reappears behind the player with a grabbing wind-up (ground
-## marker, then a hit). With all oncor lit he cannot fade. A lit oncor is also a haven: no dark pillars rise near it,
-## and its light protects against the Eclipse.
-## Moves (shuffled deck, never the same heavy twice in a row): dusk claws, grab, lantern void (homing skulls),
-## umbral pillars (lingering dark zones), dusk pulse. At 50% HP nightfall: darkness grows faster, he moves faster and
-## adds the shadow flurry (teleporting rakes) and the Eclipse (limit break, stand in the gold light).
+## Optional miniboss (bestiary.md, combat.md boss revamp v9): the dusk terror that lives in darkness. The room darkens
+## while engaged. One rule: he cannot enter light. While any oncor is unlit he melts into shadow (sig1) every few seconds
+## and rises behind the player for a grab (sig2). Oncor burn for a while (oncor.gd): when the 4th is lit he is pinned in
+## the open, stunned 3 s with TERBUKA, every time it happens. A lit oncor is also a haven: no dark pillars rise near it,
+## its light pool keeps him out, and it protects against the Eclipse.
+## Moves (shuffled deck, never the same heavy twice in a row): dusk claws, grab, lantern void (homing skulls), umbral
+## pillars (lingering dark zones), dusk pulse. At 50% HP nightfall: darkness grows faster, he moves faster and adds the
+## Eclipse (stand in the gold light).
 ## ponytail: no hold effect on the grab (damage only), no arena-edge pathing.
 
-enum State { IDLE, CHASE, FADING, GONE, WINDUP, GRAB, RECOVER, DEAD, ACT }
+enum State { IDLE, CHASE, FADING, GONE, WINDUP, GRAB, RECOVER, DEAD, ACT, STUN }
 
 const GRAB_R := 24.0
 const OVERLAY_SIZE := Vector2(736, 384)   # the ts_leuwi Sandekala room, 23x12 tiles at SCALE=2 (zones/tatar_sunda.md)
 const DUSK := Color(0.65, 0.35, 1.0)
 const LIGHT := Color(1.0, 0.9, 0.5)
-const HEAVY := ["pillars", "pulse", "flurry", "eclipse"]
+const HEAVY := ["pillars", "pulse", "eclipse"]
+const WIND := 1.15                    # v9: an early boss's heavy attacks wind up 15% longer (telegraph and strike together)
 
 @export var cond := ""                # Game.check condition; empty = always on (zone: `flag:mq1_h3`, after K1)
 @export var engage_dist := 140.0      # TUNE
@@ -24,7 +26,8 @@ const HEAVY := ["pillars", "pulse", "flurry", "eclipse"]
 @export var fade_every := 6.0         # TUNE: seconds in shadow between fades
 @export var fade_time := 0.4          # TUNE
 @export var gone_time := 1.0          # TUNE
-@export var windup := 0.6             # bestiary.md
+@export var windup := 0.6             # bestiary.md (sig2, the rising grab)
+@export var stun_time := 3.0          # v9: pinned in the open when the 4th oncor lights
 @export var grab_time := 0.15         # TUNE
 @export var recover_time := 0.9       # TUNE
 @export var melee_range := 26.0       # TUNE: lit-room grab starts from here
@@ -41,11 +44,9 @@ const HEAVY := ["pillars", "pulse", "flurry", "eclipse"]
 @export var zone_keep_clear := 16.0   # TUNE: pillars keep this far beyond their radius from an oncor, the gates and the threshold
 @export var pulse_damage := 16        # TUNE
 @export var pulse_radius := 34.0      # TUNE
-@export var flurry_damage := 12       # TUNE: per rake
 @export var eclipse_damage := 24      # TUNE: limit break, ~1.5x heavy
 @export var eclipse_windup := 1.8     # TUNE
 @export var eclipse_recovery := 2.6   # TUNE
-@export var torch_safe := 44.0        # TUNE: radius around a lit oncor where pillars never rise
 
 var boss_name_key := "BOSS_SANDEKALA"
 var active := true                    # EliteGuard flips it
@@ -65,7 +66,7 @@ var _mt := 0.0
 var _ang := 0.0
 var _wind := 0.5
 var _claw_i := 0
-var _flurry_i := 0
+var _prev_lit := 0
 var _ambush := false
 var _dark_rate := 1.0
 var _recover_t := 0.9
@@ -118,7 +119,7 @@ func in_shadow() -> bool:
 ## Inside the light of a lit oncor (pillars skip it, the Eclipse cannot hurt there).
 func _in_light(p: Vector2) -> bool:
 	for o: Oncor in get_tree().get_nodes_in_group("oncor"):
-		if o.lit and o.global_position.distance_to(p) <= torch_safe:
+		if o.lit and o.global_position.distance_to(p) <= o.pool_radius():
 			return true
 	return false
 
@@ -136,7 +137,13 @@ func _tick(delta: float) -> void:
 			if not o.lit:
 				BossKit.mark(self, o, "", 1.0, 10.0)
 	var total := maxi(1, get_tree().get_node_count_in_group("oncor"))
-	overlay.color.a = max_dark * dark * (1.0 - float(lit_count()) / total)
+	var lit := lit_count()
+	if engaged and not dead and lit == total and _prev_lit < total and state != State.DEAD:
+		_enter(State.STUN)   # the 4th oncor lit: he is pinned in the open
+		BossKit.open(self, stun_time)
+		get_node("/root/Events").weakness_triggered.emit("sandekala")
+	_prev_lit = lit
+	overlay.color.a = max_dark * dark * (1.0 - float(lit) / total)
 	var to_target := Vector2.INF
 	if target != null:
 		to_target = target.global_position - global_position
@@ -151,6 +158,8 @@ func _tick(delta: float) -> void:
 			var d := to_target.length()
 			var spd := move_speed * (1.25 if phase >= 2 else 1.0)
 			velocity = to_target / maxf(d, 0.01) * spd * slow() if d > melee_range * 0.6 else Vector2.ZERO
+			if _in_light(global_position + velocity * delta * 4.0):
+				velocity = Vector2.ZERO   # he cannot enter light: he waits at the pool's edge
 			if in_shadow() and fade_timer >= fade_every:
 				_enter(State.FADING)
 			elif gap <= 0.0 and target != null:
@@ -168,12 +177,16 @@ func _tick(delta: float) -> void:
 				global_position = _behind_player()
 				_enter(State.WINDUP)
 		State.WINDUP:
-			if state_time >= windup:
+			if state_time >= windup * WIND:
 				_enter(State.GRAB)
 		State.GRAB:
 			if state_time >= grab_time:
 				_recover_t = recover_time
 				_enter(State.RECOVER)
+		State.STUN:
+			if state_time >= stun_time:
+				gap = attack_gap
+				_enter(State.CHASE)
 		State.RECOVER:
 			if state_time >= _recover_t:
 				gap = attack_gap
@@ -193,6 +206,7 @@ func _enter(s: State) -> void:
 	velocity = Vector2.ZERO
 	match s:
 		State.FADING:
+			BossKit.anim(self, "sig1", 10.0, true)   # melt into shadow
 			_ambush = true
 			moves_used["fade"] = int(moves_used.get("fade", 0)) + 1
 			health.invincible_time = INF
@@ -204,6 +218,12 @@ func _enter(s: State) -> void:
 			health.invincible_time = 0.0
 			hurtbox.set_deferred("monitorable", true)
 			marker.visible = true
+			BossKit.anim(self, "sig2", 8.0, true)   # rise and grab
+		State.STUN:
+			modulate = Color(0.7, 0.75, 1.0)
+			health.invincible_time = 0.0   # pinned even mid-fade
+			hurtbox.set_deferred("monitorable", true)
+			BossKit.anim_stop(self)
 		State.GRAB:
 			attack_hitbox.damage = grab_damage
 			attack_hitbox.heavy = false
@@ -212,6 +232,10 @@ func _enter(s: State) -> void:
 			modulate.a = 1.0
 		State.CHASE, State.RECOVER:
 			BossKit.anim_stop(self)
+	if s != State.STUN:
+		modulate.r = 1.0   # leave the stun tint
+		modulate.g = 1.0
+		modulate.b = 1.0
 
 
 # --- the deck ------------------------------------------------------------------------------------------------
@@ -219,7 +243,6 @@ func _enter(s: State) -> void:
 func _pool() -> Array[String]:
 	var out: Array[String] = ["claws", "grab", "lantern", "pillars", "pulse"]
 	if phase >= 2:
-		out.append("flurry")
 		out.append("eclipse")
 	return out
 
@@ -236,8 +259,6 @@ func _fits(m: String, d: float) -> bool:
 			return d <= 240.0
 		"pulse":
 			return d <= 100.0
-		"flurry":
-			return d <= 200.0
 		"eclipse":
 			return d <= 240.0
 	return false
@@ -289,11 +310,7 @@ func _begin_move(m: String) -> void:
 			_begin_pillars()
 		"pulse":
 			BossKit.anim(self, "slam", 10.0, true)
-			_track(BossKit.telegraph_circle(self, global_position, pulse_radius, 0.9, DUSK))
-		"flurry":
-			BossKit.anim(self, "cast", 8.0, true)
-			BossKit.ghost(self, DUSK, 0.5)
-			modulate.a = 0.3
+			_track(BossKit.telegraph_circle(self, global_position, pulse_radius, 0.9 * WIND, DUSK))
 		"eclipse":
 			_begin_eclipse()
 
@@ -324,20 +341,18 @@ func _run_move(delta: float) -> void:
 				BossKit.flash_fx(self, global_position + Vector2(0, -8), 16.0, 0.3, DUSK)
 				_end_move(recover_time + 0.7)
 		"pillars":
-			if _mt >= 0.9:
+			if _mt >= 0.9 * WIND:
 				for p in _spots:
 					BossKit.strike_circle(self, p, pillar_radius, pillar_damage, true, DUSK)
 					_owned.append(BossKit.zone(self, p, pillar_radius, zone_damage, 5.0, DUSK, zone_warm))
 				BossKit.shake(self, 2.0, 0.2)
 				_end_move(heavy_recovery)
 		"pulse":
-			if _mt >= 0.9:
+			if _mt >= 0.9 * WIND:
 				BossKit.strike_circle(self, global_position, pulse_radius, pulse_damage, true, DUSK)
 				_owned.append(BossKit.wave(self, global_position, 110.0, 100.0, 12, DUSK, true))
 				BossKit.shake(self, 2.0, 0.2)
 				_end_move(heavy_recovery)
-		"flurry":
-			_run_flurry()
 		"eclipse":
 			_run_eclipse()
 		_:
@@ -415,40 +430,7 @@ func _begin_pillars() -> void:
 		if _in_light(p) or _blocked(p):
 			continue
 		_spots.append(p)
-		_track(BossKit.telegraph_circle(self, p, pillar_radius, 0.9, DUSK))
-
-
-## Shadow flurry: vanish, then three telegraphed teleport rakes around the player. He stays hittable.
-func _run_flurry() -> void:
-	match _stage:
-		0:
-			if _mt >= 0.6:
-				_stage = 1
-				_flurry_i = 0
-				_flurry_jump()
-		1:
-			if _mt >= 0.5:
-				BossKit.strike_cone(self, global_position, _ang, 1.6, 44.0, flurry_damage, false, DUSK)
-				BossKit.shake(self, 1.0, 0.1)
-				_flurry_i += 1
-				if _flurry_i < 3:
-					_flurry_jump()
-				else:
-					_end_move(heavy_recovery)
-
-
-func _flurry_jump() -> void:
-	BossKit.ghost(self, DUSK, 0.4)
-	BossKit.flash_fx(self, global_position + Vector2(0, -10), 14.0, 0.25, DUSK)
-	var at := _clamp_room(target.global_position + Vector2.from_angle(_ang + TAU * _flurry_i / 3.0 + PI) * 30.0)
-	global_position = at
-	_ang = (target.global_position - global_position).angle()
-	modulate.a = 1.0
-	_mt = 0.0
-	BossKit.flash_fx(self, global_position + Vector2(0, -10), 14.0, 0.25, DUSK)
-	BossKit.anim(self, "slam", 12.0, false)
-	_clear_attack()
-	_track(BossKit.telegraph_cone(self, global_position, _ang, 1.6, 44.0, 0.5, DUSK))
+		_track(BossKit.telegraph_circle(self, p, pillar_radius, 0.9 * WIND, DUSK))
 
 
 ## Eclipse (limit break): the whole room goes dark. Stand in a gold pool of light (or by a lit oncor) to be spared.
@@ -461,13 +443,13 @@ func _begin_eclipse() -> void:
 		c = target.global_position
 	_spots.append(_clamp_room(c + side))
 	_spots.append(_clamp_room(c - side))
-	_track(BossKit.telegraph_circle(self, home, 200.0, eclipse_windup, Color(0.55, 0.15, 0.7)))
+	_track(BossKit.telegraph_circle(self, home, 200.0, eclipse_windup * WIND, Color(0.55, 0.15, 0.7)))
 	for p in _spots:
-		_track(BossKit.telegraph_circle(self, p, 26.0, eclipse_windup, LIGHT))
+		_track(BossKit.telegraph_circle(self, p, 26.0, eclipse_windup * WIND, LIGHT))
 
 
 func _run_eclipse() -> void:
-	if _mt < eclipse_windup:
+	if _mt < eclipse_windup * WIND:
 		return
 	if target == null:
 		_end_move(eclipse_recovery)
@@ -489,6 +471,10 @@ func _run_eclipse() -> void:
 func _clamp_room(p: Vector2) -> Vector2:
 	var half := OVERLAY_SIZE / 2.0 - Vector2(16, 16)
 	var clamped := Vector2(clampf(p.x, home.x - half.x, home.x + half.x), clampf(p.y, home.y - half.y, home.y + half.y))
+	for o: Oncor in get_tree().get_nodes_in_group("oncor"):   # he never lands in a lit pool
+		var off := clamped - o.global_position
+		if o.lit and off.length() < o.pool_radius() + 4.0:
+			clamped = o.global_position + off.normalized() * (o.pool_radius() + 4.0) if off.length() > 0.1 else clamped + Vector2(o.pool_radius() + 4.0, 0)
 	return BossKit.clamp_arena_pos(self, clamped)
 
 
@@ -499,7 +485,7 @@ func _behind_player() -> Vector2:
 	return _clamp_room(p)
 
 
-## Nightfall at 50% HP: the dark rushes in, he is faster and gains the flurry and the Eclipse.
+## Nightfall at 50% HP: the dark rushes in, he is faster and gains the Eclipse.
 func _on_health(hp: int, max_hp: int) -> void:
 	if phase == 1 and hp > 0 and hp * 2 <= max_hp:
 		phase = 2
@@ -524,6 +510,8 @@ func _on_died() -> void:
 	BossKit.anim_stop(self)
 	super()
 	state = State.DEAD
+	for o: Oncor in get_tree().get_nodes_in_group("oncor"):
+		o.keep_lit()   # the gorge stays lit
 	marker.visible = false
 	modulate.a = 1.0
 	get_node("/root/Events").boss_defeated.emit("sandekala")

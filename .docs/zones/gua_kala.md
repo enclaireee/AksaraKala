@@ -714,25 +714,25 @@ X__________________________________________________________#
 ## Area 4: gk_ruang_kala
 
 - Size: 60 x 34 tiles = 2 x 2 screens (30 x 17 each).
-- Look: A round chamber, a clock face on the floor, the great hourglass overhead (art layer). Open floor, no rocks.
-- Purpose: Boss arena Batara Kala (interior about 44 x 29, no rocks). Arena gate `A` in the north corridor (the arrival spawn sits just inside it). North door back to gk_lupa, south lit door to Desa Purwa behind the kabut `mq5_3`, quest marker `kala_exit`.
+- Look: A round chamber, a clock face on the floor, the great hourglass standing just north of Batara Kala (a prop he places, boss revamp v9). Two 2x2 rock stubs flank the hourglass and one sits in each quadrant, so a pulse or a lunge can be broken by line of sight while the floor still reads as one clock face. The painted floor (`F`) carries the zodiac and the four Ruwatan quadrants.
+- Purpose: Boss arena Batara Kala (arena rect (8,2)-(51,31), interior about 44 x 29, six 2x2 rock stubs as cover, boss revamp v9). Arena gate `A` in the north corridor (the arrival spawn sits just inside it). North door back to gk_lupa, south lit door to Desa Purwa behind the kabut `mq5_3`, quest marker `kala_exit`.
 
 ### Map
 ```
 #############################NN#############################
 #############################AA#############################
-##########################__Rn____##########################
+##########################F_Rn____##########################
 #####################__________________#####################
 ##################________________________##################
 ################____________________________################
 ##############________________________________##############
 #############__________________________________#############
 ############____________________________________############
-###########______________________________________###########
+###########______rr_______________________rr_____###########
+##########_______rr_______________________rr______##########
 ##########________________________________________##########
-##########________________________________________##########
-#########__________________________________________#########
-#########__________________________________________#########
+#########________________rr_______rr_______________#########
+#########________________rr_______rr_______________#########
 ########____________________________________________########
 ########____________________________________________########
 ########____________________________________________########
@@ -743,8 +743,8 @@ X__________________________________________________________#
 #########__________________________________________#########
 ##########________________________________________##########
 ##########________________________________________##########
-###########______________________________________###########
-############____________________________________############
+###########______rr_______________________rr_____###########
+############_____rr_______________________rr____############
 #############__________________________________#############
 ##############________________________________##############
 ################____________________________################
@@ -766,6 +766,7 @@ X__________________________________________________________#
 | `K` | kabut, lifts on the boss (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq5_3"}` | floor | 2 |
 | `T` | trigger, quest marker kala_exit (4x2) | `res://entities/world/trigger.tscn` | `{trigger_id:"kala_exit", size:Vector2i(4,2)}` | floor | 1 |
 | `R` | rehearsal lock for Kala (5.12): a sealed glyph lock in the corridor between the gate and the threshold, by the arrival spawn, so it is reachable before Kala wakes (the corridor is all that lies outside the threshold; the gate stands on the map edge). Cast Jawa Ka on it (rehearsal.tscn, id `reh_kala`) | `res://entities/world/rehearsal.tscn` | `{id:"reh_kala", glyph:"jawa_ka", look:"lock", boss:"batara_kala"}` | floor | 1 |
+| `F` | painted arena floor (boss revamp v9): the clock-face image `assets/art/arena/gk_ruang_kala.png` over the arena rect (8,2)-(51,31), placed 18 cells east of its top-left cell (dx) | `res://entities/world/arena_floor.tscn` | `{art:"res://assets/art/arena/gk_ruang_kala.png", dx:18, dy:0}` | floor | 1 |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |

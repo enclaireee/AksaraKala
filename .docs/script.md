@@ -2846,7 +2846,7 @@ VERIFY: Roro Jonggrang's women pounding rice to fake the dawn.
 | @ | | |
 | BEAT_RANGA_WORD_4 | Ia menghilang di balik akar, meninggalkan topeng retak itu berayun pelan, seperti pertanda. | He slips behind the roots, leaving the cracked mask swaying slowly, like a sign. |
 
-### Beat `camp` (if `!flag:beat_camp`, `flag:mq2_7`; do `flag:beat_camp`). The turn
+### Beat `camp` (if `!flag:beat_camp`, `flag:mq2_7`; do `flag:beat_camp`, `give:laras_strip_ka`). The turn
 | Key | ID | EN |
 |-----|----|----|
 | BEAT_CAMP_1 | Perkemahan itu bukan penjara. Meja panjang, lontar terbentang, batu-batu tersusun: sebuah ruang baca. | The camp is no prison. Long tables, lontar spread open, stones stacked: a reading room. |

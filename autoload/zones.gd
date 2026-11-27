@@ -396,6 +396,8 @@ func respawn(rested := false) -> void:
 	sealed = false
 	var br: Dictionary = {} if rested else game.boss_retry   # died in a boss arena: back at its door, once
 	game.boss_retry = {}
+	for id in br.get("ids", []):   # retry mercy (balance.md 7.3)
+		game.boss_deaths[id] = int(game.boss_deaths.get(id, 0)) + 1
 	if at == Vector2.INF and not br.is_empty() and ResourceLoader.exists(ZONES.get(br.zone, br.zone)):
 		zone = ZONES.get(br.zone, br.zone)
 		at = Vector2(br.pos[0], br.pos[1])

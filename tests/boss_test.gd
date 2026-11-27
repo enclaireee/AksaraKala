@@ -1,5 +1,5 @@
 extends SceneTree
-## Sangkuriang test: phase 2, dawn, fake dawn stun, enrage, release. Steps the boss by hand.
+## Sangkuriang test (v9): sundial/boat set piece, every move, the dawn rule (answer = Ca at the cloth post: stun + TERBUKA; miss = one wrath ring), phase 2, release. Steps the boss by hand.
 
 const DT := 1.0 / 60.0
 var fails := 0
@@ -17,6 +17,13 @@ func _initialize() -> void:
 	events.boss_defeated.connect(func(id: String) -> void: defeated.append(id))
 	player = CharacterBody2D.new()
 	player.add_to_group("player")
+	var hb := Hurtbox.new()
+	hb.name = "Hurtbox"
+	var hp := Health.new()
+	hp.max_hp = 100000
+	hb.health = hp
+	player.add_child(hp)
+	player.add_child(hb)
 	player.position = Vector2(200, 135)
 	root.add_child(player)
 	var post := (load("res://entities/bosses/arena_post.tscn") as PackedScene).instantiate() as ArenaPost
@@ -30,14 +37,15 @@ func _initialize() -> void:
 	var ilmu0: int = game.ilmu
 
 	check(b.is_in_group("boss") and b.is_in_group("enemy"), "groups")
-	check(b.health.max_hp == 2100 and b.phase == 1 and b.dawn == 0.0, "starts phase 1, dawn 0")
+	check(b.health.max_hp == 1785 and b.phase == 1 and b.dawn < 0.01, "starts phase 1, dawn ~0 (%s)" % [b.dawn])
 	for i in 600:
 		b._physics_process(DT)
 	check(b.attacks > 0 and b.engaged, "phase 1 attacks")
-	check(b.dawn == 0.0, "dawn stays 0 in phase 1")
+	check(b.dawn > 0.0, "the sundial fills from the start of the fight")
+	check(b._dial != null and b._boat != null, "set piece: sundial and boat are up")
 
 	# Deck: phase 1 has 5 moves, never the same heavy twice in a row.
-	check(b._pool().size() == 5 and not ("earthshaker" in b._pool()) and not ("wrath" in b._pool()), "phase 1 pool")
+	check(b._pool().size() == 5 and not ("earthshaker" in b._pool()), "phase 1 pool")
 	b._deck.clear()
 	b._last = ""
 	var prev := ""
@@ -49,56 +57,61 @@ func _initialize() -> void:
 		prev = pm
 	check(not dup, "deck: no heavy twice in a row")
 
-	# Every move runs to its recovery and is counted.
-	for m in ["throw", "slam", "timber", "cleave", "roll", "earthshaker", "wrath"]:
+	# Every move runs to its recovery and is counted (sig1 = adze, sig2 = heave).
+	for m in ["throw", "adze", "heave", "timber", "roll", "earthshaker", "wrath"]:
 		var before: int = int(b.moves_used.get(m, 0))
 		check(run_move(b, m), "move %s ends in RECOVER" % m)
 		check(int(b.moves_used.get(m, 0)) == before + 1, "move %s counted" % m)
 	b._enter(Sangkuriang.State.CHASE)
 	b.global_position = Vector2(100, 135)
 	b._deck.clear()
-	b._since_wrath = 99
 	player.position = Vector2(200, 135)
-	check(b.dawn == 0.0 and b.phase == 1, "moves leave the dawn alone in phase 1")
+
+	# Early boss: the heave's wind-up is 15% longer.
+	b._begin_move("heave")
+	check(absf(b._wind - b.heave_windup * 1.15) < 0.001, "heave wind-up x1.15")
+	b._enter(Sangkuriang.State.CHASE)
 
 	# no cloth: interact does nothing
 	post.interact()
 	check(not post.hung and not game.has_flag("post:east"), "post stays bare without the item")
 
-	b.health.take_damage(1050, player)
-	check(b.phase == 2, "phase 2 at 50%")
-	for i in 300:
+	b.health.take_damage(b.health.max_hp - b.health.max_hp / 2, player)
+	check(b.phase == 2 and "earthshaker" in b._pool(), "phase 2 at 50% adds the earthshaker")
+	for i in 120:
 		b._physics_process(DT)
-	check(b.dawn > 0.0 and b.dawn < 1.0, "dawn rises")
 
-	# Ca with no cloth does nothing
+	# The rule: the post needs the cloth, the dial 50% full and the player near it.
+	b.dawn = 0.6
 	events.spell_cast.emit("sunda_ca", 1.0)
 	check(b.state != Sangkuriang.State.STUN, "Ca without cloth does not stun")
-
 	game.add_item("boeh_rarang", false)
 	post.interact()
 	check(post.hung and game.has_flag("post:east"), "cloth hung")
-	var before: float = b.dawn
 	events.spell_cast.emit("sunda_ka", 1.0)
-	check(b.state != Sangkuriang.State.STUN and b.dawn == before, "other glyph does not stun")
+	check(b.state != Sangkuriang.State.STUN, "other glyph does not stun")
 	player.position = Vector2(400, 135)
 	events.spell_cast.emit("sunda_ca", 1.0)
 	check(b.state != Sangkuriang.State.STUN, "Ca far from the post does not stun")
 	player.position = Vector2(200, 135)
+	b.dawn = 0.2
 	events.spell_cast.emit("sunda_ca", 1.0)
-	check(b.state == Sangkuriang.State.STUN and b.dawn == 0.0, "Ca near hung post stuns and resets dawn")
+	check(b.state != Sangkuriang.State.STUN, "Ca before the dial is half full does not stun")
+	b.dawn = 0.6
+	events.spell_cast.emit("sunda_ca", 1.0)
+	check(b.state == Sangkuriang.State.STUN and b.dawn == 0.0 and BossKit.is_open(b), "false dawn: stun, TERBUKA, dial empty")
 	for i in int(b.stun_time / DT) + 2:
 		b._physics_process(DT)
 	check(b.state != Sangkuriang.State.STUN, "stun ends")
 
-	# enrage at dawn 1, then the fake dawn can repeat
-	for i in int(b.dawn_time / DT) + 60:
+	# Missed: the dial fills, the boat is whole, the Dawn Wrath fires once and the dial starts over.
+	b._enter(Sangkuriang.State.CHASE)
+	b.global_position = Vector2(100, 135)
+	b.dawn = 0.9999
+	var wraths: int = int(b.moves_used.get("wrath", 0))
+	for i in 10:
 		b._physics_process(DT)
-	check(b.dawn == 1.0 and b.enraged, "dawn 1 enrages")
-	b._since_wrath = 99   # he may already have thrown one in the last second
-	check("earthshaker" in b._pool() and "wrath" in b._pool(), "enraged: the Dawn Wrath joins the deck")
-	events.spell_cast.emit("sunda_ca", 1.0)
-	check(b.state == Sangkuriang.State.STUN and not b.enraged and b.dawn == 0.0, "stun repeats and calms him")
+	check(int(b.moves_used.get("wrath", 0)) == wraths + 1 and b.dawn < 0.1, "dial full: one Dawn Wrath, dial resets")
 
 	# release
 	b.health.take_damage(5000, player)

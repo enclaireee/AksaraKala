@@ -66,7 +66,8 @@ var pinned := ""                       # pinned side quest id, "" follows the ma
 var hero_name := DEFAULT_NAME          # set on the name screen; new_game keeps it
 var hero_pronoun := "they"             # he, she or they
 var memory_return := {}                # inside a Kelir memory: {zone: scene path, pos: [x, y]} to go back to (Zones.enter_memory)
-var boss_retry := {}                   # died past an arena gate: {zone, pos: [x, y]} of its door (Zones.respawn uses it once). Not saved
+var boss_retry := {}                   # died past an arena gate: {zone, pos: [x, y], ids} of its door (Zones.respawn uses it once). Not saved
+var boss_deaths := {}                  # boss unique_id -> deaths in its arena this run, for retry mercy (balance.md 7.3). Not saved
 var boss_intro_seen: Array = []        # boss_name_key of every entrance already played this session: a retry gets the short one
 
 
@@ -96,6 +97,7 @@ func _reset() -> void:
 	hero_pronoun = "they"
 	memory_return = {}
 	boss_retry = {}
+	boss_deaths = {}
 
 
 func _ready() -> void:

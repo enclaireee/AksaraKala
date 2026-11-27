@@ -1,15 +1,17 @@
 class_name BarmaWijaya extends EnemyBase
-## Boss: Prabu Barma Wijaya, the false king and illusionist (bestiary.md Story v2). Moves: kris thrust, kris-dart fan,
-## teleport flurry (ghost marks, three cuts), royal decree (rings of darts with a rotating gap), mirror volley (three
-## decoy points converge on you), and the limit break Coronation (eight golden spokes, then a rotated second set).
-## Glamour at 70% and 35% HP: 3 copies of this scene (copy = true) spread out with him over 1 s. Copies are always
-## invincible: a weapon hit flickers through (Hurtbox.dodged), a spell (any script under res://spells/) breaks one.
-## While a copy stands he is invincible too; the last break stuns him 3 s. Copies only thrust and fan, for half damage.
-## Phase = 1 + glamours: phase 2 (after the 70% glamour) adds decree, mirror and Coronation.
+## Boss: Prabu Barma Wijaya, the false king and illusionist (bestiary.md Story v2, boss revamp v9).
+## The rule: copies step out of the four wall mirrors, and only the real king casts a shadow. Hit the king and every copy
+## shatters; he is stunned 3 s and open. A cast glyph on a copy breaks that one (the last break stuns him too).
+## Moves: kris thrust, kris-dart fan, royal decree and mirror volley (phase 2), and the signatures: mirror step (sig1:
+## he steps into one mirror and out of another, a copy steps out of a third) and royal cleave (sig2).
+## Glamour at 70% and 35% HP: the king is untouchable for 1 s while up to 3 copies step out of the mirrors.
+## Phase = 1 + glamours. Copies only thrust and fan, for half damage.
 ## Defeat: he never dies. At 0 HP he kneels, goes inert, stays in Game.killed, then Events.boss_defeated.
 ## The HUD polls: group "boss", health, boss_name_key, engaged.
 
 enum State { IDLE, CHASE, WINDUP, THRUST, RECOVER, GLAMOUR, STUN, ACT }
+
+const WIND := 1.15   # early boss (combat.md v9): heavy attacks wind up 15% longer, telegraph and strike together
 
 const MARKER := Color(1.0, 0.3, 0.3, 0.35)
 const STUNNED := Color(0.7, 0.75, 1.0)
@@ -17,7 +19,10 @@ const GOLD := Color(1.0, 0.8, 0.3)
 const SHOT := preload("res://entities/enemies/spirit_shot.tscn")
 const MARKS := [70, 35]   # spec: glamour at these HP percents
 const COPIES := 3         # spec
-const HEAVY: Array[String] = ["flurry", "decree", "mirror", "coronation"]
+const HEAVY: Array[String] = ["decree", "mirror", "cleave"]
+const MIRROR_X := [-352.0, -128.0, 128.0, 352.0]   # mirror columns, from his spawn point (kg_keraton Area 2: cells 18.5, 25.5, 33.5, 40.5)
+const MIRROR_UP := -122.0                          # mirror centre, above his spawn (it hangs in the back wall)
+const MIRROR_OUT := 30.0                           # a figure steps out this far in front of its mirror
 
 @export var boss_name_key := "BOSS_BARMA_WIJAYA"
 @export var sabotage_flag := "laras_sabotage_glamour_seal"   # HUD boss bar reads this
@@ -37,24 +42,21 @@ const HEAVY: Array[String] = ["flurry", "decree", "mirror", "coronation"]
 @export var refan_after := 2.0         # TUNE: unused since the move deck, kept for scenes
 @export var recovery := 1.0            # TUNE: after a light move
 @export var recovery_heavy := 2.5      # TUNE: the punish window after a set-piece
-@export var flurry_hits := 3           # TUNE
-@export var flurry_tele := 0.6         # TUNE: the ghost mark shows this long before he blinks there
-@export var flurry_cut_windup := 0.5   # TUNE: cone marker after each blink
-@export var flurry_radius := 40.0      # TUNE: blink spots lie this far from the player
-@export var decree_windup := 0.9       # TUNE: heavy
+@export var decree_windup := 0.9       # TUNE: heavy (x WIND)
 @export var decree_damage := 12        # TUNE: each dart
 @export var decree_count := 12         # TUNE: darts per ring
 @export var decree_gap_slots := 2      # TUNE: missing darts per ring (the safe gap)
 @export var decree_volleys := 5        # TUNE
 @export var decree_interval := 0.55    # TUNE
 @export var decree_speed := 85.0       # TUNE
-@export var mirror_windup := 0.7       # TUNE
+@export var mirror_windup := 0.7       # TUNE (x WIND)
+@export var step_tele := 0.7           # TUNE: mirror step, the exit mirror shows this long before he steps out
+@export var cleave_windup := 1.0       # TUNE: royal cleave (x WIND)
+@export var cleave_damage := 26        # TUNE: heavy, a bit under 2x the thrust
+@export var cleave_arc := 2.2          # TUNE: radians
+@export var cleave_length := 64.0      # TUNE
 @export var mirror_volleys := 2        # TUNE
 @export var mirror_speed := 190.0      # TUNE
-@export var ult_windup := 1.4          # TUNE: Coronation, long telegraph
-@export var ult_damage := 24           # TUNE: ~1.7x light, avoidable between the spokes
-@export var ult_length := 150.0        # TUNE
-@export var ult_cooldown := 22.0       # TUNE
 @export var glamour_time := 1.0        # spec: the shuffle
 @export var glamour_radius := 48.0     # TUNE: the 4 figures end on this ring
 @export var stun_time := 3.0           # spec
@@ -82,10 +84,12 @@ var _last_move := ""
 var _stage := 0
 var _sub := 0.0
 var _rec := 1.0
-var _ult_cd := 0.0
+var _mirrors: Array[Node2D] = []   # the four wall mirrors (frame 1 = cracked while a copy that stepped out of it stands)
+var _spots: Array[Vector2] = []    # where a figure steps out of each mirror
+var _src := {}                     # copy -> its mirror index
 var _dir := Vector2.RIGHT
 var _from := Vector2.ZERO
-var _spot := Vector2.ZERO
+var _exit := 0
 var _count := 0
 var _base := 0.0
 var _ghost_t := 0.0
@@ -106,6 +110,10 @@ func _ready() -> void:
 		_enter(State.GLAMOUR)
 		return
 	add_to_group("boss")
+	_build_mirrors()
+	var sh := Shadow.new()   # only the real king casts one: the copies have none
+	sh.z_index = -1
+	add_child(sh)
 	health.changed.connect(_on_health)
 	var g := EliteGuard.new()
 	g.cond = cond
@@ -118,8 +126,9 @@ func phase() -> int:
 
 func _tick(delta: float) -> void:
 	state_time += delta
-	_ult_cd = maxf(0.0, _ult_cd - delta)
 	_prune_owned()
+	if not copies.is_empty():
+		BossKit.hint(self, "BOSS_HINT_BARMA", 12.0)   # until the copies are gone
 	if target == null:
 		return
 	var to_t := target.global_position - global_position
@@ -158,6 +167,8 @@ func _tick(delta: float) -> void:
 				_enter(State.CHASE)
 		State.GLAMOUR:
 			if state_time >= glamour_time:
+				if not copy:
+					health.invincible_time = 0.0   # the king can be hit again: the shadow tells which one he is
 				_enter(State.CHASE)
 		State.STUN:
 			if state_time >= stun_time + (sabotage_stun_bonus if (_sabotaged() and not copy) else 0.0):   # ASSUMED (v5)
@@ -218,7 +229,8 @@ func _refill() -> void:
 	_deck.clear()
 	var names: Array[String] = ["thrust", "fan"]
 	if not copy:
-		names.append("flurry")
+		names.append("step")
+		names.append("cleave")
 		if phase() >= 2:
 			names.append("decree")
 			names.append("mirror")
@@ -234,8 +246,10 @@ func _ok(m: String, d: float) -> bool:
 			return d <= thrust_length
 		"fan":
 			return d <= fan_range
-		"flurry":
-			return d <= 240.0
+		"step":
+			return d <= 300.0
+		"cleave":
+			return d <= cleave_length + 16.0
 		"decree":
 			return d <= 200.0
 		"mirror":
@@ -243,10 +257,8 @@ func _ok(m: String, d: float) -> bool:
 	return false
 
 
-## Next move by distance and phase: the Coronation when it is ready, else the first fitting card of the shuffled deck.
+## Next move by distance and phase: the first fitting card of the shuffled deck.
 func _pick(d: float) -> String:
-	if not copy and phase() >= 2 and _ult_cd <= 0.0 and d <= 220.0:
-		return "coronation"
 	for attempt in 2:
 		for i in _deck.size():
 			var m: String = _deck[i]
@@ -270,15 +282,19 @@ func _begin_move(m: String, to_t := Vector2.ZERO) -> void:
 	match m:
 		"thrust", "fan":
 			_begin_windup(m == "fan")
-		"flurry":
+		"step":
 			_enter(State.ACT)
-			_count = flurry_hits
-			_flurry_mark()
+			_step_begin()
+		"cleave":
+			_enter(State.ACT)
+			_goto(0)
+			BossKit.anim(self, "sig2", 8.0, false)
+			_tg.append(BossKit.telegraph_cone(self, global_position, _dir.angle(), cleave_arc, cleave_length, cleave_windup * WIND, GOLD))
 		"decree":
 			_enter(State.ACT)
 			_base = randf() * TAU
 			_count = 0
-			var r := BossKit.telegraph_ring(self, global_position, 110.0, 24.0, decree_windup, GOLD)
+			var r := BossKit.telegraph_ring(self, global_position, 110.0, 24.0, decree_windup * WIND, GOLD)
 			r.follow = self
 			_tg.append(r)
 			BossKit.anim(self, "cast")
@@ -288,14 +304,6 @@ func _begin_move(m: String, to_t := Vector2.ZERO) -> void:
 			_enter(State.ACT)
 			_count = mirror_volleys
 			_mirror_mark()
-		"coronation":
-			_ult_cd = ult_cooldown
-			_enter(State.ACT)
-			_base = randf() * TAU
-			BossKit.anim(self, "cast")
-			BossKit.roar(self, GOLD, 60.0)
-			_spoke_marks(_base, ult_windup)
-			_goto(0)
 		_:
 			_finish(recovery)
 
@@ -308,14 +316,14 @@ func _goto(stage: int) -> void:
 func _act(delta: float) -> void:
 	_sub += delta
 	match _move:
-		"flurry":
-			_act_flurry()
+		"step":
+			_act_step()
+		"cleave":
+			_act_cleave()
 		"decree":
 			_act_decree()
 		"mirror":
 			_act_mirror()
-		"coronation":
-			_act_coronation()
 		_:
 			_finish(recovery)
 
@@ -358,45 +366,41 @@ func _fire_fan() -> void:
 		shot.global_position = aim.global_position
 
 
-# --- teleport flurry: ghost mark, blink, cone cut, three times ---
+# --- mirror step (sig1): he steps into the nearest mirror and out of another; a copy steps out of a third ---
 
-func _flurry_mark() -> void:
-	if target == null:
-		_finish(recovery)
-		return
-	var feet := target.global_position
-	_spot = BossKit.clamp_arena_pos(self, feet + Vector2.from_angle(randf() * TAU) * flurry_radius)
-	_tg.append(BossKit.telegraph_circle(self, _spot, 14.0, flurry_tele, GOLD))
-	BossKit.ghost(self, GOLD, flurry_tele)
-	BossKit.anim(self, "dash", 12.0, false)
+func _step_begin() -> void:
+	var mine := _nearest_mirror(global_position)
+	var others: Array[int] = [0, 1, 2, 3]
+	others.erase(mine)
+	others.shuffle()
+	_exit = others[0]
+	if copies.size() < COPIES:
+		_spawn_copy(others[1])
+	_tg.append(BossKit.telegraph_circle(self, _spots[_exit], 14.0, step_tele, GOLD))
+	BossKit.anim(self, "sig1", 10.0, false)
+	BossKit.ghost(self, GOLD, step_tele)
 	body.modulate = Color(1.0, 1.0, 1.0, 0.45)
 	_goto(1)
 
 
-func _act_flurry() -> void:
-	match _stage:
-		1:
-			if _sub >= flurry_tele:
-				BossKit.ghost(self, GOLD, 0.4)
-				BossKit.flash_fx(self, global_position + Vector2(0, -10), 18.0, 0.3, GOLD)
-				global_position = _spot
-				BossKit.flash_fx(self, global_position + Vector2(0, -10), 18.0, 0.3, GOLD)
-				body.modulate = Color.WHITE
-				var to_t := target.global_position - global_position
-				_dir = to_t.normalized() if to_t != Vector2.ZERO else Vector2.RIGHT
-				_tg.append(BossKit.telegraph_cone(self, global_position, _dir.angle(), 1.2, thrust_length + 8.0, flurry_cut_windup, GOLD))
-				BossKit.anim(self, "cast")
-				_goto(2)
-		2:
-			if _sub >= flurry_cut_windup:
-				BossKit.anim(self, "slam", 12.0, false)
-				BossKit.strike_cone(self, global_position, _dir.angle(), 1.2, thrust_length + 8.0, _dmg(thrust_damage), false, GOLD)
-				BossKit.punch(self, 1.15, 0.9, 0.2)
-				_count -= 1
-				if _count > 0:
-					_flurry_mark()
-				else:
-					_finish(recovery_heavy)
+func _act_step() -> void:
+	if _stage == 1 and _sub >= step_tele:
+		BossKit.flash_fx(self, global_position + Vector2(0, -10), 18.0, 0.3, GOLD)
+		global_position = _spots[_exit]
+		BossKit.flash_fx(self, global_position + Vector2(0, -10), 18.0, 0.3, GOLD)
+		body.modulate = Color.WHITE
+		_finish(recovery)
+
+
+# --- royal cleave (sig2): a wide heavy sweep after a long telegraph ---
+
+func _act_cleave() -> void:
+	if _stage == 0 and _sub >= cleave_windup * WIND:
+		BossKit.strike_cone(self, global_position, _dir.angle(), cleave_arc, cleave_length, _dmg(cleave_damage), true, GOLD)
+		BossKit.punch(self, 1.15, 0.9, 0.2)
+		_goto(1)
+	elif _stage == 1 and _sub >= 0.3:
+		_finish(recovery_heavy)
 
 
 # --- royal decree: rings of darts, each with a gap that turns ---
@@ -404,7 +408,7 @@ func _act_flurry() -> void:
 func _act_decree() -> void:
 	match _stage:
 		0:
-			if _sub >= decree_windup:
+			if _sub >= decree_windup * WIND:
 				_goto(1)
 				_sub = decree_interval   # the first ring goes at once
 		1:
@@ -443,14 +447,14 @@ func _mirror_mark() -> void:
 		var dir := (feet - pt).angle()
 		_mpts.append(pt)
 		_mdirs.append(dir)
-		_tg.append(BossKit.telegraph_line(self, pt, pt + Vector2.from_angle(dir) * 150.0, 8.0, mirror_windup, GOLD))
-		BossKit.flash_fx(self, pt, 10.0, mirror_windup, GOLD)
+		_tg.append(BossKit.telegraph_line(self, pt, pt + Vector2.from_angle(dir) * 150.0, 8.0, mirror_windup * WIND, GOLD))
+		BossKit.flash_fx(self, pt, 10.0, mirror_windup * WIND, GOLD)
 	BossKit.anim(self, "cast")
 	_goto(1)
 
 
 func _act_mirror() -> void:
-	if _stage == 1 and _sub >= mirror_windup:
+	if _stage == 1 and _sub >= mirror_windup * WIND:
 		for i in _mpts.size():
 			_owned.append(BossKit.shoot(self, _mpts[i], _mdirs[i], mirror_speed, _dmg(fan_damage), GOLD, "blade", 4.0, 1.4))
 			BossKit.sparks(self, _mpts[i], GOLD, 6, 40.0, 0.3)
@@ -463,79 +467,77 @@ func _act_mirror() -> void:
 		_finish(recovery_heavy)
 
 
-# --- Coronation (limit break): eight spokes, then eight more turned half a gap; stand between them ---
+# --- mirrors, copies, glamour ---
 
-func _spoke_marks(base: float, life: float) -> void:
-	for k in 8:
-		var a := base + TAU * float(k) / 8.0
-		_tg.append(BossKit.telegraph_line(self, global_position, global_position + Vector2.from_angle(a) * ult_length, 14.0, life, GOLD))
-
-
-func _spoke_strike(base: float) -> void:
-	var p := BossKit.player_point(self)
-	var hit := false
-	for k in 8:
-		var a := base + TAU * float(k) / 8.0
-		var to := global_position + Vector2.from_angle(a) * ult_length
-		BossKit.beam_fx(self, global_position, to, 14.0, 0.3, GOLD)
-		if BossKit.in_line(p, global_position, to, 14.0):
-			hit = true
-	BossKit.shake(self, 2.0, 0.3)
-	if hit:
-		BossKit.hurt_player(self, _dmg(ult_damage), true)
+## The four wall mirrors, drawn from his spawn point (ponytail: spawn-relative, so no arena rect is needed here).
+func _build_mirrors() -> void:
+	for x in MIRROR_X:
+		var m := BossKit.prop("props/arena_mirror.png", Vector2(24, 40), Color(0.6, 0.8, 0.9), 2)
+		m.top_level = true
+		m.global_position = global_position + Vector2(x, MIRROR_UP)
+		add_child(m)
+		_mirrors.append(m)
+		_spots.append(m.global_position + Vector2(0, 20.0 + MIRROR_OUT))
 
 
-func _act_coronation() -> void:
-	match _stage:
-		0:
-			if _sub >= ult_windup:
-				_spoke_strike(_base)
-				_clear_marks()
-				_spoke_marks(_base + TAU / 16.0, 0.7)
-				BossKit.anim(self, "slam", 12.0, false)
-				_goto(1)
-		1:
-			if _sub >= 0.7:
-				_spoke_strike(_base + TAU / 16.0)
-				_clear_marks()
-				_goto(2)
-		2:
-			if _sub >= 0.4:
-				_finish(recovery_heavy + 0.5)
+func _nearest_mirror(p: Vector2) -> int:
+	var best := 0
+	for i in _spots.size():
+		if p.distance_to(_spots[i]) < p.distance_to(_spots[best]):
+			best = i
+	return best
 
 
-# --- glamour ---
+## A copy steps out of mirror `i`; the mirror shows a crack while it stands.
+func _spawn_copy(i: int) -> BarmaWijaya:
+	var c := (load(scene_file_path) as PackedScene).instantiate() as BarmaWijaya
+	c.copy = true
+	c.real = self
+	c.unique_id = ""
+	c.ilmu = 0
+	c.position = _spots[i]
+	get_parent().add_child(c)
+	copies.append(c)
+	_src[c] = i
+	_set_crack(i, true)
+	BossKit.flash_fx(self, _spots[i] + Vector2(0, -10), 16.0, 0.3, GOLD)
+	BossKit.mark(self, c, "", 60.0, 14.0)   # every false face wears the ring; the king is the one with the shadow
+	return c
 
+
+func _set_crack(i: int, on: bool) -> void:
+	if i >= 0 and i < _mirrors.size() and _mirrors[i] is Sprite2D:
+		(_mirrors[i] as Sprite2D).frame = 1 if on else 0
+
+
+## The rule: a hit on the king shatters every copy and stuns him (the last break does it). Not while he is shuffling.
 func _on_health(hp: int, max_hp: int) -> void:
 	engaged = true   # first hit
+	if state != State.GLAMOUR and not copies.is_empty():
+		for c in copies.duplicate():
+			c._break()
 	if glamours < MARKS.size() and hp > 0 and hp * 100 <= max_hp * MARKS[glamours]:
 		glamours += 1
 		health.invincible_time = INF
 		_deck.clear()
-		_ult_cd = maxf(_ult_cd, 6.0)
+		BossKit.open(self, 0.0)
 		_enter(State.GLAMOUR)
 		_glamour.call_deferred()   # ponytail: deferred, the hit can come mid physics query
 
 
-## 3 copies appear on him, then all 4 figures move to shuffled spots on a ring over glamour_time.
+## Up to 3 copies step out of the mirrors, then all figures move to shuffled spots on a ring over glamour_time.
 func _glamour() -> void:
 	if dead:
 		return
 	BossKit.roar(self, GOLD, 70.0)
 	var figs: Array[Node2D] = [self]
-	var scene := load(scene_file_path) as PackedScene
-	for i in COPIES:
-		var c := scene.instantiate() as BarmaWijaya
-		c.copy = true
-		c.real = self
-		c.unique_id = ""
-		c.ilmu = 0
-		c.position = position
-		get_parent().add_child(c)
-		copies.append(c)
-		figs.append(c)
-		BossKit.mark(self, c, "", 60.0, 14.0)   # every false face wears the ring; the king is the one without
-	BossKit.hint(self, "BOSS_HINT_BARMA", 0.0)   # twice a fight
+	var order: Array[int] = [0, 1, 2, 3]
+	order.shuffle()
+	for i in COPIES - copies.size():
+		figs.append(_spawn_copy(order[i]))
+	for c in copies:
+		if not figs.has(c):
+			figs.append(c)
 	figs.shuffle()
 	var at := global_position
 	for i in figs.size():
@@ -585,6 +587,8 @@ func _shard(at: Vector2) -> void:
 
 func _copy_broken(c: BarmaWijaya) -> void:
 	copies.erase(c)
+	_set_crack(int(_src.get(c, -1)), false)
+	_src.erase(c)
 	if copies.is_empty() and not dead:
 		health.invincible_time = 0.0
 		_enter(State.STUN)
@@ -600,6 +604,15 @@ func _sabotaged() -> bool:
 
 func _on_flinch() -> void:
 	pass   # bosses do not flinch
+
+
+## The king's shadow: a dark ellipse under his feet. Copies are built without one.
+class Shadow extends Node2D:
+	func _draw() -> void:
+		var pts := PackedVector2Array()
+		for i in 16:
+			pts.append(Vector2(cos(TAU * i / 16.0) * 11.0, sin(TAU * i / 16.0) * 4.0))
+		draw_colored_polygon(pts, Color(0, 0, 0, 0.45))
 
 
 ## Never dies: EnemyBase death minus the free and enemy_killed. Kneels and stays, inert.

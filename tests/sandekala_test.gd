@@ -24,6 +24,7 @@ func _initialize() -> void:
 	player.set("motion_mode", 1)
 	var hb := Hurtbox.new()
 	hb.collision_layer = 2
+	hb.name = "Hurtbox"
 	hb.position = Vector2(0, -6)
 	var cs := CollisionShape2D.new()
 	cs.shape = CircleShape2D.new()
@@ -49,7 +50,7 @@ func _initialize() -> void:
 	s.set_physics_process(false)   # before any physics tick: the player is inside engage_dist, so a tick would engage it
 	await process_frame
 	check(s.is_in_group("boss") and s.is_in_group("enemy"), "groups boss and enemy")
-	check(s.boss_name_key == "BOSS_SANDEKALA" and s.health.max_hp == 1100 and not s.engaged, "boss bar contract")
+	check(s.boss_name_key == "BOSS_SANDEKALA" and s.health.max_hp == 935 and not s.engaged, "boss bar contract")
 
 	# a hit on the oncor lights it, once, and the hit does not hurt the torch for good
 	var hit := Hitbox.new()
@@ -88,13 +89,13 @@ func _initialize() -> void:
 	check(hp.hp == 100, "no damage during the wind-up")
 	s.global_position = player.global_position   # stand on the marker
 	s.attack_hitbox.global_position = player.global_position
-	for i in int(s.windup / DT) - 2:
+	for i in int(s.windup * Sandekala.WIND / DT) - 2:
 		s._physics_process(DT)
 	check(s.state == Sandekala.State.WINDUP and hp.hp == 100, "still no damage just before the hit")
 	for i in 30:
 		s._physics_process(DT)
 		await physics_frame
-	check(hp.hp == 86, "grab did 14")
+	check(hp.hp == 100 - BossKit.boss_damage(s.grab_damage), "grab did the scaled damage")
 	check(not s.health.is_invincible(), "vulnerable again after reappearing")
 
 	# new moves: each runs to its recovery and is counted; the deck never repeats a heavy move; nightfall adds two more
@@ -102,8 +103,8 @@ func _initialize() -> void:
 	for m in ["claws", "lantern", "pillars", "pulse", "grab"]:
 		check(run_move(s, m), "move %s ends in RECOVER and is counted" % m)
 	s.health.take_damage(600, player)
-	check(s.phase == 2 and "flurry" in s._pool() and "eclipse" in s._pool(), "nightfall at 50% adds flurry and eclipse")
-	for m in ["flurry", "eclipse"]:
+	check(s.phase == 2 and "eclipse" in s._pool() and s._pool().size() == 6, "nightfall at 50% adds the eclipse")
+	for m in ["eclipse"]:
 		check(run_move(s, m), "move %s ends in RECOVER and is counted" % m)
 	s._deck.clear()
 	var prev := ""
@@ -115,22 +116,39 @@ func _initialize() -> void:
 	check(not dup and prev != "", "deck: no heavy twice in a row")
 	check(s.moves_used.get("fade", 0) >= 1, "the fade ambush is counted")
 
-	# all lit: no fade
+	# the rule: the 4th oncor lit pins him in the open (stun 3 s, TERBUKA); no fade with all four lit; they gutter out
 	for o in oncors:
+		o.burn = 5.0
 		o.light()
 	s.global_position = Vector2(300, 100)
 	s._enter(Sandekala.State.CHASE)
 	s.fade_timer = 0.0
+	s._prev_lit = 3
 	player.global_position = Vector2(300, 600)   # out of melee range
+	s._physics_process(DT)
+	check(s.state == Sandekala.State.STUN and BossKit.is_open(s), "4th oncor lit: stunned and TERBUKA")
+	check(not s.health.is_invincible() and s.modulate.a == 1.0, "pinned in the open")
+	for i in int(s.stun_time / DT) + 2:
+		s._physics_process(DT)
+	check(s.state != Sandekala.State.STUN, "stun over after 3 s")
 	var faded := false
-	for i in 900:
+	for i in 120:
 		s._physics_process(DT)
 		faded = faded or s.state == Sandekala.State.FADING
 	check(not faded, "no fade with all four lit")
+	check(s._in_light(oncors[0].global_position), "a lit oncor's pool is light")
+	for i in 400:
+		for o in oncors:
+			o._process(DT)
+	check(s.lit_count() == 0, "oncor gutter out after their burn")
+	for o in oncors:
+		o.burn = 16.0
+		o.light()
 
 	# death: boss_defeated once
 	s.health.take_damage(5000, player)
 	s.health.take_damage(5000, player)
+	check(oncors[0].lit and oncors[0].burn == 0.0, "torches stay lit after the fall")
 	check(defeated == ["sandekala"], "boss_defeated emitted once: %s" % [defeated])
 	check("sandekala" in game.killed, "listed in killed")
 	game.killed.erase("sandekala")

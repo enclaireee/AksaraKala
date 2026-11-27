@@ -27,7 +27,7 @@ func _initialize() -> void:
 	hit.source = player
 
 	check(b.is_in_group("boss") and b.is_in_group("enemy"), "groups")
-	check(b.health.max_hp == 3100 and b.phase == 1 and b.kind == "bandung_bondowoso", "stats and marker kind")
+	check(b.health.max_hp == 2635 and b.phase == 1 and b.kind == "bandung_bondowoso", "stats and marker kind")
 	check(b.standing() == 1, "opens with 1 pillar: %d" % b.standing())
 
 	# shield
@@ -59,32 +59,45 @@ func _initialize() -> void:
 	hp0 = b.health.hp
 	check(b.hurtbox.receive(hit) and b.health.hp == hp0 - 10, "damage lands with 0 pillars")
 
-	# Jawa Ca beat and cooldown (build timer keeps raising pillars; ignore them)
+	# the rule (v9): drums light in a beat, Jawa Ca on the gong flash cracks every pillar and stuns him
 	b._raise(Vector2(100, 200))
-	var q: Pillar = b.pillars[b.pillars.size() - 1]
-	q.exposed_left = 0.0
-	b._ca_cd = 0.0
+	b._raise(Vector2(60, 200))
+	check(b._drums.size() == 4, "four drum stones")
+	events.spell_cast.emit("jawa_ca", 1.0)
+	check(b.standing() == 2 and b.state != BandungBondowoso.State.STUN, "Jawa Ca outside the gong does nothing")
+	b._beat_t = b.gong_at_s() - 0.02
+	b._physics_process(DT)
+	check(not b.gong_open and (b._drums[0] as Sprite2D).frame == 0, "before the 4th beat the gong is shut")
+	for i in 3:
+		b._physics_process(DT)
+	check(b.gong_open and (b._drums[0] as Sprite2D).frame == 1 and (b._drums[3] as Sprite2D).frame == 1, "the 4th beat: gong, every drum flashes")
 	events.spell_cast.emit("sunda_ca", 1.0)
-	check(not q.is_exposed(), "other glyph: no beat")
+	check(b.standing() == 2, "another glyph does nothing")
 	events.spell_cast.emit("jawa_ca", 1.0)
-	check(q.is_exposed() and b.dawn == 0.0, "Jawa Ca beats at once")
-	q.exposed_left = 0.0
-	events.spell_cast.emit("jawa_ca", 1.0)
-	check(not q.is_exposed(), "Jawa Ca on cooldown")
-	for i in int(b.ca_cooldown / DT) + 2:
+	check(b.standing() == 0 and b.state == BandungBondowoso.State.STUN and BossKit.is_open(b) and b.stun_time >= 3.0, "Jawa Ca on the gong: every pillar cracks, stun 3 s, TERBUKA")
+	await process_frame
+	hp0 = b.health.hp
+	check(b.hurtbox.receive(hit) and b.health.hp == hp0 - 10, "free hit while stunned")
+	for i in int(b.stun_time / DT) + 2:
 		b._physics_process(DT)
-		q.exposed_left = 0.0
-	events.spell_cast.emit("jawa_ca", 1.0)
-	check(q.is_exposed(), "Jawa Ca again after 8 s")
+	check(b.state != BandungBondowoso.State.STUN, "stun ends")
 
-	# natural beat every 20 s
-	q.exposed_left = 0.0
-	b.dawn = 0.0
-	for i in int(b.beat_every / DT) + 2:
+	# a missed gong: the window closes and a heavy wave rolls out (nothing worse)
+	b._raise(Vector2(100, 200))
+	b._beat_t = b.gong_at_s() - 0.02
+	for i in int((b.gong_window + 0.3) / DT):
 		b._physics_process(DT)
-		if q.is_exposed():
-			break
-	check(q.is_exposed(), "dawn bar fills and beats")
+	check(not b.gong_open and b._owned.any(func(n: Node) -> bool: return n is BossKit.Wave), "missed gong: closes, one wave")
+	events.spell_cast.emit("jawa_ca", 1.0)
+	check(b.standing() >= 1, "Jawa Ca after the window does nothing")
+
+	# the dawn bar follows the beat cycle
+	b._beat_t = 0.0
+	b._physics_process(DT)
+	check(b.dawn > 0.0 and b.dawn < 0.01, "dawn bar starts the cycle")
+	b._beat_t = b.gong_at_s() + 1.0
+	b._physics_process(DT)
+	check(b.dawn > 0.1, "dawn bar fills")
 
 	# cap 3 and ring distance
 	player.position = Vector2(100, 135)   # near the boss; ring spots still keep 32 px from the player
@@ -106,7 +119,7 @@ func _initialize() -> void:
 	await process_frame
 	check(b.standing() == 0 or b.pillars.size() == b.standing(), "pillars cleared")
 	b.build_interval = b.pillar_every
-	b.health.take_damage(b.health.hp - 1500, player)
+	b.health.take_damage(b.health.hp - (b.health.max_hp / 2 - 50), player)
 	check(b.phase == 2 and b.state == BandungBondowoso.State.PAUSE, "phase 2 at 50% with a pause")
 	check(b.build_interval == 6.0, "phase 2 builds every 6 s")
 	var n: int = b.standing()
@@ -120,9 +133,9 @@ func _initialize() -> void:
 		b._physics_process(DT)
 	check(b._marks.any(func(m: Dictionary) -> bool: return m.kind == "debris") or root.get_child_count() != marks_before, "debris marks near the player")
 
-	# every move runs to its end; heavy moves leave a 2 s+ window; temples is the phase 2 limit break
+	# every move runs to its end; heavy moves leave a 2 s+ window; stomp is the beat stomp (sig2)
 	player.position = Vector2(200, 135)
-	for mv in ["boulder", "stomp", "fist", "quake", "pillar_crush", "leap", "temples"]:
+	for mv in ["boulder", "stomp", "fist", "pillar_crush", "leap"]:
 		b.global_position = Vector2(100, 135)
 		b._enter(BandungBondowoso.State.CHASE)
 		b._begin_move(mv)
@@ -135,7 +148,6 @@ func _initialize() -> void:
 		if mv in BandungBondowoso.HEAVY:
 			check(b._rec >= 2.0, "punish window after " + mv)
 	check(b.body.position == b._body0, "leap ends on the ground")
-	check(b._ult_cd > 0.0, "temples is on cooldown")
 	b.global_position = Vector2(100, 135)
 	b._enter(BandungBondowoso.State.CHASE)
 

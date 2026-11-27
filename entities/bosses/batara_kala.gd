@@ -1,16 +1,18 @@
 class_name BataraKala extends EnemyBase
 ## Final boss: Batara Kala (bestiary.md "Final: Gua Kala", build spec P0). A deity, calmed and turned back, never killed.
-## Phase 1: devouring pulse (a thin ring), time-sand (ground-marked circles), scythe sweep (forehand + backhand) and the
-## hour chime (a ring of orbs with a gap). Phase 2 (66%): a shield with a 3-glyph sequence and a countdown; the right casts
-## in order break it. New moves: clock hands (two rotating blades, step through the gap), time skip (vanish, reappear behind
-## you), time stop (frozen rings released as waves). Phase 3 (33%): faster, 20 s, 5 circles; adds eclipse meteors, hourglass
-## beams and the limit break "Ruwatan Eclipse" (eight wedges, one safe).
+## Boss revamp v9 rule (combat.md): "The shield names its glyphs. The hourglass drains each phase."
+## The hourglass (a prop between the door and the clock face) drains in every phase. Empty: one marked heavy pulse
+## (the red fill grows over the arena, dodge through it), then it refills. From phase 2 (66%) the eclipse shield is up
+## (sig2): its 3 sockets name the glyphs, a Sunda glyph, a Jawa glyph, then Ombak; cast in order, it breaks, stun 4 s.
+## Moves, phase 1: pulse ring, time-sand, scythe sweep, hour chime. Phase 2: sand, sweep, chime, clock hands, time skip.
+## Phase 3 (33%): sand, sweep, skip, eclipse meteors, hourglass beams and the limit break "Ruwatan Eclipse" (eight
+## wedges, one safe). Every phase: sig1 devour lunge.
 ## Defeat is a release: EnemyBase death (Ilmu, enemy_killed) then Events.boss_defeated.
 ## The HUD polls: group "boss", health, boss_name_key, engaged, dawn (null or 0..1), sequence, seq_index.
 # ponytail: damage goes straight through the player's Hurtbox (so i-frames refuse it), no physics hitbox sweeps.
 
-enum State { IDLE, CHASE, PULSE_WIND, PULSE, SAND_WIND, RECOVER, PAUSE, STUN, DEVOUR,
-	SWEEP, CHIME, HANDS, SKIP, STOP, METEOR, BEAMS, RUWATAN }
+enum State { IDLE, CHASE, PULSE_WIND, PULSE, SAND_WIND, RECOVER, PAUSE, STUN, EMPTY,
+	SWEEP, CHIME, HANDS, SKIP, LUNGE, METEOR, BEAMS, RUWATAN }
 
 const MARKER := Color(1.0, 0.3, 0.3, 0.35)
 const STUNNED := Color(0.7, 0.75, 1.0)
@@ -18,13 +20,18 @@ const GOLD := Color(1.0, 0.8, 0.3)
 const VIOLET := Color(0.75, 0.4, 1.0)
 const ICE := Color(0.6, 0.85, 1.0)
 const EMBER := Color(1.0, 0.55, 0.2)
-const WINDY := [State.PULSE_WIND, State.SAND_WIND, State.SWEEP, State.CHIME, State.HANDS, State.SKIP, State.STOP,
+const WINDY := [State.PULSE_WIND, State.SAND_WIND, State.SWEEP, State.CHIME, State.HANDS, State.SKIP, State.LUNGE,
 	State.METEOR, State.BEAMS, State.RUWATAN]
-const HEAVY := ["pulse", "hands", "meteor", "beams", "stop", "ruwatan"]
+const HEAVY := ["pulse", "hands", "meteor", "beams", "devour", "ruwatan"]
+## The deck per phase (v9: 4-6 moves; the devour lunge is sig1, the Ruwatan Eclipse comes every 5 moves in phase 3).
+const DECK := {1: ["pulse", "sand", "sweep", "chime", "devour"],
+	2: ["sand", "sweep", "chime", "hands", "skip", "devour"],
+	3: ["sand", "sweep", "skip", "meteor", "beams", "devour"]}
+const HOURGLASS_AT := Vector2(0, -112)   # ASSUMED: from his spawn, between the north door and the clock face
 
 @export var boss_name_key := "BOSS_BATARA_KALA"
 @export var sabotage_flag := "laras_sabotage_kala_eclipse"   # HUD boss bar reads this
-@export var sabotage_stun_bonus := 1.0  # TUNE (v5): Laras cracks the Eclipse shield, stun after a break is this much longer (3 -> 4 s)
+@export var sabotage_stun_bonus := 1.0  # TUNE (v5): Laras cracks the Eclipse shield, stun after a break is this much longer (4 -> 5 s)
 @export var speed := 22.0              # TUNE
 @export var engage_range := 160.0      # TUNE
 @export var pulse_windup := 0.8        # TUNE
@@ -41,13 +48,18 @@ const HEAVY := ["pulse", "hands", "meteor", "beams", "stop", "ruwatan"]
 @export var recovery := 1.2            # TUNE
 @export var heavy_recovery := 2.4      # TUNE: the punish window after a heavy move
 @export var ult_recovery := 3.0        # TUNE: after Ruwatan Eclipse
-@export var pause_time := 1.0          # TUNE
-@export var stun_time := 3.0           # TUNE
+@export var pause_time := 1.6          # TUNE: the phase change: roar, then the shield rises (sig2)
+@export var stun_time := 4.0           # TUNE (v9): the shield answer
 @export var open_time := 10.0          # TUNE: total seconds the shield stays down after breaking
+@export var countdown_p1 := 30.0       # TUNE (v9): the hourglass in phase 1 (no shield yet)
 @export var countdown_p2 := 30.0       # TUNE
 @export var countdown_p3 := 20.0       # TUNE
-@export var devour_time := 2.0         # TUNE: the red ring fills the arena
-@export var devour_damage := 60        # TUNE, heavy
+@export var empty_time := 2.0          # TUNE: hourglass empty, the red fill grows over the arena
+@export var empty_damage := 60         # TUNE, heavy: the one hit a missed shield costs
+@export var lunge_wind := 0.8          # TUNE: sig1 devour lunge, the line fills while the row plays
+@export var lunge_len := 120.0         # TUNE
+@export var lunge_width := 24.0        # TUNE
+@export var lunge_damage := 40         # TUNE, heavy
 @export var arena_radius := 500.0      # TUNE (SCALE=2)
 @export var wind_p3 := 0.7             # TUNE: wind-up multiplier in phase 3
 @export var sweep_wind := 0.6          # TUNE: each cut of the scythe sweep
@@ -61,8 +73,6 @@ const HEAVY := ["pulse", "hands", "meteor", "beams", "stop", "ruwatan"]
 @export var hands_damage := 34         # TUNE, heavy
 @export var skip_wind := 0.9           # TUNE: the landing marker
 @export var skip_damage := 30          # TUNE: the landing slam
-@export var stop_hold := 1.4           # TUNE: seconds the rings stay frozen
-@export var stop_damage := 24          # TUNE
 @export var meteor_radius := 20.0      # TUNE
 @export var meteor_fall := 0.9         # TUNE: marker time before each impact
 @export var meteor_damage := 30        # TUNE
@@ -88,10 +98,11 @@ var engaged := false
 var shielded := false
 var sequence := PackedStringArray()
 var seq_index := 0
-var dawn = null             # null without a shield, else elapsed / countdown (0..1)
+var dawn = null             # the hourglass drained so far (0..1), null while it stands still (HUD bar)
 var pulses := 0
 var sands := 0
-var devours := 0
+var empties := 0
+var lunges := 0
 var moves_used: Dictionary = {}   # move name -> times begun (tests)
 var _forced_move := ""      # tests: begin this move next ("none" = never attack)
 var _deck: Array[String] = []
@@ -113,6 +124,10 @@ var _crack_t := 0.0
 var _ring: BossKit.PxDecal   # pixel decals (BossKit.decal): motif fill, stepped edge
 var _fill: BossKit.PxDecal
 var _shield: BossKit.PxDecal
+var _sockets: Sockets          # the shield's 3 sockets, each naming its glyph
+var _crown: Node2D             # the BossMark (next glyph) sits here, above his crown
+var hourglass: Node2D          # the prop; its Sand child draws the level
+var _sand: Sand
 # rotating blades (clock hands and hourglass beams share one code path)
 var _sw_lines: Array[BossKit.PxDecal] = []
 var _sw_a := 0.0
@@ -152,6 +167,19 @@ func _ready() -> void:
 		sp.texture = face
 		clock.add_child(sp)
 		clock.color.a = 0.0
+	_sockets = Sockets.new()
+	_sockets.boss = self
+	_sockets.z_index = 2
+	_sockets.visible = false
+	body.add_child(_sockets)
+	_crown = Node2D.new()
+	_crown.position = Vector2(0, -84)
+	body.add_child(_crown)
+	hourglass = BossKit.prop("props/arena_hourglass.png", Vector2(24, 40), Color(0.75, 0.6, 0.3), 1)
+	_sand = Sand.new()
+	hourglass.add_child(_sand)
+	hourglass.position = position + HOURGLASS_AT   # a sibling, so it stands in the room even before he wakes
+	get_parent().add_child.call_deferred(hourglass)
 	if cond != "":   # hidden and inert until Game.check(cond) holds (elite_guard.gd); the zone doc passes it
 		var g := EliteGuard.new()
 		g.cond = cond
@@ -168,28 +196,34 @@ func _tick(delta: float) -> void:
 	var d := to_t.length()
 	if d <= engage_range and BossKit.may_engage(self):
 		engaged = true
-	if phase >= 2 and state != State.PAUSE:
-		if shielded:
-			health.invincible_time = INF
-			if state != State.DEVOUR:
-				_elapsed += delta
-				if _elapsed >= _countdown():
-					_enter(State.DEVOUR)
-			dawn = minf(1.0, _elapsed / _countdown())
-			if sequence.size() >= 3 and seq_index < sequence.size():
-				BossKit.hint(self, "BOSS_HINT_KALA")
-				var old := get_node_or_null("BossMark")
-				if old != null and old.get_meta("idx", -1) != seq_index:   # the next glyph: swap the ring
-					old.name = "BossMarkOld"
-					old.queue_free()
-				BossKit.mark(self, self, sequence[seq_index], 1.0, 22.0)
-				var m := get_node_or_null("BossMark")
-				if m != null:
-					m.set_meta("idx", seq_index)
-		else:
+	if engaged and state != State.PAUSE:
+		if phase >= 2 and not shielded:
 			_open_left -= delta
 			if _open_left <= 0.0:
 				_raise_shield()
+		if phase == 1 or shielded:   # the hourglass drains (it stands still while the shield is down)
+			if state != State.EMPTY:
+				_elapsed += delta
+				if _elapsed >= _countdown():
+					_enter(State.EMPTY)
+			dawn = minf(1.0, _elapsed / _countdown())
+			BossKit.hint(self, "BOSS_HINT_KALA")
+		else:
+			dawn = null
+		_sand.level = 1.0 - (dawn if dawn != null else 0.0)
+	if shielded:
+		health.invincible_time = INF
+		if sequence.size() >= 3 and seq_index < sequence.size():
+			var old := _crown.get_node_or_null("BossMark")
+			if old != null and old.get_meta("idx", -1) != seq_index:   # the next glyph: swap the mark
+				old.name = "BossMarkOld"
+				old.queue_free()
+			BossKit.mark(self, _crown, sequence[seq_index], 1.0, 6.0)
+			var m := _crown.get_node_or_null("BossMark")
+			if m != null:
+				m.set_meta("idx", seq_index)
+		if state in [State.IDLE, State.CHASE, State.RECOVER]:
+			_hold_shield()
 	if phase >= 2 and engaged and state != State.PAUSE:
 		_crack_t -= delta
 		if _crack_t <= 0.0:
@@ -241,20 +275,27 @@ func _tick(delta: float) -> void:
 			if state_time >= _recover_len * rk:
 				_enter(State.CHASE)
 		State.PAUSE:
+			if _step == 0 and state_time >= 1.0:   # the form-swap roar is over: the shield rises
+				_step = 1
+				BossKit.anim(self, "sig2", 10.0, true)
 			if state_time >= pause_time:
 				_enter(State.CHASE)
 		State.STUN:
 			if state_time >= stun_time + (sabotage_stun_bonus if _sabotaged() else 0.0):   # ASSUMED (v5)
 				_enter(State.CHASE)
-		State.DEVOUR:
+		State.EMPTY:
 			if is_instance_valid(_fill):
-				_fill.radius = arena_radius * minf(1.0, state_time / devour_time)
-			if state_time >= devour_time:
-				devours += 1
+				_fill.radius = arena_radius * minf(1.0, state_time / empty_time)
+			if state_time >= empty_time:   # one heavy hit, then the hourglass refills (and the shield names new glyphs)
+				empties += 1
 				BossKit.shake(self, 3.0, 0.4)
 				if BossKit.player_point(self).distance_to(global_position) <= arena_radius + BossKit.HURT_RADIUS:
-					_hurt(devour_damage, true)
-				_new_sequence()
+					_hurt(empty_damage, true)
+				_elapsed = 0.0
+				if shielded:
+					_new_sequence()
+				_sand.alarm = false
+				BossKit.ring_fx(self, hourglass.global_position, 24.0, 0.5, GOLD)
 				_enter(State.CHASE)
 		State.SWEEP:
 			_tick_sweep()
@@ -264,8 +305,8 @@ func _tick(delta: float) -> void:
 			_tick_blades(delta)
 		State.SKIP:
 			_tick_skip()
-		State.STOP:
-			_tick_stop()
+		State.LUNGE:
+			_tick_lunge()
 		State.METEOR:
 			_tick_meteor()
 		State.RUWATAN:
@@ -274,10 +315,10 @@ func _tick(delta: float) -> void:
 
 
 func _countdown() -> float:
-	var c := countdown_p3 if phase >= 3 else countdown_p2
+	var c := countdown_p3 if phase >= 3 else countdown_p2 if phase == 2 else countdown_p1
 	var g := get_node_or_null("/root/Game")
 	if phase >= 3 and g and g.has_flag("choice_redeem_aria"):
-		c += 6.0   # Choice 6: Aria's shadow adds +6 s to Phase 3 countdown (bestiary.md)
+		c += 6.0   # Choice 6: Aria's shadow slows the hourglass, +6 s in phase 3 (bestiary.md)
 	return c
 
 
@@ -297,9 +338,12 @@ func _enter(s: State) -> void:
 		body.modulate = Color(1.0, 0.45, 0.45)
 	if s == State.CHASE or s == State.RECOVER or s == State.STUN:
 		BossKit.anim_stop(self)
-	if s == State.DEVOUR:
+	if s == State.EMPTY:   # marked: he roars, the hourglass flashes red and the fill grows from him
 		BossKit.anim(self, "roar", 8.0, false)
 		BossKit.flash_fx(self, global_position + Vector2(0, -14), 40.0, 0.5, Color(1.0, 0.2, 0.2))
+		BossKit.flash_fx(self, hourglass.global_position, 20.0, 0.5, Color(1.0, 0.2, 0.2))
+		BossKit.ring_fx(self, hourglass.global_position, 40.0, 0.6, Color(1.0, 0.3, 0.3))
+		_sand.alarm = true
 		_fill = BossKit.decal(self, 0.0, Color(1.0, 0.1, 0.1, 0.3))
 		_fill.z_index = -1
 		add_child(_fill)
@@ -330,14 +374,8 @@ func _next_move(d: float) -> String:
 
 
 func _refill_deck() -> void:
-	var base: Array[String] = ["pulse", "sand", "sweep", "chime"]
-	if phase >= 2:
-		base.append("hands")
-		base.append("skip")
-		base.append("stop")
-	if phase >= 3:
-		base.append("meteor")
-		base.append("beams")
+	var base: Array[String] = []
+	base.assign(DECK[clampi(phase, 1, 3)])
 	base.shuffle()
 	_deck.append_array(base)
 
@@ -365,8 +403,8 @@ func _begin(mv: String) -> void:
 			_begin_blades(true)
 		"skip":
 			_begin_skip()
-		"stop":
-			_begin_stop()
+		"devour":
+			_begin_lunge()
 		"meteor":
 			_begin_meteor()
 		"ruwatan":
@@ -612,29 +650,28 @@ func _tick_skip() -> void:
 		_enter(State.RECOVER)
 
 
-# --- time stop: the rings freeze in the air, then are released outward as waves ---
+# --- sig1 devour lunge: the line fills while the row plays, then he bites through to its end ---
 
-func _begin_stop() -> void:
-	_enter(State.STOP)
+func _begin_lunge() -> void:
+	_enter(State.LUNGE)
 	_recover_len = heavy_recovery
-	BossKit.anim(self, "cast")
-	BossKit.flash_fx(self, global_position + Vector2(0, -10), 36.0, 0.4, Color(1, 1, 1))
-	for r: float in [40.0, 80.0, 120.0]:
-		_fx.append(BossKit.telegraph_ring(self, global_position, r + 3.0, r - 3.0, stop_hold, ICE))
+	_aim = _aim_at()
+	_skip_from = global_position
+	_land = BossKit.clamp_arena_pos(self, global_position + Vector2.from_angle(_aim) * lunge_len)
+	BossKit.anim(self, "sig1", 8.0 / lunge_wind, true)
+	_fx.append(BossKit.telegraph_line(self, global_position, _land, lunge_width, lunge_wind, VIOLET))
 
 
-func _tick_stop() -> void:
-	var waves := 3 if phase >= 3 else 2
-	if _step == 0 and state_time >= stop_hold:
-		_step = 1
-		BossKit.anim(self, "slam")
-		BossKit.flash_fx(self, global_position, 120.0, 0.3, Color(1, 1, 1))
-		BossKit.shake(self, 2.5, 0.3)
-	if _step >= 1 and _step <= waves and state_time >= stop_hold + 0.3 * (_step - 1):
-		_owned.append(BossKit.wave(self, global_position, 126.0, 110.0, stop_damage, ICE, false))
-		_step += 1
-	if _step > waves and state_time >= stop_hold + 0.3 * waves + 0.3:
-		_enter(State.RECOVER)
+func _tick_lunge() -> void:
+	if state_time < lunge_wind:
+		return
+	lunges += 1
+	BossKit.ghost(self, VIOLET, 0.5)
+	global_position = _land   # ponytail: a snap with a ghost and a beam trail, like the time skip
+	BossKit.strike_line(self, _skip_from, _land, lunge_width, lunge_damage, true, VIOLET)
+	BossKit.punch(self, 1.2, 0.85, 0.25)
+	BossKit.shake(self, 2.0, 0.25)
+	_enter(State.RECOVER)
 
 
 # --- eclipse meteors: three volleys of ground markers (trail, ring around you, checkerboard) ---
@@ -813,18 +850,36 @@ func _raise_shield() -> void:
 	_elapsed = 0.0
 	health.invincible_time = INF   # Health refuses damage while invincible: the cleanest block
 	_new_sequence()
-	if _shield == null:
-		_shield = BossKit.decal(self, 18.0, Color(0.6, 0.8, 1.0, 0.35))
-		_shield.position = Vector2(0, -14)
+	if _shield == null:   # a faint eclipse disc over the sheet's shield (cell centre 48,47, r 15.7), so it reads mid-move
+		_shield = BossKit.decal(self, 16.0, Color(0.6, 0.8, 1.0, 0.2))
+		_shield.position = Vector2(0, -32)
 		_shield.z_index = 1
 		add_child(_shield)
 	_shield.visible = true
+	_sockets.visible = true
 	BossKit.roar(self, ICE, 90.0)
+	if state != State.PAUSE:   # at a phase change the form-swap roar plays first (State.PAUSE raises it after)
+		BossKit.anim(self, "sig2", 10.0, true)
+
+
+## sig2: the shield is raised (cols 0-3) and held (cols 4-7). Between moves he keeps it up on the held frames.
+func _hold_shield() -> void:
+	var art := body.get_node_or_null("Art") as EnemyArt
+	if art != null and art._move == "":
+		art.play("sig2", 10.0, true)
+		art._move_t = 4.0   # ponytail: EnemyArt.play has no start column, so skip the raise by hand
+
+
+func _clear_mark() -> void:
+	for m in _crown.get_children():
+		m.name = "BossMarkOld"   # BossKit.mark skips a target that still has a "BossMark"
+		m.queue_free()
 
 
 func _new_sequence() -> void:
 	seq_index = 0
 	_elapsed = 0.0
+	_clear_mark()
 	var pool := PackedStringArray(Array(get_node("/root/Game").glyphs_learned).filter(
 		func(g: String) -> bool: return not SpellVariants.SIGNATURE.has(g)))   # never asks for a class's own aksara
 	if pool.is_empty():
@@ -855,7 +910,11 @@ func _break_shield() -> void:
 	dawn = null
 	health.invincible_time = 0.0
 	_open_left = open_time
+	_elapsed = 0.0   # the hourglass refills and stands still while he is open
+	_sand.level = 1.0
 	_shield.visible = false
+	_sockets.visible = false
+	_clear_mark()
 	BossKit.flash_fx(self, global_position + Vector2(0, -14), 40.0, 0.4, Color(1, 1, 1))
 	BossKit.sparks(self, global_position + Vector2(0, -14), ICE, 20, 90.0, 0.6)
 	_enter(State.STUN)
@@ -878,6 +937,7 @@ func _on_health(hp: int, max_hp: int) -> void:
 		return
 	if phase == 1 and hp * 3 <= max_hp * 2:
 		phase = 2
+		get_node("/root/Game").set_flag("kala_p2", false)   # story beat kala_p2 (script.md 5.13); no save mid-fight
 		_deck.clear()
 		_enter(State.PAUSE)
 		_raise_shield()
@@ -885,6 +945,7 @@ func _on_health(hp: int, max_hp: int) -> void:
 		BossKit.shake(self, 3.0, 0.5)
 	if phase == 2 and hp * 3 <= max_hp:
 		phase = 3
+		get_node("/root/Game").set_flag("kala_p3", false)   # story beat kala_p3 (script.md 5.13); no save mid-fight
 		_deck.clear()
 		_since_ult = 3   # the first Ruwatan Eclipse comes after two moves
 		_enter(State.PAUSE)
@@ -908,6 +969,9 @@ func _on_died() -> void:
 	body.visible = true
 	if _shield != null:
 		_shield.visible = false
+	_sockets.visible = false
+	_sand.alarm = false
+	_sand.level = 1.0
 	dawn = null
 	shielded = false
 	super()
@@ -917,3 +981,103 @@ func _on_died() -> void:
 	tw.tween_property(body, "scale:y", 0.6, 0.35)
 	var events := get_node("/root/Events")
 	get_tree().create_timer(0.3).timeout.connect(func() -> void: events.boss_defeated.emit("batara_kala"))
+
+
+## The shield's 3 sockets on the sig2 sheet, in cell px (96x80, unflipped, from the cell's top-left). Each shows the
+## glyph it names: answered ones are filled gold, the next one is lit and pulses, later ones are faint.
+class Sockets extends Node2D:
+	const AT := [Vector2(48, 41), Vector2(42, 52), Vector2(54, 52)]
+	var boss: BataraKala
+	var _t := 0.0
+	var _cells := {}   # glyph id -> the glyph as 1 px cells about 6 px wide, centred on 0
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		var art := get_parent().get_node_or_null("Art") as EnemyArt
+		var off := art.offset if art != null else Vector2(-48, -79)
+		for i in mini(AT.size(), boss.sequence.size()):
+			var p: Vector2 = off + AT[i]
+			if art != null and art.flip_h:
+				p.x = -p.x
+			draw_set_transform(p.round())
+			var done := i < boss.seq_index
+			var lit := i == boss.seq_index
+			BossKit.px_fill(self, BossKit.px_disc(4.0), Color(GOLD, 0.95) if done else Color(0.08, 0.05, 0.12, 0.9))
+			if lit:
+				var r := 6.0 + roundf(sin(_t * 6.0))
+				BossKit.px_edge(self, BossKit.px_disc(r, r - 2.0), BossKit.ramp(Color(GOLD, 0.95)), 2, true)
+			var ink := Color(0.12, 0.07, 0.13) if done else Color(1.0, 0.95, 0.7) if lit else Color(0.6, 0.55, 0.8, 0.6)
+			for c in _glyph(boss.sequence[i]):
+				draw_rect(Rect2(c, Vector2.ONE), ink)
+		draw_set_transform(Vector2.ZERO)
+
+	func _glyph(id: String) -> PackedVector2Array:
+		if _cells.has(id):
+			return _cells[id]
+		var out := PackedVector2Array()
+		var g: GlyphData = GlyphData.by_id(id) if ResourceLoader.exists("res://data/glyphs/%s.tres" % id) else null
+		if g != null and not g.templates.is_empty():   # same walk as BossKit.Mark._stamp, at 1 px
+			var st: PackedVector2Array = g.templates[0]
+			var box := Rect2(st[0], Vector2.ZERO)
+			for q in st:
+				box = box.expand(q)
+			var k := 6.0 / maxf(maxf(box.size.x, box.size.y), 0.001)
+			var seen := {}
+			for j in st.size() - 1:
+				var p0 := (st[j] - box.get_center()) * k
+				var p1 := (st[j + 1] - box.get_center()) * k
+				var n := maxi(1, ceili(p0.distance_to(p1)))
+				for m in n + 1:
+					var c := (p0.lerp(p1, float(m) / n) - Vector2(0.5, 0.5)).round()
+					if not seen.has(c):
+						seen[c] = true
+						out.append(c)
+		_cells[id] = out
+		return out
+
+
+## The hourglass glass (arena_hourglass.png, 24x40, centred): sand rows in the top bulb drain into the bottom bulb.
+## alarm: the empty pulse is coming, the sand flashes red.
+class Sand extends Node2D:
+	var level := 1.0:
+		set(v):
+			if not is_equal_approx(v, level):
+				level = v
+				queue_redraw()
+	var alarm := false:
+		set(v):
+			alarm = v
+			set_process(v)
+			queue_redraw()
+	var _t := 0.0
+
+	func _ready() -> void:
+		set_process(alarm)
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	## Half-width of the glass at prop row y (top bulb rows 8-18, bottom bulb rows 21-31, the neck between).
+	static func half(y: int) -> int:
+		var d := y if y <= 19 else 39 - y
+		return 4 if d <= 11 else 3 if d <= 14 else 2 if d <= 16 else 1
+
+	func _draw() -> void:
+		var col := Color(0.98, 0.8, 0.38)
+		if alarm and int(_t * 8.0) % 2 == 0:
+			col = Color(1.0, 0.3, 0.3)
+		var top := roundi(11.0 * clampf(level, 0.0, 1.0))
+		for y in range(19 - top, 19):   # what is left sits on the neck
+			_row(y, col)
+		for y in range(32 - (11 - top), 32):   # what fell piles from the bottom
+			_row(y, col.darkened(0.15))
+		if top > 0 and top < 11:
+			draw_rect(Rect2(Vector2(11 - 12, 19 - 20), Vector2(1, 2 + top)), col)   # the falling stream, neck to pile
+
+	func _row(y: int, col: Color) -> void:
+		var hw := half(y)
+		draw_rect(Rect2(Vector2(12 - hw - 12, y - 20), Vector2(hw * 2, 1)), col)

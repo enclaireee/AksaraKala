@@ -171,16 +171,16 @@ Roaming packs: Faceless (113,59) (115,60) (114,62). 3 kills, skirtable, outside 
 ### Map
 ```
 ############################################################
-#################____________H_____________#################
+#################F___________H_____________#################
 ###____________##______________M___________#################
 ###__D_________##__________________________#################
-###____________##____r_______B________r____#################
+###____________##____________B_____________#################
 ###____________##_________Q_____O__________#################
 Zz__J__________##________q_________________#################
-Z______________##_________________R________#################
-###____________##____r________________r____#################
+Z______________##____r____________R___r____#################
 ###____________##__________________________#################
 ###____________##__________________________#################
+###____________##________r________r________#################
 ###____________##__________________________#################
 ########__#######__________________________#################
 ########WW###################KK#############################
@@ -236,6 +236,7 @@ Z______________##_________________R________#################
 | `D` | clue, the court portrait with its face scraped off; pulls you into K-II (MQG g.17, `clue_examined:court_portrait` sets `mqg_h1`, `memory_id` `k_ii`) | `res://entities/world/clue.tscn` | `{clue_id:"court_portrait", memory_id:"k_ii", cond:"flag:mqg_6b"}` | floor | 1 |
 | `M` | clue, the Hunter's mask fragment behind the throne; pulls you into H2 (MQG g.18, sets `mqg_h3` after `memory_done:h2`, `memory_id` `h2`; appears once K-II is done) | `res://entities/world/clue.tscn` | `{clue_id:"hunter_mask_2", memory_id:"h2", cond:"flag:mqg_h2"}` | floor | 1 |
 | `Y` | rehearsal, a false reflection (a mirror on a stand) beside the courtyard path outside the throne door: any spell breaks it, the same trick that breaks Barma Wijaya's copies (boss fights v7, quests.md 10; id fixed, a quest sub-goal reads `clue_examined:reh_barma`) | `res://entities/world/rehearsal.tscn` | `{id:"reh_barma", glyph:"", look:"mirror", boss:"barma_wijaya"}` | grass | 1 |
+| `F` | painted arena floor (boss revamp v9): the throne room image `assets/art/arena/kg_keraton.png` over the arena rect (17,1)-(42,12), placed at its top-left cell | `res://entities/world/arena_floor.tscn` | `{art:"res://assets/art/arena/kg_keraton.png"}` | floor | 1 |
 | `T` | encounter galuh_hall, the palace guards on the courtyard road before the throne room door (MQG g.19 `fight x2`: the guards here, then the champion `L`; the step completes on `L`). v7: moved out of the throne room (its old rect (19..39 x 5..13) covered the arena and the threshold, so it would have started inside the boss fight); cond ends at `mqg_6c` so it never starts again at the boss | `res://entities/world/encounter.tscn` | `{area_id:"galuh_hall", size:Vector2i(20,8), cond:"flag:mqg_h3,!flag:mqg_6c", waves:[[[res://entities/enemies/faceless.tscn, Vector2i(-6,-1)], [res://entities/enemies/faceless.tscn, Vector2i(0,2)], [res://entities/enemies/faceless.tscn, Vector2i(6,-1)], [res://entities/enemies/faceless_archer.tscn, Vector2i(8,3)]]]}` | path | 1 |
 
 ### Rooms
@@ -246,7 +247,7 @@ Z______________##_________________R________#################
 | inner garden | (1,14)-(17,32) 17x19, wall x=18 with a gap (18,22..23) | The palace's inner garden: rest and the camp talk. Gate kabut `V` (18,22..23) flag `lamps_3` | petilasan `P` (12,22) (g.3), Ciung camp `C` (14,23), banyans (6..8,17..19) (6..8,27..29) |
 | cage | (25,6) | SQ-C2: the queen `q` beside the `cage` figure `Q` (26,5), after `mq2` is done | q |
 | portrait gallery | (3,2)-(14,11) 12x10, door (8..9,12..13) | The court portraits, entered from the archive grate (west edge `Z`, trigger `J` sets `mqg_6b`); the door `W` to the courtyard lifts on `mqg_6b`. The king's portrait is the clue (g.17) | clue `D` (5,3), trigger `J` (4,6), kabut `W` (8..9,13) flag `mqg_6b` |
-| throne room | (17,1)-(42,12) 26x12 | The g.9 guards, the boss arena, then the confession and cage staging | boss `B` (29,4), two mirrored rock columns (21,4) (21,8) (38,4) (38,8) as cover, 26x12 clear floor, Hunter shadow `H` (29,1), mask clue `M` (31,2), Pangrenyep `Q` (26,5), Ciung `O` (32,5), Hariang `R` (34,7), kabut `K` (29..30,13) flag `mqg_h2`, arena gate `A` (29..30,14) side n. Outside the gate: guards `T` (30,25) (rect 20..40 x 21..29, courtyard road), champion `L` (30,16), rehearsal `Y` (26,18) |
+| throne room | (17,1)-(42,12) 26x12 | The g.9 guards, the boss arena, then the confession and cage staging | boss `B` (29,4), painted floor `F` (17,1) (v9), four wall mirrors drawn by boss code in the north wall at x cells 18.5, 25.5, 33.5, 40.5 (a figure steps out at row 2), four rock columns (21,7) (38,7) (25,10) (34,10) as cover (v9: moved south, off the mirror exits), Hunter shadow `H` (29,1), mask clue `M` (31,2), Pangrenyep `Q` (26,5), Ciung `O` (32,5), Hariang `R` (34,7), kabut `K` (29..30,13) flag `mqg_h2`, arena gate `A` (29..30,14) side n. Outside the gate: guards `T` (30,25) (rect 20..40 x 21..29, courtyard road), champion `L` (30,16), rehearsal `Y` (26,18) |
 
 ### Encounters
 | area_id | spot | size | waves (enemy, offset) | clean answer |
@@ -351,19 +352,19 @@ No roaming enemies.
 #.......................~~~~~~~~~~~~.......................#
 #.......................~~~~~~~~~~~~.......................#
 #.......................~~~~~~~~~~~~r......................#
+#...................F..r,,,,,,,,,,,,.r.....................#
 #......................r,,,,,,,,,,,,.r.....................#
-#......................r,,,,,r,,,,,,.r.....................#
-#......................r,,,r,,,,,,,,.r..L.........bbb......#
-#......................r,,,,,,,,,,,,.r............bbb......#
+#......................r,,,,,,,,,,,,.r..L.........bbb......#
+#......................r,,,r,,,,r,,,.r............bbb......#
 #...............S......r,,,,,,,,,,,,.rQK..........bbb......#
 #...............N....c.r,,,,,,,,,,,,.r....P................#
 Xe,,,,,,,,,,,,,,,,,,,,,A,,,,,,,,,B,,,a,,,,,,,,,,,,,,,,,,,,yY
 X,,,,,,,,,,,,,,,,,,,,,,A,,,,,,,,,,,,,a,,,,,,,,,,,,,,,,,,,,,Y
 #......................r,,,,,s,,,,,,Hr..h..................#
 #.........1............r,,,,,,,,,,,,.r..2..................#
+#......................r,,,r,,,,r,,,.r.....................#
 #......................r,,,,,,,,,,,,.r.....................#
-#......................r,,,,,,,,r,,,.r.....................#
-#......................r,,,,,,r,,,,,.r.....................#
+#......................r,,,,,,,,,,,,.r.....................#
 #......................r,,,,,,,,,,,,.r.....................#
 #.......................~~~~~~~~~~~~r......................#
 #.......................~~~~~~~~~~~~.......................#
@@ -400,12 +401,13 @@ X,,,,,,,,,,,,,,,,,,,,,,A,,,,,,,,,,,,,a,,,,,,,,,,,,,,,,,,,,,Y
 | `A` | arena gate (combat.md 5.3 v7), the ford's west mouth on the road; open until a threshold two tiles inside is crossed | `res://entities/world/arena_gate.tscn` | `{side:"e"}` | path | 2 |
 | `a` | arena gate, the ford's east mouth on the road (the side the player stands on at 2.23-2.24) | `res://entities/world/arena_gate.tscn` | `{side:"w"}` | path | 2 |
 | `N` | write spot nagawiru, on the Pamali stone (MQ2 2.21) | `res://entities/npc/npc.tscn` | `{npc_id:"nagawiru", cond:"flag:mq2_7c"}` | grass | 1 |
+| `F` | painted arena floor (boss revamp v9): `assets/art/arena/kg_pamali.png` over the arena rect (20,10)-(39,23), placed at its top-left cell | `res://entities/world/arena_floor.tscn` | `{art:"res://assets/art/arena/kg_pamali.png"}` | grass | 1 |
 
 ### Rooms
 | room | tile rect (x,y) size | purpose | contents |
 |------|----------------------|---------|----------|
 | west bank | (1,1)-(23,32) | Arrival, stone, Ciung's staging spot | exit `X` (0,16..17), spawn `e` (1,16), stone `S` (16,14), Ciung `c` (21,15), codex `g` (16,27) |
-| ford arena | (20,10)-(39,23) 20x14 | Duel; Sapto's crossing; after the truce, Hariang Banga's camp talk | boss `B` (33,16), Sapto `s` (29,18), Hariang `H` (36,18) after the truce, rocks `r` for cover |
+| ford arena | (20,10)-(39,23) 20x14 | Duel; Sapto's crossing; after the truce, Hariang Banga's camp talk | boss `B` (33,16), Sapto `s` (29,18), Hariang `H` (36,18) after the truce, painted floor `F` (20,10), rocks `r` for cover (v9: four, at (27,13) (32,13) (27,20) (32,20), clear of the road so the cyan guard arc can be crossed) |
 | river | (24,1)-(35,32) minus ford | Impassable water | none |
 | east bank | (36,1)-(58,32) | Road to Mataram | exit `Y` (59,16..17), spawn `y` (58,16) |
 | piece placement (MQ2 2.20-2.24) | west bank, ford, east bank camp | 2.20-2.21 `travel x2, fight x2, write, beat`: travel 1 the west bank from `e` (1,16) to the stone `S` (16,14), pickets `1` (10,19); write at `S`; travel 2 the ford road to the east bank, guards `2` (40,19); the camp stands from `mq2_8`. 2.22 `memory, talk`: Ki Sumarto `K` (39,14) and the show clue `Q` (38,14). 2.23-2.24 `clue, beat, boss, beat`: letters `L` (40,12), beat `ford`, then Hariang Banga `B` (33,16) and the `truce` (**Choice 3**) | `1` `2` `K` `Q` `L` | `pamali_bank`, `pamali_ford`, `sumarto_show`, `hariang_letters` |

@@ -1,6 +1,7 @@
 class_name CurseStake extends Node2D
-## Curse stake (bestiary.md Keris Gandring). Unlit, then a 1 s red mark, then lit. Any glyph cast within 40 px puts a lit stake out;
-## Jawa Ha puts out every lit stake within 80 px. The Keris lights and counts stakes. A practice stake is always lit and relights after 2 s.
+## Curse stake (bestiary.md Keris Gandring, boss revamp v9). Unlit, then a 1 s red mark, then lit. The Keris lights the stakes in
+## stake_id order and clears the whole clock itself when Jawa Ha lands (keris_gandring.gd), so a boss stake ignores casts.
+## A practice stake is always lit, goes out on any glyph within 40 px (Jawa Ha: 80) and relights after 2 s.
 
 enum State { UNLIT, MARK, LIT }
 
@@ -14,6 +15,7 @@ enum State { UNLIT, MARK, LIT }
 
 var state := State.UNLIT
 var _left := 0.0
+var charge := 0.0      # 0..1, set by the Keris on the next stake of the clock: it reddens as its turn nears
 var _body: Sprite2D   # props/curse_stake.png: 0 unlit, 1 marked, 2 lit
 
 
@@ -64,10 +66,11 @@ func tick(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	tick(delta)
+	_paint()   # the countdown colour follows charge
 
 
 func _on_cast(glyph_id: String, _score: float) -> void:
-	if state != State.LIT:
+	if not practice or state != State.LIT:
 		return
 	var p := get_tree().get_first_node_in_group("player") as Node2D
 	if p == null:
@@ -79,3 +82,4 @@ func _on_cast(glyph_id: String, _score: float) -> void:
 
 func _paint() -> void:
 	_body.frame = state
+	_body.modulate = Color(1.0, 1.0 - 0.5 * charge, 1.0 - 0.5 * charge)

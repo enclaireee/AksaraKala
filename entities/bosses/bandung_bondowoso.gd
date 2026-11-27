@@ -1,13 +1,14 @@
 class_name BandungBondowoso extends EnemyBase
-## Boss: Bandung Bondowoso (bestiary.md "Build spec"). Raises stone pillars; while one stands he takes no damage.
-## Dawn beats expose pillars so one hit breaks them; Jawa Ca calls a beat at once. Phase 2: faster pillars, debris.
-## Moves: boulder throw, stomp, golem fist (cone), seismic quake (stomp + two waves), pillar crush (stones drop on
-## markers), leap slam (jump + shockwave), and the limit break Thousand Temples (phase 2: lanes of stone spikes, one safe lane).
+## Boss: Bandung Bondowoso (bestiary.md "Build spec", boss revamp v9). Raises stone pillars; while one stands he takes no damage.
+## The rule: four drum stones light in a beat, one after another; the fourth is the gong flash (a 0.8 s window). Cast Jawa Ca
+## on the gong flash and every pillar cracks and he is stunned 3 s with TERBUKA. An unanswered gong sends a heavy wave out.
+## Moves: boulder throw, golem fist (cone), pillar crush (stones drop on markers), leap slam, and the signatures:
+## summon pillar (sig1, the builders) and beat stomp (sig2, "stomp"). Phase 2: faster pillars, debris rain.
 ## Defeat is a kneeling release: EnemyBase death, then Events.boss_defeated.
-## The HUD polls: group "boss", health, boss_name_key, engaged, dawn (beat progress 0-1).
+## The HUD polls: group "boss", health, boss_name_key, engaged, dawn (the beat cycle, 0-1).
 # ponytail: spirit builders and the lesung women at the arena edge are visual only and skipped.
 
-enum State { IDLE, CHASE, WINDUP, RECOVER, PAUSE, ACT }
+enum State { IDLE, CHASE, WINDUP, RECOVER, PAUSE, ACT, STUN }
 
 const STONE_SPEED := 0.35      # TUNE: stone flight time at the end of a throw wind-up
 const MARKER := Color(1.0, 0.3, 0.3, 0.35)
@@ -16,9 +17,8 @@ const SHIELD := Color(0.6, 0.85, 1.0)
 const PILLAR_SCENE := preload("res://entities/bosses/pillar.tscn")
 const SHIELD_HP := 1 << 30
 const STONE := Color(0.62, 0.58, 0.5)
-const HEAVY: Array[String] = ["stomp", "fist", "quake", "pillar_crush", "leap", "temples"]
-const TEMPLE_GAP := 36.0       # lane spacing of Thousand Temples
-const TEMPLE_HALF := 150.0     # half length of a lane
+const HEAVY: Array[String] = ["stomp", "fist", "pillar_crush", "leap"]
+const DRUM_AT := [Vector2(-72, -72), Vector2(72, -72), Vector2(72, 72), Vector2(-72, 72)]   # the drum square, round his start
 
 @export var boss_name_key := "BOSS_BANDUNG_BONDOWOSO"
 @export var cond := ""                  # Game.check condition; empty = always on
@@ -48,7 +48,8 @@ const TEMPLE_HALF := 150.0     # half length of a lane
 @export var rise_mark := 1.5           # spec
 @export var beat_every := 20.0         # spec
 @export var expose_time := 3.0         # spec
-@export var ca_cooldown := 8.0         # spec
+@export var gong_window := 0.8         # TUNE (v9): Jawa Ca on the gong flash counts for this long
+@export var stun_time := 3.0           # v9: the cracked pillars stun him this long
 @export var debris_every := 5.0        # spec, phase 2
 @export var debris_count := 3          # spec
 @export var debris_mark := 0.8         # spec
@@ -79,10 +80,6 @@ const TEMPLE_HALF := 150.0     # half length of a lane
 @export var leap_radius := 30.0        # TUNE
 @export var leap_damage := 41          # TUNE: heavy
 @export var leap_wave_damage := 18     # TUNE
-@export var temple_windup := 1.6       # TUNE: limit break, long telegraph
-@export var temple_windup_2 := 1.0     # TUNE: the second sweep
-@export var temple_damage := 50        # TUNE: ~1.2x heavy, one safe lane
-@export var temple_cooldown := 26.0    # TUNE
 
 var active := true:   # EliteGuard flips it
 	set(v):
@@ -101,7 +98,6 @@ var shield_flashes := 0
 var _start := Vector2.ZERO
 var _build_t := 0.0
 var _debris_t := 0.0
-var _ca_cd := 0.0
 var _marks: Array[Dictionary] = []     # {pos, left, marker, kind: "pillar" | "debris"}
 var _stomp := false
 var _spot := Vector2.ZERO
@@ -116,7 +112,9 @@ var _stage := 0
 var _sub := 0.0
 var _rec := 1.2
 var _count := 0
-var _ult_cd := 0.0
+var _beat_t := 0.0                     # seconds into the beat cycle
+var gong_open := false                 # the 4th beat's window is open
+var _drums: Array[Node2D] = []
 var _axis_h := true
 var _safe := 0
 var _from := Vector2.ZERO
@@ -141,6 +139,7 @@ func _ready() -> void:
 	health.changed.connect(_on_health)
 	hurtbox.dodged.connect(_on_shield_hit)
 	get_node("/root/Events").spell_cast.connect(_on_cast)
+	_build_drums()
 	if active:
 		_raise.call_deferred(_ring_spot())   # the fight opens with one pillar
 
@@ -152,8 +151,6 @@ func standing() -> int:
 func _tick(delta: float) -> void:
 	state_time += delta
 	_prune_owned()
-	_ca_cd = maxf(0.0, _ca_cd - delta)
-	_ult_cd = maxf(0.0, _ult_cd - delta)
 	var to_t := Vector2.INF
 	if target != null:
 		to_t = target.global_position - global_position
@@ -194,6 +191,9 @@ func _tick(delta: float) -> void:
 		State.PAUSE:
 			if state_time >= pause_time:
 				_enter(State.CHASE)
+		State.STUN:
+			if state_time >= stun_time:
+				_enter(State.CHASE)
 	move_and_slide()
 
 
@@ -210,9 +210,7 @@ func _run_builders(delta: float) -> void:
 			_debris_t = 0.0
 			for i in debris_count:
 				_mark(target.global_position + Vector2.from_angle(randf() * TAU) * randf() * debris_spread, debris_mark, "debris")
-	dawn = minf(1.0, dawn + delta / (sabotage_beat_every if _sabotaged() else beat_every))   # ASSUMED (v5)
-	if dawn >= 1.0:
-		_beat()
+	_run_beat(delta)
 	for m in _marks.duplicate():
 		m.left -= delta
 		if m.left <= 0.0:
@@ -224,10 +222,74 @@ func _run_builders(delta: float) -> void:
 				_drop_debris(m.pos)
 
 
+## The pillars open for a hit (the sabotage flag: they break on every lesung beat).
 func _beat() -> void:
-	dawn = 0.0
 	for p in pillars:
 		p.expose(sabotage_expose_time if _sabotaged() else expose_time)   # ASSUMED (v5)
+
+
+func _build_drums() -> void:
+	for off in DRUM_AT:
+		var d := BossKit.prop("props/arena_drum.png", Vector2(32, 32), Color(0.5, 0.45, 0.4), 2)
+		d.top_level = true
+		d.global_position = _start + off
+		d.z_index = -1
+		add_child(d)
+		_drums.append(d)
+
+
+## Four beats a drum apart (the fourth is the gong, all drums flash), then a rest. dawn shows the cycle.
+## One beat cycle: beat_every s (the sabotage flag: sabotage_beat_every; phase 2: x0.7). Beats 1-3 come every fifth of it,
+## the gong (4th) at 60%, then the rest. The HUD dawn bar shows the cycle.
+func beat_cycle() -> float:
+	return (sabotage_beat_every if _sabotaged() else beat_every) * (0.7 if phase == 2 else 1.0)
+
+
+func gong_at_s() -> float:
+	return beat_cycle() * 0.6
+
+
+func _run_beat(delta: float) -> void:
+	var cycle := beat_cycle()
+	var gong_at := gong_at_s()
+	var before := _beat_t
+	_beat_t += delta
+	dawn = minf(1.0, _beat_t / cycle)
+	if before < gong_at and _beat_t >= gong_at:
+		gong_open = true
+		if _sabotaged():
+			_beat()
+		BossKit.shake(self, 1.5, 0.2)
+	if gong_open and _beat_t >= gong_at + gong_window:
+		gong_open = false
+		_gong_missed()
+	if _beat_t >= cycle:
+		_beat_t = 0.0
+	for i in _drums.size():
+		var gap := beat_cycle() * 0.2
+		var lit := gong_open or (i < 3 and _beat_t >= gap * i and _beat_t < gap * i + 0.5)
+		if _drums[i] is Sprite2D:
+			(_drums[i] as Sprite2D).frame = 1 if lit else 0
+
+
+## The gong passed unanswered: a heavy wave rolls out from him (dash or jump it).
+func _gong_missed() -> void:
+	if dead:
+		return
+	BossKit.anim(self, "sig2", 10.0, false)
+	BossKit.shake(self, 2.0, 0.25)
+	_owned.append(BossKit.wave(self, global_position, 124.0, 150.0, quake_wave_damage, STONE, true))
+
+
+## The answer: Jawa Ca on the gong flash cracks every pillar and stuns him.
+func _crack_all() -> void:
+	gong_open = false
+	for p in pillars.duplicate():
+		if is_instance_valid(p):
+			p.health.take_damage(p.health.max_hp, null, true)
+	_enter(State.STUN)
+	BossKit.open(self, stun_time)
+	BossKit.roar(self, STONE, 70.0)
 
 
 func _pending(kind: String) -> int:
@@ -256,6 +318,8 @@ func _raise(pos: Vector2) -> void:
 	get_parent().add_child(p)
 	p.global_position = pos
 	pillars.append(p)
+	if state in [State.IDLE, State.CHASE, State.RECOVER]:
+		BossKit.anim(self, "sig1", 10.0, false)   # summon pillar
 	p.broken.connect(func(q: Pillar) -> void:
 		pillars.erase(q)
 		_refresh_shield()
@@ -325,12 +389,10 @@ func _on_shield_hit(_hb: Hitbox) -> void:
 	body.create_tween().tween_property(body, "modulate", Color.WHITE, 0.12)
 
 
-## Jawa Ca (the lesung rhythm) anywhere in the arena calls a beat at once.
+## Jawa Ca while the gong window is open (anywhere in the arena).
 func _on_cast(glyph_id: String, _score: float) -> void:
-	if glyph_id != "jawa_ca" or not engaged or dead or _ca_cd > 0.0:
-		return
-	_ca_cd = ca_cooldown
-	_beat()
+	if glyph_id == "jawa_ca" and gong_open and engaged and not dead:
+		_crack_all()
 
 
 # --- the move deck ---
@@ -360,7 +422,7 @@ func _goto(stage: int) -> void:
 
 func _refill() -> void:
 	_deck.clear()
-	var names: Array[String] = ["boulder", "stomp", "fist", "quake", "pillar_crush", "leap"]
+	var names: Array[String] = ["boulder", "stomp", "fist", "pillar_crush", "leap"]
 	_deck.append_array(names)
 	_deck.shuffle()
 
@@ -375,8 +437,6 @@ func _ok(m: String, d: float) -> bool:
 			return d <= stomp_range
 		"fist":
 			return d <= fist_reach + 8.0
-		"quake":
-			return d <= 190.0
 		"pillar_crush":
 			return d <= 200.0
 		"leap":
@@ -384,10 +444,8 @@ func _ok(m: String, d: float) -> bool:
 	return false
 
 
-## Next move by distance and phase: Thousand Temples when ready, else the first fitting card of the shuffled deck.
+## Next move by distance:  the first fitting card of the shuffled deck.
 func _pick(d: float) -> String:
-	if phase == 2 and _ult_cd <= 0.0 and d <= 220.0:
-		return "temples"
 	for attempt in 2:
 		for i in _deck.size():
 			var m: String = _deck[i]
@@ -408,8 +466,9 @@ func _begin_move(m: String) -> void:
 	match m:
 		"boulder":
 			_begin_attack(false, target_pos)
-		"stomp":
+		"stomp":   # sig2, the beat stomp
 			_begin_attack(true, target_pos)
+			BossKit.anim(self, "sig2", 8.0, false)
 		"fist":
 			_enter(State.ACT)
 			var ang := (target_pos - global_position).angle()
@@ -417,13 +476,6 @@ func _begin_move(m: String) -> void:
 			var c := BossKit.telegraph_cone(self, global_position, ang, fist_arc, fist_reach, fist_windup, BossKit.RED)
 			c.follow = self
 			_tg.append(c)
-			BossKit.anim(self, "slam", 10.0, false)
-			_goto(0)
-		"quake":
-			_enter(State.ACT)
-			var r := BossKit.telegraph_circle(self, global_position, 44.0, quake_windup, BossKit.RED)
-			r.follow = self
-			_tg.append(r)
 			BossKit.anim(self, "slam", 10.0, false)
 			_goto(0)
 		"pillar_crush":
@@ -436,11 +488,6 @@ func _begin_move(m: String) -> void:
 			_tg.append(BossKit.telegraph_circle(self, _spot, leap_radius, leap_windup, BossKit.RED))
 			BossKit.anim(self, "cast", 10.0, false)
 			_goto(0)
-		"temples":
-			_ult_cd = temple_cooldown
-			_enter(State.ACT)
-			BossKit.roar(self, STONE, 90.0)
-			_temples_mark(temple_windup, true)
 		_:
 			_finish(recovery)
 
@@ -450,14 +497,10 @@ func _act(delta: float) -> void:
 	match _move:
 		"fist":
 			_act_fist()
-		"quake":
-			_act_quake()
 		"pillar_crush":
 			_act_crush()
 		"leap":
 			_act_leap()
-		"temples":
-			_act_temples()
 		_:
 			_finish(recovery)
 
@@ -536,27 +579,6 @@ func _act_fist() -> void:
 				_finish(recovery_heavy)
 
 
-# --- seismic quake: a stomp in place, then two waves that run out ---
-
-func _act_quake() -> void:
-	match _stage:
-		0:
-			if _sub >= quake_windup:
-				BossKit.strike_circle(self, global_position, 44.0, quake_damage, true, STONE)
-				BossKit.shake(self, 3.0, 0.4)
-				BossKit.punch(self, 1.15, 0.88, 0.3)
-				_owned.append(BossKit.wave(self, global_position, quake_radius, 120.0, quake_wave_damage, STONE, false))
-				_goto(1)
-		1:
-			if _sub >= 0.8:
-				_owned.append(BossKit.wave(self, global_position, quake_radius, 120.0, quake_wave_damage, STONE, false))
-				BossKit.shake(self, 2.0, 0.3)
-				_goto(2)
-		2:
-			if _sub >= 1.0:
-				_finish(recovery_heavy)
-
-
 # --- pillar crush: stones fall on the markers ---
 
 func _crush_mark() -> void:
@@ -620,77 +642,12 @@ func _act_leap() -> void:
 				_finish(recovery_heavy)
 
 
-# --- Thousand Temples (limit break): lanes of stone spikes rise across the arena, one lane is safe ---
-
-func _lane_ends(k: int) -> Array[Vector2]:
-	var ax := Vector2.RIGHT if _axis_h else Vector2.DOWN
-	var c := _spot + ax.orthogonal() * TEMPLE_GAP * float(k)
-	var out: Array[Vector2] = [c - ax * TEMPLE_HALF, c + ax * TEMPLE_HALF]
-	return out
-
-
-func _temples_mark(life: float, first: bool) -> void:
-	var feet := target.global_position if target != null else global_position
-	if first:
-		_spot = feet
-		_axis_h = randf() < 0.5
-	var nx := (Vector2.RIGHT if _axis_h else Vector2.DOWN).orthogonal()
-	var pk := clampi(roundi((feet - _spot).dot(nx) / TEMPLE_GAP), -3, 3)
-	var cand: Array[int] = []
-	for k in range(-3, 4):
-		if absi(k - pk) >= 2:
-			cand.append(k)
-	_safe = cand[randi() % cand.size()]
-	for k in range(-3, 4):
-		if k == _safe:
-			continue
-		var ends := _lane_ends(k)
-		_tg.append(BossKit.telegraph_line(self, ends[0], ends[1], 20.0, life, BossKit.RED))
-	BossKit.anim(self, "cast", 10.0, false)
-	_goto(0 if first else 1)
-
-
-func _temples_strike() -> void:
-	var p := BossKit.player_point(self)
-	var hit := false
-	for k in range(-3, 4):
-		if k == _safe:
-			continue
-		var ends := _lane_ends(k)
-		BossKit.beam_fx(self, ends[0], ends[1], 20.0, 0.35, STONE)
-		BossKit.sparks(self, (ends[0] + ends[1]) * 0.5, STONE, 8, 90.0, 0.4, 100.0)
-		if BossKit.in_line(p, ends[0], ends[1], 20.0):
-			hit = true
-	BossKit.shake(self, 3.0, 0.4)
-	if hit:
-		BossKit.hurt_player(self, temple_damage, true)
-
-
-func _act_temples() -> void:
-	match _stage:
-		0:
-			if _sub >= temple_windup:
-				_temples_strike()
-				_clear_attack()
-				_temples_mark(temple_windup_2, false)
-		1:
-			if _sub >= temple_windup_2:
-				_temples_strike()
-				_clear_attack()
-				BossKit.anim(self, "slam", 10.0, false)
-				_goto(2)
-		2:
-			if _sub >= 0.4:
-				_finish(recovery_heavy + 0.6)
-
-
 func _on_health(hp: int, max_hp: int) -> void:
 	engaged = true   # first hit
 	if phase == 1 and hp > 0 and hp * 2 <= max_hp:
 		phase = 2
 		build_interval = pillar_every_2
 		_deck.clear()
-		_ult_cd = maxf(_ult_cd, 5.0)
 		_enter(State.PAUSE)
 		BossKit.roar(self, STONE, 100.0)
 
