@@ -27,7 +27,7 @@ UI_HINT_DEX,"Damage jarak jauh +5%, kecepatan serang +1%","Ranged damage +5%, at
 UI_HINT_SPI,"Damage mantra +5%, sakti terisi +2%","Spell damage +5%, sakti gain +2%"
 UI_SLOT_WEAPON,Senjata,Weapon
 UI_SLOT_ARMOR,Zirah,Armor
-UI_SLOT_ACCESSORY,Aksesori,Accessory
+UI_SLOT_ACCESSORY,Jimat,Jimat
 UI_TAB_STATUS,Status,Status
 UI_TAB_EQUIP,Perlengkapan,Equipment
 UI_TAB_JOURNAL,Catatan,Journal
@@ -228,7 +228,7 @@ UI_BK_TIME,Waktu main,Play time
 UI_BK_ILMU,Ilmu,Ilmu
 UI_BK_ATTRS,Sifat,Attributes
 UI_BK_POINTS,Poin,Points
-UI_BK_DERIVED,Daya,Power
+UI_BK_DERIVED,Kekuatan,Power
 UI_BK_STAMINA,Stamina,Stamina
 UI_BK_SAKTI,Sakti,Sakti
 UI_BK_JAMU,Jamu,Jamu
@@ -373,6 +373,30 @@ UI_JIMAT_FULL,Daya tidak cukup,Not enough Daya
 UI_CODEX_ITEMS,Barang,Items
 UI_CODEX_ITEMS_FOUND,Barang ditemukan %d/%d,Items found %d/%d
 UI_UNKNOWN,???,???
+UI_BK_HINT_UNEQUIP,Lepas,Unequip
+UI_STAT_SPELL_MULT,Mantra,Spell Dmg
+UI_STAT_FLASK_HEAL,Kendi,Flask Heal
+UI_STAT_DODGE_SAKTI,Sakti Elak,Dodge Sakti
+UI_STAT_ILMU_MULT,Ilmu,Ilmu Gain
+UI_STAT_LOW_HP_DMG,Bawah 30% HP,Low HP Dmg
+UI_STAT_KILL_HEAL,HP/Tumbang,HP on Kill
+UI_STAT_STATUS_SHORT,Durasi Status,Status Dur.
+UI_STAT_DR,Tahan Serang,Dmg Reduce
+UI_STAT_TIP_DMG,Ujung Tombak,Tip Damage
+UI_STAT_BRACE_REACH,Jangkau Kuda,Brace Reach
+UI_STAT_BRACE_FAST,Cepat Kuda,Brace Speed
+UI_STAT_BRACE_STA,Stamina Kuda,Brace Stamina
+UI_STAT_BOUNCE_RNG,Jarak Pantul,Bounce Range
+UI_STAT_BOUNCE_DMG,Pantulan,Bounce Dmg
+UI_STAT_DODGE_DIST,Jarak Elak,Dodge Dist
+UI_STAT_ZONE_LIFE,Durasi Zona,Zone Duration
+UI_STAT_WIRAMA_FIN,Wirama Akhir,Finisher Wirama
+UI_STAT_WIRAMA_CAP,Batas Wirama,Max Wirama
+UI_STAT_WIRAMA_KEEP,Simpan Wirama,Keep Wirama
+UI_STAT_WIRAMA_HASTE,Cepat Wirama,Wirama Haste
+UI_STAT_LAKON_SAKTI,Sakti Lakon,Lakon Sakti
+UI_STAT_LAKON_CAP,Batas Lakon,Max Lakon
+UI_STAT_SPELL_RAD,Radius Mantra,Spell Radius
 JAMASAN_1,"Air menetes dari bilah, dan terdengar suara kecil: Laras bertanya kenapa telaga itu dulu perahu. Kau bilang itu cuma dongeng, dan ia bilang dongeng pun bisa menunggu.","Water runs off the blade, and a small voice comes: Laras asks why the lake was once a boat. You say it's only a tale, and she says a tale can wait too."
 JAMASAN_2,"Laras menolak tidur sebelum cerita seribu candi selesai. Kau menutupnya dengan kokok ayam, dan ia tertawa sampai kepangnya lepas.","Laras refuses to sleep before the thousand temples are done. You end the tale with a rooster's crow, and she laughs until her braid comes loose."
 JAMASAN_3,"Laras menutup telinga saat cerita keris yang tak selesai, lalu minta diulang. ""Kalau belum selesai,"" katanya, ""berarti masih bisa diubah.""","Laras covers her ears at the tale of the unfinished keris, then asks for it again. ""If it's unfinished,"" she says, ""it can still be changed."""

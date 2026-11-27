@@ -105,4 +105,4 @@ zone = "desa_purwa"
 size = "S"
 giver = "semar"
 steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5"), SubResource("s6"), SubResource("s7"), SubResource("s8"), SubResource("s9"), SubResource("s10"), SubResource("s11"), SubResource("s12")])
-rewards = {"codex": ["hanacaraka"]}
+rewards = {"items": ["amulet"], "codex": ["hanacaraka"]}

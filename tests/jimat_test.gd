@@ -57,7 +57,7 @@ func _initialize() -> void:
 	g.equip_jimat("silver_bangle")
 	g.add_item("feather_charm", false)
 	g.equip_jimat("feather_charm")
-	check(is_equal_approx(g.bonus("stamina_regen"), 0.15) and is_equal_approx(g.bonus("move_speed"), 0.08), "summed regen %s move %s" % [g.bonus("stamina_regen"), g.bonus("move_speed")])
+	check(is_equal_approx(g.bonus("stamina_regen"), 0.10) and is_equal_approx(g.bonus("move_speed"), 0.08), "summed regen %s move %s" % [g.bonus("stamina_regen"), g.bonus("move_speed")])
 
 	# The favoured bonus applies only to the matching class (Genitri: mage, smudge -0.03).
 	_fresh("mage")
@@ -74,6 +74,24 @@ func _initialize() -> void:
 	check(is_equal_approx(g.bonus("str"), 1.0), "warrior favoured +1 str: %s" % g.bonus("str"))
 	g.class_id = "mage"
 	check(is_equal_approx(g.bonus("str"), 0.0), "a mage got the warrior-favoured str: %s" % g.bonus("str"))
+
+	# Rajah (low_hp_damage) scales SpellUtil.damage() when caster HP < 30%.
+	var world := Node2D.new()
+	root.add_child(world)
+	var pl: Player = (load("res://entities/player/player.tscn") as PackedScene).instantiate()
+	world.add_child(pl)
+	await process_frame
+	pl.set_physics_process(false)
+	_fresh("mage")
+	g.add_item("rajah", false)
+	g.equip_jimat("rajah")
+	g.changed.emit()
+	pl.health.hp = pl.health.max_hp
+	var sp_hi := SpellUtil.damage(pl)
+	pl.health.hp = 1
+	var sp_lo := SpellUtil.damage(pl)
+	check(is_equal_approx(sp_lo, sp_hi * 1.2), "Rajah low_hp_damage did not scale SpellUtil.damage: %s -> %s" % [sp_hi, sp_lo])
+	world.free()
 
 	DirAccess.remove_absolute(PATH)
 	DirAccess.remove_absolute(PATH.replace(".json", ".bak"))

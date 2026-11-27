@@ -78,6 +78,9 @@ func open(petilasan := false, target_tab := -1) -> void:
 	for t in tabs:
 		t.cancel()
 	refresh()
+	var g := get_node("/root/Game")
+	if petilasan and target_tab < 0 and g.has_flag("has_pusaka") and g.jamasan_pending() > 0:
+		_last_tab = 0
 	if target_tab >= 0:
 		_last_tab = clampi(target_tab, 0, tabs.size() - 1)
 	_prev_tab = _last_tab
@@ -106,6 +109,9 @@ func close() -> void:
 func refresh() -> void:
 	for t in tabs:
 		t.refresh()
+	if book:
+		var g := get_node("/root/Game")
+		book.set_badge(0, g.has_flag("has_pusaka") and g.jamasan_pending() > 0)
 	if book and visible:
 		book.select(_tabs.current_tab)
 		update_hints()

@@ -112,7 +112,7 @@ func build(l: Control, r: Control) -> void:
 	_pusaka.mouse_filter = MOUSE_FILTER_IGNORE
 	put(l, _pusaka, Vector2(0, 88), Vector2(200, 60))
 	var ic := TextureRect.new()
-	ic.texture = load("res://assets/art/items/kujang_kembar.png")   # no pusaka icon of its own yet
+	ic.texture = load("res://assets/art/items/kujang_pusaka.png")
 	ic.mouse_filter = MOUSE_FILTER_IGNORE
 	put(_pusaka, ic, Vector2.ZERO, Vector2(16, 16))
 	put(_pusaka, MenuBook.bold(tr("UI_PUSAKA"), MenuBook.INK_HEAD), Vector2(18, 2), Vector2(34, 12))
@@ -324,9 +324,10 @@ func _refresh_pusaka(g: Node, at: bool, pend: int) -> void:
 	jamasan_btn.disabled = not at
 	jamasan_btn.tooltip_text = "" if at else tr("UI_JAMASAN_HINT")
 	jamasan_btn.modulate.a = 1.0 if at else 0.5
-	var vit: Button = _rows["vit"]
-	vit.focus_neighbor_left = vit.get_path_to(jamasan_btn) if jamasan_btn.visible and at else vit.get_path()
-	jamasan_btn.focus_neighbor_right = jamasan_btn.get_path_to(vit)
+	for s in STATS:
+		var row: Button = _rows[s]
+		row.focus_neighbor_left = row.get_path_to(jamasan_btn) if jamasan_btn.visible and at else row.get_path()
+	jamasan_btn.focus_neighbor_right = jamasan_btn.get_path_to(_rows[_focus_stat])
 	jamasan_btn.focus_neighbor_left = jamasan_btn.get_path()
 	jamasan_btn.focus_neighbor_top = jamasan_btn.get_path()
 	jamasan_btn.focus_neighbor_bottom = jamasan_btn.get_path()
@@ -384,18 +385,16 @@ func _refresh_derived(g: Node) -> void:
 	var sak := int(TUNING.keen_mind_max if g.class_id == "mage" else TUNING.sakti_max)
 	var atk := 0
 	if w:
-		atk = roundi(w.damage * (1.0 + TUNING.stat_damage_per * g.stat("str" if w.is_melee() else "dex")))
-	var def := 0
-	var worn: Array = [g.equipped_item("armor")]
-	for id: String in g.jimat:
-		worn.append(ItemData.by_id(id))
-	for it: ItemData in worn:
-		def += it.defense if it else 0
+		var sk := "str" if w.is_melee() else ("spi" if w.archetype == "staff" else "dex")
+		atk = roundi(w.damage * (1.0 + TUNING.stat_damage_per * g.stat(sk)) * (1.0 + g.bonus("damage_mult")) * g.power_mult())
+	var armor: ItemData = g.equipped_item("armor")
+	var arm_def := armor.defense if armor else 0
+	var total_dr := 1.0 - (1.0 - 0.05 * arm_def) * (1.0 - clampf(g.bonus("defense"), 0.0, 0.9))
 	_derived.hp.text = str(hp)
 	_derived.sta.text = str(sta)
 	_derived.sak.text = str(sak)
 	_derived.atk.text = str(atk)
-	_derived["def"].text = str(def)
+	_derived["def"].text = "%d%%" % roundi(total_dr * 100.0)
 	_derived.jamu.text = "%d/%d" % [g.flask_charges, g.flask_max]
 
 

@@ -125,5 +125,33 @@ func run() -> void:
 	var unk: String = tr("UI_UNKNOWN")
 	check(lines.has(tr(ItemData.by_id("jimat").title)), "codex Items shows an owned item's name")
 	check(lines.has(unk) and not lines.has(tr(ItemData.by_id("blangkon").title)), "codex Items shows ??? for an unowned item")
+
+	# Phase 7c UX fixes: Status ATK/DEF, Equipment STAT_KEYS & DR separation, Petilasan pending prompt.
+	game.add_item("dagger", false)
+	game.equip("dagger")
+	game.ingatan = 0
+	menu.refresh()
+	var atk0 := int(st._derived.atk.text)
+	game.ingatan = 3
+	menu.refresh()
+	check(int(st._derived.atk.text) > atk0, "Status ATK did not rise with Ingatan")
+	game.add_item("gelang_akar_bahar", false)
+	game.equip_jimat("gelang_akar_bahar")
+	menu.refresh()
+	check(st._derived["def"].text == "6%", "Status DEF did not reflect jimat DR: %s" % st._derived["def"].text)
+	for bk in ["spell_mult", "flask_heal", "dodge_sakti", "ilmu_mult", "low_hp_damage", "kill_heal", "status_short"]:
+		check(eq.STAT_KEYS.has(bk), "Equipment STAT_KEYS missing %s" % bk)
+	var gab_stats: Dictionary = eq._item_stats(ItemData.by_id("gelang_akar_bahar"))
+	check(gab_stats.has("damage_reduction") and not gab_stats.has("defense"), "jimat DR should not collide with armor defense")
+	var pet: Petilasan = (load("res://entities/petilasan/petilasan.tscn") as PackedScene).instantiate()
+	root.add_child(pet)
+	await process_frame
+	game.set_flag("has_pusaka")
+	game.killed = PackedStringArray(["sangkuriang", "bandung_bondowoso", "keris_gandring"])
+	game.ingatan = 1
+	pet._refresh_prompt()
+	check(pet.prompt.text.contains(tr("UI_JAMASAN_PENDING") % 2), "Petilasan prompt missing pending jamasan: %s" % pet.prompt.text)
+	pet.queue_free()
+
 	DirAccess.remove_absolute(settings)
 	DirAccess.remove_absolute("user://test_menu.json")

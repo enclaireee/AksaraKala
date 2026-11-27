@@ -60,6 +60,8 @@ func refresh() -> void:
 					continue
 				box.add_child(MenuBook.bold(tr("CODEX_%s_TITLE" % U)))
 				_label(box, "CODEX_%s_BODY" % U, MenuBook.INK_DIM)
+				if e.id == "kujang":
+					_label(box, "%s %d/4 · +%d%% · %s %d" % [tr("UI_INGATAN"), g.ingatan, roundi((g.power_mult() - 1.0) * 100.0), tr("UI_DAYA"), g.daya()], MenuBook.VERD)
 				if g.has_flag("weak:" + e.id):
 					_label(box, "%s: %s" % [tr("UI_WEAKNESS"), tr("CODEX_%s_WEAK" % U)])
 			if cat == "item":
@@ -67,12 +69,24 @@ func refresh() -> void:
 	_restore.call_deferred(sl, sr)
 
 
-## Every ItemData weapon, armor and jimat, by slot then name, with its own found/total (codex_percent ignores these).
+## Every obtainable ItemData weapon, armor and jimat, by slot then name, with its own found/total (codex_percent ignores these).
 func _items(box: VBoxContainer) -> void:
 	var all: Array[ItemData] = []
+	var cls: String = game.class_id
+	var start_w := ""
+	if cls != "":
+		var cd := ClassData.by_id(cls)
+		if cd:
+			start_w = cd.start_weapon
+	const STARTERS := ["dagger", "broadsword", "hunting_bow", "oak_staff", "tombak_prajurit", "bandring", "kipas", "kayon"]
 	for f in DirAccess.get_files_at("res://data/items"):
 		var it := ItemData.by_id(f.trim_suffix(".remap").trim_suffix(".tres"))
 		if it and f.contains(".tres"):
+			if not owned(it) and cls != "":
+				if it.favoured != "" and it.favoured != cls:
+					continue
+				if it.id in STARTERS and it.id != start_w:
+					continue
 			all.append(it)
 	var order := ["weapon", "armor", "accessory"]
 	all.sort_custom(func(a: ItemData, b: ItemData) -> bool:
@@ -81,10 +95,7 @@ func _items(box: VBoxContainer) -> void:
 		return tr(a.title) < tr(b.title))
 	var found := all.filter(func(it: ItemData) -> bool: return owned(it))
 	box.add_child(MenuBook.bold(tr("UI_CODEX_ITEMS_FOUND") % [found.size(), all.size()], MenuBook.INK_HEAD))
-	for it in all:
-		if not owned(it):
-			_label(box, "UI_UNKNOWN", MenuBook.INK_FADE)
-			continue
+	for it in found:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 4)
 		var ic := TextureRect.new()
@@ -104,6 +115,13 @@ func _items(box: VBoxContainer) -> void:
 			col.add_child(MenuBook.text(tr(lk), MenuBook.INK_FADE, true))
 		row.add_child(col)
 		box.add_child(row)
+	var unowned := all.size() - found.size()
+	if unowned > 0:
+		var urow := HBoxContainer.new()
+		urow.add_theme_constant_override("separation", 4)
+		urow.add_child(MenuBook.text(tr("UI_UNKNOWN"), MenuBook.INK_FADE))
+		urow.add_child(MenuBook.text("×%d" % unowned, MenuBook.INK_FADE))
+		box.add_child(urow)
 
 
 func owned(it: ItemData) -> bool:

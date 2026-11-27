@@ -37,4 +37,4 @@ size = "M"
 giver = "kabayan"
 requires = Array[String](["mqg_a1"])
 steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4")])
-rewards = {"lakon": "si_kabayan", "codex": ["kabayan"]}
+rewards = {"items": ["sabuk_merah"], "lakon": "si_kabayan", "codex": ["kabayan"]}

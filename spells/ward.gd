@@ -23,7 +23,8 @@ func _ready() -> void:
 			w.queue_free()
 	add_to_group("ward")
 	power *= SpellUtil.perfect_mult(perfect)
-	caster.health.shield = roundi(data.power * power * SpellUtil.spirit(caster))
+	var g := SpellUtil._game()
+	caster.health.shield = roundi(data.power * power * SpellUtil.spirit(caster) * (g.power_mult() if g else 1.0))
 	_left = data.duration
 	global_position = caster.global_position
 	_tint = SpellUtil.tint(data.glyph_id, caster)

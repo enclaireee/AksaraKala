@@ -219,13 +219,28 @@ func _ready() -> void:
 		refresh_arrow())
 	ev.item_picked.connect(func(id: String) -> void:
 		var what := "%s Ilmu" % id.get_slice(":", 1) if id.begins_with("ilmu:") else tr("ITEM_%s_NAME" % id.to_upper())
-		_push_toast(tr("UI_TOAST_ITEM") % what))
+		var it := ItemData.by_id(id)
+		if it and it.slot == "accessory":
+			var msg := "%s (%s %d)" % [tr("UI_TOAST_ITEM") % what, tr("UI_DAYA"), it.daya]
+			if g.jimat.is_empty():
+				msg += " — " + tr("UI_JIMAT_HINT")
+			_push_toast(msg)
+		else:
+			_push_toast(tr("UI_TOAST_ITEM") % what))
+	ev.boss_defeated.connect(func(id: String) -> void: _jamasan_toast(id))
+	ev.area_cleared.connect(func(id: String) -> void: _jamasan_toast(id))
 	ev.glyph_learned.connect(func(id: String) -> void:
 		_push_toast(tr("UI_TOAST_GLYPH") % id.split("_")[-1].capitalize()))   # sunda_ka -> Ka
 	ev.zone_entered.connect(func(_z: String) -> void: refresh_arrow())
 	refresh()
 	refresh_arrow()
 	refresh_objective()
+
+
+func _jamasan_toast(id: String) -> void:
+	var g := get_node("/root/Game")
+	if id in g.MAIN_BOSSES and g.has_flag("has_pusaka") and g.jamasan_pending() > 0:
+		_push_toast("%s — %s" % [tr("UI_JAMASAN_PENDING") % g.jamasan_pending(), tr("UI_JAMASAN_HINT")])
 
 
 ## The tracker (docs/quest_system.md 3.1): the tracked quest's title and its current active objective.

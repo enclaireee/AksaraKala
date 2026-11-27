@@ -58,8 +58,12 @@ func _set_near(b: Node, on: bool) -> void:
 
 
 func _refresh_prompt() -> void:
-	var k: String = get_node("/root/Game").key_name("interact")
-	prompt.text = "[%s] %s" % [k, tr("UI_VERB_REST")]
+	var g := get_node("/root/Game")
+	var k: String = g.key_name("interact")
+	var base := "[%s] %s" % [k, tr("UI_VERB_REST")]
+	if g.has_flag("has_pusaka") and g.jamasan_pending() > 0:
+		base += " · " + (tr("UI_JAMASAN_PENDING") % g.jamasan_pending())
+	prompt.text = base
 
 
 func _unhandled_input(event: InputEvent) -> void:

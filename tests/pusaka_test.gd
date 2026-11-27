@@ -69,6 +69,31 @@ func _initialize() -> void:
 	g.changed.emit()
 	check(is_equal_approx(p.dmg_mult, melee0) and is_equal_approx(SpellUtil.damage(p), spell0), "back at tier 0 the multipliers did not return")
 
+	# Dialogue wiring for Kujang Pusaka, Jamasan, and Act III/IV payoffs + Ward power_mult scaling.
+	var ibu_dlg := FileAccess.get_file_as_string("res://data/dialogue/ibu.tres")
+	check(ibu_dlg.contains("flag:has_pusaka") and ibu_dlg.contains("codex:kujang") and ibu_dlg.contains("DLG_IBU_V601") and ibu_dlg.contains("DLG_IBU_V602"), "ibu.tres missing Pusaka wiring")
+	check(FileAccess.get_file_as_string("res://data/dialogue/semar.tres").contains("DLG_SEMAR_V601"), "semar.tres missing Jamasan tutorial")
+	check(FileAccess.get_file_as_string("res://data/dialogue/timur_empu.tres").contains("DLG_TIMUR_EMPU_V601"), "timur_empu.tres missing pamor line")
+	var ward := (load("res://spells/ward.tscn") as PackedScene).instantiate()
+	ward.caster = p
+	ward.data = SpellData.new()
+	ward.data.power = 50.0
+	ward.data.duration = 5.0
+	g.ingatan = 0
+	world.add_child(ward)
+	var sh0: int = p.health.shield
+	ward.queue_free()
+	await process_frame
+	var ward2 := (load("res://spells/ward.tscn") as PackedScene).instantiate()
+	ward2.caster = p
+	ward2.data = SpellData.new()
+	ward2.data.power = 50.0
+	ward2.data.duration = 5.0
+	g.ingatan = 3
+	world.add_child(ward2)
+	check(p.health.shield == roundi(50.0 * p.spell_mult() * 1.3), "Ward shield did not scale with power_mult: %d -> %d" % [sh0, p.health.shield])
+	ward2.queue_free()
+
 	DirAccess.remove_absolute(PATH)
 	DirAccess.remove_absolute(PATH.replace(".json", ".bak"))
 	quit(1 if fails > 0 else 0)

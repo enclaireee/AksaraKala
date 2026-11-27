@@ -7,9 +7,18 @@ const SLOTS := ["weapon", "armor"]
 const INV_SLOTS := ["weapon", "armor", "accessory"]   # inventory order; accessories are jimat
 const ITEM_DIR := "res://assets/art/items/"
 const COLS := 9
-const STAT_KEYS := {"damage": "UI_DER_ATK", "defense": "UI_DER_DEF", "max_hp": "UI_DER_HP", "move_speed": "UI_BK_SPEED",
-		"stamina_regen": "UI_BK_STA_REGEN", "vit": "UI_STAT_VIT", "end": "UI_STAT_END", "str": "UI_STAT_STR",
-		"dex": "UI_STAT_DEX", "spi": "UI_STAT_SPI", "damage_mult": "UI_DER_ATK", "sakti_gain": "UI_FAV_SAKTI", "smudge": "UI_FAV_SMUDGE"}
+const STAT_KEYS := {"damage": "UI_DER_ATK", "defense": "UI_DER_DEF", "damage_reduction": "UI_STAT_DR",
+		"max_hp": "UI_DER_HP", "move_speed": "UI_BK_SPEED", "stamina_regen": "UI_BK_STA_REGEN",
+		"vit": "UI_STAT_VIT", "end": "UI_STAT_END", "str": "UI_STAT_STR", "dex": "UI_STAT_DEX", "spi": "UI_STAT_SPI",
+		"damage_mult": "UI_DER_ATK", "sakti_gain": "UI_FAV_SAKTI", "smudge": "UI_FAV_SMUDGE",
+		"spell_mult": "UI_STAT_SPELL_MULT", "flask_heal": "UI_STAT_FLASK_HEAL", "dodge_sakti": "UI_STAT_DODGE_SAKTI",
+		"ilmu_mult": "UI_STAT_ILMU_MULT", "low_hp_damage": "UI_STAT_LOW_HP_DMG", "kill_heal": "UI_STAT_KILL_HEAL",
+		"status_short": "UI_STAT_STATUS_SHORT", "tip_damage": "UI_STAT_TIP_DMG", "brace_reach": "UI_STAT_BRACE_REACH",
+		"brace_fast": "UI_STAT_BRACE_FAST", "brace_stamina": "UI_STAT_BRACE_STA", "bounce_range": "UI_STAT_BOUNCE_RNG",
+		"bounce_mult": "UI_STAT_BOUNCE_DMG", "dodge_dist": "UI_STAT_DODGE_DIST", "zone_life": "UI_STAT_ZONE_LIFE",
+		"wirama_finisher": "UI_STAT_WIRAMA_FIN", "wirama_cap": "UI_STAT_WIRAMA_CAP", "wirama_keep": "UI_STAT_WIRAMA_KEEP",
+		"wirama_haste": "UI_STAT_WIRAMA_HASTE", "lakon_sakti": "UI_STAT_LAKON_SAKTI", "lakon_cap": "UI_STAT_LAKON_CAP",
+		"spell_radius": "UI_STAT_SPELL_RAD"}
 # doll slot positions on the left page (24x24 wells) and the doll point each leader line runs to
 const DOLL := Vector2(72, 24)
 const SLOT_POS := {"weapon": Vector2(16, 64), "armor": Vector2(160, 40)}
@@ -30,6 +39,7 @@ var _card_type: Label
 var _card_tag: Label
 var _card_stats: VBoxContainer
 var _card_desc: Label
+var _card_desc_scroll: ScrollContainer
 var _card_item: ItemData
 var _empty: Label
 var _strip: Control       # Jimat strip (dimmed outside a petilasan)
@@ -109,11 +119,14 @@ func build(l: Control, r: Control) -> void:
 	_note.clip_text = true
 	put(_strip, _note, Vector2(0, 34), Vector2(200, 10))
 	put(l, MenuBook.section(tr("UI_BK_GEAR_TOTALS")), Vector2(0, 156))
+	var tot_scroll := ScrollContainer.new()
+	tot_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	put(l, tot_scroll, Vector2(0, 170), Vector2(200, 44))
 	_totals = GridContainer.new()
 	_totals.columns = 2
 	_totals.add_theme_constant_override("h_separation", 8)
 	_totals.add_theme_constant_override("v_separation", 1)
-	put(l, _totals, Vector2(0, 172), Vector2(200, 40))
+	tot_scroll.add_child(_totals)
 	# right page: inventory grid + card
 	put(r, MenuBook.section(tr("UI_BK_INVENTORY")), Vector2.ZERO)
 	_count = MenuBook.num("", MenuBook.INK_DIM)
@@ -148,9 +161,12 @@ func build(l: Control, r: Control) -> void:
 	_card_stats = VBoxContainer.new()
 	_card_stats.add_theme_constant_override("separation", 0)
 	put(r, _card_stats, Vector2(6, 142), Vector2(188, 10))
+	_card_desc_scroll = ScrollContainer.new()
+	_card_desc_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	put(r, _card_desc_scroll, Vector2(6, 162), Vector2(188, 46))
 	_card_desc = MenuBook.text("", MenuBook.INK_DIM, true)
-	_card_desc.clip_text = true
-	put(r, _card_desc, Vector2(6, 162), Vector2(188, 46))
+	_card_desc.custom_minimum_size.x = 184
+	_card_desc_scroll.add_child(_card_desc)
 
 
 func _icon(item: ItemData) -> Texture2D:
@@ -293,7 +309,15 @@ func _refresh_strip(g: Node) -> void:
 		b.tooltip_text = tr(it.title)
 		b.pressed.connect(func() -> void:
 			if toggle_jimat(id):
-				_doll_btn.weapon.grab_focus.call_deferred())
+				if _jimat_row.get_child_count() > 0:
+					(_jimat_row.get_child(0) as Control).grab_focus.call_deferred()
+				else:
+					focus_id = id
+					for gb in _grid.get_children():
+						if gb.get_meta("id", "") == id:
+							gb.grab_focus.call_deferred()
+							return
+					_doll_btn.weapon.grab_focus.call_deferred())
 		b.focus_entered.connect(func() -> void:
 			_show_card(it)
 			menu.update_hints())
@@ -347,10 +371,12 @@ func _item_stats(item: ItemData) -> Dictionary:
 	if item.defense != 0:
 		out["defense"] = float(item.defense)
 	for k in item.bonus:
-		out[k] = float(item.bonus[k])
+		var dk: String = "damage_reduction" if k == "defense" else k
+		out[dk] = out.get(dk, 0.0) + float(item.bonus[k])
 	if item.favoured == get_node("/root/Game").class_id:
 		for k in item.favoured_bonus:
-			out[k] = out.get(k, 0.0) + float(item.favoured_bonus[k])
+			var dk: String = "damage_reduction" if k == "defense" else k
+			out[dk] = out.get(dk, 0.0) + float(item.favoured_bonus[k])
 	return out
 
 
@@ -358,9 +384,13 @@ func _stat_name(k: String) -> String:
 	return tr(STAT_KEYS[k]) if STAT_KEYS.has(k) else k.capitalize()
 
 
-## Flat numbers as-is; fractions (move_speed, stamina_regen) as percent.
+## Flat numbers as-is; fractions (move_speed, stamina_regen, etc.) as percent.
 func _fmt(v: float, k := "") -> String:
-	if k in ["move_speed", "stamina_regen"] or (absf(v) < 1.0 and not is_zero_approx(v)):
+	if k == "status_short":
+		return "%+d%%" % roundi(-v * 100.0)
+	if k == "wirama_keep":
+		return "50%"
+	if k in ["move_speed", "stamina_regen", "damage_reduction"] or (absf(v) < 1.0 and not is_zero_approx(v)):
 		return "%+d%%" % roundi(v * 100.0)
 	var s := str(roundi(v))
 	return ("+" + s) if k not in ["damage", "defense"] and v > 0 else s
@@ -423,7 +453,10 @@ func _show_card(item: ItemData) -> void:
 		desc = tr("UI_FAVOURED") % tr("CLASS_%s_NAME" % item.favoured.to_upper()) + "\n" + desc
 	_card_desc.text = desc
 	_card_desc.add_theme_color_override("font_color", MenuBook.INK_HEAD if fav else MenuBook.INK_DIM)   # ponytail: the whole note lights up, not just the line
-	_card_desc.position.y = 142 + 10 * keys.size() + 4
+	var desc_y := 142.0 + 10.0 * keys.size() + 4.0
+	_card_desc_scroll.position.y = desc_y
+	_card_desc_scroll.size.y = maxf(16.0, 208.0 - desc_y)
+	_card_desc_scroll.scroll_vertical = 0
 
 
 func focus_first() -> void:
@@ -439,8 +472,12 @@ func focus_first() -> void:
 
 func hints() -> Array:
 	var f := get_viewport().gui_get_focus_owner() if get_viewport() else null
-	if f and f.get_parent() == _grid:
-		if _card_item and _worn(_card_item) and _card_item.slot != "accessory":
+	if f and (f.get_parent() == _grid or f.get_parent() == _jimat_row):
+		if _card_item and _card_item.slot == "accessory":
+			if not menu.at_petilasan:
+				return [["@updown", "UI_BK_HINT_SELECT"]]
+			return [["@updown", "UI_BK_HINT_SELECT"], ["Enter", "UI_BK_HINT_UNEQUIP" if _worn(_card_item) else "UI_BK_HINT_EQUIP"]]
+		if _card_item and _worn(_card_item):
 			return [["@updown", "UI_BK_HINT_SELECT"]]
 		return [["@updown", "UI_BK_HINT_SELECT"], ["Enter", "UI_BK_HINT_EQUIP"]]
 	return [["@updown", "UI_BK_HINT_SELECT"], ["Enter", "UI_BK_HINT_CHOOSE"]]

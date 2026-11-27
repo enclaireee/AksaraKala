@@ -44,4 +44,4 @@ size = "L"
 giver = "g2_maid"
 requires = Array[String](["mqg_kp1"])
 steps = Array[ExtResource("2")]([SubResource("s1"), SubResource("s2"), SubResource("s3"), SubResource("s4"), SubResource("s5")])
-rewards = {"codex": ["ririwa"]}
+rewards = {"items": ["genitri"], "codex": ["ririwa"]}

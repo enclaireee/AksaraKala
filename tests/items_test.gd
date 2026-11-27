@@ -189,6 +189,29 @@ func _initialize() -> void:
 	check(game.has_flag("chest:test_unit_chest"), "Chest interact set flag")
 	test_chest.free()
 
+	# 6. Cakra balance & Herder bounce compatibility + Kujang Pusaka icon.
+	var cakra := ItemData.by_id("cakra")
+	check(cakra != null and cakra.damage == 6, "cakra base damage should be 6")
+	var pk_tex := load("res://assets/art/items/kujang_pusaka.png") as Texture2D
+	check(pk_tex != null and pk_tex.get_size() == Vector2(16, 16), "kujang_pusaka.png missing or wrong size")
+	var h_thrower := Node2D.new()
+	root.add_child(h_thrower)
+	var c_arrow: Arrow = (load("res://entities/player/arrow.tscn") as PackedScene).instantiate()
+	c_arrow.source = h_thrower
+	c_arrow.returns = true
+	c_arrow.pierce = true
+	c_arrow.bounce = 0.6
+	c_arrow.speed = 100.0
+	c_arrow.max_range = 50.0
+	root.add_child(c_arrow)
+	await process_frame
+	c_arrow.set_physics_process(false)
+	var dummy_hb := Hurtbox.new()
+	dummy_hb.health = Health.new()
+	c_arrow.hit_landed.emit(dummy_hb)
+	check(c_arrow.pierce and c_arrow.returns, "Herder bounce cancelled Cakra pierce/return")
+	dummy_hb.health.free(); dummy_hb.free(); c_arrow.free(); h_thrower.free()
+
 	DirAccess.remove_absolute("user://items_test_save.json")
 	quit(1 if fails > 0 else 0)
 

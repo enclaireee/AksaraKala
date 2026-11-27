@@ -110,6 +110,16 @@ if __name__ == '__main__':
             if sum(DMG_JIMAT[j][0] for j in combo) <= 6:
                 w, sp = (sum(DMG_JIMAT[j][i] for j in combo) for i in (1, 2))
                 assert w <= JIMAT_DMG + 1e-9 and sp <= JIMAT_DMG + 1e-9, f'{combo}: jimat damage over the cap'
+    STAT_JIMAT = {
+        **DMG_JIMAT,
+        'genitri': (2, 0, 0.05), 'blencong': (2, 0, 0.05),
+        'gelang_baja': (2, 0.05, 0), 'sabuk_merah': (2, 0.05, 0), 'kantong_panah': (2, 0.05, 0),
+    }
+    for k in range(1, len(STAT_JIMAT) + 1):
+        for combo in combinations(STAT_JIMAT, k):
+            if sum(STAT_JIMAT[j][0] for j in combo) <= 6:
+                w, sp = (sum(STAT_JIMAT[j][i] for j in combo) for i in (1, 2))
+                assert w <= 0.15 + 1e-9 and sp <= 0.15 + 1e-9, f'{combo}: jimat + stat damage over 15%'
     print('ok')
 
     print('== 7.2 v7 floor hazards and kneel (boss, tick, light hit, reference HP)')

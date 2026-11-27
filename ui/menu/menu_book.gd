@@ -32,6 +32,7 @@ const KEY_INK := Color("141026")   # letters on the light keycap
 var content: Control           # the menu adds its TabContainer here (between the pages and the front ornaments)
 var footer_box: HBoxContainer
 var _ribbons: Array[Button] = []
+var _badges: Array[ColorRect] = []
 var _rib_layer: Control
 var _keys: Array[Control] = []
 
@@ -64,6 +65,14 @@ func build(titles: Array, icons: Array) -> void:
 		b.add_theme_constant_override("outline_size", 0)
 		b.set_meta("title", titles[i])
 		b.pressed.connect(func() -> void: ribbon_pressed.emit(i))
+		var badge := ColorRect.new()
+		badge.color = Color("F2B84B")
+		badge.size = Vector2(3, 3)
+		badge.position = Vector2(RIB_W - 5, 3)
+		badge.visible = false
+		badge.mouse_filter = MOUSE_FILTER_IGNORE
+		b.add_child(badge)
+		_badges.append(badge)
 		_rib_layer.add_child(b)
 		_ribbons.append(b)
 	add_child(nine("book_cover", BOOK, 8))
@@ -139,9 +148,16 @@ func select(index: int) -> void:
 		var on := i == index
 		_ribbons[i].position = Vector2(x, RIB_ON_Y if on else RIB_Y)
 		_ribbons[i].size = Vector2(widths[i], 22 if on else 16)
+		if i < _badges.size():
+			_badges[i].position = Vector2(widths[i] - 5, 3)
 		x += widths[i] + gap
 	_keys[0].position = Vector2(SPINE_X - total / 2 - 6 - _keys[0].size.x, 5)
 	_keys[1].position = Vector2(x - gap + 6, 5)
+
+
+func set_badge(index: int, on: bool) -> void:
+	if index >= 0 and index < _badges.size():
+		_badges[index].visible = on
 
 
 func _ribbon_box(name_: String, on: bool) -> StyleBoxTexture:

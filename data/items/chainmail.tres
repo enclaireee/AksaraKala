@@ -11,3 +11,4 @@ title = "ITEM_CHAINMAIL_NAME"
 slot = "armor"
 description = "ITEM_CHAINMAIL_DESC"
 defense = 4
+bonus = {"status_short": 0.25}

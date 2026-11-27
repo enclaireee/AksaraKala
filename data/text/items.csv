@@ -35,7 +35,7 @@ ITEM_BROADSWORD_NAME,Kelewang,Kelewang
 ITEM_CAKRA_DESC,"Cakram cahaya yang dilempar, lalu kembali seperti bumerang dan melukai dalam perjalanan pulang.",A thrown disc of light that returns like a boomerang and hits on the way back.
 ITEM_CAKRA_LORE,Cakram Kresna dalam cerita wayang. Di sini ia kembali ke tangan setelah dilempar.,Krishna's disc from the wayang tales. Here it returns to the hand after the throw.
 ITEM_CAKRA_NAME,Cakra,Cakra
-ITEM_CHAINMAIL_DESC,Cincin besi yang berat.,Heavy rings of iron.
+ITEM_CHAINMAIL_DESC,Cincin besi yang berat. Efek status padamu 25% lebih singkat.,Heavy rings of iron. Status effects on you last 25% shorter.
 ITEM_CHAINMAIL_NAME,Baju Zirah Rantai,Chainmail
 ITEM_CROSSBOW_DESC,"Penarikan lambat, anak panah melesat cepat dan terjauh.","Slow wind-up, a fast bolt and the longest range."
 ITEM_CROSSBOW_NAME,Busur Silang,Crossbow
@@ -60,7 +60,7 @@ ITEM_BATU_KALI_NAME,Batu Kali,Batu Kali
 ITEM_KAIN_HIJAU_DESC,Selembar kain hijau. Kendi menyembuhkan +10%.,A green cloth. The flask heals +10%.
 ITEM_KAIN_HIJAU_LORE,"Menurut kepercayaan, terkait dengan kisah Nyi Roro Kidul.","Linked, by belief, to the lore of Nyi Roro Kidul."
 ITEM_KAIN_HIJAU_NAME,Kain Hijau,Kain Hijau
-ITEM_KERIS_LUK_7_DESC,Keris tujuh lekukan. +4 Sakti saat menghindar tepat waktu.,A keris with seven curves. +4 Sakti on a perfect dodge.
+ITEM_KERIS_LUK_7_DESC,Keris tujuh lekukan. +6 Sakti saat menghindar tepat waktu.,A keris with seven curves. +6 Sakti on a perfect dodge.
 ITEM_KERIS_LUK_7_LORE,"Tujuh lekukan, secara tradisi dikaitkan dengan perlindungan. Pusaka keramat; perlakukan dengan hormat.","Seven curves, traditionally associated with protection. A sacred pusaka; handle it with respect."
 ITEM_KERIS_LUK_7_NAME,Keris Luk 7,Keris Luk 7
 ITEM_KERIS_MPU_GANDRING_DESC,"Kuat, tetapi setiap pukulan menguras 1 HP.","Strong, but every hit costs you 1 HP."
@@ -75,7 +75,7 @@ ITEM_PADDED_TUNIC_NAME,Tunik Empuk,Padded Tunic
 ITEM_PANAH_PASOPATI_DESC,Anak panah yang namanya diambil dari panah Arjuna. +10% Sakti terisi.,An arrow named after Arjuna's. +10% Sakti gain.
 ITEM_PANAH_PASOPATI_LORE,"Arjuna, pemanah agung dalam wayang, dikaitkan dengan panah Pasopati.","Arjuna, the great archer of wayang, is linked with the arrow Pasopati."
 ITEM_PANAH_PASOPATI_NAME,Panah Pasopati,Panah Pasopati
-ITEM_SILVER_BANGLE_DESC,Daya 1. +15% pemulihan stamina.,Daya 1. +15% stamina regen.
+ITEM_SILVER_BANGLE_DESC,Daya 1. +10% pemulihan stamina.,Daya 1. +10% stamina regen.
 ITEM_SILVER_BANGLE_NAME,Gelang Perak,Silver Bangle
 ITEM_SPEAR_DESC,"Jangkauan terpanjang di antara senjata biasa, tusukan sempit.","The longest reach of the common weapons, with a narrow thrust."
 ITEM_SPEAR_NAME,Tombak,Spear
@@ -220,7 +220,7 @@ ITEM_BANDRING_LORE,Anak gembala memakai bandring untuk menghalau burung dan menj
 ITEM_BANDRING_IJUK_LORE,"Ijuk, serat pohon aren, dipilin jadi tali yang awet. Ia juga dipakai untuk atap dan tambang.","Ijuk, the fibre of the aren palm, is twisted into hardy cord. It is also used for thatch and rope."
 ITEM_BANDRING_KULIT_LORE,Tali kulit lebih licin dan lebih cepat dilepas daripada serat.,Leather cord is smoother and quicker to release than fibre.
 ITEM_BATU_AKIK_NAME,Batu Akik,Batu Akik
-ITEM_BATU_AKIK_DESC,Daya 1. +6 Sakti saat menghindar tepat waktu.,Daya 1. +6 Sakti on a perfect dodge.
+ITEM_BATU_AKIK_DESC,Daya 1. +4 Sakti saat menghindar tepat waktu.,Daya 1. +4 Sakti on a perfect dodge.
 ITEM_BATU_AKIK_LORE,"Batu akik, batu cincin yang digosok halus. Banyak yang percaya tiap batu punya tuahnya.","Batu akik, a polished ring stone. Many believe each stone has its own virtue."
 ITEM_BESKAP_DALANG_LORE,"Dalang duduk bersila dalam beskapnya semalam suntuk, dari gamelan pertama sampai fajar.","The dalang sits cross-legged in his beskap all night, from the first gamelan note to dawn."
 ITEM_BLENCONG_LORE,"Blencong, lampu minyak di atas dalang, membuat bayangan wayang jatuh ke kelir.","The blencong, the oil lamp above the dalang, throws the wayang's shadow onto the screen."

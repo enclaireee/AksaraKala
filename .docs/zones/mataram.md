@@ -981,7 +981,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,=,,,,,,Y
 | `L` | NPC tuyul leader (SQ-M3, talk for the peaceful end) | `res://entities/npc/npc.tscn` | `{npc_id:"tuyul_leader"}` | floor | 1 |
 | `M` | trigger, green-bean counting trap in the kiln (SQ-M3 peaceful end; fires `area_entered:m3_trap_sprung`) | `res://entities/world/trigger.tscn` | `{trigger_id:"m3_trap_sprung", size:Vector2i(4,4)}` | floor | 1 |
 | `q` | elite tuyul leader (SQ-M3, inert until step 4; `unique_id` `tuyul_leader`, elite stats HP x4, Ilmu x4, **TUNE**; in the peaceful end it is the one caught while counting, in the fight end the swarm of `mataram_tuyul` wakes with it) | `res://entities/enemies/tuyul_leader.tscn` | `{unique_id:"tuyul_leader"}` | floor | 1 |
-| `c` | chest: Amulet (secret 3, well chamber, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_secret_sumur", item_id:"amulet"}` | floor | 1 |
+| `c` | chest: class gear `gelang_baja`, a second path gets its sibling (secret 3, well chamber, ASSUMED) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_secret_sumur", item_id:"gelang_baja"}` | floor | 1 |
 | `u` | loose Tuyul, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/tuyul.tscn` | `{}` | grass | 2 |
 | `k` | loose Pocong, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/pocong.tscn` | `{}` | grass | 1 |
 | `E` | encounter mataram_tegal_pillars (2.13 fight across the plain of rising stones) | `res://entities/world/encounter.tscn` | `{area_id:"mataram_tegal_pillars", size:Vector2i(15,9), waves:[[[res://entities/enemies/arca_penjaga.tscn, Vector2i(-4,0)], [res://entities/enemies/genderuwo.tscn, Vector2i(4,0)]]]}` | path | 1 |

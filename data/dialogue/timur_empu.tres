@@ -7,7 +7,7 @@ script = ExtResource("1")
 npc_id = "timur_empu"
 name_key = "NPC_TIMUR_EMPU_NAME"
 entries = Array[Dictionary]([
-	{"if": ["step:mq3=2"], "lines": ["DLG_TIMUR_EMPU_V1", "@NPC_HERO_NAME", "DLG_TIMUR_EMPU_H1", "@NPC_TIMUR_EMPU_NAME", "DLG_TIMUR_EMPU_V2", "DLG_TIMUR_EMPU_V3"], "do": []},
+	{"if": ["step:mq3=2"], "lines": ["DLG_TIMUR_EMPU_V1", "@NPC_HERO_NAME", "DLG_TIMUR_EMPU_H1", "@NPC_TIMUR_EMPU_NAME", "DLG_TIMUR_EMPU_V2", "DLG_TIMUR_EMPU_V3", "DLG_TIMUR_EMPU_V601", "DLG_TIMUR_EMPU_V602", "DLG_TIMUR_EMPU_V603"], "do": []},
 	{"if": ["quest:sq_t3=available"], "lines": ["DLG_TIMUR_EMPU_15", "DLG_TIMUR_EMPU_16", "DLG_TIMUR_EMPU_17"], "do": ["start:sq_t3"]},
 	{"if": ["step:sq_t3=2"], "lines": ["DLG_TIMUR_EMPU_12", "DLG_TIMUR_EMPU_13", "DLG_TIMUR_EMPU_14"], "do": []},
 	{"if": ["flag:choice_reforge"], "lines": ["DLG_TIMUR_EMPU_V8"], "do": []},

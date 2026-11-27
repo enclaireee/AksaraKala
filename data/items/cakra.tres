@@ -18,4 +18,5 @@ recovery = 0.3
 cost = 4.0
 projectile_speed = 300.0
 projectile_range = 220.0
-damage = 10
+sakti_per_hit = 2.5
+damage = 6

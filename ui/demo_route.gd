@@ -529,6 +529,8 @@ func _level_floor(lv: int) -> void:
 
 ## The best weapon of the class's kind, the heaviest armor, and jimat up to the Daya budget.
 func _equip_best() -> void:
+	while g.jamasan():
+		pass
 	if _cls == null:
 		return
 	var start := ItemData.by_id(_cls.start_weapon)

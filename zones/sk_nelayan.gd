@@ -81,7 +81,7 @@ const SPOTS := {
 	"J": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_jurukunci", "cond": "!flag:mq4_4"}, "tile": "_"},   # NPC Mbah Wiryo, first met here (4.10, `talked_to:kidul_jurukunci`, sets `mq4_4`; the instance in `sk_pantai` takes over once `mq4_4` is set)
 	"s": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_sari", "cond": "flag:mq4_8"}, "tile": "_"},   # NPC Sari after the Trial of the Waves (entry 5, `"quiet": true`, hub `H`)
 	"F": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "k2_fisher"}, "tile": "."},   # NPC river-mouth fisher (SQ-K2)
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_nelayan", "item_id": "sabuk_merah"}, "tile": "_"},   # chest: class gear `sabuk_merah`, a second path gets its sibling (ASSUMED)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "kidul_chest_nelayan", "item_id": "ilmu:380"}, "tile": "_"},   # chest: 380 Ilmu (was sabuk_merah, moved to SQ-G1)
 	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_fam_wiryo"}, "tile": "."},   # NPC the head of Mbah Wiryo's own family, his nephew, mends in the front yard of the juru kunci's house; the third of the three coastal families (Act V town, **ASSUMED**)
 	"K": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_fam_jala"}, "tile": "."},   # NPC the head of the net-mending family, in the net yard of the south row; the first of the three coastal families (**ASSUMED**)
 	"L": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "kidul_fam_bakul"}, "tile": "."},   # NPC the head of the basket-weaving and drying family, in the yard of the south-east row; the second of the three coastal families (**ASSUMED**)

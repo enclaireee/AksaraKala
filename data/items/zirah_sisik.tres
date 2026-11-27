@@ -12,4 +12,4 @@ slot = "armor"
 description = "ITEM_ZIRAH_SISIK_DESC"
 defense = 4
 favoured = "warrior"
-favoured_bonus = {"max_hp": 10}
+favoured_bonus = {"defense": 0.05}

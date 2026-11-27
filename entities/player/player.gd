@@ -92,7 +92,10 @@ func _ready() -> void:
 	hurtbox.hurt.connect(_on_hurt)
 	hurtbox.dodged.connect(_on_dodged)
 	health.died.connect(_on_died)
-	_ev.enemy_killed.connect(func(_e: Node2D, _i: int) -> void: health.heal(roundi(game.bonus("kill_heal"))))
+	_ev.enemy_killed.connect(func(_e: Node2D, _i: int) -> void:
+		var kh := roundi(game.bonus("kill_heal"))
+		if kh > 0:
+			health.heal(kh))
 	camera.lean = tuning.camera_lean
 	melee_hitbox.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, self, melee_hitbox.heavy, melee_hitbox.damage))
 	stamina.empty_attempt.connect(blocked.emit.bind("st"))
@@ -623,7 +626,8 @@ func apply_from_game() -> void:
 	health.reduction = game.bonus("defense")   # Sabuk Galuh
 	var aria_regen := ARIA_REGEN if game.has_flag("choice_release_aria") and _zone_seen == ARIA_ZONE else 0.0
 	stamina.regen = _regen_base * (1.0 + tuning.stat_speed_per * game.stat("end") + game.bonus("stamina_regen") + aria_regen)
-	dmg_mult = (1.0 + tuning.stat_damage_per * game.stat("str" if item.is_melee() else "dex")) * (1.0 + game.bonus("damage_mult")) * game.power_mult()
+	var dmg_stat := "str" if item.is_melee() else ("spi" if item.archetype == "staff" else "dex")
+	dmg_mult = (1.0 + tuning.stat_damage_per * game.stat(dmg_stat)) * (1.0 + game.bonus("damage_mult")) * game.power_mult()
 	atk_speed = 1.0 + tuning.stat_speed_per * game.stat("dex")
 	move_mult = 1.0 + game.bonus("move_speed")
 	dodge_cost = tuning.rogue_dodge_cost if class_id == "rogue" else tuning.dodge_cost

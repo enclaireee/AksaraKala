@@ -346,7 +346,7 @@ The old well stands a few steps from the banyan; the catch happens there, becaus
 | T:ask_cups | `"topic": "ask_cups"`, `"quiet": true` | | |
 | 2 | `step:mq4=2`, `item:laras_ribbon,item:laras_board,item:laras_strip_ka` (4.3, section 10) | | |
 | 3 | `step:mq4=2` (4.3, no items yet, `"quiet": true`, section 10) | | |
-| 4 | `step:mq0=9` (0.10, the morning after) | `flag:has_pusaka` | |
+| 4 | `step:mq0=9` (0.10, the morning after) | `flag:has_pusaka`, `codex:kujang` | |
 | 5 | `flag:mq5_4` (epilogue, section 11) | | |
 | 6 | `quest:mq0=active` | | |
 | 7 | (none) | | |
@@ -3342,7 +3342,7 @@ Runtime order is the row order above: the SQ-T3 entries come before the main-pat
 | 3 | DLG_TIMUR_EMPU_V22 | Mpu Gandring, empu tua yang menempanya, leluhur guru kami. Dongeng lupa bagian yang tak enak: seseorang harus merawatnya. | Mpu Gandring, the old smith who made it, ancestor of our teachers. The tale forgets the awkward part: someone has to tend it. |
 | 3 | DLG_TIMUR_EMPU_V23 | Setiap bilah ingat untuk apa ia ditempa. Yang itu ditempa untuk menelan. Tanda di pintu itu akar tonggaknya. | Every blade remembers what it was made for. That one was made to swallow. Those door marks are the roots of its stakes. |
 | 3 | DLG_TIMUR_EMPU_V601 | Kujang di pinggangmu itu. Boleh kulihat pamornya? | That kujang at your belt. May I read its pamor? |
-| 3 | DLG_TIMUR_EMPU_V602 | Sudah dua kali dibasuh. Ada yang di rumahmu masih menyayanginya. | Washed twice already. Someone in your house still loves it. |
+| 3 | DLG_TIMUR_EMPU_V602 | Pamornya masih hangat. Ada yang di rumahmu masih menyayanginya. | Its pamor is still warm. Someone in your house still loves it. |
 | 3 | DLG_TIMUR_EMPU_V603 | Bilah yang masih ingat rumahnya tak mudah ditelan keris itu. Simpan dekat. | A blade that still remembers its house won't be swallowed easily by that keris. Keep it close. |
 | 3 | @NPC_HERO_NAME | | |
 | 3 | DLG_TIMUR_EMPU_H21 | Bagaimana menghentikannya? | How do I stop it? |

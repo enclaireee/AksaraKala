@@ -61,11 +61,11 @@ The Short Sword, Iron Staff and Longbow are **deleted**. Each was its starter pl
 ### 2.2 Mythic (pusaka)
 | Item | Archetype | Dmg | Twist | Notes (culture) | Source |
 |------|-----------|-----|-------|-----------------|--------|
-| Keris Luk 7 | Light | 10 | +4 Sakti on a perfect dodge (`dodge_sakti`) | A keris with 7 curves (*luk*; keris luk are odd numbers 3 to 13). The meaning of 7 varies by source, so the text says "traditionally associated with". The keris is UNESCO Intangible Heritage (2008), a sacred pusaka, and is treated respectfully | SQ-T3 Pamor errand |
+| Keris Luk 7 | Light | 10 | +6 Sakti on a perfect dodge (`dodge_sakti`) | A keris with 7 curves (*luk*; keris luk are odd numbers 3 to 13). The meaning of 7 varies by source, so the text says "traditionally associated with". The keris is UNESCO Intangible Heritage (2008), a sacred pusaka, and is treated respectfully | SQ-T3 Pamor errand |
 | Keris Mpu Gandring | Light | 14 | Cursed: each hit costs 1 HP (`self_damage`). The one exception to the cap | In the Pararaton legend (label it legend), the keris was forged unfinished for Ken Arok and Mpu Gandring's dying curse followed it. **VERIFY** | MQ3 Choice 4, reforge |
 | Panah Pasopati | Ranged | 10 | +10% Sakti gain | Named after Arjuna's arrow. Who gave it to him is unconfirmed | Zone 2 secret |
-| Cakra | Ranged | 10 | Thrown disc that **returns like a boomerang** and hits on the way back | Kresna's disc (Cakra Baskara or Sudarsana) in wayang | SQ-K2 sea spirit bounty |
-| Gada Rujakpolo | Heavy | 27 | Very wide arc (170°), slow: windup 0.35 s, recovery 0.6 s, 25 dps vs the broadsword 27.5 (TUNE) | Bima's club in wayang. **VERIFY** the name and the owner | sk_karang chest (`kidul_chest_2`), Act V |
+| Cakra | Ranged | 6 | Thrown disc that **returns like a boomerang** and hits on the way back (`sakti_per_hit` 2.5) | Kresna's disc (Cakra Baskara or Sudarsana) in wayang | SQ-K2 sea spirit bounty |
+| Gada Rujakpolo | Heavy | 27 | Very wide arc (170°), slow: windup 0.35 s, recovery 0.5 s, cost 28, `sakti_per_hit` 14, 27.8 dps vs the broadsword 27.5 (TUNE) | Bima's club in wayang. **VERIFY** the name and the owner | sk_karang chest (`kidul_chest_2`), Act V |
 | Teken Galih Asem | Staff | 10 | +10% spell damage (`spell_mult`) | A walking staff of tamarind heartwood, carried by a wandering ascetic. **VERIFY** *teken* and *galih asem* as an ascetic's staff | tt_pesisir wreck chest (`chest_tt_pesisir`), Act IV |
 
 The old Kujang weapon is **deleted**. Its name and codex entry move to the Kujang Pusaka (section 1).
@@ -77,7 +77,7 @@ One body slot. `defense` gives 5% damage reduction per point ([rpg.md](rpg.md) 5
 |------|------|-----|-------|--------|
 | Padded Tunic | Common | 1 | Plain padded cloth | Starter |
 | Leather Armor | Common | 2 | Light and quiet | Zone 1 chest |
-| Chainmail | Common | 4 | Heavy rings of iron | Zone 3 chest |
+| Chainmail | Common | 4 | Heavy rings of iron, status effects −25% (`status_short`) | Zone 3 chest |
 | Iket Sunda | Mythic | 2 | Smudged-cast threshold −0.02 (`smudge`) | Sundanese cloth head wrap, tied by the wearer. From SQ-S1 Lutung Kasarung |
 | Blangkon | Mythic | 3 | +5% Sakti gain | Javanese ready-made batik head cloth. From SQ-M4 Gamelan errand |
 | Baju Batik | Mythic | 4 | +15 max HP | Batik clothing whose patterns carry meaning (use a named pattern with a verified meaning). From the MQ2 boss, Bandung Bondowoso |
@@ -111,11 +111,11 @@ The existing keys are listed in [classes.md](classes.md).
 |-------|------|---------------------|-------|--------|
 | Iron Ring | 2 | +5% damage (`damage_mult`) | A plain band | Zone 1 chest |
 | Stone Ring | 2 | +5% spell damage (`spell_mult`) | A ring with a stone | SQ-T1 Ande-Ande Lumut |
-| Amulet | 1 | +15 max HP | A small charm | Zone 2 chest |
+| Amulet | 1 | +15 max HP | A small charm | MQ0 reward |
 | Feather Charm | 1 | +8% move speed | Light as a feather | SQ-M1 Jaka Tarub |
-| Silver Bangle | 1 | +15% stamina regen | | SQ-S4 Cepot |
+| Silver Bangle | 1 | +10% stamina regen | | SQ-S4 Cepot |
 | Kembang Setaman | 1 | Flask heals +10% (`flask_heal`) | Seven kinds of flowers floated in water for blessing and cleansing. **VERIFY** | ts_situ chest (`sunda_kujang`, was the Kujang) |
-| Batu Akik | 1 | +6 Sakti on a perfect dodge (`dodge_sakti`) | A polished agate ring stone. **VERIFY** the protective beliefs | ts_sawah chest (`sunda_chest_sawah`, was the Short Sword) |
+| Batu Akik | 1 | +4 Sakti on a perfect dodge (`dodge_sakti`) | A polished agate ring stone. **VERIFY** the protective beliefs | ts_sawah chest (`sunda_chest_sawah`, was the Short Sword) |
 | Kemenyan | 1 | +10% Ilmu (`ilmu_mult`) | Benzoin incense, burned to send words to the ancestors. **VERIFY** | mt_reruntuhan secret (`mataram_secret_gong`, was the Longbow) |
 | Jimat (mythic) | 2 | +4 HP per kill (`kill_heal`) | A small protective charm, carried for luck and protection | SQ-M2 Wewe Gombel |
 | Lontar Kuno (mythic) | 2 | Smudged-cast threshold −0.05 (`smudge`) | Old palm-leaf manuscript, how aksara were written | SQ-D2 Pustaka, 50% codex |
@@ -138,20 +138,20 @@ Every class-favoured jimat (section 5) costs **2 Daya**.
 |---|---|---|---|---|
 | Parang Perang (`parang_perang`) | Heavy | 24 dmg, quicker swing | Hulubalang: +10% damage | Zone chest |
 | Tombak Panji (`tombak_panji`) | Heavy | 27 dmg, long reach | Hulubalang: +1 Vitality | SQ-X1 |
-| Zirah Sisik (`zirah_sisik`) | Armor | Def 4 | Hulubalang: +10 max HP | Zone chest |
-| Gelang Baja (`gelang_baja`) | Jimat 2 | +5% damage reduction | Hulubalang: +1 Strength | Zone chest |
+| Zirah Sisik (`zirah_sisik`) | Armor | Def 4 | Hulubalang: +5% damage reduction | Zone chest |
+| Gelang Baja (`gelang_baja`) | Jimat 2 | +5% damage reduction | Hulubalang: +1 Strength | Zone chest (`mt_tegal`) |
 | Busur Petung (`busur_petung`) | Ranged | 7 dmg, 3 stamina, fast | Pamanah: +10% damage | Zone chest |
 | Gendewa Tanduk (`gendewa_tanduk`) | Ranged | 10 dmg | Pamanah: +1 Dexterity | SQ-X1 |
 | Kampret Pemburu (`kampret_pemburu`) | Armor | Def 2, +5% move speed | Pamanah: +10% stamina regen | Zone chest |
-| Kantong Panah (`kantong_panah`) | Jimat 2 | +10% stamina regen | Pamanah: +1 Dexterity | Zone chest |
+| Kantong Panah (`kantong_panah`) | Jimat 2 | +10% stamina regen | Pamanah: +1 Dexterity | Zone chest (`tt_kulon`) |
 | Golok Pendek (`golok_pendek`) | Light | 9 dmg | Pendekar: +10% damage | Zone chest |
 | Kujang Kembar (`kujang_kembar`) | Light | 10 dmg, very fast. **VERIFY**: a paired fighting use of the kujang is a game invention, and the text must say so | Pendekar: +1 Dexterity | SQ-X1 |
 | Pangsi Hitam (`pangsi_hitam`) | Armor | Def 2, +8% move speed. **VERIFY**: pangsi as silat and daily Sundanese clothing | Pendekar: +10% stamina regen | Zone chest |
-| Sabuk Merah (`sabuk_merah`) | Jimat 2 | +1 Endurance | Pendekar: +1 Strength | Zone chest |
+| Sabuk Merah (`sabuk_merah`) | Jimat 2 | +1 Endurance | Pendekar: +1 Strength | SQ-G1 Si Kabayan |
 | Tongkat Genta (`tongkat_genta`) | Staff | 9 dmg, 6 Sakti per hit | Wiku: +10% Sakti gain | Zone chest |
 | Tongkat Cendana (`tongkat_cendana`) | Staff | 10 dmg | Wiku: +1 Spirit | SQ-X1 |
 | Jubah Wiku (`jubah_wiku`) | Armor | Def 1, +1 Spirit | Wiku: +10% Sakti gain | Zone chest |
-| Genitri (`genitri`) | Jimat 2 | +1 Spirit. **VERIFY**: genitri (rudraksha) prayer beads | Wiku: smudge threshold −0.03 | Zone chest |
+| Genitri (`genitri`) | Jimat 2 | +1 Spirit. **VERIFY**: genitri (rudraksha) prayer beads | Wiku: smudge threshold −0.03 | SQ-G2 Ririwa |
 
 **Second paths.** Each row is the sibling of the school item named in the last column. `Game.SIBLING_ITEM` swaps it in for a second-path player.
 

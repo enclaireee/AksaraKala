@@ -230,6 +230,12 @@ func quest_rewards(q: QuestData) -> Dictionary:
 	if own != "":
 		r["items"] = r.get("items", []) + [own]
 	r.merge(r.get("class_rewards", {}).get(class_id, {}), true)   # per-class override, e.g. SQ-V1 gives a Dalang Ilmu, not a 2nd blencong
+	if r.has("items"):
+		var resolved: Array = []
+		for item_id in r["items"]:
+			var sib := ItemData.by_id(SIBLING_ITEM.get(String(item_id), ""))
+			resolved.append(sib.id if sib and sib.favoured == class_id else item_id)
+		r["items"] = resolved
 	return r
 
 
@@ -1029,6 +1035,8 @@ func _load_gear(d: Dictionary) -> void:
 		raw_jimat = [equipped.get("accessory", "")]
 		if quest_state("mq0") == "done" or (quests.has("mq0") and int(quests.mq0.step) >= 10) or has_flag("mq0_4"):
 			flags["has_pusaka"] = true   # Ibu gave the kujang at 0.10 (the talk sets mq0_4)
+			if "kujang" not in codex:
+				codex.append("kujang")
 	var start := ClassData.by_id(class_id)
 	for slot in ["weapon", "armor"]:
 		var id: Variant = equipped.get(slot, "")
