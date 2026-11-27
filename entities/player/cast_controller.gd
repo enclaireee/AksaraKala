@@ -7,6 +7,7 @@ signal read(result: Dictionary)   # every recognized stroke: {glyph, score, powe
 
 @export var overlay: CastOverlay
 @export var practice := false   # sanggar: no sakti gate, no cost (spells.md 9)
+@export var practice_only_signal := false   # Semar Phase A drill: emit practice_cast instead of quest-advancing spell_cast
 
 const KICK := {"sunda_ca": 2.5, "jawa_ka": 2.0, "jawa_ra": 1.5, "jawa_na": 1.5, "sunda_pa": 2.0, "jawa_pa": 1.5}   # camera shake px per glyph
 
@@ -132,7 +133,11 @@ func release() -> void:
 			SpellVariants.later(player, echo_delay, func() -> void:
 				if not SpellVariants.cast(spell, player, aim, echo_pow, false):
 					_spawn(spell, echo_pow))
-		get_node("/root/Events").spell_cast.emit(glyph.id, power)
+		var ev := get_node("/root/Events")
+		if practice and practice_only_signal:
+			ev.practice_cast.emit(glyph.id, power)
+		else:
+			ev.spell_cast.emit(glyph.id, power)
 
 
 ## Cancels and fizzles both lock casting out for a moment, so slow-mo cannot be spammed (spells.md 9).

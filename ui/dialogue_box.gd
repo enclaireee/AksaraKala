@@ -20,8 +20,8 @@ const BOX_W := 400.0
 const BOX_BOTTOM := 262.0 # frame bottom edge (8 px screen margin): the box grows upward from here
 const PAD_X := 10.0       # text inset when there is no face
 const PAD_TOP := 7.0      # frame top to the name row
-const NAME_ROW := 13.0    # name row height (11 px caps line + 2 px gap) above the text
-const PAD_BOT := 13.0     # room for the continue mark under the text
+const NAME_ROW := 14.0    # name row height (one 14 px line pitch) above the text
+const PAD_BOT := 21.0     # 2 px gap, the 14 px continue row (keycap), 5 px above the 4 px border
 const MIN_H := 40.0
 const LINE_H := UIFx.LINE * 1.0   # body line pitch (ui.md 1)
 const FACE_W := 70.0      # 6 px inset + 56 px frame + 8 px gap: the text column starts here
@@ -46,7 +46,8 @@ var _plate: NinePatchRect   # gold name plate over the top edge
 var _sel_bar: ColorRect
 var _lozenge: TextureRect
 var _frame: NinePatchRect
-var _hint: Label   # "[E] Continue" until the first advance of a save
+var _hint: Label   # "Continue" beside its keycap until the first advance of a save
+var _hint_key: Control
 var _tween: Tween
 var _choices := PackedStringArray()   # for the next request
 var _opts := PackedStringArray()      # for the open box
@@ -83,13 +84,13 @@ func _ready() -> void:
 	_frame = _nine("ink_panel", Rect2(BOX_X, BOX_BOTTOM - MIN_H, BOX_W, MIN_H), 4)
 	_plate = NinePatchRect.new()   # the name row: no art of its own, it only holds the caps name (ui.md 3.1)
 	_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_plate.size = Vector2(60, 12)
+	_plate.size = Vector2(60, UIFx.LINE - 1)
 	add_child(_plate)
 	_speaker = UIFx.text("", "label", UIFx.WARM)
-	_speaker.size = Vector2(60, 12)
+	_speaker.size = Vector2(60, UIFx.LINE - 1)
 	_plate.add_child(_speaker)
 	_who = UIFx.text("", "body", UIFx.DIM)   # first meeting: "Anak Semar. Riuh." beside the name
-	_who.size = Vector2(240, 12)
+	_who.size = Vector2(240, UIFx.LINE - 1)
 	add_child(_who)
 	_text = UIFx.text("", "body", TEXT_COL)
 	_text.size = Vector2(BOX_W - PAD_X * 2.0, LINE_H)
@@ -109,15 +110,15 @@ func _ready() -> void:
 	_lozenge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_lozenge)
 	_list = UIFx.text("", "body", TEXT_COL)
-	_list.size = Vector2(BOX_W - PAD_X * 2.0 - 10.0, 30)
+	_list.size = Vector2(BOX_W - PAD_X * 2.0 - 10.0, LINE_H * 2.0 - 1.0)
 	_list.add_theme_constant_override("line_spacing", 1)
 	add_child(_list)
 	_cue = TextureRect.new()
 	_cue.texture = load(UI_DIR + "continue_arrow.png")
 	_cue.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_cue)
-	_hint = UIFx.text("", "body", UIFx.DIM)
-	_hint.size = Vector2(120, 12)
+	_hint = UIFx.text("", "body", UIFx.LABEL_COL)
+	_hint.size = Vector2(120, UIFx.LINE - 1)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(_hint)
 	_frame.z_index = -1
@@ -189,7 +190,13 @@ func _on_requested(speaker_key: String, lines: PackedStringArray) -> void:
 	_fresh.clear()
 	_speaker_key = ""   # a new talk starts on the neutral face
 	var g0 := get_node("/root/Game")
-	_hint.text = "" if g0.has_flag("seen_hint_continue") else "%s  %s" % [g0.key_name("interact"), tr("UI_HINT_CONTINUE")]
+	_hint.text = "" if g0.has_flag("seen_hint_continue") else tr("UI_HINT_CONTINUE")
+	if _hint_key != null:
+		_hint_key.queue_free()
+		_hint_key = null
+	if _hint.text != "":
+		_hint_key = MenuBook.keycap(g0.key_name("interact"))
+		add_child(_hint_key)
 	_set_speaker(speaker_key)
 	visible = true
 	_animate_open()
@@ -369,10 +376,13 @@ func _layout() -> void:
 	_text.position = Vector2(tx, ty)
 	_text.size.y = th
 	_list.position = Vector2(tx + 10.0, ty + th + 4.0)
-	_list.size = Vector2(tw - 10.0, maxf(LINE_H * _opts.size(), LINE_H))
+	_list.size = Vector2(tw - 10.0, maxf(LINE_H * _opts.size(), LINE_H) - 1.0)
 	_sel_bar.size.x = tw
-	_cue.position = Vector2(BOX_X + BOX_W - PAD_X - 5.0, fy + h - 10.0)
-	_hint.position = Vector2(_cue.position.x - 4.0 - _hint.size.x, fy + h - 12.0)
+	_cue.position = Vector2(BOX_X + BOX_W - PAD_X - 5.0, fy + h - 13.0)
+	_hint.position = Vector2(_cue.position.x - UIFx.GAP_S - _hint.size.x, fy + h - 20.0)   # row: keycap 14 px at h-19; the label ink starts on its face row 2
+	if _hint_key != null:
+		var tw_h := ceilf(UIFx.body_font().get_string_size(_hint.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x)
+		_hint_key.position = Vector2(_cue.position.x - UIFx.GAP_S - tw_h - UIFx.GAP_S - _hint_key.size.x, fy + h - 19.0)
 
 
 func _close() -> void:
@@ -400,8 +410,10 @@ func _process(delta: float) -> void:
 		_text.visible_characters = vis
 	_cue.visible = _open and _hold_until == 0 and not _choosing and _text.visible_characters >= _text.get_total_character_count() \
 			and Time.get_ticks_msec() % 800 < 500
-	_cue.position.y = _frame.position.y + _frame.size.y - 10.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)
+	_cue.position.y = _frame.position.y + _frame.size.y - 13.0 + (1.0 if Time.get_ticks_msec() % 800 < 250 else 0.0)
 	_hint.visible = _cue.visible and _hint.text != ""
+	if _hint_key != null:
+		_hint_key.visible = _hint.visible
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -430,5 +442,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	else:
 		if _hint.text != "":   # the player found the key: the hint has done its job
 			_hint.text = ""
+			if _hint_key != null:
+				_hint_key.queue_free()
+				_hint_key = null
 			get_node("/root/Game").set_flag("seen_hint_continue")
 		_next()

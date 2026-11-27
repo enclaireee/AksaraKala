@@ -14,7 +14,7 @@ var _tween: Tween
 var _hid_far := false   # the prompt is hidden only because a nearer one is in range
 
 const KEYCAP := preload("res://assets/art/ui/keycap.png")
-const KEY_FONT := preload("res://assets/fonts/PixeloidSans.woff")   # body face at its 9 px grid (ui.md 1)
+var KEY_FONT := UIFx.body_font()   # the trimmed body face (ui.md 1)
 const PILL := preload("res://assets/art/ui/ink_panel.png")
 const RISE := 3.0
 
@@ -103,19 +103,19 @@ func _sprite_top() -> float:
 func _layout_prompt() -> void:
 	if _prompt == null:
 		return
-	# 16 px ink pill: 2 px border, 12 px keycap, then the verb centred on the pill
-	var kw := maxf(10.0, ceilf(KEY_FONT.get_string_size(_key_lbl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x) + 5.0)
+	# 18 px ink pill: 2 px border, 14 px keycap (ui.md 0.2 item 7), then the verb centred on the pill
+	var kw := maxf(12.0, ceilf(KEY_FONT.get_string_size(_key_lbl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x) + 5.0)
 	_prompt.reset_size()
 	var vs := _prompt.get_minimum_size()
-	_prompt.size = Vector2(vs.x, 12.0)
+	_prompt.size = Vector2(vs.x, 14.0)
 	var w := 2.0 + kw + 4.0 + vs.x + 4.0
-	_pill.size = Vector2(w, 16)
-	_pill.position = Vector2(0, -16)
-	_cap.size = Vector2(kw, 12)
-	_cap.position = Vector2(2, -14)
-	_key_lbl.size = Vector2(kw, 12)
-	_key_lbl.position = Vector2(2, -14)
-	_prompt.position = Vector2(2.0 + kw + 4.0, -14.0)
+	_pill.size = Vector2(w, 18)
+	_pill.position = Vector2(0, -18)
+	_cap.size = Vector2(kw, 14)
+	_cap.position = Vector2(2, -16)
+	_key_lbl.size = Vector2(kw, 14)
+	_key_lbl.position = Vector2(2, -16)
+	_prompt.position = Vector2(2.0 + kw + 4.0, -16.0)
 	_prompt_root.position = Vector2(-roundf(w / 2.0), roundf(_sprite_top() - 3.0))
 
 

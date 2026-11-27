@@ -20,19 +20,25 @@ const STAT_KEYS := {"damage": "UI_DER_ATK", "defense": "UI_DER_DEF", "damage_red
 		"wirama_haste": "UI_STAT_WIRAMA_HASTE", "lakon_sakti": "UI_STAT_LAKON_SAKTI", "lakon_cap": "UI_STAT_LAKON_CAP",
 		"spell_radius": "UI_STAT_SPELL_RAD"}
 # doll slot positions on the left page (24x24 wells) and the doll point each leader line runs to
-const DOLL := Vector2(72, 24)
-const SLOT_POS := {"weapon": Vector2(16, 64), "armor": Vector2(160, 40)}
+const DOLL := Vector2(72, 8)
+const SLOT_POS := {"weapon": Vector2(20, 48), "armor": Vector2(156, 26)}   # two 64 px columns either side of the doll
 const SLOT_TO := {"weapon": Vector2(DOLL.x + 6, DOLL.y + 60), "armor": Vector2(DOLL.x + 40, DOLL.y + 40)}
-const STRIP_Y := 110      # Jimat strip: header, tiles, note
+const STRIP_Y := 114      # Jimat strip: header 16, tiles 20, note 13 (the doll is 104 tall at y 8, feet end at 112; weapon name ends 113)
+const TOTALS_Y := 168     # header 16, then 2 rows at the 14 px pitch fill the page to 212
+const GRID_Y := 20
+const CARD_GAP := 6
 
 var focus_id := ""        # item id focused in the grid (kept across rebuilds)
 var _doll_btn := {}       # slot -> Button
 var _doll_icon := {}      # slot -> TextureRect
 var _doll_name := {}      # slot -> Label
+var _grid_rows := 1
 var _totals: GridContainer
 var _grid: GridContainer
 var _grid_scroll: ScrollContainer
 var _count: Label
+var _card: Control
+var _card_bg: NinePatchRect
 var _card_icon: TextureRect
 var _card_name: Label
 var _card_type: Label
@@ -94,79 +100,107 @@ func build(l: Control, r: Control) -> void:
 		var cx: float = SLOT_POS[s].x + 12
 		var lbl := MenuBook.bold(tr("UI_SLOT_" + s.to_upper()), MenuBook.INK_HEAD)
 		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		put(l, lbl, Vector2(cx - 30, SLOT_POS[s].y + 25), Vector2(60, 11))
-		var nm := MenuBook.text("", MenuBook.INK_DIM)
+		put(l, lbl, Vector2(cx - 32, SLOT_POS[s].y + 26), Vector2(64, 13))
+		var nm := MenuBook.text("", MenuBook.INK_DIM, true)   # wraps to a 2nd line, never "..."
 		nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		nm.clip_text = true
-		nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		put(l, nm, Vector2(cx - 30, SLOT_POS[s].y + 36), Vector2(60, 12))
+		put(l, nm, Vector2(cx - 32, SLOT_POS[s].y + 38), Vector2(64, UIFx.LINE * 2 - 1))
 		_doll_name[s] = nm
 	_strip = Control.new()
 	_strip.mouse_filter = MOUSE_FILTER_IGNORE
-	put(l, _strip, Vector2(0, STRIP_Y), Vector2(200, 44))
+	put(l, _strip, Vector2(0, STRIP_Y), Vector2(200, 52))
 	put(_strip, MenuBook.section(tr("UI_JIMAT")), Vector2.ZERO)
 	_daya_lbl = MenuBook.num("", MenuBook.INK_DIM)
 	_daya_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	put(_strip, _daya_lbl, Vector2(70, -1), Vector2(70, 12))
+	put(_strip, _daya_lbl, Vector2(70, 1), Vector2(70, 13))
 	_daya_pips = HBoxContainer.new()
 	_daya_pips.add_theme_constant_override("separation", 2)
 	_daya_pips.mouse_filter = MOUSE_FILTER_IGNORE
-	put(_strip, _daya_pips, Vector2(146, 1), Vector2(54, 10))
+	put(_strip, _daya_pips, Vector2(146, 5), Vector2(54, 5))
 	_jimat_row = HBoxContainer.new()
 	_jimat_row.add_theme_constant_override("separation", 2)
-	put(_strip, _jimat_row, Vector2(0, 14), Vector2(200, 20))
+	put(_strip, _jimat_row, Vector2(0, 17), Vector2(200, 20))
 	_note = MenuBook.text("", MenuBook.INK_FADE)
 	_note.clip_text = true
-	put(_strip, _note, Vector2(0, 34), Vector2(200, 10))
-	put(l, MenuBook.section(tr("UI_BK_GEAR_TOTALS")), Vector2(0, 156))
+	put(_strip, _note, Vector2(0, 38), Vector2(200, 13))
+	put(l, MenuBook.section(tr("UI_BK_GEAR_TOTALS")), Vector2(0, TOTALS_Y))
 	var tot_scroll := ScrollContainer.new()
 	tot_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	put(l, tot_scroll, Vector2(0, 170), Vector2(200, 44))
+	put(l, tot_scroll, Vector2(0, TOTALS_Y + 17), Vector2(200, UIFx.LINE * 2 - 1))
 	_totals = GridContainer.new()
 	_totals.columns = 2
-	_totals.add_theme_constant_override("h_separation", 8)
+	_totals.add_theme_constant_override("h_separation", 16)
 	_totals.add_theme_constant_override("v_separation", 1)
 	tot_scroll.add_child(_totals)
 	# right page: inventory grid + card
 	put(r, MenuBook.section(tr("UI_BK_INVENTORY")), Vector2.ZERO)
 	_count = MenuBook.num("", MenuBook.INK_DIM)
 	_count.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	put(r, _count, Vector2(150, -1), Vector2(50, 12))
+	put(r, _count, Vector2(150, 1), Vector2(50, 13))
 	_grid_scroll = ScrollContainer.new()
 	_grid_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_grid_scroll.follow_focus = true
-	put(r, _grid_scroll, Vector2(0, 20), Vector2(200, 86))
+	put(r, _grid_scroll, Vector2(0, GRID_Y), Vector2(200, 86))
 	_grid = GridContainer.new()
 	_grid.columns = COLS
 	_grid.add_theme_constant_override("h_separation", 2)
 	_grid.add_theme_constant_override("v_separation", 2)
 	_grid_scroll.add_child(_grid)
 	_empty = MenuBook.italic(tr("UI_BK_NO_ITEMS"), MenuBook.INK_FADE, false)
-	put(r, _empty, Vector2(0, 24), Vector2(200, 12))
-	# item card
-	put(r, MenuBook.nine("book_card", Rect2(0, 112, 200, 100), 4), Vector2(0, 112))
-	put(r, MenuBook.nine("slot", Rect2(0, 0, 20, 20), 4), Vector2(6, 118))
+	put(r, _empty, Vector2(0, 24), Vector2(200, 13))
+	# item card: sized to its content and hung under the grid (_layout_card)
+	_card = Control.new()
+	_card.mouse_filter = MOUSE_FILTER_IGNORE
+	put(r, _card, Vector2(0, 112), Vector2(200, 100))
+	_card_bg = MenuBook.nine("book_card", Rect2(0, 0, 200, 100), 4)
+	_card.add_child(_card_bg)
+	put(_card, MenuBook.nine("slot", Rect2(0, 0, 20, 20), 4), Vector2(6, 6))
 	_card_icon = TextureRect.new()
 	_card_icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
 	_card_icon.mouse_filter = MOUSE_FILTER_IGNORE
-	put(r, _card_icon, Vector2(8, 120), Vector2(16, 16))
-	_card_name = MenuBook.head("")
-	_card_name.clip_text = true
-	put(r, _card_name, Vector2(30, 116), Vector2(164, 12))
+	put(_card, _card_icon, Vector2(8, 8), Vector2(16, 16))
+	_card_name = MenuBook.head("", 12, MenuBook.INK)
+	_card_name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	put(_card, _card_name, Vector2(32, 5), Vector2(160, 13))
 	_card_type = MenuBook.italic("", MenuBook.INK_DIM, false)
-	put(r, _card_type, Vector2(30, 129), Vector2(110, 12))
+	put(_card, _card_type, Vector2(32, 18), Vector2(100, 13))
 	_card_tag = MenuBook.bold("", MenuBook.VERD)
 	_card_tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	put(r, _card_tag, Vector2(130, 129), Vector2(64, 12))
+	put(_card, _card_tag, Vector2(132, 18), Vector2(62, 13))
 	_card_stats = VBoxContainer.new()
-	_card_stats.add_theme_constant_override("separation", 0)
-	put(r, _card_stats, Vector2(6, 143), Vector2(188, 12))
+	_card_stats.add_theme_constant_override("separation", 1)
+	put(_card, _card_stats, Vector2(6, 34), Vector2(188, 13))
 	_card_desc_scroll = ScrollContainer.new()
 	_card_desc_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	put(r, _card_desc_scroll, Vector2(6, 162), Vector2(188, 46))
+	put(_card, _card_desc_scroll, Vector2(6, 52), Vector2(188, 46))
 	_card_desc = MenuBook.text("", MenuBook.INK_DIM, true)
-	_card_desc.custom_minimum_size.x = 184
+	_card_desc.custom_minimum_size.x = 176   # clear of the scrollbar
 	_card_desc_scroll.add_child(_card_desc)
+
+
+## Sizes the grid to its rows (1-4, then it scrolls) and the card to its content, hung just under the grid.
+func _layout_card(rows: int, n_stats: int) -> void:
+	var gh := clampi(rows, 1, 4) * 22 - 2
+	_grid_scroll.size.y = gh
+	var top := GRID_Y + gh + CARD_GAP
+	var nh := maxf(13.0, _card_name.get_minimum_size().y)
+	_card_name.size.y = nh
+	var head_h := maxf(26.0, 5.0 + nh + 1.0 + 13.0 + 3.0)   # slot well, or name + type line
+	_card_type.position.y = 5.0 + nh + 1.0
+	_card_tag.position.y = _card_type.position.y
+	_card_stats.position.y = head_h + 3.0
+	var desc_y := _card_stats.position.y + n_stats * float(UIFx.LINE) + (3.0 if n_stats > 0 else 0.0)
+	var avail := 212.0 - top - desc_y - 6.0
+	_card_desc_scroll.position.y = desc_y
+	var want := _card_desc.get_minimum_size().y
+	var dh := clampf(want, 13.0, maxf(avail, 13.0))
+	if dh < want:   # scrolls: end on a whole line so no glyph is cut at the edge
+		dh = maxf(13.0, floorf((dh + 1.0) / UIFx.LINE) * UIFx.LINE - 1.0)
+	_card_desc_scroll.size.y = dh
+	_card_desc_scroll.scroll_vertical = 0
+	var h := minf(desc_y + _card_desc_scroll.size.y + 6.0, 212.0 - top)
+	_card.position.y = top
+	_card.size.y = h
+	_card_bg.size = Vector2(200, h)
 
 
 func _icon(item: ItemData) -> Texture2D:
@@ -198,6 +232,7 @@ func refresh() -> void:
 				items.append(it)
 	_count.text = str(items.size())
 	_empty.visible = items.is_empty()
+	_grid_rows = ceili(items.size() / float(COLS))
 	var focus_btn: Button = null
 	for it in items:
 		var b := _slot_button(g, it)
@@ -352,7 +387,7 @@ func _refresh_totals(g: Node) -> void:
 		return
 	for k in sum:
 		var row := HBoxContainer.new()
-		row.custom_minimum_size = Vector2(96, 12)
+		row.custom_minimum_size = Vector2(92, 13)   # + 1 v_separation = the 14 px row pitch; 2 x 92 + 16 = the 200 px page
 		row.add_theme_constant_override("separation", 0)
 		var n := MenuBook.text(_stat_name(k))
 		n.size_flags_horizontal = SIZE_EXPAND_FILL
@@ -411,6 +446,7 @@ func _show_card(item: ItemData) -> void:
 		_card_type.text = ""
 		_card_tag.text = ""
 		_card_desc.text = ""
+		_layout_card(_grid_rows, 0)
 		return
 	_card_icon.texture = _icon(item)
 	_card_name.text = tr(item.title)
@@ -432,6 +468,7 @@ func _show_card(item: ItemData) -> void:
 	for k in keys:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 3)
+		row.custom_minimum_size.y = 13   # + 1 separation = the 14 px row pitch
 		var n := MenuBook.text(_stat_name(k))
 		n.custom_minimum_size.x = 84
 		row.add_child(n)
@@ -453,10 +490,7 @@ func _show_card(item: ItemData) -> void:
 		desc = tr("UI_FAVOURED") % tr("CLASS_%s_NAME" % item.favoured.to_upper()) + "\n" + desc
 	_card_desc.text = desc
 	_card_desc.add_theme_color_override("font_color", MenuBook.INK_HEAD if fav else MenuBook.INK_DIM)   # ponytail: the whole note lights up, not just the line
-	var desc_y := 143.0 + 12.0 * keys.size() + 3.0
-	_card_desc_scroll.position.y = desc_y
-	_card_desc_scroll.size.y = maxf(16.0, 208.0 - desc_y)
-	_card_desc_scroll.scroll_vertical = 0
+	_layout_card(_grid_rows, keys.size())
 
 
 func handle_input(e: InputEvent) -> bool:

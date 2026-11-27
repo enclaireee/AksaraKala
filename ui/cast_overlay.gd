@@ -30,6 +30,9 @@ var _label: Label
 var _sub: Label   # quality and cost line under the result
 var _guide: Node2D
 var _guide_line: Line2D
+var _guide_pts := PackedVector2Array()
+var _guide_bead: ColorRect
+var _guide_start_ms := 0
 
 
 func _ready() -> void:
@@ -141,6 +144,12 @@ func _width_curve(extra: float) -> Curve:
 func _process(_d: float) -> void:
 	if _open:
 		_ring.position = get_viewport().get_mouse_position().round()
+	if _guide_bead != null and is_instance_valid(_guide_bead) and _guide_pts.size() >= 2:
+		var cycle := fmod(float(Time.get_ticks_msec() - _guide_start_ms) * 0.001, 2.0)
+		var prog := clampf(cycle / 1.5, 0.0, 1.0)
+		var idx := clampi(int(prog * (_guide_pts.size() - 1)), 0, _guide_pts.size() - 1)
+		_guide_bead.position = (_guide_pts[idx] - Vector2(2.0, 2.0)).round()
+		_guide_bead.modulate.a = 1.0 if cycle < 1.65 else clampf((2.0 - cycle) / 0.35, 0.0, 1.0)
 
 
 func _kill() -> void:
@@ -259,7 +268,7 @@ func finish(ok: bool, text: String, info := {}) -> void:
 	_sub.modulate = Color.WHITE
 	_sub.position = Vector2(
 		clampf(_label.position.x + (_label.size.x - _sub.size.x) / 2.0, 6.0, 474.0 - _sub.size.x),
-		clampf(_label.position.y + _label.size.y - 1.0, 6.0, 264.0 - _sub.size.y)).round()
+		clampf(_label.position.y + float(UIFx.LINE), 6.0, 264.0 - _sub.size.y)).round()
 	if ok and not info.is_empty():
 		_set_ink_color(element)
 		_sigil(info, element, perfect)
@@ -373,6 +382,14 @@ func show_guide(template: PackedVector2Array, rect: Rect2) -> void:
 		var a := brush_line(3.0, Color(SKY, 0.5))
 		a.points = PackedVector2Array([pts[i] - d.rotated(0.5) * 5.0, pts[i], pts[i] - d.rotated(-0.5) * 5.0])
 		_guide.add_child(a)
+	_guide_pts = pts
+	_guide_start_ms = Time.get_ticks_msec()
+	_guide_bead = ColorRect.new()
+	_guide_bead.size = Vector2(4, 4)
+	_guide_bead.color = UIFx.HEAD
+	_guide_bead.position = (pts[0] - Vector2(2.0, 2.0)).round()
+	_guide_bead.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_guide.add_child(_guide_bead)
 	# ponytail: guide shows while overlay is hidden only if the caller opens it; drawn on this layer
 	_guide.visible = true
 
@@ -382,3 +399,5 @@ func hide_guide() -> void:
 		c.queue_free()
 		_guide.remove_child(c)
 	_guide_line = null
+	_guide_bead = null
+	_guide_pts = PackedVector2Array()

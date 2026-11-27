@@ -23,14 +23,12 @@ func icon() -> String:
 
 func build(_l: Control, _r: Control) -> void:
 	_view = MapView.new()
-	put(self, _view, Vector2(12, 4), Vector2(432, 184))
-	_note = MenuBook.text("", MenuBook.INK, false)
-	_note.clip_text = true
-	_note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	put(self, _note, Vector2(12, 190), Vector2(432, 14))
+	put(self, _view, Vector2(12, 4), Vector2(432, 173))   # the art is 184: MapView crops its foot
+	_note = MenuBook.text("", MenuBook.INK, true)   # wraps to a 2nd line rather than "..."
+	put(self, _note, Vector2(12, 179), Vector2(432, UIFx.LINE * 2 - 1))   # 2 lines reserved
 	_ft_bar = HBoxContainer.new()
 	_ft_bar.add_theme_constant_override("separation", 4)
-	put(self, _ft_bar, Vector2(12, 206), Vector2(432, 18))
+	put(self, _ft_bar, Vector2(12, 208), Vector2(432, UIFx.LINE))
 	_ft_lbl = MenuBook.bold(tr("UI_FT_LABEL"))
 	_ft_bar.add_child(_ft_lbl)
 	_ft_prev = MenuBook.small_button("<")

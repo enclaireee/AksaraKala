@@ -3,8 +3,10 @@ extends MenuTab
 ## with live slider readouts, focus highlights, danger styling, and a centered confirm modal.
 
 const BUSES := GameSettings.BUSES
-const LABEL_W := 96   # slider label column; longer labels wrap, slider + value fill the rest
+const LABEL_W := 96   # one label column for toggles and sliders (text starts at x 6, like a row button's text)
+const SIDE := 6       # left / right inner margin shared by both row kinds
 
+var _label_w := LABEL_W
 var action := ""   # "title" or "quit" while the confirm is open
 var lang_btn: Button
 var full_btn: Button
@@ -24,11 +26,16 @@ func icon() -> String:
 
 
 func build(l: Control, r: Control) -> void:
-	var lv := scroll(l, Rect2(0, 0, 194, 212))
+	_label_w = LABEL_W
+	for k in ["UI_SYS_MASTER", "UI_SYS_MUSIC", "UI_SYS_SFX", "UI_SYS_AMBIENCE", "UI_SYS_SHAKE", "UI_SYS_SLOWMO", "UI_SYS_DRAWTIME"]:
+		_label_w = maxi(_label_w, ceili(MenuBook.text(tr(k)).get_minimum_size().x) + 2)   # no slider label touches its slider, in either language
+	var lv := scroll(l, Rect2(0, 0, 200, 208))
+	lv.add_theme_constant_override("separation", 0)   # 16 px rows touch: the row pitch for interactive rows
 	lv.add_child(MenuBook.section(tr("UI_BK_AUDIO"), 190))
 	for b in BUSES:
 		_slider_row(lv, "UI_SYS_" + b.to_upper(), 0, 100, 5, float(load_setting("vol_" + b.to_lower(), 100)),
 				set_volume.bind(b), func(v: float) -> String: return "%d%%" % int(v), b)
+	_gap(lv)
 	lv.add_child(MenuBook.section(tr("UI_BK_DISPLAY"), 190))
 	full_btn = _button(lv, toggle_fullscreen)
 	_slider_row(lv, "UI_SYS_SHAKE", 0, 100, 10, GameSettings.screenshake(),
@@ -41,9 +48,11 @@ func build(l: Control, r: Control) -> void:
 	_toggle_row(lv, "cursor_size", func() -> void: GameSettings.set_cursor_size(1 if GameSettings.cursor_size() >= 2 else 2), func() -> String:
 		return "%s: %dx" % [tr("UI_SYS_CURSOR_SIZE"), GameSettings.cursor_size()])
 
-	var rv := scroll(r, Rect2(0, 0, 194, 212))
+	var rv := scroll(r, Rect2(0, 0, 200, 208))
+	rv.add_theme_constant_override("separation", 0)
 	rv.add_child(MenuBook.section(tr("UI_SYS_LANG"), 190))
 	lang_btn = _button(rv, toggle_language)
+	_gap(rv)
 	rv.add_child(MenuBook.section(tr("UI_BK_ACCESSIBILITY"), 190))
 	_toggle_row(rv, "preset", func() -> void:
 		GameSettings.set_control_preset("left_handed" if GameSettings.control_preset() == "default" else "default"), func() -> String:
@@ -65,7 +74,10 @@ func build(l: Control, r: Control) -> void:
 		return "%s: %s" % [tr("UI_SYS_GENTLE"), tr("UI_ON") if GameSettings.gentle_combat() else tr("UI_OFF")])
 	_toggle_row(rv, "drawing_assist", func() -> void: GameSettings.set_drawing_assist(not GameSettings.drawing_assist()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_DRAW_ASSIST"), tr("UI_ON") if GameSettings.drawing_assist() else tr("UI_OFF")])
+	_gap(rv)
 	rv.add_child(MenuBook.section(tr("UI_BK_GAME"), 190))
+	_toggle_row(rv, "skip_tutorials", func() -> void: GameSettings.set_skip_tutorials(not GameSettings.skip_tutorials()), func() -> String:
+		return "%s: %s" % [tr("UI_SYS_SKIP_TUT"), tr("UI_ON") if GameSettings.skip_tutorials() else tr("UI_OFF")])
 	_toggle_row(rv, "check_updates", func() -> void: GameSettings.set_check_updates(not GameSettings.check_updates()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_UPDATES"), tr("UI_ON") if GameSettings.check_updates() else tr("UI_OFF")])
 	_button(rv, menu.close).text = tr("UI_SYS_RESUME")
@@ -124,6 +136,35 @@ func _danger_style(b: Button) -> void:
 		b.add_theme_color_override(c, MenuBook.WAX)
 
 
+func _gap(box: Control) -> void:
+	var g := Control.new()
+	g.custom_minimum_size.y = UIFx.GAP_S
+	g.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.add_child(g)
+
+
+## "Label: value" on a row button: the label stays the button text (left column), the value sits in a right column
+## that lines up with the slider readouts.
+func _set_toggle(b: Button, t: String) -> void:
+	var i := t.rfind(": ")
+	var v: Label = b.get_meta("val") if b.has_meta("val") else null
+	if i < 0:
+		b.text = t
+		if v:
+			v.text = ""
+		return
+	if v == null:
+		v = MenuBook.text("", MenuBook.INK_DIM)
+		v.set_anchors_preset(Control.PRESET_FULL_RECT)
+		v.offset_right = -SIDE
+		v.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		v.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		b.add_child(v)
+		b.set_meta("val", v)
+	b.text = t.left(i)
+	v.text = t.substr(i + 2)
+
+
 func _button(box: Control, cb: Callable) -> Button:
 	var b := MenuBook.row_button(16)
 	b.pressed.connect(cb)
@@ -141,10 +182,14 @@ func _toggle_row(box: Control, key: String, cb: Callable, label_fn: Callable) ->
 func _slider_row(box: Control, key: String, mn: float, mx: float, step: float, val: float, cb: Callable, fmt: Callable, node_name := "") -> void:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 4)
+	row.custom_minimum_size.y = 16
 	box.add_child(row)
-	var lab := MenuBook.bold(tr(key), MenuBook.INK)
-	lab.custom_minimum_size.x = LABEL_W
-	lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var pad := Control.new()
+	pad.custom_minimum_size.x = SIDE - 4
+	row.add_child(pad)
+	var lab := MenuBook.text(tr(key), MenuBook.INK)
+	lab.custom_minimum_size.x = _label_w
+	lab.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row.add_child(lab)
 	var sl := HSlider.new()
 	if node_name != "":
@@ -153,14 +198,18 @@ func _slider_row(box: Control, key: String, mn: float, mx: float, step: float, v
 	sl.max_value = mx
 	sl.step = step
 	sl.value = val
-	sl.custom_minimum_size = Vector2(54, 12)
+	sl.custom_minimum_size = Vector2(30, 12)
 	sl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	sl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(sl)
 	var num_lbl := MenuBook.num(fmt.call(val), MenuBook.INK_DIM)
-	num_lbl.custom_minimum_size.x = 28
+	num_lbl.custom_minimum_size.x = 26
 	num_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	num_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row.add_child(num_lbl)
+	var rpad := Control.new()
+	rpad.custom_minimum_size.x = SIDE - 4
+	row.add_child(rpad)
 	sl.value_changed.connect(func(v: float) -> void:
 		cb.call(v)
 		num_lbl.text = fmt.call(v))
@@ -172,10 +221,10 @@ func _slider_row(box: Control, key: String, mn: float, mx: float, step: float, v
 
 
 func refresh() -> void:
-	lang_btn.text = "%s: %s" % [tr("UI_SYS_LANG"), GameSettings.language_name()]
-	full_btn.text = "%s: %s" % [tr("UI_SYS_FULLSCREEN"), tr("UI_ON") if is_fullscreen() else tr("UI_OFF")]
+	_set_toggle(lang_btn, "%s: %s" % [tr("UI_SYS_LANG"), GameSettings.language_name()])
+	_set_toggle(full_btn, "%s: %s" % [tr("UI_SYS_FULLSCREEN"), tr("UI_ON") if is_fullscreen() else tr("UI_OFF")])
 	for entry in _toggles.values():
-		(entry[0] as Button).text = (entry[1] as Callable).call()
+		_set_toggle(entry[0], (entry[1] as Callable).call())
 
 
 func focus_first() -> void:

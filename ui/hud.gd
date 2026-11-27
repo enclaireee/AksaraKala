@@ -16,10 +16,10 @@ const UI_DIR := "res://assets/art/ui/"
 const LAG_HOLD := 0.4   # s before the cream lag chunk drains
 const LOW_HP := 0.25
 const MAX_OBJ := 4   # objective rows shown before "+n more"
-const TRACKER_W := 136   # TUNE: tracker width, text wraps inside
+const TRACKER_W := 176   # TUNE: tracker width, text wraps inside
 const TRACKER_REST_A := 0.5   # TUNE: tracker opacity once it has sat unchanged for TRACKER_IDLE
 const TRACKER_IDLE := 5.0   # TUNE: s at full opacity after a change before it dims
-const MENU_HINT_SHOW := 25.0   # s the [Esc] hint stays before it fades
+const MENU_HINT_SHOW := 25.0   # s the Esc hint stays before it fades
 
 var _bars := {}   # name -> [fill TextureRect, width, frame, lag TextureRect, well NinePatchRect, frame, red flash TextureRect]
 var _pips: Array[TextureRect] = []
@@ -48,8 +48,10 @@ var _focus_tw: Tween
 var _hp_txt: Label   # "120/120" right of the HP bar
 var _class_txt: Label   # second-path mechanic indicator below Sakti bar
 var _dist_bg: NinePatchRect   # lacquer pill behind the distance label
-var _menu_hint: Label
+var _menu_hint: Control   # keycap + "Menu", right-aligned under Ilmu
 var _menu_hint_t := 0.0
+var _spotlight: NinePatchRect
+var _spotlight_id := ""
 var _tracker_sig := ""
 var _pulse_tw: Tween
 var _sub_seen := {}   # quest id -> [step, finished sub-goals] last seen, to spot a new step or sub-goal
@@ -112,12 +114,13 @@ func _ready() -> void:
 	_st_nodes = [_bars.st[2], _bars.st[4], _bars.st[5]]
 	_hp_txt = UIFx.text("", "body", CREAM)
 	_hp_txt.position = Vector2(M + HP_W + 2 + 4, M - 1)
-	_hp_txt.size = Vector2(48, 12)
+	_hp_txt.size = Vector2(48, UIFx.LINE - 1)
 	_hp_txt.modulate.a = 0.85
 	_grp_bars.add_child(_hp_txt)
 	_class_txt = UIFx.text("", "body", CREAM)
 	_class_txt.position = Vector2(M, M + 23)
-	_class_txt.size = Vector2(130, 12)
+	_class_txt.size = Vector2(130, UIFx.LINE - 1)
+	_outlined(_class_txt)   # rides over roofs and dark ground
 	_grp_bars.add_child(_class_txt)
 	var well := TextureRect.new()   # weapon well, bottom left, with the flasks on its baseline
 	well.texture = _ui_tex("ink_slot")
@@ -149,7 +152,7 @@ func _ready() -> void:
 	_grp_hide.add_child(ii)
 	_ilmu_disp = UIFx.text("", "body", GOLD)
 	_ilmu_disp.position = Vector2(480 - M - 8 - 3 - 60, M - 1)
-	_ilmu_disp.size = Vector2(60, 12)
+	_ilmu_disp.size = Vector2(60, UIFx.LINE - 1)
 	_ilmu_disp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_grp_hide.add_child(_ilmu_disp)
 	_saved_icon = TextureRect.new()
@@ -160,7 +163,7 @@ func _ready() -> void:
 	_grp_hide.add_child(_saved_icon)   # fades with the rest of the HUD while a dialogue is open
 	_saved = UIFx.text("UI_SAVED", "body", UIFx.DIM)
 	_saved.position = Vector2(480 - M - 8 - 4 - 80, 270 - M - 10)
-	_saved.size = Vector2(80, 12)
+	_saved.size = Vector2(80, UIFx.LINE - 1)
 	_saved.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_saved.visible = false
 	_grp_hide.add_child(_saved)
@@ -174,16 +177,29 @@ func _ready() -> void:
 	_tracker_panel.visible = false
 	_grp_hide.add_child(_tracker_panel)
 	_tracker = VBoxContainer.new()
-	_tracker.add_theme_constant_override("separation", 3)
+	_tracker.add_theme_constant_override("separation", UIFx.GAP_XS)
 	_tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_tracker_panel.add_child(_tracker)
-	_menu_hint = UIFx.text(tr("UI_HINT_MENU") % get_node("/root/Game").key_name("pause").replace("Escape", "Esc"), "body", UIFx.DIM)
-	_menu_hint.position = Vector2(480 - M - 100, M + 12)   # quiet hint under Ilmu for the first minute; fades
-	_menu_hint.size = Vector2(100, 12)
-	_menu_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_menu_hint.modulate.a = 0.55
+	_menu_hint = Control.new()   # quiet hint under Ilmu for the first minute; fades
 	_menu_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var hk: Control = MenuBook.keycap(get_node("/root/Game").key_name("pause").replace("Escape", "Esc"))
+	var hl := UIFx.text(tr("UI_HINT_MENU").replace("%s", "").strip_edges(), "body", UIFx.LABEL_COL)
+	var hw := ceilf(UIFx.body_font().get_string_size(hl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x) + 1.0
+	hl.position = Vector2(hk.size.x + UIFx.GAP_S, 1)   # label ink starts on keycap face row 2
+	hl.size = Vector2(hw, UIFx.LINE - 1)
+	_menu_hint.size = Vector2(hk.size.x + UIFx.GAP_S + hw, MenuBook.KEYCAP_H)
+	_menu_hint.position = Vector2(480.0 - M - _menu_hint.size.x, M + 12.0)
+	_menu_hint.add_child(hk)
+	_menu_hint.add_child(hl)
 	_grp_hide.add_child(_menu_hint)
+	_spotlight = NinePatchRect.new()
+	if ResourceLoader.exists(UI_DIR + "tut_spotlight.png"):
+		_spotlight.texture = load(UI_DIR + "tut_spotlight.png")
+	for side in ["left", "top", "right", "bottom"]:
+		_spotlight.set("patch_margin_" + side, 5)
+	_spotlight.visible = false
+	_spotlight.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_spotlight)
 	var g := get_node("/root/Game")
 	g.changed.connect(refresh)
 	g.changed.connect(refresh_objective)
@@ -309,7 +325,7 @@ func refresh_objective() -> void:
 			ic.custom_minimum_size = Vector2(5, 7)
 			ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			var pad := Control.new()   # drops the 5 px diamond onto the first line's caps
-			pad.custom_minimum_size = Vector2(5, 3)
+			pad.custom_minimum_size = Vector2(5, 2)
 			pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			var col := VBoxContainer.new()
 			col.add_theme_constant_override("separation", 0)
@@ -320,7 +336,6 @@ func refresh_objective() -> void:
 			row.add_child(col)
 			var l := UIFx.text(String(r[1]), "body", r[2])
 			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			l.add_theme_constant_override("line_spacing", 1)
 			l.custom_minimum_size.x = inner - 9.0
 			l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			row.add_child(l)
@@ -498,7 +513,7 @@ func _build_extras() -> void:
 	# toast (item, glyph, hint): a small ink pill under Ilmu, top right, sized to its text; never shares a spot
 	# with the quest banner (top centre)
 	_toast_root = Control.new()
-	_toast_root.position = Vector2(480 - M - 120, M + 24)
+	_toast_root.position = Vector2(480 - M - 120, M + 28)
 	_toast_root.size = Vector2(120, 17)
 	_toast_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_toast_root.visible = false
@@ -508,7 +523,7 @@ func _build_extras() -> void:
 	_toast_rule = _rect(Vector2(2, 2), Vector2(1, 13), GOLD, _toast_root)   # amber tick on the leading edge
 	_toast = UIFx.text("", "body", CREAM)
 	_toast.position = Vector2(8, 3)
-	_toast.size = Vector2(104, 12)
+	_toast.size = Vector2(104, UIFx.LINE - 1)
 	_toast.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_toast.visible = false
 	_toast_root.add_child(_toast)
@@ -523,11 +538,11 @@ func _build_extras() -> void:
 	bp.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_banner_head = UIFx.text("", "label", GOLD)
 	_banner_head.position = Vector2(8, 3)
-	_banner_head.size = Vector2(80, 12)
+	_banner_head.size = Vector2(80, UIFx.LINE - 1)
 	_banner_root.add_child(_banner_head)
 	_banner_body = UIFx.text("", "body", CREAM)
 	_banner_body.position = Vector2(94, 3)
-	_banner_body.size = Vector2(100, 12)
+	_banner_body.size = Vector2(100, UIFx.LINE - 1)
 	_banner_body.add_theme_constant_override("line_spacing", 1)
 	_banner_body.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_banner_root.add_child(_banner_body)
@@ -542,7 +557,7 @@ func _build_extras() -> void:
 	_dist_bg = _nine("ink_panel", Rect2(0, 0, 40, 14), [4, 4, 4, 4])   # lacquer pill: "1 m" never floats loose over a character
 	_dist_bg.visible = false
 	_dist = UIFx.text("", "body", GOLD)
-	_dist.size = Vector2(80, 12)
+	_dist.size = Vector2(80, UIFx.LINE - 1)
 	_dist.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_dist.add_theme_constant_override("outline_size", 0)   # it sits on its own pill
 	_dist.visible = false
@@ -563,8 +578,8 @@ func _build_extras() -> void:
 	# boss: name in the heading face, left-aligned over a long thin bar at the bottom centre (Souls convention)
 	var x := (480 - BOSS_W) / 2
 	_boss_name = UIFx.text("", "head", UIFx.GOLD_HI)
-	_boss_name.position = Vector2(x, 270 - M - 26)
-	_boss_name.size = Vector2(BOSS_W, 13)
+	_boss_name.position = Vector2(x, 270 - M - 28)
+	_boss_name.size = Vector2(BOSS_W, UIFx.LINE - 1)
 	_boss_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_boss_root.add_child(_boss_name)
 	var by := 270 - M - 10
@@ -577,8 +592,8 @@ func _build_extras() -> void:
 	_boss_ticks.position = Vector2(x, by)
 	_boss_root.add_child(_boss_ticks)
 	_boss_open = UIFx.text(tr("BOSS_OPEN"), "body", UIFx.GOLD_HI)
-	_boss_open.position = Vector2(x, 270 - M - 26)
-	_boss_open.size = Vector2(BOSS_W, 12)
+	_boss_open.position = Vector2(x, 270 - M - 28)
+	_boss_open.size = Vector2(BOSS_W, UIFx.LINE - 1)
 	_boss_open.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_boss_root.add_child(_boss_open)
 	_boss_mark = _make_crack_mark(Vector2(x + BOSS_W + 4, by - 3))
@@ -599,7 +614,7 @@ func _fit_banner() -> void:
 	if bw <= 300.0:
 		_banner_body.autowrap_mode = TextServer.AUTOWRAP_OFF
 		_banner_body.position = Vector2(8.0 + kw + 6.0, 3.0)
-		_banner_body.size = Vector2(tw + 2.0, 12.0)
+		_banner_body.size = Vector2(tw + 2.0, UIFx.LINE - 1.0)
 		_banner_root.size = Vector2(maxf(bw, 80.0), 17.0)
 	else:
 		bw = 260.0
@@ -791,7 +806,7 @@ func _update_toast(delta: float) -> void:
 		var k := clampf((TOAST_TIME - _toast_left) / 0.2, 0.0, 1.0)
 		k = 1.0 - (1.0 - k) * (1.0 - k)
 		_toast_root.position.x = roundf(480.0 - M - _toast_root.size.x + 12.0 * (1.0 - k))
-		_toast_root.position.y = M + 24.0
+		_toast_root.position.y = M + 28.0
 		_toast_root.modulate.a = minf(k, clampf(_toast_left / 0.4, 0.0, 1.0))
 
 
@@ -918,7 +933,8 @@ func _process(delta: float) -> void:
 		_update_stamina_fade(delta, p.stamina.value >= p.stamina.max_stamina)
 	if not _menu_hint_paused():
 		_menu_hint_t += delta
-	_menu_hint.modulate.a = 0.55 * clampf((MENU_HINT_SHOW + 2.0 - _menu_hint_t) / 2.0, 0.0, 1.0)
+	_menu_hint.modulate.a = 1.0 if _spotlight_id == "menu" else clampf((MENU_HINT_SHOW + 2.0 - _menu_hint_t) / 2.0, 0.0, 1.0)
+	_update_spotlight()
 	_update_toast(delta)
 	_update_banner(delta)
 	_update_arrow()
@@ -968,13 +984,13 @@ func _update_class_hud(p: Node) -> void:
 			var w: int = int(p.get("wirama"))
 			var cap: int = p.wirama_cap() if p.has_method("wirama_cap") else 8
 			_class_txt.text = tr("UI_CLS_WIRAMA") % [w, cap]
-			_class_txt.modulate = Color("F27BB0") if w >= cap else Color(CREAM, 0.85 if w > 0 else 0.45)
+			_class_txt.modulate = Color("F27BB0") if w >= cap else Color(CREAM, 0.85 if w > 0 else 0.7)
 		"dalang":
 			var n: int = int(p.get("_lakon_n"))
 			var pct: int = roundi(n * p.tuning.lakon_step * 100.0)
 			var maxed: bool = p.has_method("lakon_maxed") and p.lakon_maxed()
 			_class_txt.text = tr("UI_CLS_LAKON") % pct
-			_class_txt.modulate = GOLD if maxed else Color(CREAM, 0.85 if n > 0 else 0.45)
+			_class_txt.modulate = GOLD if maxed else Color(CREAM, 0.85 if n > 0 else 0.7)
 		"herder":
 			_class_txt.text = tr("UI_CLS_PANTUL")
 			_class_txt.modulate = Color(CREAM, 0.6)
@@ -1009,10 +1025,62 @@ func _update_hp_fx(delta: float, ratio: float) -> void:
 		b[2].modulate = Color.WHITE
 
 
-## Stamina hides after 2 s at full and shows on use (ui.md 2).
+## Stamina hides after 2 s at full and shows on use (ui.md 2). Kept visible while spotlighted.
 func _update_stamina_fade(delta: float, full: bool) -> void:
-	_st_full = _st_full + delta if full else 0.0
+	_st_full = _st_full + delta if (full and _spotlight_id != "st") else 0.0
 	var a := 0.0 if _st_full > 2.0 else 1.0
 	for n in _st_nodes:
 		n.modulate.a = move_toward(n.modulate.a, a, delta * 4.0)
 	_bars.st[5].modulate.a = _st_nodes[0].modulate.a
+
+
+## Pulses a bracket frame around a HUD element ("hp" | "st" | "sk" | "flask" | "menu") for tutorial cues.
+func spotlight(target: String) -> void:
+	_spotlight_id = target
+	if target == "st":
+		_st_full = 0.0
+	elif target == "menu":
+		_menu_hint_t = 0.0
+	_update_spotlight()
+
+
+func clear_spotlight() -> void:
+	_spotlight_id = ""
+	if _spotlight:
+		_spotlight.visible = false
+
+
+func _update_spotlight() -> void:
+	if _spotlight == null:
+		return
+	if _spotlight_id == "" or _dialogue_focus or get_tree().paused:
+		_spotlight.visible = false
+		return
+	var rect := Rect2()
+	var col := UIFx.WARM
+	match _spotlight_id:
+		"hp":
+			rect = Rect2(M - 3.0, M - 3.0, HP_W + 8.0, 12.0)
+			col = UIFx.DANGER
+		"st":
+			rect = Rect2(M - 3.0, M + 6.0, ST_W + 8.0, 10.0)   # 3 px bar: the 9-patch needs 10 px, so no pulse growth (below)
+			col = UIFx.WARM
+		"sk":
+			rect = Rect2(M - 3.0, M + 13.0, 68.0, 10.0)
+			col = UIFx.ACCENT
+		"flask":
+			var fmax: int = maxi(1, int(get_node("/root/Game").flask_max))
+			rect = Rect2(M + 21.0, 270.0 - M - 13.0, fmax * 9.0 + 4.0, 15.0)
+			col = UIFx.WARM
+		"menu":
+			rect = Rect2(_menu_hint.position.x - 3.0, _menu_hint.position.y - 2.0, _menu_hint.size.x + 6.0, 16.0)
+			col = UIFx.WARM
+		_:
+			_spotlight.visible = false
+			return
+	_spotlight.visible = true
+	var pulse := 0.5 + 0.5 * sin(float(Time.get_ticks_msec()) * 0.008)
+	var grow := 0.0 if _spotlight_id in ["st", "sk"] else roundf(pulse * 1.5)   # thin bars sit 7 px apart: growing would cross the neighbour
+	_spotlight.position = (rect.position - Vector2(grow, grow)).round()
+	_spotlight.size = (rect.size + Vector2(grow * 2.0, grow * 2.0)).round()
+	_spotlight.modulate = Color(col.r, col.g, col.b, 0.6 + 0.4 * pulse)

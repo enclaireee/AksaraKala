@@ -7,6 +7,7 @@ extends Control
 ## "Reduce flashing" (controls.md 6) dims the flashes. Slow motion is skipped headless and while a cast holds time.
 
 const BAR_H := 20.0
+const LINE_BOTTOM := 232.0   # the taunt ends here: above the HUD boss name row (234), clear of the letterbox (250)
 const RULE_W := 168.0
 const GOLD := UIFx.WARM
 const ART := "res://assets/art/ui/"
@@ -57,12 +58,12 @@ func _ready() -> void:
 	_card.add_child(_name)
 	_epithet = UIFx.text("", "body", UIFx.WARM)
 	_epithet.position = Vector2(0, 120)
-	_epithet.size = Vector2(480, 12)
+	_epithet.size = Vector2(480, UIFx.LINE - 1)
 	_epithet.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_card.add_child(_epithet)
 	_line = UIFx.text("", "body", Color(1, 1, 1))
-	_line.position = Vector2(40, 270 - BAR_H - 30)
-	_line.size = Vector2(400, 24)
+	_line.position = Vector2(40, LINE_BOTTOM - UIFx.LINE)   # bottom-anchored: _fit_line grows it upward
+	_line.size = Vector2(400, UIFx.LINE - 1)
 	_line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_line.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_card.add_child(_line)
@@ -70,9 +71,8 @@ func _ready() -> void:
 	_hint_bg.modulate.a = 0.0
 	_hint = UIFx.text("", "body", UIFx.GOLD_HI)
 	_hint.position = Vector2(10, 4)
-	_hint.size = Vector2(340, 12)
+	_hint.size = Vector2(340, UIFx.LINE - 1)
 	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_hint.add_theme_constant_override("line_spacing", 1)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint_bg.add_child(_hint)
 	for y: float in [86.0, 134.0]:
@@ -83,6 +83,22 @@ func _ready() -> void:
 		lz.position = Vector2(237, y)
 		lz.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_card.add_child(lz)
+	get_node("/root/Events").player_died.connect(_on_player_died)
+
+
+## The player fell: drop every card, bar and hint so none bleeds through the death screen.
+func _on_player_died() -> void:
+	if _tw:
+		_tw.kill()
+	if _hint_tw:
+		_hint_tw.kill()
+	_card.modulate.a = 0.0
+	_hint_bg.modulate.a = 0.0
+	_top.position.y = -BAR_H
+	_bot.position.y = 270.0
+	if _staging:
+		_staging = false
+		get_tree().paused = false
 
 
 func _rect(pos: Vector2, sz: Vector2, col: Color, parent: Node) -> ColorRect:
@@ -112,10 +128,9 @@ func _nine(tex: String, rect: Rect2, m: int, parent: Node) -> NinePatchRect:
 ## A fight reminder above the boss bar for `seconds` (BossKit.hint).
 func show_hint(text: String, seconds := 4.0) -> void:
 	_hint.text = text
-	var bf := UIFx.body_font()
-	var sz := bf.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, 340.0, UIFx.BODY)
-	var lines := maxi(1, roundi(sz.y / maxf(bf.get_height(UIFx.BODY), 1.0)))
-	_hint.size = Vector2(340.0, lines * UIFx.LINE)
+	_hint.size = Vector2(340.0, UIFx.LINE - 1.0)
+	var lines := maxi(1, _hint.get_line_count())
+	_hint.size = Vector2(340.0, lines * UIFx.LINE - 1.0)
 	_hint_bg.size = Vector2(360.0, _hint.size.y + 8.0)
 	_hint_bg.position = Vector2(60.0, 270.0 - 44.0 - _hint_bg.size.y)
 	if _hint_tw:
@@ -180,6 +195,10 @@ func _intro(b: Node) -> void:
 	_name.text = tr(key)
 	_epithet.text = _text_or_empty(key + "_EPITHET")
 	_line.text = "" if seen else _text_or_empty(key + "_INTRO")
+	_line.size = Vector2(400, UIFx.LINE - 1)
+	var n := maxi(1, _line.get_line_count())
+	_line.size.y = n * UIFx.LINE - 1
+	_line.position.y = LINE_BOTTOM - _line.size.y
 	_set_rules(0.0)
 	if _tw:
 		_tw.kill()

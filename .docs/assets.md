@@ -41,8 +41,8 @@ All fonts and assets adhere to open-source or permissive licenses:
 
 | Asset | Source URL | License | Usage in Budayago | Attribution Status |
 |---|---|---|---|---|
-| **Pixeloid Sans** (Regular, Bold) | https://ggbot.itch.io/pixeloid-font | SIL OFL 1.1 | Body text, labels, dialogue, HUD, menus (9 px) | Shipped (`assets/fonts/OFL_Pixeloid.txt`) |
-| **Jersey 10 / Jersey 15** | https://github.com/google/fonts/tree/main/ofl/jersey10 | SIL OFL 1.1 | Headings (10 at 19), display titles (15 at 27) | Shipped (`assets/fonts/OFL_Jersey.txt`) |
+| **Pixeloid Sans** (Regular, Bold) | https://ggbot.itch.io/pixeloid-font | SIL OFL 1.1 | Retired 2026-11-27 (replaced by Jersey 15); file unused | On disk (`assets/fonts/OFL_Pixeloid.txt`) |
+| **Jersey 10 / Jersey 15** | https://github.com/google/fonts/tree/main/ofl/jersey10 | SIL OFL 1.1 | Jersey 15 is the only UI face: body/labels/headings at 16, display at 27, logo 54 (Jersey 10 unused) | Shipped (`assets/fonts/OFL_Jersey.txt`) |
 | **Noto Sans Sundanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Sunda character rendering | Shipped (`assets/fonts/OFL_Noto.txt`) |
 | **Noto Sans Javanese** | https://github.com/google/fonts/tree/main/ofl | SIL OFL 1.1 | Aksara Jawa character rendering | Shipped (`assets/fonts/OFL_Noto.txt`) |
 | **Dungeon Tileset II** | https://0x72.itch.io/dungeontileset-ii | CC0 | Prototyping reference | CC0 Public Domain |

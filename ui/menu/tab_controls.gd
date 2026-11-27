@@ -20,15 +20,15 @@ func icon() -> String:
 func build(l: Control, r: Control) -> void:
 	put(l, MenuBook.section(tr("UI_BK_TAB_CONTROLS")), Vector2.ZERO)
 	_list = scroll(l, Rect2(0, 20, 200, 192))
-	_list.add_theme_constant_override("separation", 3)
-	_list_scroll = _list.get_parent()
-	var rv := scroll(r, Rect2(0, 0, 200, 212))
+	_list.add_theme_constant_override("separation", 0)   # 16 px rows: 12 actions fill the 192 px list exactly
+	_list_scroll = _list.get_parent().get_parent()
+	var rv := scroll(r, Rect2(0, 0, 200, 208))
 	rv.add_theme_constant_override("separation", 4)
 	rv.add_child(MenuBook.section(tr("UI_BK_HOWTO")))
 	rv.add_child(MenuBook.text(tr("UI_BK_HOWTO_BODY"), MenuBook.INK_DIM, true))
 	var frame := PanelContainer.new()
 	frame.add_theme_stylebox_override("panel", MenuBook.box("book_card", 4, 4))
-	frame.custom_minimum_size = Vector2(192, 78)
+	frame.custom_minimum_size = Vector2(0, 78)
 	frame.mouse_filter = MOUSE_FILTER_IGNORE
 	rv.add_child(frame)
 	_diagram = GestureDiagram.new()
@@ -61,10 +61,12 @@ func refresh() -> void:
 			continue
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 4)
-		row.custom_minimum_size.y = 14
+		row.custom_minimum_size.y = 16
 		var name_ := MenuBook.bold(tr("UI_ACT_" + a.to_upper()), MenuBook.INK)
 		name_.custom_minimum_size.x = 100
-		name_.clip_text = true
+		name_.custom_minimum_size.y = UIFx.LINE   # 14 px box, text on its lower 13: caps line up with the keycap face
+		name_.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+		name_.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		row.add_child(name_)
 		var shown := {}
 		for ev in InputMap.action_get_events(a):

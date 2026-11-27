@@ -55,7 +55,7 @@ func _ready() -> void:
 	_area.add_theme_constant_override("outline_size", 1)
 	_area.add_theme_color_override("font_color", CREAM)
 	_area.position = Vector2(0, Y + 29)
-	_area.size = Vector2(480, 12)
+	_area.size = Vector2(480, UIFx.LINE - 1)
 	_area.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_area.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_area)

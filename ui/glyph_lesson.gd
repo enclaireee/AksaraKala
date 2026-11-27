@@ -9,7 +9,7 @@ extends CanvasLayer
 
 const NEEDED := 3   # TUNE: successful casts per lesson
 const HOLD := 1.0
-const CARD := Rect2(288, 50, 184, 174)   # right edge (8 px margin), under Ilmu and the toast row: clear of tracker, banner, dialogue
+const CARD := Rect2(256, 56, 216, 176)   # right edge (8 px margin), under Ilmu, the Esc hint and the toast row (ends Y 51): clear of tracker, banner, dialogue
 const GUIDE_RECT := Rect2(CARD.position.x + 14.0, CARD.position.y + 32.0, 68.0, 68.0)   # the ghost glyph sits in the card's slot
 const INK_HEAD := UIFx.ACCENT   # on the dusk card: the cyan glyph light (ui.md 0.1)
 const HINT_COL := UIFx.DIM
@@ -30,6 +30,8 @@ const INK := Color(0.07, 0.06, 0.12)
 
 var active := ""
 var count := 0
+var _target_count := NEEDED
+var _sakti_handoff := false   # Semar's sunda_ka drill: Phase A (2 free draws) -> Phase B (live Sakti cast)
 var _queue: Array[String] = []
 var _dialogue := false
 var _prev_practice := false
@@ -46,7 +48,16 @@ var _pips: Array[TextureRect] = []
 var _hold_bar: ColorRect
 var _msg: Label
 var _cast_cue: Label
+var _cast_mouse: TextureRect
+var _cast_keycap: Control   # keyboard-bound cast key (the mouse icon is for RMB/LMB)
+var _cast_mouse_atlas: AtlasTexture
 var _hint_w: Label
+var _bg: NinePatchRect
+var _hint: Label
+var _h := CARD.size.y   # card height: stacks tip, cue row, skip hint, hold bar (_fit)
+var _row_y := 0.0   # absolute y of the cue row (mouse icon / keycap + verb)
+var _write_mouse: TextureRect
+var _write_mouse_atlas: AtlasTexture
 var writing := ""   # write-mode sequence id while the card is up
 var _seq := PackedStringArray()
 var _wi := 0
@@ -75,9 +86,9 @@ func _ready() -> void:
 	add_child(_panel)
 	var cx := CARD.position.x
 	var cy := CARD.position.y
-	var bg := _nine("ink_panel", CARD, 4)   # the in-world ink card (ui.md 0)
-	_panel.move_child(bg, 0)
-	_name = _label(Vector2(cx + 10, cy + 8), Vector2(CARD.size.x - 20, 13))
+	_bg = _nine("ink_panel", CARD, 4)   # the in-world ink card (ui.md 0)
+	_panel.move_child(_bg, 0)
+	_name = _label(Vector2(cx + 10, cy + 8), Vector2(CARD.size.x - 20, UIFx.LINE - 1))
 	_name.add_theme_font_override("font", UIFx.head_font())
 	_name.add_theme_font_size_override("font_size", UIFx.HEAD_SIZE)
 	_name.add_theme_color_override("font_color", UIFx.GOLD_HI)
@@ -89,7 +100,7 @@ func _ready() -> void:
 	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(rule)
 	_nine("ink_slot", Rect2(cx + 10, cy + 28, 76, 76), 4)   # the drawing well holding the ghost glyph
-	_aksara = _label(Vector2(cx + 92, cy + 28), Vector2(78, 38))
+	_aksara = _label(Vector2(cx + 92, cy + 28), Vector2(CARD.size.x - 102, 38))
 	_aksara.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_aksara.add_theme_font_size_override("font_size", 28)
 	_aksara.add_theme_color_override("font_color", INK_HEAD)
@@ -98,33 +109,43 @@ func _ready() -> void:
 	for i in NEEDED:   # one lozenge per cast: lit once done
 		var d := TextureRect.new()
 		d.texture = load("res://assets/art/ui/ink_cursor.png")
-		d.position = Vector2(cx + 92 + (78 - NEEDED * 5 - (NEEDED - 1) * 6) / 2 + i * 11, cy + 72)
+		d.position = Vector2(cx + 92 + (CARD.size.x - 102 - NEEDED * 5 - (NEEDED - 1) * 6) / 2 + i * 11, cy + 72)
 		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_panel.add_child(d)
 		_pips.append(d)
-	_progress = _label(Vector2(cx + 92, cy + 82), Vector2(78, 12))
+	_progress = _label(Vector2(cx + 92, cy + 80), Vector2(CARD.size.x - 102, UIFx.LINE - 1))
 	_progress.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_progress.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_msg = _label(Vector2(cx + 92, cy + 94), Vector2(78, 12))
+	_msg = _label(Vector2(cx + 92, cy + 94), Vector2(CARD.size.x - 102, UIFx.LINE - 1))
 	_msg.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_msg.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_msg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_msg.add_theme_color_override("font_color", INK_HEAD)
-	_tip = _label(Vector2(cx + 10, cy + 108), Vector2(CARD.size.x - 20, 36))
+	_tip = _label(Vector2(cx + 10, cy + 108), Vector2(CARD.size.x - 20, UIFx.LINE * 3 - 1))
 	_body = _label(Vector2.ZERO, Vector2.ONE)   # the codex lore stays in the codex; the card only teaches the stroke
 	_body.visible = false
-	_cast_cue = _label(Vector2(cx + 10, cy + CARD.size.y - 29), Vector2(CARD.size.x - 20, 12))
+	_cast_mouse_atlas = AtlasTexture.new()
+	if ResourceLoader.exists("res://assets/art/ui/tut_mouse_rmb.png"):
+		_cast_mouse_atlas.atlas = load("res://assets/art/ui/tut_mouse_rmb.png")
+	_cast_mouse_atlas.region = Rect2(0, 0, 12, 16)
+	_cast_mouse = TextureRect.new()
+	_cast_mouse.texture = _cast_mouse_atlas
+	_cast_mouse.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_cast_mouse.position = Vector2(cx + 10, cy + CARD.size.y - 31)
+	_cast_mouse.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(_cast_mouse)
+	_cast_cue = _label(Vector2(cx + 10 + 12 + UIFx.GAP, cy + CARD.size.y - 29), Vector2(CARD.size.x - 42, UIFx.LINE - 1))
 	_cast_cue.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_cast_cue.add_theme_color_override("font_color", UIFx.GOLD_HI)
 	_cast_cue.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	var hint := _label(Vector2(cx + 10, cy + CARD.size.y - 17), Vector2(CARD.size.x - 20, 12))
-	hint.text = tr("UI_HOLD_SKIP")
-	hint.autowrap_mode = TextServer.AUTOWRAP_OFF
-	hint.add_theme_color_override("font_color", HINT_COL)
-	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_hint = _label(Vector2(cx + 10, cy + CARD.size.y - 18), Vector2(CARD.size.x - 20, UIFx.LINE - 1))
+	_hint.text = tr("UI_HOLD_SKIP")
+	_hint.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_hint.add_theme_color_override("font_color", HINT_COL)
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_hold_bar = ColorRect.new()
 	_hold_bar.color = INK_HEAD
-	_hold_bar.position = Vector2(cx + 10, cy + CARD.size.y - 8)
+	_hold_bar.position = Vector2(cx + 10, cy + CARD.size.y - 6)
 	_hold_bar.size = Vector2(0, 1)
 	_hold_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(_hold_bar)
@@ -133,6 +154,7 @@ func _ready() -> void:
 	ev.dialogue_requested.connect(func(_s, _l): _dialogue = true)
 	ev.dialogue_finished.connect(_on_dialogue_finished)
 	ev.spell_cast.connect(_on_cast)
+	ev.practice_cast.connect(_on_cast)
 	ev.write_requested.connect(_on_write)
 	_card = ColorRect.new()
 	_card.color = INK
@@ -165,10 +187,20 @@ func _ready() -> void:
 	_card.add_child(_stroke)
 	_hint_w = UIFx.text(_write_cue_text(), "body", UIFx.HEAD)
 	_hint_w.position = Vector2(0, 220)
-	_hint_w.size = Vector2(480, 12)
+	_hint_w.size = Vector2(480, UIFx.LINE - 1)
 	_hint_w.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_card.add_child(_hint_w)
-	_cast_cue.text = _cast_cue_text()
+	_write_mouse_atlas = AtlasTexture.new()
+	if ResourceLoader.exists("res://assets/art/ui/tut_mouse_lmb.png"):
+		_write_mouse_atlas.atlas = load("res://assets/art/ui/tut_mouse_lmb.png")
+	_write_mouse_atlas.region = Rect2(0, 0, 12, 16)
+	_write_mouse = TextureRect.new()
+	_write_mouse.texture = _write_mouse_atlas
+	_write_mouse.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_write_mouse.position = Vector2(234, 200)
+	_write_mouse.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_card.add_child(_write_mouse)
+	_set_cast_cue()
 
 
 func _nine(tex: String, rect: Rect2, m: int) -> NinePatchRect:
@@ -196,6 +228,9 @@ func _label(pos: Vector2, sz: Vector2) -> Label:
 
 
 func _on_learned(id: String) -> void:
+	var g_node := get_node_or_null("/root/Game")
+	if id == "sunda_ka" and g_node != null and g_node.check("step:mq0=10") and (GameSettings.skip_tutorials() or g_node.has_flag("skip_semar_drill")):
+		return
 	_queue.append(id)
 	if not _dialogue:
 		_next.call_deferred()
@@ -222,13 +257,17 @@ func _next() -> void:
 	active = id
 	count = 0
 	_hold = 0.0
+	var g_node := get_node("/root/Game")
+	_sakti_handoff = id == "sunda_ka" and g_node.check("step:mq0=10") and not GameSettings.skip_tutorials() and not g_node.has_flag("tut_cast")
+	_target_count = 2 if _sakti_handoff else NEEDED
 	var up := id.to_upper()
 	_name.text = "%s · %s" % [g.latin.capitalize(), _t(spell.title)]
 	_aksara.text = CHARS.get(id, g.latin)
 	_font(_aksara, g)
 	_body.text = _t("CODEX_%s_BODY" % up)
 	_tip.text = _t("LESSON_%s" % up)
-	_cast_cue.text = _cast_cue_text()
+	_fit()
+	_set_cast_cue()
 	_msg.text = ""
 	_set_progress(1.0, false)
 	var player := get_tree().get_first_node_in_group("player")
@@ -236,6 +275,8 @@ func _next() -> void:
 	if _cast:
 		_prev_practice = _cast.practice
 		_cast.practice = true
+		if _sakti_handoff and "practice_only_signal" in _cast:
+			_cast.practice_only_signal = true
 	_guide.visible = true
 	_guide.show_guide(g.templates[0], GUIDE_RECT)
 	_panel.visible = true
@@ -245,13 +286,48 @@ func _t(key: String) -> String:
 	return get_node("/root/Game").fmt(tr(key))
 
 
-func _cast_cue_text() -> String:
+## "Hold" / "Click" beside the mouse icon (RMB/LMB), or beside a keycap when the cast key is on the keyboard.
+func _set_cast_cue() -> void:
 	var k: String = get_node("/root/Game").key_name("cast")
-	return tr("UI_HOLD_KEY") % k
+	var mouse := k == tr("UI_KEY_RMB") or k == tr("UI_KEY_LMB")
+	var verb := tr("UI_TOGGLE_KEY" if GameSettings.toggle_cast() else "UI_HOLD_KEY") % ""
+	_cast_cue.text = verb.replace("[", "").replace("]", "").strip_edges()
+	_cast_mouse.visible = mouse
+	if _cast_keycap != null:
+		_cast_keycap.queue_free()
+		_cast_keycap = null
+	var x := CARD.position.x + 10.0
+	if mouse:
+		var tex := "res://assets/art/ui/tut_mouse_%s.png" % ("lmb" if k == tr("UI_KEY_LMB") else "rmb")
+		if ResourceLoader.exists(tex):
+			_cast_mouse_atlas.atlas = load(tex)
+		x += 12.0 + UIFx.GAP
+	else:
+		_cast_keycap = MenuBook.keycap(k)
+		_cast_keycap.position = Vector2(x, _row_y + 1.0)
+		_panel.add_child(_cast_keycap)
+		x += _cast_keycap.size.x + UIFx.GAP
+	_cast_cue.position.x = x
+
+
+## Long stroke tips (id runs to 5 lines) push the cue row, skip hint and hold bar down instead of under the text.
+func _fit() -> void:
+	_tip.size.y = UIFx.LINE - 1
+	var n := maxi(_tip.get_line_count(), 3)
+	_tip.size.y = n * UIFx.LINE - 1
+	_row_y = _tip.position.y + _tip.size.y + UIFx.GAP_S   # cue row: 16 px (the mouse icon), its own space under the text
+	_hint.position.y = _row_y + 2.0   # right end of the cue row: icon + verb left, "Hold to skip" right
+	_hold_bar.position.y = _row_y + 16.0 + 2.0
+	_h = _hold_bar.position.y + 1.0 + 6.0 - CARD.position.y
+	_bg.size.y = _h
+	_cast_mouse.position.y = _row_y
+	_cast_cue.position.y = _row_y + 2.0   # 13 px label centred on the 16 px row
+	if _cast_keycap != null:
+		_cast_keycap.position.y = _row_y + 1.0
 
 
 func _write_cue_text() -> String:
-	return (tr("UI_HOLD_KEY") % tr("UI_KEY_LMB")) + "  " + tr("UI_WRITE_HINT")
+	return tr("UI_WRITE_HINT")   # the animated LMB icon above it says "hold"
 
 
 ## The aksara system font on a label, or the Latin fallback text when it is missing.
@@ -264,8 +340,9 @@ func _font(l: Label, g: GlyphData) -> void:
 
 
 func _set_progress(power: float, shown := true) -> void:
-	_progress.text = "%d / %d" % [count, NEEDED] + ("  %d%%" % roundi(power * 100.0) if shown and count > 0 else "")
+	_progress.text = "%d / %d" % [count, _target_count] + ("  %d%%" % roundi(power * 100.0) if shown and count > 0 else "")
 	for i in _pips.size():
+		_pips[i].visible = i < _target_count
 		_pips[i].modulate = Color.WHITE if i < count else Color(1, 1, 1, 0.3)
 
 
@@ -279,14 +356,18 @@ func _on_cast(glyph_id: String, score: float) -> void:
 	count += 1
 	_msg.text = ""
 	_set_progress(score)
-	if count >= NEEDED:
+	if count >= _target_count:
 		finish()
 
 
 func finish() -> void:
 	if active == "":
 		return
+	var handoff := _sakti_handoff
+	_sakti_handoff = false
 	active = ""
+	if is_instance_valid(_cast) and "practice_only_signal" in _cast:
+		_cast.practice_only_signal = false
 	# Only undo our own switch: the sanggar (desa_purwa.gd) may have changed practice since, so never set it back to true.
 	if is_instance_valid(_cast) and not _prev_practice:
 		_cast.practice = false
@@ -294,10 +375,19 @@ func finish() -> void:
 	_guide.hide_guide()
 	_guide.visible = false
 	_panel.visible = false
+	if handoff:
+		var ev := get_node_or_null("/root/Events")
+		if ev:
+			ev.lesson_offered.emit("cast")
 	_next.call_deferred()
 
 
 func _process(delta: float) -> void:
+	var frame := 1 if int(Time.get_ticks_msec() / 420) % 2 == 1 else 0
+	if _panel.visible and _cast_mouse_atlas.atlas != null:
+		_cast_mouse_atlas.region = Rect2(frame * 12, 0, 12, 16)
+	if _card.visible and _write_mouse_atlas.atlas != null:
+		_write_mouse_atlas.region = Rect2(frame * 12, 0, 12, 16)
 	_hold = _hold + delta if active != "" and not get_tree().paused and Input.is_action_pressed("interact") else 0.0
 	if _hold_bar != null:
 		_hold_bar.size.x = (CARD.size.x - 20.0) * clampf(_hold / HOLD, 0.0, 1.0)

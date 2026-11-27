@@ -132,7 +132,7 @@ func _ready() -> void:
 	_lang.pressed.connect(_toggle_lang)
 	add_child(_lang)
 	_lang_text()
-	var ver := UIFx.text("v" + str(ProjectSettings.get_setting("application/config/version", "")), "body", UIFx.DIM)
+	var ver := UIFx.text("v" + str(ProjectSettings.get_setting("application/config/version", "")), "body", UIFx.LABEL_COL)
 	ver.position = Vector2(420, 256)
 	ver.size = Vector2(52, 12)
 	ver.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -384,7 +384,7 @@ func _open_card(which: String) -> void:
 		_about_scroll.add_child(body)
 		v.add_child(_about_scroll)
 		_build_about(body)
-	if not _about_scroll:   # the About scroll already fills down to Back
+	if not _about_scroll and which != "settings":   # the About and Settings scrolls already fill down to Back
 		var fill := Control.new()   # Back sits at the foot of the card
 		fill.size_flags_vertical = SIZE_EXPAND_FILL
 		fill.mouse_filter = MOUSE_FILTER_IGNORE
@@ -459,7 +459,7 @@ func _build_settings(v: VBoxContainer) -> void:
 	_section(sv, "UI_BK_AUDIO")
 	for bus in GameSettings.BUSES:
 		var name_lbl := UIFx.text("UI_SYS_" + bus.to_upper(), "body", UIFx.TEXT)
-		name_lbl.custom_minimum_size.x = 80
+		name_lbl.custom_minimum_size.x = 92
 		var row := _row(name_lbl)
 		row.add_theme_constant_override("separation", 4)
 		row.custom_minimum_size.y = 14
@@ -469,7 +469,7 @@ func _build_settings(v: VBoxContainer) -> void:
 		sl.max_value = 100
 		sl.step = 5
 		sl.value = GameSettings.volume(bus)
-		sl.custom_minimum_size = Vector2(84, 10)
+		sl.custom_minimum_size = Vector2(72, 10)
 		sl.size_flags_vertical = SIZE_SHRINK_CENTER
 		row.add_child(sl)
 		var val := UIFx.text(str(int(sl.value)), "body", UIFx.DIM)
@@ -507,7 +507,7 @@ func _build_settings(v: VBoxContainer) -> void:
 
 
 func _build_about(v: VBoxContainer) -> void:
-	var para := func(t: String, col: Color) -> void:   # every line wraps: Pixeloid runs wider than the card
+	var para := func(t: String, col: Color) -> void:   # every line wraps: Jersey 15 at 16 runs wide on the card
 		var lbl := UIFx.text(t, "body", col)
 		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		lbl.custom_minimum_size.x = v.custom_minimum_size.x - INDENT
@@ -522,7 +522,7 @@ func _build_about(v: VBoxContainer) -> void:
 	para.call("Kementerian Kebudayaan Republik Indonesia", UIFx.DIM)
 	_section(v, "UI_ABOUT_BUILT_WITH")
 	para.call("Godot Engine", UIFx.TEXT)
-	para.call("Pixeloid Sans, Noto Sans Sundanese & Javanese (SIL OFL 1.1)", UIFx.DIM)
+	para.call("Jersey 15, Noto Sans Sundanese & Javanese (SIL OFL 1.1)", UIFx.DIM)
 	_section(v, "UI_ABOUT_MUSIC")
 	para.call(MUSIC_BY, UIFx.TEXT)
 	para.call(", ".join(MUSIC), UIFx.DIM)

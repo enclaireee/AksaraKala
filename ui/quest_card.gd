@@ -40,7 +40,6 @@ func _ready() -> void:
 	_caption.uppercase = true
 	_title = _label(UIFx.display(), UIFx.DISPLAY, GOLD_LIGHT)     # Jersey 15 at 27: the one display size
 	_body = _label(UIFx.body_font(), UIFx.BODY, CREAM)
-	_body.add_theme_constant_override("line_spacing", 1)
 	_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var ev := get_node_or_null("/root/Events")
 	if ev:
@@ -194,14 +193,11 @@ func _show(card: Dictionary) -> void:
 	var lines: PackedStringArray = card.lines
 	_body.text = "\n".join(lines)
 	_body.visible = not lines.is_empty()
-	# layout on the 2 px grid: 10 pad, caption 12, 4 gap, title 24, 4 gap, body lines (UIFx.LINE each, wrapped), 10 pad
-	_body.size = Vector2(360, 0)
+	# layout on the 2 px grid: 10 pad, caption 12 (13 box), 4 gap, title 24, 4 gap, body lines (UIFx.LINE each, wrapped), 10 pad
+	_body.size = Vector2(360, UIFx.LINE - 1)
 	var body_h := 0.0
 	if not lines.is_empty():
-		var bf := UIFx.body_font()
-		var sz := bf.get_multiline_string_size(_body.text, HORIZONTAL_ALIGNMENT_CENTER, 360.0, UIFx.BODY)
-		var lc := maxi(1, roundi(sz.y / maxf(bf.get_height(UIFx.BODY), 1.0)))
-		body_h = UIFx.LINE * lc
+		body_h = UIFx.LINE * maxi(1, _body.get_line_count())   # the label's own wrap count: the band grows to fit every line
 	var h := 10.0 + 12.0 + 4.0 + 24.0 + (4.0 + body_h if body_h > 0.0 else 0.0) + 10.0
 	var top := roundf(CENTER_Y - h / 2.0)
 	_band.position = Vector2(0, top)
@@ -211,11 +207,11 @@ func _show(card: Dictionary) -> void:
 	_rule_bottom.position = Vector2(0, top + h - 3.0)
 	_rule_bottom.size = Vector2(480, 3)
 	_caption.position = Vector2(0, top + 10.0)
-	_caption.size = Vector2(480, 12)
+	_caption.size = Vector2(480, UIFx.LINE - 1)
 	_title.position = Vector2(0, top + 26.0)
 	_title.size = Vector2(480, 24)
 	_body.position = Vector2(60, top + 54.0)
-	_body.size = Vector2(360, maxf(body_h, 0.0))
+	_body.size = Vector2(360, maxf(body_h - 1.0, 0.0))
 	if _tween:
 		_tween.kill()
 	visible = true

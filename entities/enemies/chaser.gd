@@ -126,6 +126,9 @@ func _enter(s: State) -> void:
 	match s:
 		State.WINDUP:
 			body.modulate = TELEGRAPH
+			var ev := get_node_or_null("/root/Events")
+			if ev:
+				ev.enemy_windup.emit(self)
 		State.ATTACK:
 			velocity = Vector2.from_angle(facing) * t("lunge") / t("lunge_time")
 			attack_hitbox.activate()

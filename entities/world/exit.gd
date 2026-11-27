@@ -11,7 +11,7 @@ const ARM_TIME := 0.5   # ignore the player right after load so arriving here ne
 const ART := "res://assets/art/world_fx/%s.png"
 const CELL := 16   # sheet cells (tools/gen_world_fx.py): 0 path stones, 1 gapura post, 2-5 mote fade stages
 const SIGN_RANGE := 64.0   # px from exit center where the quiet signpost appears
-const SIGN_FONT := preload("res://assets/fonts/PixeloidSans.woff")
+var SIGN_FONT := UIFx.body_font()
 
 var _armed := false
 var _sheet: Texture2D
@@ -83,9 +83,9 @@ func _make_sign() -> void:
 	_sign.add_theme_color_override("font_outline_color", Color(0.08, 0.06, 0.12, 0.9))
 	_sign.add_theme_constant_override("outline_size", 2)
 	_sign.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_sign.custom_minimum_size = Vector2(140, 12)
+	_sign.custom_minimum_size = Vector2(140, UIFx.LINE)
 	var inset := -_out * (8.0 * block + 10.0)
-	_sign.position = inset + Vector2(-70, -14)
+	_sign.position = inset + Vector2(-70, -16)
 	_sign.z_index = 20
 	_sign.modulate.a = 0.0
 	_sign.visible = false

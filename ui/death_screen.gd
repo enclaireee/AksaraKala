@@ -25,7 +25,7 @@ func _ready() -> void:
 	var sub := UIFx.text("UI_DEATH_SUB", "body", UIFx.DIM)
 	sub.name = "Sub"
 	sub.position = Vector2(0, 144)
-	sub.size = Vector2(480, 12)
+	sub.size = Vector2(480, UIFx.LINE - 1)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sub.modulate.a = 0.0
 	_dim.add_child(sub)

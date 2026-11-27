@@ -1,77 +1,72 @@
-# Tutorial: Teaching the Prologue
+# Tutorial: Pelajaran Desa Purwa (Prologue Onboarding)
 
-How the game organically teaches its core verbs through narrative moments. The Prologue (`MQ0`) is the classroom: calm, purposeful, with four central characters who introduce each action in context. Every verb taught here is essential for the night raid and subsequent journeys through the regions.
+How AksaraKala teaches its core verbs, Aksara casting, class mechanics, and RPG loop directly inside the Desa Purwa Prologue (`MQ0`, *Hari Biasa Terakhir*) through tactile, diegetic story moments.
 
-Related: [controls.md](controls.md) (input reference), [combat.md](combat.md) (combat timing), [quests.md](quests.md) (`MQ0` steps).
-
----
-
-## 1. Principles
-
-1. **One Verb per Moment:** A lesson teaches a single input. Teaching two verbs at once feels like a manual rather than a game.
-2. **Motivated by Story:** Every lesson is grounded in character interaction:
-   - Laras challenges you to tag -> teaches movement and dodging.
-   - Cepot shows off at the sanggar -> teaches attacks and combo chaining.
-   - Ibu sets out tea and packs your bag -> teaches Petilasan resting and jamu healing.
-   - Semar interprets the broken lontar -> teaches drawing and casting aksara.
-3. **Learn by Doing:** A lesson completes when the player performs the specified input (`Events.player_struck`, `spell_cast`, `petilasan_activated`, etc.). There is no passive "OK" button.
-4. **Never Block:** Gameplay is never paused or frozen. A lesson waits quietly until the player performs the action.
-5. **Quiet Visual Voice:** Lessons appear as a single ink pill at the bottom of the screen (`Y = 224`), using the same `UIFx` typography as interact prompts and HUD elements.
-6. **Persistence:** Completing a lesson sets `tut_<id>` in `Game.flags`, ensuring returning players or completed lessons never repeat.
+Related: [controls.md](controls.md) (input reference), [combat.md](combat.md) (combat timing), [spells.md](spells.md) (casting & Sakti), [classes.md](classes.md) (class passives), [quests.md](quests.md) (`MQ0` steps), [ui.md](ui.md) (dusk palette & HUD).
 
 ---
 
-## 2. The In-Story Ladder
+## 1. Design Principles
 
-| # | Lesson | Step & Timing | Motivator | Completion Trigger | Core Concept Taught |
+1. **One Unified Onboarding System:** All prologue teaching flows through one coordinated system (`data/lessons.gd`, `ui/tutorial.gd`, `ui/world_bark.gd`, `ui/world_beacon.gd`, `ui/hud.gd` spotlights, `ui/glyph_lesson.gd`, and `zones/desa_purwa_base.gd`) — no overlapping ghost guides, no duplicate pills, no buried one-off toasts.
+2. **Required Story Beats with Replay Skip:** Key hands-on drills (Cepot's sanggar combo & class warm-up, Semar's Aksara-to-Sakti cast, and post-raid Petilasan rest) are genuine `MQ0` sub-goals so first-time players feel every loop before Tatar Sunda. Returning players can skip via an in-character dialogue choice on Cepot/Semar or the **Skip Tutorials** toggle (`GameSettings.skip_tutorials()`).
+3. **Show in the World:** Every cue combines diegetic world signifiers (pulsing ground beacons `tut_ring.png`, real-time mentor floating barks above Laras/Cepot/Semar/Ibu) with crisp HUD bar spotlights (`tut_spotlight.png`) and animated pixel mouse/keycap icons (`tut_mouse_lmb.png`, `tut_mouse_rmb.png`).
+4. **Brief Tactical Slow-Mo on First Combat Beats:** On the player's very first Faceless windup (Perfect Dodge) and first low-HP wound (Jamu heal), time slows briefly (`0.22x` / `0.30x` for ~1.1–1.4 s real time) so the player can read the telegraph and react without pausing the flow. Strictly guarded: disabled in headless runs, yields immediately to `CastController`, and resets cleanly on action completion, pause, death, or scene change.
+5. **Never Collide on 480×270:** The tutorial cue card sits clear of the bottom weapon well and boss name bar (`Y = 204` or lifted when a boss bar is visible), suppresses while dialogue, pause menu, or Write Mode is open, and never stacks on top of `GlyphLesson`.
+6. **Persistence:** Completing (or skipping) a lesson sets `tut_<id>` in `Game.flags`, ensuring finished cues never repeat.
+
+---
+
+## 2. The 8-Beat Prologue Arc (`MQ0`)
+
+`MQ0` keeps its 12 steps (`s1..s12`, indices `0..11`). Each verb is earned at the exact story moment that motivates it:
+
+| # | Lesson ID | `MQ0` Step | Story Moment & Mentor | Completion Trigger | Diegetic & HUD Presentation |
 |---|---|---|---|---|---|
-| 1 | `dodge` | Step 0.1 (Village tag) | Laras (`beat:tag_cat`) | First successful dodge roll | WASD movement, `dodge` (Space) to slip past obstacles, stamina cost. |
-| 2 | `attack` | Step 0.5 (Sanggar) | Cepot (`DLG_CEPOT_T1/T2`) | 3 landed attacks | `attack` (LMB), holding LMB for the 3-hit combo, stamina management. |
-| 3 | `rest` | Step 0.10 (Morning) | Ibu (`DLG_IBU_T1/T2`) | `petilasan_activated` | `interact` (E) at a Petilasan: checkpointing, saving, stat upgrades. |
-| 4 | `cast` | Step 0.11 (Sanggar) | Semar (`DLG_SEMAR_T1`) | First `spell_cast` | Hold `cast` (RMB) to slow time, draw aksara with mouse, release to cast. |
-| 5 | `flask` | First time player HP drops | Ibu's Jamu line (0.10+) | First jamu drink | `heal_jamu` (Q), drinking a flask charge to restore HP. |
-| 6 | `perfect` | First hurt after flask | Combat situation | First perfect dodge | Timing a roll into an incoming blow refunds stamina and generates sakti. |
-
-*Note:* Step 0.6 (writing names on the lontar leaf) and Step 0.8 (`K0` wayang ruwatan) are self-teaching cinematic sequences managed by `ui/glyph_lesson.gd` and `zones/kelir/k0_ruwatan.gd`.
-
----
-
-## 3. Lesson Triggers & Data (`data/lessons.gd`)
-
-Lessons are defined as data entries in `data/lessons.gd`:
-
-```gdscript
-const LESSONS := {
-    "dodge": {
-        "text": "UI_TUT_DODGE",
-        "key": "dodge",
-        "when": "step:mq0=0",
-        "on": "talk",
-        "steps": [{"event": "dodged", "n": 1}],
-    },
-    ...
-}
-```
-
-### Trigger Types (`on`)
-- **`on: "talk"` or `"beat"`:** An NPC dialogue entry or story beat executes the dialogue action `lesson:<id>` (e.g. `do: ["lesson:attack"]`). `Game` emits `Events.lesson_offered`, and `ui/tutorial.gd` displays the card if its `when` condition holds.
-- **`on: "hurt"`:** Automatically triggered from `Events.player_hurt` when player HP is below `hp_below`. `flask` triggers if a charge is available; `perfect` triggers once `tut_flask` is already completed, preventing overlapping cards.
-
-### Condition Gating (`when`)
-Lessons use flag windows (e.g., `when: "flag:mq0_d4,!flag:mq0_d7"`) so that a lesson card remains active across dialogue transitions until the required action is performed.
+| 1 | `move` | `s1` (0.1 Dawn Tag) | Waking at dawn as Laras calls you to tag | Move (`WASD`) **and** real `talked_to` / `clue_examined` (pressing `E` in empty air does not count) | `WASD` + `E` keycaps, pulsing gold ground ring on the nearest tag target |
+| 2 | `dodge` | `s1` (0.1 Tag) | Triggered reliably after touching **any 1st** tag target (Si Belang, well, or banyan root) | `player_dodged` (1 roll) | `[Space]` keycap, **HUD Stamina spotlight**, Laras floating world bark |
+| 3 | `menu` | `s2–s3` (0.2–0.3 Errands) | After Ibu's tea / village errands | `menu_opened` (`Tab`/`Esc`/`M`) or gracefully retires at `s5` | `[Tab] / [M]` keycaps, **HUD top-right menu spotlight** |
+| 4 | `combo` | `s5` (0.5 Sanggar Warm-Up) | Cepot beside the 4 straw dummies **inside the sanggar** (with replay-skip choice) | **Stage A:** True 3-hit combo finisher (`player_struck` with `combo == 2`). **Stage B:** Class mechanic spotlight (all 8 classes) + knock down 1 straw dummy (`enemy_killed:dummy`, required `s5` sub-goal) | Animated **LMB mouse icon**, 3-pip combo meter (`○ ○ ★`), **HUD Stamina spotlight**, ground rings on dummies, live Cepot barks |
+| 5 | `cast` | `s11` (0.11 Sanggar with Semar) | Semar reveals `Ka` on Laras's torn lontar (with replay-skip choice) | **Phase A (Form):** 2 free-practice draws in unified `GlyphLesson` (suppressing overlapping sanggar guide & bottom pill). **Phase B (Sakti Flow):** Practice mode turns OFF; strike dummy to fill Sakti ≥ 15, then cast 1 live Sakti-funded `Ka` (`spell_cast:sunda_ka`, required `s11` sub-goal) | Animated **RMB mouse icon** (adapts to `toggle_cast`), moving stroke-order ink bead, **HUD Sakti spotlight**, dummy rings, Semar barks |
+| 6 | `perfect` | `s12` (0.12 First Skirmish) | First Faceless attack windup (`enemy_windup`) in range | `perfect_dodge` (or 2 dodges during combat so players never stall) | Brief **tactical slow-mo** (`0.22x`), crimson ring on swinging Faceless, `[Space]` cue, Stamina/Sakti flash |
+| 7 | `flask` | `s12` (0.12 First Wound) | First time HP ≤ 75% with Jamu charges (`player_hurt`) | `player_drank` (`Q`) | Brief **tactical slow-mo** (`0.30x`), **HUD Flasks + HP spotlight**, `[Q]` + jamu cue |
+| 8 | `rest` | `s12` (0.12 Post-Raid) | **Moved after `purwa_raid` clears:** now wounded, down Jamu, and holding fresh Ilmu, 3 tiles from the plaza Petilasan | `petilasan_activated:desa_purwa` (required `s12` sub-goal before Ibu at the west gate) | Pulsing gold ground beacon on Desa Purwa Petilasan + one-time **Level-Up highlight** in `tab_status.gd` |
 
 ---
 
-## 4. UI Presentation (`ui/tutorial.gd`)
+## 3. Class Mechanic Spotlight (`data/lessons.gd` `CLASS_TIPS`)
 
-- **Placement:** Bottom-center (`Y = 224`), 15 px height ink panel pill.
-- **Layout:** Displays an input keycap showing the live action binding, followed by localized body text (`data/text/ui.csv`), and a counter `(n/m)` for multi-hit lessons (such as the 3-hit combo).
-- **Behavior:** Fades in over 0.16 s. On completion, holds for 0.55 s and fades out. Completely ignores mouse clicks (`mouse_filter = Control.MOUSE_FILTER_IGNORE`).
-- **Suppression:** The pill automatically hides during dialogue, menu screens, write cards, and player death.
+During Cepot's sanggar drill (Stage B), after the player lands their 3-hit combo finisher, Cepot calls out a tailored tip for the player's chosen class (`Game.class_id`):
+
+| Class | Trait | Sanggar Tip |
+|---|---|---|
+| `warrior` | Iron Skin (*Kulit Besi*) | Press through light hits without staggering; punish with heavy finishers. |
+| `lancer` | Kuda-kuda | Stand still briefly to brace (-25% dmg, +30% next thrust) and strike at spear tip. |
+| `archer` | Eagle Eye (*Mata Elang*) | Keep distance (> 120 px) for +15% damage and piercing finishers. |
+| `herder` | Skipping Stone (*Batu Pantul*) | Sling stones bounce between nearby targets and break poise quickly. |
+| `rogue` | Light Step (*Langkah Ringan*) | Cheap dodges let you slip behind foes for double backstab damage. |
+| `dancer` | Wirama | Chain hits without taking damage to stack Wirama up to 8 for a fan wave finisher. |
+| `mage` | Keen Mind (*Pikiran Tajam*) | Staff bolts charge a deeper Sakti pool 1.2x faster for frequent casting. |
+| `dalang` | Lakon | Rotate different aksara without repeating to boost spell power up to +30%. |
 
 ---
 
-## 5. Verification & Testing
+## 4. Assets (`tools/gen_tutorial_art.py`)
 
-- `$GODOT --headless --path . -s tests/tutorial_test.gd` — Verifies that all lesson keys resolve, `when` gates function, multi-strike counts complete lessons, completed lessons never repeat, and dialogue hides active pills.
-- `python3 tools/quest_audit.py` — Confirms tutorial dialogue actions and text key presence across both languages.
+Generated using `tools/pixlib.py` in the Senja dusk palette (`assets/art/ui/`):
+- `tut_mouse_lmb.png` (24×16, 2 frames) — pixel mouse highlighting Left Mouse Button
+- `tut_mouse_rmb.png` (24×16, 2 frames) — pixel mouse highlighting Right Mouse Button
+- `tut_ring.png` (112×28, 4 frames) — pulsing ground beacon ring
+- `tut_spotlight.png` (16×16 9-patch) — pulsing HUD bracket highlight
+- `tut_check.png` (9×9) — green tick with a dark outline, no disc
+- Card geometry: 6 px padding, a 12 px kicker row, a 2 px gap and a 1–2 line wrapped body (38 or 50 px tall, `MAX_W` 280); its bottom stays at or above Y 236 (boss name bar). Class tips do not repeat the class name; the kicker carries it.
+- World barks hold for their full duration before fading (sequential tween). The beacon is its target's first child, so the ring draws under the sprite and above the ground (never `z_index -1`, which falls under the tiles); the gem floats at Y −34, clear of the head.
+
+---
+
+## 5. Verification
+
+- `python3 tools/quest_audit.py` — 0 problems across quests, dialogue, flags, and lessons.
+- `python3 .docs/know_check.py` & `python3 .docs/pacing_model.py` — canon & pacing aligned.
+- `$GODOT --headless --path . -s tests/tutorial_test.gd` — static key/lesson coverage + live runtime tests (real interact, true 3-hit combo check, any-order dodge trigger, 2-phase Ka/Sakti flow, windup slow-mo & flask triggers, skip toggle, UI suppression, boss-bar clearance).
+- `$GODOT --headless --path . -s tests/glyph_lesson_test.gd`, `tests/puzzle_test.gd`, `tests/playthrough_test.gd`, `tests/demo_test.gd`, `tests/zone_build_test.gd`, `tests/ui_test.gd`.

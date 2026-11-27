@@ -76,37 +76,39 @@ func build(l: Control, r: Control) -> void:
 	_figure.mouse_filter = MOUSE_FILTER_IGNORE
 	put(l, _figure, Vector2(52, 32), Vector2(FRAME_W, FRAME_H))
 	# level seal, top left of the figure
-	put(l, MenuBook.pic("book_seal", Vector2.ZERO), Vector2(8, 40))
-	_level = MenuBook.num("", UIFx.HEAD, 20)
+	put(l, MenuBook.pic("book_seal", Vector2.ZERO), Vector2(16, 40))
+	_level = MenuBook.text("", UIFx.HEAD)
+	_level.add_theme_font_override("font", UIFx.display())   # DISPLAY 27 sits inside the 28 px ring
+	_level.add_theme_font_size_override("font_size", UIFx.DISPLAY)
 	_level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_level.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	put(l, _level, Vector2(8, 40), Vector2(28, 26))
+	put(l, _level, Vector2(16, 40), Vector2(28, 28))
 	var lv := MenuBook.bold(tr("UI_BK_LEVEL"), MenuBook.INK_HEAD)
 	lv.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	put(l, lv, Vector2(0, 70), Vector2(44, 12))
+	put(l, lv, Vector2(0, 70), Vector2(60, 13))
 	# play time, top right (balances the seal)
-	put(l, MenuBook.pic("book_ic_time", Vector2.ZERO), Vector2(165, 32))
+	put(l, MenuBook.pic("book_ic_time", Vector2.ZERO), Vector2(153, 33))
 	_time = MenuBook.num("", MenuBook.INK, 10)
 	_time.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	put(l, _time, Vector2(148, 46), Vector2(44, 12))
+	put(l, _time, Vector2(128, 45), Vector2(60, 13))
 	var tl := MenuBook.bold(tr("UI_BK_TIME"), MenuBook.INK_HEAD)
 	tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	put(l, tl, Vector2(136, 70), Vector2(64, 12))   # 64 wide: PLAY TIME in Pixeloid caps stays on the page
+	put(l, tl, Vector2(116, 59), Vector2(84, 13))   # centred at 158, wide enough for "WAKTU MAIN" in id; above the shield
 	# Ilmu: label, value, bar, status line
-	put(l, MenuBook.pic("book_ic_ilmu", Vector2.ZERO), Vector2(0, 170))
-	put(l, MenuBook.bold(tr("UI_BK_ILMU"), MenuBook.INK_HEAD), Vector2(14, 168), Vector2(80, 12))
+	put(l, MenuBook.pic("book_ic_ilmu", Vector2.ZERO), Vector2(0, 163))
+	put(l, MenuBook.bold(tr("UI_BK_ILMU"), MenuBook.INK_HEAD), Vector2(14, 161), Vector2(80, 13))
 	_ilmu_val = MenuBook.num("", MenuBook.INK)
 	_ilmu_val.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	put(l, _ilmu_val, Vector2(100, 167), Vector2(100, 12))
-	put(l, MenuBook.nine("book_bar", Rect2(0, 182, 200, 8), 2), Vector2(0, 182))
-	_bar_fill = MenuBook.nine("book_bar_fill", Rect2(1, 183, 0, 6), 1)
+	put(l, _ilmu_val, Vector2(100, 161), Vector2(100, 13))
+	put(l, MenuBook.nine("book_bar", Rect2(0, 175, 200, 8), 2), Vector2(0, 175))
+	_bar_fill = MenuBook.nine("book_bar_fill", Rect2(1, 176, 0, 6), 1)
 	_bar_fill.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
 	_bar_fill.patch_margin_top = 0
 	_bar_fill.patch_margin_bottom = 0
-	put(l, _bar_fill, Vector2(1, 183))
+	put(l, _bar_fill, Vector2(1, 176))
 	_bar_w = 198
-	_status_line = MenuBook.italic("", MenuBook.INK_DIM, false)
-	put(l, _status_line, Vector2(0, 194), Vector2(200, 12))
+	_status_line = MenuBook.italic("", MenuBook.INK_DIM, true)   # wraps (id is longer); 2 lines end at 212
+	put(l, _status_line, Vector2(0, 185), Vector2(200, UIFx.LINE * 2 - 1))
 	# Pusaka panel (items.md 1): the free column left of the figure, button in the one right of it
 	_pusaka = Control.new()
 	_pusaka.mouse_filter = MOUSE_FILTER_IGNORE
@@ -156,19 +158,19 @@ func build(l: Control, r: Control) -> void:
 	put(_pts_seal, _pts_num, Vector2(64, 0), Vector2(16, 15))
 	for i in STATS.size():
 		var s: String = STATS[i]
-		var row := MenuBook.row_button(16)
+		var row := MenuBook.row_button(UIFx.LINE)
 		row.name = "Row_" + s
-		put(r, row, Vector2(0, 20 + i * 16), Vector2(200, 16))
-		put(row, MenuBook.pic("book_ic_" + s, Vector2.ZERO), Vector2(4, 3))
-		put(row, MenuBook.text(tr(NAMES[s])), Vector2(18, 2), Vector2(76, 12))
+		put(r, row, Vector2(0, 17 + i * UIFx.LINE), Vector2(200, UIFx.LINE))
+		put(row, MenuBook.pic("book_ic_" + s, Vector2.ZERO), Vector2(4, 2))
+		put(row, MenuBook.text(tr(NAMES[s])), Vector2(18, 0), Vector2(76, 13))
 		var pips := HBoxContainer.new()
 		pips.add_theme_constant_override("separation", 1)
 		pips.mouse_filter = MOUSE_FILTER_IGNORE
-		put(row, pips, Vector2(94, 5), Vector2(60, 5))
+		put(row, pips, Vector2(98, 4), Vector2(60, 5))
 		_pips[s] = pips
 		var v := MenuBook.num("", MenuBook.INK)
 		v.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		put(row, v, Vector2(154, 1), Vector2(20, 12))
+		put(row, v, Vector2(158, 0), Vector2(20, 13))
 		_vals[s] = v
 		var b := Button.new()
 		b.focus_mode = FOCUS_NONE
@@ -179,7 +181,7 @@ func build(l: Control, r: Control) -> void:
 		b.pressed.connect(ask.bind(s))
 		b.mouse_entered.connect(func() -> void: b.icon = MenuBook.tex("book_plus_hi") if not b.disabled else b.icon)
 		b.mouse_exited.connect(_paint_plus.bind(s))
-		put(row, b, Vector2(184, 2), Vector2(11, 11))
+		put(row, b, Vector2(184, 1), Vector2(11, 11))
 		raise[s] = b
 		row.pressed.connect(func() -> void:
 			if not raise[s].disabled:
@@ -195,13 +197,12 @@ func build(l: Control, r: Control) -> void:
 		row.focus_neighbor_bottom = row.get_path_to(_rows[STATS[posmod(i + 1, STATS.size())]])
 		row.focus_neighbor_left = row.get_path()
 		row.focus_neighbor_right = row.get_path()
-	_effect = MenuBook.italic("", MenuBook.INK_DIM, false)
-	_effect.clip_text = true
-	put(r, _effect, Vector2(4, 101), Vector2(196, 12))
+	_effect = MenuBook.italic("", MenuBook.INK_DIM, true)   # wraps; 2 lines are reserved so Power below never jumps
+	put(r, _effect, Vector2(4, 89), Vector2(196, UIFx.LINE * 2 - 1))
 	_confirm = HBoxContainer.new()
 	_confirm.visible = false
 	_confirm.add_theme_constant_override("separation", 4)
-	put(r, _confirm, Vector2(4, 100), Vector2(196, 13))
+	put(r, _confirm, Vector2(4, 89), Vector2(196, UIFx.LINE))
 	_confirm_lbl = MenuBook.bold("", MenuBook.WAX)
 	_confirm_lbl.size_flags_horizontal = SIZE_EXPAND_FILL
 	_confirm_lbl.clip_text = true
@@ -219,22 +220,22 @@ func build(l: Control, r: Control) -> void:
 	var keys := [["hp", "UI_DER_HP"], ["atk", "UI_DER_ATK"], ["sta", "UI_BK_STAMINA"], ["def", "UI_DER_DEF"],
 			["sak", "UI_BK_SAKTI"], ["jamu", "UI_BK_JAMU"]]
 	for i in keys.size():
-		var x := (i % 2) * 104
-		var y := 138 + (i / 2) * 13
-		put(r, MenuBook.pic("book_ic_" + keys[i][0], Vector2.ZERO), Vector2(x + 2, y + 1))
-		put(r, MenuBook.text(tr(keys[i][1])), Vector2(x + 16, y), Vector2(56, 12))
+		var x := (i % 2) * 92   # col 2 starts at 92: "Pertahanan" (id) needs the room
+		var y := 135 + (i / 2) * UIFx.LINE
+		put(r, MenuBook.pic("book_ic_" + keys[i][0], Vector2.ZERO), Vector2(x, y + 2))
+		put(r, MenuBook.text(tr(keys[i][1])), Vector2(x + 13, y), Vector2(70, 13))
 		var v := MenuBook.num("", MenuBook.INK)
 		v.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		put(r, v, Vector2(x + 56, y - 1), Vector2(40, 12))
+		put(r, v, Vector2(x + 48, y), Vector2(40 if i % 2 == 0 else 60, 13))
 		_derived[keys[i][0]] = v
 	# learned glyphs
 	put(r, MenuBook.section(tr("UI_BK_GLYPHS")), Vector2(0, 178))
 	_glyphs = HBoxContainer.new()
 	_glyphs.add_theme_constant_override("separation", 2)
 	_glyphs.mouse_filter = MOUSE_FILTER_IGNORE
-	put(r, _glyphs, Vector2(0, 196), Vector2(200, 16))
+	put(r, _glyphs, Vector2(0, 194), Vector2(200, 18))
 	_no_glyphs = MenuBook.italic(tr("UI_BK_NO_GLYPHS"), MenuBook.INK_FADE, false)
-	put(r, _no_glyphs, Vector2(0, 198), Vector2(200, 12))
+	put(r, _no_glyphs, Vector2(0, 196), Vector2(200, 13))
 
 
 func _process(d: float) -> void:
@@ -273,10 +274,16 @@ func refresh() -> void:
 		_status_line.text = tr("UI_JAMASAN_HINT")
 	elif not at:
 		_status_line.text = tr("UI_REST_HINT")
+		_status_line.add_theme_color_override("font_color", MenuBook.INK_DIM)
+	elif pts > 0 and not g.has_flag("tut_levelup") and not GameSettings.skip_tutorials():
+		_status_line.text = tr("UI_TUT_LEVELUP_HINT")
+		_status_line.add_theme_color_override("font_color", MenuBook.ACCENT)
 	elif pts > 0:
 		_status_line.text = tr("UI_BK_AT_SHRINE")
+		_status_line.add_theme_color_override("font_color", UIFx.WARM)
 	else:
-		_status_line.text = tr("UI_BK_NEED_ILMU") % (cost - g.ilmu)
+		_status_line.text = tr("UI_TUT_SHRINE_SAVED") if (not g.has_flag("tut_levelup") and not GameSettings.skip_tutorials()) else (tr("UI_BK_NEED_ILMU") % (cost - g.ilmu))
+		_status_line.add_theme_color_override("font_color", MenuBook.ACCENT if not g.has_flag("tut_levelup") else MenuBook.INK_DIM)
 	_pts_seal.visible = pts > 0
 	_pts_num.text = str(pts)
 	var can: bool = at and pts > 0
@@ -446,6 +453,8 @@ func ask(stat: String) -> void:
 func _do_raise() -> void:
 	if _pending != "":
 		game.level_up(_pending)
+		if not game.has_flag("tut_levelup"):
+			game.set_flag("tut_levelup", false)   # the hint is seen once the player actually spends
 	cancel()
 
 

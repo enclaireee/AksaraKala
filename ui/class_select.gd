@@ -30,7 +30,7 @@ var _w_icon: TextureRect
 var _w_name: Label
 var _p_name: Label
 var _p_text: Label
-var _hints: Label
+var _hints: HBoxContainer
 var _fade: ColorRect
 var _in_confirm := false
 
@@ -40,6 +40,7 @@ func _ready() -> void:
 	UIFx.sky(self, 0.6, false)   # the dusk sky, dimmed: the figure and the card carry the screen
 	_stage = Control.new()   # figure, cone, pedestal, particles
 	_stage.mouse_filter = MOUSE_FILTER_IGNORE
+	_stage.position.x = -32   # nudged left: the wider card on the right needs the room
 	add_child(_stage)
 	_stage.add_child(UIFx.rect_tex("light_cone", Vector2(157, 36)))
 	_stage.add_child(UIFx.rect_tex("pedestal", Vector2(173, 190)))
@@ -85,12 +86,21 @@ func _ready() -> void:
 			_entry(c)
 
 	_build_info()
-	_hints = UIFx.text("", "body", UIFx.DIM)
+	_hints = HBoxContainer.new()   # footer: keycaps + lavender words
 	_hints.position = Vector2(0, 254)
-	_hints.size = Vector2(480, 12)
-	_hints.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hints.size = Vector2(210, UIFx.LINE)   # centred under the list: the card on the right runs to the screen foot
+	_hints.alignment = BoxContainer.ALIGNMENT_CENTER
+	_hints.add_theme_constant_override("separation", UIFx.GAP_S)
 	add_child(_hints)
-	_hints.text = "Enter  %s      Esc  %s" % [tr("UI_CHOOSE"), tr("UI_BACK")]
+	for h in [["Enter", "UI_CHOOSE"], ["Esc", "UI_BACK"]]:
+		if _hints.get_child_count() > 0:
+			var sp := Control.new()
+			sp.custom_minimum_size.x = UIFx.GAP_L - UIFx.GAP_S
+			_hints.add_child(sp)
+		_hints.add_child(MenuBook.keycap(h[0]))
+		var hl := UIFx.text(tr(h[1]), "body", UIFx.LABEL_COL)
+		hl.size_flags_vertical = Control.SIZE_SHRINK_END   # the cap face sits 1 px low in its 14 px box
+		_hints.add_child(hl)
 
 	_build_confirm()
 	_fade = UIFx.cover(self)
@@ -118,70 +128,88 @@ func _ink_panel(pos: Vector2, sz: Vector2) -> Panel:
 	return p
 
 
-## Right card, on the 2 px grid: name (heading) / role (caps) / rule / description / 5 stats / weapon / passive.
+## Right card: a vertical stack (name / role / rule / description / stats / weapon / passive). Each block takes its
+## height from its content, so wrapped text pushes the blocks below it down and can never overlap them.
 func _build_info() -> void:
-	_info = _ink_panel(Vector2(292, 20), Vector2(180, 228))
+	var x := float(UIFx.MARGIN + 2)
+	var w := 242.0
+	_info = _ink_panel(Vector2(210, 4), Vector2(262, 260))
 	add_child(_info)
-	var x := 10.0
-	var w := 160.0
+	var col := VBoxContainer.new()
+	col.position = Vector2(x, UIFx.PAD)
+	col.size = Vector2(w, 0)
+	col.add_theme_constant_override("separation", UIFx.GAP_XS)
+	col.mouse_filter = MOUSE_FILTER_IGNORE
+	_info.add_child(col)
 	_name = UIFx.text("", "head", UIFx.GOLD_HI)
-	_name.position = Vector2(x, 8)
-	_name.size = Vector2(w, 12)
-	_info.add_child(_name)
+	var head := HBoxContainer.new()   # name left, role right on one line
+	head.add_theme_constant_override("separation", UIFx.GAP)
+	head.mouse_filter = MOUSE_FILTER_IGNORE
+	col.add_child(head)
+	head.add_child(_name)
 	_role = UIFx.text("", "label", UIFx.LABEL_COL)
-	_role.position = Vector2(x, 22)
-	_role.size = Vector2(w, 12)
-	_info.add_child(_role)
-	var rule := NinePatchRect.new()   # book_rule: a cyan lead-in, then the hairline
-	rule.texture = load("res://assets/art/ui/book_rule.png")
-	rule.patch_margin_left = 6
-	rule.position = Vector2(x, 36)
-	rule.size = Vector2(w, 3)
-	_info.add_child(rule)
-	_desc = UIFx.text("", "body", UIFx.CREAM)
-	_desc.position = Vector2(x, 42)
-	_desc.size = Vector2(w, 36)
-	_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_desc.add_theme_constant_override("line_spacing", 1)
-	_info.add_child(_desc)
-	var y := 82.0
+	_role.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_role.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	head.add_child(_role)
+	var rule := Control.new()   # full-width hairline with a cyan lead-in
+	rule.custom_minimum_size = Vector2(w, 1)
+	rule.mouse_filter = MOUSE_FILTER_IGNORE
+	var line := ColorRect.new()
+	line.color = UIFx.LINE_DIM
+	line.size = Vector2(w, 1)
+	rule.add_child(line)
+	var lead := ColorRect.new()
+	lead.color = UIFx.ACCENT
+	lead.size = Vector2(6, 1)
+	rule.add_child(lead)
+	col.add_child(rule)
+	_desc = _wrap(w)
+	col.add_child(_desc)
+	var stats := Control.new()
+	stats.custom_minimum_size = Vector2(w, UIFx.LINE * STATS.size())
+	stats.mouse_filter = MOUSE_FILTER_IGNORE
+	col.add_child(stats)
+	var y := 0.0
 	for s: String in STATS:
-		var l := UIFx.text(tr("UI_STAT_" + s.to_upper()), "body", UIFx.DIM)
-		l.position = Vector2(x, y)
-		l.size = Vector2(56, 12)
-		_info.add_child(l)
+		var l := UIFx.text(tr("UI_STAT_" + s.to_upper()), "body", UIFx.LABEL_COL)
+		l.position = Vector2(0, y)
+		l.size = Vector2(82, 12)
+		stats.add_child(l)
 		var bar := StatBar.new()
-		bar.position = Vector2(x + 58, y + 1)
-		_info.add_child(bar)
+		bar.position = Vector2(84, y + 1)
+		stats.add_child(bar)
 		_bars[s] = bar
-		y += 12.0
-	y += 6.0   # 148: weapon well with its caps label and name beside it
-	var slot := UIFx.rect_tex("ink_slot", Vector2(x, y))
-	_info.add_child(slot)
+		y += UIFx.LINE
+	var weapon := Control.new()   # well with its caps label and name beside it
+	weapon.custom_minimum_size = Vector2(w, 24)
+	weapon.mouse_filter = MOUSE_FILTER_IGNORE
+	col.add_child(weapon)
+	var slot := UIFx.rect_tex("ink_slot", Vector2.ZERO)
+	weapon.add_child(slot)
 	_w_icon = TextureRect.new()
 	_w_icon.position = Vector2(2, 2)
 	_w_icon.size = Vector2(16, 16)
 	_w_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	slot.add_child(_w_icon)
 	var w_lbl := UIFx.text(tr("UI_WEAPON"), "label", UIFx.LABEL_COL)
-	w_lbl.position = Vector2(x + 26, y)
+	w_lbl.position = Vector2(26, 0)
 	w_lbl.size = Vector2(w - 26, 12)
-	_info.add_child(w_lbl)
+	weapon.add_child(w_lbl)
 	_w_name = UIFx.text("", "body", UIFx.CREAM)
-	_w_name.position = Vector2(x + 26, y + 12)
+	_w_name.position = Vector2(26, 12)
 	_w_name.size = Vector2(w - 26, 12)
-	_info.add_child(_w_name)
-	y += 28.0   # 176: passive
+	weapon.add_child(_w_name)
 	_p_name = UIFx.text("", "label", UIFx.ACCENT)
-	_p_name.position = Vector2(x, y)
-	_p_name.size = Vector2(w, 12)
-	_info.add_child(_p_name)
-	_p_text = UIFx.text("", "body", UIFx.CREAM)
-	_p_text.position = Vector2(x, y + 13)
-	_p_text.size = Vector2(w, 36)
-	_p_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_p_text.add_theme_constant_override("line_spacing", 1)
-	_info.add_child(_p_text)
+	col.add_child(_p_name)
+	_p_text = _wrap(w)
+	col.add_child(_p_text)
+
+
+func _wrap(w: float) -> Label:
+	var l := UIFx.text("", "body", UIFx.CREAM)
+	l.custom_minimum_size.x = w
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	return l
 
 
 func _build_confirm() -> void:

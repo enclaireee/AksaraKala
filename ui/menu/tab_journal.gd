@@ -25,12 +25,12 @@ func icon() -> String:
 
 
 func build(l: Control, r: Control) -> void:
-	_list = scroll(l, Rect2(0, 0, 200, 212))
+	_list = scroll(l, Rect2(0, 0, 200, 208))   # ends clear of the footer rule
 	_list.add_theme_constant_override("separation", 0)
-	_list_scroll = _list.get_parent()
-	detail = scroll(r, Rect2(0, 0, 200, 212))
+	_list_scroll = _list.get_parent().get_parent()
+	detail = scroll(r, Rect2(0, 0, 200, 208))
 	detail.add_theme_constant_override("separation", 3)
-	_detail_scroll = detail.get_parent()
+	_detail_scroll = detail.get_parent().get_parent()
 
 
 func _lists(g: Node) -> Dictionary:
@@ -91,7 +91,7 @@ func refresh() -> void:
 		var rule := MenuBook.nine("book_rule", Rect2(0, 0, 200, 3), 8)
 		rule.patch_margin_top = 0
 		rule.patch_margin_bottom = 0
-		rule.custom_minimum_size = Vector2(200, 3)
+		rule.custom_minimum_size = Vector2(0, 3)
 		_list.add_child(rule)
 		for q: QuestData in lists[k]:
 			_list.add_child(_row(g, q, k, tracked))
@@ -114,9 +114,11 @@ func _row(g: Node, q: QuestData, group: String, tracked: String) -> Button:
 		b.set_meta("pin", q.id)   # `interact` also tracks, as before
 	MenuBook.set_row_selected(b, q.id == sel)
 	var title := MenuBook.text(tr("Q_%s_TITLE" % q.id.to_upper()), MenuBook.INK_FADE if group == "done" else MenuBook.INK)
-	title.clip_text = true
-	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	put(b, title, Vector2(14, 2), Vector2(184, 12))
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # a long title wraps and the row grows: never "..."
+	put(b, title, Vector2(14, 2), Vector2(176, 13))
+	var th := maxf(13.0, title.get_minimum_size().y)
+	title.size.y = th
+	b.custom_minimum_size.y = maxf(16.0, th + 4.0)
 	if q.id == tracked:
 		put(b, MenuBook.pic("book_track", Vector2.ZERO), Vector2(4, 4))
 	elif group == "done":
@@ -184,7 +186,7 @@ func _bullet(t: String, kind: String, color := MenuBook.INK) -> Label:
 	var b := MenuBook.pic(kind, Vector2.ZERO)
 	b.size_flags_vertical = SIZE_SHRINK_BEGIN
 	var wrap := MarginContainer.new()   # nudge the 7 px bullet onto the first text line
-	wrap.add_theme_constant_override("margin_top", 3)
+	wrap.add_theme_constant_override("margin_top", 2)
 	wrap.add_child(b)
 	row.add_child(wrap)
 	var l := MenuBook.text(t, color, true)

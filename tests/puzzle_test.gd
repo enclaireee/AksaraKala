@@ -105,10 +105,12 @@ func _initialize() -> void:
 	all_props("mq0", 6, ["stage_lamp_1", "stage_lamp_2", "stage_lamp_3", "stage_lamp_4"], "mq0 0.7")
 	check(step_of("mq0") == 7 and g.has_flag("mq0_d6b"), "mq0 0.7 done: %s" % g.quests.mq0)
 
-	# MQ0 0.12: raid, leave, and Ibu at the gate
+	# MQ0 0.12: raid, rest at petilasan, leave, and Ibu at the gate
 	at("mq0", 11)
 	ev.area_cleared.emit("purwa_raid")
 	ev.zone_entered.emit("ts_kebun")
+	check(step_of("mq0") == 11, "mq0 0.12 done without Petilasan or Ibu")
+	ev.petilasan_activated.emit("desa_purwa")
 	check(step_of("mq0") == 11, "mq0 0.12 done without Ibu")
 	press("ibu")
 	check(step_of("mq0") == 99, "mq0 0.12 done: %s" % g.quests.mq0)

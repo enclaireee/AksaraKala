@@ -1,6 +1,6 @@
 class_name LozengeButton extends Button
 ## Frameless menu entry: a diamond cursor on hover or focus and a 3 px indent, nothing else (ui.md 4: one cursor
-## language, no shimmer). size >= 10 is a menu entry in the heading face (Pixeloid Bold 9 +1), smaller is body text.
+## language, no shimmer). size >= 10 is a menu entry in the heading face (Jersey 15 16 +1), smaller is body text.
 ## Hovering takes focus, so mouse, keyboard and gamepad share one cursor.
 
 var _indent := 0.0

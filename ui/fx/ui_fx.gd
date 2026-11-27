@@ -37,25 +37,28 @@ static func tex(name: String) -> Texture2D:
 
 # ---------------------------------------------------------------------------------------------------------------
 # Design system v3.1 (ui.md 0-1). Every screen takes its type, colour and spacing from here.
-# Pixeloid Sans / Bold render crisp ONLY on their 9 px grid (9, 18, 27); never pass any other size:
-#   BODY    Pixeloid Sans 9       cap 7, line 12   all body text, numbers, hints, dialogue, lists (Bold: FONT_BODY_BOLD)
-#   LABEL   Pixeloid Sans 9       CAPS + 1 px tracking, lavender: small section labels and kickers
-#   HEAD    Pixeloid Sans Bold 9  CAPS/Title + 1 px tracking: screen / page / card headings, names, boss name
-#   DISPLAY Pixeloid Sans Bold 18 + 1 px tracking: area titles, quest titles, "Fallen", boss banner; LOGO = 27
+# Jersey 15 is the one UI face (one weight). Its own grid is 27 px; with AA off only 16, 27 and 54 render with even
+# stems, so never pass any other size (ui.md 1):
+#   BODY    Jersey 15 16   cap 9, line 14   all body text, numbers, hints, dialogue, lists
+#   LABEL   Jersey 15 16   CAPS + 1 px tracking, lavender: small section labels and kickers
+#   HEAD    Jersey 15 16   + 1 px tracking in the HEAD colour: screen / page / card headings, names, boss name
+#   DISPLAY Jersey 15 27   + 1 px tracking: area titles, quest titles, "Fallen", boss banner; LOGO = 54
 # ---------------------------------------------------------------------------------------------------------------
-const FONT_BODY := "res://assets/fonts/PixeloidSans.woff"
-const FONT_BODY_BOLD := "res://assets/fonts/PixeloidSans-Bold.woff"
-const FONT_TINY := FONT_BODY   # unified onto Pixeloid 9
-const TINY := 9
+const FONT_BODY := "res://assets/fonts/Jersey15-Regular.ttf"
+const FONT_BODY_BOLD := FONT_BODY   # Jersey 15 has one weight
+const FONT_TINY := FONT_BODY
+const TINY := 16
 const FONT_HEAD := FONT_BODY_BOLD
 const FONT_DISPLAY := FONT_BODY_BOLD
 const FONT_SUNDA := "res://assets/fonts/NotoSansSundanese.ttf"
 const FONT_JAWA := "res://assets/fonts/NotoSansJavanese.ttf"
-const BODY := 9         # Pixeloid's pixel grid: 9, 18, 27
-const HEAD_SIZE := 9    # (the colour of the same name is HEAD)
-const DISPLAY := 18
-const LOGO := 27
-const LINE := 12        # body line pitch (11 px glyph box + 1 spacing)
+const BODY := 16        # Jersey 15 steps: 16, 27 (its own grid), 54
+const HEAD_SIZE := 16   # (the colour of the same name is HEAD)
+const DISPLAY := 27
+const LOGO := 54
+const LINE := 14        # body line pitch (13 px trimmed glyph box + 1 spacing)
+const BODY_ASCENT := 10   # TUNE: the body box is cap 9 + 1 above, descender 3 below (raw 13 / 4)
+const BODY_DESCENT := 3
 
 # spacing: one 4 px grid. Screen-safe margin 8, panel padding 6, gaps 2 / 4 / 8 / 16.
 const MARGIN := 8
@@ -87,39 +90,44 @@ static func _aksara_fallbacks() -> Array[Font]:
 	return _aksara_fb
 
 
-static func _font(path: String, top := 0, bottom := 0, track := 0) -> Font:
-	var k := "%s|%d|%d|%d" % [path, top, bottom, track]
+static func _font(path: String, track := 0, size := BODY) -> Font:
+	var k := "%s|%d|%d" % [path, track, size]
 	if not _fonts.has(k):
+		var base := load(path) as Font
 		var v := FontVariation.new()
-		v.base_font = load(path)
-		v.spacing_top = top
-		v.spacing_bottom = bottom
+		v.base_font = base
 		v.spacing_glyph = track
 		v.fallbacks = _aksara_fallbacks()
+		# The Noto fallbacks stretch the line box; body sizes trim to BODY_ASCENT + BODY_DESCENT (+1 theme
+		# line_spacing = LINE), display sizes keep Jersey's own box. Spacing is in pixels, so each size gets its own.
+		var asc := float(BODY_ASCENT) if size < DISPLAY else base.get_ascent(size)
+		var desc := float(BODY_DESCENT) if size < DISPLAY else base.get_descent(size)
+		v.spacing_top = roundi(asc - v.get_ascent(size))
+		v.spacing_bottom = roundi(desc - v.get_descent(size))
 		_fonts[k] = v
 	return _fonts[k]
 
 
-## Pixeloid Sans: the body face for everything small.
+## Jersey 15: the body face for everything small.
 static func body_font() -> Font:
 	return _font(FONT_BODY)
 
 
-## Keeps legacy callers on Pixeloid 9 (CAPS labels keep their 1 px tracking).
+## Keeps legacy callers on the body size (CAPS labels keep their 1 px tracking).
 static func tiny(l: Label) -> Label:
 	l.add_theme_font_override("font", caps_font() if l.uppercase else body_font())
 	l.add_theme_font_size_override("font_size", BODY)
 	return l
 
 
-## Pixeloid Sans with 1 px tracking for CAPS labels.
+## Jersey 15 with 1 px tracking for CAPS labels.
 static func caps_font() -> Font:
-	return _font(FONT_BODY, 0, 0, 1)
+	return _font(FONT_BODY, 1)
 
 
-## Pixeloid Sans Bold at 9 with 1 px tracking for headings and menu entries.
+## Jersey 15 at 16 with 1 px tracking for headings and menu entries.
 static func head_font() -> Font:
-	return _font(FONT_HEAD, 0, 0, 1)
+	return _font(FONT_HEAD, 1)
 
 
 ## Old name kept for callers: the heading face.
@@ -127,16 +135,16 @@ static func cinzel() -> Font:
 	return head_font()
 
 
-## Pixeloid Sans Bold at 18 / 27 with 1 px tracking for big titles.
-static func display() -> Font:
-	return _font(FONT_DISPLAY, 0, 0, 1)
+## Jersey 15 at 27 / 54 with 1 px tracking for big titles.
+static func display(size := DISPLAY) -> Font:
+	return _font(FONT_DISPLAY, 1, size)
 
 
 ## Maps any old size to the nearest pixel-true step of the scale.
 static func snap(size: int, display_face: bool = false) -> int:
 	if display_face:
 		return LOGO if size >= 40 else (DISPLAY if size >= 18 else HEAD_SIZE)
-	return 18 if size >= 16 else BODY
+	return DISPLAY if size >= 24 else BODY
 
 
 ## A Label on the scale. kind: "body", "label" (caps, tracked), "head", "display", "logo".
@@ -159,7 +167,7 @@ static func text(t: String, kind := "body", color := CREAM, paper := false) -> L
 			l.add_theme_font_override("font", display())
 			l.add_theme_font_size_override("font_size", DISPLAY)
 		"logo":
-			l.add_theme_font_override("font", display())
+			l.add_theme_font_override("font", display(LOGO))
 			l.add_theme_font_size_override("font_size", LOGO)
 		_:
 			l.add_theme_font_override("font", body_font())

@@ -107,10 +107,12 @@ def glow_panel(w, h, fill=FILL):
     return im
 
 
-def keycap(w=10, h=10):
+def keycap(w=10, h=12):
+    """ui.md 0.2: 12 px cap. Row 1 highlight, rows 2-8 face (7 px caps sit here), rows 9-10 lip, 1 px edge.
+    Nine-patch margins L/R 3, T 3, B 4."""
     im = new(w, h)
     px = im.load()
-    face, lip = rgb("E4DEF0"), rgb("9E94BE")
+    hi, face, lip, lip_lo = rgb("FBF8FF"), rgb("E4DEF0"), rgb("A79DC6"), rgb("7E73A3")
     for y in range(h):
         for x in range(w):
             if (x in (0, w - 1)) and (y in (0, h - 1)):
@@ -118,9 +120,16 @@ def keycap(w=10, h=10):
             if x in (0, w - 1) or y in (0, h - 1):
                 px[x, y] = EDGE
             elif y == h - 2:
+                px[x, y] = lip_lo
+            elif y == h - 3:
                 px[x, y] = lip
+            elif y == 1:
+                px[x, y] = hi
             else:
                 px[x, y] = face
+    # side shading on the face so stretched caps keep their bevel
+    for y in range(2, h - 3):
+        px[w - 2, y] = rgb("CFC7E2")
     return im
 
 
@@ -281,10 +290,12 @@ def corner():
 
 
 def footer():
-    im = new(16, 12, rgb("0E0B1C"))
+    # one tone above the page well so the hint row reads as a band, a lit hairline over a soft one
+    im = new(16, 12, rgb("17122C"))
     px = im.load()
     for x in range(16):
         px[x, 0] = HAIR
+        px[x, 1] = HAIR_LO
         px[x, 11] = EDGE
     return im
 
@@ -1286,7 +1297,7 @@ MARKS = {
 }
 
 
-def word_mask(word, cell):
+def word_mask(word, cell, letters=True, marks=True):
     cols = []
     xs = []
     x = 0
@@ -1301,12 +1312,12 @@ def word_mask(word, cell):
     im = Image.new("L", (w_cells * cell, h_cells * cell), 0)
     d = ImageDraw.Draw(im)
     oy = 1
-    for (ch, (x0, gw)) in zip(word, xs):
+    for (ch, (x0, gw)) in zip(word if letters else "", xs):
         for ry, r in enumerate(LETTERS[ch]):
             for rx, c in enumerate(r[:gw]):
                 if c == "#":
                     d.rectangle([(x0 + rx) * cell, (oy + ry) * cell, (x0 + rx + 1) * cell - 1, (oy + ry + 1) * cell - 1], fill=255)
-    for idx, kind in MARKS.get(word, []):
+    for idx, kind in (MARKS.get(word, []) if marks else []):
         x0, gw = xs[idx]
         if kind == "bar":
             d.rectangle([x0 * cell, (oy + 0) * cell, (x0 + gw) * cell - 1, (oy + 0) * cell + cell - 2], fill=255)
@@ -1342,47 +1353,51 @@ def distress(mask, seed):
 
 
 def logo(cell=4, seed=21):
-    a = word_mask("Aksara", cell)
-    k = word_mask("Kala", cell)
-    gap = -cell   # Kala's tick row tucks into the empty row under Aksara's dots
-    pad = 6
-    w = max(a.width, k.width) + pad * 2
-    h = a.height + k.height + gap + pad * 2
-    mask = Image.new("L", (w, h), 0)
-    mask.paste(a, ((w - a.width) // 2, pad))
-    mask.paste(k, ((w - k.width) // 2, pad + a.height + gap))
+    """Bold 2-tone wordmark: cream face over an amber lower band, a 1 px dark bevel under each stroke, a 1 px lacquer
+    outline so it holds on any sky band, and the aksara-style marks (bars, ticks, dots) in cyan."""
     from PIL import ImageFilter
-    mask = mask.filter(ImageFilter.MaxFilter(3))   # bolder: every stroke grows 1 px each side
-    bb = mask.getbbox()   # trim to the ink, then a 3 px margin for the shadow and flecks
-    mask = mask.crop((bb[0] - 3, bb[1] - 3, bb[2] + 3, bb[3] + 3))
+    def stack(**kw):
+        a = word_mask("Aksara", cell, **kw)
+        k = word_mask("Kala", cell, **kw)
+        gap = -cell   # Kala's tick row tucks into the empty row under Aksara's dots
+        pad = 6
+        w = max(a.width, k.width) + pad * 2
+        h = a.height + k.height + gap + pad * 2
+        m = Image.new("L", (w, h), 0)
+        m.paste(a, ((w - a.width) // 2, pad))
+        m.paste(k, ((w - k.width) // 2, pad + a.height + gap))
+        return m.filter(ImageFilter.MaxFilter(3)), (pad, pad + a.height + gap, a.height)   # every stroke 1 px bolder
+    mask, (ya, yk, hw) = stack()
+    marks, _ = stack(letters=False)
+    bb = mask.getbbox()   # trim to the ink, then a 3 px margin for the outline and bevel
+    box = (bb[0] - 3, bb[1] - 3, bb[2] + 3, bb[3] + 3)
+    mask, marks = mask.crop(box), marks.crop(box)
+    ya, yk = ya - box[1], yk - box[1]
     w, h = mask.size
-    mask = distress(mask, seed)
-    m = mask.load()
+    m, mk = mask.load(), marks.load()
     im = new(w, h)
     px = im.load()
-    face, face_lo = rgb("EEE8DC"), rgb("CFC6CC")
-    shadow = rgb("140C24", 200)
+    ink = lambda x, y: 0 <= x < w and 0 <= y < h and m[x, y]
+    # x-height band per word, in pixels: letters' baselines sit at cap row 7 of the 11-row cell grid
+    base = [ya + 8 * cell + 1, yk + 8 * cell + 1]
     for y in range(h):
         for x in range(w):
-            if m[x, y]:
-                continue
-            if x - 2 >= 0 and y - 2 >= 0 and m[x - 2, y - 2]:
-                px[x, y] = shadow
-            elif x - 1 >= 0 and y - 1 >= 0 and m[x - 1, y - 1]:
-                px[x, y] = shadow
-    for y in range(h):
-        for x in range(w):
-            if m[x, y]:
-                # bottom cell-row of each stroke a touch darker: a little weight, no gradient
-                below = y + 1 < h and m[x, y + 1]
-                px[x, y] = face if below or (y % cell) < cell - 1 else face_lo
-    rnd = random.Random(seed + 1)
-    for _ in range(18):   # loose flecks around the letters, as on the poster
-        x, y = rnd.randrange(w), rnd.randrange(h)
-        if not m[x, y] and px[x, y][3] == 0:
-            near_ = any(0 <= x + dx < w and 0 <= y + dy < h and m[x + dx, y + dy] for dx in range(-4, 5) for dy in range(-4, 5))
-            if near_:
-                px[x, y] = rgb("EEE8DC", 200)
+            if ink(x, y):
+                if mk[x, y]:
+                    px[x, y] = CYAN_HALO if not ink(x, y + 1) else (CYAN_HI if not ink(x, y - 1) else CYAN)   # same 3-tone bevel as the letters
+                    continue
+                b = base[0] if y < base[0] + 2 else base[1]
+                bottom = not ink(x, y + 1)
+                if bottom:
+                    px[x, y] = AMBER_LO                 # bevel: the stroke's underside
+                elif y >= b - 2 * cell:
+                    px[x, y] = AMBER if y >= b - cell else AMBER_HI   # lower band warms toward the baseline
+                else:
+                    px[x, y] = HEAD if ink(x, y - 1) else rgb("FFFFFF")   # top edge catches the light
+            elif any(ink(x + dx, y + dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1)):
+                px[x, y] = EDGE                         # 1 px lacquer outline (corners included: no jaggy notches)
+            elif ink(x - 1, y - 2) or ink(x, y - 2):
+                px[x, y] = rgb("0A0814", 150)           # soft drop under the outline
     return im
 
 

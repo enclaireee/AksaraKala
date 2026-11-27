@@ -41,11 +41,11 @@ func _ready() -> void:
 	bg.set_anchors_preset(PRESET_FULL_RECT)
 	bg.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(bg)
-	add_child(UIFx.frame(Vector2(31, 3), Vector2(418, 168)))   # card frame round the kelir
+	add_child(UIFx.frame(Vector2(31, 3), Vector2(418, 160)))   # card frame round the kelir
 	var screen := ColorRect.new()   # the backlit kelir
 	screen.color = Color("d9a24a")
 	screen.position = Vector2(40, 12)
-	screen.size = Vector2(400, 150)
+	screen.size = Vector2(400, 142)   # the caption card below holds 5 lines of Jersey 15
 	screen.mouse_filter = MOUSE_FILTER_IGNORE
 	screen.clip_contents = true
 	add_child(screen)
@@ -62,11 +62,11 @@ func _ready() -> void:
 	floor_strip.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	floor_strip.region_enabled = true
 	floor_strip.region_rect = Rect2(0, 0, 400, 16)
-	floor_strip.position = Vector2(0, 134)
+	floor_strip.position = Vector2(0, 126)
 	screen.add_child(floor_strip)
-	_aji = _puppet("puppet_ajisaka", Vector2(-60, 146), 3.0)   # the dalang's hero puppet
+	_aji = _puppet("puppet_ajisaka", Vector2(-60, 138), 3.0)   # the dalang's hero puppet
 	_servants = Node2D.new()
-	_servants.position = Vector2(300, 146)
+	_servants.position = Vector2(300, 138)
 	_servants.modulate.a = 0.0
 	screen.add_child(_servants)
 	for x in [-36, 36]:
@@ -87,29 +87,28 @@ func _ready() -> void:
 	screen.add_child(_aksara)
 	var box := Panel.new()   # the same ink card as the in-game dialogue box (ui.md 3.1)
 	box.add_theme_stylebox_override("panel", UIFx.ink_box())
-	box.position = Vector2(40, 172)
-	box.size = Vector2(400, 82)
+	box.position = Vector2(40, 164)
+	box.size = Vector2(400, 92)
 	box.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(box)
 	_card = Control.new()   # name and text fade and rise together between cards
 	_card.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(_card)
 	_name = UIFx.text("", "label", UIFx.WARM)
-	_name.position = Vector2(52, 180)
-	_name.size = Vector2(376, 9)
+	_name.position = Vector2(52, 170)
+	_name.size = Vector2(376, 12)
 	_card.add_child(_name)
 	_text = UIFx.text("", "body", UIFx.CREAM)
-	_text.position = Vector2(52, 193)
-	_text.size = Vector2(376, 52)   # room for an extras line under a card
+	_text.position = Vector2(52, 182)
+	_text.size = Vector2(364, 70)   # room for an extras line under a card
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_text.add_theme_constant_override("line_spacing", 3)
 	_card.add_child(_text)
 	_arrow = UIFx.rect_tex("continue_arrow", Vector2(425, 244))
 	_arrow.visible = false
 	add_child(_arrow)
-	var hint := UIFx.text("UI_HOLD_SKIP", "body", UIFx.DIM)
+	var hint := UIFx.text("UI_HOLD_SKIP", "body", UIFx.LABEL_COL)
 	hint.position = Vector2(232, 258)
-	hint.size = Vector2(240, 9)
+	hint.size = Vector2(240, 12)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(hint)
 	_cover = UIFx.cover(self)
@@ -152,7 +151,7 @@ func advance() -> void:
 	if game.has_flag(str(variants.get(index, variants.get(str(index), "")))):
 		key += "_ALT"
 	_name.text = "NPC_SEMAR_NAME" if index >= semar_from and index <= semar_to else ""
-	_text.position.y = 193.0 if _name.text != "" else 181.0
+	_text.position.y = 182.0 if _name.text != "" else 172.0
 	var body := tr(key)
 	if "%d" in body:
 		body = body % int(game.codex_percent())

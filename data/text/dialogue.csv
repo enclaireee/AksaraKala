@@ -1584,7 +1584,7 @@ BEAT_TAG_CAT_5,Bisa. Kakak saja yang jarang dengar.,They do. You just don't list
 BEAT_TAG_CAT_6,Si Belang mengibaskan ekor dan berlari kecil ke arah beringin.,Si Belang flicks his tail and trots off toward the banyan.
 BEAT_TAG_CAT_7,"Sudah, sudah, dia mau tidur lagi. Ayo lanjut!","All right, he wants his nap back. Come on, keep going!"
 BEAT_TAG_CAT_8,"Kalau kepepet, mengelak saja, Kak. Asal jangan sampai kehabisan napas!","If you get boxed in, dodge, Kak. Just don't run out of breath!"
-DLG_CEPOT_T1,"Sebelum menulis, panaskan tanganmu, Kak. Boneka jerami di halaman itu kuikat sejak subuh. Pukul, tahan tombolnya, dan tiga ayunan jadi satu kombo.","Before you write, warm up your hands, Kak. I tied those straw dummies in the yard at dawn. Strike, hold the button, and three swings make one combo."
+DLG_CEPOT_T1,"Sebelum menulis, panaskan tanganmu, Kak. Boneka jerami di sanggar ini kuikat sejak subuh. Pukul, tahan tombolnya, dan tiga ayunan jadi satu kombo.","Before you write, warm up your hands, Kak. I tied these straw dummies in the sanggar at dawn. Strike, hold the button, and three swings make one combo."
 DLG_CEPOT_T2,"Awas napasmu. Tiap ayunan memakan stamina, si bar kuning di bawah nyawamu.","Mind your breath. Every swing costs stamina, that yellow bar under your health."
 DLG_IBU_T1,"Sebelum kau pergi: petilasan tua di desa ini mengingat siapa saja yang singgah. Duduklah di sana, dan lelahmu ikut diingat pulih.","Before you go: the old petilasan in this village remembers whoever stops there. Sit by it, and your tiredness is remembered away."
 DLG_IBU_T2,Dan bawa kendi jamu ini. Minum saat kau terluka. Kuisi lagi tiap kali kau beristirahat.,And take this jamu flask. Drink when you are hurt. I refill it each time you rest.
@@ -3978,3 +3978,8 @@ DLG_TIMUR_EMPU_V602,Pamornya masih hangat. Ada yang di rumahmu masih menyayangin
 DLG_TIMUR_EMPU_V603,Bilah yang masih ingat rumahnya tak mudah ditelan keris itu. Simpan dekat.,A blade that still remembers its house won't be swallowed easily by that keris. Keep it close.
 DLG_IBU_H602,"Bu, kujang di pinggangku ini. Ibu ingat dari mana asalnya?","Ibu, this kujang at my belt. Do you remember where it came from?"
 DLG_IBU_V602,"Itu kujang ayahku. Pagi itu tangan Ibu yang menurunkannya dari dinding, bukan kepala Ibu.","That was my father's kujang. That morning it was my hand that took it down from the wall, not my head."
+DLG_CEPOT_DRILL_REMIND,"Boneka jeraminya masih berdiri tegak, Kak! Hantam tiga kali beruntun sampai roboh, atau mau langsung lanjut?","The straw dummies are still standing, Kak! Land a three-hit combo and knock one down, or ready to move on?"
+CHOICE_CEPOT_DRILL_YES,"Ayo, aku coba boneka jeraminya.","All right, let's warm up on the dummies."
+CHOICE_CEPOT_DRILL_SKIP,"Tanganku sudah siap. Lewati latihan.","My hands are ready. Skip the warm-up."
+CHOICE_SEMAR_DRILL_YES,"Ajari aku menulis dan merapal Ka.","Teach me to draw and cast Ka."
+CHOICE_SEMAR_DRILL_SKIP,"Aku sudah ingat caranya. Lewati latihan.","I already remember how. Skip the drill."

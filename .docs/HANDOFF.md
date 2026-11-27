@@ -73,15 +73,16 @@ Authoritative development status and system architecture reference for **Aksara 
   6. **Penuntun (Controls):** Live InputMap bindings display, keycap indicators, aksara drawing guide, and remapping tools.
   7. **Sistem (Settings):** Master/Music/SFX/Ambience audio sliders, display resolution/fullscreen toggles, accessibility settings, and Indonesian/English language toggle.
 
-### 3.4 In-Story Tutorial Ladder ([tutorial.md](tutorial.md))
-- Replaces any standalone tutorial rooms with organic, quiet in-story learning in Desa Purwa:
-  1. `dodge`: Laras tag game (0.1) teaches movement, obstacle evasion, and stamina cost.
-  2. `attack`: Cepot at the sanggar (0.5) teaches combos and stamina recovery.
-  3. `rest`: Ibu in the morning (0.10) teaches Petilasan activation, checkpointing, and healing.
-  4. `cast`: Semar after Ka is learned (0.11) teaches slow-mo drawing, release, and sakti gating.
-  5. `flask`: Triggered on first player hurt (0.10+) to teach jamu healing charges.
-  6. `perfect`: Triggered on subsequent hurt in combat to teach rolling into attacks for stamina refunds and sakti gain.
-- Lessons display as single ink pills at bottom screen (`ui/tutorial.gd`), never pausing or blocking gameplay, and complete automatically upon performing the action.
+### 3.4 Pelajaran Desa Purwa — Prologue Tutorial System ([tutorial.md](tutorial.md))
+- Unified diegetic onboarding baked into `MQ0` (12 steps preserved) with custom pixel mouse/keycap icons (`tools/gen_tutorial_art.py`), world target beacons (`ui/world_beacon.gd`), live mentor floating barks (`ui/world_bark.gd`), HUD bar spotlights (`ui/hud.gd`), guarded tactical slow-mo, and replay-skip support (`GameSettings.skip_tutorials()` + Cepot/Semar skip choices):
+  1. `move` (0.1): `WASD` + real interact verification with ground beacon on nearest tag target.
+  2. `dodge` (0.1): Triggered reliably on *any* 1st tag target; Stamina spotlight + Laras bark.
+  3. `menu` (0.2–0.3): Quiet Field Book (`Tab`) / Map (`M`) intro with top-right spotlight.
+  4. `combo` + Class Spotlight (0.5): Required `s5` Sanggar warm-up (`enemy_killed:dummy`); verifies true 3-hit combo (`combo == 2`), then spotlights the chosen class's unique trait across all 8 classes.
+  5. `cast` + Sakti (0.11): Unified 2-phase Semar `sunda_ka` drill (zero UI collision): Phase A teaches RMB stroke form in `GlyphLesson` with animated stroke bead, Phase B drops practice mode and requires striking a dummy to build Sakti before casting a live `Ka`.
+  6. `perfect` (0.12): First nearby Faceless windup triggers guarded tactical slow-mo (`0.22x`) + crimson target ring.
+  7. `flask` (0.12): First wound (HP ≤ 75%) triggers guarded tactical slow-mo (`0.30x`) + Jamu flask spotlight.
+  8. `rest` (0.12 post-raid): Moved after `purwa_raid` (`petilasan_activated:desa_purwa` in `s12`) when the player is hurt and holds fresh Ilmu, with a one-time Level-Up callout in `tab_status.gd`.
 
 ### 3.5 Kelir v2 Memory System ([architecture.md](architecture.md))
 - Built around `zones/kelir/kelir_stage.gd` (`KelirStage`, CanvasLayer 7) providing authentic wayang shadow-puppet staging:
@@ -159,6 +160,8 @@ Authoritative development status and system architecture reference for **Aksara 
 5. **Phase 4g class depth (2026-11-12):** built: the four second paths have their own kit (9 spells each in `spells/path_<class>.gd`, signature aksara Jawa Ga / Sunda Ba / Sunda Ta / Jawa La) and mechanic (Kuda-kuda, Batu Pantul, Wirama, Lakon); 32 class-favoured items (16 school items in 12 chests, 16 siblings swapped in by `Game.add_item` for the second path, `SIBLING_ITEM`); `SQ-X1` from Nyai Rukmi gives all eight classes their signature aksara and a class weapon; the `class:` cond; `tests/second_path_test.gd`. 715 chest Ilmu became gear. Still by hand: draw the four new shapes in `tools/glyph_recorder.tscn`, play each second path for feel and numbers (all **TUNE**), check the **VERIFY** names in [classes.md](classes.md) and [items.md](items.md), redraw the recoloured icons. `balance_model.py` now has eight classes but does not model the four mechanics.
 6. **Softlock pass (2026-11-27):** `tests/playthrough_test.gd` plays every quest with strict sources (no nudges). Found and fixed: nothing gave `laras_strip_ka`, so MQ4 step 4 could not finish; the `camp` beat now gives it. Four `all` subs got their own marker (mqg 5, mq2 2, mq3 1, SQ-C2 4). `item_source_test` now also needs a source for every `item:` cond.
 7. **Phase 7c Pusaka & Jimat (2026-11-27):** item revamp per [items.md](items.md) and [schedule.md](schedule.md) Phase 7c. Check the new **VERIFY** tags (kujang as Sundanese heirloom, jamasan, sipat kandel, Gada Rujakpolo, Teken Galih Asem).
+8. **UI polish pass (2026-11-27):** fonts trimmed to a 12 px line box ([ui.md](ui.md) §0.2 items 6–9), every screen re-laid on the spacing tokens, bark/beacon fixes and redrawn tutorial art ([tutorial.md](tutorial.md) §4), new logo, keycap and footer (`tools/gen_ui_dusk.py`). Late fixes: the glyph-lesson card grows with its tip (`_fit()`), barks measure their own wrap, the Gear Jimat strip sits below the doll (`STRIP_Y` 118), and the HUD class label and wirama/lakon idle text are outlined/brighter.
+9. **Font swap (2026-11-27, user call):** Pixeloid Sans is replaced by Jersey 15 everywhere (16 body/labels/headings, 27 display, 54 logo); the line box is now 14 and keycaps 14 tall ([ui.md](ui.md) §0.2 items 6–7, §1). Every screen was re-laid for the bigger type. `PixeloidSans*.woff`, `OFL_Pixeloid.txt` and `Jersey10-Regular.ttf` are now unused and can be deleted.
 ---
 
 ## 7. Standing Operational Rules

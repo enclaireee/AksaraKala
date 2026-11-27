@@ -22,12 +22,12 @@ func icon() -> String:
 
 
 func build(l: Control, r: Control) -> void:
-	list = scroll(l, Rect2(0, 0, 200, 212))
+	list = scroll(l, Rect2(0, 0, 200, 208))   # ends clear of the footer rule
 	list.add_theme_constant_override("separation", 4)
-	_left_scroll = list.get_parent()
-	_right = scroll(r, Rect2(0, 0, 200, 212))
+	_left_scroll = list.get_parent().get_parent()
+	_right = scroll(r, Rect2(0, 0, 200, 208))   # ends clear of the footer rule
 	_right.add_theme_constant_override("separation", 4)
-	_right_scroll = _right.get_parent()
+	_right_scroll = _right.get_parent().get_parent()
 
 
 static func _glyph_font(is_jawa: bool) -> FontVariation:
@@ -51,7 +51,7 @@ func _card(box: Control) -> VBoxContainer:
 	p.mouse_filter = MOUSE_FILTER_IGNORE
 	box.add_child(p)
 	var v := VBoxContainer.new()
-	v.add_theme_constant_override("separation", 2)
+	v.add_theme_constant_override("separation", 1)   # 13 px line + 1 = the 14 px pitch
 	v.mouse_filter = MOUSE_FILTER_IGNORE
 	p.add_child(v)
 	return v
@@ -59,15 +59,15 @@ func _card(box: Control) -> VBoxContainer:
 
 func _cat_header(box: Control, cat: String, found: int, total: int) -> void:
 	var hdr := Control.new()
-	hdr.custom_minimum_size = Vector2(192, 16)
+	hdr.custom_minimum_size = Vector2(0, 16)
 	hdr.mouse_filter = MOUSE_FILTER_IGNORE
-	var sec := MenuBook.section(tr("UI_CAT_" + cat.to_upper()), 192)
+	var sec := MenuBook.section(tr("UI_CAT_" + cat.to_upper()), 190)
 	hdr.add_child(sec)
 	if total > 0:
 		var cnt := MenuBook.num("%d/%d" % [found, total], MenuBook.INK_DIM)
 		cnt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		cnt.position = Vector2(140, 1)
-		cnt.size = Vector2(52, 12)
+		cnt.position = Vector2(138, 1)
+		cnt.size = Vector2(52, 13)
 		hdr.add_child(cnt)
 	box.add_child(hdr)
 
@@ -190,17 +190,16 @@ func _items(box: VBoxContainer) -> void:
 		ic.mouse_filter = MOUSE_FILTER_IGNORE
 		well.add_child(ic)
 		row.add_child(well)
-		var col := VBoxContainer.new()
-		col.size_flags_horizontal = SIZE_EXPAND_FILL
-		col.add_theme_constant_override("separation", 1)
-		col.mouse_filter = MOUSE_FILTER_IGNORE
-		col.add_child(MenuBook.bold(tr(it.title), MenuBook.INK_HEAD))
-		col.add_child(MenuBook.text(tr(it.description), MenuBook.INK_DIM, true))
+		var tl := MenuBook.bold(tr(it.title), MenuBook.INK_HEAD)
+		tl.size_flags_vertical = SIZE_SHRINK_CENTER
+		tl.size_flags_horizontal = SIZE_EXPAND_FILL
+		tl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		row.add_child(tl)
+		c.add_child(row)   # body text below starts at the card edge, same as every other card
+		c.add_child(MenuBook.text(tr(it.description), MenuBook.INK_DIM, true))
 		var lk := "ITEM_%s_LORE" % it.id.to_upper()
 		if tr(lk) != lk:
-			col.add_child(MenuBook.text(tr(lk), MenuBook.INK_FADE, true))
-		row.add_child(col)
-		c.add_child(row)
+			c.add_child(MenuBook.text(tr(lk), MenuBook.INK_FADE, true))
 	var unowned := all.size() - found.size()
 	if unowned > 0:
 		var urow := HBoxContainer.new()
@@ -221,16 +220,16 @@ func _restore(sl: int, sr: int) -> void:
 
 func handle_input(e: InputEvent) -> bool:
 	if e.is_action_pressed("ui_up", true):
-		_left_scroll.scroll_vertical -= 24
+		_left_scroll.scroll_vertical -= UIFx.LINE * 2
 		return true
 	if e.is_action_pressed("ui_down", true):
-		_left_scroll.scroll_vertical += 24
+		_left_scroll.scroll_vertical += UIFx.LINE * 2
 		return true
 	if e.is_action_pressed("ui_left", true) or (e is InputEventKey and e.pressed and e.physical_keycode == KEY_PAGEUP):
-		_right_scroll.scroll_vertical -= 24
+		_right_scroll.scroll_vertical -= UIFx.LINE * 2
 		return true
 	if e.is_action_pressed("ui_right", true) or (e is InputEventKey and e.pressed and e.physical_keycode == KEY_PAGEDOWN):
-		_right_scroll.scroll_vertical += 24
+		_right_scroll.scroll_vertical += UIFx.LINE * 2
 		return true
 	return false
 

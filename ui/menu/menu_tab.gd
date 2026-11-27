@@ -100,10 +100,14 @@ func scroll(parent: Control, r: Rect2) -> VBoxContainer:
 	sc.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	sc.follow_focus = true
 	parent.add_child(sc)
+	var m := MarginContainer.new()   # keeps rows and labels clear of the scrollbar (the ScrollContainer is v.get_parent().get_parent())
+	m.size_flags_horizontal = SIZE_EXPAND_FILL
+	m.add_theme_constant_override("margin_right", UIFx.GAP_S)
+	sc.add_child(m)
 	var v := VBoxContainer.new()
 	v.size_flags_horizontal = SIZE_EXPAND_FILL
 	v.add_theme_constant_override("separation", 2)
-	sc.add_child(v)
+	m.add_child(v)
 	return v
 
 

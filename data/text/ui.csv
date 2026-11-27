@@ -286,12 +286,12 @@ UI_ABOUT_BUILT_WITH,Dibangun dengan,Built with
 UI_ABOUT_MUSIC,Musik,Music
 UI_ABOUT_AUDIO,Audio & Sampel,Audio & Samples
 INTRO_SKIP,Tekan tombol apa saja untuk melewati,Press any key to skip
-UI_TUT_DODGE,"Berguling menghindar, memakai stamina",Dodge-roll away. It costs stamina
+UI_TUT_DODGE,Tekan {dodge} untuk berguling menghindar (pakai stamina),Press {dodge} to dodge-roll away (uses stamina)
 UI_TUT_ATTACK,"Pukul boneka jerami, kombo 3 kali","Strike the straw dummy, 3-hit combo"
-UI_TUT_REST,Tekan di petilasan untuk menyimpan dan pulih,Press at a shrine to save and recover
-UI_TUT_CAST,"Tahan, gambar aksara dengan mouse, lepas","Hold, draw the glyph with the mouse, release"
-UI_TUT_FLASK,Minum jamu untuk memulihkan nyawa,Drink jamu to restore health
-UI_TUT_PERFECT,Berguling tepat saat dipukul: stamina kembali,Dodge just as a blow lands to refund stamina
+UI_TUT_REST,Tekan {interact} di petilasan alun-alun untuk pulih & simpan,Press {interact} at the plaza shrine to heal & save
+UI_TUT_CAST,"Tahan {cast}, gambar Ka di layar, lalu lepas","Hold {cast}, draw Ka on screen, then release"
+UI_TUT_FLASK,Tekan {heal_jamu} untuk minum jamu dan pulihkan nyawa,Press {heal_jamu} to drink jamu and restore health
+UI_TUT_PERFECT,Tekan {dodge} tepat saat musuh mengayun: stamina kembali & +Sakti,Press {dodge} right as a blow lands: refund stamina & +Sakti
 UI_DEMO,Demo,Demo
 UI_DEMO_NOTE,Mulai dari titik mana pun dalam cerita. Demo memakai slot simpan sendiri.,Start from any point in the story. The demo keeps its own save slot.
 UI_DEMO_CLASS,Kelas,Class
@@ -336,8 +336,8 @@ BOSS_HINT_SANGKURIANG,Jam matahari terisi saat perahu naik. Nyalakan tiang kain 
 BOSS_HINT_SANDEKALA,Ia tak bisa masuk ke cahaya. Nyalakan keempat oncor dan ia tak punya tempat bersembunyi.,He cannot enter light. Light all four oncor and he has nowhere to hide.
 BOSS_HINT_KALA,Perisainya menyebut hurufnya. Gambar berurutan untuk memecahnya. Saat jam pasir habis hindari dentumannya.,The shield names its glyphs. Draw them in order to break it. When the hourglass empties dodge the pulse.
 BOSS_HINT_BARMA,Tiruan keluar dari cermin. Hanya raja sungguhan yang punya bayangan.,Copies step out of the mirrors. Only the real king casts a shadow.
-BOSS_HINT_HARIANG,"Penjagaannya adalah busur biru. Gambar Na menembus busur itu.","His guard is the cyan arc. Cast Jawa Na through it."
-BOSS_HINT_BANDUNG,"Batu gendang menyala berirama. Gambar Ca saat gong berkilat.","The drum stones light in a beat. Cast Jawa Ca on the gong flash."
+BOSS_HINT_HARIANG,Penjagaannya adalah busur biru. Gambar Na menembus busur itu.,His guard is the cyan arc. Cast Jawa Na through it.
+BOSS_HINT_BANDUNG,Batu gendang menyala berirama. Gambar Ca saat gong berkilat.,The drum stones light in a beat. Cast Jawa Ca on the gong flash.
 BOSS_HINT_BUTO,Satu bungkusan menyala. Berdirilah di belakangnya dan biarkan ia menyeruduk melewatinya.,One pouch glows. Stand behind it and let him charge through it.
 BOSS_HINT_KERIS,Tonggak menyala berurutan seperti jam. Bersihkan dengan Ha Jawa sebelum yang ketujuh.,The stakes light in order like a clock. Cleanse with Jawa Ha before the seventh.
 BOSS_HINT_HUNTER,Ia mengangkat topengnya sebelum Lupa. Pantulkan dengan Ga Sunda.,He raises his mask before Forget. Reflect it with Sunda Ga.
@@ -412,3 +412,40 @@ UI_CLS_THRUST,TUSUK,THRUST
 UI_CLS_WIRAMA,WIRAMA %d/%d,WIRAMA %d/%d
 UI_CLS_LAKON,LAKON +%d%%,LAKON +%d%%
 UI_CLS_PANTUL,BATU PANTUL,RICOCHET
+UI_SYS_SKIP_TUT,Lewati tutorial,Skip tutorials
+UI_TOGGLE_KEY,[Klik %s],[Click %s]
+UI_TUT_DONE,Bagus! Dipahami.,Got it!
+UI_TUT_MOVE_TITLE,GERAK & INTERAKSI,MOVE & INTERACT
+UI_TUT_DODGE_TITLE,MENGHINDAR,DODGE ROLL
+UI_TUT_MENU_TITLE,BUKU & PETA,FIELD BOOK & MAP
+UI_TUT_MENU,Tekan {menu} untuk jurnal atau {map} untuk peta desa,Press {menu} for journal or {map} for the village map
+UI_TUT_COMBO_TITLE,KOMBO 3 PUKULAN,3-HIT COMBO
+UI_TUT_COMBO,Tahan atau klik {attack} di boneka jerami sampai ayunan ke-3,Hold or click {attack} on a straw dummy through the 3rd finisher
+UI_TUT_CAST_TITLE,SAKTI & AKSARA,SAKTI & CASTING
+UI_TUT_SAKTI_CAST,"Pukul boneka untuk Sakti, lalu tahan {cast} untuk gambar Ka","Strike a dummy for Sakti, then hold {cast} to draw Ka"
+UI_TUT_SAKTI_FILL,Pukul boneka jerami dulu untuk mengisi Sakti (%d/%d),Strike the straw dummy to build Sakti first (%d/%d)
+UI_TUT_CAST_TOGGLE,"Klik {cast}, gambar aksara dengan mouse, lalu klik untuk rapal","Click {cast}, draw the glyph with the mouse, then click to cast"
+UI_TUT_PERFECT_TITLE,MENGHINDAR SEMPURNA,PERFECT DODGE
+UI_TUT_FLASK_TITLE,MINUM JAMU,DRINK JAMU
+UI_TUT_REST_TITLE,PETILASAN,PETILASAN SHRINE
+UI_TUT_LEVELUP_HINT,"Nyawa & jamu pulih, tersimpan! Klik + untuk belanja Ilmu naikkan atribut.","Healed, refilled & saved! Click + to spend Ilmu on your stats."
+UI_TUT_SHRINE_SAVED,"Nyawa & jamu pulih, permainan tersimpan. Kumpulkan Ilmu untuk naik level.","Healed, refilled & saved! Gather Ilmu to level up at shrines."
+UI_TUT_CLASS_WARRIOR,Tak goyah oleh pukulan ringan. Robohkan boneka jerami!,Shrug off light blows. Knock down a straw dummy!
+UI_TUT_CLASS_LANCER,Diam sejenak untuk tusukan +30%. Robohkan boneka jerami!,Stand still to brace for +30% thrust. Knock down a dummy!
+UI_TUT_CLASS_ARCHER,Tembak dari jauh (+15% & tembus). Robohkan boneka jerami!,Shoot from afar (+15% & pierce). Knock down a dummy!
+UI_TUT_CLASS_HERDER,Lemparan memantul ke musuh lain. Robohkan boneka jerami!,Sling shots bounce to nearby foes. Knock down a dummy!
+UI_TUT_CLASS_ROGUE,Guling ke belakang untuk 2x damage. Robohkan boneka jerami!,Roll behind foes for 2x backstab. Knock down a dummy!
+UI_TUT_CLASS_DANCER,Rangkai pukulan sampai 8 untuk gelombang kipas. Robohkan boneka!,Chain hits to 8 for a fan wave finisher. Knock down a dummy!
+UI_TUT_CLASS_MAGE,Tongkatmu mengisi Sakti lebih cepat. Robohkan boneka jerami!,Staff bolts charge Sakti faster. Knock down a dummy!
+UI_TUT_CLASS_DALANG,Gonta-ganti aksara untuk +30% daya. Robohkan boneka jerami!,Vary glyphs for +30% power. Knock down a straw dummy!
+BARK_LARAS_DODGE_CUE,"Cepat, Kak! Berguling biar tak kalah cepat!","Quick, Kak! Roll if you want to keep up!"
+BARK_LARAS_DODGE_OK,"Nah, begitu! Awas napasmu habis!",There you go! Watch your breath!
+BARK_CEPOT_START,"Ayo, hantam boneka jerami di sini! Tiga ayunan jadi satu kombo!","Go on, hit the straw dummies here! Three swings make one combo!"
+BARK_CEPOT_HIT1,Satu! Terus sambung!,One! Keep chaining!
+BARK_CEPOT_HIT2,Dua! Satu lagi penutupnya!,Two! Now the finisher!
+BARK_CEPOT_HIT3,Nah itu penutupnya! Coba jurus khasmu sampai boneka itu roboh!,Now that's a finisher! Try your style and knock a dummy down!
+BARK_CEPOT_DONE,"Mantap! Tanganmu sudah panas, Kak!","Nice! Your hands are warmed up, Kak!"
+BARK_SEMAR_FORM,"Tahan klik kanan, ikuti garis cahaya Ka pelan-pelan.",Hold right-click and trace Ka's glowing stroke slowly.
+BARK_SEMAR_SAKTI,"Sekarang yang sesungguhnya: pukul boneka untuk isi Sakti, lalu rapalkan Ka!","Now for real: strike a dummy to fill Sakti, then cast Ka!"
+BARK_SEMAR_SAKTI_READY,Saktimu cukup! Tahan klik kanan dan lepaskan Ka!,Your Sakti is ready! Hold right-click and loose Ka!
+BARK_SEMAR_DONE,"Tanganmu sudah hafal Ka. Lindungi desa kita, Nak.","Your hand knows Ka now. Protect our village, child."

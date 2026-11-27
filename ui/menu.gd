@@ -93,6 +93,9 @@ func open(petilasan := false, target_tab := -1) -> void:
 	book.select(_last_tab)
 	update_hints()
 	current().focus_first()
+	var ev := get_node_or_null("/root/Events")
+	if ev:
+		ev.menu_opened.emit(_last_tab)
 	if _tween:
 		_tween.kill()
 	modulate.a = 0.0   # fade + rise 6 px (ui.md 4.3)

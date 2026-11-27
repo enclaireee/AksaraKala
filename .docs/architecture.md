@@ -214,7 +214,7 @@ No new autoload. `Zones` gets two methods; `Game` keeps the return point so it i
 - Field Book Menu (`ui/menu.gd`, `ui/menu/menu_book.gd`): 7 tabs (Diri/Status, Perlengkapan/Equipment, Catatan/Journal, Peta/Map, Pustaka/Codex, Penuntun/Controls, Sistem/Settings).
 - Peta / Map System: Illustrated world map with fog of war (`tools/gen_map_art.py`, `map_world.png`, `map_fog_*.png`) and dynamic painted area map (`MapRender.painted()`). Toggled instantly via the `M` key or menu Tab 4.
 - Launch Intro (`ui/intro.tscn`): 10 s wordless cinematic storm-and-dawn sequence.
-- Typography & Theme: `ui/theme.tres` with pixel fonts (Pixeloid Sans 9 body, Jersey 10 at 19 headings, Jersey 15 at 27 display) and the v3 dusk palette (`UIFx`). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
+- Typography & Theme: `ui/theme.tres` with pixel fonts (Jersey 15 everywhere: 16 body/labels/headings, 27 display, 54 logo; line 14) and the v3 dusk palette (`UIFx`). Aksara text shaped via `Noto Sans Sundanese` and `Noto Sans Javanese`. Layout details: [ui.md](ui.md).
 
 ## 10b. Demo mode (user call 2026-11-12, **ASSUMED**)
 A player-facing way to try any part of the story without playing up to it. The title's **Demo** card lists, per act, the start of the act, the first arrival in each area of the main route and the door of each boss (`DemoRoute.checkpoints()`, read from the main quest data, so it follows the quests when they change). A class can be picked.

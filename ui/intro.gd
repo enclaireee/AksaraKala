@@ -151,9 +151,9 @@ func _ready() -> void:
 	_build_close()
 	_build_wide()
 	_build_logo()
-	_skip_hint = UIFx.text(_line("INTRO_SKIP"), "body", UIFx.DIM)
-	_skip_hint.position = Vector2(8, 258)
-	_skip_hint.size = Vector2(464, 10)
+	_skip_hint = UIFx.text(_line("INTRO_SKIP"), "body", UIFx.LABEL_COL)
+	_skip_hint.position = Vector2(8, 256)
+	_skip_hint.size = Vector2(464, 12)
 	_skip_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_skip_hint.modulate.a = 0.0
 	add_child(_skip_hint)

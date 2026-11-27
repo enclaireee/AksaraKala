@@ -8,7 +8,7 @@ signal ribbon_pressed(index: int)
 # 480x270 layout on the 8 px grid (whole pixels only)
 const BOOK := Rect2(8, 16, 464, 248)
 const PAGES := Rect2(12, 20, 456, 228)     # both pages; the TabContainer of spreads sits here
-const FOOTER := Rect2(12, 248, 456, 12)
+const FOOTER := Rect2(12, 248, 456, 14)   # the 14 px keycaps (KEYCAP_H) fill the band
 const SPINE_X := 240
 const RIB_Y := 4                            # top of a closed ribbon (its foot hides under the cover)
 const RIB_ON_Y := 0
@@ -88,8 +88,8 @@ func build(titles: Array, icons: Array) -> void:
 	# front: footer band, corner glints, Q / E keycaps
 	add_child(nine("book_footer", FOOTER, 4, true))
 	footer_box = HBoxContainer.new()
-	footer_box.position = FOOTER.position + Vector2(0, 1)
-	footer_box.size = Vector2(FOOTER.size.x, 10)
+	footer_box.position = FOOTER.position
+	footer_box.size = Vector2(FOOTER.size.x, KEYCAP_H)
 	footer_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	footer_box.add_theme_constant_override("separation", 3)
 	footer_box.mouse_filter = MOUSE_FILTER_IGNORE
@@ -151,8 +151,8 @@ func select(index: int) -> void:
 		if i < _badges.size():
 			_badges[i].position = Vector2(widths[i] - 5, 3)
 		x += widths[i] + gap
-	_keys[0].position = Vector2(SPINE_X - total / 2 - 6 - _keys[0].size.x, 5)
-	_keys[1].position = Vector2(x - gap + 6, 5)
+	_keys[0].position = Vector2(SPINE_X - total / 2 - 6 - _keys[0].size.x, 1)   # centred in the 16 px strip above the cover
+	_keys[1].position = Vector2(x - gap + 6, 1)
 
 
 func set_badge(index: int, on: bool) -> void:
@@ -169,7 +169,7 @@ func _ribbon_box(name_: String, on: bool) -> StyleBoxTexture:
 	s.texture_margin_bottom = 3
 	s.content_margin_left = 5
 	s.content_margin_right = 5
-	s.content_margin_top = 5 if on else 2
+	s.content_margin_top = 3 if on else 2
 	s.content_margin_bottom = 4 if on else 4
 	return s
 
@@ -186,7 +186,8 @@ func set_hints(hints: Array) -> void:
 			footer_box.add_child(sp)
 		for k in str(hints[i][0]).split(" "):
 			footer_box.add_child(keycap(k))
-		var l := text(tr(hints[i][1]), INK_DIM)
+		var l := text(tr(hints[i][1]), UIFx.LABEL_COL)
+		l.size_flags_vertical = SIZE_SHRINK_END   # 13 px label at the foot of the 14 px band: its caps line up with the keycap face
 		footer_box.add_child(l)
 
 
@@ -230,7 +231,7 @@ static func box(name_: String, m: int, content := -1) -> StyleBoxTexture:
 	return s
 
 
-## Body text (Pixeloid Sans 9), cool cream on the night page.
+## Body text (Jersey 15 16), cool cream on the night page.
 static func text(t: String, color := INK, wrap := false) -> Label:
 	var l := Label.new()
 	l.text = t
@@ -250,7 +251,7 @@ static func italic(t: String, color := INK_DIM, wrap := true) -> Label:
 	return text(t, color, wrap)   # the pixel face has no italic: secondary text is the lavender colour
 
 
-## Small tracked caps (Pixeloid Sans 9 +1): labels, section names, menu entries.
+## Small tracked caps (Jersey 15 16 +1): labels, section names, menu entries.
 static func bold(t: String, color := INK) -> Label:
 	var l := text(t, color)
 	l.add_theme_font_override("font", UIFx.caps_font())
@@ -290,12 +291,17 @@ static func section(t: String, width := 200) -> Control:
 
 
 ## A keycap (keycap.png, 9-patch 3) with a key name, or "@name" for an icon (book_ic_<name>).
+## ui.md 0.2 item 7: KEYCAP_H (14) tall, face rows 2-10 hold Jersey's 9 px caps, rows 11-13 are the lip.
+const KEYCAP_H := 14
 static func keycap(k: String) -> Control:
-	var n := nine("keycap", Rect2(0, 0, 10, 10), 3)
+	var n := nine("keycap", Rect2(0, 0, 10, KEYCAP_H), 3)
+	n.patch_margin_bottom = 4   # rows 0-1 edge + highlight, 2-10 face, 11-13 lip + edge
 	if k.begins_with("@"):
-		var ic := pic("book_ic_" + k.substr(1), Vector2(1, 0))
+		var ic := pic("book_ic_" + k.substr(1), Vector2.ZERO)
+		ic.position = Vector2(roundi((12 - ic.size.x) / 2.0), 2 + roundi((9 - ic.size.y) / 2.0))   # centred on face rows 2-10
+		ic.modulate = KEY_INK   # the pale icon would vanish on the pale cap
 		n.add_child(ic)
-		n.size = Vector2(12, 10)
+		n.size = Vector2(12, KEYCAP_H)
 	else:
 		var f := UIFx.body_font()
 		var w := f.get_string_size(k, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
@@ -306,10 +312,10 @@ static func keycap(k: String) -> Control:
 		l.add_theme_color_override("font_color", KEY_INK)
 		l.add_theme_constant_override("outline_size", 0)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		n.size = Vector2(maxi(10, int(ceil(w)) + 6), 12)   # Pixeloid's 11 px box + 1, so the cap's lip clears the glyphs
-		l.position = Vector2(0, 0)
-		l.size = n.size
+		l.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+		n.size = Vector2(maxi(12, int(ceil(w)) + 6), KEYCAP_H)   # >= 3 px each side of the glyphs
+		l.position = Vector2(0, 1)   # ascent 10 - cap 9: ink starts on face row 2
+		l.size = Vector2(n.size.x, UIFx.LINE - 1)
 		n.add_child(l)
 	n.custom_minimum_size = n.size
 	n.size_flags_vertical = SIZE_SHRINK_CENTER
@@ -375,7 +381,7 @@ static func small_button(t: String) -> Button:
 		b.add_theme_stylebox_override(s, n)
 	for s in ["hover", "focus", "pressed", "hover_pressed"]:
 		b.add_theme_stylebox_override(s, h)
-	b.custom_minimum_size.y = 12
+	b.custom_minimum_size.y = UIFx.LINE   # 13 px text + 1 px foot margin
 	b.mouse_entered.connect(func() -> void:
 		if b.is_visible_in_tree():
 			b.grab_focus())

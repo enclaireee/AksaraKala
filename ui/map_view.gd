@@ -7,7 +7,8 @@ class_name MapView extends Control
 ## Click the DUNIA / AREA pill (or press accept) to switch.
 
 const GOLD := UIFx.HEAD
-const LEGEND_H := 14.0
+const LEGEND_H := 18.0   # strip below the map for the legend bar
+const TOP_H := 17.0      # strip above the map for the WORLD / AREA pill (15 tall at y 1)
 const ICON := 11
 const ICON_TEX := "res://assets/art/ui/map_icons.png"
 const WORLD_TEX := "res://assets/art/ui/map_world.png"
@@ -189,14 +190,14 @@ func _fog(rid: String) -> Texture2D:
 
 
 func _world_rect() -> Rect2:
-	var s := Vector2(432, 184)
-	return Rect2(((size - s) / 2.0).floor(), s)
+	var s := Vector2(432, 184)   # the art is 184 tall, the view is shorter: crop 3 px at the top, the rest at the foot
+	return Rect2(Vector2(floorf((size.x - s.x) / 2.0), -3.0 if size.y < s.y else floorf((size.y - s.y) / 2.0)), s)
 
 
 func _area_rect() -> Rect2:
-	var area := Vector2(size.x, size.y - LEGEND_H)
+	var area := Vector2(size.x, size.y - LEGEND_H - TOP_H)
 	var sc := minf(area.x / maxf(_tiles.x, 1.0), area.y / maxf(_tiles.y, 1.0))
-	return Rect2(((area - _tiles * sc) / 2.0).floor(), _tiles * sc)
+	return Rect2(((area - _tiles * sc) / 2.0).floor() + Vector2(0, TOP_H), _tiles * sc)
 
 
 func _to_screen(tile: Vector2) -> Vector2:
@@ -287,9 +288,11 @@ func _draw_world() -> void:
 		_label(_region_label(rid) if _seen.get(rid, false) else "???", p, col)
 	if _region != "" and MapRegions.REGIONS.has(_region):
 		var hp: Vector2 = wr.position + MapRegions.REGIONS[_region].pos + Vector2(0, 12)
+		hp.y = minf(hp.y, size.y - 7.0)   # the foot of the art is cropped: keep the pin on screen
 		_icon("you", hp, sin(_pulse * 3.0) * 1.2)
 	if _goal_region != "" and MapRegions.REGIONS.has(_goal_region):
 		var gp: Vector2 = wr.position + MapRegions.REGIONS[_goal_region].pos + Vector2(12 if _goal_region == _region else 0, -12)
+		gp.y = clampf(gp.y, 10.0, size.y - 10.0)
 		_halo(gp)
 		_icon("goal", gp, sin(_pulse * 4.0) * 1.0)
 
@@ -299,6 +302,11 @@ func _draw_area() -> void:
 	draw_texture_rect(_tex, r, false)
 	draw_rect(Rect2(r.position - Vector2.ONE, r.size + Vector2(2, 2)), UIFx.LINE_DIM, false, 1.0)
 	var seen := {}
+	var taken: Array[Rect2] = []   # label boxes and marker boxes already on the map: labels dodge them
+	var h := _to_screen(_hero)
+	taken.append(Rect2(h - Vector2(6, 6), Vector2(12, 12)))
+	for f in _feats:
+		taken.append(Rect2(_to_screen(f.pos) - Vector2(6, 6), Vector2(12, 12)))
 	for kind in ["exit", "chest", "clue", "rest", "npc", "goal"]:
 		for f in _feats:
 			if f.kind != kind:
@@ -309,13 +317,27 @@ func _draw_area() -> void:
 			_icon(kind, p, sin(_pulse * 4.0) * 1.0 if kind == "goal" else 0.0)
 			if kind == "exit" and not seen.has(f.name):   # one label per destination
 				seen[f.name] = true
-				var tp := p + Vector2(7, 4)
-				tp.y = minf(tp.y, size.y - 19)   # a bottom exit's label stays above the legend bar
 				var lw := UIFx.caps_font().get_string_size(f.name, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x   # the font _label draws with
-				if tp.x + lw > size.x - 2:   # near the right edge: label sits left of the marker
-					tp.x = p.x - 7 - lw
-				_label(f.name, tp, UIFx.ACCENT, false)
-	var h := _to_screen(_hero)
+				var own := Rect2(p - Vector2(6, 6), Vector2(12, 12))
+				var best := Vector2.ZERO
+				var best_hits := 99
+				# right of the marker, left of it, then centred below and above; the first spot that is clear wins
+				for c in [Vector2(7, 4), Vector2(-7 - lw, 4), Vector2(-lw / 2.0, 17), Vector2(-lw / 2.0, -8), Vector2(7, 17), Vector2(-7 - lw, 17), Vector2(7, -8)]:
+					var tp: Vector2 = p + c
+					tp.x = clampf(tp.x, r.position.x + 2, maxf(r.end.x - 2 - lw, r.position.x + 2))   # labels stay inside the map
+					tp.y = clampf(tp.y, r.position.y + 10, r.end.y - 3)
+					var box := Rect2(tp.x, tp.y - 10, lw, 13)
+					var hits := 0
+					for t in taken:
+						if t.intersects(box) and t != own:
+							hits += 1
+					if hits < best_hits:
+						best_hits = hits
+						best = tp
+						if hits == 0:
+							break
+				taken.append(Rect2(best.x, best.y - 10, lw, 13))
+				_label(f.name, best, UIFx.ACCENT, false)
 	_icon("you", h, sin(_pulse * 3.0) * 1.0)
 
 
@@ -324,7 +346,7 @@ func _draw_pill() -> void:
 	var names := [tr("UI_MAP_WORLD"), tr("UI_MAP_AREA")]
 	var font := UIFx.caps_font()
 	var x := 6.0
-	var rect := Rect2(x, 6, 0, 13)
+	var rect := Rect2(x, 1, 0, 15)
 	var widths := []
 	for n: String in names:
 		widths.append(font.get_string_size(n.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x + 10.0)
@@ -332,13 +354,13 @@ func _draw_pill() -> void:
 	draw_style_box(UIFx.ink_box(1), rect)
 	var cx := x + 2.0
 	for i in 2:
-		var seg := Rect2(cx, 8, widths[i], 9)
+		var seg := Rect2(cx, 3, widths[i], 11)   # cap 9 + 1 above and below
 		_pill[i] = Rect2(seg.position - Vector2(1, 2), seg.size + Vector2(2, 4))
 		var on := (mode == "world") == (i == 0)
 		if on:
 			draw_rect(seg, Color(UIFx.ACCENT, 0.22))
 			draw_rect(Rect2(seg.position.x, seg.end.y - 1, seg.size.x, 1), UIFx.ACCENT)
-		draw_string(font, Vector2(seg.position.x + 5, seg.position.y + 8), names[i].to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.HEAD if on else UIFx.DIM)
+		draw_string(font, Vector2(seg.position.x + 5, seg.position.y + 10), names[i].to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.HEAD if on else UIFx.DIM)
 		cx += widths[i] + 3.0
 
 
@@ -347,17 +369,17 @@ func _legend() -> void:
 	if mode == "area":
 		items += [["npc", "UI_LEG_NPC"], ["rest", "UI_LEG_REST"], ["chest", "UI_LEG_CHEST"], ["clue", "UI_LEG_CLUE"], ["exit", "UI_LEG_EXIT"]]
 	var font := UIFx.body_font()
-	var total := 6.0
+	var total := 8.0
 	var texts := []
 	for it in items:
 		var t: String = tr(it[1])
 		texts.append(t)
-		total += 16.0 + font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
-	var bar := Rect2(4, size.y - 16, total, 14)
+		total += 14.0 + font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
+	var bar := Rect2(4, size.y - 16, minf(total, size.x - 8.0), 14)
 	draw_style_box(UIFx.ink_box(1), bar)
 	var x := bar.position.x + 6.0
-	var y := bar.position.y + 7.0
+	var y := bar.position.y + 7.0   # icon centre; the baseline below puts cap rows 3-11 of the 14 px bar
 	for i in items.size():
 		_icon(items[i][0], Vector2(x + 5, y))
-		draw_string(font, Vector2(x + 14, y + 4), texts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.TEXT)
-		x += 16.0 + font.get_string_size(texts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
+		draw_string(font, Vector2(x + 12, y + 5), texts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.TEXT)
+		x += 14.0 + font.get_string_size(texts[i], HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x

@@ -16,12 +16,12 @@ func _ready() -> void:
 	add_child(UIFx.rect_tex("vignette", Vector2.ZERO))
 	var card := Panel.new()   # ink card (ui.md 0), the same surface as class select and the dialogue box
 	card.add_theme_stylebox_override("panel", UIFx.ink_box())
-	card.position = Vector2(120, 74)
-	card.size = Vector2(240, 118)
+	card.position = Vector2(120, 94)
+	card.size = Vector2(240, 82)
 	card.mouse_filter = MOUSE_FILTER_IGNORE
 	add_child(card)
 	var title := UIFx.text("UI_NAME_PROMPT", "label", UIFx.LABEL_COL)
-	title.position = Vector2(0, 14)
+	title.position = Vector2(0, 10)
 	title.size = Vector2(240, 12)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	card.add_child(title)
@@ -30,7 +30,7 @@ func _ready() -> void:
 	_edit.max_length = 12
 	_edit.text = get_node("/root/Game").DEFAULT_NAME
 	_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_edit.position = Vector2(40, 34)
+	_edit.position = Vector2(40, 24)
 	_edit.size = Vector2(160, 24)
 	_edit.add_theme_font_override("font", UIFx.display())
 	_edit.add_theme_font_size_override("font_size", UIFx.DISPLAY)
@@ -42,19 +42,20 @@ func _ready() -> void:
 		var e := StyleBoxEmpty.new()
 		e.content_margin_left = 4.0
 		e.content_margin_right = 4.0
+		e.content_margin_bottom = 8.0   # the display face's line box carries spare room below the glyphs
 		_edit.add_theme_stylebox_override(s, e)
 	_edit.text_changed.connect(_on_changed)
 	_edit.text_submitted.connect(func(_s: String) -> void: confirm())
 	card.add_child(_edit)
 	_rule = ColorRect.new()
-	_rule.position = Vector2(40, 62)
+	_rule.position = Vector2(40, 45)
 	_rule.size = Vector2(160, 1)
 	_rule.color = UIFx.ACCENT
 	_rule.mouse_filter = MOUSE_FILTER_IGNORE
 	card.add_child(_rule)
 
 	var row := HBoxContainer.new()
-	row.position = Vector2(20, 78)
+	row.position = Vector2(20, 54)
 	row.size = Vector2(200, 18)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 12)
@@ -67,11 +68,21 @@ func _ready() -> void:
 	back.custom_minimum_size.x = 72
 	back.pressed.connect(_back)
 	row.add_child(back)
-	var hints := UIFx.text("Enter  %s      Esc  %s" % [tr("UI_NAME_OK"), tr("UI_BACK")], "body", UIFx.DIM)
+	var hints := HBoxContainer.new()   # footer: keycaps + lavender words
 	hints.position = Vector2(0, 254)
 	hints.size = Vector2(480, 12)
-	hints.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hints.alignment = BoxContainer.ALIGNMENT_CENTER
+	hints.add_theme_constant_override("separation", UIFx.GAP_S)
 	add_child(hints)
+	for h in [["Enter", "UI_NAME_OK"], ["Esc", "UI_BACK"]]:
+		if hints.get_child_count() > 0:
+			var sp := Control.new()
+			sp.custom_minimum_size.x = UIFx.GAP_L - UIFx.GAP_S
+			hints.add_child(sp)
+		hints.add_child(MenuBook.keycap(h[0]))
+		var hl := UIFx.text(tr(h[1]), "body", UIFx.LABEL_COL)
+		hl.size_flags_vertical = Control.SIZE_SHRINK_END   # the cap face sits 1 px low in its 14 px box
+		hints.add_child(hl)
 	_edit.grab_focus()
 	_edit.select_all()
 	_fade = UIFx.cover(self)

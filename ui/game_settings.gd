@@ -101,6 +101,14 @@ static func set_check_updates(on: bool) -> void:
 	save_value("check_updates", on)
 
 
+static func skip_tutorials() -> bool:
+	return bool(load_value("skip_tutorials", false))
+
+
+static func set_skip_tutorials(on: bool) -> void:
+	save_value("skip_tutorials", on)
+
+
 static func damage_numbers() -> bool:
 	return bool(load_value("damage_numbers", true))
 
