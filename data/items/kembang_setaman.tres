@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/kembang_setaman.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "kembang_setaman"
+title = "ITEM_KEMBANG_SETAMAN_NAME"
+slot = "accessory"
+description = "ITEM_KEMBANG_SETAMAN_DESC"
+daya = 1
+bonus = {"flask_heal": 0.1}

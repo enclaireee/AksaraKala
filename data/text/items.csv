@@ -20,75 +20,66 @@ CLASS_WARRIOR_NAME,Hulubalang,Hulubalang
 CLASS_WARRIOR_PASSIVE,Kulit Besi,Iron Skin
 CLASS_WARRIOR_PASSIVE_DESC,Pukulan ringan tidak membuatmu terhuyung atau terpental.,Light hits do not stagger or knock you back.
 CLASS_WARRIOR_ROLE,Garda Depan,Vanguard
-ITEM_AMULET_DESC,+10 HP maks.,+10 max HP.
+ITEM_AMULET_DESC,Daya 1. +15 HP maks.,Daya 1. +15 max HP.
 ITEM_AMULET_NAME,Amulet,Amulet
-ITEM_AXE_DESC,"Berat dan lambat, tapi pukulannya keras.",Hits hard and slow.
+ITEM_AXE_DESC,"Berat dan lambat, ayunannya lebar (130 derajat).","Heavy and slow, with a wide swing (130 degrees)."
 ITEM_AXE_NAME,Kapak,Axe
-ITEM_BAJU_BATIK_DESC,Pakaian batik.,Batik clothing.
+ITEM_BAJU_BATIK_DESC,Pakaian batik. +15 HP maks.,Batik clothing. +15 max HP.
 ITEM_BAJU_BATIK_LORE,"Motifnya sarat makna; sebagian, seperti parang, dulu hanya boleh dipakai bangsawan.","Its patterns carry meaning; some, like parang, were once royal-only."
 ITEM_BAJU_BATIK_NAME,Baju Batik,Baju Batik
-ITEM_BLANGKON_DESC,Penutup kepala batik siap pakai khas Jawa.,A Javanese ready-made batik head cloth.
+ITEM_BLANGKON_DESC,Penutup kepala batik siap pakai khas Jawa. +5% Sakti terisi.,A Javanese ready-made batik head cloth. +5% Sakti gain.
 ITEM_BLANGKON_LORE,Dipakai di seluruh Jawa; motif batiknya menyimpan makna.,Worn across Java; the batik pattern carries meaning.
 ITEM_BLANGKON_NAME,Blangkon,Blangkon
 ITEM_BROADSWORD_DESC,Ayunan lebar dan berat.,"A wide, heavy swing."
 ITEM_BROADSWORD_NAME,Kelewang,Kelewang
-ITEM_CAKRA_DESC,Cakram cahaya yang dilempar.,A thrown disc of light.
-ITEM_CAKRA_LORE,Cakram Kresna dalam cerita wayang. Di sini ia melesat seperti anak panah.,Krishna's disc from the wayang tales. Here it flies like an arrow.
+ITEM_CAKRA_DESC,"Cakram cahaya yang dilempar, lalu kembali seperti bumerang dan melukai dalam perjalanan pulang.",A thrown disc of light that returns like a boomerang and hits on the way back.
+ITEM_CAKRA_LORE,Cakram Kresna dalam cerita wayang. Di sini ia kembali ke tangan setelah dilempar.,Krishna's disc from the wayang tales. Here it returns to the hand after the throw.
 ITEM_CAKRA_NAME,Cakra,Cakra
 ITEM_CHAINMAIL_DESC,Cincin besi yang berat.,Heavy rings of iron.
 ITEM_CHAINMAIL_NAME,Baju Zirah Rantai,Chainmail
-ITEM_CROSSBOW_DESC,"Penarikan lambat, daya hancur besar.","Slow wind-up, high damage."
+ITEM_CROSSBOW_DESC,"Penarikan lambat, anak panah melesat cepat dan terjauh.","Slow wind-up, a fast bolt and the longest range."
 ITEM_CROSSBOW_NAME,Busur Silang,Crossbow
 ITEM_DAGGER_DESC,"Cepat, jangkauan pendek.","Fast, short reach."
-ITEM_DAGGER_NAME,Kujang,Kujang
-ITEM_FEATHER_CHARM_DESC,+8% kecepatan gerak.,+8% move speed.
+ITEM_DAGGER_NAME,Belati,Dagger
+ITEM_FEATHER_CHARM_DESC,Daya 1. +8% kecepatan gerak.,Daya 1. +8% move speed.
 ITEM_FEATHER_CHARM_NAME,Jimat Bulu,Feather Charm
-ITEM_GOLOK_DESC,Bilah tebas mirip parang.,A machete-like chopping blade.
-ITEM_HUNTING_BOW_DESC,Busur biasa.,A plain bow.
+ITEM_GOLOK_DESC,"Tebasan berat yang cepat, jangkauan pendek.","A fast, heavy chop with short reach."
+ITEM_HUNTING_BOW_DESC,Busur biasa. Tiap tembakan menghabiskan 4 stamina.,A plain bow. Each shot costs 4 stamina.
 ITEM_HUNTING_BOW_NAME,Gendewa,Gendewa
-ITEM_IKET_SUNDA_DESC,Ikat kepala kain khas Sunda.,A Sundanese cloth head wrap.
+ITEM_IKET_SUNDA_DESC,"Ikat kepala kain khas Sunda. Ambang coretan -0,02.",A Sundanese cloth head wrap. Smudge threshold -0.02.
 ITEM_IKET_SUNDA_LORE,"Diikat sendiri oleh pemakainya, tidak pernah disemat.","Tied by the wearer, never pinned."
 ITEM_IKET_SUNDA_NAME,Iket Sunda,Iket Sunda
-ITEM_IRON_RING_DESC,+1 Kekuatan.,+1 Strength.
+ITEM_IRON_RING_DESC,Daya 2. +5% damage.,Daya 2. +5% damage.
 ITEM_IRON_RING_NAME,Cincin Besi,Iron Ring
-ITEM_IRON_STAFF_DESC,Sambaran yang lebih kokoh.,A sturdier bolt.
-ITEM_IRON_STAFF_NAME,Tongkat Besi,Iron Staff
-ITEM_JIMAT_DESC,+10 HP maks.,+10 max HP.
+ITEM_JIMAT_DESC,Daya 2. +4 HP tiap musuh dikalahkan.,Daya 2. +4 HP per kill.
 ITEM_JIMAT_LORE,Benda kecil yang dibawa demi keberuntungan dan perlindungan.,A small charm carried for luck and protection.
 ITEM_JIMAT_NAME,Jimat,Jimat
-ITEM_BATU_KALI_DESC,+1 Spirit dan +5% pemulihan stamina.,+1 Spirit and +5% stamina regen.
+ITEM_BATU_KALI_DESC,Daya 2. Efek status padamu 50% lebih singkat. +5% pemulihan stamina.,Daya 2. Status effects on you last 50% shorter. +5% stamina regen.
 ITEM_BATU_KALI_LORE,Batu sungai yang licin; sungai mengembalikannya saat keris ditenggelamkan.,A smooth river stone the river gives back when you sink the keris.
 ITEM_BATU_KALI_NAME,Batu Kali,Batu Kali
-ITEM_KAIN_HIJAU_DESC,Selembar kain hijau.,A green cloth.
+ITEM_KAIN_HIJAU_DESC,Selembar kain hijau. Kendi menyembuhkan +10%.,A green cloth. The flask heals +10%.
 ITEM_KAIN_HIJAU_LORE,"Menurut kepercayaan, terkait dengan kisah Nyi Roro Kidul.","Linked, by belief, to the lore of Nyi Roro Kidul."
 ITEM_KAIN_HIJAU_NAME,Kain Hijau,Kain Hijau
-ITEM_KERIS_LUK_7_DESC,Keris dengan tujuh lekukan.,A keris with seven curves.
+ITEM_KERIS_LUK_7_DESC,Keris tujuh lekukan. +4 Sakti saat menghindar tepat waktu.,A keris with seven curves. +4 Sakti on a perfect dodge.
 ITEM_KERIS_LUK_7_LORE,"Tujuh lekukan, secara tradisi dikaitkan dengan perlindungan. Pusaka keramat; perlakukan dengan hormat.","Seven curves, traditionally associated with protection. A sacred pusaka; handle it with respect."
 ITEM_KERIS_LUK_7_NAME,Keris Luk 7,Keris Luk 7
 ITEM_KERIS_MPU_GANDRING_DESC,"Kuat, tetapi setiap pukulan menguras 1 HP.","Strong, but every hit costs you 1 HP."
 ITEM_KERIS_MPU_GANDRING_LORE,"Dalam legenda Pararaton, keris ini ditempa belum selesai untuk Ken Arok, dan kutukan Mpu Gandring menyertainya.","In the Pararaton legend, this keris was forged unfinished for Ken Arok, and Mpu Gandring's dying curse followed it."
 ITEM_KERIS_MPU_GANDRING_NAME,Keris Mpu Gandring,Keris Mpu Gandring
-ITEM_KUJANG_DESC,Bilah melengkung khas Sunda.,A curved Sundanese blade.
-ITEM_KUJANG_LORE,Ikon Jawa Barat; bilahnya yang melengkung menyapu lebar.,Iconic to West Java; its curved blade sweeps wide.
-ITEM_KUJANG_NAME,Kujang,Kujang
 ITEM_LEATHER_ARMOR_DESC,Ringan dan senyap.,Light and quiet.
 ITEM_LEATHER_ARMOR_NAME,Zirah Kulit,Leather Armor
-ITEM_LONGBOW_DESC,"Tarikan lebih lambat, daya hancur lebih besar.","Slower draw, more damage."
-ITEM_LONGBOW_NAME,Busur Panjang,Longbow
 ITEM_OAK_STAFF_DESC,Sambaran cahaya yang lemah.,A weak bolt of light.
 ITEM_OAK_STAFF_NAME,Tongkat Wiku,Tongkat Wiku
 ITEM_PADDED_TUNIC_DESC,Kain berlapis yang sederhana.,Plain padded cloth.
 ITEM_PADDED_TUNIC_NAME,Tunik Empuk,Padded Tunic
-ITEM_PANAH_PASOPATI_DESC,Anak panah yang namanya diambil dari panah Arjuna.,An arrow named after Arjuna's.
+ITEM_PANAH_PASOPATI_DESC,Anak panah yang namanya diambil dari panah Arjuna. +10% Sakti terisi.,An arrow named after Arjuna's. +10% Sakti gain.
 ITEM_PANAH_PASOPATI_LORE,"Arjuna, pemanah agung dalam wayang, dikaitkan dengan panah Pasopati.","Arjuna, the great archer of wayang, is linked with the arrow Pasopati."
 ITEM_PANAH_PASOPATI_NAME,Panah Pasopati,Panah Pasopati
-ITEM_SHORT_SWORD_DESC,Bilah yang seimbang.,A balanced blade.
-ITEM_SHORT_SWORD_NAME,Pedang Pendek,Short Sword
-ITEM_SILVER_BANGLE_DESC,+10% pemulihan stamina.,+10% stamina regen.
+ITEM_SILVER_BANGLE_DESC,Daya 1. +15% pemulihan stamina.,Daya 1. +15% stamina regen.
 ITEM_SILVER_BANGLE_NAME,Gelang Perak,Silver Bangle
-ITEM_SPEAR_DESC,"Jangkauan panjang, tusukan sempit.","Long reach, narrow thrust."
+ITEM_SPEAR_DESC,"Jangkauan terpanjang di antara senjata biasa, tusukan sempit.","The longest reach of the common weapons, with a narrow thrust."
 ITEM_SPEAR_NAME,Tombak,Spear
-ITEM_STONE_RING_DESC,+1 Spirit.,+1 Spirit.
+ITEM_STONE_RING_DESC,Daya 2. +5% damage mantra.,Daya 2. +5% spell damage.
 ITEM_STONE_RING_NAME,Cincin Batu,Stone Ring
 SPELL_JAWA_CA_NAME,Kobar,Rally
 SPELL_JAWA_HA_NAME,Sembuh,Heal
@@ -116,10 +107,10 @@ ITEM_HERB_NAME,Daun Obat,Herb
 ITEM_FLASK_NAME,Isi Labu,Flask Refill
 SPELL_JAWA_KA_NAME,Ombak,Tide
 ITEM_SABUK_GALUH_NAME,Sabuk Galuh,Sabuk Galuh
-ITEM_SABUK_GALUH_DESC,+8% pertahanan dan +1 Vitalitas.,+8% defense and +1 Vitality.
+ITEM_SABUK_GALUH_DESC,"Daya 3. Damage diterima -8%, +1 Vitalitas.","Daya 3. 8% less damage taken, +1 Vitality."
 ITEM_SABUK_GALUH_LORE,Sabuk kerajaan yang diberikan saat keadilan ditegakkan di tepi Sungai Pamali.,A royal sash bestowed when justice is upheld on the banks of the Pamali.
 ITEM_LONTAR_KUNO_NAME,Lontar Kuno,Ancient Lontar
-ITEM_LONTAR_KUNO_DESC,Goresan yang kabur lebih mudah terbaca (ambang 0.65 ke 0.60).,Smudged strokes read more easily (threshold 0.65 to 0.60).
+ITEM_LONTAR_KUNO_DESC,"Daya 2. Goresan kabur lebih mudah terbaca (ambang 0,65 ke 0,60).",Daya 2. Smudged strokes read more easily (threshold 0.65 to 0.60).
 ITEM_LONTAR_KUNO_LORE,Naskah daun lontar tua dari pustaka desa.,An old palm-leaf manuscript from the village archive.
 CLASS_LANCER_DESC,"Prajurit barisan dari alun-alun keraton.\nMenjaga jarak dengan tombak; tusukannya menjangkau jauh.","A line soldier from the palace square.\nHolds the distance with a tombak; the thrust reaches far."
 CLASS_LANCER_NAME,Prajurit,Prajurit
@@ -164,7 +155,7 @@ ITEM_TOMBAK_PANJI_DESC,"Tombak panjang berpanji. Dibawa orang yang berdiri palin
 ITEM_ZIRAH_SISIK_NAME,Zirah Sisik,Zirah Sisik
 ITEM_ZIRAH_SISIK_DESC,"Zirah dari sisik logam yang dijahit rapat.","Armor of metal scales sewn close together."
 ITEM_GELANG_BAJA_NAME,Gelang Baja,Gelang Baja
-ITEM_GELANG_BAJA_DESC,"Gelang baja tebal. Bisa menahan sabetan.","A thick steel bracelet. It can turn a cut."
+ITEM_GELANG_BAJA_DESC,Daya 2. Damage diterima -5%.,Daya 2. 5% less damage taken.
 ITEM_BUSUR_PETUNG_NAME,Busur Petung,Busur Petung
 ITEM_BUSUR_PETUNG_DESC,"Busur dari bambu petung. Ringan dan cepat dilepas.","A bow of petung bamboo. Light and quick to loose."
 ITEM_GENDEWA_TANDUK_NAME,Gendewa Tanduk,Gendewa Tanduk
@@ -172,7 +163,7 @@ ITEM_GENDEWA_TANDUK_DESC,"Gendewa berlapis tanduk kerbau. Tarikannya berat, pana
 ITEM_KAMPRET_PEMBURU_NAME,Kampret Pemburu,Kampret Pemburu
 ITEM_KAMPRET_PEMBURU_DESC,"Baju kampret longgar milik pemburu. Enak dipakai berlari.","A hunter's loose kampret shirt. Easy to run in."
 ITEM_KANTONG_PANAH_NAME,Kantong Panah,Kantong Panah
-ITEM_KANTONG_PANAH_DESC,"Kantong panah dari kulit. Tangan tak perlu mencari-cari.","A leather quiver. The hand never has to search."
+ITEM_KANTONG_PANAH_DESC,Daya 2. +10% pemulihan stamina.,Daya 2. +10% stamina regen.
 ITEM_GOLOK_PENDEK_NAME,Golok Pendek,Golok Pendek
 ITEM_GOLOK_PENDEK_DESC,"Golok pendek yang mudah disembunyikan di balik sarung.","A short golok, easy to hide under a sarong."
 ITEM_KUJANG_KEMBAR_NAME,Kujang Kembar,Kujang Kembar
@@ -180,7 +171,7 @@ ITEM_KUJANG_KEMBAR_DESC,"Sepasang kujang kecil, rekaan kisah ini. Kujang yang as
 ITEM_PANGSI_HITAM_NAME,Pangsi Hitam,Pangsi Hitam
 ITEM_PANGSI_HITAM_DESC,"Baju dan celana pangsi hitam. Longgar untuk bergerak.","A black pangsi shirt and trousers. Loose for moving."
 ITEM_SABUK_MERAH_NAME,Sabuk Merah,Sabuk Merah
-ITEM_SABUK_MERAH_DESC,"Sabuk kain merah yang dililit kencang di pinggang.","A red cloth belt wound tight at the waist."
+ITEM_SABUK_MERAH_DESC,Daya 2. +1 Ketahanan.,Daya 2. +1 Endurance.
 ITEM_TONGKAT_GENTA_NAME,Tongkat Genta,Tongkat Genta
 ITEM_TONGKAT_GENTA_DESC,"Tongkat dengan genta kecil di ujungnya. Tiap denting mengumpulkan Sakti.","A staff with a small bell at its head. Each chime gathers Sakti."
 ITEM_TONGKAT_CENDANA_NAME,Tongkat Cendana,Tongkat Cendana
@@ -188,7 +179,7 @@ ITEM_TONGKAT_CENDANA_DESC,"Tongkat kayu cendana. Wanginya menenangkan pikiran.",
 ITEM_JUBAH_WIKU_NAME,Jubah Wiku,Jubah Wiku
 ITEM_JUBAH_WIKU_DESC,"Jubah sederhana seorang wiku.","The plain robe of a wiku."
 ITEM_GENITRI_NAME,Genitri,Genitri
-ITEM_GENITRI_DESC,"Untaian biji genitri untuk menghitung doa.","A string of genitri seeds for counting prayers."
+ITEM_GENITRI_DESC,Daya 2. +1 Spirit.,Daya 2. +1 Spirit.
 ITEM_TOMBAK_GALAH_NAME,Tombak Galah,Tombak Galah
 ITEM_TOMBAK_GALAH_DESC,"Tombak bergagang galah bambu. Jangkauannya paling jauh.","A spear on a bamboo pole. The longest reach there is."
 ITEM_TOMBAK_BENDERA_NAME,Tombak Bendera,Tombak Bendera
@@ -196,7 +187,7 @@ ITEM_TOMBAK_BENDERA_DESC,"Tombak pembawa bendera barisan. Selama ia tegak, baris
 ITEM_BAJU_KEPRAJURITAN_NAME,Baju Keprajuritan,Baju Keprajuritan
 ITEM_BAJU_KEPRAJURITAN_DESC,"Busana prajurit keraton, tebal dan berlapis.","The dress of a palace soldier, thick and layered."
 ITEM_TAMENG_ROTAN_NAME,Tameng Rotan,Tameng Rotan
-ITEM_TAMENG_ROTAN_DESC,"Tameng kecil dari anyaman rotan. Ringan di lengan.","A small shield of woven rattan. Light on the arm."
+ITEM_TAMENG_ROTAN_DESC,Daya 2. Damage diterima -5%.,Daya 2. 5% less damage taken.
 ITEM_BANDRING_KULIT_NAME,Bandring Kulit,Bandring Kulit
 ITEM_BANDRING_KULIT_DESC,"Bandring bertali kulit. Cepat diputar, cepat dilepas.","A sling with leather cords. Quick to whirl and quick to loose."
 ITEM_BANDRING_IJUK_NAME,Bandring Ijuk,Bandring Ijuk
@@ -204,7 +195,7 @@ ITEM_BANDRING_IJUK_DESC,"Bandring dari tali ijuk yang dipilin kuat. Batunya terb
 ITEM_SARUNG_GEMBALA_NAME,Sarung Gembala,Sarung Gembala
 ITEM_SARUNG_GEMBALA_DESC,"Sarung yang diselempangkan penggembala. Hangat di padang.","A sarong a herder wears slung across the body. Warm out on the field."
 ITEM_SULING_BAMBU_NAME,Suling Bambu,Suling Bambu
-ITEM_SULING_BAMBU_DESC,"Suling bambu teman menggembala. Meniupnya melegakan napas.","A bamboo flute, a herder's company. Playing it eases the breath."
+ITEM_SULING_BAMBU_DESC,Daya 2. +10% pemulihan stamina.,Daya 2. +10% stamina regen.
 ITEM_KIPAS_BAMBU_NAME,Kipas Bambu,Kipas Bambu
 ITEM_KIPAS_BAMBU_DESC,"Kipas berbilah bambu. Tepinya lebih tajam dari yang terlihat.","A fan with bamboo blades. Its edge is sharper than it looks."
 ITEM_KIPAS_KEMBAR_NAME,Kipas Kembar,Kipas Kembar
@@ -212,7 +203,7 @@ ITEM_KIPAS_KEMBAR_DESC,"Dua kipas untuk dua tangan. Satu membuka, satu menutup."
 ITEM_BAJU_PENARI_NAME,Baju Penari,Baju Penari
 ITEM_BAJU_PENARI_DESC,"Busana tari yang ringan. Dibuat untuk bergerak.","A light dance costume. Made for moving."
 ITEM_GELANG_KAKI_NAME,Gelang Kaki,Gelang Kaki
-ITEM_GELANG_KAKI_DESC,"Gelang kaki bergenta. Tiap langkah punya bunyi.","Ankle bells. Every step has a sound."
+ITEM_GELANG_KAKI_DESC,Daya 2. +1 Ketahanan.,Daya 2. +1 Endurance.
 ITEM_CEMPALA_NAME,Cempala,Cempala
 ITEM_CEMPALA_DESC,"Pemukul kayu sang dalang. Ketukannya memberi aba-aba pada gamelan.","The dalang's wooden knocker. Its raps cue the gamelan."
 ITEM_KAYON_GAPURAN_NAME,Kayon Gapuran,Kayon Gapuran
@@ -220,4 +211,80 @@ ITEM_KAYON_GAPURAN_DESC,"Kayon bergambar gapura. Membuka dan menutup setiap lako
 ITEM_BESKAP_DALANG_NAME,Beskap Dalang,Beskap Dalang
 ITEM_BESKAP_DALANG_DESC,"Beskap yang dikenakan dalang semalam suntuk.","The beskap a dalang wears through the whole night."
 ITEM_BLENCONG_NAME,Blencong,Blencong
-ITEM_BLENCONG_DESC,"Lampu minyak di balik kelir. Tanpa cahayanya tak ada bayangan.","The oil lamp behind the screen. Without its light there is no shadow."
+ITEM_BLENCONG_DESC,Daya 2. +1 Spirit.,Daya 2. +1 Spirit.
+ITEM_AMULET_LORE,"Benda kecil di leher. Pemakainya tak pernah yakin ia bekerja, tapi tak mau melepasnya.","A small thing worn at the neck. The wearer is never sure it works, but won't take it off."
+ITEM_AXE_LORE,"Kapak yang biasa membuka ladang dan menebang kayu. Di tangan yang tepat, ia senjata juga.","An axe that clears fields and fells timber. In the right hands, it is a weapon too."
+ITEM_BAJU_KEPRAJURITAN_LORE,Dibuat seragam agar barisan tampak seperti satu tubuh.,Made uniform so the line looks like one body.
+ITEM_BAJU_PENARI_LORE,Busana tari dijahit longgar di bahu supaya tangan leluasa bergerak.,A dance costume cut loose at the shoulder so the arms move freely.
+ITEM_BANDRING_LORE,Anak gembala memakai bandring untuk menghalau burung dan menjaga ternak dari jauh.,Herd children use the bandring to drive off birds and watch the animals from afar.
+ITEM_BANDRING_IJUK_LORE,"Ijuk, serat pohon aren, dipilin jadi tali yang awet. Ia juga dipakai untuk atap dan tambang.","Ijuk, the fibre of the aren palm, is twisted into hardy cord. It is also used for thatch and rope."
+ITEM_BANDRING_KULIT_LORE,Tali kulit lebih licin dan lebih cepat dilepas daripada serat.,Leather cord is smoother and quicker to release than fibre.
+ITEM_BATU_AKIK_NAME,Batu Akik,Batu Akik
+ITEM_BATU_AKIK_DESC,Daya 1. +6 Sakti saat menghindar tepat waktu.,Daya 1. +6 Sakti on a perfect dodge.
+ITEM_BATU_AKIK_LORE,"Batu akik, batu cincin yang digosok halus. Banyak yang percaya tiap batu punya tuahnya.","Batu akik, a polished ring stone. Many believe each stone has its own virtue."
+ITEM_BESKAP_DALANG_LORE,"Dalang duduk bersila dalam beskapnya semalam suntuk, dari gamelan pertama sampai fajar.","The dalang sits cross-legged in his beskap all night, from the first gamelan note to dawn."
+ITEM_BLENCONG_LORE,"Blencong, lampu minyak di atas dalang, membuat bayangan wayang jatuh ke kelir.","The blencong, the oil lamp above the dalang, throws the wayang's shadow onto the screen."
+ITEM_BROADSWORD_LORE,"Pedang lebar bermata satu, dikenal di banyak penjuru Nusantara.","A broad single-edged sword, known across many parts of the archipelago."
+ITEM_BUSUR_PETUNG_LORE,Petung adalah bambu besar yang lenturnya cocok untuk busur ringan.,Petung is a large bamboo whose spring suits a light bow.
+ITEM_CEMPALA_LORE,Dalang mengetukkan cempala pada peti wayang untuk memberi isyarat kepada penabuh gamelan.,The dalang raps the cempala on the wayang chest to cue the gamelan players.
+ITEM_CHAINMAIL_LORE,"Cincin besi yang ditautkan satu per satu. Berat di bahu, tapi menahan tebasan.","Iron rings linked one by one. Heavy on the shoulders, but it turns a cut."
+ITEM_CROSSBOW_LORE,"Busur yang ditarik sampai terkunci, lalu dilepas sekaligus. Lambat disiapkan, jauh jangkauannya.","A bow drawn until it locks, then loosed all at once. Slow to ready, long in reach."
+ITEM_DAGGER_LORE,"Belati pendek yang dipakai orang desa untuk apa saja, dari memotong tali sampai membela diri.","A short blade villagers use for everything, from cutting rope to defending themselves."
+ITEM_FEATHER_CHARM_LORE,Bulu ringan yang diikat pada seutas tali. Katanya langkah pemakainya ikut ringan.,A light feather tied on a cord. They say the wearer's step turns light too.
+ITEM_GADA_RUJAKPOLO_NAME,Gada Rujakpolo,Gada Rujakpolo
+ITEM_GADA_RUJAKPOLO_DESC,"Gada berat dengan ayunan sangat lebar (170 derajat), lambat.","A heavy club with a very wide swing (170 degrees), slow."
+ITEM_GADA_RUJAKPOLO_LORE,Gada Bima dalam cerita wayang; kepalanya menyapu apa saja di depannya.,Bima's club in the wayang tales; its head sweeps through anything in front of it.
+ITEM_GELANG_AKAR_BAHAR_NAME,Gelang Akar Bahar,Gelang Akar Bahar
+ITEM_GELANG_AKAR_BAHAR_DESC,Daya 2. Damage diterima -6%.,Daya 2. 6% less damage taken.
+ITEM_GELANG_AKAR_BAHAR_LORE,Akar bahar adalah karang hitam dari laut. Pelaut percaya gelang darinya menolak bahaya.,Akar bahar is black sea coral. Sailors believe a bangle of it turns danger away.
+ITEM_GELANG_BAJA_LORE,"Gelang baja tebal, dipakai prajurit agar lengan tahan sabetan.","A thick steel bracelet, worn by soldiers so the forearm can turn a cut."
+ITEM_GELANG_KAKI_LORE,Penari memakai gelang kaki berkerincing agar tiap langkah selaras dengan gamelan.,Dancers wear belled anklets so every step keeps time with the gamelan.
+ITEM_GENDEWA_TANDUK_LORE,Tanduk di punggung busur menambah tenaga tarik.,Horn along the back of the bow adds draw strength.
+ITEM_GENITRI_LORE,Genitri adalah biji pohon yang dirangkai menjadi untaian doa. Satu butir untuk satu hitungan.,Genitri are tree seeds strung into a prayer string. One bead for each count.
+ITEM_GOLOK_LORE,"Golok adalah pisau serbaguna di tanah Sunda, dipakai di dapur, ladang, dan pertarungan. Hadiah sayembara kuntilanak.","The golok is an all-purpose blade in Sundanese country, used in the kitchen, the field and the fight. A prize from the kuntilanak bounty."
+ITEM_GOLOK_PENDEK_LORE,Golok pendek terselip di balik sarung. Pesilat menyimpannya untuk saat terdesak.,A short golok tucked under the sarong. Silat fighters keep it for when they are cornered.
+ITEM_HUNTING_BOW_LORE,Gendewa adalah busur Arjuna dalam wayang. Yang ini hanya busur berburu biasa.,Gendewa is Arjuna's bow in wayang. This one is only an ordinary hunting bow.
+ITEM_IRON_RING_LORE,"Cincin besi polos tanpa permata, ditempa pandai besi desa.","A plain iron ring with no stone, forged by a village smith."
+ITEM_JUBAH_WIKU_LORE,Jubah polos. Seorang wiku tak butuh kain mahal untuk membaca lontar.,A plain robe. A wiku needs no fine cloth to read a lontar.
+ITEM_KAMPRET_PEMBURU_LORE,"Kemeja kampret yang longgar, pakaian sehari-hari di tanah Sunda, enak dipakai berlari di hutan.","The loose kampret shirt, everyday wear in Sundanese country, good for running in the forest."
+ITEM_KANTONG_PANAH_LORE,"Kantong kulit tempat anak panah disusun searah, supaya tangan menemukan pangkalnya tanpa melihat.","A leather case where arrows lie in one direction, so the hand finds the nock without looking."
+ITEM_KAYON_LORE,"Kayon, juga disebut gunungan, wayang berbentuk daun. Ia dipancang untuk membuka dan menutup lakon.","The kayon, also called the gunungan, is a leaf-shaped wayang. It is planted to open and close a lakon."
+ITEM_KAYON_GAPURAN_LORE,"Kayon bergambar gapura, pintu istana. Dalam pertunjukan, ia membuka dan menutup lakon.","A kayon painted with a gate, the palace door. In a show it opens and closes the lakon."
+ITEM_KEMBANG_SETAMAN_NAME,Kembang Setaman,Kembang Setaman
+ITEM_KEMBANG_SETAMAN_DESC,Daya 1. Kendi menyembuhkan +10%.,Daya 1. The flask heals +10%.
+ITEM_KEMBANG_SETAMAN_LORE,"Tujuh macam bunga dari satu taman, direndam dalam air untuk membersihkan diri dan memohon berkah.","Seven kinds of flowers from one garden, floated in water for cleansing and blessing."
+ITEM_KEMENYAN_NAME,Kemenyan,Kemenyan
+ITEM_KEMENYAN_DESC,Daya 1. +10% Ilmu.,Daya 1. +10% Ilmu.
+ITEM_KEMENYAN_LORE,Getah kemenyan yang dibakar; asapnya dipercaya mengantar kata-kata kepada leluhur.,"Benzoin resin, burned; its smoke is believed to carry words to the ancestors."
+ITEM_KIPAS_LORE,"Kipas berbilah besi, dipakai penari untuk menari dan, kalau terpaksa, untuk bertahan.","A fan with iron ribs, used by dancers to dance and, if they must, to defend themselves."
+ITEM_KIPAS_BAMBU_LORE,Di tangan penari kipas ini tampak seperti mainan. Hanya yang pernah terkena yang tahu bedanya.,In a dancer's hand this fan looks like a toy. Only those it has struck know the difference.
+ITEM_KIPAS_KEMBAR_LORE,"Dalam tari, dua tangan jarang bekerja sendiri. Kipas kembar mengingatkan itu.","In dance, two hands rarely work alone. The twin fans are a reminder."
+ITEM_KUJANG_KEMBAR_LORE,"Sepasang kujang adalah rekaan kisah ini. Yang asli diwariskan satu per satu, dari tangan ke tangan.","A pair of kujang is this tale's invention. The real ones are passed down one at a time, hand to hand."
+ITEM_LEATHER_ARMOR_LORE,Kulit yang disamak perlahan; tak berisik saat dipakai berjalan.,Slow-tanned leather that makes no noise as you walk.
+ITEM_MUSTIKA_NAME,Mustika,Mustika
+ITEM_MUSTIKA_DESC,"Daya 3. +12% Sakti terisi, +5% damage mantra.","Daya 3. +12% Sakti gain, +5% spell damage."
+ITEM_MUSTIKA_LORE,Mustika adalah batu atau mutiara yang dipercaya menyimpan daya. Yang ini terasa hangat di telapak tangan.,A mustika is a stone or pearl believed to hold power. This one feels warm in the palm.
+ITEM_OAK_STAFF_LORE,Tongkat kayu yang dibawa para wiku di pertapaan. Gagangnya licin oleh tangan-tangan yang memegangnya.,A wooden staff carried by the wiku of the hermitage. Its shaft is worn smooth by the hands that held it.
+ITEM_PADDED_TUNIC_LORE,Pakaian berlapis yang dijahit untuk anak-anak desa yang berangkat jauh.,Layered clothing sewn for village children setting out far from home.
+ITEM_PANGSI_HITAM_LORE,"Pangsi hitam dipakai orang Sunda sehari-hari, dan juga oleh para pesilat.","Black pangsi is everyday Sundanese wear, and silat fighters wear it too."
+ITEM_PARANG_PERANG_LORE,Parang dibuat panjang dan lebar untuk medan laga. Tebasannya kuat tapi tak lamban.,The parang is made long and broad for the battlefield. Strong in the cut but not slow.
+ITEM_RAJAH_NAME,Rajah,Rajah
+ITEM_RAJAH_DESC,Daya 2. +20% damage saat HP di bawah 30%.,Daya 2. +20% damage while below 30% HP.
+ITEM_RAJAH_LORE,"Rajah adalah tulisan pelindung berisi aksara dan gambar, ditulis pada kain atau lembaran, lalu dibawa-bawa.","A rajah is protective writing of letters and drawings, set on cloth or a sheet and carried about."
+ITEM_SABUK_MERAH_LORE,Sabuk kain dililit kencang menjaga pinggang saat bergerak cepat.,A cloth belt wound tight to steady the waist in fast movement.
+ITEM_SARUNG_GEMBALA_LORE,"Penggembala memakai sarung sebagai selimut, tas, dan bantal.","Herders use a sarong as blanket, bag and pillow."
+ITEM_SILVER_BANGLE_LORE,Gelang perak tempaan tangan. Kotagede dikenal sebagai kota pengrajin perak.,A hand-worked silver bangle. Kotagede is known as a town of silversmiths.
+ITEM_SPEAR_LORE,"Dari perburuan sampai barisan keraton, tombak ada di mana-mana. Ini hadiah sayembara pemburu tuyul.","From the hunt to the palace ranks, the spear is everywhere. A prize from the tuyul bounty."
+ITEM_STONE_RING_LORE,Cincin bermata batu. Banyak orang di Jawa percaya batu tertentu membawa tuah.,A ring set with a stone. Many in Java believe certain stones bring luck.
+ITEM_SULING_BAMBU_LORE,Anak gembala meniup suling di padang sambil menunggu ternak pulang.,Herd children play the flute in the field while waiting for the animals to come home.
+ITEM_TAMENG_ROTAN_LORE,Rotan dianyam rapat jadi perisai kecil yang lentur menahan pukulan.,Rattan woven tight into a small shield that gives under a blow.
+ITEM_TEKEN_GALIH_ASEM_NAME,Teken Galih Asem,Teken Galih Asem
+ITEM_TEKEN_GALIH_ASEM_DESC,Tongkat jalan dari kayu asam. +10% damage mantra.,A walking staff of tamarind wood. +10% spell damage.
+ITEM_TEKEN_GALIH_ASEM_LORE,"Teken, tongkat jalan, dari galih asam, bagian terdalam batang yang keras. Dibawa seorang pertapa pengembara yang kapalnya tak sampai ke tujuan.","A teken, a walking staff, of tamarind heartwood, the hard core of the trunk. Carried by a wandering ascetic whose ship never reached shore."
+ITEM_TOMBAK_BENDERA_LORE,"Bendera diikat tepat di bawah mata tombak. Selama ia berkibar, barisan tahu masih ada yang berdiri.","The flag is tied just below the spearhead. While it flies, the line knows someone still stands."
+ITEM_TOMBAK_GALAH_LORE,Galah bambu biasa dipakai menjolok buah dan mendorong perahu. Ujungnya diganti besi.,A bamboo pole usually knocks down fruit and pushes boats. Here its tip is iron.
+ITEM_TOMBAK_PANJI_LORE,Panji adalah bendera pasukan. Pembawanya berdiri paling depan supaya semua tahu ke mana maju.,The panji is a unit's flag. Its bearer stands in front so everyone knows where to advance.
+ITEM_TOMBAK_PRAJURIT_LORE,"Tombak latihan barisan prajurit keraton, ringan dan seragam.","The drill spear of the palace ranks, light and uniform."
+ITEM_TONGKAT_CENDANA_LORE,"Cendana harum dan tahan lama, sejak dulu dipakai untuk dupa dan benda doa.","Sandalwood is fragrant and lasting, long used for incense and prayer objects."
+ITEM_TONGKAT_GENTA_LORE,Genta kecil membuat orang yang lewat berhenti sejenak. Wiku memakainya menenangkan pikiran sebelum menulis.,A small bell makes passers-by pause. A wiku uses it to settle the mind before writing.
+ITEM_ZIRAH_SISIK_LORE,"Sisik logam disusun tumpang tindih seperti sisik ikan, agar tak ada celah.","Metal scales laid overlapping like a fish's, so no gap is left."

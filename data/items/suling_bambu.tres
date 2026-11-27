@@ -13,3 +13,4 @@ description = "ITEM_SULING_BAMBU_DESC"
 bonus = {"stamina_regen": 0.1}
 favoured = "herder"
 favoured_bonus = {"zone_life": 0.2}
+daya = 2

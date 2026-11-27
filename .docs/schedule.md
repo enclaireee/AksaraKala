@@ -143,6 +143,17 @@ Acts IV-VI were thinner than Acts I-III in people, clues, side quests and hand-p
 - Exit: `python3 tools/content_density.py` exits 0, and the design checks and play tests pass. Main quest steps, bosses and beats are unchanged.
 - Still by hand: walk each changed area in Demo mode; check the new **VERIFY** items (list in HANDOFF); female sprite rows for some new women NPCs.
 
+## Phase 7c: Pusaka & Jimat (2026-11-27, user call)
+Item system revamp ([items.md](items.md)): the Kujang Pusaka and Ingatan tiers as the power spine, Jimat with a Daya budget in place of the accessory slot, 4 filler weapons deleted, 2 late mythics and 6 jimat added, the weapon cap enforced, lore for every item, and a codex Items page.
+- [x] Docs: items.md, rpg.md, balance.md (+ `balance_model.py` 7.4 and 7.5), classes.md, story.md, script.md, quests.md, ui.md
+- [x] Game state and save v4 (`ingatan`, `jimat`, migration from v3)
+- [x] Combat and economy hooks for every bonus key; Cakra return
+- [x] Item roster, icons, chest swaps and zones regenerated; Hunter HP 4200
+- [x] Lore ID and EN for every item; story lines through `script_to_data.py`
+- [x] Menu: Pusaka panel and Jamasan, Jimat strip with Daya meter, codex Items page
+- [x] Tests: `pusaka_test`, `jimat_test`, updated items, item source, save, menu and choice tests
+- Exit: no item without lore or a source; no bonus key in data goes unread; every boss's modelled fight time is between 0.65 and 0.95 of its target (`balance_model.py`); a v1.3.0 save loads as v4; the design checks and all tests pass.
+
 ## Phase 8: Release
 - [x] Export builds for macOS, Windows, Linux (and Web if possible) *(macOS & Windows Desktop exported)*
 - [x] Title, credits, and asset attributions

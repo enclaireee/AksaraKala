@@ -19,6 +19,6 @@ cost = 8.0
 sakti_per_hit = 4.0
 reach = 20.0
 arc = 120.0
-damage = 10
+damage = 8
 favoured = "dancer"
 favoured_bonus = {"wirama_cap": 2.0}

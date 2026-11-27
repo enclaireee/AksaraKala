@@ -13,3 +13,4 @@ mythic = true
 description = "ITEM_BAJU_BATIK_DESC"
 lore = "ITEM_BAJU_BATIK_LORE"
 defense = 4
+bonus = {"max_hp": 15}

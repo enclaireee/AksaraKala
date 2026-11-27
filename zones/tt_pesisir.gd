@@ -47,7 +47,7 @@ const SPOTS := {
 	"g": {"scene": "res://entities/world/spawn.tscn", "props": {"id": "from_sk_karang"}, "tile": ","},   # spawn, arrival from sk_karang
 	"q": {"scene": "res://entities/enemies/banaspati_elite.tscn", "props": {"unique_id": "banaspati_elite"}, "tile": "."},   # elite Banaspati (SQ-T2, at the spring in the east dunes, `unique_id` `banaspati_elite`, elite stats HP x4, Ilmu x4, **TUNE**; inert until step 4)
 	"T": {"scene": "res://entities/world/trigger.tscn", "props": {"trigger_id": "burn_trail", "size": Vector2i(6,6)}, "tile": "."},   # trigger, burn trail reached (SQ-T2)
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "chest_tt_pesisir", "item_id": "ilmu:220"}, "tile": "."},   # chest: 220 Ilmu (wreck, secret)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "chest_tt_pesisir", "item_id": "teken_galih_asem"}, "tile": "."},   # chest: Teken Galih Asem (wreck, secret)
 	"k": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "kuda_kepang_3"}, "tile": "."},   # pickup, kuda kepang 3 (SQ-T4)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "timur_pesisir", "size": Vector2i(20,11), "waves": [[["res://entities/enemies/prajurit_terkutuk.tscn", Vector2i(7,0)], ["res://entities/enemies/banaspati.tscn", Vector2i(3,-3)], ["res://entities/enemies/banaspati.tscn", Vector2i(3,3)]]]}, "tile": "."},   # encounter timur_pesisir
 	"A": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ash_trail"}, "tile": "."},   # clue, the Hunter's cold ash trail (3.14 `clue` piece; journal note only, ASSUMED id)

@@ -44,20 +44,20 @@ func _initialize() -> void:
 	# Armor and accessory bonuses.
 	g.add_item("leather_armor", false); g.add_item("amulet", false); g.add_item("feather_charm", false)
 	g.equip("leather_armor"); g.equip("amulet")
-	check(p.health.defense == 2 and p.health.max_hp == 140, "leather armor defense 2 and amulet +10 hp")
+	check(p.health.defense == 2 and p.health.max_hp == 145, "leather armor defense 2 and amulet +15 hp")
 	p.health.hp = p.health.max_hp
 	p.health.take_damage(20, null, true)
-	check(p.health.hp == 140 - 18, "defense 2 takes 18 of 20 (hp %d)" % p.health.hp)
+	check(p.health.hp == 145 - 18, "defense 2 takes 18 of 20 (hp %d)" % p.health.hp)
 	p.health.defense = 19
 	p.health.take_damage(1, null, true)
-	check(p.health.hp == 140 - 19, "damage never drops below 1")
+	check(p.health.hp == 145 - 19, "damage never drops below 1")
 	p.health.take_damage(0, null, true)
-	check(p.health.hp == 140 - 19, "0 damage stays 0")
+	check(p.health.hp == 145 - 19, "0 damage stays 0")
 	p.health.defense = 2
-	g.equip("amulet")
-	g.add_item("feather_charm", false); g.equipped.accessory = "feather_charm"; g.changed.emit()
+	g.unequip_jimat("amulet")
+	g.add_item("feather_charm", false); g.equip("feather_charm")
 	check(is_equal_approx(p.move_mult, 1.08), "feather charm +8% move speed")
-	g.equipped.accessory = ""; g.changed.emit()
+	g.unequip_jimat("feather_charm")
 
 	# Healing flask.
 	g.flask_charges = 3

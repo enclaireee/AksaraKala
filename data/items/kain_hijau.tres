@@ -13,3 +13,4 @@ mythic = true
 description = "ITEM_KAIN_HIJAU_DESC"
 lore = "ITEM_KAIN_HIJAU_LORE"
 defense = 5
+bonus = {"flask_heal": 0.1}

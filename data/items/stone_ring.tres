@@ -10,4 +10,5 @@ id = "stone_ring"
 title = "ITEM_STONE_RING_NAME"
 slot = "accessory"
 description = "ITEM_STONE_RING_DESC"
-bonus = {"spi": 1}
+bonus = {"spell_mult": 0.05}
+daya = 2

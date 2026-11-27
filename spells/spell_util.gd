@@ -78,7 +78,7 @@ static func spirit(caster: Node) -> float:
 ## Damage multiplier: Spirit x class (second paths use their own rules, not their first-path school).
 static func damage(caster: Node) -> float:
 	var g := _game()
-	return spirit(caster) * CLASS_DAMAGE.get(class_id(caster), 1.0) * (1.0 + (g.bonus("damage_mult") if g else 0.0))
+	return spirit(caster) * CLASS_DAMAGE.get(class_id(caster), 1.0) * (1.0 + (g.bonus("damage_mult") if g else 0.0)) * (1.0 + (g.bonus("spell_mult") if g else 0.0)) * (g.power_mult() if g else 1.0)
 
 
 ## Gauge cost after class modifiers: Mage x0.9, Rogue x0.7 on Dash-strike, Lancer x0.85 on formations, Dancer x0.85 on dances.

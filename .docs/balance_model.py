@@ -17,7 +17,8 @@ SPELL_DMG, SPELL_COST = 42, 22  # average over Bolt (36 + burn), Burst, Dash-str
 CLASS_SPELL = {'Warrior': 0.9, 'Lancer': 0.9, 'Mage': 1.1, 'Dalang': 1.1}
 MAGE_GAIN, MAGE_COST = 1.2, 0.9
 MAGES = ('Mage', 'Dalang')  # Dalang's Suluk gain (1.35) is close to the Wiku's 1.2; modelled as the same
-INGATAN = 0.15
+INGATAN = 0.10  # per Ingatan tier: jamasan of the Kujang Pusaka after each main boss (items.md 1, TUNE)
+JIMAT_DMG = 0.10  # cap on jimat damage within the largest Daya budget, outside Rajah (items.md 2)
 
 # Enemies (balance.md section 6)
 HP_T = [1.0, 1.3, 1.6, 1.9, 2.2]
@@ -38,13 +39,13 @@ def build(cls, p):  # half main stat, 30% vitality, rest endurance
 
 
 def power(cls, p, rank, wmult=1.0):
-    """(total dps, spell dps, max hp) for `p` points spent and Ingatan rank."""
+    """(total dps, spell dps, max hp) for `p` points spent and Ingatan tier `rank`; `wmult` is jimat damage."""
     s, arch, ms = build(cls, p)
     ing = 1 + INGATAN * rank
     hit = WEAPON[arch] * wmult * (1 + 0.05 * (s[4] if arch == 'staff' else s[ms])) * ing
     rate = (1 / SWING[arch]) * (1 + 0.01 * s[3]) * UPTIME[arch]
     gain = GAIN[arch] * (1 + 0.02 * s[4]) * (MAGE_GAIN if cls in MAGES else 1)
-    spell = SPELL_DMG * (1 + 0.05 * s[4]) * ing * CLASS_SPELL.get(cls, 1.0)
+    spell = SPELL_DMG * wmult * (1 + 0.05 * s[4]) * ing * CLASS_SPELL.get(cls, 1.0)
     sdps = gain * rate / (SPELL_COST * (MAGE_COST if cls in MAGES else 1)) * spell
     return hit * rate + sdps, sdps, 80 + 10 * s[0]
 
@@ -84,10 +85,32 @@ if __name__ == '__main__':
     HP_K, DMG_K, MERCY_CAP = 0.85, 0.85, 0.20
     for n, hp, light, heavy in [('Capt', 1800, 16, 36), ('Sangkuriang', 2100, 16, 36), ('Sandekala', 1100, 10, 22),
                                 ('Barma', 2400, 18, 40), ('Bondowoso', 3100, 18, 41), ('Hariang', 2800, 21, 45),
-                                ('Buto Ijo', 3400, 23, 51), ('Keris', 4200, 23, 51), ('Hunter', 3600, 24, 54),
+                                ('Buto Ijo', 3400, 23, 51), ('Keris', 4200, 23, 51), ('Hunter', 4200, 24, 54),
                                 ('Kala', 9300, 27, 60)]:
         print(f'{n:12} HP {round(hp * HP_K):5} (mercy floor {round(hp * HP_K * (1 - MERCY_CAP)):5})'
               f'  light {max(1, round(light * DMG_K))} heavy {max(1, round(heavy * DMG_K))}')
+
+    print('== 7.4 fight time / target with Ingatan tiers (scene HP x0.85; main only, and 100% with jimat damage at cap)')
+    # Rank = Ingatan tier at the door (main bosses killed before it, jamasan done). The band keeps late fights from
+    # spiking (no tiers: Kala 1.17) and from collapsing (a +15% step: Hunter 0.68 and falling).
+    for n, hp, p, R, sec in [('Capt', 1800, 5, 0, 60), ('Sangkuriang', 2100, 6, 0, 70), ('Barma', 2400, 9, 1, 65),
+                             ('Bondowoso', 3100, 12, 1, 80), ('Hariang', 2800, 15, 2, 70), ('Buto Ijo', 3400, 16, 2, 75),
+                             ('Keris', 4200, 18, 2, 90), ('Hunter', 4200, 19, 3, 85), ('Kala', 9300, 24, 4, 150)]:
+        main = hp * HP_K / st.mean(power(c, p, R)[0] for c in CLASSES) / sec
+        full = hp * HP_K / st.mean(power(c, p + 3, R, 1 + JIMAT_DMG)[0] for c in CLASSES) / sec
+        print(f'{n:12} main {main:.2f}  100% {full:.2f}')
+        assert 0.65 <= main <= 0.95, f'{n}: main-path fight time outside 0.65-0.95 of target'
+        assert full >= 0.5, f'{n}: a 100% player with capped jimat melts the boss'
+
+    print('== 7.5 jimat damage cap (largest Daya budget 6; Rajah excluded)')
+    from itertools import combinations
+    DMG_JIMAT = {'iron_ring': (2, 0.05, 0.05), 'stone_ring': (2, 0, 0.05), 'mustika': (3, 0, 0.05)}  # daya, weapon, spell
+    for k in range(1, len(DMG_JIMAT) + 1):
+        for combo in combinations(DMG_JIMAT, k):
+            if sum(DMG_JIMAT[j][0] for j in combo) <= 6:
+                w, sp = (sum(DMG_JIMAT[j][i] for j in combo) for i in (1, 2))
+                assert w <= JIMAT_DMG + 1e-9 and sp <= JIMAT_DMG + 1e-9, f'{combo}: jimat damage over the cap'
+    print('ok')
 
     print('== 7.2 v7 floor hazards and kneel (boss, tick, light hit, reference HP)')
     # Phase-2 floor zones tick every 0.5 s (BossKit.HazardZone). A player who blunders into one is assumed to take

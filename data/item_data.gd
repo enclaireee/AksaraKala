@@ -27,6 +27,7 @@ class_name ItemData extends Resource
 
 @export_group("Armor and accessory")
 @export var defense := 0                 # 5% less damage per point (rpg.md 5)
+@export var daya := 0                    # jimat (accessory) Daya cost, 1-3; 0 for weapons and armor (items.md 4)
 ## Keys: vit, end, str, dex, spi (stat points) and max_hp, move_speed, stamina_regen (flat or fraction).
 @export var bonus := {}
 ## Class-favoured gear (items.md): this class id also gets favoured_bonus. Same keys as bonus, plus
@@ -43,4 +44,5 @@ func is_melee() -> bool:
 
 static func by_id(item_id: String) -> ItemData:
 	var path := "res://data/items/%s.tres" % item_id
-	return load(path) if item_id != "" and ResourceLoader.exists(path) else null
+	# is_valid_filename: a hand-edited save id like "../classes/mage" never loads another resource
+	return load(path) as ItemData if item_id.is_valid_filename() and ResourceLoader.exists(path) else null

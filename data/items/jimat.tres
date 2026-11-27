@@ -12,4 +12,5 @@ slot = "accessory"
 mythic = true
 description = "ITEM_JIMAT_DESC"
 lore = "ITEM_JIMAT_LORE"
-bonus = {"max_hp": 10}
+bonus = {"kill_heal": 4}
+daya = 2

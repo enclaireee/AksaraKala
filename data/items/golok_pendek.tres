@@ -19,6 +19,6 @@ cost = 10.0
 sakti_per_hit = 4.0
 reach = 20.0
 arc = 90.0
-damage = 11
+damage = 9
 favoured = "rogue"
 favoured_bonus = {"damage_mult": 0.1}

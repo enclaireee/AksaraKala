@@ -615,7 +615,7 @@ W,,,,,,,,,,.................................,,.............................#____
 | `n` | codex spot, Roro Jonggrang (museum) | `res://entities/world/pickup.tscn` | `{codex_id:"roro_jonggrang"}` | floor | 1 |
 | `o` | codex spot, Arca (museum) | `res://entities/world/pickup.tscn` | `{codex_id:"arca"}` | floor | 1 |
 | `g` | pickup, gong ageng (sparkle, SQ-M4, secret 1 nook) | `res://entities/world/pickup.tscn` | `{item_id:"gong_ageng"}` | floor | 1 |
-| `c` | chest: Longbow (secret 1, items.md Zone 2 chest) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_secret_gong", item_id:"longbow"}` | floor | 1 |
+| `c` | chest: Kemenyan (secret 1, items.md 4.2) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_secret_gong", item_id:"kemenyan"}` | floor | 1 |
 | `u` | loose Tuyul, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/tuyul.tscn` | `{}` | grass | 2 |
 | `k` | loose Pocong, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/pocong.tscn` | `{}` | grass | 3 |
 | `B` | clue, Laras's chalked *Ka* on the courtyard wall (2.6 `clue` piece; journal note only, no quest trigger; ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"ka_chalk"}` | grass | 1 |
@@ -777,7 +777,7 @@ X,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,..................................
 | `J` | kabut K3, east gate to Tanah Timur (one per tile) | `res://entities/world/kabut.tscn` | `{flag:"mq2_9"}` | path | 2 |
 | `M` | NPC juru kunci the juru kunci (2.12, teaches Ra after `mataram_batu`) | `res://entities/npc/npc.tscn` | `{npc_id:"juru_kunci"}` | floor | 1 |
 | `E` | encounter mataram_batu | `res://entities/world/encounter.tscn` | `{area_id:"mataram_batu", size:Vector2i(24,14), waves:[[[res://entities/enemies/genderuwo.tscn, Vector2i(9,0)], [res://entities/enemies/pocong.tscn, Vector2i(4,-4)], [res://entities/enemies/pocong.tscn, Vector2i(4,4)]]]}` | grass | 1 |
-| `c` | chest: Iron Staff (items.md Zone 2, no drops yet) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_chest_wetan", item_id:"iron_staff"}` | grass | 1 |
+| `c` | chest: Rajah (items.md 4.2) | `res://entities/world/chest.tscn` | `{chest_id:"mataram_chest_wetan", item_id:"rajah"}` | grass | 1 |
 | `g` | codex spot, Genderuwo | `res://entities/world/pickup.tscn` | `{codex_id:"genderuwo"}` | grass | 1 |
 | `u` | loose Tuyul, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/tuyul.tscn` | `{}` | grass | 2 |
 | `k` | loose Pocong, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/pocong.tscn` | `{}` | grass | 1 |
@@ -1278,7 +1278,7 @@ Interlock rules:
 11. Secret chests: gong nook gear chest, Panah Pasopati crypt, well gear chest. Gear: Longbow (gong nook), Panah Pasopati (crypt), Amulet (well).
 12. The in-game name "Candi Seribu" for the boss site (invented; the real Prambanan is never named as the arena).
 13. The Arca are a stationary-shooter exception to "at most one shooter".
-14. Chest items (existing ids, ASSUMED): gapura `stone_ring`, sawah `padded_tunic`, pasar `silver_bangle`, wetan `short_sword`, candi `chainmail`, gong nook `feather_charm`, well `amulet`; crypt `panah_pasopati` (Q). The quest pickups `selendang_nawang`, `gong_ageng`, `batu_bintang` have no `data/items/` file yet.
+14. Chest items (existing ids, ASSUMED): gapura `stone_ring`, sawah `padded_tunic`, pasar `silver_bangle`, wetan `rajah`, candi `chainmail`, gong nook `feather_charm`, well `amulet`; crypt `panah_pasopati` (Q). The quest pickups `selendang_nawang`, `gong_ageng`, `batu_bintang` have no `data/items/` file yet.
 15. Map layout (Phase 5; v3.1 additions are items 16-24): the causeway pocket is on the east edge of `mt_gapura`; the gong nook is an open one-tile gap between two rocks (no breakable-wall mechanic); the lesung women stay in the farm yard of `mt_sawah` (an NPC at the arena edge would be interactive); the tuyul leader NPC and the inert elite stand side by side in the kiln; `mt_kuburan` has its north entry and east exit.
 16. v3.1 numbering: MQ2 has 13 steps ([quests.md](../quests.md) section 4). Lead flags `lead_pasar`, `lead_ruins`, `lead_kuburan` and step flag `mq2_4` come from quests.md; `mq2_5` (Ca), `mq2_7b` (Bandung Bondowoso) too.
 17. The three leads are free-order. The journal arrow points at the nearest open lead (**ASSUMED**). A player can run past the Arca and finish `mataram_ruins` later because the courtyard has no doors.

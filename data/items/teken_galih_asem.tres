@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/teken_galih_asem.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "teken_galih_asem"
+title = "ITEM_TEKEN_GALIH_ASEM_NAME"
+slot = "weapon"
+mythic = true
+archetype = "staff"
+description = "ITEM_TEKEN_GALIH_ASEM_DESC"
+lore = "ITEM_TEKEN_GALIH_ASEM_LORE"
+windup = 0.15
+recovery = 0.35
+cost = 5.0
+projectile_speed = 200.0
+projectile_range = 160.0
+sakti_per_hit = 4.0
+damage = 10
+bonus = {"spell_mult": 0.1}

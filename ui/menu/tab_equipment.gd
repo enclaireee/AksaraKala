@@ -1,9 +1,10 @@
 extends MenuTab
-## Perlengkapan (Equipment), ui.md 4.3 tab 2. Left page: a paper-doll outline with the Weapon / Armor / Accessory
-## slots around it and the gear totals. Right page: the iron-rimmed inventory grid and an item card that always shows
+## Perlengkapan (Equipment), ui.md 4.3 tab 2. Left page: a paper-doll outline with the Weapon / Armor slots around
+## it, the Jimat strip (Daya meter and worn jimat, changed only at a petilasan) and the gear totals. Right page: the iron-rimmed inventory grid and an item card that always shows
 ## something (the focused item, else the equipped weapon) with compare arrows against the equipped item.
 
-const SLOTS := ["weapon", "armor", "accessory"]
+const SLOTS := ["weapon", "armor"]
+const INV_SLOTS := ["weapon", "armor", "accessory"]   # inventory order; accessories are jimat
 const ITEM_DIR := "res://assets/art/items/"
 const COLS := 9
 const STAT_KEYS := {"damage": "UI_DER_ATK", "defense": "UI_DER_DEF", "max_hp": "UI_DER_HP", "move_speed": "UI_BK_SPEED",
@@ -11,9 +12,9 @@ const STAT_KEYS := {"damage": "UI_DER_ATK", "defense": "UI_DER_DEF", "max_hp": "
 		"dex": "UI_STAT_DEX", "spi": "UI_STAT_SPI", "damage_mult": "UI_DER_ATK", "sakti_gain": "UI_FAV_SAKTI", "smudge": "UI_FAV_SMUDGE"}
 # doll slot positions on the left page (24x24 wells) and the doll point each leader line runs to
 const DOLL := Vector2(72, 24)
-const SLOT_POS := {"weapon": Vector2(16, 64), "armor": Vector2(160, 40), "accessory": Vector2(160, 92)}
-const SLOT_TO := {"weapon": Vector2(DOLL.x + 6, DOLL.y + 60), "armor": Vector2(DOLL.x + 40, DOLL.y + 40),
-		"accessory": Vector2(DOLL.x + 34, DOLL.y + 21)}
+const SLOT_POS := {"weapon": Vector2(16, 64), "armor": Vector2(160, 40)}
+const SLOT_TO := {"weapon": Vector2(DOLL.x + 6, DOLL.y + 60), "armor": Vector2(DOLL.x + 40, DOLL.y + 40)}
+const STRIP_Y := 110      # Jimat strip: header, tiles, note
 
 var focus_id := ""        # item id focused in the grid (kept across rebuilds)
 var _doll_btn := {}       # slot -> Button
@@ -31,6 +32,12 @@ var _card_stats: VBoxContainer
 var _card_desc: Label
 var _card_item: ItemData
 var _empty: Label
+var _strip: Control       # Jimat strip (dimmed outside a petilasan)
+var _jimat_row: HBoxContainer
+var _daya_pips: HBoxContainer
+var _daya_lbl: Label
+var _note: Label
+var _note_gen := 0
 
 
 func title_key() -> String:
@@ -84,12 +91,29 @@ func build(l: Control, r: Control) -> void:
 		nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		put(l, nm, Vector2(cx - 30, SLOT_POS[s].y + 34), Vector2(60, 10))
 		_doll_name[s] = nm
-	put(l, MenuBook.section(tr("UI_BK_GEAR_TOTALS")), Vector2(0, 144))
+	_strip = Control.new()
+	_strip.mouse_filter = MOUSE_FILTER_IGNORE
+	put(l, _strip, Vector2(0, STRIP_Y), Vector2(200, 44))
+	put(_strip, MenuBook.section(tr("UI_JIMAT")), Vector2.ZERO)
+	_daya_lbl = MenuBook.num("", MenuBook.INK_DIM)
+	_daya_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	put(_strip, _daya_lbl, Vector2(70, -1), Vector2(70, 12))
+	_daya_pips = HBoxContainer.new()
+	_daya_pips.add_theme_constant_override("separation", 2)
+	_daya_pips.mouse_filter = MOUSE_FILTER_IGNORE
+	put(_strip, _daya_pips, Vector2(146, 1), Vector2(54, 10))
+	_jimat_row = HBoxContainer.new()
+	_jimat_row.add_theme_constant_override("separation", 2)
+	put(_strip, _jimat_row, Vector2(0, 14), Vector2(200, 20))
+	_note = MenuBook.text("", MenuBook.INK_FADE)
+	_note.clip_text = true
+	put(_strip, _note, Vector2(0, 34), Vector2(200, 10))
+	put(l, MenuBook.section(tr("UI_BK_GEAR_TOTALS")), Vector2(0, 156))
 	_totals = GridContainer.new()
 	_totals.columns = 2
 	_totals.add_theme_constant_override("h_separation", 8)
 	_totals.add_theme_constant_override("v_separation", 1)
-	put(l, _totals, Vector2(0, 164), Vector2(200, 48))
+	put(l, _totals, Vector2(0, 172), Vector2(200, 40))
 	# right page: inventory grid + card
 	put(r, MenuBook.section(tr("UI_BK_INVENTORY")), Vector2.ZERO)
 	_count = MenuBook.num("", MenuBook.INK_DIM)
@@ -148,9 +172,10 @@ func refresh() -> void:
 		_doll_icon[s].texture = _icon(it)
 		_doll_name[s].text = tr(it.title) if it else tr("UI_BK_EMPTY_SLOT")
 	_refresh_totals(g)
+	_refresh_strip(g)
 	clear(_grid)
 	var items: Array[ItemData] = []
-	for s in SLOTS:
+	for s in INV_SLOTS:
 		for id in g.inventory:
 			var it := ItemData.by_id(id)
 			if it and it.slot == s:
@@ -183,15 +208,99 @@ func _slot_button(g: Node, item: ItemData) -> Button:
 		b.vertical_icon_alignment = VERTICAL_ALIGNMENT_CENTER
 	else:
 		b.text = tr(item.title).left(2)
-	if g.equipped.get(item.slot, "") == item.id:
+	if _worn(item):
 		put(b, MenuBook.pic("book_equipped", Vector2.ZERO), Vector2(13, 0))
-	b.pressed.connect(g.equip.bind(item.id))
+	if item.slot == "accessory":   # Daya cost in the corner, wax red when it would overflow the budget
+		var over: bool = not _worn(item) and g.daya_used() + item.daya > g.daya()
+		var dl := MenuBook.num(str(item.daya), MenuBook.WAX if over else MenuBook.INK_DIM)
+		dl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		put(b, dl, Vector2(10, 8), Vector2(9, 12))
+	b.pressed.connect(_pick.bind(item))
 	b.focus_entered.connect(func() -> void:
 		focus_id = item.id
 		_show_card(item)
 		menu.update_hints())
 	b.mouse_entered.connect(func() -> void: b.grab_focus())
 	return b
+
+
+func _worn(item: ItemData) -> bool:
+	return item.id in game.jimat if item.slot == "accessory" else game.equipped.get(item.slot, "") == item.id
+
+
+func _pick(item: ItemData) -> void:
+	if item.slot == "accessory":
+		toggle_jimat(item.id)
+	else:
+		game.equip(item.id)
+
+
+## Wear or remove a jimat. Only at a petilasan, and only within the Daya budget; a refusal shows a note and shakes the strip.
+func toggle_jimat(id: String) -> bool:
+	var item := ItemData.by_id(id)
+	if item == null:
+		return false
+	if not menu.at_petilasan:
+		_refuse("UI_JIMAT_HINT")
+		return false
+	if id in game.jimat:
+		game.unequip_jimat(id)
+		return true
+	if not game.equip_jimat(id):
+		_refuse("UI_JIMAT_FULL")
+		return false
+	return true
+
+
+func _refuse(key: String) -> void:
+	_note.text = tr(key)
+	_note.add_theme_color_override("font_color", MenuBook.WAX)
+	_note_gen += 1
+	var gen := _note_gen
+	if is_inside_tree():
+		var tw := create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		for dx in [3, -3, 2, -2, 0]:
+			tw.tween_property(_strip, "position:x", float(dx), 0.04)
+		get_tree().create_timer(1.6, true).timeout.connect(func() -> void:
+			if gen == _note_gen:
+				_refresh_note())
+
+
+func _refresh_note() -> void:
+	_note.add_theme_color_override("font_color", MenuBook.INK_FADE)
+	_note.text = "" if menu.at_petilasan else tr("UI_JIMAT_HINT")
+
+
+func _refresh_strip(g: Node) -> void:
+	var at: bool = menu.at_petilasan
+	_strip.modulate.a = 1.0 if at else 0.6
+	_daya_lbl.text = "%s %d/%d" % [tr("UI_DAYA"), g.daya_used(), g.daya()]
+	clear(_daya_pips)
+	for i in g.daya():
+		var p := MenuBook.pic("book_pip_on" if i < g.daya_used() else "book_pip_off", Vector2.ZERO)
+		p.custom_minimum_size = Vector2(6, 10)   # the 3x5 pip at 2x
+		_daya_pips.add_child(p)
+	clear(_jimat_row)
+	for id: String in g.jimat:
+		var it := ItemData.by_id(id)
+		if it == null:
+			continue
+		var b := Button.new()
+		b.theme_type_variation = &"SlotButton"
+		b.custom_minimum_size = Vector2(20, 20)
+		b.focus_mode = FOCUS_ALL
+		b.icon = _icon(it)
+		b.tooltip_text = tr(it.title)
+		b.pressed.connect(func() -> void:
+			if toggle_jimat(id):
+				_doll_btn.weapon.grab_focus.call_deferred())
+		b.focus_entered.connect(func() -> void:
+			_show_card(it)
+			menu.update_hints())
+		b.mouse_entered.connect(func() -> void: b.grab_focus())
+		_jimat_row.add_child(b)
+	_note_gen += 1
+	_refresh_note()
 
 
 ## A doll slot jumps into the grid: the equipped item of that slot, else the first item of that kind.
@@ -208,8 +317,10 @@ func _jump_to_slot(slot: String) -> void:
 func _refresh_totals(g: Node) -> void:
 	clear(_totals)
 	var sum := {}
-	for s in SLOTS:
-		var st := _item_stats(g.equipped_item(s))
+	var worn: Array = SLOTS.map(func(s: String) -> ItemData: return g.equipped_item(s))
+	worn.append_array(g.jimat.map(func(id: String) -> ItemData: return ItemData.by_id(id)))
+	for it: ItemData in worn:
+		var st := _item_stats(it)
 		for k in st:
 			sum[k] = sum.get(k, 0.0) + st[k]
 	if sum.is_empty():
@@ -276,7 +387,11 @@ func _show_card(item: ItemData) -> void:
 	_card_name.add_theme_color_override("font_color", MenuBook.INK_HEAD if item.mythic else MenuBook.INK)
 	_card_type.text = tr("UI_SLOT_" + item.slot.to_upper()) + (" · " + tr("UI_BK_PUSAKA") if item.mythic else "")
 	var cur: ItemData = game.equipped_item(item.slot)
-	var same := cur == item
+	var jim := item.slot == "accessory"
+	var same := _worn(item)
+	if jim:
+		cur = null
+		_card_type.text = tr("UI_JIMAT") + " · %s %d" % [tr("UI_DAYA"), item.daya]
 	_card_tag.text = tr("UI_BK_WORN") if same else ""
 	var mine := _item_stats(item)
 	var theirs := _item_stats(cur) if cur and not same else {}
@@ -301,7 +416,7 @@ func _show_card(item: ItemData) -> void:
 				row.add_child(dl)
 		_card_stats.add_child(row)
 	var desc := tr(item.description)
-	if item.mythic and item.lore != "":
+	if (item.mythic or jim) and item.lore != "":
 		desc += " " + tr(item.lore)
 	var fav: bool = item.favoured != "" and item.favoured == get_node("/root/Game").class_id
 	if item.favoured != "":
@@ -325,7 +440,7 @@ func focus_first() -> void:
 func hints() -> Array:
 	var f := get_viewport().gui_get_focus_owner() if get_viewport() else null
 	if f and f.get_parent() == _grid:
-		if _card_item and game.equipped.get(_card_item.slot, "") == _card_item.id:
+		if _card_item and _worn(_card_item) and _card_item.slot != "accessory":
 			return [["@updown", "UI_BK_HINT_SELECT"]]
 		return [["@updown", "UI_BK_HINT_SELECT"], ["Enter", "UI_BK_HINT_EQUIP"]]
 	return [["@updown", "UI_BK_HINT_SELECT"], ["Enter", "UI_BK_HINT_CHOOSE"]]

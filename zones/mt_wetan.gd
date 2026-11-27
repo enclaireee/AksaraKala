@@ -52,7 +52,7 @@ const SPOTS := {
 	"J": {"scene": "res://entities/world/kabut.tscn", "props": {"flag": "mq2_9"}, "tile": ","},   # kabut K3, east gate to Tanah Timur (one per tile)
 	"M": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "juru_kunci"}, "tile": "_"},   # NPC juru kunci the juru kunci (2.12, teaches Ra after `mataram_batu`)
 	"E": {"scene": "res://entities/world/encounter.tscn", "props": {"area_id": "mataram_batu", "size": Vector2i(24,14), "waves": [[["res://entities/enemies/genderuwo.tscn", Vector2i(9,0)], ["res://entities/enemies/pocong.tscn", Vector2i(4,-4)], ["res://entities/enemies/pocong.tscn", Vector2i(4,4)]]]}, "tile": "."},   # encounter mataram_batu
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_wetan", "item_id": "iron_staff"}, "tile": "."},   # chest: Iron Staff (items.md Zone 2, no drops yet)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_chest_wetan", "item_id": "rajah"}, "tile": "."},   # chest: Rajah (items.md 4.2)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "genderuwo"}, "tile": "."},   # codex spot, Genderuwo
 	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
 	"k": {"scene": "res://entities/enemies/pocong.tscn", "props": {}, "tile": "."},   # loose Pocong, roaming pack (respawns on zone reload, no unique_id)

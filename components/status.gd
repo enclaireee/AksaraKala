@@ -29,6 +29,9 @@ var _flicker := 0.0
 func apply(type: Type, seconds := -1.0, value := 0.0) -> void:
 	if seconds < 0.0:
 		seconds = _default_time(type)
+	var game := get_node_or_null("/root/Game")
+	if game and owner and owner.is_in_group("player"):  # Batu Kali (items.md 4.2)
+		seconds *= maxf(0.1, 1.0 - float(game.bonus("status_short")))
 	var was := _left.has(type)
 	_left[type] = seconds
 	if type == Type.SLOW:

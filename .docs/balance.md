@@ -60,21 +60,22 @@ The player gets about 2x damage and 1.3x HP over the game. Each source has a cei
 | Source | How much | Guaranteed on the main path? |
 |--------|----------|------------------------------|
 | **Stats** | +5% damage per point in the matching stat, +10 HP per Vitality | Yes (Ilmu from enemies and bosses) |
-| **Ingatan** (remembrance, new) | +15% to **all** player damage, weapons and spells, per rank. 4 ranks, max +60% | Yes, 1 rank per main boss |
-| **Weapons** | Same archetype, at most +25% over the starter. Mostly a change of behavior (reach, arc, speed) | No, from side quests and secrets |
+| **Ingatan** (the Kujang Pusaka, Phase 7c) | +10% to **all** player damage, weapons and spells, per tier, and +1 Daya. 4 tiers, max +40% | Yes, 1 jamasan per main boss, done at a petilasan |
+| **Weapons** | At most 1.25x the class or archetype starter after `damage_mult` (Keris Mpu Gandring excepted, it costs HP). Mostly a change of behavior (reach, arc, speed, a twist key) | No, from side quests, chests and secrets |
 | **Armor** | 5% damage reduction per Defense point, 5-25% | Batik and Kain Hijau are on the main path |
-| **Accessories** | Small flat bonuses (+1 Spirit, +10 HP, +8% speed and others) | No |
+| **Jimat** (replaces accessories) | A Daya budget of 2 + tier (2-6). Worn jimat add at most +10% weapon and +10% spell damage (Rajah's +20% below 30% HP aside); the rest is HP, speed, Sakti, flask and utility ([items.md](items.md) 4) | No |
 | **Healing Flask** | 3-6 charges, 40-60% heal each | Base only. Upgrades are side-quest rewards |
 | **Major Choices** (Story v5) | One of two small rewards per Act, each inside the ceilings above: Sunda `Ca` radius +10%, Sabuk Galuh (+1 Vit, +8% damage reduction), Keris Mpu Gandring or Batu Kali, *Ombak* -3 Sakti and +20% poise damage on Eclipse enemies or the Berkah Pesisir revive/ward, Keteguhan Sunyi (+15% stamina and Sakti recovery in the Kala fight) or +6 s on the Phase 3 countdown ([items.md](items.md), [spells.md](spells.md)). Every choice is a side-grade, so neither branch changes the target levels in section 2.2 (**TUNE**, **ASSUMED**) | No, but one branch per choice is always taken |
 
-### 3.1 Ingatan Progression
-As the letters return to the world, the hero's ilmu grows with them. This is what keeps a main-quest-only player on the curve without new items.
-- Rank = main bosses cleared: Sangkuriang (1), Bandung Bondowoso (2), Mpu Gandring's Keris (3), Nyi Roro Kidul's trial (4, main path).
-- All damage the player deals (weapon, spell, Summon, Ward absorb) is multiplied by `1 + 0.15 x rank`.
-- Shown as a short line when it rises ("The letters remember you. Ingatan II") and in the stats screen. No new UI.
-- State: derived from the boss flags in `Game`. Nothing new is saved.
-- Buto Ijo is a miniboss and gives no rank.
-- Segara Kidul is on the main path, so rank 4 is always reached before Batara Kala and his HP is the full 9300 (section 7). The Captain, Barma Wijaya, Hariang Banga and the Hunter give no rank (**ASSUMED**).
+### 3.1 Ingatan Progression (the Kujang Pusaka, Phase 7c)
+Ibu's kujang remembers what the world forgets. Washing it (jamasan) after each great deed is what keeps a main-quest-only player on the curve. It was designed at +15% per rank in v1 and never built; v1.3.0 ran flat, which is why Kala's model fight was 176 s against a 150 s target.
+- A jamasan becomes available after each main boss: Sangkuriang, Bandung Bondowoso, Mpu Gandring's Keris, Nyi Roro Kidul's trial (main path). `Game.jamasan_pending()` = main bosses in `killed` - `Game.ingatan`.
+- The player performs it from the Status tab at a petilasan. It raises the tier by 1 (max 4) with a short ritual card and one memory line.
+- All damage the player deals (weapon, spell, Summon, Ward absorb) is multiplied by `Game.power_mult()` = `1 + 0.10 x tier` (**TUNE**). Each tier also adds 1 Daya ([items.md](items.md) 4).
+- State: `ingatan` (int) is saved (save v4, [rpg.md](rpg.md) 11). Pending is derived, so a v3 save just shows its earned jamasan as pending.
+- Buto Ijo is a miniboss and gives no jamasan. The Captain, Barma Wijaya, Hariang Banga and the Hunter give none either (**ASSUMED**).
+- Segara Kidul is on the main path, so tier 4 is always within reach before Batara Kala. The model assumes the jamasan is done at the petilasan before each door; a player who skips it is weaker, and the Status tab and the petilasan prompt remind them.
+- Why +10%: `balance_model.py` 7.4 puts every main-path fight at 0.70-0.84 of its target time (band asserted 0.65-0.95). +15% overshoots (the Hunter falls to 0.68 and keeps falling); none climbs to 1.17 at Kala.
 
 ## 4. Player formulas
 | Item | Baseline | Formula / Value | Rationale |
@@ -83,7 +84,7 @@ As the letters return to the world, the hero's ilmu grows with them. This is wha
 | Sakti gain per hit | - | heavy 10, light 4, ranged 4, staff 4 | Balances gauge gain rate across weapon attack speeds |
 | Spirit gauge bonus | - | +2% per point | Smooth scaling without over-saturating spell frequency |
 | Armor | - | `max(1, round(dmg x (1 - 0.05 x defense)))` | Percentage reduction scaling across all zone tiers |
-| Spell power | - | Spirit x Ingatan multiplier | Keeps spell effectiveness aligned with escalating enemy HP |
+| Spell power | - | Spirit x `power_mult()` x (1 + `damage_mult` + `spell_mult`) | Keeps spell effectiveness aligned with escalating enemy HP |
 
 Unchanged: stamina costs and regen, dodge, Vitality and Endurance formulas, flask, level cost.
 
@@ -176,7 +177,7 @@ Boss HP = mean class damage per second for the reference player x target fight t
 | Hariang Banga (Act III duel, yields at 15% HP) | L16, 2 | 55-80 s | **2800** (3200) | 21 | 45 | 320 |
 | Buto Ijo (miniboss) | L17, 2 | 60-85 s | **3400** (800) | 23 | 51 | 300 |
 | Mpu Gandring's Keris | L19, 2 | 70-100 s | **4200** (1400) | 23 | 51 | 500 |
-| The Nameless Hunter (Act IV) | L20, 3 | 65-100 s | **4600** | 24 | 54 | 480 |
+| The Nameless Hunter (Act IV) | L20, 3 | 65-100 s | **4200** (4600) | 24 | 54 | 480 |
 | Batara Kala | L25, 4 | 115-175 s, 3 phases | **9300** (2500), 3100 per phase | 27 | 60 | none (ending) |
 | Nyi Roro Kidul's trial (main path) | L22, 3 | waves of tier 3 enemies | no HP | | | 700 |
 
@@ -202,8 +203,25 @@ The table above stays the design HP. Code applies, for scene bosses only (`entit
 - **Damage x0.85** on every hit whose source is in the `boss` group (`Hurtbox.receive` -> `BossKit.boss_damage`, at least 1). This covers strikes, floor zones and direct hits.
 - **Retry mercy:** each death inside a sealed arena adds 1 to `Game.boss_deaths[unique_id]` (`Zones.respawn`, from the ids `arena_gate` stores in `boss_retry`). Each death takes another 7% off that boss's HP, capped at 20% (x0.85 x0.80 = x0.68 at worst). Not saved: a reload starts fresh.
 - **Early wind-ups:** Captain, Sangkuriang and Sandekala heavy wind-ups are 15% longer (combat.md, boss revamp v9).
-- The scene HP for the Hunter is 3600, not the 4600 in the table (tuned down at some point, never written back). v9 scales from the scene value.
+- The Hunter's scene HP was 3600 against 4600 here. Phase 7c sets both to 4200, so its tiered fight lands at 0.76 of target like its neighbours.
 - Effective HP and hits: `balance_model.py` 7.3.
+
+### 7.4 Fight time with Ingatan tiers (Phase 7c, `balance_model.py` 7.4 and 7.5)
+Scene HP x0.85 over the mean class dps at the door, as a share of the target fight time. The 100% column adds 3 stat points and the jimat damage cap (+10%).
+
+| Boss | Tier | Main path | 100% |
+|------|------|-----------|------|
+| Captain | 0 | 0.74 | 0.63 |
+| Sangkuriang | 0 | 0.72 | 0.63 |
+| Barma Wijaya | 1 | 0.78 | 0.67 |
+| Bandung Bondowoso | 1 | 0.78 | 0.67 |
+| Hariang Banga | 2 | 0.70 | 0.62 |
+| Buto Ijo | 2 | 0.79 | 0.68 |
+| Keris | 2 | 0.79 | 0.70 |
+| Hunter | 3 | 0.76 | 0.67 |
+| Batara Kala | 4 | 0.84 | 0.73 |
+
+Asserts: every main-path share is 0.65-0.95; every 100% share is at least 0.5; no jimat set within a budget of 6 passes the +10% damage cap. The v9 retry mercy and death drop still sit on top for the struggling player.
 
 ## 8. Ilmu economy
 ### 8.1 Level cost
@@ -254,7 +272,8 @@ One mode. Assist toggles live in Settings, can change at any time, and have no p
 ## 10. Adding content without breaking balance
 - **Enemy:** pick a role, a zone tier and any modifier, then read the stats off section 6. Do not hand-tune numbers before a playtest.
 - **Boss:** pick a target fight time and use the model to get HP and hit damage.
-- **Weapon:** at most +25% over that archetype's starter. Prefer a new behavior over a bigger number.
+- **Weapon:** at most 1.25x its class or archetype starter after `damage_mult` (`items_test` checks it). Give it a twist: a shape, speed or bonus key. Never the starter plus 1.
+- **Jimat:** a Daya cost of 1-3 that matches its strength. A damage jimat must keep `balance_model.py` 7.5 passing. Every bonus key it sets must be read in code.
 - **Quest:** Ilmu from section 8.3 by size. Key rewards from [quests.md](quests.md) section 3.2.
 - **Zone:** give it the next tier. If it sits between two tiers, use the lower one.
 
@@ -271,5 +290,5 @@ One mode. Assist toggles live in Settings, can change at any time, and have no p
 
 ## 12. Balancing Notes
 1. **Damage numbers on screen:** enabled by default, toggleable in Settings ([combat.md](combat.md)).
-2. **Staff and bow upgrades:** the staff has no found upgrade and the bow has only Panah Pasopati. Ingatan rank scaling covers the power progression curve.
+2. **Staff and bow upgrades:** found staffs are side-grades (Tongkat Genta, Cendana, Teken Galih Asem's spell bonus) and bows are Panah Pasopati and the Crossbow. The Kujang Pusaka's Ingatan tiers carry the power curve; weapons carry the play style.
 3. **Pacing validation:** `python3 .docs/pacing_model.py` validates the minutes-per-act target curve across all acts and side quests.

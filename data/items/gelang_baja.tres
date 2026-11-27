@@ -13,3 +13,4 @@ description = "ITEM_GELANG_BAJA_DESC"
 bonus = {"defense": 0.05}
 favoured = "warrior"
 favoured_bonus = {"str": 1}
+daya = 2

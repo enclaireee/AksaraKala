@@ -19,6 +19,11 @@ func _initialize() -> void:
 		if f.ends_with(".tres"):
 			var id := f.get_basename()
 			check(RegEx.create_from_string("\\b%s\\b" % id).search(text) != null, "item %s has no source" % id)
+	# The deleted items (items.md 2) are gone from every give and chest, and the new jimat chests are wired.
+	for gone in ["short_sword", "iron_staff", "longbow"]:
+		check(not text.contains("give:%s\"" % gone) and not text.contains("\"item_id\": \"%s\"" % gone), "deleted item %s is still handed out" % gone)
+	for id in ["kembang_setaman", "batu_akik", "kemenyan", "rajah", "gelang_akar_bahar", "mustika", "gada_rujakpolo", "teken_galih_asem"]:
+		check(text.contains("\"item_id\": \"%s\"" % id), "new item %s has no chest in zones" % id)
 	# Every `item:X` cond needs something that hands X over, or the gate it guards never opens.
 	var seen := {}
 	for m in RegEx.create_from_string("[^a-z_]item:([a-z0-9_]+)").search_all(text):

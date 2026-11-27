@@ -17,6 +17,6 @@ recovery = 0.45
 lunge = 4.0
 cost = 25.0
 sakti_per_hit = 10.0
-damage = 28
+damage = 27
 reach = 44.0
 arc = 40.0

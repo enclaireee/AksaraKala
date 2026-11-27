@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/items/gelang_akar_bahar.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2_icon")
+id = "gelang_akar_bahar"
+title = "ITEM_GELANG_AKAR_BAHAR_NAME"
+slot = "accessory"
+mythic = true
+description = "ITEM_GELANG_AKAR_BAHAR_DESC"
+lore = "ITEM_GELANG_AKAR_BAHAR_LORE"
+daya = 2
+bonus = {"defense": 0.06}

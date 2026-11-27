@@ -12,4 +12,5 @@ slot = "accessory"
 mythic = true
 description = "ITEM_BATU_KALI_DESC"
 lore = "ITEM_BATU_KALI_LORE"
-bonus = {"spi": 1, "stamina_regen": 0.05}
+bonus = {"status_short": 0.5, "stamina_regen": 0.05}
+daya = 2

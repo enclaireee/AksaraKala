@@ -16,4 +16,4 @@ recovery = 0.3
 cost = 6.0
 projectile_speed = 360.0
 projectile_range = 240.0
-damage = 14
+damage = 10

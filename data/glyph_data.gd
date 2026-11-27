@@ -9,4 +9,7 @@ class_name GlyphData extends Resource
 
 
 static func by_id(glyph_id: String) -> GlyphData:
-	return load("res://data/glyphs/%s.tres" % glyph_id)
+	var path := "res://data/glyphs/%s.tres" % glyph_id
+	if not glyph_id.is_valid_filename() or not ResourceLoader.exists(path):
+		return null   # unknown or tampered save id (items get the same guard in ItemData.by_id)
+	return load(path) as GlyphData

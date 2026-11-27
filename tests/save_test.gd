@@ -40,6 +40,7 @@ func _initialize() -> void:
 	# Round trip through the file equals the live state.
 	g.glyphs_learned.append("jawa_ha")
 	g.killed.append("boss_z1")
+	g.inventory.append("broadsword")   # a v4 save only equips what it owns
 	g.equipped.weapon = "broadsword"
 	g.flags["met_guide"] = true
 	g.last_petilasan = {"zone": "res://zones/hub.tscn", "id": "p1"}
@@ -104,6 +105,77 @@ func _initialize() -> void:
 	check(not g.load_game(), "load succeeded with both files broken")
 	check(FileAccess.file_exists(PATH) and FileAccess.file_exists("user://save_test.bak"), "a broken file was deleted")
 	check(not FileAccess.file_exists(PATH + ".tmp"), "tmp file left behind")
+
+	# Save v4 (items.md 10). A v3 save: accessory -> jimat, deleted ids dropped, weapon back to the starter, pusaka flag.
+	g._reset()
+	g.from_dict({"version": 3, "class_id": "warrior", "inventory": ["broadsword", "short_sword", "kujang", "amulet", "padded_tunic"],
+		"equipped": {"weapon": "short_sword", "armor": "padded_tunic", "accessory": "amulet"},
+		"quests": {"mq0": {"state": "active", "step": 11, "count": 0, "all": 0}}})
+	check(g.jimat == ["amulet"], "v3 accessory did not become the jimat: %s" % [g.jimat])
+	check(g.equipped.weapon == "broadsword", "deleted weapon did not fall back to the starter: %s" % g.equipped.weapon)
+	check("short_sword" not in g.inventory and "kujang" not in g.inventory, "deleted ids survived in the inventory: %s" % [g.inventory])
+	check("amulet" in g.inventory and "broadsword" in g.inventory, "v3 load dropped a valid item: %s" % [g.inventory])
+	check(g.has_flag("has_pusaka") and g.ingatan == 0, "v3 past mq0 0.10: has_pusaka %s ingatan %d" % [g.has_flag("has_pusaka"), g.ingatan])
+	check(not g.equipped.has("accessory"), "the accessory slot lingers: %s" % g.equipped)
+	# A v1.3.0 file mid Act IV, read from disk: two bosses down shows two pending jamasan, and a 3-Daya belt waits in the bag.
+	_write(PATH, JSON.stringify({"version": 3, "class_id": "archer", "ilmu": 40, "inventory": ["hunting_bow", "longbow", "sabuk_galuh"],
+		"equipped": {"weapon": "longbow", "armor": "", "accessory": "sabuk_galuh"}, "killed": ["sangkuriang", "bandung_bondowoso"],
+		"quests": {"mq0": {"state": "done", "step": 12}}, "last_petilasan": {"zone": "res://zones/hub.tscn", "id": "p1"}}))
+	g._reset()
+	check(g.load_game() and g.class_id == "archer" and g.ilmu == 40, "v1.3.0 file did not load")
+	check(g.jamasan_pending() == 2 and g.ingatan == 0 and g.has_flag("has_pusaka"), "v1.3.0 file: pending %d ingatan %d" % [g.jamasan_pending(), g.ingatan])
+	check(g.equipped.weapon == "hunting_bow" and "longbow" not in g.inventory and "sabuk_galuh" in g.inventory and g.jimat.is_empty(), "v1.3.0 file gear: %s %s %s" % [g.equipped, g.inventory, g.jimat])
+	check(g.last_petilasan.zone == "res://zones/hub.tscn", "v1.3.0 file lost its petilasan: %s" % g.last_petilasan)
+	g._reset()
+	g.from_dict({"version": 3, "class_id": "mage", "inventory": ["oak_staff"], "equipped": {"weapon": "oak_staff", "accessory": ""}})
+	check(g.jimat.is_empty() and not g.has_flag("has_pusaka"), "v3 before mq0 0.10 got a pusaka or jimat")
+
+	# A v4 round trip keeps ingatan and jimat.
+	g._reset()
+	g.class_id = "mage"
+	g.inventory = PackedStringArray(["oak_staff", "amulet", "iron_ring"])
+	g.equipped = {"weapon": "oak_staff", "armor": ""}
+	g.killed.append_array(["sangkuriang", "bandung_bondowoso"])   # ingatan never outruns the bosses beaten
+	g.ingatan = 2   # budget 4
+	g.jimat = ["amulet", "iron_ring"]
+	var v4 := JSON.stringify(g.to_dict())
+	check(g.to_dict().version == 4 and g.to_dict().ingatan == 2 and g.to_dict().jimat == ["amulet", "iron_ring"], "to_dict v4 fields: %s" % v4)
+	g._reset()
+	g.from_dict(JSON.parse_string(v4))
+	check(g.ingatan == 2 and typeof(g.ingatan) == TYPE_INT and g.jimat == ["amulet", "iron_ring"], "v4 round trip: ingatan %s jimat %s" % [g.ingatan, g.jimat])
+
+	# A tampered v4 save is clamped and never crashes.
+	var base := {"version": 4, "class_id": "mage", "inventory": ["oak_staff", "amulet", "iron_ring", "stone_ring", "sabuk_galuh", "dagger"],
+		"equipped": {"weapon": "oak_staff", "armor": ""}, "killed": g.MAIN_BOSSES}
+	g._reset()
+	g.from_dict(base.merged({"ingatan": 99, "jimat": []}, true))
+	check(g.ingatan == g.INGATAN_MAX, "ingatan 99 was not clamped: %d" % g.ingatan)
+	g.from_dict(base.merged({"ingatan": 4, "killed": ["sangkuriang"]}, true))
+	check(g.ingatan == 1, "ingatan outran the bosses beaten: %d" % g.ingatan)
+	g.from_dict(base.merged({"version": 4, "equipped": {"weapon": "panah_pasopati"}}, true))
+	check(g.equipped.weapon == "oak_staff", "a v4 save equipped an unowned weapon: %s" % g.equipped.weapon)
+	g.from_dict(base.merged({"last_petilasan": {"zone": 5}, "memory_return": {"zone": "user://x.tscn", "pos": [1, 2]}, "glyphs_learned": ["sunda_ka", "bogus", "../items/dagger"]}, true))
+	check(g.last_petilasan.zone == "" and g.memory_return.is_empty() and "bogus" not in g.glyphs_learned and g.glyphs_learned.size() == 1,
+		"bad zone or glyph ids survived: %s %s %s" % [g.last_petilasan, g.memory_return, g.glyphs_learned])
+	g.from_dict(base.merged({"ingatan": -5}, true))
+	check(g.ingatan == 0, "negative ingatan was not clamped: %d" % g.ingatan)
+	g.from_dict(base.merged({"ingatan": 0, "jimat": ["nope", "../classes/mage", "dagger", "amulet", "amulet", 7, null, "stone_ring"]}, true))
+	check(g.jimat == ["amulet"] and g.daya_used() <= g.daya(), "junk, non-jimat, duplicate or over-budget jimat kept: %s" % [g.jimat])
+	g.from_dict(base.merged({"ingatan": 0, "jimat": ["sabuk_galuh"]}, true))
+	check(g.jimat.is_empty(), "a 3 Daya jimat fit a budget of 2: %s" % [g.jimat])
+	g.from_dict(base.merged({"ingatan": 0, "jimat": ["amulet", "iron_ring", "stone_ring"]}, true))
+	check(g.daya_used() <= g.daya() and g.jimat == ["amulet"], "over-budget set not trimmed: %s" % [g.jimat])
+	g.from_dict(base.merged({"jimat": ["iron_ring", "not_owned_xx"], "inventory": ["oak_staff"]}, true))
+	check(g.jimat.is_empty(), "a jimat that is not in the inventory was worn: %s" % [g.jimat])
+	for bad: Variant in ["junk", 5, {"a": 1}, null, true]:
+		g.from_dict(base.merged({"jimat": bad}, true))
+		check(g.jimat.is_empty(), "non-array jimat %s was kept: %s" % [bad, g.jimat])
+		g.from_dict(base.merged({"ingatan": bad}, true))
+		check(g.ingatan >= 0 and g.ingatan <= g.INGATAN_MAX and typeof(g.ingatan) == TYPE_INT, "wrong-typed ingatan %s gave %s" % [bad, g.ingatan])
+	g.from_dict(base.merged({"equipped": {"weapon": 12, "armor": ["x"]}}, true))
+	check(g.equipped.weapon is String and g.equipped.armor is String, "wrong-typed equipped kept: %s" % g.equipped)
+	g.from_dict(base.merged({"equipped": {"weapon": "../classes/mage", "armor": "amulet"}}, true))
+	check(g.equipped.weapon == "oak_staff" and g.equipped.armor == "", "tampered equipped ids: %s" % g.equipped)
 
 	for p in [PATH, "user://save_test.bak", QDIR + "/sv_q.tres", QDIR]:
 		DirAccess.remove_absolute(p)

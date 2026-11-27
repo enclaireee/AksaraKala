@@ -346,7 +346,7 @@ The old well stands a few steps from the banyan; the catch happens there, becaus
 | T:ask_cups | `"topic": "ask_cups"`, `"quiet": true` | | |
 | 2 | `step:mq4=2`, `item:laras_ribbon,item:laras_board,item:laras_strip_ka` (4.3, section 10) | | |
 | 3 | `step:mq4=2` (4.3, no items yet, `"quiet": true`, section 10) | | |
-| 4 | `step:mq0=9` (0.10, the morning after) | | |
+| 4 | `step:mq0=9` (0.10, the morning after) | `flag:has_pusaka` | |
 | 5 | `flag:mq5_4` (epilogue, section 11) | | |
 | 6 | `quest:mq0=active` | | |
 | 7 | (none) | | |
@@ -409,6 +409,11 @@ The old well stands a few steps from the banyan; the catch happens there, becaus
 | 4 | DLG_IBU_H113 | Aku akan membawanya pulang, Bu. Aku janji. | I'll bring her home, Ibu. I promise. |
 | 4 | @NPC_IBU_NAME | | |
 | 4 | DLG_IBU_V113 | Membawa siapa pulang? Sudahlah. Panggung wayang masih berasap, siapa tahu ada yang tertinggal di sana. | Bring who home? Never mind. The wayang stage is still smoking, something may be left there. |
+| 4 | DLG_IBU_V601 | Sebentar. Ibu tak tahu kenapa tadi menurunkan kujang tua ini dari dinding. Bawalah. | Wait. I don't know why I took this old kujang down from the wall today. Take it. |
+| 4 | @NPC_HERO_NAME | | |
+| 4 | DLG_IBU_H601 | Bu, kujang ini tak boleh disentuh siapa pun sejak aku kecil. | Ibu, nobody was allowed to touch this kujang since I was small. |
+| 4 | @NPC_IBU_NAME | | |
+| 4 | DLG_IBU_V605 | Tangan Ibu bergerak sendiri. Bawa saja, jangan tinggalkan di rumah yang sepi. | My hand moved on its own. Just take it, don't leave it in a quiet house. |
 | 4 | DLG_IBU_T1 | Sebelum kau pergi: petilasan tua di desa ini mengingat siapa saja yang singgah. Duduklah di sana, dan lelahmu ikut diingat pulih. | Before you go: the old petilasan in this village remembers whoever stops there. Sit by it, and your tiredness is remembered away. |
 | 4 | DLG_IBU_T2 | Dan bawa kendi jamu ini. Minum saat kau terluka. Kuisi lagi tiap kali kau beristirahat. | And take this jamu flask. Drink when you are hurt. I refill it each time you rest. |
 | 6 | DLG_IBU_V7 | Hati-hati. Sejak semalam seisi desa gelisah. | Be careful. The whole village is jumpy since last night. |
@@ -422,6 +427,8 @@ Choices for the Ibu hub:
 | CHOICE_IBU_ASK_103 | Tidak apa-apa, Bu. | Never mind, Ibu. | |
 
 Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan reads a child's name aloud (story.md Spine).
+
+**Phase 7c (items.md 1).** Entry 4 gives the family kujang and sets `flag:has_pusaka` (Semar entry 5 teaches jamasan; Ibu's Interlude entry 2 and Wirasana's entry 3 pay it off). **VERIFY**: the kujang as a Sundanese family heirloom; *jamasan* as the ritual cleansing of a pusaka, usually in Sura; *sipat kandel* as a pusaka carried for protection (not named in these lines). Jamasan at a petilasan after a great foe is a game rule, and Semar says so. The four memory lines `JAMASAN_1` to `JAMASAN_4` live in `ui.csv`.
 
 ### purwa_old_couple (the neighbours' lane; name NPC_PURWA_OLD_COUPLE_NAME; new). The couple who raised Ciung. Ibu's line "our neighbours' boy" came first.
 | Entry | if | do |
@@ -604,6 +611,11 @@ Entries 2, 3 and 5 are written in sections 10 and 11. **VERIFY**: that a ruwatan
 | 5 | DLG_SEMAR_H109 | Aku akan menggambarnya sampai tanganku hafal. | I'll draw it until my hand knows it. |
 | 5 | @NPC_SEMAR_NAME | | |
 | 5 | DLG_SEMAR_V118 | Itu muridku. Tiga kali, di depan boneka latihan itu. | That's my apprentice. Three times, on those practice dummies. |
+| 5 | @NPC_HERO_NAME | | |
+| 5 | DLG_SEMAR_H601 | Ibu memberiku kujang pagi tadi. Katanya ia sendiri tak tahu kenapa. | Ibu gave me a kujang this morning. She said she didn't know why herself. |
+| 5 | @NPC_SEMAR_NAME | | |
+| 5 | DLG_SEMAR_V601 | Hehe. Pusaka sering tahu lebih dulu dari pemiliknya. Ia perlu dijamas, dibasuh supaya ingat. | Hehe. A pusaka often knows before its keeper does. It must be washed, a jamasan, so that it remembers. |
+| 5 | DLG_SEMAR_V602 | Setelah musuh besar tumbang, duduklah di petilasan dan jamasi bilahnya. Itu aturanku di sini, bukan adat lama. | After a great foe falls, sit at a petilasan and wash the blade. That's my rule here, not an old custom. |
 | 5 | DLG_SEMAR_T1 | Tahan tombolnya, gambar dengan mouse-mu, lalu lepaskan. Garis yang pelan dan mantap lebih berharga daripada yang tergesa. | Hold the button, draw with your mouse, then let go. A slow, steady line is worth more than a hurried one. |
 | H2 | @NPC_SEMAR_NAME | | |
 | H2 | DLG_SEMAR_V7 | Lagi. Tiga kali, sampai tanganmu tak perlu menunggu kepalamu. | Again. Three times, until your hand stops waiting for your head. |
@@ -3329,6 +3341,9 @@ Runtime order is the row order above: the SQ-T3 entries come before the main-pat
 | 3 | @NPC_TIMUR_EMPU_NAME | | |
 | 3 | DLG_TIMUR_EMPU_V22 | Mpu Gandring, empu tua yang menempanya, leluhur guru kami. Dongeng lupa bagian yang tak enak: seseorang harus merawatnya. | Mpu Gandring, the old smith who made it, ancestor of our teachers. The tale forgets the awkward part: someone has to tend it. |
 | 3 | DLG_TIMUR_EMPU_V23 | Setiap bilah ingat untuk apa ia ditempa. Yang itu ditempa untuk menelan. Tanda di pintu itu akar tonggaknya. | Every blade remembers what it was made for. That one was made to swallow. Those door marks are the roots of its stakes. |
+| 3 | DLG_TIMUR_EMPU_V601 | Kujang di pinggangmu itu. Boleh kulihat pamornya? | That kujang at your belt. May I read its pamor? |
+| 3 | DLG_TIMUR_EMPU_V602 | Sudah dua kali dibasuh. Ada yang di rumahmu masih menyayanginya. | Washed twice already. Someone in your house still loves it. |
+| 3 | DLG_TIMUR_EMPU_V603 | Bilah yang masih ingat rumahnya tak mudah ditelan keris itu. Simpan dekat. | A blade that still remembers its house won't be swallowed easily by that keris. Keep it close. |
 | 3 | @NPC_HERO_NAME | | |
 | 3 | DLG_TIMUR_EMPU_H21 | Bagaimana menghentikannya? | How do I stop it? |
 | 3 | @NPC_TIMUR_EMPU_NAME | | |
@@ -4254,6 +4269,10 @@ Each entry 1 runs the write card (glyph ids **ASSUMED**: door_a `sunda_ka,sunda_
 | 2 | DLG_IBU_H301 | Karena Ibu menunggu. Dan karena tubuh Ibu belum lupa, walau kepala Ibu sudah. | Because you're waiting. And because your body hasn't forgotten, though your head has. |
 | 2 | @NPC_IBU_NAME | | |
 | 2 | DLG_IBU_V303 | Kalau begitu biar tubuhku yang menang. Cangkir kedua kutata lurus, dan kuberi teh yang hangat. | Then let my body win. I'll set the second cup straight, and pour it warm. |
+| 2 | @NPC_HERO_NAME | | |
+| 2 | DLG_IBU_H602 | Bu, kujang di pinggangku ini. Ibu ingat dari mana asalnya? | Ibu, this kujang at my belt. Do you remember where it came from? |
+| 2 | @NPC_IBU_NAME | | |
+| 2 | DLG_IBU_V602 | Itu kujang ayahku. Pagi itu tangan Ibu yang menurunkannya dari dinding, bukan kepala Ibu. | That was my father's kujang. That morning it was my hand that took it down from the wall, not my head. |
 | 2 | DLG_IBU_V304 | Dua anak dari seberang sungai makan malam di sini nanti. Kau yang harus menceritakan siapa mereka. | Two boys from across the river eat here tonight. You'll have to tell me who they are. |
 | 3 | @NPC_HERO_NAME | | |
 | 3 | DLG_IBU_H3 | Ibu, kenapa menangis? | Ibu, you're crying. |
@@ -7459,7 +7478,7 @@ One short past-tense line per main step, key `Q_<QUEST>_S<n>_DONE`, `n` as above
 | Q_MQ5_S14_DONE | I wrote La, Ra, Sa on my lontar, and my sister came home. | Kutulis La, Ra, Sa di lontarku, dan adikku pulang. |
 
 ## 13. Codex (`codex.csv` and `data/codex/<id>.tres`)
-**Entries: 53 codex rows.** Not part of the dialogue budget.
+**Entries: 54 codex rows.** Not part of the dialogue budget.
 Category `enemy` for the first six (they unlock on kill; `_WEAK` is the weakness line), `legend` for the rest (they unlock through `codex:` actions). Each body is 1-3 sentences. `Src` is "legend" (from the traditional stories) or "game" (invented here); a row can be both and says which part is which.
 
 | Id | Title EN / ID | Body EN | Body ID | Src | Weak EN / ID |
@@ -7517,6 +7536,7 @@ Category `enemy` for the first six (they unlock on kill; `_WEAK` is the weakness
 | kabayan | Si Kabayan / Si Kabayan | A lazy but clever man in Sundanese folk tales, who beats the proud with their own words (**VERIFY** the tale used). | Lelaki malas tapi cerdik dalam cerita rakyat Sunda, yang mengalahkan si sombong dengan kata-katanya sendiri (**VERIFY** kisah yang dipakai). | legend | — |
 | ririwa | Ririwa / Ririwa | A ghost that keeps doing its old chore until someone remembers its name (**VERIFY** the Sundanese term). In the game the servant Canga is remembered by writing his name, or driven off. | Hantu yang terus mengerjakan tugas lamanya sampai ada yang mengingat namanya (**VERIFY** istilah Sunda). Dalam permainan, pelayan Canga diingat dengan menuliskan namanya, atau diusir. | legend | — |
 | pangrenyep_letter | The Queen's Letter / Surat Sang Permaisuri | A mother's reply across the river: a short letter sealed with her own ring, wording that depends on the judgment given at the Pamali. | Balasan seorang ibu dari seberang sungai: surat pendek bersegel cincinnya sendiri, dengan kata-kata yang bergantung pada keputusan di Pamali. | game | — |
+| kujang | Kujang Pusaka / Kujang Pusaka | The family kujang, a curved Sundanese blade (**VERIFY**), and the one thing in the house that still remembers Laras. It is carried, not wielded. After a great foe falls you can wash it at a petilasan (jamasan, a pusaka cleansing (**VERIFY**); doing it at a petilasan is the game's rule), and each washing adds one Ingatan: +10% damage and +1 Daya. | Kujang keluarga, bilah Sunda yang melengkung (**VERIFY**), dan satu-satunya benda di rumah yang masih mengingat Laras. Ia dibawa, bukan diayunkan. Setelah musuh besar tumbang, ia bisa dijamas di petilasan (jamasan, pembersihan pusaka (**VERIFY**); melakukannya di petilasan adalah aturan permainan), dan tiap jamasan menambah satu Ingatan: damage +10% dan Daya +1. | legend and game | — |
 
 Keep the Faceless codex unlock on the `hunter_raid` beat even though kills would unlock it too.
 

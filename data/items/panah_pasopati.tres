@@ -19,3 +19,4 @@ cost = 4.0
 projectile_speed = 340.0
 projectile_range = 260.0
 damage = 10
+bonus = {"sakti_gain": 0.1}

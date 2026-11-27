@@ -11,6 +11,8 @@ var far_after := 120.0
 var bounce := 0.0          # Batu Pantul: > 0 = hop to the nearest other foe at this damage multiplier
 var bounce_range := 70.0
 var bounces_left := 1
+var returns := false       # Cakra: flies out, then homes back to the thrower and can hit again
+var _back := false
 var _travelled := 0.0
 var _spent := false
 var _trail: Sprite2D   # 2-frame streak behind the shaft (combat.md 2.3b); visual only
@@ -75,5 +77,16 @@ func _physics_process(delta: float) -> void:
 		_glow.frame = int(_travelled / 5.0) % _glow.hframes
 	if far_damage > 0 and _travelled > far_after:
 		damage = far_damage
-	if _travelled >= max_range:
-		queue_free()
+	if _back:
+		if not is_instance_valid(source) or global_position.distance_to((source as Node2D).global_position) < 10.0:
+			queue_free()
+			return
+		direction = (source as Node2D).global_position - global_position
+		direction = direction.normalized()
+		rotation = direction.angle()
+	elif _travelled >= max_range:
+		if returns and is_instance_valid(source):
+			_back = true
+			_hit.clear()   # each foe can be hit once per direction
+		else:
+			queue_free()

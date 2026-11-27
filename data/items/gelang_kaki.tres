@@ -13,3 +13,4 @@ description = "ITEM_GELANG_KAKI_DESC"
 bonus = {"end": 1}
 favoured = "dancer"
 favoured_bonus = {"wirama_haste": 0.12}
+daya = 2

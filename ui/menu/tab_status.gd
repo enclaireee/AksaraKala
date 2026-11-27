@@ -41,6 +41,15 @@ var _glyphs: HBoxContainer
 var _no_glyphs: Label
 var _time: Label
 var _focus_stat := "vit"
+var _pusaka: Control      # Pusaka panel (Phase 7c), shown with has_pusaka
+var _ingatan_pips: HBoxContainer
+var _bonus: Label
+var _daya: Label
+var jamasan_btn: Button
+var _card: Control        # ritual card: the tier's memory line, until dismissed
+var _card_text: Label
+var _card_ok: Button
+var _memory := 0          # tier whose card is open (0 = none)
 
 
 func title_key() -> String:
@@ -98,6 +107,39 @@ func build(l: Control, r: Control) -> void:
 	_bar_w = 198
 	_status_line = MenuBook.italic("", MenuBook.INK_DIM, false)
 	put(l, _status_line, Vector2(0, 194), Vector2(200, 12))
+	# Pusaka panel (items.md 1): the free column left of the figure, button in the one right of it
+	_pusaka = Control.new()
+	_pusaka.mouse_filter = MOUSE_FILTER_IGNORE
+	put(l, _pusaka, Vector2(0, 88), Vector2(200, 60))
+	var ic := TextureRect.new()
+	ic.texture = load("res://assets/art/items/kujang_kembar.png")   # no pusaka icon of its own yet
+	ic.mouse_filter = MOUSE_FILTER_IGNORE
+	put(_pusaka, ic, Vector2.ZERO, Vector2(16, 16))
+	put(_pusaka, MenuBook.bold(tr("UI_PUSAKA"), MenuBook.INK_HEAD), Vector2(18, 2), Vector2(34, 12))
+	put(_pusaka, MenuBook.text(tr("UI_INGATAN"), MenuBook.INK_DIM), Vector2(0, 20), Vector2(50, 12))
+	_ingatan_pips = HBoxContainer.new()
+	_ingatan_pips.add_theme_constant_override("separation", 2)
+	_ingatan_pips.mouse_filter = MOUSE_FILTER_IGNORE
+	put(_pusaka, _ingatan_pips, Vector2(0, 33), Vector2(50, 10))
+	_bonus = MenuBook.num("", MenuBook.VERD)
+	put(_pusaka, _bonus, Vector2(0, 44), Vector2(50, 12))
+	_daya = MenuBook.text("", MenuBook.INK_DIM)
+	put(_pusaka, _daya, Vector2(0, 56), Vector2(50, 12))
+	jamasan_btn = MenuBook.small_button("UI_JAMASAN")
+	jamasan_btn.name = "Jamasan"
+	jamasan_btn.pressed.connect(_do_jamasan)
+	put(_pusaka, jamasan_btn, Vector2(148, 0), Vector2(52, 14))
+	_card = Control.new()
+	_card.visible = false
+	put(l, _card, Vector2(0, 88), Vector2(200, 104))
+	put(_card, MenuBook.nine("book_card", Rect2(0, 0, 200, 104), 4), Vector2.ZERO)
+	put(_card, MenuBook.head(tr("UI_JAMASAN")), Vector2(8, 3), Vector2(184, 14))
+	_card_text = MenuBook.text("", MenuBook.INK_DIM, true)
+	_card_text.clip_text = true
+	put(_card, _card_text, Vector2(8, 20), Vector2(184, 62))
+	_card_ok = MenuBook.small_button("UI_BACK")
+	_card_ok.pressed.connect(_close_card)
+	put(_card, _card_ok, Vector2(136, 86), Vector2(56, 14))
 	# --- right page: attributes
 	var sec := MenuBook.section(tr("UI_BK_ATTRS"))
 	put(r, sec, Vector2(0, 0))
@@ -226,7 +268,10 @@ func refresh() -> void:
 	_bar_fill.visible = _bar_fill.size.x >= 2
 	var pts := points(g)
 	var at: bool = menu.at_petilasan
-	if not at:
+	var pend: int = g.jamasan_pending()
+	if not at and pend > 0 and g.has_flag("has_pusaka"):
+		_status_line.text = tr("UI_JAMASAN_HINT")
+	elif not at:
 		_status_line.text = tr("UI_REST_HINT")
 	elif pts > 0:
 		_status_line.text = tr("UI_BK_AT_SHRINE")
@@ -260,6 +305,51 @@ func refresh() -> void:
 	_show_effect()
 	_refresh_derived(g)
 	_refresh_glyphs(g)
+	_refresh_pusaka(g, at, pend)
+
+
+func _refresh_pusaka(g: Node, at: bool, pend: int) -> void:
+	_pusaka.visible = g.has_flag("has_pusaka") and _memory == 0
+	if _memory > 0 and not g.has_flag("has_pusaka"):
+		_memory = 0
+	_card.visible = _memory > 0
+	clear(_ingatan_pips)
+	for i in 4:
+		var p := MenuBook.pic("book_pip_on" if i < g.ingatan else "book_pip_off", Vector2.ZERO)
+		p.custom_minimum_size = Vector2(6, 10)   # the 3x5 pip at 2x
+		_ingatan_pips.add_child(p)
+	_bonus.text = "+%d%%" % roundi((g.power_mult() - 1.0) * 100.0)
+	_daya.text = "%s %d" % [tr("UI_DAYA"), g.daya()]
+	jamasan_btn.visible = pend > 0
+	jamasan_btn.disabled = not at
+	jamasan_btn.tooltip_text = "" if at else tr("UI_JAMASAN_HINT")
+	jamasan_btn.modulate.a = 1.0 if at else 0.5
+	var vit: Button = _rows["vit"]
+	vit.focus_neighbor_left = vit.get_path_to(jamasan_btn) if jamasan_btn.visible and at else vit.get_path()
+	jamasan_btn.focus_neighbor_right = jamasan_btn.get_path_to(vit)
+	jamasan_btn.focus_neighbor_left = jamasan_btn.get_path()
+	jamasan_btn.focus_neighbor_top = jamasan_btn.get_path()
+	jamasan_btn.focus_neighbor_bottom = jamasan_btn.get_path()
+
+
+## Jamasan at a petilasan: Ingatan +1, then the ritual card with that tier's memory line.
+func _do_jamasan() -> void:
+	if not menu.at_petilasan or not game.jamasan():
+		return
+	_memory = game.ingatan
+	_card_text.text = tr("JAMASAN_%d" % _memory)
+	refresh()
+	if is_inside_tree():
+		_card_ok.grab_focus()
+	menu.update_hints()
+
+
+func _close_card() -> void:
+	_memory = 0
+	refresh()
+	if is_inside_tree():
+		_rows[_focus_stat].grab_focus()
+	menu.update_hints()
 
 
 func _paint_plus(s: String) -> void:
@@ -296,8 +386,10 @@ func _refresh_derived(g: Node) -> void:
 	if w:
 		atk = roundi(w.damage * (1.0 + TUNING.stat_damage_per * g.stat("str" if w.is_melee() else "dex")))
 	var def := 0
-	for slot in ["armor", "accessory"]:
-		var it: ItemData = g.equipped_item(slot)
+	var worn: Array = [g.equipped_item("armor")]
+	for id: String in g.jimat:
+		worn.append(ItemData.by_id(id))
+	for it: ItemData in worn:
 		def += it.defense if it else 0
 	_derived.hp.text = str(hp)
 	_derived.sta.text = str(sta)
@@ -352,6 +444,10 @@ func _do_raise() -> void:
 func cancel() -> void:
 	var s := _pending
 	_pending = ""
+	if _memory > 0:   # a tab switch drops the card too
+		_memory = 0
+		_card.visible = false
+		_pusaka.visible = game.has_flag("has_pusaka")
 	_confirm.visible = false
 	_effect.visible = true
 	if s != "" and _rows[s].is_visible_in_tree():
@@ -359,10 +455,13 @@ func cancel() -> void:
 
 
 func is_modal() -> bool:
-	return _pending != ""
+	return _pending != "" or _memory > 0
 
 
 func back() -> bool:
+	if _memory > 0:
+		_close_card()
+		return true
 	if _pending != "":
 		cancel()
 		return true
@@ -370,10 +469,15 @@ func back() -> bool:
 
 
 func focus_first() -> void:
+	if _memory > 0:
+		_card_ok.grab_focus()
+		return
 	_rows[_focus_stat].grab_focus()
 
 
 func hints() -> Array:
+	if _memory > 0:
+		return [["Enter", "UI_BK_HINT_CONFIRM"]]
 	if _pending != "":
 		return [["Enter", "UI_YES"], ["Esc", "UI_CANCEL"]]
 	var h := [["@updown", "UI_BK_HINT_SELECT"]]

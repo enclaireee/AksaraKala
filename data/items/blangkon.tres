@@ -13,3 +13,4 @@ mythic = true
 description = "ITEM_BLANGKON_DESC"
 lore = "ITEM_BLANGKON_LORE"
 defense = 3
+bonus = {"sakti_gain": 0.05}

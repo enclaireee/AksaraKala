@@ -5,8 +5,13 @@ extends Node
 signal changed   # ilmu, stats, gear, glyphs or flask changed
 signal saved     # HUD shows "Saved" for 1 s
 
-const VERSION := 3   # 2: quest records gain `all` (bits of an all step). Older saves load with all = 0.
+const VERSION := 4   # 2: quest records gain `all` (bits of an all step). Older saves load with all = 0.
                      # 3: memory_return (architecture.md 9b). Older saves load with none.
+                     # 4: the accessory slot becomes `jimat`, plus `ingatan` (items.md 10). from_dict migrates.
+## Main bosses: each makes one jamasan available (items.md 1). Ids in `killed`; the Nyi Roro Kidul trial is an
+## encounter, so it counts through its `cleared:` flag instead.
+const MAIN_BOSSES := ["sangkuriang", "bandung_bondowoso", "keris_gandring", "kidul_trial"]
+const INGATAN_MAX := 4
 const STATS := ["vit", "end", "str", "dex", "spi"]
 const STARTER_GLYPHS: Array[String] = []   # glyphs come from the main quest (quests.md 3.3)
 ## Quest Ilmu by zone and size S/M/L (quests.md 3.1, TUNE). Desa Purwa uses the Act 1 row for now.
@@ -35,12 +40,13 @@ const LARAS_FLAGS := {
 ## Saved fields, in to_dict order. Add a field here and in _reset(); old saves get its default.
 const FIELDS := ["class_id", "stats", "ilmu", "points_spent", "glyphs_learned", "inventory", "equipped",
 	"flask_charges", "flask_max", "herb_pouches", "last_petilasan", "killed", "flags", "play_time", "quests", "codex", "pinned",
-	"hero_name", "hero_pronoun", "memory_return"]
+	"hero_name", "hero_pronoun", "memory_return", "ingatan", "jimat"]
 const DEFAULT_NAME := "Jaka"   # ASSUMED (ui.md 3)
 ## he / she / they -> [they, them, their, They] for Game.fmt.
 const PRONOUNS := {"he": ["he", "him", "his", "He"], "she": ["she", "her", "her", "She"], "they": ["they", "them", "their", "They"]}
 
-const SAVE_PATH := "user://save.json"
+## A headless test run (-s) never writes the player's real slot, even when a test or the title resets save_path.
+var SAVE_PATH := "user://test_save.json" if "-s" in OS.get_cmdline_args() else "user://save.json"
 const DEMO_SAVE := "user://demo_save.json"   # demo mode plays in its own slot, never the real save (ui/demo_route.gd)
 var save_path := SAVE_PATH   # tests point this elsewhere
 var demo := false        # a run started from the title's Demo card; the title puts save_path back
@@ -52,7 +58,9 @@ var ilmu := 0
 var points_spent := 0
 var glyphs_learned := PackedStringArray()
 var inventory := PackedStringArray()   # item ids, weapons included
-var equipped := {}                     # weapon, armor, accessory -> item id or ""
+var equipped := {}                     # weapon, armor -> item id or ""
+var jimat: Array = []                  # worn jimat (accessory) ids; total Daya within daya() (items.md 4)
+var ingatan := 0                       # Kujang Pusaka tier 0-4, one jamasan per main boss (items.md 1)
 var flask_charges := 3
 var flask_max := 3                     # +1 per Flask Shard, max 6
 var herb_pouches := 0                  # +5% flask heal each, max 4
@@ -82,7 +90,9 @@ func _reset() -> void:
 	points_spent = 0
 	glyphs_learned = PackedStringArray(STARTER_GLYPHS)
 	inventory = PackedStringArray()
-	equipped = {"weapon": "", "armor": "", "accessory": ""}
+	equipped = {"weapon": "", "armor": ""}
+	jimat = []
+	ingatan = 0
 	flask_charges = 3
 	flask_max = 3
 	herb_pouches = 0
@@ -227,6 +237,8 @@ func equip(id: String) -> bool:
 	var item := ItemData.by_id(id)
 	if item == null or id not in inventory:
 		return false
+	if item.slot == "accessory":
+		return equip_jimat(id)
 	equipped[item.slot] = id
 	changed.emit()
 	save_game()
@@ -237,16 +249,69 @@ func equipped_item(slot: String) -> ItemData:
 	return ItemData.by_id(equipped.get(slot, ""))
 
 
+## Wear a jimat if it fits the Daya budget (items.md 4). The petilasan gate is the UI's job.
+func equip_jimat(id: String) -> bool:
+	var item := ItemData.by_id(id)
+	if item == null or item.slot != "accessory" or id not in inventory or id in jimat or daya_used() + item.daya > daya():
+		return false
+	jimat.append(id)
+	changed.emit()
+	save_game()
+	return true
+
+
+func unequip_jimat(id: String) -> void:
+	if id in jimat:
+		jimat.erase(id)
+		changed.emit()
+		save_game()
+
+
+func daya() -> int:
+	return 2 + ingatan
+
+
+func daya_used() -> int:
+	var total := 0
+	for id: String in jimat:
+		var item := ItemData.by_id(id)
+		if item:
+			total += item.daya
+	return total
+
+
+## Kujang Pusaka: +10% weapon and spell damage per Ingatan tier (items.md 1, balance.md 3.1, TUNE).
+func power_mult() -> float:
+	return 1.0 + 0.10 * ingatan
+
+
+func _bosses_beaten() -> int:
+	return MAIN_BOSSES.filter(func(b: String) -> bool: return b in killed or has_flag("cleared:" + b)).size()
+
+
+func jamasan_pending() -> int:
+	return maxi(0, _bosses_beaten() - ingatan)
+
+
+## Raise Ingatan one tier. The UI checks for a petilasan (menu.at_petilasan).
+func jamasan() -> bool:
+	if jamasan_pending() <= 0 or ingatan >= INGATAN_MAX:
+		return false
+	ingatan += 1
+	changed.emit()
+	save_game()
+	return true
+
+
 ## A stat with gear bonuses on top.
 func stat(key: String) -> int:
 	return stats.get(key, 0) + int(bonus(key))
 
 
-## Sum of one bonus key over the equipped gear, with the favoured extra for the right class (items.md).
+## Sum of one bonus key over weapon, armor and every jimat, with the favoured extra for the right class (items.md).
 func bonus(key: String) -> float:
 	var total := 0.0
-	for slot in ["weapon", "armor", "accessory"]:
-		var item := equipped_item(slot)
+	for item: ItemData in [equipped_item("weapon"), equipped_item("armor")] + jimat.map(ItemData.by_id):
 		if item:
 			total += float(item.bonus.get(key, 0.0))
 			if item.favoured == class_id:
@@ -931,8 +996,12 @@ func from_dict(d: Dictionary) -> void:
 	hero_name = clean_name(hero_name)
 	if hero_pronoun not in PRONOUNS:
 		hero_pronoun = "they"
+	if not _zone_ok(last_petilasan.get("zone", "")):
+		last_petilasan = {"zone": "", "id": ""}
+	last_petilasan.id = str(last_petilasan.get("id", ""))
+	glyphs_learned = PackedStringArray(Array(glyphs_learned).filter(func(id: String) -> bool: return GlyphData.by_id(id) != null))
 	var mp: Variant = memory_return.get("pos")
-	if not (memory_return.get("zone") is String and memory_return.zone != "" and mp is Array and mp.size() == 2 \
+	if not (_zone_ok(memory_return.get("zone")) and memory_return.zone != "" and mp is Array and mp.size() == 2 \
 			and mp.all(func(x: Variant) -> bool: return x is float or x is int)):
 		memory_return = {}
 	for s in STATS:   # JSON reads numbers back as floats
@@ -946,7 +1015,45 @@ func from_dict(d: Dictionary) -> void:
 	if quests.has("mq0") and int(quests.mq0.get("step", 0)) >= 2:
 		for f in ["mq0_d1", "mq0_d2", "mq0_d2b"]:
 			flags[f] = true
+	_load_gear(d)
 	changed.emit()
+
+
+## Save v4 (items.md 10): migrates a v3 accessory to `jimat` and drops deleted items, then validates the gear,
+## Ingatan and the jimat set so a tampered save never crashes or goes over the Daya budget.
+func _load_gear(d: Dictionary) -> void:
+	var ver := _num(d.get("version"))
+	var raw_jimat: Variant = d.get("jimat", [])
+	if ver < 4:
+		inventory = PackedStringArray(Array(inventory).filter(func(id: String) -> bool: return ItemData.by_id(id) != null))
+		raw_jimat = [equipped.get("accessory", "")]
+		if quest_state("mq0") == "done" or (quests.has("mq0") and int(quests.mq0.step) >= 10) or has_flag("mq0_4"):
+			flags["has_pusaka"] = true   # Ibu gave the kujang at 0.10 (the talk sets mq0_4)
+	var start := ClassData.by_id(class_id)
+	for slot in ["weapon", "armor"]:
+		var id: Variant = equipped.get(slot, "")
+		var it: ItemData = ItemData.by_id(id) if id is String else null
+		if id is String and id == "":
+			continue
+		if it == null or it.slot != slot or id not in inventory:
+			id = start.start_weapon if slot == "weapon" and start else ""
+			if id != "" and id not in inventory:
+				inventory.append(id)
+		equipped[slot] = id
+	equipped = {"weapon": str(equipped.get("weapon", "")), "armor": str(equipped.get("armor", ""))}
+	ingatan = clampi(ingatan, 0, mini(INGATAN_MAX, _bosses_beaten()))   # a legit save never outruns its bosses
+	jimat = []
+	if raw_jimat is Array:
+		for id: Variant in raw_jimat:   # in order; one that would go over the budget is dropped
+			var it: ItemData = ItemData.by_id(id) if id is String else null
+			if it and it.slot == "accessory" and id in inventory and id not in jimat and daya_used() + it.daya <= daya():
+				jimat.append(id)
+
+
+## A saved scene path must be "" or a .tscn inside res://, so a bad save cannot softlock Continue or load outside files.
+func _zone_ok(z: Variant) -> bool:
+	return z is String and (z == "" or (z.begins_with("res://") and z.simplify_path() == z and z.ends_with(".tscn") \
+			and ResourceLoader.exists(z)))
 
 
 func _num(v: Variant) -> int:

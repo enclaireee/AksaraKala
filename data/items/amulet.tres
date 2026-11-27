@@ -10,4 +10,5 @@ id = "amulet"
 title = "ITEM_AMULET_NAME"
 slot = "accessory"
 description = "ITEM_AMULET_DESC"
-bonus = {"max_hp": 10}
+bonus = {"max_hp": 15}
+daya = 1

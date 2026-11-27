@@ -36,7 +36,7 @@ Code ids stay `warrior`, `archer`, `rogue`, `mage`; mechanics below are unchange
 
 ## Shared Rules
 - Every class can draw and cast aksara spells ([spells.md](spells.md)).
-- All classes share the same 5 core stats ([rpg.md](rpg.md)) and 3 equipment slots (weapon, armor, accessory).
+- All classes share the same 5 core stats ([rpg.md](rpg.md)) 2 equipment slots (weapon, armor) and the Jimat set (Daya budget 2 + Ingatan tier, [items.md](items.md) 4).
 - Classes differ in starting stat allocation, starting weapon, one distinctive passive, and spell affinity modifiers.
 - Visuals: Dedicated class sprites with custom headgear, attire, and starting weapons.
 - Class selection occurs when starting a New Game (Title -> Elden-style Class Select pedestal -> Name Entry -> Desa Purwa).
@@ -122,7 +122,7 @@ Each class learns one aksara no other class can learn. For the first paths it is
 - Batara Kala's cast-sequence phase never asks for a signature glyph.
 
 ## Favoured gear (Phase 4g, **ASSUMED**)
-Thirty-two common items, four per class ([items.md](items.md) "Class-favoured gear"). Anyone can equip them. The favoured class also gets one small extra bonus (`ItemData.favoured`, `favoured_bonus`). No gear is class-locked. A class chest or `SQ-X1` gives a second path its own piece in place of its school's (`Game.SIBLING_ITEM`).
+Thirty-two common items, four per class ([items.md](items.md) 5); the accessory of each four is now a 2-Daya jimat. Anyone can equip them. The favoured class also gets one small extra bonus (`ItemData.favoured`, `favoured_bonus`). No gear is class-locked. Bonus keys: `vit`, `end`, `str`, `dex`, `spi`, `max_hp`, `move_speed`, `stamina_regen`, `defense`, `damage_mult`, `spell_mult`, `sakti_gain`, `smudge`, `flask_heal`, `dodge_sakti`, `ilmu_mult`, `low_hp_damage`, `kill_heal`, `status_short`, and the second-path keys (`tip_damage`, `brace_reach`, `brace_fast`, `brace_stamina`, `bounce_range`, `bounce_mult`, `dodge_dist`, `zone_life`, `wirama_finisher`, `wirama_cap`, `wirama_keep`, `wirama_haste`, `lakon_sakti`, `lakon_cap`, `spell_radius`). A class chest or `SQ-X1` gives a second path its own piece in place of its school's (`Game.SIBLING_ITEM`).
 
 ---
 

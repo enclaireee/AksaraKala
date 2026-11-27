@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddgmj4wpwgune"
-path="res://.godot/imported/kujang.png-e375a4c540518d90c782c27c5eae2d13.ctex"
+uid="uid://d0bkejpuq3doy"
+path="res://.godot/imported/rajah.png-6158eaa55a3b9e51f73e9b14df3132e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/items/kujang.png"
-dest_files=["res://.godot/imported/kujang.png-e375a4c540518d90c782c27c5eae2d13.ctex"]
+source_file="res://assets/art/items/rajah.png"
+dest_files=["res://.godot/imported/rajah.png-6158eaa55a3b9e51f73e9b14df3132e4.ctex"]
 
 [params]
 

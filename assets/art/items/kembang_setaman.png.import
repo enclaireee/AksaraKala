@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://feexgxj8t5k8"
-path="res://.godot/imported/iron_staff.png-6de780e387fc3d5b3e4ad7fb2ab411a5.ctex"
+uid="uid://bkqtx2q2jn2a2"
+path="res://.godot/imported/kembang_setaman.png-ce19406992c5a7731e62e7b7ab18f128.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/items/iron_staff.png"
-dest_files=["res://.godot/imported/iron_staff.png-6de780e387fc3d5b3e4ad7fb2ab411a5.ctex"]
+source_file="res://assets/art/items/kembang_setaman.png"
+dest_files=["res://.godot/imported/kembang_setaman.png-ce19406992c5a7731e62e7b7ab18f128.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kh5xexpafkga"
-path="res://.godot/imported/longbow.png-e460c88760ad1e6691034612456d035c.ctex"
+uid="uid://b5stkkr0tgs8u"
+path="res://.godot/imported/teken_galih_asem.png-1a8c27e82832ec328d17506e32497d42.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/items/longbow.png"
-dest_files=["res://.godot/imported/longbow.png-e460c88760ad1e6691034612456d035c.ctex"]
+source_file="res://assets/art/items/teken_galih_asem.png"
+dest_files=["res://.godot/imported/teken_galih_asem.png-1a8c27e82832ec328d17506e32497d42.ctex"]
 
 [params]
 

@@ -1125,7 +1125,7 @@ X,,,,,,,,,,,,,,,,,A__________________________________#...r.#
 | `g` | spawn, arrival from sk_karang | `res://entities/world/spawn.tscn` | `{id:"from_sk_karang"}` | path | 1 |
 | `q` | elite Banaspati (SQ-T2, at the spring in the east dunes, `unique_id` `banaspati_elite`, elite stats HP x4, Ilmu x4, **TUNE**; inert until step 4) | `res://entities/enemies/banaspati_elite.tscn` | `{unique_id:"banaspati_elite"}` | grass | 1 |
 | `T` | trigger, burn trail reached (SQ-T2) | `res://entities/world/trigger.tscn` | `{trigger_id:"burn_trail", size:Vector2i(6,6)}` | grass | 1 |
-| `c` | chest: 220 Ilmu (wreck, secret) | `res://entities/world/chest.tscn` | `{chest_id:"chest_tt_pesisir", item_id:"ilmu:220"}` | grass | 1 |
+| `c` | chest: Teken Galih Asem (wreck, secret) | `res://entities/world/chest.tscn` | `{chest_id:"chest_tt_pesisir", item_id:"teken_galih_asem"}` | grass | 1 |
 | `k` | pickup, kuda kepang 3 (SQ-T4) | `res://entities/world/pickup.tscn` | `{item_id:"kuda_kepang_3"}` | grass | 1 |
 | `E` | encounter timur_pesisir | `res://entities/world/encounter.tscn` | `{area_id:"timur_pesisir", size:Vector2i(20,11), waves:[[[res://entities/enemies/prajurit_terkutuk.tscn, Vector2i(7,0)], [res://entities/enemies/banaspati.tscn, Vector2i(3,-3)], [res://entities/enemies/banaspati.tscn, Vector2i(3,3)]]]}` | grass | 1 |
 | `A` | clue, the Hunter's cold ash trail (3.14 `clue` piece; journal note only, ASSUMED id) | `res://entities/world/clue.tscn` | `{clue_id:"ash_trail"}` | grass | 1 |

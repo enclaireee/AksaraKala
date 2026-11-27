@@ -557,7 +557,7 @@ X,,,.........,,,,tt#__W__#ttttttttttttttttttttttttttt#######
 | `i` | loose Jurig Leuweung (terrace), roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/jurig_leuweung.tscn` | `{}` | tea terrace | 1 |
 | `l` | clue, the Weaver's loom (K2 clue 3) | `res://entities/world/clue.tscn` | `{clue_id:"loom"}` | floor | 1 |
 | `o` | clue, the empty rooster coops on the terrace farmstead (K2 clue 2) | `res://entities/world/clue.tscn` | `{clue_id:"empty_coops"}` | tea terrace | 1 |
-| `s` | chest: Short Sword (secret, sawah's optional find, behind clearing rocks) | `res://entities/world/chest.tscn` | `{chest_id:"sunda_chest_sawah", item_id:"short_sword"}` | grass | 1 |
+| `s` | chest: Batu Akik (secret, sawah's optional find, behind clearing rocks) | `res://entities/world/chest.tscn` | `{chest_id:"sunda_chest_sawah", item_id:"batu_akik"}` | grass | 1 |
 | `a` | puzzle, upper sluice wheel 1, west (MQ1 1.15 press-each x2; sets `sluice_wheel_1`, `sluice_1`) | `res://entities/npc/npc.tscn` | `{npc_id:"sluice_wheel_1"}` | tea terrace | 1 |
 | `c` | puzzle, upper sluice wheel 2, east (MQ1 1.15; sets `sluice_wheel_2`, `sluice_2`, which drains the ts_situ flood `F`) | `res://entities/npc/npc.tscn` | `{npc_id:"sluice_wheel_2"}` | tea terrace | 1 |
 
@@ -643,7 +643,7 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 | `C` | NPC Ciung Wanara by the lake after Sangkuriang (MQ1 camp talk `camp_sunda`: optional, 2-4 lines, `quiet`, `do`: `flag:camp_sunda`; his anger and the mother he does not know, who is the woman `D` two tiles away; entry cond `flag:mq1_9`, `zone:ts_situ`, so it never replays later, **ASSUMED**) | `res://entities/npc/npc.tscn` | `{npc_id:"ciung_wanara", cond:"flag:mq1_9"}` | grass | 1 |
 | `d` | NPC Dayang Sumbi, idle talk at the lake after MQ1 (SQ-S5 is retired) | `res://entities/npc/npc.tscn` | `{npc_id:"dayang_sumbi", cond:"quest:mq1=done"}` | grass | 1 |
 | `x` | codex spot, ruin on the lake shore | `res://entities/world/pickup.tscn` | `{codex_id:"tangkuban_perahu"}` | grass | 1 |
-| `k` | chest: Kujang (secret 1) | `res://entities/world/chest.tscn` | `{chest_id:"sunda_kujang", item_id:"kujang"}` | grass | 1 |
+| `k` | chest: Kembang Setaman (secret 1) | `res://entities/world/chest.tscn` | `{chest_id:"sunda_kujang", item_id:"kembang_setaman"}` | grass | 1 |
 | `w` | loose faceless, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless.tscn` | `{}` | grass | 2 |
 | `v` | loose faceless archer, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/faceless_archer.tscn` | `{}` | grass | 1 |
 | `y` | loose wild boar, roaming pack (respawns on zone reload, no unique_id) | `res://entities/enemies/wild_boar.tscn` | `{}` | grass | 2 |
@@ -661,7 +661,7 @@ Roaming pack S1 east of the terraces, guarding angklung 3: faceless `j` (50,19) 
 | west gate | (1,8)-(5,9) 5x2 | Walk to ts_kawah_jalan | exit `&` (0,8..9), spawn `!` (1,8) | none |
 | ruin | (40,17)-(44,19) 5x3 | Ruin ringed by four rocks, gaps at the diagonals | codex `x` (42,18) | codex `tangkuban_perahu` |
 | south shore | (7,14)-(51,32) | Open shore and paths; the approach to the lake, where `sunda_lakeshore` waits at the foot of the shore path | lakeshore `Z` (30,17), angklung `5` (10,18), exit `%` (8..9,33) spawn `@` (8,32), exit `X` (30..31,33) spawn `e` (30,32) | none |
-| kujang room | (52,10)-(58,15) 7x6 | Secret 1, behind rocks (51,11) and (51,13), gap (51,12) | chest Kujang `k` (56,12) | none |
+| kujang room | (52,10)-(58,15) 7x6 | Secret 1, behind rocks (51,11) and (51,13), gap (51,12) | chest Kembang Setaman `k` (56,12) | none |
 | east corridor | (30,20)-(58,21) 29x2 | Corridor to Segara Kidul. Gate `=` (56,20..21). The pocket (57..58,20..21) is the open side. | gate `=` `sc:ts_sk` (open_side `e`), spawn `;` (58,20), exit `$` (59,20..21) | none |
 | flood and dam | (30,28)-(31,28) flood, wheels (22,31) and (38,31) | The 1.15 `puzzle` ("move the water"): the river was dammed overnight and flooded the shore path north of the arrival spawn. Turn the west wheel `a`, then the east wheel `c` (a hint line if you try `c` first); the flood `F` drains. Both wheels are south of the flood, 8 and 16 tiles from the spawn; the ladder route from ts_kampung joins the path north of it and is unaffected | wheels `a` `c`, flood `F` x2 | 1.15 `sluice_wheel_1`, `sluice_wheel_2` |
 | toy | (33,17) | Where the fallen Faceless dropped the toy, beside the lakeshore fight | clue `T` | 1.18 `faceless_toy` |

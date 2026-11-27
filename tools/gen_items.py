@@ -201,14 +201,6 @@ def _(c):
     c.px(1, 11, "9"); c.px(0, 12, "8")
 
 
-@icon("short_sword")
-def _(c):
-    c.bar((11, 0), (5, 6), "123")
-    c.line((3, 6), (8, 11), "8"); c.line((3, 5), (4, 6), "7")
-    c.bar((4, 9), (2, 11), "45")
-    c.rect(0, 12, 2, 2, "8"); c.px(0, 12, "7")
-
-
 @icon("broadsword")
 def _(c):
     c.bar((11, 0), (4, 7), "1223")
@@ -291,19 +283,6 @@ def _(c):
         pass
     c.g = [[("2" if ch == "w" else ch) for ch in row] for row in c.g]
     c.line((3, 6), (11, 6), "6"); c.px(12, 6, "1"); c.px(11, 5, "1"); c.px(11, 7, "1")
-    c.px(3, 5, "A"); c.px(3, 7, "A")
-
-
-@icon("longbow", a="#4F7A38")
-def _(c):
-    for y in range(14):
-        x = round(2 + 3.0 * math.sin(math.pi * y / 13) * -1 + 3)
-    pts = [(6, 0), (5, 1), (4, 2), (3, 3), (3, 4), (2, 5), (2, 6), (2, 7), (2, 8), (3, 9), (3, 10), (4, 11), (5, 12), (6, 13)]
-    for i, (x, y) in enumerate(pts):
-        c.px(x, y, "5"); c.px(x + 1, y, "4") if i in (1, 2, 3) else None
-        c.px(x - 1 if x > 2 else x, y, "4")
-    c.line((6, 0), (6, 13), "2")
-    c.line((3, 6), (13, 6), "6"); c.px(13, 6, "1"); c.px(12, 5, "1"); c.px(12, 7, "1")
     c.px(3, 5, "A"); c.px(3, 7, "A")
 
 
@@ -395,41 +374,6 @@ def _(c):
     ], 8, 0)
     c.px(9, 1, "7"); c.px(12, 2, "C")
     c.rect(9, 4, 2, 2, "5")
-
-
-@icon("iron_staff", a="#5DB1D6")
-def _(c):
-    c.bar((2, 13), (10, 5), "23")
-    c.px(3, 12, "k")
-    c.blit([
-        "..AA..",
-        ".ABBA.",
-        "AB1BBC",
-        ".BBBC.",
-        "..CC..",
-    ], 8, 0)
-    c.line((9, 4), (12, 4), "3"); c.line((9, 5), (11, 5), "2")
-    c.px(8, 6, "2")
-
-
-@icon("kujang", spot=(13, 1))
-def _(c):
-    c.blit([
-        "....1.........",
-        "...12.........",
-        "...122........",
-        "..1223........",
-        "..1223......1.",
-        "..12233....12.",
-        "..12223...123.",
-        "..122231.1223.",
-        "..12222312233.",
-        "..1222222233..",
-        "...12222233...",
-    ], 0, 0)
-    c.px(4, 6, "k"); c.px(5, 8, "k")
-    c.rect(3, 11, 5, 1, "8"); c.px(3, 11, "7"); c.px(7, 11, "9")
-    c.rect(4, 12, 2, 2, "5"); c.px(4, 12, "4"); c.px(5, 13, "6")
 
 
 @icon("keris_luk_7", a="#7A3A2A", spot=(13, 1))
@@ -1430,6 +1374,88 @@ def _(c):
     c.px(2, 7, "8"); c.px(1, 7, "9"); c.px(12, 7, "9")
     c.rect(6, 11, 3, 2, "8"); c.px(6, 11, "7"); c.px(8, 12, "9")
     c.rect(4, 13, 7, 1, "9"); c.rect(4, 13, 3, 1, "8")
+
+
+@icon("kembang_setaman", a="#E8A0B8")
+def _(c):
+    c.shaded(lambda x, y: math.hypot(x - 6.5, y - 9.5) <= 5.0 and y >= 8, "A", "B", "C", cy=9.5)
+    c.shaded(lambda x, y: math.hypot(x - 6.5, y - 6.5) <= 2.6, "A", "B", "C")
+    for p in ((3, 4), (9, 4), (6, 2), (3, 8), (10, 8)):
+        c.px(*p, "B"); c.px(p[0] - 1, p[1], "A")
+    c.px(6, 6, "7"); c.px(6, 5, "8")
+
+
+@icon("batu_akik", a="#C77A2A")
+def _(c):
+    c.shaded(lambda x, y: math.hypot((x - 6.5) / 1.2, y - 7.5) <= 4.4, "A", "B", "C", cy=7.5)
+    c.shaded(lambda x, y: 3.6 <= math.hypot((x - 6.5) / 1.2, y - 7.5) <= 5.2, "7", "8", "9", cy=7.5)
+    c.px(5, 6, "1"); c.px(6, 5, "1"); c.px(5, 7, "A")
+
+
+@icon("kemenyan", a="#B8A98A")
+def _(c):
+    c.blit([
+        "...A..A.....",
+        "....A..A....",
+        "...A..A.....",
+    ], 1, 0)
+    c.blit([
+        "...AB..",
+        "..ABBC.",
+        ".ABBBBC",
+        "ABBBBBC",
+    ], 3, 5)
+    c.rect(1, 10, 11, 2, "4"); c.rect(2, 12, 9, 1, "5")
+
+
+@icon("rajah", a="#E8DCB0", spot=(12, 1))
+def _(c):
+    c.rect(1, 1, 11, 12, "A"); c.rect(1, 1, 11, 1, "B"); c.rect(1, 12, 11, 1, "C")
+    for y in (3, 5, 7, 9):
+        c.line((3, y), (9, y), "6")
+    c.px(6, 4, "9"); c.px(5, 6, "9"); c.px(7, 8, "9"); c.px(6, 10, "9")
+
+
+@icon("gelang_akar_bahar", a="#2A2A32", spot=(12, 1))
+def _(c):
+    c.shaded(lambda x, y: 3.1 <= math.hypot(x - 6.5, y - 6.5) <= 5.8, "A", "B", "C", k=-0.3)
+    for p in ((2, 3), (4, 1), (9, 1), (11, 4), (6, 0), (1, 6)):
+        c.px(*p, "B")
+    c.px(4, 3, "1"); c.px(3, 5, "1")
+
+
+@icon("mustika", a="#9AD8E8", spot=(12, 1))
+def _(c):
+    c.shaded(lambda x, y: math.hypot(x - 6.5, y - 7.0) <= 5.0, "A", "B", "C", cy=7.0)
+    c.px(4, 4, "w"); c.px(5, 4, "1"); c.px(4, 5, "1")
+    c.line((6, 12), (6, 13), "8"); c.rect(4, 12, 5, 1, "8"); c.px(4, 12, "7")
+
+
+@icon("gada_rujakpolo", a="#7A5A3A", spot=(13, 1))
+def _(c):
+    c.blit([
+        "...AAAA...",
+        "..ABBBBA..",
+        ".ABBBBBBC.",
+        ".ABBBBBBC.",
+        "..ABBBBC..",
+        "...CBBC...",
+    ], 3, 0)
+    c.px(8, 2, "1"); c.px(5, 3, "1")
+    c.line((9, 6), (3, 12), "5"); c.line((10, 6), (4, 12), "4")
+    c.rect(1, 12, 3, 2, "8"); c.px(1, 12, "7")
+
+
+@icon("teken_galih_asem", a="#6FA84B", spot=(13, 1))
+def _(c):
+    c.line((3, 13), (9, 3), "5"); c.line((4, 13), (10, 3), "4")
+    c.px(8, 6, "6"); c.px(6, 9, "6")
+    c.blit([
+        ".AA.",
+        "ABBA",
+        ".BC.",
+    ], 8, 0)
+    c.px(9, 1, "1")
 
 
 if __name__ == "__main__":

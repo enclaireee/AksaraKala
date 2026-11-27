@@ -55,7 +55,7 @@ const SPOTS := {
 	"C": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "ciung_wanara", "cond": "flag:mq1_9"}, "tile": "."},   # NPC Ciung Wanara by the lake after Sangkuriang (MQ1 camp talk `camp_sunda`: optional, 2-4 lines, `quiet`, `do`: `flag:camp_sunda`; his anger and the mother he does not know, who is the woman `D` two tiles away; entry cond `flag:mq1_9`, `zone:ts_situ`, so it never replays later, **ASSUMED**)
 	"d": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "dayang_sumbi", "cond": "quest:mq1=done"}, "tile": "."},   # NPC Dayang Sumbi, idle talk at the lake after MQ1 (SQ-S5 is retired)
 	"x": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "tangkuban_perahu"}, "tile": "."},   # codex spot, ruin on the lake shore
-	"k": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_kujang", "item_id": "kujang"}, "tile": "."},   # chest: Kujang (secret 1)
+	"k": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_kujang", "item_id": "kembang_setaman"}, "tile": "."},   # chest: Kembang Setaman (secret 1)
 	"w": {"scene": "res://entities/enemies/faceless.tscn", "props": {}, "tile": "."},   # loose faceless, roaming pack (respawns on zone reload, no unique_id)
 	"v": {"scene": "res://entities/enemies/faceless_archer.tscn", "props": {}, "tile": "."},   # loose faceless archer, roaming pack (respawns on zone reload, no unique_id)
 	"y": {"scene": "res://entities/enemies/wild_boar.tscn", "props": {}, "tile": "."},   # loose wild boar, roaming pack (respawns on zone reload, no unique_id)

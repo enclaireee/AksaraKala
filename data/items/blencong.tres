@@ -13,3 +13,4 @@ description = "ITEM_BLENCONG_DESC"
 bonus = {"spi": 1}
 favoured = "dalang"
 favoured_bonus = {"spell_radius": 0.15}
+daya = 2

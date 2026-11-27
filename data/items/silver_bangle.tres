@@ -10,4 +10,5 @@ id = "silver_bangle"
 title = "ITEM_SILVER_BANGLE_NAME"
 slot = "accessory"
 description = "ITEM_SILVER_BANGLE_DESC"
-bonus = {"stamina_regen": 0.1}
+bonus = {"stamina_regen": 0.15}
+daya = 1

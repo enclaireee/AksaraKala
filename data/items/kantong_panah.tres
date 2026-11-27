@@ -13,3 +13,4 @@ description = "ITEM_KANTONG_PANAH_DESC"
 bonus = {"stamina_regen": 0.1}
 favoured = "archer"
 favoured_bonus = {"dex": 1}
+daya = 2

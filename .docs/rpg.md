@@ -39,7 +39,7 @@ Five stats, no skill trees. Starting values come from the class ([classes.md](cl
 - Spell costs are listed in [spells.md](spells.md).
 
 ## 5. Damage and health
-- Damage dealt = weapon base x stat multiplier (melee: Strength, ranged: Dexterity, spells: Spirit and spell base) x Ingatan (`1 + 0.15 x` main bosses cleared, [balance.md](balance.md) 3.1).
+- Damage dealt = weapon base x stat multiplier (melee: Strength, ranged: Dexterity, spells: Spirit and spell base) x Ingatan (`Game.power_mult()` = `1 + 0.10 x` Ingatan tier; one tier per jamasan of the Kujang Pusaka after a main boss, [items.md](items.md) 1, [balance.md](balance.md) 3.1) x jimat and gear `damage_mult` (spells also `spell_mult`).
 - Attack interval: light melee 0.35 s, heavy 0.8 s, ranged 0.45 s, staff 0.5 s (**TUNE**), faster with Dexterity.
 - Damage taken = `max(1, round(enemy damage x (1 - 0.05 x armor defense)))`, so each defense point is 5% reduction.
 - Assist toggle "Gentle combat" halves damage taken ([balance.md](balance.md) 9).
@@ -60,7 +60,7 @@ Five stats, no skill trees. Starting values come from the class ([classes.md](cl
 - Death screen is short, with a one-line folklore quote or tip (stretch).
 
 ## 8. Gear
-Three slots: weapon, armor, accessory. No crafting, no upgrading. Items are found in chests, dropped by enemies, or given by NPCs. Full list: [items.md](items.md).
+Two slots (weapon, armor) plus the **Jimat** set: worn charms whose Daya cost must fit a budget of 2 + Ingatan tier, swapped only at a petilasan. No crafting, no per-item upgrades: the Kujang Pusaka's Ingatan is the one vertical upgrade. Items are found in chests or given by NPCs. Full list: [items.md](items.md).
 
 Weapons differ in behavior, not only numbers (hit shapes per weapon: [combat.md](combat.md) 2.3):
 
@@ -75,8 +75,8 @@ Weapons differ in behavior, not only numbers (hit shapes per weapon: [combat.md]
 1. Choose a class.
 2. Earn glyphs by deeds through the main quest (a fight, a rescue, an inscription read; the lesson card follows) ([spells.md](spells.md), [quests.md](quests.md)).
 3. Spend Ilmu on stats.
-4. Find and equip gear, mostly from side quests and the six Major Choices (Sabuk Galuh, Keris Mpu Gandring or Batu Kali, Berkah Pesisir, Keteguhan Sunyi; [items.md](items.md)).
-5. Beat zone bosses to open the next region. Each main boss also raises Ingatan (+15% damage).
+4. Find gear and jimat, mostly from side quests, chests and the six Major Choices (Sabuk Galuh, Keris Mpu Gandring or Batu Kali, Berkah Pesisir, Keteguhan Sunyi; [items.md](items.md)).
+5. Beat zone bosses to open the next region. Each main boss makes one jamasan available; perform it at a petilasan to raise the Kujang Pusaka's Ingatan tier (+10% damage, +1 Daya).
 
 ## 10. HUD
 Layout, sizes, colors, fonts and menus: [ui.md](ui.md).
@@ -97,11 +97,11 @@ P0. One slot, saved automatically. No manual save, no save menu.
 - New Game with a save present asks "Mulai baru? Perjalanan lama akan terhapus / Start over? Your old journey will be erased". The old save is replaced only when the new game saves for the first time (at class choice), so backing out before that loses nothing.
 - Before the first save there is no Continue. The prologue up to class choice is about 3 minutes.
 
-**What is saved:** everything in `Game`: class, stats, Ilmu, Ingatan, glyphs learned (and mastery, if built), equipment and inventory, flask charges, Flask Shards, Herb Pouches, last petilasan, quests, flags (including the six `choice_*` flags and the `laras_key:*` and `laras_sabotage:*` flags), codex unlocks, killed bosses and minibosses, opened fog gates, opened chests, picked-up unique items, play time. **Not saved:** normal enemies, player position, dropped Ilmu, settings (those live in `user://settings.cfg`, [controls.md](controls.md) 7).
+**What is saved:** everything in `Game`: class, stats, Ilmu, Ingatan tier (`ingatan`), worn jimat (`jimat`), glyphs learned (and mastery, if built), equipment and inventory, flask charges, Flask Shards, Herb Pouches, last petilasan, quests, flags (including the six `choice_*` flags and the `laras_key:*` and `laras_sabotage:*` flags), codex unlocks, killed bosses and minibosses, opened fog gates, opened chests, picked-up unique items, play time. **Not saved:** normal enemies, player position, dropped Ilmu, settings (those live in `user://settings.cfg`, [controls.md](controls.md) 7).
 
 **File and safety**
 - `user://save.json`, written with `JSON.stringify` from `Game.to_dict()`.
 - Write to `save.tmp`, copy the current `save.json` to `save.bak`, then rename `save.tmp` over `save.json`. A crash mid-write never leaves a broken save.
 - On load, if `save.json` does not parse, try `save.bak`. If both fail, the title screen says the save could not be read and offers New Game. Never delete a save that failed to load.
-- The file has `"version": 3` (`Game.VERSION`; 2 added the `all` bits of quest records). Loading merges the saved dictionary onto a fresh default `Game` state, so a field added later just gets its default and old saves keep working. Bump the version only when a field changes meaning.
+- The file has `"version": 4` (`Game.VERSION`; 2 added the `all` bits of quest records; 4 turned the accessory slot into the `jimat` list and added `ingatan`, migration in [items.md](items.md) 10). Loading merges the saved dictionary onto a fresh default `Game` state, so a field added later just gets its default and old saves keep working. Bump the version only when a field changes meaning.
 - A web export (P2) maps `user://` to browser storage; check `OS.is_userfs_persistent()` there (**VERIFY** when the web export is built).

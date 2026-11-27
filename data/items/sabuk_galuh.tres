@@ -13,3 +13,4 @@ mythic = true
 description = "ITEM_SABUK_GALUH_DESC"
 lore = "ITEM_SABUK_GALUH_LORE"
 bonus = {"defense": 0.08, "vit": 1}
+daya = 3

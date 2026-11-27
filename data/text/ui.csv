@@ -361,3 +361,19 @@ UI_UPD_OPEN,Buka halaman,Open page
 UI_UPD_FAILED,Unduhan gagal. Permainan tetap bisa dimainkan.,Download failed. You can keep playing.
 UI_UPD_RETRY,Coba lagi,Retry
 UI_SYS_UPDATES,Cek pembaruan,Check for updates
+UI_PUSAKA,Pusaka,Heirloom
+UI_INGATAN,Ingatan,Memory
+UI_JAMASAN,Jamasan,Jamasan
+UI_JAMASAN_PENDING,Jamasan menunggu: %d,Jamasan waiting: %d
+UI_JAMASAN_HINT,Lakukan di petilasan,Do it at a petilasan
+UI_JIMAT,Jimat,Jimat
+UI_DAYA,Daya,Daya
+UI_JIMAT_HINT,Ganti jimat di petilasan,Change jimat at a petilasan
+UI_JIMAT_FULL,Daya tidak cukup,Not enough Daya
+UI_CODEX_ITEMS,Barang,Items
+UI_CODEX_ITEMS_FOUND,Barang ditemukan %d/%d,Items found %d/%d
+UI_UNKNOWN,???,???
+JAMASAN_1,"Air menetes dari bilah, dan terdengar suara kecil: Laras bertanya kenapa telaga itu dulu perahu. Kau bilang itu cuma dongeng, dan ia bilang dongeng pun bisa menunggu.","Water runs off the blade, and a small voice comes: Laras asks why the lake was once a boat. You say it's only a tale, and she says a tale can wait too."
+JAMASAN_2,"Laras menolak tidur sebelum cerita seribu candi selesai. Kau menutupnya dengan kokok ayam, dan ia tertawa sampai kepangnya lepas.","Laras refuses to sleep before the thousand temples are done. You end the tale with a rooster's crow, and she laughs until her braid comes loose."
+JAMASAN_3,"Laras menutup telinga saat cerita keris yang tak selesai, lalu minta diulang. ""Kalau belum selesai,"" katanya, ""berarti masih bisa diubah.""","Laras covers her ears at the tale of the unfinished keris, then asks for it again. ""If it's unfinished,"" she says, ""it can still be changed."""
+JAMASAN_4,"Ia pernah menaruh selembar kain hijau di pasir karena kata nenek-nenek itu sopan. Ombak mengambilnya, dan ia melambai pada laut seperti pada tetangga.","She once left a green cloth on the sand because the old women said it was polite. The tide took it, and she waved at the sea as if at a neighbour."

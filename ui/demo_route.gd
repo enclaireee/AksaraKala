@@ -527,7 +527,7 @@ func _level_floor(lv: int) -> void:
 		_spend()
 
 
-## The best weapon of the class's kind, the heaviest armor, and an accessory if none is worn.
+## The best weapon of the class's kind, the heaviest armor, and jimat up to the Daya budget.
 func _equip_best() -> void:
 	if _cls == null:
 		return
@@ -548,8 +548,7 @@ func _equip_best() -> void:
 				if cur == null or it.defense > cur.defense:
 					best.armor = it
 			"accessory":
-				if str(g.equipped.get("accessory", "")) == "":
-					g.equipped["accessory"] = id
+				g.equip_jimat(id)   # fills the Daya budget in inventory order
 	for slot: String in best:
 		if best[slot] != null:
 			g.equipped[slot] = (best[slot] as ItemData).id

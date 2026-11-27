@@ -13,3 +13,4 @@ description = "ITEM_GENITRI_DESC"
 bonus = {"spi": 1}
 favoured = "mage"
 favoured_bonus = {"smudge": -0.03}
+daya = 2

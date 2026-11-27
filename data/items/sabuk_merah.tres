@@ -13,3 +13,4 @@ description = "ITEM_SABUK_MERAH_DESC"
 bonus = {"end": 1}
 favoured = "rogue"
 favoured_bonus = {"str": 1}
+daya = 2

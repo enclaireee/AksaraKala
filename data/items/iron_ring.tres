@@ -10,4 +10,5 @@ id = "iron_ring"
 title = "ITEM_IRON_RING_NAME"
 slot = "accessory"
 description = "ITEM_IRON_RING_DESC"
-bonus = {"str": 1}
+bonus = {"damage_mult": 0.05}
+daya = 2

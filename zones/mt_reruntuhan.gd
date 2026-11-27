@@ -71,7 +71,7 @@ const SPOTS := {
 	"n": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "roro_jonggrang"}, "tile": "_"},   # codex spot, Roro Jonggrang (museum)
 	"o": {"scene": "res://entities/world/pickup.tscn", "props": {"codex_id": "arca"}, "tile": "_"},   # codex spot, Arca (museum)
 	"g": {"scene": "res://entities/world/pickup.tscn", "props": {"item_id": "gong_ageng"}, "tile": "_"},   # pickup, gong ageng (sparkle, SQ-M4, secret 1 nook)
-	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_secret_gong", "item_id": "longbow"}, "tile": "_"},   # chest: Longbow (secret 1, items.md Zone 2 chest)
+	"c": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "mataram_secret_gong", "item_id": "kemenyan"}, "tile": "_"},   # chest: Kemenyan (secret 1, items.md 4.2)
 	"u": {"scene": "res://entities/enemies/tuyul.tscn", "props": {}, "tile": "."},   # loose Tuyul, roaming pack (respawns on zone reload, no unique_id)
 	"k": {"scene": "res://entities/enemies/pocong.tscn", "props": {}, "tile": "."},   # loose Pocong, roaming pack (respawns on zone reload, no unique_id)
 	"B": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "ka_chalk"}, "tile": "."},   # clue, Laras's chalked *Ka* on the courtyard wall (2.6 `clue` piece; journal note only, no quest trigger; ASSUMED id)

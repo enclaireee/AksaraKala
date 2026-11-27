@@ -45,16 +45,17 @@ The goal is rewards that **scale with the systems already designed** (5 stats, 3
 ### 3.2 Plus one key reward, from these pools
 | Pool | What it does | Count | Why it scales |
 |------|--------------|-------|---------------|
-| **Gear** | Weapons, armor and accessories in [items.md](items.md). Quests and choices are the main source of pusaka gear; chests and secrets hold the rest | 12 from quests/choices | Gear is already data. A new item is one resource |
+| **Gear** | Weapons, armor and jimat in [items.md](items.md). Quests and choices are the main source of pusaka gear; chests and secrets hold the rest | 12 from quests/choices | Gear is already data. A new item is one resource |
 | **Flask Shard** | +1 max flask charge. Base 3, max 6 | 3 | Rewards exploration with survivability |
 | **Herb Pouch** | +5% flask heal each. Base 40%, max 60% | 4 | Flask power grows without new systems |
 | **Lakon** (wayang story) | Unlocks a performance at the Desa Purwa wayang stage (section 6.1) | 9 total | Feeds the hub meta quest |
-| **Lontar Kuno** | Accessory: the "smudged" threshold drops from 0.65 to 0.60 (**TUNE**) | 1 | Helps casting without adding a glyph |
+| **Lontar Kuno** | Jimat (2 Daya): the "smudged" threshold drops by 0.05 (**TUNE**) | 1 | Helps casting without adding a glyph |
 
 ### 3.3 Where every reward comes from
 | Reward | Source |
 |--------|--------|
-| Kujang | Tatar Sunda secret chest |
+| Kujang Pusaka | Ibu, MQ0 step 0.10 (not a weapon; [items.md](items.md) 1) |
+| Ingatan tiers | One jamasan per main boss (Sangkuriang, Bondowoso, Keris, the NRK trial), done at a petilasan |
 | Golok | SQ-S2 Kuntilanak bounty |
 | Spear (ex-Tombak) | SQ-M3 Tuyul bounty |
 | Panah Pasopati | Mataram secret chest |

@@ -52,7 +52,7 @@ const SPOTS := {
 	"i": {"scene": "res://entities/enemies/jurig_leuweung.tscn", "props": {}, "tile": "t"},   # loose Jurig Leuweung (terrace), roaming pack (respawns on zone reload, no unique_id)
 	"l": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "loom"}, "tile": "_"},   # clue, the Weaver's loom (K2 clue 3)
 	"o": {"scene": "res://entities/world/clue.tscn", "props": {"clue_id": "empty_coops"}, "tile": "t"},   # clue, the empty rooster coops on the terrace farmstead (K2 clue 2)
-	"s": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_chest_sawah", "item_id": "short_sword"}, "tile": "."},   # chest: Short Sword (secret, sawah's optional find, behind clearing rocks)
+	"s": {"scene": "res://entities/world/chest.tscn", "props": {"chest_id": "sunda_chest_sawah", "item_id": "batu_akik"}, "tile": "."},   # chest: Batu Akik (secret, sawah's optional find, behind clearing rocks)
 	"a": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_1"}, "tile": "t"},   # puzzle, upper sluice wheel 1, west (MQ1 1.15 press-each x2; sets `sluice_wheel_1`, `sluice_1`)
 	"c": {"scene": "res://entities/npc/npc.tscn", "props": {"npc_id": "sluice_wheel_2"}, "tile": "t"},   # puzzle, upper sluice wheel 2, east (MQ1 1.15; sets `sluice_wheel_2`, `sluice_2`, which drains the ts_situ flood `F`)
 }

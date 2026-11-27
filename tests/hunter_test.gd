@@ -79,7 +79,7 @@ func _initialize() -> void:
 	root.add_child(b)
 	await process_frame
 	b.set_physics_process(false)
-	check(b.is_in_group("boss") and b.health.max_hp == 3060 and b.phase == 1, "starts phase 1, 3060 HP (v9 x0.85)")
+	check(b.is_in_group("boss") and b.health.max_hp == 3570 and b.phase == 1, "starts phase 1, 3570 HP (4200 x0.85, items.md 7)")
 
 	# Shadow-step: faded, ground marker, reappears on it.
 	b.engaged = true

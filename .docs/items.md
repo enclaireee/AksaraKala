@@ -1,143 +1,221 @@
 # Items
 
-Three gear slots: weapon, armor, accessory. Plus consumables. Two tiers: **common** gear (ordinary fantasy-RPG fare) and **mythic** gear (pusaka, the cultural heirlooms). Most gear comes from chests, drops and quests ([quests.md](quests.md) section 3.4). Mythic descriptions and associations: Checked Nov 2026; remaining VERIFY items are marked. Stats are starting values (**TUNE**).
+Phase 7c revamp (2026-11-27, user call, all **ASSUMED** unless tagged). Every pickup is one of three things:
+- **Power**: the Kujang Pusaka spine (section 1). One predictable vertical step per main boss.
+- **Choice**: weapons, armor and jimat (sections 2 to 4). A budgeted build that is swapped at the checkpoint.
+- **Meaning**: every item has a lore line and a codex page (section 7).
 
 Rules:
 - Every item is a data resource ([architecture.md](architecture.md)), so adding items is data entry.
-- No rarity tiers, no crafting, no upgrading. Each item has a `mythic` flag (**ASSUMED**).
-- Mythic (pusaka) items show a gold name and a lore line, and carry the cultural descriptions. Commons have a plain one-line description.
-- Weapons differ by archetype (light melee, heavy melee, ranged, staff, thrown) and behavior ([combat.md](combat.md) 2.3), not just numbers.
+- Two gear slots (weapon, armor) plus the **Jimat** set, which replaces the old accessory slot.
+- No random loot, no rarity tiers, no crafting, no per-item upgrades. The pusaka's Ingatan is the only upgrade. Each item has a `mythic` flag, which gives a gold name.
+- **No dominated loot.** A weapon earns its place with a twist (shape, speed or a bonus key), not a bigger number.
+- **Weapon cap.** `damage x (1 + damage_mult)` is at most 1.25x the starter of its class (favoured items) or its archetype (other items):
+  - Archetype starters: light (Dagger) 8, heavy (Broadsword) 22, ranged (Hunting Bow) 8, staff (Oak Staff) 8.
+  - Class starters: Lancer (Tombak Prajurit) 20, Herder (Bandring) 10, Dancer (Kipas) 7, Dalang (Kayon) 8.
+  - The one exception is the Keris Mpu Gandring, which is paid for with its curse.
+  - `tests/items_test.gd` enforces the cap.
+- Every item has a source (`tests/item_source_test.gd`) and a lore line in ID and EN (`data/text/items.csv`).
+- Every bonus key set in data is read in code (`items_test`).
+- Culture facts carry **VERIFY** until sourced. Numbers are **TUNE**.
 
-## Weapons: common
-Numbers **TUNE**. Sources use "Zone N chest" or "drop"; shops are not designed yet.
+## 1. The Kujang Pusaka and Ingatan (the spine)
+**Story.**
+- At MQ0 0.10, Ibu takes the family kujang down from the wall and gives it to you: "I don't know why I took it down today. Take it." She no longer remembers Laras. The kujang is the house's memory of her.
+- At 0.11, Semar teaches **jamasan**: a pusaka is washed so it remembers.
+- **VERIFY:** the kujang as a Sundanese family heirloom; *jamasan* as the ritual cleansing of a pusaka, usually in the month of Sura; *sipat kandel* as a pusaka carried for protection. The game's jamasan, which happens at any petilasan after a great deed, is a game rule, and the text says so.
 
-| Item | Archetype | Base dmg | Notes | Source |
-|------|-----------|----------|-------|--------|
-| Dagger | Light melee | 8 | Fast, short reach | Starter (Rogue) |
-| Short Sword | Light melee | 9 | Balanced blade | Zone 1 chest (ts_sawah) |
-| Broadsword | Heavy melee | 22 | Wide swing | Starter (Warrior) |
-| Axe | Heavy melee | 26 | Hits hard, slow | Zone 2 chest |
-| Spear | Heavy melee | 28 | Long reach | SQ-M3 Tuyul bounty (ex-Tombak) |
-| Golok | Heavy melee | 25 | Machete-like chopping blade | SQ-S2 Kuntilanak bounty |
+**Rules.**
+- The kujang is carried, not wielded, so it has no slot and every weapon stays relevant. It is the flag `has_pusaka` plus the int `Game.ingatan`, not an `ItemData` resource.
+- **Ingatan tier**, 0 to 4. Each main boss you defeat makes one **jamasan** available:
+  - Sangkuriang (Act I)
+  - Bandung Bondowoso (Act III)
+  - The Keris (Act IV)
+  - The Nyi Roro Kidul trial (Act V)
+- `Game.jamasan_pending()` = main bosses in `killed` − `ingatan`. It is derived from `killed`, so there is no new currency.
+- A jamasan is done from the **Status tab at a petilasan** (`menu.at_petilasan`). It plays a short ritual card and one memory line per tier (script.md).
+- Each tier gives **+10% to all weapon and spell damage** (`Game.power_mult()` = `1 + 0.10 x ingatan`, **TUNE**, [balance.md](balance.md) 3.1) and **+1 Daya** (section 4).
+- The pusaka has a codex page (`data/codex/kujang.tres`, category item) that shows its current tier.
+
+**Payoffs** (script.md):
+- **Act IV:** Mpu Wirasana reads the kujang's pamor and ties it to the Keris seal. This is a dialogue line only.
+- **Interlude 4.4:** Ibu recognises the kujang, one line that pays off the arc.
+
+## 2. Weapons
+Archetypes (light melee, heavy melee, ranged, staff) differ by behaviour ([combat.md](combat.md) 2.3). Shape fields (`reach`, `arc`, `windup`, `recovery`, `projectile_speed`, `projectile_range`) give common weapons their twist.
+
+### 2.1 Common
+| Item | Archetype | Dmg | Twist | Source |
+|------|-----------|-----|-------|--------|
+| Dagger | Light | 8 | Fast, short reach | Starter (Rogue) |
+| Broadsword | Heavy | 22 | Wide swing | Starter (Warrior) |
+| Axe | Heavy | 26 | Wide arc (130°), slow | Zone 2 chest |
+| Spear | Heavy | 27 | Longest common reach, narrow arc | SQ-M3 Tuyul bounty |
+| Golok | Heavy | 25 | Fast heavy chop, short reach | SQ-S2 Kuntilanak bounty |
 | Hunting Bow | Ranged | 8 | 4 stamina per shot | Starter (Archer) |
-| Longbow | Ranged | 10 | Slower draw, more damage | Zone 2 chest |
-| Crossbow | Ranged | 14 | Slow wind-up, high damage | Zone 3 chest |
+| Crossbow | Ranged | 10 | Slow wind-up, fast bolt, longest range | Zone 3 chest |
 | Oak Staff | Staff | 8 | Weak ranged bolt | Starter (Mage) |
-| Iron Staff | Staff | 9 | Sturdier bolt | Zone 2 chest (no enemy drops yet, **ASSUMED**) |
 
-## Weapons: mythic (pusaka)
-| Item | Archetype | Base dmg | Notes (culture) | Source |
-|------|-----------|----------|-----------------|--------|
-| Kujang | Light melee | 9 | Sundanese blade, iconic to West Java | Zone 1 chest |
-| Keris Luk 7 | Light melee | 10 | A keris with 7 curves ("luk"; keris luk are odd numbers 3 to 13; the meaning of 7 varies by source, say "traditionally associated with"). Keris is a cultural heritage object (UNESCO Intangible Heritage, inscribed 2008; sacred pusaka, treat respectfully) | SQ-T3 Pamor errand |
-| Keris Mpu Gandring | Light melee | 14 | Cursed: strong, but each hit costs 1 HP (**TUNE**). Lore: in the Pararaton legend (label it legend), the keris was forged unfinished for Ken Arok, and Mpu Gandring's dying curse followed it. Never say it is a historical fact. **VERIFY** | MQ3 Choice 4, reforge (`choice_reforge`, Wirasana gives it tamed) |
-| Panah Pasopati | Ranged | 10 | Named after Arjuna's arrow (verified). Arjuna is the famous archer of wayang; who gave him Pasopati is unconfirmed | Zone 2 secret |
-| Cakra | Thrown | 12 | Krishna/Kresna's disc (Cakra Baskara or Sudarsana) from wayang, returns like a boomerang (stretch) | SQ-K2 sea spirit bounty (P2) |
+The Short Sword, Iron Staff and Longbow are **deleted**. Each was its starter plus 1, so it was dominated loot. Their chests now hold jimat (section 4.2).
 
-Decisions (**ASSUMED**): Tombak becomes the common Spear. Golok becomes common. Gada is dropped (its Gatotkaca link was unverified).
+### 2.2 Mythic (pusaka)
+| Item | Archetype | Dmg | Twist | Notes (culture) | Source |
+|------|-----------|-----|-------|-----------------|--------|
+| Keris Luk 7 | Light | 10 | +4 Sakti on a perfect dodge (`dodge_sakti`) | A keris with 7 curves (*luk*; keris luk are odd numbers 3 to 13). The meaning of 7 varies by source, so the text says "traditionally associated with". The keris is UNESCO Intangible Heritage (2008), a sacred pusaka, and is treated respectfully | SQ-T3 Pamor errand |
+| Keris Mpu Gandring | Light | 14 | Cursed: each hit costs 1 HP (`self_damage`). The one exception to the cap | In the Pararaton legend (label it legend), the keris was forged unfinished for Ken Arok and Mpu Gandring's dying curse followed it. **VERIFY** | MQ3 Choice 4, reforge |
+| Panah Pasopati | Ranged | 10 | +10% Sakti gain | Named after Arjuna's arrow. Who gave it to him is unconfirmed | Zone 2 secret |
+| Cakra | Ranged | 10 | Thrown disc that **returns like a boomerang** and hits on the way back | Kresna's disc (Cakra Baskara or Sudarsana) in wayang | SQ-K2 sea spirit bounty |
+| Gada Rujakpolo | Heavy | 27 | Very wide arc (170°), slow: windup 0.35 s, recovery 0.6 s, 25 dps vs the broadsword 27.5 (TUNE) | Bima's club in wayang. **VERIFY** the name and the owner | sk_karang chest (`kidul_chest_2`), Act V |
+| Teken Galih Asem | Staff | 10 | +10% spell damage (`spell_mult`) | A walking staff of tamarind heartwood, carried by a wandering ascetic. **VERIFY** *teken* and *galih asem* as an ascetic's staff | tt_pesisir wreck chest (`chest_tt_pesisir`), Act IV |
 
-## Armor
-Body armor only, one slot.
+The old Kujang weapon is **deleted**. Its name and codex entry move to the Kujang Pusaka (section 1).
 
-| Item | Tier | Defense | Notes | Source |
-|------|------|---------|-------|--------|
-| Padded Tunic | Common | 1 | Plain padded cloth | Starter (ex-Kain Polos) |
+## 3. Armor
+One body slot. `defense` gives 5% damage reduction per point ([rpg.md](rpg.md) 5). The mythic armors each get a twist.
+
+| Item | Tier | Def | Twist | Source |
+|------|------|-----|-------|--------|
+| Padded Tunic | Common | 1 | Plain padded cloth | Starter |
 | Leather Armor | Common | 2 | Light and quiet | Zone 1 chest |
 | Chainmail | Common | 4 | Heavy rings of iron | Zone 3 chest |
-| Iket Sunda | Mythic | 2 | Sundanese cloth head wrap, tied by the wearer | SQ-S1 Lutung Kasarung |
-| Blangkon | Mythic | 3 | Javanese ready-made batik head cloth | SQ-M4 Gamelan errand |
-| Baju Batik | Mythic | 4 | Batik clothing, patterns carry meaning (pick a named pattern with a verified meaning; some, like parang, were royal-only) | MQ2 boss, Bandung Bondowoso |
-| Kain Hijau | Mythic | 5 | Green cloth, linked to Nyi Roro Kidul lore (a belief, see world.md) | MQ4 Trial of the Waves (main path) |
+| Iket Sunda | Mythic | 2 | Smudged-cast threshold −0.02 (`smudge`) | Sundanese cloth head wrap, tied by the wearer. From SQ-S1 Lutung Kasarung |
+| Blangkon | Mythic | 3 | +5% Sakti gain | Javanese ready-made batik head cloth. From SQ-M4 Gamelan errand |
+| Baju Batik | Mythic | 4 | +15 max HP | Batik clothing whose patterns carry meaning (use a named pattern with a verified meaning). From the MQ2 boss, Bandung Bondowoso |
+| Kain Hijau | Mythic | 5 | Flask heals +10% (`flask_heal`) | Green cloth linked to Nyi Roro Kidul lore (a belief, see world.md). From MQ4 4.22 at the Sea Altar (`give:kain_hijau`) |
 
-## Accessories
-| Item | Tier | Effect | Notes | Source |
-|------|------|--------|-------|--------|
-| Iron Ring | Common | +1 Strength | A plain band | Zone 1 chest |
-| Amulet | Common | +10 max HP | A small charm | Zone 2 chest |
-| Feather Charm | Common | +8% move speed | Light as a feather (ex-Selendang) | SQ-M1 Jaka Tarub |
-| Silver Bangle | Common | +10% stamina regen | (ex-Gelang Perak) | SQ-S4 Cepot |
-| Stone Ring | Common | +1 Spirit | A ring with a stone (ex-Cincin Batu) | SQ-T1 Ande-Ande Lumut |
-| Lontar Kuno | Mythic | Smudged-cast threshold 0.65 -> 0.60 (**TUNE**) | Old palm-leaf manuscript, how aksara were written | SQ-D2 Pustaka, 50% codex (P1) |
-| Batu Kali | Mythic | +1 Spirit, +5% stamina regen (**TUNE**, **ASSUMED**). Design: also cleanses one status now and then (not built) | A smooth river stone ("river stone") the river gives back when you sink the keris | MQ3 Choice 4, sink (`choice_sink`) |
-| Sabuk Galuh | Mythic | +1 Vitality, +8% damage taken reduction (`bonus` keys `vit`, `defense`, **TUNE**, **ASSUMED**) | A royal belt of Galuh, a defense ward from the court smiths. A belt, not body armor, so it sits in the accessory slot | MQ2 Choice 3, judgment (`choice_judgment`) |
-| Jimat | Mythic | +10 max HP | A small protective charm, a jimat carried for luck and protection (ex-Jimat Kecil) | SQ-M2 Wewe Gombel |
+The class-favoured armors are in section 5.
 
-## Class-favoured gear (Phase 4g, user call 2026-11-12, all **ASSUMED**, numbers **TUNE**)
-Common tier. Anyone can equip these. The favoured class also gets the last column (`favoured`, `favoured_bonus` on `ItemData`). Bonus keys are the accessory keys plus `damage_mult` (weapon and spell damage fraction) and `sakti_gain` (Sakti gain fraction). The equipment card shows "Favoured: <class>" above the note, dark ink when it is active and dim when not. The 32 icons are recolours of a kin icon (`RECOLOUR` in `tools/gen_items.py`, **ASSUMED**, redraw when there is time). Names are plain Indonesian or Sundanese words for ordinary objects; **VERIFY** the three marked ones before shipping.
+## 4. Jimat (replaces the accessory slot)
+### 4.1 Daya
+- **Daya** is the budget: `Game.daya()` = 2 + `ingatan`, so it runs from 2 to 6.
+- Each jimat costs 1 to 3 Daya (the `daya` field on `ItemData`).
+- Worn jimat are `Game.jimat`, an Array of ids. Bonuses sum like gear bonuses, and favoured bonuses still apply.
+- You can equip any set whose total cost is within the budget. `Game.equip_jimat(id)` refuses a set that goes over and returns false.
+- **Jimat are swapped only at a petilasan.** Weapons and armor can still be changed anywhere.
+- **Damage cap.** Within the largest budget, worn jimat add at most +10% weapon damage and +10% spell damage, outside the Rajah window. `balance_model.py` section 7.5 checks this.
+- A 100% player owns about 30 Daya of jimat against a budget of 6 at most, so the choice stays real.
+
+### 4.2 Roster
+New bonus keys:
+- `spell_mult`: spell damage fraction.
+- `flask_heal`: multiplies the flask heal.
+- `dodge_sakti`: Sakti on a perfect dodge.
+- `ilmu_mult`: Ilmu gain fraction.
+- `low_hp_damage`: damage fraction while below 30% HP.
+- `kill_heal`: HP per kill.
+- `status_short`: fraction cut from the duration of status effects on you.
+
+The existing keys are listed in [classes.md](classes.md).
+
+| Jimat | Daya | Effect (bonus keys) | Notes | Source |
+|-------|------|---------------------|-------|--------|
+| Iron Ring | 2 | +5% damage (`damage_mult`) | A plain band | Zone 1 chest |
+| Stone Ring | 2 | +5% spell damage (`spell_mult`) | A ring with a stone | SQ-T1 Ande-Ande Lumut |
+| Amulet | 1 | +15 max HP | A small charm | Zone 2 chest |
+| Feather Charm | 1 | +8% move speed | Light as a feather | SQ-M1 Jaka Tarub |
+| Silver Bangle | 1 | +15% stamina regen | | SQ-S4 Cepot |
+| Kembang Setaman | 1 | Flask heals +10% (`flask_heal`) | Seven kinds of flowers floated in water for blessing and cleansing. **VERIFY** | ts_situ chest (`sunda_kujang`, was the Kujang) |
+| Batu Akik | 1 | +6 Sakti on a perfect dodge (`dodge_sakti`) | A polished agate ring stone. **VERIFY** the protective beliefs | ts_sawah chest (`sunda_chest_sawah`, was the Short Sword) |
+| Kemenyan | 1 | +10% Ilmu (`ilmu_mult`) | Benzoin incense, burned to send words to the ancestors. **VERIFY** | mt_reruntuhan secret (`mataram_secret_gong`, was the Longbow) |
+| Jimat (mythic) | 2 | +4 HP per kill (`kill_heal`) | A small protective charm, carried for luck and protection | SQ-M2 Wewe Gombel |
+| Lontar Kuno (mythic) | 2 | Smudged-cast threshold −0.05 (`smudge`) | Old palm-leaf manuscript, how aksara were written | SQ-D2 Pustaka, 50% codex |
+| Batu Kali (mythic) | 2 | Status effects on you last 50% shorter (`status_short`), +5% stamina regen | A smooth river stone the river gives back when you sink the keris | MQ3 Choice 4, sink |
+| Rajah (mythic) | 2 | +20% damage while below 30% HP (`low_hp_damage`) | A written protective formula. **VERIFY** *rajah* as written protective script | mt_wetan chest (`mataram_chest_wetan`, was the Iron Staff) |
+| Gelang Akar Bahar (mythic) | 2 | +6% damage reduction (`defense`) | A bangle of black sea coral. **VERIFY** the coastal belief | sk_tebing chest (`kidul_chest_3`), Act V |
+| Sabuk Galuh (mythic) | 3 | +8% damage reduction, +1 Vitality | A royal belt of Galuh, a ward from the court smiths | MQ2 Choice 3, judgment |
+| Mustika (mythic) | 3 | +12% Sakti gain, +5% spell damage | A *mustika*: a pearl or stone believed to hold power. **VERIFY** | gk_mulut chest (`kala_chest_0`), Act VI |
+
+Every class-favoured jimat (section 5) costs **2 Daya**.
+
+## 5. Class-favoured gear (Phase 4g, numbers **TUNE**)
+- Anyone can equip these. The favoured class also gets the last column (`favoured`, `favoured_bonus`). The equipment card shows "Favoured: <class>".
+- The icons are recolours of a kin icon (`RECOLOUR` in `tools/gen_items.py`).
+- **VERIFY** the marked names before shipping.
+
+**Schools.**
 
 | Item (id) | Slot | Stats | Favoured class: extra | Source |
 |---|---|---|---|---|
-| Parang Perang (`parang_perang`) | Heavy melee | 24 dmg, quicker swing | Hulubalang: +10% damage | Zone chest |
-| Tombak Panji (`tombak_panji`) | Heavy melee | 27 dmg, long reach | Hulubalang: +1 Vitality | SQ-X1 |
-| Zirah Sisik (`zirah_sisik`) | Armor | Defense 4 | Hulubalang: +10 max HP | Zone chest |
-| Gelang Baja (`gelang_baja`) | Accessory | +5% damage reduction | Hulubalang: +1 Strength | Zone chest |
+| Parang Perang (`parang_perang`) | Heavy | 24 dmg, quicker swing | Hulubalang: +10% damage | Zone chest |
+| Tombak Panji (`tombak_panji`) | Heavy | 27 dmg, long reach | Hulubalang: +1 Vitality | SQ-X1 |
+| Zirah Sisik (`zirah_sisik`) | Armor | Def 4 | Hulubalang: +10 max HP | Zone chest |
+| Gelang Baja (`gelang_baja`) | Jimat 2 | +5% damage reduction | Hulubalang: +1 Strength | Zone chest |
 | Busur Petung (`busur_petung`) | Ranged | 7 dmg, 3 stamina, fast | Pamanah: +10% damage | Zone chest |
-| Gendewa Tanduk (`gendewa_tanduk`) | Ranged | 11 dmg | Pamanah: +1 Dexterity | SQ-X1 |
-| Kampret Pemburu (`kampret_pemburu`) | Armor | Defense 2, +5% move speed | Pamanah: +10% stamina regen | Zone chest |
-| Kantong Panah (`kantong_panah`) | Accessory | +10% stamina regen | Pamanah: +1 Dexterity | Zone chest |
-| Golok Pendek (`golok_pendek`) | Light melee | 11 dmg | Pendekar: +10% damage | Zone chest |
-| Kujang Kembar (`kujang_kembar`) | Light melee | 10 dmg, very fast. **VERIFY**: the kujang is a Sundanese heirloom blade; a paired fighting use is a game invention and the text must say so or the name changes | Pendekar: +1 Dexterity | SQ-X1 |
-| Pangsi Hitam (`pangsi_hitam`) | Armor | Defense 2, +8% move speed. **VERIFY**: pangsi as silat and daily Sundanese clothing | Pendekar: +10% stamina regen | Zone chest |
-| Sabuk Merah (`sabuk_merah`) | Accessory | +1 Endurance | Pendekar: +1 Strength | Zone chest |
+| Gendewa Tanduk (`gendewa_tanduk`) | Ranged | 10 dmg | Pamanah: +1 Dexterity | SQ-X1 |
+| Kampret Pemburu (`kampret_pemburu`) | Armor | Def 2, +5% move speed | Pamanah: +10% stamina regen | Zone chest |
+| Kantong Panah (`kantong_panah`) | Jimat 2 | +10% stamina regen | Pamanah: +1 Dexterity | Zone chest |
+| Golok Pendek (`golok_pendek`) | Light | 9 dmg | Pendekar: +10% damage | Zone chest |
+| Kujang Kembar (`kujang_kembar`) | Light | 10 dmg, very fast. **VERIFY**: a paired fighting use of the kujang is a game invention, and the text must say so | Pendekar: +1 Dexterity | SQ-X1 |
+| Pangsi Hitam (`pangsi_hitam`) | Armor | Def 2, +8% move speed. **VERIFY**: pangsi as silat and daily Sundanese clothing | Pendekar: +10% stamina regen | Zone chest |
+| Sabuk Merah (`sabuk_merah`) | Jimat 2 | +1 Endurance | Pendekar: +1 Strength | Zone chest |
 | Tongkat Genta (`tongkat_genta`) | Staff | 9 dmg, 6 Sakti per hit | Wiku: +10% Sakti gain | Zone chest |
 | Tongkat Cendana (`tongkat_cendana`) | Staff | 10 dmg | Wiku: +1 Spirit | SQ-X1 |
-| Jubah Wiku (`jubah_wiku`) | Armor | Defense 1, +1 Spirit | Wiku: +10% Sakti gain | Zone chest |
-| Genitri (`genitri`) | Accessory | +1 Spirit. **VERIFY**: genitri (rudraksha) prayer beads and who wore them | Wiku: smudge threshold -0.03 | Zone chest |
+| Jubah Wiku (`jubah_wiku`) | Armor | Def 1, +1 Spirit | Wiku: +10% Sakti gain | Zone chest |
+| Genitri (`genitri`) | Jimat 2 | +1 Spirit. **VERIFY**: genitri (rudraksha) prayer beads | Wiku: smudge threshold −0.03 | Zone chest |
 
-**Second paths (2026-11-12).** Each row is the sibling of the school item in brackets. There are no extra chests: when a second-path player would receive the bracketed item (class chest or `SQ-X1`), `Game.add_item` gives the sibling instead (`Game.SIBLING_ITEM`).
+**Second paths.** Each row is the sibling of the school item named in the last column. `Game.SIBLING_ITEM` swaps it in for a second-path player.
 
 | Item (id) | Slot | Stats | Favoured class: extra | Sibling of |
 |---|---|---|---|---|
-| Tombak Galah (`tombak_galah`) | Heavy melee | 22 dmg, longest reach | Prajurit: +15% tip sweet-spot damage | `parang_perang` |
-| Tombak Bendera (`tombak_bendera`) | Heavy melee | 26 dmg, long reach | Prajurit: +15% melee & spell reach | `tombak_panji` |
-| Baju Keprajuritan (`baju_keprajuritan`) | Armor | Defense 4. **VERIFY**: keraton soldier dress | Prajurit: 15% faster Kuda-kuda brace | `zirah_sisik` |
-| Tameng Rotan (`tameng_rotan`) | Accessory | +5% damage reduction | Prajurit: +15 stamina when hit while braced | `gelang_baja` |
+| Tombak Galah (`tombak_galah`) | Heavy | 22 dmg, longest reach | Prajurit: +15% tip sweet-spot damage | `parang_perang` |
+| Tombak Bendera (`tombak_bendera`) | Heavy | 25 dmg, long reach | Prajurit: +15% melee and spell reach | `tombak_panji` |
+| Baju Keprajuritan (`baju_keprajuritan`) | Armor | Def 4. **VERIFY**: keraton soldier dress | Prajurit: 15% faster Kuda-kuda brace | `zirah_sisik` |
+| Tameng Rotan (`tameng_rotan`) | Jimat 2 | +5% damage reduction | Prajurit: +15 stamina when hit while braced | `gelang_baja` |
 | Bandring Kulit (`bandring_kulit`) | Ranged | 8 dmg, 3 stamina, fast | Pangangon: +35 px Batu Pantul bounce range | `busur_petung` |
 | Bandring Ijuk (`bandring_ijuk`) | Ranged | 11 dmg | Pangangon: +20% Batu Pantul bounce damage | `gendewa_tanduk` |
-| Sarung Gembala (`sarung_gembala`) | Armor | Defense 2, +5% move speed | Pangangon: +15% dodge distance | `kampret_pemburu` |
-| Suling Bambu (`suling_bambu`) | Accessory | +10% stamina regen | Pangangon: +20% zone & summon duration | `kantong_panah` |
-| Kipas Bambu (`kipas_bambu`) | Light melee | 11 dmg | Penari Topeng: +1 Wirama on combo finisher | `golok_pendek` |
-| Kipas Kembar (`kipas_kembar`) | Light melee | 10 dmg, very fast | Penari Topeng: +2 max Wirama (8 -> 10) | `kujang_kembar` |
-| Baju Penari (`baju_penari`) | Armor | Defense 2, +8% move speed | Penari Topeng: keep half Wirama when hit | `pangsi_hitam` |
-| Gelang Kaki (`gelang_kaki`) | Accessory | +1 Endurance. Ankle bells | Penari Topeng: +12% atk & move speed at 4+ Wirama | `sabuk_merah` |
-| Cempala (`cempala`) | Staff | 9 dmg, 6 Sakti per hit. **VERIFY**: the dalang's wooden knocker | Dalang: +8 Sakti on max Lakon cast | `tongkat_genta` |
-| Kayon Gapuran (`kayon_gapuran`) | Staff | 10 dmg. **VERIFY**: gapuran as a kayon type | Dalang: +15% zone & summon duration | `tongkat_cendana` |
-| Beskap Dalang (`beskap_dalang`) | Armor | Defense 1, +1 Spirit. **VERIFY**: beskap | Dalang: +1 max Lakon stack (+45% cap) | `jubah_wiku` |
-| Blencong (`blencong`) | Accessory | +1 Spirit. **VERIFY**: the oil lamp behind the screen | Dalang: +15% spell zone & blast radius | `genitri` |
+| Sarung Gembala (`sarung_gembala`) | Armor | Def 2, +5% move speed | Pangangon: +15% dodge distance | `kampret_pemburu` |
+| Suling Bambu (`suling_bambu`) | Jimat 2 | +10% stamina regen | Pangangon: +20% zone and summon duration (`zone_life`) | `kantong_panah` |
+| Kipas Bambu (`kipas_bambu`) | Light | 8 dmg | Penari Topeng: +1 Wirama on combo finisher | `golok_pendek` |
+| Kipas Kembar (`kipas_kembar`) | Light | 8 dmg, very fast | Penari Topeng: +2 max Wirama (8 → 10) | `kujang_kembar` |
+| Baju Penari (`baju_penari`) | Armor | Def 2, +8% move speed | Penari Topeng: keep half Wirama when hit | `pangsi_hitam` |
+| Gelang Kaki (`gelang_kaki`) | Jimat 2 | +1 Endurance. Ankle bells | Penari Topeng: +12% attack and move speed at 4+ Wirama | `sabuk_merah` |
+| Cempala (`cempala`) | Staff | 9 dmg, 6 Sakti per hit. **VERIFY**: the dalang's wooden knocker | Dalang: +8 Sakti on a max Lakon cast | `tongkat_genta` |
+| Kayon Gapuran (`kayon_gapuran`) | Staff | 10 dmg. **VERIFY**: gapuran as a kayon type | Dalang: +15% zone and summon duration (`zone_life`) | `tongkat_cendana` |
+| Beskap Dalang (`beskap_dalang`) | Armor | Def 1, +1 Spirit. **VERIFY**: beskap | Dalang: +1 max Lakon stack | `jubah_wiku` |
+| Blencong (`blencong`) | Jimat 2 | +1 Spirit. **VERIFY**: the oil lamp behind the screen | Dalang: +15% spell zone and blast radius (`spell_radius`) | `genitri` |
 
-The 12 chest items replace Ilmu-only chests in the zone docs (`.docs/zones/*.md`).
-
-## Main-path quest items
-Not equipment. Each is a data resource with `quest_item = true` (**ASSUMED**), shown in the journal's items list, never sold or dropped. Ids are the ones quests.md and script.md use. Side-quest pickups (angklung, selendang, gong, batu bintang, sodo lanang, kuda kepang, tukik) are listed with their quests in [quests.md](quests.md) section 5.
+## 6. Main-path quest items
+These are not equipment. Each is a data resource with `quest_item = true`, shown in the journal's items list and never sold or dropped. Side-quest pickups are listed with their quests in [quests.md](quests.md) section 5.
 
 | Item | Id | Effect | Notes | Source |
 |------|----|--------|-------|--------|
-| Laras's Lontar | `laras_lontar` | None | Her palm-leaf strip, with your name on the back. The letters fade as the Curse of Forgetting grows. Semar reads it | MQ0 0.4, pickup on the burned stage (`item_picked:laras_lontar`) |
-| Laras's Ribbon | `laras_ribbon` | None (flavor) | Her hair ribbon, caught on the bamboo where she broke free. Step 1.1 completes on the fight, not on the pickup | MQ1 1.1, pickup at the bamboo edge |
-| Boeh Rarang | `boeh_rarang` | Hung on the eastern post at the crater to call the false dawn (`arena_post`, post_id "east"), then Ca | A woven cloth that, in the Sangkuriang legend, helps raise the false dawn (**VERIFY** the legend detail). The Weaver gives it | MQ1 1.8 (`give:boeh_rarang`) |
+| Laras's Lontar | `laras_lontar` | None | Her palm-leaf strip, with your name on the back. The letters fade as the Curse of Forgetting grows | MQ0 0.4 |
+| Laras's Ribbon | `laras_ribbon` | None (flavor) | Her hair ribbon, caught on the bamboo where she broke free | MQ1 1.1 |
+| Boeh Rarang | `boeh_rarang` | Hung on the eastern post to call the false dawn | A woven cloth that, in the Sangkuriang legend, helps raise the false dawn (**VERIFY**) | MQ1 1.8 (`give:boeh_rarang`) |
 
-The Hunter's empty mask in the Interlude (`hunter_mask`) is a codex entry, not an item. The Keris Mpu Gandring (weapon) and the Batu Kali (accessory) are in the tables above; Choice 4 gives one of them. Kain Hijau (armor) is given at the altar (`give:kain_hijau`, MQ4 4.9; the file is `data/items/kain_hijau.tres`, defense 5).
+The Hunter's empty mask (`hunter_mask`) is a codex entry, not an item.
 
-## Choice rewards that are not items
-Two of the six Major Choices ([story.md](story.md) "Six Major Choices") give a blessing or passive, not gear. They are flags, not `ItemData` resources (**ASSUMED**):
+## 7. Codex: the Items page
+- The codex gains a **Barang / Items** category, built straight from `ItemData`:
+  - Every weapon, armor and jimat, plus the Kujang Pusaka at the top.
+  - Title, icon, description and lore come from `data/text/items.csv`. There is no duplicate CodexEntry text.
+- An item that is not in your inventory or equipped shows as "???".
+- The page has its own found/total counter. `Game.codex_percent()` is unchanged, so the Lontar Kuno 50% gate stays stable.
+- Lore lines are 1 to 2 sentences, in ID and EN, for every item.
+
+## 8. Consumables and pickups
+- **Healing Flask:** 3 charges, 40% heal each, refilled at a petilasan. The heal is multiplied by `1 + flask_heal`.
+- **Flask Shard:** +1 max flask charge, 3 in the game (max 6). Quest rewards only.
+- **Herb Pouch:** +5% flask heal each, 4 in the game (max 60%). Quest rewards only.
+- **Ilmu:** currency drops, multiplied by `1 + ilmu_mult`. A chest with no gear holds Ilmu of its zone (`item_id: "ilmu:<n>"`). Of the ten late Ilmu chests in Acts IV to VI, four now hold items (sections 2.2 and 4.2).
+- **Herb:** small HP pickup from enemies.
+- **Gulungan** (scroll): learns a new glyph. Main quest only.
+
+## 9. Choice rewards that are not items
+Two of the six Major Choices give a blessing, not gear. They are flags, not `ItemData`:
 - **Berkah Pesisir** (`choice_offer_song`, Act V): once in Act VI, an auto-revive or ward shield.
-- **Keteguhan Sunyi** (`choice_release_aria`, Act VI): `+15%` stamina and Sakti recovery in the final fight.
+- **Keteguhan Sunyi** (`choice_release_aria`, Act VI): +15% stamina and Sakti recovery in the final fight.
 
-Choice flags with spell effects (Sunda `Ca` radius `+10%`, *Ombak* cost and poise) are in [spells.md](spells.md).
+## 10. Data per item and save
+- `ItemData` fields: `id`, `title`, `slot` (weapon, armor or accessory; an accessory is a jimat), `archetype`, `mythic`, `description`, `lore`, `icon`, the weapon shape fields, `defense`, `bonus`, `daya` (jimat only, 1 to 3), `favoured`, `favoured_bonus`.
+- `icon` is a 16x16 PNG at `assets/art/items/<id>.png`, generated by `tools/gen_items.py`.
+- **Save v4** ([rpg.md](rpg.md) 11) adds `ingatan` and `jimat`. Loading a v3 save:
+  - The old equipped accessory becomes the first jimat, unless it costs more than the 2 Daya a v3 save starts with (Sabuk Galuh, 3). Then it stays in the inventory, to wear after the first jamasan.
+  - Deleted ids (`short_sword`, `iron_staff`, `longbow`, `kujang`) are dropped from the inventory. An equipped deleted weapon falls back to the class starter.
+  - `has_pusaka` is set if MQ0 is past 0.10.
+  - Bosses already beaten show as pending jamasan, so no tier backfill is needed.
 
-## Consumables and pickups
-- **Healing Flask**: heal item, 3 charges, 40% heal each, refilled at a petilasan ([rpg.md](rpg.md)).
-- **Flask Shard**: +1 max flask charge, 3 in the game (max 6). Quest rewards only.
-- **Herb Pouch**: +5% flask heal each, 4 in the game (max 60%). Quest rewards only.
-- **Ilmu**: currency drops. A chest with no gear left to give holds Ilmu S or M of its zone instead (`item_id: "ilmu:<n>"`, **ASSUMED**).
-- **Herb**: small HP pickup from enemies.
-- **Gulungan** (scroll): learns a new glyph. Main quest only ([quests.md](quests.md) section 3.3).
-
-## Data per item
-Mythic items: `name_key`, `description_key`, `lore_key` (translation keys with Indonesian and English text, see [architecture.md](architecture.md)), `source_note` (the reference used, for the codex), `icon`, `mythic = true`. Commons: `name_key`, `description_key` (one line), `icon`. Lore lines are 1-2 sentences.
-
-`icon` is a 16x16 PNG at `assets/art/items/<id>.png` generated by `tools/gen_items.py` (Phase 6b), exported on `ItemData.icon`. Consumables and quest items get icons in the same folder.
-
-## Pickup and equip
-- Chests show a short item card. Equip from the menu at any time (not only at petilasans) (**ASSUMED**).
-- Swapping weapons is instant, no cooldown.
+## 11. Pickup and equip
+- Chests show a short item card.
+- Weapons and armor can be equipped from the menu at any time. Jimat can be equipped only at a petilasan.
+- Swapping weapons is instant, with no cooldown.

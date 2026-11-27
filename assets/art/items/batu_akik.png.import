@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdh7kcf7b2wb1"
-path="res://.godot/imported/short_sword.png-ae80d35dd1c60b0a82d148e6d1ddc69d.ctex"
+uid="uid://dgmb4i7j7rffr"
+path="res://.godot/imported/batu_akik.png-a323a0027b35408633f7ff71ce826e95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/items/short_sword.png"
-dest_files=["res://.godot/imported/short_sword.png-ae80d35dd1c60b0a82d148e6d1ddc69d.ctex"]
+source_file="res://assets/art/items/batu_akik.png"
+dest_files=["res://.godot/imported/batu_akik.png-a323a0027b35408633f7ff71ce826e95.ctex"]
 
 [params]
 

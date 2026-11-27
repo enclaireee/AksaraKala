@@ -88,7 +88,9 @@ func _initialize() -> void:
 	g.changed.emit()
 	var hp0 := p.health.max_hp
 	g.add_item("sabuk_galuh", false)
-	g.equip("sabuk_galuh")
+	check(not g.equip("sabuk_galuh"), "sabuk (3 Daya) does not fit the base budget of 2")
+	g.ingatan = 1   # budget 3
+	check(g.equip("sabuk_galuh"), "sabuk fits at Ingatan 1")
 	check(g.stat("vit") == 6 and p.health.max_hp == hp0 + p.tuning.stat_hp_per, "sabuk +1 vit (max hp %d vs %d)" % [p.health.max_hp, hp0])
 	check(is_equal_approx(p.health.reduction, 0.08), "sabuk sets 8%% reduction (%s)" % p.health.reduction)
 	p.health.hp = p.health.max_hp
@@ -96,8 +98,7 @@ func _initialize() -> void:
 	check(p.health.hp == p.health.max_hp - 46, "50 damage becomes 46 (hp %d/%d)" % [p.health.hp, p.health.max_hp])
 	p.health.take_damage(1, null, true)
 	check(p.health.hp == p.health.max_hp - 47, "damage never drops below 1")
-	g.equipped.accessory = ""
-	g.changed.emit()
+	g.unequip_jimat("sabuk_galuh")
 	check(p.health.reduction == 0.0, "no sabuk, no reduction")
 
 	# Lontar Kuno: smudged threshold 0.65 -> 0.60, no Spirit
@@ -112,8 +113,18 @@ func _initialize() -> void:
 	var stroke: PackedVector2Array = gl[0].templates[0]
 	check(Recognizer.classify(stroke, gl).power > 0.0, "a clean stroke casts at the default threshold")
 	check(Recognizer.classify(stroke, gl, 1.01).power == 0.0, "a threshold above the score fizzles")
-	g.equipped.accessory = ""
-	g.changed.emit()
+	g.unequip_jimat("lontar_kuno")
+
+	# Batu Kali is a jimat (2 Daya): status_short halves a status on the player, never on others.
+	_reset()
+	g.add_item("batu_kali", false)
+	check(ItemData.by_id("batu_kali").slot == "accessory" and g.equip("batu_kali") and "batu_kali" in g.jimat, "Batu Kali equips as a jimat")
+	check(is_equal_approx(g.bonus("status_short"), 0.5), "Batu Kali status_short 0.5 (%s)" % g.bonus("status_short"))
+	p.status.apply(Status.Type.SLOW, 4.0)
+	check(is_equal_approx(p.status._left[Status.Type.SLOW], 2.0), "player SLOW 4s becomes 2s (%s)" % p.status._left.get(Status.Type.SLOW))
+	g.unequip_jimat("batu_kali")
+	p.status.apply(Status.Type.SLOW, 4.0)
+	check(is_equal_approx(p.status._left[Status.Type.SLOW], 4.0), "no Batu Kali: full duration")
 
 	_finish()
 
@@ -121,7 +132,9 @@ func _initialize() -> void:
 func _reset() -> void:
 	g.flags = {}
 	g.stats = {"vit": 5, "end": 5, "str": 5, "dex": 5, "spi": 5}
-	g.equipped.accessory = ""
+	g.jimat = []
+	g.ingatan = 0
+	g.inventory = PackedStringArray()
 	zones.current_zone = ""
 	p.health.invincible_time = 0.0
 	p.health.hp = p.health.max_hp

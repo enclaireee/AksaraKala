@@ -92,6 +92,7 @@ func _ready() -> void:
 	hurtbox.hurt.connect(_on_hurt)
 	hurtbox.dodged.connect(_on_dodged)
 	health.died.connect(_on_died)
+	_ev.enemy_killed.connect(func(_e: Node2D, _i: int) -> void: health.heal(roundi(game.bonus("kill_heal"))))
 	camera.lean = tuning.camera_lean
 	melee_hitbox.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, self, melee_hitbox.heavy, melee_hitbox.damage))
 	stamina.empty_attempt.connect(blocked.emit.bind("st"))
@@ -299,7 +300,7 @@ func _drink() -> void:
 		return
 	if state_time >= tuning.flask_time:
 		var pouches := mini(game.herb_pouches, 4)
-		health.heal(roundi((tuning.flask_base_heal + tuning.flask_pouch_heal * pouches) * health.max_hp))
+		health.heal(roundi((tuning.flask_base_heal + tuning.flask_pouch_heal * pouches) * health.max_hp * (1.0 + game.bonus("flask_heal"))))
 		game.flask_charges -= 1
 		Snd.play("flask")
 		_enter(State.FREE)
@@ -426,6 +427,9 @@ func _shoot() -> void:
 	arrow.direction = aim_dir
 	arrow.speed = item.projectile_speed
 	arrow.max_range = item.projectile_range
+	if item.id == "cakra":
+		arrow.returns = true
+		arrow.pierce = true
 	arrow.position = aim.global_position + aim_dir * 8.0
 	# ASSUMED: a ranged hit freezes only the target; the archer is not touching it
 	arrow.hit_landed.connect(func(hb: Hurtbox) -> void: _on_hit_landed(hb, null, finisher, arrow.damage))
@@ -487,7 +491,7 @@ func _on_dodged(hitbox: Hitbox) -> void:
 		return
 	last_perfect = clock
 	stamina.refund(tuning.dodge_cost)
-	sakti.add(tuning.perfect_sakti)
+	sakti.add(tuning.perfect_sakti + game.bonus("dodge_sakti"))
 	add_wirama(2)
 	hit_flash.flash(tuning.perfect_pause * 3.0)
 	Snd.play("perfect_dodge")
@@ -585,7 +589,8 @@ func _phase_len(p: Phase) -> float:
 
 func _damage() -> int:
 	var m := (tuning.brace_thrust if _thrust_ready else 1.0) * (1.2 if has_buff("gelar") else 1.0) * (1.2 if has_buff("klana") else 1.0)
-	return roundi(item.damage * dmg_mult * (tuning.finisher_mult if hit == 2 else 1.0) * m)
+	var low: float = 1.0 + (game.bonus("low_hp_damage") if health.hp < 0.3 * health.max_hp else 0.0)
+	return roundi(item.damage * dmg_mult * low * (tuning.finisher_mult if hit == 2 else 1.0) * m)
 
 
 ## Rogue Light Step: the hit lands within 60 degrees of the enemy's back. Never on bosses.
@@ -610,17 +615,15 @@ func apply_from_game() -> void:
 	var mage := class_id == "mage"
 	health.max_hp = tuning.stat_hp_base + tuning.stat_hp_per * game.stat("vit") + int(game.bonus("max_hp"))
 	health.hp = health.max_hp if not _applied else mini(health.hp, health.max_hp)
-	health.defense = 0
-	for slot in ["armor", "accessory"]:
-		var g: ItemData = game.equipped_item(slot)
-		health.defense += g.defense if g else 0
+	var armor: ItemData = game.equipped_item("armor")
+	health.defense = armor.defense if armor else 0
 	stamina.max_stamina = tuning.stat_stamina_base + tuning.stat_stamina_per * game.stat("end")
 	stamina.value = stamina.max_stamina if not _applied else minf(stamina.value, stamina.max_stamina)
 	_zone_seen = _zone_id()
 	health.reduction = game.bonus("defense")   # Sabuk Galuh
 	var aria_regen := ARIA_REGEN if game.has_flag("choice_release_aria") and _zone_seen == ARIA_ZONE else 0.0
 	stamina.regen = _regen_base * (1.0 + tuning.stat_speed_per * game.stat("end") + game.bonus("stamina_regen") + aria_regen)
-	dmg_mult = (1.0 + tuning.stat_damage_per * game.stat("str" if item.is_melee() else "dex")) * (1.0 + game.bonus("damage_mult"))
+	dmg_mult = (1.0 + tuning.stat_damage_per * game.stat("str" if item.is_melee() else "dex")) * (1.0 + game.bonus("damage_mult")) * game.power_mult()
 	atk_speed = 1.0 + tuning.stat_speed_per * game.stat("dex")
 	move_mult = 1.0 + game.bonus("move_speed")
 	dodge_cost = tuning.rogue_dodge_cost if class_id == "rogue" else tuning.dodge_cost

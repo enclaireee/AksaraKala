@@ -16,6 +16,6 @@ recovery = 0.3
 cost = 5.0
 projectile_speed = 290.0
 projectile_range = 280.0
-damage = 11
+damage = 10
 favoured = "archer"
 favoured_bonus = {"dex": 1}

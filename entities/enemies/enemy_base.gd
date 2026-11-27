@@ -185,7 +185,7 @@ func _on_died() -> void:
 	BossKit.anim(self, "death", 12.0, true)   # bosses with a death row (enemy_art.gd); others keep the grey flash
 	_drop()
 	var game := get_node("/root/Game")
-	game.add_ilmu(ilmu)   # ASSUMED: awarded directly, no pickups
+	game.add_ilmu(roundi(ilmu * (1.0 + game.bonus("ilmu_mult"))))   # ASSUMED: awarded directly, no pickups
 	if unique_id != "":
 		game.killed.append(unique_id)
 		game.save_game()

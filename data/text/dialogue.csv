@@ -3967,3 +3967,14 @@ BEAT_SQV1_RING_1,"Kelir itu terbentang sendiri. Tak ada angin, tak ada dalang.",
 BEAT_SQV1_RING_2,"Bayang-bayang kecil duduk di depannya, diam semua.","Small shadows sit down in front of it, all of them silent."
 BEAT_SQV1_RING_3,"Jangan dihitung, Nak. Lakonnya sudah dimulai.","Don't count them, child. The play has begun."
 BEAT_SQV1_RING_4,"Gending pelan mengalun, lalu sunyi. Lingkaran batu itu kosong dan terang.","A slow gending plays, then silence. The stone ring is empty and bright."
+DLG_IBU_V601,Sebentar. Ibu tak tahu kenapa tadi menurunkan kujang tua ini dari dinding. Bawalah.,Wait. I don't know why I took this old kujang down from the wall today. Take it.
+DLG_IBU_H601,"Bu, kujang ini tak boleh disentuh siapa pun sejak aku kecil.","Ibu, nobody was allowed to touch this kujang since I was small."
+DLG_IBU_V605,"Tangan Ibu bergerak sendiri. Bawa saja, jangan tinggalkan di rumah yang sepi.","My hand moved on its own. Just take it, don't leave it in a quiet house."
+DLG_SEMAR_H601,Ibu memberiku kujang pagi tadi. Katanya ia sendiri tak tahu kenapa.,Ibu gave me a kujang this morning. She said she didn't know why herself.
+DLG_SEMAR_V601,"Hehe. Pusaka sering tahu lebih dulu dari pemiliknya. Ia perlu dijamas, dibasuh supaya ingat.","Hehe. A pusaka often knows before its keeper does. It must be washed, a jamasan, so that it remembers."
+DLG_SEMAR_V602,"Setelah musuh besar tumbang, duduklah di petilasan dan jamasi bilahnya. Itu aturanku di sini, bukan adat lama.","After a great foe falls, sit at a petilasan and wash the blade. That's my rule here, not an old custom."
+DLG_TIMUR_EMPU_V601,Kujang di pinggangmu itu. Boleh kulihat pamornya?,That kujang at your belt. May I read its pamor?
+DLG_TIMUR_EMPU_V602,Sudah dua kali dibasuh. Ada yang di rumahmu masih menyayanginya.,Washed twice already. Someone in your house still loves it.
+DLG_TIMUR_EMPU_V603,Bilah yang masih ingat rumahnya tak mudah ditelan keris itu. Simpan dekat.,A blade that still remembers its house won't be swallowed easily by that keris. Keep it close.
+DLG_IBU_H602,"Bu, kujang di pinggangku ini. Ibu ingat dari mana asalnya?","Ibu, this kujang at my belt. Do you remember where it came from?"
+DLG_IBU_V602,"Itu kujang ayahku. Pagi itu tangan Ibu yang menurunkannya dari dinding, bukan kepala Ibu.","That was my father's kujang. That morning it was my hand that took it down from the wall, not my head."
