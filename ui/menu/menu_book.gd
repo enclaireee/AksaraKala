@@ -66,7 +66,7 @@ func build(titles: Array, icons: Array) -> void:
 		b.set_meta("title", titles[i])
 		b.pressed.connect(func() -> void: ribbon_pressed.emit(i))
 		var badge := ColorRect.new()
-		badge.color = Color("F2B84B")
+		badge.color = UIFx.WARM
 		badge.size = Vector2(3, 3)
 		badge.position = Vector2(RIB_W - 5, 3)
 		badge.visible = false
@@ -280,9 +280,9 @@ static func section(t: String, width := 200) -> Control:
 	c.custom_minimum_size = Vector2(width, 16)
 	c.mouse_filter = MOUSE_FILTER_IGNORE
 	var h := head(t)
-	h.position = Vector2(0, -1)
+	h.position = Vector2(0, 1)
 	c.add_child(h)
-	var r := nine("book_rule", Rect2(0, 14, width, 3), 8)
+	var r := nine("book_rule", Rect2(0, 13, width, 3), 8)
 	r.patch_margin_top = 0
 	r.patch_margin_bottom = 0
 	c.add_child(r)
@@ -323,8 +323,17 @@ static func row_button(height := 16) -> Button:
 	b.focus_mode = FOCUS_ALL
 	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	b.clip_text = true
+	b.add_theme_font_override("font", UIFx.body_font())
+	b.add_theme_font_size_override("font_size", UIFx.BODY)
+	b.add_theme_color_override("font_color", INK)
+	for c in ["font_hover_color", "font_focus_color", "font_pressed_color", "font_hover_pressed_color"]:
+		b.add_theme_color_override(c, ACCENT)
 	var empty := StyleBoxEmpty.new()
+	empty.content_margin_left = 6
+	empty.content_margin_right = 6
 	var hi := box("book_row", 4, 0)
+	hi.content_margin_left = 6
+	hi.content_margin_right = 6
 	for s in ["normal", "disabled", "pressed"]:
 		b.add_theme_stylebox_override(s, empty)
 	for s in ["hover", "focus", "hover_pressed"]:
@@ -337,7 +346,10 @@ static func row_button(height := 16) -> Button:
 
 
 static func set_row_selected(b: Button, on: bool) -> void:
-	b.add_theme_stylebox_override("normal", box("book_row_sel", 4, 0) if on else StyleBoxEmpty.new())
+	var s: StyleBox = box("book_row_sel", 4, 0) if on else StyleBoxEmpty.new()
+	s.content_margin_left = 6
+	s.content_margin_right = 6
+	b.add_theme_stylebox_override("normal", s)
 
 
 ## A small dusk button with a hairline rim (cyan rim when focused), tracked caps.

@@ -103,19 +103,19 @@ func _sprite_top() -> float:
 func _layout_prompt() -> void:
 	if _prompt == null:
 		return
-	# 14 px ink pill: 2 px border, 10 px keycap, then the verb with its 5 px caps centred on the pill
-	var kw := maxf(10.0, ceilf(KEY_FONT.get_string_size(_key_lbl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 8).x) + 5.0)
+	# 16 px ink pill: 2 px border, 12 px keycap, then the verb centred on the pill
+	var kw := maxf(10.0, ceilf(KEY_FONT.get_string_size(_key_lbl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x) + 5.0)
 	_prompt.reset_size()
 	var vs := _prompt.get_minimum_size()
-	_prompt.size = vs
+	_prompt.size = Vector2(vs.x, 12.0)
 	var w := 2.0 + kw + 4.0 + vs.x + 4.0
-	_pill.size = Vector2(w, 14)
-	_pill.position = Vector2(0, -14)
-	_cap.size = Vector2(kw, 10)
-	_cap.position = Vector2(2, -12)
-	_key_lbl.size = Vector2(kw, 9)
-	_key_lbl.position = Vector2(2, -12)
-	_prompt.position = Vector2(2.0 + kw + 4.0, -11.0)
+	_pill.size = Vector2(w, 16)
+	_pill.position = Vector2(0, -16)
+	_cap.size = Vector2(kw, 12)
+	_cap.position = Vector2(2, -14)
+	_key_lbl.size = Vector2(kw, 12)
+	_key_lbl.position = Vector2(2, -14)
+	_prompt.position = Vector2(2.0 + kw + 4.0, -14.0)
 	_prompt_root.position = Vector2(-roundf(w / 2.0), roundf(_sprite_top() - 3.0))
 
 

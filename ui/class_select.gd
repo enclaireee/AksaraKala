@@ -68,10 +68,15 @@ func _ready() -> void:
 	_stage.add_child(fog)
 	add_child(UIFx.rect_tex("vignette", Vector2.ZERO))
 
+	var list_hdr := UIFx.text("UI_CLASS_TITLE", "label", UIFx.LABEL_COL)
+	list_hdr.position = Vector2(27, 40)
+	list_hdr.size = Vector2(120, 12)
+	add_child(list_hdr)
+
 	_list = VBoxContainer.new()
-	_list.position = Vector2(16, 58)   # 8 classes: 8 x 18 px rows + gaps
-	_list.size = Vector2(120, 158)
-	_list.add_theme_constant_override("separation", 2)
+	_list.position = Vector2(16, 54)   # 8 classes: 8 x 16 px rows
+	_list.size = Vector2(124, 144)
+	_list.add_theme_constant_override("separation", 0)
 	add_child(_list)
 	for id in ClassData.IDS:
 		var c := ClassData.by_id(id)
@@ -82,7 +87,7 @@ func _ready() -> void:
 	_build_info()
 	_hints = UIFx.text("", "body", UIFx.DIM)
 	_hints.position = Vector2(0, 254)
-	_hints.size = Vector2(480, 9)
+	_hints.size = Vector2(480, 12)
 	_hints.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(_hints)
 	_hints.text = "Enter  %s      Esc  %s" % [tr("UI_CHOOSE"), tr("UI_BACK")]
@@ -115,17 +120,17 @@ func _ink_panel(pos: Vector2, sz: Vector2) -> Panel:
 
 ## Right card, on the 2 px grid: name (heading) / role (caps) / rule / description / 5 stats / weapon / passive.
 func _build_info() -> void:
-	_info = _ink_panel(Vector2(296, 32), Vector2(176, 214))
+	_info = _ink_panel(Vector2(292, 20), Vector2(180, 228))
 	add_child(_info)
 	var x := 10.0
-	var w := 156.0
+	var w := 160.0
 	_name = UIFx.text("", "head", UIFx.GOLD_HI)
 	_name.position = Vector2(x, 8)
-	_name.size = Vector2(w, 13)
+	_name.size = Vector2(w, 12)
 	_info.add_child(_name)
 	_role = UIFx.text("", "label", UIFx.LABEL_COL)
-	_role.position = Vector2(x, 24)
-	_role.size = Vector2(w, 9)
+	_role.position = Vector2(x, 22)
+	_role.size = Vector2(w, 12)
 	_info.add_child(_role)
 	var rule := NinePatchRect.new()   # book_rule: a cyan lead-in, then the hairline
 	rule.texture = load("res://assets/art/ui/book_rule.png")
@@ -135,22 +140,22 @@ func _build_info() -> void:
 	_info.add_child(rule)
 	_desc = UIFx.text("", "body", UIFx.CREAM)
 	_desc.position = Vector2(x, 42)
-	_desc.size = Vector2(w, 29)
+	_desc.size = Vector2(w, 36)
 	_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_desc.add_theme_constant_override("line_spacing", 1)
 	_info.add_child(_desc)
-	var y := 78.0
+	var y := 82.0
 	for s: String in STATS:
 		var l := UIFx.text(tr("UI_STAT_" + s.to_upper()), "body", UIFx.DIM)
-		l.position = Vector2(x, y - 1)
-		l.size = Vector2(56, 9)
+		l.position = Vector2(x, y)
+		l.size = Vector2(56, 12)
 		_info.add_child(l)
 		var bar := StatBar.new()
 		bar.position = Vector2(x + 58, y + 1)
 		_info.add_child(bar)
 		_bars[s] = bar
-		y += 10.0
-	y += 6.0   # 134: weapon well with its caps label and name beside it
+		y += 12.0
+	y += 6.0   # 148: weapon well with its caps label and name beside it
 	var slot := UIFx.rect_tex("ink_slot", Vector2(x, y))
 	_info.add_child(slot)
 	_w_icon = TextureRect.new()
@@ -159,21 +164,21 @@ func _build_info() -> void:
 	_w_icon.mouse_filter = MOUSE_FILTER_IGNORE
 	slot.add_child(_w_icon)
 	var w_lbl := UIFx.text(tr("UI_WEAPON"), "label", UIFx.LABEL_COL)
-	w_lbl.position = Vector2(x + 26, y + 1)
-	w_lbl.size = Vector2(w - 26, 9)
+	w_lbl.position = Vector2(x + 26, y)
+	w_lbl.size = Vector2(w - 26, 12)
 	_info.add_child(w_lbl)
 	_w_name = UIFx.text("", "body", UIFx.CREAM)
-	_w_name.position = Vector2(x + 26, y + 11)
-	_w_name.size = Vector2(w - 26, 9)
+	_w_name.position = Vector2(x + 26, y + 12)
+	_w_name.size = Vector2(w - 26, 12)
 	_info.add_child(_w_name)
-	y += 28.0   # 162: passive
+	y += 28.0   # 176: passive
 	_p_name = UIFx.text("", "label", UIFx.ACCENT)
 	_p_name.position = Vector2(x, y)
-	_p_name.size = Vector2(w, 9)
+	_p_name.size = Vector2(w, 12)
 	_info.add_child(_p_name)
 	_p_text = UIFx.text("", "body", UIFx.CREAM)
-	_p_text.position = Vector2(x, y + 12)
-	_p_text.size = Vector2(w, 39)
+	_p_text.position = Vector2(x, y + 13)
+	_p_text.size = Vector2(w, 36)
 	_p_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_p_text.add_theme_constant_override("line_spacing", 1)
 	_info.add_child(_p_text)
@@ -330,4 +335,4 @@ class StatBar extends Control:
 			var fw := roundf(6.0 * f)
 			for half in 2:   # each segment is two 3x5 book pips: lit once the fill reaches them
 				draw_texture(_PIP_ON if fw >= 3.0 * (half + 1) - 1.0 and f > 0.0 else _PIP_OFF, Vector2(i * 7 + half * 3, 1))
-		draw_string(UIFx.body_font(), Vector2(74, 6), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.CREAM)
+		draw_string(UIFx.body_font(), Vector2(74, 8), str(_target), HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, UIFx.CREAM)

@@ -42,8 +42,14 @@ func _ready() -> void:
 	row.add_theme_constant_override("separation", 6)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_pill.add_child(row)
-	_key = UIFx.text("", "label", UIFx.HEAD)
-	_key.add_theme_stylebox_override("normal", UIFx.box("keycap", 2.0))
+	_key = UIFx.text("", "body", UIFx.NIGHT)
+	_key.add_theme_constant_override("outline_size", 0)
+	var kbox := UIFx.box("keycap", 3.0)
+	kbox.content_margin_left = 4.0
+	kbox.content_margin_right = 4.0
+	kbox.content_margin_top = 1.0
+	kbox.content_margin_bottom = 1.0
+	_key.add_theme_stylebox_override("normal", kbox)
 	row.add_child(_key)
 	_lbl = UIFx.text("", "body", UIFx.CREAM)
 	row.add_child(_lbl)

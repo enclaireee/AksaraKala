@@ -32,10 +32,12 @@ var _goal_region := ""
 var _goal_name := ""
 var _zone_name := Callable()
 var _pill := [Rect2(), Rect2()]
+var _redraw_t := 0.0
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	clip_contents = true
 	_icons = load(ICON_TEX)
 	_world = load(WORLD_TEX)
 
@@ -43,7 +45,10 @@ func _ready() -> void:
 func _process(d: float) -> void:
 	if is_visible_in_tree():
 		_pulse += d
-		queue_redraw()
+		_redraw_t += d
+		if _redraw_t >= 0.08:
+			_redraw_t = 0.0
+			queue_redraw()
 
 
 static func region_of(zone_id: String) -> String:
@@ -243,7 +248,7 @@ func _label(text: String, p: Vector2, color: Color, centered := true) -> void:
 	var font := UIFx.caps_font()
 	var w := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
 	var at := Vector2(roundf(p.x - (w / 2.0 if centered else 0.0)), roundf(p.y))
-	draw_string_outline(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, 3, UIFx.LACQUER)
+	draw_string_outline(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, 1, UIFx.LACQUER)
 	draw_string(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY, color)
 
 

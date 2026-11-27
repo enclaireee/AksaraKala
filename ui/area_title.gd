@@ -37,13 +37,13 @@ func _ready() -> void:
 	_region.add_theme_color_override("font_outline_color", OUTLINE)
 	_region.add_theme_constant_override("outline_size", 1)
 	_region.position = Vector2(0, Y)
-	_region.size = Vector2(480, 20)
+	_region.size = Vector2(480, 24)
 	_region.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_region.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_region)
 	_rule = ColorRect.new()
 	_rule.color = GOLD
-	_rule.position = Vector2(240, Y + 21)
+	_rule.position = Vector2(240, Y + 25)
 	_rule.size = Vector2(0, 1)
 	_rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_rule)
@@ -54,8 +54,8 @@ func _ready() -> void:
 	_area.add_theme_color_override("font_outline_color", OUTLINE)
 	_area.add_theme_constant_override("outline_size", 1)
 	_area.add_theme_color_override("font_color", CREAM)
-	_area.position = Vector2(0, Y + 24)
-	_area.size = Vector2(480, 9)
+	_area.position = Vector2(0, Y + 29)
+	_area.size = Vector2(480, 12)
 	_area.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_area.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_area)

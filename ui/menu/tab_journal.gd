@@ -154,11 +154,12 @@ func _track(id: String) -> void:
 
 
 func handle_input(e: InputEvent) -> bool:
-	if e.is_action_pressed("interact"):
-		var f := get_viewport().gui_get_focus_owner()
-		if f and is_ancestor_of(f) and f.has_meta("pin"):
-			game.pin_quest(f.get_meta("pin"))
-			return true
+	if e.is_action_pressed("ui_left") or (e is InputEventKey and e.pressed and e.physical_keycode == KEY_PAGEUP):
+		_detail_scroll.scroll_vertical -= 24
+		return true
+	if e.is_action_pressed("ui_right") or (e is InputEventKey and e.pressed and e.physical_keycode == KEY_PAGEDOWN):
+		_detail_scroll.scroll_vertical += 24
+		return true
 	return false
 
 
@@ -213,7 +214,7 @@ func _fill_detail(g: Node) -> void:
 	zl.size_flags_horizontal = SIZE_EXPAND_FILL
 	meta.add_child(zl)
 	if q.id == _tracked_id(g):
-		meta.add_child(MenuBook.bold(tr("UI_BK_TRACKED"), MenuBook.WAX))
+		meta.add_child(MenuBook.bold(tr("UI_BK_TRACKED"), UIFx.WARM))
 	elif done:
 		meta.add_child(MenuBook.bold(tr("UI_JOURNAL_DONE"), MenuBook.VERD))
 	detail.add_child(meta)

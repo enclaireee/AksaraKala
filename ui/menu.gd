@@ -53,9 +53,14 @@ func _ready() -> void:
 	book.ribbon_pressed.connect(_switch)
 	_tabs.tab_changed.connect(_on_tab_changed)
 	var g := get_node("/root/Game")
-	g.changed.connect(refresh)
+	g.changed.connect(_on_game_changed)
 	get_node("/root/Events").rested.connect(func(_p: Node2D) -> void: open(true))
 	refresh()
+
+
+func _on_game_changed() -> void:
+	if visible:
+		refresh()
 
 
 func current() -> MenuTab:
@@ -123,7 +128,8 @@ func update_hints() -> void:
 		return
 	var h: Array = current().hints().duplicate()
 	h.append(["Q E", "UI_BK_HINT_TABS"])
-	h.append(["Esc", "UI_BK_HINT_BACK"])
+	var pk: String = get_node("/root/Game").key_name("pause").replace("Escape", "Esc")
+	h.append([pk, "UI_BK_HINT_BACK"])
 	book.set_hints(h)
 
 

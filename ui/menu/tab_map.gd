@@ -1,6 +1,6 @@
 extends MenuTab
 ## Peta (Map), ui.md 4.3 tab 4: the illustrated world map and the painted area map across both pages (ui/map_view.gd).
-## Accept (Enter / Space) flips between them, as does clicking the pill. Activated Petilasans allow Fast Travel.
+## F / Space (or clicking the pill) flips between DUNIA and AREA. Activated Petilasans allow Fast Travel.
 
 var _view: MapView
 var _note: Label
@@ -23,12 +23,14 @@ func icon() -> String:
 
 func build(_l: Control, _r: Control) -> void:
 	_view = MapView.new()
-	put(self, _view, Vector2(12, 8), Vector2(432, 160))
-	_note = MenuBook.text("", MenuBook.INK, true)
-	put(self, _note, Vector2(12, 170), Vector2(432, 22))
+	put(self, _view, Vector2(12, 4), Vector2(432, 184))
+	_note = MenuBook.text("", MenuBook.INK, false)
+	_note.clip_text = true
+	_note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	put(self, _note, Vector2(12, 190), Vector2(432, 14))
 	_ft_bar = HBoxContainer.new()
 	_ft_bar.add_theme_constant_override("separation", 4)
-	put(self, _ft_bar, Vector2(12, 196), Vector2(432, 22))
+	put(self, _ft_bar, Vector2(12, 206), Vector2(432, 18))
 	_ft_lbl = MenuBook.bold(tr("UI_FT_LABEL"))
 	_ft_bar.add_child(_ft_lbl)
 	_ft_prev = MenuBook.small_button("<")
@@ -43,8 +45,18 @@ func build(_l: Control, _r: Control) -> void:
 	_ft_bar.add_child(_ft_next)
 
 
+func focus_first() -> void:
+	if _ft_go and not _ft_go.disabled:
+		_ft_go.grab_focus()
+
+
 func hints() -> Array:
-	return [["Enter", "UI_MAP_TOGGLE"], [game.key_name("interact"), "UI_VERB_TRAVEL"]]
+	var h := [["F", "UI_MAP_TOGGLE"]]
+	if _ft_go and not _ft_go.disabled:
+		h.append(["Enter", "UI_VERB_TRAVEL"])
+		if _ft_zones.size() > 1:
+			h.append(["< >", "UI_BK_HINT_SELECT"])
+	return h
 
 
 func refresh() -> void:
@@ -53,14 +65,17 @@ func refresh() -> void:
 	_view.refresh(zone_name)
 	var zones := get_node("/root/Zones")
 	var z: String = zones.current_zone
-	var line := "%s: %s" % [tr("UI_MAP_HERE"), zone_name(z)] if z != "" else ""
+	var parts := PackedStringArray()
+	if z != "":
+		parts.append("%s: %s" % [tr("UI_MAP_HERE"), zone_name(z)])
 	var obj: String = game.objective_text()
 	if obj != "":
-		line += "\n" + tr("UI_MAP_GOAL") + ": " + obj
+		var g_str := tr("UI_MAP_GOAL") + ": " + obj
 		var m: Dictionary = game.objective_marker()
 		if m.get("zone", z) != z:
-			line += "  (" + zone_name(str(m.zone)) + ")"
-	_note.text = line
+			g_str += " (" + zone_name(str(m.zone)) + ")"
+		parts.append(g_str)
+	_note.text = "  ·  ".join(parts)
 	_refresh_fast_travel(zones, z)
 
 
@@ -109,10 +124,15 @@ func handle_input(e: InputEvent) -> bool:
 	if e.is_action_pressed("ui_right") and _ft_zones.size() > 1:
 		_step_ft(1)
 		return true
-	if e.is_action_pressed("interact") and not _ft_go.disabled:
-		_do_fast_travel()
-		return true
-	if e.is_action_pressed("ui_accept") and _view != null and _view.is_visible_in_tree():
-		_view.toggle()
-		return true
+	if e is InputEventKey and e.pressed and not e.echo and e.physical_keycode in [KEY_F, KEY_SPACE]:
+		if _view != null and _view.is_visible_in_tree():
+			_view.toggle()
+			return true
+	if e.is_action_pressed("ui_accept"):
+		if _ft_go != null and not _ft_go.disabled:
+			_do_fast_travel()
+			return true
+		if _view != null and _view.is_visible_in_tree():
+			_view.toggle()
+			return true
 	return false

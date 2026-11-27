@@ -67,7 +67,7 @@ func build(l: Control, r: Control) -> void:
 	put(l, _name, Vector2(0, -2), Vector2(200, 20))
 	_class = MenuBook.italic("", MenuBook.INK_DIM, false)
 	_class.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	put(l, _class, Vector2(0, 18), Vector2(200, 10))
+	put(l, _class, Vector2(0, 14), Vector2(200, 12))
 	put(l, MenuBook.pic("book_disc", Vector2(56, 150)), Vector2(56, 150))
 	_atlas = AtlasTexture.new()
 	_figure = TextureRect.new()
@@ -77,13 +77,13 @@ func build(l: Control, r: Control) -> void:
 	put(l, _figure, Vector2(52, 32), Vector2(FRAME_W, FRAME_H))
 	# level seal, top left of the figure
 	put(l, MenuBook.pic("book_seal", Vector2.ZERO), Vector2(8, 40))
-	_level = MenuBook.num("", MenuBook.PAPER_HI, 20)
+	_level = MenuBook.num("", UIFx.HEAD, 20)
 	_level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_level.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	put(l, _level, Vector2(8, 40), Vector2(28, 26))
 	var lv := MenuBook.bold(tr("UI_BK_LEVEL"), MenuBook.INK_HEAD)
 	lv.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	put(l, lv, Vector2(0, 70), Vector2(44, 10))
+	put(l, lv, Vector2(0, 70), Vector2(44, 12))
 	# play time, top right (balances the seal)
 	put(l, MenuBook.pic("book_ic_time", Vector2.ZERO), Vector2(165, 32))
 	_time = MenuBook.num("", MenuBook.INK, 10)
@@ -91,7 +91,7 @@ func build(l: Control, r: Control) -> void:
 	put(l, _time, Vector2(148, 46), Vector2(44, 12))
 	var tl := MenuBook.bold(tr("UI_BK_TIME"), MenuBook.INK_HEAD)
 	tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	put(l, tl, Vector2(136, 70), Vector2(64, 10))   # 64 wide: PLAY TIME in Pixeloid caps stays on the page
+	put(l, tl, Vector2(136, 70), Vector2(64, 12))   # 64 wide: PLAY TIME in Pixeloid caps stays on the page
 	# Ilmu: label, value, bar, status line
 	put(l, MenuBook.pic("book_ic_ilmu", Vector2.ZERO), Vector2(0, 170))
 	put(l, MenuBook.bold(tr("UI_BK_ILMU"), MenuBook.INK_HEAD), Vector2(14, 168), Vector2(80, 12))
@@ -110,21 +110,21 @@ func build(l: Control, r: Control) -> void:
 	# Pusaka panel (items.md 1): the free column left of the figure, button in the one right of it
 	_pusaka = Control.new()
 	_pusaka.mouse_filter = MOUSE_FILTER_IGNORE
-	put(l, _pusaka, Vector2(0, 88), Vector2(200, 60))
+	put(l, _pusaka, Vector2(0, 84), Vector2(200, 62))
 	var ic := TextureRect.new()
 	ic.texture = load("res://assets/art/items/kujang_pusaka.png")
 	ic.mouse_filter = MOUSE_FILTER_IGNORE
 	put(_pusaka, ic, Vector2.ZERO, Vector2(16, 16))
-	put(_pusaka, MenuBook.bold(tr("UI_PUSAKA"), MenuBook.INK_HEAD), Vector2(18, 2), Vector2(34, 12))
-	put(_pusaka, MenuBook.text(tr("UI_INGATAN"), MenuBook.INK_DIM), Vector2(0, 20), Vector2(50, 12))
+	put(_pusaka, MenuBook.bold(tr("UI_PUSAKA"), MenuBook.INK_HEAD), Vector2(18, 2), Vector2(42, 12))
+	put(_pusaka, MenuBook.text(tr("UI_INGATAN"), MenuBook.INK_DIM), Vector2(0, 18), Vector2(54, 12))
 	_ingatan_pips = HBoxContainer.new()
 	_ingatan_pips.add_theme_constant_override("separation", 2)
 	_ingatan_pips.mouse_filter = MOUSE_FILTER_IGNORE
-	put(_pusaka, _ingatan_pips, Vector2(0, 33), Vector2(50, 10))
+	put(_pusaka, _ingatan_pips, Vector2(0, 31), Vector2(50, 6))
 	_bonus = MenuBook.num("", MenuBook.VERD)
-	put(_pusaka, _bonus, Vector2(0, 44), Vector2(50, 12))
+	put(_pusaka, _bonus, Vector2(0, 38), Vector2(50, 12))
 	_daya = MenuBook.text("", MenuBook.INK_DIM)
-	put(_pusaka, _daya, Vector2(0, 56), Vector2(50, 12))
+	put(_pusaka, _daya, Vector2(0, 50), Vector2(50, 12))
 	jamasan_btn = MenuBook.small_button("UI_JAMASAN")
 	jamasan_btn.name = "Jamasan"
 	jamasan_btn.pressed.connect(_do_jamasan)
@@ -146,11 +146,11 @@ func build(l: Control, r: Control) -> void:
 	_pts_seal = Control.new()
 	_pts_seal.mouse_filter = MOUSE_FILTER_IGNORE
 	put(r, _pts_seal, Vector2(120, -3), Vector2(80, 16))
-	var pl := MenuBook.bold(tr("UI_BK_POINTS"), MenuBook.WAX)
+	var pl := MenuBook.bold(tr("UI_BK_POINTS"), UIFx.WARM)
 	pl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	put(_pts_seal, pl, Vector2(0, 3), Vector2(62, 12))
 	put(_pts_seal, MenuBook.pic("book_seal_small", Vector2.ZERO), Vector2(64, 0))
-	_pts_num = MenuBook.num("", MenuBook.PAPER_HI)
+	_pts_num = MenuBook.num("", UIFx.HEAD)
 	_pts_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_pts_num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	put(_pts_seal, _pts_num, Vector2(64, 0), Vector2(16, 15))
@@ -316,7 +316,7 @@ func _refresh_pusaka(g: Node, at: bool, pend: int) -> void:
 	clear(_ingatan_pips)
 	for i in 4:
 		var p := MenuBook.pic("book_pip_on" if i < g.ingatan else "book_pip_off", Vector2.ZERO)
-		p.custom_minimum_size = Vector2(6, 10)   # the 3x5 pip at 2x
+		p.custom_minimum_size = Vector2(3, 5)
 		_ingatan_pips.add_child(p)
 	_bonus.text = "+%d%%" % roundi((g.power_mult() - 1.0) * 100.0)
 	_daya.text = "%s %d" % [tr("UI_DAYA"), g.daya()]
@@ -398,6 +398,17 @@ func _refresh_derived(g: Node) -> void:
 	_derived.jamu.text = "%d/%d" % [g.flask_charges, g.flask_max]
 
 
+static var _glyph_fonts := {}
+
+
+static func _glyph_font(is_jawa: bool) -> FontVariation:
+	if not _glyph_fonts.has(is_jawa):
+		var f := FontVariation.new()
+		f.base_font = load(Lesson.JAWA if is_jawa else Lesson.SUNDA)
+		_glyph_fonts[is_jawa] = f
+	return _glyph_fonts[is_jawa]
+
+
 func _refresh_glyphs(g: Node) -> void:
 	clear(_glyphs)
 	var ids: PackedStringArray = g.glyphs_learned
@@ -409,9 +420,7 @@ func _refresh_glyphs(g: Node) -> void:
 		tile.mouse_filter = MOUSE_FILTER_PASS
 		var l := Label.new()
 		l.text = Lesson.CHARS.get(id, "?")
-		var f := FontVariation.new()
-		f.base_font = load(Lesson.JAWA if id.begins_with("jawa") else Lesson.SUNDA)
-		l.add_theme_font_override("font", f)
+		l.add_theme_font_override("font", _glyph_font(id.begins_with("jawa")))
 		l.add_theme_font_size_override("font_size", 10 if id.begins_with("jawa") else 12)
 		l.add_theme_color_override("font_color", MenuBook.INK)
 		l.add_theme_constant_override("outline_size", 0)

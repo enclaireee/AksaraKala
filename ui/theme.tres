@@ -1,10 +1,10 @@
 [gd_resource type="Theme" load_steps=48 format=3]
 
 [ext_resource type="FontFile" path="res://assets/fonts/PixeloidSans.woff" id="f1"]
-[ext_resource type="FontFile" path="res://assets/fonts/Jersey15-Regular.ttf" id="f2"]
+[ext_resource type="FontFile" path="res://assets/fonts/PixeloidSans-Bold.woff" id="f2"]
 [ext_resource type="FontFile" path="res://assets/fonts/PixeloidSans.woff" id="f4"]
 [ext_resource type="FontFile" path="res://assets/fonts/PixeloidSans-Bold.woff" id="f5"]
-[ext_resource type="FontFile" path="res://assets/fonts/Jersey10-Regular.ttf" id="f3"]
+[ext_resource type="FontFile" path="res://assets/fonts/PixeloidSans-Bold.woff" id="f3"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/panel.png" id="t_panel"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/panel_dialogue.png" id="t_panel_dialogue"]
 [ext_resource type="Texture2D" path="res://assets/art/ui/button_normal.png" id="t_button_normal"]
@@ -206,13 +206,11 @@ base_font = ExtResource("f5")
 
 [sub_resource type="FontVariation" id="fv_head"]
 base_font = ExtResource("f3")
-spacing_top = -4
-spacing_bottom = -3
+spacing_glyph = 1
 
 [sub_resource type="FontVariation" id="fv_display"]
 base_font = ExtResource("f2")
-spacing_top = -5
-spacing_bottom = -2
+spacing_glyph = 1
 
 [sub_resource type="FontVariation" id="fv_caps"]
 base_font = ExtResource("f1")
@@ -234,9 +232,9 @@ Panel/styles/panel = SubResource("s_panel")
 PanelContainer/styles/panel = SubResource("s_panel")
 TooltipPanel/styles/panel = SubResource("s_panel")
 TooltipLabel/colors/font_color = Color(0.925, 0.902, 0.949, 1)
-TooltipLabel/font_sizes/font_size = 8
+TooltipLabel/font_sizes/font_size = 9
 Button/fonts/font = SubResource("fv_bold")
-Button/font_sizes/font_size = 8
+Button/font_sizes/font_size = 9
 Button/colors/font_color = Color(0.925, 0.902, 0.949, 1)
 Button/colors/font_hover_color = Color(0.498, 0.91, 0.878, 1)
 Button/colors/font_hover_pressed_color = Color(0.498, 0.91, 0.878, 1)
@@ -244,7 +242,7 @@ Button/colors/font_focus_color = Color(0.498, 0.91, 0.878, 1)
 Button/colors/font_pressed_color = Color(0.847, 1, 0.984, 1)
 Button/colors/font_disabled_color = Color(0.353, 0.306, 0.502, 1)
 Button/colors/font_outline_color = Color(0.0392, 0.0314, 0.0784, 1)
-Button/constants/outline_size = 1
+Button/constants/outline_size = 0
 Button/constants/h_separation = 3
 Button/styles/normal = SubResource("s_button_normal")
 Button/styles/hover = SubResource("s_button_hover")
@@ -265,12 +263,12 @@ CheckBox/colors/font_color = Color(0.925, 0.902, 0.949, 1)
 CheckBox/colors/font_hover_color = Color(0.498, 0.91, 0.878, 1)
 CheckBox/styles/focus = SubResource("s_none")
 TabContainer/fonts/font = SubResource("fv_bold")
-TabContainer/font_sizes/font_size = 8
+TabContainer/font_sizes/font_size = 9
 TabContainer/colors/font_selected_color = Color(0.498, 0.91, 0.878, 1)
 TabContainer/colors/font_unselected_color = Color(0.663, 0.608, 0.784, 1)
 TabContainer/colors/font_hovered_color = Color(0.498, 0.91, 0.878, 1)
 TabContainer/colors/font_outline_color = Color(0.0392, 0.0314, 0.0784, 1)
-TabContainer/constants/outline_size = 1
+TabContainer/constants/outline_size = 0
 TabContainer/constants/side_margin = 0
 TabContainer/styles/panel = SubResource("s_empty")
 TabContainer/styles/tab_selected = SubResource("s_tab_on")
@@ -279,7 +277,7 @@ TabContainer/styles/tab_hovered = SubResource("s_tab_on")
 TabContainer/styles/tab_focus = SubResource("s_none")
 TabContainer/styles/tab_disabled = SubResource("s_tab_off")
 TabBar/fonts/font = SubResource("fv_bold")
-TabBar/font_sizes/font_size = 8
+TabBar/font_sizes/font_size = 9
 TabBar/colors/font_selected_color = Color(0.498, 0.91, 0.878, 1)
 TabBar/colors/font_unselected_color = Color(0.663, 0.608, 0.784, 1)
 TabBar/colors/font_hovered_color = Color(0.498, 0.91, 0.878, 1)
@@ -308,22 +306,22 @@ LineEdit/styles/normal = SubResource("s_edit")
 LineEdit/styles/focus = SubResource("s_edit")
 HeaderLarge/base_type = &"Label"
 HeaderLarge/fonts/font = SubResource("fv_display")
-HeaderLarge/font_sizes/font_size = 27
+HeaderLarge/font_sizes/font_size = 18
 HeaderLarge/colors/font_color = Color(1, 0.957, 0.902, 1)
 Heading/base_type = &"Label"
 Heading/fonts/font = SubResource("fv_head")
-Heading/font_sizes/font_size = 19
+Heading/font_sizes/font_size = 9
 Heading/colors/font_color = Color(1, 0.957, 0.902, 1)
 BossName/base_type = &"Label"
 BossName/fonts/font = SubResource("fv_head")
-BossName/font_sizes/font_size = 19
+BossName/font_sizes/font_size = 9
 BossName/colors/font_color = Color(0.925, 0.902, 0.949, 1)
 Small/base_type = &"Label"
-Small/font_sizes/font_size = 8
+Small/font_sizes/font_size = 9
 Small/colors/font_color = Color(0.663, 0.608, 0.784, 1)
 Caps/base_type = &"Label"
 Caps/fonts/font = SubResource("fv_caps")
-Caps/font_sizes/font_size = 8
+Caps/font_sizes/font_size = 9
 Caps/colors/font_color = Color(0.663, 0.608, 0.784, 1)
 Dim/base_type = &"Label"
 Dim/colors/font_color = Color(0.663, 0.608, 0.784, 1)
@@ -332,7 +330,7 @@ Italic/fonts/font = ExtResource("f4")
 Italic/colors/font_color = Color(0.549, 0.514, 0.651, 1)
 ProgressBar/styles/background = SubResource("s_pbar_bg")
 ProgressBar/styles/fill = SubResource("s_pbar_fill")
-ProgressBar/font_sizes/font_size = 8
+ProgressBar/font_sizes/font_size = 9
 HSlider/styles/slider = SubResource("s_pbar_bg")
 HSlider/styles/grabber_area = SubResource("s_pbar_fill")
 HSlider/styles/grabber_area_highlight = SubResource("s_pbar_fill_hi")

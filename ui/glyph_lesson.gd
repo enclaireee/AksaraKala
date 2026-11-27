@@ -9,7 +9,7 @@ extends CanvasLayer
 
 const NEEDED := 3   # TUNE: successful casts per lesson
 const HOLD := 1.0
-const CARD := Rect2(292, 56, 180, 160)   # right edge (8 px margin), under Ilmu and the toast row: clear of tracker, banner, dialogue
+const CARD := Rect2(288, 50, 184, 174)   # right edge (8 px margin), under Ilmu and the toast row: clear of tracker, banner, dialogue
 const GUIDE_RECT := Rect2(CARD.position.x + 14.0, CARD.position.y + 32.0, 68.0, 68.0)   # the ghost glyph sits in the card's slot
 const INK_HEAD := UIFx.ACCENT   # on the dusk card: the cyan glyph light (ui.md 0.1)
 const HINT_COL := UIFx.DIM
@@ -113,7 +113,7 @@ func _ready() -> void:
 	_tip = _label(Vector2(cx + 10, cy + 108), Vector2(CARD.size.x - 20, 36))
 	_body = _label(Vector2.ZERO, Vector2.ONE)   # the codex lore stays in the codex; the card only teaches the stroke
 	_body.visible = false
-	_cast_cue = _label(Vector2(cx + 10, cy + CARD.size.y - 17), Vector2(88, 12))
+	_cast_cue = _label(Vector2(cx + 10, cy + CARD.size.y - 29), Vector2(CARD.size.x - 20, 12))
 	_cast_cue.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_cast_cue.add_theme_color_override("font_color", UIFx.GOLD_HI)
 	_cast_cue.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -163,12 +163,10 @@ func _ready() -> void:
 	_card.add_child(_wet)
 	_stroke = CastOverlay.brush_line(6.0, GOLD)
 	_card.add_child(_stroke)
-	_hint_w = Label.new()
-	_hint_w.text = _write_cue_text()
+	_hint_w = UIFx.text(_write_cue_text(), "body", UIFx.HEAD)
 	_hint_w.position = Vector2(0, 220)
 	_hint_w.size = Vector2(480, 12)
 	_hint_w.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_hint_w.add_theme_color_override("font_color", UIFx.GOLD_HI)
 	_card.add_child(_hint_w)
 	_cast_cue.text = _cast_cue_text()
 
@@ -332,6 +330,8 @@ func _on_write(seq_id: String, glyphs: PackedStringArray) -> void:
 	for c in _card.get_children():
 		if c is Label and c.has_meta("written"):
 			c.queue_free()
+	_stroke.clear_points()
+	_wet.clear_points()
 	_wpaused = get_tree().paused
 	get_tree().paused = true
 	_wshow()
@@ -385,6 +385,7 @@ func _write_done() -> void:
 	_wguide.hide_guide()
 	_wguide.visible = false
 	_stroke.clear_points()
+	_wet.clear_points()
 	get_tree().paused = _wpaused
 	get_node("/root/Events").name_written.emit(id)
 	_next()

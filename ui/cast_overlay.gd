@@ -55,17 +55,17 @@ func _ready() -> void:
 	_ring.closed = true
 	_label = Label.new()
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_label.add_theme_font_override("font", UIFx.head_font())   # Jersey 10 at 19: the heading step (ui.md 1)
+	_label.add_theme_font_override("font", UIFx.head_font())
 	_label.add_theme_font_size_override("font_size", UIFx.HEAD_SIZE)
 	_label.add_theme_color_override("font_outline_color", INK)
-	_label.add_theme_constant_override("outline_size", 4)
+	_label.add_theme_constant_override("outline_size", 2)
 	add_child(_label)
 	_sub = Label.new()
 	_sub.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_sub.add_theme_font_override("font", UIFx.body_font())
 	_sub.add_theme_font_size_override("font_size", UIFx.BODY)
 	_sub.add_theme_color_override("font_outline_color", INK)
-	_sub.add_theme_constant_override("outline_size", 3)
+	_sub.add_theme_constant_override("outline_size", 1)
 	add_child(_sub)
 
 
@@ -266,8 +266,9 @@ func finish(ok: bool, text: String, info := {}) -> void:
 	_label.modulate = Color.WHITE
 	_label.modulate.a = 1.0 if text != "" else 0.0
 	if ok:
-		_label.scale = Vector2(1.35, 1.35)   # a small pop, then settle
-		create_tween().set_ignore_time_scale(true).tween_property(_label, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		var ly := _label.position.y
+		_label.position.y = ly + 4.0
+		create_tween().set_ignore_time_scale(true).tween_property(_label, "position:y", ly, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	if _ink.get_point_count() > 0:
 		_mark("blot", 4, last, 1.0)   # the pen lifts: a blot at the end of the stroke
 	_tween.tween_property(_vignette, "modulate:a", 0.0, 0.3)

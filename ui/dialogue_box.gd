@@ -20,7 +20,7 @@ const BOX_W := 400.0
 const BOX_BOTTOM := 262.0 # frame bottom edge (8 px screen margin): the box grows upward from here
 const PAD_X := 10.0       # text inset when there is no face
 const PAD_TOP := 7.0      # frame top to the name row
-const NAME_ROW := 12.0    # name row height (9 px caps line + 3 px gap) above the text
+const NAME_ROW := 13.0    # name row height (11 px caps line + 2 px gap) above the text
 const PAD_BOT := 13.0     # room for the continue mark under the text
 const MIN_H := 40.0
 const LINE_H := UIFx.LINE * 1.0   # body line pitch (ui.md 1)
@@ -83,13 +83,13 @@ func _ready() -> void:
 	_frame = _nine("ink_panel", Rect2(BOX_X, BOX_BOTTOM - MIN_H, BOX_W, MIN_H), 4)
 	_plate = NinePatchRect.new()   # the name row: no art of its own, it only holds the caps name (ui.md 3.1)
 	_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_plate.size = Vector2(60, 9)
+	_plate.size = Vector2(60, 12)
 	add_child(_plate)
 	_speaker = UIFx.text("", "label", UIFx.WARM)
-	_speaker.size = Vector2(60, 9)
+	_speaker.size = Vector2(60, 12)
 	_plate.add_child(_speaker)
 	_who = UIFx.text("", "body", UIFx.DIM)   # first meeting: "Anak Semar. Riuh." beside the name
-	_who.size = Vector2(240, 9)
+	_who.size = Vector2(240, 12)
 	add_child(_who)
 	_text = UIFx.text("", "body", TEXT_COL)
 	_text.size = Vector2(BOX_W - PAD_X * 2.0, LINE_H)
@@ -117,7 +117,7 @@ func _ready() -> void:
 	_cue.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_cue)
 	_hint = UIFx.text("", "body", UIFx.DIM)
-	_hint.size = Vector2(120, 9)
+	_hint.size = Vector2(120, 12)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(_hint)
 	_frame.z_index = -1
@@ -228,10 +228,9 @@ func _animate_open() -> void:
 
 
 func _pop_plate() -> void:
-	_plate.pivot_offset = _plate.size / 2.0
-	_plate.scale = Vector2(0.8, 0.8)
-	create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).tween_property(_plate, "scale", Vector2.ONE, 0.15) \
-			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_plate.modulate.a = 0.0
+	create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).tween_property(_plate, "modulate:a", 1.0, 0.12) \
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
 ## Sets the name and, for a named NPC (key NPC_<ID>_NAME) with a NPC_<ID>_WHO text, the tag; flag seen_name_<id> on first sight.
@@ -370,7 +369,7 @@ func _layout() -> void:
 	_text.position = Vector2(tx, ty)
 	_text.size.y = th
 	_list.position = Vector2(tx + 10.0, ty + th + 4.0)
-	_list.size.x = tw - 10.0
+	_list.size = Vector2(tw - 10.0, maxf(LINE_H * _opts.size(), LINE_H))
 	_sel_bar.size.x = tw
 	_cue.position = Vector2(BOX_X + BOX_W - PAD_X - 5.0, fy + h - 10.0)
 	_hint.position = Vector2(_cue.position.x - 4.0 - _hint.size.x, fy + h - 12.0)

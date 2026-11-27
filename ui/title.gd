@@ -38,8 +38,8 @@ var _leaving := false
 const SETTINGS := "user://settings.cfg"
 static var settings_path := SETTINGS   # tests point this at a scratch file
 
-const MENU_W := 112.0
-const LOGO_POS := Vector2(36, 32)
+const MENU_W := 124.0
+const LOGO_POS := Vector2(36, 24)
 const HERO_POS := Vector2(372, 190)        # top-left of the 24 px frame: feet on the cliff flat (y 214)
 const STAFF := Vector2(384, 180)           # where the glyphs leave the staff (their bottom centre)
 const RUNE_POS := Vector2(244, 218)        # title_pillar_glyph on the foreground pillar (tools/title_scene.py PILLAR_GLYPH_AT)
@@ -107,15 +107,15 @@ func _ready() -> void:
 	# the logo and its line
 	_logo = UIFx.rect_tex("logo", LOGO_POS)
 	add_child(_logo)
-	_sub = UIFx.text("The script of time", "body", UIFx.TEXT)
-	_sub.size = Vector2(_logo.size.x, 10)
+	_sub = UIFx.text("UI_TAGLINE", "body", UIFx.TEXT)
+	_sub.size = Vector2(_logo.size.x, 12)
 	_sub.position = Vector2(LOGO_POS.x, LOGO_POS.y + _logo.size.y + 2)
 	_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(_sub)
 	# the menu: a column under the logo
 	_box = VBoxContainer.new()
-	_box.position = Vector2(roundf(LOGO_POS.x + (_logo.size.x - MENU_W) / 2.0), 140)
-	_box.size = Vector2(MENU_W, 60)
+	_box.position = Vector2(roundf(LOGO_POS.x + (_logo.size.x - MENU_W) / 2.0), 128)
+	_box.size = Vector2(MENU_W, 96)
 	_box.add_theme_constant_override("separation", 0)
 	add_child(_box)
 	if get_node("/root/Game").has_save():
@@ -355,7 +355,7 @@ func _open_card(which: String) -> void:
 	_card = Panel.new()
 	_card.add_theme_stylebox_override("panel", UIFx.ink_box())
 	_card.position = CARD.position
-	_card.size = Vector2(CARD.size.x, 176.0 if which == "settings" else CARD.size.y)   # Settings is shorter
+	_card.size = CARD.size
 	add_child(_card)
 	move_child(_card, _fade.get_index())   # under the fade cover
 	var v := VBoxContainer.new()
@@ -448,42 +448,62 @@ func _row(c: Control) -> HBoxContainer:
 
 
 func _build_settings(v: VBoxContainer) -> void:
-	_section(v, "UI_BK_AUDIO")
+	var sc := ScrollContainer.new()
+	sc.size_flags_vertical = SIZE_EXPAND_FILL
+	sc.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var sv := VBoxContainer.new()
+	sv.add_theme_constant_override("separation", 2)
+	sv.custom_minimum_size.x = v.size.x - 6
+	sc.add_child(sv)
+	v.add_child(sc)
+	_section(sv, "UI_BK_AUDIO")
 	for bus in GameSettings.BUSES:
 		var name_lbl := UIFx.text("UI_SYS_" + bus.to_upper(), "body", UIFx.TEXT)
-		name_lbl.custom_minimum_size.x = 88
+		name_lbl.custom_minimum_size.x = 80
 		var row := _row(name_lbl)
-		row.custom_minimum_size.y = 12
+		row.add_theme_constant_override("separation", 4)
+		row.custom_minimum_size.y = 14
 		var sl := HSlider.new()
 		sl.name = bus
 		sl.min_value = 0
 		sl.max_value = 100
 		sl.step = 5
 		sl.value = GameSettings.volume(bus)
-		sl.custom_minimum_size = Vector2(96, 10)
+		sl.custom_minimum_size = Vector2(84, 10)
 		sl.size_flags_vertical = SIZE_SHRINK_CENTER
 		row.add_child(sl)
 		var val := UIFx.text(str(int(sl.value)), "body", UIFx.DIM)
-		val.custom_minimum_size.x = 24
+		val.custom_minimum_size.x = 22
 		val.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		row.add_child(val)
 		sl.value_changed.connect(func(x: float) -> void:
 			GameSettings.set_volume(bus, x)
 			val.text = str(int(x)))
-		# the slider has no cursor of its own: its name lights up cyan while it has focus
 		sl.focus_entered.connect(func() -> void: name_lbl.add_theme_color_override("font_color", UIFx.ACCENT))
 		sl.focus_exited.connect(func() -> void: name_lbl.add_theme_color_override("font_color", UIFx.TEXT))
 		sl.mouse_entered.connect(func() -> void: sl.grab_focus())
-		v.add_child(row)
-	_section(v, "UI_BK_DISPLAY")
+		sv.add_child(row)
+	_section(sv, "UI_BK_DISPLAY")
 	_full_btn = LozengeButton.new("", 8)
 	_full_btn.pressed.connect(func() -> void:
 		GameSettings.set_fullscreen(not GameSettings.is_fullscreen())
 		_card_text())
-	v.add_child(_full_btn)
+	sv.add_child(_full_btn)
 	_lang_btn = LozengeButton.new("", 8)
 	_lang_btn.pressed.connect(_toggle_lang)
-	v.add_child(_lang_btn)
+	sv.add_child(_lang_btn)
+	var flash_btn := LozengeButton.new("", 8)
+	flash_btn.pressed.connect(func() -> void:
+		GameSettings.set_reduce_flashes(not GameSettings.reduce_flashes())
+		flash_btn.text = "%s: %s" % [tr("UI_SYS_REDUCE_FLASHES"), tr("UI_ON") if GameSettings.reduce_flashes() else tr("UI_OFF")])
+	flash_btn.text = "%s: %s" % [tr("UI_SYS_REDUCE_FLASHES"), tr("UI_ON") if GameSettings.reduce_flashes() else tr("UI_OFF")]
+	sv.add_child(flash_btn)
+	var cur_btn := LozengeButton.new("", 8)
+	cur_btn.pressed.connect(func() -> void:
+		GameSettings.set_cursor_size(1 if GameSettings.cursor_size() >= 2 else 2)
+		cur_btn.text = "%s: %dx" % [tr("UI_SYS_CURSOR_SIZE"), GameSettings.cursor_size()])
+	cur_btn.text = "%s: %dx" % [tr("UI_SYS_CURSOR_SIZE"), GameSettings.cursor_size()]
+	sv.add_child(cur_btn)
 
 
 func _build_about(v: VBoxContainer) -> void:
@@ -502,7 +522,7 @@ func _build_about(v: VBoxContainer) -> void:
 	para.call("Kementerian Kebudayaan Republik Indonesia", UIFx.DIM)
 	_section(v, "UI_ABOUT_BUILT_WITH")
 	para.call("Godot Engine", UIFx.TEXT)
-	para.call("Pixeloid Sans, Tiny5, Jersey 10 / 15, Noto Sans Sundanese & Javanese (SIL OFL 1.1)", UIFx.DIM)
+	para.call("Pixeloid Sans, Noto Sans Sundanese & Javanese (SIL OFL 1.1)", UIFx.DIM)
 	_section(v, "UI_ABOUT_MUSIC")
 	para.call(MUSIC_BY, UIFx.TEXT)
 	para.call(", ".join(MUSIC), UIFx.DIM)

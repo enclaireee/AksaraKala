@@ -98,11 +98,14 @@ static func first_sentence(text: String) -> String:
 	return t
 
 
-## "PROLOG" / "ACT I" caption for a main quest; "" when the quest has no act. Roman numerals only (no existing act key).
+## "PROLOG" / "ACT I" caption for a main quest; "" when the quest has no act.
 static func act_label(id: String) -> String:
 	if not ACTS.has(id):
 		return ""
-	return ACTS[id] if id == "mq0" else "ACT " + String(ACTS[id])
+	if id == "mq0":
+		return ACTS[id]
+	var fmt := _t("UI_ACT_LABEL")
+	return (fmt % ACTS[id]) if fmt != "" else ("ACT " + String(ACTS[id]))
 
 
 ## Reward lines for a rewards dict plus the Ilmu gained. Missing keys and empty entries are skipped.
@@ -115,13 +118,16 @@ static func build_reward_lines(rewards: Dictionary, ilmu_gain: int) -> PackedStr
 		out.append(n if n != "" else String(item).capitalize())
 	var shard := int(rewards.get("flask_shard", 0))
 	if shard > 0:
-		out.append("+%d flask shard" % shard)
+		var sf := _t("UI_REWARD_SHARD")
+		out.append((sf % shard) if sf != "" else ("+%d flask shard" % shard))
 	var pouch := int(rewards.get("herb_pouch", 0))
 	if pouch > 0:
-		out.append("+%d herb pouch" % pouch)
+		var pf := _t("UI_REWARD_POUCH")
+		out.append((pf % pouch) if pf != "" else ("+%d herb pouch" % pouch))
 	var lakon := String(rewards.get("lakon", ""))
 	if lakon != "":
-		out.append("Lakon: " + lakon.capitalize())
+		var lf := _t("UI_REWARD_LAKON")
+		out.append((lf % lakon.capitalize()) if lf != "" else ("Lakon: " + lakon.capitalize()))
 	for c in rewards.get("codex", []):
 		var n := _t("CODEX_%s_TITLE" % String(c).to_upper())
 		if n != "":
@@ -188,10 +194,15 @@ func _show(card: Dictionary) -> void:
 	var lines: PackedStringArray = card.lines
 	_body.text = "\n".join(lines)
 	_body.visible = not lines.is_empty()
-	# layout on the 2 px grid: 10 pad, caption 9, 4 gap, title 20, 6 gap, body lines (UIFx.LINE each, wrapped), 10 pad
+	# layout on the 2 px grid: 10 pad, caption 12, 4 gap, title 24, 4 gap, body lines (UIFx.LINE each, wrapped), 10 pad
 	_body.size = Vector2(360, 0)
-	var body_h := UIFx.LINE * _body.get_line_count() - 1.0 if not lines.is_empty() else 0.0
-	var h := 10.0 + 9.0 + 4.0 + 20.0 + (6.0 + body_h if body_h > 0.0 else 0.0) + 10.0
+	var body_h := 0.0
+	if not lines.is_empty():
+		var bf := UIFx.body_font()
+		var sz := bf.get_multiline_string_size(_body.text, HORIZONTAL_ALIGNMENT_CENTER, 360.0, UIFx.BODY)
+		var lc := maxi(1, roundi(sz.y / maxf(bf.get_height(UIFx.BODY), 1.0)))
+		body_h = UIFx.LINE * lc
+	var h := 10.0 + 12.0 + 4.0 + 24.0 + (4.0 + body_h if body_h > 0.0 else 0.0) + 10.0
 	var top := roundf(CENTER_Y - h / 2.0)
 	_band.position = Vector2(0, top)
 	_band.size = Vector2(480, h)
@@ -200,10 +211,10 @@ func _show(card: Dictionary) -> void:
 	_rule_bottom.position = Vector2(0, top + h - 3.0)
 	_rule_bottom.size = Vector2(480, 3)
 	_caption.position = Vector2(0, top + 10.0)
-	_caption.size = Vector2(480, 9)
-	_title.position = Vector2(0, top + 23.0)
-	_title.size = Vector2(480, 20)
-	_body.position = Vector2(60, top + 49.0)
+	_caption.size = Vector2(480, 12)
+	_title.position = Vector2(0, top + 26.0)
+	_title.size = Vector2(480, 24)
+	_body.position = Vector2(60, top + 54.0)
 	_body.size = Vector2(360, maxf(body_h, 0.0))
 	if _tween:
 		_tween.kill()

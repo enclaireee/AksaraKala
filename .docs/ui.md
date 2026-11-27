@@ -31,14 +31,13 @@ Rooted in the key-art aesthetic: a twilight sky over ancient candi ruins, distre
 All constants live in `ui/fx/ui_fx.gd` (`UIFx.text(t, kind, colour)`); `ui/theme.tres` matches them.
 | Step | Face | Size | Cap / line | Use |
 |---|---|---|---|---|
-| Body | Pixeloid Sans (`PixeloidSans.woff`, OFL; Bold for `[b]`) | 9 | 7 / 12 (11 + 1 spacing) | all body text, dialogue, lists, numbers, hints, prompts |
+| Body | Pixeloid Sans (`PixeloidSans.woff`, OFL; Bold for `[b]`) | 9 | 7 / 12 (11 + 1 spacing) | all body text, dialogue, lists, numbers, hints, prompts, HUD tracker |
 | Label | Pixeloid Sans, CAPS, +1 px tracking | 9 | 7 / 12 | small section labels, kickers ("QUEST UPDATED"), speaker names |
-| Tracker | Tiny5 (`Tiny5-Regular.woff`, OFL); quest name in CAPS +1 px tracking | 8 | 5 / 10 | the HUD quest tracker only: quest name and objective (user call 2026-11-20, `UIFx.tiny`) |
-| Heading | Jersey 10 | 19 | 10 / 13 (FontVariation trims 4 top, 3 bottom) | panel and page titles, menu entries, banner quest name, boss name, class name |
-| Display | Jersey 15 | 27 (logo 54) | 15 / 20 | area and region titles, quest title cards, "Fallen", the logo |
-- Big numbers may use Pixeloid Sans at 18. Pixeloid runs about a third wider than the old Tiny5 8, so fixed-width boxes wrap their text (`AUTOWRAP_WORD_SMART`) and size by `UIFx.LINE * get_line_count()`. Tiny5 was replaced on 2026-11-20 for legibility, except in the HUD quest tracker (user call). The aksara scripts keep Noto Sans Javanese / Sundanese at their own sizes.
-- Text over the world has a 1 px dark outline; text on ink or paper has none. On paper: ink `#2A1C12`, headings ink red `#7A2A1E`, secondary `#6B5A44`. On ink: cream `#EADFC4`, headings `#F3E3B8`, labels `#B8A27A`, dim `#A59A82`, accent gold `#E0B35A`; Semar's narration is warm dim gold `#C9B48A` (the pixel face has no italic).
-- Crimson Pro and Almendra were removed with the v3 rebrand.
+| Heading | Pixeloid Sans Bold (`PixeloidSans-Bold.woff`, OFL), +1 px tracking | 9 | 7 / 12 | panel and page titles, menu entries, banner quest name, boss name, class name |
+| Display | Pixeloid Sans Bold, +1 px tracking | 18 (logo 27) | 14 / 22 | area and region titles, quest title cards, boss entrance, "Fallen" |
+- Pixeloid Sans / Bold render crisp on their exact `9 px` grid (`9`, `18`, `27`) with `oversampling = 1.0`, `antialiasing = 0`, and `allow_system_fallback = false`. Noto Sans Javanese / Sundanese are attached as explicit fallbacks on `UIFx` font variations and used directly for large aksara glyph tiles.
+- Text over the world has a 1 px dark outline; text on ink or dusk surfaces has none (or 1 px where over art). On dusk: cream `#ECE6F2`, headings `#FFF4E6`, labels `#A99BC8`, dim `#8C83A6`, accent cyan `#7FE8E0`, warm amber `#F2B27A`, danger rose `#E0566A`.
+- Jersey 10 / 15 and Tiny5 were retired from active UI in v3.1 (2026-11-27) to eliminate off-grid mixels and unify the pixel-art voice.
 
 ---
 

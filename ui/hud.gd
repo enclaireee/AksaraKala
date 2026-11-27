@@ -16,7 +16,7 @@ const UI_DIR := "res://assets/art/ui/"
 const LAG_HOLD := 0.4   # s before the cream lag chunk drains
 const LOW_HP := 0.25
 const MAX_OBJ := 4   # objective rows shown before "+n more"
-const TRACKER_W := 124   # TUNE: tracker width, text wraps inside
+const TRACKER_W := 136   # TUNE: tracker width, text wraps inside
 const TRACKER_REST_A := 0.5   # TUNE: tracker opacity once it has sat unchanged for TRACKER_IDLE
 const TRACKER_IDLE := 5.0   # TUNE: s at full opacity after a change before it dims
 const MENU_HINT_SHOW := 25.0   # s the [Esc] hint stays before it fades
@@ -79,6 +79,8 @@ var _tnode: Node2D   # what the arrow points at: a marker node, or the exit towa
 var _tzone := ""     # the target's zone while _tnode is only the exit toward it, else ""
 var _diamond: Node2D   # marker over an on-screen target
 var _dist: Label       # metres to the target, or "-> zone" when it is elsewhere
+var _dist_last := ""   # cached label to avoid per-frame _fit_pill()
+var _boss_last_text := ""
 
 # boss bar (ui.md 2). Contract: node in group "boss" with `health` (Health), `boss_name_key: String`,
 # optional `dawn: float` (0-1), optional `sequence: PackedStringArray` + `seq_index: int` (shown while dawn
@@ -110,12 +112,12 @@ func _ready() -> void:
 	_st_nodes = [_bars.st[2], _bars.st[4], _bars.st[5]]
 	_hp_txt = UIFx.text("", "body", CREAM)
 	_hp_txt.position = Vector2(M + HP_W + 2 + 4, M - 1)
-	_hp_txt.size = Vector2(48, 9)
+	_hp_txt.size = Vector2(48, 12)
 	_hp_txt.modulate.a = 0.85
 	_grp_bars.add_child(_hp_txt)
 	_class_txt = UIFx.text("", "body", CREAM)
-	_class_txt.position = Vector2(M, M + 24)
-	_class_txt.size = Vector2(120, 9)
+	_class_txt.position = Vector2(M, M + 23)
+	_class_txt.size = Vector2(130, 12)
 	_grp_bars.add_child(_class_txt)
 	var well := TextureRect.new()   # weapon well, bottom left, with the flasks on its baseline
 	well.texture = _ui_tex("ink_slot")
@@ -147,7 +149,7 @@ func _ready() -> void:
 	_grp_hide.add_child(ii)
 	_ilmu_disp = UIFx.text("", "body", GOLD)
 	_ilmu_disp.position = Vector2(480 - M - 8 - 3 - 60, M - 1)
-	_ilmu_disp.size = Vector2(60, 9)
+	_ilmu_disp.size = Vector2(60, 12)
 	_ilmu_disp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_grp_hide.add_child(_ilmu_disp)
 	_saved_icon = TextureRect.new()
@@ -157,14 +159,14 @@ func _ready() -> void:
 	_saved_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_grp_hide.add_child(_saved_icon)   # fades with the rest of the HUD while a dialogue is open
 	_saved = UIFx.text("UI_SAVED", "body", UIFx.DIM)
-	_saved.position = Vector2(480 - M - 8 - 4 - 80, 270 - M - 9)
-	_saved.size = Vector2(80, 9)
+	_saved.position = Vector2(480 - M - 8 - 4 - 80, 270 - M - 10)
+	_saved.size = Vector2(80, 12)
 	_saved.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_saved.visible = false
 	_grp_hide.add_child(_saved)
 	_build_extras()
 	_tracker_panel = PanelContainer.new()   # minimalistic floating quest HUD under vitals
-	_tracker_panel.position = Vector2(M, M + 28)   # under the vitals, one 8 px gap
+	_tracker_panel.position = Vector2(M, M + 26)   # under vitals (shifts down when _class_txt is shown)
 	_tracker_panel.custom_minimum_size = Vector2(TRACKER_W, 0)
 	var sb := StyleBoxEmpty.new()   # transparent background: no background panel box, clean text HUD
 	_tracker_panel.add_theme_stylebox_override("panel", sb)
@@ -177,7 +179,7 @@ func _ready() -> void:
 	_tracker_panel.add_child(_tracker)
 	_menu_hint = UIFx.text(tr("UI_HINT_MENU") % get_node("/root/Game").key_name("pause").replace("Escape", "Esc"), "body", UIFx.DIM)
 	_menu_hint.position = Vector2(480 - M - 100, M + 12)   # quiet hint under Ilmu for the first minute; fades
-	_menu_hint.size = Vector2(100, 9)
+	_menu_hint.size = Vector2(100, 12)
 	_menu_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_menu_hint.modulate.a = 0.55
 	_menu_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -197,7 +199,9 @@ func _ready() -> void:
 		_snap(qid)
 	ev.quest_started.connect(func(id: String) -> void:
 		_snap(id)
-		_push_banner("UI_Q_NEW", _title(id))
+		var q := QuestData.by_id(id)
+		if q == null or q.kind != "main" or get_node_or_null("../QuestCard") == null:
+			_push_banner("UI_Q_NEW", _title(id))
 		refresh_arrow())
 	ev.quest_updated.connect(func(id: String) -> void:
 		_on_quest_updated(id)
@@ -215,7 +219,8 @@ func _ready() -> void:
 		_push_banner("UI_Q_REMEMBER", tr(rk))
 		_pulse_tracker())
 	ev.quest_completed.connect(func(id: String) -> void:
-		_push_banner("UI_Q_DONE", _title(id))
+		if get_node_or_null("../QuestCard") == null:
+			_push_banner("UI_Q_DONE", _title(id))
 		refresh_arrow())
 	ev.item_picked.connect(func(id: String) -> void:
 		var what := "%s Ilmu" % id.get_slice(":", 1) if id.begins_with("ilmu:") else tr("ITEM_%s_NAME" % id.to_upper())
@@ -288,8 +293,8 @@ func refresh_objective() -> void:
 	_tracker_panel.visible = not rows.is_empty()
 	var inner := float(TRACKER_W - 12)
 	for r in rows:
-		if r[0] == "title":   # small tracked caps: the quest's name is a label, the objective is the message
-			var t := UIFx.tiny(UIFx.text(String(r[1]), "label", r[2]))   # Tiny5: user call 2026-11-20
+		if r[0] == "title":
+			var t := UIFx.text(String(r[1]), "label", r[2])
 			t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			t.custom_minimum_size.x = inner
 			_tracker.add_child(t)
@@ -304,7 +309,7 @@ func refresh_objective() -> void:
 			ic.custom_minimum_size = Vector2(5, 7)
 			ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			var pad := Control.new()   # drops the 5 px diamond onto the first line's caps
-			pad.custom_minimum_size = Vector2(5, 2)
+			pad.custom_minimum_size = Vector2(5, 3)
 			pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			var col := VBoxContainer.new()
 			col.add_theme_constant_override("separation", 0)
@@ -313,7 +318,7 @@ func refresh_objective() -> void:
 			col.add_child(pad)
 			col.add_child(ic)
 			row.add_child(col)
-			var l := UIFx.tiny(UIFx.text(String(r[1]), "body", r[2]))
+			var l := UIFx.text(String(r[1]), "body", r[2])
 			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			l.add_theme_constant_override("line_spacing", 1)
 			l.custom_minimum_size.x = inner - 9.0
@@ -494,35 +499,35 @@ func _build_extras() -> void:
 	# with the quest banner (top centre)
 	_toast_root = Control.new()
 	_toast_root.position = Vector2(480 - M - 120, M + 24)
-	_toast_root.size = Vector2(120, 15)
+	_toast_root.size = Vector2(120, 17)
 	_toast_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_toast_root.visible = false
 	add_child(_toast_root)
-	var tp := _nine("ink_panel", Rect2(0, 0, 120, 15), [4, 4, 4, 4], _toast_root)
+	var tp := _nine("ink_panel", Rect2(0, 0, 120, 17), [4, 4, 4, 4], _toast_root)
 	tp.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_toast_rule = _rect(Vector2(2, 2), Vector2(1, 11), GOLD, _toast_root)   # amber tick on the leading edge
+	_toast_rule = _rect(Vector2(2, 2), Vector2(1, 13), GOLD, _toast_root)   # amber tick on the leading edge
 	_toast = UIFx.text("", "body", CREAM)
 	_toast.position = Vector2(8, 3)
-	_toast.size = Vector2(104, 9)
+	_toast.size = Vector2(104, 12)
 	_toast.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_toast.visible = false
 	_toast_root.add_child(_toast)
 
 	# quest banner: one small ink pill, top centre: gold caps kicker then the quest name, both body size
 	_banner_root = Control.new()
-	_banner_root.size = Vector2(200, 15)
+	_banner_root.size = Vector2(200, 17)
 	_banner_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_banner_root.visible = false
 	add_child(_banner_root)
-	var bp := _nine("ink_panel", Rect2(0, 0, 200, 15), [4, 4, 4, 4], _banner_root)
+	var bp := _nine("ink_panel", Rect2(0, 0, 200, 17), [4, 4, 4, 4], _banner_root)
 	bp.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_banner_head = UIFx.text("", "label", GOLD)
 	_banner_head.position = Vector2(8, 3)
-	_banner_head.size = Vector2(80, 9)
+	_banner_head.size = Vector2(80, 12)
 	_banner_root.add_child(_banner_head)
 	_banner_body = UIFx.text("", "body", CREAM)
 	_banner_body.position = Vector2(94, 3)
-	_banner_body.size = Vector2(100, 9)
+	_banner_body.size = Vector2(100, 12)
 	_banner_body.add_theme_constant_override("line_spacing", 1)
 	_banner_body.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_banner_root.add_child(_banner_body)
@@ -534,10 +539,10 @@ func _build_extras() -> void:
 	_diamond.add_child(dm)
 	_diamond.visible = false
 	add_child(_diamond)
-	_dist_bg = _nine("ink_panel", Rect2(0, 0, 40, 11), [4, 4, 4, 4])   # lacquer pill: "1 m" never floats loose over a character
+	_dist_bg = _nine("ink_panel", Rect2(0, 0, 40, 14), [4, 4, 4, 4])   # lacquer pill: "1 m" never floats loose over a character
 	_dist_bg.visible = false
 	_dist = UIFx.text("", "body", GOLD)
-	_dist.size = Vector2(80, 9)
+	_dist.size = Vector2(80, 12)
 	_dist.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_dist.add_theme_constant_override("outline_size", 0)   # it sits on its own pill
 	_dist.visible = false
@@ -572,8 +577,8 @@ func _build_extras() -> void:
 	_boss_ticks.position = Vector2(x, by)
 	_boss_root.add_child(_boss_ticks)
 	_boss_open = UIFx.text(tr("BOSS_OPEN"), "body", UIFx.GOLD_HI)
-	_boss_open.position = Vector2(x, 270 - M - 25)
-	_boss_open.size = Vector2(BOSS_W, 9)
+	_boss_open.position = Vector2(x, 270 - M - 26)
+	_boss_open.size = Vector2(BOSS_W, 12)
 	_boss_open.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_boss_root.add_child(_boss_open)
 	_boss_mark = _make_crack_mark(Vector2(x + BOSS_W + 4, by - 3))
@@ -594,16 +599,16 @@ func _fit_banner() -> void:
 	if bw <= 300.0:
 		_banner_body.autowrap_mode = TextServer.AUTOWRAP_OFF
 		_banner_body.position = Vector2(8.0 + kw + 6.0, 3.0)
-		_banner_body.size = Vector2(tw + 2.0, 9.0)
-		_banner_root.size = Vector2(maxf(bw, 80.0), 15.0)
+		_banner_body.size = Vector2(tw + 2.0, 12.0)
+		_banner_root.size = Vector2(maxf(bw, 80.0), 17.0)
 	else:
 		bw = 260.0
 		_banner_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		var sz := bf.get_multiline_string_size(_banner_body.text, HORIZONTAL_ALIGNMENT_LEFT, bw - 16.0, UIFx.BODY)
 		var lines := clampi(roundi(sz.y / maxf(bf.get_height(UIFx.BODY), 1.0)), 1, 3)
-		_banner_body.position = Vector2(8.0, 14.0)
-		_banner_body.size = Vector2(bw - 16.0, lines * 10.0 - 1.0)
-		_banner_root.size = Vector2(bw, 14.0 + _banner_body.size.y + 4.0)
+		_banner_body.position = Vector2(8.0, 15.0)
+		_banner_body.size = Vector2(bw - 16.0, lines * float(UIFx.LINE))
+		_banner_root.size = Vector2(bw, 15.0 + _banner_body.size.y + 4.0)
 
 
 func _push_toast(text: String) -> void:
@@ -737,20 +742,23 @@ func _update_arrow() -> void:
 	var k := minf(half.x / maxf(absf(d.x), 0.001), half.y / maxf(absf(d.y), 0.001))
 	_arrow.position = (c + d * k).round()
 	_arrow.rotation = d.angle()
-	_arrow.scale = Vector2.ONE * (1.0 + 0.15 * sin(_t * 6.0))
+	_arrow.scale = Vector2.ONE
+	_arrow.modulate.a = 0.8 + 0.2 * sin(_t * 5.0)
 	_arrow.visible = true
 	_dist.text = label
 	var lp := _arrow.position - d.normalized() * 16.0 - Vector2(40, 5)
-	_dist.position = Vector2(clampf(lp.x, 0.0, SCREEN.x - 80.0), clampf(lp.y, 0.0, SCREEN.y - 12.0)).round()
+	_dist.position = Vector2(clampf(lp.x, 0.0, SCREEN.x - 80.0), clampf(lp.y, 0.0, SCREEN.y - 14.0)).round()
 	_dist.visible = true
 	_fit_pill()
 
 
 ## Sizes the pill to the label text (the label is centred in its 80 px box).
 func _fit_pill() -> void:
-	var w := ceilf(_dist.get_minimum_size().x) + 8.0
-	_dist_bg.size = Vector2(w, 11)
-	_dist_bg.position = _dist.position + Vector2(roundf((_dist.size.x - w) / 2.0), -1)
+	if _dist.text != _dist_last:
+		_dist_last = _dist.text
+		var w := ceilf(_dist.get_minimum_size().x) + 8.0
+		_dist_bg.size = Vector2(w, 14)
+	_dist_bg.position = _dist.position + Vector2(roundf((_dist.size.x - _dist_bg.size.x) / 2.0), -1)
 	_dist_bg.visible = _dist.text != ""
 
 
@@ -810,7 +818,7 @@ func _update_boss() -> void:
 	_boss_root.visible = h != null and bool(b.get("engaged")) and h.hp > 0
 	if not _boss_root.visible:
 		return
-	_boss_name.text = tr(str(b.get("boss_name_key")))
+	var bname := tr(str(b.get("boss_name_key")))
 	if b != _boss_ticked:
 		_boss_ticked = b
 		for c in _boss_ticks.get_children():
@@ -829,7 +837,10 @@ func _update_boss() -> void:
 			var g := GlyphData.by_id(seq[i])
 			var t: String = g.latin if g else seq[i]
 			parts.append("[%s]" % t.to_upper() if i == int(b.get("seq_index")) else t)
-		_boss_name.text += "   " + " · ".join(parts)
+		bname += "   " + " · ".join(parts)
+	if bname != _boss_last_text:
+		_boss_last_text = bname
+		_boss_name.text = bname
 	_boss_fill.size.x = roundf(BOSS_W * clampf(float(h.hp) / maxf(h.max_hp, 1.0), 0.0, 1.0))
 	_boss_ghost.size.x = maxf(_boss_fill.size.x, _boss_ghost.size.x - 45.0 * get_process_delta_time())
 	var dawn = b.get("dawn")
@@ -946,29 +957,32 @@ func _update_class_hud(p: Node) -> void:
 	match cid:
 		"lancer":
 			if p.has_method("braced") and p.braced():
-				_class_txt.text = "KUDA-KUDA"
+				_class_txt.text = tr("UI_CLS_KUDA")
 				_class_txt.modulate = GOLD
 			elif p.get("_thrust_ready"):
-				_class_txt.text = "THRUST"
+				_class_txt.text = tr("UI_CLS_THRUST")
 				_class_txt.modulate = Color(CREAM, 0.9)
 			else:
 				_class_txt.text = ""
 		"dancer":
 			var w: int = int(p.get("wirama"))
 			var cap: int = p.wirama_cap() if p.has_method("wirama_cap") else 8
-			_class_txt.text = "WIRAMA %d/%d" % [w, cap]
+			_class_txt.text = tr("UI_CLS_WIRAMA") % [w, cap]
 			_class_txt.modulate = Color("F27BB0") if w >= cap else Color(CREAM, 0.85 if w > 0 else 0.45)
 		"dalang":
 			var n: int = int(p.get("_lakon_n"))
 			var pct: int = roundi(n * p.tuning.lakon_step * 100.0)
 			var maxed: bool = p.has_method("lakon_maxed") and p.lakon_maxed()
-			_class_txt.text = "LAKON +%d%%" % pct
+			_class_txt.text = tr("UI_CLS_LAKON") % pct
 			_class_txt.modulate = GOLD if maxed else Color(CREAM, 0.85 if n > 0 else 0.45)
 		"herder":
-			_class_txt.text = "BATU PANTUL"
+			_class_txt.text = tr("UI_CLS_PANTUL")
 			_class_txt.modulate = Color(CREAM, 0.6)
 		_:
 			_class_txt.text = ""
+	var want_y: float = M + 38.0 if _class_txt.text != "" else M + 26.0
+	if _tracker_panel.position.y != want_y:
+		_tracker_panel.position.y = want_y
 
 
 ## HP: a cream lag chunk drains LAG_HOLD s after the fill drops; below 25% the fill and frame pulse.

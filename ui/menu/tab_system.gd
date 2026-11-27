@@ -1,15 +1,15 @@
 extends MenuTab
-## Sistem (Settings), ui.md 4.3 tab 7. Ported from the old menu: volumes, fullscreen, language, resume / title / quit
-## with a confirm. The regrouped layout (Tampilan scale and shake, Aksesibilitas, "Simpan & Keluar") comes later.
+## Sistem (Settings), ui.md 4.3 tab 7: volumes, display, accessibility & assists, resume / title / quit
+## with live slider readouts, focus highlights, danger styling, and a centered confirm modal.
 
 const BUSES := GameSettings.BUSES
-const LABEL_W := 112   # slider label column; longer labels wrap, the slider fills the rest
+const LABEL_W := 96   # slider label column; longer labels wrap, slider + value fill the rest
 
 var action := ""   # "title" or "quit" while the confirm is open
 var lang_btn: Button
 var full_btn: Button
 var _toggles := {}   # key -> [Button, Callable(-> String)]
-var _modal: HBoxContainer
+var _modal_overlay: Control
 var _modal_lbl: Label
 var _modal_yes: Button
 var _first: Control
@@ -24,41 +24,27 @@ func icon() -> String:
 
 
 func build(l: Control, r: Control) -> void:
-	var lv := scroll(l, Rect2(0, 0, 200, 212))
-	lv.add_child(MenuBook.section(tr("UI_BK_AUDIO")))
+	var lv := scroll(l, Rect2(0, 0, 194, 212))
+	lv.add_child(MenuBook.section(tr("UI_BK_AUDIO"), 190))
 	for b in BUSES:
-		var row := HBoxContainer.new()
-		lv.add_child(row)
-		var lab := MenuBook.bold(tr("UI_SYS_" + b.to_upper()))
-		lab.custom_minimum_size.x = LABEL_W
-		lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		row.add_child(lab)
-		var sl := HSlider.new()
-		sl.name = b
-		sl.min_value = 0
-		sl.max_value = 100
-		sl.step = 5
-		sl.custom_minimum_size = Vector2(60, 12)
-		sl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		sl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		sl.value = load_setting("vol_" + b.to_lower(), 100)
-		sl.value_changed.connect(set_volume.bind(b))
-		row.add_child(sl)
-		if _first == null:
-			_first = sl
-	lv.add_child(MenuBook.section(tr("UI_BK_DISPLAY")))
+		_slider_row(lv, "UI_SYS_" + b.to_upper(), 0, 100, 5, float(load_setting("vol_" + b.to_lower(), 100)),
+				set_volume.bind(b), func(v: float) -> String: return "%d%%" % int(v), b)
+	lv.add_child(MenuBook.section(tr("UI_BK_DISPLAY"), 190))
 	full_btn = _button(lv, toggle_fullscreen)
-	_slider_row(lv, "UI_SYS_SHAKE", 0, 100, 10, GameSettings.screenshake(), func(v: float) -> void: GameSettings.set_screenshake(int(v)))
+	_slider_row(lv, "UI_SYS_SHAKE", 0, 100, 10, GameSettings.screenshake(),
+			func(v: float) -> void: GameSettings.set_screenshake(int(v)),
+			func(v: float) -> String: return "%d%%" % int(v))
 	_toggle_row(lv, "reduce_flashes", func() -> void: GameSettings.set_reduce_flashes(not GameSettings.reduce_flashes()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_REDUCE_FLASHES"), tr("UI_ON") if GameSettings.reduce_flashes() else tr("UI_OFF")])
 	_toggle_row(lv, "damage_numbers", func() -> void: GameSettings.set_damage_numbers(not GameSettings.damage_numbers()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_DAMAGE_NUMBERS"), tr("UI_ON") if GameSettings.damage_numbers() else tr("UI_OFF")])
 	_toggle_row(lv, "cursor_size", func() -> void: GameSettings.set_cursor_size(1 if GameSettings.cursor_size() >= 2 else 2), func() -> String:
 		return "%s: %dx" % [tr("UI_SYS_CURSOR_SIZE"), GameSettings.cursor_size()])
-	var rv := scroll(r, Rect2(0, 0, 200, 212))
-	rv.add_child(MenuBook.section(tr("UI_SYS_LANG")))
+
+	var rv := scroll(r, Rect2(0, 0, 194, 212))
+	rv.add_child(MenuBook.section(tr("UI_SYS_LANG"), 190))
 	lang_btn = _button(rv, toggle_language)
-	rv.add_child(MenuBook.section(tr("UI_BK_ACCESSIBILITY")))
+	rv.add_child(MenuBook.section(tr("UI_BK_ACCESSIBILITY"), 190))
 	_toggle_row(rv, "preset", func() -> void:
 		GameSettings.set_control_preset("left_handed" if GameSettings.control_preset() == "default" else "default"), func() -> String:
 		var k := "UI_SYS_PRESET_LEFT" if GameSettings.control_preset() == "left_handed" else "UI_SYS_PRESET_DEF"
@@ -67,39 +53,79 @@ func build(l: Control, r: Control) -> void:
 		return "%s: %s" % [tr("UI_SYS_SWAP_MOUSE"), tr("UI_ON") if GameSettings.swap_mouse() else tr("UI_OFF")])
 	_toggle_row(rv, "toggle_cast", func() -> void: GameSettings.set_toggle_cast(not GameSettings.toggle_cast()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_TOGGLE_CAST"), tr("UI_ON") if GameSettings.toggle_cast() else tr("UI_OFF")])
-	_slider_row(rv, "UI_SYS_SLOWMO", 10, 40, 5, GameSettings.slow_mo_strength(), func(v: float) -> void: GameSettings.set_slow_mo_strength(int(v)))
-	_slider_row(rv, "UI_SYS_DRAWTIME", 2.5, 5.0, 0.5, GameSettings.draw_time(), func(v: float) -> void: GameSettings.set_draw_time(v))
+	_slider_row(rv, "UI_SYS_SLOWMO", 10, 40, 5, GameSettings.slow_mo_strength(),
+			func(v: float) -> void: GameSettings.set_slow_mo_strength(int(v)),
+			func(v: float) -> String: return "%d%%" % int(v))
+	_slider_row(rv, "UI_SYS_DRAWTIME", 2.5, 5.0, 0.5, GameSettings.draw_time(),
+			func(v: float) -> void: GameSettings.set_draw_time(v),
+			func(v: float) -> String: return "%.1fs" % v)
 	_toggle_row(rv, "guide_always", func() -> void: GameSettings.set_guide_always_on(not GameSettings.guide_always_on()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_GUIDE"), tr("UI_ON") if GameSettings.guide_always_on() else tr("UI_OFF")])
 	_toggle_row(rv, "gentle_combat", func() -> void: GameSettings.set_gentle_combat(not GameSettings.gentle_combat()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_GENTLE"), tr("UI_ON") if GameSettings.gentle_combat() else tr("UI_OFF")])
 	_toggle_row(rv, "drawing_assist", func() -> void: GameSettings.set_drawing_assist(not GameSettings.drawing_assist()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_DRAW_ASSIST"), tr("UI_ON") if GameSettings.drawing_assist() else tr("UI_OFF")])
-	rv.add_child(MenuBook.section(tr("UI_BK_GAME")))
+	rv.add_child(MenuBook.section(tr("UI_BK_GAME"), 190))
 	_toggle_row(rv, "check_updates", func() -> void: GameSettings.set_check_updates(not GameSettings.check_updates()), func() -> String:
 		return "%s: %s" % [tr("UI_SYS_UPDATES"), tr("UI_ON") if GameSettings.check_updates() else tr("UI_OFF")])
 	_button(rv, menu.close).text = tr("UI_SYS_RESUME")
-	_button(rv, ask.bind("title")).text = tr("UI_SYS_TITLE")
-	_button(rv, ask.bind("quit")).text = tr("UI_SYS_QUIT")
-	_modal_lbl = MenuBook.text("", MenuBook.INK_HEAD, true)
-	_modal_lbl.custom_minimum_size.x = 200
-	_modal_lbl.visible = false
-	rv.add_child(_modal_lbl)
-	_modal = HBoxContainer.new()
-	_modal.visible = false
-	rv.add_child(_modal)
-	_modal_yes = MenuBook.small_button(tr("UI_YES"))
-	_modal_yes.pressed.connect(_do)
-	_modal.add_child(_modal_yes)
-	var no := MenuBook.small_button(tr("UI_CANCEL"))
-	no.pressed.connect(cancel)
-	_modal.add_child(no)
+	var tb := _button(rv, ask.bind("title"))
+	tb.text = tr("UI_SYS_TITLE")
+	_danger_style(tb)
+	var qb := _button(rv, ask.bind("quit"))
+	qb.text = tr("UI_SYS_QUIT")
+	_danger_style(qb)
+
+	_build_modal()
 	apply_settings()
+
+
+func _build_modal() -> void:
+	_modal_overlay = Control.new()
+	_modal_overlay.position = Vector2.ZERO
+	_modal_overlay.size = Vector2(456, 228)
+	_modal_overlay.visible = false
+	_modal_overlay.z_index = 10
+	add_child(_modal_overlay)
+	var dim := ColorRect.new()
+	dim.color = Color(0.03, 0.02, 0.06, 0.72)
+	dim.set_anchors_preset(PRESET_FULL_RECT)
+	_modal_overlay.add_child(dim)
+	var card := Panel.new()
+	card.add_theme_stylebox_override("panel", UIFx.ink_box(8))
+	card.position = Vector2(118, 68)
+	card.size = Vector2(220, 88)
+	_modal_overlay.add_child(card)
+	_modal_lbl = MenuBook.text("", MenuBook.INK_HEAD, true)
+	_modal_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_modal_lbl.position = Vector2(12, 12)
+	_modal_lbl.size = Vector2(196, 36)
+	card.add_child(_modal_lbl)
+	var row := HBoxContainer.new()
+	row.position = Vector2(12, 56)
+	row.size = Vector2(196, 18)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 12)
+	card.add_child(row)
+	_modal_yes = MenuBook.small_button(tr("UI_YES"))
+	_modal_yes.custom_minimum_size.x = 68
+	_modal_yes.add_theme_color_override("font_hover_color", MenuBook.WAX)
+	_modal_yes.add_theme_color_override("font_focus_color", MenuBook.WAX)
+	_modal_yes.pressed.connect(_do)
+	row.add_child(_modal_yes)
+	var no := MenuBook.small_button(tr("UI_CANCEL"))
+	no.custom_minimum_size.x = 68
+	no.pressed.connect(cancel)
+	row.add_child(no)
+
+
+func _danger_style(b: Button) -> void:
+	for c in ["font_hover_color", "font_focus_color", "font_pressed_color", "font_hover_pressed_color"]:
+		b.add_theme_color_override(c, MenuBook.WAX)
 
 
 func _button(box: Control, cb: Callable) -> Button:
 	var b := MenuBook.row_button(16)
-	b.add_theme_color_override("font_color", MenuBook.INK)
 	b.pressed.connect(cb)
 	box.add_child(b)
 	return b
@@ -112,23 +138,37 @@ func _toggle_row(box: Control, key: String, cb: Callable, label_fn: Callable) ->
 	_toggles[key] = [b, label_fn]
 
 
-func _slider_row(box: Control, key: String, mn: float, mx: float, step: float, val: float, cb: Callable) -> void:
+func _slider_row(box: Control, key: String, mn: float, mx: float, step: float, val: float, cb: Callable, fmt: Callable, node_name := "") -> void:
 	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 4)
 	box.add_child(row)
-	var lab := MenuBook.bold(tr(key))
+	var lab := MenuBook.bold(tr(key), MenuBook.INK)
 	lab.custom_minimum_size.x = LABEL_W
 	lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	row.add_child(lab)
 	var sl := HSlider.new()
+	if node_name != "":
+		sl.name = node_name
 	sl.min_value = mn
 	sl.max_value = mx
 	sl.step = step
 	sl.value = val
-	sl.custom_minimum_size = Vector2(60, 12)
+	sl.custom_minimum_size = Vector2(54, 12)
 	sl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	sl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	sl.value_changed.connect(cb)
 	row.add_child(sl)
+	var num_lbl := MenuBook.num(fmt.call(val), MenuBook.INK_DIM)
+	num_lbl.custom_minimum_size.x = 28
+	num_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	row.add_child(num_lbl)
+	sl.value_changed.connect(func(v: float) -> void:
+		cb.call(v)
+		num_lbl.text = fmt.call(v))
+	sl.focus_entered.connect(func() -> void: lab.add_theme_color_override("font_color", MenuBook.ACCENT))
+	sl.focus_exited.connect(func() -> void: lab.add_theme_color_override("font_color", MenuBook.INK))
+	sl.mouse_entered.connect(func() -> void: sl.grab_focus())
+	if _first == null:
+		_first = sl
 
 
 func refresh() -> void:
@@ -162,16 +202,14 @@ func back() -> bool:
 
 func cancel() -> void:
 	action = ""
-	if _modal:
-		_modal.visible = false
-		_modal_lbl.visible = false
+	if _modal_overlay:
+		_modal_overlay.visible = false
 
 
 func ask(a: String) -> void:
 	action = a
 	_modal_lbl.text = tr("UI_SYS_CONFIRM_" + a.to_upper())
-	_modal_lbl.visible = true
-	_modal.visible = true
+	_modal_overlay.visible = true
 	_modal_yes.grab_focus()
 	menu.update_hints()
 
@@ -200,7 +238,6 @@ func save_setting(key: String, v: Variant) -> void:
 	GameSettings.save_value(key, v)
 
 
-## Volumes from user://settings.cfg; the Music and SFX buses are created on first use.
 func apply_settings() -> void:
 	GameSettings.apply_volumes()
 

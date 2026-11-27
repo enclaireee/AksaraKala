@@ -401,3 +401,14 @@ JAMASAN_1,"Air menetes dari bilah, dan terdengar suara kecil: Laras bertanya ken
 JAMASAN_2,"Laras menolak tidur sebelum cerita seribu candi selesai. Kau menutupnya dengan kokok ayam, dan ia tertawa sampai kepangnya lepas.","Laras refuses to sleep before the thousand temples are done. You end the tale with a rooster's crow, and she laughs until her braid comes loose."
 JAMASAN_3,"Laras menutup telinga saat cerita keris yang tak selesai, lalu minta diulang. ""Kalau belum selesai,"" katanya, ""berarti masih bisa diubah.""","Laras covers her ears at the tale of the unfinished keris, then asks for it again. ""If it's unfinished,"" she says, ""it can still be changed."""
 JAMASAN_4,"Ia pernah menaruh selembar kain hijau di pasir karena kata nenek-nenek itu sopan. Ombak mengambilnya, dan ia melambai pada laut seperti pada tetangga.","She once left a green cloth on the sand because the old women said it was polite. The tide took it, and she waved at the sea as if at a neighbour."
+UI_TAGLINE,Aksara sang waktu,The script of time
+UI_CLASS_TITLE,Pilih jalanmu,Choose your path
+UI_ACT_LABEL,BABAK %s,ACT %s
+UI_REWARD_SHARD,+%d pecahan kendi,+%d flask shard
+UI_REWARD_POUCH,+%d kantong jamu,+%d herb pouch
+UI_REWARD_LAKON,Lakon: %s,Lakon: %s
+UI_CLS_KUDA,KUDA-KUDA,STANCE
+UI_CLS_THRUST,TUSUK,THRUST
+UI_CLS_WIRAMA,WIRAMA %d/%d,WIRAMA %d/%d
+UI_CLS_LAKON,LAKON +%d%%,LAKON +%d%%
+UI_CLS_PANTUL,BATU PANTUL,RICOCHET

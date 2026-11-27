@@ -13,7 +13,7 @@ const HOLD_DONE := 0.55     # s the finished pill stays before it goes
 const Y := 224.0            # px from the top: clear of the weapon well (242) and the boss bar
 const MIN_W := 108.0
 const MAX_W := 316.0
-const H := 15.0
+const H := 16.0
 const PAD := 8.0
 const CAP_MIN := 9.0
 
@@ -277,17 +277,16 @@ func _refresh_text() -> void:
 	_key.visible = kw > 0.0
 	_cap.visible = kw > 0.0
 	if kw > 0.0:
-		_cap.size = Vector2(kw, H)
+		_cap.size = Vector2(kw, 12.0)
+		_cap.position = Vector2(PAD, 2.0)
 		_key.size = _cap.size
-		_key.position = Vector2.ZERO
+		_key.position = _cap.position
 	var tw := UIFx.body_font().get_string_size(_lbl.text, HORIZONTAL_ALIGNMENT_LEFT, -1, UIFx.BODY).x
 	var w := clampf(PAD + (kw + 4.0 if kw > 0.0 else 0.0) + tw + PAD, MIN_W, MAX_W)
 	_panel.size = Vector2(w, H)
-	if kw > 0.0:
-		_cap.position = Vector2(PAD, round((H - _cap.size.y) * 0.5))
 	var lx := PAD + (kw + 4.0 if kw > 0.0 else 0.0)
-	_lbl.position = Vector2(lx, 3)
-	_lbl.size = Vector2(w - lx - PAD + 2.0, 9)
+	_lbl.position = Vector2(lx, 2.0)
+	_lbl.size = Vector2(w - lx - PAD + 2.0, 12.0)
 	_lbl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_root.position = Vector2(round((480.0 - w) * 0.5), Y)
 

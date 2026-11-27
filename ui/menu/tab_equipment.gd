@@ -94,12 +94,12 @@ func build(l: Control, r: Control) -> void:
 		var cx: float = SLOT_POS[s].x + 12
 		var lbl := MenuBook.bold(tr("UI_SLOT_" + s.to_upper()), MenuBook.INK_HEAD)
 		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		put(l, lbl, Vector2(cx - 30, SLOT_POS[s].y + 25), Vector2(60, 10))
+		put(l, lbl, Vector2(cx - 30, SLOT_POS[s].y + 25), Vector2(60, 11))
 		var nm := MenuBook.text("", MenuBook.INK_DIM)
 		nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		nm.clip_text = true
 		nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		put(l, nm, Vector2(cx - 30, SLOT_POS[s].y + 34), Vector2(60, 10))
+		put(l, nm, Vector2(cx - 30, SLOT_POS[s].y + 36), Vector2(60, 12))
 		_doll_name[s] = nm
 	_strip = Control.new()
 	_strip.mouse_filter = MOUSE_FILTER_IGNORE
@@ -152,15 +152,15 @@ func build(l: Control, r: Control) -> void:
 	put(r, _card_icon, Vector2(8, 120), Vector2(16, 16))
 	_card_name = MenuBook.head("")
 	_card_name.clip_text = true
-	put(r, _card_name, Vector2(30, 115), Vector2(164, 14))
+	put(r, _card_name, Vector2(30, 116), Vector2(164, 12))
 	_card_type = MenuBook.italic("", MenuBook.INK_DIM, false)
-	put(r, _card_type, Vector2(30, 128), Vector2(110, 10))
+	put(r, _card_type, Vector2(30, 129), Vector2(110, 12))
 	_card_tag = MenuBook.bold("", MenuBook.VERD)
 	_card_tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	put(r, _card_tag, Vector2(130, 128), Vector2(64, 10))
+	put(r, _card_tag, Vector2(130, 129), Vector2(64, 12))
 	_card_stats = VBoxContainer.new()
 	_card_stats.add_theme_constant_override("separation", 0)
-	put(r, _card_stats, Vector2(6, 142), Vector2(188, 10))
+	put(r, _card_stats, Vector2(6, 143), Vector2(188, 12))
 	_card_desc_scroll = ScrollContainer.new()
 	_card_desc_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	put(r, _card_desc_scroll, Vector2(6, 162), Vector2(188, 46))
@@ -294,7 +294,7 @@ func _refresh_strip(g: Node) -> void:
 	clear(_daya_pips)
 	for i in g.daya():
 		var p := MenuBook.pic("book_pip_on" if i < g.daya_used() else "book_pip_off", Vector2.ZERO)
-		p.custom_minimum_size = Vector2(6, 10)   # the 3x5 pip at 2x
+		p.custom_minimum_size = Vector2(3, 5)
 		_daya_pips.add_child(p)
 	clear(_jimat_row)
 	for id: String in g.jimat:
@@ -453,10 +453,17 @@ func _show_card(item: ItemData) -> void:
 		desc = tr("UI_FAVOURED") % tr("CLASS_%s_NAME" % item.favoured.to_upper()) + "\n" + desc
 	_card_desc.text = desc
 	_card_desc.add_theme_color_override("font_color", MenuBook.INK_HEAD if fav else MenuBook.INK_DIM)   # ponytail: the whole note lights up, not just the line
-	var desc_y := 142.0 + 10.0 * keys.size() + 4.0
+	var desc_y := 143.0 + 12.0 * keys.size() + 3.0
 	_card_desc_scroll.position.y = desc_y
 	_card_desc_scroll.size.y = maxf(16.0, 208.0 - desc_y)
 	_card_desc_scroll.scroll_vertical = 0
+
+
+func handle_input(e: InputEvent) -> bool:
+	if e is InputEventKey and e.pressed and e.physical_keycode in [KEY_PAGEUP, KEY_PAGEDOWN]:
+		_card_desc_scroll.scroll_vertical += -24 if e.physical_keycode == KEY_PAGEUP else 24
+		return true
+	return false
 
 
 func focus_first() -> void:

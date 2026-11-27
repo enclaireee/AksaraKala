@@ -36,23 +36,25 @@ static func tex(name: String) -> Texture2D:
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# Design system v2 (ui.md 0-1). Every screen takes its type, colour and spacing from here.
-# Pixel fonts render crisp ONLY at their grid sizes; never pass any other size:
-#   BODY    Pixeloid Sans 9  cap 7, line 12   all body text, numbers, hints, dialogue, lists (Bold: FONT_BODY_BOLD)
-#   LABEL   Pixeloid Sans 9  CAPS + 1 px tracking, dim gold: small section labels and kickers
-#   HEAD    Jersey10 19 cap 10, line 13  screen / page / card headings, names, boss name
-#   DISPLAY Jersey15 27 cap 15, line 20  area titles, quest titles, "Fallen"; LOGO = 54
+# Design system v3.1 (ui.md 0-1). Every screen takes its type, colour and spacing from here.
+# Pixeloid Sans / Bold render crisp ONLY on their 9 px grid (9, 18, 27); never pass any other size:
+#   BODY    Pixeloid Sans 9       cap 7, line 12   all body text, numbers, hints, dialogue, lists (Bold: FONT_BODY_BOLD)
+#   LABEL   Pixeloid Sans 9       CAPS + 1 px tracking, lavender: small section labels and kickers
+#   HEAD    Pixeloid Sans Bold 9  CAPS/Title + 1 px tracking: screen / page / card headings, names, boss name
+#   DISPLAY Pixeloid Sans Bold 18 + 1 px tracking: area titles, quest titles, "Fallen", boss banner; LOGO = 27
 # ---------------------------------------------------------------------------------------------------------------
 const FONT_BODY := "res://assets/fonts/PixeloidSans.woff"
 const FONT_BODY_BOLD := "res://assets/fonts/PixeloidSans-Bold.woff"
-const FONT_TINY := "res://assets/fonts/Tiny5-Regular.woff"   # the old body face, kept for the HUD quest tracker
-const TINY := 8         # Tiny5's pixel grid
-const FONT_HEAD := "res://assets/fonts/Jersey10-Regular.ttf"
-const FONT_DISPLAY := "res://assets/fonts/Jersey15-Regular.ttf"
-const BODY := 9         # Pixeloid's pixel grid: 9, or 18 for a big figure
-const HEAD_SIZE := 19   # (the colour of the same name is HEAD)
-const DISPLAY := 27
-const LOGO := 54
+const FONT_TINY := FONT_BODY   # unified onto Pixeloid 9
+const TINY := 9
+const FONT_HEAD := FONT_BODY_BOLD
+const FONT_DISPLAY := FONT_BODY_BOLD
+const FONT_SUNDA := "res://assets/fonts/NotoSansSundanese.ttf"
+const FONT_JAWA := "res://assets/fonts/NotoSansJavanese.ttf"
+const BODY := 9         # Pixeloid's pixel grid: 9, 18, 27
+const HEAD_SIZE := 9    # (the colour of the same name is HEAD)
+const DISPLAY := 18
+const LOGO := 27
 const LINE := 12        # body line pitch (11 px glyph box + 1 spacing)
 
 # spacing: one 4 px grid. Screen-safe margin 8, panel padding 6, gaps 2 / 4 / 8 / 16.
@@ -72,6 +74,17 @@ const DANGER := Color("E0566A")      # rose: damage, low HP, destructive only
 const OK := Color("8FD9A0")          # done / gained
 
 static var _fonts := {}
+static var _aksara_fb: Array[Font] = []
+
+
+static func _aksara_fallbacks() -> Array[Font]:
+	if _aksara_fb.is_empty():
+		for p in [FONT_SUNDA, FONT_JAWA]:
+			if ResourceLoader.exists(p):
+				var f := load(p) as Font
+				if f:
+					_aksara_fb.append(f)
+	return _aksara_fb
 
 
 static func _font(path: String, top := 0, bottom := 0, track := 0) -> Font:
@@ -82,6 +95,7 @@ static func _font(path: String, top := 0, bottom := 0, track := 0) -> Font:
 		v.spacing_top = top
 		v.spacing_bottom = bottom
 		v.spacing_glyph = track
+		v.fallbacks = _aksara_fallbacks()
 		_fonts[k] = v
 	return _fonts[k]
 
@@ -91,10 +105,10 @@ static func body_font() -> Font:
 	return _font(FONT_BODY)
 
 
-## Puts a UIFx.text label on Tiny5 8 (CAPS labels keep their 1 px tracking): the HUD quest tracker only.
+## Keeps legacy callers on Pixeloid 9 (CAPS labels keep their 1 px tracking).
 static func tiny(l: Label) -> Label:
-	l.add_theme_font_override("font", _font(FONT_TINY, 0, 0, 1 if l.uppercase else 0))
-	l.add_theme_font_size_override("font_size", TINY)
+	l.add_theme_font_override("font", caps_font() if l.uppercase else body_font())
+	l.add_theme_font_size_override("font_size", BODY)
 	return l
 
 
@@ -103,9 +117,9 @@ static func caps_font() -> Font:
 	return _font(FONT_BODY, 0, 0, 1)
 
 
-## Jersey 10 at 19 (its 10 px cap grid), trimmed so the line box hugs the caps.
+## Pixeloid Sans Bold at 9 with 1 px tracking for headings and menu entries.
 static func head_font() -> Font:
-	return _font(FONT_HEAD, -4, -3)
+	return _font(FONT_HEAD, 0, 0, 1)
 
 
 ## Old name kept for callers: the heading face.
@@ -113,16 +127,16 @@ static func cinzel() -> Font:
 	return head_font()
 
 
-## Jersey 15 at 27 / 54 for big titles.
+## Pixeloid Sans Bold at 18 / 27 with 1 px tracking for big titles.
 static func display() -> Font:
-	return _font(FONT_DISPLAY, -5, -2)
+	return _font(FONT_DISPLAY, 0, 0, 1)
 
 
 ## Maps any old size to the nearest pixel-true step of the scale.
 static func snap(size: int, display_face: bool = false) -> int:
 	if display_face:
-		return LOGO if size >= 40 else (DISPLAY if size >= 20 else HEAD_SIZE)
-	return 16 if size >= 16 else BODY
+		return LOGO if size >= 40 else (DISPLAY if size >= 18 else HEAD_SIZE)
+	return 18 if size >= 16 else BODY
 
 
 ## A Label on the scale. kind: "body", "label" (caps, tracked), "head", "display", "logo".

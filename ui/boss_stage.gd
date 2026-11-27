@@ -8,7 +8,7 @@ extends Control
 
 const BAR_H := 20.0
 const RULE_W := 168.0
-const GOLD := Color("D2A446")
+const GOLD := UIFx.WARM
 const ART := "res://assets/art/ui/"
 
 var _boss: Node
@@ -49,35 +49,35 @@ func _ready() -> void:
 	_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_card.modulate.a = 0.0
 	add_child(_card)
-	_nine("ink_panel", Rect2(120, 86, 240, 50), 4, _card).modulate.a = 0.75
-	_name = UIFx.text("", "head", UIFx.GOLD_HI)
-	_name.position = Vector2(0, 98)
-	_name.size = Vector2(240, 13)
-	_name.scale = Vector2(2, 2)   # the heading face at twice its size: whole pixels
+	_nine("ink_panel", Rect2(80, 82, 320, 56), 4, _card).modulate.a = 0.75
+	_name = UIFx.text("", "display", UIFx.HEAD)
+	_name.position = Vector2(0, 93)
+	_name.size = Vector2(480, 24)
 	_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_card.add_child(_name)
 	_epithet = UIFx.text("", "body", UIFx.WARM)
-	_epithet.position = Vector2(0, 137)
-	_epithet.size = Vector2(480, 9)
+	_epithet.position = Vector2(0, 120)
+	_epithet.size = Vector2(480, 12)
 	_epithet.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_card.add_child(_epithet)
 	_line = UIFx.text("", "body", Color(1, 1, 1))
 	_line.position = Vector2(40, 270 - BAR_H - 30)
-	_line.size = Vector2(400, 20)
+	_line.size = Vector2(400, 24)
 	_line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_line.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_card.add_child(_line)
-	_hint_bg = _nine("ink_panel", Rect2(90, 270 - 52, 300, 13), 4, self)
+	_hint_bg = _nine("ink_panel", Rect2(60, 270 - 60, 360, 20), 4, self)
 	_hint_bg.modulate.a = 0.0
 	_hint = UIFx.text("", "body", UIFx.GOLD_HI)
-	_hint.position = Vector2(0, 2)
-	_hint.size = Vector2(300, 9)
+	_hint.position = Vector2(10, 4)
+	_hint.size = Vector2(340, 12)
+	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_hint.add_theme_constant_override("line_spacing", 1)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_hint.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_hint_bg.add_child(_hint)
-	for y: float in [90.0, 131.0]:
+	for y: float in [86.0, 134.0]:
 		_rules.append(_nine("hud_boss_rule", Rect2(240, y, 0, 2), 0, _card))
-	for y: float in [87.0, 128.0]:   # a small brass lozenge on each rule
+	for y: float in [83.0, 131.0]:   # a small lozenge on each rule
 		var lz := TextureRect.new()
 		lz.texture = load(ART + "hud_boss_lozenge.png")
 		lz.position = Vector2(237, y)
@@ -112,6 +112,12 @@ func _nine(tex: String, rect: Rect2, m: int, parent: Node) -> NinePatchRect:
 ## A fight reminder above the boss bar for `seconds` (BossKit.hint).
 func show_hint(text: String, seconds := 4.0) -> void:
 	_hint.text = text
+	var bf := UIFx.body_font()
+	var sz := bf.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, 340.0, UIFx.BODY)
+	var lines := maxi(1, roundi(sz.y / maxf(bf.get_height(UIFx.BODY), 1.0)))
+	_hint.size = Vector2(340.0, lines * UIFx.LINE)
+	_hint_bg.size = Vector2(360.0, _hint.size.y + 8.0)
+	_hint_bg.position = Vector2(60.0, 270.0 - 44.0 - _hint_bg.size.y)
 	if _hint_tw:
 		_hint_tw.kill()
 	_hint_tw = create_tween()

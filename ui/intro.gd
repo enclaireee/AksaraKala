@@ -270,8 +270,8 @@ func _build_logo() -> void:
 	_logo.pivot_offset = _logo.size / 2.0
 	_logo.modulate.a = 0.0
 	_stage.add_child(_logo)
-	_tag = UIFx.text("The script of time", "body", UIFx.TEXT)
-	_tag.size = Vector2(200, 10)
+	_tag = UIFx.text("UI_TAGLINE", "body", UIFx.TEXT)
+	_tag.size = Vector2(200, 12)
 	_tag.position = Vector2(140, _logo.position.y + _logo.size.y + 4)
 	_tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_tag.modulate.a = 0.0
